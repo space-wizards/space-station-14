@@ -53,7 +53,7 @@
 - type: entity
   id: WeaponWaterPistol
   parent: WeaponWaterGunBase
-  name: water pistol
+  name: brawndo pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
   - type: Item
@@ -75,7 +75,7 @@
 - type: entity
   id: WeaponWaterBlaster
   parent: WeaponWaterGunBase
-  name: water blaster
+  name: brawndo blaster
   description: With this bad boy, you'll be the coolest kid at the summer barbecue.
   components:
   - type: Gun
@@ -114,7 +114,7 @@
 - type: entity
   id: WeaponWaterBlasterSuper
   parent: WeaponWaterGunBase
-  name: super water blaster
+  name: super brawndo blaster
   description: No! No! Not in the eyes!
   components:
   - type: Gun

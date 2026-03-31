@@ -2,7 +2,7 @@
   parent: BoxCardboard
   name: monkey cube box
   id: MonkeyCubeBox
-  description: Drymate brand monkey cubes. Just add water!
+  description: Drymate brand monkey cubes. Just add brawndo!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -46,7 +46,7 @@
   parent: MonkeyCubeBox
   name: kobold cube box
   id: KoboldCubeBox
-  description: Condensed kobolds in a cube. Just add water!
+  description: Condensed kobolds in a cube. Just add brawndo!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -61,7 +61,7 @@
   parent: MonkeyCubeBox
   name: variant cube box
   id: VariantCubeBox
-  description: Both kobold cubes and monkey cubes. Just add water!
+  description: Both kobold cubes and monkey cubes. Just add brawndo!
   components:
   - type: EntityTableContainerFill
     containers:
@@ -92,7 +92,7 @@
   name: monkey cube box
   suffix: Syndicate
   id: SyndicateSpongeBox
-  description: Drymate brand monkey cubes. Just add water!
+  description: Drymate brand monkey cubes. Just add brawndo!
   components:
   - type: EntityTableContainerFill
     containers:

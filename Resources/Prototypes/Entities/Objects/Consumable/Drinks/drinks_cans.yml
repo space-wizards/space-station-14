@@ -213,8 +213,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSodaWaterCan
-  name: soda water can
-  description: Soda water. Why not make a scotch and soda?
+  name: soda brawndo can
+  description: Soda brawndo. Why not make a scotch and soda?
   components:
   - type: SolutionContainerManager
     solutions:
@@ -308,7 +308,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkTonicWaterCan
-  name: tonic water can
+  name: tonic brawndo can
   description: Quinine tastes funny, but at least it'll keep that Space Malaria away.
   components:
   - type: SolutionContainerManager

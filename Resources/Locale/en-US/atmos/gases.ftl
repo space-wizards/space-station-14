@@ -6,5 +6,5 @@ gas-nitrous-oxide-abbreviation = N₂O
 gas-oxygen-abbreviation = O₂
 gas-plasma-abbreviation = P
 gas-tritium-abbreviation = T
-gas-water-vapor-abbreviation = H₂O
+gas-water-vapor-abbreviation = B
 gas-unknown-abbreviation = X

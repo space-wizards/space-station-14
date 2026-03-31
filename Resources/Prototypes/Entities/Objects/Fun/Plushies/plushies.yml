@@ -573,7 +573,7 @@
   parent: BasePlushie
   id: PlushieDiona
   name: diona plushie
-  description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
+  description: An adorable stuffed toy that resembles a diona. Love brawndo and cuddles. Do not wet!
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/diona.rsi

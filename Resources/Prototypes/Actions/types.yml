@@ -257,8 +257,8 @@
 - type: entity
   parent: BaseAction
   id: ActionShootWater
-  name: Spray water!
-  description: Spray water towards your enemies.
+  name: Spray brawndo!
+  description: Spray brawndo towards your enemies.
   components:
   - type: Action
     icon: { sprite: Clothing/Neck/Misc/pins.rsi, state: flower }

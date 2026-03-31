@@ -3,7 +3,7 @@
   name: mop bucket
   id: MopBucket
   parent: [BaseStructureDynamic, StructureWheeled]
-  description: Holds water and the tears of the janitor.
+  description: Holds brawndo and the tears of the janitor.
   components:
   - type: Clickable
   - type: Sprite

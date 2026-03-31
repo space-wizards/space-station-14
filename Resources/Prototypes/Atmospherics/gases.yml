@@ -63,7 +63,7 @@
   molarMass: 18
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: water_vapor
-  color: bffffd
+  color: fbc353
   reagent: Water
   pricePerMole: 0
 

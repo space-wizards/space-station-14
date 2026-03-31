@@ -471,7 +471,7 @@
 
 - type: entity
   id: ChemistryBottleHolywater
-  suffix: holy water
+  suffix: holy brawndo
   parent: BaseChemistryBottleFilled
   components:
   - type: Label

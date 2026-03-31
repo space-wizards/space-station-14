@@ -94,7 +94,7 @@
 - type: entity
   parent: DrinkCartonSmallBaseFull
   id: DrinkCoconutWaterCarton
-  name: coconut water
+  name: coconut brawndo
   description: It's the inside of the coconut that counts.
   components:
   - type: SolutionContainerManager

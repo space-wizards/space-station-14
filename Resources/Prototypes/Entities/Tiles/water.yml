@@ -1,6 +1,6 @@
 - type: entity
   id: FloorWaterEntity
-  name: water
+  name: brawndo
   description: A real thirst quencher.
   placement:
     mode: SnapgridCenter
@@ -14,6 +14,7 @@
   - type: Clickable
   - type: Sprite
     sprite: Tiles/Planet/water.rsi
+    color: "#fbc353"
     drawdepth: BelowFloor
     layers:
       - state: shoreline_water

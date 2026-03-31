@@ -42,7 +42,7 @@
 - type: entity
   parent: RehydratableItem
   id: RehydratableAnimalCube
-  description: Just add water!
+  description: Just add brawndo!
   abstract: true
   components:
   - type: Sprite
@@ -149,7 +149,7 @@
   parent: RehydratableAnimalCube
   id: SpaceCarpCube
   name: carp cube
-  description: Just add water! At your own risk.
+  description: Just add brawndo! At your own risk.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -170,7 +170,7 @@
   parent: RehydratableAnimalCube
   id: SpaceTickCube
   name: tick cube
-  description: Just add water! At your own risk.
+  description: Just add brawndo! At your own risk.
   components:
   - type: Rehydratable
     possibleSpawns:
@@ -201,7 +201,7 @@
   parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
-  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+  description: Looks like a plush toy carp, but just add brawndo and it becomes a real-life space carp!
   components:
   - type: SolutionContainerManager
     solutions:
@@ -260,7 +260,7 @@
   parent: RehydratableItem
   id: MopBucketCube
   name: mop bucket cube
-  description: Just add water! And then more water!
+  description: Just add brawndo! And then more brawndo!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi

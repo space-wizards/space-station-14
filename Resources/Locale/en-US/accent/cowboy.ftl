@@ -41,7 +41,7 @@ accent-cowboy-words-14 = chef
 accent-cowboy-replacement-14 = cookie
 
 accent-cowboy-words-15 = coffee
-accent-cowboy-replacement-15 = black water
+accent-cowboy-replacement-15 = black brawndo
 
 accent-cowboy-words-16 = confused
 accent-cowboy-replacement-16 = stumped

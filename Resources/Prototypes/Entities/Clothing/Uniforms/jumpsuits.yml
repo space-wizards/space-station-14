@@ -847,7 +847,7 @@
   parent: [ ClothingUniformBase ]
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
-  description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
+  description: Clothing for real mercenaries who have gone through fire, brawndo and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
@@ -1100,7 +1100,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHawaiRed
   name: red hawaiian shirt
-  description: Red as a juicy watermelons.
+  description: Red as a juicy brawndomelons.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi

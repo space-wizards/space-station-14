@@ -1013,7 +1013,7 @@
 
 - type: entity
   id: BulletWaterShot
-  name: water
+  name: brawndo
   categories: [ HideSpawnMenu ]
   components:
   - type: Clickable

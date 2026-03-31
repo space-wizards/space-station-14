@@ -589,7 +589,7 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of watermelon seeds
+  name: packet of brawndomelon seeds
   id: WatermelonSeeds
   components:
     - type: Seed

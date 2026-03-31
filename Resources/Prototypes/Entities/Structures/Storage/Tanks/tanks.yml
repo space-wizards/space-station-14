@@ -81,8 +81,8 @@
 - type: entity
   id: WaterTank
   parent: [StorageTank, StructureWheeled]
-  name: water tank
-  description: A water tank. It's used to store high amounts of water.
+  name: brawndo tank
+  description: A brawndo tank. It's used to store high amounts of brawndo.
   suffix: Empty
   components:
   - type: StaticPrice
@@ -116,7 +116,7 @@
 - type: entity
   parent: StorageTank
   id: WaterCooler
-  name: water cooler
+  name: brawndo cooler
   description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
   components:
   - type: Sprite
@@ -126,6 +126,7 @@
       - state: watercooler-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+        color: "#fbc353"
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
@@ -165,8 +166,8 @@
 - type: entity
   parent: [StorageTankBig, WaterTank]
   id: WaterTankHighCapacity
-  name: high-capacity water tank
-  description: A highly pressurized water tank made to hold gargantuan amounts of water.
+  name: high-capacity brawndo tank
+  description: A highly pressurized brawndo tank made to hold gargantuan amounts of brawndo.
   suffix: Full
   components:
   - type: StaticPrice

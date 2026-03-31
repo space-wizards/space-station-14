@@ -68,7 +68,7 @@
 - type: entity
   parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
   id: DrinkWaterCup
-  name: water cup
+  name: brawndo cup
   description: A paper water cup.
   components:
   - type: SolutionContainerManager

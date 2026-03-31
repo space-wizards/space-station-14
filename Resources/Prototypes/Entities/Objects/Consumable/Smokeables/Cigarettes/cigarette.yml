@@ -87,7 +87,7 @@
 - type: entity
   id: CigaretteOmnizine
   parent: SoakedCigarette
-  name: Hot Dog Water Flavor Explosion
+  name: Hot Dog brawndo Flavor Explosion
   components:
   - type: SolutionContainerManager
     solutions:

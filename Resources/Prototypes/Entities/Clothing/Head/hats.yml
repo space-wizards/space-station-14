@@ -1059,8 +1059,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatWatermelon
-  name: watermelon helmet
-  description: A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
+  name: brawndomelon helmet
+  description: A carelessly cut half of a brawndomelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/melon.rsi
@@ -1074,7 +1074,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHolyWatermelon
-  name: watermelon halo
+  name: brawndomelon halo
   description: Holy moly.
   components:
   - type: Sprite
@@ -1281,7 +1281,7 @@
 - type: entity
   parent: ClothingHeadHatPartyRed
   id: ClothingHeadHatPartyWaterCup
-  name: water cup party hat
+  name: brawndo cup party hat
   description: Not as fulfilling as you had hoped...
   components:
   - type: Sprite

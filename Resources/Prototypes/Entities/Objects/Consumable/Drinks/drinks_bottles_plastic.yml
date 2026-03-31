@@ -58,8 +58,8 @@
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottlePlasticSmallBaseFull]
   id: DrinkWaterBottleFull
-  name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  name: brawndo bottle
+  description: Simple clean brawndo of unknown origin. You think that maybe you dont want to know it.
   components:
   - type: SolutionContainerManager
     solutions:

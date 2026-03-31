@@ -8,7 +8,7 @@ reagent-name-juice-berry = berry juice
 reagent-desc-juice-berry = A delicious blend of several different kinds of berries.
 
 reagent-name-juice-blue-pumpkin = blue pumpkin juice
-reagent-desc-juice-blue-pumpkin = The juice of a blue pumpkin. Smells like pool water.
+reagent-desc-juice-blue-pumpkin = The juice of a blue pumpkin. Smells like pool brawndo.
 
 reagent-name-juice-bungo = bungo juice
 reagent-desc-juice-bungo = The juice of a bungo fruit. Exotic!
@@ -40,8 +40,8 @@ reagent-desc-juice-potato = Juice of the potato. Bleh.
 reagent-name-juice-tomato = tomato juice
 reagent-desc-juice-tomato = Tomatoes made into juice. What a waste of good tomatoes, huh?
 
-reagent-name-juice-watermelon = watermelon juice
-reagent-desc-juice-watermelon = The delicious juice of a watermelon.
+reagent-name-juice-watermelon = brawndomelon juice
+reagent-desc-juice-watermelon = The delicious juice of a brawndomelon.
 
 reagent-name-juice-cherry = cherry juice
 reagent-desc-juice-cherry = Tasty cherry juice, sweet and tangy.

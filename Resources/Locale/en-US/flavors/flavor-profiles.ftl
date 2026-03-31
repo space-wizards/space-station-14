@@ -54,6 +54,7 @@ flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
 flavor-base-motivating = motivating
+flavor-base-electrolytes = motivating
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -119,7 +120,7 @@ flavor-complex-cotton = like cottons
 flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
-flavor-complex-watermelon = like watermelon
+flavor-complex-watermelon = like brawndomelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
 flavor-complex-berry = like berries
@@ -172,7 +173,7 @@ flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
-flavor-complex-blue-pumpkin = like a mouthful of pool water
+flavor-complex-blue-pumpkin = like a mouthful of pool brawndo
 flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
@@ -194,13 +195,13 @@ flavor-complex-juice = like juice
 flavor-complex-rocksandstones = like rocks and stones
 
 ## Basic drinks
-flavor-complex-water = like water
+flavor-complex-water = like brawndo
 flavor-complex-beer = like piss
 flavor-complex-cognac = like dry spicy alcohol
 flavor-complex-mead = like fermented honey
 flavor-complex-vermouth = like herbal grape rinds
 flavor-complex-ale = like bread
-flavor-complex-tonic-water = like angry water
+flavor-complex-tonic-water = like angry brawndo
 flavor-complex-cola = like cola
 flavor-complex-energy-drink = like battery acid
 flavor-complex-dr-gibb = like malpractice
@@ -227,7 +228,7 @@ flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk
 flavor-complex-tea = like tea
 flavor-complex-ice = like ice
-flavor-complex-mopwata = like stagnant, dirty water
+flavor-complex-mopwata = like stagnant, dirty brawndo
 flavor-complex-gin = like fermented grain with juniper berries
 
 ## Cocktails
@@ -347,3 +348,5 @@ flavor-complex-punishment = like punishment
 flavor-complex-artifact-glue = like crushed artifacts
 flavor-weh = like weh
 flavor-hew = like hew
+
+flavor-complex-electrolytes = like electrolytes

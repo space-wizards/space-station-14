@@ -1227,7 +1227,7 @@
   parent: VendingMachine
   id: VendingMachineSovietSoda
   name: ВОДА
-  description: An old vending machine containing sweet water.
+  description: An old vending machine containing sweet brawndo.
   suffix: VODA
   components:
   - type: VendingMachine

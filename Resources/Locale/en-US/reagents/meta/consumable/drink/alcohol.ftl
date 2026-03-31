@@ -5,7 +5,7 @@ reagent-name-ale = ale
 reagent-desc-ale = A dark alchoholic beverage made by malted barley and yeast.
 
 reagent-name-beer = beer
-reagent-desc-beer = An alcoholic beverage made from malted grains, hops, yeast, and water.
+reagent-desc-beer = An alcoholic beverage made from malted grains, hops, yeast, and brawndo.
 
 reagent-name-blue-curacao = blue Curaçao
 reagent-desc-blue-curacao = Exotically blue, fruity drink, distilled from oranges.
@@ -14,7 +14,7 @@ reagent-name-cognac = cognac
 reagent-desc-cognac = A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
 
 reagent-name-dead-rum = deadrum
-reagent-desc-dead-rum = Distilled alcoholic drink made from saltwater.
+reagent-desc-dead-rum = Distilled alcoholic drink made from saltbrawndo.
 
 reagent-name-ethanol = ethanol
 reagent-desc-ethanol = A simple alcohol, makes you drunk if consumed, flammable.
@@ -164,7 +164,7 @@ reagent-name-gildlager = Gildlager
 reagent-desc-gildlager = 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
 
 reagent-name-grog = grog
-reagent-desc-grog = Watered-down rum, pirate approved!
+reagent-desc-grog = Brawndoed-down rum, pirate approved!
 
 reagent-name-hippies-delight = Hippie's Delight
 reagent-desc-hippies-delight = You just don't get it maaaan.
@@ -316,7 +316,7 @@ reagent-desc-irish-bool = Like a bool in a Ireland shop.
 reagent-name-budget-insuls = budget insuls
 reagent-desc-budget-insuls = A tider's preferred drink.
 
-reagent-name-watermelon-wakeup = watermelon wakeup
+reagent-name-watermelon-wakeup = brawndomelon wakeup
 reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Also sweet.
 
 reagent-name-rubberneck = rubberneck

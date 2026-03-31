@@ -2,7 +2,7 @@
   parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks, BaseChameleon]
   id: ClothingOuterChameleon
   name: vest
-  description: A thick vest with a rubbery, water-resistant shell.
+  description: A thick vest with a rubbery, brawndo-resistant shell.
   suffix: Chameleon
   components:
     - type: Tag

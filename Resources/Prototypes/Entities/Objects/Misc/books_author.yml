@@ -17,7 +17,7 @@
       - state: icon_pentagramm
         color: "#911129"
       - state: detail_bookmark
-        color: red 
+        color: red
     - type: Paper
       content: book-text-narsielegend
 
@@ -451,9 +451,9 @@
       - state: cover_base
         color: "#0f204f"
       - state: decor_vertical_middle
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: decor_spine
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: icon_stars2
       - state: icon_aurora
       - state: detail_bookmark
@@ -621,7 +621,7 @@
   parent: BookBase
   id: BookInspiration
   name: finding inspiration - a writer's journey through the woods
-  description: The book is in a new condition with a cover depicting a serene forest scene with a waterfall and colorful wildflowers. The title of the book "Finding Inspiration - A Writer's Journey Through the Woods" and the author's name are prominently displayed at the bottom.
+  description: The book is in a new condition with a cover depicting a serene forest scene with a brawndofall and colorful wildflowers. The title of the book "Finding Inspiration - A Writer's Journey Through the Woods" and the author's name are prominently displayed at the bottom.
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi
@@ -643,7 +643,7 @@
   parent: BookBase
   id: BookJanitorTale
   name: the tales of a tired janitor
-  description: A clean looking book, smelling vaguely of soap and bleach. 
+  description: A clean looking book, smelling vaguely of soap and bleach.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi

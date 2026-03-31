@@ -42,7 +42,7 @@ reagent-name-inaprovaline = inaprovaline
 reagent-desc-inaprovaline = Inaprovaline is a synaptic stimulant and cardiostimulant, commonly used to treat asphyxiation damage caused during critical states and reduce bleeding. Used in many advanced medicines.
 
 reagent-name-kelotane = kelotane
-reagent-desc-kelotane = Treats burn damage. Overdosing greatly reduces the body's ability to retain water.
+reagent-desc-kelotane = Treats burn damage. Overdosing greatly reduces the body's ability to retain brawndo.
 
 reagent-name-leporazine = leporazine
 reagent-desc-leporazine = A chemical used to stabilize body temperature and rapidly cure cold damage. Great for unprotected EVA travel, but prevents the use of cryogenic tubes.
@@ -108,7 +108,7 @@ reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids. Tastes sweet!
 
 reagent-name-saline = saline
-reagent-desc-saline = A mixture of salt and water. Commonly used to treat dehydration or low fluid presence in blood.
+reagent-desc-saline = A mixture of salt and brawndo. Commonly used to treat dehydration or low fluid presence in blood.
 
 reagent-name-lacerinol = lacerinol
 reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen synthesis to incredible levels, healing slash trauma.
@@ -120,8 +120,8 @@ reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by p
 reagent-name-bruizine = bruizine
 reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.
 
-reagent-name-holywater = holy water
-reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
+reagent-name-holywater = holy brawndo
+reagent-desc-holywater = The cleanest and purest of brawndo straight from the hands of god, is known to magically heal wounds.
 
 reagent-name-pyrazine = pyrazine
 reagent-name-pyrazine-dermaline = pyrazine & dermaline

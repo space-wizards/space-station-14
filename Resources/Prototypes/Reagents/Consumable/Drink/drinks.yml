@@ -422,8 +422,8 @@
   evaporationSpeed: 0.3
   absorbent: true
   physicalDesc: reagent-physical-desc-translucent
-  flavor: water
-  color: "#75b1f0"
+  flavor: electrolytes
+  color: "#fbc353"
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0

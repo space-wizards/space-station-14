@@ -125,7 +125,7 @@
       spawnGas: Frezon
 
 - type: entity
-  name: water vapor gas miner
+  name: brawndo vapor gas miner
   parent: GasMinerBase
   id: GasMinerWaterVapor
   components:

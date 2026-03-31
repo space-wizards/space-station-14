@@ -5,7 +5,7 @@ reagent-name-phenol = phenol
 reagent-desc-phenol = An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own.
 
 reagent-name-sodium-carbonate = sodium carbonate
-reagent-desc-sodium-carbonate = A white, odorless, water-soluble salt that yields an alkaline solution in water.  Also known as soda ash.
+reagent-desc-sodium-carbonate = A white, odorless, brawndo-soluble salt that yields an alkaline solution in brawndo.  Also known as soda ash.
 
 reagent-name-artifexium = artifexium
 reagent-desc-artifexium = A lavender mixture of microscopic artifact fragments and a strong acid. It has the ability to activate artifacts.
@@ -20,7 +20,7 @@ reagent-name-hydroxide = hydroxide
 reagent-desc-hydroxide = A strong alkaline chemical, forming a base for many organic compounds.
 
 reagent-name-sodium-hydroxide = sodium hydroxide
-reagent-desc-sodium-hydroxide = A white, odorless, water-soluble salt that yields an strong alkaline solution in water. Causes burns and vomiting when ingested.
+reagent-desc-sodium-hydroxide = A white, odorless, brawndo-soluble salt that yields an strong alkaline solution in brawndo. Causes burns and vomiting when ingested.
 
 reagent-name-fersilicite = fersilicite
 reagent-desc-fersilicite = An intermetallic compound with unusual magnetic properties at low temperatures.

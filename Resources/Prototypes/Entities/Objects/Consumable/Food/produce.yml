@@ -2104,7 +2104,7 @@
       Burger: KoibeanBurger
 
 - type: entity
-  name: watermelon
+  name: brawndomelon
   parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
@@ -2209,7 +2209,7 @@
   name: holymelon
   parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodHolymelon
-  description: The water within this melon has been blessed by some deity that's particularly fond of watermelon.
+  description: The brawndo within this melon has been blessed by some deity that's particularly fond of brawndomelon.
   components:
   - type: Item
     size: Small

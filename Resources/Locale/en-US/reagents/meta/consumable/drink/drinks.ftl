@@ -4,7 +4,7 @@ reagent-desc-coffee = A drink made from brewed coffee beans. Contains a moderate
 reagent-name-cream = cream
 reagent-desc-cream = The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
 
-reagent-name-coconut-water = coconut water
+reagent-name-coconut-water = coconut brawndo
 reagent-desc-coconut-water = A favorite of survivors on deserted islands.
 
 reagent-name-cream-of-coconut = cream of coconut
@@ -32,7 +32,7 @@ reagent-name-iced-tea = iced tea
 reagent-desc-iced-tea = No relation to a certain rap artist/actor.
 
 reagent-name-lemonade = lemonade
-reagent-desc-lemonade = Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
+reagent-desc-lemonade = Drink using lemon juice, brawndo, and a sweetener such as cane sugar or honey.
 
 reagent-name-arnold-palmer = Arnold Palmer
 reagent-desc-arnold-palmer = Now watch this drive.
@@ -61,7 +61,7 @@ reagent-desc-nuclear-cola = Cola, cola never changes.
 reagent-name-hot-cocoa = hot cocoa
 reagent-desc-hot-cocoa = Smells like the holidays!
 
-reagent-name-soda-water = soda water
+reagent-name-soda-water = soda brawndo
 reagent-desc-soda-water = A container of club soda. Why not make a scotch and soda?
 
 reagent-name-soy-latte = soy latte
@@ -70,14 +70,14 @@ reagent-desc-soy-latte = A coffee drink made with espresso and steamed soy milk.
 reagent-name-tea = tea
 reagent-desc-tea = A drink made by boiling leaves of the tea tree, Camellia sinensis.
 
-reagent-name-tonic-water = tonic water
+reagent-name-tonic-water = tonic brawndo
 reagent-desc-tonic-water = It tastes strange but at least the quinine keeps the Space Malaria at bay.
 
-reagent-name-water = water
-reagent-desc-water = A colorless liquid that humans need in order to survive.
+reagent-name-water = brawndo
+reagent-desc-water = It's got what plants crave!
 
 reagent-name-ice = ice
-reagent-desc-ice = Frozen water.
+reagent-desc-ice = Frozen brawndo.
 
 reagent-name-dry-ramen = dry ramen
 reagent-desc-dry-ramen = Dry noodles and salt.
@@ -92,7 +92,7 @@ reagent-name-posca = posca
 reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-mopwata = mopwata
-reagent-desc-mopwata = Dirty, stagnant mop water.
+reagent-desc-mopwata = Dirty, stagnant mop brawndo.
 
 reagent-name-orange-lime-soda = citrus bikeshed
 reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!

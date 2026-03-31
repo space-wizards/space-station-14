@@ -415,7 +415,7 @@
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # todo Needs to be renamed DrinkBeerBottleFullGrowler
   name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
+  description: An alcoholic beverage made from malted grains, hops, yeast, and brawndo. XL growler bottle.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -466,7 +466,7 @@
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkBeerBottleFull
   name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water.
+  description: An alcoholic beverage made from malted grains, hops, yeast, and brawndo.
   components:
   - type: SolutionContainerManager
     solutions:

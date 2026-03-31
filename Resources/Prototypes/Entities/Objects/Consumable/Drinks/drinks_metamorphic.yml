@@ -527,7 +527,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkCoconutWaterGlass
-  suffix: coconut water
+  suffix: coconut brawndo
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2239,7 +2239,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkWaterJug
-  name: water jug
+  name: brawndo jug
   description: Stay hydrated.
   components:
   - type: SolutionContainerManager
@@ -2256,7 +2256,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkWatermelonJuice
-  suffix: watermelon juice
+  suffix: brawndomelon juice
   components:
   - type: SolutionContainerManager
     solutions:
