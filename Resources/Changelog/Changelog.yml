@@ -4096,3 +4096,11 @@ Entries:
   id: 9600
   time: '2026-04-01T00:00:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43422
+- author: rwrv1
+  changes:
+  - message: De-Iced Snowball
+    type: Tweak
+  id: 9601
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43422
+
