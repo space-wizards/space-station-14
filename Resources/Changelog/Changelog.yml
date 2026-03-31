@@ -1,4 +1,4 @@
-﻿Entries:
+Entries:
 - author: aada
   changes:
   - message: Cannabis no longer stacks infinitely. Sorry, botanists!
@@ -4033,3 +4033,66 @@
   id: 9591
   time: '2026-03-27T23:00:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43361
+- author: slarticodefast
+  changes:
+  - message: NT is now sponsored by Brawndo!
+    type: Tweak
+  id: 9592
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43421
+- author: iadaa
+  changes:
+  - message: Mimes who break their vow of silence are very cringe.
+    type: Tweak
+  id: 9593
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43409
+- author: Velken
+  changes:
+  - message: Passengers and Visitors are no longer considered crew for silicons, go get a job!
+    type: Tweak
+  id: 9594
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43408
+- author: Velken
+  changes:
+  - message: Silicons spawn wearing silly cones.
+    type: Tweak
+  id: 9595
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43407
+- author: Golubgik
+  changes:
+  - message: Added blob.
+    type: Add
+  id: 9596
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43406
+- author: iadaa
+  changes:
+  - message: More fools and entertainers :o)
+    type: Tweak
+  id: 9597
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43401
+- author: slarticodefast
+  changes:
+  - message: Do a flip!
+    type: Add
+  id: 9598
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43398
+- author: jessicamaybe
+  changes:
+  - message: Fragile trait
+    type: Add
+  id: 9599
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43364
+- author: slarticodefast
+  changes:
+  - message: He is not even paid for this.
+    type: Tweak
+  id: 9600
+  time: '2026-04-01T00:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43422
