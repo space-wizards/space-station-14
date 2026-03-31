@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Content.Server.Administration.Logs;
-using Content.Server.NPC.HTN;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
@@ -12,11 +11,6 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-
-    protected override bool IsNpc(EntityUid uid)
-    {
-        return HasComp<HTNComponent>(uid);
-    }
 
     public override void SetInCombatMode(EntityUid entity, bool value, CombatModeComponent? component = null)
     {
