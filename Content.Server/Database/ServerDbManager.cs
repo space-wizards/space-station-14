@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -220,6 +221,9 @@ namespace Content.Server.Database
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
         Task<int> CountAdminLogs(int round, int? serverId = null, CancellationToken cancel = default);
+        Task AddAuditLogs(List<AdminAuditEventWriteData> logs, CancellationToken cancel = default);
+        Task<List<SharedAdminAuditLog>> GetAuditLogs(AuditLogFilter filter);
+        Task<int> CountAuditLogs(AuditLogFilter filter);
 
         #endregion
 
@@ -770,6 +774,24 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.CountAdminLogs(round, serverId, cancel));
+        }
+
+        public Task AddAuditLogs(List<AdminAuditEventWriteData> logs, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAuditLogs(logs, cancel));
+        }
+
+        public Task<List<SharedAdminAuditLog>> GetAuditLogs(AuditLogFilter filter)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAuditLogs(filter));
+        }
+
+        public Task<int> CountAuditLogs(AuditLogFilter filter)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.CountAuditLogs(filter));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

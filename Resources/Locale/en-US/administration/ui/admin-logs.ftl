@@ -2,6 +2,8 @@
 admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-export = Export
 admin-logs-pop-out = Pop Out
+admin-audit-logs-title = Admin Audit Log
+admin-audit-logs-button = Audit Log
 
 # Round selector
 admin-logs-browsing-prefix = Round{" "}

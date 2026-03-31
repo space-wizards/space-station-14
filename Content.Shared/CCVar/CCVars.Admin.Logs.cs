@@ -59,4 +59,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> AdminLogsCondensationMaxGap =
         CVarDef.Create("adminlogs.condensation_max_gap", 10f, CVar.SERVERONLY);
+
+    public static readonly CVarDef<bool> AdminAuditLogEnabled =
+        CVarDef.Create("adminlogs.audit_enabled", true, CVar.SERVERONLY);
+
+    public static readonly CVarDef<float> AdminAuditLogQueueSendDelay =
+        CVarDef.Create("adminlogs.audit_queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 }

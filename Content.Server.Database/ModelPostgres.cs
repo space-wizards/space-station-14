@@ -72,6 +72,15 @@ namespace Content.Server.Database
                 .HasIndex(p => p.SearchVector)
                 .HasDatabaseName("IX_admin_log_event_payload_search_vector_gin")
                 .HasMethod("GIN");
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasGeneratedTsVectorColumn(
+                    e => e.SearchVector,
+                    "english",
+                    e => e.Message)
+                .HasIndex(e => e.SearchVector)
+                .HasDatabaseName("IX_admin_audit_event_search_vector_gin")
+                .HasMethod("GIN");
         }
     }
 }

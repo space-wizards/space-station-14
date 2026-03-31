@@ -58,6 +58,111 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminAuditEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("admin_audit_event_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Action")
+                        .HasColumnType("integer")
+                        .HasColumnName("action");
+
+                    b.Property<Guid>("AdminUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("admin_user_id");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_at");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.Property<NpgsqlTsVector>("SearchVector")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("tsvector")
+                        .HasColumnName("search_vector")
+                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
+                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "Message" });
+
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
+                    b.Property<byte>("Severity")
+                        .HasColumnType("smallint")
+                        .HasColumnName("severity");
+
+                    b.Property<string>("TargetEntityName")
+                        .HasColumnType("text")
+                        .HasColumnName("target_entity_name");
+
+                    b.Property<string>("TargetEntityPrototype")
+                        .HasColumnType("text")
+                        .HasColumnName("target_entity_prototype");
+
+                    b.Property<int?>("TargetEntityUid")
+                        .HasColumnType("integer")
+                        .HasColumnName("target_entity_uid");
+
+                    b.Property<Guid?>("TargetPlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("target_player_user_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_admin_audit_event");
+
+                    b.HasIndex("RoundId")
+                        .HasDatabaseName("IX_admin_audit_event_round_id");
+
+                    b.HasIndex("SearchVector")
+                        .HasDatabaseName("IX_admin_audit_event_search_vector_gin");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("SearchVector"), "GIN");
+
+                    b.HasIndex("AdminUserId", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "OccurredAt", "Id");
+
+                    b.HasIndex("TargetPlayerUserId", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "Action", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "RoundId", "OccurredAt", "Id");
+
+                    b.HasIndex("ServerId", "Severity", "OccurredAt", "Id");
+
+                    b.ToTable("admin_audit_event", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminAuditEventPayload", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_id");
+
+                    b.Property<JsonDocument>("Json")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("json");
+
+                    b.HasKey("EventId")
+                        .HasName("PK_admin_audit_event_payload");
+
+                    b.ToTable("admin_audit_event_payload", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
                 {
                     b.Property<int>("Id")
@@ -1641,6 +1746,37 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("AdminRank");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AdminAuditEvent", b =>
+                {
+                    b.HasOne("Content.Server.Database.Round", "Round")
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .HasConstraintName("FK_admin_audit_event_round_round_id");
+
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany()
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_audit_event_server_server_id");
+
+                    b.Navigation("Round");
+
+                    b.Navigation("Server");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminAuditEventPayload", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminAuditEvent", "Event")
+                        .WithOne("Payload")
+                        .HasForeignKey("Content.Server.Database.AdminAuditEventPayload", "EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_admin_audit_event_payload_admin_audit_event_event_id");
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("Content.Server.Database.AdminFlag", b =>
                 {
                     b.HasOne("Content.Server.Database.Admin", "Admin")
@@ -2252,6 +2388,12 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AdminAuditEvent", b =>
+                {
+                    b.Navigation("Payload")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.AdminLogEvent", b =>

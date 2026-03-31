@@ -1,0 +1,33 @@
+<Control xmlns="https://spacestation14.io">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Orientation="Vertical" Margin="4">
+            <BoxContainer Orientation="Horizontal" MinHeight="28">
+                <Label Text="{Loc admin-logs-browsing-prefix}" Margin="0 0 2 0"/>
+                <SpinBox Name="RoundSpinBox" Access="Public" Value="0" MinWidth="100"/>
+                <Label Text="{Loc admin-logs-browsing-on}" Margin="4 0 2 0"/>
+                <Label Name="ServerNameLabel" Access="Public" StyleClasses="LabelKeyText" Margin="4 0"/>
+                <Control HorizontalExpand="True"/>
+                <Button Name="SearchButton" Access="Public" Text="{Loc admin-logs-search-button}" StyleClasses="OpenRight"/>
+                <LineEdit Name="SearchLineEdit" Access="Public" MinWidth="260" PlaceHolder="{Loc admin-logs-search-logs-placeholder}" StyleClasses="OpenLeft"/>
+                <Control MinSize="8 0"/>
+                <Button Name="RoutineButton" Access="Public" Text="Routine" ToggleMode="True" Pressed="True" StyleClasses="OpenRight"/>
+                <Button Name="NotableButton" Access="Public" Text="Notable" ToggleMode="True" Pressed="True" StyleClasses="ButtonSquare"/>
+                <Button Name="CriticalButton" Access="Public" Text="Critical" ToggleMode="True" Pressed="True" StyleClasses="OpenLeft"/>
+            </BoxContainer>
+
+            <Control MinSize="0 4"/>
+
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
+            </ScrollContainer>
+
+            <Control MinSize="0 4"/>
+
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"/>
+                <Control HorizontalExpand="True"/>
+                <Label Name="CountLabel" Access="Public" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

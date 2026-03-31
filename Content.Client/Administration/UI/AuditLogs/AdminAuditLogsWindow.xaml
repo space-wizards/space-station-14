@@ -1,0 +1,7 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:auditLogs="clr-namespace:Content.Client.Administration.UI.AuditLogs"
+               Title="{Loc admin-audit-logs-title}"
+               MinSize="900 500"
+               SetSize="1100 600">
+    <auditLogs:AdminAuditLogsControl Name="AuditLogs" Access="Public" />
+</DefaultWindow>

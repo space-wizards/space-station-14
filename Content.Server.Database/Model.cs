@@ -52,8 +52,8 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
-        public DbSet<CustomVoteLog> CustomVoteLog { get; set; } = null!;
-        public DbSet<CustomVoteLogOption> CustomVoteLogOption { get; set; } = null!;
+        public DbSet<AdminAuditEvent> AdminAuditEvent { get; set; } = null!;
+        public DbSet<AdminAuditEventPayload> AdminAuditEventPayload { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -196,6 +196,40 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogEntityDimension>()
                 .HasIndex(dim => new { dim.ServerId, dim.EntityUid });
+
+            // Admin Audit Log configuration
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasOne(e => e.Server)
+                .WithMany()
+                .HasForeignKey(e => e.ServerId);
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasOne(e => e.Round)
+                .WithMany()
+                .HasForeignKey(e => e.RoundId);
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.AdminUserId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.RoundId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.Action, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.TargetPlayerUserId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.Severity, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEventPayload>()
+                .HasOne(p => p.Event)
+                .WithOne(e => e.Payload)
+                .HasForeignKey<AdminAuditEventPayload>(p => p.EventId);
 
             modelBuilder.Entity<PlayTime>()
                 .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
@@ -743,6 +777,51 @@ namespace Content.Server.Database
         public string? PrototypeId { get; set; }
 
         public string? EntityName { get; set; }
+    }
+
+    [Table("admin_audit_event")]
+    public class AdminAuditEvent
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
+        [ForeignKey("Round")] public int? RoundId { get; set; }
+        public Round? Round { get; set; }
+
+        [Required] public Guid AdminUserId { get; set; }
+
+        [Required] public AdminAuditAction Action { get; set; }
+
+        [Required] public AuditSeverity Severity { get; set; }
+
+        [Required] public DateTime OccurredAt { get; set; }
+
+        public Guid? TargetPlayerUserId { get; set; }
+
+        public int? TargetEntityUid { get; set; }
+
+        public string? TargetEntityName { get; set; }
+
+        public string? TargetEntityPrototype { get; set; }
+
+        [Required] public string Message { get; set; } = default!;
+
+        public NpgsqlTsVector SearchVector { get; set; } = default!;
+
+        public AdminAuditEventPayload Payload { get; set; } = default!;
+    }
+
+    [Table("admin_audit_event_payload")]
+    public class AdminAuditEventPayload
+    {
+        [Key] public int EventId { get; set; }
+
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        [ForeignKey(nameof(EventId))] public AdminAuditEvent Event { get; set; } = default!;
     }
 
     /// <summary>

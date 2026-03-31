@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Prototypes;
@@ -986,6 +987,79 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
         }
 
+        public async Task AddAuditLogs(List<AdminAuditEventWriteData> logs, CancellationToken cancel = default)
+        {
+            const int maxRetryAttempts = 5;
+            var initialRetryDelay = TimeSpan.FromSeconds(5);
+
+            DebugTools.Assert(logs.All(x => x.ServerId > 0), "Adding audit logs with invalid server ids.");
+
+            var attempt = 0;
+            var retryDelay = initialRetryDelay;
+
+            while (attempt < maxRetryAttempts)
+            {
+                try
+                {
+                    await using var db = await GetDb(cancel);
+                    await using var tx = await db.DbContext.Database.BeginTransactionAsync(cancel);
+
+                    var headers = new List<AdminAuditEvent>(logs.Count);
+                    foreach (var log in logs)
+                    {
+                        var header = new AdminAuditEvent
+                        {
+                            ServerId = log.ServerId,
+                            RoundId = log.RoundId,
+                            AdminUserId = log.AdminUserId,
+                            Action = log.Action,
+                            Severity = log.Severity,
+                            OccurredAt = log.OccurredAt,
+                            Message = log.Message,
+                            TargetPlayerUserId = log.TargetPlayerUserId,
+                            TargetEntityUid = log.TargetEntityUid,
+                            TargetEntityName = log.TargetEntityName,
+                            TargetEntityPrototype = log.TargetEntityPrototype,
+                        };
+
+                        headers.Add(header);
+                    }
+
+                    db.DbContext.AdminAuditEvent.AddRange(headers);
+                    await db.DbContext.SaveChangesAsync(cancel);
+
+                    for (var i = 0; i < headers.Count; i++)
+                    {
+                        db.DbContext.AdminAuditEventPayload.Add(new AdminAuditEventPayload
+                        {
+                            EventId = headers[i].Id,
+                            Json = logs[i].Json ?? JsonSerializer.SerializeToDocument(new { }),
+                        });
+                    }
+
+                    await db.DbContext.SaveChangesAsync(cancel);
+                    await tx.CommitAsync(cancel);
+                    _opsLog.Debug($"Successfully saved {logs.Count} admin audit logs.");
+                    break;
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    attempt += 1;
+                    _opsLog.Error($"Attempt {attempt} failed to save audit logs: {ex}");
+
+                    if (attempt >= maxRetryAttempts)
+                    {
+                        throw new InvalidOperationException($"Max retry attempts reached. Failed to save {logs.Count} admin audit logs.", ex);
+                    }
+
+                    _opsLog.Warning($"Retrying in {retryDelay.TotalSeconds} seconds...");
+                    await Task.Delay(retryDelay, cancel);
+
+                    retryDelay *= 2;
+                }
+            }
+        }
+
         protected abstract IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null);
 
         private IQueryable<AdminLogEvent> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
@@ -1342,6 +1416,133 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 query = query.Where(log => log.ServerId == serverId);
 
             return await query.CountAsync(cancel);
+        }
+
+        private IQueryable<AdminAuditEvent> GetAuditLogsQuery(
+            ServerDbContext db,
+            AuditLogFilter filter,
+            bool includePagination = true)
+        {
+            var query = db.AdminAuditEvent.AsQueryable();
+
+            if (filter.ServerId != null)
+            {
+                query = query.Where(log => log.ServerId == filter.ServerId);
+            }
+
+            if (filter.Round != null)
+            {
+                query = query.Where(log => log.RoundId == filter.Round);
+            }
+
+            if (filter.Actions != null)
+            {
+                query = query.Where(log => filter.Actions.Contains(log.Action));
+            }
+
+            if (filter.Severities != null)
+            {
+                query = query.Where(log => filter.Severities.Contains(log.Severity));
+            }
+
+            if (filter.AdminUserId != null)
+            {
+                query = query.Where(log => log.AdminUserId == filter.AdminUserId);
+            }
+
+            if (filter.TargetPlayerUserId != null)
+            {
+                query = query.Where(log => log.TargetPlayerUserId == filter.TargetPlayerUserId);
+            }
+
+            if (filter.Before != null)
+            {
+                query = query.Where(log => log.OccurredAt < filter.Before);
+            }
+
+            if (filter.After != null)
+            {
+                query = query.Where(log => log.OccurredAt > filter.After);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Search))
+            {
+                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
+            }
+
+            if (!includePagination)
+                return query;
+
+            if (filter.LastLogId != null)
+            {
+                if (filter.LastOccurredAt != null)
+                {
+                    var cursorTime = filter.LastOccurredAt.Value;
+                    var cursorId = filter.LastLogId.Value;
+
+                    query = filter.DateOrder switch
+                    {
+                        DateOrder.Ascending => query.Where(log =>
+                            log.OccurredAt > cursorTime ||
+                            (log.OccurredAt == cursorTime && log.Id > cursorId)),
+                        DateOrder.Descending => query.Where(log =>
+                            log.OccurredAt < cursorTime ||
+                            (log.OccurredAt == cursorTime && log.Id < cursorId)),
+                        _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                            $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                    };
+                }
+                else
+                {
+                    query = filter.DateOrder switch
+                    {
+                        DateOrder.Ascending => query.Where(log => log.Id > filter.LastLogId),
+                        DateOrder.Descending => query.Where(log => log.Id < filter.LastLogId),
+                        _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                            $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                    };
+                }
+            }
+
+            query = filter.DateOrder switch
+            {
+                DateOrder.Ascending => query.OrderBy(log => log.OccurredAt).ThenBy(log => log.Id),
+                DateOrder.Descending => query.OrderByDescending(log => log.OccurredAt).ThenByDescending(log => log.Id),
+                _ => throw new ArgumentOutOfRangeException(nameof(filter), $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+            };
+
+            const int hardLogLimit = 500_000;
+            query = query.Take(Math.Min(filter.Limit ?? hardLogLimit, hardLogLimit));
+
+            return query;
+        }
+
+        public async Task<List<SharedAdminAuditLog>> GetAuditLogs(AuditLogFilter filter)
+        {
+            var ct = filter.CancellationToken;
+            await using var db = await GetDb(ct);
+
+            return await GetAuditLogsQuery(db.DbContext, filter)
+                .AsNoTracking()
+                .Select(log => new SharedAdminAuditLog(
+                    log.Id,
+                    log.Action,
+                    log.Severity,
+                    log.OccurredAt,
+                    log.AdminUserId,
+                    log.Message,
+                    log.TargetPlayerUserId,
+                    log.TargetEntityUid,
+                    log.TargetEntityName,
+                    log.TargetEntityPrototype))
+                .ToListAsync(ct);
+        }
+
+        public async Task<int> CountAuditLogs(AuditLogFilter filter)
+        {
+            await using var db = await GetDb(filter.CancellationToken);
+            return await GetAuditLogsQuery(db.DbContext, filter, includePagination: false)
+                .CountAsync(filter.CancellationToken);
         }
 
         #endregion

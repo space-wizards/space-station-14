@@ -80,6 +80,13 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLogEventPayload>()
                 .Ignore(p => p.SearchVector);
 
+            modelBuilder.Entity<AdminAuditEvent>()
+                .Ignore(e => e.SearchVector);
+
+            modelBuilder.Entity<AdminAuditEventPayload>()
+                .Property(p => p.Json)
+                .HasConversion(jsonStringConverter);
+
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
