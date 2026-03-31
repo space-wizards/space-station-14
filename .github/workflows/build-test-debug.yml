@@ -2,7 +2,7 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master, staging, stable, april-fools-2026]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
