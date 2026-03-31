@@ -16,7 +16,7 @@
       shuttleTime: 600
     violet:
       announcement: alert-level-violet-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Announcements/Intern/outbreak7.ogg
       color: Violet
       emergencyLightColor: Violet
       forceEnableEmergencyLights: true

@@ -103,7 +103,7 @@
   - type: StationEvent
     startAnnouncementColor: "#18abf5"
     startAudio:
-      path: /Audio/Announcements/announce.ogg
+      collection: InternAnomaly
     weight: 8
     duration: 35
   - type: AnomalySpawnRule
@@ -119,7 +119,7 @@
   - type: StationEvent
     startAnnouncementColor: "#18abf5"
     startAudio:
-      path: /Audio/Announcements/announce.ogg
+      collection: InternAlert
     weight: 8
     duration: 35
   - type: BluespaceArtifactRule
@@ -373,7 +373,7 @@
   - type: StationEvent
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      collection: InternAnomaly
     endAnnouncement: station-event-gas-leak-end-announcement
     weight: 8
   - type: GasLeakRule
@@ -398,7 +398,7 @@
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
-      path: /Audio/Announcements/power_off.ogg
+      path: /Audio/Announcements/Intern/power_off.ogg
       params:
         volume: -4
     duration: 60
@@ -414,7 +414,7 @@
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/radiation.ogg # not exactly the same event, but close
     duration: 120
     maxDuration: 240
   - type: SolarFlareRule
@@ -440,7 +440,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-clog-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      collection: InternAlert
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
@@ -456,7 +456,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-horde-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -477,7 +477,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-horde-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -498,7 +498,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-horde-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -517,7 +517,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-horde-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
@@ -614,7 +614,7 @@
     maxOccurrences: 1 # can only happen once per round
     startAnnouncement: station-event-communication-interception
     startAudio:
-      path: /Audio/Announcements/intercept.ogg
+      path: /Audio/Announcements/Intern/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
@@ -674,7 +674,7 @@
   components:
   - type: StationEvent
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      collection: InternAlert
     weight: 5
     minimumPlayers: 25
     reoccurrenceDelay: 20
