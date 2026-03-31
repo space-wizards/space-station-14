@@ -11,10 +11,9 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 public sealed class ReagentDataTest
 {
     [Test]
-    public async Task ReagentDataIsSerializable()
+    public void ReagentDataIsSerializable()
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var reflection = pair.Server.ResolveDependency<IReflectionManager>();
+        var reflection = Pair.Server.ResolveDependency<IReflectionManager>();
 
         Assert.Multiple(() =>
         {
@@ -24,7 +23,5 @@ public sealed class ReagentDataTest
                 Assert.That(instance.HasCustomAttribute<SerializableAttribute>(), $"{instance} must have the serializable attribute.");
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }
