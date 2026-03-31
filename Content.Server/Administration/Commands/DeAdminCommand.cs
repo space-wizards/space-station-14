@@ -1,4 +1,5 @@
 using Content.Server.Administration.Managers;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -15,14 +16,8 @@ namespace Content.Server.Administration.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
-            if (player == null)
-            {
-                shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
-                return;
-            }
-
-            _admin.DeAdmin(player);
+            if (CommandChecks.MustNotBeServer(shell, out var player))
+                _admin.DeAdmin(player);
         }
     }
 }
