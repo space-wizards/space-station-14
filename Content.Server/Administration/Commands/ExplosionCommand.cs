@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Commands;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Administration.Commands;
@@ -21,15 +22,8 @@ public sealed class OpenExplosionEui : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player == null)
-        {
-            shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
-            return;
-        }
-
-        var ui = new SpawnExplosionEui();
-        _euiManager.OpenEui(ui, player);
+        if (CommandChecks.MustNotBeServer(shell, out var player))
+            _euiManager.OpenEui(new SpawnExplosionEui(), player);
     }
 }
 

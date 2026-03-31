@@ -28,6 +28,7 @@ shell-argument-uid = EntityUid
 
 ## Guards
 
+shell-invalid-string = The argument you passed could not be parsed as a string!
 shell-missing-required-permission = You need {$perm} for this command!
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.

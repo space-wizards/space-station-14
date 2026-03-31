@@ -1,8 +1,8 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Shared.Console;
-using Robust.Shared.Enums;
 
 namespace Content.Server.Chat.Commands
 {
@@ -15,29 +15,15 @@ namespace Content.Server.Chat.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not { } player)
-            {
-                shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
-                return;
-            }
-
-            if (player.Status != SessionStatus.InGame)
-                return;
-
-            if (player.AttachedEntity is not {} playerEntity)
-            {
-                shell.WriteError(Loc.GetString($"shell-must-be-attached-to-entity"));
-                return;
-            }
-
-            if (args.Length < 1)
+            if (!CommandChecks.MustBeAttachedToEntity(shell, out var player, out var entity) ||
+                !CommandChecks.NeedExactlyOneArgument(shell, args))
                 return;
 
             var message = string.Join(" ", args).Trim();
             if (string.IsNullOrEmpty(message))
                 return;
 
-            _chatSystem.TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
+            _chatSystem.TrySendInGameICMessage(entity.Value, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
         }
     }
 }

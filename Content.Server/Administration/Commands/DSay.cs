@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Shared.Console;
@@ -14,25 +15,14 @@ public sealed class DsayCommand : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not { } player)
-        {
-            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
-            return;
-        }
-
-        if (player.AttachedEntity is not { Valid: true } entity)
-        {
-            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
-            return;
-        }
-
-        if (args.Length < 1)
+        if (!CommandChecks.MustBeAttachedToEntity(shell, out var player, out var entity) ||
+            !CommandChecks.NeedExactlyOneArgument(shell, args))
             return;
 
         var message = string.Join(" ", args).Trim();
         if (string.IsNullOrEmpty(message))
             return;
 
-        _chatSystem.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+        _chatSystem.TrySendInGameOOCMessage(entity.Value, message, InGameOOCChatType.Dead, false, shell, player);
     }
 }
