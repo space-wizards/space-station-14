@@ -6,3 +6,4 @@ add-uplink-command-completion-2 = Uplink uid (default to PDA)
 add-uplink-command-completion-3 = Is uplink discount enabled
 add-uplink-command-error-1 = Selected player doesn't control any entity
 add-uplink-command-error-2 = Failed to add uplink to the player
+add-uplink-command-uplink-code = Your uplink code is {$code}. Set it as your PDA ringtone to access your store.
