@@ -92512,7 +92512,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 21.5,-70.5
       parent: 2
-    - type: Timer
   - uid: 9798
     components:
     - type: Transform
