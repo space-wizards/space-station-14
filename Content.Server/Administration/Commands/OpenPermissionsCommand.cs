@@ -11,7 +11,8 @@ public sealed class OpenPermissionsCommand : ToolshedCommand
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public void Permissions(IInvocationContext ctx)
+    [CommandImplementation]
+    public void OpenPermissions(IInvocationContext ctx)
     {
         if (ctx.Session is null)
         {
