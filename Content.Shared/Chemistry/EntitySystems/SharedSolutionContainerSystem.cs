@@ -76,9 +76,10 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
-    private EntityQuery<SolutionComponent> _solutionQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
+    [Dependency] private readonly EntityQuery<SolutionComponent> _solutionQuery = default!;
+    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionManagerQuery = default!;
 
     public override void Initialize()
     {
@@ -86,7 +87,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         InitializeRelays();
 
-        SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(OnSolutionHandleState);
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
@@ -100,13 +102,20 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnContainerManagerShutdown);
             SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnContainedSolutionShutdown);
         }
-
-        _solutionQuery = GetEntityQuery<SolutionComponent>();
-        _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
     }
 
-    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
     {
+        args.State = new SolutionComponentState(ent.Comp.Solution);
+    }
+
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState cast)
+            return;
+
+        ent.Comp.Solution = cast.Solution.Clone();
+
         // Always raise the event on the client so that we can update UIs accordingly.
         var changedEv = new SolutionChangedEvent(ent);
         RaiseLocalEvent(ent, ref changedEv);
@@ -253,7 +262,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (includeSelf && _solutionQuery.TryComp(container, out var solutionComp))
             yield return (null, (container.Owner, solutionComp));
 
-        if (!_solutionContainerQuery.Resolve(container, ref container.Comp, logMissing: false))
+        if (!_solutionManagerQuery.Resolve(container, ref container.Comp, logMissing: false))
             yield break;
 
         foreach (var name in container.Comp.Containers)
