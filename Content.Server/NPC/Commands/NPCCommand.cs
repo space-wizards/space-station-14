@@ -2,25 +2,25 @@ using Content.Server.Administration;
 using Content.Server.EUI;
 using Content.Server.NPC.UI;
 using Content.Shared.Administration;
-using Robust.Shared.Console;
+using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 
 namespace Content.Server.NPC.Commands;
 
-[AdminCommand(AdminFlags.Debug)]
-public sealed class NpcCommand : LocalizedEntityCommands
+[ToolshedCommand, AdminCommand(AdminFlags.Debug)]
+public sealed class NpcCommand : ToolshedCommand
 {
     [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public override string Command => "npc";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    [CommandImplementation]
+    public void Npc(IInvocationContext ctx)
     {
-        if (shell.Player is not { } playerSession)
+        if (ctx.Session is null)
         {
-            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
+            ctx.ReportError(new NotForServerConsoleError());
             return;
         }
 
-        _euiManager.OpenEui(new NPCEui(), playerSession);
+        _euiManager.OpenEui(new NPCEui(), ctx.Session);
     }
 }

@@ -1,28 +1,24 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
 using Content.Shared.Administration;
-using Robust.Shared.Console;
+using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands;
+
+[ToolshedCommand, AdminCommand(AdminFlags.Permissions)]
+public sealed class OpenPermissionsCommand : ToolshedCommand
 {
-    [AdminCommand(AdminFlags.Permissions)]
-    public sealed class OpenPermissionsCommand : LocalizedEntityCommands
+    [Dependency] private readonly EuiManager _euiManager = default!;
+
+    public void Permissions(IInvocationContext ctx)
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
-
-        public override string Command => "permissions";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (ctx.Session is null)
         {
-            var player = shell.Player;
-            if (player == null)
-            {
-                shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
-                return;
-            }
-
-            var ui = new PermissionsEui();
-            _euiManager.OpenEui(ui, player);
+            ctx.ReportError(new NotForServerConsoleError());
+            return;
         }
+
+        _euiManager.OpenEui(new PermissionsEui(), ctx.Session);
     }
 }
