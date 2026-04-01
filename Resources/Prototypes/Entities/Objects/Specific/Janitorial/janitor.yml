@@ -373,10 +373,70 @@
       path: "/Audio/Weapons/bladeslice.ogg"
 
 - type: entity
-  parent: WireBrush
+  parent: [BaseItem, PowerCellSlotSmallItem]
   id: WireBrushElectrical
   name: electrical wire brush
   description: A bristly steel wire brush with a moving head, allowing for a way easier time cleaning.
   components:
-  - type: Tool
-    speedModifier: 1.5
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wirebrush_electrical.rsi
+    layers:
+    - state: icon
+    - state: active
+      visible: false
+      map: [ "active" ]
+  - type: Item
+    storedSprite:
+      sprite: Objects/Specific/Janitorial/wirebrush_electrical.rsi
+      state: storage
+    size: Small
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        active:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/Items/change_drill.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/telescopicoff.ogg
+      params:
+        volume: -5
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Ambience/Objects/circular_saw.ogg
+      params:
+        volume: -6
+        maxDistance: 2
+  - type: ToggleableVisuals
+    spriteLayer: active
+  - type: ComponentToggler
+    components:
+    - type: Tool
+      qualities:
+      - Brushing
+      speedModifier: 4
+      useSound: /Audio/Items/drill_use.ogg
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    drawRate: 1
+    useCharge: 0
+  - type: Tag
+    tags:
+    - WireBrush
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
+  - type: StaticPrice
+    price: 22
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Piercing: 3
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"

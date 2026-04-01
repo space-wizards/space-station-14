@@ -24,6 +24,10 @@
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       types:
         Heat: 10
+    reviveDeadChance: 0.05
+    reviveDeadDamageFraction: 0.1
+    restoreBloodOnRevive: true
+    reviveDeadOncePerBody: true
   - type: MeleeWeapon
     soundHit:
       collection: Punch

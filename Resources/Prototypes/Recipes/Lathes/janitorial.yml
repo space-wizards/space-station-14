@@ -112,3 +112,12 @@
   materials:
     Steel: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: WireBrushElectrical
+  result: WireBrushElectrical
+  completetime: 3
+  materials:
+    Steel: 150
+    Plastic: 150
+    Glass: 50

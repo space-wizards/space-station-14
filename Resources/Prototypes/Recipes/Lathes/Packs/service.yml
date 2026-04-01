@@ -48,6 +48,7 @@
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
   - MegaSprayBottle
+  - WireBrushElectrical
 
 - type: latheRecipePack
   id: Instruments
