@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: CoconutThunder
-  changes:
-  - message: Fixed lubed items being thrown when looking at the pickup verb.
-    type: Fix
-  - message: Fixed multihanded items showing a popup when looking at the pickup verb.
-    type: Fix
-  - message: Fixed a bug with lubed handcuffs.
-    type: Fix
-  id: 9086
-  time: '2025-05-25T05:10:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38705
-- author: GitHubUser53123
-  changes:
-  - message: Zombies that aren't supposed to spread the zombie virus now don't do
-      so on mobs in critical state.
-    type: Fix
-  id: 9087
-  time: '2025-10-13T01:24:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40857
 - author: PotentiallyTom
   changes:
   - message: Added a page in the guidebook listing common AI and silicon lawsets.
@@ -4034,3 +4015,17 @@
   id: 9597
   time: '2026-03-29T23:41:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43395
+- author: MissKay1994
+  changes:
+  - message: Salt is now significantly less common in ore generation
+    type: Tweak
+  id: 9598
+  time: '2026-03-31T00:31:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43012
+- author: Tayrtahn
+  changes:
+  - message: Ghost time of death display is now accurate.
+    type: Fix
+  id: 9599
+  time: '2026-03-31T03:41:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43411
