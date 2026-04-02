@@ -744,6 +744,7 @@
         whitelist:
           tags:
           - ConstructionMaterial
+          - PowerCell
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
