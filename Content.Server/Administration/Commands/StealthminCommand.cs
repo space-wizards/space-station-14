@@ -24,7 +24,7 @@ public sealed class StealthminCommand : ToolshedCommand
 
         DebugTools.AssertNotNull(adminData);
 
-        if (!adminData!.Stealth)
+        if (!adminData.Stealth)
             _adminManager.Stealth(admin);
         else
             _adminManager.UnStealth(admin);
