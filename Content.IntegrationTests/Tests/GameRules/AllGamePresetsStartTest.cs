@@ -14,7 +14,6 @@ using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
