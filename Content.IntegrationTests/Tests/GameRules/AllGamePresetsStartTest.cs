@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
@@ -17,7 +18,7 @@ using Robust.Shared.Player;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class AllGamePresetsStartTest
+public sealed class AllGamePresetsStartTest : GameTest
 {
     /// <summary>
     /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
@@ -27,6 +28,13 @@ public sealed class AllGamePresetsStartTest
 
     private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
+    public override PoolSettings PoolSettings => new PoolSettings
+    {
+        DummyTicker = false,
+        Connected = true,
+        InLobby = true
+    };
+
     // Tests that all game modes can start given ideal circumstances.
     [Test]
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent))]
@@ -34,13 +42,7 @@ public sealed class AllGamePresetsStartTest
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            DummyTicker = false,
-            Connected = true,
-            InLobby = true
-        });
-
+        var pair = Pair;
         var server = pair.Server;
         var client = pair.Client;
         var protoMan = server.ProtoMan;
