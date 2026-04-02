@@ -14,6 +14,7 @@ using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
@@ -28,8 +29,9 @@ public sealed class AllGamePresetsStartTest : GameTest
 
     private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
-    public override PoolSettings PoolSettings => new PoolSettings
+    public override PoolSettings PoolSettings => new()
     {
+        Dirty = true,
         DummyTicker = false,
         Connected = true,
         InLobby = true
@@ -92,6 +94,9 @@ public sealed class AllGamePresetsStartTest : GameTest
         {
             foreach (var ruleId in preset.Rules)
             {
+                if (ruleId == GameTicker.DummyGameRule)
+                    continue;
+
                 if (!protoMan.Resolve(ruleId, out var rule ))
                     continue; // Bruh moment
 
