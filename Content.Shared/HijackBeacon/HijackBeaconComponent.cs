@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
@@ -18,7 +19,7 @@ public sealed partial class HijackBeaconComponent : Component
     ///     Current state of the beacon.
     /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
-    public HijackBeaconStatus Status = HijackBeaconStatus.AWAIT_ACTIVATE;
+    public HijackBeaconStatus Status = HijackBeaconStatus.AwaitActivate;
 
     /// <summary>
     ///     How long it takes to deactivate the beacon.
@@ -29,19 +30,13 @@ public sealed partial class HijackBeaconComponent : Component
     /// <summary>
     ///     Remaining time until the hijack is completed.
     /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
+    [DataField, Access(typeof(HijackBeaconSystem))]
     public TimeSpan RemainingTime = TimeSpan.FromSeconds(200);
-
-    /// <summary>
-    ///     The minimum amount of time on the timer if the beacon is reactivated.
-    /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
-    public TimeSpan MinimumTime = TimeSpan.FromSeconds(100);
 
     /// <summary>
     ///     Default amount of time before the beacon can be re-activated, if it is disarmed.
     /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
+    [DataField, Access(typeof(HijackBeaconSystem))]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(20);
 
     /// <summary>
@@ -51,8 +46,8 @@ public sealed partial class HijackBeaconComponent : Component
     public TimeSpan CooldownTime = TimeSpan.Zero;
 
     /// <summary>
-    ///     The entity prototype id that should be given upon objective completion, if any.
+    /// How much cash should be withdrawn from each department account?
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId? Reward = null;
+    [DataField]
+    public int Fine = 5000;
 }

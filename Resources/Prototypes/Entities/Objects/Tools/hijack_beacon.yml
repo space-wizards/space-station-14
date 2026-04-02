@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStructure, BaseSyndicateContraband ]
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HijackBeacon
   name: hijack beacon
   description: A device that bypasses the firewall on Nanotrasen-brand Automated Trade Stations.
@@ -8,8 +8,10 @@
     anchored: false
   - type: Physics
     bodyType: Dynamic
+  - type: Anchorable
+  - type: Item
+    size: Normal
   - type: HijackBeacon
-    reward: Telecrystal10
   - type: Fixtures
     fixtures:
       fix1:

@@ -24,7 +24,6 @@ public sealed partial class CargoSystem
     private void InitializeShuttle()
     {
         SubscribeLocalEvent<TradeStationComponent, GridSplitEvent>(OnTradeSplit);
-        SubscribeLocalEvent<TradeStationComponent, HijackBeaconSuccessEvent>(OnTradeHijack);
 
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
@@ -77,19 +76,6 @@ public sealed partial class CargoSystem
         {
             EnsureComp<TradeStationComponent>(gridUid);
         }
-    }
-
-    /// <summary>
-    ///     Updates the hacked status of the trade station.
-    /// </summary>
-    private void OnTradeHijack(Entity<TradeStationComponent> ent, ref HijackBeaconSuccessEvent args)
-    {
-        if(ent.Comp.Hacked)
-            Log.Warning("Hack succeeded on an already hacked trade station!");
-
-        ent.Comp.Hacked = true;
-
-        Dirty(ent);
     }
 
     #region Shuttle
