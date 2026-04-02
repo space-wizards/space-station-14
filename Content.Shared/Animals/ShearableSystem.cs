@@ -50,10 +50,11 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="shearingSolutionState">An out variable of the resolved sheared product solution.</param>
     /// <param name="shearingSolutionEnt">An out variable of the resolved sheared product solution entity.</param>
     /// <param name="shearingSolutionToRemove">An out variable of the reagent that will be removed from the target entity if it is sheared.</param>
+    /// <param name="feedbackPopupString">If populated, this string can be used in a client popup to describe why the creature isn't shearable. It makes use of the shearable-system-no-product loc string.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
-    ///     True of shearable, false if not.
+    ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
     public bool CheckShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
@@ -135,11 +136,11 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     Checks if the target entity can currently be sheared. Overload function that requires only the shearedProduct out variable.
     /// </summary>
     /// <param name="ent">The shearable entity that will be checked, and the ShearableComponent combined with it.</param>
-    /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
+    /// <param name="feedbackPopupString">If populated, this string can be used in a client popup to describe why the creature isn't shearable. It makes use of the shearable-system-no-product loc string.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
-    ///     True of shearable, false if not.
+    ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
     public bool CheckShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
@@ -156,7 +157,6 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     True of shearable, false if not.
     /// </returns>
-    /// <seealso cref="CheckShearReturns"/>
     public bool CheckShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
         return CheckShear(ent, out _, out _, out _, out _, out _, usedItem, checkItem);
@@ -171,7 +171,6 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    /// <seealso cref="CheckShearReturns"/>
     public bool CheckShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
     {
         return CheckShear(ent, out _, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
