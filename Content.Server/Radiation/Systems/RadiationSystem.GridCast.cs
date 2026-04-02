@@ -1,4 +1,7 @@
+using System;
+using System.Buffers;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Radiation.Components;
@@ -208,52 +211,66 @@ public partial class RadiationSystem
                 return;
             }
 
-            var gridList = RadiationSystem._gridListCache.Value!;
-            var nearbySources = RadiationSystem._nearbySourcesCache.Value!;
-            nearbySources.Clear();
-            var destWorld = System._transform.GetWorldPosition(destTrs);
-            var rads = 0f;
-            var destMapId = destTrs.MapID;
-            var queryAabb = new Box2(destWorld, destWorld);
+            var nearbySourcesArray = ArrayPool<EntityUid>.Shared.Rent(256);
 
-            var state = (nearbySources, SourceTree);
-            SourceTree.Query(ref state, static (ref (List<EntityUid> nearby, B2DynamicTree<EntityUid> tree) tuple, DynamicTree.Proxy proxy) =>
+            var gridList = new List<Entity<MapGridComponent>>(8);
+
+            try
             {
-                var uid = tuple.tree.GetUserData(proxy);
-                tuple.nearby.Add(uid);
-                return true;
-            }, in queryAabb);
+                var destWorld = System._transform.GetWorldPosition(destTrs);
+                var rads = 0f;
+                var destMapId = destTrs.MapID;
 
-            foreach (var sourceUid in nearbySources)
-            {
-                if (!SourceDataMap.TryGetValue(sourceUid, out var source)
-                    || source.Transform.MapID != destMapId) continue;
-                var delta = source.WorldPosition - destWorld;
-                if (delta.LengthSquared() > source.MaxRange * source.MaxRange) continue;
-                var dist = delta.Length();
-                var radsAfterDist = source.Intensity - source.Slope * dist;
-                if (radsAfterDist < System.MinIntensity) continue;
-                if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray) continue;
+                var queryAabb = new Box2(destWorld, destWorld);
 
-                if (ray.ReachedDestination)
-                    rads += ray.Rads;
-
-                if (DebugRays is not null)
+                var state = (nearbySourcesArray, 0, SourceTree);
+                SourceTree.Query(ref state, static (ref (EntityUid[] arr, int count, B2DynamicTree<EntityUid> tree) tuple, DynamicTree.Proxy proxy) =>
                 {
-                    DebugRays.Add(new DebugRadiationRay(
-                        ray.MapId,
-                        System.GetNetEntity(ray.SourceUid),
-                        ray.Source,
-                        System.GetNetEntity(ray.DestinationUid),
-                        ray.Destination,
-                        ray.Rads,
-                        ray.Blockers ?? new())
-                    );
-                }
-            }
+                    if (tuple.count >= tuple.arr.Length)
+                        return true;
 
-            rads = System.GetAdjustedRadiationIntensity(destUid, rads);
-            Results[index] = rads;
+                    var uid = tuple.tree.GetUserData(proxy);
+                    tuple.arr[tuple.count++] = uid;
+                    return true;
+                }, in queryAabb);
+
+                var nearbySourcesSpan = nearbySourcesArray.AsSpan(0, state.Item2);
+
+                foreach (var sourceUid in nearbySourcesSpan)
+                {
+                    if (!SourceDataMap.TryGetValue(sourceUid, out var source)
+                        || source.Transform.MapID != destMapId) continue;
+                    var delta = source.WorldPosition - destWorld;
+                    if (delta.LengthSquared() > source.MaxRange * source.MaxRange) continue;
+                    var dist = delta.Length();
+                    var radsAfterDist = source.Intensity - source.Slope * dist;
+                    if (radsAfterDist < System.MinIntensity) continue;
+                    if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray) continue;
+
+                    if (ray.ReachedDestination)
+                        rads += ray.Rads;
+
+                    if (DebugRays is not null)
+                    {
+                        DebugRays.Add(new DebugRadiationRay(
+                            ray.MapId,
+                            System.GetNetEntity(ray.SourceUid),
+                            ray.Source,
+                            System.GetNetEntity(ray.DestinationUid),
+                            ray.Destination,
+                            ray.Rads,
+                            ray.Blockers ?? new())
+                        );
+                    }
+                }
+
+                rads = System.GetAdjustedRadiationIntensity(destUid, rads);
+                Results[index] = rads;
+            }
+            finally
+            {
+                ArrayPool<EntityUid>.Shared.Return(nearbySourcesArray);
+            }
         }
     }
 }

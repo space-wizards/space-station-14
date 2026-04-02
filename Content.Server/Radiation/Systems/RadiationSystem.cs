@@ -29,11 +29,6 @@ public sealed partial class RadiationSystem : EntitySystem
     private readonly Dictionary<EntityUid, SourceData> _sourceDataMap = new();
     private readonly List<EntityUid> _activeReceivers = new();
 
-    private static readonly ThreadLocal<List<Entity<MapGridComponent>>> _gridListCache
-        = new(() => new List<Entity<MapGridComponent>>(8));
-    private static readonly ThreadLocal<List<EntityUid>> _nearbySourcesCache
-        = new(() => new List<EntityUid>(64));
-
     private float _accumulator;
 
     public override void Initialize()
