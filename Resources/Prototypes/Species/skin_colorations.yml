@@ -28,7 +28,7 @@
     - hue: 0.55
       saturation: [ 0.2, 0.5 ]
       value: [ 0.36, 0.55 ]
-    - hue: 1 # Red
+    - hue: 1
       saturation: [ 0.2, 0.5 ]
       value: [ 0.36, 0.5 ]
 
