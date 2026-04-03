@@ -1,77 +1,63 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
-using Robust.Client.GameObjects;
+using Content.Shared.Kitchen.Components;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Prototypes;
 
-namespace Content.Client.Kitchen.UI
+namespace Content.Client.Kitchen.UI;
+
+public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private GrinderMenu? _menu;
+
+    protected override void Open()
     {
-        [ViewVariables]
-        private GrinderMenu? _menu;
+        base.Open();
 
-        public ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        _menu = this.CreateWindow<GrinderMenu>();
+        _menu.SetEntity(Owner);
+        _menu.OnToggleAuto += ToggleAutoMode;
+        _menu.OnGrind += StartGrinding;
+        _menu.OnJuice += StartJuicing;
+        _menu.OnEjectAll += EjectAll;
+        _menu.OnEjectBeaker += EjectBeaker;
+        _menu.OnEjectChamber += EjectChamberContent;
+    }
 
-        protected override void Open()
-        {
-            base.Open();
+    public override void Update()
+    {
+        base.Update();
 
-            _menu = this.CreateWindow<GrinderMenu>();
-            _menu.OnToggleAuto += ToggleAutoMode;
-            _menu.OnGrind += StartGrinding;
-            _menu.OnJuice += StartJuicing;
-            _menu.OnEjectAll += EjectAll;
-            _menu.OnEjectBeaker += EjectBeaker;
-            _menu.OnEjectChamber += EjectChamberContent;
-        }
+        _menu?.UpdateUi();
+    }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (state is not ReagentGrinderInterfaceState cState)
-                return;
+    public void ToggleAutoMode()
+    {
+        SendPredictedMessage(new ReagentGrinderToggleAutoModeMessage());
+    }
 
-            _menu?.UpdateState(cState);
-        }
+    public void StartGrinding()
+    {
+        SendPredictedMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
+    }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            base.ReceiveMessage(message);
-            _menu?.HandleMessage(message);
-        }
+    public void StartJuicing()
+    {
+        SendPredictedMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
+    }
 
-        public void ToggleAutoMode()
-        {
-            SendMessage(new ReagentGrinderToggleAutoModeMessage());
-        }
+    public void EjectAll()
+    {
+        SendPredictedMessage(new ReagentGrinderEjectChamberAllMessage());
+    }
 
-        public void StartGrinding()
-        {
-            SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
-        }
+    public void EjectBeaker()
+    {
+        SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentGrinderComponent.BeakerSlotId));
+    }
 
-        public void StartJuicing()
-        {
-            SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
-        }
-
-        public void EjectAll()
-        {
-            SendMessage(new ReagentGrinderEjectChamberAllMessage());
-        }
-
-        public void EjectBeaker()
-        {
-            SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
-        }
-
-        public void EjectChamberContent(EntityUid uid)
-        {
-            SendMessage(new ReagentGrinderEjectChamberContentMessage(EntMan.GetNetEntity(uid)));
-        }
+    public void EjectChamberContent(EntityUid uid)
+    {
+        SendPredictedMessage(new ReagentGrinderEjectChamberContentMessage(EntMan.GetNetEntity(uid)));
     }
 }
