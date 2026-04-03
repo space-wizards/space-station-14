@@ -86,13 +86,13 @@
   - type: VoltageToggler
     settings:
     - voltage: Apc
-      wattage: 16000 # 16kW - 125 seconds to spawn one
+      wattage: 32000 # 32kW - 125 seconds to spawn one
       name: power-voltage-low
     - voltage: Medium
-      wattage: 50000 # 50kW - 40 seconds to spawn one
+      wattage: 80000 # 80kW - 50 seconds to spawn one
       name: power-voltage-medium
     - voltage: High
-      wattage: 200000 # 200kW - 10 seconds to spawn one # sets off the rogue power consuming device alert!
+      wattage: 200000 # 400kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCrystal1
