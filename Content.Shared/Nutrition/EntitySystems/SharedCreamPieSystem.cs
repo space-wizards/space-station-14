@@ -53,7 +53,7 @@ public abstract class SharedCreamPieSystem : EntitySystem
         Dirty(creamPie);
 
         // The entity is being deleted, so play the sound at its position rather than parenting.
-        if (_net.IsServer) // we don't have a user to pass in
+        if (_net.IsServer) // we don't have a user to pass in TODO: make the popup API sane and remove this guard
         {
             var coordinates = Transform(creamPie).Coordinates;
             _audio.PlayPvs(creamPie.Comp.Sound, coordinates);
