@@ -44,6 +44,7 @@
     components:
     - XenoborgsRule
 
+- type: feedbackPopup
   id: ForceVentCrittersToAttackFeedback
   popupOrigin: wizden_master
   title: "[bold]Played an antagonist vent critter role?[/bold]"
