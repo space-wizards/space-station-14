@@ -39,7 +39,7 @@ public sealed class PhotographySystem : EntitySystem
         using (args.PushGroup(nameof(PhotographComponent)))
         {
             if (string.IsNullOrEmpty(ent.Comp.NameText))
-                args.PushText(Loc.GetString("photograph-description-empty"));
+                args.PushText(Loc.GetString("photograph-name-text-empty"));
             else
                 args.PushText(ent.Comp.NameText);
             if (ent.Comp.Description != null)
@@ -95,14 +95,12 @@ public sealed class PhotographySystem : EntitySystem
         {
             description = _examine.GetExamineText(target.Value, user);
             // Get the full string now instead of indexing it later because we need the entity to know if it uses a proper noun or not.
-            nameText = Loc.GetString("photograph-description", ("entity", Identity.Entity(target.Value, EntityManager)));
+            nameText = Loc.GetString("photograph-name-text", ("entity", Identity.Entity(target.Value, EntityManager)));
             // We don't want photographs to contain the descriptions of other photographs, because that makes entities with, in theory, infinite descriptions.
-            var recursive = HasComp<PhotographComponent>(target.Value);
-            if (recursive)
+            if (HasComp<PhotographComponent>(target.Value))
             {
-                // handles recursion
-                description = FormattedMessage.Empty;
-                nameText = Loc.GetString("photograph-description-recursive");
+                description = null;
+                nameText = Loc.GetString("photograph-name-text-photograph");
             }
         }
 
