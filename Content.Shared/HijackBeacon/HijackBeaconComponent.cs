@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.HijackBeacon;
 
 /// <summary>
-///     Component for hijack beacons.
+///     Component for hijack beacons, meant to be planted on the ATS to drain station funds.
 /// </summary>
 /// <remarks>
 ///     Status and timer fields are private so the state machine is preserved.
@@ -46,7 +46,7 @@ public sealed partial class HijackBeaconComponent : Component
     public TimeSpan CooldownTime = TimeSpan.Zero;
 
     /// <summary>
-    /// How much cash should be withdrawn from each department account?
+    ///     How much cash should be withdrawn from each department account?
     /// </summary>
     [DataField]
     public int Fine = 5000;
