@@ -331,7 +331,7 @@ public abstract partial class SharedGunSystem
         inserted = _stack.GetOne(inserted);
         var ammoEv = new BeforeAmmoLoadedEvent();
         RaiseLocalEvent(inserted, ref ammoEv);
-                                                                    // in that case, only insert one
+
         if (!ammoEv.CanLoad)
             return false;
 
