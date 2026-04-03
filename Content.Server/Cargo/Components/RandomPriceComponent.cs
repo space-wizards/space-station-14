@@ -1,9 +1,11 @@
-﻿namespace Content.Server.Cargo.Components;
+﻿using Content.Server.Cargo.Systems;
+
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// Adds a random value between 0 and X to an entity's sell value.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(PricingSystem))]
 public sealed partial class RandomPriceComponent : Component
 {
     /// <summary>
@@ -21,10 +23,13 @@ public sealed partial class RandomPriceComponent : Component
     /// <summary>
     /// The generated price for the specific entity.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public double RandomPrice = 0.00;
+    [DataField]
+    public double? RandomPrice = null;
 }
 
+/// <summary>
+/// The random distribution used when generating a random price.
+/// </summary>
 public enum RandomPricingCurve
 {
     Linear,

@@ -8,14 +8,14 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Content.Shared.Research.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -34,7 +34,7 @@ public sealed class PricingSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
-        SubscribeLocalEvent<RandomPriceComponent, ComponentInit>(SetRandomPrice);
+        SubscribeLocalEvent<RandomPriceComponent, MapInitEvent>(SetRandomPrice);
         SubscribeLocalEvent<RandomPriceComponent, PriceCalculationEvent>(CalculateRandomPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
@@ -99,23 +99,26 @@ public sealed class PricingSystem : EntitySystem
         args.Price += component.Price * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
-    private void SetRandomPrice(Entity<RandomPriceComponent> entity, ref ComponentInit args)
+    private void SetRandomPrice(Entity<RandomPriceComponent> entity, ref MapInitEvent args)
     {
-        var modifier = _random.NextDouble();
-        switch (entity.Comp.PricingCurve)
+        if (entity.Comp.RandomPrice == null)
         {
-            default:
-            case RandomPricingCurve.Linear:
-                break;
-            case RandomPricingCurve.Squared:
-                modifier = modifier * modifier;
-                break;
-            case RandomPricingCurve.Cubed:
-                modifier = modifier * modifier * modifier;
-                break;
-        }
+            var modifier = _random.NextDouble();
+            switch (entity.Comp.PricingCurve)
+            {
+                default:
+                case RandomPricingCurve.Linear:
+                    break;
+                case RandomPricingCurve.Squared:
+                    modifier = modifier * modifier;
+                    break;
+                case RandomPricingCurve.Cubed:
+                    modifier = modifier * modifier * modifier;
+                    break;
+            }
 
-        entity.Comp.RandomPrice = modifier * entity.Comp.MaxRandomPrice;
+            entity.Comp.RandomPrice = modifier * entity.Comp.MaxRandomPrice;
+        }
     }
 
     private void CalculateRandomPrice(Entity<RandomPriceComponent> entity, ref PriceCalculationEvent args)
@@ -124,7 +127,7 @@ public sealed class PricingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Price += entity.Comp.RandomPrice;
+        args.Price += entity.Comp.RandomPrice ?? 0;
     }
 
     private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)
