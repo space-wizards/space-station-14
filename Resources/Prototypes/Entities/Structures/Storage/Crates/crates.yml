@@ -333,7 +333,7 @@
     access: [["Command"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: CrateCommandSecure
   id: CrateEVASecure # mostly for the EVA kit cargo order, since ideally anyone who can enter EVA Storage unsupervised should also be able to open this unsupervised
   name: EVA storage crate
   components:
