@@ -117,6 +117,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         if (_net.IsServer)
         {
+            ent.Comp.CurrentDevourSound = _audio.Stop(ent.Comp.CurrentDevourSound);
             var pvsSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent);
             if (pvsSound != null)
                 ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
