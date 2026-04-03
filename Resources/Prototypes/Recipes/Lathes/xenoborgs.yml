@@ -69,7 +69,7 @@
   id: XenoborgModuleDoorControlRecipe
   result: XenoborgModuleDoorControl
   materials:
-    XenoborgCrystal: 100
+    XenoborgCrystal: 200
 
 ## heavy xenoborg modules
 
@@ -78,7 +78,7 @@
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:
-    XenoborgCrystal: 100
+    XenoborgCrystal: 200
 
 ## scout xenoborg modules
 
@@ -87,7 +87,7 @@
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
   materials:
-    XenoborgCrystal: 100
+    XenoborgCrystal: 300
 
 ## stealth xenoborg modules
 
@@ -96,4 +96,4 @@
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
   materials:
-    XenoborgCrystal: 100
+    XenoborgCrystal: 300
