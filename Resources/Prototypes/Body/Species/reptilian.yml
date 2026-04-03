@@ -131,6 +131,10 @@
     allowedEmotes: ['Thump']
   - type: TypingIndicator
     proto: lizard
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_lizard
   - type: Vocal
     sounds:
       Male: MaleReptilian
