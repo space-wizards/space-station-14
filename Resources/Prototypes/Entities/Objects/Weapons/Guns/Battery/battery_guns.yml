@@ -1001,3 +1001,34 @@
     fireRate: 2
     minAngle: 1
     maxAngle: 2
+
+- type: entity
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  id: WeaponBurstFireLaserXenoborg
+  name: xenoborg burst fire laser
+  description: An alien weapon, channelling a burst-fire laser through a prism, causing targets to burst into fire.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/xenoborg_burstfire.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
+      shader: unshaded
+  - type: BatterySelfRecharger
+    autoRechargeRate: 60
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/xenofirebeam.ogg
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    minAngle: 2
+    maxAngle: 30
+    angleIncrease: 3
+    angleDecay: 15
+    cameraRecoilScalar: .25
+  - type: BatteryAmmoProvider
+    proto: XenoborgLaser
+    fireCost: 100
