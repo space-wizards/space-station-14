@@ -4,14 +4,24 @@ uniform highp vec4 displacementUV;
 
 varying highp vec2 displacementUVOut;
 
+const highp vec2 DisplacementBias = vec2(128.0 / 255.0);
+const highp float DisplacementScale = 1.0 - 128.0 / 255.0;
+
 void vertex() {
     displacementUVOut = mix(displacementUV.xy, displacementUV.zw, tCoord2);
 }
 
+highp vec2 decodeDisplacement(highp vec2 encodedValue) {
+    return (encodedValue - DisplacementBias) / DisplacementScale;
+}
+
 void fragment() {
     highp vec4 displacementSample = texture2D(displacementMap, displacementUVOut);
-    highp vec2 displacementValue = (displacementSample.xy - vec2(128.0 / 255.0)) / (1.0 - 128.0 / 255.0);
-    COLOR = zTexture(UV + displacementValue * TEXTURE_PIXEL_SIZE * displacementSize * vec2(1.0, -1.0));
+    highp vec2 displacementValue = decodeDisplacement(displacementSample.xy);
+    highp vec2 displacedUv =
+        UV + displacementValue * TEXTURE_PIXEL_SIZE * displacementSize * vec2(1.0, -1.0);
+
+    COLOR = zTexture(displacedUv);
     COLOR.a *= displacementSample.a;
 }
 

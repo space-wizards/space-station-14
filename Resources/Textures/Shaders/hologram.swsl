@@ -7,17 +7,13 @@ uniform highp float intensity;
 uniform highp float texHeight;
 uniform highp float t;
 
-const highp float PI = 3.14159265;
+const highp float Pi = 3.14159265;
 
 void fragment() {
-	highp vec4 base = texture2D(TEXTURE, UV);
-	highp float bw = zGrayscale(base.rgb * intensity);
-	highp vec4 color = vec4(vec3(color1), alpha);
+    highp vec4 baseColor = texture2D(TEXTURE, UV);
+    highp float grayscale = zGrayscale(baseColor.rgb * intensity);
+    highp float scanline = sin(Pi * (UV.y + t) * texHeight);
+    highp vec3 tint = scanline < 0.0 ? color2 : color1;
 
-	if (sin(PI * (UV.y + t) * texHeight) < 0.0)
-	{
-		color = vec4(vec3(color2), alpha);
-	}
-
-	COLOR = vec4(vec3(bw), base.a) * color;
+    COLOR = vec4(vec3(grayscale), baseColor.a) * vec4(tint, alpha);
 }

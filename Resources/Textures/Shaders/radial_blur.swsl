@@ -1,16 +1,19 @@
-﻿uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D SCREEN_TEXTURE;
 uniform highp float Strength;
-const highp int SampleCount = 10; // a higher number makes the shader look better, but has a big performance impact
 
-// a simple radial blur
+const highp int SampleCount = 6; // Higher counts look better, but cost much more.
+
+// A simple radial blur.
 void fragment() {
-    highp vec3 col = texture(SCREEN_TEXTURE, UV).xyz;
-    highp vec4 color = zTexture(UV);
+    highp vec4 sourceColor = zTexture(UV);
+    highp vec3 blurred = texture(SCREEN_TEXTURE, UV).xyz;
     highp vec2 direction = vec2(0.5, 0.5) - UV;
-    for (int i=1; i <= SampleCount; i++)
-    {
-        col += zTextureSpec(SCREEN_TEXTURE, UV + float(i) * Strength / float(SampleCount) * direction).xyz;
+    highp vec2 blurStep = direction * (Strength / float(SampleCount));
+
+    for (int i = 1; i <= SampleCount; i++) {
+        blurred += zTextureSpec(SCREEN_TEXTURE, UV + blurStep * float(i)).xyz;
     }
-    col = col / float(SampleCount);
-    COLOR = vec4(vec3(col), color.a);
+
+    blurred /= float(SampleCount + 1);
+    COLOR = vec4(blurred, sourceColor.a);
 }

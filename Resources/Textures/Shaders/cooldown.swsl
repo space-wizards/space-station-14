@@ -1,29 +1,25 @@
 light_mode unshaded;
 
-const highp float PI = 3.14159265;
+const highp float Pi = 3.14159265;
 
 uniform highp float progress;
 
 void fragment() {
-    highp vec4 col = zTexture(UV);
-    highp vec2 center = vec2(0.5,0.5);
-    highp vec2 delta = UV.xy - center;
-    
-    highp float angle = atan(delta.x, -delta.y) + PI;
+    highp vec4 spriteColor = zTexture(UV);
+    highp vec2 delta = UV - vec2(0.5, 0.5);
+    highp float angle = atan(delta.x, -delta.y) + Pi;
+    highp float distanceFromCenter = length(delta);
 
-    highp float dist = length(delta);
 #ifdef HAS_DFDX
-    highp float dist_fwidth = fwidth(dist) * 0.67;
+    highp float edgeWidth = fwidth(distanceFromCenter) * 0.67;
 #else
-    highp float dist_fwidth = 0.05;
+    highp float edgeWidth = 0.05;
 #endif
-    
-    highp float dist_alpha = smoothstep(0.1-dist_fwidth, 0.1, abs(dist-0.35));
-    
-    highp float angle_delta = (progress * PI * 2.0) - angle;
-    highp float arc_length = angle_delta * dist;
-    
-    highp float angle_alpha = (progress > 0.0) ? smoothstep(dist_fwidth, 0.0, arc_length) : 0.0;
 
-    COLOR = vec4(col.xyz, 1.0 - max(dist_alpha, angle_alpha));
+    highp float ringAlpha = smoothstep(0.1 - edgeWidth, 0.1, abs(distanceFromCenter - 0.35));
+    highp float angleDelta = progress * Pi * 2.0 - angle;
+    highp float arcLength = angleDelta * distanceFromCenter;
+    highp float progressAlpha = progress > 0.0 ? smoothstep(edgeWidth, 0.0, arcLength) : 0.0;
+
+    COLOR = vec4(spriteColor.rgb, 1.0 - max(ringAlpha, progressAlpha));
 }

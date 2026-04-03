@@ -1,6 +1,7 @@
-
-//Draws the given texture at the given screen coords. Useful in specific scenarios (i.e. this was made for drawing singularity sprites over the lensing effect but below FOV)
-//Currently does not work with AtlasTextures, going to need some work.
+// Draws the given texture at the given screen coords. Useful in specific
+// scenarios, such as drawing singularity sprites over the lensing effect but
+// below FoV.
+// Currently does not work with AtlasTextures, going to need some work.
 
 uniform sampler2D tex;
 uniform highp vec2 positionInput;
@@ -9,15 +10,28 @@ uniform highp float alphaCutoff;
 uniform bool removeTransparency;
 
 void fragment() {
-	highp float pixelLength = pixelSize.x*2.0;
-	highp float halvedLength = pixelLength/2.0;
-	if(FRAGCOORD.x > positionInput.x - halvedLength && FRAGCOORD.x < positionInput.x + halvedLength && FRAGCOORD.y > positionInput.y - halvedLength && FRAGCOORD.y < positionInput.y + halvedLength){
-		highp vec2 finalCoords = (FRAGCOORD.xy-positionInput+(pixelLength/2.0))/pixelLength;
-		highp vec4 color = texture2D(tex, finalCoords);
-		if(color.a > alphaCutoff){
-			if(removeTransparency)
-				color.a = 1.0;
-			COLOR = color;
-		}
-	}
+    highp float drawSize = pixelSize.x * 2.0;
+    highp float halfSize = drawSize * 0.5;
+    bool insideBounds =
+        FRAGCOORD.x > positionInput.x - halfSize &&
+        FRAGCOORD.x < positionInput.x + halfSize &&
+        FRAGCOORD.y > positionInput.y - halfSize &&
+        FRAGCOORD.y < positionInput.y + halfSize;
+
+    if (insideBounds) {
+        highp vec2 textureUv = (FRAGCOORD.xy - positionInput + vec2(halfSize)) / drawSize;
+        highp vec4 color = texture2D(tex, textureUv);
+
+        if (color.a > alphaCutoff) {
+            if (removeTransparency) {
+                color.a = 1.0;
+            }
+
+            COLOR = color;
+        } else {
+            COLOR = vec4(0.0);
+        }
+    } else {
+        COLOR = vec4(0.0);
+    }
 }
