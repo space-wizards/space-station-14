@@ -306,7 +306,7 @@ public sealed partial class StatusEffectsSystem
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
     public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
     {
-        return time == null ? TryRemoveStatusEffect(uid, effectProto) : TryAddTime(uid, effectProto, time.Value);
+        return time == null ? TryRemoveStatusEffect(uid, effectProto) : TryAddTime(uid, effectProto, - time.Value);
     }
 
     /// <summary>
@@ -353,6 +353,7 @@ public sealed partial class StatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component.
     /// </summary>
+    /// <returns>Returns true if any entity with the specified component is found.</returns>
     public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<Entity<T, StatusEffectComponent>>? effects) where T : IComponent
     {
         effects = null;

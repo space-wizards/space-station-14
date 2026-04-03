@@ -38,8 +38,6 @@
       solutions:
         drainBuffer:
           maxVol: 1000
-    - type: DrainableSolution
-      solution: drainBuffer
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: StructuralMetallic

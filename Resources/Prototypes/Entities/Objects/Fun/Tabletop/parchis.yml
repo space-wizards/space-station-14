@@ -1,4 +1,3 @@
-# Parchís board item (normal in game item you can hold in your hand)
 - type: entity
   parent: BaseBoardEntity
   id: ParchisBoard
@@ -13,13 +12,12 @@
     size: 574, 574
     setup:
       !type:TabletopParchisSetup
-      boardPrototype: ParchisBoardTabletop
+      boardPrototype: &ParchisBoard ParchisBoardTabletop
 
-# Parchís tabletop item (item only visible in tabletop game)
 - type: entity
-  id: ParchisBoardTabletop
-  name: parchís
   parent: BaseBoardTabletop
+  id: *ParchisBoard
+  name: parchís
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

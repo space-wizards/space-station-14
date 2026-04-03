@@ -1,22 +1,29 @@
 - type: entity
+  abstract: true
+  id: BaseFloorDecoration
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Sprite
+    drawdepth: FloorTiles
+
+- type: entity
   id: Stairs
+  parent: BaseFloorDecoration
   name: stairs
   suffix: Steel
   description: The greatest invention since rocket-propelled grenades.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Anchorable
     flags:
     - Anchorable
   - type: Rotatable
-  - type: Clickable
   - type: Sprite
     sprite: Structures/stairs.rsi
     state: stairs_steel
-    drawdepth: FloorTiles
-  - type: Transform
-    anchored: true
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic

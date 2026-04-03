@@ -5,7 +5,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
+/// <seealso cref="Explode"/>
+public sealed partial class Explosion : EntityEffectBase<Explosion>
 {
     /// <summary>
     ///     The type of explosion. Determines damage types and tile break chance scaling.
@@ -50,9 +51,7 @@ public sealed partial class ExplosionEffect : EntityEffectBase<ExplosionEffect>
     public float TileBreakScale = 1f;
 
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-explosion-reaction-effect", ("chance", Probability));
+        => Loc.GetString("entity-effect-guidebook-explosion", ("chance", Probability));
 
-    public override bool ShouldLog => true;
-
-    public override LogImpact LogImpact => LogImpact.High;
+    public override LogImpact? Impact => LogImpact.High;
 }

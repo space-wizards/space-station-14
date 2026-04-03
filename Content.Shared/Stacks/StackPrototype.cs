@@ -4,6 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Stacks;
 
+/// <summary>
+/// Prototype used to combine and spawn like-entities for <see cref="SharedStackSystem"/>.
+/// </summary>
 [Prototype]
 public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
 {
@@ -21,28 +24,27 @@ public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
     public bool Abstract { get; private set; }
 
     /// <summary>
-    ///     Human-readable name for this stack type e.g. "Steel"
+    /// Human-readable name for this stack type e.g. "Steel"
     /// </summary>
     /// <remarks>This is a localization string ID.</remarks>
     [DataField]
     public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
-    ///     An icon that will be used to represent this stack type.
+    /// An icon that will be used to represent this stack type.
     /// </summary>
     [DataField]
     public SpriteSpecifier? Icon { get; private set; }
 
     /// <summary>
-    ///     The entity id that will be spawned by default from this stack.
+    /// The entity id that will be spawned by default from this stack.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId Spawn { get; private set; } = string.Empty;
+    public EntProtoId<StackComponent> Spawn { get; private set; } = string.Empty;
 
     /// <summary>
-    ///     The maximum amount of things that can be in a stack.
-    ///     Can be overriden on <see cref="StackComponent"/>
-    ///     if null, simply has unlimited max count.
+    /// The maximum amount of things that can be in a stack, can be overriden on <see cref="StackComponent"/>.
+    /// If null, simply has unlimited max count.
     /// </summary>
     [DataField]
     public int? MaxCount { get; private set; }

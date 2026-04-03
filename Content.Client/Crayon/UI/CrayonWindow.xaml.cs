@@ -137,7 +137,8 @@ namespace Content.Client.Crayon.UI
 
         private void ButtonOnPressed(ButtonEventArgs obj)
         {
-            if (obj.Button.Name == null) return;
+            if (obj.Button.Name == null)
+                return;
 
             _selected = obj.Button.Name;
             _autoSelected = null;

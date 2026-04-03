@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
@@ -10,17 +9,17 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Localizations;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
@@ -28,9 +27,15 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// The event raised whenever a solution entity is modified.
+/// Raised on the solution entity itself.
+/// If you want to subscribe with the entity containing the solution entity
+/// then use <see cref="SolutionContainerChangedEvent"/> instead.
 /// </summary>
 /// <remarks>
 /// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
+/// This is always raised on the client when handling the component state so that we can update UIs accordingly.
+/// You might need an IGameTiming.ApplyingState guard to prevent mispredicts if the changes from your subscription are
+/// networked with the same game state.
 /// </remarks>
 /// <param name="Solution">The solution entity that has been modified.</param>
 [ByRefEvent]
@@ -73,6 +78,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -80,6 +86,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         InitializeRelays();
 
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
@@ -95,6 +103,22 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
+    private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new SolutionComponentState(ent.Comp.Solution);
+    }
+
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState cast)
+            return;
+
+        ent.Comp.Solution = cast.Solution.Clone();
+
+        // Always raise the event on the client so that we can update UIs accordingly.
+        var changedEv = new SolutionChangedEvent(ent);
+        RaiseLocalEvent(ent, ref changedEv);
+    }
 
     /// <summary>
     /// Attempts to resolve a solution associated with an entity.
@@ -435,6 +459,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Sets whether or not the given solution entity can react and dirties it.
+    /// </summary>
+    public void SetCanReact(Entity<SolutionComponent> soln, bool canReact)
+    {
+        soln.Comp.Solution.CanReact = canReact;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
     ///     Adds reagent of an Id to the container.
     /// </summary>
     /// <param name="targetUid"></param>
@@ -588,7 +621,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Adds a solution to the container, if it can fully fit.
     /// </summary>
     /// <param name="targetUid">entity holding targetSolution</param>
-    ///  <param name="targetSolution">entity holding targetSolution</param>
+    /// <param name="targetSolution">entity holding targetSolution</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
     public bool TryAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
@@ -606,40 +639,44 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds as much of a solution to a container as can fit.
+    ///     Adds as much of a solution to a container as can fit and updates the container.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>The quantity of the solution actually added.</returns>
     public FixedPoint2 AddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return FixedPoint2.Zero;
 
         var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, solution.AvailableVolume));
         if (quantity < toAdd.Volume)
-            TryTransferSolution(soln, toAdd, quantity);
+        {
+            // TODO: This should be made into a function that directly transfers reagents.
+            // Currently this is quite inefficient.
+            solution.AddSolution(toAdd.Clone().SplitSolution(quantity), PrototypeManager);
+        }
         else
-            ForceAddSolution(soln, toAdd);
+            solution.AddSolution(toAdd, PrototypeManager);
 
+        UpdateChemicals(soln);
         return quantity;
     }
 
     /// <summary>
     ///     Adds a solution to a container and updates the container.
+    ///     This can exceed the maximum volume of the solution added to.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>Whether any reagents were added to the solution.</returns>
     public bool ForceAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return false;
@@ -854,7 +891,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
                                         ("desc", primary.LocalizedPhysicalDescription),
-                                        ("chemCount", solution.Contents.Count) ));
+                                        ("chemCount", solution.Contents.Count)));
 
             // Push the recognizable reagents
 
@@ -1044,7 +1081,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public bool EnsureSolution(
         Entity<MetaDataComponent?> entity,
         string name,
-        [NotNullWhen(true)]out Solution? solution,
+        [NotNullWhen(true)] out Solution? solution,
         FixedPoint2 maxVol = default)
     {
         return EnsureSolution(entity, name, maxVol, null, out _, out solution);
@@ -1054,7 +1091,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         Entity<MetaDataComponent?> entity,
         string name,
         out bool existed,
-        [NotNullWhen(true)]out Solution? solution,
+        [NotNullWhen(true)] out Solution? solution,
         FixedPoint2 maxVol = default)
     {
         return EnsureSolution(entity, name, maxVol, null, out existed, out solution);
@@ -1213,7 +1250,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
-        MetaDataSys.SetEntityName(uid, $"solution - {name}");
+        MetaDataSys.SetEntityName(uid, $"solution - {name}", raiseEvents: false);
         ContainerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
@@ -1236,13 +1273,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            dissolvedSol.RemoveReagent(reagent,amtChange);
+            dissolvedSol.RemoveReagent(reagent, amtChange);
         }
         UpdateChemicals(dissolvedSolution);
     }
 
     public FixedPoint2 GetReagentQuantityFromConcentration(Entity<SolutionComponent> dissolvedSolution,
-        FixedPoint2 volume,float concentration)
+        FixedPoint2 volume, float concentration)
     {
         var dissolvedSol = dissolvedSolution.Comp.Solution;
         if (volume == 0

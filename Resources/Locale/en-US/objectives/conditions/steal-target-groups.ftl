@@ -25,6 +25,7 @@ steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
 steal-target-groups-officer-handguns = security officer's handgun
 steal-target-groups-lamps = LAMP
+steal-target-groups-huds = HUD
 
 # Thief single item
 steal-target-groups-forensic-scanner = forensic scanner
@@ -39,7 +40,6 @@ steal-target-groups-fire-axe = fireaxe
 steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
-steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal

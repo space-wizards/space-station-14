@@ -57,7 +57,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Food
+  - type: Edible
     solution: cube
   - type: FlavorProfile
     flavors:
