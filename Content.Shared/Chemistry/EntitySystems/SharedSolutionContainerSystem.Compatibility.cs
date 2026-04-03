@@ -14,10 +14,10 @@ public abstract partial class SharedSolutionContainerSystem
 {
     public void InitializeContainerManager()
     {
-        SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(OnContainerComponentInit);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnSolutionContainerInit);
     }
 
-    private void OnContainerComponentInit(Entity<SolutionContainerManagerComponent> container, ref ComponentInit args)
+    private void OnSolutionContainerInit(Entity<SolutionContainerManagerComponent> container, ref MapInitEvent args)
     {
         // Create the manager, this should also create a container, so we ensure it exists.
         EnsureComp<SolutionManagerComponent>(container, out var manager);
@@ -39,14 +39,22 @@ public abstract partial class SharedSolutionContainerSystem
                             $"from a {nameof(SolutionContainerManagerComponent)} on {ToPrettyString(container)}, {MetaData(container).EntityPrototype}, " +
                             $"but the entity already had a solution with that id.");
                 solutionEnt.Value.Comp.Solution = solution.Solution;
-                continue;
+            }
+            else
+            {
+                ContainerSystem.Insert(solutionUid, solutionContainer, force: true);
             }
 
-            ContainerSystem.Insert(solutionUid, solutionContainer, force: true);
+            // We don't need it anymore
+            ContainerSystem.ShutdownContainer(slot);
         }
 
         if (container.Comp.Solutions == null)
+        {
+            RemCompDeferred<SolutionManagerComponent>(container);
             return;
+        }
+
 
         // Next, if this entity was never initialized, create its solutions.
         foreach (var (name, solution) in container.Comp.Solutions)
@@ -63,5 +71,9 @@ public abstract partial class SharedSolutionContainerSystem
             // Clone the solution to the component.
             solutionEnt.Comp.Solution = solution;
         }
+
+        // Clear its data
+        container.Comp.Solutions = null;
+        RemCompDeferred<SolutionManagerComponent>(container);
     }
 }
