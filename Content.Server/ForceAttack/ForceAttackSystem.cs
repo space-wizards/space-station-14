@@ -47,11 +47,8 @@ public sealed class ForceAttackSystem : EntitySystem
         while (query.MoveNext(out var uid, out var forceComp, out var factionComp, out var modeComp, out _))
         {
             // Check if we have a weapon
-            if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
-            {
-                forceComp.InRange = false;
+            if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon) || weapon.NextAttack > curTime)
                 continue;
-            }
 
             // Find a target in range that isn't critical or dead
             if (!_faction.GetNearbyHostiles((uid, factionComp), weapon.Range)
@@ -69,7 +66,7 @@ public sealed class ForceAttackSystem : EntitySystem
                 continue;
             }
 
-            if (forceComp.NextAttack > curTime || weapon.NextAttack > curTime)
+            if (forceComp.NextAttack > curTime)
                 continue;
 
             // Force mob to enter combat mode (necessary for AttemptAttack to succeed).
