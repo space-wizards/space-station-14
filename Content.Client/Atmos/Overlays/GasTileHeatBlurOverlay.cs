@@ -152,7 +152,9 @@ public sealed class GasTileHeatBlurOverlay : Overlay
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
                     // We only care about tiles that fit in these bounds
-                    var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+                    var worldToGridLocal = _xformSys.GetInvWorldMatrix(grid.Owner);
+                    var floatBounds = worldToGridLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+
                     var localBounds = new Box2i(
                         (int)MathF.Floor(floatBounds.Left),
                         (int)MathF.Floor(floatBounds.Bottom),

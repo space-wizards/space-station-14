@@ -137,6 +137,10 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_arachnid
 
 - type: entity
   parent: OrganBase

@@ -293,7 +293,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
         {
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
-            TryModifyBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceSolution.Volume);
+            // TODO: Use Solutions API for this when it exists
+            TryRegulateBloodLevel(ent.AsNullable(), ent.Comp.BloodReferenceSolution.Volume);
         }
     }
 
@@ -424,7 +425,11 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
+<<<<<<< solutions-refactor-part-1-solution-prototypes
             var adjustedAmount = amount * ratio;
+=======
+            var adjustedAmount = referenceQuantity * ratio;
+>>>>>>> master
 
             if (error > 0)
             {

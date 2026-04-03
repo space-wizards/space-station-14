@@ -17,3 +17,16 @@
   responseType: "General Feedback"
   responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
   showRoundEnd: false
+
+- type: feedbackPopup
+  id: ForceVentCrittersToAttackFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Played an antagonist vent critter role?[/bold]"
+  description: >-
+    If you've played or interacted with a player-controlled antagonist vent critter (spiders, slimes, clown spiders), please leave your feedback on how the new auto-attack feature went.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/force-vent-critters-to-attack-feedback/26861"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+      - VentHordeRule
