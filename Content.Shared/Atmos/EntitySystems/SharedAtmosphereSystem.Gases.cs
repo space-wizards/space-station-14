@@ -16,10 +16,10 @@ public abstract partial class SharedAtmosphereSystem
      */
 
     /// <summary>
-    /// Cached array of gas specific heats.
+    /// Cached array of molar heat capacities of the gases.
     /// </summary>
-    public float[] GasSpecificHeats => _gasSpecificHeats;
-    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+    public float[] GasMolarHeatCapacities => _gasMolarHeatCapacities;
+    private float[] _gasMolarHeatCapacities = new float[Atmospherics.TotalNumberOfGases];
 
     /// <summary>
     /// Mask used to determine if a gas is flammable or not.
@@ -69,7 +69,7 @@ public abstract partial class SharedAtmosphereSystem
             GasReagents[idx] = gasPrototype.Reagent;
         }
 
-        Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
+        Array.Resize(ref _gasMolarHeatCapacities, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
 
         for (var i = 0; i < GasPrototypes.Length; i++)
         {
@@ -81,7 +81,7 @@ public abstract partial class SharedAtmosphereSystem
              If you would like the unscaled specific heat, you'd need to multiply by HeatScale again.
              TODO ATMOS: please just make this 2 separate arrays instead of invoking multiplication every time.
              */
-            _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
+            _gasMolarHeatCapacities[i] = GasPrototypes[i].MolarHeatCapacity / HeatScale;
 
             // """Mask""" built here. Used to determine if a gas is fuel/oxidizer or not decently quickly and clearly.
             GasFuelMask[i] = GasPrototypes[i].IsFuel ? 1 : 0;
@@ -115,7 +115,7 @@ public abstract partial class SharedAtmosphereSystem
     /// considered ignitable, for both oxidizer and fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is ignitable, otherwise, false.</returns>
     [PublicAPI]
-    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = 0.001f)
+    public bool IsMixtureIgnitable(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
     {
         return IsMixtureFuel(mixture, epsilon) && IsMixtureOxidizer(mixture, epsilon);
     }
@@ -128,7 +128,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered fuel.</param>
     /// <returns>True if the <see cref="GasMixture"/> is fuel, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Determines if a <see cref="GasMixture"/> has oxidizer gases in it or not.
@@ -138,7 +138,7 @@ public abstract partial class SharedAtmosphereSystem
     /// is considered an oxidizer.</param>
     /// <returns>True if the <see cref="GasMixture"/> is an oxidizer, otherwise, false.</returns>
     [PublicAPI]
-    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = 0.001f);
+    public abstract bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon);
 
     /// <summary>
     /// Calculates the heat capacity for a <see cref="GasMixture"/>.
