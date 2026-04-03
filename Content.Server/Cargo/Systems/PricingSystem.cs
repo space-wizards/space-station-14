@@ -15,6 +15,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Research.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -24,6 +25,7 @@ namespace Content.Server.Cargo.Systems;
 public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -32,6 +34,8 @@ public sealed class PricingSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
+        SubscribeLocalEvent<RandomPriceComponent, ComponentInit>(SetRandomPrice);
+        SubscribeLocalEvent<RandomPriceComponent, PriceCalculationEvent>(CalculateRandomPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -93,6 +97,34 @@ public sealed class PricingSystem : EntitySystem
         }
 
         args.Price += component.Price * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
+    }
+
+    private void SetRandomPrice(Entity<RandomPriceComponent> entity, ref ComponentInit args)
+    {
+        var modifier = _random.NextDouble();
+        switch (entity.Comp.PricingCurve)
+        {
+            default:
+            case RandomPricingCurve.Linear:
+                break;
+            case RandomPricingCurve.Squared:
+                modifier = modifier * modifier;
+                break;
+            case RandomPricingCurve.Cubed:
+                modifier = modifier * modifier * modifier;
+                break;
+        }
+
+        entity.Comp.RandomPrice = modifier * entity.Comp.MaxRandomPrice;
+    }
+
+    private void CalculateRandomPrice(Entity<RandomPriceComponent> entity, ref PriceCalculationEvent args)
+    {
+        // TODO: Estimated pricing.
+        if (args.Handled)
+            return;
+
+        args.Price += entity.Comp.RandomPrice;
     }
 
     private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)
