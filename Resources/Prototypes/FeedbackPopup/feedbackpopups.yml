@@ -19,28 +19,14 @@
   showRoundEnd: false
 
 - type: feedbackPopup
-  id: PlayingAsMothershipCoreFeedback
+  id: ForceVentCrittersToAttackFeedback
   popupOrigin: wizden_master
-  title: "[bold]Playing as [color=deepskyblue]mothership[/color] core[/bold]"
+  title: "[bold]Played an antagonist vent critter role?[/bold]"
   description: >-
-    If you played mothership core this round or maybe in a previous round, feel free to respond this feedback thread about your experiences and issues with playing as the mothership core.
+    If you've played or interacted with a player-controlled antagonist vent critter (spiders, slimes, clown spiders), please leave your feedback on how the new auto-attack feature went.
   responseType: "Feedback Thread"
-  responseLink: "https://forum.spacestation14.com/t/playing-as-a-mothership-core/26688/2"
+  responseLink: "https://forum.spacestation14.com/t/force-vent-critters-to-attack-feedback/26861"
   showRoundEnd: true
   ruleWhitelist:
     components:
-    - XenoborgsRule
-
-- type: feedbackPopup
-  id: XenoborgExtractorFeedback
-  popupOrigin: wizden_master
-  title: "[bold]The [color=deepskyblue]xenoborg[/color] extractor [scramble chars=\"xenoborg-##][{}||,.<>\" rate=40 length=5][/bold]"
-  description: >-
-    Please share feedback on the new xenoborg extractor and crystal, and how these additions affect xenoborg gameplay.
-  responseType: "Feedback Thread"
-  responseLink: "https://forum.spacestation14.com/t/xenoborg-extractor/26689"
-  showRoundEnd: true
-  ruleWhitelist:
-    components:
-    - XenoborgsRule
-
+      - VentHordeRule
