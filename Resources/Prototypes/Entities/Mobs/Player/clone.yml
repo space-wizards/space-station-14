@@ -16,6 +16,7 @@
   - HumanoidProfile # Age, Sex, Gender
   - NpcFactionMember
   - RandomPrice
+  - CreamPied
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
