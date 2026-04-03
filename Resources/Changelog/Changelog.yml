@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: PotentiallyTom
-  changes:
-  - message: Added a page in the guidebook listing common AI and silicon lawsets.
-    type: Add
-  id: 9088
-  time: '2025-10-13T11:55:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38225
-- author: meganerobot
-  changes:
-  - message: SmartFridges are now airtight.
-    type: Tweak
-  id: 9089
-  time: '2025-10-13T16:19:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40196
-- author: TrixxedHeart
-  changes:
-  - message: Renamed "trash" reagent to "reprocessed material"
-    type: Tweak
-  id: 9090
-  time: '2025-10-13T17:18:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39761
 - author: ScarKy0
   changes:
   - message: Station AI can no longer control bolts, emergency access and electrify
@@ -4029,3 +4008,28 @@
   id: 9599
   time: '2026-03-31T03:41:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43411
+- author: ThatGuyUSA
+  changes:
+  - message: Wizard robes and hats have been given proper in-hand sprites.
+    type: Tweak
+  id: 9600
+  time: '2026-04-02T22:11:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43429
+- author: Booblesnoot42
+  changes:
+  - message: 'EXPERIMENTAL: Player-controlled spiders and slimes are now forced to
+      attack if they are passive near enemies for too long.'
+    type: Tweak
+  id: 9601
+  time: '2026-04-03T06:18:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42399
+- author: alexalexmax
+  changes:
+  - message: Added a new uplink category for objective items.
+    type: Add
+  - message: 'Added a new objective for traitors: Hijack the Automated Trade Station.
+      Your uplink will have a hijack beacon for you to use if you have this objective'
+    type: Add
+  id: 9602
+  time: '2026-04-03T10:35:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42135
