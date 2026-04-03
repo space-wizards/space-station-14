@@ -334,6 +334,14 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateEVASecure # mostly for the EVA kit cargo order, since ideally anyone who can enter EVA Storage unsupervised should also be able to open this unsupervised
+  name: EVA storage crate
+  components:
+  - type: AccessReader
+    access: [["External"], ["Command"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CrateSyndicateSecure
   name: secure syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
