@@ -425,11 +425,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
-<<<<<<< solutions-refactor-part-1-solution-prototypes
-            var adjustedAmount = amount * ratio;
-=======
             var adjustedAmount = referenceQuantity * ratio;
->>>>>>> master
 
             if (error > 0)
             {
