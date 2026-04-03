@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.NPC.Prototypes;
 using Content.Server.Actions;
 using Content.Server.Body.Systems;
@@ -8,6 +9,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
@@ -18,6 +20,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -71,6 +74,9 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
             SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
+
+            // After changing the ling's form, we restore the zombie visuals and factions
+            SubscribeLocalEvent<ZombieComponent, ChangelingPostTransformEvent>(OnChangelingPostTransform);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -176,6 +182,33 @@ namespace Content.Server.Zombies
         {
             args.Unrevivable = true;
         }
+
+        private void OnChangelingPostTransform(Entity<ZombieComponent> ent, ref ChangelingPostTransformEvent args)
+        {
+            // Reapply zombie appearance and faction after changeling transformation,
+            // since the transformation may have overwritten them.
+            if (TryComp<HumanoidAppearanceComponent>(ent, out var huApComp))
+            {
+                // Reapply zombie skin and eye color
+                _humanoidAppearance.SetSkinColor(ent.Owner, ent.Comp.SkinColor, verify: false, humanoid: huApComp);
+                huApComp.EyeColor = ent.Comp.EyeColor;
+
+                // Restore base visual layers characteristic for zombies
+                _humanoidAppearance.SetBaseLayerId(ent.Owner, HumanoidVisualLayers.Tail, ent.Comp.BaseLayerExternal, humanoid: huApComp);
+                _humanoidAppearance.SetBaseLayerId(ent.Owner, HumanoidVisualLayers.HeadSide, ent.Comp.BaseLayerExternal, humanoid: huApComp);
+                _humanoidAppearance.SetBaseLayerId(ent.Owner, HumanoidVisualLayers.HeadTop, ent.Comp.BaseLayerExternal, humanoid: huApComp);
+                _humanoidAppearance.SetBaseLayerId(ent.Owner, HumanoidVisualLayers.Snout, ent.Comp.BaseLayerExternal, humanoid: huApComp);
+
+                Dirty(ent.Owner, huApComp);
+            }
+
+            // Update factions, name, and identity so that other zombies correctly recognize this one
+            _faction.ClearFactions(ent.Owner, dirty: false);
+            _faction.AddFaction(ent.Owner, Faction);
+            _nameMod.RefreshNameModifiers(ent.Owner);
+            _identity.QueueIdentityUpdate(ent.Owner);
+        }
+
 
         private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
         {
