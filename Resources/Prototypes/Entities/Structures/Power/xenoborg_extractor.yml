@@ -76,7 +76,7 @@
     mediumVoltageNode: input
     lowVoltageNode: input
   - type: Battery
-    maxCharge: 2000000 # 2MJ
+    maxCharge: 4000000 # 4MJ
     netsync: false
   - type: ExaminableBattery
   - type: PowerConsumerBatteryCharger
@@ -96,7 +96,7 @@
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCrystal1
-    charge: 2000000 # 2MJ
+    charge: 4000000 # 4MJ
 
 - type: entity
   parent: XenoborgExtractor
