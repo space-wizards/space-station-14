@@ -26,11 +26,12 @@ public sealed partial class SolutionManagerComponent : Component
     /// A cache of solutions currently attached to this entity.
     /// </summary>
     [ViewVariables]
+    [Access(typeof(SharedSolutionContainerSystem), Other = AccessPermissions.None)]
     public Dictionary<string, Entity<SolutionComponent>> Solutions = new ();
 
     /// <summary>
     /// A list of solution entities to spawn when this component starts up.
     /// </summary>
-    [DataField("solutions")]
+    [DataField("solutions", readOnly: true)]
     public List<EntProtoId> SolutionEnts = new ();
 }

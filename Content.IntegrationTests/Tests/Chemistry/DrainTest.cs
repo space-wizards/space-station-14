@@ -28,10 +28,10 @@ public sealed class DrainTest : InteractionTest
   - type: Solution
     id: puddle
     solution:
-        maxVol: 1000
-        reagents:
-        - ReagentId: {BloodReagent}
-          Quantity: {PuddleVolume}
+      maxVol: 1000
+      reagents:
+      - ReagentId: {BloodReagent}
+        Quantity: {PuddleVolume}
 ";
 
 

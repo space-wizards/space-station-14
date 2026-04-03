@@ -37,7 +37,7 @@ public sealed class AbsorbentTest
   - type: Solution
     id: absorbed
     solution:
-        maxVol: 100
+      maxVol: 100
 
 - type: entity
   name: {RefillableDummyId}
@@ -46,7 +46,7 @@ public sealed class AbsorbentTest
   - type: Solution
     id: refillable
     solution:
-        maxVol: 200
+      maxVol: 200
   - type: RefillableSolution
     solution: refillable
 
@@ -57,7 +57,7 @@ public sealed class AbsorbentTest
   - type: Solution
     id: refillable
     solution:
-        maxVol: 20
+      maxVol: 20
   - type: RefillableSolution
     solution: refillable
 ";

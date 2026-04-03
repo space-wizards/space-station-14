@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
   - type: Solution
     id: beaker
     solution:
-       maxVol: 120";
+      maxVol: 120";
 
         private static string[] _reactions = GameDataScrounger.PrototypesOfKind<ReactionPrototype>();
 

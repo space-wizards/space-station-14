@@ -22,7 +22,7 @@ public sealed class SolutionSystemTests
   - type: Solution
     id: beaker
     solution:
-       maxVol: 50
+      maxVol: 50
 
 - type: reagent
   id: TestReagentA

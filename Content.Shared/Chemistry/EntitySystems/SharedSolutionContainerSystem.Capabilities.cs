@@ -148,11 +148,6 @@ public abstract partial class SharedSolutionContainerSystem
 
     #region Static Methods
 
-    public static string ToPrettyString(Entity<SolutionComponent> solution)
-    {
-        return ToPrettyString(solution.Comp);
-    }
-
     public static string ToPrettyString(SolutionComponent solution)
     {
         var sb = new StringBuilder($"{solution.Id}:");

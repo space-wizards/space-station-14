@@ -23,7 +23,7 @@ public sealed class SolutionRoundingTest
   - type: Solution
     id: beaker
     solution:
-       maxVol: 100
+      maxVol: 100
 
 # This is the Chloral Hydrate recipe fyi.
 - type: reagent

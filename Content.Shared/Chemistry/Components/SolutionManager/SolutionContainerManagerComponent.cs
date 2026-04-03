@@ -4,9 +4,13 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components.SolutionManager;
 
-/// <summary>
-/// TODO: DELET THIS ONLY EXISTS TO MAKE GAME RUN!!!!
-/// </summary>
+/// <remarks>
+/// Exists for simple backwards compatibility.
+/// On <see cref="ComponentInit"/> this component will transfer all its data where it can to a <see cref="SolutionManagerComponent"/>
+/// Then it will delete itself.
+/// This component will be deleted in the indeterminate future.
+/// </remarks>
+[Obsolete]
 [RegisterComponent]
 [Access(typeof(SharedSolutionContainerSystem))]
 public sealed partial class SolutionContainerManagerComponent : Component
