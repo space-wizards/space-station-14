@@ -75,7 +75,7 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
 
         // TODO: fix the popup
-        // _popup.PopupClient(Loc.GetString(ent.Comp.PopupMessageAnchorFail), ent, args.User);
+        _popup.PopupClient(Loc.GetString(ent.Comp.PopupMessageAnchorFail), ent, args.User);
         args.Cancel();
     }
 
