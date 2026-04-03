@@ -178,6 +178,12 @@ public partial class SharedGunSystem
                 continue;
             }
 
+            if (!ValidateInsertionSpeed(ent.Owner))
+            {
+                Popup(Loc.GetString("gun-insertion-too-fast"), ent, user);
+                return false;
+            }
+
             ent.Comp.AmmoSlots[index] = insertEnt;
             Containers.Insert(insertEnt, ent.Comp.AmmoContainer);
             SetChamber(ent, insertEnt, index);

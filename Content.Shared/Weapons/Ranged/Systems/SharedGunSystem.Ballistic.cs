@@ -55,7 +55,7 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        if (TryBallisticInsert(ent, args.Used, args.User))
+        if (TryBallisticInsert(ent, args.Used, args.User, checkInsertionSpeed: true))
             args.Handled = true;
     }
 
@@ -111,6 +111,13 @@ public abstract partial class SharedGunSystem
                     ("entity", uid)),
                 uid,
                 args.User);
+            return;
+        }
+
+        // Check if we somehow would've bypassed the insert delay with this doafter, if it exists
+        if (IsInsertionTooFast(args.Target.Value))
+        {
+            Popup(Loc.GetString("gun-insertion-too-fast"), uid, args.User);
             return;
         }
 
@@ -321,11 +328,18 @@ public abstract partial class SharedGunSystem
         Entity<BallisticAmmoProviderComponent> entity,
         EntityUid inserted,
         EntityUid? user,
-        bool suppressInsertionSound = false
+        bool suppressInsertionSound = false,
+        bool checkInsertionSpeed = false
     )
     {
         if (!CanInsertBallistic(entity, inserted))
             return false;
+
+        if (checkInsertionSpeed && !ValidateInsertionSpeed(entity.Owner))
+        {
+            Popup(Loc.GetString("gun-insertion-too-fast"), entity, user);
+            return false;
+        }
 
         entity.Comp.Entities.Add(inserted);
         Containers.Insert(inserted, entity.Comp.Container);
@@ -415,7 +429,7 @@ public abstract partial class SharedGunSystem
         {
             // Can't use unspawned ammo, so spawn an entity and try to insert it.
             var ammoEntity = PredictedSpawnAttachedTo(refiller.AmmoProto, Transform(entity).Coordinates);
-            var insertSucceeded = TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true);
+            var insertSucceeded = TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true, checkInsertionSpeed: false);
             if (!insertSucceeded)
             {
                 PredictedQueueDel(ammoEntity);
