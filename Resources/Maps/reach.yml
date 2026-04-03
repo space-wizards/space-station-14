@@ -13849,7 +13849,7 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: MachineAnomalyVessel
+- proto: MachineAnomalyVesselFlatpack
   entities:
   - uid: 891
     components:
