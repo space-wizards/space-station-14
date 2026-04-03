@@ -23,7 +23,7 @@
     - Prying
   - type: AmmoCounter
   - type: Gun
-    fireRate: 8
+    fireRate: 4
     maxAngle: 15
     minAngle: 1
     selectedMode: FullAuto
