@@ -55,9 +55,7 @@ public sealed partial class SatiationSystem : EntitySystem
         foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
         {
             // TODO: Replace with RandomPredicted once the engine PR is merged
-            var seed = SharedRandomExtensions.HashCodeCombine(new List<int>
-                { (int)_timing.CurTick.Value, GetNetEntity(entity).Id });
-            var rand = new System.Random(seed);
+            var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
             var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
 
             SetAuthoritativeValue(entity, satiation, proto, value);
@@ -95,7 +93,7 @@ public sealed partial class SatiationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Applies a speed modifier when any satiation is at or below <see cref="SatiationThreshold.Concerned"/>.
+    /// Applies a speed modifier based on the current satiation level.
     /// </summary>
     private void OnRefreshMovementSpeed(
         Entity<SatiationComponent> entity,
