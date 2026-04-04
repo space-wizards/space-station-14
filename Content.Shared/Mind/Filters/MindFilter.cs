@@ -3,14 +3,14 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Mind.Filters;
 
 /// <summary>
-/// A mind filter that can be used to filter out minds from a <see cref="IMindPool"/>.
+/// A mind filter that can be used to filter out minds from a <see cref="MindPool"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class MindFilter
 {
     /// <summary>
     /// The actual filter function, this has to return false for minds that get removed from the pool.
-    /// An excluded mind will be the same one passed to <see cref="IMindPool.FindMinds"/>.
+    /// An excluded mind will be the same one passed to <see cref="MindPool.FindMinds"/>.
     /// </summary>
     /// <param name="mind">The mind to check</param>
     /// <param name="exclude">The same mind passed to FindMinds</param>

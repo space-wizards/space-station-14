@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mind.Filters;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Mind.Filters;
 /// Further filtered by <see cref="IMindFilter"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public partial interface IMindPool
+public abstract partial class MindPool
 {
     /// <summary>
     /// Add minds for this pool to a hashset.
@@ -15,5 +15,5 @@ public partial interface IMindPool
     /// </summary>
     /// <param name="minds">The hashset to add to</param>
     /// <param name="exclude">A mind entity that must not be returned</param>
-    void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys);
+    public abstract void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys);
 }
