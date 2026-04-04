@@ -198,7 +198,8 @@
   - type: Storage
     maxItemSize: Ginormous
     grid:
-    - 0,0,15,7
+    - 0,0,7,8
+    - 10,0,17,8
     blacklist:
       tags:
       - Backpack

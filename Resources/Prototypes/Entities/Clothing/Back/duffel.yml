@@ -254,13 +254,10 @@
   - type: Storage
     maxItemSize: Ginormous
     grid:
-    - 0,0,15,7
+    - 0,0,20,7
     blacklist:
       tags:
         - Backpack
-  - type: ClothingSpeedModifier
-    sprintModifier: 1 # makes its stats identical to other variants of bag of holding
-  - type: HeldSpeedModifier
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
