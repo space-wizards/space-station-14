@@ -515,7 +515,7 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
-  - type: CameraLightOnCollideCollider
+  - type: CameraActiveOnCollideCollider
 
 # The holographic representation of the AI that is projected from a holopad.
 - type: entity

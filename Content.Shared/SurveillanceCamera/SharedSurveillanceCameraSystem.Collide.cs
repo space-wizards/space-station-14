@@ -1,32 +1,31 @@
-using Content.Shared.Light.Components;
-using Content.Shared.SurveillanceCamera;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.Light.EntitySystems;
+namespace Content.Shared.SurveillanceCamera;
 
-public sealed class CameraLightCollideSystem : EntitySystem
+public abstract partial class SharedSurveillanceCameraSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSurveillanceCameraSystem _camera = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
 
-    private EntityQuery<CameraLightOnCollideComponent> _lightQuery;
+    private EntityQuery<CameraActiveOnCollideComponent> _lightQuery;
 
-    public override void Initialize()
+    public void InitializeCollide()
     {
-        base.Initialize();
+        _lightQuery = GetEntityQuery<CameraActiveOnCollideComponent>();
 
-        _lightQuery = GetEntityQuery<CameraLightOnCollideComponent>();
+        SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, StartCollideEvent>(OnStart);
+        SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, EndCollideEvent>(OnEnd);
 
-        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
-        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, StartCollideEvent>(OnStart);
-        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, EndCollideEvent>(OnEnd);
-
-        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, ComponentShutdown>(OnCollideShutdown);
+        SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, ComponentShutdown>(OnCollideShutdown);
+        SubscribeLocalEvent<CameraActiveOnCollideComponent, SurveillanceCameraGetOverrideAppearanceEvent>(OnOverrideState);
     }
 
-    private void OnCollideShutdown(Entity<CameraLightOnCollideColliderComponent> ent, ref ComponentShutdown args)
+    private void OnCollideShutdown(Entity<CameraActiveOnCollideColliderComponent> ent, ref ComponentShutdown args)
     {
         // TODO: Check this on the event.
         if (TerminatingOrDeleted(ent.Owner))
@@ -51,7 +50,7 @@ public sealed class CameraLightCollideSystem : EntitySystem
 
     // You may be wondering what de fok this is doing here.
     // At the moment there's no easy way to do collision whitelists based on components.
-    private void OnPreventCollide(Entity<CameraLightOnCollideColliderComponent> ent, ref PreventCollideEvent args)
+    private void OnPreventCollide(Entity<CameraActiveOnCollideColliderComponent> ent, ref PreventCollideEvent args)
     {
         if (!_lightQuery.HasComp(args.OtherEntity))
         {
@@ -59,7 +58,7 @@ public sealed class CameraLightCollideSystem : EntitySystem
         }
     }
 
-    private void OnEnd(Entity<CameraLightOnCollideColliderComponent> ent, ref EndCollideEvent args)
+    private void OnEnd(Entity<CameraActiveOnCollideColliderComponent> ent, ref EndCollideEvent args)
     {
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
@@ -78,19 +77,28 @@ public sealed class CameraLightCollideSystem : EntitySystem
         _camera.UpdateVisuals(args.OtherEntity);
     }
 
-    private void OnStart(Entity<CameraLightOnCollideColliderComponent> ent, ref StartCollideEvent args)
+    private void OnStart(Entity<CameraActiveOnCollideColliderComponent> ent, ref StartCollideEvent args)
     {
-        Log.Debug("Checking fixture");
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        Log.Debug("Checking component");
         if (!_lightQuery.TryComp(args.OtherEntity, out var light))
             return;
 
-        Log.Debug("Enabling");
         light.Enabled = true;
         Dirty(args.OtherEntity, light);
         _camera.UpdateVisuals(args.OtherEntity);
     }
+
+    private void OnOverrideState(Entity<CameraActiveOnCollideComponent> ent, ref SurveillanceCameraGetOverrideAppearanceEvent args)
+    {
+        if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
+            return;
+
+        if (!ent.Comp.Enabled)
+            return;
+
+        args.State = ent.Comp.State;
+    }
 }
+

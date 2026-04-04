@@ -1,12 +1,11 @@
 using Content.Shared.Emp;
-using Content.Shared.Light.Components;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
-public abstract class SharedSurveillanceCameraSystem : EntitySystem
+public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -15,6 +14,8 @@ public abstract class SharedSurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemovedEvent>(OnEmpDisabledRemoved);
+
+        InitializeCollide();
     }
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -43,7 +44,7 @@ public abstract class SharedSurveillanceCameraSystem : EntitySystem
         }
     }
 
-    public void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
+    protected void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
     {
         Log.Debug("Resolving");
         // Don't log missing, because otherwise tests fail.
@@ -54,21 +55,22 @@ public abstract class SharedSurveillanceCameraSystem : EntitySystem
 
         var key = SurveillanceCameraVisuals.Disabled;
 
-        Log.Debug("Checking active");
         if (component.Active)
         {
             key = SurveillanceCameraVisuals.Active;
-            Log.Debug("Checking active");
         }
 
-        Log.Debug("Checking in use");
-        if (component.ActiveViewers.Count > 0 || component.ActiveMonitors.Count > 0 || TryComp<CameraLightOnCollideComponent>(uid, out var light) && light.Enabled)
+        if (component.ActiveViewers.Count > 0 || component.ActiveMonitors.Count > 0)
         {
             key = SurveillanceCameraVisuals.InUse;
-            Log.Debug("In use");
         }
 
-        Log.Debug($"Setting {key} to {appearance}");
+        var ev = new SurveillanceCameraGetOverrideAppearanceEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.State != null)
+            key = ev.State.Value;
+
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 
@@ -100,3 +102,10 @@ public enum SurveillanceCameraVisuals : byte
     Xray,
     Emp
 }
+
+/// <summary>
+/// Raised on a camera entity to find a state to override its visuals with.
+/// </summary>
+/// <param name="State">The state to override the appearance with.</param>
+[ByRefEvent]
+public record struct SurveillanceCameraGetOverrideAppearanceEvent(SurveillanceCameraVisuals? State = null);
