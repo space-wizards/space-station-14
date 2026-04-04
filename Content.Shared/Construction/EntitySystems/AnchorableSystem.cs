@@ -74,8 +74,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (isOnStation)
             return;
 
-        // TODO: fix the popup
-        _popup.PopupClient(Loc.GetString(ent.Comp.PopupMessageAnchorFail), ent, args.User);
+        args.FailMessage = ent.Comp.PopupMessageAnchorFail;
         args.Cancel();
     }
 
@@ -99,8 +98,12 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, false))
+        if (!Valid(uid, userUid, usingUid, false, out var failMessage))
+        {
+            if (failMessage != null)
+                _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
             return;
+        }
 
         // Log unanchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
@@ -250,8 +253,12 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, true, anchorable, usingTool))
+        if (!Valid(uid, userUid, usingUid, true, out var failMessage, anchorable, usingTool))
+        {
+            if (failMessage != null)
+                _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
             return;
+        }
 
         // Log anchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
@@ -273,9 +280,12 @@ public sealed partial class AnchorableSystem : EntitySystem
         EntityUid userUid,
         EntityUid usingUid,
         bool anchoring,
+        out LocId? failMessage,
         AnchorableComponent? anchorable = null,
         ToolComponent? usingTool = null)
     {
+        failMessage = null;
+
         if (!Resolve(uid, ref anchorable))
             return false;
 
@@ -298,6 +308,8 @@ public sealed partial class AnchorableSystem : EntitySystem
             RaiseLocalEvent(uid, (UnanchorAttemptEvent)attempt);
 
         anchorable.Delay += attempt.Delay;
+
+        failMessage = attempt.FailMessage;
 
         return !attempt.Cancelled;
     }

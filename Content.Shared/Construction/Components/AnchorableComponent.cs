@@ -38,6 +38,7 @@ namespace Content.Shared.Construction.Components
     {
         public EntityUid User { get; }
         public EntityUid Tool { get; }
+        public LocId? FailMessage { get; set; }
 
         /// <summary>
         ///     Extra delay to add to the do_after.
@@ -46,10 +47,11 @@ namespace Content.Shared.Construction.Components
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, LocId? failMessage=null)
         {
             User = user;
             Tool = tool;
+            FailMessage = failMessage;
         }
     }
 
