@@ -38,8 +38,9 @@ namespace Content.Server.Storage.EntitySystems
 
             var processing = _processingPrototypes;
 
-            var ungrouped = CollectOrGroups(component.Items, out var orGroups);
+            var priced = false;
 
+            var ungrouped = CollectOrGroups(component.Items, out var orGroups);
             foreach (var entry in ungrouped)
             {
                 if (entry.PrototypeId == null)
@@ -52,6 +53,7 @@ namespace Content.Server.Storage.EntitySystems
                     var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
                     args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
                     Del(protUid);
+                    priced = true;
                 }
                 finally
                 {
@@ -75,6 +77,7 @@ namespace Content.Server.Storage.EntitySystems
                                       (entry.SpawnProbability / group.CumulativeProbability) *
                                       entry.GetAmount(getAverage: true);
                         Del(protUid);
+                        priced = true;
                     }
                     finally
                     {
@@ -82,8 +85,8 @@ namespace Content.Server.Storage.EntitySystems
                     }
                 }
             }
-
-            args.Handled = true;
+            if (priced)
+                args.Handled = true;
         }
 
         private void OnUseInHand(EntityUid uid, SpawnItemsOnUseComponent component, UseInHandEvent args)
