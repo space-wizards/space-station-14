@@ -8,7 +8,6 @@ namespace Content.Shared.SurveillanceCamera;
 public abstract partial class SharedSurveillanceCameraSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedSurveillanceCameraSystem _camera = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
 
     private EntityQuery<CameraActiveOnCollideComponent> _lightQuery;
@@ -74,7 +73,7 @@ public abstract partial class SharedSurveillanceCameraSystem
 
         light.Enabled = false;
         Dirty(args.OtherEntity, light);
-        _camera.UpdateVisuals(args.OtherEntity);
+        UpdateVisuals(args.OtherEntity);
     }
 
     private void OnStart(Entity<CameraActiveOnCollideColliderComponent> ent, ref StartCollideEvent args)
@@ -87,7 +86,7 @@ public abstract partial class SharedSurveillanceCameraSystem
 
         light.Enabled = true;
         Dirty(args.OtherEntity, light);
-        _camera.UpdateVisuals(args.OtherEntity);
+        UpdateVisuals(args.OtherEntity);
     }
 
     private void OnOverrideState(Entity<CameraActiveOnCollideComponent> ent, ref SurveillanceCameraGetOverrideAppearanceEvent args)
