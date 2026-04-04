@@ -1,9 +1,10 @@
+using Content.IntegrationTests.Fixtures;
 using Robust.Shared.Exceptions;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class StartTest
+    public sealed class StartTest : GameTest
     {
         /// <summary>
         ///     Test that the server, and client start, and stop.
@@ -11,7 +12,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestClientStart()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var client = pair.Client;
             Assert.That(client.IsAlive);
             await client.WaitRunTicks(5);
@@ -27,8 +28,6 @@ namespace Content.IntegrationTests.Tests
             Assert.That(sRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on server.");
             await server.WaitIdleAsync();
             Assert.That(server.IsAlive);
-
-            await pair.CleanReturnAsync();
         }
     }
 }
