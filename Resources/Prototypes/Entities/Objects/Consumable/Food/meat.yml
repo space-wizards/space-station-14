@@ -42,6 +42,7 @@
   - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
+  - type: TemperatureDamage
   # required for cooking to work
   - type: InternalTemperature
     thickness: 0.02
@@ -69,16 +70,6 @@
     entity: FoodMeatRotten
     # once it would say bloated, turn into the rotten prototype
     stage: 1
-
-# bruh
-- type: Tag
-  id: Raw
-
-- type: Tag
-  id: Cooked
-
-- type: Tag
-  id: Cutlet
 
 # Raw
 

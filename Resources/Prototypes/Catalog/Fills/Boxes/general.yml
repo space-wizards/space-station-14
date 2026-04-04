@@ -1,17 +1,37 @@
 - type: entity
-  name: cardboard box
   parent: BoxBase
   id: BoxCardboard
+  name: cardboard box
   description: A cardboard box for storing things.
   components:
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
-  - type: Storage
-    maxItemSize: Small
-    grid:
-    - 0,0,2,2
+  - type: Construction
+    graph: BoxCardboard
+    node: boxcardboard
+    containers:
+      - storagebase
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
+  - type: Sprite
+    state: box
+  - type: Tag
+    tags:
+    - BoxCardboard
+
+- type: entity
+  parent: BoxBaseSmall
+  id: BoxCardboardSmall
+  name: small cardboard box
+  description: A small cardboard box for storing things.
+  components:
+  - type: Construction
+    graph: BoxCardboardSmall # Half the material cost of the "regular" cardboardbox
+    node: boxcardboardsmall
+    containers:
+      - storagebase
+  - type: PhysicalComposition # Half of the "regular" cardboard box
+    materialComposition:
+      Cardboard: 50
   - type: Sprite
     state: box
   - type: Tag
@@ -160,6 +180,17 @@
     layers:
       - state: box
       - state: headset
+
+- type: entity
+  parent: BoxCardboardSmall
+  id: BoxStamps
+  name: stamp box
+  description: A small box containing stamps.
+  components: # Baking a "default" EntityTableContainerFill into this prototype seems like bad practice, so this is currently an empty box. If you need a new type of prefilled stamp box, create a new child prototype with the appropriate stamps!
+  - type: Sprite
+    layers:
+      - state: box
+      - state: stamp
 
 - type: entity
   name: meson box
@@ -468,11 +499,17 @@
           amount: 4
 
 - type: entity
-  name: darts box
   parent: BoxCardboard
   id: BoxDarts
+  name: darts box
   description: A box filled with colorful darts.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    maxItemSize: Tiny
   - type: Sprite
     layers:
       - state: box

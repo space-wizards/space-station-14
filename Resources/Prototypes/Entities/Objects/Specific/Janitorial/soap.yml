@@ -156,16 +156,18 @@
   description: A tiny piece of syndicate soap.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    layers:
-    - state: syndie-soaplet
   - type: SolutionContainerManager
     solutions:
       soap:
-        maxVol: 10
+        maxVol: 1.5 # 50 / 30 = 1.666
         reagents:
         - ReagentId: SoapReagent
-          Quantity: 10
+          Quantity: 1.5
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
+  - type: Sprite
+    layers:
+    - state: syndie-soaplet
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.04
@@ -196,6 +198,9 @@
       path: "/Audio/Effects/Fluids/splat.ogg"
       params:
         volume: -8
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-red
 
 - type: entity
   parent: BaseSoap

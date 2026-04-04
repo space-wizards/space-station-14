@@ -73,6 +73,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
@@ -104,6 +109,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
@@ -111,11 +121,6 @@
         nodeGroupID: HVPower
   - type: BatteryDischarger
   - type: Anchorable
-
-- type: entity
-  parent: BaseSMES
-  id: DebugSMES
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseSMES
@@ -127,11 +132,6 @@
 
 - type: entity
   parent: BaseSubstation
-  id: DebugSubstation
-  suffix: DEBUG, Empty
-
-- type: entity
-  parent: BaseSubstation
   id: DebugSubstationRecharging
   suffix: DEBUG, AutoRecharge
   components:
@@ -140,21 +140,11 @@
 
 - type: entity
   parent: BaseSubstationWall
-  id: DebugSubstationWall
-  suffix: DEBUG, Empty
-
-- type: entity
-  parent: BaseSubstationWall
   id: DebugSubstationWallRecharging
   suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-
-- type: entity
-  parent: BaseAPC
-  id: DebugAPC
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseAPC
