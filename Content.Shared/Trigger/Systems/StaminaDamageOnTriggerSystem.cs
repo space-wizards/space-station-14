@@ -1,34 +1,18 @@
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class StaminaDamageOnTriggerSystem : EntitySystem
+public sealed class StaminaDamageOnTriggerSystem : XOnTriggerSystem<StaminaDamageOnTriggerComponent>
 {
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<StaminaDamageOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<StaminaDamageOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<StaminaDamageOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
-        if (target == null)
-            return;
-
-        var ev = new BeforeStaminaDamageOnTriggerEvent(ent.Comp.Stamina, target.Value);
+        var ev = new BeforeStaminaDamageOnTriggerEvent(ent.Comp.Stamina, target);
         RaiseLocalEvent(ent.Owner, ref ev);
 
-        _stamina.TakeStaminaDamage(target.Value, ev.Stamina, source: args.User, with: ent.Owner, ignoreResist: ent.Comp.IgnoreResistances);
+        _stamina.TakeStaminaDamage(target, ev.Stamina, source: args.User, with: ent.Owner, ignoreResist: ent.Comp.IgnoreResistances);
 
         args.Handled = true;
     }

@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -9,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 
 [TestFixture]
 [TestOf(typeof(ChemicalReactionSystem))]
-public sealed class SolutionRoundingTest
+public sealed class SolutionRoundingTest : GameTest
 {
     // This test tests two things:
     // * A rounding error in reaction code while I was making chloral hydrate
@@ -64,10 +65,15 @@ public sealed class SolutionRoundingTest
     SolutionRoundingTestReagentD: 1
 ";
 
+    private const string SolutionRoundingTestReagentA = "SolutionRoundingTestReagentA";
+    private const string SolutionRoundingTestReagentB = "SolutionRoundingTestReagentB";
+    private const string SolutionRoundingTestReagentC = "SolutionRoundingTestReagentC";
+    private const string SolutionRoundingTestReagentD = "SolutionRoundingTestReagentD";
+
     [Test]
     public async Task Test()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var testMap = await pair.CreateTestMap();
 
@@ -84,12 +90,12 @@ public sealed class SolutionRoundingTest
             solutionEnt = newSolutionEnt!.Value;
             solution = newSolution!;
 
-            system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentC", 50));
-            system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentB", 30));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentC, 50));
+            system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentB, 30));
 
             for (var i = 0; i < 9; i++)
             {
-                system.TryAddSolution(solutionEnt, new Solution("SolutionRoundingTestReagentA", 10));
+                system.TryAddSolution(solutionEnt, new Solution(SolutionRoundingTestReagentA, 10));
             }
         });
 
@@ -98,25 +104,23 @@ public sealed class SolutionRoundingTest
             Assert.Multiple(() =>
             {
                 Assert.That(
-                    solution.ContainsReagent("SolutionRoundingTestReagentA", null),
+                    solution.ContainsReagent(SolutionRoundingTestReagentA, null),
                     Is.False,
                     "Solution should not contain reagent A");
 
                 Assert.That(
-                    solution.ContainsReagent("SolutionRoundingTestReagentB", null),
+                    solution.ContainsReagent(SolutionRoundingTestReagentB, null),
                     Is.False,
                     "Solution should not contain reagent B");
 
                 Assert.That(
-                    solution![new ReagentId("SolutionRoundingTestReagentC", null)].Quantity,
+                    solution![new ReagentId(SolutionRoundingTestReagentC, null)].Quantity,
                     Is.EqualTo((FixedPoint2) 20));
 
                 Assert.That(
-                    solution![new ReagentId("SolutionRoundingTestReagentD", null)].Quantity,
+                    solution![new ReagentId(SolutionRoundingTestReagentD, null)].Quantity,
                     Is.EqualTo((FixedPoint2) 30));
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }

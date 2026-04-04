@@ -1,9 +1,11 @@
+# When adding new crayons, also add it to id: AllCrayonsTable
+
 - type: entity
   abstract: true
   parent: BaseItem
   id: CrayonInedible
   name: crayon
-  description: A colourful crayon. Looks tasty. Mmmm...
+  description: A colourful crayon. A forbidden flavor.
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -15,6 +17,7 @@
     - Write
     - Crayon
     - Trash
+    - Recyclable
   - type: SpaceGarbage
   - type: UserInterface
     interfaces:
@@ -31,17 +34,8 @@
   abstract: true
   parent: CrayonInedible
   id: Crayon
-  name: crayon
   description: A colourful crayon. Looks tasty. Mmmm...
   components:
-  - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
-  - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: Tiny
-  - type: Tag
-    tags:
-    - Recyclable
   - type: Edible
   - type: FlavorProfile
     flavors:
@@ -56,24 +50,7 @@
         - ReagentId: MindbreakerToxin
           Quantity: 2
 
-- type: entity
-  parent: Crayon
-  id: CrayonWhite
-  name: white crayon
-  components:
-  - type: Sprite
-    state: white
-  - type: Item
-    heldPrefix: white
-  - type: Crayon
-    color: white
-  - type: Tag
-    tags:
-    - Write
-    - Crayon
-    - CrayonWhite
-    - Recyclable
-    - Trash
+# special crayons
 
 - type: entity
   parent: Crayon
@@ -108,16 +85,11 @@
     selectableColor: true
   - type: LimitedCharges
     maxCharges: 30
-  - type: Tag
-    tags:
-    - Write
-    - Crayon
-    - Recyclable
-    - Trash
 
 - type: entity
   parent: CrayonRainbow
   id: CrayonInfinite # should not be player available to prevent decal spam
+  categories: [ DoNotMap ]
   name: infinite crayon
   components:
   - type: Crayon
@@ -139,14 +111,28 @@
     deleteEmpty: false
     color: Red
     selectableColor: true
-  - type: LimitedCharges
-    maxCharges: 30
   - type: AutoRecharge
     rechargeDuration: 5
+
+# monocolor crayons
+
+- type: entity
+  parent: Crayon
+  id: CrayonWhite
+  name: white crayon
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    heldPrefix: white
+  - type: Crayon
+    color: white
   - type: Tag
     tags:
     - Write
     - Crayon
+    - CrayonWhite
+    - Recyclable
     - Trash
 
 - type: entity
@@ -284,7 +270,7 @@
 
 - type: entity
   parent: BoxCardboard
-  id: CrayonBox
+  id: CrayonBoxEmpty
   name: crayon box
   description: It's a box of crayons.
   components:
@@ -298,17 +284,9 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: Small
+    shape:
+    - 0,0,1,1
     heldPrefix: box
-  - type: StorageFill
-    contents:
-    - id: CrayonRed
-    - id: CrayonOrange
-    - id: CrayonYellow
-    - id: CrayonGreen
-    - id: CrayonBlue
-    - id: CrayonPurple
-    - id: CrayonBlack
-    - id: CrayonWhite
   - type: ItemMapper
     mapLayers:
       black_box:
@@ -344,3 +322,21 @@
           tags:
           - CrayonWhite
   - type: Appearance
+
+- type: entity
+  parent: CrayonBoxEmpty
+  id: CrayonBox
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrayonRed
+        - id: CrayonOrange
+        - id: CrayonYellow
+        - id: CrayonGreen
+        - id: CrayonBlue
+        - id: CrayonPurple
+        - id: CrayonBlack
+        - id: CrayonWhite

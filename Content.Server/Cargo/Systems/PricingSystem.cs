@@ -1,23 +1,21 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Administration;
-using Content.Shared.Body.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -27,8 +25,8 @@ namespace Content.Server.Cargo.Systems;
 public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -36,6 +34,8 @@ public sealed class PricingSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
+        SubscribeLocalEvent<RandomPriceComponent, MapInitEvent>(SetRandomPrice);
+        SubscribeLocalEvent<RandomPriceComponent, PriceCalculationEvent>(CalculateRandomPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -96,18 +96,38 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partPenalty = 0.0;
-        if (TryComp<BodyComponent>(uid, out var body))
+        args.Price += component.Price * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
+    }
+
+    private void SetRandomPrice(Entity<RandomPriceComponent> entity, ref MapInitEvent args)
+    {
+        if (entity.Comp.RandomPrice == null)
         {
-            var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
-            var totalPartsPresent = partList.Sum(_ => 1);
-            var totalParts = partList.Count;
+            var modifier = _random.NextDouble();
+            switch (entity.Comp.PricingCurve)
+            {
+                default:
+                case RandomPricingCurve.Linear:
+                    break;
+                case RandomPricingCurve.Squared:
+                    modifier = modifier * modifier;
+                    break;
+                case RandomPricingCurve.Cubed:
+                    modifier = modifier * modifier * modifier;
+                    break;
+            }
 
-            var partRatio = totalPartsPresent / (double) totalParts;
-            partPenalty = component.Price * (1 - partRatio) * component.MissingBodyPartPenalty;
+            entity.Comp.RandomPrice = modifier * entity.Comp.MaxRandomPrice;
         }
+    }
 
-        args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
+    private void CalculateRandomPrice(Entity<RandomPriceComponent> entity, ref PriceCalculationEvent args)
+    {
+        // TODO: Estimated pricing.
+        if (args.Handled)
+            return;
+
+        args.Price += entity.Comp.RandomPrice ?? 0;
     }
 
     private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)
