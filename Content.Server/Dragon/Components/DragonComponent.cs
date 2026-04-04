@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
@@ -68,6 +69,18 @@ namespace Content.Server.Dragon
         [DataField]
         public ProtoId<NpcFactionPrototype> Faction = "Dragon";
 
+        /// <summary>
+        /// The smoke to spawn upon rift timeout death.
+        /// </summary>
+        [DataField]
+        public EntProtoId SmokePrototype = "BloodSmoke";
+
+        /// <summary>
+        /// The solution to place into the smoke (mostly just needed for color)
+        /// </summary>
+        [DataField]
+        public Solution SmokeSolution = new ([new("Blood", 1)]);
+        
         /// <summary>
         /// This alert displays how long the dragon has to spawn a rift
         /// </summary>
