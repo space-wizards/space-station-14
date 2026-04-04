@@ -5,8 +5,7 @@ namespace Content.Shared.SurveillanceCamera.Components;
 /// <summary>
 /// Marks an entity with <see cref="SurveillanceCameraComponent"/> whenever entities are contacting with it.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CameraActiveOnCollideComponent : Component
 {
     /// <summary>

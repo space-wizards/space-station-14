@@ -8,6 +8,9 @@ namespace Content.Shared.SurveillanceCamera.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CameraActiveOnCollideColliderComponent : Component
 {
+    /// <summary>
+    /// The fixture id used for detecting the collision.
+    /// </summary>
     [DataField]
     public string FixtureId = "lightTrigger";
 }
