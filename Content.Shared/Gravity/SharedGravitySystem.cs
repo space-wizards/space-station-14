@@ -1,171 +1,255 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
-using Robust.Shared.GameStates;
+using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Gravity
+namespace Content.Shared.Gravity;
+
+public abstract partial class SharedGravitySystem : EntitySystem
 {
-    public abstract partial class SharedGravitySystem : EntitySystem
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+
+    public static readonly ProtoId<AlertPrototype> WeightlessAlert = "Weightless";
+
+    protected EntityQuery<GravityComponent> GravityQuery;
+    private EntityQuery<GravityAffectedComponent> _weightlessQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+
+    public override void Initialize()
     {
-        [Dependency] protected readonly IGameTiming Timing = default!;
-        [Dependency] private readonly AlertsSystem _alerts = default!;
+        base.Initialize();
+        // Grid Gravity
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
 
-        public static readonly ProtoId<AlertPrototype> WeightlessAlert = "Weightless";
+        // Weightlessness
+        SubscribeLocalEvent<GravityAffectedComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GravityAffectedComponent, EntParentChangedMessage>(OnEntParentChanged);
+        SubscribeLocalEvent<GravityAffectedComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
-        private EntityQuery<GravityComponent> _gravityQuery;
+        // Alerts
+        SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
+        SubscribeLocalEvent<AlertsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
+        SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
 
-        public bool IsWeightless(EntityUid uid, PhysicsComponent? body = null, TransformComponent? xform = null)
-        {
-            Resolve(uid, ref body, false);
+        // Impulse
+        SubscribeLocalEvent<GravityAffectedComponent, ShooterImpulseEvent>(OnShooterImpulse);
+        SubscribeLocalEvent<GravityAffectedComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
 
-            if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
-                return false;
+        GravityQuery = GetEntityQuery<GravityComponent>();
+        _weightlessQuery = GetEntityQuery<GravityAffectedComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+    }
 
-            if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
-                return ignoreGravityComponent.Weightless;
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        UpdateShake();
+    }
 
-            var ev = new IsWeightlessEvent(uid);
-            RaiseLocalEvent(uid, ref ev);
-            if (ev.Handled)
-                return ev.IsWeightless;
+    public bool IsWeightless(Entity<GravityAffectedComponent?> entity)
+    {
+        // If we can be weightless and are weightless, return true, otherwise return false
+        return _weightlessQuery.Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
+    }
 
-            if (!Resolve(uid, ref xform))
-                return true;
+    private bool GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
+    {
+        if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
+            return false;
 
-            // If grid / map has gravity
-            if (EntityGridOrMapHaveGravity((uid, xform)))
-                return false;
+        if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
+            return false;
 
+        // Check if something other than the grid or map is overriding our gravity
+        var ev = new IsWeightlessEvent();
+        RaiseLocalEvent(entity, ref ev);
+        if (ev.Handled)
+            return ev.IsWeightless;
+
+        return !EntityGridOrMapHaveGravity(entity.Owner);
+    }
+
+    /// <summary>
+    /// Refreshes weightlessness status, needs to be called anytime it would change.
+    /// </summary>
+    /// <param name="entity">The entity we are updating the weightless status of</param>
+    public void RefreshWeightless(Entity<GravityAffectedComponent?> entity)
+    {
+        if (!_weightlessQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        UpdateWeightless(entity!);
+    }
+
+    /// <summary>
+    /// Overload of <see cref="RefreshWeightless(Entity{GravityAffectedComponent?})"/> which also takes a bool for the weightlessness value we want to change to.
+    /// This method should only be called if there is no chance something can override the weightless value you're trying to change to.
+    /// This is really only the case if you're applying a weightless value that overrides non-conditionally from events or are a grid with the gravity component.
+    /// </summary>
+    /// <param name="entity">The entity we are updating the weightless status of</param>
+    /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
+    public void RefreshWeightless(Entity<GravityAffectedComponent?> entity, bool weightless)
+    {
+        if (!_weightlessQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        // Only update if we're changing our weightless status
+        if (entity.Comp.Weightless == weightless)
+            return;
+
+        UpdateWeightless(entity!);
+    }
+
+    private void UpdateWeightless(Entity<GravityAffectedComponent> entity)
+    {
+        var newWeightless = GetWeightless(entity);
+
+        // Don't network or raise events if it's not changing
+        if (newWeightless == entity.Comp.Weightless)
+            return;
+
+        entity.Comp.Weightless = newWeightless;
+        Dirty(entity);
+
+        var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
+        RaiseLocalEvent(entity, ref ev);
+    }
+
+    private void OnMapInit(Entity<GravityAffectedComponent> entity, ref MapInitEvent args)
+    {
+        RefreshWeightless((entity.Owner, entity.Comp));
+    }
+
+    private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
+    {
+        if (args.Weightless)
+            _alerts.ShowAlert(entity.AsNullable(), WeightlessAlert);
+        else
+            _alerts.ClearAlert(entity.AsNullable(), WeightlessAlert);
+    }
+
+    private void OnEntParentChanged(Entity<GravityAffectedComponent> entity, ref EntParentChangedMessage args)
+    {
+        // If we've moved but are still on the same grid, then don't do anything.
+        if (args.OldParent == args.Transform.GridUid)
+            return;
+
+        RefreshWeightless((entity.Owner, entity.Comp));
+    }
+
+    private void OnBodyTypeChanged(Entity<GravityAffectedComponent> entity, ref PhysicsBodyTypeChangedEvent args)
+    {
+        // No need to update weightlessness if we're not weightless and we're a body type that can't be weightless
+        if (args.New is BodyType.Static or BodyType.Kinematic && entity.Comp.Weightless == false)
+            return;
+
+        RefreshWeightless((entity.Owner, entity.Comp));
+    }
+
+    /// <summary>
+    /// Checks if a given entity is currently standing on a grid or map that supports having gravity at all.
+    /// </summary>
+    public bool EntityOnGravitySupportingGridOrMap(Entity<TransformComponent?> entity)
+    {
+        entity.Comp ??= Transform(entity);
+
+        return GravityQuery.HasComp(entity.Comp.GridUid) ||
+               GravityQuery.HasComp(entity.Comp.MapUid);
+    }
+
+    /// <summary>
+    /// Checks if a given entity is currently standing on a grid or map that has gravity of some kind.
+    /// </summary>
+    public bool EntityGridOrMapHaveGravity(Entity<TransformComponent?> entity)
+    {
+        entity.Comp ??= Transform(entity);
+
+        // DO NOT SET TO WEIGHTLESS IF THEY'RE IN NULL-SPACE
+        // TODO: If entities actually properly pause when leaving PVS rather than entering null-space this can probably go.
+        if (entity.Comp.MapID == MapId.Nullspace)
             return true;
-        }
 
-        /// <summary>
-        /// Checks if a given entity is currently standing on a grid or map that supports having gravity at all.
-        /// </summary>
-        public bool EntityOnGravitySupportingGridOrMap(Entity<TransformComponent?> entity)
+        return GravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
+               GravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;
+    }
+
+    private void OnGravityChange(ref GravityChangedEvent args)
+    {
+        var gravity = AllEntityQuery<GravityAffectedComponent, TransformComponent>();
+        while(gravity.MoveNext(out var uid, out var weightless, out var xform))
         {
-            entity.Comp ??= Transform(entity);
+            if (xform.GridUid != args.ChangedGridIndex)
+                continue;
 
-            return _gravityQuery.HasComp(entity.Comp.GridUid) ||
-                   _gravityQuery.HasComp(entity.Comp.MapUid);
-        }
-
-
-        /// <summary>
-        /// Checks if a given entity is currently standing on a grid or map that has gravity of some kind.
-        /// </summary>
-        public bool EntityGridOrMapHaveGravity(Entity<TransformComponent?> entity)
-        {
-            entity.Comp ??= Transform(entity);
-
-            return _gravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
-                   _gravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-            SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
-            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
-            SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
-            SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
-
-            _gravityQuery = GetEntityQuery<GravityComponent>();
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            UpdateShake();
-        }
-
-        private void OnHandleState(EntityUid uid, GravityComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not GravityComponentState state)
-                return;
-
-            if (component.EnabledVV == state.Enabled)
-                return;
-            component.EnabledVV = state.Enabled;
-            var ev = new GravityChangedEvent(uid, component.EnabledVV);
-            RaiseLocalEvent(uid, ref ev, true);
-        }
-
-        private void OnGetState(EntityUid uid, GravityComponent component, ref ComponentGetState args)
-        {
-            args.State = new GravityComponentState(component.EnabledVV);
-        }
-
-        private void OnGravityChange(ref GravityChangedEvent ev)
-        {
-            var alerts = AllEntityQuery<AlertsComponent, TransformComponent>();
-            while(alerts.MoveNext(out var uid, out _, out var xform))
-            {
-                if (xform.GridUid != ev.ChangedGridIndex)
-                    continue;
-
-                if (!ev.HasGravity)
-                {
-                    _alerts.ShowAlert(uid, WeightlessAlert);
-                }
-                else
-                {
-                    _alerts.ClearAlert(uid, WeightlessAlert);
-                }
-            }
-        }
-
-        private void OnAlertsSync(AlertSyncEvent ev)
-        {
-            if (IsWeightless(ev.Euid))
-            {
-                _alerts.ShowAlert(ev.Euid, WeightlessAlert);
-            }
-            else
-            {
-                _alerts.ClearAlert(ev.Euid, WeightlessAlert);
-            }
-        }
-
-        private void OnAlertsParentChange(EntityUid uid, AlertsComponent component, ref EntParentChangedMessage args)
-        {
-            if (IsWeightless(uid))
-            {
-                _alerts.ShowAlert(uid, WeightlessAlert);
-            }
-            else
-            {
-                _alerts.ClearAlert(uid, WeightlessAlert);
-            }
-        }
-
-        private void OnGridInit(GridInitializeEvent ev)
-        {
-            EnsureComp<GravityComponent>(ev.EntityUid);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class GravityComponentState : ComponentState
-        {
-            public bool Enabled { get; }
-
-            public GravityComponentState(bool enabled)
-            {
-                Enabled = enabled;
-            }
+            RefreshWeightless((uid, weightless), !args.HasGravity);
         }
     }
 
-    [ByRefEvent]
-    public record struct IsWeightlessEvent(EntityUid Entity, bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
+    private void OnAlertsSync(AlertSyncEvent ev)
     {
-        SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;
+        if (IsWeightless(ev.Euid))
+            _alerts.ShowAlert(ev.Euid, WeightlessAlert);
+        else
+            _alerts.ClearAlert(ev.Euid, WeightlessAlert);
+    }
+
+    private void OnAlertsParentChange(Entity<AlertsComponent> entity, ref EntParentChangedMessage args)
+    {
+        if (IsWeightless(entity.Owner))
+            _alerts.ShowAlert(entity.AsNullable(), WeightlessAlert);
+        else
+            _alerts.ClearAlert(entity.AsNullable(), WeightlessAlert);
+    }
+
+    private void OnGridInit(GridInitializeEvent ev)
+    {
+        EnsureComp<GravityComponent>(ev.EntityUid);
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class GravityComponentState : ComponentState
+    {
+        public bool Enabled { get; }
+
+        public GravityComponentState(bool enabled)
+        {
+            Enabled = enabled;
+        }
+    }
+
+    private void OnThrowerImpulse(Entity<GravityAffectedComponent> entity, ref ThrowerImpulseEvent args)
+    {
+        args.Push |= IsWeightless((entity.Owner, entity.Comp));
+    }
+
+    private void OnShooterImpulse(Entity<GravityAffectedComponent> entity, ref ShooterImpulseEvent args)
+    {
+        args.Push |= IsWeightless((entity.Owner, entity.Comp));
     }
 }
+
+/// <summary>
+/// Raised to determine if an entity's weightlessness is being overwritten by a component or item with a component.
+/// </summary>
+/// <param name="IsWeightless">Whether we should be weightless</param>
+/// <param name="Handled">Whether something is trying to override our weightlessness</param>
+[ByRefEvent]
+public record struct IsWeightlessEvent(bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
+{
+    SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;
+}
+
+/// <summary>
+/// Raised on an entity when their weightless status changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct WeightlessnessChangedEvent(bool Weightless);

@@ -832,6 +832,7 @@
     - FoodOnion
   mutationPrototypes:
     - onionred
+    - bloonion
   lifespan: 25
   maturation: 8
   production: 6
@@ -1293,10 +1294,6 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Desoxyephedrine:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
     Vitamin:
       Min: 1
       Max: 2
@@ -1331,10 +1328,6 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Desoxyephedrine:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
 
 - type: seed
   id: galaxythistle
@@ -1381,6 +1374,10 @@
       Min: 1
       Max: 25
       PotencyDivisor: 4
+    Desoxyephedrine: # meff!!
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
 
 - type: seed
   id: flyAmanita
@@ -1994,3 +1991,38 @@
       Min: 1
       Max: 2
       PotencyDivisor: 40
+
+- type: seed
+  id: bloonion
+  name: seeds-bloonion-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bloonion-display-name
+  plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
+  packetPrototype: BloonionSeeds
+  productPrototypes:
+  - FoodBloonion
+  lifespan: 25
+  maturation: 15
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 4
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Potassium:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Phosphorus:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sugar:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Allicin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

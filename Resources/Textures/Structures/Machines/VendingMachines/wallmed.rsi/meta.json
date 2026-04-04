@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae, off.png taken from /tg/station commit ede31369cfa5ea1bed9262b5ef4bbef85f60fe26 and edited by @Flareguy",
+  "copyright": "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae, off.png taken from /tg/station commit ede31369cfa5ea1bed9262b5ef4bbef85f60fe26 and edited by @Flareguy & IProduceWidgets (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -33,6 +33,9 @@
     },
     {
       "name": "off"
+    },
+    {
+      "name": "off-civilian"
     }
   ]
 }
