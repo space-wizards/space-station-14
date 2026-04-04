@@ -15,26 +15,24 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 
     public override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
     {
-        if (TryComp<NodeContainerComponent>(entity, out var nodeContainerComp))
-        {
-            var newNodeGroupId = setting.Voltage switch
-            {
-                Voltage.Apc => NodeGroupID.Apc,
-                Voltage.Medium => NodeGroupID.MVPower,
-                Voltage.High => NodeGroupID.HVPower,
-                _ => NodeGroupID.Default,
-            };
+        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp) ||
+            !TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
+            return;
 
-            var inputNode = nodeContainerComp.Nodes["input"];
-            _nodeGroupSystem.QueueNodeRemove(inputNode);
-            inputNode.SetNodeGroupId(newNodeGroupId);
-            _nodeGroupSystem.QueueReflood(inputNode);
-        }
-
-        if (TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))
+        var newNodeGroupId = setting.Voltage switch
         {
-            powerConsumerComp.Voltage = setting.Voltage;
-            powerConsumerComp.DrawRate = setting.Wattage;
-        }
+            Voltage.Apc => NodeGroupID.Apc,
+            Voltage.Medium => NodeGroupID.MVPower,
+            Voltage.High => NodeGroupID.HVPower,
+            _ => NodeGroupID.Default,
+        };
+
+        var inputNode = nodeContainerComp.Nodes["input"];
+        _nodeGroupSystem.QueueNodeRemove(inputNode);
+        inputNode.SetNodeGroupId(newNodeGroupId);
+        _nodeGroupSystem.QueueReflood(inputNode);
+
+        powerConsumerComp.Voltage = setting.Voltage;
+        powerConsumerComp.DrawRate = setting.Wattage;
     }
 }
