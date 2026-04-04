@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Traitor.Uplink;
@@ -88,7 +89,7 @@ public sealed class StoreTests : GameTest
             mindSystem.TransferTo(mind, human, mind: mind);
 
             FixedPoint2 originalBalance = 20;
-            uplinkSystem.AddUplink(human, originalBalance, null, pda, true, true);
+            uplinkSystem.AddUplink(human, originalBalance, out _, pda, null, true);
 
             var storeComponent = entManager.GetComponent<StoreComponent>(pda);
             var discountComponent = entManager.GetComponent<StoreDiscountComponent>(pda);
