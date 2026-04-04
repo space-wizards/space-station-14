@@ -1,12 +1,9 @@
-﻿using Robust.Shared.GameStates;
-using Content.Shared.Power;
-
-namespace Content.Server.Power.Components;
+﻿namespace Content.Shared.Power.Components;
 
 /// <summary>
 ///     Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentState]
 public sealed partial class VoltageTogglerComponent : Component
 {
     /// <summary>
