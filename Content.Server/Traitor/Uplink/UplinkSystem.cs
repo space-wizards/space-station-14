@@ -77,8 +77,8 @@ public sealed class UplinkSystem : EntitySystem
     {
         code = null;
 
-        uplinkEntity ??= FindUplinkTarget(user);
         storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
+        uplinkEntity ??= FindUplinkTarget(user);
 
         if (uplinkEntity == null)
             return false;
@@ -100,7 +100,7 @@ public sealed class UplinkSystem : EntitySystem
             _ringer.SetBoundUplinkEntity((storeEntity.Value, accessComp), uplinkEntity.Value);
         }
 
-        SetUplink(user, storeEntity.Value, balance, giveDiscounts);
+        SetUplink(user, storeEntity.Value, uplinkEntity.Value, balance, giveDiscounts);
 
         return true;
     }
@@ -108,25 +108,35 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
+    private void SetUplink(EntityUid user, EntityUid store, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
+    {
+        SetUplink(user, store, balance, giveDiscounts);
+        var remote = EnsureComp<RemoteStoreComponent>(uplink);
+        remote.Store = store;
+    }
+
+    /// <summary>
+    /// Configure TC for the uplink
+    /// </summary>
+    private void SetUplink(EntityUid user, EntityUid store, FixedPoint2 balance, bool giveDiscounts)
     {
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;
 
-        var store = EnsureComp<StoreComponent>(uplink);
+        var storeComp = EnsureComp<StoreComponent>(store);
 
-        store.AccountOwner = mind;
+        storeComp.AccountOwner = mind;
 
-        store.Balance.Clear();
+        storeComp.Balance.Clear();
         _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
-            uplink,
-            store);
+            store,
+            storeComp);
 
         var uplinkInitializedEvent = new StoreInitializedEvent(
             TargetUser: mind,
-            Store: uplink,
+            Store: store,
             UseDiscounts: giveDiscounts,
-            Listings: _store.GetAvailableListings(mind, uplink, store)
+            Listings: _store.GetAvailableListings(mind, store, storeComp)
                 .ToArray());
         RaiseLocalEvent(ref uplinkInitializedEvent);
     }
@@ -163,7 +173,7 @@ public sealed class UplinkSystem : EntitySystem
     /// Finds the entity that can hold an uplink for a user.
     /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
     /// </summary>
-    public EntityUid? FindUplinkTarget(EntityUid user)
+    public Entity<RemoteStoreComponent>? FindUplinkTarget(EntityUid user)
     {
         // Try to find PDA in inventory
         if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
@@ -172,16 +182,16 @@ public sealed class UplinkSystem : EntitySystem
             {
                 var pdaUid = containerSlot.ContainedEntity;
 
-                if (_store.ValidStoreTarget<PdaComponent>(pdaUid))
-                    return pdaUid;
+                if (HasComp<StoreComponent>(pdaUid) && TryComp<RemoteStoreComponent>(pdaUid, out var remote))
+                    return (pdaUid.Value, remote);
             }
         }
 
         // Also check hands
         foreach (var item in _handsSystem.EnumerateHeld(user))
         {
-            if (_store.ValidStoreTarget<PdaComponent>(item))
-                return item;
+            if (HasComp<StoreComponent>(item) && TryComp<RemoteStoreComponent>(item, out var remote))
+                return (item, remote);
         }
 
         return null;

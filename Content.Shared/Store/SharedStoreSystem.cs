@@ -56,25 +56,4 @@ public abstract partial class SharedStoreSystem : EntitySystem
 
         return null;
     }
-
-    public bool ValidStoreTarget(EntityUid? target)
-    {
-        return StoreQuery.HasComp(target) || RemoteStoreQuery.HasComp(target);
-    }
-
-    public bool ValidStoreTarget<T>(EntityUid? target) where T : Component
-    {
-        if (!HasComp<T>(target))
-            return false;
-
-        return StoreQuery.HasComp(target) || RemoteStoreQuery.HasComp(target);
-    }
-
-    public bool ValidStoreTarget<T>(EntityUid? target, EntityQuery<T> query) where T : Component
-    {
-        if (!query.HasComp(target))
-            return false;
-
-        return StoreQuery.HasComp(target) || RemoteStoreQuery.HasComp(target);
-    }
 }
