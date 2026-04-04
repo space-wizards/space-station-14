@@ -1,21 +1,18 @@
 using Content.Shared.Emp;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
 public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemovedEvent>(OnEmpDisabledRemoved);
-
-        InitializeCollide();
     }
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -42,36 +39,6 @@ public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
             args.Disabled = true;
             SetActive(uid, false);
         }
-    }
-
-    protected void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
-    {
-        Log.Debug("Resolving");
-        // Don't log missing, because otherwise tests fail.
-        if (!Resolve(uid, ref component, ref appearance, false))
-        {
-            return;
-        }
-
-        var key = SurveillanceCameraVisuals.Disabled;
-
-        if (component.Active)
-        {
-            key = SurveillanceCameraVisuals.Active;
-        }
-
-        if (component.ActiveViewers.Count > 0 || component.ActiveMonitors.Count > 0)
-        {
-            key = SurveillanceCameraVisuals.InUse;
-        }
-
-        var ev = new SurveillanceCameraGetOverrideAppearanceEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        if (ev.State != null)
-            key = ev.State.Value;
-
-        _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 
     private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemovedEvent args)
@@ -104,8 +71,9 @@ public enum SurveillanceCameraVisuals : byte
 }
 
 /// <summary>
-/// Raised on a camera entity to find a state to override its visuals with.
+/// Raised on a camera entity to find whether it is externally viewed by some entity.
+/// This does not use the actual viewers or monitors camera has and is simply used to see whether the camera is "technically"
+/// being looked through by somebody, such as the Station AI.
 /// </summary>
-/// <param name="State">The state to override the appearance with.</param>
 [ByRefEvent]
-public record struct SurveillanceCameraGetOverrideAppearanceEvent(SurveillanceCameraVisuals? State = null);
+public record struct SurveillanceCameraGetIsViewedExternallyEvent(bool Viewed = false);

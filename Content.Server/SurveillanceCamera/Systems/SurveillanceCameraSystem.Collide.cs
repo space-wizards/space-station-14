@@ -1,11 +1,12 @@
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.SurveillanceCamera;
+namespace Content.Server.SurveillanceCamera;
 
-public abstract partial class SharedSurveillanceCameraSystem
+public partial class SurveillanceCameraSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
@@ -21,7 +22,7 @@ public abstract partial class SharedSurveillanceCameraSystem
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, EndCollideEvent>(OnEnd);
 
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, ComponentShutdown>(OnCollideShutdown);
-        SubscribeLocalEvent<CameraActiveOnCollideComponent, SurveillanceCameraGetOverrideAppearanceEvent>(OnOverrideState);
+        SubscribeLocalEvent<CameraActiveOnCollideComponent, SurveillanceCameraGetIsViewedExternallyEvent>(OnOverrideState);
     }
 
     private void OnCollideShutdown(Entity<CameraActiveOnCollideColliderComponent> ent, ref ComponentShutdown args)
@@ -89,7 +90,7 @@ public abstract partial class SharedSurveillanceCameraSystem
         UpdateVisuals(args.OtherEntity);
     }
 
-    private void OnOverrideState(Entity<CameraActiveOnCollideComponent> ent, ref SurveillanceCameraGetOverrideAppearanceEvent args)
+    private void OnOverrideState(Entity<CameraActiveOnCollideComponent> ent, ref SurveillanceCameraGetIsViewedExternallyEvent args)
     {
         if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
             return;
@@ -97,7 +98,7 @@ public abstract partial class SharedSurveillanceCameraSystem
         if (!ent.Comp.Enabled)
             return;
 
-        args.State = ent.Comp.State;
+        args.Viewed = true;
     }
 }
 

@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.SurveillanceCamera.Components;
 
 /// <summary>
-/// Marks an entity with <see cref="SurveillanceCameraComponent"/> as specified <see cref="SurveillanceCameraVisuals"/> whenever entities are contacting with it.
+/// Marks an entity with <see cref="SurveillanceCameraComponent"/> whenever entities are contacting with it.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
@@ -20,10 +20,4 @@ public sealed partial class CameraActiveOnCollideComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RequiresPower = true;
-
-    /// <summary>
-    /// What appearance state to set this camera as when colliding.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SurveillanceCameraVisuals State = SurveillanceCameraVisuals.InUse;
 }

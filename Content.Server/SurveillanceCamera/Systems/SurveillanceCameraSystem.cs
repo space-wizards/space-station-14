@@ -10,11 +10,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.Light.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
+public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
@@ -22,6 +21,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SurveillanceCameraMapSystem _cameraMapSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -61,6 +61,8 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         SubscribeLocalEvent<SurveillanceCameraComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
+
+        InitializeCollide();
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -249,6 +251,17 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         UpdateVisuals(camera, component);
     }
 
+    private bool IsGettingViewed(Entity<SurveillanceCameraComponent> ent)
+    {
+        if (ent.Comp.ActiveViewers.Count > 0 || ent.Comp.ActiveMonitors.Count > 0)
+            return true;
+
+        var ev = new SurveillanceCameraGetIsViewedExternallyEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        return ev.Viewed;
+    }
+
     public override void SetActive(EntityUid camera, bool setting, SurveillanceCameraComponent? component = null)
     {
         if (!Resolve(camera, ref component))
@@ -284,6 +297,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
         }
 
         _viewSubscriberSystem.AddViewSubscriber(camera, actor.PlayerSession);
+
         component.ActiveViewers.Add(player);
 
         if (monitor != null)
@@ -374,6 +388,29 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             component.ActiveMonitors.Remove(monitor.Value);
             UpdateVisuals(camera, component);
         }
+    }
+
+    private void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
+    {
+        // Don't log missing, because otherwise tests fail.
+        if (!Resolve(uid, ref component, ref appearance, false))
+        {
+            return;
+        }
+
+        var key = SurveillanceCameraVisuals.Disabled;
+
+        if (component.Active)
+        {
+            key = SurveillanceCameraVisuals.Active;
+        }
+
+        if (IsGettingViewed((uid, component)))
+        {
+            key = SurveillanceCameraVisuals.InUse;
+        }
+
+        _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 }
 
