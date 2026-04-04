@@ -63,7 +63,7 @@ public partial class SurveillanceCameraSystem
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_cameraQuery.TryComp(args.OtherEntity, out var light))
+        if (!_cameraQuery.TryComp(args.OtherEntity, out var cameraCollider))
             return;
 
         // TODO: Engine bug IsTouching box2d yay.
@@ -72,8 +72,8 @@ public partial class SurveillanceCameraSystem
         if (contacts > 0)
             return;
 
-        light.Enabled = false;
-        Dirty(args.OtherEntity, light);
+        cameraCollider.Enabled = false;
+        Dirty(args.OtherEntity, cameraCollider);
         UpdateVisuals(args.OtherEntity);
     }
 
@@ -82,11 +82,11 @@ public partial class SurveillanceCameraSystem
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_cameraQuery.TryComp(args.OtherEntity, out var light))
+        if (!_cameraQuery.TryComp(args.OtherEntity, out var cameraCollider))
             return;
 
-        light.Enabled = true;
-        Dirty(args.OtherEntity, light);
+        cameraCollider.Enabled = true;
+        Dirty(args.OtherEntity, cameraCollider);
         UpdateVisuals(args.OtherEntity);
     }
 
