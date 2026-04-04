@@ -1430,12 +1430,6 @@
           components:
           - BorgModule
     - hand:
-        emptyRepresentative: MaterialXenoborgCrystal
-        emptyLabel: borg-slot-xenoborg-crystal-empty
-        whitelist:
-          tags:
-          - XenoborgCrystal
-    - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
         whitelist:
@@ -1463,12 +1457,6 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
-    - hand:
-        emptyRepresentative: MaterialXenoborgCrystal
-        emptyLabel: borg-slot-xenoborg-crystal-empty
-        whitelist:
-          tags:
-          - XenoborgCrystal
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
@@ -1551,6 +1539,22 @@
     - item: AccessConfiguratorXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleTileGun
+  name: tile gun xenoborg module
+  description: Module with a tile gun. wait, a what?
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-tile
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponTileGunEmpty
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
