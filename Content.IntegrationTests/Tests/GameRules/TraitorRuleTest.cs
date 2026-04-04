@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
