@@ -12,7 +12,7 @@ public sealed partial class VoltageTogglerComponent : Component
     /// <summary>
     /// List of all voltage settings.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
+    [DataField(required: true)]
     public VoltageSetting[] Settings = [];
 
     /// <summary>
