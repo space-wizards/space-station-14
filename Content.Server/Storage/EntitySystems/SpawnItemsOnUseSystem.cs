@@ -21,6 +21,8 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+        [ThreadStatic] private static HashSet<string>? _processingPrototypes;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,30 +33,53 @@ namespace Content.Server.Storage.EntitySystems
 
         private void CalculatePrice(EntityUid uid, SpawnItemsOnUseComponent component, ref PriceCalculationEvent args)
         {
+            if (_processingPrototypes == null)
+                _processingPrototypes = new HashSet<string>();
+
+            var processing = _processingPrototypes;
+
             var ungrouped = CollectOrGroups(component.Items, out var orGroups);
 
             foreach (var entry in ungrouped)
             {
-                var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+                if (entry.PrototypeId == null)
+                    continue;
+                if (!processing.Add(entry.PrototypeId))
+                    continue;
 
-                // Calculate the average price of the possible spawned items
-                args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
-
-                Del(protUid);
+                try
+                {
+                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+                    args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
+                    Del(protUid);
+                }
+                finally
+                {
+                    processing.Remove(entry.PrototypeId);
+                }
             }
 
             foreach (var group in orGroups)
             {
                 foreach (var entry in group.Entries)
                 {
-                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+                    if (entry.PrototypeId == null)
+                        continue;
+                    if (!processing.Add(entry.PrototypeId))
+                        continue;
 
-                    // Calculate the average price of the possible spawned items
-                    args.Price += _pricing.GetPrice(protUid) *
-                                  (entry.SpawnProbability / group.CumulativeProbability) *
-                                  entry.GetAmount(getAverage: true);
-
-                    Del(protUid);
+                    try
+                    {
+                        var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+                        args.Price += _pricing.GetPrice(protUid) *
+                                      (entry.SpawnProbability / group.CumulativeProbability) *
+                                      entry.GetAmount(getAverage: true);
+                        Del(protUid);
+                    }
+                    finally
+                    {
+                        processing.Remove(entry.PrototypeId);
+                    }
                 }
             }
 
