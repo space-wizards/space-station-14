@@ -834,8 +834,7 @@
       storagebase: !type:GroupSelector
         children:
         - id: PillDexalin
-          amount: &Range1to6 !type:RangeNumberSelector
-            range: 1, 6
+          amount: 1, 6
         - id: PillDylovene
           amount: *Range1to6
         - id: PillHyronalin
