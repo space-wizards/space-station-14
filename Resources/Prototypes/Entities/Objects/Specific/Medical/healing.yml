@@ -856,12 +856,6 @@
           amount: *Range1to6
         - id: PillCharcoal
           amount: *Range1to6
-        - id: PillAmbuzol
-          weight: 0.75
-          amount: *Range1to6
-        - id: PillAmbuzolPlus
-          weight: 0.75
-          amount: *Range1to6
         - id: PillSpaceDrugs
           weight: 0.75
           amount: *Range1to6
