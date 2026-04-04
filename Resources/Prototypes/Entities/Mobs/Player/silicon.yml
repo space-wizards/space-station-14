@@ -491,7 +491,7 @@
       lightTrigger:
         shape:
           !type:PhysShapeCircle
-          radius: 0.5
+          radius: 8
         density: 80
         hard: false
         layer:

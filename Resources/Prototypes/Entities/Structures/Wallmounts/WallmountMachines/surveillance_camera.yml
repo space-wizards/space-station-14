@@ -11,7 +11,7 @@
       light:
         shape:
           !type:PhysShapeCircle
-          radius: 8
+          radius: 0.5
         hard: false
         mask:
         - GhostImpassable
