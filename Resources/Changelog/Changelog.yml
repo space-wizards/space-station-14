@@ -1,152 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: On fland, the wardens enforcer has been removed.
-    type: Remove
-  id: 9059
-  time: '2025-10-08T23:45:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40786
-- author: SlamBamActionman
-  changes:
-  - message: EXPERIMENTAL Nocturine now slows the target down, with a longer duration
-      and shorter delay before activating.
-    type: Tweak
-  id: 9060
-  time: '2025-10-09T13:32:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40797
-- author: Princess-Cheeseballs
-  changes:
-  - message: Dying while asleep shouldn't permanently blind you anymore.
-    type: Fix
-  id: 9061
-  time: '2025-10-09T13:46:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40366
-- author: kontakt
-  changes:
-  - message: Bulldog magazines are now only accessible through emagged fabricators.
-    type: Tweak
-  id: 9062
-  time: '2025-10-09T14:00:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40790
-- author: Princess-Cheeseballs
-  changes:
-  - message: The thieving beacon can now detect the officer's handgun objective.
-    type: Fix
-  id: 9063
-  time: '2025-10-10T04:59:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40811
-- author: Hitlinemoss
-  changes:
-  - message: The Paladin AI lawset has been rewritten.
-    type: Tweak
-  id: 9064
-  time: '2025-10-10T12:41:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40343
-- author: kontakt
-  changes:
-  - message: Ninjas can now have a bombing target at any warp point.
-    type: Tweak
-  id: 9065
-  time: '2025-10-10T21:27:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40726
-- author: frigid-dev
-  changes:
-  - message: Ore Crabs now collide with the player if mob collisions are enabled.
-    type: Tweak
-  - message: Ore Crabs now show they are stunned
-    type: Fix
-  id: 9066
-  time: '2025-10-10T23:31:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40764
-- author: Crude Oil
-  changes:
-  - message: Removed 'Activate Holopad Projector' verb from the station AI core.
-    type: Fix
-  id: 9067
-  time: '2025-10-11T00:03:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39937
-- author: Hitlinemoss
-  changes:
-  - message: Ice now satiates thirst.
-    type: Tweak
-  - message: Ice now evaporates.
-    type: Tweak
-  id: 9068
-  time: '2025-10-11T00:20:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40149
-- author: slarticodefast
-  changes:
-  - message: The artifact analysis console no longer breaks when trying to link it
-      to multiple artifact analyzers or vice versa.
-    type: Fix
-  id: 9069
-  time: '2025-10-11T00:33:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39984
-- author: qwerltaz
-  changes:
-  - message: The ID card computer now has buttons to grant or revoke all access from
-      the target ID card.
-    type: Add
-  id: 9070
-  time: '2025-10-11T00:52:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39375
-- author: Centronias
-  changes:
-  - message: The HugBot, which is similar in purpose and construction to other small
-      robots like the CleanBot.
-    type: Add
-  id: 9071
-  time: '2025-10-11T01:05:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37557
-- author: PicklOH
-  changes:
-  - message: Added more Syndie ammo to the EMAG lathe inventory
-    type: Add
-  id: 9072
-  time: '2025-10-11T05:14:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40822
-- author: TrixxedHeart
-  changes:
-  - message: Updated Xenoarchaeology guidebook page to current system.
-    type: Tweak
-  id: 9073
-  time: '2025-10-11T17:32:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40621
-- author: HTMLSystem
-  changes:
-  - message: Added infectious anom sprites for moths and arachnids.
-    type: Add
-  id: 9074
-  time: '2025-10-11T18:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39508
-- author: ScarKy0
-  changes:
-  - message: Mice, cockroaches and other small mobs can no longer unwrap parcels.
-    type: Fix
-  id: 9075
-  time: '2025-10-11T21:32:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40838
-- author: Hitlinemoss
-  changes:
-  - message: Autolathes can now print durathread.
-    type: Add
-  id: 9076
-  time: '2025-10-11T21:46:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40837
-- author: cloudyias
-  changes:
-  - message: Added the ability for droppers to be printed via autolathes and medfabs
-    type: Add
-  id: 9077
-  time: '2025-10-11T23:15:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40074
-- author: jessicamaybe
-  changes:
-  - message: Added swabs and an emag inventory to the biogenerator
-    type: Tweak
-  id: 9078
-  time: '2025-10-12T00:15:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39037
 - author: SuperGDPWYL
   changes:
   - message: Added the Syndicate ID Card to the uplink for 1 TC.
@@ -3824,8 +3676,38 @@
   url: https://github.com/space-wizards/space-station-14/pull/42909
 - author: sowelipililimute
   changes:
-  - message: Internal code changes to damage handling may result in slightly different
-      numbers for some medicines and/or some attacks.
+  - message: Underlying technical work for future medical improvements have resulted
+      in the following changes to better accomodate future development. Please note
+      that these changes are not representative of the final product and that the
+      medical balance will receive a major overhaul once limb and organ damage are
+      fully implemented.
+    type: Tweak
+  - message: Species now regenerate -0.05 of brute types individually (from -0.02).
+    type: Tweak
+  - message: Several mobs and weapons previously dealing split brute damage now deal
+      singular damage types.
+    type: Tweak
+  - message: Several reagents previously dealing split brute damage now deals singular
+      damage types.
+    type: Tweak
+  - message: Several reagents previously healing split brute damage now evenly heals
+      instead.
+    type: Tweak
+  - message: Spiders now regenerate -0.03 of brute and burn types individually (from
+      -0.02).
+    type: Tweak
+  - message: Skeletons now evenly heal when using milk.
+    type: Tweak
+  - message: Tomato killers now heal evenly when splashed with water, blood, or robust
+      harvest.
+    type: Tweak
+  - message: Tricordrazine now evenly heals both brute, burn and toxin.
+    type: Tweak
+  - message: Desoxyephedrine now deals slighlty more blunt damage (to offset tricordazine
+      changes).
+    type: Tweak
+  - message: Crusher mark leech hits now heal 5 of each brute category on hit (was
+      7).
     type: Tweak
   id: 9549
   time: '2026-02-27T06:33:44.0000000+00:00'
@@ -3837,19 +3719,6 @@
   id: 9550
   time: '2026-02-27T16:02:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42960
-- author: Samuka
-  changes:
-  - message: 'EXPERIMENTAL: Added the xenoborg crystal!'
-    type: Add
-  - message: 'EXPERIMENTAL: Added the xenoborg extractor which can produce the xenoborg
-      crystal.'
-    type: Add
-  - message: 'EXPERIMENTAL: The recipes to make xenoborg chassis and xenoborg modules
-      now uses xenoborg crystals instead of normal materials.'
-    type: Tweak
-  id: 9551
-  time: '2026-02-28T01:08:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/42796
 - author: kontakt
   changes:
   - message: Throwing croissants no longer have a throwing knife in-hand sprite.
@@ -4003,3 +3872,164 @@
   id: 9569
   time: '2026-03-08T01:05:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42866
+- author: ScarKy0
+  changes:
+  - message: Hostile vent critters now crawl out of a single vent, alerting the station
+      about the location in advance.
+    type: Add
+  - message: Friendly critters no longer have an announcement when spawning.
+    type: Remove
+  - message: Vent critters can no longer spawn on unachored vents.
+    type: Fix
+  id: 9570
+  time: '2026-03-11T23:42:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43047
+- author: Centronias
+  changes:
+  - message: Wrapped parcels can now fit in mail carts.
+    type: Add
+  id: 9571
+  time: '2026-03-13T20:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43226
+- author: Velken
+  changes:
+  - message: Corrupted silicon laws now use scrambled text in the UI again.
+    type: Fix
+  id: 9572
+  time: '2026-03-13T23:48:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43229
+- author: TaserTheFox
+  changes:
+  - message: Fixed certain bottled reagents not having localization text.
+    type: Fix
+  id: 9573
+  time: '2026-03-14T16:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43208
+- author: Crude Oil
+  changes:
+  - message: Fixed some emitter alerts missing the word "emitter"
+    type: Fix
+  id: 9574
+  time: '2026-03-14T16:32:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43225
+- author: SnappingOpossum
+  changes:
+  - message: Certain randomised items and decorations no longer spawn with the wrong
+      rotation.
+    type: Fix
+  id: 9575
+  time: '2026-03-14T16:32:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43234
+- author: themias
+  changes:
+  - message: Healing with a holy book now gives off a holy light.
+    type: Tweak
+  id: 9576
+  time: '2026-03-14T16:33:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43189
+- author: Centronias
+  changes:
+  - message: Certain small cargo products are now delivered in parcel wrap rather
+      than in crates.
+    type: Tweak
+  id: 9577
+  time: '2026-03-15T13:59:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40834
+- author: Velken
+  changes:
+  - message: Crew manifest names can now appear in ion storm laws.
+    type: Add
+  id: 9578
+  time: '2026-03-15T16:08:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42629
+- author: Verin, Centronias
+  changes:
+  - message: Character saving is no longer broken by erroneous hair.
+    type: Fix
+  id: 9579
+  time: '2026-03-15T16:08:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43170
+- author: slarticodefast
+  changes:
+  - message: The reagent grinder interactions and user interface are now predicted
+      and should feel much more responsive.
+    type: Tweak
+  id: 9580
+  time: '2026-03-15T19:29:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42815
+- author: Eternally-Confused
+  changes:
+  - message: The chem guidebook now shows when chemicals adjust body temperature again
+    type: Fix
+  id: 9581
+  time: '2026-03-17T17:52:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42394
+- author: murolem
+  changes:
+  - message: Retextured technology disk to have the color of their discipline and
+      extra marks for each tier. Also increased sell price for higher-tier disks.
+    type: Tweak
+  id: 9582
+  time: '2026-03-17T23:05:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37719
+- author: Buunie099
+  changes:
+  - message: Fixed guidebook showing the wrong value for the maximum temperature of
+      hellfire heaters.
+    type: Tweak
+  id: 9583
+  time: '2026-03-18T06:31:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43285
+- author: ProPeperos
+  changes:
+  - message: Changed the hitbox of borg chargers, so they no longer get stuck in doorways.
+    type: Tweak
+  id: 9584
+  time: '2026-03-20T14:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43300
+- author: slarticodefast
+  changes:
+  - message: Fixed melee attack animations being rotated wrong if your camera is rotated.
+    type: Fix
+  id: 9585
+  time: '2026-03-21T17:02:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43307
+- author: SlartiBartFast, Verin
+  changes:
+  - message: Welders no longer perform an extra pass after a repair has completed.
+    type: Fix
+  id: 9586
+  time: '2026-03-22T22:57:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43321
+- author: mqole
+  changes:
+  - message: Flatpacks now use the collision of the flatpacked entity, so they can
+      be opened on tables and aren't blocked by ghosts.
+    type: Fix
+  id: 9587
+  time: '2026-03-24T20:25:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41849
+- author: Not-A-Chair
+  changes:
+  - message: Tricordrazine no longer heals radiation
+    type: Tweak
+  - message: . Tricordrazine no longer works on mobs in crit
+    type: Tweak
+  id: 9588
+  time: '2026-03-25T13:34:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43293
+- author: ArcaneValiance
+  changes:
+  - message: Ambuzol and Ambuzol Plus pills now properly cure and prevent infection
+      respectively.
+    type: Fix
+  id: 9589
+  time: '2026-03-25T13:49:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43331
+- author: salarua
+  changes:
+  - message: Chat dialogue now appears in curly quotes rather than straight quotes.
+    type: Tweak
+  id: 9590
+  time: '2026-03-27T17:53:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43350

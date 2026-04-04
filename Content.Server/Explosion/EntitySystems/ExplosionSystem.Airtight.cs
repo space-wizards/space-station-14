@@ -245,7 +245,7 @@ public sealed partial class ExplosionSystem
             var damagePerIntensity = FixedPoint2.Zero;
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
-                if (_damageableSystem.CanBeDamagedBy((uid, damageable), type))
+                if (!_damageableSystem.CanBeDamagedBy((uid, damageable), type))
                     continue;
 
                 // TODO EXPLOSION SYSTEM
