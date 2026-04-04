@@ -225,8 +225,23 @@ public sealed class ChangelingDevourSystem : EntitySystem
             && HasComp<HumanoidProfileComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
-            _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+
+            // Has the NOT target been devoured?
+            // If so, were they NOT devoured by us?
+            // Do we NOT have a stored reference to them?
+            // Add them to our saved identities.
+            if (!TryComp<ChangelingDevouredComponent>(target, out var devoured)
+                || !devoured.DevouredBy.Contains(args.User)
+                || !identityStorage.ConsumedIdentities.ContainsValue(target))
+            {
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
+                _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+
+                // We add a reference to ourselves to prevent repeated identity gain.
+                EnsureComp<ChangelingDevouredComponent>(target, out var targetDevoured);
+                targetDevoured.DevouredBy.Add(args.User);
+                Dirty(target, targetDevoured);
+            }
 
             if (_inventorySystem.TryGetSlotEntity(target, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
@@ -34,6 +35,8 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
+
+        SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
     }
 
     private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
@@ -57,7 +60,24 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         if (TryComp<ActorComponent>(ent, out var actor))
             CleanupPvsOverride(ent, actor.PlayerSession);
+
         CleanupChangelingNullspaceIdentities(ent);
+        CleanupDevouredReferences(ent);
+    }
+
+    private void OnDevouredShutdown(Entity<ChangelingDevouredComponent> ent, ref ComponentShutdown args)
+    {
+        // We remove all references to this entity for all changelings that devoured it.
+        foreach (var ling in ent.Comp.DevouredBy)
+        {
+            if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
+                continue;
+
+            var key = identityComp.ConsumedIdentities.FirstOrDefault(x => x.Value == ent.Owner).Key;
+            identityComp.ConsumedIdentities[key] = null;
+
+            Dirty(ling, identityComp);
+        }
     }
 
     private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
@@ -78,7 +98,26 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
 
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity);
+            QueueDel(consumedIdentity.Key);
+        }
+    }
+
+    /// <summary>
+    /// Removes all references to the owning changeling from ChangelingDevouredComponents.
+    /// </summary>
+    /// <param name="ent">The changeling entity</param>
+    private void CleanupDevouredReferences(Entity<ChangelingIdentityComponent> ent)
+    {
+        foreach (var entity in ent.Comp.ConsumedIdentities)
+        {
+            if (!TryComp<ChangelingDevouredComponent>(entity.Value, out var devoured))
+                continue;
+
+            if (!devoured.DevouredBy.Contains(ent.Owner))
+                continue;
+
+            devoured.DevouredBy.Remove(ent.Owner);
+            Dirty(entity.Value.Value, devoured);
         }
     }
 
@@ -132,7 +171,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (clone == null)
             return null;
 
-        ent.Comp.ConsumedIdentities.Add(clone.Value);
+        ent.Comp.ConsumedIdentities.Add(clone.Value, target);
 
         Dirty(ent);
         HandlePvsOverride(ent, clone.Value);
@@ -157,12 +196,12 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// Cleanup all PVS overrides for the owner of the ChangelingIdentity
     /// </summary>
     /// <param name="ent">The changeling storing the identities.</param>
-    /// <param name="entityUid"The session you wish to remove the overrides from.</param>
+    /// <param name="session">The session you wish to remove the overrides from.</param>
     private void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, ICommonSession session)
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.RemoveSessionOverride(identity, session);
+            _pvsOverrideSystem.RemoveSessionOverride(identity.Key, session);
         }
     }
 
@@ -175,7 +214,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.AddSessionOverride(identity, session);
+            _pvsOverrideSystem.AddSessionOverride(identity.Key, session);
         }
     }
 
