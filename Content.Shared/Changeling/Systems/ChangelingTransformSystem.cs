@@ -99,7 +99,10 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             PopupType.MediumCaution);
 
         if (_net.IsServer)
+        {
+            ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound); // cancel any previous sounds first
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
+        }
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
@@ -146,9 +149,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
-
-        if (Exists(ent.Comp.CurrentTransformSound))
-            _audio.Stop(ent.Comp.CurrentTransformSound);
+        ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)
             return;
