@@ -234,7 +234,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         var ev = new SurveillanceCameraDeactivateEvent(camera);
 
-        RemoveActiveViewers(camera, new(component.ActiveViewers), null, component);
+        RemoveActiveViewers(camera, new(component.ActivePvsViewers), null, component);
         component.Active = false;
 
         // Send a targetted event to all monitors.
@@ -251,9 +251,17 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         UpdateVisuals(camera, component);
     }
 
-    private bool IsGettingViewed(Entity<SurveillanceCameraComponent> ent)
+    /// <summary>
+    /// Checks whether the camera is being viewed through by anyone at all.
+    /// </summary>
+    /// <param name="ent">The camera to check</param>
+    /// <returns>True if the camera is looked through, otherwise False.</returns>
+    public bool IsGettingViewed(Entity<SurveillanceCameraComponent?> ent)
     {
-        if (ent.Comp.ActiveViewers.Count > 0 || ent.Comp.ActiveMonitors.Count > 0)
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (ent.Comp.ActivePvsViewers.Count > 0 || ent.Comp.ActiveMonitors.Count > 0)
             return true;
 
         var ev = new SurveillanceCameraGetIsViewedExternallyEvent();
@@ -298,7 +306,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         _viewSubscriberSystem.AddViewSubscriber(camera, actor.PlayerSession);
 
-        component.ActiveViewers.Add(player);
+        component.ActivePvsViewers.Add(player);
 
         if (monitor != null)
         {
@@ -360,7 +368,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         if (Resolve(player, ref actor))
             _viewSubscriberSystem.RemoveViewSubscriber(camera, actor.PlayerSession);
 
-        component.ActiveViewers.Remove(player);
+        component.ActivePvsViewers.Remove(player);
 
         if (monitor != null)
         {

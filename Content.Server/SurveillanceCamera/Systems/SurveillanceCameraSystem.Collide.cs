@@ -11,11 +11,11 @@ public partial class SurveillanceCameraSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
 
-    private EntityQuery<CameraActiveOnCollideComponent> _lightQuery;
+    private EntityQuery<CameraActiveOnCollideComponent> _cameraQuery;
 
     public void InitializeCollide()
     {
-        _lightQuery = GetEntityQuery<CameraActiveOnCollideComponent>();
+        _cameraQuery = GetEntityQuery<CameraActiveOnCollideComponent>();
 
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, StartCollideEvent>(OnStart);
@@ -41,7 +41,7 @@ public partial class SurveillanceCameraSystem
 
             var other = contact.OtherEnt(ent.Owner);
 
-            if (_lightQuery.HasComp(other))
+            if (_cameraQuery.HasComp(other))
             {
                 _physics.RegenerateContacts(other);
             }
@@ -52,7 +52,7 @@ public partial class SurveillanceCameraSystem
     // At the moment there's no easy way to do collision whitelists based on components.
     private void OnPreventCollide(Entity<CameraActiveOnCollideColliderComponent> ent, ref PreventCollideEvent args)
     {
-        if (!_lightQuery.HasComp(args.OtherEntity))
+        if (!_cameraQuery.HasComp(args.OtherEntity))
         {
             args.Cancelled = true;
         }
@@ -63,7 +63,7 @@ public partial class SurveillanceCameraSystem
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_lightQuery.TryComp(args.OtherEntity, out var light))
+        if (!_cameraQuery.TryComp(args.OtherEntity, out var light))
             return;
 
         // TODO: Engine bug IsTouching box2d yay.
@@ -82,7 +82,7 @@ public partial class SurveillanceCameraSystem
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_lightQuery.TryComp(args.OtherEntity, out var light))
+        if (!_cameraQuery.TryComp(args.OtherEntity, out var light))
             return;
 
         light.Enabled = true;
