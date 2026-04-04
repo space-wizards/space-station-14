@@ -148,6 +148,10 @@
     allowedEmotes: ['Chitter', 'Squeak', 'Flap']
   - type: TypingIndicator
     proto: moth
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_moth
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

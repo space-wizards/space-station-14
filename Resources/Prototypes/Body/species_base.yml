@@ -27,12 +27,6 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: HealthExaminable
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
-  - type: GenericVisualizer
-    visuals:
-      enum.CreamPiedVisuals.Creamed:
-        clownedon:
-          True: { visible: true }
-          False: { visible: false }
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
   - type: JobStatus
@@ -128,6 +122,9 @@
     factions:
     - NanoTrasen
   - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_human
   - type: ParcelWrapOverride
     parcelPrototype: WrappedParcelHumanoid
     wrapDelay: 5
@@ -184,7 +181,6 @@
   - type: PassiveDamage
     allowedStates:
     - Alive
-    damageCap: 20
     damage:
       types:
         Heat: -0.07
