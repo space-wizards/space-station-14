@@ -1,30 +1,32 @@
 using Content.Shared.Light.Components;
+using Content.Shared.SurveillanceCamera;
+using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public sealed class LightCollideSystem : EntitySystem
+public sealed class CameraLightCollideSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SlimPoweredLightSystem _lights = default!;
+    [Dependency] private readonly SharedSurveillanceCameraSystem _camera = default!;
 
-    private EntityQuery<LightOnCollideComponent> _lightQuery;
+    private EntityQuery<CameraLightOnCollideComponent> _lightQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _lightQuery = GetEntityQuery<LightOnCollideComponent>();
+        _lightQuery = GetEntityQuery<CameraLightOnCollideComponent>();
 
-        SubscribeLocalEvent<LightOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
-        SubscribeLocalEvent<LightOnCollideColliderComponent, StartCollideEvent>(OnStart);
-        SubscribeLocalEvent<LightOnCollideColliderComponent, EndCollideEvent>(OnEnd);
+        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, StartCollideEvent>(OnStart);
+        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, EndCollideEvent>(OnEnd);
 
-        SubscribeLocalEvent<LightOnCollideColliderComponent, ComponentShutdown>(OnCollideShutdown);
+        SubscribeLocalEvent<CameraLightOnCollideColliderComponent, ComponentShutdown>(OnCollideShutdown);
     }
 
-    private void OnCollideShutdown(Entity<LightOnCollideColliderComponent> ent, ref ComponentShutdown args)
+    private void OnCollideShutdown(Entity<CameraLightOnCollideColliderComponent> ent, ref ComponentShutdown args)
     {
         // TODO: Check this on the event.
         if (TerminatingOrDeleted(ent.Owner))
@@ -49,7 +51,7 @@ public sealed class LightCollideSystem : EntitySystem
 
     // You may be wondering what de fok this is doing here.
     // At the moment there's no easy way to do collision whitelists based on components.
-    private void OnPreventCollide(Entity<LightOnCollideColliderComponent> ent, ref PreventCollideEvent args)
+    private void OnPreventCollide(Entity<CameraLightOnCollideColliderComponent> ent, ref PreventCollideEvent args)
     {
         if (!_lightQuery.HasComp(args.OtherEntity))
         {
@@ -57,12 +59,12 @@ public sealed class LightCollideSystem : EntitySystem
         }
     }
 
-    private void OnEnd(Entity<LightOnCollideColliderComponent> ent, ref EndCollideEvent args)
+    private void OnEnd(Entity<CameraLightOnCollideColliderComponent> ent, ref EndCollideEvent args)
     {
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_lightQuery.HasComp(args.OtherEntity))
+        if (!_lightQuery.TryComp(args.OtherEntity, out var light))
             return;
 
         // TODO: Engine bug IsTouching box2d yay.
@@ -71,17 +73,24 @@ public sealed class LightCollideSystem : EntitySystem
         if (contacts > 0)
             return;
 
-        _lights.SetEnabled(args.OtherEntity, false);
+        light.Enabled = false;
+        Dirty(args.OtherEntity, light);
+        _camera.UpdateVisuals(args.OtherEntity);
     }
 
-    private void OnStart(Entity<LightOnCollideColliderComponent> ent, ref StartCollideEvent args)
+    private void OnStart(Entity<CameraLightOnCollideColliderComponent> ent, ref StartCollideEvent args)
     {
+        Log.Debug("Checking fixture");
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (!_lightQuery.HasComp(args.OtherEntity))
+        Log.Debug("Checking component");
+        if (!_lightQuery.TryComp(args.OtherEntity, out var light))
             return;
 
-        _lights.SetEnabled(args.OtherEntity, true);
+        Log.Debug("Enabling");
+        light.Enabled = true;
+        Dirty(args.OtherEntity, light);
+        _camera.UpdateVisuals(args.OtherEntity);
     }
 }

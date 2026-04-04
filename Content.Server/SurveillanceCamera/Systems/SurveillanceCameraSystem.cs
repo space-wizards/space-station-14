@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Light.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -19,7 +20,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SurveillanceCameraMapSystem _cameraMapSystem = default!;
 
@@ -374,29 +374,6 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             component.ActiveMonitors.Remove(monitor.Value);
             UpdateVisuals(camera, component);
         }
-    }
-
-    private void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
-    {
-        // Don't log missing, because otherwise tests fail.
-        if (!Resolve(uid, ref component, ref appearance, false))
-        {
-            return;
-        }
-
-        var key = SurveillanceCameraVisuals.Disabled;
-
-        if (component.Active)
-        {
-            key = SurveillanceCameraVisuals.Active;
-        }
-
-        if (component.ActiveViewers.Count > 0 || component.ActiveMonitors.Count > 0)
-        {
-            key = SurveillanceCameraVisuals.InUse;
-        }
-
-        _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 }
 

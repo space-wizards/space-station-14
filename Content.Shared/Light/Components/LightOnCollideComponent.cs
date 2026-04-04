@@ -6,6 +6,12 @@ namespace Content.Shared.Light.Components;
 /// Enables / disables pointlight whenever entities are contacting with it
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class LightOnCollideComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class CameraLightOnCollideComponent : Component
 {
+    /// <summary>
+    /// Whether this camera light is currently being collided with.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled;
 }
