@@ -142,6 +142,7 @@ namespace Content.Shared.Atmos
         /// The minimum difference in temperature between <see cref="GasMixture"/>s
         /// (<see cref="TileAtmosphere"/>s) required
         /// for LINDA to report a pressure difference between them for space wind.
+        /// In Kelvin.
         /// </summary>
         public const float MinimumTemperatureToMove = 5f;
 
