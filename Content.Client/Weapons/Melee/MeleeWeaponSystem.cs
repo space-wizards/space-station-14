@@ -34,15 +34,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     private const string MeleeLungeKey = "melee-lunge";
 
     public override void Initialize()
     {
         base.Initialize();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
         UpdatesOutsidePrediction = true;
     }

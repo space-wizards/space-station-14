@@ -30,6 +30,8 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] EntityQuery<TransformComponent> _transformQuery = default!;
+    [Dependency] EntityQuery<MetaDataComponent> _metaQuery = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
@@ -235,8 +237,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     /// </summary>
     private void ProcessNearbyAmbience(TransformComponent playerXform)
     {
-        var query = GetEntityQuery<TransformComponent>();
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
         var mapPos = _xformSystem.GetMapCoordinates(playerXform);
 
         // Remove out-of-range ambiences
@@ -249,9 +249,9 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             if (comp.Enabled &&
                 // Don't keep playing sounds that have changed since.
                 sound.Sound == comp.Sound &&
-                query.TryGetComponent(owner, out var xform) &&
+                _transformQuery.TryGetComponent(owner, out var xform) &&
                 xform.MapID == playerXform.MapID &&
-                !metaQuery.GetComponent(owner).EntityPaused)
+                !_metaQuery.GetComponent(owner).EntityPaused)
             {
                 // TODO: This is just trydistance for coordinates.
                 var distance = (xform.ParentUid == playerXform.ParentUid)
@@ -294,7 +294,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                 var comp = sourceEntity.Comp;
 
                 if (_playingSounds.ContainsKey(sourceEntity) ||
-                    metaQuery.GetComponent(uid).EntityPaused)
+                    _metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 var audioParams = _params
