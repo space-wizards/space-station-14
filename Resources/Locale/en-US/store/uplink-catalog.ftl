@@ -410,7 +410,7 @@ uplink-ultrabright-lantern-name = Extra-Bright Lantern
 uplink-ultrabright-lantern-desc = This ultra-bright lantern can be used to blind people, similar to a flash.
 
 uplink-travel-camera-name = Travel Camera
-uplink-travel-camera-desc = Stun people with your photography skills and the single-target camera flash. Makes you look like a tourist.
+uplink-travel-camera-desc = Stun people with your photography skills and the conveniently legal camera flash. Makes you look like a tourist.
 
 uplink-combat-medkit-name = Combat Medical Kit
 uplink-combat-medkit-desc = A medkit made for fixing combat injuries.
