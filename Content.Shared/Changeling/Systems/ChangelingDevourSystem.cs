@@ -191,12 +191,12 @@ public sealed class ChangelingDevourSystem : EntitySystem
     /// <summary>
     /// Has the given victim been devoured by the given changeling before?
     /// </summary>
-    public bool HasDevoured(EntityUid changeling, Entity<ChangelingDevouredComponent?> devoured)
+    public bool HasDevoured(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
     {
-        if (!Resolve(devoured, ref devoured.Comp, false))
-            return false; // If they don't have the component they have never been devoured.
+        if (!Resolve(changeling, ref changeling.Comp, false))
+            return false;
 
-        return devoured.Comp.DevouredBy.Contains(changeling);
+        return changeling.Comp.ConsumedIdentities.ContainsValue(devoured);
     }
 
     /// <summary>
@@ -217,7 +217,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (HasDevoured(changeling, victim))
+        if (HasDevoured(changeling.Owner, victim))
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), changeling.Owner, changeling.Owner, PopupType.Medium);
