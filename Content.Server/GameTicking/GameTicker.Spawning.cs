@@ -348,7 +348,6 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            character.Loadouts.TryGetValue(jobId, out var loadout);
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
             DebugTools.AssertNotNull(mobMaybe);

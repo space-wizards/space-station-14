@@ -627,7 +627,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
+    /// Adds to a hashset every living AI core except for an optional single excluded mind.
     /// </summary>
     public void AddAliveAi(HashSet<Entity<MindComponent>> allAi, EntityUid? exclude = null)
     {
