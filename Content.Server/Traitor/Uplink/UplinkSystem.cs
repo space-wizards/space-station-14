@@ -52,6 +52,7 @@ public sealed class UplinkSystem : EntitySystem
             return;
         }
 
+        SetUplink(args.Implanted, Spawn(TraitorUplinkStore, MapCoordinates.Nullspace), 0, false);
         Log.Error($"{ToPrettyString(args.Implanted)} did not have an uplink when they were implanted.");
     }
 
