@@ -10,13 +10,10 @@ public partial class SurveillanceCameraSystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-
-    private EntityQuery<CameraActiveOnCollideComponent> _cameraQuery;
+    [Dependency] private readonly EntityQuery<CameraActiveOnCollideComponent> _cameraQuery = default!;
 
     public void InitializeCollide()
     {
-        _cameraQuery = GetEntityQuery<CameraActiveOnCollideComponent>();
-
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, StartCollideEvent>(OnStart);
         SubscribeLocalEvent<CameraActiveOnCollideColliderComponent, EndCollideEvent>(OnEnd);
