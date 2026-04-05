@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Trigger;
 using Robust.Server.Containers;
 
 namespace Content.Server.VoiceTrigger;
@@ -29,10 +30,9 @@ public sealed class StorageVoiceControlSystem : EntitySystem
 
     private void VoiceTriggered(Entity<StorageVoiceControlComponent> ent, ref VoiceTriggeredEvent args)
     {
-        // Check if the component has any slot restrictions via AllowedSlots
         // If it has slot restrictions, check if the item is in a slot that is allowed
-        if (ent.Comp.AllowedSlots != null && _inventory.TryGetContainingSlot(ent.Owner, out var itemSlot) &&
-            (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
+        if (ent.Comp.AllowedSlots is { } allowedSlots
+            && !_inventory.InSlotWithAnyFlags(ent.Owner, allowedSlots))
             return;
 
         // Get the storage component
@@ -40,7 +40,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             return;
 
         // If the player has something in their hands, try to insert it into the storage
-        if (_hands.TryGetActiveItem(ent.Owner, out var activeItem))
+        if (_hands.TryGetActiveItem(args.Source, out var activeItem))
         {
             // Disallow insertion and provide a reason why if the person decides to insert the item into itself
             if (ent.Owner.Equals(activeItem.Value))

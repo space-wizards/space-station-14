@@ -10,7 +10,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Vector2 = System.Numerics.Vector2;
 
 namespace Content.Client.Shuttles.UI;
 

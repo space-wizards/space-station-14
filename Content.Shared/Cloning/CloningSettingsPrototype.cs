@@ -51,6 +51,12 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public bool CopyImplants = true;
 
     /// <summary>
+    ///     Should infinite status effects applied to an entity be copied or not?
+    /// </summary>
+    [DataField]
+    public bool CopyStatusEffects = true;
+
+    /// <summary>
     ///     Whitelist for the equipment allowed to be copied.
     /// </summary>
     [DataField]

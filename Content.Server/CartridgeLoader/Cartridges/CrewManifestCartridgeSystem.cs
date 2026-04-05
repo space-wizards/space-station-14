@@ -3,6 +3,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CCVar;
+using Content.Shared.CrewManifest;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -16,8 +17,7 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     [Dependency] private readonly CrewManifestSystem _crewManifest = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string CartridgePrototypeName = "CrewManifestCartridge";
+    private static readonly EntProtoId CartridgePrototypeName = "CrewManifestCartridge";
 
     /// <summary>
     /// Flag that shows that if crew manifest is allowed to be viewed from 'unsecure' entities,
@@ -61,7 +61,13 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
         var owningStation = _stationSystem.GetOwningStation(uid);
 
         if (owningStation is null)
+        {
+            // Display "loading failed" message
+            var failureMessage = Loc.GetString("crew-manifest-cartridge-loading-failed");
+            var failureState = new CrewManifestUiState(failureMessage, new CrewManifestEntries());
+            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, failureState);
             return;
+        }
 
         var (stationName, entries) = _crewManifest.GetCrewManifest(owningStation.Value);
 

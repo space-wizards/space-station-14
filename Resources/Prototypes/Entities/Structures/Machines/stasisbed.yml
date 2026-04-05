@@ -18,8 +18,13 @@
     - state: icon
     - state: unlit
       shader: unshaded
-      map: ["enum.StasisBedVisualLayers.IsOn"]
-  - type: StasisBedVisuals
+      map: ["unlit"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        unlit:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 1000
@@ -58,5 +63,5 @@
         - LowImpassable
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
   - type: PowerSwitch

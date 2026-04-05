@@ -1,0 +1,43 @@
+# Tiles found on shuttles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleWhite
+  name: stack-white-shuttle-tile
+  spawn: FloorTileItemShuttleWhite
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleBlue
+  name: stack-blue-shuttle-tile
+  spawn: FloorTileItemShuttleBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleOrange
+  name: stack-orange-shuttle-tile
+  spawn: FloorTileItemShuttleOrange
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttlePurple
+  name: stack-purple-shuttle-tile
+  spawn: FloorTileItemShuttlePurple
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleRed
+  name: stack-red-shuttle-tile
+  spawn: FloorTileItemShuttleRed
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleGrey
+  name: stack-grey-shuttle-tile
+  spawn: FloorTileItemShuttleGrey
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackShuttleBlack
+  name: stack-black-shuttle-tile
+  spawn: FloorTileItemShuttleBlack

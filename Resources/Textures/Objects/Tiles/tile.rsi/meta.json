@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github)",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github), Ironsands concrete variants modified from other concrete and inhands modified from generic inhands by SeaWyrm (github Aearo-Deepwater)",
     "size": {
         "x": 32,
         "y": 32
@@ -26,6 +26,12 @@
             "name": "dark-mono"
         },
         {
+            "name": "dark-vertical-slats"
+        },
+        {
+            "name": "dark-horizontal-slats"
+        },
+        {
             "name": "dark-pavement"
         },
         {
@@ -33,6 +39,9 @@
         },
         {
             "name": "dark-offset"
+        },
+        {
+            "name": "desertsand"
         },
         {
             "name": "dirty"
@@ -69,6 +78,23 @@
         },
         {
             "name": "oldconcrete-smooth"
+        },
+        {
+            "name": "ironsandconcrete"
+        },
+        {
+            "name": "ironsandconcrete-mono"
+        },
+        {
+            "name": "ironsandconcrete-smooth"
+        },
+        {
+            "name": "ironsandconcrete-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "ironsandconcrete-inhand-right",
+            "directions": 4
         },
         {
             "name": "gcircuit"
@@ -129,6 +155,12 @@
         },
         {
             "name": "grass"
+        },
+        {
+            "name": "grassdark"
+        },
+        {
+            "name": "grasslight"
         },
         {
             "name": "grassjungle"
@@ -238,6 +270,12 @@
             "name": "steel-pavement-vertical"
         },
         {
+            "name": "steel-vertical-slats"
+        },
+        {
+            "name": "steel-horizontal-slats"
+        },
+        {
             "name": "silver"
         },
         {
@@ -266,6 +304,12 @@
         },
         {
             "name": "white-mono"
+        },
+        {
+            "name": "white-vertical-slats"
+        },
+        {
+            "name": "white-horizontal-slats"
         },
         {
             "name": "white-pavement"
@@ -439,11 +483,35 @@
             "directions": 4
         },
         {
+            "name": "grasslight-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "grasslight-inhand-right",
+            "directions": 4
+        },
+        {
             "name": "snow-inhand-left",
             "directions": 4
         },
         {
             "name": "snow-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "grassdark-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "grassdark-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "desertsand-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "desertsand-inhand-right",
             "directions": 4
         },
         {
@@ -568,6 +636,20 @@
             "directions": 4
         },
         {
+            "name": "ironsand"
+        },
+        {
+            "name": "astro-ironsand"
+        },
+        {
+            "name": "ironsand-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "ironsand-inhand-left",
+            "directions": 4
+        },
+        {
             "name": "xenofloor"
         },
         {
@@ -580,7 +662,54 @@
             "name": "xeno-techmaint"
         },
         {
+            "name": "xenoborg-floor"
+        },
+        {
             "name": "dark-squiggly"
+        },
+        {
+            "name": "white-marble"
+        },
+        {
+            "name": "white-marble-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "white-marble-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dark-marble"
+        },
+        {
+            "name": "dark-marble-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "dark-marble-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plasmarble"
+        },
+        {
+            "name": "plasmarble-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plasmarble-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "uranium-marble"
+        },
+        {
+            "name": "uranium-marble-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "uranium-marble-inhand-right",
+            "directions": 4
         }
     ]
 }

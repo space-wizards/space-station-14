@@ -35,15 +35,18 @@
     layers:
     - state: green
     - state: ai
-  - type: RandomSpawner
-    prototypes:
-    - MobCat
-    - MobCatCalico
-    - MobCatCaracal
-    - MobCatKitten
-    rarePrototypes:
-    - MobCatSpace
-    rareChance: 0.05
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobCatSpace
+        weight: 5
+      - !type:GroupSelector
+        weight: 95
+        children:
+        - id: MobCat
+        - id: MobCatCalico
+        - id: MobCatCaracal
+        - id: MobCatKitten
 
 - type: entity
   parent: MarkerBase
@@ -85,6 +88,21 @@
   - type: ConditionalSpawner
     prototypes:
     - MobCockroach
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobMoproach
+  name: Moproach Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Animals/mothroach/moproach.rsi
+      state: icon
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobMoproach
 
 - type: entity
   parent: MarkerBase
@@ -210,7 +228,7 @@
     layers:
     - state: green
     - state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      sprite: Mobs/Animals/parrot/parrot.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobParrot
