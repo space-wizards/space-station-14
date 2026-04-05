@@ -1,3 +1,9 @@
+using System;
+using System.Buffers;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
@@ -7,22 +13,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
-using System;
-using System.Buffers;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.InteropServices;
 
 namespace Content.Server.Radiation.Systems;
-
-[StructLayout(LayoutKind.Explicit, Size = 64)]
-public struct PaddedFloat
-{
-    [FieldOffset(0)]
-    public float Value;
-}
 
 // main algorithm that fire radiation rays to target
 public partial class RadiationSystem
@@ -51,7 +43,7 @@ public partial class RadiationSystem
             return;
         }
 
-        var results = new PaddedFloat[_activeReceivers.Count];
+        var results = new float[_activeReceivers.Count];
         var debugRays = debug ? new ConcurrentBag<DebugRadiationRay>() : null;
 
         var job = new RadiationJob
@@ -70,7 +62,7 @@ public partial class RadiationSystem
         for (var i = 0; i < _activeReceivers.Count; i++)
         {
             var uid = _activeReceivers[i];
-            var rads = results[i].Value;
+            var rads = results[i];
 
             if (TryComp<RadiationReceiverComponent>(uid, out var receiver))
             {
@@ -206,7 +198,7 @@ public partial class RadiationSystem
         public required B2DynamicTree<EntityUid> SourceTree { get; init; }
         public required Dictionary<EntityUid, SourceData> SourceDataMap { get; init; }
         public required List<EntityUid> Destinations { get; init; }
-        public required PaddedFloat[] Results { get; init; }
+        public required float[] Results { get; init; }
         public required ConcurrentBag<DebugRadiationRay>? DebugRays { get; init; }
         public required bool Debug { get; init; }
 
@@ -215,7 +207,7 @@ public partial class RadiationSystem
             var destUid = Destinations[index];
             if (System.Deleted(destUid) || !System.TryComp(destUid, out TransformComponent? destTrs))
             {
-                Results[index].Value = 0;
+                Results[index] = 0;
                 return;
             }
 
@@ -273,8 +265,7 @@ public partial class RadiationSystem
                 }
 
                 rads = System.GetAdjustedRadiationIntensity(destUid, rads);
-                Results[index] = new PaddedFloat { Value = rads };
-
+                Results[index] = rads;
             }
             finally
             {
