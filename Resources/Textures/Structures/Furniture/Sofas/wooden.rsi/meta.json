@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "derived from burgerstation https://github.com/BurgerLUA/burgerstation/blob/HEAD/icons/obj/structure/sofa.dmi and edited by TheShuEd for ss14",
+    "states": [
+        {
+            "name": "state0",
+            "directions": 4
+        },
+        {
+            "name": "state1",
+            "directions": 4
+        },
+        {
+            "name": "state2",
+            "directions": 4
+        },
+        {
+            "name": "state3",
+            "directions": 4
+        },
+		{
+            "name": "state4",
+            "directions": 4
+        },
+        {
+            "name": "state5",
+            "directions": 4
+        },
+        {
+            "name": "state6",
+            "directions": 4
+        },
+        {
+            "name": "state7",
+            "directions": 4
+        }
+    ]
+}
