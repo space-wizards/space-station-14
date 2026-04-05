@@ -75,7 +75,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         // Menu category for dropping identities.
         var dropMenuButton = new RadialMenuNestedLayerOption(dropButtons)
         {
-            IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Rsi(new("/Textures/Markers/cross.rsi"), "red")),
+            IconSpecifier = RadialMenuIconSpecifier.With(new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete.svg.192dpi.png"))),
             ToolTip = Loc.GetString("changeling-transform-bui-drop-identity-menu")
         };
         buttons.Add(dropMenuButton);

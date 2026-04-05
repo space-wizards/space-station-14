@@ -39,9 +39,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentityDropMessage>(OnTransformDrop);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
 
         // Components that need special handling outside of cloning.
@@ -79,6 +79,43 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         } //TODO: Can add a Else here with TransformInto and CloseUI to make a quick switch,
           // issue right now is that Radials cover the Action buttons so clicking the action closes the UI (due to clicking off a radial causing it to close, even with UI)
           // but pressing the number does.
+    }
+
+    private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
+        ref ChangelingTransformIdentitySelectMessage args)
+    {
+        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
+            return;
+
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+            return;
+
+        if (identity.CurrentIdentity == targetIdentity)
+            return; // don't transform into ourselves
+
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+            return; // this identity does not belong to this player
+
+        TransformInto(ent.AsNullable(), targetIdentity.Value);
+    }
+
+    private void OnTransformDrop(Entity<ChangelingTransformComponent> ent,
+        ref ChangelingTransformIdentityDropMessage args)
+    {
+        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
+            return;
+
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+            return;
+
+        if (identity.CurrentIdentity == targetIdentity)
+            return; // don't drop our current identity
+
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+            return; // this identity does not belong to this player
+
+        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
     /// <summary>
@@ -125,42 +162,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             RequireCanInteract = false,
             DistanceThreshold = null,
         });
-    }
-
-    private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
-        ref ChangelingTransformIdentitySelectMessage args)
-    {
-        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
-            return;
-
-        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
-            return;
-
-        if (identity.CurrentIdentity == targetIdentity)
-            return; // don't transform into ourselves
-
-        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
-            return; // this identity does not belong to this player
-
-        TransformInto(ent.AsNullable(), targetIdentity.Value);
-    }
-
-    private void OnTransformDrop(Entity<ChangelingTransformComponent> ent,
-        ref ChangelingTransformIdentityDropMessage args)
-    {
-        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
-            return;
-
-        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
-            return;
-
-        if (identity.CurrentIdentity == targetIdentity)
-            return; // don't drop our current identity
-
-        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
-            return; // this identity does not belong to this player
-
-        _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
     }
 
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,

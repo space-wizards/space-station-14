@@ -1,4 +1,4 @@
-﻿# antag selection
+# antag selection
 roles-antag-changeling-name = Changeling
 roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims.
 
@@ -24,6 +24,7 @@ changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap
 changeling-transform-bui-select-entity = {$entity}
 changeling-transform-bui-drop-identity-menu = Drop a devoured identity from your memory.
 changeling-transform-bui-drop-identity-entity = Drop {$entity}
+changeling-transform-bui-drop-identity-entity-popup = You dropped {$entity} from your memory.
 changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your current identity.
 
 # other
