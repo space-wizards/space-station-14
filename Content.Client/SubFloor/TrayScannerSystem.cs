@@ -20,7 +20,6 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly TrayScanRevealSystem _trayScanReveal = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _transformQuery = default!;
     [Dependency] private readonly EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
     [Dependency] private readonly EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
@@ -39,7 +38,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // TODO: Multiple viewports or w/e
         var player = _player.LocalEntity;
 
-        if (!_transformQuery.TryGetComponent(player, out var playerXform))
+        if (!TryComp(player, out TransformComponent? playerXform))
             return;
 
         var playerPos = _transform.GetWorldPosition(playerXform);

@@ -30,8 +30,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _transformQuery = default!;
-    [Dependency] private readonly EntityQuery<MetaDataComponent> _metaQuery = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
@@ -249,9 +247,9 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             if (comp.Enabled &&
                 // Don't keep playing sounds that have changed since.
                 sound.Sound == comp.Sound &&
-                _transformQuery.TryGetComponent(owner, out var xform) &&
+                TryComp(owner, out TransformComponent? xform) &&
                 xform.MapID == playerXform.MapID &&
-                !_metaQuery.GetComponent(owner).EntityPaused)
+                !Paused(owner))
             {
                 // TODO: This is just trydistance for coordinates.
                 var distance = (xform.ParentUid == playerXform.ParentUid)
@@ -294,7 +292,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                 var comp = sourceEntity.Comp;
 
                 if (_playingSounds.ContainsKey(sourceEntity) ||
-                    _metaQuery.GetComponent(uid).EntityPaused)
+                    Paused(uid))
                     continue;
 
                 var audioParams = _params

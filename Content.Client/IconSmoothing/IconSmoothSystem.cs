@@ -18,10 +18,8 @@ namespace Content.Client.IconSmoothing
     {
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
-        [Dependency] private readonly EntityQuery<TransformComponent> _transformQuery = default!;
         [Dependency] private readonly EntityQuery<IconSmoothComponent> _iconSmoothQuery = default!;
         [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
-
 
         private readonly Queue<EntityUid> _dirtyEntities = new();
         private readonly Queue<EntityUid> _anchorChangedEntities = new();
@@ -113,7 +111,7 @@ namespace Content.Client.IconSmoothing
             // first process anchor state changes.
             while (_anchorChangedEntities.TryDequeue(out var uid))
             {
-                if (!_transformQuery.TryGetComponent(uid, out var xform))
+                if (!TryComp(uid, out TransformComponent? xform))
                     continue;
 
                 if (xform.MapID == MapId.Nullspace)
@@ -220,7 +218,7 @@ namespace Content.Client.IconSmoothing
             {
                 if (smooth is { Enabled: true } &&
                     TryComp<SmoothEdgeComponent>(uid, out var edge) &&
-                    _transformQuery.TryGetComponent(uid, out xform))
+                    TryComp(uid, out xform))
                 {
                     var directions = DirectionFlag.None;
 
@@ -247,7 +245,7 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            xform = _transformQuery.GetComponent(uid);
+            xform = Transform(uid);
             smooth.UpdateGeneration = _generation;
 
             if (!_spriteQuery.TryGetComponent(uid, out var sprite))

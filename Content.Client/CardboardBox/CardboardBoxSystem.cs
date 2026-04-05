@@ -15,7 +15,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _transformQuery = default!;
 
     public override void Initialize()
     {
@@ -31,9 +30,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!TryComp<CardboardBoxComponent>(source, out var box))
             return;
 
-        if (!_transformQuery.TryGetComponent(source, out var xform))
-            return;
-
+        var xform = Transform(source);
         var sourcePos = _transform.GetMapCoordinates(source, xform);
 
         //Any mob that can move should be surprised?
@@ -68,7 +65,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
             var ent = Spawn(box.Effect, mapPos);
 
-            if (!_transformQuery.TryGetComponent(ent, out var entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
+            if (!TryComp(ent, out TransformComponent? entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
                 continue;
 
             _sprite.SetOffset((ent, sprite), new Vector2(0, 1));
