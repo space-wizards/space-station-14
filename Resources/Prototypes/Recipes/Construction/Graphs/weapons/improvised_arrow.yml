@@ -90,3 +90,22 @@
 
   - node: ImprovisedArrowCarp
     entity: ArrowImprovisedCarp
+
+- type: constructionGraph
+  id: CardArrow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: CardArrow
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - material: Cardboard
+        amount: 1
+        doAfter: 0.5
+
+  - node: CardArrow
+    entity: ArrowCard
+

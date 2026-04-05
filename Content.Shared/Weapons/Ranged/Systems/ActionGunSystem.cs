@@ -28,14 +28,14 @@ public sealed class ActionGunSystem : EntitySystem
 
     private void OnShutdown(Entity<ActionGunComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.Gun is {} gun)
+        if (ent.Comp.Gun is { } gun)
             QueueDel(gun);
     }
 
     private void OnShoot(Entity<ActionGunComponent> ent, ref ActionGunShootEvent args)
     {
         if (TryComp<GunComponent>(ent.Comp.Gun, out var gun))
-            _gun.AttemptShoot(ent, ent.Comp.Gun.Value, gun, args.Target);
+            _gun.AttemptShoot(ent, (ent.Comp.Gun.Value, gun), args.Target);
     }
 }
 

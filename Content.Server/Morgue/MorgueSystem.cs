@@ -1,95 +1,46 @@
-using Content.Server.Storage.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Examine;
 using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Morgue;
 
-public sealed class MorgueSystem : EntitySystem
+public sealed class MorgueSystem : SharedMorgueSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MorgueComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<MorgueComponent, MapInitEvent>(OnMapInit);
     }
 
-    /// <summary>
-    ///     Handles the examination text for looking at a morgue.
-    /// </summary>
-    private void OnExamine(Entity<MorgueComponent> ent, ref ExaminedEvent args)
+    private void OnMapInit(Entity<MorgueComponent> ent, ref MapInitEvent args)
     {
-        if (!args.IsInDetailsRange)
-            return;
-
-        _appearance.TryGetData<MorgueContents>(ent.Owner, MorgueVisuals.Contents, out var contents);
-
-        var text = contents switch
-        {
-            MorgueContents.HasSoul => "morgue-entity-storage-component-on-examine-details-body-has-soul",
-            MorgueContents.HasContents => "morgue-entity-storage-component-on-examine-details-has-contents",
-            MorgueContents.HasMob => "morgue-entity-storage-component-on-examine-details-body-has-no-soul",
-            _ => "morgue-entity-storage-component-on-examine-details-empty"
-        };
-
-        args.PushMarkup(Loc.GetString(text));
+        ent.Comp.NextBeep = _timing.CurTime + ent.Comp.NextBeep;
     }
 
     /// <summary>
-    ///     Updates data periodically in case something died/got deleted in the morgue.
-    /// </summary>
-    private void CheckContents(EntityUid uid, MorgueComponent? morgue = null, EntityStorageComponent? storage = null, AppearanceComponent? app = null)
-    {
-        if (!Resolve(uid, ref morgue, ref storage, ref app))
-            return;
-
-        if (storage.Contents.ContainedEntities.Count == 0)
-        {
-            _appearance.SetData(uid, MorgueVisuals.Contents, MorgueContents.Empty);
-            return;
-        }
-
-        var hasMob = false;
-
-        foreach (var ent in storage.Contents.ContainedEntities)
-        {
-            if (!hasMob && HasComp<BodyComponent>(ent))
-                hasMob = true;
-
-            if (HasComp<ActorComponent>(ent))
-            {
-                _appearance.SetData(uid, MorgueVisuals.Contents, MorgueContents.HasSoul, app);
-                return;
-            }
-        }
-
-        _appearance.SetData(uid, MorgueVisuals.Contents, hasMob ? MorgueContents.HasMob : MorgueContents.HasContents, app);
-    }
-
-    /// <summary>
-    ///     Handles the periodic beeping that morgues do when a live body is inside.
+    /// Handles the periodic beeping that morgues do when a live body is inside.
     /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
+        var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<MorgueComponent, EntityStorageComponent, AppearanceComponent>();
         while (query.MoveNext(out var uid, out var comp, out var storage, out var appearance))
         {
-            comp.AccumulatedFrameTime += frameTime;
-
-            CheckContents(uid, comp, storage);
-
-            if (comp.AccumulatedFrameTime < comp.BeepTime)
+            if (curTime < comp.NextBeep)
                 continue;
 
-            comp.AccumulatedFrameTime -= comp.BeepTime;
+            comp.NextBeep += comp.BeepTime;
+
+            CheckContents(uid, comp, storage);
 
             if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {

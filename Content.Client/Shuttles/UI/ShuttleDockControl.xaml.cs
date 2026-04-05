@@ -40,6 +40,8 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
     private readonly HashSet<DockingPortState> _drawnDocks = new();
     private readonly Dictionary<DockingPortState, Button> _dockButtons = new();
 
+    private readonly Color _fallbackHighlightedColor = Color.Magenta;
+
     /// <summary>
     /// Store buttons for every other dock
     /// </summary>
@@ -213,11 +215,11 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
                 if (HighlightedDock == dock.Entity)
                 {
-                    otherDockColor = Color.ToSrgb(Color.Magenta);
+                    otherDockColor = Color.ToSrgb(dock.HighlightedColor);
                 }
                 else
                 {
-                    otherDockColor = Color.ToSrgb(Color.Purple);
+                    otherDockColor = Color.ToSrgb(dock.Color);
                 }
 
                 /*
@@ -311,7 +313,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
             ScalePosition(Vector2.Transform(new Vector2(-0.5f, 0.5f), rotation)),
             ScalePosition(Vector2.Transform(new Vector2(0.5f, -0.5f), rotation)));
 
-        var dockColor = Color.Magenta;
+        var dockColor = _viewedState?.HighlightedColor ?? _fallbackHighlightedColor;
         var connectionColor = Color.Pink;
 
         handle.DrawRect(ourDockConnection, connectionColor.WithAlpha(0.2f));

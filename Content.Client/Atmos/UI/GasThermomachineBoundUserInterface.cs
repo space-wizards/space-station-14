@@ -37,7 +37,7 @@ namespace Content.Client.Atmos.UI
 
             _window = this.CreateWindow<GasThermomachineWindow>();
 
-            _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
+            _window.ToggleStatusButton.OnToggled += _ => OnToggleStatusButtonPressed();
             _window.TemperatureSpinbox.OnValueChanged += _ => OnTemperatureChanged(_window.TemperatureSpinbox.Value);
             _window.Entity = Owner;
             Update();
@@ -45,9 +45,6 @@ namespace Content.Client.Atmos.UI
 
         private void OnToggleStatusButtonPressed()
         {
-            if (_window is null) return;
-
-            _window.SetActive(!_window.Active);
             SendPredictedMessage(new GasThermomachineToggleMessage());
         }
 

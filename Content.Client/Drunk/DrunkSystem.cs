@@ -1,7 +1,9 @@
 using Content.Shared.Drunk;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Client.Drunk;
 
@@ -9,6 +11,7 @@ public sealed class DrunkSystem : SharedDrunkSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private DrunkOverlay _overlay = default!;
 
@@ -16,38 +19,45 @@ public sealed class DrunkSystem : SharedDrunkSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrunkComponent, ComponentInit>(OnDrunkInit);
-        SubscribeLocalEvent<DrunkComponent, ComponentShutdown>(OnDrunkShutdown);
+        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
 
-        SubscribeLocalEvent<DrunkComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<DrunkComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnPlayerAttached);
+        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, DrunkComponent component, LocalPlayerAttachedEvent args)
+    private void OnStatusApplied(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
-        _overlayMan.AddOverlay(_overlay);
+        if (!_overlayMan.HasOverlay<DrunkOverlay>())
+        {
+            _overlay.Phase = _random.NextFloat(MathF.Tau); // random starting phase for movement effect
+            _overlayMan.AddOverlay(_overlay);
+        }
     }
 
-    private void OnPlayerDetached(EntityUid uid, DrunkComponent component, LocalPlayerDetachedEvent args)
+    private void OnStatusRemoved(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
+        if (Status.HasEffectComp<DrunkStatusEffectComponent>(args.Target))
+            return;
+
+        if (_player.LocalEntity != args.Target)
+            return;
+
         _overlay.CurrentBoozePower = 0;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
-    private void OnDrunkInit(EntityUid uid, DrunkComponent component, ComponentInit args)
+    private void OnPlayerAttached(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
     {
-        if (_player.LocalEntity == uid)
-            _overlayMan.AddOverlay(_overlay);
+        _overlayMan.AddOverlay(_overlay);
+
     }
 
-    private void OnDrunkShutdown(EntityUid uid, DrunkComponent component, ComponentShutdown args)
+    private void OnPlayerDetached(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
     {
-        if (_player.LocalEntity == uid)
-        {
-            _overlay.CurrentBoozePower = 0;
-            _overlayMan.RemoveOverlay(_overlay);
-        }
+        _overlay.CurrentBoozePower = 0;
+        _overlayMan.RemoveOverlay(_overlay);
     }
 }
