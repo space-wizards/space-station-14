@@ -4,7 +4,7 @@ meta:
   engineVersion: 275.2.0
   forkId: ""
   forkVersion: ""
-  time: 04/05/2026 10:47:17
+  time: 04/05/2026 12:05:24
   entityCount: 2837
 maps:
 - 1
@@ -2120,7 +2120,7 @@ entities:
       pos: 4.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17811.223
+      secondsUntilStateChange: -17881.61
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2131,7 +2131,7 @@ entities:
       pos: 3.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17811.723
+      secondsUntilStateChange: -17882.11
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2180,7 +2180,7 @@ entities:
       pos: -6.5,4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -20946.416
+      secondsUntilStateChange: -21016.803
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6617,7 +6617,7 @@ entities:
   - uid: 2832
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: ClothingHeadHatWelding
@@ -6625,7 +6625,7 @@ entities:
   - uid: 2836
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: ClothingHeadsetMining
@@ -13989,7 +13989,7 @@ entities:
   - uid: 2833
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: NitrogenCanister
@@ -15210,7 +15210,7 @@ entities:
   - uid: 2834
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: SecurityTechFab
@@ -17177,10 +17177,10 @@ entities:
       parent: 2
 - proto: ToolboxGolden
   entities:
-  - uid: 2831
+  - uid: 2660
     components:
     - type: Transform
-      pos: 10.520043,15.60812
+      pos: 10.489431,15.621844
       parent: 2
     - type: Storage
       storedItems:
@@ -19018,7 +19018,7 @@ entities:
   - uid: 2837
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: WelderIndustrialAdvanced
@@ -19401,7 +19401,7 @@ entities:
   - uid: 2835
     components:
     - type: Transform
-      parent: 2831
+      parent: 2660
     - type: Physics
       canCollide: False
 - proto: Wrench
