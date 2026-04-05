@@ -82,9 +82,6 @@ public sealed class WallMountVisualsSystem : EntitySystem
     // Invalidate tile cache when anchor state changes for a blocking entity
     private void OnTagAnchorChanged(Entity<TagComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (args.Detaching)
-            return;
-
         if (!_tag.HasAnyTag(ent.Comp, BlockingTags))
             return;
 
