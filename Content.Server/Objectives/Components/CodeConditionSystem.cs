@@ -14,4 +14,10 @@ public sealed partial class CodeConditionComponent : Component
     /// </summary>
     [DataField]
     public bool Completed;
+
+    /// <summary>
+    /// Should this objective fail when evac docks if it's not already completed?
+    /// </summary>
+    [DataField]
+    public bool FailOnEvac = false;
 }

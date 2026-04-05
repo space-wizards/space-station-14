@@ -1,5 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 
@@ -10,6 +11,7 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class CodeConditionSystem : EntitySystem
 {
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
@@ -41,6 +43,9 @@ public sealed class CodeConditionSystem : EntitySystem
     public void SetCompleted(Entity<CodeConditionComponent?> ent, bool completed = true)
     {
         if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.FailOnEvac && _emergencyShuttle.EmergencyShuttleArrived) // it's too late.
             return;
 
         ent.Comp.Completed = completed;
