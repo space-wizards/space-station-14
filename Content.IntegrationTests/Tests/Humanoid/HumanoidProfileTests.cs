@@ -96,11 +96,12 @@ public sealed class HumanoidProfileTests : GameTest
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
 
-            Assert.That(humanoidComponent.Age <= proto.MaxAge && humanoidComponent.Age >= proto.MinAge);
-            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex));
+            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge));
+            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge));
+            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True);
             Assert.That(humanoidComponent.Species, Is.EqualTo(species));
             var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
-            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor));
+            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor), Is.True);
 
             AssertValidProfile((body, humanoidComponent), profile);
         });
@@ -143,8 +144,8 @@ public sealed class HumanoidProfileTests : GameTest
                 var markingProto = Server.ProtoMan.Index(marking.MarkingId);
 
                 Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count));
-                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto));
-                Assert.That(data.Layers.Contains(markingProto.BodyPart));
+                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True);
+                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True);
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)
                     freeMarkings.Add(marking);
 
@@ -152,7 +153,7 @@ public sealed class HumanoidProfileTests : GameTest
                     continue;
 
                 var count = counts.GetValueOrDefault(markingProto.BodyPart);
-                Assert.That(count <= limits.Limit);
+                Assert.That(count, Is.LessThanOrEqualTo(limits.Limit));
                 counts[markingProto.BodyPart] = count + 1;
             }
 
@@ -170,7 +171,8 @@ public sealed class HumanoidProfileTests : GameTest
                 Assert.That(marking.MarkingColors,
                     Is.EqualTo(MarkingColoring.GetMarkingLayerColors(markingProto, profile.Appearance.SkinColor, profile.Appearance.EyeColor, markingOrgan.AppliedMarkings)));
 
-                Assert.That(markingProto.SexRestriction == null || markingProto.SexRestriction == profile.Sex);
+                if (markingProto.SexRestriction != null)
+                    Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex));
             }
         }
     }
