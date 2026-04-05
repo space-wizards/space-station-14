@@ -308,10 +308,10 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 internal static class SkinColorationUtils
 {
     /// <summary>
-    /// A value derived by dividing 1 by 256.
-    /// Due to RGB being stored in 8-bit color values, we can't expect more precision than this.
+    /// A value derived by dividing 1 by 361, rounding down.
+    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon =  0.00390625f;
+    public const float Epsilon =   0.00277f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
