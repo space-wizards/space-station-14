@@ -15,9 +15,13 @@
     state: icon
   - type: Flash
     flashOnUse: false # handled by PhotographySystem
-    flashOnMelee: false # don't allow revolutionary conversion
+    flashOnMelee: false # also handled by PhotographySystem
     sound: !type:SoundPathSpecifier
       path: /Audio/Misc/camera_snap.ogg
+  - type: MeleeWeapon # allows using the camera in melee
+    damage:
+      types:
+        Blunt: 0
   - type: LimitedCharges
     maxCharges: 4
   - type: AutoRecharge

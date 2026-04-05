@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
@@ -6,6 +7,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -29,6 +31,7 @@ public sealed class PhotographySystem : EntitySystem
         SubscribeLocalEvent<PhotographComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PictureTakerComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PictureTakerComponent, BeforeRangedInteractEvent>(OnRangedInteract);
+        SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
     }
 
     private void OnExamined(Entity<PhotographComponent> ent, ref ExaminedEvent args)
@@ -60,6 +63,41 @@ public sealed class PhotographySystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Processes the entity hit by a camera and prints a picture of them.
+    /// </summary>
+    private void OnCameraMeleeHit(Entity<PictureTakerComponent> ent, ref MeleeHitEvent args)
+    {
+        // if we hit nothing, there's nothing to take a picture of.
+        if (!args.HitEntities.Any())
+            return;
+        if (TryComp<FlashComponent>(ent.Owner, out var flashComp))
+        {
+            // we also need to be able to flash (this also checks for charges)
+            if (!_flash.TryUseFlashItem((ent.Owner, flashComp), args.User))
+                return;
+        }
+        else
+        {
+            // we need a flash to take a picture!
+            return;
+        }
+        foreach (var entity in args.HitEntities)
+        {
+            // produces the picture so our camera works
+            TakePicture(ent, entity, args.User);
+            // TODO: Currently this just hijacks the FlashOnMelee property of FlashComponent and uses the flash on melee even if its set to false. A better implementation would interface better with the flashing system (maybe the check could be on that system?)
+            // flashes the entity.
+            var stunDuration = TimeSpan.Zero;
+            if (flashComp.MeleeStunDuration != null)
+                stunDuration=flashComp.MeleeStunDuration.Value;
+            _flash.Flash(entity, args.User, ent.Owner, stunDuration, flashComp.SlowTo, melee:true, displayPopup:true);
+            // we can only take one picture of one entity per swing!
+            break;
+        }
+
+    }
+
     // TODO: This or most of the other systems subscribing to BeforeRangedInteractEvent shouldn't be using this event as handling it stops contact interaction with the used tool,
     // but this will need some cleanup of how SharedInteractionSystem handles the code flow. Also the event is raised for both in-range and out of range interactions, which
     // is what the subscribers are using it for, but does not seem originally intended from the naming convention.
@@ -67,7 +105,6 @@ public sealed class PhotographySystem : EntitySystem
     {
         if (args.Handled || !TryComp<FlashComponent>(ent.Owner, out var flashComp) || !_flash.TryUseFlashItem((ent.Owner, flashComp), args.User))
             return;
-
         TakePicture(ent, args.Target, args.User);
         _flash.FlashArea(ent.Owner, args.User, flashComp.Range, flashComp.AoeFlashDuration, flashComp.SlowTo, true, flashComp.Probability);
         args.Handled = true;
