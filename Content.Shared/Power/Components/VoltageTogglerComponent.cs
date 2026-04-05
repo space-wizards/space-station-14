@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Power.Components;
 
 /// <summary>
-///     Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
+/// Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
 /// </summary>
 [RegisterComponent, AutoGenerateComponentState]
 public sealed partial class VoltageTogglerComponent : Component
