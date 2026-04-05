@@ -62,7 +62,7 @@ public partial class RadiationSystem
             var uid = _activeReceivers[i];
             var rads = results[i];
 
-            if (TryComp<RadiationReceiverComponent>(uid, out var receiver))
+            if (_receiverQuery.TryComp(uid, out var receiver))
             {
                 receiver.CurrentRadiation = rads;
                 if (rads > 0)

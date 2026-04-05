@@ -4,11 +4,9 @@ using Content.Shared.Radiation.Events;
 using Content.Shared.Stacks;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using System.Numerics;
-using System.Threading;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -21,6 +19,7 @@ public sealed partial class RadiationSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
 
+    [Dependency] private readonly EntityQuery<RadiationReceiverComponent> _receiverQuery = default!;
     private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery;
     private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery;
     private EntityQuery<StackComponent> _stackQuery;
