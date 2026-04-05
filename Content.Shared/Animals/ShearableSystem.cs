@@ -57,7 +57,7 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public bool CheckShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
         shearedProduct = _proto.Index(ent.Comp.ShearedProductID);
@@ -143,9 +143,9 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
     /// <seealso cref="CheckShearReturns"/>
-    public bool CheckShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
-        return CheckShear(ent, out _, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
+        return CanShear(ent, out _, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
     }
 
     /// <summary>
@@ -157,9 +157,9 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     True of shearable, false if not.
     /// </returns>
-    public bool CheckShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
-        return CheckShear(ent, out _, out _, out _, out _, out _, usedItem, checkItem);
+        return CanShear(ent, out _, out _, out _, out _, out _, usedItem, checkItem);
     }
 
     /// <summary>
@@ -171,9 +171,9 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    public bool CheckShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
     {
-        return CheckShear(ent, out _, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
+        return CanShear(ent, out _, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ public sealed class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        if (!CheckShear(ent, out var feedbackPopupString, usedItem: toolUsed))
+        if (!CanShear(ent, out var feedbackPopupString, usedItem: toolUsed))
         {
             // If this string is set then create a popup now.
             if (feedbackPopupString != null)
@@ -228,7 +228,7 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (!CheckShear(ent, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false)
+        if (!CanShear(ent, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false)
             // these must all be resolved.
             || shearingSolutionState is null
             || shearingSolutionEnt is null
@@ -288,7 +288,7 @@ public sealed class SharedShearableSystem : EntitySystem
         var toolUsed = args.Using;
 
         // Check.
-        if (!CheckShear(ent, toolUsed, true))
+        if (!CanShear(ent, toolUsed, true))
         {
             // Still adds the verb but it's disabled.
             verbDisabled = true;
@@ -327,7 +327,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Checks whether the entity can be sheared and applies appropriate examine additions.
-        if (CheckShear(ent, out var shearingSolutionToRemove, checkItem: false))
+        if (CanShear(ent, out var shearingSolutionToRemove, checkItem: false))
         {
             if (string.IsNullOrEmpty(ent.Comp.ShearableMarkupText))
             {
