@@ -79,7 +79,9 @@
     maxCharge: 4000000 # 4MJ
     netsync: false
   - type: ExaminableBattery
-  - type: PowerConsumerBatteryCharger
+  - type: PowerNetworkBattery
+  - type: BatteryCharger
+    voltage: Apc
   - type: PowerConsumer
     voltage: Apc
     drawRate: 10000
