@@ -30,8 +30,8 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] EntityQuery<TransformComponent> _transformQuery = default!;
-    [Dependency] EntityQuery<MetaDataComponent> _metaQuery = default!;
+    [Dependency] private readonly EntityQuery<TransformComponent> _transformQuery = default!;
+    [Dependency] private readonly EntityQuery<MetaDataComponent> _metaQuery = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
