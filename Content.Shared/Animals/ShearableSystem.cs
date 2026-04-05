@@ -254,21 +254,20 @@ public sealed class SharedShearableSystem : EntitySystem
         // Split the solution inside the creature by solutionToRemove, return what was removed.
         var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, (FixedPoint2)shearingSolutionToRemove);
 
-        // Psuedo shared randomness stolen from #39661
-        // Can be replaced with SharedRandom once that exists.
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
-        var random = new System.Random(seed);
+        // Psuedo shared randomness
+        // Can be replaced with SharedRandom once #5849 is merged.
 
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var center = ent.Owner.ToCoordinates();
         // Spawn product.
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
             // Offset the spawn position by e.g 0.4 pixels, so they don't all stack in one spot.
-            var xoffs = random.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
-            var yoffs = random.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
+            var xoffs = rand.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
+            var yoffs = rand.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
             var pos = center.Offset(new Vector2(xoffs, yoffs));
 
-            EntityManager.PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
+            PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
         }
 
         // Success message.
