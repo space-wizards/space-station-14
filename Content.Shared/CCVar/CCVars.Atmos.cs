@@ -138,9 +138,18 @@ public sealed partial class CCVars
         CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
-    ///     gases heat up and cool down 64x faster than real life.
+    /// Like atmos.speedup, but only for gas and reaction heat values. 64x means
+    /// gases heat up and cool down 64x faster than real life.
     /// </summary>
+    /// <remarks><para>This is only supposed to facilitate the speedup of
+    /// heat transfer between bodies by making the heat capacities appear smaller.
+    /// In the context of a heat-only reaction like gas reactions creating heat,
+    /// you shouldn't be using the scaled specific heat.</para>
+    /// <para>So things like thermomachines and the TEG, which work based on heat transfer, would need to use the scaled value,
+    /// whereas heat-only reactions like gas reactions and anything else that "generates" or "consumes" heat would use the unscaled value.</para>
+    /// </remarks>
+    /// <example>Mechanics like the thermomachine or TEG should be affected by this CVAR change,
+    /// whereas gas reactions and heat-only interactions should stay the same.</example>
     public static readonly CVarDef<float> AtmosHeatScale =
         CVarDef.Create("atmos.heat_scale", 8f, CVar.REPLICATED | CVar.SERVER);
 

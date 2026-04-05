@@ -12,7 +12,11 @@
   - DetailExaminable
   - Dna
   - Fingerprint
+  - Grammar # Pronouns
+  - HumanoidProfile # Age, Sex, Gender
   - NpcFactionMember
+  - RandomPrice
+  - CreamPied
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
@@ -54,6 +58,8 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  eventComponents:
+  - Vocal # voice sounds
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -81,7 +87,6 @@
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
-    - HumanoidProfile # will cause problems for downstream felinids getting cloned as Urists
     - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
     - VirtualItem
 
@@ -120,7 +125,6 @@
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
-  - Vocal # voice sounds
   - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids

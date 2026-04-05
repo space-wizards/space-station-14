@@ -20,6 +20,11 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
+        /// Global Atmospherics epsilon. Used for all general floating-point comparisons.
+        /// </summary>
+        public const float Epsilon = 0.5f;
+
+        /// <summary>
         ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
         ///     This is used to initialize roundstart atmos rooms.
         /// </summary>
@@ -159,25 +164,11 @@ namespace Content.Shared.Atmos
         public const float MinimumHeatCapacity = 0.0003f;
 
         /// <summary>
-        ///     For the purposes of making space "colder"
+        /// Allows Atmospherics to cool down rooms during spacing
+        /// by assigning a fake heat capacity to space,
+        /// making space "actually cold" for gameplay reasons.
         /// </summary>
         public const float SpaceHeatCapacity = 7000f;
-
-        /// <summary>
-        ///     Dictionary of chemical abbreviations for <see cref="Gas"/>
-        /// </summary>
-        public static Dictionary<Gas, string> GasAbbreviations = new Dictionary<Gas, string>()
-        {
-            [Gas.Ammonia] = Loc.GetString("gas-ammonia-abbreviation"),
-            [Gas.CarbonDioxide] = Loc.GetString("gas-carbon-dioxide-abbreviation"),
-            [Gas.Frezon] = Loc.GetString("gas-frezon-abbreviation"),
-            [Gas.Nitrogen] = Loc.GetString("gas-nitrogen-abbreviation"),
-            [Gas.NitrousOxide] = Loc.GetString("gas-nitrous-oxide-abbreviation"),
-            [Gas.Oxygen] = Loc.GetString("gas-oxygen-abbreviation"),
-            [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
-            [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
-            [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
-        };
 
         #region Excited Groups
 
@@ -228,8 +219,8 @@ namespace Content.Shared.Atmos
         public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
-        public const float PlasmaMinimumBurnTemperature = (100f+T0C);
-        public const float PlasmaUpperTemperature = (1370f+T0C);
+        public const float PlasmaMinimumBurnTemperature = 100f + T0C;
+        public const float PlasmaUpperTemperature = 1370f + T0C;
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
 

@@ -10,9 +10,9 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband ]
+  parent: [ ClothingOuterArmorBase, ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband ]
   id: ClothingOuterCoatDetective
-  name: detective trenchcoat
+  name: detective armored trenchcoat
   description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
   components:
   - type: Sprite
@@ -29,7 +29,7 @@
 - type: entity
   parent: [ClothingOuterCoatDetectiveLoadout]
   id: ClothingOuterCoatDetectiveLoadoutGrey
-  name: noir trenchcoat
+  name: noir armored trenchcoat
   description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 spesos.
   components:
   - type: Sprite

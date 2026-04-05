@@ -283,6 +283,16 @@
         enum.StationAiVisualLayers.Base:
           False: { state: ai_empty }
           True: { state: ai_error }
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_ai
+  - type: Reactive
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPie
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
     interactFailureString: petting-failure-station-ai
@@ -638,6 +648,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModulePrying
       - BorgModuleTool
       - BorgModuleFireExtinguisher
       - BorgModuleConstruction
@@ -676,6 +687,7 @@
       borg_brain:
         - PositronicBrain
       borg_module:
+        - BorgModulePrying
         - BorgModuleTool
         - BorgModuleFireExtinguisher
   - type: ItemSlots
@@ -711,6 +723,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModulePrying
       - BorgModuleTool
       - BorgModuleFireExtinguisher
       - BorgModuleCleaning
@@ -748,6 +761,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModulePrying
       - BorgModuleTool
       - BorgModuleFireExtinguisher
       - BorgModuleChemical
@@ -786,6 +800,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModulePrying
       - BorgModuleTool #No fire extinguisher, traversal is better
       - BorgModuleMining
       - BorgModuleTraversal

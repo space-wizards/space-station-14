@@ -48,9 +48,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         var highestType = damageTypesSorted.First().Key; // We only need 1 of the values
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
         ProtoId<DamageTypePrototype>? spriteState = null;
 
