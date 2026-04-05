@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 268.0.0
+  engineVersion: 275.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/22/2025 00:19:53
+  time: 04/05/2026 20:50:59
   entityCount: 201
 maps: []
 grids:
@@ -164,6 +164,8 @@ entities:
     - type: Shuttle
       dampingModifier: 0.25
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AirCanister
   entities:
   - uid: 140
@@ -221,25 +223,25 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,-0.5
+      pos: 3.5,-0.5
       parent: 1
   - uid: 199
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,1.5
+      pos: 3.5,1.5
       parent: 1
   - uid: 200
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,1.5
+      pos: -2.5,1.5
       parent: 1
   - uid: 201
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,-0.5
+      pos: -2.5,-0.5
       parent: 1
 - proto: BlastDoor
   entities:
