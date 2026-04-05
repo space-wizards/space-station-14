@@ -6,7 +6,7 @@
 - type: skinColoration
   id: TintedHues
   strategy: !type:ClampedHslColoration
-    saturation: [0, 0.1]
+    saturation: [0, 0.2]
     lightness: [0.85, 1]
 
 - type: skinColoration
