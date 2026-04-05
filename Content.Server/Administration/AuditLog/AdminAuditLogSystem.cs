@@ -1,3 +1,5 @@
+using Content.Server.GameTicking.Events;
+
 namespace Content.Server.Administration.AuditLog;
 
 public sealed class AdminAuditLogSystem : EntitySystem
@@ -6,6 +8,9 @@ public sealed class AdminAuditLogSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
+        SubscribeLocalEvent<RoundStartingEvent>(ev => _auditLog.RoundStarting(ev.Id));
         _auditLog.Initialize();
     }
 

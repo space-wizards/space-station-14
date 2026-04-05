@@ -26,6 +26,7 @@ public sealed class AdminAuditLogsEui : BaseEui
         _control.SearchButton.OnPressed += _ => RequestLogs();
         _control.SearchLineEdit.OnTextEntered += _ => RequestLogs();
         _control.NextButton.OnPressed += _ => NextLogs();
+        _control.ActionFiltersChanged += RequestLogs;
         _control.RoutineButton.OnPressed += _ => RequestLogs();
         _control.NotableButton.OnPressed += _ => RequestLogs();
         _control.CriticalButton.OnPressed += _ => RequestLogs();
@@ -48,7 +49,7 @@ public sealed class AdminAuditLogsEui : BaseEui
         if (s.IsLoading)
             return;
 
-        _control.SetCurrentRound(s.RoundId);
+        _control.SetMaxRound(s.MaxRoundId);
         _control.SetServerName(s.CurrentServerName);
         _control.UpdateCount(s.TotalLogs);
 
@@ -57,7 +58,7 @@ public sealed class AdminAuditLogsEui : BaseEui
 
         _firstState = false;
         _suppressRoundChangeRequest = true;
-        _control.RoundSpinBox.Value = s.RoundId;
+        _control.RoundSpinBox.Value = s.MaxRoundId;
         _suppressRoundChangeRequest = false;
 
         RequestLogs();
@@ -86,6 +87,7 @@ public sealed class AdminAuditLogsEui : BaseEui
         {
             RoundId = _control.SelectedRoundId > 0 ? _control.SelectedRoundId : null,
             Search = _control.Search,
+            Actions = new HashSet<AdminAuditAction>(_control.SelectedActions),
             Severities = new HashSet<AuditSeverity>(_control.SelectedSeverities),
             DateOrder = DateOrder.Descending
         });

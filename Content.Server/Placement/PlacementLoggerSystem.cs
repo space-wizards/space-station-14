@@ -1,6 +1,7 @@
 using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
-using Content.Server.Database;
+using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Shared.Map;
@@ -11,9 +12,11 @@ namespace Content.Server.Placement;
 
 public sealed partial class PlacementLoggerSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override void Initialize()
     {
@@ -53,6 +56,27 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                     new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor),
                     new AdminLogEntityRef(ev.EditedEntity, AdminLogEntityRole.Target),
                 ]);
+
+            if (_adminManager.IsAdmin(actor, includeDeAdmin: true) &&
+                (ev.PlacementEventAction == PlacementEventAction.Create || ev.PlacementEventAction == PlacementEventAction.Erase))
+            {
+                var action = ev.PlacementEventAction == PlacementEventAction.Create
+                    ? AdminAuditAction.SpawnEntity
+                    : AdminAuditAction.DeleteEntity;
+
+                _auditLog.LogAction(
+                    actor.UserId.UserId,
+                    action,
+                    AuditSeverity.Notable,
+                    $"Placement system {ev.PlacementEventAction.ToString().ToLower()}d entity {ToPrettyString(ev.EditedEntity)} at {ev.Coordinates}",
+                    targetEntity: ev.EditedEntity,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        action = ev.PlacementEventAction.ToString(),
+                        editedEntity = (int) ev.EditedEntity,
+                        coordinates = ev.Coordinates.ToString()
+                    }));
+            }
         }
         else if (actor != null)
             _adminLogger.AddStructured(logType, LogImpact.Medium,

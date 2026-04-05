@@ -6,12 +6,12 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration.Managers;
@@ -48,22 +48,23 @@ public sealed partial class ServerApi : IPostInjectInit
         CCVars.PanicBunkerCustomReason.Name,
     ];
 
-    [Dependency] private IStatusHost _statusHost = default!;
-    [Dependency] private IConfigurationManager _config = default!;
-    [Dependency] private ISharedPlayerManager _playerManager = default!;
-    [Dependency] private ISharedAdminManager _adminManager = default!;
-    [Dependency] private IGameMapManager _gameMapManager = default!;
-    [Dependency] private IServerNetManager _netManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
-    [Dependency] private ITaskManager _taskManager = default!;
-    [Dependency] private EntityManager _entityManager = default!;
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
-    [Dependency] private ILocalizationManager _loc = default!;
-    [Dependency] private IPlayerLocator _locator = default!;
-    [Dependency] private IBanManager _bans = default!;
-    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private readonly IStatusHost _statusHost = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
+    [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+    [Dependency] private readonly IServerNetManager _netManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly ITaskManager _taskManager = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IBanManager _bans = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     private string _token = string.Empty;
     private ISawmill _sawmill = default!;
@@ -241,6 +242,12 @@ public sealed partial class ServerApi : IPostInjectInit
             }
 
             ticker.SetGamePreset(preset);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.ForcePreset,
+                AuditSeverity.Critical,
+                $"Forced round preset to {body.PresetId}",
+                payload: JsonSerializer.SerializeToDocument(new { preset = body.PresetId }));
             _sawmill.Info($"Forced the game to start with preset {body.PresetId} by {FormatLogActor(actor)}.");
 
             await RespondOk(context);
@@ -408,6 +415,18 @@ public sealed partial class ServerApi : IPostInjectInit
             reason += " (kicked by admin)";
 
             _netManager.DisconnectChannel(player.Channel, reason);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.Kick,
+                AuditSeverity.Critical,
+                $"Kicked player {player.Name} ({player.UserId})",
+                targetPlayerUserId: player.UserId.UserId,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    targetName = player.Name,
+                    targetUserId = player.UserId.UserId,
+                    reason = body.Reason
+                }));
             await RespondOk(context);
 
             _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) for {reason} by {FormatLogActor(actor)}");
@@ -454,6 +473,12 @@ public sealed partial class ServerApi : IPostInjectInit
             }
 
             roundEndSystem.EndRound();
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.EndRound,
+                AuditSeverity.Critical,
+                "Ended round",
+                payload: JsonSerializer.SerializeToDocument(new { action = "round_end" }));
             _sawmill.Info($"Forced round end by {FormatLogActor(actor)}");
             await RespondOk(context);
         });
@@ -466,6 +491,12 @@ public sealed partial class ServerApi : IPostInjectInit
             var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
 
             ticker.RestartRound();
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.RestartRound,
+                AuditSeverity.Critical,
+                "Restarted round immediately",
+                payload: JsonSerializer.SerializeToDocument(new { action = "round_restart_now" }));
             _sawmill.Info($"Forced instant round restart by {FormatLogActor(actor)}");
             await RespondOk(context);
         });

@@ -7,9 +7,10 @@ namespace Content.Shared.Administration.Logs;
 [Serializable, NetSerializable]
 public sealed class AdminAuditLogsEuiState : EuiStateBase
 {
-    public AdminAuditLogsEuiState(int roundId, int totalLogs, string currentServerName)
+    public AdminAuditLogsEuiState(int roundId, int maxRoundId, int totalLogs, string currentServerName)
     {
         RoundId = roundId;
+        MaxRoundId = maxRoundId;
         TotalLogs = totalLogs;
         CurrentServerName = currentServerName;
     }
@@ -17,6 +18,8 @@ public sealed class AdminAuditLogsEuiState : EuiStateBase
     public bool IsLoading { get; set; }
 
     public int RoundId { get; }
+
+    public int MaxRoundId { get; }
 
     public int TotalLogs { get; }
 

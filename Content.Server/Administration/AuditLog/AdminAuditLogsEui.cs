@@ -63,13 +63,13 @@ public sealed class AdminAuditLogsEui : BaseEui
     {
         if (_isLoading)
         {
-            return new AdminAuditLogsEuiState(CurrentRoundId, 0, string.Empty)
+            return new AdminAuditLogsEuiState(CurrentRoundId, CurrentRoundId, 0, string.Empty)
             {
                 IsLoading = true
             };
         }
 
-        return new AdminAuditLogsEuiState(_currentRoundId, _totalLogs, _currentServerName)
+        return new AdminAuditLogsEuiState(_currentRoundId, CurrentRoundId, _totalLogs, _currentServerName)
         {
             IsLoading = false
         };

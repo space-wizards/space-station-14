@@ -1,32 +1,50 @@
-<Control xmlns="https://spacestation14.io">
+<Control xmlns="https://spacestation14.io"
+         xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <PanelContainer StyleClasses="BackgroundDark">
-        <BoxContainer Orientation="Vertical" Margin="4">
-            <BoxContainer Orientation="Horizontal" MinHeight="28">
-                <Label Text="{Loc admin-logs-browsing-prefix}" Margin="0 0 2 0"/>
-                <SpinBox Name="RoundSpinBox" Access="Public" Value="0" MinWidth="100"/>
-                <Label Text="{Loc admin-logs-browsing-on}" Margin="4 0 2 0"/>
-                <Label Name="ServerNameLabel" Access="Public" StyleClasses="LabelKeyText" Margin="4 0"/>
-                <Control HorizontalExpand="True"/>
-                <Button Name="SearchButton" Access="Public" Text="{Loc admin-logs-search-button}" StyleClasses="OpenRight"/>
-                <LineEdit Name="SearchLineEdit" Access="Public" MinWidth="260" PlaceHolder="{Loc admin-logs-search-logs-placeholder}" StyleClasses="OpenLeft"/>
-                <Control MinSize="8 0"/>
-                <Button Name="RoutineButton" Access="Public" Text="Routine" ToggleMode="True" Pressed="True" StyleClasses="OpenRight"/>
-                <Button Name="NotableButton" Access="Public" Text="Notable" ToggleMode="True" Pressed="True" StyleClasses="ButtonSquare"/>
-                <Button Name="CriticalButton" Access="Public" Text="Critical" ToggleMode="True" Pressed="True" StyleClasses="OpenLeft"/>
+        <BoxContainer Orientation="Horizontal">
+            <BoxContainer Orientation="Vertical" Margin="4" MinWidth="200">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc admin-logs-browsing-prefix}" Margin="0 0 2 0"/>
+                    <SpinBox Name="RoundSpinBox" Access="Public" Value="0" MinWidth="80"/>
+                    <Control HorizontalExpand="True"/>
+                    <Button Name="ResetRoundButton" Text="{Loc admin-logs-reset}" StyleClasses="ButtonSquare"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="0 2 0 0">
+                    <Label Text="{Loc admin-logs-browsing-on}" Margin="0 0 2 0"/>
+                    <Label Name="ServerNameLabel" Access="Public" StyleClasses="LabelKeyText"/>
+                </BoxContainer>
+                <Control MinSize="0 4"/>
+                <LineEdit Name="ActionSearch" Access="Public" StyleClasses="actionSearchBox"
+                          HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-types-placeholder}"/>
+                <BoxContainer Orientation="Horizontal" Margin="0 2">
+                    <Button Name="SelectAllActionsButton" Text="{Loc admin-logs-select-all}" HorizontalExpand="True" StyleClasses="OpenRight"/>
+                    <Button Name="SelectNoActionsButton" Text="{Loc admin-logs-select-none}" HorizontalExpand="True" StyleClasses="OpenLeft"/>
+                </BoxContainer>
+                <ScrollContainer VerticalExpand="True">
+                    <BoxContainer Name="ActionTypesContainer" Access="Public" Orientation="Vertical"/>
+                </ScrollContainer>
             </BoxContainer>
-
-            <Control MinSize="0 4"/>
-
-            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
-                <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
-            </ScrollContainer>
-
-            <Control MinSize="0 4"/>
-
-            <BoxContainer Orientation="Horizontal">
-                <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}"/>
-                <Control HorizontalExpand="True"/>
-                <Label Name="CountLabel" Access="Public" />
+            <aui:VSeparator/>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
+                    <Button Name="RoutineButton" Access="Public" Text="Routine" ToggleMode="True" Pressed="True" StyleClasses="OpenRight"/>
+                    <Button Name="NotableButton" Access="Public" Text="Notable" ToggleMode="True" Pressed="True" StyleClasses="ButtonSquare"/>
+                    <Button Name="CriticalButton" Access="Public" Text="Critical" ToggleMode="True" Pressed="True" StyleClasses="OpenLeft"/>
+                    <Control HorizontalExpand="True"/>
+                    <Label Name="CountLabel" Access="Public" Margin="4 0"/>
+                    <Control HorizontalExpand="True"/>
+                    <Button Name="ExportLogs" Access="Public" Text="{Loc admin-logs-export}" StyleClasses="OpenRight"/>
+                    <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}" StyleClasses="OpenLeft"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="0 2">
+                    <LineEdit Name="SearchLineEdit" Access="Public" StyleClasses="actionSearchBox"
+                              HorizontalExpand="True" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
+                    <Button Name="SearchButton" Access="Public" Text="{Loc admin-logs-search-button}" StyleClasses="OpenRight"/>
+                    <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
+                </BoxContainer>
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                    <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
+                </ScrollContainer>
             </BoxContainer>
         </BoxContainer>
     </PanelContainer>

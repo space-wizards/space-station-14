@@ -9,8 +9,10 @@ public record struct SharedAdminAuditLog(
     AuditSeverity Severity,
     DateTime OccurredAt,
     Guid AdminUserId,
+    string AdminUserName,
     string Message,
     Guid? TargetPlayerUserId,
+    string? TargetPlayerUserName,
     int? TargetEntityUid,
     string? TargetEntityName,
     string? TargetEntityPrototype);

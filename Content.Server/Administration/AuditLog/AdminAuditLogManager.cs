@@ -1,14 +1,15 @@
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
-using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.AuditLog;
@@ -21,9 +22,9 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
 
     private const string SawmillId = "admin.audit_logs";
 
@@ -35,6 +36,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
     private TimeSpan _nextUpdateTime;
     private int _savingLogs;
     private int _serverId;
+    private int _roundId;
 
     public void Initialize()
     {
@@ -46,6 +48,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
             value => _queueSendDelay = TimeSpan.FromSeconds(value), true);
 
         _consoleHost.AnyCommandExecuted += OnAnyCommandExecuted;
+        _vvManager.PropertyModified += OnVVPropertyModified;
 
         _ = Task.Run(async () =>
         {
@@ -63,6 +66,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
     public void Shutdown()
     {
         _consoleHost.AnyCommandExecuted -= OnAnyCommandExecuted;
+        _vvManager.PropertyModified -= OnVVPropertyModified;
 
         if (_logQueue.IsEmpty)
             return;
@@ -80,16 +84,77 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
     private void OnAnyCommandExecuted(IConsoleShell shell, string commandName, string argStr, string[] args)
     {
         if (shell.Player is not { } session)
+        {
+            _sawmill.Verbose($"AnyCommandExecuted fired for '{commandName}' but shell.Player is null (server console).");
             return;
+        }
 
         if (!_adminManager.IsAdmin(session))
             return;
+
+        _sawmill.Debug($"Audit logging command: {session.Name} executed '{commandName}'");
 
         LogAction(
             session.UserId,
             AdminAuditAction.CommandExecution,
             AuditSeverity.Routine,
-            $"Executed command: {argStr}");
+            $"{session.Name} executed: {argStr}");
+    }
+
+    private void OnVVPropertyModified(NetUserId userId, object target, string memberName, object? oldValue, object? newValue)
+    {
+        var oldStr = FormatVVValue(oldValue);
+        var newStr = FormatVVValue(newValue);
+
+        // If the target is an entity component, we want the enitity
+        EntityUid? targetEntity = null;
+        string entityDesc = "";
+        var componentName = memberName;
+
+        if (target is IComponent comp)
+        {
+            //Constuct a nice string with the comp name
+            componentName = $"{comp.GetType().Name}.{memberName.Split('.').LastOrDefault() ?? memberName}";
+
+            if (comp.Owner.IsValid())
+            {
+                targetEntity = comp.Owner;
+                entityDesc = $" on {_entityManager.ToPrettyString(comp.Owner)}";
+            }
+        }
+
+        LogAction(
+            userId.UserId,
+            AdminAuditAction.VVWrite,
+            AuditSeverity.Notable,
+            $"VV modified {componentName}{entityDesc}: {oldStr} → {newStr}",
+            targetEntity: targetEntity,
+            payload: JsonSerializer.SerializeToDocument(new
+            {
+                component = target is IComponent c ? c.GetType().Name : target.GetType().Name,
+                member = memberName,
+                oldValue = oldStr,
+                newValue = newStr
+            }));
+    }
+
+    //There are too many Vs in this name
+    private static string FormatVVValue(object? value)
+    {
+        if (value == null)
+            return "<null>";
+
+        // For collections make a list
+        if (value is System.Collections.IEnumerable enumerable and not string)
+        {
+            var items = new List<string>();
+            foreach (var item in enumerable)
+                items.Add(item?.ToString() ?? "<null>");
+
+            return items.Count == 0 ? "[]" : $"[{string.Join(", ", items)}]";
+        }
+
+        return value.ToString() ?? "<null>";
     }
 
     public void Update()
@@ -105,6 +170,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
 
     public void RoundStarting(int roundId)
     {
+        _roundId = roundId;
     }
 
     public void LogAction(
@@ -137,7 +203,7 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
         if (message.Contains('\0'))
             message = message.Replace("\0", "");
 
-        var roundId = _gameTicker.RoundId;
+        var roundId = _roundId;
 
         _logQueue.Enqueue(new AdminAuditEventWriteData
         {

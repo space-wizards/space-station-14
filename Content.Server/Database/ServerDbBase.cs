@@ -1522,7 +1522,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             var ct = filter.CancellationToken;
             await using var db = await GetDb(ct);
 
-            return await GetAuditLogsQuery(db.DbContext, filter)
+            var results = await GetAuditLogsQuery(db.DbContext, filter)
                 .AsNoTracking()
                 .Select(log => new SharedAdminAuditLog(
                     log.Id,
@@ -1530,12 +1530,43 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     log.Severity,
                     log.OccurredAt,
                     log.AdminUserId,
+                    string.Empty,
                     log.Message,
                     log.TargetPlayerUserId,
+                    null,
                     log.TargetEntityUid,
                     log.TargetEntityName,
                     log.TargetEntityPrototype))
                 .ToListAsync(ct);
+
+            var userIds = new HashSet<Guid>();
+            foreach (var log in results)
+            {
+                userIds.Add(log.AdminUserId);
+                if (log.TargetPlayerUserId is { } targetPlayerUserId)
+                    userIds.Add(targetPlayerUserId);
+            }
+
+            var nameMap = userIds.Count == 0
+                ? new Dictionary<Guid, string>()
+                : await db.DbContext.Player
+                    .AsNoTracking()
+                    .Where(player => userIds.Contains(player.UserId))
+                    .ToDictionaryAsync(player => player.UserId, player => player.LastSeenUserName, ct);
+
+            for (var i = 0; i < results.Count; i++)
+            {
+                var log = results[i];
+                results[i] = log with
+                {
+                    AdminUserName = nameMap.GetValueOrDefault(log.AdminUserId, log.AdminUserId.ToString()),
+                    TargetPlayerUserName = log.TargetPlayerUserId is { } targetPlayerUserId
+                        ? nameMap.GetValueOrDefault(targetPlayerUserId)
+                        : null
+                };
+            }
+
+            return results;
         }
 
         public async Task<int> CountAuditLogs(AuditLogFilter filter)

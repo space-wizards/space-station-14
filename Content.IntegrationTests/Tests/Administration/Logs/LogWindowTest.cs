@@ -34,7 +34,7 @@ public sealed class LogWindowTest : InteractionTest
 
         // Find the log search field and refresh buttons
         var search = logWindow.Logs.LogSearch;
-        var refresh = logWindow.Logs.RefreshButton;
+        var refresh = logWindow.Logs.SearchButton;
         var cont = logWindow.Logs.LogsContainer;
 
         async Task<AdminLogLabel[]> SearchForLog(Guid logGuid)
