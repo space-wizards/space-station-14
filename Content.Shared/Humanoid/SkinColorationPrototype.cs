@@ -308,11 +308,10 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 internal static class SkinColorationUtils
 {
     /// <summary>
-    /// An empirically determined epsilon to account for floating-point drift during RGB -> HSL/HSV -> RGB conversions.
-    /// Based on high-iteration testing (50M+ samples) which showed a max drift of ~4.9E-6 for HSL.
-    /// A value of 1E-5f provides a robust safety margin.
+    /// A value derived by dividing 1 by 256.
+    /// Due to RGB being stored in 8-bit color values, we can't expect more precision than this.
     /// </summary>
-    public const float Epsilon = 1e-5f; // 0.00001
+    public const float Epsilon =  0.00390625f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
