@@ -37,8 +37,8 @@
     - id: CowSwarm
     - id: PotatoSwarm
     - id: FunSwarm
-    - id: FleshSwarm
-    - id: KudzuSwarm
+    - id: MeteorSwarmFlesh
+    - id: MeteorSwarmKudzu
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
@@ -343,8 +343,8 @@
       max: 12
 
 - type: entity
-  parent: GameRuleMeteorSwarm
-  id: FleshSwarm
+  parent: MeteorSwarm
+  id: MeteorSwarmFlesh
   components:
   - type: StationEvent
     weight: 4
@@ -361,8 +361,8 @@
       max: 10
 
 - type: entity
-  parent: GameRuleMeteorSwarm
-  id: KudzuSwarm
+  parent: MeteorSwarm
+  id: MeteorSwarmKudzu
   components:
   - type: StationEvent
     weight: 5
