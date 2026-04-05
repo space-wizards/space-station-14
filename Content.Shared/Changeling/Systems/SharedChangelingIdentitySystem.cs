@@ -65,16 +65,24 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         CleanupDevouredReferences(ent);
     }
 
+    // Set all references to this entity to null to prevent PVS errors when networking.
     private void OnDevouredShutdown(Entity<ChangelingDevouredComponent> ent, ref ComponentShutdown args)
     {
-        // We remove all references to this entity for all changelings that devoured it.
         foreach (var ling in ent.Comp.DevouredBy)
         {
             if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
                 continue;
 
-            var key = identityComp.ConsumedIdentities.FirstOrDefault(x => x.Value == ent.Owner).Key;
-            identityComp.ConsumedIdentities[key] = null;
+            var keysToUpdate = identityComp.ConsumedIdentities
+                .Where(kvp => kvp.Value == ent.Owner)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            if (keysToUpdate.Count == 0)
+                continue; // No need to dirty.
+
+            foreach (var key in keysToUpdate)
+                identityComp.ConsumedIdentities[key] = null;
 
             Dirty(ling, identityComp);
         }
@@ -108,16 +116,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// <param name="ent">The changeling entity</param>
     private void CleanupDevouredReferences(Entity<ChangelingIdentityComponent> ent)
     {
-        foreach (var entity in ent.Comp.ConsumedIdentities)
+        foreach (var devouredUid in ent.Comp.ConsumedIdentities.Values)
         {
-            if (!TryComp<ChangelingDevouredComponent>(entity.Value, out var devoured))
+            if (!TryComp<ChangelingDevouredComponent>(devouredUid, out var devouredComp))
                 continue;
 
-            if (!devoured.DevouredBy.Contains(ent.Owner))
-                continue;
-
-            devoured.DevouredBy.Remove(ent.Owner);
-            Dirty(entity.Value.Value, devoured);
+            if (devouredComp.DevouredBy.Remove(ent.Owner))
+                Dirty(devouredUid.Value, devouredComp);
         }
     }
 

@@ -13,7 +13,8 @@ public sealed partial class ChangelingIdentityComponent : Component
 {
     /// <summary>
     /// The list of entities that exist on a paused map. They are paused clones of the victims that the ling has consumed, with all relevant components copied from the original.
-    /// First is the Uid of the stored identity, second is the original entity the identity came from.
+    /// The key is the EntityUid of the stored identity, the value is the original entity the identity came from.
+    /// The value will be set to null if that entity is deleted.
     /// </summary>
     // TODO: This should be handled via a relation system in the future.
     [DataField, AutoNetworkedField]
