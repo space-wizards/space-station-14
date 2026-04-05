@@ -4,33 +4,37 @@
   id: LootSpawnerIndustrialFluff
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-    - type: RandomSpawner
-      rarePrototypes:
-        - CheapLighter
-        - Pen
-        - Cigar
-        - CigarSpent
-        - Cigarette
-        - CigaretteSpent
-        - Paper
-        - FolderSpawner
-      rareChance: 0.1
-      prototypes:
-        - RemoteSignaller
-        - GeigerCounter
-        - trayScanner
-        - FlashlightLantern
-        - ClothingHandsGlovesColorBlack
-        - Lighter
-        - ClothingMaskGas
-        - HandheldGPSBasic
-      chance: 0.85
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Tools/flashlight.rsi
+      state: flashlight
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 9
+        prob: 0.85
+        children:
+        - id: RemoteSignaller
+        - id: GeigerCounter
+        - id: trayScanner
+        - id: FlashlightLantern
+        - id: ClothingHandsGlovesColorBlack
+        - id: Lighter
+        - id: ClothingMaskGas
+        - id: HandheldGPSBasic
+      - !type:GroupSelector
+        children:
+        - id: CheapLighter
+        - id: Pen
+        - id: Cigar
+        - id: CigarSpent
+        - id: Cigarette
+        - id: CigaretteSpent
+        - id: Paper
+        - id: FolderSpawner
+    offset: 0.0
 
 - type: entity
   name: industrial loot spawner
@@ -38,48 +42,53 @@
   id: LootSpawnerIndustrial
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/welder.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - MicroManipulatorStockPart
-        - CableHVStack10
-        - WelderIndustrial
-        - PowerCellHigh
-        - PowerCellSmall
-        - ClothingHandsGlovesColorYellowBudget
-      rareChance: 0.2
-      prototypes:
-        - ClothingHeadHatWelding
-        - WelderMini
-        - Crowbar
-        - CrowbarRed
-        - Screwdriver
-        - Wrench
-        - Wirecutter
-        - Welder
-        - RemoteSignaller
-        - GeigerCounter
-        - GasAnalyzer
-        - Multitool
-        - trayScanner
-        - FlashlightLantern
-        - ClothingHandsGlovesColorBlack
-        - ClothingMaskGas
-        - HandheldGPSBasic
-        - FireExtinguisher
-        - PowerCellMedium
-        - SheetSteel10
-        - SheetGlass10
-        - SheetPlastic10
-        - SheetPlasteel10
-        - PartRodMetal10
-        - CableApcStack10
-        - CableMVStack10
-        - ToolboxElectricalFilled
-        - ToolboxMechanicalFilled
-      chance: 0.8
-      offset: 0.0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Tools/welder.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 8
+        prob: 0.8
+        children:
+        - id: ClothingHeadHatWelding
+        - id: WelderMini
+        - id: Crowbar
+        - id: CrowbarRed
+        - id: Screwdriver
+        - id: Wrench
+        - id: Wirecutter
+        - id: Welder
+        - id: RemoteSignaller
+        - id: GeigerCounter
+        - id: GasAnalyzer
+        - id: Multitool
+        - id: trayScanner
+        - id: FlashlightLantern
+        - id: ClothingHandsGlovesColorBlack
+        - id: ClothingMaskGas
+        - id: HandheldGPSBasic
+        - id: FireExtinguisher
+        - id: PowerCellMedium
+        - id: SheetSteel10
+        - id: SheetGlass10
+        - id: SheetPlastic10
+        - id: SheetPlasteel10
+        - id: PartRodMetal10
+        - id: CableApcStack10
+        - id: CableMVStack10
+        - id: ToolboxElectricalFilled
+        - id: ToolboxMechanicalFilled
+      - !type:GroupSelector
+        weight: 2
+        children:
+        - id: MicroManipulatorStockPart
+        - id: CableHVStack10
+        - id: WelderIndustrial
+        - id: PowerCellHigh
+        - id: PowerCellSmall
+        - id: ClothingHandsGlovesColorYellowBudget
+    offset: 0.0
