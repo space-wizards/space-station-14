@@ -20,12 +20,17 @@ public sealed partial class VoltageTogglerComponent : Component
     public int SelectedVoltageLevel;
 }
 
+/// <summary>
+/// A voltage setting that the the entity with <see cref="PowerConsumerComponent"/> and
+/// <see cref="VoltageTogglerComponent"/> can be toggled into.
+/// </summary>
 [DataDefinition]
 public partial struct VoltageSetting
 {
     /// <summary>
     /// The voltage of the setting,
-    /// that being which cable type the entity with <see cref="PowerConsumerComponent"/> will consume power from.
+    /// that being which cable type the entity with <see cref="PowerConsumerComponent"/>
+    /// will consume power from.
     /// </summary>
     [DataField(required: true)]
     public Voltage Voltage;
