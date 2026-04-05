@@ -1,7 +1,5 @@
-using System;
 using System.Buffers;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Radiation.Components;
@@ -224,44 +222,48 @@ public partial class RadiationSystem
                 var queryAabb = new Box2(destWorld, destWorld);
 
                 var state = (nearbySourcesArray, 0, SourceTree);
-                SourceTree.Query(ref state, static (ref (EntityUid[] arr, int count, B2DynamicTree<EntityUid> tree) tuple, DynamicTree.Proxy proxy) =>
-                {
-                    if (tuple.count >= tuple.arr.Length)
-                        return true;
+                SourceTree.Query(ref state,
+                    static (ref (EntityUid[] arr, int count, B2DynamicTree<EntityUid> tree) tuple,
+                        DynamicTree.Proxy proxy) =>
+                    {
+                        if (tuple.count >= tuple.arr.Length)
+                            return true;
 
-                    var uid = tuple.tree.GetUserData(proxy);
-                    tuple.arr[tuple.count++] = uid;
-                    return true;
-                }, in queryAabb);
+                        var uid = tuple.tree.GetUserData(proxy);
+                        tuple.arr[tuple.count++] = uid;
+                        return true;
+                    },
+                    in queryAabb);
 
                 var nearbySourcesSpan = nearbySourcesArray.AsSpan(0, state.Item2);
 
                 foreach (var sourceUid in nearbySourcesSpan)
                 {
                     if (!SourceDataMap.TryGetValue(sourceUid, out var source)
-                        || source.Transform.MapID != destMapId) continue;
+                        || source.Transform.MapID != destMapId)
+                        continue;
                     var delta = source.WorldPosition - destWorld;
-                    if (delta.LengthSquared() > source.MaxRange * source.MaxRange) continue;
+                    if (delta.LengthSquared() > source.MaxRange * source.MaxRange)
+                        continue;
                     var dist = delta.Length();
                     var radsAfterDist = source.Intensity - source.Slope * dist;
-                    if (radsAfterDist < System.MinIntensity) continue;
-                    if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray) continue;
+                    if (radsAfterDist < System.MinIntensity)
+                        continue;
+                    if (System.Irradiate(source, destUid, destTrs, destWorld, Debug, gridList) is not { } ray)
+                        continue;
 
                     if (ray.ReachedDestination)
                         rads += ray.Rads;
 
-                    if (DebugRays is not null)
-                    {
-                        DebugRays.Add(new DebugRadiationRay(
-                            ray.MapId,
-                            System.GetNetEntity(ray.SourceUid),
-                            ray.Source,
-                            System.GetNetEntity(ray.DestinationUid),
-                            ray.Destination,
-                            ray.Rads,
-                            ray.Blockers ?? new())
-                        );
-                    }
+                    DebugRays?.Add(new DebugRadiationRay(
+                        ray.MapId,
+                        System.GetNetEntity(ray.SourceUid),
+                        ray.Source,
+                        System.GetNetEntity(ray.DestinationUid),
+                        ray.Destination,
+                        ray.Rads,
+                        ray.Blockers ?? new Dictionary<NetEntity, List<(Vector2i, float)>>())
+                    );
                 }
 
                 rads = System.GetAdjustedRadiationIntensity(destUid, rads);
