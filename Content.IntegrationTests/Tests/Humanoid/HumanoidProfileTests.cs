@@ -59,6 +59,8 @@ public sealed class HumanoidProfileTests : GameTest
     }
 
     [Test]
+    [TestOf(typeof(HumanoidCharacterProfile)), TestOf(typeof(VisualBodyComponent))]
+    [Description("Tests that the game can generate a completely random profile with a completely random species and apply it to a blank body.")]
     public async Task EnsureValidRandom()
     {
         var pair = Pair;
@@ -80,7 +82,7 @@ public sealed class HumanoidProfileTests : GameTest
     [Test]
     [TestOf(typeof(HumanoidCharacterProfile)), TestOf(typeof(VisualBodyComponent))]
     [TestCaseSource(nameof(_species))]
-    [Description("Tests that a given entity specifies a valid node for construction, and optionally a valid one for deconstruction.")]
+    [Description("Tests that every species is able to randomly generate a valid appearance without issues.")]
     public async Task EnsureValidRandomSpecies(string species)
     {
         await Server.WaitIdleAsync();
