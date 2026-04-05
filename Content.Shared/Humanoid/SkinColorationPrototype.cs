@@ -311,7 +311,7 @@ internal static class SkinColorationUtils
     /// A value derived by dividing 1 by 361, rounding down.
     /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon =   0.00277f;
+    public const float Epsilon = 0.00277f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
