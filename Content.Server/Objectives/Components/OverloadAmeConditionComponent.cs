@@ -6,10 +6,4 @@ namespace Content.Server.Objectives.Components;
 /// Requires that the station's AME is overloaded.
 /// </summary>
 [RegisterComponent, Access(typeof(OverloadAmeConditionSystem))]
-public sealed partial class OverloadAmeConditionComponent : Component
-{
-    /// <summary>
-    /// Has this objective been completed?
-    /// </summary>
-    public bool Completed = false;
-}
+public sealed partial class OverloadAmeConditionComponent : Component;
