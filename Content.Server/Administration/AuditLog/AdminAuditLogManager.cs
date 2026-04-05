@@ -28,6 +28,19 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
 
     private const string SawmillId = "admin.audit_logs";
 
+    private static readonly HashSet<string> SensitiveCommands = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "setpassword",
+        "changepassword",
+        "loadconfigfile",
+        "saveconfig",
+    };
+
+    private static readonly HashSet<string> RedactedArgCommands = new(StringComparer.OrdinalIgnoreCase)
+    {
+        //this can be used to redact stuff if needed in the audeit log
+    };
+
     private ISawmill _sawmill = default!;
     private readonly ConcurrentQueue<AdminAuditEventWriteData> _logQueue = new();
 
@@ -92,13 +105,19 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
         if (!_adminManager.IsAdmin(session))
             return;
 
+        var logMessage = argStr;
+        if (SensitiveCommands.Contains(commandName))
+            logMessage = $"{commandName} [arguments redacted]";
+        else if (RedactedArgCommands.Contains(commandName))
+            logMessage = $"{commandName} [...]";
+
         _sawmill.Debug($"Audit logging command: {session.Name} executed '{commandName}'");
 
         LogAction(
             session.UserId,
             AdminAuditAction.CommandExecution,
             AuditSeverity.Routine,
-            $"{session.Name} executed: {argStr}");
+            $"{session.Name} executed: {logMessage}");
     }
 
     private void OnVVPropertyModified(NetUserId userId, object target, string memberName, object? oldValue, object? newValue)

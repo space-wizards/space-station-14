@@ -283,6 +283,16 @@ public sealed partial class ServerApi : IPostInjectInit
 
             _sawmill.Info($"Ended game rule {body.GameRuleId} by {FormatLogActor(actor)}.");
             ticker.EndGameRule(gameRule.Value);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.RemoveGameRule,
+                AuditSeverity.Critical,
+                $"Ended game rule {body.GameRuleId}",
+                targetEntity: gameRule.Value,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    gameRule = body.GameRuleId,
+                }));
 
             await RespondOk(context);
         });
@@ -316,6 +326,18 @@ public sealed partial class ServerApi : IPostInjectInit
                 ticker.StartGameRule(ruleEntity);
                 _sawmill.Info($"Started game rule {body.GameRuleId} by {FormatLogActor(actor)}.");
             }
+
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.AddGameRule,
+                AuditSeverity.Critical,
+                $"Added game rule {body.GameRuleId}",
+                targetEntity: ruleEntity,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    gameRule = body.GameRuleId,
+                    startedImmediately = ticker.RunLevel == GameRunLevel.InRound,
+                }));
 
             await RespondOk(context);
         });

@@ -1,8 +1,13 @@
+using System.IO;
+using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using static Content.Shared.Administration.Logs.AdminAuditLogsEuiMsg;
 
 namespace Content.Client.Administration.UI.AuditLogs;
@@ -10,14 +15,32 @@ namespace Content.Client.Administration.UI.AuditLogs;
 [UsedImplicitly]
 public sealed class AdminAuditLogsEui : BaseEui
 {
-    private readonly AdminAuditLogsWindow _window;
+    [Dependency] private readonly IFileDialogManager _dialogManager = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
+    private const char CsvSeparator = ',';
+    private const string CsvQuote = "\"";
+    private const string CsvHeader = "Date,ID,AdminName,Action,Severity,Target,Message";
+
+    private ISawmill _sawmill = default!;
+
+    private AdminAuditLogsWindow? _window;
     private readonly AdminAuditLogsControl _control;
+
+    private IClydeWindow? ClydeWindow;
+    private WindowRoot? Root;
 
     private bool _firstState = true;
     private bool _suppressRoundChangeRequest;
+    private bool _currentlyExportingLogs;
 
     public AdminAuditLogsEui()
     {
+        IoCManager.InjectDependencies(this);
+        _sawmill = _log.GetSawmill("admin.audit_logs.ui");
+
         _window = new AdminAuditLogsWindow();
         _control = _window.AuditLogs;
 
@@ -30,6 +53,8 @@ public sealed class AdminAuditLogsEui : BaseEui
         _control.RoutineButton.OnPressed += _ => RequestLogs();
         _control.NotableButton.OnPressed += _ => RequestLogs();
         _control.CriticalButton.OnPressed += _ => RequestLogs();
+        _control.ExportLogs.OnPressed += _ => ExportLogs();
+        _control.PopOutButton.OnPressed += _ => PopOut();
         _control.RoundSpinBox.ValueChanged += _ =>
         {
             if (!_suppressRoundChangeRequest)
@@ -99,10 +124,100 @@ public sealed class AdminAuditLogsEui : BaseEui
         SendMessage(new NextAuditLogsRequest());
     }
 
+    private async void ExportLogs()
+    {
+        if (_currentlyExportingLogs)
+            return;
+
+        _currentlyExportingLogs = true;
+        _control.ExportLogs.Disabled = true;
+
+        var file = await _dialogManager.SaveFile(new FileDialogFilters(new FileDialogFilters.Group("csv")));
+        if (file == null)
+        {
+            _currentlyExportingLogs = false;
+            _control.ExportLogs.Disabled = false;
+            return;
+        }
+
+        try
+        {
+            await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
+            await writer.WriteLineAsync(CsvHeader);
+
+            foreach (var log in _control.LoadedLogs)
+            {
+                await writer.WriteAsync(log.OccurredAt.ToString("s", System.Globalization.CultureInfo.InvariantCulture));
+                await writer.WriteAsync(CsvSeparator);
+                await writer.WriteAsync(log.Id.ToString());
+                await writer.WriteAsync(CsvSeparator);
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(log.AdminUserName.Replace(CsvQuote, CsvQuote + CsvQuote));
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(CsvSeparator);
+                await writer.WriteAsync(log.Action.ToString());
+                await writer.WriteAsync(CsvSeparator);
+                await writer.WriteAsync(log.Severity.ToString());
+                await writer.WriteAsync(CsvSeparator);
+                var target = log.TargetPlayerUserName ?? log.TargetEntityName ?? "";
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(target.Replace(CsvQuote, CsvQuote + CsvQuote));
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(CsvSeparator);
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
+                await writer.WriteAsync(CsvQuote);
+                await writer.WriteLineAsync();
+            }
+        }
+        catch (Exception exc)
+        {
+            _sawmill.Error($"Error exporting audit logs:\n{exc.StackTrace}");
+        }
+        finally
+        {
+            await file.Value.fileStream.DisposeAsync();
+            _currentlyExportingLogs = false;
+            _control.ExportLogs.Disabled = false;
+        }
+    }
+
+    private void PopOut()
+    {
+        if (_window == null)
+            return;
+
+        var monitor = _clyde.EnumerateMonitors().First();
+
+        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        {
+            Maximized = false,
+            Title = Loc.GetString("admin-audit-logs-title"),
+            Monitor = monitor,
+            Width = 1100,
+            Height = 400
+        });
+
+        _control.Orphan();
+        _window.Dispose();
+        _window = null;
+
+        ClydeWindow.RequestClosed += OnRequestClosed;
+        ClydeWindow.DisposeOnClose = true;
+
+        Root = _uiManager.CreateWindowRoot(ClydeWindow);
+        Root.AddChild(_control);
+    }
+
+    private void OnRequestClosed(WindowRequestClosedEventArgs args)
+    {
+        OnCloseWindow();
+    }
+
     public override void Opened()
     {
         base.Opened();
-        _window.OpenCentered();
+        _window?.OpenCentered();
     }
 
     public override void Closed()
@@ -110,6 +225,8 @@ public sealed class AdminAuditLogsEui : BaseEui
         base.Closed();
 
         _control.Dispose();
-        _window.Dispose();
+        _window?.Dispose();
+        Root?.Dispose();
+        ClydeWindow?.Dispose();
     }
 }

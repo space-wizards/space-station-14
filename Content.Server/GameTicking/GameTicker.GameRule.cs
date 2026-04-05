@@ -1,6 +1,7 @@
 using System.Linq;
-using System.Text;
+using System.Text.Json;
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -25,13 +26,8 @@ public sealed partial class GameTicker
 
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
-    /// <summary>
-    /// List of ignored game rules, these rules won't be spawned by normal means.
-    /// This list is populated by <see cref="CCVars.GameTickerIgnoredPresets"/>
-    /// </summary>
-    [ViewVariables] private string[] _ignoredRules = [];
-
-    [Dependency] private EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -487,6 +483,21 @@ public sealed partial class GameTicker
             if(RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
 
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.AddGameRule,
+                    AuditSeverity.Critical,
+                    $"Added game rule {rule}",
+                    targetEntity: ent,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        gameRule = rule,
+                        startedImmediately = RunLevel == GameRunLevel.InRound,
+                    }));
+            }
+
         }
     }
 
@@ -514,7 +525,23 @@ public sealed partial class GameTicker
                 _adminLogger.AddStructured(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
             }
 
-            EndGameRule(ruleEnt.Value);
+            if (!EndGameRule(ruleEnt.Value))
+                continue;
+
+            if (shell.Player != null)
+            {
+                var ruleName = MetaData(ruleEnt.Value).EntityPrototype?.ID ?? rule;
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.RemoveGameRule,
+                    AuditSeverity.Critical,
+                    $"Ended game rule {ruleName}",
+                    targetEntity: ruleEnt.Value,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        gameRule = ruleName,
+                    }));
+            }
         }
     }
 

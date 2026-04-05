@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Database;
 
 /// <summary>
-///  Role information for entities in admin logs
+/// The role an entity played in an admin log event.
 /// </summary>
 public enum AdminLogEntityRole : byte
 {

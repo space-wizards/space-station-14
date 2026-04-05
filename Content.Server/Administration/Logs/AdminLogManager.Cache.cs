@@ -10,9 +10,11 @@ public sealed partial class AdminLogManager
     /// The in-memory cache is disabled: <see cref="TrySearchCache"/> always returns false,
     /// so populating it wastes ~30k allocations per round for data that is never read.
     /// These methods are retained as no-ops to satisfy call sites in <see cref="SaveLogs"/>
-    /// and <see cref="RoundStarting"/>. When (if) a cache strategy is re-introduced for V2,
-    /// it should be server-identity-aware and keyset-compatible.
+    /// and <see cref="RoundStarting"/>.
     /// </summary>
+    /// <remarks>
+    /// Im pretty sure we dont need a cache because its faster now. Idk we will see
+    /// </remarks>
     public void CacheNewRound()
     {
         // No-op: V2 cache disabled.

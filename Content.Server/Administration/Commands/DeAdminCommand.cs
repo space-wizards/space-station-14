@@ -1,5 +1,8 @@
+using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
@@ -9,7 +12,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.None)]
     public sealed partial class DeAdminCommand : LocalizedCommands
     {
-        [Dependency] private IAdminManager _admin = default!;
+        [Dependency] private readonly IAdminManager _admin = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "deadmin";
 
@@ -23,6 +27,16 @@ namespace Content.Server.Administration.Commands
             }
 
             _admin.DeAdmin(player);
+
+            _auditLog.LogAction(
+                player.UserId.UserId,
+                AdminAuditAction.DeAdmin,
+                AuditSeverity.Notable,
+                "De-adminned self",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    action = "deadmin_self"
+                }));
         }
     }
 }

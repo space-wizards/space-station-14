@@ -49,13 +49,11 @@ public sealed partial class AdminAuditLogsControl : Control
         SelectedSeverities.Add(AuditSeverity.Critical);
 
         SetActions(Enum.GetValues<AdminAuditAction>());
-
-        ExportLogs.Disabled = true;
-        PopOutButton.Disabled = true;
     }
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => SearchLineEdit.Text.Trim();
+    public IReadOnlyList<SharedAdminAuditLog> LoadedLogs => _loadedLogs;
 
     public HashSet<AuditSeverity> SelectedSeverities { get; } = new();
     public HashSet<AdminAuditAction> SelectedActions { get; } = new();
