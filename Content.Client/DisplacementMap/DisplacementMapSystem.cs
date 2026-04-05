@@ -12,6 +12,7 @@ public sealed class DisplacementMapSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serialization = null!;
     [Dependency] private readonly SpriteSystem _sprite = null!;
 
+    //needs to be replaced later: see comment on line 48
     private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
 
     private static string? BuildDisplacementLayerKey(object key)
@@ -44,8 +45,12 @@ public sealed class DisplacementMapSystem : EntitySystem
 
         if (data.ShaderOverride is not null)
         {
+            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
+            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
+            //should be replaced by an engine-level solution, but this is an adequate temporary solution.
+            //what's that phrase about temporary solutions?
             sprite.Comp.LayerSetShader(index,
-                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID) //don't like doing a fixed comparison like this but it's the only real way to check if the current shader is unshaded atm. could expose parsedShader from the proto?
+                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID)
                     ? data.ShaderOverrideUnshaded
                     : data.ShaderOverride);
         }
