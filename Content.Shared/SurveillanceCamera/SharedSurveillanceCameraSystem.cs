@@ -1,7 +1,6 @@
 using Content.Shared.Emp;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
