@@ -836,31 +836,31 @@
         - id: PillDexalin
           amount: 1, 6
         - id: PillDylovene
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillHyronalin
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillPotassiumIodide
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillIron
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillCopper
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillKelotane
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillDermaline
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillTricordrazine
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillBicaridine
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillCharcoal
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillSpaceDrugs
           weight: 0.75
-          amount: *Range1to6
+          amount: 1, 6
         - id: StrangePill
           weight: 0.75
-          amount: *Range1to6
+          amount: 1, 6
 
 # Syringes
 - type: entity
