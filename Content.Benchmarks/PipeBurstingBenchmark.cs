@@ -1,12 +1,11 @@
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnosers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Configuration;
