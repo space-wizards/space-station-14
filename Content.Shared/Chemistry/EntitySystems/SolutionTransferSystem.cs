@@ -99,7 +99,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         ent.Comp.TransferAmount = newTransferAmount;
 
         if (message.Actor is { Valid: true } user)
-            _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent.Owner, user);
+            _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent.Owner, user);
 
         Dirty(ent.Owner, ent.Comp);
     }

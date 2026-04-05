@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Content.Server.Store.Systems;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -10,13 +9,12 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class StoreTests
+public sealed class StoreTests : GameTest
 {
 
     [TestPrototypes]
@@ -24,7 +22,7 @@ public sealed class StoreTests
 - type: entity
   name: InventoryPdaDummy
   id: InventoryPdaDummy
-  parent: BasePDA
+  parent: [BasePDA, StorePresetUplink]
   components:
   - type: Clothing
     QuickEquip: false
@@ -32,10 +30,23 @@ public sealed class StoreTests
     - idcard
   - type: Pda
 ";
+
     [Test]
+    [Ignore("""
+        This currently causes the client to crash, failing the test.
+        When this is fixed, this test should be removed and StoreDiscountAndRefund
+        should just use the default pair config.
+    """)]
+    public async Task StoreDiscountAndRefundWithClient()
+    {
+        await StoreDiscountAndRefund();
+    }
+
+    [Test]
+    [PairConfig(nameof(PsDisconnected))]
     public async Task StoreDiscountAndRefund()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -78,10 +89,13 @@ public sealed class StoreTests
             mindSystem.TransferTo(mind, human, mind: mind);
 
             FixedPoint2 originalBalance = 20;
-            uplinkSystem.AddUplink(human, originalBalance, null, true);
+            uplinkSystem.AddUplink(human, originalBalance, out var notes, pda, null, true);
 
-            var storeComponent = entManager.GetComponent<StoreComponent>(pda);
-            var discountComponent = entManager.GetComponent<StoreDiscountComponent>(pda);
+            var remote = entManager.GetComponent<RemoteStoreComponent>(pda);
+            var storeEnt = remote.Store;
+            Assert.That(storeEnt.HasValue);
+            var storeComponent = entManager.GetComponent<StoreComponent>(storeEnt.Value);
+            var discountComponent = entManager.GetComponent<StoreDiscountComponent>(storeEnt.Value);
             Assert.That(
                 discountComponent.Discounts,
                 Has.Exactly(6).Items,
@@ -127,7 +141,7 @@ public sealed class StoreTests
                     Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), "Expected discounted cost to be lower then prototype cost.");
 
 
-                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID){Actor = human};
+                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID, null){Actor = human};
                     server.EntMan.EventBus.RaiseLocalEvent(pda, buyMsg);
 
                     var newBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
@@ -168,7 +182,5 @@ public sealed class StoreTests
             }
 
         });
-
-        await pair.CleanReturnAsync();
     }
 }

@@ -150,7 +150,17 @@ namespace Content.Client.Chemistry.UI
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
-            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+            switch (castState.DrawSource)
+            {
+                case ChemMasterDrawSource.Internal:
+                    SetBufferText(castState.BufferCurrentVolume, "chem-master-output-buffer-draw");
+                    break;
+                case ChemMasterDrawSource.External:
+                    SetBufferText(castState.InputContainerInfo?.CurrentVolume, "chem-master-output-beaker-draw");
+                    break;
+                default:
+                    throw new($"Chemmaster {castState.OutputContainerInfo} draw source is not set");
+            }
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
@@ -168,9 +178,14 @@ namespace Content.Client.Chemistry.UI
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-            var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
+            var outputVolume = castState.DrawSource switch
+            {
+                ChemMasterDrawSource.Internal => castState.BufferCurrentVolume?.Int() ?? 0,
+                ChemMasterDrawSource.External => castState.InputContainerInfo?.CurrentVolume.Int() ?? 0,
+                _ => 0,
+            };
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
+            PillDosage.Value = (int)Math.Min(outputVolume, castState.PillDosageLimit);
 
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
@@ -186,25 +201,35 @@ namespace Content.Client.Chemistry.UI
             // Avoid division by zero
             if (PillDosage.Value > 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.Value = Math.Min(outputVolume / PillDosage.Value, pillNumberMax);
             }
             else
             {
                 PillNumber.Value = 0;
             }
 
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
+            BottleDosage.Value = Math.Min(bottleAmountMax, outputVolume);
         }
         /// <summary>
-        /// Generate a product label based on reagents in the buffer.
+        /// Generate a product label based on reagents in the buffer or beaker.
         /// </summary>
         /// <param name="state">State data sent by the server.</param>
         private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
         {
-            if (state.BufferCurrentVolume == 0)
+            if (
+                state.BufferCurrentVolume == 0 && state.DrawSource == ChemMasterDrawSource.Internal ||
+                state.InputContainerInfo?.CurrentVolume == 0 && state.DrawSource == ChemMasterDrawSource.External ||
+                state.InputContainerInfo?.Reagents == null
+            )
                 return "";
 
-            var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
+            var reagent = (state.DrawSource switch
+                {
+                    ChemMasterDrawSource.Internal => state.BufferReagents,
+                    ChemMasterDrawSource.External => state.InputContainerInfo.Reagents ?? [],
+                    _ => throw new($"Chemmaster {state.OutputContainerInfo} draw source is not set"),
+                }).MinBy(r => r.Quantity)
+                .Reagent;
             _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
             return proto?.LocalizedName ?? "";
         }
@@ -233,6 +258,8 @@ namespace Content.Client.Chemistry.UI
                 _ => Loc.GetString("chem-master-window-sort-type-none")
             };
 
+            OutputBufferDraw.Pressed = state.DrawSource == ChemMasterDrawSource.Internal;
+            OutputBeakerDraw.Pressed = state.DrawSource == ChemMasterDrawSource.External;
 
             if (!state.BufferReagents.Any())
             {
@@ -413,6 +440,12 @@ namespace Content.Client.Chemistry.UI
         {
             get => LabelLineEdit.Text;
             set => LabelLineEdit.Text = value;
+        }
+
+        private void SetBufferText(FixedPoint2? volume, string text)
+        {
+            BufferCurrentVolume.Text = $" {volume ?? FixedPoint2.Zero}u";
+            DrawSource.Text = Loc.GetString(text);
         }
     }
 
