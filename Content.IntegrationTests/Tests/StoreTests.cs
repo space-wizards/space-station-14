@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Server.PDA.Ringer;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -68,6 +69,7 @@ public sealed class StoreTests : GameTest
         EntityUid pda = default;
 
         var uplinkSystem = entManager.System<UplinkSystem>();
+        var ringerSystem = entManager.System<RingerSystem>();
 
         var listingPrototypes = prototypeManager.EnumeratePrototypes<ListingPrototype>()
                                                 .ToArray();
@@ -89,10 +91,10 @@ public sealed class StoreTests : GameTest
             mindSystem.TransferTo(mind, human, mind: mind);
 
             FixedPoint2 originalBalance = 20;
-            uplinkSystem.AddUplink(human, originalBalance, out var notes, pda, null, true);
+            uplinkSystem.AddUplink(human, originalBalance, out var notes, pda, true);
 
-            var remote = entManager.GetComponent<RemoteStoreComponent>(pda);
-            var storeEnt = remote.Store;
+            Assert.That(notes != null);
+            ringerSystem.TryMatchRingtoneToStore(notes, out var storeEnt);
             Assert.That(storeEnt.HasValue);
             var storeComponent = entManager.GetComponent<StoreComponent>(storeEnt.Value);
             var discountComponent = entManager.GetComponent<StoreDiscountComponent>(storeEnt.Value);
