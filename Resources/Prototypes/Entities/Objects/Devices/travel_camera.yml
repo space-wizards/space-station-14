@@ -2,7 +2,7 @@
   parent: BaseItem
   id: TravelCamera
   name: travel camera
-  description: A picture says more than a thousand words. Comes with an ultrabright flash and internal photo roll, so make sure every snap counts!
+  description: A picture says more than a thousand words. Comes with an ultrabright flash and internal recharging photo roll.
   components:
     # aptly named component for picture taking
   - type: PictureTaker
