@@ -24,7 +24,8 @@ public sealed partial class VoltageTogglerComponent : Component
 public partial struct VoltageSetting
 {
     /// <summary>
-    /// Voltage.
+    /// The voltage of the setting,
+    /// that being which cable type the entity with <see cref="PowerConsumerComponent"/> will consume power from.
     /// </summary>
     [DataField(required: true)]
     public Voltage Voltage;
