@@ -1204,7 +1204,7 @@
     toolQuality: Cutting # Wirecutters and barber's scissors.
     shearableMarkupText: sheep-shearable-examine-markup
     unShearableMarkupText: sheep-not-shearable-examine-markup
-  - type: Food
+  - type: Edible
     solution: wool
     requiresSpecialDigestion: true
     # Wooly prevents eating wool deleting the sheep so its fine

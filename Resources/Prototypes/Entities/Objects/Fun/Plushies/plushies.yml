@@ -1226,7 +1226,7 @@
       collection: Sheep
       params:
         variation: 0.05
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       collection: Sheep
@@ -1284,7 +1284,7 @@
       collection: SheepSpace
       params:
         variation: 0.05
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       collection: SheepSpace
