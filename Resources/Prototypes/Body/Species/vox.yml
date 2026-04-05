@@ -74,6 +74,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVox
+  categories: [ HideSpawnMenu ]
   name: vox appearance
   components:
   - type: Inventory

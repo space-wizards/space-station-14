@@ -46,6 +46,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSlimePerson
+  categories: [ HideSpawnMenu ]
   name: SlimePerson appearance
   components:
   - type: Inventory

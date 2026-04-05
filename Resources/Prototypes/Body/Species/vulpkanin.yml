@@ -63,6 +63,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVulpkanin
+  categories: [ HideSpawnMenu ]
   name: vulpkanin appearance
   components:
   - type: InitialBody
