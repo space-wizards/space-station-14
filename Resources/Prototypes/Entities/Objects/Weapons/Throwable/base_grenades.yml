@@ -61,7 +61,6 @@
   components:
   - type: TimerTriggerVisuals
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed
 
 - type: entity # Starts fuse after taking 10 damage.
   parent: GrenadeBase

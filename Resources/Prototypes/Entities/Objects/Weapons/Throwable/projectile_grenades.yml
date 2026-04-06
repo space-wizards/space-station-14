@@ -76,7 +76,6 @@
     primingSound:
       path: /Audio/Effects/countdown.ogg
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed
 
 - type: entity
   parent: [FragileGrenadeBase, ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -111,7 +110,6 @@
     price: 1500
   - type: TimerTriggerVisuals
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed
 
 - type: entity
   parent: [FragileGrenadeBase, ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -147,4 +145,3 @@
   - type: Appearance
   - type: TimerTriggerVisuals
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed

@@ -42,7 +42,6 @@
   - type: TimerTriggerVisuals
     unprimedSprite: base
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

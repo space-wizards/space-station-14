@@ -18,7 +18,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
     {
         base.Initialize();
         SubscribeLocalEvent<TimerTriggerVisualsComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<TimerTriggerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
+        SubscribeLocalEvent<TimerTriggerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
 
     }
 
@@ -75,7 +75,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
 
     private void OnGetHeldVisuals(EntityUid uid, TimerTriggerVisualsComponent component, GetInhandVisualsEvent args)
     {
-        if (component.InHandPrimedName == null || component.InHandUnprimedName == null)
+        if (component.InHandPrimedName == null)
             return;
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
@@ -90,9 +90,14 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
         var layer = new PrototypeLayerData();
 
         // Selects inhand sprites to load based on primed state, e.g. inhand-right-unprimed or inhand-right-primed
-        var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+        var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand";
         var key = heldPrefix + args.Location.ToString().ToLowerInvariant();
-        key += (state == TriggerVisualState.Unprimed) ? component.InHandUnprimedName : component.InHandPrimedName;
+        if (state == TriggerVisualState.Primed)
+            key += component.InHandPrimedName;
+        else if (component.InHandUnprimedName != null)
+            key += component.InHandUnprimedName; //some have unique unprimed sprites, e.g. smoke grenades
+        else
+            return; // using default in-hand sprite; no need to duplicate layer
 
         layer.State = key;
         args.Layers.Add((key, layer));

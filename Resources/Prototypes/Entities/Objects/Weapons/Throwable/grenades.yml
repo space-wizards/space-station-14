@@ -365,7 +365,6 @@
     price: 75
   - type: TimerTriggerVisuals
     inHandPrimedName: -primed
-    inHandUnprimedName: -unprimed
 
 - type: entity
   name: EMP grenade
