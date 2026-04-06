@@ -59,6 +59,16 @@
   groupBy: "smokeables"
 
 - type: loadout
+  id: FlippoLighter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - FlippoLighter
+  groupBy: "smokeables"
+
+- type: loadout
   id: CigPackGreen
   storage:
     back:
