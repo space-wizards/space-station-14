@@ -628,7 +628,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         var query = EntityQueryEnumerator<StationAiCoreComponent, StationAiHolderComponent>();
 
-
         while (query.MoveNext(out var uid, out _, out var aiHolder))
         {
             // the player needs to have a mind and not be the excluded one +
