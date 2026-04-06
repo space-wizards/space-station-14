@@ -39,7 +39,7 @@ public static partial class GameDataScrounger
         return Directory.EnumerateFiles(path,
                 pattern ?? "*",
                 recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-            .Select(x => new ResPath(x.Remove(0, resBasePath.Length)))
+            .Select(x => ResPath.FromRelativeSystemPath(x.Remove(0, resBasePath.Length)))
             .ToArray();
     }
 

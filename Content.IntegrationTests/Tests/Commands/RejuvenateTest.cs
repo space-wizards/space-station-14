@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration.Systems;
+﻿using Content.IntegrationTests.Fixtures;
+using Content.Shared.Administration.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -14,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RejuvenateSystem))]
-    public sealed class RejuvenateTest
+    public sealed class RejuvenateTest : GameTest
     {
         private static readonly ProtoId<DamageGroupPrototype> TestDamageGroup = "Toxin";
 
@@ -36,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -92,7 +93,6 @@ namespace Content.IntegrationTests.Tests.Commands
                     Assert.That(damSystem.GetTotalDamage((human, damageable)), Is.EqualTo(FixedPoint2.Zero));
                 });
             });
-            await pair.CleanReturnAsync();
         }
     }
 }
