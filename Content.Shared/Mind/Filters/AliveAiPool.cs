@@ -1,5 +1,4 @@
-﻿using Content.Shared.Mobs.Systems;
-using Content.Shared.Objectives.Systems;
+﻿using Content.Shared.Objectives.Systems;
 using Content.Shared.Silicons.StationAi;
 
 namespace Content.Shared.Mind.Filters;

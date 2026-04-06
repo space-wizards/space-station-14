@@ -624,6 +624,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return _blocker.CanComplexInteract(entity.Owner);
     }
 
+    /// <summary>
+    /// Gets all alive AI minds and adds them to the inputted hashset, excluding one optional mind
+    /// </summary>
+    /// <param name="aliveAis">Hashset of alive AI minds</param>
+    /// <param name="exclude">Optional mind to exclude</param>
     public void AddAliveAis(HashSet<Entity<MindComponent>> aliveAis, EntityUid? exclude = null)
     {
         var query = EntityQueryEnumerator<StationAiCoreComponent, StationAiHolderComponent>();
