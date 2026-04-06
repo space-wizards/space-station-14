@@ -4,17 +4,12 @@ using Content.Shared.Mind;
 namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
-/// This is an abstract system which is inherited from to find and return a hashset of valid minds.
+/// This is an abstract system which is intended to query a list of entities, and acquire a hashset of valid minds from them.
+/// It uses EntityQueries to limit the amount of entities which need to be checked, by component.
 /// </summary>
 public abstract partial class MindTargetSystem : EntitySystem
 {
     [Dependency] protected readonly SharedMindSystem Mind = default!;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-
-    }
 
     public HashSet<Entity<MindComponent>> GetMinds(params EntityUid[] exclude)
     {

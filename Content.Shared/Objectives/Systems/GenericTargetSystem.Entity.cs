@@ -1,30 +1,25 @@
 ﻿namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
-/// This is an abstract system which is inherited from to find and return a hashset of valid minds.
+/// This is an abstract system which is intended to query all entities and return a hashset of valid entities,
+/// based on a list of expected components and optional filters.
 /// </summary>
 public abstract partial class EntityTargetSystem : EntitySystem
 {
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-
-    }
-
-    public HashSet<EntityUid> GetMinds(params EntityUid[] exclude)
+    public HashSet<EntityUid> GetEntities(params EntityUid[] exclude)
     {
         var minds = new HashSet<EntityUid>();
-        AddMinds(minds, exclude);
+        AddEntities(minds, exclude);
         return minds;
     }
 
-    public abstract void AddMinds(HashSet<EntityUid> minds, params EntityUid[] exclude);
+    public abstract void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude);
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
 public abstract partial class EntityTargetSystem<T> : EntityTargetSystem where T : Component
 {
-    public override void AddMinds(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
     {
         var query = EntityQueryEnumerator<T>();
         while (query.MoveNext(out var uid, out var comp))
@@ -44,7 +39,7 @@ public abstract partial class EntityTargetSystem<T1,T2> : EntityTargetSystem
     where T1 : Component
     where T2 : Component
 {
-    public override void AddMinds(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
     {
         var query = EntityQueryEnumerator<T1,T2>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2))
@@ -65,7 +60,7 @@ public abstract partial class EntityTargetSystem<T1,T2,T3> : EntityTargetSystem
     where T2 : Component
     where T3 : Component
 {
-    public override void AddMinds(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
     {
         var query = EntityQueryEnumerator<T1,T2,T3>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3))
@@ -87,7 +82,7 @@ public abstract partial class EntityTargetSystem<T1,T2,T3,T4> : EntityTargetSyst
     where T3 : Component
     where T4 : Component
 {
-    public override void AddMinds(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
     {
         var query = EntityQueryEnumerator<T1,T2,T3,T4>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3, out var comp4))
