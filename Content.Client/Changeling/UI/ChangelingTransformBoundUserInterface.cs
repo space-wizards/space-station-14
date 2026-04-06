@@ -23,7 +23,6 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         _menu.OpenOverMouseScreenPosition();
     }
 
-
     public override void Update()
     {
         if (_menu == null)
@@ -32,7 +31,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         if (!EntMan.TryGetComponent<ChangelingIdentityComponent>(Owner, out var lingIdentity))
             return;
 
-        var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity?.CurrentIdentity);
+        var models = ConvertToButtons(lingIdentity.ConsumedIdentities.Keys, lingIdentity?.CurrentIdentity);
 
         _menu.SetButtons(models);
     }
