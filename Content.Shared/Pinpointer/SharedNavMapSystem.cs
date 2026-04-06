@@ -26,7 +26,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
     [Robust.Shared.IoC.Dependency] private readonly INetManager _net = default!;
 
-    [Robust.Shared.IoC.Dependency] private readonly EntityQuery<NavMapDoorComponent> _doorQuery;
+    [Robust.Shared.IoC.Dependency] private readonly EntityQuery<NavMapDoorComponent> _doorQuery = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
 
