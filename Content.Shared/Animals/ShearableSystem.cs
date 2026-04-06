@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace Content.Shared.Animals;
@@ -56,8 +57,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    /// <seealso cref="CheckShearReturns"/>
-    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, out Solution? shearingSolutionState, out Entity<SolutionComponent>? shearingSolutionEnt, out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, [NotNullWhen(true)] out Solution? shearingSolutionState, [NotNullWhen(true)] out Entity<SolutionComponent>? shearingSolutionEnt, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
         shearedProduct = _proto.Index(ent.Comp.ShearedProductID);
@@ -142,7 +142,6 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    /// <seealso cref="CheckShearReturns"/>
     public bool CanShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
         return CanShear(ent, out _, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
@@ -228,11 +227,7 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (!CanShear(ent, out var shearedProduct, out var shearingSolutionState, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false)
-            // these must all be resolved.
-            || shearingSolutionState is null
-            || shearingSolutionEnt is null
-            || shearingSolutionToRemove is null)
+        if (!CanShear(ent, out var shearedProduct, out var _, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false))
         {
             return;
         }
