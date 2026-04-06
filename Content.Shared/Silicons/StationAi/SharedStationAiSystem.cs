@@ -623,6 +623,25 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         return _blocker.CanComplexInteract(entity.Owner);
     }
+
+    public void AddAliveAis(HashSet<Entity<MindComponent>> aliveAis, EntityUid? exclude = null)
+    {
+        var query = EntityQueryEnumerator<StationAiCoreComponent, StationAiHolderComponent>();
+
+
+        while (query.MoveNext(out var uid, out _, out var aiHolder))
+        {
+            // the player needs to have a mind and not be the excluded one +
+            // the player has to be alive
+            if (!TryGetHeld((uid, aiHolder), out var held) || _mobState.IsDead(held.Value))
+                continue;
+
+            if (!_mind.TryGetMind(held.Value, out var mind, out var mindComp) || mind == exclude)
+                continue;
+
+            aliveAis.Add((mind, mindComp));
+        }
+    }
 }
 
 public sealed partial class JumpToCoreEvent : InstantActionEvent
