@@ -131,6 +131,31 @@
     requireDead: true
     requireMaroon: true
 
+- type: entity
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillStationAiObjective
+  description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
+  components:
+  - type: Objective
+    difficulty: 3.0
+    # there's probably only one AI
+    unique: true
+    icon:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead # TODO: Change this to broken when we have a better objectives UI, broken sprite is currently too big!
+  - type: TargetObjective
+    title: objective-condition-kill-station-ai
+  - type: PickRandomPerson
+    pool: !type:AliveAiPool
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
+  - type: KillPersonCondition
+    requireDead: true
+
 # social
 
 - type: entity
