@@ -17,9 +17,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery;
-    [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery;
+    [Dependency] EntityQuery<HandsComponent> _handsQuery = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
@@ -28,6 +26,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         base.Update(frameTime);
 
         var time = GameTiming.CurTime;
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var handsQuery = GetEntityQuery<HandsComponent>();
 
         var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
         while (enumerator.MoveNext(out var uid, out var active, out var comp))
@@ -199,21 +199,20 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         var args = doAfter.Args;
 
-        //re-using xformQuery for Exists() checks.
-        if (args.Used is { } used && !_xformQuery.HasComponent(used))
+        if (args.Used is { } used && !Exists(used))
             return true;
 
-        if (args.EventTarget is { Valid: true } eventTarget && !_xformQuery.HasComponent(eventTarget))
+        if (args.EventTarget is { Valid: true } eventTarget && !Exists(eventTarget))
             return true;
 
-        if (!_xformQuery.TryGetComponent(args.User, out var userXform))
+        if (!TryComp(args.User, out TransformComponent? userXform))
             return true;
 
         TransformComponent? targetXform = null;
-        if (args.Target is { } target && !_xformQuery.TryGetComponent(target, out targetXform))
+        if (args.Target is { } target && !TryComp(target, out targetXform))
             return true;
 
-        if (args.Used is { } @using && !_xformQuery.HasComp(@using))
+        if (args.Used is { } @using && !Exists(@using))
             return true;
 
         // TODO: Re-use existing xform query for these calculations.
