@@ -31,6 +31,7 @@ namespace Content.Shared.Mind;
 
 public abstract partial class SharedMindSystem : EntitySystem
 {
+    [Dependency] private readonly IDependencyCollection _dependency = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -628,11 +629,11 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// Picks a random mind from a pool after applying a list of filters.
     /// Returns null if no valid mind could be found.
     /// </summary>
-    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, EntityUid? exclude = null)
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, params EntityUid[] exclude)
     {
         _pickingMinds.Clear();
-        pool.FindMinds(_pickingMinds, exclude, EntityManager, this);
-        FilterMinds(_pickingMinds, filters, exclude);
+        pool.FindMinds(_pickingMinds, _dependency, exclude);
+        FilterMinds(_pickingMinds, filters);
 
         if (_pickingMinds.Count == 0)
             return null;
@@ -643,15 +644,15 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <summary>
     /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter)
     {
-        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager, this));
+        minds.RemoveWhere(mind => filter.Filter(mind, EntityManager, this));
     }
 
     /// <summary>
     /// Filters minds from a hashset using a list of <see cref="MindFilter"/>s to apply sequentially.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters, EntityUid? exclude = null)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters)
     {
         foreach (var filter in filters)
         {
@@ -659,7 +660,7 @@ public abstract partial class SharedMindSystem : EntitySystem
             if (minds.Count == 0)
                 break;
 
-            FilterMinds(minds, filter, exclude);
+            FilterMinds(minds, filter);
         }
     }
 

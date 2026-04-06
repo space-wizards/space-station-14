@@ -14,14 +14,14 @@ public abstract partial class MindFilter
     /// </summary>
     /// <param name="mind">The mind to check</param>
     /// <param name="exclude">The same mind passed to FindMinds</param>
-    protected abstract bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys);
+    protected abstract bool ShouldRemove(Entity<MindComponent> mind, IEntityManager entMan, SharedMindSystem mindSys);
 
     /// <summary>
     /// The high-level filter function to be used by the mind system.
     /// </summary>
-    public bool Filter(Entity<MindComponent> mind, EntityUid? exclude, EntityManager entMan, SharedMindSystem mindSys)
+    public bool Filter(Entity<MindComponent> mind, EntityManager entMan, SharedMindSystem mindSys)
     {
-        return ShouldRemove(mind, exclude, entMan, mindSys) ^ Inverted;
+        return ShouldRemove(mind, entMan, mindSys) ^ Inverted;
     }
 
     /// <summary>
