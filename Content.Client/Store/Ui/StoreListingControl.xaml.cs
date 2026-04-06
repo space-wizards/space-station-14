@@ -52,6 +52,9 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
             return false;
 
+        if (_data.TimeSinceLastPurchase + _data.Cooldown > _timing.CurTime)
+            return false;
+
         return true;
     }
 
@@ -61,7 +64,12 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
         {
             var timeLeftToBuy = stationTime - _data.RestockTime;
-            StoreItemBuyButton.Text =  timeLeftToBuy.Duration().ToString(@"mm\:ss");
+            StoreItemBuyButton.Text = timeLeftToBuy.Duration().ToString(@"mm\:ss");
+        }
+        else if (_data.TimeSinceLastPurchase + _data.Cooldown > _timing.CurTime)
+        {
+            var timeLeftToBuy = _timing.CurTime - (_data.TimeSinceLastPurchase + _data.Cooldown);
+            StoreItemBuyButton.Text = timeLeftToBuy.Duration().ToString(@"mm\:ss");
         }
         else
         {

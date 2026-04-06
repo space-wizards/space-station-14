@@ -39,6 +39,8 @@ public partial class ListingData : IEquatable<ListingData>
         other.Categories,
         other.OriginalCost,
         other.RestockTime,
+        other.Cooldown,
+        other.TimeSinceLastPurchase,
         other.DiscountDownTo,
         other.DisableRefund,
         other.ApplyToMob
@@ -65,6 +67,8 @@ public partial class ListingData : IEquatable<ListingData>
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
         TimeSpan restockTime,
+        TimeSpan cooldown,
+        TimeSpan timeSinceLastPurchase,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo,
         bool disableRefund,
         bool applyToMob
@@ -87,6 +91,8 @@ public partial class ListingData : IEquatable<ListingData>
         Categories = categories.ToHashSet();
         OriginalCost = originalCost;
         RestockTime = restockTime;
+        Cooldown = cooldown;
+        TimeSinceLastPurchase = timeSinceLastPurchase;
         DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
         DisableRefund = disableRefund;
         ApplyToMob = applyToMob;
@@ -188,11 +194,24 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public int PurchaseAmount;
 
+
     /// <summary>
     /// Used to delay purchase of some items.
     /// </summary>
     [DataField]
     public TimeSpan RestockTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// Used to delay repeated purchase of some items.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.Zero;
+
+    /// <summary>
+    /// Used internally for tracking when the last purchase of this item was made.
+    /// </summary>
+    [DataField]
+    public TimeSpan TimeSinceLastPurchase;
 
     /// <summary>
     /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
@@ -225,6 +244,7 @@ public partial class ListingData : IEquatable<ListingData>
             ProductAction != listing.ProductAction ||
             ProductEvent?.GetType() != listing.ProductEvent?.GetType() ||
             RestockTime != listing.RestockTime ||
+            Cooldown != listing.Cooldown ||
             DisableRefund != listing.DisableRefund ||
             ApplyToMob != listing.ApplyToMob)
             return false;
@@ -306,6 +326,8 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.Categories,
             listingData.OriginalCost,
             listingData.RestockTime,
+            listingData.Cooldown,
+            listingData.TimeSinceLastPurchase,
             listingData.DiscountDownTo,
             listingData.DisableRefund,
             listingData.ApplyToMob

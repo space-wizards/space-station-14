@@ -358,14 +358,19 @@
   parent: BaseTraitorObjective
   id: HijackTradeStationObjective
   name: Hijack the Automated Trade Station.
-  description: Your uplink has been authorized one hijack beacon. Deploy it on the Automated Trade Station and defend it whilst it hijacks the trade station.
+  description: Plant a hacking beacon on one of the pallets aboard the trade station and defend it for 200 seconds as it hijacks the station.
   components:
   - type: Objective
     difficulty: 3
     icon:
       sprite: Objects/Tools/hijack_beacon.rsi
       state: extraction_point
-  - type: HijackTradeStationCondition
+  - type: CodeCondition
+  - type: SabotageCondition
+    whitelist: 
+      components:
+      - CargoPallet
+    requireConfirmation: true
   - type: ObjectiveLimit
     # There is only one trade station so there should never be more than one of these objectives.
     limit: 1

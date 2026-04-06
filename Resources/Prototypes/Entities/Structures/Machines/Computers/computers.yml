@@ -626,6 +626,7 @@
       board: !type:Container
       IdCardConsole-privilegedId: !type:ContainerSlot
       IdCardConsole-targetId: !type:ContainerSlot
+  - type: BeaconHackable
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -682,6 +683,7 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: BeaconHackable
 
 - type: entity
   parent: ComputerComms
@@ -906,6 +908,7 @@
   - type: GuideHelp
     guides:
     - Cargo
+  - type: BeaconHackable
 
 # Request console variants.
 - type: entity

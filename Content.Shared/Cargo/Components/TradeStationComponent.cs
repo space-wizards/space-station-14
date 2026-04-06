@@ -1,4 +1,3 @@
-using Content.Shared.HijackBeacon;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Cargo.Components;
@@ -10,7 +9,7 @@ namespace Content.Shared.Cargo.Components;
 public sealed partial class TradeStationComponent : Component
 {
     /// <summary>
-    ///     The Trade Station's current hijack state. Modified by HijackBeaconSystem.
+    ///     The Trade Station's current hijack state. Modified by CargoSystem.Hack.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Hacked = false;

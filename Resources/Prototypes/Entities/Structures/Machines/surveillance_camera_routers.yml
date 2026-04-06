@@ -43,6 +43,7 @@
         path: /Audio/Ambience/Objects/server_fans.ogg
     - type: WiresVisuals
     - type: WiresPanel
+    - type: BeaconHackable
 
 - type: entity
   parent: SurveillanceCameraRouterBase
