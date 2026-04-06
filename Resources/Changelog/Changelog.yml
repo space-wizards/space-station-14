@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Two new instrument options for the microphone, Wa and Wah.
-    type: Add
-  - message: Fixed the gilded bike horn's instrument not playing properly, causing
-      listening to it to be even worse than it is supposed to be.
-    type: Fix
-  - message: Fixed the microphone's Kweh instrument not playing properly, causing
-      listening it to be even worse than it is supposed to be.
-    type: Fix
-  id: 9111
-  time: '2025-10-16T17:03:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39210
-- author: MilenVolf
-  changes:
-  - message: Go go hat's activation phrase can be reset to the default without having
-      to record it manually to reset the phrase.
-    type: Tweak
-  id: 9112
-  time: '2025-10-16T18:47:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35636
 - author: Wolfkey-SomeoneElseTookMyUsername
   changes:
   - message: The recipes for grilled cheese, cotton buns, cotton cakes, and cotton
@@ -4036,3 +4015,21 @@
   id: 9622
   time: '2026-04-05T22:33:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43431
+- author: psykana
+  changes:
+  - message: Nuclear operatives round end summary now shows the Disk's location. If
+      it wasn't atomized, that is.
+    type: Add
+  id: 9623
+  time: '2026-04-06T21:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39767
+- author: Princess-Cheeseballs
+  changes:
+  - message: Added a new Traitor objective to kill the Station AI!
+    type: Add
+  - message: Traitor kill objectives will now show stage names instead of character
+      names if applicable
+    type: Fix
+  id: 9624
+  time: '2026-04-06T22:23:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43462

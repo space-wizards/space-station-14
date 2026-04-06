@@ -29,6 +29,7 @@
   id: TraitorObjectiveGroupKill
   weights:
     KillRandomPersonObjective: 1
+    KillStationAiObjective: 0.25
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
