@@ -1402,6 +1402,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: Girder
+    node: wallMining
   - type: IconSmooth
     key: walls
     base: mining
@@ -1451,7 +1454,9 @@
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
-
+  - type: Construction
+    graph: Girder
+    node: wallMiningDiagonal
 
 # Vault Walls
 
