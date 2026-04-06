@@ -95,11 +95,12 @@ public sealed partial class PowerMonitoringWindow
             button.TextureRect.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Rsi(new ResPath(entry.MetaData.Value.SpritePath), entry.MetaData.Value.SpriteState));
 
         // Update name
-        var name = Loc.GetString(entry.MetaData.Value.EntityName);
+        // no Loc.GetString, as the name already gets localized in PowerMonitoringConsoleSystem
+        var name = entry.MetaData.Value.EntityName;
         button.NameLocalized.Text = name;
 
         // Update tool tip
-        button.ToolTip = Loc.GetString(name);
+        button.ToolTip = name;
 
         // Update power value
         // Don't use SI prefixes, just give the number in W, so that it is readily apparent which consumer is using a lot of power.

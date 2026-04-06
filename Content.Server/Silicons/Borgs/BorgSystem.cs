@@ -1,6 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -25,12 +26,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
 

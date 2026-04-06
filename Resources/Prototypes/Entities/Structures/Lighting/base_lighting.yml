@@ -451,6 +451,11 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
     maxCharge: 30000
     startingCharge: 0
   - type: EmergencyLight
