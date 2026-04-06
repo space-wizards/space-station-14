@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 1800 #0.5 hr
+      time: 0.5h
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
@@ -21,7 +21,7 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    shoes: ClothingShoesChef
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled

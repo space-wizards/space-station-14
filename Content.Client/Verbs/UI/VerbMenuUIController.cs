@@ -109,7 +109,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             var menu = popup ?? _context.RootMenu;
-            menu.MenuBody.DisposeAllChildren();
+            menu.MenuBody.RemoveAllChildren();
 
             CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, out ExtraCategories, force);
@@ -207,7 +207,7 @@ namespace Content.Client.Verbs.UI
         /// </summary>
         public void AddServerVerbs(List<Verb>? verbs, ContextMenuPopup popup)
         {
-            popup.MenuBody.DisposeAllChildren();
+            popup.MenuBody.RemoveAllChildren();
 
             // Verbs may be null if the server does not think we can see the target entity. This **should** not happen.
             if (verbs == null)

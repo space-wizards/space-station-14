@@ -1,20 +1,20 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
 [TestFixture]
-public sealed class GridJoinTest
+public sealed class GridJoinTest : GameTest
 {
     private const string CanisterProtoId = "AirCanister";
 
     [Test]
     public async Task TestGridJoinAtmosphere()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.EntMan;
@@ -47,7 +47,5 @@ public sealed class GridJoinTest
             // Make sure that the canister is now properly tracked as on-grid
             Assert.That(atmosDeviceSystem.IsJoinedOffGrid(canisterEnt), Is.False);
         });
-
-        await pair.CleanReturnAsync();
     }
 }

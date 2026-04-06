@@ -1,6 +1,8 @@
 using System.Net;
 using Content.Shared.Database;
 using Content.Shared.Eui;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
@@ -21,32 +23,9 @@ public sealed class BanPanelEuiState : EuiStateBase
 public static class BanPanelEuiStateMsg
 {
     [Serializable, NetSerializable]
-    public sealed class CreateBanRequest : EuiMessageBase
+    public sealed class CreateBanRequest(Ban ban) : EuiMessageBase
     {
-        public string? Player { get; set; }
-        public string? IpAddress { get; set; }
-        public ImmutableTypedHwid? Hwid { get; set; }
-        public uint Minutes { get; set; }
-        public string Reason { get; set; }
-        public NoteSeverity Severity { get; set; }
-        public string[]? Roles { get; set; }
-        public bool UseLastIp { get; set; }
-        public bool UseLastHwid { get; set; }
-        public bool Erase { get; set; }
-
-        public CreateBanRequest(string? player, (IPAddress, int)? ipAddress, bool useLastIp, ImmutableTypedHwid? hwid, bool useLastHwid, uint minutes, string reason, NoteSeverity severity, string[]? roles, bool erase)
-        {
-            Player = player;
-            IpAddress = ipAddress == null ? null : $"{ipAddress.Value.Item1}/{ipAddress.Value.Item2}";
-            UseLastIp = useLastIp;
-            Hwid = hwid;
-            UseLastHwid = useLastHwid;
-            Minutes = minutes;
-            Reason = reason;
-            Severity = severity;
-            Roles = roles;
-            Erase = erase;
-        }
+        public Ban Ban { get; } = ban;
     }
 
     [Serializable, NetSerializable]
@@ -59,4 +38,51 @@ public static class BanPanelEuiStateMsg
             PlayerUsername = username;
         }
     }
+}
+
+/// <summary>
+///     Contains all the data related to a particular ban action created by the BanPanel window.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed record Ban
+{
+    public Ban(
+        string? target,
+        (IPAddress, int)? ipAddressTuple,
+        bool useLastIp,
+        ImmutableTypedHwid? hwid,
+        bool useLastHwid,
+        uint banDurationMinutes,
+        string reason,
+        NoteSeverity severity,
+        ProtoId<JobPrototype>[]? bannedJobs,
+        ProtoId<AntagPrototype>[]? bannedAntags,
+        bool erase)
+    {
+        Target = target;
+        IpAddress = ipAddressTuple?.Item1.ToString();
+        IpAddressHid = ipAddressTuple?.Item2.ToString() ?? "0";
+        UseLastIp = useLastIp;
+        Hwid = hwid;
+        UseLastHwid = useLastHwid;
+        BanDurationMinutes = banDurationMinutes;
+        Reason = reason;
+        Severity = severity;
+        BannedJobs = bannedJobs;
+        BannedAntags = bannedAntags;
+        Erase = erase;
+    }
+
+    public readonly string? Target;
+    public readonly string? IpAddress;
+    public readonly string? IpAddressHid;
+    public readonly bool UseLastIp;
+    public readonly ImmutableTypedHwid? Hwid;
+    public readonly bool UseLastHwid;
+    public readonly uint BanDurationMinutes;
+    public readonly string Reason;
+    public readonly NoteSeverity Severity;
+    public readonly ProtoId<JobPrototype>[]? BannedJobs;
+    public readonly ProtoId<AntagPrototype>[]? BannedAntags;
+    public readonly bool Erase;
 }

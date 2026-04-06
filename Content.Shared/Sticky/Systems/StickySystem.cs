@@ -68,7 +68,7 @@ public sealed class StickySystem : EntitySystem
 
         // check whitelist and blacklist
         if (_whitelist.IsWhitelistFail(comp.Whitelist, target) ||
-            _whitelist.IsBlacklistPass(comp.Blacklist, target))
+            _whitelist.IsWhitelistPass(comp.Blacklist, target))
             return false;
 
         var attemptEv = new AttemptEntityStickEvent(target, user);

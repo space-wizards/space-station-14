@@ -38,7 +38,7 @@ marking-VulpEarOtie-otie-inner = Otie ears (Inner)
 marking-VulpEarOtie = Vulpkanin Otie
 
 marking-VulpEarShock-shock = Shock ears (Base)
-marking-VulpEarShock-inner = Shock ears (Inner)
+marking-VulpEarShock-shock-inner = Shock ears (Inner)
 marking-VulpEarShock = Vulpkanin Shock
 
 
@@ -119,6 +119,9 @@ marking-VulpTailVulp = Vulpkanin
 marking-VulpTailVulpFade-vulp = Vulpkanin tail (Base)
 marking-VulpTailVulpFade-vulp-fade = Vulpkanin tail (Fade)
 marking-VulpTailVulpFade = Vulpkanin (Fade)
+
+marking-VulpTailCoyote-coyote = Coyote Tail (Base)
+marking-VulpTailCoyote = Vulpkanin Coyote
 
 
 # Chest
