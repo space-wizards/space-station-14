@@ -19,7 +19,7 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     private ISawmill _sawmill = default!;
 
-    [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery = default!;
 
     public override void Initialize()
     {

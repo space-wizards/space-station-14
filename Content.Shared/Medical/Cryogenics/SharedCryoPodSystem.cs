@@ -54,10 +54,10 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
 
-    [Dependency] private readonly EntityQuery<BloodstreamComponent> _bloodstreamQuery;
-    [Dependency] private readonly EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
-    [Dependency] private readonly EntityQuery<FitsInDispenserComponent> _dispenserQuery;
-    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
+    [Dependency] private readonly EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private readonly EntityQuery<ItemSlotsComponent> _itemSlotsQuery = default!;
+    [Dependency] private readonly EntityQuery<FitsInDispenserComponent> _dispenserQuery = default!;
+    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery = default!;
 
 
     public override void Initialize()

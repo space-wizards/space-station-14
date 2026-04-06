@@ -28,14 +28,14 @@ namespace Content.Shared.Friction
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
 
-        [Dependency] private readonly EntityQuery<TileFrictionModifierComponent> _frictionQuery;
-        [Dependency] private readonly EntityQuery<PullerComponent> _pullerQuery;
-        [Dependency] private readonly EntityQuery<PullableComponent> _pullableQuery;
-        [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery;
+        [Dependency] private readonly EntityQuery<TileFrictionModifierComponent> _frictionQuery = default!;
+        [Dependency] private readonly EntityQuery<PullerComponent> _pullerQuery = default!;
+        [Dependency] private readonly EntityQuery<PullableComponent> _pullableQuery = default!;
+        [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
 
         // For debug purposes only
-        [Dependency] private readonly EntityQuery<InputMoverComponent> _moverQuery;
-        [Dependency] private readonly EntityQuery<BlockMovementComponent> _blockMoverQuery;
+        [Dependency] private readonly EntityQuery<InputMoverComponent> _moverQuery = default!;
+        [Dependency] private readonly EntityQuery<BlockMovementComponent> _blockMoverQuery = default!;
 
         private float _frictionModifier;
         private float _minDamping;

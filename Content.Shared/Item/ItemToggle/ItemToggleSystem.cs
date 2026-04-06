@@ -26,7 +26,7 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-    [Dependency] private readonly EntityQuery<ItemToggleComponent> _itemToggleQuery;
+    [Dependency] private readonly EntityQuery<ItemToggleComponent> _itemToggleQuery = default!;
 
     public override void Initialize()
     {

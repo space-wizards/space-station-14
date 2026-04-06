@@ -19,9 +19,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     public static readonly ProtoId<AlertPrototype> WeightlessAlert = "Weightless";
 
-    [Dependency] protected readonly EntityQuery<GravityComponent> GravityQuery;
-    [Dependency] private readonly EntityQuery<GravityAffectedComponent> _weightlessQuery;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] protected readonly EntityQuery<GravityComponent> GravityQuery = default!;
+    [Dependency] private readonly EntityQuery<GravityAffectedComponent> _weightlessQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {

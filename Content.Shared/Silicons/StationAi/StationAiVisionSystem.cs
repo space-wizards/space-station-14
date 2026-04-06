@@ -20,7 +20,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
 
-    [Dependency] private readonly EntityQuery<OccluderComponent> _occluderQuery;
+    [Dependency] private readonly EntityQuery<OccluderComponent> _occluderQuery = default!;
 
     private SeedJob _seedJob;
     private ViewJob _job;

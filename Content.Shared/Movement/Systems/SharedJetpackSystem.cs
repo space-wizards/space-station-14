@@ -20,7 +20,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
-    [Dependency] private readonly EntityQuery<JetpackComponent> _jetpackQuery;
+    [Dependency] private readonly EntityQuery<JetpackComponent> _jetpackQuery = default!;
 
     public override void Initialize()
     {

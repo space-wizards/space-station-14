@@ -73,10 +73,10 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly TagSystem _tag = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
-    [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery;
-    [Dependency] private readonly EntityQuery<StackComponent> _stackQuery;
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery;
-    [Dependency] private readonly EntityQuery<UserInterfaceUserComponent> _userQuery;
+    [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery = default!;
+    [Dependency] private readonly EntityQuery<StackComponent> _stackQuery = default!;
+    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private readonly EntityQuery<UserInterfaceUserComponent> _userQuery = default!;
 
     /// <summary>
     /// Whether we're allowed to go up-down storage via UI.

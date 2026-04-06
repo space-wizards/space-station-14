@@ -16,7 +16,7 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
-    [Dependency] private readonly EntityQuery<WeldableComponent> _query;
+    [Dependency] private readonly EntityQuery<WeldableComponent> _query = default!;
 
     public override void Initialize()
     {

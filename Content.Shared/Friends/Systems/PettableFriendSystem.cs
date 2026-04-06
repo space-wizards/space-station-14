@@ -14,8 +14,8 @@ public sealed class PettableFriendSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-    [Dependency] private readonly EntityQuery<FactionExceptionComponent> _exceptionQuery;
-    [Dependency] private readonly EntityQuery<UseDelayComponent> _useDelayQuery;
+    [Dependency] private readonly EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
+    [Dependency] private readonly EntityQuery<UseDelayComponent> _useDelayQuery = default!;
 
     public override void Initialize()
     {

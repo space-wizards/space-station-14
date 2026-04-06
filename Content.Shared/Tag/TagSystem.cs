@@ -18,7 +18,7 @@ public sealed class TagSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    [Dependency] private readonly EntityQuery<TagComponent> _tagQuery;
+    [Dependency] private readonly EntityQuery<TagComponent> _tagQuery = default!;
 
     public override void Initialize()
     {

@@ -72,8 +72,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     // StationAiOverlay handles the static overlay. It also handles interaction blocking on client and server
     // for anything under it.
 
-    [Dependency] private readonly EntityQuery<BroadphaseComponent> _broadphaseQuery;
-    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery;
+    [Dependency] private readonly EntityQuery<BroadphaseComponent> _broadphaseQuery = default!;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
     private readonly ProtoId<ChatNotificationPrototype> _downloadChatNotificationPrototype = "IntellicardDownload";

@@ -31,10 +31,10 @@ public abstract class SharedConveyorController : VirtualController
 
     private ConveyorJob _job;
 
-    [Dependency] private readonly EntityQuery<ConveyorComponent> _conveyorQuery;
-    [Dependency] private readonly EntityQuery<ConveyedComponent> _conveyedQuery;
-    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery;
-    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery;
+    [Dependency] private readonly EntityQuery<ConveyorComponent> _conveyorQuery = default!;
+    [Dependency] private readonly EntityQuery<ConveyedComponent> _conveyedQuery = default!;
+    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery = default!;
+    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery = default!;
 
     protected HashSet<EntityUid> Intersecting = new();
 

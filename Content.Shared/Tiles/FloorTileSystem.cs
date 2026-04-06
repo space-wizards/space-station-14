@@ -38,7 +38,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 

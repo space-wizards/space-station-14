@@ -18,8 +18,8 @@ public sealed partial class BodySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
-    [Dependency] private readonly EntityQuery<BodyComponent> _bodyQuery;
-    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery;
+    [Dependency] private readonly EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery = default!;
 
     public override void Initialize()
     {

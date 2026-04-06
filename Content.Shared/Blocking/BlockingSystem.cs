@@ -33,10 +33,10 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
-    [Dependency] private readonly EntityQuery<BlockingComponent> _blockQuery;
-    [Dependency] private readonly EntityQuery<HandsComponent> _handQuery;
-    [Dependency] private readonly EntityQuery<MobStateComponent> _mobQuery;
-    [Dependency] private readonly EntityQuery<BlockingUserComponent> _userQuery;
+    [Dependency] private readonly EntityQuery<BlockingComponent> _blockQuery = default!;
+    [Dependency] private readonly EntityQuery<HandsComponent> _handQuery = default!;
+    [Dependency] private readonly EntityQuery<MobStateComponent> _mobQuery = default!;
+    [Dependency] private readonly EntityQuery<BlockingUserComponent> _userQuery = default!;
 
     public override void Initialize()
     {

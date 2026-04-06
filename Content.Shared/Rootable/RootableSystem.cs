@@ -44,8 +44,8 @@ public sealed class RootableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    [Dependency] private readonly EntityQuery<PuddleComponent> _puddleQuery;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {

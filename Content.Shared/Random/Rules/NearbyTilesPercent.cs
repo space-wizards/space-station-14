@@ -23,7 +23,7 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
     [DataField]
     public float Range = 10f;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override bool Check(EntityManager entManager, EntityUid uid)
     {

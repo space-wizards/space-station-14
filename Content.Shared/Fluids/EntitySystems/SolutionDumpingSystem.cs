@@ -28,7 +28,7 @@ public sealed class SolutionDumpingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solContainer = default!;
 
-    [Dependency] private readonly EntityQuery<DumpableSolutionComponent> _dumpQuery;
+    [Dependency] private readonly EntityQuery<DumpableSolutionComponent> _dumpQuery = default!;
 
     public override void Initialize()
     {

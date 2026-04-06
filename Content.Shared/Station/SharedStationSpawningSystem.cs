@@ -24,10 +24,10 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
-    [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery;
-    [Dependency] private readonly EntityQuery<InventoryComponent> _inventoryQuery;
-    [Dependency] private readonly EntityQuery<StorageComponent> _storageQuery;
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
+    [Dependency] private readonly EntityQuery<InventoryComponent> _inventoryQuery = default!;
+    [Dependency] private readonly EntityQuery<StorageComponent> _storageQuery = default!;
+    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
 
     /// <summary>
     ///     Equips the data from a `RoleLoadout` onto an entity.

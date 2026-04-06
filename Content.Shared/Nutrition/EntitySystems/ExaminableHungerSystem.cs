@@ -9,7 +9,7 @@ public sealed class ExaminableHungerSystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
 
-    [Dependency] private readonly EntityQuery<HungerComponent> _hungerQuery;
+    [Dependency] private readonly EntityQuery<HungerComponent> _hungerQuery = default!;
 
     public override void Initialize()
     {

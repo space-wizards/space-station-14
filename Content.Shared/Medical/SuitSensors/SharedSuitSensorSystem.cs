@@ -43,7 +43,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
-    [Dependency] private readonly EntityQuery<SuitSensorComponent> _sensorQuery;
+    [Dependency] private readonly EntityQuery<SuitSensorComponent> _sensorQuery = default!;
 
     public override void Initialize()
     {

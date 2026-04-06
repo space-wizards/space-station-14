@@ -8,7 +8,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <typeparam name="T">Type of XAT component that system will work with.</typeparam>
 public abstract class BaseQueryUpdateXATSystem<T> : BaseXATSystem<T> where T : Component
 {
-    [Dependency] protected readonly EntityQuery<XenoArtifactComponent> XenoArtifactQuery = default!;
+    [Dependency] protected readonly EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
 
     /// <inheritdoc />
     public override void Update(float frameTime)
@@ -23,7 +23,7 @@ public abstract class BaseQueryUpdateXATSystem<T> : BaseXATSystem<T> where T : C
             if (node.Attached == null)
                 continue;
 
-            var artifact = XenoArtifactQuery.Get(node.Attached.Value);
+            var artifact = _xenoArtifactQuery.Get(node.Attached.Value);
 
             if (!CanTrigger(artifact, (uid, node)))
                 continue;

@@ -38,7 +38,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physQuery;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physQuery = default!;
 
     public override void Initialize()
     {

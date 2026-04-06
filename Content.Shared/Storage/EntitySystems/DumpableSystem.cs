@@ -20,7 +20,7 @@ public sealed class DumpableSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-    [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery = default!;
 
     public override void Initialize()
     {

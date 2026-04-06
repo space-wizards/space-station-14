@@ -22,8 +22,8 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] private readonly SharedRoofSystem _roof = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
-    [Dependency] private readonly EntityQuery<BlockWeatherComponent> _blockQuery;
-    [Dependency] private readonly EntityQuery<WeatherStatusEffectComponent> _weatherQuery;
+    [Dependency] private readonly EntityQuery<BlockWeatherComponent> _blockQuery = default!;
+    [Dependency] private readonly EntityQuery<WeatherStatusEffectComponent> _weatherQuery = default!;
 
     public static readonly TimeSpan StartupTime = TimeSpan.FromSeconds(15);
     public static readonly TimeSpan ShutdownTime = TimeSpan.FromSeconds(15);

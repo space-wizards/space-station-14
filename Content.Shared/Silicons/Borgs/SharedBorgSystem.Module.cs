@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.Borgs;
 
 public abstract partial class SharedBorgSystem
 {
-    [Dependency] private readonly EntityQuery<BorgModuleComponent> _moduleQuery;
+    [Dependency] private readonly EntityQuery<BorgModuleComponent> _moduleQuery = default!;
 
     public void InitializeModule()
     {

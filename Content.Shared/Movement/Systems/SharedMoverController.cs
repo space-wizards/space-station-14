@@ -48,22 +48,22 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
 
-    [Dependency] protected readonly EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
-    [Dependency] protected readonly EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
-    [Dependency] protected readonly EntityQuery<FTLComponent> FTLQuery;
-    [Dependency] protected readonly EntityQuery<InputMoverComponent> MoverQuery;
-    [Dependency] protected readonly EntityQuery<MapComponent> MapQuery;
-    [Dependency] protected readonly EntityQuery<MapGridComponent> MapGridQuery;
-    [Dependency] protected readonly EntityQuery<MobMoverComponent> MobMoverQuery;
-    [Dependency] protected readonly EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
-    [Dependency] protected readonly EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
-    [Dependency] protected readonly EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
-    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery;
-    [Dependency] protected readonly EntityQuery<PilotComponent> PilotQuery;
-    [Dependency] protected readonly EntityQuery<PreventPilotComponent> PreventPilotQuery;
-    [Dependency] protected readonly EntityQuery<RelayInputMoverComponent> RelayQuery;
-    [Dependency] protected readonly EntityQuery<PullableComponent> PullableQuery;
-    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery;
+    [Dependency] protected readonly EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery = default!;
+    [Dependency] protected readonly EntityQuery<FootstepModifierComponent> FootstepModifierQuery = default!;
+    [Dependency] protected readonly EntityQuery<FTLComponent> FTLQuery = default!;
+    [Dependency] protected readonly EntityQuery<InputMoverComponent> MoverQuery = default!;
+    [Dependency] protected readonly EntityQuery<MapComponent> MapQuery = default!;
+    [Dependency] protected readonly EntityQuery<MapGridComponent> MapGridQuery = default!;
+    [Dependency] protected readonly EntityQuery<MobMoverComponent> MobMoverQuery = default!;
+    [Dependency] protected readonly EntityQuery<MovementRelayTargetComponent> RelayTargetQuery = default!;
+    [Dependency] protected readonly EntityQuery<MovementSpeedModifierComponent> ModifierQuery = default!;
+    [Dependency] protected readonly EntityQuery<NoRotateOnMoveComponent> NoRotateQuery = default!;
+    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery = default!;
+    [Dependency] protected readonly EntityQuery<PilotComponent> PilotQuery = default!;
+    [Dependency] protected readonly EntityQuery<PreventPilotComponent> PreventPilotQuery = default!;
+    [Dependency] protected readonly EntityQuery<RelayInputMoverComponent> RelayQuery = default!;
+    [Dependency] protected readonly EntityQuery<PullableComponent> PullableQuery = default!;
+    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery = default!;
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 

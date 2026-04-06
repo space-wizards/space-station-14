@@ -6,7 +6,7 @@ namespace Content.Shared.Audio;
 
 public abstract class SharedAmbientSoundSystem : EntitySystem
 {
-    [Dependency] private readonly EntityQuery<AmbientSoundComponent> _query;
+    [Dependency] private readonly EntityQuery<AmbientSoundComponent> _query = default!;
 
     public override void Initialize()
     {

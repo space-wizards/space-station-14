@@ -18,7 +18,7 @@ public sealed class MagnetPickupSystem : EntitySystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
 

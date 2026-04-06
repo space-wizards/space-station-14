@@ -20,7 +20,7 @@ public sealed class TurfSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitions = default!;
 
-    [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery;
+    [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery = default!;
 
     /// <summary>
     /// Attempts to get the turf at or under some given coordinates or null if no such turf exists.

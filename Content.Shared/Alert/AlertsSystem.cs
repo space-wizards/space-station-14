@@ -11,7 +11,7 @@ public abstract class AlertsSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    [Dependency] private readonly EntityQuery<AlertsComponent> _alertsQuery;
+    [Dependency] private readonly EntityQuery<AlertsComponent> _alertsQuery = default!;
     private FrozenDictionary<ProtoId<AlertPrototype>, AlertPrototype> _typeToAlert = default!;
 
     public override void Initialize()

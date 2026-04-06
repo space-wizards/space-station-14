@@ -26,8 +26,8 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     public const float FTLBufferRange = 8f;
     public const float TileDensityMultiplier = 0.5f;
 
-    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private List<Entity<MapGridComponent>> _grids = new();
 

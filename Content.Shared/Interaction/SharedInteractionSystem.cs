@@ -75,16 +75,16 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-        [Dependency] private readonly EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
-        [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery;
-        [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery;
-        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
-        [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery;
-        [Dependency] private readonly EntityQuery<InteractionRelayComponent> _relayQuery;
-        [Dependency] private readonly EntityQuery<CombatModeComponent> _combatQuery;
-        [Dependency] private readonly EntityQuery<WallMountComponent> _wallMountQuery;
-        [Dependency] private readonly EntityQuery<UseDelayComponent> _delayQuery;
-        [Dependency] private readonly EntityQuery<ActivatableUIComponent> _uiQuery;
+        [Dependency] private readonly EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery = default!;
+        [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery = default!;
+        [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery = default!;
+        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
+        [Dependency] private readonly EntityQuery<InteractionRelayComponent> _relayQuery = default!;
+        [Dependency] private readonly EntityQuery<CombatModeComponent> _combatQuery = default!;
+        [Dependency] private readonly EntityQuery<WallMountComponent> _wallMountQuery = default!;
+        [Dependency] private readonly EntityQuery<UseDelayComponent> _delayQuery = default!;
+        [Dependency] private readonly EntityQuery<ActivatableUIComponent> _uiQuery = default!;
 
         /// <summary>
         /// The collision mask used by default for

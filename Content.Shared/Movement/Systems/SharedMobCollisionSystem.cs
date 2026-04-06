@@ -20,8 +20,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
 
-    [Dependency] protected readonly EntityQuery<MobCollisionComponent> MobQuery;
-    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery;
+    [Dependency] protected readonly EntityQuery<MobCollisionComponent> MobQuery = default!;
+    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery = default!;
 
     /// <summary>
     /// <see cref="CCVars.MovementPushingCap"/>
