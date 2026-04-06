@@ -27,8 +27,6 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
         SubscribeLocalEvent<MultipartMachineComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);
@@ -58,7 +56,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             var entityCoords = new EntityCoordinates(ent.Owner, part.Offset);
             var ghostEnt = Spawn(_ghostPrototype, entityCoords);
 
-            if (!XformQuery.TryGetComponent(ghostEnt, out var xform))
+            if (!TryComp(ghostEnt, out TransformComponent? xform))
                 break;
 
             xform.LocalRotation = part.Rotation;

@@ -26,8 +26,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
 
         _audioQuery = GetEntityQuery<AudioComponent>();

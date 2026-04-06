@@ -37,8 +37,6 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
 
         Subs.CVar(_cfg, CCVars.GameShowGreentext, value => _showGreentext = value, true);

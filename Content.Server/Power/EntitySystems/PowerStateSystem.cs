@@ -8,8 +8,6 @@ public sealed class PowerStateSystem : SharedPowerStateSystem
 {
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<PowerStateComponent, ComponentStartup>(OnComponentStartup);
     }
 

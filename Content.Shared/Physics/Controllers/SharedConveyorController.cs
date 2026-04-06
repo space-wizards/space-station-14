@@ -31,20 +31,16 @@ public abstract class SharedConveyorController : VirtualController
 
     private ConveyorJob _job;
 
-    private EntityQuery<ConveyorComponent> _conveyorQuery;
-    private EntityQuery<ConveyedComponent> _conveyedQuery;
-    protected EntityQuery<PhysicsComponent> PhysicsQuery;
-    protected EntityQuery<TransformComponent> XformQuery;
+    [Dependency] private readonly EntityQuery<ConveyorComponent> _conveyorQuery;
+    [Dependency] private readonly EntityQuery<ConveyedComponent> _conveyedQuery;
+    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery;
+    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery;
 
     protected HashSet<EntityUid> Intersecting = new();
 
     public override void Initialize()
     {
         _job = new ConveyorJob(this);
-        _conveyorQuery = GetEntityQuery<ConveyorComponent>();
-        _conveyedQuery = GetEntityQuery<ConveyedComponent>();
-        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
-        XformQuery = GetEntityQuery<TransformComponent>();
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 

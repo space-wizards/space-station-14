@@ -75,16 +75,16 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-        private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
-        private EntityQuery<FixturesComponent> _fixtureQuery;
-        private EntityQuery<ItemComponent> _itemQuery;
-        private EntityQuery<PhysicsComponent> _physicsQuery;
-        private EntityQuery<HandsComponent> _handsQuery;
-        private EntityQuery<InteractionRelayComponent> _relayQuery;
-        private EntityQuery<CombatModeComponent> _combatQuery;
-        private EntityQuery<WallMountComponent> _wallMountQuery;
-        private EntityQuery<UseDelayComponent> _delayQuery;
-        private EntityQuery<ActivatableUIComponent> _uiQuery;
+        [Dependency] private readonly EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
+        [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery;
+        [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery;
+        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+        [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery;
+        [Dependency] private readonly EntityQuery<InteractionRelayComponent> _relayQuery;
+        [Dependency] private readonly EntityQuery<CombatModeComponent> _combatQuery;
+        [Dependency] private readonly EntityQuery<WallMountComponent> _wallMountQuery;
+        [Dependency] private readonly EntityQuery<UseDelayComponent> _delayQuery;
+        [Dependency] private readonly EntityQuery<ActivatableUIComponent> _uiQuery;
 
         /// <summary>
         /// The collision mask used by default for
@@ -103,17 +103,6 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
-            _ignoreUiRangeQuery = GetEntityQuery<IgnoreUIRangeComponent>();
-            _fixtureQuery = GetEntityQuery<FixturesComponent>();
-            _itemQuery = GetEntityQuery<ItemComponent>();
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
-            _handsQuery = GetEntityQuery<HandsComponent>();
-            _relayQuery = GetEntityQuery<InteractionRelayComponent>();
-            _combatQuery = GetEntityQuery<CombatModeComponent>();
-            _wallMountQuery = GetEntityQuery<WallMountComponent>();
-            _delayQuery = GetEntityQuery<UseDelayComponent>();
-            _uiQuery = GetEntityQuery<ActivatableUIComponent>();
-
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
 
             // TODO make this a broadcast event subscription again when engine has updated.

@@ -23,6 +23,8 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
     [DataField]
     public float Range = 10f;
 
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+
     public override bool Check(EntityManager entManager, EntityUid uid)
     {
         if (!entManager.TryGetComponent(uid, out TransformComponent? xform) ||
@@ -35,7 +37,6 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
         var mapSys = entManager.System<SharedMapSystem>();
         var tileDef = IoCManager.Resolve<ITileDefinitionManager>();
 
-        var physicsQuery = entManager.GetEntityQuery<PhysicsComponent>();
         var tileCount = 0;
         var matchingTileCount = 0;
 
@@ -50,7 +51,7 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
 
                 while (gridEnum.MoveNext(out var ancUid))
                 {
-                    if (!physicsQuery.TryGetComponent(ancUid, out var physics) ||
+                    if (!_physicsQuery.TryGetComponent(ancUid, out var physics) ||
                         !physics.CanCollide)
                     {
                         continue;

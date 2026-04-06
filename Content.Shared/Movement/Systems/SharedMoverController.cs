@@ -48,22 +48,22 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
 
-    protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
-    protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
-    protected EntityQuery<FTLComponent> FTLQuery;
-    protected EntityQuery<InputMoverComponent> MoverQuery;
-    protected EntityQuery<MapComponent> MapQuery;
-    protected EntityQuery<MapGridComponent> MapGridQuery;
-    protected EntityQuery<MobMoverComponent> MobMoverQuery;
-    protected EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
-    protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
-    protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
-    protected EntityQuery<PhysicsComponent> PhysicsQuery;
-    protected EntityQuery<PilotComponent> PilotQuery;
-    protected EntityQuery<PreventPilotComponent> PreventPilotQuery;
-    protected EntityQuery<RelayInputMoverComponent> RelayQuery;
-    protected EntityQuery<PullableComponent> PullableQuery;
-    protected EntityQuery<TransformComponent> XformQuery;
+    [Dependency] protected readonly EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
+    [Dependency] protected readonly EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
+    [Dependency] protected readonly EntityQuery<FTLComponent> FTLQuery;
+    [Dependency] protected readonly EntityQuery<InputMoverComponent> MoverQuery;
+    [Dependency] protected readonly EntityQuery<MapComponent> MapQuery;
+    [Dependency] protected readonly EntityQuery<MapGridComponent> MapGridQuery;
+    [Dependency] protected readonly EntityQuery<MobMoverComponent> MobMoverQuery;
+    [Dependency] protected readonly EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
+    [Dependency] protected readonly EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
+    [Dependency] protected readonly EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
+    [Dependency] protected readonly EntityQuery<PhysicsComponent> PhysicsQuery;
+    [Dependency] protected readonly EntityQuery<PilotComponent> PilotQuery;
+    [Dependency] protected readonly EntityQuery<PreventPilotComponent> PreventPilotQuery;
+    [Dependency] protected readonly EntityQuery<RelayInputMoverComponent> RelayQuery;
+    [Dependency] protected readonly EntityQuery<PullableComponent> PullableQuery;
+    [Dependency] protected readonly EntityQuery<TransformComponent> XformQuery;
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
@@ -83,23 +83,6 @@ public abstract partial class SharedMoverController : VirtualController
     {
         UpdatesBefore.Add(typeof(TileFrictionController));
         base.Initialize();
-
-        MoverQuery = GetEntityQuery<InputMoverComponent>();
-        MobMoverQuery = GetEntityQuery<MobMoverComponent>();
-        ModifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
-        RelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
-        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
-        RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
-        PullableQuery = GetEntityQuery<PullableComponent>();
-        XformQuery = GetEntityQuery<TransformComponent>();
-        NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
-        CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
-        FootstepModifierQuery = GetEntityQuery<FootstepModifierComponent>();
-        MapGridQuery = GetEntityQuery<MapGridComponent>();
-        MapQuery = GetEntityQuery<MapComponent>();
-        FTLQuery = GetEntityQuery<FTLComponent>();
-        PilotQuery = GetEntityQuery<PilotComponent>();
-        PreventPilotQuery = GetEntityQuery<PreventPilotComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
         SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
