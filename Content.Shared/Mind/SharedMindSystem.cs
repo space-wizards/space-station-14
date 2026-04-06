@@ -33,7 +33,6 @@ namespace Content.Shared.Mind;
 public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -41,12 +40,9 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
-    [Dependency] private readonly SharedStationAiSystem _ai = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
-
-    private HashSet<Entity<MindComponent>> _pickingMinds = new();
 
     private readonly EntProtoId _mindProto = "MindBase";
 
@@ -598,77 +594,11 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
-    /// A new hashset is allocated for every call, consider using <see cref="AddAliveHumans"/> instead.
-    /// </summary>
-    public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
-    {
-        var allHumans = new HashSet<Entity<MindComponent>>();
-        AddAliveHumans(allHumans, exclude);
-        return allHumans;
-    }
-
-    /// <summary>
-    /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
-    /// </summary>
-    public void AddAliveHumans(HashSet<Entity<MindComponent>> allHumans, EntityUid? exclude = null)
-    {
-        // HumanoidProfileComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<HumanoidProfileComponent, MobStateComponent>();
-        while (query.MoveNext(out var uid, out _, out var mobState))
-        {
-            // the player needs to have a mind and not be the excluded one +
-            // the player has to be alive
-            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
-                continue;
-
-            allHumans.Add((mind, mindComp));
-        }
-    }
-
-    /// <summary>
-    /// Adds to a hashset every living AI core except for an optional single excluded mind.
-    /// </summary>
-    public void AddAliveAi(HashSet<Entity<MindComponent>> allAi, EntityUid? exclude = null)
-    {
-        // HumanoidProfileComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<StationAiCoreComponent, StationAiHolderComponent>();
-        while (query.MoveNext(out var uid, out _, out var aiHolder))
-        {
-            // the player needs to have a mind and not be the excluded one +
-            // the player has to be alive
-            if (!_ai.TryGetHeld((uid, aiHolder), out var held) || _mobState.IsDead(held.Value))
-                continue;
-
-            if (!TryGetMind(held.Value, out var mind, out var mindComp) || mind == exclude)
-                continue;
-
-            allAi.Add((mind, mindComp));
-        }
-    }
-
-    /// <summary>
-    /// Picks a random mind from a pool after applying a list of filters.
-    /// Returns null if no valid mind could be found.
-    /// </summary>
-    public Entity<MindComponent>? PickFromPool(MindPool pool, List<MindFilter> filters, EntityUid? exclude = null)
-    {
-        _pickingMinds.Clear();
-        pool.FindMinds(_pickingMinds, exclude, EntityManager, this);
-        FilterMinds(_pickingMinds, filters, exclude);
-
-        if (_pickingMinds.Count == 0)
-            return null;
-
-        return _random.Pick(_pickingMinds);
-    }
-
-    /// <summary>
     /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
     /// </summary>
     public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
     {
-        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager, this));
+        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager));
     }
 
     /// <summary>

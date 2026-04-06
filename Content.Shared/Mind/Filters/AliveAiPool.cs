@@ -1,12 +1,14 @@
-﻿namespace Content.Shared.Mind.Filters;
+﻿using Content.Shared.Objectives.Systems;
+
+namespace Content.Shared.Mind.Filters;
 
 /// <summary>
-/// A mind pool that uses <see cref="SharedMindSystem.AddAliveAi"/>.
+/// A mind pool that uses <see cref="TargetSystem.AddAliveAi"/>.
 /// </summary>
 public sealed partial class AliveAiPool : MindPool
 {
-    public override void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
+    public override void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, TargetSystem targetSys)
     {
-        mindSys.AddAliveAi(minds, exclude);
+        targetSys.AddAliveAi(minds, exclude);
     }
 }

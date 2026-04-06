@@ -1,10 +1,10 @@
-using Robust.Shared.Serialization;
+using Content.Shared.Objectives.Systems;
 
 namespace Content.Shared.Mind.Filters;
 
 /// <summary>
 /// A mind pool that can find minds to use for objectives etc.
-/// Further filtered by <see cref="IMindFilter"/>.
+/// Further filtered by <see cref="MindFilter"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class MindPool
@@ -15,5 +15,7 @@ public abstract partial class MindPool
     /// </summary>
     /// <param name="minds">The hashset to add to</param>
     /// <param name="exclude">A mind entity that must not be returned</param>
-    public abstract void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys);
+    /// <param name="entMan">entity Manager for further control</param>
+    /// <param name="targetSys">targeting system which explicitly searches for targets.</param>
+    public abstract void FindMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude, IEntityManager entMan, TargetSystem targetSys);
 }
