@@ -160,7 +160,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-aloxadone
+    currentLabel: reagent-name-aloxadone
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -175,7 +175,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol
+    currentLabel: reagent-name-ambuzol
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -190,7 +190,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol-plus
+    currentLabel: reagent-name-ambuzol-plus
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -220,7 +220,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-barozine
+    currentLabel: reagent-name-barozine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -250,7 +250,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-bruizine
+    currentLabel: reagent-name-bruizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -265,7 +265,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-cognizine
+    currentLabel: reagent-name-cognizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -620,27 +620,12 @@
           Quantity: 30
 
 - type: entity
-  id: ChemistryBottleNecrosol
-  suffix: necrosol
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-necrosol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Necrosol
-          Quantity: 30
-
-- type: entity
   id: ChemistryBottleOculine
   suffix: oculine
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-oculine
+    currentLabel: reagent-name-oculine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -670,7 +655,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-opporozidone
+    currentLabel: reagent-name-opporozidone
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -711,7 +696,7 @@
 
 - type: entity
   id: ChemistryBottlePotassiumIodide
-  suffix: iodide
+  suffix: potassium iodide
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
@@ -741,7 +726,7 @@
 
 - type: entity
   id: ChemistryBottlePulpedBananaPeel
-  suffix: pulped-banana-peel
+  suffix: pulped banana peel
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
@@ -865,7 +850,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-tranexamic-acid
+    currentLabel: reagent-name-tranexamic-acid
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -902,6 +887,21 @@
         maxVol: 30
         reagents:
         - ReagentId: Ultravasculine
+          Quantity: 30
+
+- type: entity
+  parent: BaseChemistryBottleFilled
+  id: ChemistryBottleCharcoal
+  suffix: charcoal
+  components:
+  - type: Label
+    currentLabel: reagent-name-charcoal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Charcoal
           Quantity: 30
 
 # Other bottles
@@ -1054,6 +1054,21 @@
         maxVol: 30
         reagents:
         - ReagentId: Toxin
+          Quantity: 30
+
+- type: entity
+  parent: BaseChemistryBottleFilled
+  id: ChemistryBottleLaughter
+  suffix: laughter
+  components:
+  - type: Label
+    currentLabel: reagent-name-laughter
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Laughter
           Quantity: 30
 
 # Base reagent bottles
@@ -1389,13 +1404,12 @@
     children:
     - id: ChemistryBottleBicaridine
     - id: ChemistryBottleKelotane
-    - id: ChemistryBottleDermaline
     - id: ChemistryBottleDylovene
     - id: ChemistryBottleInaprovaline
     - id: ChemistryBottleDexalin
-    - id: ChemistryBottleDexalinPlus
     - id: ChemistryBottleSaline
     - id: ChemistryBottleTricordrazine
+    - id: ChemistryBottleHyronalin
 
 - type: entityTable
   id: SpecialtyMedicineReagentBottleTable
@@ -1409,6 +1423,8 @@
     - id: ChemistryBottleTricordrazine
     - id: ChemistryBottleTranexamicAcid
     - id: ChemistryBottleOculine
+    - id: ChemistryBottleCharcoal
+    - id: ChemistryBottleLaughter
 
 - type: entityTable
   id: AllMedicineReagentBottlesTable
@@ -1445,7 +1461,6 @@
     - id: ChemistryBottleLeporazine
     - id: ChemistryBottleLipozine
     - id: ChemistryBottleMannitol
-    - id: ChemistryBottleNecrosol
     - id: ChemistryBottleOculine
     - id: ChemistryBottleOmnizine
     - id: ChemistryBottleOpporozidone
@@ -1464,3 +1479,5 @@
     - id: ChemistryBottleTranexamicAcid
     - id: ChemistryBottleTricordrazine
     - id: ChemistryBottleUltravasculine
+    - id: ChemistryBottleCharcoal
+    - id: ChemistryBottleLaughter

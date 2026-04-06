@@ -50,7 +50,7 @@
     - !type:OreDunGen
       replacement: IronRock
       entity: IronRockSalt
-      count: 50
+      count: 25
       minGroupSize: 8
       maxGroupSize: 12
     - !type:OreDunGen
