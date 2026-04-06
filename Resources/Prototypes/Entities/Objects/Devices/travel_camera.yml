@@ -14,8 +14,7 @@
     sprite: Objects/Devices/travel_camera.rsi
     state: icon
   - type: Flash
-    flashOnUse: false # handled by PhotographySystem
-    flashOnMelee: false # also handled by PhotographySystem
+    flashOnRangedInteract: true
     sound: !type:SoundPathSpecifier
       path: /Audio/Misc/camera_snap.ogg
   - type: MeleeWeapon # allows using the camera in melee

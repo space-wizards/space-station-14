@@ -147,7 +147,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
             HasComp<ZombieComponent>(ev.Target) ||
-            !HasComp<CanConvertComponent>(ev.Used))
+            !HasComp<RevolutionaryConverterComponent>(ev.Used))
         {
             return;
         }

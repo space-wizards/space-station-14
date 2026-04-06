@@ -1,13 +1,8 @@
-using System.Linq;
 using Content.Shared.EntityTable;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
-using Content.Shared.Flash.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -21,7 +16,6 @@ public sealed class PhotographySystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityTableSystem _tables = default!;
-    [Dependency] private readonly SharedFlashSystem _flash = default!;
     [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
@@ -29,9 +23,7 @@ public sealed class PhotographySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PhotographComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PictureTakerComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<PictureTakerComponent, BeforeRangedInteractEvent>(OnRangedInteract);
-        SubscribeLocalEvent<PictureTakerComponent, MeleeHitEvent>(OnCameraMeleeHit);
+        SubscribeLocalEvent<PictureTakerComponent, AfterFlashActivatedEvent>(OnFlashActivated);
     }
 
     private void OnExamined(Entity<PhotographComponent> ent, ref ExaminedEvent args)
@@ -52,62 +44,10 @@ public sealed class PhotographySystem : EntitySystem
         }
     }
 
-    private void OnUseInHand(Entity<PictureTakerComponent> ent, ref UseInHandEvent args)
+    // The flash system is handling charges and all interactions, we just print the picture afterwards.
+    private void OnFlashActivated(Entity<PictureTakerComponent> ent, ref AfterFlashActivatedEvent args)
     {
-        if (args.Handled || !TryComp<FlashComponent>(ent.Owner, out var flashComp) || !_flash.TryUseFlashItem((ent.Owner, flashComp), args.User))
-            return;
-
-        // If not aimed at anything just create a flash and photograph without any specific target.
-        TakePicture(ent, null, args.User);
-        _flash.FlashArea(ent.Owner, args.User, flashComp.Range, flashComp.AoeFlashDuration, flashComp.SlowTo, true, flashComp.Probability);
-        args.Handled = true;
-    }
-
-    /// <summary>
-    /// Processes the entity hit by a camera and prints a picture of them.
-    /// </summary>
-    private void OnCameraMeleeHit(Entity<PictureTakerComponent> ent, ref MeleeHitEvent args)
-    {
-        // if we hit nothing, there's nothing to take a picture of.
-        if (!args.HitEntities.Any())
-            return;
-        if (TryComp<FlashComponent>(ent.Owner, out var flashComp))
-        {
-            // we also need to be able to flash (this also checks for charges)
-            if (!_flash.TryUseFlashItem((ent.Owner, flashComp), args.User))
-                return;
-        }
-        else
-        {
-            // we need a flash to take a picture!
-            return;
-        }
-        foreach (var entity in args.HitEntities)
-        {
-            // produces the picture so our camera works
-            TakePicture(ent, entity, args.User);
-            // TODO: Currently this just hijacks the FlashOnMelee property of FlashComponent and uses the flash on melee even if its set to false. A better implementation would interface better with the flashing system (maybe the check could be on that system?)
-            // flashes the entity.
-            var stunDuration = TimeSpan.Zero;
-            if (flashComp.MeleeStunDuration != null)
-                stunDuration=flashComp.MeleeStunDuration.Value;
-            _flash.Flash(entity, args.User, ent.Owner, stunDuration, flashComp.SlowTo, melee:true, displayPopup:true);
-            // we can only take one picture of one entity per swing!
-            break;
-        }
-
-    }
-
-    // TODO: This or most of the other systems subscribing to BeforeRangedInteractEvent shouldn't be using this event as handling it stops contact interaction with the used tool,
-    // but this will need some cleanup of how SharedInteractionSystem handles the code flow. Also the event is raised for both in-range and out of range interactions, which
-    // is what the subscribers are using it for, but does not seem originally intended from the naming convention.
-    private void OnRangedInteract(Entity<PictureTakerComponent> ent, ref BeforeRangedInteractEvent args)
-    {
-        if (args.Handled || !TryComp<FlashComponent>(ent.Owner, out var flashComp) || !_flash.TryUseFlashItem((ent.Owner, flashComp), args.User))
-            return;
         TakePicture(ent, args.Target, args.User);
-        _flash.FlashArea(ent.Owner, args.User, flashComp.Range, flashComp.AoeFlashDuration, flashComp.SlowTo, true, flashComp.Probability);
-        args.Handled = true;
     }
 
     /// <summary>
@@ -118,13 +58,13 @@ public sealed class PhotographySystem : EntitySystem
     /// https://github.com/space-wizards/space-station-14/pull/43327
     /// for details.
     /// </summary>
-    public void TakePicture(Entity<PictureTakerComponent> camera, EntityUid? target, EntityUid user)
+    public void TakePicture(Entity<PictureTakerComponent> camera, EntityUid? target, EntityUid? user)
     {
         if (_net.IsClient)
             return; // Can't interact with predictively spawned entities yet.
 
         var tableResult = _tables.GetSpawns(camera.Comp.Photographs);
-        var coords = Transform(user).Coordinates;
+        var coords = Transform(camera).Coordinates;
 
         FormattedMessage? description = null;
         string? nameText = null;

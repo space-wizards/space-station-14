@@ -145,6 +145,7 @@
         visible: false
         shader: unshaded
     - type: Flash
+    - type: RevolutionaryConverter
     - type: LimitedCharges
       maxCharges: 5
     - type: MeleeWeapon
@@ -175,9 +176,6 @@
       guides:
       - Security
       - Antagonists
-    # allows the flash to be used for head revs to convert.
-    # viva la revolución!
-    - type: CanConvert
 
 - type: entity
   name: flash
