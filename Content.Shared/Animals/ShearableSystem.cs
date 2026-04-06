@@ -201,9 +201,9 @@ public sealed class SharedShearableSystem : EntitySystem
             if (feedbackPopupString != null)
             {
                 _popup.PopupClient(feedbackPopupString, ent.Owner, userUid);
-                return;
             }
-
+            // Fail regardless of popup.
+            return;
         }
 
         // Build arguments for calling TryStartDoAfter
@@ -223,7 +223,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
-        // Check the action hasn't been cancelled, or hasn't already been handled, or that the player's hand is empty.
+        // Check the action hasn't been cancelled, or hasn't already been handled.
         if (args.Cancelled || args.Handled)
             return;
 

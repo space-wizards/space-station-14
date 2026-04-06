@@ -467,6 +467,14 @@
   - type: Wooly
     quantity: 10
     growthDelay: 120 #2 minutes
+  - type: Speech
+    speechSounds: SheepSpace
+    speechVerb: Sheep
+  - type: Vocal
+    sounds:
+      Female: SheepSpace
+      Male: SheepSpace
+      Unsexed: SheepSpace
 
 - type: entity
   parent:
