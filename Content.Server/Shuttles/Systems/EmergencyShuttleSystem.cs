@@ -208,6 +208,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             TryComp<FTLComponent>(uid, out var ftlComp) ? ftlComp.TravelTime : _shuttle.DefaultTravelTime
         );
 
+        _adminLogger.AddStructured(
+            LogType.ShuttleLaunched,
+            LogImpact.High,
+            $"Emergency shuttle {uid:entity} launched from station toward CentComm. ETA: {ftlTime.TotalSeconds:F0}s");
+
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
             var payload = new NetworkPayload
@@ -229,6 +234,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
         var countdownTime = TimeSpan.FromSeconds(ConfigManager.GetCVar(CCVars.RoundRestartTime));
+
+        _adminLogger.AddStructured(
+            LogType.ShuttleArrivedAtCentComm,
+            LogImpact.High,
+            $"Emergency shuttle {uid:entity} arrived at CentComm. Round restart in {countdownTime.TotalSeconds:F0}s. Post-round window open.");
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {

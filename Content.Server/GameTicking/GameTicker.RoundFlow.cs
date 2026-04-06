@@ -433,6 +433,9 @@ namespace Content.Server.GameTicking
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
 
+            _adminLogger.AddStructured(LogType.RoundStarted, LogImpact.High,
+                $"Round {RoundId} started on map {DefaultMap}");
+
             RoundStartTimeSpan = _gameTiming.CurTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
@@ -486,6 +489,11 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
+            var duration = RoundDuration();
+            _adminLogger.AddStructured(LogType.RoundEnded, LogImpact.High,
+                $"Round {RoundId} ended after {duration.Minutes}m {duration.Seconds}s. Entering post-round.",
+                new { roundId = RoundId, durationSeconds = duration.TotalSeconds });
+
             try
             {
                 ShowRoundEndScoreboard(text);
@@ -507,8 +515,8 @@ namespace Content.Server.GameTicking
 
         public void ShowRoundEndScoreboard(string text = "")
         {
-            // Log end of round
-            _adminLogger.AddStructured(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
+            // Log end of round scoreboard display.
+            _adminLogger.AddStructured(LogType.RoundEnded, LogImpact.Low, $"Round {RoundId} end summary shown to players");
 
             //Tell every client the round has ended.
             var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
@@ -653,6 +661,9 @@ namespace Content.Server.GameTicking
             TryResetPreset();
 
             _sawmill.Info("Restarting round!");
+
+            _adminLogger.AddStructured(LogType.RoundRestarted, LogImpact.High,
+                $"Round {RoundId} restarting. Returning to lobby.");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
 
