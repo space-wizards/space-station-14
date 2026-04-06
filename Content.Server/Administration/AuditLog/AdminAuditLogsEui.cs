@@ -102,6 +102,7 @@ public sealed class AdminAuditLogsEui : BaseEui
                         Round = roundId,
                         ServerId = _serverId,
                         Search = request.Search,
+                        SearchMode = request.SearchMode,
                         Actions = request.Actions,
                         Severities = request.Severities,
                         AdminUserId = request.AdminUserId,

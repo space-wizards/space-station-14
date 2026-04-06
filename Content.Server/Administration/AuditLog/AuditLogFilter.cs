@@ -14,6 +14,8 @@ public sealed class AuditLogFilter
 
     public string? Search { get; set; }
 
+    public LogSearchMode SearchMode { get; set; } = LogSearchMode.Keyword;
+
     public HashSet<AdminAuditAction>? Actions { get; set; }
 
     public HashSet<AuditSeverity>? Severities { get; set; }

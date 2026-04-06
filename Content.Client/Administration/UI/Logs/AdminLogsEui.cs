@@ -86,6 +86,7 @@ public sealed partial class AdminLogsEui : BaseEui
                 anyEntities = null;
         }
 
+        var hasPlayerFilter = LogsControl.SelectedPlayers.Count != 0;
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
             LogsControl.Search,
@@ -93,12 +94,13 @@ public sealed partial class AdminLogsEui : BaseEui
             LogsControl.SelectedImpacts.ToHashSet(),
             null,
             null,
-            LogsControl.SelectedPlayers.Count != 0,
-            LogsControl.SelectedPlayers.ToArray(),
+            true,
+            hasPlayerFilter ? LogsControl.SelectedPlayers.ToArray() : null,
             null,
-            LogsControl.IncludeNonPlayerLogs,
+            LogsControl.IncludeNonPlayerLogs || !hasPlayerFilter,
             DateOrder.Descending,
-            anyEntities: anyEntities);
+            anyEntities: anyEntities,
+            searchMode: LogsControl.SelectedSearchMode);
 
         SendMessage(request);
     }

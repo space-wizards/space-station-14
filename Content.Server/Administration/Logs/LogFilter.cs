@@ -15,6 +15,8 @@ public sealed class LogFilter
 
     public string? Search { get; set; }
 
+    public LogSearchMode SearchMode { get; set; } = LogSearchMode.Keyword;
+
     public HashSet<LogType>? Types { get; set; }
 
     public HashSet<LogImpact>? Impacts { get; set; }

@@ -144,6 +144,7 @@ public sealed partial class AdminLogsEui : BaseEui
                     ServerId = resolvedServerId,
                     Round = roundId,
                     Search = request.Search,
+                    SearchMode = request.SearchMode,
                     Types = request.Types,
                     Impacts = request.Impacts,
                     Before = request.Before,

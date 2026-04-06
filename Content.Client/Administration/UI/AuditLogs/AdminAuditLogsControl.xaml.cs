@@ -40,6 +40,11 @@ public sealed partial class AdminAuditLogsControl : Control
 
         SearchLineEdit.OnTextChanged += SearchLineEditChanged;
 
+        SearchModeKeyword.OnPressed += SearchModeKeywordPressed;
+        SearchModeRegex.OnPressed += SearchModeRegexPressed;
+        SearchModeWildcard.OnPressed += SearchModeWildcardPressed;
+        SearchModeExact.OnPressed += SearchModeExactPressed;
+
         RoutineButton.OnPressed += SeverityButtonPressed;
         NotableButton.OnPressed += SeverityButtonPressed;
         CriticalButton.OnPressed += SeverityButtonPressed;
@@ -53,6 +58,7 @@ public sealed partial class AdminAuditLogsControl : Control
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => SearchLineEdit.Text.Trim();
+    public LogSearchMode SelectedSearchMode { get; private set; } = LogSearchMode.Keyword;
     public IReadOnlyList<SharedAdminAuditLog> LoadedLogs => _loadedLogs;
 
     public HashSet<AuditSeverity> SelectedSeverities { get; } = new();
@@ -287,6 +293,35 @@ public sealed partial class AdminAuditLogsControl : Control
         UpdateLogs();
     }
 
+    private void SetSearchMode(LogSearchMode mode)
+    {
+        SelectedSearchMode = mode;
+        SearchModeKeyword.Pressed = mode == LogSearchMode.Keyword;
+        SearchModeRegex.Pressed = mode == LogSearchMode.Regex;
+        SearchModeWildcard.Pressed = mode == LogSearchMode.Wildcard;
+        SearchModeExact.Pressed = mode == LogSearchMode.Exact;
+    }
+
+    private void SearchModeKeywordPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Keyword);
+    }
+
+    private void SearchModeRegexPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Regex);
+    }
+
+    private void SearchModeWildcardPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Wildcard);
+    }
+
+    private void SearchModeExactPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Exact);
+    }
+
     private void SelectAllActions(ButtonEventArgs args)
     {
         SelectedActions.Clear();
@@ -347,6 +382,11 @@ public sealed partial class AdminAuditLogsControl : Control
         SelectAllActionsButton.OnPressed -= SelectAllActions;
         SelectNoActionsButton.OnPressed -= SelectNoActions;
         SearchLineEdit.OnTextChanged -= SearchLineEditChanged;
+
+        SearchModeKeyword.OnPressed -= SearchModeKeywordPressed;
+        SearchModeRegex.OnPressed -= SearchModeRegexPressed;
+        SearchModeWildcard.OnPressed -= SearchModeWildcardPressed;
+        SearchModeExact.OnPressed -= SearchModeExactPressed;
 
         RoutineButton.OnPressed -= SeverityButtonPressed;
         NotableButton.OnPressed -= SeverityButtonPressed;

@@ -112,6 +112,7 @@ public sealed class AdminAuditLogsEui : BaseEui
         {
             RoundId = _control.SelectedRoundId > 0 ? _control.SelectedRoundId : null,
             Search = _control.Search,
+            SearchMode = _control.SelectedSearchMode,
             Actions = new HashSet<AdminAuditAction>(_control.SelectedActions),
             Severities = new HashSet<AuditSeverity>(_control.SelectedSeverities),
             DateOrder = DateOrder.Descending

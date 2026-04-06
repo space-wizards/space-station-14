@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
@@ -325,9 +326,19 @@ namespace Content.Server.Database
             // the join for non-search queries.
             if (!string.IsNullOrWhiteSpace(filter?.Search))
             {
-                return db.AdminLogEvent
-                    .Include(log => log.Payload)
-                    .Where(log => EF.Functions.Like(log.Payload.Message, $"%{filter.Search}%"));
+                var search = filter.Search;
+                return filter.SearchMode switch
+                {
+                    LogSearchMode.Wildcard => db.AdminLogEvent
+                        .Include(log => log.Payload)
+                        .Where(log => EF.Functions.Like(log.Payload.Message, search)),
+                    LogSearchMode.Exact => db.AdminLogEvent
+                        .Include(log => log.Payload)
+                        .Where(log => EF.Functions.Like(log.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                    _ => db.AdminLogEvent
+                        .Include(log => log.Payload)
+                        .Where(log => EF.Functions.Like(log.Payload.Message, $"%{search}%"))
+                };
             }
 
             return db.AdminLogEvent;

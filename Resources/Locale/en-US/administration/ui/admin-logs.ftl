@@ -26,3 +26,7 @@ admin-logs-search-entity-uid-placeholder = Entity UID(s)
 admin-logs-search-button = Search
 admin-logs-next = Next
 admin-logs-toggle-metadata = Metadata
+admin-logs-search-mode-keyword = Keyword
+admin-logs-search-mode-regex = Regex
+admin-logs-search-mode-wildcard = Wild
+admin-logs-search-mode-exact = Exact

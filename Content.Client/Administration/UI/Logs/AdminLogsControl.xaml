@@ -61,6 +61,11 @@
                             StyleClasses="OpenLeft"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="0 2">
+                    <Button Name="SearchModeKeyword" Access="Public" Text="{Loc admin-logs-search-mode-keyword}" ToggleMode="True" Pressed="True" StyleClasses="OpenRight" MinWidth="65"/>
+                    <Button Name="SearchModeRegex" Access="Public" Text="{Loc admin-logs-search-mode-regex}" ToggleMode="True" StyleClasses="ButtonSquare" MinWidth="55"/>
+                    <Button Name="SearchModeWildcard" Access="Public" Text="{Loc admin-logs-search-mode-wildcard}" ToggleMode="True" StyleClasses="ButtonSquare" MinWidth="50"/>
+                    <Button Name="SearchModeExact" Access="Public" Text="{Loc admin-logs-search-mode-exact}" ToggleMode="True" StyleClasses="OpenLeft" MinWidth="55"/>
+                    <Control MinSize="4 0"/>
                     <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
                               HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
                     <LineEdit Name="EntityUidSearch" Access="Public" StyleClasses="actionSearchBox"

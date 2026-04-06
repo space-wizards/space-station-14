@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1062,6 +1063,19 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         protected abstract IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null);
 
+        protected virtual bool SupportsRegex => false;
+
+        /// <summary>
+        /// Escapes SQL LIKE special characters so the input is treated as a literal substring.
+        /// </summary>
+        protected static string EscapeLikePattern(string input)
+        {
+            return input
+                .Replace("\\", "\\\\")
+                .Replace("%", "\\%")
+                .Replace("_", "\\_");
+        }
+
         private IQueryable<AdminLogEvent> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             // Save me from SQLite
@@ -1467,7 +1481,25 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             if (!string.IsNullOrWhiteSpace(filter.Search))
             {
-                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
+                var search = filter.Search;
+                switch (filter.SearchMode)
+                {
+                    case LogSearchMode.Regex when SupportsRegex:
+                        query = query.Where(log => Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase));
+                        break;
+                    case LogSearchMode.Wildcard:
+                        query = query.Where(log => EF.Functions.Like(log.Message, search));
+                        break;
+                    case LogSearchMode.Exact:
+                    {
+                        var escaped = EscapeLikePattern(search);
+                        query = query.Where(log => EF.Functions.Like(log.Message, $"%{escaped}%", "\\"));
+                        break;
+                    }
+                    default:
+                        query = query.Where(log => EF.Functions.Like(log.Message, $"%{search}%"));
+                        break;
+                }
             }
 
             if (!includePagination)

@@ -470,7 +470,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        var logPlayers = new List<Guid>(players?.Count ?? 0);
+        var handlerValues = handler.Values;
+        var autoPlayers = GetPlayers(handlerValues);
+        var autoEntities = GetEntities(handlerValues, type);
+        var autoPlayerRoles = GetPlayerRoles(handlerValues, type);
+        var logPlayers = new List<Guid>(autoPlayers.Count + (players?.Count ?? 0));
+
         if (players != null)
         {
             foreach (var player in players)
@@ -479,7 +484,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             }
         }
 
-        var logEntities = new List<AdminLogEventEntityWriteData>(entities?.Count ?? 0);
+        foreach (var player in autoPlayers)
+        {
+            AddPlayer(logPlayers, player);
+        }
+
+        var logEntities = new List<AdminLogEventEntityWriteData>(autoEntities.Count + (entities?.Count ?? 0));
         if (entities != null)
         {
             foreach (var entity in entities)
@@ -487,8 +497,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 var prototypeId = entity.PrototypeId;
                 var entityName = entity.EntityName;
 
-                // Auto-resolve name/prototype from the entity manager when not
-                // explicitly provided — mirrors what GetEntities() does for Add().
                 if ((prototypeId == null || entityName == null)
                     && EntityManager.TryGetComponent<MetaDataComponent>(entity.Entity, out var meta))
                 {
@@ -496,12 +504,33 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     entityName ??= meta.EntityName;
                 }
 
-                // If still unresolved (entity deleted or pre-round), tag as pre-round
-                // so the UI shows something meaningful instead of <unknown>.
                 if (entityName == null && preRound)
                     entityName = "[PreRound]";
 
                 AddEntity(logEntities, (int) entity.Entity, entity.Role, prototypeId, entityName);
+            }
+        }
+
+        foreach (var autoEntity in autoEntities)
+        {
+            AddEntity(logEntities, autoEntity.EntityUid, autoEntity.Role, autoEntity.PrototypeId, autoEntity.EntityName);
+        }
+
+        Dictionary<Guid, AdminLogEntityRole>? mergedPlayerRoles = null;
+        if (autoPlayerRoles != null || playerRoles != null)
+        {
+            mergedPlayerRoles = new Dictionary<Guid, AdminLogEntityRole>();
+
+            if (autoPlayerRoles != null)
+            {
+                foreach (var (guid, role) in autoPlayerRoles)
+                    mergedPlayerRoles.TryAdd(guid, role);
+            }
+
+            if (playerRoles != null)
+            {
+                foreach (var (guid, role) in playerRoles)
+                    mergedPlayerRoles[guid] = role;
             }
         }
 
@@ -523,9 +552,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Json = json,
             Players = logPlayers,
             Entities = logEntities,
-            PlayerRoles = playerRoles?.Count > 0
-                ? new Dictionary<Guid, AdminLogEntityRole>(playerRoles)
-                : null,
+            PlayerRoles = mergedPlayerRoles?.Count > 0 ? mergedPlayerRoles : null,
         };
 
         if (preRound)

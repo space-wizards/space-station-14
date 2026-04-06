@@ -4,10 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
@@ -370,14 +372,29 @@ namespace Content.Server.Database
             // Read the link above for parameterization before changing this method or you get the bullet
             if (!string.IsNullOrWhiteSpace(filter?.Search))
             {
-                return db.AdminLogEvent
-                    .Include(a => a.Payload)
-                    .Where(a => EF.Functions.ToTsVector("english", a.Payload.Message)
-                        .Matches(EF.Functions.PlainToTsQuery("english", filter.Search)));
+                var search = filter.Search;
+                return filter.SearchMode switch
+                {
+                    LogSearchMode.Regex => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => Regex.IsMatch(a.Payload.Message, search, RegexOptions.IgnoreCase)),
+                    LogSearchMode.Wildcard => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => EF.Functions.Like(a.Payload.Message, search)),
+                    LogSearchMode.Exact => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => EF.Functions.Like(a.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                    _ => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => EF.Functions.ToTsVector("english", a.Payload.Message)
+                            .Matches(EF.Functions.PlainToTsQuery("english", search)))
+                };
             }
 
             return db.AdminLogEvent;
         }
+
+        protected override bool SupportsRegex => true;
 
         protected override DateTime NormalizeDatabaseTime(DateTime time)
         {

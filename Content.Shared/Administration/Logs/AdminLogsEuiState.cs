@@ -80,7 +80,8 @@ public static class AdminLogsEuiMsg
             bool includeNonPlayers,
             DateOrder dateOrder,
             int? serverId = null,
-            int[]? anyEntities = null)
+            int[]? anyEntities = null,
+            LogSearchMode searchMode = LogSearchMode.Keyword)
         {
             RoundId = roundId;
             Search = search;
@@ -95,6 +96,7 @@ public static class AdminLogsEuiMsg
             DateOrder = dateOrder;
             ServerId = serverId;
             AnyEntities = anyEntities is { Length: > 0 } ? anyEntities : null;
+            SearchMode = searchMode;
         }
 
         public int? RoundId { get; set; }
@@ -110,6 +112,7 @@ public static class AdminLogsEuiMsg
         public DateOrder DateOrder { get; set; }
         public int? ServerId { get; set; }
         public int[]? AnyEntities { get; set; }
+        public LogSearchMode SearchMode { get; set; }
     }
 
     [Serializable, NetSerializable]

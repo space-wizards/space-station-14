@@ -46,6 +46,11 @@ public sealed partial class AdminLogsControl : Control
 
         ResetRoundButton.OnPressed += ResetRoundPressed;
 
+        SearchModeKeyword.OnPressed += SearchModeKeywordPressed;
+        SearchModeRegex.OnPressed += SearchModeRegexPressed;
+        SearchModeWildcard.OnPressed += SearchModeWildcardPressed;
+        SearchModeExact.OnPressed += SearchModeExactPressed;
+
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
     }
@@ -54,6 +59,7 @@ public sealed partial class AdminLogsControl : Control
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => LogSearch.Text;
+    public LogSearchMode SelectedSearchMode { get; private set; } = LogSearchMode.Keyword;
     private int ShownLogs { get; set; }
     private int TotalLogs { get; set; }
     private int RoundLogs { get; set; }
@@ -131,6 +137,35 @@ public sealed partial class AdminLogsControl : Control
     private void LogSearchChanged(LineEditEventArgs args)
     {
         UpdateLogs();
+    }
+
+    private void SetSearchMode(LogSearchMode mode)
+    {
+        SelectedSearchMode = mode;
+        SearchModeKeyword.Pressed = mode == LogSearchMode.Keyword;
+        SearchModeRegex.Pressed = mode == LogSearchMode.Regex;
+        SearchModeWildcard.Pressed = mode == LogSearchMode.Wildcard;
+        SearchModeExact.Pressed = mode == LogSearchMode.Exact;
+    }
+
+    private void SearchModeKeywordPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Keyword);
+    }
+
+    private void SearchModeRegexPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Regex);
+    }
+
+    private void SearchModeWildcardPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Wildcard);
+    }
+
+    private void SearchModeExactPressed(ButtonEventArgs args)
+    {
+        SetSearchMode(LogSearchMode.Exact);
     }
 
     private void SelectAllTypes(ButtonEventArgs args)
@@ -616,5 +651,10 @@ public sealed partial class AdminLogsControl : Control
         RoundSpinBox.ValueChanged -= RoundSpinBoxChanged;
 
         ResetRoundButton.OnPressed -= ResetRoundPressed;
+
+        SearchModeKeyword.OnPressed -= SearchModeKeywordPressed;
+        SearchModeRegex.OnPressed -= SearchModeRegexPressed;
+        SearchModeWildcard.OnPressed -= SearchModeWildcardPressed;
+        SearchModeExact.OnPressed -= SearchModeExactPressed;
     }
 }

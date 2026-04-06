@@ -38,6 +38,7 @@ public static class AdminAuditLogsEuiMsg
         public Guid? AdminUserId { get; set; }
         public Guid? TargetPlayerUserId { get; set; }
         public DateOrder DateOrder { get; set; }
+        public LogSearchMode SearchMode { get; set; }
     }
 
     [Serializable, NetSerializable]
