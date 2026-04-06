@@ -14,7 +14,6 @@ namespace Content.Client.Humanoid;
 public sealed partial class OrganMarkingPicker : Control
 {
     [Dependency] private readonly MarkingManager _marking = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
 
     private readonly SpriteSystem _sprite;
@@ -43,7 +42,7 @@ public sealed partial class OrganMarkingPicker : Control
     {
         base.EnteredTree();
 
-        _markingsModel.OrganProfileDataChanged += UpdateMarkings;
+        _markingsModel.OrganProfileDataChanged += OnOrganProfileDataChanged;
         _markingsModel.EnforcementsChanged += UpdateMarkings;
     }
 
@@ -51,11 +50,17 @@ public sealed partial class OrganMarkingPicker : Control
     {
         base.ExitedTree();
 
-        _markingsModel.OrganProfileDataChanged -= UpdateMarkings;
+        _markingsModel.OrganProfileDataChanged -= OnOrganProfileDataChanged;
         _markingsModel.EnforcementsChanged -= UpdateMarkings;
     }
 
     public bool Empty => LayerTabs.ChildCount == 0;
+
+    private void OnOrganProfileDataChanged(bool refresh)
+    {
+        if (refresh)
+            UpdateMarkings();
+    }
 
     private void UpdateMarkings()
     {

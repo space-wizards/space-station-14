@@ -70,7 +70,7 @@
     - type: Stealth
       hadOutline: true
     - type: StealthOnMove
-      passiveVisibilityRate: -0.37
+      passiveVisibilityRate: -1 # very useful for going around the station concealed, if you start jitterstrafing you get seen
       movementVisibilityRate: 0.20
 
 - type: entity

@@ -1,8 +1,10 @@
 using Content.Server.Destructible;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Gibbing;
 using Content.Shared.Popups;
@@ -28,6 +30,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Update(float frameTime)
     {
@@ -94,7 +97,9 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             // oh god.
             var coords = Transform(uid).Coordinates;
+
             _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{ToPrettyString(uid)} and {ToPrettyString(ent)} created singularity at X:{coords.X} Y:{coords.Y}");
 
             Del(uid);
             Del(ent);
@@ -124,6 +129,9 @@ public sealed class ImmovableRodSystem : EntitySystem
                 _damageable.TryChangeDamage(ent, component.Damage, ignoreResistances: true);
                 return;
             }
+
+            var coords = Transform(uid).Coordinates;
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibbed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
 
             _gibbing.Gib(ent);
             return;

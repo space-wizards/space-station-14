@@ -149,7 +149,7 @@
           reagents:
             - ReagentId: Ash
               Quantity: 25
-            - ReagentId: Necrosol
+            - ReagentId: Arcryox
               Quantity: 25
     - type: GuideHelp
       guides:
