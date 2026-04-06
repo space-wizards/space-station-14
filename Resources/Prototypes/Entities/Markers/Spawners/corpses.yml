@@ -22,7 +22,20 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomServiceCorpse
+      - MobCorpseBartender
+      - MobCorpseBotanist
+      - MobCorpseChaplain
+      - MobCorpseChef
+      - MobCorpseClown
+      - MobCorpseJanitor
+      - MobCorpseLawyer
+      - MobCorpseLibrarian
+      - MobCorpseMime
+      - MobCorpseMusician
+      - MobCorpsePassenger
+      - MobCorpseReporter
+      - MobCorpseServiceWorker
+      - MobCorpsePsychologist
 
 - type: entity
   name: Random Engineer Corpse Spawner
@@ -35,7 +48,9 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomEngineerCorpse
+      - MobCorpseAtmosphericTechnician
+      - MobCorpseStationEngineer
+      - MobCorpseTechnicalAssistant
 
 - type: entity
   name: Random Cargo Corpse Spawner
@@ -48,7 +63,9 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomCargoCorpse
+      - MobCorpseCargoTechnician
+      - MobCorpseSalvageSpecialist
+      - MobCorpseQuartermaster
 
 - type: entity
   name: Random Medic Corpse Spawner
@@ -61,7 +78,10 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomMedicCorpse
+      - MobCorpseChemist
+      - MobCorpseMedicalDoctor
+      - MobCorpseMedicalIntern
+      - MobCorpseParamedic
 
 - type: entity
   name: Random Science Corpse Spawner
@@ -74,7 +94,8 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomScienceCorpse
+      - MobCorpseScientist
+      - MobCorpseResearchAssistant
 
 - type: entity
   name: Random Security Corpse Spawner
@@ -87,7 +108,10 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomSecurityCorpse
+      - MobCorpseSecurityCadet
+      - MobCorpseSecurityOfficer
+      - MobCorpseDetective
+      - MobCorpseWarden
 
 - type: entity
   name: Random Command Corpse Spawner
@@ -100,4 +124,11 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobRandomCommandCorpse
+      - MobCorpseCaptain
+      - MobCorpseChiefEngineer
+      - MobCorpseChiefMedicalOfficer
+      - MobCorpseHeadOfPersonnel
+      - MobCorpseHeadOfSecurity
+      - MobCorpseResearchDirector
+      - MobCorpseQuartermaster
+      - MobCorpseCentcommOfficial
