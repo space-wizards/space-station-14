@@ -29,6 +29,14 @@
       "directions": 4
     },
     {
+      "name": "inhand-left-unprimed",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-unprimed",
+      "directions": 4
+    },
+    {
       "name": "inhand-left-primed",
       "directions": 4,
 	  "delays": [
