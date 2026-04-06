@@ -54,7 +54,7 @@ public sealed class XATMagnetSystem : BaseQueryUpdateXATSystem<XATMagnetComponen
             if (node.Attached == null)
                 continue;
 
-            var artifact = _xenoArtifactQuery.Get(node.Attached.Value);
+            var artifact = XenoArtifactQuery.Get(node.Attached.Value);
 
             if (!CanTrigger(artifact, (uid, node)))
                 continue;
