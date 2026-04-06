@@ -24,17 +24,17 @@ public sealed class LatheBoundUserInterface : BoundUserInterface
 
         _menu.OnServerListButtonPressed += _ =>
         {
-            SendMessage(new ConsoleServerSelectionMessage());
+            SendPredictedMessage(new ConsoleServerSelectionMessage());
         };
 
         _menu.RecipeQueueAction += (recipe, amount) =>
         {
-            SendMessage(new LatheQueueRecipeMessage(recipe, amount));
+            SendPredictedMessage(new LatheQueueRecipeMessage(recipe, amount));
         };
-        _menu.QueueDeleteAction += index => SendMessage(new LatheDeleteRequestMessage(index));
-        _menu.QueueMoveUpAction += index => SendMessage(new LatheMoveRequestMessage(index, -1));
-        _menu.QueueMoveDownAction += index => SendMessage(new LatheMoveRequestMessage(index, 1));
-        _menu.DeleteFabricatingAction += () => SendMessage(new LatheAbortFabricationMessage());
+        _menu.QueueDeleteAction += index => SendPredictedMessage(new LatheDeleteRequestMessage(index));
+        _menu.QueueMoveUpAction += index => SendPredictedMessage(new LatheMoveRequestMessage(index, -1));
+        _menu.QueueMoveDownAction += index => SendPredictedMessage(new LatheMoveRequestMessage(index, 1));
+        _menu.DeleteFabricatingAction += () => SendPredictedMessage(new LatheAbortFabricationMessage());
     }
 
     public override void Update()
@@ -44,13 +44,13 @@ public sealed class LatheBoundUserInterface : BoundUserInterface
         if (_menu == null)
             return;
 
-        if (!EntMan.TryGetComponent(Owner, out LatheComponent? comp))
+        if (!EntMan.TryGetComponent(Owner, out LatheComponent? lathe))
             return;
 
-        _menu.Recipes = comp.Recipes;
+        _menu.Recipes = lathe.Recipes;
         _menu.PopulateRecipes();
         _menu.UpdateCategories();
-        _menu.PopulateQueueList(comp.Queue);
-        _menu.SetQueueInfo(comp.CurrentRecipe);
+        _menu.PopulateQueueList(lathe.Queue);
+        _menu.SetQueueInfo(lathe.CurrentRecipe);
     }
 }

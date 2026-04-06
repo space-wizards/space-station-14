@@ -40,7 +40,7 @@ public sealed partial class LatheComponent : Component
     /// This is a LinkedList to allow for constant time insertion/deletion (vs a List), and more efficient
     /// moves (vs a Queue).
     /// </remarks>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public LinkedList<LatheRecipeBatch> Queue = new();
 
     /// <summary>
@@ -55,7 +55,7 @@ public sealed partial class LatheComponent : Component
     /// <summary>
     /// The default amount that's displayed in the UI for selecting the print amount.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public int DefaultProductionAmount = 1;
 
     #region Visualizer info
