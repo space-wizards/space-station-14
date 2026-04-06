@@ -27,6 +27,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
         SubscribeLocalEvent<MultipartMachineComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);

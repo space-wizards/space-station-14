@@ -26,6 +26,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<MultipartMachineComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<MultipartMachineComponent, AnchorStateChangedEvent>(OnMachineAnchorChanged);
