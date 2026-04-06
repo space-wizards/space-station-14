@@ -9,7 +9,7 @@ namespace Content.Shared.Wall;
 ///     This will only exempt anchored entities that intersect the wall-mount. Additionally, this exemption will apply
 ///     in a limited arc, providing basic functionality for directional wall mounts.
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WallMountComponent : Component
 {
     /// <summary>
