@@ -70,12 +70,12 @@ public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
 
         foreach (var (direction, list) in entity.Comp.DirectionLayers)
         {
-            LinkedList<int>? linkedList;
+            List<int>? subList;
 
-            if (!entity.Comp.CachedLayerOverrides.TryGetValue(direction, out linkedList))
-                linkedList = new LinkedList<int>();
+            if (!entity.Comp.CachedLayerOverrides.TryGetValue(direction, out subList))
+                subList = new List<int>();
             else
-                linkedList.Clear();
+                subList.Clear();
 
             for (var i = 0; i < list.Count; i++)
             {
@@ -89,16 +89,16 @@ public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
                 if (parsedKey is Enum enumkey)
                 {
                     if (_sprite.LayerMapTryGet((entity.Owner, sprite), enumkey, out var index, false))
-                        linkedList.AddLast(index);
+                        subList.Add(index);
                 }
                 else if (parsedKey is string stringkey)
                 {
                     if (_sprite.LayerMapTryGet((entity.Owner, sprite), stringkey, out var index, false))
-                        linkedList.AddLast(index);
+                        subList.Add(index);
                 }
             }
 
-            entity.Comp.CachedLayerOverrides[direction] = linkedList;
+            entity.Comp.CachedLayerOverrides[direction] = subList;
         }
     }
 }

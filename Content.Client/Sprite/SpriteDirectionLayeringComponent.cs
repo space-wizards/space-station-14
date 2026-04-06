@@ -15,5 +15,5 @@ public sealed partial class SpriteDirectionLayeringComponent : Component
     public RsiDirection? PreviousDirection;
 
     [ViewVariables]
-    public Dictionary<RsiDirection, LinkedList<int>> CachedLayerOverrides = new();
+    public Dictionary<RsiDirection, List<int>> CachedLayerOverrides = new();
 }
