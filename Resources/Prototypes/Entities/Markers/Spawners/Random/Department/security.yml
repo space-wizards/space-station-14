@@ -12,10 +12,10 @@
       state: flash
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.85
       children:
       - !type:GroupSelector
         weight: 0.95
-        prob: 0.85
         children:
         - id: Flash
         - id: Handcuffs
@@ -41,10 +41,10 @@
       state: flash
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.85
       children:
       - !type:GroupSelector
         weight: 0.95
-        prob: 0.85
         children:
         - id: Flash
         - id: Handcuffs
@@ -80,10 +80,10 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.95
       children:
       - !type:GroupSelector
         weight: 0.95
-        prob: 0.95
         children:
         - id: RiotShield
         - id: RiotBulletShield
@@ -121,10 +121,10 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.95
       children:
       - !type:GroupSelector
         weight: 0.95
-        prob: 0.95
         children:
 #        - id: WeaponSubMachineGunWt550
         - id: WeaponDisabler
@@ -153,12 +153,12 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.95
       children:
       - id: ClothingHeadHelmetSwat
         weight: 0.05
       - !type:GroupSelector
         weight: 0.95
-        prob: 0.95
         children:
         - id: RiotShield
         - id: RiotBulletShield

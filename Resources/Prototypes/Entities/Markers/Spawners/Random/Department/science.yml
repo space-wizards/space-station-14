@@ -13,10 +13,10 @@
       state: icon
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.8
       children:
       - !type:GroupSelector
         weight: 0.9
-        prob: 0.8
         children:
         - id: ClothingHandsGlovesLatex
         - id: ClothingMaskSterile
@@ -106,10 +106,10 @@
       state: generic
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.9
       children:
       - id: BorgModuleFireExtinguisher
         weight: 0.9
-        prob: 0.9
       - !type:GroupSelector
         weight: 0.1
         children:

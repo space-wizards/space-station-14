@@ -12,12 +12,12 @@
       state: brutepack
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.9
       children:
       - id: MedkitFilled
         weight: 0.1
       - !type:GroupSelector
         weight: 0.9
-        prob: 0.9
         children:
         - id: Syringe #you win some you lose some
         - id: Brutepack
@@ -40,10 +40,10 @@
       state: firstaid
   - type: EntityTableSpawner
     table: !type:GroupSelector
+      prob: 0.9
       children:
       - !type:GroupSelector
         weight: 0.9
-        prob: 0.9
         children:
         - id: Syringe
         - id: Dropper
