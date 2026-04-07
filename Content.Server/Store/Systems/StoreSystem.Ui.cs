@@ -35,8 +35,6 @@ public sealed partial class StoreSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
-    private readonly SharedGameTicker _ticker = default!;
-
     private void InitializeUi()
     {
         SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
