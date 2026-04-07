@@ -1,5 +1,4 @@
-﻿using Content.Shared.Whitelist;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -34,20 +33,15 @@ public sealed partial class BorgModuleComponent : Component
     /// This only affects examine text. The actual whitelist for modules that can be inserted into a borg is defined in its <see cref="BorgChassisComponent"/>.
     /// </summary>
     [DataField]
-    public HashSet<LocId>? BorgFitTypes;
+    public List<LocId>? BorgFitTypes;
 
     /// <summary>
     /// List of module groups this module is a part of
-    /// This only affects examine text. The actual tag-based whitelist is defined in <see cref="ExclusiveModuleTags"/>
+    /// This only affects examine text. The actual tag-based whitelist is defined
+    /// in <see cref="BorgModuleWhitelistComponent"/>
     /// </summary>
     [DataField]
-    public HashSet<LocId>? ModuleTypes;
-
-    /// <summary>
-    /// List of module tags this module is incompatible with
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? CompatibleModulesBlacklist;
+    public List<LocId>? ModuleTypes;
 }
 
 /// <summary>

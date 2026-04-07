@@ -393,22 +393,6 @@
         color: "#962023"
 
 - type: entity
-  abstract: true
-  parent: BaseXenoborgModuleHeavy
-  id: BaseXenoborgModuleHeavyWeapon
-  components:
-  - type: BorgModule
-    moduleTypes:
-      - module-group-xenoborg-heavy-weapon
-    compatibleModulesBlacklist:
-      tags:
-        - XenoborgModuleGroupHeavyWeapon
-  - type: Tag
-    tags:
-     - XenoborgModuleHeavy
-     - XenoborgModuleGroupHeavyWeapon
-
-- type: entity
   parent: BaseBorgModule
   id: BaseXenoborgModuleScout
   abstract: true
@@ -1585,7 +1569,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-jammer-module }
 
 - type: entity
-  parent: [ BaseXenoborgModuleHeavyWeapon, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleLaser
   name: laser xenoborg module
   description: Module with a laser gun.
@@ -1601,7 +1585,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser-module }
 
 - type: entity
-  parent: [ BaseXenoborgModuleHeavyWeapon, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleHeavyLaser
   name: laser cannon xenoborg module
   description: Module with a laser cannon.

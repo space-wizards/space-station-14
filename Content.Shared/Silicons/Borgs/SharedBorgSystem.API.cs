@@ -220,20 +220,6 @@ public abstract partial class SharedBorgSystem
             return false;
         }
 
-        if (module.Comp.CompatibleModulesBlacklist != null)
-        {
-            foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-            {
-                if (_whitelist.IsWhitelistPass(module.Comp.CompatibleModulesBlacklist, containedModuleUid))
-                {
-                    _popup.PopupClient(
-                        Loc.GetString("borg-module-incompatible", ("existing", MetaData(containedModuleUid).EntityName)),
-                        chassis.Owner, user);
-                    return false;
-                }
-            }
-        }
-
         if (TryComp<ItemBorgModuleComponent>(module, out var itemModuleComp))
         {
             foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)

@@ -32,6 +32,8 @@ public abstract partial class SharedBorgSystem
 
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
             OnComponentModuleInstalledRelay);
+        SubscribeLocalEvent<BorgModuleWhitelistComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
+            OnCheckWhitelistRelay);
 
         _moduleQuery = GetEntityQuery<BorgModuleComponent>();
     }
@@ -41,22 +43,22 @@ public abstract partial class SharedBorgSystem
     {
         using (args.PushGroup(nameof(BorgModuleComponent)))
         {
-            if (TryFormatHashSet(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
+            if (TryFormatList(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
                 args.PushMarkup(list);
 
-            if (TryFormatHashSet(ent.Comp.ModuleTypes, "module-group-incompatible", "types", out list))
+            if (TryFormatList(ent.Comp.ModuleTypes, "module-group-incompatible", "types", out list))
                 args.PushMarkup(list);
         }
     }
 
-    private bool TryFormatHashSet(HashSet<LocId>? hash, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
+    private bool TryFormatList(List<LocId>? list, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
     {
         formattedList = null;
 
-        if (hash == null || hash.Count == 0)
+        if (list == null || list.Count == 0)
             return false;
 
-        var entries = ContentLocalizationManager.FormatList([.. hash.Select(s => Loc.GetString(s))]);
+        var entries = ContentLocalizationManager.FormatList([.. list.Select(s => Loc.GetString(s))]);
 
         formattedList = Loc.GetString(messageId, (listId, entries));
         return true;
@@ -280,6 +282,22 @@ public abstract partial class SharedBorgSystem
                 args.Args.Cancelled = true;
                 args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
             }
+        }
+
+    }
+    #endregion
+
+    #region ModuleWhitelist
+    private void OnCheckWhitelistRelay(Entity<BorgModuleWhitelistComponent> ent,
+        ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
+    {
+        if (!TryComp<BorgModuleWhitelistComponent>(args.Args.ModuleEnt, out var whitelist))
+            return;
+
+        if (_whitelist.IsWhitelistPass(whitelist.ModuleBlacklist, ent))
+        {
+            args.Args.Cancelled = true;
+            args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", MetaData(ent).EntityName));
         }
     }
     #endregion
