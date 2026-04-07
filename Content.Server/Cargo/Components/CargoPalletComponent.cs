@@ -26,7 +26,7 @@ public sealed partial class CargoPalletComponent : Component
     /// How many seconds does a hacking beacon need to be planted to this to successfully hijack the ATS?
     /// </summary>
     [DataField]
-    public float HackCompletionTime = 200;
+    public TimeSpan HackCompletionTime = TimeSpan.FromSeconds(200);
 
     /// <summary>
     /// How much cash should be withdrawn from each department account upon a hijacking?

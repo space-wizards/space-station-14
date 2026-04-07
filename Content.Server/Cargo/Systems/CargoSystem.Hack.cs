@@ -31,7 +31,7 @@ public sealed partial class CargoSystem
             if (sticky.StuckTo == null || !TryComp<CargoPalletComponent>(sticky.StuckTo, out var pallet))
                 continue;
 
-            if (hack.TimePlanted.TotalSeconds >= pallet.HackCompletionTime && !hack.HackCompleted)
+            if (hack.TimePlanted >= pallet.HackCompletionTime && !hack.HackCompleted)
             {
                 hack.HackCompleted = true;
                 var ev = new StructureHackCompletedEvent();
@@ -79,7 +79,7 @@ public sealed partial class CargoSystem
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
-        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", ent.Comp.HackCompletionTime));
+        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", ent.Comp.HackCompletionTime.TotalSeconds));
         _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Yellow);
     }
 
