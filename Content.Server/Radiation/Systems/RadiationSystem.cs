@@ -53,7 +53,6 @@ public sealed partial class RadiationSystem : EntitySystem
     private void OnSourceInit(EntityUid uid, RadiationSourceComponent component, ComponentInit args)
     {
         component.OnModified = () => UpdateSource((uid, component));
-        UpdateSource((uid, component));
     }
 
     private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref MapInitEvent args)
