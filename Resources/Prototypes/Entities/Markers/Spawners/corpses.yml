@@ -12,29 +12,70 @@
       - SalvageHumanCorpse
 
 - type: entity
-  name: Random Service Corpse Spawner
-  id: RandomServiceCorpseSpawner
+  name: Random Command Corpse Spawner
+  id: RandomCommandCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
   - type: Sprite
     layers:
-      - state: botanist
+      - state: captain
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobCorpseBartender
-      - MobCorpseBotanist
-      - MobCorpseChaplain
-      - MobCorpseChef
-      - MobCorpseClown
-      - MobCorpseJanitor
-      - MobCorpseLawyer
-      - MobCorpseLibrarian
-      - MobCorpseMime
-      - MobCorpseMusician
-      - MobCorpsePassenger
-      - MobCorpseReporter
-      - MobCorpseServiceWorker
+      - MobCorpseCentcommOfficial
+      - MobCorpseCaptain
+      - MobCorpseHeadOfPersonnel
+      - MobCorpseChiefEngineer
+      - MobCorpseChiefMedicalOfficer
+      - MobCorpseHeadOfSecurity
+      - MobCorpseResearchDirector
+      - MobCorpseQuartermaster
+
+- type: entity
+  name: Random Security Corpse Spawner
+  id: RandomSecurityCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: security_officer
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorpseWarden
+      - MobCorpseDetective
+      - MobCorpseSecurityOfficer
+      - MobCorpseSecurityCadet
+
+- type: entity
+  name: Random Science Corpse Spawner
+  id: RandomScienceCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: scientist
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorpseScientist
+      - MobCorpseResearchAssistant
+
+- type: entity
+  name: Random Medic Corpse Spawner
+  id: RandomMedicCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: doctor
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorpseMedicalDoctor
+      - MobCorpseParamedic
+      - MobCorpseChemist
+      - MobCorpseMedicalIntern
       - MobCorpsePsychologist
 
 - type: entity
@@ -63,72 +104,31 @@
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobCorpseCargoTechnician
+      - MobCorpseQuartermaster
       - MobCorpseSalvageSpecialist
-      - MobCorpseQuartermaster
+      - MobCorpseCargoTechnician
 
 - type: entity
-  name: Random Medic Corpse Spawner
-  id: RandomMedicCorpseSpawner
+  name: Random Service Corpse Spawner
+  id: RandomServiceCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
   - type: Sprite
     layers:
-      - state: doctor
+      - state: botanist
       - state: green
   - type: ConditionalSpawner
     prototypes:
-      - MobCorpseChemist
-      - MobCorpseMedicalDoctor
-      - MobCorpseMedicalIntern
-      - MobCorpseParamedic
-
-- type: entity
-  name: Random Science Corpse Spawner
-  id: RandomScienceCorpseSpawner
-  parent: SalvageHumanCorpseSpawner
-  components:
-  - type: Sprite
-    layers:
-      - state: scientist
-      - state: green
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCorpseScientist
-      - MobCorpseResearchAssistant
-
-- type: entity
-  name: Random Security Corpse Spawner
-  id: RandomSecurityCorpseSpawner
-  parent: SalvageHumanCorpseSpawner
-  components:
-  - type: Sprite
-    layers:
-      - state: security_officer
-      - state: green
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCorpseSecurityCadet
-      - MobCorpseSecurityOfficer
-      - MobCorpseDetective
-      - MobCorpseWarden
-
-- type: entity
-  name: Random Command Corpse Spawner
-  id: RandomCommandCorpseSpawner
-  parent: SalvageHumanCorpseSpawner
-  components:
-  - type: Sprite
-    layers:
-      - state: captain
-      - state: green
-  - type: ConditionalSpawner
-    prototypes:
-      - MobCorpseCaptain
-      - MobCorpseChiefEngineer
-      - MobCorpseChiefMedicalOfficer
-      - MobCorpseHeadOfPersonnel
-      - MobCorpseHeadOfSecurity
-      - MobCorpseResearchDirector
-      - MobCorpseQuartermaster
-      - MobCorpseCentcommOfficial
+      - MobCorpseBartender
+      - MobCorpseBotanist
+      - MobCorpseChef
+      - MobCorpseJanitor
+      - MobCorpseLawyer
+      - MobCorpseChaplain
+      - MobCorpseLibrarian
+      - MobCorpseReporter
+      - MobCorpseMusician
+      - MobCorpseServiceWorker
+      - MobCorpseMime
+      - MobCorpseClown
+      - MobCorpsePassenger
