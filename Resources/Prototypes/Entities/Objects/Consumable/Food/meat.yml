@@ -670,6 +670,39 @@
       - state: snake-inhand-left
       right:
       - state: snake-inhand-right
+  - type: Construction
+    graph: SnakeMeat
+    node: start
+    defaultTarget: snake meat
+
+- type: entity
+  parent: FoodMeatSnake
+  id: FoodMeatSnakeCooked
+  name: cooked snake meat
+  description: A long piece of cooked snake meat, no longer poisonous.
+  components:
+    - type: Sprite
+      layers:
+      - state: snake-cooked
+    - type: Tag
+      tags:
+      - Cooked
+      - Meat
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+          - ReagentId: Protein
+            Quantity: 5
+    - type: FoodSequenceElement
+      entries:
+        Skewer: SnakeSkewer
+    - type: FlavorProfile
+      flavors:
+      - meaty
+      - chewy
 
 - type: entity
   # not raw since acid kills bacteria or something, same as xeno
@@ -2090,6 +2123,7 @@
     entries:
       Burger: MeatCutlet
       Taco: MeatCutlet
+      Skewer: MeatCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2134,6 +2168,7 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+      Skewer: BearCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2176,6 +2211,7 @@
     entries:
       Burger: PenguinCutletBurger
       Taco: PenguinCutlet
+      Skewer: PenguinCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2218,6 +2254,7 @@
     entries:
       Burger: ChickenCutlet
       Taco: ChickenCutlet
+      Skewer: ChickenCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2260,6 +2297,7 @@
     entries:
       Burger: DuckCutlet
       Taco: DuckCutlet
+      Skewer: DuckCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2303,6 +2341,7 @@
     entries:
       Burger: LizardCutletBurger
       Taco: LizardCutlet
+      Skewer: LizardCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2344,6 +2383,7 @@
     entries:
       Burger: SpiderCutletBurger
       Taco: SpiderCutlet
+      Skewer: SpiderCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2385,6 +2425,7 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+      Skewer: XenoCutletSkewer
   - type: Item
     size: Tiny
     shape:
@@ -2428,6 +2469,7 @@
     entries:
       Burger: DragonCutlet
       Taco: DragonCutlet
+      Skewer: DragonCutletSkewer
   - type: Item
     size: Tiny
     shape:
