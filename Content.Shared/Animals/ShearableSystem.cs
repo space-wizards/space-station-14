@@ -57,11 +57,10 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, [NotNullWhen(true)] out Solution? shearingSolutionState, [NotNullWhen(true)] out Entity<SolutionComponent>? shearingSolutionEnt, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, [NotNullWhen(true)] out Entity<SolutionComponent>? shearingSolutionEnt, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
         shearedProduct = _proto.Index(ent.Comp.ShearedProductID);
-        shearingSolutionState = null;
         shearingSolutionEnt = null;
         shearingSolutionToRemove = null;
         feedbackPopupString = null;
@@ -80,7 +79,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // If so, True, otherwise False.
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
-        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref shearingSolutionEnt, out shearingSolutionState))
+        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref shearingSolutionEnt, out var shearingSolutionState))
         {
             return false;
         }
@@ -106,8 +105,8 @@ public sealed class SharedShearableSystem : EntitySystem
         // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
         // e.g.
         // targetSolutionQuantity.Value = 2500, this is how much shearable solution the target entity contains, it's equivalent to 25 units.
-        // productsPerSolution = 500, this is the yaml defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
-        // maxProductsToSpawn is undefined in yaml and has been defaulted to productsPerSolution (500).
+        // productsPerSolution = 500, this is the YAML defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
+        // maxProductsToSpawn is undefined in YAML and has been defaulted to productsPerSolution (500).
         // 2500 - 2500 % 500. 500 fits nicely into 2500 so there is no remainder of 0. This means we're removing all 2500 reagent currently.
         //
         // Next, we check the maximum number of products we want to spawn, if this is less than the total reagent available then the entity will need to be sheared multiple times to deplete its resources.
@@ -144,7 +143,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </returns>
     public bool CanShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
-        return CanShear(ent, out _, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
+        return CanShear(ent, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
     }
 
     /// <summary>
@@ -158,7 +157,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </returns>
     public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
-        return CanShear(ent, out _, out _, out _, out _, out _, usedItem, checkItem);
+        return CanShear(ent, out _, out _, out _, out _, usedItem, checkItem);
     }
 
     /// <summary>
@@ -172,7 +171,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </returns>
     public bool CanShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
     {
-        return CanShear(ent, out _, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
+        return CanShear(ent, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
     }
 
     /// <summary>
@@ -227,7 +226,7 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (!CanShear(ent, out var shearedProduct, out var _, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false))
+        if (!CanShear(ent, out var shearedProduct, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false))
         {
             return;
         }
