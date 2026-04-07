@@ -33,9 +33,9 @@ public abstract class SharedCargoSystem : EntitySystem
         var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
         while (stationQuery.MoveNext(out var uid, out var comp))
         {
-            foreach (var (account, cash) in comp.Accounts)
+            foreach (var (account, data) in comp.Accounts)
             {
-                comp.Accounts[account] = cash - args.Fine;
+                data.Balance -= args.Fine;
                 args.Total += args.Fine;
             }
 
