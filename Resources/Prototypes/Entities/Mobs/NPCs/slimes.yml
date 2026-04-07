@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -89,9 +89,6 @@
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
-  - type: Body
-    prototype: Slimes
-    requiredLegs: 1
   - type: MeleeWeapon
     altDisarm: false
     soundHit:
@@ -171,6 +168,7 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
+    - type: ForceAttack
 
 - type: entity
   name: green slime
@@ -211,6 +209,7 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
+    - type: ForceAttack
 
 - type: entity
   name: yellow slime
@@ -250,3 +249,4 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
+    - type: ForceAttack

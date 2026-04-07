@@ -7,6 +7,29 @@ namespace Content.Shared.Stacks;
 // Partial for public API functions.
 public abstract partial class SharedStackSystem
 {
+    #region Spawning
+    // Interactions with spawned entities can not currently be predicted.
+    // This means that when spawning a stack it should not be given directly to the player, but have some intermediary.
+
+    /// <summary>
+    /// Gets or spawns an entity with a stack count of 1.
+    /// Useful when you don't know if something is a stack, and want to make sure you just have a single entity.
+    /// </summary>
+    /// <param name="stackEnt">An entity to pop one count off the stack.</param>
+    /// <returns>An entity with a stack count of 1, or a non-stack.</returns>
+    [PublicAPI]
+    public EntityUid GetOne(Entity<StackComponent?> stackEnt)
+    {
+        if (!Resolve(stackEnt.Owner, ref stackEnt.Comp, logMissing: false) // If it's not a stack, you already have the one
+            || stackEnt.Comp.Count == 1) // If it's at one, just use this
+            return stackEnt.Owner;
+
+        ReduceCount(stackEnt, 1);
+        var stackId = _prototype.Index(stackEnt.Comp.StackTypeId);
+        return PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
+    }
+
+    #endregion
     #region Merge Stacks
 
     /// <summary>

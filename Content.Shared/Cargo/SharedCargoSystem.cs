@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.HijackBeacon;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -18,12 +19,30 @@ public abstract class SharedCargoSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StationBankAccountComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HijackBeaconSuccessEvent>(OnHijackSuccess);
     }
 
     private void OnMapInit(Entity<StationBankAccountComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextIncomeTime = Timing.CurTime + ent.Comp.IncomeDelay;
         Dirty(ent);
+    }
+
+    private void OnHijackSuccess(ref HijackBeaconSuccessEvent args)
+    {
+        var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
+        while (stationQuery.MoveNext(out var uid, out var comp))
+        {
+            foreach (var (account, cash) in comp.Accounts)
+            {
+                comp.Accounts[account] = cash - args.Fine;
+                args.Total += args.Fine;
+            }
+
+            var ev = new BankBalanceUpdatedEvent(uid, comp.Accounts);
+            RaiseLocalEvent(uid, ref ev, true);
+            Dirty(uid, comp);
+        }
     }
 
     /// <summary>

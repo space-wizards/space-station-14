@@ -121,12 +121,15 @@ public sealed class RootableSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var cloneComp = EnsureComp<RootableComponent>(args.CloneUid);
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<RootableComponent>();
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.RootedAlert = ent.Comp.RootedAlert;
         cloneComp.TransferRate = ent.Comp.TransferRate;
         cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
         cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
         cloneComp.RootSound = ent.Comp.RootSound;
-        Dirty(args.CloneUid, cloneComp);
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> ent, ref MapInitEvent args)

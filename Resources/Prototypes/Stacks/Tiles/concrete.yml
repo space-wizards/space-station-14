@@ -53,3 +53,21 @@
   id: FloorTileOldConcreteSmooth
   name: stack-old-concrete-smooth
   spawn: FloorTileItemOldConcreteSmooth
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronsandConcrete
+  name: stack-ironsand-concrete-tile
+  spawn: FloorTileItemIronsandConcrete
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronsandConcreteMono
+  name: stack-ironsand-concrete-mono-tile
+  spawn: FloorTileItemIronsandConcreteMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileIronsandConcreteSmooth
+  name: stack-ironsand-concrete-smooth
+  spawn: FloorTileItemIronsandConcreteSmooth
