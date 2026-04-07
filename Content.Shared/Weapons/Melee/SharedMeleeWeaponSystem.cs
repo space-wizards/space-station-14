@@ -723,6 +723,9 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                 appliedDamage += damageResult;
                 hitEntities.Add(entity);
             }
+
+            if (TerminatingOrDeleted(entity))
+                targets.RemoveAt(i);
         }
 
         // Emit a single compound log for the entire wide attack.
@@ -758,9 +761,6 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using {meleeUid:tool}, hitting {names} for {appliedDamage.GetTotal():damage} total damage");
             }
-
-            if (TerminatingOrDeleted(entity))
-                targets.RemoveAt(i);
         }
 
         if (entities.Count != 0)
