@@ -1,5 +1,3 @@
-
-using System.Diagnostics;
 using Content.Server.Objectives.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Objectives.Components;
