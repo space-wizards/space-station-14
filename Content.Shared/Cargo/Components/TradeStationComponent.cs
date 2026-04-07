@@ -13,4 +13,10 @@ public sealed partial class TradeStationComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Hacked = false;
+
+    /// <summary>
+    ///     Has the hack been successfully completed? Modified by CargoSystem.Hack.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool HackCompleted = false;
 }

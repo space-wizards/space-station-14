@@ -46,6 +46,14 @@ public sealed partial class CargoSystem
         var ev = new HijackBeaconSuccessEvent(ent.Comp.Fine);
         RaiseLocalEvent(ref ev);
 
+        // mark ATS as fully hacked
+        if (TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
+        {
+            station.HackCompleted = true;
+            if (Transform(ent).GridUid != null)
+                Dirty((EntityUid)Transform(ent).GridUid!, station);
+        }
+
         // mark all pallets as hacked
         var query = EntityQueryEnumerator<BeaconHackableComponent, CargoPalletComponent>();
         while (query.MoveNext(out var uid, out var hack, out _))
@@ -85,7 +93,8 @@ public sealed partial class CargoSystem
     private void OnPalletBeaconRemoved(Entity<CargoPalletComponent> ent, ref BeaconRemovedEvent args)
     {
         if (!TryComp<BeaconHackableComponent>(ent, out var hack)) return;
-        if (hack.Hacked) return; // not a disarming
+        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
+        if (station.HackCompleted) return; // not a disarming
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
@@ -93,7 +102,6 @@ public sealed partial class CargoSystem
         _chat.DispatchGlobalAnnouncement(message, sender, true, DeactivateSound, Color.Green);
 
         if (Transform(ent).GridUid == null) return;
-        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
         station.Hacked = false;
         Dirty((EntityUid)Transform(ent).GridUid!, station);
     }

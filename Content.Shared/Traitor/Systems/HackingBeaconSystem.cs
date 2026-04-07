@@ -43,7 +43,7 @@ public sealed partial class HackingBeaconSystem : EntitySystem
         var ev = new StructureHackedEvent();
         RaiseLocalEvent(args.Target, ev);
 
-        if (TryComp<BeaconHackableComponent>(args.Target, out var hackableComp)) // not sure when this would ever fail but
+        if (TryComp<BeaconHackableComponent>(args.Target, out var hackableComp))
             hackableComp.Hacked = true;
     }
 
