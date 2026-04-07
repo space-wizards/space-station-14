@@ -18,7 +18,8 @@ public sealed partial class SupercriticalAnomaliesConditionSystem : EntitySystem
 
     private void OnAnomalySupercrit(ref AnomalyShutdownEvent args)
     {
-        if (!args.Supercritical) return;
+        if (!args.Supercritical)
+            return;
         var query = EntityQueryEnumerator<SupercriticalAnomaliesConditionComponent>();
         while (query.MoveNext(out var comp))
         {
@@ -28,11 +29,12 @@ public sealed partial class SupercriticalAnomaliesConditionSystem : EntitySystem
 
     private void OnGetProgress(Entity<SupercriticalAnomaliesConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        if (!TryComp<NumberObjectiveComponent>(ent, out var number))
+        var target = _numberObjective.GetTarget(ent);
+        if (target == 0)
         {
             args.Progress = 0f;
             return;
         }
-        args.Progress = MathF.Min(ent.Comp.SupercriticalAnomalies / _numberObjective.GetTarget(ent, number), 1f);
+        args.Progress = MathF.Min((float)ent.Comp.SupercriticalAnomalies / target, 1f);
     }
 }
