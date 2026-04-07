@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Actions;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
@@ -28,6 +29,7 @@ public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -43,6 +45,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -192,8 +195,8 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<RevenantComponent>();
-        while (query.MoveNext(out var uid, out var rev))
+        var query = EntityQueryEnumerator<RevenantComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var rev, out var transform))
         {
             rev.Accumulator += frameTime;
 
@@ -204,6 +207,20 @@ public sealed partial class RevenantSystem : EntitySystem
             if (rev.Essence < rev.EssenceRegenCap)
             {
                 ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
+            }
+
+            var effectiveEssence = Math.Clamp(rev.Essence.Int(), 0, 500);
+            // Parabolic curve with range of 500 to 1000 on the clamped interval of 0 to 500 essence
+            var temperatureChange = -.002f * MathF.Pow(effectiveEssence - 500, 2) + 1000;
+
+            var grid = transform.GridUid;
+            var map = transform.MapUid;
+            var indices = _transform.GetGridTilePositionOrDefault((uid, transform));
+            var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
+
+            if (mixture is { })
+            {
+                mixture.Temperature -= temperatureChange * frameTime;
             }
         }
     }
