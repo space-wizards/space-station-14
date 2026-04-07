@@ -41,15 +41,22 @@ public sealed partial class RadiationSystem : EntitySystem
         _stackQuery = GetEntityQuery<StackComponent>();
 
         SubscribeLocalEvent<RadiationSourceComponent, ComponentInit>(OnSourceInit);
+        SubscribeLocalEvent<RadiationSourceComponent, MapInitEvent>(OnSourceInit);
         SubscribeLocalEvent<RadiationSourceComponent, ComponentShutdown>(OnSourceShutdown);
         SubscribeLocalEvent<RadiationSourceComponent, MoveEvent>(OnSourceMove);
         SubscribeLocalEvent<RadiationSourceComponent, StackCountChangedEvent>(OnSourceStackChanged);
 
-        SubscribeLocalEvent<RadiationReceiverComponent, ComponentInit>(OnReceiverInit);
+        SubscribeLocalEvent<RadiationReceiverComponent, MapInitEvent>(OnReceiverInit);
         SubscribeLocalEvent<RadiationReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
     }
 
-    private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref ComponentInit args)
+    private void OnSourceInit(EntityUid uid, RadiationSourceComponent component, ComponentInit args)
+    {
+        component.OnModified = () => UpdateSource((uid, component));
+        UpdateSource((uid, component));
+    }
+
+    private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref MapInitEvent args)
     {
         UpdateSource(entity);
     }
@@ -78,7 +85,7 @@ public sealed partial class RadiationSystem : EntitySystem
         UpdateSource(entity);
     }
 
-    private void OnReceiverInit(EntityUid uid, RadiationReceiverComponent component, ComponentInit args)
+    private void OnReceiverInit(EntityUid uid, RadiationReceiverComponent component, ref MapInitEvent args)
     {
         _activeReceivers.Add(uid);
     }
