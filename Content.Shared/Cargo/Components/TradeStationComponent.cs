@@ -9,7 +9,7 @@ namespace Content.Shared.Cargo.Components;
 public sealed partial class TradeStationComponent : Component
 {
     /// <summary>
-    ///     The Trade Station's current hijack state. Modified by CargoSystem.Hack.
+    ///     Is the Trade Station currently being hijacked? Modified by CargoSystem.Hack.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Hacked = false;

@@ -17,6 +17,7 @@ public sealed partial class HackingBeaconSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HackingBeaconComponent, EntityStuckEvent>(OnStuck);
+        SubscribeLocalEvent<HackingBeaconComponent, EntityUnstuckEvent>(OnUnstuck);
         SubscribeLocalEvent<HackingBeaconComponent, AttemptEntityStickEvent>(OnAttemptStick);
         SubscribeLocalEvent<HackingBeaconComponent, ExaminedEvent>(OnExamine);
     }
@@ -28,6 +29,12 @@ public sealed partial class HackingBeaconSystem : EntitySystem
             _popup.PopupPredictedCursor(Loc.GetString("hacking-beacon-already-hacked"), ent);
             args.Cancelled = true;
         }
+
+        var ev = new AttemptHackStructureEvent();
+        RaiseLocalEvent(args.Target, ev);
+
+        if (ev.Cancelled)
+            args.Cancelled = true;
     }
 
     private void OnStuck(Entity<HackingBeaconComponent> ent, ref EntityStuckEvent args)
@@ -38,6 +45,13 @@ public sealed partial class HackingBeaconSystem : EntitySystem
 
         if (TryComp<BeaconHackableComponent>(args.Target, out var hackableComp)) // not sure when this would ever fail but
             hackableComp.Hacked = true;
+    }
+
+    private void OnUnstuck(Entity<HackingBeaconComponent> ent, ref EntityUnstuckEvent args)
+    {
+        // for when something should happen when the beacon is removed, like the ATS hijack.
+        var ev = new BeaconRemovedEvent();
+        RaiseLocalEvent(args.Target, ev);
     }
 
     public override void Update(float frameTime)

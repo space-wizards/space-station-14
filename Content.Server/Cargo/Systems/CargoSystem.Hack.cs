@@ -19,6 +19,8 @@ public sealed partial class CargoSystem
     private void InitializeHack()
     {
         SubscribeLocalEvent<CargoPalletComponent, StructureHackedEvent>(OnPalletHack);
+        SubscribeLocalEvent<CargoPalletComponent, AttemptHackStructureEvent>(OnAttemptHack);
+        SubscribeLocalEvent<CargoPalletComponent, BeaconRemovedEvent>(OnPalletBeaconRemoved);
     }
 
     private void UpdateHack(float frameTime)
@@ -44,9 +46,6 @@ public sealed partial class CargoSystem
         var ev = new HijackBeaconSuccessEvent(ent.Comp.Fine);
         RaiseLocalEvent(ref ev);
 
-        if (TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
-            station.Hacked = true;
-
         // mark all pallets as hacked
         var query = EntityQueryEnumerator<BeaconHackableComponent, CargoPalletComponent>();
         while (query.MoveNext(out var uid, out var hack, out _))
@@ -64,9 +63,38 @@ public sealed partial class CargoSystem
 
     private void OnPalletHack(Entity<CargoPalletComponent> ent, ref StructureHackedEvent args)
     {
+        if (Transform(ent).GridUid != null && TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
+        {
+            station.Hacked = true;
+            Dirty((EntityUid)Transform(ent).GridUid!, station);
+        }
+
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
         var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", ent.Comp.HackCompletionTime));
         _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Yellow);
+    }
+
+    private void OnAttemptHack(Entity<CargoPalletComponent> ent, ref AttemptHackStructureEvent args)
+    {
+        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
+        if (station.Hacked) // already being hacked at the moment or has already been.
+            args.Cancel();
+    }
+
+    private void OnPalletBeaconRemoved(Entity<CargoPalletComponent> ent, ref BeaconRemovedEvent args)
+    {
+        if (!TryComp<BeaconHackableComponent>(ent, out var hack)) return;
+        if (hack.Hacked) return; // not a disarming
+
+        //global announcement
+        var sender = Loc.GetString("hijack-beacon-announcement-sender");
+        var message = Loc.GetString("hijack-beacon-announcement-deactivated");
+        _chat.DispatchGlobalAnnouncement(message, sender, true, DeactivateSound, Color.Green);
+
+        if (Transform(ent).GridUid == null) return;
+        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
+        station.Hacked = false;
+        Dirty((EntityUid)Transform(ent).GridUid!, station);
     }
 }
