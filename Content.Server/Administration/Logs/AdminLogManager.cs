@@ -651,9 +651,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         // Prefer explicit log-type semantics for events,
         // then fall back to generic key-based role inference for all other log types.
-        // Yes this is switching hell,
         switch (type)
         {
+            //Combat/damage stuff
             case LogType.Damaged:
             case LogType.Healed:
             case LogType.MeleeHit:
@@ -669,22 +669,40 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     return AdminLogEntityRole.Tool;
                 break;
 
+            //Item movement
             case LogType.Pickup:
             case LogType.Drop:
             case LogType.Throw:
             case LogType.Landed:
                 if (ContainsAny(key, "actor", "user", "player", "thrower"))
                     return AdminLogEntityRole.Actor;
-                if (ContainsAny(key, "item", "thrown", "target"))
+                if (ContainsAny(key, "item", "thrown", "target", "entity"))
                     return AdminLogEntityRole.Target;
                 if (ContainsAny(key, "container", "slot"))
                     return AdminLogEntityRole.Container;
                 break;
+
+            //tool use
+            case LogType.InteractUsing:
+                if (ContainsAny(key, "user", "actor", "player"))
+                    return AdminLogEntityRole.Actor;
+                if (ContainsAny(key, "used", "tool", "weapon", "instrument"))
+                    return AdminLogEntityRole.Tool;
+                if (ContainsAny(key, "target", "entity"))
+                    return AdminLogEntityRole.Target;
+                break;
+
+            //identity
+            case LogType.Identity:
+                if (ContainsAny(key, "name", "actor", "player", "user", "entity"))
+                    return AdminLogEntityRole.Actor;
+                break;
         }
 
+        // generic fallbacks
         if (ContainsAny(key, "actor", "user", "player", "attacker"))
             return AdminLogEntityRole.Actor;
-        if (key.Contains("target"))
+        if (ContainsAny(key, "target", "recipient", "entity"))
             return AdminLogEntityRole.Target;
         if (ContainsAny(key, "tool", "weapon", "instrument", "projectile", "using"))
             return AdminLogEntityRole.Tool;
@@ -692,7 +710,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return AdminLogEntityRole.Victim;
         if (ContainsAny(key, "container", "slot"))
             return AdminLogEntityRole.Container;
-        if (ContainsAny(key, "location", "coord", "subject", "entity"))
+        if (ContainsAny(key, "location", "coord", "subject", "grid", "station", "map"))
             return AdminLogEntityRole.Subject;
 
         return AdminLogEntityRole.Other;
