@@ -394,6 +394,8 @@
     min: 3
     max: 4
     title: objective-condition-supercrit-anomalies-title
+  - type: ObjectiveLimit
+    limit: 1
 
 # other
 - type: entity
