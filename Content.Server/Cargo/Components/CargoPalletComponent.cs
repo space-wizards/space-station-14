@@ -21,16 +21,4 @@ public sealed partial class CargoPalletComponent : Component
     /// </summary>
     [DataField]
     public BuySellType PalletType;
-
-    /// <summary>
-    /// How many seconds does a hacking beacon need to be planted to this to successfully hijack the ATS?
-    /// </summary>
-    [DataField]
-    public TimeSpan HackCompletionTime = TimeSpan.FromSeconds(200);
-
-    /// <summary>
-    /// How much cash should be withdrawn from each department account upon a hijacking?
-    /// </summary>
-    [DataField]
-    public int Fine = 5000;
 }

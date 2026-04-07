@@ -19,6 +19,9 @@ public sealed class StructureHackCompletedEvent : EntityEventArgs;
 [ByRefEvent]
 public record struct HijackBeaconSuccessEvent(int Fine)
 {
+    /// <summary>
+    /// The total amount deducted from station accounts. Used in the announcement.
+    /// </summary>
     public int Total = 0;
 };
 

@@ -16,6 +16,12 @@ public sealed partial class SabotageConditionComponent : Component
     public EntityWhitelist Whitelist;
 
     /// <summary>
+    /// Blacklist for entities that will not count for this objective. Takes priority over the whitelist.s
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
     /// Are there more criteria to success than just "stick the beacon on"?
     /// </summary>
     [DataField]

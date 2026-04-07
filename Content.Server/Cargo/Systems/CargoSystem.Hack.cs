@@ -13,9 +13,6 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly SharedChatSystem _chat = default!;
 
-    public readonly SoundSpecifier AnnounceSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
-    public readonly SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
-
     private void InitializeHack()
     {
         SubscribeLocalEvent<CargoPalletComponent, StructureHackedEvent>(OnPalletHack);
@@ -26,33 +23,52 @@ public sealed partial class CargoSystem
     private void UpdateHack(float frameTime)
     {
         var query = EntityQueryEnumerator<HackingBeaconComponent, StickyComponent>();
-        while (query.MoveNext(out var uid, out var hack, out var sticky))
+        while (query.MoveNext(out _, out var hack, out var sticky))
         {
             if (sticky.StuckTo == null || !TryComp<CargoPalletComponent>(sticky.StuckTo, out var pallet))
                 continue;
 
-            if (hack.TimePlanted >= pallet.HackCompletionTime && !hack.HackCompleted)
+            var gridUid = Transform(sticky.StuckTo.Value).GridUid;
+            if (!TryComp<TradeStationComponent>(gridUid, out var station))
+                continue;
+
+            if (hack.TimePlanted >= station.HackCompletionTime && !hack.HackCompleted)
             {
                 hack.HackCompleted = true;
                 var ev = new StructureHackCompletedEvent();
-                RaiseLocalEvent((EntityUid)sticky.StuckTo, ev);
-                OnPalletHackSuccess(((EntityUid)sticky.StuckTo, pallet));
+                RaiseLocalEvent(sticky.StuckTo.Value, ev);
+                OnPalletHackSuccess((sticky.StuckTo.Value, pallet));
             }
         }
     }
 
+    /// <summary>
+    /// Is the ATS currently being hacked?
+    /// </summary>
+    /// <returns>Whether the ATS is currently being hacked.</returns>
+    public bool IsTradeStationBeingHacked()
+    {
+        var query = EntityQueryEnumerator<HackingBeaconComponent, StickyComponent>();
+        while (query.MoveNext(out var hack, out var sticky))
+        {
+            if (HasComp<CargoPalletComponent>(sticky.StuckTo) && !hack.HackCompleted)
+                return true;
+        }
+
+        return false;
+    }
+
     private void OnPalletHackSuccess(Entity<CargoPalletComponent> ent)
     {
-        var ev = new HijackBeaconSuccessEvent(ent.Comp.Fine);
-        RaiseLocalEvent(ref ev);
-
         // mark ATS as fully hacked
-        if (TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
-        {
-            station.HackCompleted = true;
-            if (Transform(ent).GridUid != null)
-                Dirty((EntityUid)Transform(ent).GridUid!, station);
-        }
+        var gridUid = Transform(ent).GridUid;
+        if (!TryComp<TradeStationComponent>(gridUid, out var station))
+            return;
+        station.HackCompleted = true;
+        Dirty(gridUid.Value, station);
+
+        var ev = new HijackBeaconSuccessEvent(station.Fine);
+        RaiseLocalEvent(ref ev);
 
         // mark all pallets as hacked
         var query = EntityQueryEnumerator<BeaconHackableComponent, CargoPalletComponent>();
@@ -66,43 +82,44 @@ public sealed partial class CargoSystem
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
         var message = Loc.GetString("hijack-beacon-announcement-success", ("fine", ev.Total));
-        _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Red);
+        _chat.DispatchGlobalAnnouncement(message, sender, true, station.AnnounceSound, Color.Red);
     }
 
     private void OnPalletHack(Entity<CargoPalletComponent> ent, ref StructureHackedEvent args)
     {
-        if (Transform(ent).GridUid != null && TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
-        {
-            station.Hacked = true;
-            Dirty((EntityUid)Transform(ent).GridUid!, station);
-        }
+        var gridUid = Transform(ent).GridUid;
+        if (!TryComp<TradeStationComponent>(gridUid, out var station))
+            return;
+        station.HackCompleted = true;
+        Dirty(gridUid.Value, station);
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
-        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", ent.Comp.HackCompletionTime.TotalSeconds));
-        _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Yellow);
+        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", station.HackCompletionTime.TotalSeconds));
+        _chat.DispatchGlobalAnnouncement(message, sender, true, station.AnnounceSound, Color.Yellow);
     }
 
     private void OnAttemptHack(Entity<CargoPalletComponent> ent, ref AttemptHackStructureEvent args)
     {
-        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
-        if (station.Hacked) // already being hacked at the moment or has already been.
+        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
+            return;
+        if (IsTradeStationBeingHacked()) // already being hacked at the moment or has already been.
             args.Cancel();
     }
 
     private void OnPalletBeaconRemoved(Entity<CargoPalletComponent> ent, ref BeaconRemovedEvent args)
     {
-        if (!TryComp<BeaconHackableComponent>(ent, out var hack)) return;
-        if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station)) return;
-        if (station.HackCompleted) return; // not a disarming
+        if (!HasComp<BeaconHackableComponent>(ent))
+            return;
+        var gridUid = Transform(ent).GridUid;
+        if (!TryComp<TradeStationComponent>(gridUid, out var station))
+            return;
+        if (station.HackCompleted)
+            return; // not a disarming
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
         var message = Loc.GetString("hijack-beacon-announcement-deactivated");
-        _chat.DispatchGlobalAnnouncement(message, sender, true, DeactivateSound, Color.Green);
-
-        if (Transform(ent).GridUid == null) return;
-        station.Hacked = false;
-        Dirty((EntityUid)Transform(ent).GridUid!, station);
+        _chat.DispatchGlobalAnnouncement(message, sender, true, station.DeactivateSound, Color.Green);
     }
 }
