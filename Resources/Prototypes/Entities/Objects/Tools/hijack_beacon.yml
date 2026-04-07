@@ -16,7 +16,7 @@
       components:
       - BeaconHackable
     stickDelay: 5
-    unstickDelay: 5
+    unstickDelay: 0 # temporary. intended to be 5, but unsticking does not work if it is not instant at the moment.
     stickPopupStart: hacking-beacon-plant-start
     stickPopupSuccess: hacking-beacon-plant-success
     unstickPopupStart: hacking-beacon-unstick-start
