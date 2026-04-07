@@ -58,10 +58,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             var entityCoords = new EntityCoordinates(ent.Owner, part.Offset);
             var ghostEnt = Spawn(_ghostPrototype, entityCoords);
 
-            if (!TryComp(ghostEnt, out TransformComponent? xform))
-                break;
-
-            xform.LocalRotation = part.Rotation;
+            Transform(ghostEnt).LocalRotation = part.Rotation;
 
             Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
 

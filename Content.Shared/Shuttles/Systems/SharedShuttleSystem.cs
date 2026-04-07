@@ -184,17 +184,14 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// </summary>
     public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones)
     {
-        if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
-            !TryComp(shuttleUid, out TransformComponent? shuttleXform))
-        {
+        if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics))
             return false;
-        }
 
         // Just checks if any grids inside of a buffer range at the target position.
         _grids.Clear();
         var mapCoordinates = XformSystem.ToMapCoordinates(coordinates);
 
-        var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
+        var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, Transform(shuttleUid)));
 
         // This is the already adjusted position
         var targetPosition = mapCoordinates.Position;

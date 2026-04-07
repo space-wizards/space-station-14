@@ -220,7 +220,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
         if (HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent))
             return ent;
 
-        if (!TryComp(parent, out TransformComponent? parentXform) || parentXform.Anchored)
+        var parentXform = Transform(parent);
+
+        if (parentXform.Anchored)
             return ent;
 
         if (!TryComp<PhysicsComponent>(parent, out var body) || body.BodyType == BodyType.Static)
