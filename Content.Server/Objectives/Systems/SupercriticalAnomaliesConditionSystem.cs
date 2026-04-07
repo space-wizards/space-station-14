@@ -20,6 +20,7 @@ public sealed partial class SupercriticalAnomaliesConditionSystem : EntitySystem
     {
         if (!args.Supercritical)
             return;
+
         var query = EntityQueryEnumerator<SupercriticalAnomaliesConditionComponent>();
         while (query.MoveNext(out var comp))
         {
