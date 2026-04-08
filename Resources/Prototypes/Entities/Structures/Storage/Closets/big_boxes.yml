@@ -59,6 +59,11 @@
       containers:
         - entity_storage
     - type: GravityAffected
+    - type: MovementSpeedModifier
+      weightlessModifier: 0
+      acceleration: 2
+      friction: 2
+      frictionNoInput: 6
 
 - type: entity
   id: StealthBox
