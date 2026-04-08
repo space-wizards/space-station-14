@@ -201,6 +201,12 @@
   friction: 0.4
   tileReactions:
   - !type:FlammableTileReaction {}
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:Flammable
+        multiplier: 0.4
   metabolisms:
     Bloodstream:
       effects:
