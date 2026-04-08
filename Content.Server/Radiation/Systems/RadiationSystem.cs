@@ -40,7 +40,6 @@ public sealed partial class RadiationSystem : EntitySystem
         _resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         _stackQuery = GetEntityQuery<StackComponent>();
 
-        SubscribeLocalEvent<RadiationSourceComponent, ComponentInit>(OnSourceInit);
         SubscribeLocalEvent<RadiationSourceComponent, MapInitEvent>(OnSourceInit);
         SubscribeLocalEvent<RadiationSourceComponent, ComponentShutdown>(OnSourceShutdown);
         SubscribeLocalEvent<RadiationSourceComponent, MoveEvent>(OnSourceMove);
@@ -50,13 +49,12 @@ public sealed partial class RadiationSystem : EntitySystem
         SubscribeLocalEvent<RadiationReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
     }
 
-    private void OnSourceInit(EntityUid uid, RadiationSourceComponent component, ComponentInit args)
-    {
-        component.OnModified = () => UpdateSource((uid, component));
-    }
-
     private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref MapInitEvent args)
     {
+        var (uid, component) = entity;
+
+        component.OnModified = () => UpdateSource((uid, component));
+
         UpdateSource(entity);
     }
 
