@@ -308,11 +308,17 @@
   group: Drinks
   physicalDesc: reagent-physical-desc-nothing
   metabolisms:
-    Digestion:
+    Bloodstream:
+      metabolismRate: 0.05
       effects:
       - !type:SatiateThirst
-        factor: 2
-        # TODO heal mimes
+        factor: 0.05
+      - !type:ConvertToMime
+        conditions:
+        - !type:ReagentCondition
+          reagent: Nothing
+          min: 20
+    # TODO heal mimes
 
 - type: reagent
   id: NuclearCola

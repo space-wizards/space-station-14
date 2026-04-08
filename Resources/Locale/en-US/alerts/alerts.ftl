@@ -84,6 +84,9 @@ alerts-parched-desc = You're severely thirsty. The thirst makes moving around a 
 alerts-muted-name = Muted
 alerts-muted-desc = You have lost the ability to speak.
 
+alerts-silenced-name = Silenced
+alerts-silenced-desc = You have [color=red]permanently[/color] lost the ability to speak. Shhh!
+
 alerts-vow-silence-name = Vow of Silence
 alerts-vow-silence-desc = You have taken a vow forbidding verbal or written communication as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
 

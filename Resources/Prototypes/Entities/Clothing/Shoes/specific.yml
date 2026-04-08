@@ -94,6 +94,41 @@
     netsync: false
 
 - type: entity
+  parent: [ ClothingShoesBase, ClothingSlotBase ]
+  id: ClothingShoesClownOrganic
+  name: organic clown shoes
+  suffix: Unremovable
+  description: Close inspection of these ordinary-looking clown shoes reveals they are made from thick layers of leathery skin. Somehow just as squeaky as a real pair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+      params:
+        variation: 0.17
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownShoes
+    - WhitelistChameleon
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - ToySidearm
+        blacklist:
+          components:
+          - Sharp
+  - type: Unremoveable
+    deleteOnDrop: false
+
+- type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesCult
   name: cult shoes

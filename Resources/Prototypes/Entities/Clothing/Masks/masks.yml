@@ -284,6 +284,21 @@
     - Snout
 
 - type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingClownMaskOrganic
+  name: organic clown wig and mask
+  suffix: Unremoveable
+  description: Close inspection of this ordinary-looking clown mask reveals it is made from thick layers of keratinized skin, with genuine but heavily discolored hair serving as the wig. You should feel sorry for the poor sap who had this replace their face.
+  components:
+  - type: Tag
+    tags:
+    - ClownMask
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: Unremoveable
+    deleteOnDrop: false
+
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskJoy
   name: joy mask
@@ -318,6 +333,16 @@
   - type: HideLayerClothing
     slots:
     - Snout
+
+- type: entity
+  parent: ClothingMaskMime
+  id: ClothingMaskMimeOrganic
+  name: organic mime mask
+  suffix: Unremoveable
+  description: Close inspection of this ordinary-looking mime mask reveals it is made from thick layers of keratinized skin. You should feel sorry for the poor sap who had this replace their face.
+  components:
+  - type: Unremoveable
+    deleteOnDrop: false
 
 - type: entity
   parent: ClothingMaskPullableBase

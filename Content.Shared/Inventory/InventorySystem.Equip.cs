@@ -226,11 +226,11 @@ public abstract partial class InventorySystem
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
-        ClothingComponent? clothing = null, ItemComponent? item = null) =>
-        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item);
+        ClothingComponent? clothing = null, ItemComponent? item = null, bool ignoreAccess = false) =>
+        CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, clothing, item, ignoreAccess);
 
     public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, ItemComponent? item = null)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, ItemComponent? item = null, bool ignoreAccess = false)
     {
         reason = "inventory-component-can-equip-cannot";
         if (!Resolve(target, ref inventory, false))
@@ -271,7 +271,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (!CanAccess(actor, target, itemUid))
+        if (!ignoreAccess && !CanAccess(actor, target, itemUid))
         {
             reason = "interaction-system-user-interaction-cannot-reach";
             return false;
