@@ -1,0 +1,27 @@
+﻿- type: entity
+  name: Wheelchair Spawner
+  id: SpawnVehicleWheelchair
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Vehicles/wheelchair.rsi
+      state: vehicle
+  - type: ConditionalSpawner
+    prototypes:
+    - VehicleWheelchair
+
+- type: entity
+  name: Janicart Spawner
+  id: SpawnVehicleJanicart
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Vehicles/janicart.rsi
+      state: keys
+  - type: ConditionalSpawner
+    prototypes:
+    - VehicleJanicart

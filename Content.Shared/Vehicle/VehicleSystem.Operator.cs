@@ -6,7 +6,7 @@ namespace Content.Shared.Vehicle;
 
 public sealed partial class VehicleSystem
 {
-    public void InitializeOperator()
+    private void InitializeOperator()
     {
         SubscribeLocalEvent<StrapVehicleComponent, StrappedEvent>(OnVehicleStrapped);
         SubscribeLocalEvent<StrapVehicleComponent, UnstrappedEvent>(OnVehicleUnstrapped);
@@ -17,24 +17,24 @@ public sealed partial class VehicleSystem
 
     private void OnVehicleStrapped(Entity<StrapVehicleComponent> ent, ref StrappedEvent args)
     {
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
         TrySetOperator((ent, vehicle), args.Buckle);
     }
 
     private void OnVehicleUnstrapped(Entity<StrapVehicleComponent> ent, ref UnstrappedEvent args)
     {
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
         TrySetOperator((ent, vehicle), null);
     }
 
     private void OnContainerEntInserted(Entity<ContainerVehicleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
 
         TrySetOperator((ent, vehicle), args.Entity, removeExisting: false);
@@ -42,10 +42,10 @@ public sealed partial class VehicleSystem
 
     private void OnContainerEntRemoved(Entity<ContainerVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        if (!TryComp<VehicleComponent>(ent, out var vehicle))
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
 
         if (vehicle.Operator != args.Entity)

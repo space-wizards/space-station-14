@@ -79,13 +79,13 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
         PhysicsSystem.UpdateIsPredicted(entity.Comp.RelayEntity);
 
-        if (TryComp<InputMoverComponent>(entity.Comp.RelayEntity, out var inputMover))
+        if (MoverQuery.TryComp(entity.Comp.RelayEntity, out var inputMover))
             SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
 
         if (Timing.ApplyingState)
             return;
 
-        if (TryComp(entity.Comp.RelayEntity, out MovementRelayTargetComponent? target) && target.LifeStage <= ComponentLifeStage.Running)
+        if (RelayTargetQuery.TryComp(entity.Comp.RelayEntity, out var target) && target.LifeStage <= ComponentLifeStage.Running)
             RemComp(entity.Comp.RelayEntity, target);
 
         _blocker.UpdateCanMove(entity.Owner);
@@ -96,10 +96,13 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
         PhysicsSystem.UpdateIsPredicted(entity.Comp.Source);
 
+        if (MoverQuery.TryComp(entity.Owner, out var inputMover))
+            SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
+
         if (Timing.ApplyingState)
             return;
 
-        if (TryComp(entity.Comp.Source, out RelayInputMoverComponent? relay) && relay.LifeStage <= ComponentLifeStage.Running)
+        if (RelayQuery.TryComp(entity.Comp.Source, out var relay) && relay.LifeStage <= ComponentLifeStage.Running)
             RemComp(entity.Comp.Source, relay);
     }
 

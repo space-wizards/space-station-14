@@ -39,6 +39,12 @@ public sealed partial class VehicleComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public DamageModifierSet? TransferDamageModifier;
+
+    /// <summary>
+    /// Whether the operator requires hands to operate this vehicle.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequiresHands = true;
 }
 
 [Serializable, NetSerializable]
@@ -63,7 +69,7 @@ public readonly record struct OnVehicleEnteredEvent(Entity<VehicleComponent> Veh
 public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
-/// Event raised on vehicle after an operator is set.
+/// Event raised on the vehicle after an operator is set.
 /// New operator can be null.
 /// </summary>
 [ByRefEvent, UsedImplicitly]

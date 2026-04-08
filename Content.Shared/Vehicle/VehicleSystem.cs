@@ -2,6 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -9,6 +12,7 @@ using Content.Shared.Vehicle.Components;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Vehicle;
 
@@ -23,10 +27,23 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private EntityQuery<VehicleComponent> _vehicleQuery;
+    private EntityQuery<VehicleOperatorComponent> _operatorQuery;
+    private EntityQuery<AppearanceComponent> _appearanceQuery;
+    private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    private EntityQuery<HandsComponent> _handsQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        _vehicleQuery = GetEntityQuery<VehicleComponent>();
+        _operatorQuery = GetEntityQuery<VehicleOperatorComponent>();
+        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+        _inputMoverQuery = GetEntityQuery<InputMoverComponent>();
+        _handsQuery = GetEntityQuery<HandsComponent>();
+
         InitializeOperator();
         InitializeKey();
 
@@ -86,18 +103,30 @@ public sealed partial class VehicleSystem : EntitySystem
     /// Set the operator for a given vehicle
     /// </summary>
     /// <param name="entity">The vehicle</param>
-    /// <param name="uid">The new operator. If null, will only remove the operator.</param>
+    /// <param name="uid">The new operator. If null, it will only remove the operator.</param>
     /// <param name="removeExisting">If true, will remove the current operator when setting the new one.</param>
     /// <returns>If the new operator was successfully able to be set</returns>
     public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid? uid, bool removeExisting = true)
     {
+        // Early exit if no change needed
         if (entity.Comp.Operator == null && uid is null)
             return false;
 
+        // Early exit if setting the same operator that's already present
+        if (entity.Comp.Operator == uid)
+            return true;
+
         // Do not run logic if the entity is already operating a vehicle.
         // However, if they are operating *this* vehicle, return true (they are indeed the operator)
-        if (TryComp<VehicleOperatorComponent>(uid, out var eOperator))
-            return eOperator.Vehicle == entity.Owner;
+        if (uid is not null && _operatorQuery.TryComp(uid, out var eOperator))
+        {
+            if (eOperator.Vehicle == entity.Owner)
+                return true;
+
+            // If trying to operate another vehicle, fail unless removeExisting is true
+            if (!removeExisting)
+                return false;
+        }
 
         if (!removeExisting && entity.Comp.Operator is not null)
             return false;
@@ -107,7 +136,8 @@ public sealed partial class VehicleSystem : EntitySystem
 
         var oldOperator = entity.Comp.Operator;
 
-        if (entity.Comp.Operator is { } currentOperator && TryComp<VehicleOperatorComponent>(currentOperator, out var currentOperatorComponent))
+        if (oldOperator is { } currentOperator &&
+            _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
         {
             var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
             RaiseLocalEvent(currentOperator, ref exitEvent);
@@ -115,6 +145,7 @@ public sealed partial class VehicleSystem : EntitySystem
             currentOperatorComponent.Vehicle = null;
             RemCompDeferred<VehicleOperatorComponent>(currentOperator);
             RemCompDeferred<RelayInputMoverComponent>(currentOperator);
+            RemCompDeferred<InteractionRelayComponent>(currentOperator);
         }
 
         entity.Comp.Operator = uid;
@@ -160,14 +191,14 @@ public sealed partial class VehicleSystem : EntitySystem
     /// From an operator, removes it from the vehicle
     /// </summary>
     /// <param name="operatorEntity">The operator who is riding a vehicle</param>
-    /// <returns>If the operator was removed successfully or if the entity was not operating a vehicle.</returns>
+    /// <returns>If the operator was removed successfully, or if the entity was not operating a vehicle.</returns>
     [PublicAPI]
     public bool TryRemoveOperator(Entity<VehicleOperatorComponent?> operatorEntity)
     {
         if (!Resolve(operatorEntity, ref operatorEntity.Comp, false))
             return true;
 
-        if (!TryComp<VehicleComponent>(operatorEntity.Comp.Vehicle, out var vehicle))
+        if (!_vehicleQuery.TryComp(operatorEntity.Comp.Vehicle, out var vehicle))
             return true;
 
         return TrySetOperator((operatorEntity.Comp.Vehicle.Value, vehicle), null, removeExisting: true);
@@ -188,7 +219,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (entity.Comp.Operator is not { } operatorUid)
             return false;
 
-        if (!TryComp<VehicleOperatorComponent>(operatorUid, out var operatorComponent))
+        if (!_operatorQuery.TryComp(operatorUid, out var operatorComponent))
             return false;
 
         operatorEnt = (operatorUid, operatorComponent);
@@ -220,10 +251,16 @@ public sealed partial class VehicleSystem : EntitySystem
     /// </summary>
     public bool CanOperate(Entity<VehicleComponent?> entity, EntityUid uid)
     {
+        if (!Exists(uid))
+            return false;
+
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
         if (_entityWhitelist.IsWhitelistFail(entity.Comp.OperatorWhitelist, uid))
+            return false;
+
+        if (entity.Comp.RequiresHands && _handsQuery.HasComp(uid) && !_actionBlocker.CanInteract(uid, entity))
             return false;
 
         return _actionBlocker.CanConsciouslyPerformAction(uid);
@@ -247,10 +284,10 @@ public sealed partial class VehicleSystem : EntitySystem
 
     private void UpdateAppearance(Entity<VehicleComponent> entity)
     {
-        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+        if (!_appearanceQuery.TryComp(entity, out var appearance))
             return;
 
-        if (TryComp<InputMoverComponent>(entity, out var inputMover))
+        if (_inputMoverQuery.TryComp(entity, out var inputMover))
         {
             _appearance.SetData(entity, VehicleVisuals.CanRun, inputMover.CanMove, appearance);
         }

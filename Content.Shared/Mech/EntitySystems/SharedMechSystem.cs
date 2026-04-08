@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Destructible;
@@ -54,9 +53,9 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, CanDropTargetEvent>(OnCanDragDrop);
         SubscribeLocalEvent<MechComponent, VehicleOperatorSetEvent>(OnOperatorSet);
 
-        SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
-        SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
-        SubscribeLocalEvent<MechPilotComponent, AttackAttemptEvent>(OnAttackAttempt);
+        SubscribeLocalEvent<VehicleOperatorComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
+        SubscribeLocalEvent<VehicleOperatorComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
+        SubscribeLocalEvent<VehicleOperatorComponent, AttackAttemptEvent>(OnAttackAttempt);
 
         InitializeRelay();
     }
@@ -116,14 +115,9 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (!Resolve(mech, ref component))
             return;
 
-        var rider = EnsureComp<MechPilotComponent>(pilot);
-
         // Warning: this bypasses most normal interaction blocking components on the user, like drone laws and the like.
         var irelay = EnsureComp<InteractionRelayComponent>(pilot);
-
         _interaction.SetRelay(pilot, mech, irelay);
-        rider.Mech = mech;
-        Dirty(pilot, rider);
 
         if (_net.IsClient)
             return;
@@ -135,10 +129,7 @@ public abstract partial class SharedMechSystem : EntitySystem
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
     {
-        if (!RemComp<MechPilotComponent>(pilot))
-            return;
         RemComp<InteractionRelayComponent>(pilot);
-
         _actions.RemoveProvidedActions(pilot, mech);
     }
 
@@ -168,7 +159,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
-    public void CycleEquipment(EntityUid uid, MechComponent? component = null)
+    private void CycleEquipment(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -385,32 +376,40 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (!Vehicle.TryGetOperator(uid, out var operatorEnt))
             return false;
 
-        _container.RemoveEntity(uid, operatorEnt.Value);
-        return true;
+        return _container.RemoveEntity(uid, operatorEnt.Value);
     }
 
-    private void OnGetMeleeWeapon(EntityUid uid, MechPilotComponent component, GetMeleeWeaponEvent args)
+    private void OnGetMeleeWeapon(EntityUid uid, VehicleOperatorComponent component, GetMeleeWeaponEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (component.Vehicle is not { } vehicle)
             return;
 
-        var weapon = mech.CurrentSelectedEquipment ?? component.Mech;
+        if (!TryComp<MechComponent>(vehicle, out var mech))
+            return;
+
+        var weapon = mech.CurrentSelectedEquipment ?? vehicle;
         args.Weapon = weapon;
         args.Handled = true;
     }
 
-    private void OnCanAttackFromContainer(EntityUid uid, MechPilotComponent component, CanAttackFromContainerEvent args)
+    private void OnCanAttackFromContainer(EntityUid uid, VehicleOperatorComponent component, CanAttackFromContainerEvent args)
     {
-        args.CanAttack = true;
+        if (component.Vehicle is not { } vehicle)
+            return;
+
+        if (HasComp<MechComponent>(vehicle))
+            args.CanAttack = true;
     }
 
-    private void OnAttackAttempt(EntityUid uid, MechPilotComponent component, AttackAttemptEvent args)
+    private void OnAttackAttempt(EntityUid uid, VehicleOperatorComponent component, AttackAttemptEvent args)
     {
-        if (args.Target == component.Mech)
+        if (component.Vehicle is { } vehicle && args.Target == vehicle)
+        {
             args.Cancel();
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, MechComponent? component = null,
@@ -458,6 +457,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         }
 
         UpdateAppearance(ent);
+        UpdateUserInterface(ent, ent);
     }
 }
 

@@ -811,9 +811,6 @@
   id: InnateDontDelete # Basically used as a bool for InnateToolComponent in InnateToolSystem. TODO remove
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: InstantDoAfters # Used by SharedDoAfterSystem for tagged entities to skip DoAfters (aghost). TODO remove
 
 - type: Tag
@@ -830,6 +827,9 @@
 
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
+
+- type: Tag
+  id: JanicartKeys # Keys for GenericKeyedVehicle of Janicart
 
 ## K ##
 

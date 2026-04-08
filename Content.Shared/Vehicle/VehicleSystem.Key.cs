@@ -5,7 +5,7 @@ namespace Content.Shared.Vehicle;
 
 public sealed partial class VehicleSystem
 {
-    public void InitializeKey()
+    private void InitializeKey()
     {
         SubscribeLocalEvent<GenericKeyedVehicleComponent, ContainerIsInsertingAttemptEvent>(OnGenericKeyedInsertAttempt);
         SubscribeLocalEvent<GenericKeyedVehicleComponent, EntInsertedIntoContainerMessage>(OnGenericKeyedEntInserted);
@@ -15,7 +15,7 @@ public sealed partial class VehicleSystem
 
     private void OnGenericKeyedInsertAttempt(Entity<GenericKeyedVehicleComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled || !ent.Comp.PreventInvalidInsertion || args.Container.ID != ent.Comp.ContainerId)
+        if (args.Cancelled || _timing.ApplyingState || !ent.Comp.PreventInvalidInsertion || args.Container.ID != ent.Comp.ContainerId)
             return;
 
         if (_entityWhitelist.IsWhitelistPass(ent.Comp.KeyWhitelist, args.EntityUid))
@@ -26,14 +26,14 @@ public sealed partial class VehicleSystem
 
     private void OnGenericKeyedEntInserted(Entity<GenericKeyedVehicleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
         RefreshCanRun(ent.Owner);
     }
 
     private void OnGenericKeyedEntRemoved(Entity<GenericKeyedVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
+        if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
         RefreshCanRun(ent.Owner);
     }
@@ -42,20 +42,24 @@ public sealed partial class VehicleSystem
     {
         if (!args.CanRun)
             return;
-        // We cannot run by default
-        args.CanRun = false;
 
         if (!_container.TryGetContainer(ent.Owner, ent.Comp.ContainerId, out var container))
+        {
+            args.CanRun = false;
             return;
+        }
 
+        var hasKey = false;
         foreach (var contained in container.ContainedEntities)
         {
             if (_entityWhitelist.IsWhitelistFail(ent.Comp.KeyWhitelist, contained))
                 continue;
 
-            // If we find a valid key, permit running and exit early.
-            args.CanRun = true;
+            hasKey = true;
             break;
         }
+
+        if (!hasKey)
+            args.CanRun = false;
     }
 }
