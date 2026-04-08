@@ -1,0 +1,177 @@
+- type: entity
+  id: BaseVehicleStrap
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: true
+  - type: InputMover
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Vehicle
+  - type: StrapVehicle
+  - type: Strap
+  - type: MovementSpeedModifier
+    weightlessModifier: 0
+    acceleration: 2
+    friction: 2
+    frictionNoInput: 6
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+
+- type: entity
+  id: VehicleWheelchair
+  parent: [BaseVehicleStrap, BaseFoldable, BaseItem]
+  name: wheelchair
+  description: A chair with big wheels. It looks like you can move in these on your own.
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/wheelchair.rsi
+    layers:
+    - state: wheelchair
+      map: ["unfoldedLayer"]
+    - state: wheelchair_folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Appearance
+  - type: Item
+    size: Ginormous
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2
+  - type: Strap
+    buckleOffset: "0,-0.05"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+  - type: StaticPrice
+    price: 70
+
+- type: entity
+  id: VehicleJanicart
+  parent: BaseVehicleStrap
+  name: janicart
+  description: The janitor's trusty steed.
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/janicart.rsi
+    drawdepth: Mobs # fixes layering like magic.
+    layers:
+    - state: vehicle
+      map: ["movement"]
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: vehicle-moving
+    noMovementLayers:
+      movement:
+        state: vehicle
+  - type: GenericKeyedVehicle
+    containerId: key_slot
+    keyWhitelist:
+      tags:
+      - JanicartKeys
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ExplodeBehavior
+      #- !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+      #  spawn:
+      #    VehicleJanicartDestroyed:
+      #      min: 1
+      #      max: 1
+  - type: Strap
+    buckleOffset: "0.01,0.15"
+    modifyBuckleDrawDepth: false
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: vehicle-slot-component-slot-name-keys
+        whitelist:
+          tags:
+          - JanicartKeys
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
+      trashbag_slot:
+        name: janitorial-trolley-slot-component-slot-name-trashbag
+        whitelist:
+          tags:
+          - TrashBag
+  - type: ContainerContainer
+    containers:
+      key_slot: !type:ContainerSlot
+      trashbag_slot: !type:ContainerSlot
+  - type: ItemMapper
+    mapLayers:
+      storage:
+        whitelist:
+          tags:
+          - TrashBag
+    sprite: Objects/Vehicles/janicart.rsi
+
+- type: entity
+  parent: BaseItem
+  id: VehicleKeyJanicart
+  name: janicart keys
+  description: Interesting design.
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/janicart.rsi
+    state: keys
+  - type: Item
+    size: Small
+  - type: Tag
+    tags: [ JanicartKeys ]
