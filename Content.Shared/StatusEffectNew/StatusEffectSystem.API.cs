@@ -407,4 +407,44 @@ public sealed partial class StatusEffectsSystem
 
         return endTime is not null;
     }
+
+    public IEnumerable<Entity<StatusEffectComponent>> EnumerateStatusEffects(
+        Entity<StatusEffectContainerComponent?> container)
+    {
+        if (!_containerQuery.Resolve(container, ref container.Comp) || container.Comp.ActiveStatusEffects == null)
+            yield break;
+
+        foreach (var effect in container.Comp.ActiveStatusEffects.ContainedEntities)
+        {
+            if (_effectQuery.TryComp(effect, out var status))
+                yield return (effect, status);
+        }
+    }
+
+    public IEnumerable<Entity<StatusEffectComponent, T>> EnumerateStatusEffects<T>(
+        Entity<StatusEffectContainerComponent?> container) where T : Component
+    {
+        if (!_containerQuery.Resolve(container, ref container.Comp) || container.Comp.ActiveStatusEffects == null)
+            yield break;
+
+        foreach (var effect in container.Comp.ActiveStatusEffects.ContainedEntities)
+        {
+            if (_effectQuery.TryComp(effect, out var status) && TryComp<T>(effect, out var comp))
+                yield return (effect, status,  comp);
+        }
+    }
+
+    public IEnumerable<Entity<StatusEffectComponent, T>> EnumerateStatusEffects<T>(
+        Entity<StatusEffectContainerComponent?> container,
+        EntityQuery<T> query) where T : Component
+    {
+        if (!_containerQuery.Resolve(container, ref container.Comp) || container.Comp.ActiveStatusEffects == null)
+            yield break;
+
+        foreach (var effect in container.Comp.ActiveStatusEffects.ContainedEntities)
+        {
+            if (_effectQuery.TryComp(effect, out var status) && query.TryComp(effect, out var comp))
+                yield return (effect, status,  comp);
+        }
+    }
 }

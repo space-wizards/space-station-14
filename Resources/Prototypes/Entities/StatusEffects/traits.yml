@@ -1,0 +1,17 @@
+- type: entity
+  abstract: true
+  parent: StatusEffectBase
+  id: StatusEffectTraitBase
+  components:
+  - type: CloneableStatusEffect
+    
+- type: entity
+  parent: [BloodstreamStatusEffectBase,  StatusEffectTraitBase]
+  id: StatusEffectTraitHemophilia
+  components:
+  - type: HemophiliaStatusEffect
+
+- type: entity
+  parent: [ PainNumbnessStatusEffectBase, StatusEffectTraitBase ]
+  id: StatusEffectTraitPainNumbness
+  name: pain numbness
