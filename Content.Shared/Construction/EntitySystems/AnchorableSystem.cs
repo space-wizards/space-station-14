@@ -74,7 +74,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (isOnStation)
             return;
 
-        args.FailMessage = ent.Comp.PopupMessageAnchorFail;
+        args.FailMessage = Loc.GetString(ent.Comp.PopupMessageAnchorFail);
         args.Cancel();
     }
 
@@ -101,7 +101,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Valid(uid, userUid, usingUid, false, out var failMessage))
         {
             if (failMessage != null)
-                _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
+                _popup.PopupClient(failMessage, uid, userUid);
             return;
         }
 
@@ -280,7 +280,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         EntityUid userUid,
         EntityUid usingUid,
         bool anchoring,
-        out LocId? failMessage,
+        out string? failMessage,
         AnchorableComponent? anchorable = null,
         ToolComponent? usingTool = null)
     {
