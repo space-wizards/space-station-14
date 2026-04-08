@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Construction;
 using Content.Server.Decals;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.EntityTable;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
@@ -35,7 +35,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private readonly IPrototypeManager _prototype;
     private readonly ITileDefinitionManager _tileDefManager;
 
-    private readonly SharedSharedAnchorableSystem _anchorable;
+    private readonly AnchorableSystem _anchorable;
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;

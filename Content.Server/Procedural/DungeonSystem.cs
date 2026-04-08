@@ -5,7 +5,6 @@ using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -32,7 +31,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly SharedAnchorableSystem _anchorable = default!;
+    [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TileSystem _tile = default!;
