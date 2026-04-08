@@ -79,7 +79,7 @@
     netsync: false
   - type: ExaminableBattery
   - type: NodeContainer
-    examinable: true
+    examinable: false # The PowerNetworkBatteryChargerVoltageToggler will show the current voltage
     nodes:
       input_lv:
         !type:CableDeviceNode
