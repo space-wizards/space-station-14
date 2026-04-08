@@ -27,6 +27,9 @@
   components:
   - type: Item
     size: Tiny
+  - type: Spillable
+    canSpillFromHand: false
+    solution: drink
   - type: ExaminableSolution
     exactVolume: true # It's a chemistry tool
   - type: Tag
