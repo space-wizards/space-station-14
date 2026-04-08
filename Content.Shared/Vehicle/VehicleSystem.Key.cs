@@ -1,4 +1,4 @@
-﻿using Content.Shared.Vehicle.Components;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Vehicle;

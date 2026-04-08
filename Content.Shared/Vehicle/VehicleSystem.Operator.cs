@@ -1,4 +1,4 @@
-﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
 
