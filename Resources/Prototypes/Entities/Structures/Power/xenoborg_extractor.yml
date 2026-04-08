@@ -62,7 +62,13 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
+      input_lv:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+      input_mv:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+      input_hv:
         !type:CableDeviceNode
         nodeGroupID: Apc
   - type: LightningTarget
@@ -72,29 +78,30 @@
     onInteractUsing: false
     onBump: false
     requirePower: true
-    highVoltageNode: input
-    mediumVoltageNode: input
-    lowVoltageNode: input
+    highVoltageNode: input_lv
+    mediumVoltageNode: input_mv
+    lowVoltageNode: input_hv
   - type: Battery
     maxCharge: 4000000 # 4MJ
     netsync: false
   - type: ExaminableBattery
   - type: PowerNetworkBattery
+    maxChargeRate: 32000
   - type: BatteryCharger
     voltage: Apc
-  - type: PowerConsumer
-    voltage: Apc
-    drawRate: 10000
-  - type: VoltageToggler
+  - type: PowerNetworkBatteryChargerVoltageToggler
     settings:
     - voltage: Apc
       wattage: 32000 # 32kW - 125 seconds to spawn one
+      node: input_lv
       name: power-voltage-low
     - voltage: Medium
       wattage: 80000 # 80kW - 50 seconds to spawn one
+      node: input_mv
       name: power-voltage-medium
     - voltage: High
       wattage: 200000 # 400kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
+      node: input_hv
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCrystal1
