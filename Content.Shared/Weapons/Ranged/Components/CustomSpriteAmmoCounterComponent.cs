@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
-[NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CustomSpriteAmmoCounterComponent : Component
 {
     /// <summary>
