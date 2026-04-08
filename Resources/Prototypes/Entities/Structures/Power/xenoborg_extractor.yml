@@ -64,18 +64,6 @@
     totalIntensity: 10
     intensitySlope: 5
     canCreateVacuum: false
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input_lv:
-        !type:CableDeviceNode
-        nodeGroupID: Apc
-      input_mv:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
-      input_hv:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
   - type: LightningTarget
     priority: 1
   - type: Electrified
@@ -90,11 +78,23 @@
     maxCharge: 4000000 # 4MJ
     netsync: false
   - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input_lv:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+      input_mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      input_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: BatteryCharger
+    voltage: Apc
   - type: PowerNetworkBattery
     canDischarge: false
     maxChargeRate: 32000
-  - type: BatteryCharger
-    voltage: Apc
   - type: PowerNetworkBatteryChargerVoltageToggler
     settings:
     - voltage: Apc
