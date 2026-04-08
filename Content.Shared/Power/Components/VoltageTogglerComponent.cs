@@ -1,9 +1,11 @@
-﻿namespace Content.Shared.Power.Components;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Power.Components;
 
 /// <summary>
 /// Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VoltageTogglerComponent : Component
 {
     /// <summary>
@@ -15,8 +17,7 @@ public sealed partial class VoltageTogglerComponent : Component
     /// <summary>
     /// Index of the currently selected setting.
     /// </summary>
-    [DataField]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public int SelectedVoltageLevel;
 }
 
