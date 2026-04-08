@@ -46,7 +46,8 @@ public abstract partial class SharedBorgSystem
             if (TryFormatList(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
                 args.PushMarkup(list);
 
-            if (TryFormatList(ent.Comp.ModuleTypes, "module-group-incompatible", "types", out list))
+            if (TryComp<BorgModuleWhitelistComponent>(ent, out var whitelist) &&
+                TryFormatList(whitelist.ModuleTypes, "module-group-incompatible", "types", out list))
                 args.PushMarkup(list);
         }
     }

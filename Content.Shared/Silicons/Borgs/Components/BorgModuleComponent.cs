@@ -34,14 +34,6 @@ public sealed partial class BorgModuleComponent : Component
     /// </summary>
     [DataField]
     public List<LocId>? BorgFitTypes;
-
-    /// <summary>
-    /// List of module groups this module is a part of
-    /// This only affects examine text. The actual tag-based whitelist is defined
-    /// in <see cref="BorgModuleWhitelistComponent"/>
-    /// </summary>
-    [DataField]
-    public List<LocId>? ModuleTypes;
 }
 
 /// <summary>

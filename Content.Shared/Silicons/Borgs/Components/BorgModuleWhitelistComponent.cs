@@ -7,9 +7,17 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// This is used for modules which require the presence or absence
 /// of a specific type of module to be installed
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, Access(typeof(SharedBorgSystem))]
 public sealed partial class BorgModuleWhitelistComponent : Component
 {
+    /// <summary>
+    /// List of module groups this module is a part of
+    /// This only affects examine text. The actual tag-based whitelist is defined
+    /// in <see cref="BorgModuleWhitelistComponent"/>
+    /// </summary>
+    [DataField]
+    public List<LocId>? ModuleTypes;
+
     /// <summary>
     /// List of module tags this module is incompatible with
     /// </summary>
