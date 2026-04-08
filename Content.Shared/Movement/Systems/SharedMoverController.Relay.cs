@@ -85,6 +85,9 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
         PhysicsSystem.UpdateIsPredicted(entity.Comp.Source);
 
+        if (TryComp<InputMoverComponent>(entity.Owner, out var inputMover))
+            SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
+
         if (Timing.ApplyingState)
             return;
 
