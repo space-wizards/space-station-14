@@ -35,7 +35,7 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
         var mapSys = entManager.System<SharedMapSystem>();
         var tileDef = IoCManager.Resolve<ITileDefinitionManager>();
 
-        var physicsQuery = entManager.GetEntityQuery<PhysicsComponent>()
+        var physicsQuery = entManager.GetEntityQuery<PhysicsComponent>();
         var tileCount = 0;
         var matchingTileCount = 0;
 
