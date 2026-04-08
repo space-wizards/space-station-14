@@ -305,7 +305,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         _alerts.ShowAlert(held.Value, _damageAlert, (short)Math.Clamp(damageLevel, 0, proto.MaxSeverity));
 
-        if (damageIncreased && damagePercent > 0)
+        if (damageIncreased)
         {
             var ev = new ChatNotificationEvent(_aiTakingDamageChatNotificationPrototype, ent);
             RaiseLocalEvent(held.Value, ref ev);
