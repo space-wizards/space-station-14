@@ -16,7 +16,7 @@ public sealed partial class NoUnstackableInTile : IConstructionCondition
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
         var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-        var anchorable = sysMan.GetEntitySystem<AnchorableSystem>();
+        var anchorable = sysMan.GetEntitySystem<SharedAnchorableSystem>();
 
         return !anchorable.AnyUnstackablesAnchoredAt(location);
     }

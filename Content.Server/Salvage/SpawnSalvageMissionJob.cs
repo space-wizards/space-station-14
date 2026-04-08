@@ -36,7 +36,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly IPrototypeManager _prototypeManager;
-    private readonly AnchorableSystem _anchorable;
+    private readonly SharedAnchorableSystem _anchorable;
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
@@ -54,7 +54,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         IGameTiming timing,
         ILogManager logManager,
         IPrototypeManager protoManager,
-        AnchorableSystem anchorable,
+        SharedAnchorableSystem anchorable,
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,

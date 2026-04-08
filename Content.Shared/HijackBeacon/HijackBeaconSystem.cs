@@ -16,7 +16,7 @@ namespace Content.Shared.HijackBeacon;
 public sealed class HijackBeaconSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly AnchorableSystem _anchor = default!;
+    [Dependency] private readonly SharedAnchorableSystem _anchor = default!;
     [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;

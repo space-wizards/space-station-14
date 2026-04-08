@@ -35,7 +35,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private readonly IPrototypeManager _prototype;
     private readonly ITileDefinitionManager _tileDefManager;
 
-    private readonly AnchorableSystem _anchorable;
+    private readonly SharedSharedAnchorableSystem _anchorable;
     private readonly DecalSystem _decals;
     private readonly DungeonSystem _dungeon;
     private readonly EntityLookupSystem _lookup;
