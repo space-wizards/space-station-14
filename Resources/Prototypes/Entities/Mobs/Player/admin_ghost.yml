@@ -28,9 +28,6 @@
         location: Right
       hand_left:
         location: Left
-    sortedHands:
-    - hand_right
-    - hand_left
   - type: ComplexInteraction
   - type: Puller
     needsHands: false

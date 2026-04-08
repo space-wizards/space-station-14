@@ -71,7 +71,7 @@ namespace Content.Client.Hands.Systems
             {
                 AddHand(ent.AsNullable(), handId, state.Hands[handId]);
             }
-            ent.Comp.SortedHands = new (state.SortedHands);
+            ent.Comp.SortedHands = new(state.SortedHands);
 
             SetActiveHand(ent.AsNullable(), state.ActiveHandId);
 

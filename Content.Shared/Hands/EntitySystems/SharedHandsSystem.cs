@@ -62,8 +62,16 @@ public abstract partial class SharedHandsSystem
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
+        foreach (var (key, _) in ent.Comp.Hands)
+        {
+            if (!ent.Comp.SortedHands.Contains(key))
+                ent.Comp.SortedHands.Add(key);
+        }
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
+
+        Dirty(ent);
     }
 
     /// <summary>
