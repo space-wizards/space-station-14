@@ -67,10 +67,10 @@
         nodeGroupID: Apc
       input_mv:
         !type:CableDeviceNode
-        nodeGroupID: Apc
+        nodeGroupID: MVPower
       input_hv:
         !type:CableDeviceNode
-        nodeGroupID: Apc
+        nodeGroupID: HVPower
   - type: LightningTarget
     priority: 1
   - type: Electrified
