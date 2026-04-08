@@ -18,8 +18,3 @@ xenoborg-type-scout = [color= #6a6b6f]scout xenoborgs[/color]
 xenoborg-type-stealth = [color= #ff00cc]stealth xenoborgs[/color]
 
 module-group-incompatible = This module is incompatible with other {$types} modules.
-
-module-group-xenoborg-engi-weapon = [color= #edd45b]xenoborg engi weapon[/color]
-module-group-xenoborg-heavy-weapon = [color= #d62020]xenoborg heavy weapon[/color]
-module-group-xenoborg-scout-weapon = [color= #6a6b6f]xenoborg scout weapon[/color]
-module-group-xenoborg-stealth-weapon = [color= #ff00cc]xenoborg stealth weapon[/color]
