@@ -140,19 +140,13 @@
     price: 100
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger100
-        !type:DamageTrigger
-        damage: 100
-      behaviors: &OverkillBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - &SoundGlassBreak !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
