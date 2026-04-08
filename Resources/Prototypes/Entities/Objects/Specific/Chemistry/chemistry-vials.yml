@@ -175,3 +175,20 @@
             Quantity: 10
   - type: Tag
     tags: *TagVial
+
+- type: entity
+  parent: ChemistryEmptyVialSmall
+  id: XenoborgOilChemistryVial
+  suffix: xenoborg oil
+  components:
+  - type: Label
+    currentLabel: reagent-name-xenoborg-oil
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
+        reagents:
+          - ReagentId: XenoborgOil
+            Quantity: 10
+  - type: Tag
+    tags: *TagVial
