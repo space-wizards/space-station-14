@@ -20,6 +20,20 @@
     - Trash
     - CentrifugeCompatible # unique feature of vials
 
+- type: entity
+  abstract: true
+  parent: [ DrinkBaseMaterialGlass, DrinkBaseEmptyTrash, DrinkVisualsAll ]
+  id: BaseChemistryAmpoule # like a vial, but you can't open, you have to break it.
+  components:
+  - type: Item
+    size: Tiny
+  - type: ExaminableSolution
+    exactVolume: true # It's a chemistry tool
+  - type: Tag
+    tags:
+    - Trash
+    - CentrifugeCompatible # unique feature of vials
+
 ## Entities
 
 - type: entity
@@ -105,6 +119,50 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+- type: entity
+  parent: BaseChemistryAmpoule
+  id: ChemistryEmptyAmpoule
+  name: ampoule
+  description: Break to open.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/ampoule.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/ampoule.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    inHandsMaxFillLevels: 4
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: StaticPrice
+    price: 100
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageTrigger100
+        !type:DamageTrigger
+        damage: 100
+      behaviors: &OverkillBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - &SoundGlassBreak !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass: # less glass than base
+            min: 0
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
 ## Reagent filled
 
 - type: entity
@@ -177,8 +235,8 @@
     tags: *TagVial
 
 - type: entity
-  parent: ChemistryEmptyVialSmall
-  id: XenoborgOilChemistryVial
+  parent: ChemistryEmptyAmpoule
+  id: XenoborgOilChemistryAmpoule
   suffix: xenoborg oil
   components:
   - type: Label
@@ -186,9 +244,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 10
+        maxVol: 30
         reagents:
           - ReagentId: XenoborgOil
-            Quantity: 10
+            Quantity: 30
   - type: Tag
     tags: *TagVial
