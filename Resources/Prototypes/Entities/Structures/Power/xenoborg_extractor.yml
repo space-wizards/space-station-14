@@ -106,7 +106,7 @@
       node: input_mv
       name: power-voltage-medium
     - voltage: High
-      wattage: 200000 # 400kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
+      wattage: 200000 # 200kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
       node: input_hv
       name: power-voltage-high
   - type: SpawnOnBatteryLevel
