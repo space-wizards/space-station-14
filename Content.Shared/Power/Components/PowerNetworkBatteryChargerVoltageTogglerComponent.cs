@@ -6,7 +6,7 @@ namespace Content.Shared.Power.Components;
 /// Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class VoltageTogglerComponent : Component
+public sealed partial class PowerNetworkBatteryChargerVoltageTogglerComponent : Component
 {
     /// <summary>
     /// List of all voltage settings.
@@ -35,6 +35,13 @@ public partial struct VoltageSetting
     /// </summary>
     [DataField(required: true)]
     public Voltage Voltage;
+
+    /// <summary>
+    /// Name of the node for the cable.
+    /// Must be a <c>CableDeviceNode</c>
+    /// </summary>
+    [DataField(required: true)]
+    public string Node = string.Empty;
 
     /// <summary>
     /// Power usage in that voltage.

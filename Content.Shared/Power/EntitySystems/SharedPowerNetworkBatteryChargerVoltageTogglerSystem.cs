@@ -3,15 +3,15 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract class SharedVoltageTogglerSystem : EntitySystem
+public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VoltageTogglerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
-    private void OnGetVerb(Entity<VoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -41,5 +41,5 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
         }
     }
 
-    protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting) {}
+    protected virtual void ChangeVoltage(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, VoltageSetting setting) {}
 }
