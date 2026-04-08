@@ -2,7 +2,7 @@
   parent: [BaseItem, BaseXenoborgContraband]
   id: WeaponOilGun
   name: oil gun
-  description: This gun launches vials of xenoborg oil to make organics slip or become flamable if hit with a direct hit
+  description: This gun launches ampoules of xenoborg oil to make organics slip or become flamable if hit with a direct hit
   components:
   - type: Appearance
   - type: Sprite
