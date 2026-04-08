@@ -3,6 +3,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
+/// <summary>
+/// This component replaces the ammo counter UI with one that has custom sprites for the loaded ammo and spent ammo
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CustomSpriteAmmoCounterComponent : Component
 {
