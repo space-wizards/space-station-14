@@ -33,6 +33,6 @@
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
-    proto: XenoborgOilChemistryVial
+    proto: XenoborgOilChemistryAmpoule
     capacity: 5
     count: 5
