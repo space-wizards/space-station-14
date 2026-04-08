@@ -91,6 +91,7 @@
     netsync: false
   - type: ExaminableBattery
   - type: PowerNetworkBattery
+    canDischarge: false
     maxChargeRate: 32000
   - type: BatteryCharger
     voltage: Apc
