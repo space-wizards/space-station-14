@@ -11,10 +11,19 @@
     - state: icon
     - state: mag-5
       map: ["enum.GunVisualLayers.Mag"]
+    - state: reloading
+      map: ["reloading"]
+      visible: false
   - type: MagazineVisuals
     magState: mag
     steps: 6
     zeroVisible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.IsFull:
+        reloading:
+          True: {visible: false}
+          False: {visible: true}
   - type: Item
     size: Large
   # - type: CustomSpriteAmmoCounter
