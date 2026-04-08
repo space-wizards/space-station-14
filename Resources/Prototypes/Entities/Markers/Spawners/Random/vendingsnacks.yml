@@ -1,14 +1,14 @@
 - type: entity
+  parent: MarkerBase
   id: RandomVendingSnacks
   name: random vending machine spawner
   suffix: Snacks
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Machines/VendingMachines/random.rsi
-        state: snack
+    - state: red
+    - sprite: Structures/Machines/VendingMachines/random.rsi
+      state: snack
   - type: EntityTableSpawner
     table: !type:GroupSelector
       children:

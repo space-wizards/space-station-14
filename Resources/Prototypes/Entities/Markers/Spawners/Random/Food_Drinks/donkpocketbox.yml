@@ -5,9 +5,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-        state: box
+    - state: red
+    - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+      state: box
   - type: EntityTableSpawner
     table: !type:GroupSelector
       prob: 0.5
