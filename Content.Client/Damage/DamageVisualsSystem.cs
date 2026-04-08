@@ -137,6 +137,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     {
         if (!TryComp(entity, out SpriteComponent? spriteComponent)
             || !TryComp<DamageableComponent>(entity, out var damageComponent)
+            || !TryComp<InjurableComponent>(entity, out var injurableComponent)
             || !HasComp<AppearanceComponent>(entity))
             return;
 
@@ -152,8 +153,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
 
         // If the damage container on our entity's DamageableComponent
         // is not null, we can try to check through its groups.
-        if (damageComponent.DamageContainerID != null
-            && _prototypeManager.Resolve<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
+        if (injurableComponent.DamageContainer != null
+            && _prototypeManager.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
         {
             // Are we using damage overlay sprites by group?
             // Check if the container matches the supported groups,
@@ -562,7 +563,9 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (thresholdIndex < 0)
         {
             thresholdIndex = ~thresholdIndex;
-            threshold = damageVisComp.Thresholds[thresholdIndex - 1];
+            if (thresholdIndex > 0)
+                thresholdIndex--;
+            threshold = damageVisComp.Thresholds[thresholdIndex];
         }
         else
         {

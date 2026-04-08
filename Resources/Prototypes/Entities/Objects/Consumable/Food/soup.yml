@@ -40,6 +40,7 @@
       types:
         Blunt: 0
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Tag
     tags:

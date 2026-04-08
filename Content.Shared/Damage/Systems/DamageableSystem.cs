@@ -25,6 +25,7 @@ public sealed partial class DamageableSystem : EntitySystem
 
     [Dependency] private readonly EntityQuery<AppearanceComponent> _appearanceQuery = default!;
     [Dependency] private readonly EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private readonly EntityQuery<InjurableComponent> _injurableQuery = default!;
 
     public float UniversalAllDamageModifier { get; private set; } = 1f;
     public float UniversalAllHealModifier { get; private set; } = 1f;
