@@ -189,7 +189,7 @@
   name: reagent-name-xenoborg-oil
   desc: reagent-desc-xenoborg-oil
   physicalDesc: reagent-physical-desc-oily
-  evaporationSpeed: 0.1
+  evaporationSpeed: 0.2
   slipData:
     requiredSlipSpeed: 3.5
   flavor: bitter
