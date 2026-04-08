@@ -267,7 +267,7 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
     private readonly Texture _loadedSprite;
     private readonly Texture _spentSprite;
 
-    private const int Separation = 4;
+    private const int Separation = 2;
 
     public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
     {
