@@ -206,7 +206,7 @@
       methods: [ Touch ]
       effects:
       - !type:Flammable
-        multiplier: 0.4
+        multiplier: 0.2
   metabolisms:
     Bloodstream:
       effects:
