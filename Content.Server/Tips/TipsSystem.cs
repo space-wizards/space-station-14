@@ -134,7 +134,7 @@ public sealed class TipsSystem : SharedTipsSystem
                 EntityUid.Invalid,
                 false,
                 false,
-                Color.MediumPurple);
+                ChatChannel.Server.TextColor());
         }
     }
 }
