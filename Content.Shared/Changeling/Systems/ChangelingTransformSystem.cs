@@ -139,7 +139,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
-        if (!identity.ConsumedIdentities.Contains(targetIdentity.Value))
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
             return; // this identity does not belong to this player
 
         TransformInto(ent.AsNullable(), targetIdentity.Value);
@@ -170,6 +170,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
+
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
