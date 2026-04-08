@@ -13,7 +13,7 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 {
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
 
-    public override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
+    protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
     {
         if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp) ||
             !TryComp<PowerConsumerComponent>(entity, out var powerConsumerComp))

@@ -41,5 +41,5 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
         }
     }
 
-    public virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting) {}
+    protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting) {}
 }
