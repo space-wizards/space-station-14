@@ -22,7 +22,7 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialGlass, DrinkBaseEmptyTrash, DrinkVisualsAll ]
+  parent: [ BaseItem, DrinkBaseMaterialGlass, DrinkBaseEmptyTrash, DrinkVisualsAll ]
   id: BaseChemistryAmpoule # like a vial, but you can't open, you have to break it.
   components:
   - type: Item
