@@ -1,0 +1,1 @@
+power-network-battery-charger-voltage-toggler-examine = The power input is set to {$voltage}.

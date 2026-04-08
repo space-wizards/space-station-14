@@ -1,4 +1,5 @@
-﻿using Content.Shared.Power.Components;
+﻿using Content.Shared.Examine;
+using Content.Shared.Power.Components;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.Power.EntitySystems;
@@ -8,7 +9,22 @@ public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : Ent
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+    }
+
+    private void OnExamined(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref ExaminedEvent args)
+    {
+        var voltage = entity.Comp.Settings[entity.Comp.SelectedVoltageLevel].Voltage;
+        var voltageStringSimple = voltage switch
+        {
+            Voltage.High => "HV",
+            Voltage.Medium => "MV",
+            Voltage.Apc => "LV",
+            _ => "Unknown",
+        };
+        var voltageString = Loc.GetString("power-switchable-voltage", ("voltage", voltageStringSimple));
+        args.PushMarkup(Loc.GetString("power-network-battery-charger-voltage-toggler-examine", ("voltage", voltageString)));
     }
 
     private void OnGetVerb(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
