@@ -261,3 +261,31 @@ public sealed class BatteryBulletRenderer : BaseBulletRenderer
         handle.DrawRect(UIBox2.FromDimensions(renderPos, new Vector2(SizeH, SizeV)), color);
     }
 }
+
+public sealed class CustomBulletRenderer : BaseBulletRenderer
+{
+    private readonly Texture _loadedSprite;
+    private readonly Texture _spentSprite;
+
+    private const int Separation = 4;
+
+    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
+    {
+        _loadedSprite = loadedSprite;
+        _spentSprite = spentSprite;
+
+        Parameters = new LayoutParameters
+        {
+            ItemWidth = _loadedSprite.Width,
+            ItemHeight = _loadedSprite.Height,
+            ItemSeparation = _loadedSprite.Width + Separation,
+            MinCountPerRow = 3,
+            VerticalSeparation = Separation,
+        };
+    }
+
+    protected override void DrawItem(DrawingHandleScreen handle, Vector2 renderPos, bool spent, bool altColor)
+    {
+        handle.DrawTexture(spent ? _spentSprite : _loadedSprite, renderPos);
+    }
+}
