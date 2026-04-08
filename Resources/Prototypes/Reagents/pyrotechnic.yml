@@ -194,8 +194,7 @@
     requiredSlipSpeed: 3.5
   flavor: bitter
   flavorMinimum: 0.01
-  color: "#3d94ff"
-  recognizable: true
+  color: "#3d5cff"
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
   friction: 0.4
