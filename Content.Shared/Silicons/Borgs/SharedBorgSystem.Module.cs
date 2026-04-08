@@ -273,7 +273,8 @@ public abstract partial class SharedBorgSystem
     private void OnComponentModuleInstalledRelay(Entity<ComponentBorgModuleComponent> ent,
         ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
-        if (!TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
+        if (args.Args.Cancelled ||
+            !TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
             return;
 
         foreach (var comp in newModule.Components)
@@ -292,10 +293,10 @@ public abstract partial class SharedBorgSystem
     private void OnCheckWhitelistRelay(Entity<BorgModuleWhitelistComponent> ent,
         ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
-        if (!TryComp<BorgModuleWhitelistComponent>(args.Args.ModuleEnt, out var whitelist))
+        if (args.Args.Cancelled)
             return;
 
-        if (_whitelist.IsWhitelistPass(whitelist.ModuleBlacklist, ent))
+        if (_whitelist.IsWhitelistPass(ent.Comp.ModuleBlacklist, args.Args.ModuleEnt))
         {
             args.Args.Cancelled = true;
             args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", MetaData(ent).EntityName));
