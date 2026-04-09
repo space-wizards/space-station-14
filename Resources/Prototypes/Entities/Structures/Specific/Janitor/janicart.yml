@@ -20,6 +20,8 @@
     solutions:
       bucket:
         maxVol: 600
+  - type: MixableSolution
+    solution: bucket
   - type: Spillable
     solution: bucket
     spillDelay: 3.0
@@ -261,6 +263,8 @@
           reagents:
             - ReagentId: Water
               Quantity: 600 # 3 quarters full at roundstart to make it more appealing
+    - type: MixableSolution
+      solution: bucket
     - type: DrainableSolution
       solution: bucket
     - type: RefillableSolution
