@@ -1375,7 +1375,7 @@
   reactants:
     Beer:
       amount: 2
-    Milk:
+    MilkGoat:
       amount: 1
   products:
     WhiteGilgamesh: 3
