@@ -80023,8 +80023,6 @@ entities:
       pos: 5.5,-70.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 20153
     - type: AtmosPipeColor
@@ -81379,8 +81377,6 @@ entities:
       pos: 5.5,-72.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 20153
     - type: AtmosPipeColor
