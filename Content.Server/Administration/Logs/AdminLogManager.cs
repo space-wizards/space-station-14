@@ -89,15 +89,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private readonly ConcurrentQueue<AdminLogEventWriteData> _logQueue = new();
     private readonly ConcurrentQueue<AdminLogEventWriteData> _preRoundLogQueue = new();
 
-    // Condensation carry-over: groups that didn't meet the threshold yet carry across flushes.
-    // Keyed by (ServerId, RoundId, LogType, Player). Flushed on shutdown and round-end.
-    private readonly Dictionary<(int ServerId, int RoundId, LogType Type, Guid Player), List<AdminLogEventWriteData>>
-        _carryOverBuckets = new();
-
-    // Condensation CVars
-    private bool _condensationEnabled;
-    private TimeSpan _condensationMaxGap;
-
     // Per round
     private int _currentRoundId;
     private GameRunLevel _runLevel = GameRunLevel.PreRoundLobby;
@@ -129,10 +120,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             value => _dropThreshold = value, true);
         _configuration.OnValueChanged(CCVars.AdminLogsHighLogPlaytime,
             value => _highImpactLogPlaytime = value, true);
-        _configuration.OnValueChanged(CCVars.AdminLogsCondensationEnabled,
-            value => _condensationEnabled = value, true);
-        _configuration.OnValueChanged(CCVars.AdminLogsCondensationMaxGap,
-            value => _condensationMaxGap = TimeSpan.FromSeconds(value), true);
 
         _ = Task.Run(async () =>
         {
@@ -163,11 +150,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public async Task Shutdown()
     {
-        // Flush any carry-over condensation buckets before final save.
-        var carryOver = FlushCarryOver();
-        foreach (var log in carryOver)
-            _logQueue.Enqueue(log);
-
         if (!_logQueue.IsEmpty || !_preRoundLogQueue.IsEmpty)
         {
             await SaveLogs(dropPreRoundInLobby: false);
@@ -283,7 +265,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         {
             while (_preRoundLogQueue.TryDequeue(out var preRoundLog))
             {
-                CacheLog(preRoundLog);
                 copy.Add(preRoundLog);
             }
         }
@@ -315,28 +296,13 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
                 if (_currentRoundId > 0)
                 {
-                    copy[i] = new AdminLogEventWriteData
-                    {
-                        ServerId = log.ServerId,
-                        ServerName = log.ServerName,
-                        RoundId = _currentRoundId,
-                        Type = log.Type,
-                        Impact = log.Impact,
-                        OccurredAt = log.OccurredAt,
-                        Message = log.Message,
-                        Json = log.Json,
-                        Players = log.Players,
-                        Entities = log.Entities,
-                        PlayerRoles = log.PlayerRoles,
-                    };
+                    log.RoundId = _currentRoundId;
                     continue;
                 }
 
                 _sawmill.Warning($"Dropping admin log with unresolved round id. Type: {log.Type}, Message: {log.Message}");
                 copy.RemoveAt(i);
             }
-
-            copy = CondenseLogs(copy);
 
             if (copy.Count == 0)
                 return;
@@ -409,10 +375,13 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         });
     }
 
-    public void RoundStarting(int id)
+    public async void RoundStarting(int id)
     {
         _currentRoundId = id;
-        CacheNewRound();
+
+        // Flush pre-round logs immediately now that we have a valid round ID.
+        if (!_preRoundLogQueue.IsEmpty)
+            await TrySaveLogs();
     }
 
     public void RunLevelChanged(GameRunLevel level)
@@ -421,11 +390,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         if (level == GameRunLevel.PreRoundLobby)
         {
-            // Flush any remaining carry-over condensation buckets on round end.
-            var carryOver = FlushCarryOver();
-            foreach (var log in carryOver)
-                _logQueue.Enqueue(log);
-
             if (!_preRoundLogQueue.IsEmpty)
             {
                 // This technically means that you could get pre-round logs from
@@ -513,7 +477,19 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         foreach (var autoEntity in autoEntities)
         {
-            AddEntity(logEntities, autoEntity.EntityUid, autoEntity.Role, autoEntity.PrototypeId, autoEntity.EntityName);
+            // Skip auto-extracted entities whose UID already has an explicit entry.
+            var alreadyExplicit = false;
+            foreach (var existing in logEntities)
+            {
+                if (existing.EntityUid == autoEntity.EntityUid)
+                {
+                    alreadyExplicit = true;
+                    break;
+                }
+            }
+
+            if (!alreadyExplicit)
+                AddEntity(logEntities, autoEntity.EntityUid, autoEntity.Role, autoEntity.PrototypeId, autoEntity.EntityName);
         }
 
         Dictionary<Guid, AdminLogEntityRole>? mergedPlayerRoles = null;
@@ -562,7 +538,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         else
         {
             _logQueue.Enqueue(log);
-            CacheLog(log);
         }
     }
 
@@ -905,11 +880,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         filter = ApplyServerScope(filter);
 
-        if (TrySearchCache(filter, out var results))
-        {
-            return results;
-        }
-
         var initialSize = Math.Min(filter?.Limit ?? 0, 1000);
         List<SharedAdminLog> list;
         if (listProvider != null)
@@ -1007,307 +977,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         filter ??= new LogFilter();
         filter.ServerId ??= _serverId > 0 ? _serverId : null;
         return filter;
-    }
-
-    /// <summary>
-    /// Condenses high-frequency low-signal log events into summary entries.
-    /// Groups eligible events by (ServerId, RoundId, LogType, player) using a
-    /// gap-based time window, then replaces groups exceeding the type's minimum
-    /// group size with a single condensed event.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// The condensed event preserves the original <see cref="LogType"/> so it remains
-    /// searchable by type filters. Condensation metadata (count, time window, sample
-    /// messages) is stored in the JSON payload.
-    /// </para>
-    /// <para>
-    /// Groups that don't yet meet their threshold are carried over to the next flush
-    /// via <see cref="_carryOverBuckets"/>, so bursts that span flush boundaries are
-    /// still condensed. Call <see cref="FlushCarryOver"/> on shutdown/round-end to
-    /// emit any remaining carry-over events.
-    /// </para>
-    /// </remarks>
-    private List<AdminLogEventWriteData> CondenseLogs(List<AdminLogEventWriteData> logs)
-    {
-        if (!_condensationEnabled)
-            return logs;
-
-        // Tag each log with its original position so we can restore chronological order.
-        var tagged = new List<(AdminLogEventWriteData Log, int Seq)>(logs.Count);
-        for (var i = 0; i < logs.Count; i++)
-            tagged.Add((logs[i], i));
-
-        var result = new List<(AdminLogEventWriteData Log, int Seq)>(logs.Count);
-
-        // Merge incoming eligible events into carry-over buckets.
-        var nextSeq = logs.Count; // Sequence counter for carry-over events already in buckets.
-        foreach (var (log, seq) in tagged)
-        {
-            if (!LogCondensationPolicy.IsEligible(log.Type, log.Impact, log.Players.Count))
-            {
-                result.Add((log, seq));
-                continue;
-            }
-
-            var key = (log.ServerId, log.RoundId, log.Type, log.Players[0]);
-
-            if (!_carryOverBuckets.TryGetValue(key, out var bucket))
-            {
-                bucket = new List<AdminLogEventWriteData>(8);
-                _carryOverBuckets[key] = bucket;
-            }
-
-            bucket.Add(log);
-        }
-
-        // Process each carry-over bucket: split into time-windowed sub-groups.
-        var keysToRemove = new List<(int, int, LogType, Guid)>();
-        foreach (var (key, bucket) in _carryOverBuckets)
-        {
-            var minGroupSize = LogCondensationPolicy.GetMinGroupSize(key.Type);
-            if (minGroupSize == null)
-            {
-                // Type lost its rule (shouldn't happen, but be safe) — emit individually.
-                foreach (var log in bucket)
-                    result.Add((log, nextSeq++));
-                keysToRemove.Add(key);
-                continue;
-            }
-
-            // Sort by time within the bucket.
-            bucket.Sort((a, b) => a.OccurredAt.CompareTo(b.OccurredAt));
-
-            // Split into completed sub-groups using gap-based windowing.
-            // The last sub-group may be "open" (not yet expired) — keep it in carry-over.
-            var subGroupStart = 0;
-            var lastEmittedEnd = 0;
-
-            for (var i = 1; i <= bucket.Count; i++)
-            {
-                bool gapExceeded;
-                if (i == bucket.Count)
-                {
-                    // Check if the tail of the bucket is old enough to close.
-                    // If the last event is older than MaxEventGap from now, the group is closed.
-                    // Otherwise, keep it in carry-over for the next flush.
-                    var timeSinceLast = DateTime.UtcNow - bucket[i - 1].OccurredAt;
-                    gapExceeded = timeSinceLast > _condensationMaxGap;
-                }
-                else
-                {
-                    gapExceeded = (bucket[i].OccurredAt - bucket[i - 1].OccurredAt) > _condensationMaxGap;
-                }
-
-                if (!gapExceeded && i < bucket.Count)
-                    continue;
-
-                // If we're at the end and the gap hasn't expired, this sub-group stays in carry-over.
-                if (i == bucket.Count && !gapExceeded)
-                    break;
-
-                var subGroupSize = i - subGroupStart;
-                if (subGroupSize >= minGroupSize.Value)
-                {
-                    var condensed = BuildCondensedEvent(key.Type, bucket, subGroupStart, i);
-                    result.Add((condensed, nextSeq++));
-                }
-                else
-                {
-                    for (var j = subGroupStart; j < i; j++)
-                        result.Add((bucket[j], nextSeq++));
-                }
-
-                lastEmittedEnd = i;
-                subGroupStart = i;
-            }
-
-            // Keep only the un-emitted tail in the carry-over bucket.
-            if (lastEmittedEnd >= bucket.Count)
-            {
-                keysToRemove.Add(key);
-            }
-            else if (lastEmittedEnd > 0)
-            {
-                bucket.RemoveRange(0, lastEmittedEnd);
-            }
-        }
-
-        foreach (var key in keysToRemove)
-            _carryOverBuckets.Remove(key);
-
-        // Restore chronological order: sort by OccurredAt, then by original sequence as tiebreaker.
-        result.Sort((a, b) =>
-        {
-            var cmp = a.Log.OccurredAt.CompareTo(b.Log.OccurredAt);
-            return cmp != 0 ? cmp : a.Seq.CompareTo(b.Seq);
-        });
-
-        var output = new List<AdminLogEventWriteData>(result.Count);
-        foreach (var (log, _) in result)
-            output.Add(log);
-
-        return output;
-    }
-
-    /// <summary>
-    /// Flushes all carry-over condensation buckets, emitting whatever is accumulated
-    /// regardless of whether thresholds are met. Called on shutdown and round-end
-    /// to ensure no events are silently lost.
-    /// </summary>
-    private List<AdminLogEventWriteData> FlushCarryOver()
-    {
-        var flushed = new List<AdminLogEventWriteData>();
-
-        foreach (var (key, bucket) in _carryOverBuckets)
-        {
-            if (bucket.Count == 0)
-                continue;
-
-            bucket.Sort((a, b) => a.OccurredAt.CompareTo(b.OccurredAt));
-
-            var minGroupSize = LogCondensationPolicy.GetMinGroupSize(key.Type);
-
-            if (minGroupSize != null && bucket.Count >= minGroupSize.Value)
-            {
-                flushed.Add(BuildCondensedEvent(key.Type, bucket, 0, bucket.Count));
-            }
-            else
-            {
-                flushed.AddRange(bucket);
-            }
-        }
-
-        _carryOverBuckets.Clear();
-
-        // Sort by time before returning.
-        flushed.Sort((a, b) => a.OccurredAt.CompareTo(b.OccurredAt));
-        return flushed;
-    }
-
-    /// <summary>
-    /// Builds a single condensed event from a slice of the bucket.
-    /// Preserves the original <see cref="LogType"/> (no burst type rewriting).
-    /// Uses the maximum <see cref="LogImpact"/> across the group to avoid down-ranking.
-    /// </summary>
-    private AdminLogEventWriteData BuildCondensedEvent(
-        LogType type,
-        List<AdminLogEventWriteData> bucket,
-        int start,
-        int end)
-    {
-        var count = end - start;
-        var first = bucket[start];
-        var last = bucket[end - 1];
-        var windowSeconds = (last.OccurredAt - first.OccurredAt).TotalSeconds;
-
-        // Use the maximum impact across the group to avoid hiding medium events in a low burst.
-        var maxImpact = first.Impact;
-
-        // Merge all distinct players.
-        var allPlayers = new List<Guid>();
-        // Merge per-player roles (first role seen for each player wins).
-        Dictionary<Guid, AdminLogEntityRole>? allPlayerRoles = null;
-        // Merge all distinct entities, keeping role information. Use HashSet for O(1) dedup.
-        var seenEntities = new HashSet<(int EntityUid, AdminLogEntityRole Role)>();
-        var allEntities = new List<AdminLogEventEntityWriteData>();
-        // Collect distinct target/object entity names for the summary message.
-        var entityNameCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        // Sample messages for the JSON payload.
-        var sampleMessages = new List<string>(LogCondensationPolicy.MaxSampleMessages);
-
-        for (var i = start; i < end; i++)
-        {
-            var log = bucket[i];
-
-            if (log.Impact > maxImpact)
-                maxImpact = log.Impact;
-
-            foreach (var player in log.Players)
-                AddPlayer(allPlayers, player);
-
-            // Merge player role overrides from constituent events.
-            if (log.PlayerRoles != null)
-            {
-                allPlayerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-                foreach (var (guid, role) in log.PlayerRoles)
-                    allPlayerRoles.TryAdd(guid, role);
-            }
-
-            foreach (var entity in log.Entities)
-            {
-                // O(1) deduplicate entities by (uid, role).
-                if (seenEntities.Add((entity.EntityUid, entity.Role)))
-                    allEntities.Add(entity);
-
-                // Track target/object entity names for the summary.
-                if (entity.EntityName != null && entity.Role != AdminLogEntityRole.Actor)
-                {
-                    entityNameCounts.TryGetValue(entity.EntityName, out var c);
-                    entityNameCounts[entity.EntityName] = c + 1;
-                }
-            }
-
-            if (sampleMessages.Count < LogCondensationPolicy.MaxSampleMessages)
-                sampleMessages.Add(log.Message);
-        }
-
-        var typeName = type.ToString();
-
-        // Show at least 1s when all events occurred in the same tick.
-        var displaySeconds = Math.Max(1, (int) Math.Round(windowSeconds));
-
-        // Build human-readable summary message.
-        string summary;
-
-        if (entityNameCounts.Count > 0)
-        {
-            // Entity-aware summary: list the most-seen non-Actor entity names.
-            var topNames = entityNameCounts
-                .OrderByDescending(kv => kv.Value)
-                .Take(LogCondensationPolicy.MaxEntityNamesInSummary)
-                .Select(kv => kv.Value > 1 ? $"{kv.Key} ×{kv.Value}" : kv.Key);
-
-            var suffix = entityNameCounts.Count > LogCondensationPolicy.MaxEntityNamesInSummary
-                ? $", +{entityNameCounts.Count - LogCondensationPolicy.MaxEntityNamesInSummary} more"
-                : "";
-
-            summary = $"[×{count} in {displaySeconds}s] {typeName} ({string.Join(", ", topNames)}{suffix})";
-        }
-        else
-        {
-            // No non-Actor entity names available: fall back to the first event's message.
-            summary = $"[×{count} in {displaySeconds}s] {first.Message}";
-        }
-
-        // Build condensation metadata JSON.
-        var condensationMeta = new Dictionary<string, object?>
-        {
-            ["condensed"] = true,
-            ["count"] = count,
-            ["window_seconds"] = Math.Round(windowSeconds, 1),
-            ["first_at"] = first.OccurredAt.ToString("O"),
-            ["last_at"] = last.OccurredAt.ToString("O"),
-            ["log_type"] = typeName,
-            ["sample_messages"] = sampleMessages,
-        };
-
-        var json = JsonSerializer.SerializeToDocument(condensationMeta, _jsonOptions);
-
-        return new AdminLogEventWriteData
-        {
-            ServerId = first.ServerId,
-            ServerName = first.ServerName,
-            RoundId = first.RoundId,
-            Type = type,  // Preserve original type — no burst rewriting.
-            Impact = maxImpact,  // Use max impact across the group.
-            OccurredAt = first.OccurredAt,
-            Message = summary,
-            Json = json,
-            Players = allPlayers,
-            Entities = allEntities,
-            PlayerRoles = allPlayerRoles,
-        };
     }
 
     private async Task EnsureServerIdentity()

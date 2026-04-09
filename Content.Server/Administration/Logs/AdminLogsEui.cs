@@ -59,6 +59,8 @@ public sealed partial class AdminLogsEui : BaseEui
 
     private int CurrentRoundId => _e.System<GameTicker>().RoundId;
 
+    private bool IsPreRound => CurrentRoundId <= 0;
+
     public override async void Opened()
     {
         base.Opened();
@@ -71,6 +73,15 @@ public sealed partial class AdminLogsEui : BaseEui
         if (_filter.ServerId == null)
             _filter.ServerId = serverEntity.Id;
         _currentServerName = serverEntity.Name;
+
+        if (IsPreRound)
+        {
+            // No round exists yet — show server-scoped recent logs without a round filter.
+            _roundLogs = 0;
+            _isLoading = false;
+            StateDirty();
+            return;
+        }
 
         var roundId = _filter.Round ?? CurrentRoundId;
         await LoadFromDb(roundId);
@@ -122,27 +133,36 @@ public sealed partial class AdminLogsEui : BaseEui
                 _logSendCancellation = new CancellationTokenSource();
 
                 var roundId = request.RoundId ?? CurrentRoundId;
+                int? resolvedServerId;
 
-                int resolvedServerId;
-                try
+                if (roundId <= 0)
                 {
-                    resolvedServerId = await LoadFromDb(roundId);
+                    // Pre-round lobby — no round exists. Query by server only.
+                    var serverEntity = await _serverDbEntry.ServerEntity;
+                    resolvedServerId = serverEntity.Id;
                 }
-                catch (OperationCanceledException)
+                else
                 {
-                    return;
-                }
-                catch (Exception e)
-                {
-                    _sawmill.Error($"Failed to load admin logs for round {roundId}: {e}");
-                    return;
+                    try
+                    {
+                        resolvedServerId = await LoadFromDb(roundId);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        _sawmill.Error($"Failed to load admin logs for round {roundId}: {e}");
+                        return;
+                    }
                 }
 
                 _filter = new LogFilter
                 {
                     CancellationToken = _logSendCancellation.Token,
                     ServerId = resolvedServerId,
-                    Round = roundId,
+                    Round = roundId > 0 ? roundId : null,
                     Search = request.Search,
                     SearchMode = request.SearchMode,
                     Types = request.Types,
@@ -188,8 +208,22 @@ public sealed partial class AdminLogsEui : BaseEui
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogger.All(_filter, _adminLogListPool.Get),
-            _filter.CancellationToken);
+        List<SharedAdminLog> logs;
+        try
+        {
+            logs = await Task.Run(async () => await _adminLogger.All(_filter, _adminLogListPool.Get),
+                _filter.CancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Failed to query admin logs: {e.Message}");
+            SendMessage(new NewLogs(new List<SharedAdminLog>(), replace, false));
+            return;
+        }
 
         if (logs.Count > 0)
         {

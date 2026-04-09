@@ -375,18 +375,21 @@ namespace Content.Server.Database
                 var search = filter.Search;
                 return filter.SearchMode switch
                 {
-                    LogSearchMode.Regex => db.AdminLogEvent
+                    LogSearchMode.Regex when IsValidRegex(search) => db.AdminLogEvent
                         .Include(a => a.Payload)
                         .Where(a => Regex.IsMatch(a.Payload.Message, search, RegexOptions.IgnoreCase)),
+                    LogSearchMode.Regex => db.AdminLogEvent // Invalid regex, return empty
+                        .Include(a => a.Payload)
+                        .Where(a => false),
                     LogSearchMode.Wildcard => db.AdminLogEvent
                         .Include(a => a.Payload)
-                        .Where(a => EF.Functions.Like(a.Payload.Message, search)),
+                        .Where(a => EF.Functions.ILike(a.Payload.Message, search)),
                     LogSearchMode.Exact => db.AdminLogEvent
                         .Include(a => a.Payload)
-                        .Where(a => EF.Functions.Like(a.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
-                    _ => db.AdminLogEvent
+                        .Where(a => EF.Functions.ILike(a.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                    _ => db.AdminLogEvent // Keyword, use GIN-indexed SearchVector
                         .Include(a => a.Payload)
-                        .Where(a => EF.Functions.ToTsVector("english", a.Payload.Message)
+                        .Where(a => a.Payload.SearchVector
                             .Matches(EF.Functions.PlainToTsQuery("english", search)))
                 };
             }
@@ -395,6 +398,27 @@ namespace Content.Server.Database
         }
 
         protected override bool SupportsRegex => true;
+
+        protected override IQueryable<AdminAuditEvent> ApplyAuditLogSearch(
+            IQueryable<AdminAuditEvent> query,
+            string search,
+            LogSearchMode searchMode)
+        {
+            return searchMode switch
+            {
+                LogSearchMode.Regex when IsValidRegex(search) =>
+                    query.Where(log => Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase)),
+                LogSearchMode.Regex => // Invalid regex, return empty
+                    query.Where(_ => false),
+                LogSearchMode.Wildcard =>
+                    query.Where(log => EF.Functions.ILike(log.Message, search)),
+                LogSearchMode.Exact =>
+                    query.Where(log => EF.Functions.ILike(log.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                _ => // Keyword, use GIN-indexed SearchVector
+                    query.Where(log => log.SearchVector
+                        .Matches(EF.Functions.PlainToTsQuery("english", search)))
+            };
+        }
 
         protected override DateTime NormalizeDatabaseTime(DateTime time)
         {

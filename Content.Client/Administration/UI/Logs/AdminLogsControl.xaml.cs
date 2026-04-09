@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -9,6 +9,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.LineEdit;
+
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.Administration.UI.Logs;
 
@@ -22,6 +24,8 @@ public sealed partial class AdminLogsControl : Control
     private readonly Comparer<AdminLogPlayerButton> _adminLogPlayerButtonComparer =
         Comparer<AdminLogPlayerButton>.Create((a, b) =>
             string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+    private readonly List<SharedAdminLog> _allLogs = new();
 
     public AdminLogsControl()
     {
@@ -50,6 +54,10 @@ public sealed partial class AdminLogsControl : Control
         SearchModeRegex.OnPressed += SearchModeRegexPressed;
         SearchModeWildcard.OnPressed += SearchModeWildcardPressed;
         SearchModeExact.OnPressed += SearchModeExactPressed;
+        SearchModeKeyword.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("admin-logs-search-mode-keyword-tooltip") };
+        SearchModeRegex.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("admin-logs-search-mode-regex-tooltip") };
+        SearchModeWildcard.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("admin-logs-search-mode-wildcard-tooltip") };
+        SearchModeExact.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("admin-logs-search-mode-exact-tooltip") };
 
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
@@ -58,7 +66,7 @@ public sealed partial class AdminLogsControl : Control
     private int CurrentRound { get; set; }
 
     public int SelectedRoundId => RoundSpinBox.Value;
-    public string Search => LogSearch.Text;
+    public string Search => LogSearch.Text.Trim();
     public LogSearchMode SelectedSearchMode { get; private set; } = LogSearchMode.Keyword;
     private int ShownLogs { get; set; }
     private int TotalLogs { get; set; }
@@ -104,13 +112,7 @@ public sealed partial class AdminLogsControl : Control
         {
             ShowMetadata = false;
             ToggleMetadataButton.Pressed = false;
-
-            foreach (var child in LogsContainer.Children)
-            {
-                if (child is not AdminLogLabel log)
-                    continue;
-                log.SetShowMetadata(false);
-            }
+            UpdateLogs();
         }
     }
 
@@ -136,6 +138,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void LogSearchChanged(LineEditEventArgs args)
     {
+        UpdateSearchValidation();
         UpdateLogs();
     }
 
@@ -146,6 +149,8 @@ public sealed partial class AdminLogsControl : Control
         SearchModeRegex.Pressed = mode == LogSearchMode.Regex;
         SearchModeWildcard.Pressed = mode == LogSearchMode.Wildcard;
         SearchModeExact.Pressed = mode == LogSearchMode.Exact;
+        UpdateSearchValidation();
+        UpdateLogs();
     }
 
     private void SearchModeKeywordPressed(ButtonEventArgs args)
@@ -316,20 +321,20 @@ public sealed partial class AdminLogsControl : Control
 
     private void UpdateLogs()
     {
+        LogsContainer.RemoveAllChildren();
         ShownLogs = 0;
 
-        foreach (var child in LogsContainer.Children)
+        foreach (var log in _allLogs)
         {
-            if (child is not AdminLogLabel log)
-            {
+            if (!ShouldShowLog(log))
                 continue;
-            }
 
-            child.Visible = ShouldShowLog(log);
-            if (child.Visible)
-            {
-                ShownLogs++;
-            }
+            var separator = new HSeparator();
+            var logCopy = log;
+            var label = new AdminLogLabel(ref logCopy, separator, ShowMetadata);
+            LogsContainer.AddChild(label);
+            LogsContainer.AddChild(separator);
+            ShownLogs++;
         }
 
         UpdateCount();
@@ -347,56 +352,78 @@ public sealed partial class AdminLogsControl : Control
                button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
-    private bool LogMatchesPlayerFilter(AdminLogLabel label)
+    private bool LogMatchesPlayerFilter(SharedAdminLog log)
     {
-        if (label.Log.Players.Length == 0)
+        if (log.Players.Length == 0)
             return SelectedPlayers.Count == 0 || IncludeNonPlayerLogs;
 
-        return SelectedPlayers.Overlaps(label.Log.Players);
+        return SelectedPlayers.Overlaps(log.Players);
     }
 
-    private bool LogMatchesSearch(AdminLogLabel label)
+    private bool LogMatchesSearch(SharedAdminLog log)
     {
         if (string.IsNullOrWhiteSpace(LogSearch.Text))
             return true;
 
-        if (label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+        var search = LogSearch.Text;
+        var mode = SelectedSearchMode;
+
+        // All modes check the message
+        if (SearchModeHelper.Matches(log.Message, search, mode))
             return true;
 
-        foreach (var entity in label.Log.Entities)
+        // Only Keyword mode extends to entity fields
+        if (mode != LogSearchMode.Keyword)
+            return false;
+
+        foreach (var entity in log.Entities)
         {
-            if (entity.EntityUid.ToString().Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            if (SearchModeHelper.Matches(entity.EntityUid.ToString(), search, mode))
                 return true;
 
-            if (entity.Role.ToString().Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            if (SearchModeHelper.Matches(entity.Role.ToString(), search, mode))
                 return true;
 
-            if (entity.PrototypeId != null && entity.PrototypeId.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            if (entity.PrototypeId != null && SearchModeHelper.Matches(entity.PrototypeId, search, mode))
                 return true;
 
-            if (entity.EntityName != null && entity.EntityName.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+            if (entity.EntityName != null && SearchModeHelper.Matches(entity.EntityName, search, mode))
                 return true;
         }
 
         return false;
     }
 
-    private bool ShouldShowLog(AdminLogLabel label)
+    private void UpdateSearchValidation()
     {
-        // Check log type
-        if (!SelectedTypes.Contains(label.Log.Type))
+        var isRegex = SelectedSearchMode == LogSearchMode.Regex;
+        var text = LogSearch.Text;
+        var invalid = isRegex && !string.IsNullOrEmpty(text) && !SearchModeHelper.IsValidRegex(text);
+
+        if (invalid)
+        {
+            LogSearch.Modulate = Color.FromHex("#FF6666");
+            LogSearch.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("admin-logs-search-invalid-regex") };
+        }
+        else
+        {
+            LogSearch.Modulate = Color.White;
+            LogSearch.TooltipSupplier = null;
+        }
+    }
+
+    private bool ShouldShowLog(SharedAdminLog log)
+    {
+        if (!SelectedTypes.Contains(log.Type))
             return false;
 
-        // Check players
-        if (!LogMatchesPlayerFilter(label))
+        if (!LogMatchesPlayerFilter(log))
             return false;
 
-        // Check impact
-        if (!SelectedImpacts.Contains(label.Log.Impact))
+        if (!SelectedImpacts.Contains(log.Impact))
             return false;
 
-        // Check search
-        if (!LogMatchesSearch(label))
+        if (!LogMatchesSearch(log))
             return false;
 
         return true;
@@ -408,10 +435,8 @@ public sealed partial class AdminLogsControl : Control
 
         foreach (var child in LogsContainer.Children)
         {
-            if (child is not AdminLogLabel log)
-                continue;
-
-            log.SetShowMetadata(ShowMetadata);
+            if (child is AdminLogLabel label)
+                label.SetShowMetadata(ShowMetadata);
         }
     }
 
@@ -577,34 +602,27 @@ public sealed partial class AdminLogsControl : Control
         UpdateLogs();
     }
 
-    public void AddLogs(List<SharedAdminLog> logs)
+    public IEnumerable<SharedAdminLog> GetShownLogs()
     {
-        var span = CollectionsMarshal.AsSpan(logs);
-        for (var i = 0; i < span.Length; i++)
+        foreach (var child in LogsContainer.Children)
         {
-            ref var log = ref span[i];
-            var separator = new HSeparator();
-            var label = new AdminLogLabel(ref log, separator, ShowMetadata);
-            label.Visible = ShouldShowLog(label);
-
-            TotalLogs++;
-            if (label.Visible)
-            {
-                ShownLogs++;
-            }
-
-            LogsContainer.AddChild(label);
-            LogsContainer.AddChild(separator);
+            if (child is AdminLogLabel label)
+                yield return label.Log;
         }
-
-        UpdateCount();
     }
 
-    public void SetLogs(List<SharedAdminLog> logs)
+    public void AddLogs(IEnumerable<SharedAdminLog> logs)
     {
+        _allLogs.AddRange(logs);
+        UpdateLogs();
+    }
+
+    public void ClearLogs()
+    {
+        _allLogs.Clear();
         LogsContainer.RemoveAllChildren();
-        UpdateCount(0, 0);
-        AddLogs(logs);
+        ShownLogs = 0;
+        UpdateCount();
     }
 
     public void UpdateCount(int? shown = null, int? total = null, int? round = null)

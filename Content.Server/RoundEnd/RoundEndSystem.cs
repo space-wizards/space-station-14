@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
@@ -182,7 +183,8 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:player}{what}");
+                _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:player}{what}",
+                    entities: new[] { new AdminLogEntityRef(requester.Value, AdminLogEntityRole.Actor) });
             else
                 _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{what}");
 
@@ -252,7 +254,8 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:player}{what}");
+                _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:player}{what}",
+                    entities: new[] { new AdminLogEntityRef(requester.Value, AdminLogEntityRole.Actor) });
             else
                 _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{what}");
 

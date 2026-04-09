@@ -47,19 +47,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> AdminLogsHighLogPlaytime =
         CVarDef.Create("adminlogs.high_log_playtime", 5, CVar.SERVERONLY);
 
-    /// <summary>
-    /// Controls whether log condensation is enabled.
-    /// </summary>
-    public static readonly CVarDef<bool> AdminLogsCondensationEnabled =
-        CVarDef.Create("adminlogs.condensation_enabled", true, CVar.SERVERONLY);
-
-    /// <summary>
-    /// Maximum gap in seconds between two consecutive events in the same condensation
-    /// group.
-    /// </summary>
-    public static readonly CVarDef<float> AdminLogsCondensationMaxGap =
-        CVarDef.Create("adminlogs.condensation_max_gap", 10f, CVar.SERVERONLY);
-
     public static readonly CVarDef<bool> AdminAuditLogEnabled =
         CVarDef.Create("adminlogs.audit_enabled", true, CVar.SERVERONLY);
 

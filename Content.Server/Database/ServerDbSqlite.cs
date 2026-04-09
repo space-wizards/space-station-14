@@ -327,18 +327,38 @@ namespace Content.Server.Database
             if (!string.IsNullOrWhiteSpace(filter?.Search))
             {
                 var search = filter.Search;
-                return filter.SearchMode switch
+                switch (filter.SearchMode)
                 {
-                    LogSearchMode.Wildcard => db.AdminLogEvent
-                        .Include(log => log.Payload)
-                        .Where(log => EF.Functions.Like(log.Payload.Message, search)),
-                    LogSearchMode.Exact => db.AdminLogEvent
-                        .Include(log => log.Payload)
-                        .Where(log => EF.Functions.Like(log.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
-                    _ => db.AdminLogEvent
-                        .Include(log => log.Payload)
-                        .Where(log => EF.Functions.Like(log.Payload.Message, $"%{search}%"))
-                };
+                    case LogSearchMode.Regex when IsValidRegex(search):
+                        // SQLite has no native regex. Skip text filter so other filters
+                        // (round, server, type, impact) still narrow the result set.
+                        // Client-side SearchModeHelper applies the real regex to loaded results.
+                        return db.AdminLogEvent.Include(log => log.Payload);
+                    case LogSearchMode.Regex: // Invalid regex, return empty
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => false);
+                    case LogSearchMode.Wildcard:
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => EF.Functions.Like(log.Payload.Message, search));
+                    case LogSearchMode.Exact:
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => EF.Functions.Like(log.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\"));
+                    default: // Keyword — tokenize into words, require all present
+                    {
+                        IQueryable<AdminLogEvent> query = db.AdminLogEvent.Include(log => log.Payload);
+                        foreach (var word in search.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            var escaped = EscapeLikePattern(word);
+                            query = query.Where(log =>
+                                EF.Functions.Like(log.Payload.Message, $"%{escaped}%", "\\"));
+                        }
+
+                        return query;
+                    }
+                }
             }
 
             return db.AdminLogEvent;

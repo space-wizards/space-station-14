@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -39,7 +40,12 @@ public sealed partial class MeteorSystem : EntitySystem
         {
             threshold = mobThreshold.Value;
             if (HasComp<ActorComponent>(args.OtherEntity))
-                _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.OtherEntity:player} was struck by meteor {uid:ent} and killed instantly.");
+                _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.OtherEntity:player} was struck by meteor {uid:ent} and killed instantly.",
+                    entities: new[]
+                    {
+                        new AdminLogEntityRef(args.OtherEntity, AdminLogEntityRole.Victim),
+                        new AdminLogEntityRef(uid, AdminLogEntityRole.Actor)
+                    });
         }
         else if (_destructible.TryGetDestroyedAt(args.OtherEntity, out var destroyThreshold))
         {

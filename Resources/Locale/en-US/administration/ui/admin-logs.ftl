@@ -30,3 +30,12 @@ admin-logs-search-mode-keyword = Keyword
 admin-logs-search-mode-regex = Regex
 admin-logs-search-mode-wildcard = Wild
 admin-logs-search-mode-exact = Exact
+
+# Search mode tooltips
+admin-logs-search-mode-keyword-tooltip = Searches for logs containing all of the given words.
+admin-logs-search-mode-regex-tooltip = Matches log text with a regular expression (case-insensitive). Example: foo|bar, [0-9]+
+admin-logs-search-mode-wildcard-tooltip = Pattern match: % = any characters, _ = exactly one character.
+admin-logs-search-mode-exact-tooltip = Finds the exact text as a substring. No wildcards or special characters.
+
+# Regex validation
+admin-logs-search-invalid-regex = Invalid regex pattern

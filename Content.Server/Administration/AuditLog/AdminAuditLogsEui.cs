@@ -56,7 +56,20 @@ public sealed class AdminAuditLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
-        await LoadInitialData(CurrentRoundId, _queryCancellation.Token);
+        try
+        {
+            // During pre-round, pass 0 which LoadInitialData handles as "no round filter".
+            await LoadInitialData(CurrentRoundId, _queryCancellation.Token);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Warning("Failed to load initial audit log data: {Exception}", ex);
+            _isLoading = false;
+            StateDirty();
+        }
     }
 
     public override EuiStateBase GetNewState()
@@ -99,7 +112,7 @@ public sealed class AdminAuditLogsEui : BaseEui
                     _currentFilter = new AuditLogFilter
                     {
                         CancellationToken = _queryCancellation.Token,
-                        Round = roundId,
+                        Round = roundId > 0 ? roundId : null,
                         ServerId = _serverId,
                         Search = request.Search,
                         SearchMode = request.SearchMode,
@@ -118,6 +131,18 @@ public sealed class AdminAuditLogsEui : BaseEui
                 catch (OperationCanceledException)
                 {
                 }
+                catch (Exception ex)
+                {
+                    // DB query failure ie regex bad.
+                    // Return empty results rather than crashing the EUI.
+                    _sawmill.Warning("Audit log query failed: {Exception}", ex);
+                    SendMessage(new NewAuditLogs
+                    {
+                        Logs = new List<SharedAdminAuditLog>(),
+                        Replace = true,
+                        HasNext = false
+                    });
+                }
 
                 break;
 
@@ -133,6 +158,16 @@ public sealed class AdminAuditLogsEui : BaseEui
                 }
                 catch (OperationCanceledException)
                 {
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Warning("Audit log next-page query failed: {Exception}", ex);
+                    SendMessage(new NewAuditLogs
+                    {
+                        Logs = new List<SharedAdminAuditLog>(),
+                        Replace = false,
+                        HasNext = false
+                    });
                 }
 
                 break;
@@ -154,7 +189,7 @@ public sealed class AdminAuditLogsEui : BaseEui
         var countFilter = new AuditLogFilter
         {
             CancellationToken = cancel,
-            Round = roundId,
+            Round = roundId > 0 ? roundId : null,
             ServerId = _serverId
         };
 

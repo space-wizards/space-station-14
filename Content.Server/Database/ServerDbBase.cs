@@ -887,13 +887,24 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     }
 
                     // Single batch query to load all existing entity dimensions.
-                    var existingDims = dimKeys.Count == 0
-                        ? new Dictionary<(int, int, int), AdminLogEntityDimension>()
-                        : await db.DbContext.AdminLogEntityDimension
-                            .Where(d => dimKeys.Select(k => k.ServerId).Distinct().Contains(d.ServerId)
-                                     && dimKeys.Select(k => k.RoundId).Distinct().Contains(d.RoundId)
-                                     && dimKeys.Select(k => k.EntityUid).Distinct().Contains(d.EntityUid))
+                    // Pre-compute distinct values so they're evaluated once, not per-row.
+                    Dictionary<(int, int, int), AdminLogEntityDimension> existingDims;
+                    if (dimKeys.Count == 0)
+                    {
+                        existingDims = new Dictionary<(int, int, int), AdminLogEntityDimension>();
+                    }
+                    else
+                    {
+                        var serverIds = dimKeys.Select(k => k.ServerId).Distinct().ToArray();
+                        var roundIds = dimKeys.Select(k => k.RoundId).Distinct().ToArray();
+                        var entityUids = dimKeys.Select(k => k.EntityUid).Distinct().ToArray();
+
+                        existingDims = await db.DbContext.AdminLogEntityDimension
+                            .Where(d => serverIds.Contains(d.ServerId)
+                                     && roundIds.Contains(d.RoundId)
+                                     && entityUids.Contains(d.EntityUid))
                             .ToDictionaryAsync(d => (d.ServerId, d.RoundId, d.EntityUid), cancel);
+                    }
 
                     for (var i = 0; i < logs.Count; i++)
                     {
@@ -1063,6 +1074,54 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         protected abstract IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null);
 
+        /// <summary>
+        /// Applies search filtering to an audit log query. Override in provider-specific
+        /// subclasses to use native search features (e.g. PostgreSQL full-text search).
+        /// </summary>
+        protected virtual IQueryable<AdminAuditEvent> ApplyAuditLogSearch(
+            IQueryable<AdminAuditEvent> query,
+            string search,
+            LogSearchMode searchMode)
+        {
+            switch (searchMode)
+            {
+                case LogSearchMode.Regex when SupportsRegex && IsValidRegex(search):
+                    // Provider has native regex support and the pattern is valid.
+                    return query.Where(log =>
+                        Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase));
+                case LogSearchMode.Regex when !SupportsRegex && IsValidRegex(search):
+                    // Provider has no native regex (e.g. SQLite). Skip the text filter
+                    // entirely so other filters (round, server, action, severity) still
+                    // narrow the result set. Client-side SearchModeHelper applies the
+                    // real regex to the loaded results.
+                    return query;
+                case LogSearchMode.Regex:
+                    // Invalid regex pattern. Return no results rather than running a
+                    // misleading plain-text search. The client UI already shows a
+                    // validation error (red tint + tooltip).
+                    return query.Where(_ => false);
+                case LogSearchMode.Wildcard:
+                    return query.Where(log => EF.Functions.Like(log.Message, search));
+                case LogSearchMode.Exact:
+                {
+                    var escaped = EscapeLikePattern(search);
+                    return query.Where(log =>
+                        EF.Functions.Like(log.Message, $"%{escaped}%", "\\"));
+                }
+                default: // Keyword — tokenize into words, require all present
+                {
+                    foreach (var word in search.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        var escaped = EscapeLikePattern(word);
+                        query = query.Where(log =>
+                            EF.Functions.Like(log.Message, $"%{escaped}%", "\\"));
+                    }
+
+                    return query;
+                }
+            }
+        }
+
         protected virtual bool SupportsRegex => false;
 
         /// <summary>
@@ -1074,6 +1133,24 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Replace("\\", "\\\\")
                 .Replace("%", "\\%")
                 .Replace("_", "\\_");
+        }
+
+        /// <summary>
+        /// Validates that a string is a legal .NET regex. This is a best-effort check:
+        /// PostgreSQL uses a different regex engine, so a pattern that passes here could
+        /// still fail at query time.
+        /// </summary>
+        protected static bool IsValidRegex(string pattern)
+        {
+            try
+            {
+                _ = new Regex(pattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
 
         private IQueryable<AdminLogEvent> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
@@ -1367,41 +1444,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                // Extract condensation metadata from JSON payloads.
-                var isCondensed = false;
-                int? condensedCount = null;
-                string[]? sampleMessages = null;
-                if (log.Json != null)
-                {
-                    try
-                    {
-                        var root = log.Json.RootElement;
-                        if (root.TryGetProperty("condensed", out var condensedProp)
-                            && condensedProp.GetBoolean())
-                        {
-                            isCondensed = true;
-
-                            if (root.TryGetProperty("count", out var countProp)
-                                && countProp.TryGetInt32(out var count))
-                            {
-                                condensedCount = count;
-                            }
-
-                            if (root.TryGetProperty("sample_messages", out var samplesElement))
-                            {
-                                sampleMessages = samplesElement.EnumerateArray()
-                                    .Select(e => e.GetString() ?? "")
-                                    .ToArray();
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _opsLog.Warning($"Malformed condensation JSON in admin log {log.Id}: {ex.Message}");
-                    }
-                }
-
-                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, isCondensed, condensedCount, sampleMessages);
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities);
             }
         }
 
@@ -1481,25 +1524,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             if (!string.IsNullOrWhiteSpace(filter.Search))
             {
-                var search = filter.Search;
-                switch (filter.SearchMode)
-                {
-                    case LogSearchMode.Regex when SupportsRegex:
-                        query = query.Where(log => Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase));
-                        break;
-                    case LogSearchMode.Wildcard:
-                        query = query.Where(log => EF.Functions.Like(log.Message, search));
-                        break;
-                    case LogSearchMode.Exact:
-                    {
-                        var escaped = EscapeLikePattern(search);
-                        query = query.Where(log => EF.Functions.Like(log.Message, $"%{escaped}%", "\\"));
-                        break;
-                    }
-                    default:
-                        query = query.Where(log => EF.Functions.Like(log.Message, $"%{search}%"));
-                        break;
-                }
+                query = ApplyAuditLogSearch(query, filter.Search, filter.SearchMode);
             }
 
             if (!includePagination)

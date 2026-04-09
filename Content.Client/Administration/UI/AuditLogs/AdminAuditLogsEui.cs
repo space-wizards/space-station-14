@@ -97,7 +97,10 @@ public sealed class AdminAuditLogsEui : BaseEui
             return;
 
         if (newLogs.Replace)
-            _control.SetLogs(newLogs.Logs);
+        {
+            _control.ClearLogs();
+            _control.AddLogs(newLogs.Logs);
+        }
         else
             _control.AddLogs(newLogs.Logs);
 

@@ -38,11 +38,27 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
 
     private static readonly HashSet<string> RedactedArgCommands = new(StringComparer.OrdinalIgnoreCase)
     {
-        //this can be used to redact stuff if needed in the audeit log
+        //this can be used to redact stuff if needed in the audit log
+    };
+
+    //List of Commands to not log, note these are mostly things that are either already logged, or not important
+    private static readonly HashSet<string> ExcludedCommands = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "say",
+        "ooc",
+        "looc",
+        "dsay",
+        "me",
+        "whisper",
+        "tsay",
+        "radio",
+        "toggleready",
+        "joinround",
     };
 
     private ISawmill _sawmill = default!;
     private readonly ConcurrentQueue<AdminAuditEventWriteData> _logQueue = new();
+    private readonly ConcurrentQueue<AdminAuditEventWriteData> _preRoundQueue = new();
 
     private bool _enabled;
     private TimeSpan _queueSendDelay;
@@ -81,6 +97,10 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
         _consoleHost.AnyCommandExecuted -= OnAnyCommandExecuted;
         _vvManager.PropertyModified -= OnVVPropertyModified;
 
+        // Drain pre-round queue into main queue on shutdown so they're not lost.
+        while (_preRoundQueue.TryDequeue(out var log))
+            _logQueue.Enqueue(log);
+
         if (_logQueue.IsEmpty)
             return;
 
@@ -103,6 +123,9 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
         }
 
         if (!_adminManager.IsAdmin(session))
+            return;
+
+        if (ExcludedCommands.Contains(commandName))
             return;
 
         var logMessage = argStr;
@@ -187,9 +210,20 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
         _ = TryFlushLogs();
     }
 
-    public void RoundStarting(int roundId)
+    public async void RoundStarting(int roundId)
     {
         _roundId = roundId;
+
+        // Assign pre-round audit logs to this round and flush them immediately.
+        // This mirrors how admin logs handle pre-round attribution.
+        while (_preRoundQueue.TryDequeue(out var log))
+        {
+            log.RoundId = roundId;
+            _logQueue.Enqueue(log);
+        }
+
+        if (!_logQueue.IsEmpty)
+            await TryFlushLogs();
     }
 
     public void LogAction(
@@ -223,11 +257,12 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
             message = message.Replace("\0", "");
 
         var roundId = _roundId;
+        var isPreRound = roundId <= 0;
 
-        _logQueue.Enqueue(new AdminAuditEventWriteData
+        var writeData = new AdminAuditEventWriteData
         {
             ServerId = _serverId,
-            RoundId = roundId > 0 ? roundId : null,
+            RoundId = isPreRound ? null : roundId,
             AdminUserId = adminUserId,
             Action = action,
             Severity = severity,
@@ -238,7 +273,14 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
             TargetEntityName = targetEntityName,
             TargetEntityPrototype = targetEntityPrototype,
             Json = payload,
-        });
+        };
+
+        // Buffer pre-round logs until a round starts so they get assigned the correct
+        // round ID. This prevents NULL-round rows from leaking into every round query.
+        if (isPreRound)
+            _preRoundQueue.Enqueue(writeData);
+        else
+            _logQueue.Enqueue(writeData);
     }
 
     private async Task TryFlushLogs()

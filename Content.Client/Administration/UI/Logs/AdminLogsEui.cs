@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -134,13 +133,8 @@ public sealed partial class AdminLogsEui : BaseEui
             // Buffer is set to 4KB for performance reasons. As the average export of 1000 logs is ~200KB
             await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
             await writer.WriteLineAsync(CsvHeader);
-            foreach (var child in LogsControl.LogsContainer.Children)
+            foreach (var log in LogsControl.GetShownLogs())
             {
-                if (child is not AdminLogLabel logLabel || !child.Visible)
-                    continue;
-
-                var log = logLabel.Log;
-
                 // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
                 await writer.WriteAsync(log.Date.ToString("s", System.Globalization.CultureInfo.InvariantCulture));
@@ -253,7 +247,8 @@ public sealed partial class AdminLogsEui : BaseEui
             case NewLogs newLogs:
                 if (newLogs.Replace)
                 {
-                    LogsControl.SetLogs(newLogs.Logs);
+                    LogsControl.ClearLogs();
+                    LogsControl.AddLogs(newLogs.Logs);
                 }
                 else
                 {

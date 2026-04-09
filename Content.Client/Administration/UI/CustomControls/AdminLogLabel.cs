@@ -22,10 +22,6 @@ public sealed class AdminLogLabel : BoxContainer
     private static readonly Color MetadataLabelColor = new(90, 90, 100);
     private static readonly Color MetadataValueColor = new(140, 140, 150);
 
-    //Condensed badge
-    private static readonly Color CondensedBadgeColor = new(180, 140, 60);
-    private static readonly Color SampleMessageColor = new(140, 140, 150);
-
     //Entity role colors
     private static readonly Color RoleActorColor = new(120, 180, 240);
     private static readonly Color RoleTargetColor = new(230, 190, 70);
@@ -38,9 +34,7 @@ public sealed class AdminLogLabel : BoxContainer
 
 
     private readonly RichTextLabel _messageLabel;
-    private readonly RichTextLabel? _sampleLabel;
     private bool _showMetadata;
-    private bool _isExpanded;
 
     public AdminLogLabel(ref SharedAdminLog log, HSeparator separator, bool showMetadata = false)
     {
@@ -57,43 +51,12 @@ public sealed class AdminLogLabel : BoxContainer
         _messageLabel.SetMessage(BuildMessage(log, _showMetadata));
         AddChild(_messageLabel);
 
-        // Expandable for condensed entries
-        if (log.SampleMessages is { Length: > 0 })
-        {
-            _sampleLabel = new RichTextLabel { HorizontalExpand = true, Visible = false };
-            _sampleLabel.SetMessage(BuildSampleMessages(log.SampleMessages));
-            AddChild(_sampleLabel);
-
-            //Make clickable to expand/collapse
-            MouseFilter = MouseFilterMode.Stop;
-        }
-
         OnVisibilityChanged += VisibilityChanged;
     }
 
     public SharedAdminLog Log { get; }
 
     public HSeparator Separator { get; }
-
-    /// <summary>
-    /// Returns true if this log entry represents a condensed/burst event.
-    /// </summary>
-    public bool IsCondensed => Log.IsCondensed;
-
-    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-    {
-        base.KeyBindDown(args);
-
-        if (_sampleLabel == null)
-            return;
-
-        if (args.Function == EngineKeyFunctions.UIClick)
-        {
-            _isExpanded = !_isExpanded;
-            _sampleLabel.Visible = _isExpanded;
-            args.Handle();
-        }
-    }
 
     private static Color GetImpactColor(LogImpact impact)
     {
@@ -140,7 +103,6 @@ public sealed class AdminLogLabel : BoxContainer
     private static FormattedMessage BuildMessage(SharedAdminLog log, bool showMetadata)
     {
         var message = new FormattedMessage();
-        var isCondensed = log.IsCondensed;
 
         //Impact indicator
         var impactColor = GetImpactColor(log.Impact);
@@ -166,14 +128,6 @@ public sealed class AdminLogLabel : BoxContainer
         {
             message.PushColor(ServerNameColor);
             message.AddText($"[{log.ServerName}] ");
-            message.Pop();
-        }
-
-        //Condensed badge
-        if (isCondensed)
-        {
-            message.PushColor(CondensedBadgeColor);
-            message.AddText("● ");
             message.Pop();
         }
 
@@ -243,28 +197,6 @@ public sealed class AdminLogLabel : BoxContainer
             message.Pop();
             message.PushColor(ServerNameColor);
             message.AddText(log.ServerName);
-            message.Pop();
-        }
-
-        return message;
-    }
-
-
-    // Builds the expandable section showing original sample messages from a condensed entry.
-    private static FormattedMessage BuildSampleMessages(string[] sampleMessages)
-    {
-        var message = new FormattedMessage();
-
-        for (var i = 0; i < sampleMessages.Length; i++)
-        {
-            if (i > 0)
-                message.AddText("\n");
-
-            message.PushColor(MetadataLabelColor);
-            message.AddText("      ");
-            message.Pop();
-            message.PushColor(SampleMessageColor);
-            message.AddText(sampleMessages[i]);
             message.Pop();
         }
 

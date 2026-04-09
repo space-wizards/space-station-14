@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
@@ -84,7 +85,8 @@ public sealed partial class PrayerSystem : EntitySystem
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
-        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{target.AttachedEntity.Value:player} received subtle message from {source?.Name ?? "unknown source"}: {message}");
+        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{target.AttachedEntity.Value:player} received subtle message from {source?.Name ?? "unknown source"}: {message}",
+            entities: new[] { new AdminLogEntityRef(target.AttachedEntity.Value, AdminLogEntityRole.Target) });
     }
 
     /// <summary>
@@ -105,6 +107,7 @@ public sealed partial class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{sender.AttachedEntity.Value:player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{sender.AttachedEntity.Value:player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}",
+            entities: new[] { new AdminLogEntityRef(sender.AttachedEntity.Value, AdminLogEntityRole.Actor) });
     }
 }
