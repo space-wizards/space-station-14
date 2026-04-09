@@ -12,12 +12,6 @@ namespace Content.Shared.CardboardBox.Components;
 public sealed partial class CardboardBoxComponent : Component
 {
     /// <summary>
-    /// The person in control of this box
-    /// </summary>
-    [DataField("mover")]
-    public EntityUid? Mover;
-
-    /// <summary>
     /// The entity used for the box opening effect
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -59,14 +53,8 @@ public sealed partial class CardboardBoxComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class PlayBoxEffectMessage : EntityEventArgs
+public sealed class PlayBoxEffectMessage(NetEntity source, NetEntity mover) : EntityEventArgs
 {
-    public NetEntity Source;
-    public NetEntity Mover;
-
-    public PlayBoxEffectMessage(NetEntity source, NetEntity mover)
-    {
-        Source = source;
-        Mover = mover;
-    }
+    public NetEntity Source = source;
+    public NetEntity Mover = mover;
 }
