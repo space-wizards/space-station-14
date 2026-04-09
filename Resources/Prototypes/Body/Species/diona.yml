@@ -64,6 +64,8 @@
       Stomach: OrganDionaStomachNymphing
   - type: HumanoidProfile
     species: Diona
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Diona/eyelids.rsi
 
 - type: entity
   parent:

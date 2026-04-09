@@ -155,6 +155,8 @@
       Kidneys: OrganVoxKidneys
   - type: HumanoidProfile
     species: Vox
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Vox/eyelids.rsi
 
 - type: entity
   parent:
