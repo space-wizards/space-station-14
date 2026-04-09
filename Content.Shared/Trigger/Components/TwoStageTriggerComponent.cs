@@ -27,7 +27,7 @@ public sealed partial class TwoStageTriggerComponent : Component
     /// <summary>
     /// How long it takes for the second stage to be triggered.
     /// </summary>
-    [DataField(required:true), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TimeSpan TriggerDelay = TimeSpan.FromSeconds(10);
 
     /// <summary>
