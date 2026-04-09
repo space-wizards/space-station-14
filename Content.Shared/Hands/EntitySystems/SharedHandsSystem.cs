@@ -2,11 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Strip;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -26,10 +28,12 @@ public abstract partial class SharedHandsSystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly SharedStrippableSystem _strippableSystem = default!;
 
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
+    protected byte ActiveHandIdIndex;
 
     public override void Initialize()
     {
@@ -43,6 +47,20 @@ public abstract partial class SharedHandsSystem
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HandsComponent, CloningEvent>(OnClone);
+
+        // Needed for manual delta states.
+        EntityManager.ComponentFactory.RegisterNetworkedFields<HandsComponent>(
+            nameof(HandsComponent.ActiveHandId),
+            nameof(HandsComponent.Hands),
+            nameof(HandsComponent.SortedHands),
+            nameof(HandsComponent.ShowInHands),
+            nameof(HandsComponent.HandDisplacement),
+            nameof(HandsComponent.LeftHandDisplacement),
+            nameof(HandsComponent.RightHandDisplacement),
+            nameof(HandsComponent.CanBeStripped));
+
+        ActiveHandIdIndex = 0; // Corresponds to HandsComponentActiveHandDeltaState
     }
 
     public override void Shutdown()
@@ -62,8 +80,32 @@ public abstract partial class SharedHandsSystem
 
     private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
     {
+        foreach (var (handId, hand) in ent.Comp.StartingHands)
+            AddHand(ent.AsNullable(), handId, hand);
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
+    }
+
+    private void OnClone(Entity<HandsComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var targetComp = Factory.GetComponent<HandsComponent>();
+        // Don't copy the Hands or SortedHands datafields since those are dynamically added and removed on map init or through other components
+        targetComp.StartingHands = ent.Comp.StartingHands;
+        targetComp.DisableExplosionRecursion = ent.Comp.DisableExplosionRecursion;
+        targetComp.BaseThrowspeed = ent.Comp.BaseThrowspeed;
+        targetComp.ThrowRange = ent.Comp.ThrowRange;
+        targetComp.ShowInHands = ent.Comp.ShowInHands;
+        targetComp.NextThrowTime = ent.Comp.NextThrowTime;
+        targetComp.ThrowCooldown = ent.Comp.ThrowCooldown;
+        targetComp.HandDisplacement = ent.Comp.HandDisplacement;
+        targetComp.LeftHandDisplacement = ent.Comp.LeftHandDisplacement;
+        targetComp.RightHandDisplacement = ent.Comp.RightHandDisplacement;
+        targetComp.CanBeStripped = ent.Comp.CanBeStripped;
+        AddComp(args.CloneUid, targetComp, true);
     }
 
     /// <summary>
@@ -337,7 +379,7 @@ public abstract partial class SharedHandsSystem
         if (TryGetHeldItem(ent, handId, out var newHeld))
             RaiseLocalEvent(newHeld.Value, new HandSelectedEvent(ent));
 
-        Dirty(ent);
+        DirtyField(ent, nameof(HandsComponent.ActiveHandId));
         return true;
     }
 

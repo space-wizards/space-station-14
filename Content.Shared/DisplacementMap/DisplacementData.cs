@@ -13,4 +13,11 @@ public sealed partial class DisplacementData
 
     [DataField]
     public string? ShaderOverride = "DisplacedDraw";
+
+    // Shallow copy for networking purposes.
+    public DisplacementData(DisplacementData other)
+    {
+        SizeMaps = new(other.SizeMaps);
+        ShaderOverride = other.ShaderOverride;
+    }
 }

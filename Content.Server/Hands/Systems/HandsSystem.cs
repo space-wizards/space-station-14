@@ -70,7 +70,28 @@ namespace Content.Server.Hands.Systems
 
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
-            args.State = new HandsComponentState(hands);
+            // If we only switch hands don't send a full state.
+            if (args.FromTick > hands.CreationTick && hands.LastFieldUpdate >= args.FromTick)
+            {
+                var fields = EntityManager.GetModifiedFields(hands, args.FromTick);
+
+                if (fields == 1 << ActiveHandIdIndex)
+                {
+                    args.State = new HandsComponentActiveHandDeltaState(hands.ActiveHandId);
+                    return;
+                }
+            }
+
+            // Get full state.
+            args.State = new HandsComponentState(
+                hands.ActiveHandId,
+                hands.Hands,
+                hands.SortedHands,
+                hands.ShowInHands,
+                hands.HandDisplacement,
+                hands.LeftHandDisplacement,
+                hands.RightHandDisplacement,
+                hands.CanBeStripped);
         }
 
 

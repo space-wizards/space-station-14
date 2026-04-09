@@ -9,13 +9,14 @@
   id: Body
   components:
   # general
+  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
   - Grammar # Pronouns
+  - Hands # diplacements and intrinsic hands
   - HumanoidProfile # Age, Sex, Gender
   - NpcFactionMember
-  - CreamPied
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
