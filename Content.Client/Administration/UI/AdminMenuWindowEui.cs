@@ -1,7 +1,6 @@
 using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
@@ -13,30 +12,26 @@ namespace Content.Client.Administration.UI
         public AdminAnnounceEui()
         {
             _window = new AdminAnnounceWindow();
-            _window.OnClose += () => SendMessage(new CloseEuiMessage());
-            _window.AnnounceButton.OnPressed += AnnounceButtonOnOnPressed;
-        }
-
-        private void AnnounceButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
+            _window.AnnounceButton.OnPressed += _ => 
             {
-                Announcement = Rope.Collapse(_window.Announcement.TextRope),
-                Announcer =  _window.Announcer.Text,
-                AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
-                CloseAfter = !_window.KeepWindowOpen.Pressed,
-            });
+                var announcement = Rope.Collapse(_window.Announcement.TextRope).Trim();
+                if (string.IsNullOrWhiteSpace(announcement))
+                    return;
 
+                SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
+                {
+                    Announcement = announcement,
+                    Announcer = _window.Announcer.Text.Trim(),
+                    AnnounceType = (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
+                    CloseAfter = !_window.KeepWindowOpen.Pressed,
+                    ColorHex = AdminAnnounceHelpers.CleanHex(_window.ColorHex.Text),
+                    SoundPath = _window.SoundPath.Text.Trim(),
+                    Sender = _window.Sender.Text.Trim(),
+                });
+            };
         }
 
-        public override void Opened()
-        {
-            _window.OpenCentered();
-        }
-
-        public override void Closed()
-        {
-            _window.Close();
-        }
+        public override void Opened() => _window.OpenCentered();
+        public override void Closed() => _window.Close();
     }
 }

@@ -6,6 +6,11 @@ admin-announce-button = Announce
 admin-announce-type-station = Station
 admin-announce-type-server = Server
 admin-announce-keep-open = Keep open
+admin-announce-color-placeholder = Color (HEX)
+admin-announce-sound-placeholder = Audio Path
+admin-announce-sender-placeholder = Signature (Sent by...)
+admin-announce-sender-default = CentComm Operator
+admin-announce-sent-by = Sent by
 
 cmd-announceui-desc = Opens the announcement UI.
 cmd-announceui-help = Usage: announceui
