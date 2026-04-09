@@ -214,4 +214,16 @@ public sealed partial class RevenantComponent : Component
     [DataField("harvestingState")]
     public string HarvestingState = "harvesting";
     #endregion
+
+    /// <summary>
+    /// The scaling for passively chilling surroundings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("chillScaling")]
+    public FixedPoint2 ChillScaling = 7000;
+
+    /// <summary>
+    /// The upper limit for essence when passively chilling surroundings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("chillUpperBound")]
+    public FixedPoint2 ChillUpperBound = 500;
 }

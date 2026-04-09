@@ -191,12 +191,26 @@ public sealed partial class RevenantSystem : EntitySystem
         }
     }
 
+    private void ChillArea(EntityUid uid, RevenantComponent rev)
+    {
+        var effectiveEssence = Math.Clamp(rev.Essence.Int(), 0, rev.ChillUpperBound.Float());
+        // Parabolic curve based on essence, more essence = more delta q, flattening as upper bound is reached
+        var temperatureChange = 200 / rev.ChillScaling.Float() * MathF.Pow(effectiveEssence - rev.ChillUpperBound.Float(), 2) - rev.ChillScaling.Float();
+
+        var mixture = _atmosphere.GetContainingMixture(uid, true, true);
+
+        if (mixture is { })
+        {
+            _atmosphere.AddHeat(mixture, temperatureChange);
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<RevenantComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var rev, out var transform))
+        var query = EntityQueryEnumerator<RevenantComponent>();
+        while (query.MoveNext(out var uid, out var rev))
         {
             rev.Accumulator += frameTime;
 
@@ -209,19 +223,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
             }
 
-            var effectiveEssence = Math.Clamp(rev.Essence.Int(), 0, 500);
-            // Parabolic curve with range of 500 to 1000 on the clamped interval of 0 to 500 essence
-            var temperatureChange = -.002f * MathF.Pow(effectiveEssence - 500, 2) + 1000;
-
-            var grid = transform.GridUid;
-            var map = transform.MapUid;
-            var indices = _transform.GetGridTilePositionOrDefault((uid, transform));
-            var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
-
-            if (mixture is { })
-            {
-                mixture.Temperature -= temperatureChange * frameTime;
-            }
+            ChillArea(uid, rev);
         }
     }
 }
