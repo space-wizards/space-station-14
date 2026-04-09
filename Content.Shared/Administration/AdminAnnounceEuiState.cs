@@ -6,8 +6,8 @@ namespace Content.Shared.Administration
 {
     public static class AdminAnnounceDefaults
     {
-        public const string DefaultColorHex = "1d8bad";
-        public const string ServerColorHex = "f0973d";
+        public const string DefaultColorHex = "#1d8bad";
+        public const string ServerColorHex = "#f0973d";
         public const string DefaultSoundPath = "/Audio/Announcements/announce.ogg";
     }
 

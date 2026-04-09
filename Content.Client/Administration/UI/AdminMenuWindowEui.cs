@@ -1,6 +1,6 @@
+using Content.Client.Administration.UI.AdminAnnounce;
 using Content.Client.Eui;
 using Content.Shared.Administration;
-using Content.Shared.Eui;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
@@ -24,7 +24,7 @@ namespace Content.Client.Administration.UI
                     Announcer = _window.Announcer.Text.Trim(),
                     AnnounceType = (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
                     CloseAfter = !_window.KeepWindowOpen.Pressed,
-                    ColorHex = AdminAnnounceHelpers.CleanHex(_window.ColorHex.Text),
+                    ColorHex = _window.GetCurrentHex(),
                     SoundPath = _window.SoundPath.Text.Trim(),
                     Sender = _window.Sender.Text.Trim(),
                 });

@@ -21,7 +21,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,0,4">
             <BoxContainer Orientation="Horizontal" Margin="2">
                 <Button Name="ColorPreview" Access="Public" Text=" " MinSize="30, 30" Margin="0,0,4,0" />
-                <LineEdit Name="ColorHex" Access="Public" MinWidth="135" /> 
+                <Button Name="OpenPaletteButton" Text="{Loc admin-announce-palette-button}" MinWidth="135" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="2">
                 <LineEdit Name="SoundPath" 

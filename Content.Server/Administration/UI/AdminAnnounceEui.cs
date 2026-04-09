@@ -48,12 +48,12 @@ namespace Content.Server.Administration.UI
             if (string.IsNullOrWhiteSpace(announcement))
                 return;
 
-            var hex = AdminAnnounceHelpers.CleanHex(doAnnounce.ColorHex);
+            var hex = doAnnounce.ColorHex.Trim();
             var fallbackHex = doAnnounce.AnnounceType == AdminAnnounceType.Server 
                 ? AdminAnnounceDefaults.ServerColorHex 
                 : AdminAnnounceDefaults.DefaultColorHex;
 
-            var color = Color.TryFromHex("#" + hex) ?? Color.FromHex("#" + fallbackHex);
+            var color = Color.TryFromHex(hex) ?? Color.FromHex(fallbackHex);
 
             switch (doAnnounce.AnnounceType)
             {
@@ -67,7 +67,7 @@ namespace Content.Server.Administration.UI
                         : doAnnounce.Announcer.Trim();
 
                     var sound = SharedChatSystem.DefaultAnnouncementSound;
-                    var soundPath = doAnnounce.SoundPath?.Trim();
+                    var soundPath = doAnnounce.SoundPath.Trim();
                     
                     if (!string.IsNullOrEmpty(soundPath) && _res.ContentFileExists(soundPath))
                         sound = new SoundPathSpecifier(soundPath);
