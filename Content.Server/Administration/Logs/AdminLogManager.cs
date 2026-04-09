@@ -121,19 +121,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         _configuration.OnValueChanged(CCVars.AdminLogsHighLogPlaytime,
             value => _highImpactLogPlaytime = value, true);
 
-        _ = Task.Run(async () =>
-        {
-            //this fixes a race
-            try
-            {
-                await EnsureServerIdentity();
-            }
-            catch (Exception e)
-            {
-                _sawmill.Warning($"Failed to resolve admin-log server identity during initialization: {e}");
-            }
-        });
-
         if (_metricsEnabled)
         {
             PreRoundQueueCapReached.Set(0);

@@ -78,18 +78,6 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
 
         _consoleHost.AnyCommandExecuted += OnAnyCommandExecuted;
         _vvManager.PropertyModified += OnVVPropertyModified;
-
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                await EnsureServerIdentity();
-            }
-            catch (Exception e)
-            {
-                _sawmill.Warning($"Failed to resolve audit-log server identity during initialization: {e}");
-            }
-        });
     }
 
     public void Shutdown()
