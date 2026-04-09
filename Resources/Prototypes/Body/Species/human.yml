@@ -85,6 +85,8 @@
       Kidneys: OrganHumanKidneys
   - type: HumanoidProfile
     species: Human
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
 
 - type: entity
   parent:

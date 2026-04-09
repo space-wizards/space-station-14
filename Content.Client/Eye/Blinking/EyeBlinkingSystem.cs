@@ -1,3 +1,4 @@
+using Content.Shared.Body;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinking;
@@ -236,15 +237,18 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         state.IsClosed = true;
         state.IsCompleteBlink = false;
 
-        var blinkColor = Color.Transparent;
+        var blinkColor = Color.Red;
 
-        if (ent.Comp.EyelidsColor == null && TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+        if (ent.Comp.EyelidsColor == null && TryComp<BodyComponent>(ent.Owner, out var body))
         {
+            var visualBody = body.Organs?.ContainedEntities.Select(organ => CompOrNull<VisualOrganComponent>(organ)).FirstOrDefault(comp => comp != null);
+
+            var skinColor = visualBody?.Profile.SkinColor ?? Color.Red;
             var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
             blinkColor = new Color(
-                humanoid.SkinColor.R * blinkFade,
-                humanoid.SkinColor.G * blinkFade,
-                humanoid.SkinColor.B * blinkFade);
+                skinColor.R * blinkFade,
+                skinColor.G * blinkFade,
+                skinColor.B * blinkFade);
         }
         else if (ent.Comp.EyelidsColor != null)
         {
