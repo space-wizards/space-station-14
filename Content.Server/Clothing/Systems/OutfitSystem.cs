@@ -94,7 +94,7 @@ public sealed class OutfitSystem : EntitySystem
             {
                 foreach (var entProto in storageContainers)
                 {
-                    var spawnedEntity = Spawn(entProto, coords);
+                    var spawnedEntity = SpawnAtPosition(entProto, coords);
                     _itemSlotsSystem.TryInsertEmpty((slotEnt.Value, itemSlots), spawnedEntity, null, excludeUserAudio: true);
                 }
             }
