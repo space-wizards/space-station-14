@@ -24,18 +24,22 @@
       shader: unshaded
       map: ["light"]
   - type: Appearance
+  - type: BatteryVisuals
   - type: GenericVisualizer
     visuals:
-      enum.PowerDeviceVisuals.Powered:
+      enum.BatteryVisuals.Charging:
         base:
-          True: { visible: false }
-          False: { visible: true }
+          Charging: { visible: false }
+          Decharging: { visible: true }
+          Constant: { visible: true }
         running:
-          True: { visible: true }
-          False: { visible: false }
+          Charging: { visible: true }
+          Decharging: { visible: false }
+          Constant: { visible: false }
         light:
-          True: { visible: true }
-          False: { visible: false }
+          Charging: { visible: true }
+          Decharging: { visible: false }
+          Constant: { visible: false }
   - type: Destructible
     thresholds:
     - trigger:
