@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
@@ -10,7 +11,6 @@ using Content.Server.Salvage.Expeditions;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
@@ -36,7 +36,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly IPrototypeManager _prototypeManager;
-    private readonly SharedAnchorableSystem _anchorable;
+    private readonly AnchorableSystem _anchorable;
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
@@ -54,7 +54,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         IGameTiming timing,
         ILogManager logManager,
         IPrototypeManager protoManager,
-        SharedAnchorableSystem anchorable,
+        AnchorableSystem anchorable,
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,
