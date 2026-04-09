@@ -50,7 +50,10 @@ public static class SearchModeHelper
 
         try
         {
+            // Pattern is user-supplied at runtime — cannot be source-generated.
+#pragma warning disable RA0026
             _ = new Regex(pattern, RegexOptions.None, RegexTimeout);
+#pragma warning restore RA0026
             return true;
         }
         catch (ArgumentException)
@@ -63,7 +66,9 @@ public static class SearchModeHelper
     {
         try
         {
+#pragma warning disable RA0026
             return Regex.IsMatch(text, pattern, RegexOptions.IgnoreCase, RegexTimeout);
+#pragma warning restore RA0026
         }
         catch
         {
@@ -78,6 +83,7 @@ public static class SearchModeHelper
     /// </summary>
     private static bool TryWildcardMatch(string text, string pattern)
     {
+#pragma warning disable RA0026
         var regexPattern = "^" + Regex.Escape(pattern)
             .Replace("%", ".*")
             .Replace("_", ".") + "$";
@@ -85,6 +91,7 @@ public static class SearchModeHelper
         try
         {
             return Regex.IsMatch(text, regexPattern, RegexOptions.IgnoreCase | RegexOptions.Singleline, RegexTimeout);
+#pragma warning restore RA0026
         }
         catch
         {
