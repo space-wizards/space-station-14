@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>..\..\..\..\bin\MapEditor.RTBridge\</OutputPath>
+    <RootNamespace>MapEditor.RTBridge</RootNamespace>
+    <AssemblyName>MapEditor.RTBridge</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Pull in Robust.Client + Robust.Shared via RT's own import files. -->
+  <Import Project="..\..\..\..\RobustToolbox\Imports\Client.props" />
+  <Import Project="..\..\..\..\RobustToolbox\Imports\Shared.props" />
+
+  <ItemGroup>
+    <!-- Content.Client brings content prototypes, components, and map loaders. -->
+    <ProjectReference Include="..\..\..\..\Content.Client\Content.Client.csproj" />
+    <ProjectReference Include="..\..\..\..\Content.Shared\Content.Shared.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,20 @@
+<Window x:Class="MapEditor.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SS14 Map Editor (Experimental)"
+        Height="720" Width="1280"
+        Background="#0f0f14">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#1a1a2e" BorderBrush="#2a2a3e" BorderThickness="0,0,1,0">
+            <StackPanel Margin="12">
+                <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
+                <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" Background="#000" />
+    </Grid>
+</Window>
