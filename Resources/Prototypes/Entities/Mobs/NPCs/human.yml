@@ -78,7 +78,6 @@
   description: I think they're dead.
   components:
   - type: RandomHumanoidAppearance
-    randomizeName: false
   - type: Damageable
     damage:
       types:
