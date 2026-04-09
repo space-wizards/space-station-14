@@ -11,19 +11,19 @@ namespace Content.Shared.Eye.Blinking;
 /// </summary>
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingComponent : Component
 {
     /// <summary>
     /// The minimum duration of a single blink, in seconds.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MinBlinkDuration = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
     /// The maximum duration of a single blink, in seconds.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MaxBlinkDuration = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
@@ -35,19 +35,19 @@ public sealed partial class EyeBlinkingComponent : Component
     /// <summary>
     /// The minimum interval between blinks, in seconds.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MinBlinkInterval = TimeSpan.FromSeconds(3f);
 
     /// <summary>
     /// The maximum interval between blinks, in seconds.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MaxBlinkInterval = TimeSpan.FromSeconds(10f);
 
     /// <summary>
     /// The multiplier applied to the skin color to calculate the eyelid shading.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BlinkSkinColorMultiplier = 0.9f;
 
     /// <summary>
@@ -65,7 +65,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// <summary>
     /// The prototype ID of the emote that triggers a forced blink.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<ProtoId<EmotePrototype>> BlinkEmoteId = new() { "Blink" };
 
     /// <summary>
@@ -79,14 +79,14 @@ public sealed partial class EyeBlinkingComponent : Component
     /// If null, the color is derived from <see cref="HumanoidAppearanceComponent.SkinColor"/> multiplied by <see cref="BlinkSkinColorMultiplier"/>.
     /// Entities without appearance components will have transparent eyelids.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Color? EyelidsColor = null;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0.05f);
 
-    [DataField]
-    public ResPath? EyelidsSprite { get; private set; }
+    [DataField, AutoNetworkedField]
+    public ResPath? EyelidsSprite { get; set; }
 }

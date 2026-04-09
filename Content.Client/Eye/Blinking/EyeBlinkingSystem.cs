@@ -28,14 +28,21 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, UpdateEyelidsAfterCloningEvent>(OnUpdateEyelidsAfterCloningEventHandler);
+        //SubscribeLocalEvent<EyeBlinkingComponent, UpdateEyelidsAfterCloningEvent>(OnUpdateEyelidsAfterCloningEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
+
     }
 
-    private void OnUpdateEyelidsAfterCloningEventHandler(Entity<EyeBlinkingComponent> ent, ref UpdateEyelidsAfterCloningEvent ev)
+    private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         InitEyeBlinking(ent);
     }
+
+    //private void OnUpdateEyelidsAfterCloningEventHandler(Entity<EyeBlinkingComponent> ent, ref UpdateEyelidsAfterCloningEvent ev)
+    //{
+    //    InitEyeBlinking(ent);
+    //}
 
     private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
     {
