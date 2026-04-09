@@ -9,7 +9,7 @@
     price: 1000
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
   - type: TimerTrigger
@@ -19,7 +19,7 @@
     delay: 3.6 # 6 beeps
     beepInterval: 0.6
     beepSound:
-      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
   - type: EmitSoundOnTrigger
@@ -27,7 +27,7 @@
     keysIn:
     - timer
     sound:
-      path: /Audio/Effects/Grenades/Supermatter/supermatter.start.ogg #0.804
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg #0.804
       params:
         volume: 5
   # - type: AnchorOnTrigger
@@ -88,7 +88,7 @@
   - type: EmitSoundOnTrigger
     positional: true
     sound:
-      path: /Audio/Effects/Grenades/Supermatter/whitehole.start.ogg
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
       params:
         volume: 5
   - type: SpawnOnTrigger
