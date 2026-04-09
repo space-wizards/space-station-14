@@ -14,6 +14,10 @@
             <StackPanel Margin="12">
                 <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
                 <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
+                <TextBlock x:Name="StatusText"
+                           Foreground="#7a7a8e" FontSize="11"
+                           Margin="0,16,0,0" TextWrapping="Wrap"
+                           Text="Waiting for viewport HWND..." />
             </StackPanel>
         </Border>
         <local:RtHwndHost x:Name="RtViewport" Grid.Column="1" />
