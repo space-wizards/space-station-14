@@ -1087,8 +1087,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             {
                 case LogSearchMode.Regex when SupportsRegex && IsValidRegex(search):
                     // Provider has native regex support and the pattern is valid.
+#pragma warning disable RA0026
                     return query.Where(log =>
                         Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase));
+#pragma warning restore RA0026
                 case LogSearchMode.Regex when !SupportsRegex && IsValidRegex(search):
                     // Provider has no native regex (e.g. SQLite). Skip the text filter
                     // entirely so other filters (round, server, action, severity) still

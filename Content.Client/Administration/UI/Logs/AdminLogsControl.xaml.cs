@@ -648,31 +648,4 @@ public sealed partial class AdminLogsControl : Control
         );
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        TypeSearch.OnTextChanged -= TypeSearchChanged;
-        PlayerSearch.OnTextChanged -= PlayerSearchChanged;
-        LogSearch.OnTextChanged -= LogSearchChanged;
-
-        SelectAllTypesButton.OnPressed -= SelectAllTypes;
-        SelectNoTypesButton.OnPressed -= SelectNoTypes;
-
-        IncludeNonPlayersButton.OnPressed -= IncludeNonPlayers;
-        SelectAllPlayersButton.OnPressed -= SelectAllPlayers;
-        SelectNoPlayersButton.OnPressed -= SelectNoPlayers;
-
-        ToggleMetadataButton.OnPressed -= ToggleMetadataPressed;
-
-        RoundSpinBox.IsValid = null;
-        RoundSpinBox.ValueChanged -= RoundSpinBoxChanged;
-
-        ResetRoundButton.OnPressed -= ResetRoundPressed;
-
-        SearchModeKeyword.OnPressed -= SearchModeKeywordPressed;
-        SearchModeRegex.OnPressed -= SearchModeRegexPressed;
-        SearchModeWildcard.OnPressed -= SearchModeWildcardPressed;
-        SearchModeExact.OnPressed -= SearchModeExactPressed;
-    }
 }

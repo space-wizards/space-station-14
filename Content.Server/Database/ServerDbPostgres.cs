@@ -375,9 +375,11 @@ namespace Content.Server.Database
                 var search = filter.Search;
                 return filter.SearchMode switch
                 {
+#pragma warning disable RA0026
                     LogSearchMode.Regex when IsValidRegex(search) => db.AdminLogEvent
                         .Include(a => a.Payload)
                         .Where(a => Regex.IsMatch(a.Payload.Message, search, RegexOptions.IgnoreCase)),
+#pragma warning restore RA0026
                     LogSearchMode.Regex => db.AdminLogEvent // Invalid regex, return empty
                         .Include(a => a.Payload)
                         .Where(a => false),
@@ -406,8 +408,10 @@ namespace Content.Server.Database
         {
             return searchMode switch
             {
+#pragma warning disable RA0026
                 LogSearchMode.Regex when IsValidRegex(search) =>
                     query.Where(log => Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase)),
+#pragma warning restore RA0026
                 LogSearchMode.Regex => // Invalid regex, return empty
                     query.Where(_ => false),
                 LogSearchMode.Wildcard =>

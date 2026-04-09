@@ -54,7 +54,7 @@ public sealed class AdminLogLabel : BoxContainer
         OnVisibilityChanged += VisibilityChanged;
     }
 
-    public SharedAdminLog Log { get; }
+    public new SharedAdminLog Log { get; }
 
     public HSeparator Separator { get; }
 
