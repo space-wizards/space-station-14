@@ -286,26 +286,21 @@
         amount: 4
 
 - type: entity
-  id: CrateNPCSheep
   parent: CrateLivestock
+  id: CrateNPCSheep
   name: sheep crate
   description: A crate containing a single sheep.
   components:
-  - type: StorageFill
-    contents:
-      - id: MobSheep
-        prob: 1
-        orGroup: MobSheep
-      - id: MobSheepRainbow
-        prob: 0.1
-        orGroup: MobSheep
-      - id: MobSheepSpace
-        prob: 0.1
-        orGroup: MobSheep
-        # teehee get plushied
-      - id: PlushieSheep
-        prob: 0.001
-        orGroup: MobSheep
-      - id: PlushieSpaceSheep
-        prob: 0.001
-        orGroup: MobSheep
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+        - id: MobSheep
+        - id: MobSheepRainbow
+          weight: 0.1
+        - id: MobSheepSpace
+          weight: 0.1
+        - id: PlushieSheep # teehee get plushied
+          weight: 0.001
+        - id: PlushieSpaceSheep
+          weight: 0.001

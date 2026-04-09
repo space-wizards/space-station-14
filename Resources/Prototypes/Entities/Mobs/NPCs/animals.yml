@@ -1119,11 +1119,11 @@
       task: RuminantHostileCompound
 
 - type: entity
-  name: sheepBase
+  abstract: true
   parent: BaseMobRuminant
   id: MobSheepBase
+  name: sheepBase
   description: A sheep.
-  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1247,44 +1247,44 @@
     baseSprintSpeed: 0.8
 
 - type: entity
-  name: sheep
   parent: [MobSheepBase, SimpleMobBase]
   id: MobSheep
+  name: sheep
   description: An adorable genetically engineered chemical factory producing milk and cotton.
 
 - type: entity
-  name: rainbow sheep
   parent: MobSheep
   id: MobSheepRainbow
+  name: rainbow sheep
   description: A sheep; this one seems... glowy.
   components:
-    - type: PointLight
-      radius: 1.5
-      energy: 0.5
-    - type: RgbLightController
-      layers: [ 1 ]
-    - type: Wooly
-      reagentId: SpaceDrugs
-    - type: Shearable
-      targetSolutionName: wool
-      shearedProductID: LeavesCannabisRainbow
-      productsPerSolution: 0.2
-      toolQuality: Cutting
-      shearableMarkupText: rainbow-sheep-shearable-examine-markup
-      unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
-      verb: rainbow-sheep-shearable-verb
-    - type: SolutionContainerManager
-      solutions:
-        udder:
-          maxVol: 250
-          reagents:
-          - ReagentId: MilkSheep
-            Quantity: 30
-        wool:
-          maxVol: 250
-          reagents:
-          - ReagentId: SpaceDrugs
-            Quantity: 25
+  - type: PointLight
+    radius: 1.5
+    energy: 0.5
+  - type: RgbLightController
+    layers: [ 1 ]
+  - type: Wooly
+    reagentId: SpaceDrugs
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductID: LeavesCannabisRainbow
+    productsPerSolution: 0.2
+    toolQuality: Cutting
+    shearableMarkupText: rainbow-sheep-shearable-examine-markup
+    unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
+    verb: rainbow-sheep-shearable-verb
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkSheep
+          Quantity: 30
+      wool:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 25
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity

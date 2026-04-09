@@ -1202,42 +1202,24 @@
     heldPrefix: sheeptoy
     storedRotation: -90
   - type: EmitSoundOnUse
-    sound:
+    sound: &PlushieSheepSound
       collection: Sheep
       params:
         variation: 0.05
   - type: EmitSoundOnLand
-    sound:
-      collection: Sheep
-      params:
-        variation: 0.05
+    sound: *PlushieSheepSound
   - type: EmitSoundOnActivate
-    sound:
-      collection: Sheep
-      params:
-        variation: 0.05
+    sound: *PlushieSheepSound
   - type: EmitSoundOnTrigger
-    sound:
-      collection: Sheep
-      params:
-        variation: 0.05
+    sound: *PlushieSheepSound
   - type: EmitSoundOnCollide
-    sound:
-      collection: Sheep
-      params:
-        variation: 0.05
+    sound: *PlushieSheepSound
   - type: Edible
     requiresSpecialDigestion: true
-    useSound:
-      collection: Sheep
-      params:
-        variation: 0.05
+    useSound: *PlushieSheepSound
   - type: MeleeWeapon
     wideAnimationRotation: 90
-    soundHit:
-      collection: Sheep
-      params:
-        variation: 0.05
+    soundHit: *PlushieSheepSound
     angle: 0
     animation: WeaponArcFist
   - type: FoodSequenceElement
@@ -1260,42 +1242,24 @@
     entries:
       CottonBurger: SheepSpacePlushie
   - type: EmitSoundOnUse
-    sound:
+    sound: &PlushieSpaceSheepSound
       collection: SheepSpace
       params:
         variation: 0.05
   - type: EmitSoundOnLand
-    sound:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    sound: *PlushieSpaceSheepSound
   - type: EmitSoundOnActivate
-    sound:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    sound: *PlushieSpaceSheepSound
   - type: EmitSoundOnTrigger
-    sound:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    sound: *PlushieSpaceSheepSound
   - type: EmitSoundOnCollide
-    sound:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    sound: *PlushieSpaceSheepSound
   - type: Edible
     requiresSpecialDigestion: true
-    useSound:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    useSound: *PlushieSpaceSheepSound
   - type: MeleeWeapon
     wideAnimationRotation: 90
-    soundHit:
-      collection: SheepSpace
-      params:
-        variation: 0.05
+    soundHit: *PlushieSpaceSheepSound
 
 - type: entity
   parent: BasePlushie

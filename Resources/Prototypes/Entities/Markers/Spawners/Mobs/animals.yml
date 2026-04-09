@@ -287,9 +287,9 @@
       sprite: Mobs/Animals/sheep.rsi
     - state: sheep_wool
       sprite: Mobs/Animals/sheep.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSheep
+  - type: EntityTableSpawner
+    table:
+      id: MobSheep
 
 - type: entity
   parent: MarkerBase
@@ -303,9 +303,9 @@
       sprite: Mobs/Animals/sheep.rsi
     - state: sheep_wool
       sprite: Mobs/Animals/sheep.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSheepRainbow
+  - type: EntityTableSpawner
+    table:
+      id: MobSheepRainbow
 
 - type: entity
   parent: MarkerBase
@@ -319,9 +319,35 @@
       sprite: Mobs/Animals/sheep.rsi
     - state: space_sheep_wool_glowmask
       sprite: Mobs/Animals/sheep.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobSheepSpace
+  - type: EntityTableSpawner
+    table:
+      id: MobSheepSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnWoolyAnimalGeneric
+  name: Wooly Animal Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - id: SpawnMobSheep
+        - id: SpawnMobGoat
+      - !type:GroupSelector
+        weight: 20
+        children:
+        - id: SpawnMobSheepRainbow
+        - id: SpawnMobSheepSpace
 
 - type: entity
   parent: MarkerBase
@@ -336,24 +362,3 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSlug
-
-- type: entity
-  parent: MarkerBase
-  id: SpawnWoolyAnimalGeneric
-  name: Wooly Animal Spawner
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: sheep_bare
-      sprite: Mobs/Animals/sheep.rsi
-    - state: sheep_wool
-      sprite: Mobs/Animals/sheep.rsi
-  - type: RandomSpawner
-    prototypes:
-    - SpawnMobSheep
-    - SpawnMobGoat
-    rarePrototypes:
-    - SpawnMobSheepRainbow
-    - SpawnMobSheepSpace
-    rareChance: 0.2
