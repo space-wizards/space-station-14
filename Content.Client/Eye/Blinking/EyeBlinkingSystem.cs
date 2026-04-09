@@ -28,18 +28,13 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeNetworkEvent<UpdateEyelidsAfterCloningEvent>(OnUpdateEyelidsAfterCloningEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, UpdateEyelidsAfterCloningEvent>(OnUpdateEyelidsAfterCloningEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnUpdateEyelidsAfterCloningEventHandler(UpdateEyelidsAfterCloningEvent ev)
+    private void OnUpdateEyelidsAfterCloningEventHandler(Entity<EyeBlinkingComponent> ent, ref UpdateEyelidsAfterCloningEvent ev)
     {
-        var ent = GetEntity(ev.NetEntity);
-
-        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
-            return;
-
-        Blink((ent, blinkingComp));
+        InitEyeBlinking(ent);
     }
 
     private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
@@ -49,6 +44,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent)
     {
+        Logger.Info($"Initializing eye blinking for entity {ent.Owner}");
         if (!TryComp<SpriteComponent>(ent.Owner, out var comp))
             return;
 
@@ -56,9 +52,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
 
-        var clientComp = EntityManager.EnsureComponent<EyeBlinkingClientComponent>(ent.Owner);
-
         InitEyelidsLayers(ent);
+        var clientComp = EnsureComp<EyeBlinkingClientComponent>(ent.Owner);
 
         var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelid-") == true);
         foreach (var layer in allEyelids)
@@ -86,8 +81,24 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComp))
+        if (!TryComp<SpriteComponent>(ent.Owner, out var comp))
             return;
+
+        for (var j = comp.AllLayers.Count() - 1; j >= 0; j--)
+        {
+            if (comp[j].RsiState.Name?.Contains("eyelid-") == true)
+            {
+                Logger.Info($"Removing existing eyelid layer {comp[j].RsiState.Name?? "error layer"} from entity {ent.Owner}");
+                _sprite.RemoveLayer(ent.Owner, j);
+
+            }
+        }
+
+        if (TryComp<EyeBlinkingClientComponent>(ent.Owner, out var blinkClient))
+        {
+            Logger.Info($"Clearing existing eyelid states for entity {ent.Owner}");
+            blinkClient.Eyelids.Clear();
+        }
 
         var rsiPath = ent.Comp.EyelidsSprite;
         if (rsiPath == null)
@@ -98,7 +109,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             Log.Error($"EyeBlinkingSystem: can't find RSI '{rsiPath}'");
             return;
         }
-        if (!_sprite.LayerMapTryGet((ent.Owner, spriteComp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
+        if (!_sprite.LayerMapTryGet((ent.Owner, comp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
         {
             return;
         }
@@ -111,17 +122,17 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             var specifier = new SpriteSpecifier.Rsi(rsiPath.Value, state.StateId.Name!);
             var layerId = $"eyelids_extra_{state.StateId}";
 
-            if (!_sprite.LayerMapTryGet((ent.Owner, spriteComp), layerId, out var existingLayer, false))
+            if (!_sprite.LayerMapTryGet((ent.Owner, comp), layerId, out var existingLayer, false))
             {
-                var layer = _sprite.AddLayer((ent.Owner, spriteComp), specifier, targetLayer + i + 1);
-                _sprite.LayerMapSet((ent.Owner, spriteComp), layerId, layer);
-                _sprite.LayerSetSprite((ent.Owner, spriteComp), layerId, specifier);
+                var layer = _sprite.AddLayer((ent.Owner, comp), specifier, targetLayer + i + 1);
+                _sprite.LayerMapSet((ent.Owner, comp), layerId, layer);
+                _sprite.LayerSetSprite((ent.Owner, comp), layerId, specifier);
             }
             else
             {
-                _sprite.LayerSetSprite((ent.Owner, spriteComp), layerId, specifier);
+                _sprite.LayerSetSprite((ent.Owner, comp), layerId, specifier);
             }
-            _sprite.LayerSetColor((ent.Owner, spriteComp), layerId, Color.Transparent);
+            _sprite.LayerSetColor((ent.Owner, comp), layerId, Color.Transparent);
             i++;
         }
     }
