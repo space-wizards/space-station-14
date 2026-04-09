@@ -74,6 +74,18 @@ public abstract partial class SharedMoverController
         UpdateMoverStatus((relayEntity, null, targetComp));
     }
 
+    /// <summary>
+    ///     Returns the entity whose movement should be treated as the effective movement source for <paramref name="uid"/>.
+    ///     If the entity is relaying movement to another entity, returns that relay target, otherwise returns the entity itself.
+    /// </summary>
+    public EntityUid GetEffectiveMover(EntityUid uid)
+    {
+        if (TryComp<RelayInputMoverComponent>(uid, out var relay) && relay.RelayEntity != EntityUid.Invalid)
+            return relay.RelayEntity;
+
+        return uid;
+    }
+
     private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ref ComponentShutdown args)
     {
         PhysicsSystem.UpdateIsPredicted(entity.Owner);

@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     /// <summary>
@@ -116,6 +118,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // Networking yay (if you have an easier way dear god please).
             newDoAfter.UserPosition = EnsureCoordinates<DoAfterComponent>(newDoAfter.NetUserPosition, uid);
             newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
+            newDoAfter.MovementEntity = EnsureEntity<DoAfterComponent>(newDoAfter.NetMovementEntity, uid);
 
             var doAfterArgs = newDoAfter.Args;
             doAfterArgs.Target = EnsureEntity<DoAfterComponent>(doAfterArgs.NetTarget, uid);
@@ -227,7 +230,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         args.NetEventTarget = GetNetEntity(args.EventTarget);
 
         if (args.BreakOnMove)
-            doAfter.UserPosition = Transform(args.User).Coordinates;
+        {
+            doAfter.MovementEntity = _mover.GetEffectiveMover(args.User);
+            doAfter.UserPosition = Transform(doAfter.MovementEntity).Coordinates;
+        }
 
         if (args.Target != null && args.BreakOnMove)
         {
@@ -236,6 +242,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
+        doAfter.NetMovementEntity = GetNetEntity(doAfter.MovementEntity);
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).

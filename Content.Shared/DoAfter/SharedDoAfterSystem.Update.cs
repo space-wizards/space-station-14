@@ -218,13 +218,21 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
-            // Whether the user has moved too much from their original position.
-            if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
+            var movementEntity = _mover.GetEffectiveMover(args.User);
+
+            if (movementEntity != doAfter.MovementEntity)
                 return true;
 
-            // Whether the distance between the user and target(if any) has changed too much.
+            if (!TryComp(movementEntity, out TransformComponent? movementXform))
+                return true;
+
+            // Whether the effective movement entity has moved too much from its original position.
+            if (!_transform.InRange(movementXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
+                return true;
+
+            // Whether the distance between the effective movement entity and the target(if any) has changed too much.
             if (targetXform != null &&
-                targetXform.Coordinates.TryDistance(EntityManager, userXform.Coordinates, out var distance))
+                targetXform.Coordinates.TryDistance(EntityManager, movementXform.Coordinates, out var distance))
             {
                 if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
                     return true;
