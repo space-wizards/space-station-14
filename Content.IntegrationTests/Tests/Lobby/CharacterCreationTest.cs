@@ -1,4 +1,5 @@
 using Content.Client.Lobby;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -9,12 +10,14 @@ namespace Content.IntegrationTests.Tests.Lobby;
 [TestFixture]
 [TestOf(typeof(ClientPreferencesManager))]
 [TestOf(typeof(ServerPreferencesManager))]
-public sealed class CharacterCreationTest
+public sealed class CharacterCreationTest : GameTest
 {
+    public override PoolSettings PoolSettings => new() { InLobby = true };
+
     [Test]
     public async Task CreateDeleteCreateTest()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+        var pair = Pair;
         var server = pair.Server;
         var client = pair.Client;
         var user = pair.Client.User!.Value;
@@ -72,19 +75,12 @@ public sealed class CharacterCreationTest
         serverCharacters = serverPrefManager.GetPreferences(user).Characters;
         Assert.That(serverCharacters, Has.Count.EqualTo(2));
         AssertEqual(serverCharacters[1], profile);
-        await pair.CleanReturnAsync();
     }
 
-    private void AssertEqual(ICharacterProfile clientCharacter, HumanoidCharacterProfile b)
+    private void AssertEqual(HumanoidCharacterProfile a, HumanoidCharacterProfile b)
     {
-        if (clientCharacter.MemberwiseEquals(b))
+        if (a.MemberwiseEquals(b))
             return;
-
-        if (clientCharacter is not HumanoidCharacterProfile a)
-        {
-            Assert.Fail($"Not a {nameof(HumanoidCharacterProfile)}");
-            return;
-        }
 
         Assert.Multiple(() =>
         {
@@ -107,13 +103,9 @@ public sealed class CharacterCreationTest
 
     private void AssertEqual(HumanoidCharacterAppearance a, HumanoidCharacterAppearance b)
     {
-        if (a.MemberwiseEquals(b))
+        if (a.Equals(b))
             return;
 
-        Assert.That(a.HairStyleId, Is.EqualTo(b.HairStyleId));
-        Assert.That(a.HairColor, Is.EqualTo(b.HairColor));
-        Assert.That(a.FacialHairStyleId, Is.EqualTo(b.FacialHairStyleId));
-        Assert.That(a.FacialHairColor, Is.EqualTo(b.FacialHairColor));
         Assert.That(a.EyeColor, Is.EqualTo(b.EyeColor));
         Assert.That(a.SkinColor, Is.EqualTo(b.SkinColor));
         Assert.That(a.Markings, Is.EquivalentTo(b.Markings));

@@ -89,6 +89,17 @@
   name: store-category-pointless
   priority: 10
 
+- type: storeCategory
+  id: UplinkObjective
+  name: store-category-objective
+  priority: 11
+
+#nukie delivery
+
+- type: storeCategory
+  id: NukieDelivery
+  name: store-category-nukie-delivery
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities

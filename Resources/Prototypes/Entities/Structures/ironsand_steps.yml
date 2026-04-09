@@ -1,0 +1,52 @@
+- type: entity
+  parent: BaseFloorDecoration
+  id: IronsandStep
+  name: ironsand step
+  description: Takes your ironsand up a level.
+  components:
+  - type: Sprite
+    sprite: Structures/ironsand_steps.rsi
+    state: straight
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: IronsandStep
+  id: IronsandStepConvexCorner
+  name: ironsand step convex corner
+  components:
+  - type: Sprite
+    state: corner_convex
+
+- type: entity
+  parent: IronsandStep
+  id: IronsandStepConcaveCorner
+  name: ironsand step concave corner
+  components:
+  - type: Sprite
+    state: corner_concave

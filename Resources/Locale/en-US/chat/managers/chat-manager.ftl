@@ -3,12 +3,12 @@
 chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
 chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
 chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
-chat-manager-looc-chat-enabled-message = Help chat has been enabled.
-chat-manager-looc-chat-disabled-message = Help chat has been disabled.
-chat-manager-dead-looc-chat-enabled-message = Dead players can now use Help.
-chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use Help.
-chat-manager-crit-looc-chat-enabled-message = Crit players can now use Help.
-chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use Help.
+chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
+chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
+chat-manager-dead-looc-chat-enabled-message = Dead players can now use LOOC.
+chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use LOOC.
+chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
+chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 
@@ -22,11 +22,11 @@ chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement = Central Command
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
-chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]“[BubbleContent]{$message}[/BubbleContent]”[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]“[BubbleContent][bold]{$message}[/bold][/BubbleContent]”[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
-chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,“[BubbleContent]{$message}[/BubbleContent]”[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, “[BubbleContent]{$message}[/BubbleContent]”[/italic][/font]
 
 # THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
@@ -34,7 +34,7 @@ chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
      [true] {CAPITALIZE($entityName)} {$message}[/italic]
     }
 
-chat-manager-entity-looc-wrap-message = Help: [bold]{$entityName}:[/bold] {$message}
+chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
 chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerName}:[/bold] {$message}
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 

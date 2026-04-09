@@ -8,6 +8,7 @@ namespace Content.Shared.Humanoid
     {
         Special, // for the cat ears
         Tail,
+        TailOverlay, // markings that go ontop of tails
         Hair,
         FacialHair,
         UndergarmentTop,
@@ -28,6 +29,7 @@ namespace Content.Shared.Humanoid
         LLeg,
         RFoot,
         LFoot,
+        Overlay,
         Handcuffs,
         StencilMask,
         Ensnare,

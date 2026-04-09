@@ -37,6 +37,7 @@ chat-emote-name-snarl = Snarl
 chat-emote-name-whine = Whine
 chat-emote-name-howl = Howl
 chat-emote-name-growl = Growl
+chat-emote-name-flap = Flap Wings
 chat-emote-name-blink = Blink
 
 # Message
@@ -58,7 +59,7 @@ chat-emote-msg-salute = salutes.
 chat-emote-msg-gasp = gasps.
 chat-emote-msg-deathgasp = seizes up and falls limp, {POSS-ADJ($entity)} eyes dead and lifeless...
 chat-emote-msg-deathgasp-monkey = lets out a faint chimper as {SUBJECT($entity)} collapses and stops moving...
-chat-emote-msg-deathgasp-scurret = lets out a final 'wa' and falls still...
+chat-emote-msg-deathgasp-scurret = lets out a final ‘wa’ and falls still...
 chat-emote-msg-buzz = buzzes!
 chat-emote-msg-weh = wehs!
 chat-emote-msg-hew = hews!
@@ -79,4 +80,5 @@ chat-emote-msg-snarl = snarls.
 chat-emote-msg-whine = whines.
 chat-emote-msg-howl = howls.
 chat-emote-msg-growl = growls.
+chat-emote-msg-flap = flaps {POSS-ADJ($entity)} wings.
 chat-emote-msg-blink = blink.
