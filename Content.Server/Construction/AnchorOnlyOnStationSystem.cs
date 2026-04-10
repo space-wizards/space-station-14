@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using Content.Server.Station.Systems;
 using Content.Shared.Construction.Components;
-using Content.Shared.Construction.EntitySystems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Construction;
 
-public sealed class AnchorableSystem : SharedAnchorableSystem
+public sealed class AnchorOnlyOnStationSystem : EntitySystem
 {
     [Dependency] private readonly StationSystem _stationSystem = null!;
     [Dependency] private readonly TransformSystem _transform = null!;
