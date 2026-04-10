@@ -24,7 +24,7 @@ using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Shared.Construction.EntitySystems;
 
-public abstract partial class SharedAnchorableSystem : EntitySystem
+public sealed partial class AnchorableSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
