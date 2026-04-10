@@ -1,13 +1,18 @@
+using System.Linq;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Light;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
@@ -17,12 +22,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Linq;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Random.Helpers;
-using Content.Shared.Clothing.Components;
 
 namespace Content.Shared.Flash;
 
@@ -57,6 +57,7 @@ public abstract class SharedFlashSystem : EntitySystem
 
         SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
         SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
+        SubscribeLocalEvent<FlashComponent, BeforeRangedInteractEvent>(OnRangedInteract);
         SubscribeLocalEvent<FlashComponent, LightToggleEvent>(OnLightToggle);
         SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
         SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
@@ -72,7 +73,7 @@ public abstract class SharedFlashSystem : EntitySystem
         if (!ent.Comp.FlashOnMelee ||
             !args.IsHit ||
             !args.HitEntities.Any() ||
-            !UseFlash(ent, args.User))
+            !TryUseFlashItem(ent.AsNullable(), args.User))
         {
             return;
         }
@@ -82,41 +83,66 @@ public abstract class SharedFlashSystem : EntitySystem
         {
             Flash(target, args.User, ent.Owner, ent.Comp.MeleeDuration, ent.Comp.SlowTo, melee: true, stunDuration: ent.Comp.MeleeStunDuration);
         }
+
+        EntityUid? firstTarget = args.HitEntities.Count > 0 ? args.HitEntities[0] : null; // Just pick the first hit entity.
+        var ev = new AfterFlashActivatedEvent(firstTarget, args.User);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnFlashUseInHand(Entity<FlashComponent> ent, ref UseInHandEvent args)
     {
-        if (!ent.Comp.FlashOnUse || args.Handled || !UseFlash(ent, args.User))
+        if (!ent.Comp.FlashOnUse || args.Handled || !TryUseFlashItem(ent.AsNullable(), args.User))
             return;
 
         args.Handled = true;
         FlashArea(ent.Owner, args.User, ent.Comp.Range, ent.Comp.AoeFlashDuration, ent.Comp.SlowTo, true, ent.Comp.Probability);
+        var ev = new AfterFlashActivatedEvent(null, args.User); // No direct target.
+        RaiseLocalEvent(ent, ref ev);
+    }
+
+    // TODO: This or most of the other systems subscribing to BeforeRangedInteractEvent shouldn't be using this event as handling it stops contact interaction with the used tool,
+    // but this will need some cleanup of how SharedInteractionSystem handles the code flow. Also the event is raised for both in-range and out of range interactions, which
+    // is what the subscribers are using it for, but does not seem originally intended from the naming convention.
+    private void OnRangedInteract(Entity<FlashComponent> ent, ref BeforeRangedInteractEvent args)
+    {
+        if (!ent.Comp.FlashOnRangedInteract || args.Handled || !TryUseFlashItem(ent.AsNullable(), args.User))
+            return;
+
+        args.Handled = true;
+        FlashArea(ent.Owner, args.User, ent.Comp.Range, ent.Comp.AoeFlashDuration, ent.Comp.SlowTo, true, ent.Comp.Probability);
+        var ev = new AfterFlashActivatedEvent(args.Target, args.User);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     // needed for the flash lantern and interrogator lamp
     // TODO: This is awful and all the different components for toggleable lights need to be unified and changed to use Itemtoggle
     private void OnLightToggle(Entity<FlashComponent> ent, ref LightToggleEvent args)
     {
-        if (!args.IsOn || !UseFlash(ent, null))
+        if (!args.IsOn || !TryUseFlashItem(ent.AsNullable(), null))
             return;
 
         FlashArea(ent.Owner, null, ent.Comp.Range, ent.Comp.AoeFlashDuration, ent.Comp.SlowTo, true, ent.Comp.Probability);
+        var ev = new AfterFlashActivatedEvent(null, null); // TODO: Add user once someone made toggleable lights not a total mess.
+        RaiseLocalEvent(ent, ref ev);
     }
 
     /// <summary>
-    /// Use charges and set the visuals.
+    /// Try to use charges, play the sound and set the visuals of a flash item.
+    /// This does not actually cause the flash status effect by itself, you will need to either call <see cref="Flash"/> or <see cref="FlashArea"/> as well.
     /// </summary>
     /// <returns>False if no charges are left or the flash is currently in use.</returns>
-    private bool UseFlash(Entity<FlashComponent> ent, EntityUid? user)
+    public bool TryUseFlashItem(Entity<FlashComponent?> ent, EntityUid? user)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
         if (_useDelay.IsDelayed(ent.Owner))
             return false;
 
         if (TryComp<LimitedChargesComponent>(ent.Owner, out var charges)
-            && _sharedCharges.IsEmpty((ent.Owner, charges)))
+            && !_sharedCharges.TryUseCharge((ent.Owner, charges)))
             return false;
 
-        _sharedCharges.TryUseCharge((ent.Owner, charges));
         _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, user);
 
         var active = EnsureComp<ActiveFlashComponent>(ent.Owner);
@@ -126,7 +152,7 @@ public abstract class SharedFlashSystem : EntitySystem
 
         if (_sharedCharges.IsEmpty((ent.Owner, charges)))
         {
-            _appearance.SetData(ent.Owner, FlashVisuals.Burnt, true);
+            _appearance.SetData(ent.Owner, FlashVisuals.Burnt, true); // TODO: Reset if charges are refilled.
             _tag.AddTag(ent.Owner, TrashTag);
             _popup.PopupClient(Loc.GetString("flash-component-becomes-empty"), user);
         }

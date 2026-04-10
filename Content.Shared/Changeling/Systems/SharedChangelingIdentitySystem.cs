@@ -185,6 +185,22 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Drop a stored identity from the changeling's storage.
+    /// </summary>
+    public void DropStoredIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (!HasComp<ChangelingStoredIdentityComponent>(identity))
+            return; // Not a stored identity.
+
+        PredictedQueueDel(identity);
+        if (ent.Comp.ConsumedIdentities.Remove(identity))
+            Dirty(ent);
+    }
+
+    /// <summary>
     /// Simple helper to add a PVS override to a nullspace identity.
     /// </summary>
     /// <param name="uid">The actor that should get the override.</param>
