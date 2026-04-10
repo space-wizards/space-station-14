@@ -22,10 +22,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void AfterChangelingTransformEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterChangelingTransformEvent args)
     {
-        Logger.Debug($"Raising UpdateEyelidsAfterCloningEvent for {ent.Owner}");
         ent.Comp.Enabled = true;
-        //var ev = new UpdateEyelidsAfterCloningEvent();
-        //RaiseLocalEvent(ent.Owner, ev);
         Dirty(ent);
     }
 
