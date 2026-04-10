@@ -31,6 +31,9 @@ public abstract partial class SharedMoverController
 
         if (MoverQuery.TryComp(ent.Comp.RelayEntity, out var inputMoverComponent))
             SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
+
+        if (MoverQuery.TryComp(ent.Owner, out var sourceMover))
+            SetMoveInput((ent.Owner, sourceMover), MoveButtons.None);
     }
 
     /// <summary>
@@ -80,8 +83,12 @@ public abstract partial class SharedMoverController
     /// </summary>
     public EntityUid GetEffectiveMover(EntityUid uid)
     {
-        if (TryComp<RelayInputMoverComponent>(uid, out var relay) && relay.RelayEntity != EntityUid.Invalid)
+        if (TryComp<RelayInputMoverComponent>(uid, out var relay)
+            && relay.RelayEntity.IsValid()
+            && Exists(relay.RelayEntity))
+        {
             return relay.RelayEntity;
+        }
 
         return uid;
     }
