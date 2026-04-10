@@ -15,3 +15,16 @@ public sealed partial class DamageProtectionBuffComponent : Component
     [DataField]
     public Dictionary<string, DamageModifierSetPrototype> Modifiers = new();
 }
+
+/// <summary>
+/// Component used on a status effect entity to modify damage taken.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class DamageModifierStatusEffectComponent : Component
+{
+    /// <summary>
+    /// The modifier prototype to apply.
+    /// </summary>
+    [DataField(required: true)]
+    public DamageModifierSet Modifiers;
+}
