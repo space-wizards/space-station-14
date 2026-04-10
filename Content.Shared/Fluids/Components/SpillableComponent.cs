@@ -17,6 +17,9 @@ public sealed partial class SpillableComponent : Component
     [DataField]
     public float? SpillDelay;
 
+    /// <summary>
+    /// If you can spill the reagent from the container from your hands with the the spill verb
+    /// </summary>
     [DataField]
     public bool CanSpillFromHand = true;
 
