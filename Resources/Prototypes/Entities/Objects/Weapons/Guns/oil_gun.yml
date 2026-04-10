@@ -51,12 +51,12 @@
     damage:
       types:
         Heat: 8
-    SoundOnHit:
+    SoundHit:
       path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
       params:
         variation: 0.250
         volume: -10
-    SoundOnHitNoDamage:
+    SoundNoDamage:
       path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
       params:
         variation: 0.250
