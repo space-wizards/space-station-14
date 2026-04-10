@@ -1,14 +1,17 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "created by Samuka-C (github)",
+  "copyright": "created by Samuka-C (github), flame taken from Objects/Tools/welder_experimental.rsi",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "icon",
+      "name": "icon"
+    },
+    {
+      "name": "flame",
       "delays": [
         [
           0.2,

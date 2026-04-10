@@ -9,6 +9,8 @@
     sprite: Objects/Weapons/Guns/Basic/oilgun.rsi
     layers:
     - state: icon
+    - state: flame
+      shader: unshaded
     - state: mag-5
       map: ["enum.GunVisualLayers.Mag"]
     - state: reloading
