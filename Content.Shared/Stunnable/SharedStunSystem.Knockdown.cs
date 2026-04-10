@@ -467,7 +467,8 @@ public abstract partial class SharedStunSystem
             if (!_fixtureQuery.TryGetComponent(ent, out var fixtures))
                 continue;
 
-            var xformComp = Transform(ent);
+            if (!TryComp(ent, out TransformComponent? xformComp))
+                continue;
 
             var xform = new Transform(xformComp.LocalPosition, xformComp.LocalRotation);
 

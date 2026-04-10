@@ -81,6 +81,9 @@ public sealed class ProximityDetectionSystem : EntitySystem
     {
         var component = detector.Comp;
 
+        if (!TryComp(detector, out TransformComponent? transform))
+            return;
+
         if (Deleted(component.Target))
             ClearTarget(detector);
 
@@ -94,7 +97,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
             if (!TryComp(uid, out TransformComponent? xForm))
                 continue;
 
-            if (!Transform(detector).Coordinates.TryDistance(EntityManager, xForm.Coordinates, out var distance) ||
+            if (!transform.Coordinates.TryDistance(EntityManager, xForm.Coordinates, out var distance) ||
                 distance > component.Range || distance >= closestDistance)
                 continue;
 

@@ -74,10 +74,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// <returns>True the state of the machine's assembly has changed, false otherwise.</returns>
     public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
-        var xform = Transform(ent);
-
         // Get all required transform information to start looking for the other parts based on their offset
-        if (!xform.Anchored)
+        if (!TryComp(ent.Owner, out TransformComponent? xform) || !xform.Anchored)
             return false;
 
         var gridUid = xform.GridUid;
@@ -212,7 +210,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     {
         // If anchored, perform a rescan of this machine when the component starts so we can immediately
         // jump to an assembled state if needed.
-        Rescan(ent);
+        if (TryComp(ent.Owner, out TransformComponent? xform) && xform.Anchored)
+            Rescan(ent);
     }
 
     /// <summary>
@@ -241,10 +240,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     private void OnPartConstructionNodeChanged(Entity<MultipartMachinePartComponent> ent,
         ref AfterConstructionChangeEntityEvent args)
     {
-        if (TerminatingOrDeleted(ent))
+        if (!TryComp(ent.Owner, out TransformComponent? constructXform))
             return;
-
-        var constructXform = Transform(ent);
 
         _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
         foreach (var machine in _entitiesInRange)
@@ -286,7 +283,10 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
         // We're anchoring some construction, we have no idea which machine this might be for
         // so we have to just check everyone in range and perform a rescan.
-        _lookupSystem.GetEntitiesInRange(args.Transform.Coordinates, MaximumRange, _entitiesInRange);
+        if (!TryComp(ent.Owner, out TransformComponent? constructXform))
+            return;
+
+        _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
         foreach (var machine in _entitiesInRange)
         {
             if (Rescan(machine) && HasPartEntity(machine.AsNullable(), ent.Owner))
