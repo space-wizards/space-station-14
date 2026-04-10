@@ -59,6 +59,14 @@ namespace Content.Shared.Administration
             return AdminAnnounceDefaults.GetDefaultColorHex(type);
         }
 
+        public static Color GetColor(AdminAnnounceType type, string? value)
+        {
+            if (Color.TryFromHex(value) is { } color)
+                return color;
+
+            return Color.FromHex(AdminAnnounceDefaults.GetDefaultColorHex(type));
+        }
+
         public static bool IsValidResourcePath(string? value)
         {
             var path = NormalizeText(value);

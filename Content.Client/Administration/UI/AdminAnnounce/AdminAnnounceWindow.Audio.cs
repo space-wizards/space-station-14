@@ -32,7 +32,7 @@ public sealed partial class AdminAnnounceWindow
 
     private bool IsStreamPlaying(EntityUid? stream)
     {
-        return stream is { } uid && uid.IsValid() && _entMan.EntityExists(uid);
+        return _audio?.IsPlaying(stream) ?? false;
     }
 
     private void UpdateButtons()

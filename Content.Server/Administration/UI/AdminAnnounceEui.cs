@@ -48,8 +48,7 @@ namespace Content.Server.Administration.UI
             if (string.IsNullOrWhiteSpace(announcement))
                 return;
 
-            var colorHex = AdminAnnounceHelpers.GetValidatedColorHex(doAnnounce.AnnounceType, doAnnounce.ColorHex);
-            var color = Color.FromHex(colorHex);
+            var color = AdminAnnounceHelpers.GetColor(doAnnounce.AnnounceType, doAnnounce.ColorHex);
 
             switch (doAnnounce.AnnounceType)
             {
