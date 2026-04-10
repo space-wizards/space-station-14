@@ -65,12 +65,7 @@ public abstract partial class SharedAnchorableSystem : EntitySystem
 
     private void OnAnchorOnStation(Entity<AnchorOnlyOnStationComponent> ent, ref AnchorAttemptEvent args)
     {
-        var entityParent = Comp<TransformComponent>(ent).ParentUid;
-        var isOnStation = _stationSystem.GetStations()
-            .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
-            .Contains(entityParent);
-
-        if (isOnStation)
+        if (_stationSystem.IsOnStation(ent))
             return;
 
         args.FailMessage = Loc.GetString(ent.Comp.PopupMessageAnchorFail);

@@ -31,12 +31,7 @@ public sealed class AnchorableSystem : SharedAnchorableSystem
             if (!allGrids.Contains(entXform.GridUid.Value))
                 continue;
 
-            var entityParent = Comp<TransformComponent>(ent).ParentUid;
-            var isOnStation = _stationSystem.GetStations()
-                .Select(stationEnt => _stationSystem.GetLargestGrid(stationEnt))
-                .Contains(entityParent);
-
-            if (isOnStation)
+            if (_stationSystem.IsOnStation(ent))
                 continue;
 
             _transform.Unanchor(ent);

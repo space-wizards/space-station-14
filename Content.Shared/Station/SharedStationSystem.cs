@@ -179,4 +179,19 @@ public abstract partial class SharedStationSystem : EntitySystem
 
         return null;
     }
+
+    /// <summary>
+    /// Returns true if a entity's parent is the station, and false if the entity is not on the station
+    /// </summary>
+    /// <remarks>
+    /// Only the biggest grid among all station grids will count, so if the entity is on
+    /// the ATS or a escape pod, it will return false
+    /// </remarks>
+    public bool IsOnStation(EntityUid entity)
+    {
+        var entityParent = Comp<TransformComponent>(entity).ParentUid;
+        return GetStations()
+            .Select(stationEnt => GetLargestGrid(stationEnt))
+            .Contains(entityParent);
+    }
 }
