@@ -63,3 +63,8 @@
         volume: -12
   - type: AltFireMelee
     attackType: Heavy
+  - type: IgnitionSource
+    temperature: 700
+  - type: PointLight
+    radius: 1.5
+    color: lightblue
