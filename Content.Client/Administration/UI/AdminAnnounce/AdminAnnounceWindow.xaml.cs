@@ -26,8 +26,6 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
         SoundPath.Text = AdminAnnounceDefaults.DefaultSoundPath;
 
-        UpdateColorPreview();
-
         Announcement.Placeholder = new Rope.Leaf(_localization.GetString("admin-announce-announcement-placeholder"));
 
         InitAnnounceMethods();

@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
@@ -6,6 +7,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Eui;
+using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -18,6 +20,7 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private readonly ChatSystem _chatSystem;
 
@@ -54,6 +57,8 @@ namespace Content.Server.Administration.UI
             {
                 case AdminAnnounceType.Server:
                     _chatManager.DispatchServerAnnouncement(announcement, color);
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                        $"{Player.Name} has sent the following server announcement: {announcement}");
                     break;
                 // TODO: Per-station announcement support
                 case AdminAnnounceType.Station:
@@ -77,6 +82,8 @@ namespace Content.Server.Administration.UI
                         playSound: true,
                         announcementSound: sound
                     );
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                        $"{Player.Name} has sent the following station announcement as {announcer}: {announcement}");
                     break;
             }
 
