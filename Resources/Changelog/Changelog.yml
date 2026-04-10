@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Folders and clipboards now recycle into sensible material components,
-      rather than only cardboard.
-    type: Fix
-  - message: Clipboards and plastic clipboards require slightly more steel to produce
-      in autolathes.
-    type: Tweak
-  id: 9117
-  time: '2025-10-18T09:25:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40954
 - author: PicklOH
   changes:
   - message: Rags can no longer be used to remove evidence.
@@ -4030,3 +4019,10 @@
   id: 9628
   time: '2026-04-08T05:40:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43513
+- author: themias
+  changes:
+  - message: Wizards can hear the sound of their fireball spell again
+    type: Fix
+  id: 9629
+  time: '2026-04-09T21:42:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43535
