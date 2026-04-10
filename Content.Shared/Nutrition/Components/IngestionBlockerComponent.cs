@@ -14,8 +14,8 @@ namespace Content.Shared.Nutrition.Components;
 public sealed partial class IngestionBlockerComponent : Component
 {
     /// <summary>
-    ///     Is this component currently blocking consumption.
+    ///     Whether this item currently blocks consuming something.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Enabled { get; set; } = true;
+    public bool Enabled = true;
 }
