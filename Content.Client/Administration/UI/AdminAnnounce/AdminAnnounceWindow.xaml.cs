@@ -11,6 +11,7 @@ namespace Content.Client.Administration.UI.AdminAnnounce;
 public sealed partial class AdminAnnounceWindow : DefaultWindow
 {
     private readonly SharedAudioSystem? _audio;
+    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly ILocalizationManager _localization = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     private AdminAnnounceColorPalette? _paletteWindow;
@@ -47,6 +48,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-station"));
         AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
         AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-server"));
+        AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.Server);
         AnnounceMethod.OnItemSelected += args =>
         {
             AnnounceMethod.SelectId(args.Id);

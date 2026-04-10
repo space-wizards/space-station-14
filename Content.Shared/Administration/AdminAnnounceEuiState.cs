@@ -9,6 +9,13 @@ namespace Content.Shared.Administration
         public const string DefaultColorHex = "#1d8bad";
         public const string ServerColorHex = "#f0973d";
         public const string DefaultSoundPath = "/Audio/Announcements/announce.ogg";
+
+        public static string GetDefaultColorHex(AdminAnnounceType type)
+        {
+            return type == AdminAnnounceType.Server
+                ? ServerColorHex
+                : DefaultColorHex;
+        }
     }
 
     public enum AdminAnnounceType
@@ -18,7 +25,7 @@ namespace Content.Shared.Administration
     }
 
     [Serializable, NetSerializable]
-    public sealed class AdminAnnounceEuiState : EuiStateBase { }
+    public sealed class AdminAnnounceEuiState : EuiStateBase;
 
     public static class AdminAnnounceEuiMsg
     {
@@ -37,11 +44,48 @@ namespace Content.Shared.Administration
 
     public static class AdminAnnounceHelpers
     {
-        public static string CleanHex(string? hex) => hex?.Trim().TrimStart('#') ?? string.Empty;
+        public static string NormalizeText(string? value) => value?.Trim() ?? string.Empty;
+
+        public static string NormalizeSoundPath(string? value)
+        {
+            var path = NormalizeText(value);
+            return IsValidResourcePath(path) ? path : string.Empty;
+        }
+
+        public static string GetValidatedColorHex(AdminAnnounceType type, string? value)
+        {
+            return TryNormalizeStrictHex(value, out var normalizedHex)
+                ? normalizedHex
+                : AdminAnnounceDefaults.GetDefaultColorHex(type);
+        }
+
+        public static bool TryNormalizeStrictHex(string? value, out string normalizedHex)
+        {
+            normalizedHex = string.Empty;
+            var hex = NormalizeText(value);
+
+            if (hex.Length != 7 || hex[0] != '#')
+                return false;
+
+            for (var i = 1; i < hex.Length; i++)
+            {
+                if (!Uri.IsHexDigit(hex[i]))
+                    return false;
+            }
+
+            normalizedHex = hex;
+            return true;
+        }
+
+        public static bool IsValidResourcePath(string? value)
+        {
+            var path = NormalizeText(value);
+            return path.StartsWith('/') && !path.Contains("..") && !path.Contains('\\');
+        }
 
         public static string FormatAnnouncement(string announcement, string? sender)
         {
-            var trimmedSender = sender?.Trim();
+            var trimmedSender = NormalizeText(sender);
             if (string.IsNullOrWhiteSpace(trimmedSender))
                 return announcement;
 

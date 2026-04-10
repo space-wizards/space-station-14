@@ -19,12 +19,12 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
 
-        private readonly ChatSystem _chat;
+        private readonly ChatSystem _chatSystem;
 
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
-            _chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
         }
 
         public override EuiStateBase GetNewState() => new AdminAnnounceEuiState();
@@ -48,12 +48,8 @@ namespace Content.Server.Administration.UI
             if (string.IsNullOrWhiteSpace(announcement))
                 return;
 
-            var hex = doAnnounce.ColorHex.Trim();
-            var fallbackHex = doAnnounce.AnnounceType == AdminAnnounceType.Server 
-                ? AdminAnnounceDefaults.ServerColorHex 
-                : AdminAnnounceDefaults.DefaultColorHex;
-
-            var color = Color.TryFromHex(hex) ?? Color.FromHex(fallbackHex);
+            var colorHex = AdminAnnounceHelpers.GetValidatedColorHex(doAnnounce.AnnounceType, doAnnounce.ColorHex);
+            var color = Color.FromHex(colorHex);
 
             switch (doAnnounce.AnnounceType)
             {
@@ -62,19 +58,20 @@ namespace Content.Server.Administration.UI
                     break;
                 // TODO: Per-station announcement support
                 case AdminAnnounceType.Station:
-                    var announcer = string.IsNullOrWhiteSpace(doAnnounce.Announcer)
+                    var normalizedAnnouncer = AdminAnnounceHelpers.NormalizeText(doAnnounce.Announcer);
+                    var announcer = string.IsNullOrWhiteSpace(normalizedAnnouncer)
                         ? Loc.GetString("admin-announce-announcer-default")
-                        : doAnnounce.Announcer.Trim();
+                        : normalizedAnnouncer;
 
                     var sound = SharedChatSystem.DefaultAnnouncementSound;
-                    var soundPath = doAnnounce.SoundPath.Trim();
+                    var soundPath = AdminAnnounceHelpers.NormalizeSoundPath(doAnnounce.SoundPath);
                     
                     if (!string.IsNullOrEmpty(soundPath) && _res.ContentFileExists(soundPath))
                         sound = new SoundPathSpecifier(soundPath);
 
                     var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, doAnnounce.Sender);
 
-                    _chat.DispatchGlobalAnnouncement(
+                    _chatSystem.DispatchGlobalAnnouncement(
                         finalContent,
                         announcer,
                         colorOverride: color,

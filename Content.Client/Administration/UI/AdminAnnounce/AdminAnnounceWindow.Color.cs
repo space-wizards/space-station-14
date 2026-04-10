@@ -57,9 +57,7 @@ public sealed partial class AdminAnnounceWindow
     private Color GetDefaultColor()
     {
         var type = (AdminAnnounceType?)AnnounceMethod.SelectedMetadata;
-        var def = type == AdminAnnounceType.Server 
-            ? AdminAnnounceDefaults.ServerColorHex 
-            : AdminAnnounceDefaults.DefaultColorHex;
+        var def = AdminAnnounceDefaults.GetDefaultColorHex(type ?? AdminAnnounceType.Station);
 
         return Color.FromHex(def);
     }

@@ -14,19 +14,21 @@ namespace Content.Client.Administration.UI
             _window = new AdminAnnounceWindow();
             _window.AnnounceButton.OnPressed += _ => 
             {
-                var announcement = Rope.Collapse(_window.Announcement.TextRope).Trim();
+                var announcement = AdminAnnounceHelpers.NormalizeText(Rope.Collapse(_window.Announcement.TextRope));
                 if (string.IsNullOrWhiteSpace(announcement))
                     return;
+
+                var announceType = (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station);
 
                 SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
                 {
                     Announcement = announcement,
-                    Announcer = _window.Announcer.Text.Trim(),
-                    AnnounceType = (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
+                    Announcer = AdminAnnounceHelpers.NormalizeText(_window.Announcer.Text),
+                    AnnounceType = announceType,
                     CloseAfter = !_window.KeepWindowOpen.Pressed,
-                    ColorHex = _window.GetCurrentHex(),
-                    SoundPath = _window.SoundPath.Text.Trim(),
-                    Sender = _window.Sender.Text.Trim(),
+                    ColorHex = AdminAnnounceHelpers.GetValidatedColorHex(announceType, _window.GetCurrentHex()),
+                    SoundPath = AdminAnnounceHelpers.NormalizeSoundPath(_window.SoundPath.Text),
+                    Sender = AdminAnnounceHelpers.NormalizeText(_window.Sender.Text),
                 });
             };
         }
