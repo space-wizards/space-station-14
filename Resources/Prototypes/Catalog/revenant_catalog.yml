@@ -49,3 +49,20 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: RevenantGhostlyGrasp
+  name: revenant-grasp-name
+  description: revenant-grasp-desc
+  productAction: ActionRevenantGrasp
+  cost:
+    StolenEssence: 20
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productEvent: !type:RevenantGraspBuyEvent
+  raiseProductEventOnUser: true
+
+

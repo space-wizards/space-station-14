@@ -1,11 +1,12 @@
-using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Numerics;
 
 namespace Content.Shared.Revenant.Components;
 
@@ -199,6 +200,29 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
+    #endregion
+
+    #region Grasp Ability
+    /// <summary>
+    /// Will the revenant use the fast visible grab, or the slow invisible one?
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public Boolean IsGrabFast = false;
+
+    /// <summary>
+    /// Density to reset to after grabbing fast
+    /// </summary>
+    [DataField("slowDensity"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public float SlowDensity = 30.0f;
+
+    /// <summary>
+    /// Density change when grabbing fast
+    /// </summary>
+    [DataField("fastDensity"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public float FastDensity = 300.0f;
     #endregion
 
     [DataField]
