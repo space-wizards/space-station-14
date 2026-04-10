@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -7,9 +8,11 @@ using Robust.Shared.Asynchronous;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace MapEditor.RTBridge;
 
@@ -65,6 +68,16 @@ public sealed class EditorContext
     ///     up by the viewport on the next frame.
     /// </summary>
     public Eye EditorEye { get; internal set; } = default!;
+
+    /// <summary>
+    ///     Prototype id of the entity that should be spawned when the user
+    ///     left clicks the viewport. Null means "left click does nothing".
+    ///     Written by the WPF host when the user picks an entity in the
+    ///     palette, read by <see cref="EditorViewportControl"/> on every
+    ///     left click. Reference reads and writes are atomic in .NET, so
+    ///     this does not need a lock.
+    /// </summary>
+    public string? PlacementPrototypeId { get; set; }
 
     internal EditorContext(
         ITaskManager taskManager,
@@ -158,4 +171,52 @@ public sealed class EditorContext
         _eyeManager.CurrentEye = EditorEye;
         _sawmill.Info($"LoadMap: editor eye switched to map {targetMap.Value}");
     }
+
+    /// <summary>
+    ///     Returns the full list of spawnable entity prototypes the user
+    ///     can place from the editor palette. Runs on the game thread
+    ///     because <see cref="IPrototypeManager"/> is not guaranteed
+    ///     thread safe, then hands the list back to the caller.
+    /// </summary>
+    public Task<IReadOnlyList<SpawnablePrototype>> GetSpawnablePrototypesAsync()
+    {
+        var tcs = new TaskCompletionSource<IReadOnlyList<SpawnablePrototype>>();
+        _taskManager.RunOnMainThread(() =>
+        {
+            try
+            {
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                var list = new List<SpawnablePrototype>();
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    // Filter out things the user should not be placing
+                    // directly: abstract bases, things hidden from spawn
+                    // menus, and anything without a sprite (map markers,
+                    // logic only entities).
+                    if (proto.Abstract || proto.HideSpawnMenu)
+                        continue;
+                    if (!proto.Components.ContainsKey("Sprite"))
+                        continue;
+
+                    list.Add(new SpawnablePrototype(proto.ID, proto.Name));
+                }
+                list.Sort(static (a, b) =>
+                    string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
+                _sawmill.Info($"GetSpawnablePrototypes: {list.Count} entries");
+                tcs.SetResult(list);
+            }
+            catch (Exception e)
+            {
+                tcs.TrySetException(e);
+            }
+        });
+        return tcs.Task;
+    }
 }
+
+/// <summary>
+///     Lightweight DTO describing one entity the user can place from the
+///     editor palette. Kept minimal so it crosses the WPF/RT thread
+///     boundary without any RT types attached.
+/// </summary>
+public sealed record SpawnablePrototype(string Id, string Name);

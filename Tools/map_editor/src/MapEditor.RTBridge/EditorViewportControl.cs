@@ -1,10 +1,13 @@
+using System;
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics;
 using Robust.Shared.Input;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -35,11 +38,14 @@ public sealed class EditorViewportControl : ViewportContainer
 {
     private readonly Eye _editorEye;
     private readonly IEyeManager _eyeManager;
+    private readonly IEntityManager _entityManager;
     private readonly EditorCamera _camera;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("map_editor.cam");
 
-    public EditorViewportControl(IEyeManager eyeManager, Eye editorEye)
+    public EditorViewportControl(IEyeManager eyeManager, IEntityManager entityManager, Eye editorEye)
     {
         _eyeManager = eyeManager;
+        _entityManager = entityManager;
         _editorEye = editorEye;
         _camera = new EditorCamera(
             position: editorEye.Position.Position,
@@ -78,11 +84,44 @@ public sealed class EditorViewportControl : ViewportContainer
     {
         base.KeyBindDown(args);
 
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            // Left click: if an entity is selected in the palette, place
+            // it at the cursor's world position. Otherwise do nothing
+            // (selection and other left click tools can land here in
+            // later milestones).
+            TryPlaceEntity(args.RelativePosition);
+            args.Handle();
+            return;
+        }
+
         if (args.Function == EngineKeyFunctions.UseSecondary)
         {
             // Right click drag starts a pan.
             _camera.BeginPan(args.RelativePosition, Size);
             args.Handle();
+        }
+    }
+
+    private void TryPlaceEntity(Vector2 cursorPixel)
+    {
+        var context = EditorContext.Current;
+        var protoId = context?.PlacementPrototypeId;
+        if (context == null || string.IsNullOrEmpty(protoId))
+            return;
+
+        var world = _camera.ScreenToWorld(cursorPixel, Size);
+        var mapId = _editorEye.Position.MapId;
+        var coords = new MapCoordinates(world, mapId);
+
+        try
+        {
+            var uid = _entityManager.SpawnEntity(protoId, coords);
+            _sawmill.Info($"Placed {protoId} at {coords} as entity {uid}");
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to place {protoId} at {coords}: {ex.Message}");
         }
     }
 

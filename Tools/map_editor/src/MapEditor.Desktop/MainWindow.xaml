@@ -19,17 +19,34 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Background="#1a1a2e" BorderBrush="#2a2a3e" BorderThickness="0,0,1,0">
-                <StackPanel Margin="12">
-                    <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
-                    <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
-                    <TextBlock x:Name="StatusText"
-                               Foreground="#7a7a8e" FontSize="11"
-                               Margin="0,16,0,0" TextWrapping="Wrap"
-                               Text="Waiting for viewport HWND..." />
-                    <TextBlock Foreground="#4a4a5e" FontSize="10"
-                               Margin="0,24,0,0" TextWrapping="Wrap"
-                               Text="Use File then Open Map to load a different SS14 map into the embedded RT viewport. Right click drag to pan, scroll wheel to zoom." />
-                </StackPanel>
+                <DockPanel Margin="8">
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
+                        <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
+                        <TextBlock x:Name="StatusText"
+                                   Foreground="#7a7a8e" FontSize="11"
+                                   Margin="0,8,0,8" TextWrapping="Wrap"
+                                   Text="Waiting for RT..." />
+                        <TextBlock Foreground="#cfcfe0" FontSize="12" FontWeight="SemiBold"
+                                   Margin="0,8,0,4" Text="Entity Palette" />
+                        <TextBox x:Name="EntitySearchBox"
+                                 Background="#0f0f14" Foreground="#cfcfe0"
+                                 BorderBrush="#2a2a3e" BorderThickness="1"
+                                 Padding="4,2"
+                                 TextChanged="OnEntitySearchChanged" />
+                        <TextBlock x:Name="SelectedEntityText"
+                                   Foreground="#8be9fd" FontSize="10"
+                                   Margin="0,4,0,4" TextWrapping="Wrap"
+                                   Text="None selected" />
+                        <TextBlock Foreground="#4a4a5e" FontSize="9"
+                                   Margin="0,0,0,4" TextWrapping="Wrap"
+                                   Text="Click an entity, then left click in the viewport to place. Right click drag to pan, scroll wheel to zoom." />
+                    </StackPanel>
+                    <ListBox x:Name="EntityListBox"
+                             Background="#0f0f14" Foreground="#cfcfe0"
+                             BorderBrush="#2a2a3e" BorderThickness="1"
+                             SelectionChanged="OnEntitySelectionChanged" />
+                </DockPanel>
             </Border>
             <local:RtHwndHost x:Name="RtViewport" Grid.Column="1" />
         </Grid>

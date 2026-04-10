@@ -3,6 +3,7 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace MapEditor.RTBridge;
@@ -20,6 +21,7 @@ public sealed class EditorViewportState : State
 {
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private EditorViewportControl? _viewport;
 
@@ -34,7 +36,7 @@ public sealed class EditorViewportState : State
                 "EditorViewportState.Startup ran before EditorContext was published. " +
                 "Check ordering in EditorBootstrap.OnRtInitialized.");
 
-        _viewport = new EditorViewportControl(_eyeManager, context.EditorEye)
+        _viewport = new EditorViewportControl(_eyeManager, _entityManager, context.EditorEye)
         {
             HorizontalExpand = true,
             VerticalExpand = true,
