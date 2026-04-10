@@ -13,7 +13,7 @@ cargo-gift-dest-sec = security dept
 cargo-gift-pizza-small = a small pizza party
 cargo-gift-pizza-large = a large pizza party
 
-cargo-gift-eng = repair Materials
+cargo-gift-eng = repair materials
 cargo-gift-vending = vending machines refills
 cargo-gift-cleaning = cleaning equipment
 cargo-gift-medical-supply = medical supplies
