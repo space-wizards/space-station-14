@@ -44,19 +44,4 @@ public sealed partial class AdminAnnounceWindow
         PlayAudio.Disabled = type != AdminAnnounceType.Station;
         PlayAudio.Text = isPreviewing ? "⏹" : "▶";
     }
-
-    private void UpdateFields(AdminAnnounceType type)
-    {
-        var isStation = type == AdminAnnounceType.Station;
-        Announcer.Editable = Sender.Editable = SoundPath.Editable = isStation;
-
-        _currentHex = AdminAnnounceDefaults.GetDefaultColorHex(type);
-
-        OnColorChanged();
-
-        if (!isStation)
-            StopPreview();
-
-        UpdateButtons();
-    }
 }

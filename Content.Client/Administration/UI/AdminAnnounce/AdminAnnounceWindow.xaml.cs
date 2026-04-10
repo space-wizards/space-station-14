@@ -56,6 +56,22 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         UpdateFields(AdminAnnounceType.Station);
     }
 
+    private void UpdateFields(AdminAnnounceType type)
+    {
+        var isStation = type == AdminAnnounceType.Station;
+        Announcer.Editable = Sender.Editable = SoundPath.Editable = isStation;
+        GlobalAnnouncement.Visible = isStation;
+
+        _currentHex = AdminAnnounceDefaults.GetDefaultColorHex(type);
+
+        OnColorChanged();
+
+        if (!isStation)
+            StopPreview();
+
+        UpdateButtons();
+    }
+
     public override void Close()
     {
         base.Close();

@@ -6,6 +6,7 @@ admin-announce-button = Announce
 admin-announce-type-station = Station
 admin-announce-type-server = Server
 admin-announce-keep-open = Keep open
+admin-announce-global = Global
 admin-announce-palette-button = Palette
 admin-announce-hex = HEX
 admin-announce-hex-color = Color...

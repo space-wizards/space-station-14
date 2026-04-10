@@ -26,6 +26,7 @@ namespace Content.Client.Administration.UI
                     Announcer = AdminAnnounceHelpers.NormalizeText(_window.Announcer.Text),
                     AnnounceType = announceType,
                     CloseAfter = !_window.KeepWindowOpen.Pressed,
+                    Global = _window.GlobalAnnouncement.Pressed,
                     ColorHex = AdminAnnounceHelpers.GetValidatedColorHex(announceType, _window.GetCurrentHex()),
                     SoundPath = _window.SoundPath.Text,
                     Sender = AdminAnnounceHelpers.NormalizeText(_window.Sender.Text),

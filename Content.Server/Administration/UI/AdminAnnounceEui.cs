@@ -11,6 +11,9 @@ using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Administration.UI
 {
@@ -21,13 +24,17 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
         private readonly ChatSystem _chatSystem;
 
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
-            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            _chatSystem = sysMan.GetEntitySystem<ChatSystem>();
         }
 
         public override EuiStateBase GetNewState() => new AdminAnnounceEuiState();
@@ -75,15 +82,59 @@ namespace Content.Server.Administration.UI
 
                     var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, doAnnounce.Sender);
 
-                    _chatSystem.DispatchGlobalAnnouncement(
-                        finalContent,
-                        announcer,
-                        colorOverride: color,
-                        playSound: true,
-                        announcementSound: sound
-                    );
+                    MapId? adminMapId = null;
+                    if (Player.AttachedEntity is { } adminEntity
+                        && _entityManager.TryGetComponent<TransformComponent>(adminEntity, out var adminXform))
+                    {
+                        adminMapId = adminXform.MapID;
+                    }
+
+                    var mapId = adminMapId ?? MapId.Nullspace;
+                    var sentPerMap = !doAnnounce.Global && mapId != MapId.Nullspace;
+
+                    if (sentPerMap)
+                    {
+                        var mapFilter = Filter.Empty();
+                        foreach (var session in _playerManager.Sessions)
+                        {
+                            if (session.AttachedEntity is { } entity
+                                && _entityManager.TryGetComponent<TransformComponent>(entity, out var xform)
+                                && xform.MapID == mapId)
+                            {
+                                mapFilter.AddPlayer(session);
+                            }
+                        }
+
+                        if (mapFilter.Recipients.Any())
+                        {
+                            _chatSystem.DispatchFilteredAnnouncement(
+                                mapFilter,
+                                finalContent,
+                                sender: announcer,
+                                playSound: true,
+                                announcementSound: sound,
+                                colorOverride: color
+                            );
+                        }
+                        else
+                        {
+                            sentPerMap = false;
+                        }
+                    }
+
+                    if (!sentPerMap)
+                    {
+                        _chatSystem.DispatchGlobalAnnouncement(
+                            finalContent,
+                            announcer,
+                            colorOverride: color,
+                            playSound: true,
+                            announcementSound: sound
+                        );
+                    }
+
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                        $"{Player.Name} has sent the following station announcement as {announcer}: {announcement}");
+                        $"{Player.Name} has sent the following {(sentPerMap ? "map" : "global")} announcement as {announcer}: {announcement}");
                     break;
             }
 

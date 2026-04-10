@@ -35,6 +35,7 @@ namespace Content.Shared.Administration
             public string Announcer = default!;
             public string Announcement = default!;
             public AdminAnnounceType AnnounceType;
+            public bool Global = true;
             public string ColorHex = AdminAnnounceDefaults.DefaultColorHex;
             public string SoundPath = AdminAnnounceDefaults.DefaultSoundPath;
             public string Sender = "";
