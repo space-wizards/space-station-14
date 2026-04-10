@@ -298,8 +298,8 @@
     - type: BatterySelfRecharger
       autoRechargeRate: 40
     - type: Extractable
-    juiceSolution:
-      reagents:
+      juiceSolution:
+        reagents:
         - ReagentId: Uranium
           Quantity: 5
 
