@@ -64,6 +64,7 @@
   - type: AltFireMelee
     attackType: Heavy
   - type: IgnitionSource
+    ignited: true
     temperature: 700
   - type: PointLight
     radius: 1.5
