@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -39,7 +40,7 @@ public sealed partial class ForensicsSystem : EntitySystem
         SubscribeLocalEvent<ForensicsComponent, GibbedBeforeDeletionEvent>(OnBeingGibbed);
         SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
-        SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: [typeof(SharedAbsorbentSystem),]);
+        SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
         SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
         SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
@@ -238,8 +239,8 @@ public sealed partial class ForensicsSystem : EntitySystem
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
 
-            var userPopupText = Loc.GetString("forensics-cleaning", ("target", target));
-            var othersPopupText = Loc.GetString("forensics-cleaning-others", ("user", user), ("target", Identity.Entity(target, EntityManager)));
+            var userPopupText = Loc.GetString("forensics-cleaning-user", ("target", Identity.Entity(target, EntityManager)));
+            var othersPopupText = Loc.GetString("forensics-cleaning-others", ("user", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
             _popupSystem.PopupPredicted(userPopupText, othersPopupText, user, user);
 
             return true;
