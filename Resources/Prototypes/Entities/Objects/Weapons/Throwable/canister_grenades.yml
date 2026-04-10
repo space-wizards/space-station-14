@@ -44,6 +44,9 @@
         Quantity: 30
   - type: TimerTriggerVisuals
     inHandUnprimedName: #don't want to inherit this state
+  - type: Tag
+    tags:
+    - CleanerGrenade
 
 - type: entity
   parent: SmokeGrenade
