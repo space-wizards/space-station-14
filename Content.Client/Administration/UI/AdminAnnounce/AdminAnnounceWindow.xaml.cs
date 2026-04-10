@@ -32,7 +32,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
         PlayAudio.OnPressed += _ => TogglePreview();
         OpenPaletteButton.OnPressed += _ => OpenPalette();
-        Announcement.OnKeyBindUp += _ => UpdateButtons();
+        Announcement.OnTextChanged += _ => UpdateButtons();
         AnnounceButton.OnPressed += _ =>
         {
             StopPreview();
