@@ -238,6 +238,9 @@
   components:
   - type: Label
     currentLabel: reagent-name-xenoborg-oil
+  - type: ThrowingAngle
+    angle: 90
+    angularVelocity: true
   - type: SolutionContainerManager
     solutions:
       drink:
