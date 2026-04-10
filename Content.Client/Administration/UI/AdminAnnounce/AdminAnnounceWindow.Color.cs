@@ -30,7 +30,7 @@ public sealed partial class AdminAnnounceWindow
 
             _paletteWindow.OnHexChanged += hex =>
             {
-                if (_currentHex == hex) return;
+                if (string.IsNullOrEmpty(hex) || _currentHex == hex) return;
                 _currentHex = hex;
                 UpdateColorPreview();
             };

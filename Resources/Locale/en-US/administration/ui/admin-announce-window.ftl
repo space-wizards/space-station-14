@@ -14,6 +14,7 @@ admin-announce-sound-placeholder = Audio Path
 admin-announce-sender-placeholder = Signature (Sent by...)
 admin-announce-sender-default = CentComm Operator
 admin-announce-sent-by = Sent by
+admin-announce-presets = Presets
 
 cmd-announceui-desc = Opens the announcement UI.
 cmd-announceui-help = Usage: announceui

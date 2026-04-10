@@ -94,16 +94,7 @@ namespace Content.Server.Administration.UI
 
                     if (sentPerMap)
                     {
-                        var mapFilter = Filter.Empty();
-                        foreach (var session in _playerManager.Sessions)
-                        {
-                            if (session.AttachedEntity is { } entity
-                                && _entityManager.TryGetComponent<TransformComponent>(entity, out var xform)
-                                && xform.MapID == mapId)
-                            {
-                                mapFilter.AddPlayer(session);
-                            }
-                        }
+                        var mapFilter = GetPlayersOnMap(mapId);
 
                         if (mapFilter.Recipients.Any())
                         {
@@ -140,6 +131,21 @@ namespace Content.Server.Administration.UI
 
             if (doAnnounce.CloseAfter)
                 Close();
+        }
+
+        private Filter GetPlayersOnMap(MapId mapId)
+        {
+            var filter = Filter.Empty();
+            foreach (var session in _playerManager.Sessions)
+            {
+                if (session.AttachedEntity is { } entity
+                    && _entityManager.TryGetComponent<TransformComponent>(entity, out var xform)
+                    && xform.MapID == mapId)
+                {
+                    filter.AddPlayer(session);
+                }
+            }
+            return filter;
         }
     }
 }
