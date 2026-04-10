@@ -27,7 +27,7 @@ namespace Content.Client.Administration.UI
                     AnnounceType = announceType,
                     CloseAfter = !_window.KeepWindowOpen.Pressed,
                     ColorHex = AdminAnnounceHelpers.GetValidatedColorHex(announceType, _window.GetCurrentHex()),
-                    SoundPath = AdminAnnounceHelpers.NormalizeSoundPath(_window.SoundPath.Text),
+                    SoundPath = _window.SoundPath.Text,
                     Sender = AdminAnnounceHelpers.NormalizeText(_window.Sender.Text),
                 });
             };

@@ -65,8 +65,8 @@ namespace Content.Server.Administration.UI
 
                     var sound = SharedChatSystem.DefaultAnnouncementSound;
                     var soundPath = AdminAnnounceHelpers.NormalizeSoundPath(doAnnounce.SoundPath);
-                    
-                    if (!string.IsNullOrEmpty(soundPath) && _res.ContentFileExists(soundPath))
+
+                    if (_res.ContentFileExists(soundPath))
                         sound = new SoundPathSpecifier(soundPath);
 
                     var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, doAnnounce.Sender);
