@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 /// <summary>
 /// Used an event that gifts the station with certain cargo
 /// </summary>
-[RegisterComponent, Access(typeof(CargoGiftsRule))]
+[RegisterComponent, Access(typeof(CargoGiftsRule)), AutoGenerateComponentPause]
 public sealed partial class CargoGiftsRuleComponent : Component
 {
     /// <summary>
@@ -55,8 +55,8 @@ public sealed partial class CargoGiftsRuleComponent : Component
     public int OrderSpaceToLeave = 5;
 
     /// <summary>
-    /// Time until we consider next lot of gifts (if supply is overflowing with orders)
+    /// Time we consider next lot of gifts at (if supply is overflowing with orders)
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan ConsiderNextGiftsAt;
 }
