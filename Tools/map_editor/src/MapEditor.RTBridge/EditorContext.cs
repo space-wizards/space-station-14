@@ -1,10 +1,15 @@
 using System;
+using System.IO;
+using System.Numerics;
 using System.Threading.Tasks;
 using Robust.Client.Graphics;
 using Robust.Shared.Asynchronous;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Graphics;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace MapEditor.RTBridge;
 
@@ -92,5 +97,65 @@ public sealed class EditorContext
             }
         });
         return tcs.Task;
+    }
+
+    /// <summary>
+    ///     Loads an SS14 map YAML from an absolute disk path and points
+    ///     the editor eye at the newly loaded map. Safe to call from any
+    ///     thread, the actual work runs on the game thread.
+    /// </summary>
+    public Task LoadMapAsync(string absolutePath)
+    {
+        if (string.IsNullOrWhiteSpace(absolutePath))
+            throw new ArgumentException("Path must not be empty", nameof(absolutePath));
+
+        return RunOnGameThread(() => LoadMapInternal(absolutePath));
+    }
+
+    private void LoadMapInternal(string absolutePath)
+    {
+        _sawmill.Info($"LoadMap: {absolutePath}");
+
+        if (!File.Exists(absolutePath))
+            throw new FileNotFoundException("Map file not found", absolutePath);
+
+        var mapLoader = _entityManager.System<MapLoaderSystem>();
+
+        // TryLoadGeneric with a stream lets us load maps from anywhere on
+        // disk, not just under Resources/.
+        using var stream = File.OpenRead(absolutePath);
+        var fileName = Path.GetFileName(absolutePath);
+
+        if (!mapLoader.TryLoadGeneric(stream, fileName, out var loadResult))
+            throw new InvalidOperationException($"Failed to load map: {absolutePath}");
+
+        _sawmill.Info(
+            $"LoadMap: loaded {loadResult.Maps.Count} map(s) and {loadResult.Grids.Count} grid(s)");
+
+        // Point the editor eye at the loaded map. Prefer an explicit map
+        // from the file, fall back to an orphan grid's auto created map.
+        MapId? targetMap = null;
+        foreach (var mapEnt in loadResult.Maps)
+        {
+            targetMap = _entityManager.GetComponent<MapComponent>(mapEnt.Owner).MapId;
+            break;
+        }
+        if (targetMap == null)
+        {
+            foreach (var gridEnt in loadResult.Grids)
+            {
+                targetMap = _entityManager.GetComponent<TransformComponent>(gridEnt.Owner).MapID;
+                break;
+            }
+        }
+        if (targetMap == null)
+        {
+            _sawmill.Warning("LoadMap: file produced no maps or grids");
+            return;
+        }
+
+        EditorEye.Position = new MapCoordinates(new Vector2(1.5f, 1.5f), targetMap.Value);
+        _eyeManager.CurrentEye = EditorEye;
+        _sawmill.Info($"LoadMap: editor eye switched to map {targetMap.Value}");
     }
 }

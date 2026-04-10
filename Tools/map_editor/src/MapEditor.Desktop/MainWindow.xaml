@@ -5,21 +5,33 @@
         Title="SS14 Map Editor (Experimental)"
         Height="720" Width="1280"
         Background="#0f0f14">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Background="#1a1a2e" BorderBrush="#2a2a3e" BorderThickness="0,0,1,0">
-            <StackPanel Margin="12">
-                <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
-                <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
-                <TextBlock x:Name="StatusText"
-                           Foreground="#7a7a8e" FontSize="11"
-                           Margin="0,16,0,0" TextWrapping="Wrap"
-                           Text="Waiting for viewport HWND..." />
-            </StackPanel>
-        </Border>
-        <local:RtHwndHost x:Name="RtViewport" Grid.Column="1" />
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="#1a1a2e" Foreground="#cfcfe0">
+            <MenuItem Header="_File" Foreground="#cfcfe0" Background="#1a1a2e">
+                <MenuItem x:Name="OpenMapMenuItem" Header="_Open Map..." Click="OnOpenMapClick" />
+                <Separator />
+                <MenuItem x:Name="ExitMenuItem" Header="E_xit" Click="OnExitClick" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#1a1a2e" BorderBrush="#2a2a3e" BorderThickness="0,0,1,0">
+                <StackPanel Margin="12">
+                    <TextBlock Foreground="#cfcfe0" FontSize="14" FontWeight="SemiBold" Text="SS14 Map Editor" />
+                    <TextBlock Foreground="#7a7a8e" FontSize="11" Margin="0,4,0,0" Text="Experimental RT embedded host" />
+                    <TextBlock x:Name="StatusText"
+                               Foreground="#7a7a8e" FontSize="11"
+                               Margin="0,16,0,0" TextWrapping="Wrap"
+                               Text="Waiting for viewport HWND..." />
+                    <TextBlock Foreground="#4a4a5e" FontSize="10"
+                               Margin="0,24,0,0" TextWrapping="Wrap"
+                               Text="Use File then Open Map to load a different SS14 map into the embedded RT viewport. Right click drag to pan, scroll wheel to zoom." />
+                </StackPanel>
+            </Border>
+            <local:RtHwndHost x:Name="RtViewport" Grid.Column="1" />
+        </Grid>
+    </DockPanel>
 </Window>
