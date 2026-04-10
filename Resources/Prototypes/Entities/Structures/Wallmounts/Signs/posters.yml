@@ -36,7 +36,7 @@
         offset: 0
   - type: Construction
     graph: PosterGraph
-    node: poster
+    node: start
 
 - type: entity
   parent: BaseSign

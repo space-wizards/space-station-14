@@ -30,7 +30,7 @@
         acts: [ "Destruction" ]
   - type: Construction
     graph: CobwebsGraph
-    node: cobwebs
+    node: start
 
 - type: entity
   parent: Cobweb1

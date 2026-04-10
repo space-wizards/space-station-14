@@ -1,8 +1,8 @@
 - type: constructionGraph
   id: PosterGraph
-  start: poster
+  start: start
   graph:
-  - node: poster
+  - node: start
     edges:
     - to: tornPoster
       steps:

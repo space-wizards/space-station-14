@@ -1,8 +1,8 @@
 - type: constructionGraph
   id: CobwebsGraph
-  start: cobwebs
+  start: start
   graph:
-  - node: cobwebs
+  - node: start
     edges:
     - to: removed
       steps:

@@ -47,7 +47,7 @@
     base: web_
   - type: Construction
     graph: CobwebsGraph
-    node: cobwebs
+    node: start
 
 - type: entity
   id: SpiderWeb
