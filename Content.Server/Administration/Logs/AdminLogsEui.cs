@@ -25,7 +25,6 @@ public sealed partial class AdminLogsEui : BaseEui
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IEntityManager _e = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
 
     private readonly ISawmill _sawmill;
