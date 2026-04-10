@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
@@ -18,63 +18,39 @@ public sealed partial class ServerDbEntryManager
     [Dependency] private IServerDbManager _db = default!;
     [Dependency] private ILogManager _logManager = default!;
 
-    private const int MaxRetries = 5;
-    private static readonly TimeSpan InitialRetryDelay = TimeSpan.FromSeconds(2);
-    private static readonly TimeSpan MaxRetryDelay = TimeSpan.FromMinutes(2);
-
-    private Task<Server>? _serverEntityTask;
-    private int _consecutiveFailures;
+    private Server? _cachedServer;
 
     /// <summary>
-    /// The entity that represents this server in the database.
-    /// </summary>
-    /// <remarks>
-    /// This value is cached when first requested. Do not re-use this entity; if you need data like the rounds,
-    /// request it manually with <see cref="IServerDbManager.AddOrGetServer"/>.
-    /// </remarks>
-    /// <summary>
-    /// Returns the cached server entity task, or starts a new one if the previous attempt failed.
+    /// Returns the cached server entity, resolving it from the DB on first access.
+    /// After the first successful resolution, this always returns a completed task.
     /// </summary>
     public Task<Server> ServerEntity
     {
         get
         {
-            if (_serverEntityTask is { IsCompletedSuccessfully: true })
-                return _serverEntityTask;
+            if (_cachedServer != null)
+                return Task.FromResult(_cachedServer);
 
-            return _serverEntityTask = GetServerEntityWithRetry();
+            return ResolveAndCache();
         }
     }
 
-    private async Task<Server> GetServerEntityWithRetry()
+    private async Task<Server> ResolveAndCache()
     {
         var sawmill = _logManager.GetSawmill("db");
-        var delay = InitialRetryDelay;
 
-        for (var attempt = 0; ; attempt++)
+        try
         {
-            try
-            {
-                var name = _cfg.GetCVar(CCVars.AdminLogsServerName);
-                var server = await _db.AddOrGetServer(name);
-                sawmill.Verbose("Server name: {Name}, ID in database: {Id}", server, server.Id);
-                Interlocked.Exchange(ref _consecutiveFailures, 0);
-                return server;
-            }
-            catch (Exception e)
-            {
-                var failures = Interlocked.Increment(ref _consecutiveFailures);
-
-                if (attempt >= MaxRetries - 1)
-                {
-                    sawmill.Error($"Failed to resolve server identity after {MaxRetries} attempts. Last error: {e}");
-                    throw;
-                }
-
-                sawmill.Warning($"Failed to resolve server identity (attempt {attempt + 1}/{MaxRetries}, total failures: {failures}): {e.Message}");
-                await Task.Delay(delay);
-                delay = TimeSpan.FromTicks(Math.Min(delay.Ticks * 2, MaxRetryDelay.Ticks));
-            }
+            var name = _cfg.GetCVar(CCVars.AdminLogsServerName);
+            var server = await _db.AddOrGetServer(name);
+            sawmill.Verbose("Server name: {Name}, ID in database: {Id}", server, server.Id);
+            _cachedServer = server;
+            return server;
+        }
+        catch (Exception e)
+        {
+            sawmill.Error($"Failed to resolve server identity: {e}");
+            throw;
         }
     }
 }

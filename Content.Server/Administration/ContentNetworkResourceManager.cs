@@ -28,9 +28,11 @@ public sealed partial class ContentNetworkResourceManager
             await _serverDb.AddUploadedResourceLogAsync(session.UserId, DateTime.Now, msg.RelativePath.ToString(), msg.Data);
     }
 
-    private async void AutoDelete(int days)
+    private void AutoDelete(int days)
     {
-        if (days > 0)
-            await _serverDb.PurgeUploadedResourceLogAsync(days);
+        if (days <= 0)
+            return;
+
+        _serverDb.PurgeUploadedResourceLogAsync(days).GetAwaiter().GetResult();
     }
 }

@@ -161,14 +161,11 @@ public sealed class AddTests : GameTest
 
         await PoolManager.WaitUntil(Server, async () =>
         {
-            var logs = await _sAdminLogManager.CurrentRoundLogs();
-            if (logs.Count == 0)
-            {
-                return false;
-            }
-
-            Assert.That(logs.First().Players, Does.Contain(playerGuid));
-            return true;
+            var filter = new LogFilter { Types = new HashSet<LogType> { LogType.Unknown } };
+            var logs = await sAdminLogSystem.CurrentRoundLogs(filter);
+            // Find the specific log that has our player
+            var match = logs.FirstOrDefault(l => l.Players.Contains(playerGuid));
+            return match.Id != 0;
         });
     }
 

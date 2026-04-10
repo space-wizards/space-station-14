@@ -270,12 +270,10 @@ public sealed partial class AdminLogsEui : BaseEui
         StateDirty();
 
         var cancel = _logSendCancellation.Token;
-        var round = _adminLogger.Round(roundId);
-        var count = _adminLogger.CountLogs(roundId, cancel: cancel);
-        var servers = _db.GetAllServers();
-        await Task.WhenAll(round, count, servers);
+        var resolvedRound = await _adminLogger.Round(roundId);
+        var logCount = await _adminLogger.CountLogs(roundId, cancel: cancel);
+        var serverEntity = await _serverDbEntry.ServerEntity;
 
-        var resolvedRound = await round;
         var players = resolvedRound.Players
             .ToDictionary(player => player.UserId, player => player.LastSeenUserName);
 
@@ -284,12 +282,11 @@ public sealed partial class AdminLogsEui : BaseEui
             _players.Add(id, name);
 
         _servers.Clear();
-        foreach (var server in await servers)
-            _servers[server.Id] = server.Name;
+        _servers[serverEntity.Id] = serverEntity.Name;
 
-        _currentServerName = _servers.GetValueOrDefault(resolvedRound.ServerId, _currentServerName);
+        _currentServerName = serverEntity.Name;
 
-        _roundLogs = await count;
+        _roundLogs = logCount;
 
         _isLoading = false;
         StateDirty();

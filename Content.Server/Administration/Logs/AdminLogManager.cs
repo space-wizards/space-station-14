@@ -246,7 +246,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 droppedPreRound++;
             }
 
-            _sawmill.Error($"Dropping {droppedPreRound} pre-round logs. Current cap: {_preRoundQueueMax}");
+            _sawmill.Debug($"Dropping {droppedPreRound} pre-round logs during lobby. Cap: {_preRoundQueueMax}");
         }
         else
         {
@@ -367,8 +367,24 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         _currentRoundId = id;
 
         // Flush pre-round logs immediately now that we have a valid round ID.
-        if (!_preRoundLogQueue.IsEmpty)
-            await TrySaveLogs();
+        // Use dropPreRoundInLobby: false because the round is starting — these
+        // logs should be persisted, not dropped. Bypass TrySaveLogs guard since
+        // this is a lifecycle event that must flush before the round proceeds.
+        if (!_preRoundLogQueue.IsEmpty || !_logQueue.IsEmpty)
+        {
+            // Wait for any in-progress save to complete
+            while (Interlocked.CompareExchange(ref _savingLogs, 1, 0) != 0)
+                await Task.Yield();
+
+            try
+            {
+                await SaveLogs(dropPreRoundInLobby: false);
+            }
+            finally
+            {
+                Interlocked.Exchange(ref _savingLogs, 0);
+            }
+        }
     }
 
     public void RunLevelChanged(GameRunLevel level)

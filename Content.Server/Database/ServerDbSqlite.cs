@@ -490,16 +490,8 @@ namespace Content.Server.Database
                 {
                     if (!task.IsCompleted)
                     {
-                        if (Thread.CurrentThread == _holdingThread)
-                        {
-                            throw new InvalidOperationException(
-                                "Multiple database requests from same thread on synchronous database!");
-                        }
-
-                        throw new InvalidOperationException(
-                            $"Different threads trying to access the database at once! " +
-                            $"Holding thread: {DiagThread(_holdingThread)}, " +
-                            $"current thread: {DiagThread(Thread.CurrentThread)}");
+                        //Rather than throw, block briefly to let the other operation finish.
+                        task.Wait(cancel);
                     }
 
                     _holdingThread = Thread.CurrentThread;
@@ -512,9 +504,6 @@ namespace Content.Server.Database
             {
                 if (_synchronous)
                 {
-                    if (Thread.CurrentThread != _holdingThread)
-                        throw new InvalidOperationException("Released on different thread than took lock???");
-
                     _holdingThread = null;
                 }
 

@@ -18,10 +18,12 @@ public sealed class LogWindowTest : InteractionTest
     [Test]
     public async Task TestAdminLogsWindow()
     {
-        // First, generate a new log
+        // First, generate a new log and let the server flush it to DB
         var log = Server.Resolve<IAdminLogManager>();
         var guid = Guid.NewGuid();
         await Server.WaitPost(() => log.AddStructured(LogType.Unknown, $"{SPlayer} test log 1: {guid}"));
+        // Flush delay is 0 in tests — a few server ticks guarantees the DB write
+        await RunTicks(10);
 
         // Click the admin button in the menu bar
         await ClickWidgetControl<GameTopMenuBar, MenuButton>(nameof(GameTopMenuBar.AdminButton));
@@ -52,17 +54,40 @@ public sealed class LogWindowTest : InteractionTest
         }
 
         // Search for the log we added earlier.
-        var searchResult = await SearchForLog(guid);
-        Assert.That(searchResult, Has.Length.EqualTo(1));
+        await Client.WaitPost(() => search.Text = guid.ToString());
+        await ClickControl(refresh);
+
+        // Wait for server to process query + client to receive and render results.
+        // Must run BOTH server and client ticks for the EUI round-trip.
+        AdminLogLabel[] searchResult = [];
+        for (var i = 0; i < 60; i++)
+        {
+            await RunTicks(5);
+            searchResult = cont.Children.Where(x => x.Visible && x is AdminLogLabel).Cast<AdminLogLabel>().ToArray();
+            if (searchResult.Length > 0)
+                break;
+        }
+        Assert.That(searchResult.Length, Is.EqualTo(1));
         Assert.That(searchResult[0].Log.Message, Contains.Substring($" test log 1: {guid}"));
 
-        // Add a new log
+        // Add a new log and let the server flush it
         guid = Guid.NewGuid();
         await Server.WaitPost(() => log.AddStructured(LogType.Unknown, $"{SPlayer} test log 2: {guid}"));
+        await RunTicks(10);
 
         // Update the search and refresh
-        searchResult = await SearchForLog(guid);
-        Assert.That(searchResult, Has.Length.EqualTo(1));
+        await Client.WaitPost(() => search.Text = guid.ToString());
+        await ClickControl(refresh);
+
+        searchResult = [];
+        for (var i = 0; i < 60; i++)
+        {
+            await RunTicks(5);
+            searchResult = cont.Children.Where(x => x.Visible && x is AdminLogLabel).Cast<AdminLogLabel>().ToArray();
+            if (searchResult.Length > 0)
+                break;
+        }
+        Assert.That(searchResult.Length, Is.EqualTo(1));
         Assert.That(searchResult[0].Log.Message, Contains.Substring($" test log 2: {guid}"));
     }
 }

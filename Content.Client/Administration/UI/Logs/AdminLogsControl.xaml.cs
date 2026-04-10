@@ -354,8 +354,11 @@ public sealed partial class AdminLogsControl : Control
 
     private bool LogMatchesPlayerFilter(SharedAdminLog log)
     {
+        if (SelectedPlayers.Count == 0)
+            return true;
+
         if (log.Players.Length == 0)
-            return SelectedPlayers.Count == 0 || IncludeNonPlayerLogs;
+            return IncludeNonPlayerLogs;
 
         return SelectedPlayers.Overlaps(log.Players);
     }
