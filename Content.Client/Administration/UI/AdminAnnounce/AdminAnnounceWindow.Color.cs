@@ -50,16 +50,11 @@ public sealed partial class AdminAnnounceWindow
 
     private Color GetCurrentColor()
     {
-        var color = Color.TryFromHex(_currentHex);
-        return color ?? GetDefaultColor();
-    }
+        if (Color.TryFromHex(_currentHex) is { } color)
+            return color;
 
-    private Color GetDefaultColor()
-    {
-        var type = (AdminAnnounceType?)AnnounceMethod.SelectedMetadata;
-        var def = AdminAnnounceDefaults.GetDefaultColorHex(type ?? AdminAnnounceType.Station);
-
-        return Color.FromHex(def);
+        var type = (AdminAnnounceType?)AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station;
+        return Color.FromHex(AdminAnnounceDefaults.GetDefaultColorHex(type));
     }
 
     private void UpdateColorPreview()

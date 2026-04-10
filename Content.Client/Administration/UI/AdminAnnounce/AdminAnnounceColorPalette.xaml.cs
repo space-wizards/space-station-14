@@ -32,14 +32,11 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
             return;
 
         button.ModulateSelfOverride = color;
-        button.OnPressed += _ => UpdateFromPreset(hex);
+        button.OnPressed += _ => ApplyPreset(hex, color);
     }
 
-    private void UpdateFromPreset(string hex)
+    private void ApplyPreset(string hex, Color color)
     {
-        if (Color.TryFromHex(hex) is not { } color)
-            return;
-
         Picker.Color = color;
         SetHexText(hex);
         OnHexChanged?.Invoke(hex);
@@ -47,8 +44,7 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
 
     public void SetHexText(string hex)
     {
-        if (HexInput.Text != hex)
-            HexInput.Text = hex;
+        HexInput.Text = hex;
     }
 
     public void UpdateDisplay(Color color, string hex)

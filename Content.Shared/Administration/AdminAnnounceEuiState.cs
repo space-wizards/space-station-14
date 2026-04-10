@@ -1,6 +1,5 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
-using System.Text;
 
 namespace Content.Shared.Administration
 {
@@ -54,27 +53,10 @@ namespace Content.Shared.Administration
 
         public static string GetValidatedColorHex(AdminAnnounceType type, string? value)
         {
-            return TryNormalizeStrictHex(value, out var normalizedHex)
-                ? normalizedHex
-                : AdminAnnounceDefaults.GetDefaultColorHex(type);
-        }
+            if (Color.TryFromHex(value) is { } color)
+                return color.ToHexNoAlpha();
 
-        public static bool TryNormalizeStrictHex(string? value, out string normalizedHex)
-        {
-            normalizedHex = string.Empty;
-            var hex = NormalizeText(value);
-
-            if (hex.Length != 7 || hex[0] != '#')
-                return false;
-
-            for (var i = 1; i < hex.Length; i++)
-            {
-                if (!Uri.IsHexDigit(hex[i]))
-                    return false;
-            }
-
-            normalizedHex = hex;
-            return true;
+            return AdminAnnounceDefaults.GetDefaultColorHex(type);
         }
 
         public static bool IsValidResourcePath(string? value)
@@ -89,12 +71,7 @@ namespace Content.Shared.Administration
             if (string.IsNullOrWhiteSpace(trimmedSender))
                 return announcement;
 
-            var sb = new StringBuilder(announcement);
-            sb.Append('\n');
-            sb.Append(Loc.GetString("admin-announce-sent-by"));
-            sb.Append(' ');
-            sb.Append(trimmedSender);
-            return sb.ToString();
+            return $"{announcement}\n{Loc.GetString("admin-announce-sent-by")} {trimmedSender}";
         }
     }
 }
