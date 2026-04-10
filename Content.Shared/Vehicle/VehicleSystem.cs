@@ -152,10 +152,18 @@ public sealed partial class VehicleSystem : EntitySystem
 
         if (uid != null)
         {
-            // AddComp used for noisy fail. This should never be an issue.
-            var vehicleOperator = AddComp<VehicleOperatorComponent>(uid.Value);
-            vehicleOperator.Vehicle = entity.Owner;
-            Dirty(uid.Value, vehicleOperator);
+            if (_operatorQuery.HasComp(uid.Value))
+            {
+                var vehicleOperator = Comp<VehicleOperatorComponent>(uid.Value);
+                vehicleOperator.Vehicle = entity.Owner;
+                Dirty(uid.Value, vehicleOperator);
+            }
+            else
+            {
+                var vehicleOperator = AddComp<VehicleOperatorComponent>(uid.Value);
+                vehicleOperator.Vehicle = entity.Owner;
+                Dirty(uid.Value, vehicleOperator);
+            }
 
             _mover.SetRelay(uid.Value, entity);
 
@@ -260,7 +268,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (_entityWhitelist.IsWhitelistFail(entity.Comp.OperatorWhitelist, uid))
             return false;
 
-        if (entity.Comp.RequiresHands && _handsQuery.HasComp(uid) && !_actionBlocker.CanInteract(uid, entity))
+        if (entity.Comp.RequiresHands && (!_handsQuery.HasComp(uid) || !_actionBlocker.CanInteract(uid, entity)))
             return false;
 
         return _actionBlocker.CanConsciouslyPerformAction(uid);
