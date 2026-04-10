@@ -43,27 +43,28 @@ public sealed partial class IngestionSystem
         args.Cancelled = true;
     }
 
-    private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> ent, ref ItemMaskToggledEvent args)
+    private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> mask, ref ItemMaskToggledEvent args)
     {
-        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        mask.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(mask);
     }
 
-    private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> entity, ref IngestionAttemptEvent args)
+    private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> mask, ref IngestionAttemptEvent args)
     {
-        if (!args.Cancelled && entity.Comp.Enabled)
+        if (!args.Cancelled && mask.Comp.Enabled)
             args.Cancelled = true;
     }
 
     /// <summary>
     ///     Block ingestion attempts based on the equipped mask or head-wear
     /// </summary>
-    private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> entity, ref InventoryRelayedEvent<IngestionAttemptEvent> args)
+    private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> mask, ref InventoryRelayedEvent<IngestionAttemptEvent> args)
     {
-        if (args.Args.Cancelled || !entity.Comp.Enabled)
+        if (args.Args.Cancelled || !mask.Comp.Enabled)
             return;
 
         args.Args.Cancelled = true;
-        args.Args.Blocker = entity;
+        args.Args.Blocker = mask;
     }
 
     private void OnEdible(Entity<EdibleComponent> entity, ref EdibleEvent args)
