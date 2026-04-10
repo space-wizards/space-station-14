@@ -45,3 +45,21 @@
     proto: XenoborgOilChemistryAmpoule
     capacity: 5
     count: 5
+  - type: IgniteOnMeleeHit
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    damage:
+      types:
+        Heat: 8
+    SoundOnHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    SoundOnHitNoDamage:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -12
+  - type: AltFireMelee
+    attackType: Heavy
