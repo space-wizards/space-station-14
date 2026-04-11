@@ -1,47 +1,24 @@
-# See https://www.desmos.com/calculator/db9t8ophwm for a calculator that may help you visualize these values.
-
-# In a low-energy state plasma will burn to simple CO2 and water just like any hydrocarbon.
 - type: gasReaction
-  id: PlasmaFireLowEnergy
+  id: PlasmaFire
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  enthalpy: 1600000 # Atmospherics.FirePlasmaEnergyReleased (J/mol)
-  reactants:
-    Plasma: 1
-    Oxygen: 9
-  products:
-    CarbonDioxide: 5
-    WaterVapor: 5
-  catalysts:
-    Tritium: 10
-    # When tritium is present, the activation energy increases
-    # which shifts the reaction over to PlasmaFireHighEnergy.
+  minimumRequirements: # In this case, same as minimum mole count.
+    Oxygen: 0.01
+    Plasma: 0.01
+  effects:
+    - !type:PlasmaFireReaction {}
 
-# Takeover reaction - when hot enough, plasma and oxygen will fuse to tritium.
-- type: gasReaction
-  id: PlasmaFireHighEnergy
-  priority: -1
-  minimumTemperature: 900
-  enthalpy: 1600000
-  reactants:
-    Plasma: 1
-    Oxygen: 9
-  products:
-    Tritium: 10
-
-# Tritium burns much hotter.
 - type: gasReaction
   id: TritiumFire
-  priority: 0
+  priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  enthalpy: 2840000
+  enthalpy: 284000
   reactants:
     Tritium: 2
     Oxygen: 1
   products:
     WaterVapor: 2
 
-# Frezon will decompose in an endothermic reaction with nitrogen.
 - type: gasReaction
   id: FrezonCoolant
   priority: 1
@@ -53,23 +30,16 @@
   products:
     NitrousOxide: 6
 
-# Frezon is made at room temperature, however the reaction is exothermic.
-# Nitrogen can be used to reduce the activation temperature, however this will also
-# cause a FrezonCoolant reaction if not managed.
-# Frezon production is exothermic - if the reaction gets out of control, it can flash
-# the tritium used.
 - type: gasReaction
   id: FrezonProduction
   priority: 2
-  minimumTemperature: 293.15
-  enthalpy: 25000
-  reactants:
-    Tritium: 1
-    Nitrogen: 8
-  products:
-    Frezon: 9
-  catalysts:
-    Oxygen: -2
+  maximumTemperature: 73.15 # Cold tritium fire, basically.
+  minimumRequirements:
+    Oxygen: 0.01
+    Nitrogen: 0.01
+    Tritium: 0.01
+  effects:
+  - !type:FrezonProductionReaction {}
 
 - type: gasReaction
   id: AmmoniaOxygenReaction
