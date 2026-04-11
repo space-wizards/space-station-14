@@ -57,6 +57,11 @@ namespace Content.Server.Lathe
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
 
+        /// <summary>
+        /// Per-tick cache
+        /// </summary>
+        private readonly List<GasMixture> _environments = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -78,15 +83,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
-
-            SubscribeLocalEvent<LatheHeatProducingComponent, MapInitEvent>(HeatComponentMapInit);
         }
-
-        private void HeatComponentMapInit(Entity<LatheHeatProducingComponent> ent, ref MapInitEvent args)
-        {
-            ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
-        }
-
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
@@ -102,11 +99,33 @@ namespace Content.Server.Lathe
             var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheProducingComponent, TransformComponent>();
             while (heatQuery.MoveNext(out var uid, out var heatComp, out _, out var xform))
             {
-                if (_timing.CurTime < heatComp.NextUpdate)
+                if (_timing.CurTime < heatComp.NextSecond)
                     continue;
+                heatComp.NextSecond += TimeSpan.FromSeconds(1);
 
-                heatComp.NextUpdate += heatComp.UpdateInterval;
-                _atmosphere.AddHeatTileMixture((uid, xform), heatComp.EnergyPerSecond);
+                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
+                _environments.Clear();
+
+                if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
+                    _environments.Add(tileMix);
+
+                if (xform.GridUid != null)
+                {
+                    var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+                    while (enumerator.MoveNext(out var mix))
+                    {
+                        _environments.Add(mix);
+                    }
+                }
+
+                if (_environments.Count > 0)
+                {
+                    var heatPerTile = heatComp.EnergyPerSecond / _environments.Count;
+                    foreach (var env in _environments)
+                    {
+                        _atmosphere.AddHeat(env, heatPerTile);
+                    }
+                }
             }
         }
 
@@ -305,7 +324,7 @@ namespace Content.Server.Lathe
 
         private void OnHeatStartPrinting(EntityUid uid, LatheHeatProducingComponent component, LatheStartPrintingEvent args)
         {
-            component.NextUpdate = _timing.CurTime;
+            component.NextSecond = _timing.CurTime;
         }
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
