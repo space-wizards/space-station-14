@@ -1,0 +1,58 @@
+- type: entity
+  parent: [BaseItem, BaseXenoborgContraband]
+  id: WeaponTileGun
+  name: tile gun
+  description: A strange gun that shoots tiles. Shoot them with the floor!
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/tilegun.rsi
+    layers:
+    - state: icon
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
+  - type: Item
+    size: Large
+  - type: ToolTileCompatible
+  - type: Tool
+    qualities:
+    - Prying
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 4
+    maxAngle: 15
+    minAngle: 1
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/magnetic_shot.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty_beep.ogg
+  - type: BallisticAmmoInteractLoader
+  - type: BallisticAmmoProvider
+    whitelist:
+      components:
+      - FloorTile
+    capacity: 30
+    proto: FloorTileItemSteel
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/tile_load.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  parent: WeaponTileGun
+  id: WeaponTileGunEmpty
+  suffix: empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
