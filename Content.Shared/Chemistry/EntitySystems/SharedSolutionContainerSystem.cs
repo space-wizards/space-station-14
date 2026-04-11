@@ -109,7 +109,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         args.State = new SolutionComponentState(ent.Comp.Solution);
     }
 
-    protected void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not SolutionComponentState cast)
             return;
