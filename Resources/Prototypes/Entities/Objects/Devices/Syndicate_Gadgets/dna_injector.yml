@@ -1,0 +1,47 @@
+- type: entity
+  parent: BaseItem
+  id: DnaInjectorUnlimited
+  suffix: Admeme, unlimited
+  # Should not be a traitor item for several reasons:
+  # - Changeling code is still in development, and copying organs etc does not work yet.
+  # - Giving this to traitors makes them overlap with changelings or paradox clones too much.
+  # - It completely makes the voice mask redundant.
+  # - Unlike when disguising yourself as someone else, there is no way to get caught.
+  name: DNA injector
+  description: Can be used to take a DNA sample from someone and inject it into another person, turning them into a clone of the original.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+    layers:
+    - state: implanter0
+      map: [ "injector" ]
+      visible: true
+    - state: implanter1
+      map: [ "fillState" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/implanter.rsi
+    heldPrefix: implanter
+    size: Small
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ChangelingClonerVisuals.State:
+        injector:
+          Empty: {state: implanter0}
+          Filled: {state: implanter0}
+          Spent: {state: broken}
+        fillState:
+          Empty: {visible: false}
+          Filled: {visible: true}
+          Spent: {visible: false}
+  - type: ChangelingCloner
+
+- type: entity
+  parent: DnaInjectorUnlimited
+  id: DnaInjector
+  suffix: Admeme, single use
+  components:
+  - type: ChangelingCloner
+    reusable: false

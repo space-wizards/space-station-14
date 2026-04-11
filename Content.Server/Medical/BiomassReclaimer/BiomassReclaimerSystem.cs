@@ -7,7 +7,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -47,6 +47,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -70,10 +71,8 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
+                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents is { } blood)
                     {
-                        Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
@@ -94,7 +93,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 reclaimer.CurrentExpectedYield -= actualYield; // store non-integer leftovers
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
-                reclaimer.BloodReagent = null;
+                reclaimer.BloodReagents = null;
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
@@ -220,9 +219,11 @@ namespace Content.Server.Medical.BiomassReclaimer
             var component = ent.Comp;
             AddComp<ActiveBiomassReclaimerComponent>(ent);
 
-            if (TryComp<BloodstreamComponent>(toProcess, out var stream))
+            if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
+                _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
             {
-                component.BloodReagent = stream.BloodReagent;
+                component.BloodReagents = solution.Clone();
+                component.BloodReagents.ScaleSolution(50 / component.BloodReagents.Volume);
             }
             if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {
@@ -268,7 +269,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             // Reject souled bodies in easy mode.
             if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
-                !HasComp<HumanoidAppearanceComponent>(dragged) ||
+                !HasComp<HumanoidProfileComponent>(dragged) ||
                 !_minds.TryGetMind(dragged, out _, out var mind))
                 return true;
 

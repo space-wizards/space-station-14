@@ -1,0 +1,32 @@
+﻿- type: feedbackPopup
+  id: FeedbackPopup
+  popupOrigin: wizden_master
+  title: "[bold]Feedback on the new feedback popup system[/bold]"
+  description: |-
+    This window you are seeing is a new system to get feedback on features. It will give popups at the end of the round (mostly on our testing server Vulture)!
+    Please share your thoughts through the forums below! Log in with your Space Station 14 account!
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/feedback-popup-feedback/22858"
+
+- type: feedbackPopup
+  id: GeneralFeedback
+  popupOrigin: wizden_master
+  title: "[bold]General feedback for the game[/bold]"
+  description: >-
+    If you have any feedback on the game, feel free to create a thread in the feedback forum category.
+  responseType: "General Feedback"
+  responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
+  showRoundEnd: false
+
+- type: feedbackPopup
+  id: ForceVentCrittersToAttackFeedback
+  popupOrigin: wizden_master
+  title: "[bold]Played an antagonist vent critter role?[/bold]"
+  description: >-
+    If you've played or interacted with a player-controlled antagonist vent critter (spiders, slimes, clown spiders), please leave your feedback on how the new auto-attack feature went.
+  responseType: "Feedback Thread"
+  responseLink: "https://forum.spacestation14.com/t/force-vent-critters-to-attack-feedback/26861"
+  showRoundEnd: true
+  ruleWhitelist:
+    components:
+      - VentHordeRule
