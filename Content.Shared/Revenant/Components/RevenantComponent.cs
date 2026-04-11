@@ -216,14 +216,15 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     /// <summary>
-    /// The scaling for passively chilling surroundings
+    /// The scaling for passively chilling surroundings.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("chillScaling")]
+    [DataField]
     public FixedPoint2 ChillScaling = 7000;
 
     /// <summary>
-    /// The upper limit for essence when passively chilling surroundings
+    /// The upper limit for essence when passively chilling surroundings.
+    /// Beyond this point, more essence will not cause more chilling.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("chillUpperBound")]
+    [DataField]
     public FixedPoint2 ChillUpperBound = 500;
 }

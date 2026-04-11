@@ -190,18 +190,21 @@ public sealed partial class RevenantSystem : EntitySystem
         }
     }
 
-    private void ChillArea(EntityUid uid, RevenantComponent rev)
+    /// <summary>
+    /// Cools the area around the revenant.
+    /// The more essence they have, the colder it gets, up to a certain point.
+    /// </summary>
+    /// <param name="ent">The revenant entity.</param>
+    private void ChillArea(Entity<RevenantComponent> ent)
     {
-        var effectiveEssence = Math.Clamp(rev.Essence.Int(), 0, rev.ChillUpperBound.Float());
+        var effectiveEssence = Math.Clamp(ent.Comp.Essence.Int(), 0, ent.Comp.ChillUpperBound.Float());
         // Parabolic curve based on essence, more essence = more delta q, flattening as upper bound is reached
-        var temperatureChange = 200 / rev.ChillScaling.Float() * MathF.Pow(effectiveEssence - rev.ChillUpperBound.Float(), 2) - rev.ChillScaling.Float();
+        var dQ =
+            200 / ent.Comp.ChillScaling.Float() * MathF.Pow(effectiveEssence - ent.Comp.ChillUpperBound.Float(), 2) -
+            ent.Comp.ChillScaling.Float();
 
-        var mixture = _atmosphere.GetContainingMixture(uid, true, true);
-
-        if (mixture is { })
-        {
-            _atmosphere.AddHeat(mixture, temperatureChange);
-        }
+        if (_atmosphere.GetContainingMixture(ent.Owner, true, true) is { } air)
+            _atmosphere.AddHeat(air, dQ);
     }
 
     public override void Update(float frameTime)
@@ -222,7 +225,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
             }
 
-            ChillArea(uid, rev);
+            ChillArea((uid, rev));
         }
     }
 }
