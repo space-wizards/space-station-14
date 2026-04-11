@@ -78,8 +78,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
-    protected EntityQuery<SolutionComponent> SolutionQuery;
-    protected EntityQuery<SolutionManagerComponent> SolutionManagerQuery;
+    [Dependency] protected readonly EntityQuery<SolutionComponent> SolutionQuery = default!;
+    [Dependency] protected readonly EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
 
     public override void Initialize()
     {
@@ -88,10 +88,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         InitializeRelays();
         InitializeContainerManager();
 
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
-        SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
@@ -100,9 +101,23 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
+    }
 
-        SolutionQuery = GetEntityQuery<SolutionComponent>();
-        SolutionManagerQuery = GetEntityQuery<SolutionManagerComponent>();
+    private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new SolutionComponentState(ent.Comp.Solution);
+    }
+
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState cast)
+            return;
+
+        ent.Comp.Solution = cast.Solution.Clone();
+
+        // Always raise the event on the client so that we can update UIs accordingly.
+        var changedEv = new SolutionChangedEvent(ent);
+        RaiseLocalEvent(ent, ref changedEv);
     }
 
     /// <summary>
