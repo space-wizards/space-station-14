@@ -105,6 +105,18 @@ public sealed partial class ElectrifiedComponent : Component
     [DataField, AutoNetworkedField]
     public float ShockTime = 5f;
 
+    /// <summary>
+    /// Delay between consecutive shocks
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan? ShockDelay;
+
+    /// <summary>
+    /// When the entity will be able to shock again
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan? NextShock;
+
     [DataField, AutoNetworkedField]
     public float SiemensCoefficient = 1f;
 

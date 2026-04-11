@@ -1570,7 +1570,7 @@
     components:
     - type: Electrified
       requirePower: false
-      onBump: false # otherwise you could just stun lock people and shock them forever
+      shockDelay: 10
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
