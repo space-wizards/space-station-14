@@ -30,6 +30,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
 
     private const string ChangelingBuiXmlGeneratedName = "ChangelingTransformBoundUserInterface";
     public override void Initialize()
@@ -38,8 +39,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
-        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentityDropMessage>(OnTransformDrop);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformDoAfterEvent>(OnSuccessfulTransform);
         SubscribeLocalEvent<ChangelingTransformComponent, ComponentShutdown>(OnShutdown);
 
         // Components that need special handling outside of cloning.
@@ -79,6 +81,43 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
           // but pressing the number does.
     }
 
+    private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
+        ref ChangelingTransformIdentitySelectMessage args)
+    {
+        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
+            return;
+
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+            return;
+
+        if (identity.CurrentIdentity == targetIdentity)
+            return; // don't transform into ourselves
+
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+            return; // this identity does not belong to this player
+
+        TransformInto(ent.AsNullable(), targetIdentity.Value);
+    }
+
+    private void OnTransformDrop(Entity<ChangelingTransformComponent> ent,
+        ref ChangelingTransformIdentityDropMessage args)
+    {
+        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
+            return;
+
+        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
+            return;
+
+        if (identity.CurrentIdentity == targetIdentity)
+            return; // don't drop our current identity
+
+        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+            return; // this identity does not belong to this player
+
+        _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
+        _changelingIdentity.DropStoredIdentity(ent.Owner, targetIdentity.Value);
+    }
+
     /// <summary>
     /// Transform the changeling into another identity.
     /// This can be any cloneable humanoid and doesn't have to be stored in the ChangelingIdentityComponent,
@@ -99,7 +138,10 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             PopupType.MediumCaution);
 
         if (_net.IsServer)
+        {
+            ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound); // cancel any previous sounds first
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
+        }
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
@@ -122,33 +164,11 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         });
     }
 
-    private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
-        ref ChangelingTransformIdentitySelectMessage args)
-    {
-        _ui.CloseUi(ent.Owner, ChangelingTransformUiKey.Key, ent);
-
-        if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
-            return;
-
-        if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
-            return;
-
-        if (identity.CurrentIdentity == targetIdentity)
-            return; // don't transform into ourselves
-
-        if (!identity.ConsumedIdentities.Contains(targetIdentity.Value))
-            return; // this identity does not belong to this player
-
-        TransformInto(ent.AsNullable(), targetIdentity.Value);
-    }
-
     private void OnSuccessfulTransform(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
-
-        if (Exists(ent.Comp.CurrentTransformSound))
-            _audio.Stop(ent.Comp.CurrentTransformSound);
+        ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)
             return;
@@ -169,6 +189,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
+
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
