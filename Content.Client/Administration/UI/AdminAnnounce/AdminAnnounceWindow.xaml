@@ -11,12 +11,19 @@
                       Text="{Loc admin-announce-announcer-default}"
                       HorizontalExpand="True"
                       Margin="2" />
-            <LineEdit Name="Sender"
-                      Access="Public"
-                      PlaceHolder="{Loc admin-announce-sender-placeholder}"
-                      Text="{Loc admin-announce-sender-default}"
-                      HorizontalExpand="True"
-                      Margin="2" />
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="2">
+                <LineEdit Name="Sender"
+                          Access="Public"
+                          PlaceHolder="{Loc admin-announce-sender-placeholder}"
+                          Text="{Loc admin-announce-sender-default}"
+                          HorizontalExpand="True" />
+                <CheckBox Name="EnableSender"
+                          Access="Public"
+                          ToolTip="{Loc admin-announce-enable-sender-tooltip}"
+                          Pressed="True"
+                          Margin="4,0,0,0"
+                          VerticalAlignment="Center" />
+            </BoxContainer>
         </GridContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,0,4">
             <BoxContainer Orientation="Horizontal" Margin="2">

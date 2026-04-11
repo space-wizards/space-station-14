@@ -11,8 +11,9 @@ admin-announce-palette-button = Palette
 admin-announce-hex = HEX
 admin-announce-hex-color = Color...
 admin-announce-sound-placeholder = Audio Path
-admin-announce-sender-placeholder = Signature (Sent by...)
+admin-announce-sender-placeholder = Sent by...
 admin-announce-sender-default = CentComm Operator
+admin-announce-enable-sender-tooltip = Enable sender signature
 admin-announce-sent-by = Sent by
 admin-announce-presets = Presets
 

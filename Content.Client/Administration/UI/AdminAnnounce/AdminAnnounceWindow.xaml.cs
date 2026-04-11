@@ -30,6 +30,7 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 
         InitAnnounceMethods();
 
+        EnableSender.OnToggled += _ => UpdateSenderEditable();
         PlayAudio.OnPressed += _ => TogglePreview();
         OpenPaletteButton.OnPressed += _ => OpenPalette();
         Announcement.OnTextChanged += _ => UpdateButtons();
@@ -38,6 +39,13 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
             StopPreview();
             UpdateButtons();
         };
+
+        UpdateSenderEditable();
+    }
+
+    private void UpdateSenderEditable()
+    {
+        Sender.Editable = EnableSender.Pressed;
     }
 
     private void InitAnnounceMethods()
@@ -59,7 +67,9 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
     private void UpdateFields(AdminAnnounceType type)
     {
         var isStation = type == AdminAnnounceType.Station;
-        Announcer.Editable = Sender.Editable = SoundPath.Editable = isStation;
+        Announcer.Editable = SoundPath.Editable = isStation;
+        EnableSender.Visible = isStation;
+        Sender.Editable = isStation && EnableSender.Pressed;
         GlobalAnnouncement.Visible = isStation;
 
         _currentHex = AdminAnnounceDefaults.GetDefaultColorHex(type);

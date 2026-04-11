@@ -1,6 +1,7 @@
 using Content.Client.Administration.UI.AdminAnnounce;
 using Content.Client.Eui;
 using Content.Shared.Administration;
+using Content.Shared.Eui;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
@@ -12,6 +13,7 @@ namespace Content.Client.Administration.UI
         public AdminAnnounceEui()
         {
             _window = new AdminAnnounceWindow();
+            _window.OnClose += () => SendMessage(new CloseEuiMessage());
             _window.AnnounceButton.OnPressed += _ => 
             {
                 var announcement = AdminAnnounceHelpers.NormalizeText(Rope.Collapse(_window.Announcement.TextRope));
@@ -29,7 +31,7 @@ namespace Content.Client.Administration.UI
                     Global = _window.GlobalAnnouncement.Pressed,
                     ColorHex = AdminAnnounceHelpers.GetValidatedColorHex(announceType, _window.GetCurrentHex()),
                     SoundPath = _window.SoundPath.Text,
-                    Sender = AdminAnnounceHelpers.NormalizeText(_window.Sender.Text),
+                    Sender = _window.EnableSender.Pressed ? AdminAnnounceHelpers.NormalizeText(_window.Sender.Text) : string.Empty,
                 });
             };
         }
