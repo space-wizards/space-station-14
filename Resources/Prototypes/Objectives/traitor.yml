@@ -378,6 +378,25 @@
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
 
+# sabotage
+- type: entity
+  parent: BaseTraitorObjective
+  id: SupercritAnomaliesObjective
+  description: Nanotrasen is very interested in anomalies with potentially catastrophic consequences. Introduce them to the fire they're playing with.
+  components:
+  - type: Objective
+    difficulty: 2
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom1
+  - type: SupercriticalAnomaliesCondition
+  - type: NumberObjective
+    min: 3
+    max: 4
+    title: objective-condition-supercrit-anomalies-title
+  - type: ObjectiveLimit
+    limit: 1
+
 # other
 - type: entity
   parent: BaseTraitorObjective
