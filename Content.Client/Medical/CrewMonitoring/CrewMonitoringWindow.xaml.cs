@@ -114,7 +114,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 HorizontalExpand = true,
             };
 
-            alertsLabel.SetMarkup(Loc.GetString("crew-monitoring-ui-alerts-label"));//, Color.Yellow);
+            alertsLabel.SetMarkup(Loc.GetString("crew-monitoring-ui-alerts-label"));
             alertsLabel.StyleClasses.Add("font-large");
 
             SensorsTable.AddChild(alertsLabel);
