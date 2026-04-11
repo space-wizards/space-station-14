@@ -215,6 +215,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!_random.Prob(electrified.Probability))
             return false;
 
+        if (electrified.ShockDelay != null && electrified.NextShock > _timing.CurTime)
+            return false;
+
         EnsureComp<ActivatedElectrifiedComponent>(uid);
         _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, true);
 
@@ -238,6 +241,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     true,
                     electrified.SiemensCoefficient
                 );
+
+                if (lastRet)
+                    electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
             }
             return lastRet;
         }
@@ -295,14 +301,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
         StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
     {
-        if (TryComp<ElectrifiedComponent>(sourceUid, out var electrified) && electrified.ShockDelay != null)
-        {
-            if (electrified.NextShock <= _timing.CurTime)
-                electrified.NextShock = _timing.CurTime + electrified.ShockDelay;
-            else
-                return false;
-        }
-
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
             || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
             return false;
