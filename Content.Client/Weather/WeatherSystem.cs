@@ -20,19 +20,15 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private EntityQuery<AudioComponent> _audioQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<RoofComponent> _roofQuery;
+    [Dependency] private readonly EntityQuery<AudioComponent> _audioQuery = default!;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private readonly EntityQuery<RoofComponent> _roofQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
-
-        _audioQuery = GetEntityQuery<AudioComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _roofQuery = GetEntityQuery<RoofComponent>();
     }
 
     private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
