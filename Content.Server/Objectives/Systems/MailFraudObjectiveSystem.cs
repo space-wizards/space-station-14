@@ -11,6 +11,7 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
 
     private EntityQuery<MailFraudConditionComponent> _objQuery;
 
@@ -28,10 +29,7 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
         if (!ent.Comp.WasPenalized)
             return; //not fraud
 
-        if (TryComp<FingerprintReaderComponent>(ent, out var reader) &&
-            TryComp<FingerprintComponent>(args.User, out var fingerprint) &&
-            fingerprint.Fingerprint != null &&
-            reader.AllowedFingerprints.AsReadOnly().Contains(fingerprint.Fingerprint))
+        if (_fingerprintReader.IsAllowed(ent.Owner, args.User, out var _, showPopup: false, checkGloves: false))
             return; //cutting open your own letter
 
         if (!_mind.TryGetMind(args.User, out _, out var mind))
