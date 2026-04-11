@@ -17,4 +17,6 @@ xenoborg-type-heavy = [color= #d62020]heavy xenoborgs[/color]
 xenoborg-type-scout = [color= #6a6b6f]scout xenoborgs[/color]
 xenoborg-type-stealth = [color= #ff00cc]stealth xenoborgs[/color]
 
+module-group-info = This is {INDEFINITE($types)} {$types} module.
 module-group-incompatible = This module is incompatible with other {$types} modules.
+module-group-prerequisite = This module requires {INDEFINITE($types)} {$types} module to be installed beforehand.

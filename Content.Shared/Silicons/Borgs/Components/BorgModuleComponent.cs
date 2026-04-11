@@ -54,5 +54,6 @@ public readonly record struct BorgModuleInstalledEvent(EntityUid ChassisEnt);
 /// Raised on a module when it's uninstalled in order to
 /// </summary>
 /// <param name="ChassisEnt">The borg the module is being uninstalled from.</param>
+/// <param name="ModuleEnt">The module being uninstalled.</param>
 [ByRefEvent]
-public readonly record struct BorgModuleUninstalledEvent(EntityUid ChassisEnt);
+public readonly record struct BorgModuleUninstalledEvent(EntityUid ChassisEnt, EntityUid ModuleEnt);

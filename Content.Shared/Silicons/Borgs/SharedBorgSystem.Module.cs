@@ -33,7 +33,7 @@ public abstract partial class SharedBorgSystem
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
             OnComponentModuleInstalledRelay);
         SubscribeLocalEvent<BorgModuleWhitelistComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
-            OnCheckWhitelistRelay);
+            OnCheckBlacklistRelay);
 
         _moduleQuery = GetEntityQuery<BorgModuleComponent>();
     }
@@ -46,9 +46,17 @@ public abstract partial class SharedBorgSystem
             if (TryFormatList(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
                 args.PushMarkup(list);
 
-            if (TryComp<BorgModuleWhitelistComponent>(ent, out var whitelist) &&
-                TryFormatList(whitelist.ModuleTypes, "module-group-incompatible", "types", out list))
-                args.PushMarkup(list);
+            if (TryComp<BorgModuleWhitelistComponent>(ent, out var whitelist))
+            {
+                if (TryFormatList(whitelist.ModuleTypes, "module-group-info", "types", out list))
+                    args.PushMarkup(list);
+
+                if (TryFormatList(whitelist.BlacklistedTypes, "module-group-incompatible", "types", out list))
+                    args.PushMarkup(list);
+
+                if (TryFormatList(whitelist.RequiredTypes, "module-group-prerequisite", "types", out list))
+                    args.PushMarkup(list);
+            }
         }
     }
 
@@ -93,6 +101,9 @@ public abstract partial class SharedBorgSystem
             return;
 
         UninstallModule((chassis, chassisComp), module.AsNullable());
+
+        var uninstallEv = new BorgModuleUninstalledEvent(chassis, module.Owner);
+        RaiseLocalEvent(chassis, ref uninstallEv);
     }
     #endregion
 
@@ -290,7 +301,7 @@ public abstract partial class SharedBorgSystem
     #endregion
 
     #region ModuleWhitelist
-    private void OnCheckWhitelistRelay(Entity<BorgModuleWhitelistComponent> ent,
+    private void OnCheckBlacklistRelay(Entity<BorgModuleWhitelistComponent> ent,
         ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
         if (args.Args.Cancelled)
@@ -299,7 +310,7 @@ public abstract partial class SharedBorgSystem
         if (_whitelist.IsWhitelistPass(ent.Comp.ModuleBlacklist, args.Args.ModuleEnt))
         {
             args.Args.Cancelled = true;
-            args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", MetaData(ent).EntityName));
+            args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
         }
     }
     #endregion
