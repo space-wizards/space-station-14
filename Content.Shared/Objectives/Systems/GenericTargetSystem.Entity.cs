@@ -1,33 +1,35 @@
-﻿namespace Content.Shared.Objectives.Systems;
+﻿using Content.Shared.EntityConditions;
+
+namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
 /// This is an abstract system which is intended to query all entities and return a hashset of valid entities,
 /// based on a list of expected components and optional filters.
 /// </summary>
-public abstract partial class EntityTargetSystem : EntitySystem
+public abstract partial class EntityTargetSystem : GenericTargetSystem
 {
-    public HashSet<EntityUid> GetEntities(params EntityUid[] exclude)
+    public HashSet<EntityUid> GetEntities(EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var minds = new HashSet<EntityUid>();
-        AddEntities(minds, exclude);
-        return minds;
+        var entities = new HashSet<EntityUid>();
+        AddEntities(entities, exclude);
+        return entities;
     }
 
-    public abstract void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude);
+    public abstract void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions);
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
 public abstract partial class EntityTargetSystem<T> : EntityTargetSystem where T : Component
 {
-    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         var query = EntityQueryEnumerator<T>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (exclude.Contains(uid) || !ValidateEntity((uid, comp)))
+            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp)))
                 continue;
 
-            minds.Add(uid);
+            entities.Add(uid);
         }
     }
 
@@ -39,15 +41,15 @@ public abstract partial class EntityTargetSystem<T1,T2> : EntityTargetSystem
     where T1 : Component
     where T2 : Component
 {
-    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         var query = EntityQueryEnumerator<T1,T2>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2))
         {
-            if (exclude.Contains(uid) || !ValidateEntity((uid, comp1, comp2)))
+            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2)))
                 continue;
 
-            minds.Add(uid);
+            entities.Add(uid);
         }
     }
 
@@ -60,15 +62,15 @@ public abstract partial class EntityTargetSystem<T1,T2,T3> : EntityTargetSystem
     where T2 : Component
     where T3 : Component
 {
-    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         var query = EntityQueryEnumerator<T1,T2,T3>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3))
         {
-            if (exclude.Contains(uid) || !ValidateEntity((uid, comp1, comp2, comp3)))
+            if (!ValidEntity(uid, exclude, conditions)|| !ValidateEntity((uid, comp1, comp2, comp3)))
                 continue;
 
-            minds.Add(uid);
+            entities.Add(uid);
         }
     }
 
@@ -82,15 +84,15 @@ public abstract partial class EntityTargetSystem<T1,T2,T3,T4> : EntityTargetSyst
     where T3 : Component
     where T4 : Component
 {
-    public override void AddEntities(HashSet<EntityUid> minds, params EntityUid[] exclude)
+    public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         var query = EntityQueryEnumerator<T1,T2,T3,T4>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3, out var comp4))
         {
-            if (exclude.Contains(uid) || !ValidateEntity((uid, comp1, comp2, comp3, comp4)))
+            if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3, comp4)))
                 continue;
 
-            minds.Add(uid);
+            entities.Add(uid);
         }
     }
 

@@ -3,13 +3,13 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emoting;
+using Content.Shared.EntityConditions;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mind.Filters;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
@@ -32,15 +32,16 @@ namespace Content.Shared.Mind;
 public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly IDependencyCollection _dependency = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
-    [Dependency] private readonly SharedPlayerSystem _player = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedEntityConditionsSystem _conditions = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedPlayerSystem _player = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -629,11 +630,10 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// Picks a random mind from a pool after applying a list of filters.
     /// Returns null if no valid mind could be found.
     /// </summary>
-    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, params EntityUid[] exclude)
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
         _pickingMinds.Clear();
-        pool.FindMinds(_pickingMinds, _dependency, exclude);
-        FilterMinds(_pickingMinds, filters);
+        pool.FindMinds(_pickingMinds, _dependency, exclude, conditions);
 
         if (_pickingMinds.Count == 0)
             return null;
@@ -642,26 +642,19 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
+    /// Filters minds from a hashset using a single <see cref="EntityCondition"/>.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition condition)
     {
-        minds.RemoveWhere(mind => filter.Filter(mind, EntityManager, this));
+        minds.RemoveWhere(mind => !_conditions.TryCondition(mind, condition));
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a list of <see cref="MindFilter"/>s to apply sequentially.
+    /// Filters minds from a hashset using a list of <see cref="EntityCondition"/>s to apply sequentially.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters)
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition[] conditions)
     {
-        foreach (var filter in filters)
-        {
-            // no point calling it if there are none left
-            if (minds.Count == 0)
-                break;
-
-            FilterMinds(minds, filter);
-        }
+        minds.RemoveWhere(mind => !_conditions.TryConditions(mind, conditions));
     }
 
     /// <summary>
