@@ -43,7 +43,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
     {
         if (TryComp(entity, out SpriteComponent? sprite))
         {
-            var path = SpriteSpecifierSerializer.TextureRoot / "Mobs/Silicon/Chassis/" + prototype.SpriteBodyState + ".rsi";
+            var path = SpriteSpecifierSerializer.TextureRoot / "Mobs/Silicon/Chassis/" + prototype.SpriteBodyRsi + ".rsi";
 
             var layers = new Dictionary<Enum, string>
             {
