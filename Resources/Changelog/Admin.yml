@@ -1699,5 +1699,13 @@ Entries:
   id: 207
   time: '2026-04-04T20:14:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38712
+- author: mikeysaurus
+  changes:
+  - message: The debug SetOutfit command now also fills target's storage containers
+      based on the gear preset.
+    type: Tweak
+  id: 208
+  time: '2026-04-09T05:05:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43346
 Name: Admin
 Order: 3
