@@ -74,7 +74,6 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly EntityQuery<InteractionIgnoreAnchoredInTileComponent> _interactionIgnoreAnchoredInTileQuery = default!;
 
         [Dependency] private readonly EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery = default!;
         [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery = default!;
@@ -86,6 +85,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly EntityQuery<WallMountComponent> _wallMountQuery = default!;
         [Dependency] private readonly EntityQuery<UseDelayComponent> _delayQuery = default!;
         [Dependency] private readonly EntityQuery<ActivatableUIComponent> _uiQuery = default!;
+        [Dependency] private readonly EntityQuery<InteractionIgnoreAnchoredInTileComponent> _interactionIgnoreAnchoredInTileQuery = default!;
 
         /// <summary>
         /// The collision mask used by default for
