@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.Borgs;
 
 public abstract partial class SharedBorgSystem
 {
-    private EntityQuery<BorgModuleComponent> _moduleQuery;
+    [Dependency] private readonly EntityQuery<BorgModuleComponent> _moduleQuery = default!;
 
     public void InitializeModule()
     {
@@ -25,9 +25,14 @@ public abstract partial class SharedBorgSystem
         SubscribeLocalEvent<ItemBorgModuleComponent, BorgModuleSelectedEvent>(OnItemModuleSelected);
         SubscribeLocalEvent<ItemBorgModuleComponent, BorgModuleUnselectedEvent>(OnItemModuleUnselected);
 
-        _moduleQuery = GetEntityQuery<BorgModuleComponent>();
+        SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleInstalledEvent>(OnComponentModuleInstalled);
+        SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleUninstalledEvent>(OnComponentModuleUninstalled);
+
+        SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
+            OnComponentModuleInstalledRelay);
     }
 
+    #region BorgModule
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.BorgFitTypes == null)
@@ -75,7 +80,9 @@ public abstract partial class SharedBorgSystem
 
         UninstallModule((chassis, chassisComp), module.AsNullable());
     }
+    #endregion
 
+    #region SelectableBorgModule
     private void OnSelectableInstalled(Entity<SelectableBorgModuleComponent> module, ref BorgModuleInstalledEvent args)
     {
         var chassis = args.ChassisEnt;
@@ -133,7 +140,9 @@ public abstract partial class SharedBorgSystem
             SelectModule((chassis, chassisComp), module.Owner);
         }
     }
+    #endregion
 
+    #region ItemBorgModule
     private void OnProvideItemStartup(Entity<ItemBorgModuleComponent> module, ref ComponentStartup args)
     {
         _container.EnsureContainer<Container>(module.Owner, module.Comp.HoldingContainer);
@@ -231,4 +240,36 @@ public abstract partial class SharedBorgSystem
 
         Dirty(module);
     }
+    #endregion
+
+    #region ComponentBorgModule
+    private void OnComponentModuleInstalled(Entity<ComponentBorgModuleComponent> ent, ref BorgModuleInstalledEvent args)
+    {
+        var chassis = args.ChassisEnt;
+        EntityManager.AddComponents(chassis, ent.Comp.Components);
+    }
+
+    private void OnComponentModuleUninstalled(Entity<ComponentBorgModuleComponent> ent,
+        ref BorgModuleUninstalledEvent args)
+    {
+        var chassis = args.ChassisEnt;
+        EntityManager.RemoveComponents(chassis, ent.Comp.Components);
+    }
+
+    private void OnComponentModuleInstalledRelay(Entity<ComponentBorgModuleComponent> ent,
+        ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
+    {
+        if (!TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
+            return;
+
+        foreach (var comp in newModule.Components)
+        {
+            if (ent.Comp.Components.TryGetComponent(comp.Key, out _))
+            {
+                args.Args.Cancelled = true;
+                args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
+            }
+        }
+    }
+    #endregion
 }

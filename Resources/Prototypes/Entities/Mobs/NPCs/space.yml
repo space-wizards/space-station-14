@@ -45,6 +45,7 @@
         Quantity: 300
   - type: CombatMode
   - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
@@ -382,13 +383,13 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
+  - BaseMobAnimal
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
   components:
-  - type: Body
-    prototype: Mouse
   - type: GhostRole
     makeSentient: true
     allowSpeech: false
@@ -512,6 +513,7 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
   - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: Reactive
@@ -576,12 +578,10 @@
   - type: MovementAlwaysTouching
 
 - type: entity
-  parent: MobSnail
+  parent: [ BaseMobMothroach, MobSnail ]
   id: MobSnailMoth
   name: Snoth
   components:
-  - type: Body
-    prototype: Mothroach
   - type: GhostRole
     name: ghost-role-information-snoth-name
     description: ghost-role-information-snoth-description
