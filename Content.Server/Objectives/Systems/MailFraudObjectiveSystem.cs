@@ -1,6 +1,8 @@
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Shared.Delivery;
+using Content.Shared.FingerprintReader;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
@@ -25,6 +27,12 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
     {
         if (!ent.Comp.WasPenalized)
             return; //not fraud
+
+        if (TryComp<FingerprintReaderComponent>(ent, out var reader) &&
+            TryComp<FingerprintComponent>(args.User, out var fingerprint) &&
+            fingerprint.Fingerprint != null &&
+            reader.AllowedFingerprints.AsReadOnly().Contains(fingerprint.Fingerprint))
+            return; //cutting open your own letter
 
         if (!_mind.TryGetMind(args.User, out _, out var mind))
             return;
