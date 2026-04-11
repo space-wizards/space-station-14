@@ -181,7 +181,7 @@
     # Can't help anyone who is tasked with helping:
     # 1. thats boring
     # 2. no cyclic progress dependencies!!!
-    - !type:ObjectiveWhitelistCondition
+    - !type:ObjectiveCondition
       inverted: true
       whitelist:
         components:

@@ -7,11 +7,11 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// <summary>
 /// Checks if the target mind has an objective which passes the given whitelist and/or blacklist.
 /// </summary>
-public sealed partial class ObjectiveWhitelistEntityConditionSystem : EntityConditionSystem<MindComponent, ObjectiveWhitelistCondition>
+public sealed partial class ObjectiveEntityConditionSystem : EntityConditionSystem<MindComponent, ObjectiveCondition>
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
-    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveWhitelistCondition> args)
+    protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveCondition> args)
     {
         foreach (var obj in entity.Comp.Objectives)
         {
@@ -25,7 +25,7 @@ public sealed partial class ObjectiveWhitelistEntityConditionSystem : EntityCond
     }
 }
 
-public sealed partial class ObjectiveWhitelistCondition : EntityConditionBase<ObjectiveWhitelistCondition>
+public sealed partial class ObjectiveCondition : EntityConditionBase<ObjectiveCondition>
 {
     [DataField]
     public EntityWhitelist? Whitelist;
