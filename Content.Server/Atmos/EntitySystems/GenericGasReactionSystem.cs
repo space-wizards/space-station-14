@@ -129,6 +129,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
             if (rate <= 0)
                 continue;
 
+            // TODO ATMOS: stackalloc
             var dC = new float[Atmospherics.AdjustedNumberOfGases]; // change in concentration
 
             // Go through and remove all the reactants
