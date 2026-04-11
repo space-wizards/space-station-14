@@ -6,7 +6,7 @@ namespace Content.Shared.Electrocution;
 /// <summary>
 ///     Component for things that shock users on touch.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ElectrifiedComponent : Component
 {
     [DataField, AutoNetworkedField]
@@ -114,7 +114,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// <summary>
     /// When the entity will be able to shock again
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextShock;
 
     [DataField, AutoNetworkedField]
