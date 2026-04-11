@@ -176,3 +176,27 @@
       params:
         loop: true
         volume: -6
+
+- type: entity
+  parent: WeatherBase
+  id: WeatherSpaceDust
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: space_dust
+    sound:
+      path: /Audio/Effects/Weather/space_dust.ogg
+      params:
+        loop: true
+        volume: 8
+  - type: WeatherEffects
+  - type: WeatherEntityEffect
+    effects:
+    - !type:HealthChange
+      probability: 0.3
+      ignoreResistances: false
+      damage:
+        types:
+          Blunt: 4
+
