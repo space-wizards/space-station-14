@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Drag-and-dropping liquids between containers has been adjusted.
-    type: Tweak
-  - message: You can no longer insert liquids into foods by clicking. Using syringes
-      still works as before.
-    type: Tweak
-  id: 9121
-  time: '2025-10-18T17:58:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38871
-- author: Mehnix
-  changes:
-  - message: All pens now embed when thrown.
-    type: Tweak
-  id: 9122
-  time: '2025-10-18T21:39:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39104
-- author: JackRyd3r
-  changes:
-  - message: You can now put the Energy Magnum to into jackboots/combat boots and
-      security belts/carriers
-    type: Fix
-  id: 9123
-  time: '2025-10-19T06:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40974
-- author: AlwyAnri
-  changes:
-  - message: Added a ninja headset.
-    type: Add
-  id: 9124
-  time: '2025-10-19T11:45:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40054
 - author: Pgriha
   changes:
   - message: Cotton seeds added to seeds crate from Cargo.
@@ -4030,3 +3998,36 @@
   id: 9632
   time: '2026-04-10T16:38:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43537
+- author: ahandleman
+  changes:
+  - message: Kudzu Gene Removal Effect to Plant-B-Gone!
+    type: Add
+  - message: Removed Magic Shared Seed Kudzu Removal!
+    type: Fix
+  id: 9633
+  time: '2026-04-10T20:22:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43385
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed the pneumatic valve overshooting gas equalization between the two
+      connected pipenets.
+    type: Fix
+  id: 9634
+  time: '2026-04-10T20:41:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43542
+- author: Buunie099
+  changes:
+  - message: Revenants will passively chill their environments based on how much essence
+      they have
+    type: Add
+  id: 9635
+  time: '2026-04-11T10:49:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43500
+- author: ProPeperos
+  changes:
+  - message: Fixed stacks of concrete and astro mowed/jungle grass splitting in to
+      wrong items
+    type: Fix
+  id: 9636
+  time: '2026-04-11T19:05:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43547
