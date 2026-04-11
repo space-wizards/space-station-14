@@ -34,6 +34,9 @@ public sealed partial class GunSystem
 
     private void OnRevolverCounter(Entity<RevolverAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
+        if (HasComp<CustomSpriteAmmoCounterComponent>(ent))
+            return;
+
         args.Control = new RevolverStatusControl();
     }
 }
