@@ -385,9 +385,6 @@ namespace Content.IntegrationTests.Tests
                 "StationData", // errors when removed mid-round
                 "StationJobs",
                 "Actor", // We aren't testing actor components, those need their player session set.
-                "BlobFloorPlanBuilder", // Implodes if unconfigured.
-                "DebrisFeaturePlacerController", // Above.
-                "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
             };
