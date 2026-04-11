@@ -822,7 +822,7 @@ public partial class AtmosphereSystem
         float tau = 1)
     {
         var a = deltaTime / tau;
-        return a * newValue / tau + (1 - a) * oldValue;
+        return a * newValue + (1 - a) * oldValue;
     }
 
     [ByRefEvent]
