@@ -189,13 +189,10 @@ public sealed class EditorContext
                 var list = new List<SpawnablePrototype>();
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    // Filter out things the user should not be placing
-                    // directly: abstract bases, things hidden from spawn
-                    // menus, and anything without a sprite (map markers,
-                    // logic only entities).
-                    if (proto.Abstract || proto.HideSpawnMenu)
-                        continue;
-                    if (!proto.Components.ContainsKey("Sprite"))
+                    if (!IsSpawnable(
+                            isAbstract: proto.Abstract,
+                            hideSpawnMenu: proto.HideSpawnMenu,
+                            hasSprite: proto.Components.ContainsKey("Sprite")))
                         continue;
 
                     list.Add(new SpawnablePrototype(proto.ID, proto.Name));
@@ -211,6 +208,37 @@ public sealed class EditorContext
             }
         });
         return tcs.Task;
+    }
+
+    /// <summary>
+    ///     Pure predicate that decides whether an entity prototype should
+    ///     appear in the spawn palette. Broken out from the enumeration
+    ///     path so it can be unit tested without having to stand up an
+    ///     <see cref="IPrototypeManager"/>.
+    /// </summary>
+    /// <param name="isAbstract">
+    ///     <see cref="EntityPrototype.Abstract"/>. Abstract bases exist
+    ///     only for inheritance and should never be placed directly.
+    /// </param>
+    /// <param name="hideSpawnMenu">
+    ///     <see cref="EntityPrototype.HideSpawnMenu"/>. Content explicitly
+    ///     opts out of spawn menus for things like map markers, runtime
+    ///     only entities, debugging helpers.
+    /// </param>
+    /// <param name="hasSprite">
+    ///     True if the prototype's component registry contains a
+    ///     <c>Sprite</c> component. Without one there is nothing visible
+    ///     to place, so the entity has no business in a visual palette.
+    /// </param>
+    public static bool IsSpawnable(bool isAbstract, bool hideSpawnMenu, bool hasSprite)
+    {
+        if (isAbstract)
+            return false;
+        if (hideSpawnMenu)
+            return false;
+        if (!hasSprite)
+            return false;
+        return true;
     }
 }
 
