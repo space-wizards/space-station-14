@@ -13,4 +13,4 @@ crew-monitoring-ui-no-station-label = Unknown station
 crew-monitoring-ui-flavor-left-label = In case of an emergency, contact station medical staff immediately
 crew-monitoring-ui-flavor-right-label = v1.7
 
-crew-monitoring-ui-alerts-label = [color=yellow][bold]Alerts[/bold][/color]
+crew-monitoring-ui-alerts-label = [color=#d2d22d]Alerts[/color]
