@@ -120,9 +120,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var changedEv = new SolutionChangedEvent(ent);
         RaiseLocalEvent(ent, ref changedEv);
 
-        if (Net.IsServer)
-            Log.Error("What");
-
         if (!ContainedQuery.TryComp(ent, out var contained) || !SolutionManagerQuery.TryComp(contained.Container, out var manager))
             return;
 
