@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Materials;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.GameStates;
@@ -19,9 +20,10 @@ public sealed partial class SolutionComponent : Component
     public const string DefaultSolutionId = "solution";
 
     /// <summary>
-    /// <para>The reagents the entity is composed of and their temperature.</para>
+    /// The name of this solution. This value should *never* change once the solution is initialized.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
+    [Access(typeof(SharedSolutionContainerSystem))]
     public string Id = DefaultSolutionId;
 
     /// <summary>

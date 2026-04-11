@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,6 +14,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -78,6 +78,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
 
+    [Dependency] protected readonly EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
     [Dependency] protected readonly EntityQuery<SolutionComponent> SolutionQuery = default!;
     [Dependency] protected readonly EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
 
@@ -108,7 +109,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         args.State = new SolutionComponentState(ent.Comp.Solution);
     }
 
-    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    protected void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not SolutionComponentState cast)
             return;
@@ -118,6 +119,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         // Always raise the event on the client so that we can update UIs accordingly.
         var changedEv = new SolutionChangedEvent(ent);
         RaiseLocalEvent(ent, ref changedEv);
+
+        if (Net.IsServer)
+            Log.Error("What");
+
+        if (!ContainedQuery.TryComp(ent, out var contained) || !SolutionManagerQuery.TryComp(contained.Container, out var manager))
+            return;
+
+        manager.Solutions[ent.Comp.Id] = ent;
     }
 
     /// <summary>
@@ -407,7 +416,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public EntityUid GetSolutionOwner(Entity<SolutionComponent> entity)
     {
-        return CompOrNull<ContainedSolutionComponent>(entity)?.Container ?? entity.Owner;
+        return ContainedQuery.CompOrNull(entity)?.Container ?? entity.Owner;
     }
 
     /// <summary>
@@ -875,13 +884,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private void OnSolutionShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
     {
         // If we are contained within another entity, update that entity. Otherwise, don't update if we're being deleted.
-        if (HasComp<ContainedSolutionComponent>(entity) || !Terminating(entity))
+        if (ContainedQuery.HasComp(entity) || !Terminating(entity))
             RemoveAllSolution(entity);
-    }
-
-    protected virtual void OnHandleState(Entity<SolutionComponent> entity, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateChemicals(entity, false);
     }
 
     /// <summary>

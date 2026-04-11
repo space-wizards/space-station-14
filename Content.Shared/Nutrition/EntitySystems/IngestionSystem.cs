@@ -341,11 +341,6 @@ public sealed partial class IngestionSystem : EntitySystem
             highestAvailable = stomachSol.AvailableVolume;
         }
 
-        if (_net.IsClient)
-            Log.Debug($"Client reports at {_timing.CurTime} stomach has {highestAvailable} units left");
-        else
-            Log.Debug($"Server reports at {_timing.CurTime} stomach has {highestAvailable} units left");
-
         // All stomachs are full or we have no stomachs
         if (stomachToUse == null)
         {
