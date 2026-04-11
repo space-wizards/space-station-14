@@ -70,22 +70,59 @@ public interface ISharedAdminLogManager
     ///     Records a structured admin log entry with an interpolated message, and optional
     ///     explicit payload, entity references, and player role mappings.
     ///     <para>This is the primary method for recording admin logs.</para>
+    ///
+    ///     <para><b>Simple usage:</b></para>
     ///     <example>
     ///     <code>
     ///     _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
     ///         $"{user:player} bolted {door:target}");
     ///     </code>
     ///     </example>
-    ///     <para>For explicit metadata control:</para>
+    ///     <para>
+    ///     The system <b>automatically</b> extracts players, entities, and role mappings
+    ///     from format specifiers in the interpolated string. In most cases, just the
+    ///     interpolated string is all you need — skip the optional parameters.
+    ///     </para>
+    ///
+    ///     <para><b>When to use optional parameters:</b></para>
+    ///     <list type="bullet">
+    ///         <item>
+    ///             <c>payload</c> — When you need searchable JSON fields that are
+    ///             <b>not</b> entities (e.g., a slot name, damage number, on/off state).
+    ///             Entity data from the format string is already captured automatically.
+    ///             <code>new { slot = "pocket1" }</code>
+    ///         </item>
+    ///         <item>
+    ///             <c>players</c> — Only when you have a player GUID but <b>no entity</b>
+    ///             (e.g., a disconnected player, a voting action, a pre-round event).
+    ///             Players attached to entities in the format string are extracted automatically.
+    ///         </item>
+    ///         <item>
+    ///             <c>entities</c> — Only when an entity is <b>conditional/nullable</b> and
+    ///             may not appear in the format string, or when you need to supply
+    ///             prototype/name metadata for pre-round entities that aren't fully initialized.
+    ///         </item>
+    ///         <item>
+    ///             <c>playerRoles</c> — Only when you need to <b>override</b> an auto-detected
+    ///             role. Roles are inferred from the specifier key automatically
+    ///             (e.g., <c>:actor</c> → Actor, <c>:victim</c> → Victim, <c>:target</c> → Target).
+    ///             This parameter is almost never needed.
+    ///         </item>
+    ///     </list>
+    ///
+    ///     <para><b>Example with payload (for non-entity metadata):</b></para>
     ///     <example>
     ///     <code>
     ///     _adminLogger.AddStructured(LogType.Stripping, LogImpact.Low,
     ///         $"{user:actor} placed {item:subject} in {target:victim}'s {slot} slot",
-    ///         new { user = (int) user, target = (int) target, item = (int) held, slot },
-    ///         players: players,
-    ///         entities: [ new AdminLogEntityRef(user, AdminLogEntityRole.Actor) ]);
+    ///         new { slot });
     ///     </code>
     ///     </example>
+    ///     <para>
+    ///     The entities, players, and roles above are all extracted from the format
+    ///     specifiers (<c>:actor</c>, <c>:subject</c>, <c>:victim</c>). Only <c>slot</c>
+    ///     needs the payload.
+    ///     </para>
     /// </summary>
     void AddStructured(
         LogType type,

@@ -100,12 +100,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
 
             _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
             //pretty sure this fails to log sometimes
-            _adminLogger.AddStructured(LogType.Gib, LogImpact.Low, $"{uid} and {ent} created singularity at X:{coords.X} Y:{coords.Y}",
-                entities: new[]
-                {
-                    new AdminLogEntityRef(uid, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(ent, AdminLogEntityRole.Target)
-                });
+            _adminLogger.AddStructured(LogType.Gib, LogImpact.Low, $"{uid:actor} and {ent:target} created singularity at X:{coords.X} Y:{coords.Y}");
 
             Del(uid);
             Del(ent);
@@ -137,12 +132,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
             }
 
             var coords = Transform(uid).Coordinates;
-            _adminLogger.AddStructured(LogType.Gib, LogImpact.Low, $"Entity {uid} gibbed {ent} at X:{coords.X} Y:{coords.Y}",
-                entities: new[]
-                {
-                    new AdminLogEntityRef(uid, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(ent, AdminLogEntityRole.Victim)
-                });
+            _adminLogger.AddStructured(LogType.Gib, LogImpact.Low, $"{uid:actor} gibbed {ent:victim} at X:{coords.X} Y:{coords.Y}");
 
             _gibbing.Gib(ent);
             return;

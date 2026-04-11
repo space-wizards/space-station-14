@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -18,7 +17,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Strip;
@@ -37,7 +35,6 @@ public abstract partial class SharedStrippableSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popupSystem = default!;
 
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -217,48 +214,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         }
 
         var prefix = stealth ? "stealthily " : "";
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s {slot} slot",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target,
-                item = (int) held,
-                slot = slot
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(held, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot });
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(true, true, slot), user, target, held)
         {
@@ -292,48 +253,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
             return;
 
         _inventorySystem.TryEquip(user, target, held, slot, triggerHandContact: true);
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s {slot} slot",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target,
-                item = (int) held,
-                slot = slot
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(held, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot });
     }
 
     /// <summary>
@@ -407,48 +332,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         }
 
         var prefix = stealth ? "stealthily " : "";
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s {slot} slot",
-            new
-            {
-                user = (int) user,
-                target = (int) target,
-                item = (int) item,
-                slot = slot
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(item, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot });
 
         _interactionSystem.DoContactInteraction(user, item);
 
@@ -485,48 +374,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s {slot} slot",
-            new
-            {
-                user = (int) user,
-                target = (int) target,
-                item = (int) item,
-                slot = slot
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(item, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot });
     }
 
     /// <summary>
@@ -595,48 +448,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         }
 
         var prefix = stealth ? "stealthily " : "";
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target.Owner, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s hands",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target.Owner,
-                item = (int) held,
-                slot = handName
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target.Owner, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(held, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot = handName });
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(true, false, handName), user, target, held)
         {
@@ -670,48 +487,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _handsSystem.TryDrop(user, checkActionBlocker: false);
         _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: !stealth, handsComp: target.Comp);
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target.Owner, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s hands",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target.Owner,
-                item = (int) held,
-                slot = handName
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target.Owner, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(held, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot = handName });
 
         // Hand update will trigger strippable update.
     }
@@ -786,48 +567,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         }
 
         var prefix = stealth ? "stealthily " : "";
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target.Owner, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s hands",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target.Owner,
-                item = (int) item,
-                slot = handName
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target.Owner, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(item, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot = handName });
 
         _interactionSystem.DoContactInteraction(user, item);
 
@@ -864,48 +609,12 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
-        Guid[]? players = null;
-        Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-
-        if (_player.TryGetSessionByEntity(user.Owner, out var userSession))
-        {
-            players = [userSession.UserId.UserId];
-            playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-            {
-                [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-            };
-        }
-
-        if (_player.TryGetSessionByEntity(target.Owner, out var targetSession))
-        {
-            if (players == null)
-                players = [targetSession.UserId.UserId];
-            else if (players[0] != targetSession.UserId.UserId)
-                players = [players[0], targetSession.UserId.UserId];
-
-            playerRoles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            playerRoles[targetSession.UserId.UserId] = AdminLogEntityRole.Victim;
-        }
 
         _adminLogger.AddStructured(
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s hands",
-            new
-            {
-                user = (int) user.Owner,
-                target = (int) target.Owner,
-                item = (int) item,
-                slot = handName
-            },
-            players: players,
-            entities:
-            [
-                new AdminLogEntityRef(user.Owner, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(target.Owner, AdminLogEntityRole.Victim),
-                new AdminLogEntityRef(item, AdminLogEntityRole.Subject),
-            ],
-            playerRoles: playerRoles);
+            new { slot = handName });
 
         // Hand update will trigger strippable update.
     }

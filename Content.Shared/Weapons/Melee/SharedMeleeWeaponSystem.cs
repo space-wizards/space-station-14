@@ -749,17 +749,23 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         else if (hitEntities.Count > 1)
         {
             var names = string.Join(", ", hitEntities.Select(e => ToPrettyString(e)));
+            var targetRefs = hitEntities
+                .Select(e => new AdminLogEntityRef(e, AdminLogEntityRole.Victim))
+                .ToArray();
+
             if (meleeUid == user)
             {
                 _adminLogger.AddStructured(LogType.MeleeHit,
                     LogImpact.Medium,
-                    $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using their hands, hitting {names} for {appliedDamage.GetTotal():damage} total damage");
+                    $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using their hands, hitting {names} for {appliedDamage.GetTotal():damage} total damage",
+                    entities: targetRefs);
             }
             else
             {
                 _adminLogger.AddStructured(LogType.MeleeHit,
                     LogImpact.Medium,
-                    $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using {meleeUid:tool}, hitting {names} for {appliedDamage.GetTotal():damage} total damage");
+                    $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using {meleeUid:tool}, hitting {names} for {appliedDamage.GetTotal():damage} total damage",
+                    entities: targetRefs);
             }
         }
 

@@ -575,11 +575,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} was forced to ghost via command",
-                        entities: new[] { new AdminLogEntityRef(playerEntity.Value, AdminLogEntityRole.Actor) });
+                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:actor} was forced to ghost via command");
                 else
-                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} is attempting to ghost via command",
-                        entities: new[] { new AdminLogEntityRef(playerEntity.Value, AdminLogEntityRole.Actor) });
+                    _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:actor} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -653,8 +651,7 @@ namespace Content.Server.Ghost
             }
 
             if (playerEntity != null)
-                _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:player} ghosted{(!canReturn ? " (non-returnable)" : "")}",
-                    entities: new[] { new AdminLogEntityRef(playerEntity.Value, AdminLogEntityRole.Actor) });
+                _adminLogger.AddStructured(LogType.Mind, $"{playerEntity.Value:actor} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 

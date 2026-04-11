@@ -43,19 +43,11 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                 logType,
                 LogImpact.Medium,
                 $"{actorEntity.Value:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}",
-                JsonSerializer.SerializeToDocument(new
+                new
                 {
-                    actor = (int) actorEntity.Value,
-                    edited = (int) ev.EditedEntity,
                     action = ev.PlacementEventAction.ToString(),
                     coordinates = ev.Coordinates.ToString()
-                }),
-                players: [actor!.UserId.UserId],
-                entities:
-                [
-                    new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(ev.EditedEntity, AdminLogEntityRole.Target),
-                ]);
+                });
 
             if (_adminManager.IsAdmin(actor, includeDeAdmin: true) &&
                 (ev.PlacementEventAction == PlacementEventAction.Create || ev.PlacementEventAction == PlacementEventAction.Erase))
@@ -98,16 +90,11 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                 LogType.Tile,
                 LogImpact.Medium,
                 $"{actorEntity.Value:actor} used placement system to set tile {tileName} at {ev.Coordinates}",
-                JsonSerializer.SerializeToDocument(new
+                new
                 {
-                    actor = (int) actorEntity.Value,
                     tile = tileName,
                     coordinates = ev.Coordinates.ToString()
-                }),
-                players: [actor!.UserId.UserId],
-                entities: [new AdminLogEntityRef(actorEntity.Value, AdminLogEntityRole.Actor)],
-                playerRoles: new Dictionary<Guid, AdminLogEntityRole>
-                    { [actor.UserId.UserId] = AdminLogEntityRole.Actor });
+                });
         }
         else if (actor != null)
         {

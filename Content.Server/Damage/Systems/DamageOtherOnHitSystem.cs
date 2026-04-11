@@ -1,6 +1,4 @@
-using System.Text.Json;
 using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage.Components;
@@ -21,7 +19,6 @@ public sealed partial class DamageOtherOnHitSystem : SharedDamageOtherOnHitSyste
     [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -41,34 +38,23 @@ public sealed partial class DamageOtherOnHitSystem : SharedDamageOtherOnHitSyste
         if (HasComp<MobStateComponent>(args.Target))
         {
             var thrower = args.Component.Thrower;
-            Guid[]? players = null;
-            if (thrower is { } sourcePlayer && _player.TryGetSessionByEntity(sourcePlayer, out var session))
-                players = [session.UserId.UserId];
 
-            _adminLogger.AddStructured(
-                LogType.ThrowHit,
-                LogImpact.Medium,
-                $"{args.Target:target} received {dmg.GetTotal():damage} damage from collision",
-                JsonSerializer.SerializeToDocument(new
-                {
-                    source = (int) uid,
-                    target = (int) args.Target,
-                    thrower = thrower is null ? null : (int?) thrower.Value,
-                    totalDamage = dmg.GetTotal()
-                }),
-                players: players,
-                entities: thrower is { } source
-                    ?
-                    [
-                        new AdminLogEntityRef(source, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
-                        new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
-                    ]
-                    :
-                    [
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Tool),
-                        new AdminLogEntityRef(args.Target, AdminLogEntityRole.Victim),
-                    ]);
+            if (thrower is { } source)
+            {
+                _adminLogger.AddStructured(
+                    LogType.ThrowHit,
+                    LogImpact.Medium,
+                    $"{args.Target:victim} received {dmg.GetTotal():damage} damage from {uid:tool} thrown by {source:actor}",
+                    new { totalDamage = dmg.GetTotal() });
+            }
+            else
+            {
+                _adminLogger.AddStructured(
+                    LogType.ThrowHit,
+                    LogImpact.Medium,
+                    $"{args.Target:victim} received {dmg.GetTotal():damage} damage from {uid:tool}",
+                    new { totalDamage = dmg.GetTotal() });
+            }
         }
 
         if (!dmg.Empty)

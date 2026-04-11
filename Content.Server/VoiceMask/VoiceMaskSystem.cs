@@ -214,12 +214,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
             RaiseLocalEvent(message.Actor, ref nameUpdatedEvent);
 
         entity.Comp.VoiceMaskName = message.Name;
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{message.Actor:player} set voice of {entity:mask}: {entity.Comp.VoiceMaskName}",
-            entities: new[]
-            {
-                new AdminLogEntityRef(message.Actor, AdminLogEntityRole.Actor),
-                new AdminLogEntityRef(entity.Owner, AdminLogEntityRole.Target)
-            });
+        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{message.Actor:actor} set voice of {entity:target}: {entity.Comp.VoiceMaskName}");
 
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, message.Actor);
 

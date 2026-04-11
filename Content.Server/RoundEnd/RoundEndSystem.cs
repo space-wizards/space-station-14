@@ -183,8 +183,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:player}{what}",
-                    entities: new[] { new AdminLogEntityRef(requester.Value, AdminLogEntityRole.Actor) });
+                _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:actor}{what}");
             else
                 _adminLogger.AddStructured(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{what}");
 
@@ -254,8 +253,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:player}{what}",
-                    entities: new[] { new AdminLogEntityRef(requester.Value, AdminLogEntityRole.Actor) });
+                _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:actor}{what}");
             else
                 _adminLogger.AddStructured(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{what}");
 

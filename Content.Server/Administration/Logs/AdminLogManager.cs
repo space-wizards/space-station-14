@@ -670,6 +670,16 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     return AdminLogEntityRole.Target;
                 break;
 
+            //stripping
+            case LogType.Stripping:
+                if (ContainsAny(key, "actor", "user", "player"))
+                    return AdminLogEntityRole.Actor;
+                if (ContainsAny(key, "victim", "target"))
+                    return AdminLogEntityRole.Victim;
+                if (ContainsAny(key, "subject", "item"))
+                    return AdminLogEntityRole.Subject;
+                break;
+
             //identity
             case LogType.Identity:
                 if (ContainsAny(key, "name", "actor", "player", "user", "entity"))

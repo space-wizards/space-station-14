@@ -1,13 +1,10 @@
-using System.Text.Json;
 using Content.Server.Administration.Logs;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Containers;
@@ -18,7 +15,6 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -56,27 +52,11 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
         if (args.Component.Thrower != null)
         {
             var thrower = args.Component.Thrower.Value;
-            Guid[]? players = null;
-            if (_player.TryGetSessionByEntity(thrower, out var session))
-                players = [session.UserId.UserId];
 
             _adminLogger.AddStructured(
                 LogType.Landed,
                 LogImpact.Low,
-                $"{args.Thrown} thrown by {thrower:player} landed in {ent}",
-                JsonSerializer.SerializeToDocument(new
-                {
-                    thrown = (int) args.Thrown,
-                    thrower = (int) thrower,
-                    container = (int) ent.Owner
-                }),
-                players: players,
-                entities:
-                [
-                    new AdminLogEntityRef(thrower, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(args.Thrown, AdminLogEntityRole.Target),
-                    new AdminLogEntityRef(ent.Owner, AdminLogEntityRole.Container),
-                ]);
+                $"{args.Thrown:target} thrown by {thrower:actor} landed in {ent:container}");
         }
     }
 }

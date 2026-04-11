@@ -48,8 +48,7 @@ public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSyste
             _gravitySystem.EnableGravity(xform.ParentUid, gravity);
         }
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} activated on grid {xform.ParentUid}",
-            entities: new[] { new AdminLogEntityRef(ent, AdminLogEntityRole.Target) });
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} activated on grid {xform.ParentUid}");
     }
 
     private void OnDeactivated(Entity<GravityGeneratorComponent> ent, ref ChargedMachineDeactivatedEvent args)
@@ -64,8 +63,7 @@ public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSyste
             _gravitySystem.RefreshGravity(xform.ParentUid, gravity);
         }
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} deactivated",
-            entities: new[] { new AdminLogEntityRef(ent, AdminLogEntityRole.Target) });
+        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"Gravity generator {ent:target} deactivated");
     }
 
     private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
