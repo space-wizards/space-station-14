@@ -188,6 +188,9 @@
             "name":"xenoborg-tool-module"
         },
         {
+            "name":"xenoborg-zap-module"
+        },
+        {
             "name": "select-type"
         }
     ]
