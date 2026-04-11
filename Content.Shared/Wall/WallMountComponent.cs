@@ -1,4 +1,6 @@
+using Robust.Shared.ComponentTrees;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Wall;
 
@@ -9,8 +11,8 @@ namespace Content.Shared.Wall;
 ///     This will only exempt anchored entities that intersect the wall-mount. Additionally, this exemption will apply
 ///     in a limited arc, providing basic functionality for directional wall mounts.
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class WallMountComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
+public sealed partial class WallMountComponent : Component, IComponentTreeEntry<WallMountComponent>
 {
     /// <summary>
     ///     Range of angles for which the exemption applies. Bigger is more permissive.
@@ -29,4 +31,15 @@ public sealed partial class WallMountComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DirectionalVisibility = true;
+
+    [ViewVariables]
+    public EntityUid? TreeUid { get; set; }
+
+    [ViewVariables]
+    public DynamicTree<ComponentTreeEntry<WallMountComponent>>? Tree { get; set; }
+
+    [ViewVariables]
+    public bool AddToTree => Arc < Math.Tau && DirectionalVisibility;
+
+    public bool TreeUpdateQueued { get; set; }
 }
