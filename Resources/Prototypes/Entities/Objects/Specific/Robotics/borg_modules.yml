@@ -1570,6 +1570,7 @@
     components:
     - type: Electrified
       requirePower: false
+      onBump: false # otherwise you could just stun lock people and shock them forever
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-zap-module }
 
