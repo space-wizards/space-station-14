@@ -1557,7 +1557,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
 
 - type: entity
-  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  parent: [ BaseXenoborgModuleEngi, BaseXenoborgContraband ]
   id: XenoborgModuleZap
   name: zap xenoborg module
   description: Module that disables the grounding of the xenoborg, making them electrified. shocking!
@@ -1571,8 +1571,6 @@
     - type: Electrified
       requirePower: false
       onBump: false # otherwise you could just stun lock people and shock them forever
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-zap-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
