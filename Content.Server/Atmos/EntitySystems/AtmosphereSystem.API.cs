@@ -811,7 +811,7 @@ public partial class AtmosphereSystem
     /// <param name="newValue">The new value to factor into the average.</param>
     /// <param name="oldValue">The old value to factor into the average.</param>
     /// <param name="deltaTime">The time delta to factor into the average.</param>
-    /// <param name="timeConstant">The time constant to use for the average.
+    /// <param name="tau">The time constant to use for the average.
     /// Higher values will make the average change more slowly,
     /// while lower values will make it change more quickly.</param>
     /// <returns>The result of the exponential moving average.</returns>
@@ -819,9 +819,8 @@ public partial class AtmosphereSystem
     public static float ExponentialMovingAverage(float newValue,
         float oldValue,
         float deltaTime,
-        float timeConstant = 1)
+        float tau = 1)
     {
-        var tau = timeConstant;
         var a = deltaTime / tau;
         return a * newValue / tau + (1 - a) * oldValue;
     }
