@@ -16,7 +16,7 @@ public sealed class RandomCloneSpawnerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private readonly AliveHumanoidTargetSystem _target = default!;
 
     public override void Initialize()
     {
@@ -35,7 +35,7 @@ public sealed class RandomCloneSpawnerSystem : EntitySystem
             return;
         }
 
-        var allHumans = _target.GetAliveHumans();
+        var allHumans = _target.GetMinds();
 
         if (allHumans.Count == 0)
             return;

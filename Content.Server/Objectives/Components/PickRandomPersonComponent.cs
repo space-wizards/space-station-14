@@ -17,7 +17,7 @@ public sealed partial class PickRandomPersonComponent : Component
     /// A pool to pick potential targets from.
     /// </summary>
     [DataField]
-    public MindPool Pool = new AliveHumansPool();
+    public IMindPool Pool = new AliveHumansPool();
 
     /// <summary>
     /// EntityConditions to apply to <see cref="Pool"/>.

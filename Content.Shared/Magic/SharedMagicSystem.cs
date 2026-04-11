@@ -68,7 +68,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly ExamineSystemShared _examine= default!;
-    [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private readonly AliveHumanoidTargetSystem _target = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -474,7 +474,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
         ev.Handled = true;
 
-        var allHumans = _target.GetAliveHumans();
+        var allHumans = _target.GetMinds();
 
         foreach (var human in allHumans)
         {

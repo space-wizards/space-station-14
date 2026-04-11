@@ -21,7 +21,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private readonly AliveHumanoidTargetSystem _target = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
@@ -38,7 +38,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        var allAliveHumanMinds = _target.GetAliveHumans();
+        var allAliveHumanMinds = _target.GetMinds();
 
         foreach (var humanMind in allAliveHumanMinds)
         {
