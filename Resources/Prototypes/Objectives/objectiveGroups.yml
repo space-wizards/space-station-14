@@ -6,6 +6,8 @@
     TraitorObjectiveGroupKill: 1
     TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
     TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+    TraitorObjectiveGroupSabotage: 1
+    TraitorObjectiveGroupOther: 1
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSteal
@@ -18,22 +20,24 @@
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
     ClipboardStealObjective: 1
+    KnuckleDustersStealObjective: 1
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    EnergyMagnumStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
   weights:
     KillRandomPersonObjective: 1
+    KillStationAiObjective: 0.25
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
+    DieObjective: 0.2
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
@@ -41,6 +45,18 @@
   weights:
 #    RandomTraitorAliveObjective: 1 - Removed because the objective was boring and didn't progress the round.
     RandomTraitorProgressObjective: 1
+
+- type: weightedRandom
+  id: TraitorObjectiveGroupSabotage
+  weights:
+    SupercritAnomaliesObjective: 1
+
+#misc objectives that don't fall other another category
+- type: weightedRandom
+  id: TraitorObjectiveGroupOther
+  weights:
+    HijackTradeStationObjective: 1
+
 
 #Thief groups
 - type: weightedRandom
@@ -62,26 +78,28 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
+    OfficerHandgunsStealCollectionObjective: 1         #sec
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
-    LAMPStealCollectionObjective: 2                     #only for moth
+    LAMPStealCollectionObjective: 0.1                   #only for moth, weight decreased cause boring and insanely easy
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
+    ChiefEngineerToolbeltStealObjective: 0.5             #command
+    CaptainSwordStealObjective: 0.5
+    ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
-    ClothingHeadsetAltMedicalStealObjective: 1
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 1                #srv
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5

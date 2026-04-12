@@ -1,7 +1,9 @@
-﻿using Content.Server.Administration.Commands;
-using Content.Server.Administration.Systems;
+﻿using Content.IntegrationTests.Fixtures;
+using Content.Shared.Administration.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -13,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RejuvenateSystem))]
-    public sealed class RejuvenateTest
+    public sealed class RejuvenateTest : GameTest
     {
         private static readonly ProtoId<DamageGroupPrototype> TestDamageGroup = "Toxin";
 
@@ -35,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -88,10 +90,9 @@ namespace Content.IntegrationTests.Tests.Commands
                     Assert.That(mobStateSystem.IsDead(human, mobState), Is.False);
                     Assert.That(mobStateSystem.IsIncapacitated(human, mobState), Is.False);
 
-                    Assert.That(damageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+                    Assert.That(damSystem.GetTotalDamage((human, damageable)), Is.EqualTo(FixedPoint2.Zero));
                 });
             });
-            await pair.CleanReturnAsync();
         }
     }
 }
