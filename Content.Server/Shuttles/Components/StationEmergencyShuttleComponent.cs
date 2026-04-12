@@ -26,42 +26,42 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// The announcement made when the shuttle has successfully docked with the station.
     /// </summary>
-    [DataField("dockedAnnouncement")]
+    [DataField]
     public LocId DockedAnnouncement = "emergency-shuttle-docked";
 
     /// <summary>
     /// Sound played when the shuttle has successfully docked with the station.
     /// </summary>
-    [DataField("dockedAudio")]
+    [DataField]
     public SoundSpecifier DockedAudio = new SoundPathSpecifier("/Audio/Announcements/shuttle_dock.ogg");
 
     /// <summary>
     /// The announcement made when the shuttle is unable to dock and instead parks in nearby space.
     /// </summary>
-    [DataField("nearbyAnnouncement")]
+    [DataField]
     public LocId NearbyAnnouncement = "emergency-shuttle-nearby";
 
     /// <summary>
     /// Sound played when the shuttle is unable to dock and instead parks in nearby space.
     /// </summary>
-    [DataField("nearbyAudio")]
+    [DataField]
     public SoundSpecifier NearbyAudio = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     /// <summary>
     /// The announcement made when the shuttle is unable to find a station.
     /// </summary>
-    [DataField("failureAnnouncement")]
+    [DataField]
     public LocId FailureAnnouncement = "emergency-shuttle-good-luck";
 
     /// <summary>
     /// Sound played when the shuttle is unable to find a station.
     /// </summary>
-    [DataField("failureAudio")]
+    [DataField]
     public SoundSpecifier FailureAudio = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     /// <summary>
     /// Text appended to the docking announcement if the launch time has been extended.
     /// </summary>
-    [DataField("launchExtendedMessage")]
+    [DataField]
     public LocId LaunchExtendedMessage = "emergency-shuttle-extended";
 }
