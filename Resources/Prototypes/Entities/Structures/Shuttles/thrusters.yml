@@ -105,6 +105,8 @@
   parent: Thruster
   id: ThrusterXenoborg
   components:
+  - type: Machine
+    board: ThrusterXenoborgMachineCircuitboard
   # temporary solution until thruster rework
   - type: Construction
     graph: "" # no deconstructing

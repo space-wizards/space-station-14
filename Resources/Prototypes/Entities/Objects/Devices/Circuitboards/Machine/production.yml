@@ -842,6 +842,19 @@
     stackRequirements:
       Manipulator: 4
       Steel: 5
+  
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: ThrusterXenoborgMachineCircuitboard
+  name: xenoborg thruster machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: ThrusterXenoborg
+    stackRequirements:
+      Manipulator: 4
+      Steel: 5
 
 - type: entity
   id: GyroscopeMachineCircuitboard
