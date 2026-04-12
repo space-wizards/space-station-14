@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/MapEditor.Desktop/MapEditor.Desktop.csproj" />
+  <Project Path="src/MapEditor.RTBridge/MapEditor.RTBridge.csproj" />
+  <Project Path="tests/MapEditor.RTBridge.Tests/MapEditor.RTBridge.Tests.csproj" />
+</Solution>
