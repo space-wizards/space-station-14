@@ -19,11 +19,19 @@ public sealed partial class MessengerCartridgeComponent : Component
     public int MaxMessageLength = 256;
 }
 
-public sealed class MessengerStoredMessage
+[DataDefinition]
+public sealed partial class MessengerStoredMessage
 {
-    public string Sender;
-    public string Content;
+    [DataField]
+    public string Sender = string.Empty;
+
+    [DataField]
+    public string Content = string.Empty;
+
+    [DataField]
     public TimeSpan Timestamp;
+
+    public MessengerStoredMessage() { }
 
     public MessengerStoredMessage(string sender, string content, TimeSpan timestamp)
     {

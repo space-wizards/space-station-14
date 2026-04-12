@@ -46,32 +46,37 @@ public sealed class MessengerCartridgeSystem : EntitySystem
                 break;
 
             case MessengerUiAction.Send:
-                if (message.RecipientName == null || message.MessageContent == null)
-                    return;
-
-                var content = message.MessageContent;
-                if (content.Length > component.MaxMessageLength)
-                    content = content[..component.MaxMessageLength];
-
-                if (string.IsNullOrWhiteSpace(content))
-                    return;
-
-                var senderName = GetOwnerName(uid);
-                if (senderName == null)
-                    return;
-
-                var timestamp = _timing.CurTime;
-                var stored = new MessengerStoredMessage(senderName, content, timestamp);
-
-                AddMessage(component, message.RecipientName, stored);
-                DeliverToRecipient(uid, senderName, message.RecipientName, content, timestamp);
-
-                _adminLogger.Add(LogType.PdaInteract, LogImpact.Low,
-                    $"{ToPrettyString(args.Actor)} sent PDA message from '{senderName}' to '{message.RecipientName}': '{content}'");
+                HandleSend(uid, component, message, args.Actor);
                 break;
         }
 
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
+    }
+
+    private void HandleSend(EntityUid uid, MessengerCartridgeComponent component, MessengerUiMessageEvent message, EntityUid actor)
+    {
+        if (message.RecipientName == null || message.MessageContent == null)
+            return;
+
+        var content = message.MessageContent.Trim();
+
+        if (content.Length > component.MaxMessageLength)
+            content = content[..component.MaxMessageLength];
+
+        if (content.Length == 0)
+            return;
+
+        var senderName = GetOwnerName(uid);
+        if (senderName == null)
+            return;
+
+        var timestamp = _timing.CurTime;
+
+        AddMessage(component, message.RecipientName, new MessengerStoredMessage(senderName, content, timestamp));
+        DeliverToRecipient(uid, senderName, message.RecipientName, content, timestamp);
+
+        _adminLogger.Add(LogType.PdaInteract, LogImpact.Low,
+            $"{ToPrettyString(actor)} sent PDA message from '{senderName}' to '{message.RecipientName}': '{content}'");
     }
 
     private void DeliverToRecipient(EntityUid senderCartridge, string senderName, string recipientName, string content, TimeSpan timestamp)
@@ -79,26 +84,24 @@ public sealed class MessengerCartridgeSystem : EntitySystem
         var query = EntityQueryEnumerator<MessengerCartridgeComponent, CartridgeComponent>();
         while (query.MoveNext(out var recipientUid, out var messenger, out var cartridge))
         {
-            if (recipientUid == senderCartridge)
+            if (recipientUid == senderCartridge || cartridge.LoaderUid == null)
                 continue;
 
-            if (cartridge.LoaderUid == null)
+            if (GetOwnerName(recipientUid) != recipientName)
                 continue;
 
-            var ownerName = GetOwnerName(recipientUid);
-            if (ownerName == null || ownerName != recipientName)
-                continue;
+            AddMessage(messenger, senderName, new MessengerStoredMessage(senderName, content, timestamp));
 
-            var stored = new MessengerStoredMessage(senderName, content, timestamp);
-            AddMessage(messenger, senderName, stored);
-
-            if (messenger.ActiveChat != senderName)
+            var alreadyViewing = messenger.ActiveChat == senderName;
+            if (!alreadyViewing)
+            {
                 messenger.UnreadContacts.Add(senderName);
 
-            _cartridgeLoader.SendNotification(
-                cartridge.LoaderUid.Value,
-                Loc.GetString("messenger-notification-header", ("sender", senderName)),
-                content);
+                _cartridgeLoader.SendNotification(
+                    cartridge.LoaderUid.Value,
+                    Loc.GetString("messenger-notification-header", ("sender", senderName)),
+                    content);
+            }
 
             UpdateUiState(recipientUid, cartridge.LoaderUid.Value, messenger);
         }
@@ -114,8 +117,9 @@ public sealed class MessengerCartridgeSystem : EntitySystem
 
         messages.Add(message);
 
-        while (messages.Count > component.MaxMessages)
-            messages.RemoveAt(0);
+        var excess = messages.Count - component.MaxMessages;
+        if (excess > 0)
+            messages.RemoveRange(0, excess);
     }
 
     private string? GetOwnerName(EntityUid cartridgeUid)
@@ -134,8 +138,8 @@ public sealed class MessengerCartridgeSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var contacts = BuildContactList(uid);
-        var currentOwner = GetOwnerName(uid) ?? "";
+        var contacts = BuildContactList(uid, component);
+        var currentOwner = GetOwnerName(uid) ?? string.Empty;
 
         var activeMessages = new List<MessengerMessageData>();
         if (component.ActiveChat != null &&
@@ -149,37 +153,33 @@ public sealed class MessengerCartridgeSystem : EntitySystem
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private List<MessengerContact> BuildContactList(EntityUid selfCartridgeUid)
+    private List<MessengerContact> BuildContactList(EntityUid selfCartridgeUid, MessengerCartridgeComponent selfMessenger)
     {
         var contacts = new List<MessengerContact>();
         var selfName = GetOwnerName(selfCartridgeUid);
 
-        MessengerCartridgeComponent? selfMessenger = null;
-        Resolve(selfCartridgeUid, ref selfMessenger);
-
-        var query = EntityQueryEnumerator<PdaComponent>();
+        var query = EntityQueryEnumerator<MessengerCartridgeComponent, CartridgeComponent>();
         var seen = new HashSet<string>();
 
-        while (query.MoveNext(out var pdaUid, out var pda))
+        while (query.MoveNext(out var otherCartridgeUid, out _, out var cartridge))
         {
-            if (pda.OwnerName == null || pda.OwnerName == selfName)
+            if (otherCartridgeUid == selfCartridgeUid || cartridge.LoaderUid == null)
                 continue;
 
-            if (!seen.Add(pda.OwnerName))
+            if (!TryComp<PdaComponent>(cartridge.LoaderUid.Value, out var pda) || pda.OwnerName == null)
                 continue;
 
-            if (!HasMessengerCartridge(pdaUid))
+            if (pda.OwnerName == selfName || !seen.Add(pda.OwnerName))
                 continue;
 
             string? jobTitle = null;
             if (pda.ContainedId != null && TryComp<IdCardComponent>(pda.ContainedId.Value, out var id))
                 jobTitle = id.LocalizedJobTitle;
 
-            var hasUnread = selfMessenger?.UnreadContacts.Contains(pda.OwnerName) ?? false;
-            contacts.Add(new MessengerContact(pda.OwnerName, jobTitle, hasUnread));
+            contacts.Add(new MessengerContact(pda.OwnerName, jobTitle, selfMessenger.UnreadContacts.Contains(pda.OwnerName)));
         }
 
-        contacts.Sort((a, b) =>
+        contacts.Sort(static (a, b) =>
         {
             if (a.HasUnread != b.HasUnread)
                 return a.HasUnread ? -1 : 1;
@@ -187,19 +187,5 @@ public sealed class MessengerCartridgeSystem : EntitySystem
         });
 
         return contacts;
-    }
-
-    private bool HasMessengerCartridge(EntityUid pdaUid)
-    {
-        if (!TryComp<CartridgeLoaderComponent>(pdaUid, out var loader))
-            return false;
-
-        foreach (var program in _cartridgeLoader.GetAvailablePrograms(pdaUid, loader))
-        {
-            if (HasComp<MessengerCartridgeComponent>(GetEntity(program)))
-                return true;
-        }
-
-        return false;
     }
 }
