@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Jittering;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
@@ -13,6 +14,7 @@ namespace Content.Client.Jittering
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
         [Dependency] private readonly EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
         [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
@@ -37,8 +39,11 @@ namespace Content.Client.Jittering
 
             var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent);
 
+            if (!TryGetCombinedStatusJitters(ent, out var newJitter))
+                return;
+
             ent.Comp.StartOffset = sprite.Offset;
-            _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _jitterAnimationKey);
+            DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer), newJitter);
         }
 
         // End the animation
@@ -61,18 +66,24 @@ namespace Content.Client.Jittering
             if (!args.Finished)
                 return;
 
-            if (_animationQuery.TryComp(ent, out var animationPlayer)
-                && _spriteQuery.TryComp(ent, out var sprite))
-                _animationPlayer.Play((ent, animationPlayer), GetAnimation(ent.Comp, sprite), _jitterAnimationKey);
+            if (TryGetCombinedStatusJitters(ent, out var newJitter)
+                && _spriteQuery.TryComp(ent, out var sprite)
+                && _animationQuery.TryComp(ent, out var animationPlayer))
+            {
+                DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer), newJitter);
+            }
         }
 
         /// <summary>
-        /// Creates and returns the animation to play on the sprite.
+        /// Creates a jitter animation, then plays the animation on the entity.
         /// </summary>
-        private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
+        private void DoJitter(Entity<JitteringComponent, SpriteComponent, AnimationPlayerComponent> ent, JitterParams newJitter)
         {
+            var (uid, jittering, sprite, animationPlayer) = ent;
+
             // Create a random offset
-            var offset = jittering.Amplitude * _random.NextVector2(jittering.MinRadius, jittering.MaxRadius);
+            var offset = _random.NextVector2(newJitter.MinRadius, newJitter.MaxRadius);
+            offset = Vector2.Transform(offset, Matrix3x2.Create(newJitter.XSheer, newJitter.YSheer, Vector2.Zero));
 
             // If we're in the same quadrant as our last location, invert the offset
             // Reduces repetitive behavior and increases large movements
@@ -82,16 +93,13 @@ namespace Content.Client.Jittering
                 offset = -offset;
             }
 
-            // Hack together a matrix because there's no node validator for Matrix3x2
-            var matrix = Matrix3x2.Create(jittering.XSheer, jittering.YSheer, Vector2.Zero);
-            offset = Vector2.Transform(offset, matrix);
-
             jittering.LastJitter = offset;
 
             // avoid dividing by 0 so animations don't try to be infinitely long
-            var length = jittering.Frequency <= 0 ? 0f : 1f / jittering.Frequency;
+            var length = newJitter.Frequency <= 0 ? 0f : 1f / newJitter.Frequency;
 
-            return new Animation()
+            // create and play the animation
+            var animation = new Animation()
             {
                 Length = TimeSpan.FromSeconds(length),
                 AnimationTracks =
@@ -108,6 +116,7 @@ namespace Content.Client.Jittering
                     }
                 }
             };
+            _animationPlayer.Play((uid, animationPlayer), animation, _jitterAnimationKey);
         }
     }
 }

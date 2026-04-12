@@ -413,7 +413,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
-        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true, statusEffects);
+        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 

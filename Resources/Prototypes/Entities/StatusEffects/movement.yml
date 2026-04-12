@@ -79,3 +79,15 @@
   - type: StatusEffectAlert
     alert: Stun
   - type: StunnedStatusEffect
+
+# Jittering
+
+- type: entity
+  parent: [StatusEffectBase, StatusEffectDebuff]
+  id: StatusEffectStandardJitter
+  name: jittering
+  components:
+  - type: JitteringStatusEffect
+    settings:
+      frequency: 3
+      maxRadius: 0.25

@@ -18,13 +18,18 @@ namespace Content.Shared.Jittering
         {
             base.Initialize();
 
-            SubscribeLocalEvent<JitteringComponent, RejuvenateEvent>(OnRejuvenate);
+            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
         }
 
-        // todo probably don't need it?
-        private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
+        private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
         {
-            RemCompDeferred<JitteringComponent>(uid);
+            EnsureComp<JitteringComponent>(ent);
+        }
+
+        private void OnStatusRemoved(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
+        {
+            RemCompDeferred<JitteringComponent>(ent);
         }
 
         // todo make remark clearer
@@ -47,8 +52,7 @@ namespace Content.Shared.Jittering
                             bool refresh,
                             float amplitude = 10f,
                             float frequency = 4f,
-                            bool forceValueChange = false,
-                            StatusEffectsComponent? status = null)
+                            bool forceValueChange = false)
         // public void DoJitter(EntityUid uid,
         // TimeSpan time,
         // bool refresh,
@@ -57,20 +61,20 @@ namespace Content.Shared.Jittering
         // bool forceValueChange = false,
         //     StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status, false))
-                return;
-
-            // todo
-            if (_statusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
-            {
-                var jittering = Comp<JitteringComponent>(uid);
-
-                // if(forceValueChange || jittering.Amplitude < amplitude)
-                //     jittering.Amplitude = amplitude;
-                //
-                // if (forceValueChange || jittering.Frequency < frequency)
-                //     jittering.Frequency = frequency;
-            }
+            // if (!Resolve(uid, ref status, false))
+            //     return;
+            //
+            // // todo
+            // if (_statusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
+            // {
+            //     var jittering = Comp<JitteringComponent>(uid);
+            //
+            //     // if(forceValueChange || jittering.Amplitude < amplitude)
+            //     //     jittering.Amplitude = amplitude;
+            //     //
+            //     // if (forceValueChange || jittering.Frequency < frequency)
+            //     //     jittering.Frequency = frequency;
+            // }
         }
 
         // todo Shouldn't need this with new status effects
@@ -79,10 +83,37 @@ namespace Content.Shared.Jittering
         /// </summary>
         public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
         {
-            var jitter = EnsureComp<JitteringComponent>(uid);
-            jitter.MaxRadius = amplitude; //todo
-            jitter.Frequency = frequency;
-            Dirty(uid, jitter);
+            // var jitter = EnsureComp<JitteringComponent>(uid);
+            // jitter.MaxRadius = amplitude; //todo
+            // jitter.Frequency = frequency;
+            // Dirty(uid, jitter);
+        }
+
+        /// <summary>
+        /// Finds all the status effects with <see cref="JitteringStatusEffectComponent"/>
+        /// and combines them into a single jitter effect.
+        /// </summary>
+        protected bool TryGetCombinedStatusJitters(EntityUid entity, out JitterParams jitter)
+        {
+            jitter = new JitterParams();
+
+            if (!_statusEffects.TryEffectsWithComp<JitteringStatusEffectComponent>(entity, out var effects))
+                return false;
+
+            foreach (var (_, jitterEffect, _) in effects)
+            {
+                jitter.Frequency += jitterEffect.Settings.Frequency;
+                jitter.MaxRadius += jitterEffect.Settings.MaxRadius;
+                jitter.MinRadius += jitterEffect.Settings.MinRadius;
+                jitter.XSheer *= jitterEffect.Settings.XSheer;
+                jitter.YSheer *= jitterEffect.Settings.YSheer;
+            }
+
+            jitter.Frequency /= effects.Count;
+            jitter.MaxRadius /= effects.Count;
+            jitter.MinRadius /= effects.Count;
+
+            return true;
         }
     }
 }

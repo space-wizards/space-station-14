@@ -429,6 +429,12 @@
   meltingPoint: 0.0
   friction: 0.4
   metabolisms:
+    Bloodstream:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStandardJitter
+        time: 2
+        type: Add
     Digestion:
       effects:
       - !type:SatiateThirst
