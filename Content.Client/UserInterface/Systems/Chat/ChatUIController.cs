@@ -135,6 +135,11 @@ public sealed partial class ChatUIController : UIController
     private readonly Dictionary<EntityUid, SpeechBubbleQueueData> _queuedSpeechBubbles
         = new();
 
+    /// <summary>
+    ///     The typing preview bubble currently displayed on screen, if any.
+    /// </summary>
+    private PreviewSpeechBubble? _previewBubble;
+
     private readonly HashSet<ChatBox> _chats = new();
     public IReadOnlySet<ChatBox> Chats => _chats;
 
@@ -418,6 +423,7 @@ public sealed partial class ChatUIController : UIController
 
     public void SetSpeechBubbleRoot(LayoutContainer root)
     {
+        //RemoveTypingPreview();
         _speechBubbleRoot.Orphan();
         root.AddChild(_speechBubbleRoot);
         LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
@@ -464,6 +470,13 @@ public sealed partial class ChatUIController : UIController
             existing = new List<SpeechBubble>();
             _activeSpeechBubbles.Add(entity, existing);
         }
+
+        // MIKEY i dont think i need?
+        // if (entity == _typingPreviewEntity && _typingPreviewBubble != null)
+        //     _typingPreviewBubble.VerticalOffset += bubble.ContentSize.Y;
+
+        // if (entity == _typingPreviewEntity && _typingPreviewBubble != null)
+        //     bubble.VerticalOffset += _typingPreviewBubble.ContentSize.Y;
 
         existing.Add(bubble);
         _speechBubbleRoot.AddChild(bubble);
@@ -930,6 +943,69 @@ public sealed partial class ChatUIController : UIController
     public void NotifyChatFocus(bool isFocused)
     {
         _typingIndicator?.ClientChangedChatFocus(isFocused);
+        // MIKEY - experiment with preview with changing chat box focus
+    }
+
+    // ---- Typing preview bubble management ----
+
+    /// <summary>
+    ///     Called by <see cref="ChatBox"/> every time the player's chat input text changes.
+    ///     Creates or updates a "typing preview" speech bubble above the player's character.
+    /// </summary>
+    /// <param name="box">
+    ///     The current chat input box.
+    /// </param>
+    public void UpdateTypingPreview(ChatBox box)
+    {
+        var text = box.ChatInput.Input.Text;
+
+        if (!_config.GetCVar(CCVars.ChatTypingPreviewEnabled)
+            || _player.LocalEntity is not { } player
+            || string.IsNullOrEmpty(text))
+        {
+            ClearTypingPreview();
+            return;
+        }
+
+        // If no preview bubble exists, create one.
+        if (_previewBubble == null)
+        {
+            _previewBubble = new PreviewSpeechBubble(player);
+            _speechBubbleRoot.AddChild(_previewBubble);
+        }
+
+        // For an existing bubble, update its text.
+        var heightDelta = _previewBubble.UpdateText(text);
+        if (heightDelta != 0 && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset += heightDelta;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Removes and disposes the typing preview bubble if one is currently shown.
+    ///     Also shifts real speech bubbles back down to close the gap left by the removed preview.
+    /// </summary>
+    public void ClearTypingPreview()
+    {
+        if (_previewBubble == null)
+            return;
+
+        if (_previewBubble.ContentSize.Y > 0
+            && _player.LocalEntity is { } player
+            && _activeSpeechBubbles.TryGetValue(player, out var activeBubbles))
+        {
+            foreach (var bubble in activeBubbles)
+            {
+                bubble.VerticalOffset -= _previewBubble.ContentSize.Y;
+            }
+        }
+
+        _previewBubble.Dispose();
+        _previewBubble = null;
     }
 
     public void Repopulate()
