@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: JackRyd3r
-  changes:
-  - message: You can now put the Energy Magnum to into jackboots/combat boots and
-      security belts/carriers
-    type: Fix
-  id: 9123
-  time: '2025-10-19T06:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40974
-- author: AlwyAnri
-  changes:
-  - message: Added a ninja headset.
-    type: Add
-  id: 9124
-  time: '2025-10-19T11:45:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40054
-- author: Pgriha
-  changes:
-  - message: Cotton seeds added to seeds crate from Cargo.
-    type: Add
-  id: 9125
-  time: '2025-10-19T16:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40970
-- author: SpaceLizard24
-  changes:
-  - message: Creating crystal chemical reaction now can produce yellow and black crystals!
-    type: Fix
-  id: 9126
-  time: '2025-10-19T18:37:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40985
 - author: Kittygyat
   changes:
   - message: Monkeys, Kobolds & Scurrets can now shove/disarm like regular species!
@@ -4030,3 +4001,33 @@
   id: 9634
   time: '2026-04-10T20:41:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43542
+- author: Buunie099
+  changes:
+  - message: Revenants will passively chill their environments based on how much essence
+      they have
+    type: Add
+  id: 9635
+  time: '2026-04-11T10:49:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43500
+- author: ProPeperos
+  changes:
+  - message: Fixed stacks of concrete and astro mowed/jungle grass splitting in to
+      wrong items
+    type: Fix
+  id: 9636
+  time: '2026-04-11T19:05:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43547
+- author: BeatusCrow
+  changes:
+  - message: NPCs no longer detect invisible targets.
+    type: Add
+  id: 9637
+  time: '2026-04-11T21:20:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43562
+- author: AndrewFenriz
+  changes:
+  - message: Fixed Cutter Machine rotation to be consistent with other lathes.
+    type: Fix
+  id: 9638
+  time: '2026-04-11T21:35:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43494
