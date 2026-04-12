@@ -158,6 +158,23 @@
 
 - type: entity
   parent: BasePDACartridge
+  id: MessengerCartridge
+  name: messenger cartridge
+  description: A program for sending messages to other PDAs.
+  components:
+  - type: Sprite
+    state: cart-y
+  - type: UIFragment
+    ui: !type:MessengerUi
+  - type: Cartridge
+    programName: messenger-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: messenger
+  - type: MessengerCartridge
+
+- type: entity
+  parent: BasePDACartridge
   id: AstroNavCartridge
   name: AstroNav cartridge
   description: A program for navigation that provides GPS coordinates.

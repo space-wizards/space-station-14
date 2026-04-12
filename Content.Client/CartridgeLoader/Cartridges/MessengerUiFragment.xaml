@@ -1,0 +1,28 @@
+<cartridges:MessengerUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"/>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Contact list view -->
+        <BoxContainer Name="ContactListView" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <Label Text="{Loc messenger-ui-title}" StyleClasses="LabelHeading" Margin="4 4 4 2"/>
+            <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Name="ContactList" HorizontalExpand="True" VerticalExpand="True"/>
+            </ScrollContainer>
+        </BoxContainer>
+        <!-- Chat view -->
+        <BoxContainer Name="ChatView" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="2">
+                <Button Name="BackButton" Text="{Loc messenger-ui-back}" MinWidth="50"/>
+                <Label Name="ChatTitle" StyleClasses="LabelHeading" HorizontalExpand="True" Align="Center"/>
+            </BoxContainer>
+            <PanelContainer StyleClasses="LowDivider" MinHeight="2"/>
+            <ScrollContainer Name="MessageScroll" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" Name="MessageList" HorizontalExpand="True" VerticalExpand="True"/>
+            </ScrollContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <LineEdit Name="MessageInput" HorizontalExpand="True" SetHeight="32" PlaceHolder="{Loc messenger-ui-placeholder}"/>
+                <Button Name="SendButton" Text="{Loc messenger-ui-send}" MinWidth="50"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</cartridges:MessengerUiFragment>

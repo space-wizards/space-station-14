@@ -84,6 +84,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - NewsReaderCartridge
+      - MessengerCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -156,6 +157,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -170,6 +172,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -417,6 +420,7 @@
     preinstalled:
     - CrewManifestCartridge
     - NewsReaderCartridge
+    - MessengerCartridge
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -483,6 +487,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -527,6 +532,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - NewsReaderCartridge
+      - MessengerCartridge
       - AstroNavCartridge
 
 - type: entity
@@ -878,6 +884,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -950,6 +957,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -976,6 +984,7 @@
       - WantedListCartridge
       - MedTekCartridge
       - AstroNavCartridge
+      - MessengerCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1094,6 +1103,7 @@
     preinstalled:
       - NotekeeperCartridge
       - NanoTaskCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: [ SyndiPDA, BaseSyndicateContraband ]
@@ -1132,6 +1142,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - MedTekCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: [ SyndiOperativePDA, BaseSyndicateContraband ]
@@ -1180,6 +1191,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1349,6 +1361,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1377,6 +1390,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - MedTekCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: ClownPDA

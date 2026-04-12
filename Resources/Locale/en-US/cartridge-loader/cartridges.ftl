@@ -26,6 +26,14 @@ log-probe-printout-device = Scanned Device: {$name}
 log-probe-printout-header = Latest logs:
 log-probe-printout-entry = #{$number} / {$time} / {$accessor}
 
+messenger-program-name = Messenger
+messenger-ui-title = Messenger
+messenger-ui-back = Back
+messenger-ui-send = Send
+messenger-ui-placeholder = Type a message...
+messenger-ui-no-contacts = No contacts available
+messenger-notification-header = Message from {$sender}
+
 astro-nav-program-name = AstroNav
 
 med-tek-program-name = MedTek
