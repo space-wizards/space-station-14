@@ -13,6 +13,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -348,11 +350,10 @@ public sealed class EditorContext
 
         var phases = new List<BenchmarkPhase>();
 
-        // Phase 1: baseline.
+        // Phase 1: baseline (wherever the user left the camera).
         phases.Add(await SamplePhaseAsync("baseline", PhaseSettleMs, PhaseSampleMs));
 
-        // Phase 2: fit to map (the wide shot is what we actually care
-        // about benchmarking).
+        // Phase 2: fit to map — zoom just enough to see the full map.
         await RunOnGameThread(() =>
         {
             Camera.Position = wideCenter;
@@ -360,17 +361,16 @@ public sealed class EditorContext
         });
         phases.Add(await SamplePhaseAsync("wide (fit-to-map)", PhaseSettleMs, PhaseSampleMs));
 
-        // Capture the visible entity count at the wide shot. This is the
-        // most useful single number for understanding what the renderer
-        // is up against.
+        // Capture the visible entity count at the wide shot.
         var visibleAtWide = 0;
         await RunOnGameThread(() =>
         {
             visibleAtWide = CountVisibleEntities(baselineMap, wideCenter, wideZoom);
         });
 
-        // Phase 3-6: pan through 4 waypoints around the bounds, sampling
-        // at each.
+        // Phase 3: zoom in to 50% of wide (half the map visible) and
+        // pan across 4 waypoints to simulate dragging around.
+        var midZoom = wideZoom * 0.5f;
         var panRadius = MathF.Max(mapBounds.Width, mapBounds.Height) * 0.15f;
         var waypoints = new[]
         {
@@ -379,34 +379,51 @@ public sealed class EditorContext
             wideCenter + new Vector2(-panRadius, 0),
             wideCenter + new Vector2(0, -panRadius),
         };
-        for (var i = 0; i < waypoints.Length; i++)
+        await RunOnGameThread(() =>
+        {
+            Camera.Zoom = midZoom;
+            Camera.Position = waypoints[0];
+        });
+        phases.Add(await SamplePhaseAsync("mid-zoom pan 1/4", PhaseSettleMs, PhaseSampleMs));
+
+        for (var i = 1; i < waypoints.Length; i++)
         {
             var wp = waypoints[i];
-            await RunOnGameThread(() =>
-            {
-                Camera.Position = wp;
-            });
-            phases.Add(await SamplePhaseAsync($"pan {i + 1}/{waypoints.Length}", PhaseSettleMs, PhaseSampleMs));
+            await RunOnGameThread(() => Camera.Position = wp);
+            phases.Add(await SamplePhaseAsync($"mid-zoom pan {i + 1}/{waypoints.Length}", PhaseSettleMs, PhaseSampleMs));
         }
 
-        // Phase 7: zoom in 2x from the wide shot.
+        // Phase 7: zoom in to 25% of wide (close-up, ~quarter of map).
         await RunOnGameThread(() =>
         {
             Camera.Position = wideCenter;
-            Camera.Zoom = wideZoom * 0.5f;
+            Camera.Zoom = wideZoom * 0.25f;
         });
-        phases.Add(await SamplePhaseAsync("zoom in 2x", PhaseSettleMs, PhaseSampleMs));
+        phases.Add(await SamplePhaseAsync("close-up (25%)", PhaseSettleMs, PhaseSampleMs));
 
-        // Phase 8: zoom out 2x from the wide shot.
+        // Phase 8: back to wide shot to bookend.
         await RunOnGameThread(() =>
         {
-            Camera.Zoom = wideZoom * 2f;
+            Camera.Zoom = wideZoom;
         });
-        phases.Add(await SamplePhaseAsync("zoom out 2x", PhaseSettleMs, PhaseSampleMs));
+        phases.Add(await SamplePhaseAsync("wide (return)", PhaseSettleMs, PhaseSampleMs));
 
-        // Phase 9: restore baseline.
+        // A/B comparison: disable the fast path and re-run the wide shot
+        // so we can see the difference in the same benchmark report.
         await RunOnGameThread(() =>
         {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.RenderSpriteSimpleFastPath, false);
+            Camera.Position = wideCenter;
+            Camera.Zoom = wideZoom;
+        });
+        phases.Add(await SamplePhaseAsync("wide (fast path OFF)", PhaseSettleMs, PhaseSampleMs));
+
+        // Re-enable and restore.
+        await RunOnGameThread(() =>
+        {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.RenderSpriteSimpleFastPath, true);
             Camera.Position = baselinePos;
             Camera.Zoom = baselineZoom;
         });
