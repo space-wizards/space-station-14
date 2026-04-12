@@ -5,7 +5,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Systems;
@@ -57,8 +56,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private readonly EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
     [Dependency] private readonly EntityQuery<ItemSlotsComponent> _itemSlotsQuery = default!;
     [Dependency] private readonly EntityQuery<FitsInDispenserComponent> _dispenserQuery = default!;
-    [Dependency] private readonly EntityQuery<SolutionManagerComponent> _solutionContainerQuery = default!;
-
 
     public override void Initialize()
     {
