@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ public sealed class FleetingClothingSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
@@ -54,7 +56,10 @@ public sealed class FleetingClothingSystem : EntitySystem
     // We can't do this in.GotUnequippedEvent because container events don't include the user.
     private void OnBeforeGettingUnequipped(Entity<FleetingClothingComponent> ent, ref BeforeGettingUnequippedEvent args)
     {
-        PredictedQueueDel(ent.Owner); // Poof!
+        if (ent.Comp.DestroyOnUnequip)
+            _destructibleSystem.DestroyEntity(ent.Owner); // Empty containers first.
+        else
+            PredictedQueueDel(ent.Owner); // Poof!
 
         // Use coords because the entity will be deleted.
         var coords = Transform(ent).Coordinates;
@@ -94,7 +99,10 @@ public sealed class FleetingClothingSystem : EntitySystem
         if (Terminating(args.EquipTarget))
             return; // Don't do anything if the item is removed due to the wearer getting deleted.
 
-        PredictedQueueDel(ent.Owner); // Poof!
+        if (ent.Comp.DestroyOnUnequip)
+            _destructibleSystem.DestroyEntity(ent.Owner); // Empty containers first.
+        else
+            PredictedQueueDel(ent.Owner); // Poof!
 
         // Can't predict the popup or sound without a user.
         // TODO: Make the popup and sound API sane and remove this guard.
