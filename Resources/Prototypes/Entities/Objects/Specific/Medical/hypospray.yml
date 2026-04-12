@@ -722,6 +722,8 @@
   parent: ChemicalMedipen
   id: WehMedipen
   name: weh auto-injector
+  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: A non-refillable medipen containing multiple doses of weh.
   components:
   - type: Sprite
