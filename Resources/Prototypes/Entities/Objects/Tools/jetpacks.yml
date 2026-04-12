@@ -1,24 +1,4 @@
 - type: entity
-  id: JetpackEffect
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: TimedDespawn
-    lifetime: 2
-  - type: Sprite
-    drawdepth: SmallMobs
-    noRot: true
-    layers:
-    - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
-      sprite: Effects/atmospherics.rsi
-      state: frezon_old
-  - type: EffectVisuals
-  - type: Tag
-    tags:
-      - HideContextMenu
-  - type: AnimationPlayer
-
-- type: entity
   parent: GasTankBase
   abstract: true
   id: BaseJetpack
