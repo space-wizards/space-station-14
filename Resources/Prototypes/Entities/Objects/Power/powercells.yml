@@ -25,8 +25,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 5
+      - ReagentId: Zinc
+        Quantity: 5
   - type: Tag
     tags:
       - PowerCell
@@ -56,8 +56,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 5
+      - ReagentId: Zinc
+        Quantity: 5
   - type: Tag
     tags:
       - PotatoBattery
@@ -85,8 +85,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 5    
+      - ReagentId: Zinc
+        Quantity: 5    
   - type: Tag
     tags:
       - PowerCellSmall
@@ -120,8 +120,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Uranium
-          Quantity: 5
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   name: medium-capacity power cell
@@ -143,8 +143,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Lithium
-          Quantity: 5
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellMediumPrinted
@@ -183,8 +183,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Lithium
-          Quantity: 5
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHighPrinted
@@ -223,8 +223,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Lithium
-          Quantity: 5
+      - ReagentId: Lithium
+        Quantity: 5
 
 - type: entity
   id: PowerCellHyperPrinted
@@ -265,8 +265,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Uranium
-          Quantity: 5
+      - ReagentId: Uranium
+        Quantity: 5
 
 - type: entity
   parent: PowerCellMicroreactor
@@ -325,8 +325,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
-        - ReagentId: Zinc
-          Quantity: 15
+      - ReagentId: Zinc
+        Quantity: 15
   - type: Tag
     tags:
       - PowerCage
