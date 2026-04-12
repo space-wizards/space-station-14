@@ -51,10 +51,10 @@
       value: [ 0.2, 0.9 ]
     - hue: 0.33 # From green to pink keep it the same. (0.65 -> 0.65)
       saturation: [ 0, 0.65 ]
-      value: [ 0.2, 0.90 ]
+      value: [ 0.2, 0.9 ]
     - hue: 0.94 # From pink, increase saturation for red. (0.65 -> 0.75)
       saturation: [ 0, 0.65 ]
-      value: [ 0.2, 0.90 ]
+      value: [ 0.2, 0.9 ]
     - hue: 1 # Red
       saturation: [ 0, 0.75 ]
-      value: [ 0.2, 0.90 ]
+      value: [ 0.2, 0.9 ]

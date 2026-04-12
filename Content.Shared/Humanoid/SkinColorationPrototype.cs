@@ -324,7 +324,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
     public bool VerifySkinColor(Color color)
     {
-        var hsv =  Color.ToHsv(color);
+        var hsv = Color.ToHsv(color);
         var range = GetNodeValuesForHue(hsv.X);
 
         // If no range was found, this color is invalid.
@@ -375,14 +375,14 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
             // If there is no element after this one, we just get the last element and give it full control of the color.
             // Basically a node list of [0, 0.5] will fall back to node at 0.5 if the hue is ever higher.
-            // This could just set the next to current as well, but I don't think there is any differance.
-            var next = Nodes.ElementAtOrDefault(i+1) ?? Nodes.Last();
+            // This could just set the next to current as well, but I don't think there is any difference.
+            var next = Nodes.ElementAtOrDefault(i + 1) ?? Nodes.Last();
 
             // Is the hue within the range of the nodes we're considering?
             if (current.Hue > hue || next.Hue < hue)
                 continue;
 
-            return  (current, next);
+            return (current, next);
         }
 
         return null;
@@ -402,7 +402,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         // If both values are equal we just return 0f.
         // This is to prevent dividing by 0.
-        var weight = MathHelper.CloseTo(firstNode.Hue, secondNode.Hue) ? 0f : (hue - firstNode.Hue)/(secondNode.Hue - firstNode.Hue);
+        var weight = MathHelper.CloseTo(firstNode.Hue, secondNode.Hue) ? 0f : (hue - firstNode.Hue) / (secondNode.Hue - firstNode.Hue);
 
         // I know this is also used to define the nodes, however it contains all the data necessary
         // And I don't think creating a new DataDefinition is worth it just to get rid of the hue from this one.
@@ -419,13 +419,17 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     }
 }
 
+/// <summary>
+/// A node to be used with <see cref="HueNodeClampedHsvColoration"/>.
+/// Represents a single point on the hue spectrum with corresponding clamping limits for saturation and value.
+/// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class HueNodeClampedHsvColorationNode
 {
     /// <summary>
     /// The point on the hue spectrum where this node is placed.
-    /// 0 is 0, 1 is 360
+    /// Between 0 and 1.
     /// </summary>
     [DataField]
     public float Hue;
