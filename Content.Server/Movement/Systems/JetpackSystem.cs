@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Movement.Components;
@@ -33,7 +32,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
                 continue;
 
             var gasTank = (uid, gasTankComp);
-            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
+            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
             var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
             if (usedAir == null)

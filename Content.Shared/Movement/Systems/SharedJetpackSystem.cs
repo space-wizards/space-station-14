@@ -158,7 +158,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<ActiveJetpackComponent>(uid);
     }
 
-    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
+    protected void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
     {
         if (IsEnabled(uid) == enabled ||
             enabled && !CanEnable(uid, component))
@@ -182,14 +182,14 @@ public abstract class SharedJetpackSystem : EntitySystem
             }
 
             SetupUser(user.Value, uid, component);
-            EnsureComp<ActiveJetpackComponent>(uid);
+            var active = EnsureComp<ActiveJetpackComponent>(uid);
+            active.LastCoordinates = Transform(uid).Coordinates;
         }
         else
         {
             RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
         }
-
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
         Dirty(uid, component);

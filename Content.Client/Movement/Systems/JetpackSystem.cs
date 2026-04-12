@@ -46,24 +46,24 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         // TODO: Please don't copy-paste this I beg
         // make a generic particle emitter system / actual particles instead.
-        var query = EntityQueryEnumerator<ActiveJetpackComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var active, out var jetpack, out var xform))
         {
-            if (_transform.InRange(xform.Coordinates, comp.LastCoordinates, comp.MaxDistance))
+            if (_transform.InRange(xform.Coordinates, active.LastCoordinates, jetpack.EffectMaxDistance))
             {
-                if (_timing.CurTime < comp.TargetTime)
+                if (_timing.CurTime < active.TargetTime)
                     continue;
             }
 
-            comp.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
-            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+            active.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
+            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(jetpack.EffectCooldown);
 
-            CreateParticles(uid);
+            CreateParticles(uid, jetpack);
         }
     }
 
-    private void CreateParticles(EntityUid uid)
+    private void CreateParticles(EntityUid uid, JetpackComponent component)
     {
         var uidXform = Transform(uid);
         // Don't show particles unless the user is moving.
@@ -90,6 +90,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
             return;
         }
 
-        Spawn("JetpackEffect", coordinates);
+        Spawn(component.EffectPrototype, coordinates);
     }
 }

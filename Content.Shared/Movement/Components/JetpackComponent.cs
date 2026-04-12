@@ -1,6 +1,5 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Movement.Components;
 
@@ -25,4 +24,13 @@ public sealed partial class JetpackComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
     public float WeightlessModifier = 1.2f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("effectCooldown")]
+    public float EffectCooldown = 0.3f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("effectMaxDistance")]
+    public float EffectMaxDistance = 0.7f;
+
+    [DataField("effectPrototype")]
+    public EntProtoId EffectPrototype = "JetpackEffect";
 }
