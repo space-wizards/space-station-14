@@ -15,12 +15,10 @@ public sealed class ExaminableSatiationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SatiationSystem _satiation = default!;
 
-    private EntityQuery<SatiationComponent> _satiationQuery;
+    [Dependency] private readonly EntityQuery<SatiationComponent> _satiationQuery = default!;
 
     public override void Initialize()
     {
-        _satiationQuery = GetEntityQuery<SatiationComponent>();
-
         SubscribeLocalEvent<ExaminableSatiationComponent, ExaminedEvent>(OnExamine);
     }
 
