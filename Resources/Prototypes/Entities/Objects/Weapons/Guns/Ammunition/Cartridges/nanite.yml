@@ -1,7 +1,6 @@
 - type: entity
   parent: [ BaseCartridge, BaseXenoborgContraband ]
   id: CartridgeNanite
-  categories: [ HideSpawnMenu ]
   name: nanite crystal
   description: A high-power nanite crystal used by xenoborgs.
   components:
@@ -12,6 +11,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/nanite_casing.rsi
     layers:
     - map: ["NaniteCasing"]
+      state: base
   - type: RandomSprite
     available:
     - NaniteCasing:
