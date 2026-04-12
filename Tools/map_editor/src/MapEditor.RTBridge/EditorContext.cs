@@ -66,11 +66,28 @@ public sealed class EditorContext
     private readonly ISawmill _sawmill;
 
     /// <summary>
-    ///     The editor's current eye. Set up during post init. Mutations to
-    ///     <see cref="Eye.Position"/> or <see cref="Eye.Zoom"/> are picked
-    ///     up by the viewport on the next frame.
+    ///     The editor's current eye. Set up during post init.
+    ///     <para>
+    ///     IMPORTANT: do NOT mutate <see cref="Eye.Position"/> or
+    ///     <see cref="Eye.Zoom"/> directly to pan/zoom from host code.
+    ///     The viewport's <c>FrameUpdate</c> writes the editor camera's
+    ///     state back to this eye every frame, so direct edits get
+    ///     overwritten on the next tick. Mutate <see cref="Camera"/>
+    ///     instead.
+    ///     </para>
     /// </summary>
     public Eye EditorEye { get; internal set; } = default!;
+
+    /// <summary>
+    ///     The editor camera. This is the source of truth for viewport
+    ///     position and zoom: the viewport's <c>FrameUpdate</c> reads
+    ///     from here and writes back to the eye every frame, so
+    ///     mutations land on the next rendered frame.
+    ///
+    ///     Published by <see cref="EditorViewportControl"/> from its
+    ///     constructor. Null until the viewport state has started up.
+    /// </summary>
+    public EditorCamera? Camera { get; internal set; }
 
     /// <summary>
     ///     Prototype id of the entity that should be spawned when the user
@@ -288,6 +305,15 @@ public sealed class EditorContext
     {
         _sawmill.Info("Benchmark: starting");
 
+        // The viewport publishes its EditorCamera through Camera. We
+        // mutate THAT, not EditorEye directly, because the viewport's
+        // FrameUpdate writes camera state back to the eye every tick
+        // and would clobber any direct eye edits.
+        if (Camera == null)
+            throw new InvalidOperationException(
+                "EditorContext.Camera is null. The viewport state must be active before " +
+                "the benchmark can run.");
+
         // Snapshot the baseline view so we can restore at the end and so
         // every phase has a known reference. Read on the game thread to
         // avoid racing the renderer.
@@ -296,8 +322,8 @@ public sealed class EditorContext
         MapId baselineMap = default;
         await RunOnGameThread(() =>
         {
-            baselinePos = EditorEye.Position.Position;
-            baselineZoom = EditorEye.Zoom;
+            baselinePos = Camera.Position;
+            baselineZoom = Camera.Zoom;
             baselineMap = EditorEye.Position.MapId;
         });
 
@@ -329,8 +355,8 @@ public sealed class EditorContext
         // about benchmarking).
         await RunOnGameThread(() =>
         {
-            EditorEye.Position = new MapCoordinates(wideCenter, baselineMap);
-            EditorEye.Zoom = wideZoom;
+            Camera.Position = wideCenter;
+            Camera.Zoom = wideZoom;
         });
         phases.Add(await SamplePhaseAsync("wide (fit-to-map)", PhaseSettleMs, PhaseSampleMs));
 
@@ -358,7 +384,7 @@ public sealed class EditorContext
             var wp = waypoints[i];
             await RunOnGameThread(() =>
             {
-                EditorEye.Position = new MapCoordinates(wp, baselineMap);
+                Camera.Position = wp;
             });
             phases.Add(await SamplePhaseAsync($"pan {i + 1}/{waypoints.Length}", PhaseSettleMs, PhaseSampleMs));
         }
@@ -366,23 +392,23 @@ public sealed class EditorContext
         // Phase 7: zoom in 2x from the wide shot.
         await RunOnGameThread(() =>
         {
-            EditorEye.Position = new MapCoordinates(wideCenter, baselineMap);
-            EditorEye.Zoom = wideZoom * 0.5f;
+            Camera.Position = wideCenter;
+            Camera.Zoom = wideZoom * 0.5f;
         });
         phases.Add(await SamplePhaseAsync("zoom in 2x", PhaseSettleMs, PhaseSampleMs));
 
         // Phase 8: zoom out 2x from the wide shot.
         await RunOnGameThread(() =>
         {
-            EditorEye.Zoom = wideZoom * 2f;
+            Camera.Zoom = wideZoom * 2f;
         });
         phases.Add(await SamplePhaseAsync("zoom out 2x", PhaseSettleMs, PhaseSampleMs));
 
         // Phase 9: restore baseline.
         await RunOnGameThread(() =>
         {
-            EditorEye.Position = new MapCoordinates(baselinePos, baselineMap);
-            EditorEye.Zoom = baselineZoom;
+            Camera.Position = baselinePos;
+            Camera.Zoom = baselineZoom;
         });
 
         var result = new BenchmarkResult(

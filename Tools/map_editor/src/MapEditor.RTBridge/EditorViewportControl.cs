@@ -51,6 +51,12 @@ public sealed class EditorViewportControl : ViewportContainer
             position: editorEye.Position.Position,
             zoom: editorEye.Zoom);
         MouseFilter = MouseFilterMode.Stop;
+
+        // Publish the camera through EditorContext so host side commands
+        // (like the benchmark) can mutate viewport position and zoom
+        // without their changes being clobbered by SyncCameraToEye.
+        if (EditorContext.Current != null)
+            EditorContext.Current.Camera = _camera;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
