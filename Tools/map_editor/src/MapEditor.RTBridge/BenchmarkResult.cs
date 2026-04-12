@@ -19,12 +19,18 @@ public sealed record BenchmarkPhase(
     double BatchCountAvg,
     double LargestBatchVerticesAvg)
 {
+    public int SimpleSpriteCountAvg { get; init; }
+    public int FullSpriteCountAvg { get; init; }
+
     public override string ToString()
     {
+        var total = SimpleSpriteCountAvg + FullSpriteCountAvg;
+        var hitRate = total > 0 ? 100.0 * SimpleSpriteCountAvg / total : 0.0;
         return
             $"{Name,-22} fps={FpsAvg,6:F1}  ft={FrameTimeMsAvg,6:F2}ms (max {FrameTimeMsMax,6:F2})  " +
             $"clyDC={SpriteDrawCallsAvg,8:F0}  glDC={GlDrawCallsAvg,6:F0}  " +
             $"batches={BatchCountAvg,6:F0}  largestBatchV={LargestBatchVerticesAvg,7:F0}  " +
+            $"fast path: {SimpleSpriteCountAvg} simple / {FullSpriteCountAvg} full ({hitRate:F0}% hit)  " +
             $"(n={SampleCount})";
     }
 }

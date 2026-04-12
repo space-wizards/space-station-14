@@ -427,7 +427,7 @@ public sealed class EditorContext
     private (Box2 bounds, bool hasAny) ComputeMapBounds(MapId mapId)
     {
         Box2? union = null;
-        var query = _entityManager.EntityQueryEnumerator<MapGridComponent, TransformComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
         var transformSys = _entityManager.System<SharedTransformSystem>();
         while (query.MoveNext(out var uid, out var grid, out var xform))
         {
@@ -483,7 +483,7 @@ public sealed class EditorContext
         var aabb = Box2.CenteredAround(center, new Vector2(halfW * 2f, halfH * 2f));
 
         var count = 0;
-        var query = _entityManager.EntityQueryEnumerator<SpriteComponent, TransformComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<SpriteComponent, TransformComponent>();
         while (query.MoveNext(out var _, out var sprite, out var xform))
         {
             if (xform.MapID != mapId || !sprite.Visible)
@@ -510,6 +510,8 @@ public sealed class EditorContext
         var glTotal = 0d;
         var batchTotal = 0d;
         var largestVTotal = 0d;
+        var simpleTotal = 0L;
+        var fullTotal = 0L;
         var samples = 0;
 
         var deadline = DateTime.UtcNow.AddMilliseconds(sampleMs);
@@ -521,6 +523,7 @@ public sealed class EditorContext
                 var clyde = IoCManager.Resolve<IClyde>();
                 var timing = IoCManager.Resolve<IGameTiming>();
                 var stats = clyde.DebugStats;
+                var spriteSystem = _entityManager.System<SpriteSystem>();
 
                 fpsTotal += timing.FramesPerSecondAvg;
                 var ft = timing.RealFrameTime.TotalMilliseconds;
@@ -530,6 +533,8 @@ public sealed class EditorContext
                 glTotal += stats.LastGLDrawCalls;
                 batchTotal += stats.LastBatches;
                 largestVTotal += stats.LargestBatchSize.vertices;
+                simpleTotal += spriteSystem.SimpleSpriteCount;
+                fullTotal += spriteSystem.FullSpriteCount;
                 samples++;
             });
         }
@@ -546,7 +551,11 @@ public sealed class EditorContext
             SpriteDrawCallsAvg: clyTotal / samples,
             GlDrawCallsAvg: glTotal / samples,
             BatchCountAvg: batchTotal / samples,
-            LargestBatchVerticesAvg: largestVTotal / samples);
+            LargestBatchVerticesAvg: largestVTotal / samples)
+        {
+            SimpleSpriteCountAvg = samples > 0 ? (int)(simpleTotal / samples) : 0,
+            FullSpriteCountAvg = samples > 0 ? (int)(fullTotal / samples) : 0,
+        };
     }
 }
 
