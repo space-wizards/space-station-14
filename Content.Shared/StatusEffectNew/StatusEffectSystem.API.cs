@@ -408,6 +408,11 @@ public sealed partial class StatusEffectsSystem
         return endTime is not null;
     }
 
+    /// <summary>
+    /// Enumerates through and returns all status effects on an entity
+    /// </summary>
+    /// <param name="container">Status effect container we're enumerating through</param>
+    /// <returns>All status effects in this container</returns>
     public IEnumerable<Entity<StatusEffectComponent>> EnumerateStatusEffects(
         Entity<StatusEffectContainerComponent?> container)
     {
@@ -421,6 +426,12 @@ public sealed partial class StatusEffectsSystem
         }
     }
 
+    /// <summary>
+    /// Enumerates through all status effects on an entity. Returning those with a {T} status effect.
+    /// </summary>
+    /// <param name="container">Status effect container we're enumerating through</param>
+    /// <typeparam name="T">Component we're looking for on each status effect</typeparam>
+    /// <returns>All status effects with {T} component in this container</returns>
     public IEnumerable<Entity<StatusEffectComponent, T>> EnumerateStatusEffects<T>(
         Entity<StatusEffectContainerComponent?> container) where T : Component
     {
@@ -434,6 +445,7 @@ public sealed partial class StatusEffectsSystem
         }
     }
 
+    /// <inhereitdoc cref="EnumerateStatusEffects{T}(Entity{StatusEffectContainerComponent})"/>
     public IEnumerable<Entity<StatusEffectComponent, T>> EnumerateStatusEffects<T>(
         Entity<StatusEffectContainerComponent?> container,
         EntityQuery<T> query) where T : Component
