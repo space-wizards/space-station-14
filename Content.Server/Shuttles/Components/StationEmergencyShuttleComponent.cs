@@ -26,6 +26,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// The announcement made when the shuttle has successfully docked with the station.
     /// </summary>
+    [DataField("dockedAnnouncement")]
     public LocId DockedAnnouncement = "emergency-shuttle-docked";
 
     /// <summary>
@@ -36,6 +37,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// The announcement made when the shuttle is unable to dock and instead parks in nearby space.
     /// </summary>
+    [DataField("nearbyAnnouncement")]
     public LocId NearbyAnnouncement = "emergency-shuttle-nearby";
 
     /// <summary>
@@ -46,6 +48,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// The announcement made when the shuttle is unable to find a station.
     /// </summary>
+    [DataField("failureAnnouncement")]
     public LocId FailureAnnouncement = "emergency-shuttle-good-luck";
 
     /// <summary>
@@ -56,5 +59,6 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Text appended to the docking announcement if the launch time has been extended.
     /// </summary>
+    [DataField("launchExtendedMessage")]
     public LocId LaunchExtendedMessage = "emergency-shuttle-extended";
 }
