@@ -358,6 +358,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         return Color.FromHsv(hsv);
     }
 
+    /// <summary>
+    /// Finds the nodes affecting value and saturation at a specified hue value.
+    /// </summary>
+    /// <param name="hue">The hue value at which to find the nodes. Between 0 and 1.</param>
+    /// <returns>The nodes taking effect at the specified hue.</returns>
     private (HueNodeClampedHsvColorationNode, HueNodeClampedHsvColorationNode)? GetAffectingNodes(float hue)
     {
         if (Nodes is null || Nodes.Count == 0)
@@ -388,6 +393,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         return null;
     }
 
+    /// <summary>
+    /// Gets the values at which to clamp the value and saturation based on the given hue.
+    /// </summary>
+    /// <param name="hue">The hue for which to get the clamping values. Between 0 and 1.</param>
+    /// <returns>Node containing the value and saturation clamping.</returns>
     private HueNodeClampedHsvColorationNode? GetNodeValuesForHue(float hue)
     {
         if (Nodes is null || Nodes.Count == 0)
