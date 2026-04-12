@@ -19,9 +19,6 @@
     - hue: 0.045
       saturation: [ 0.2, 0.8 ]
       value: [ 0.36, 0.55 ]
-    - hue: 0.1666
-      saturation: [ 0.2, 0.8 ]
-      value: [ 0.36, 0.55 ]
     - hue: 0.44
       saturation: [ 0.2, 0.8 ]
       value: [ 0.36, 0.55 ]

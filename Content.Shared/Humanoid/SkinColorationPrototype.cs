@@ -328,7 +328,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         var range = GetNodeValuesForHue(hsv.X);
 
         // If no range was found, this color is invalid.
-        if (range == null)
+        if (!VerifyNodeOrder() || range is null)
             return false;
 
         // If a range is found, check if the saturation is within the provided ranges.
@@ -376,7 +376,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         {
             // We get the currently iterated element. If for WHATEVER reason it doesn't exist, we fall back to the first element.
             // There has to be at least one element here because we check the count above.
-            var current = Nodes.ElementAtOrDefault(i) ?? Nodes.First();
+            var current = Nodes[i];
 
             // If there is no element after this one, we just get the last element and give it full control of the color.
             // Basically a node list of [0, 0.5] will fall back to node at 0.5 if the hue is ever higher.
@@ -426,6 +426,27 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         finalNode.Value.Item2 = MathHelper.Lerp(firstNode.Value.Item2, secondNode.Value.Item2, weight);
 
         return finalNode;
+    }
+
+    /// <summary>
+    /// Verifies whether the nodes are ordered correctly with ascending hue.
+    /// </summary>
+    /// <returns>True if nodes have correct hue, otherwise False.</returns>
+    private bool VerifyNodeOrder()
+    {
+        if (Nodes is null || Nodes.Count == 0)
+            return false;
+
+        float hue = 0f;
+        for (int i = 0; i < Nodes.Count; i++)
+        {
+            if (Nodes[i].Hue < hue)
+                return false;
+
+            hue = Nodes[i].Hue;
+        }
+
+        return true;
     }
 }
 
