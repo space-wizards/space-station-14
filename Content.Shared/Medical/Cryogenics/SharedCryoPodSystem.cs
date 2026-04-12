@@ -5,7 +5,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Systems;
@@ -54,9 +53,9 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
 
-    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
-    private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
-    private EntityQuery<FitsInDispenserComponent> _dispenserQuery;
+    [Dependency] private readonly EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private readonly EntityQuery<ItemSlotsComponent> _itemSlotsQuery = default!;
+    [Dependency] private readonly EntityQuery<FitsInDispenserComponent> _dispenserQuery = default!;
 
 
     public override void Initialize()
@@ -76,10 +75,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
-
-        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
-        _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
-        _dispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
 
         InitializeInsideCryoPod();
 
