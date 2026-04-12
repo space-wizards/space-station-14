@@ -11,7 +11,9 @@ namespace Content.Shared.Movement.Components;
 [Access(typeof(SharedJetpackSystem))]
 public sealed partial class ActiveJetpackComponent : Component
 {
+    [ViewVariables]
     public EntityCoordinates LastCoordinates;
 
+    [ViewVariables]
     public TimeSpan TargetTime = TimeSpan.Zero;
 }

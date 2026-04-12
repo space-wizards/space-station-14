@@ -158,7 +158,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         return HasComp<ActiveJetpackComponent>(uid);
     }
 
-    protected void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
+    public void SetEnabled(EntityUid uid, JetpackComponent component, bool enabled, EntityUid? user = null)
     {
         if (IsEnabled(uid) == enabled ||
             enabled && !CanEnable(uid, component))
