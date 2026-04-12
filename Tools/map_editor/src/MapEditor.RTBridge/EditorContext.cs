@@ -419,11 +419,28 @@ public sealed class EditorContext
         });
         phases.Add(await SamplePhaseAsync("wide (fast path OFF)", PhaseSettleMs, PhaseSampleMs));
 
-        // Re-enable and restore.
+        // Re-enable sprite fast path.
         await RunOnGameThread(() =>
         {
             var cfg = IoCManager.Resolve<IConfigurationManager>();
             cfg.SetCVar(CVars.RenderSpriteSimpleFastPath, true);
+        });
+
+        // A/B comparison: disable GPU vertex transforms and re-run wide shot.
+        await RunOnGameThread(() =>
+        {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.RenderGpuVertexTransform, false);
+            Camera.Position = wideCenter;
+            Camera.Zoom = wideZoom;
+        });
+        phases.Add(await SamplePhaseAsync("wide (GPU xform OFF)", PhaseSettleMs, PhaseSampleMs));
+
+        // Re-enable and restore.
+        await RunOnGameThread(() =>
+        {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.RenderGpuVertexTransform, true);
             Camera.Position = baselinePos;
             Camera.Zoom = baselineZoom;
         });
