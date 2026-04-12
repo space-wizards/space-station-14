@@ -25,12 +25,12 @@ public sealed partial class JetpackComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
     public float WeightlessModifier = 1.2f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("effectCooldown")]
+    [DataField]
     public float EffectCooldown = 0.3f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("effectMaxDistance")]
+    [DataField]
     public float EffectMaxDistance = 0.7f;
 
-    [DataField("effectPrototype")]
+    [DataField]
     public EntProtoId EffectPrototype = "JetpackEffect";
 }
