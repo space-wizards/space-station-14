@@ -61,10 +61,6 @@ public sealed class PreviewSpeechBubble : Control
 
         AddChild(_panel);
         ForceRunStyleUpdate();
-
-        _panel.Measure(Vector2Helpers.Infinity);
-        ContentSize = _panel.DesiredSize;
-        _verticalOffsetAchieved = -ContentSize.Y;
     }
 
     public float UpdateText(string text)
@@ -76,6 +72,10 @@ public sealed class PreviewSpeechBubble : Control
         _label.SetMessage(msg);
         _panel.Measure(Vector2Helpers.Infinity);
         ContentSize = _panel.DesiredSize;
+
+        // If initialized for the first time, make slide-in start position be below the bubble.
+        if (oldHeight == 0f)
+            _verticalOffsetAchieved = -ContentSize.Y;
 
         return ContentSize.Y - oldHeight;
     }
