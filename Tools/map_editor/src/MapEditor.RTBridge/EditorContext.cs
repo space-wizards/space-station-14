@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Threading.Tasks;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.EntitySerialization.Systems;
@@ -12,7 +13,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace MapEditor.RTBridge;
 
@@ -239,6 +242,285 @@ public sealed class EditorContext
         if (!hasSprite)
             return false;
         return true;
+    }
+
+    // ---- Benchmark ----
+
+    /// <summary>
+    ///     How long each phase of the benchmark samples for, in
+    ///     milliseconds. Long enough to capture a stable rolling average,
+    ///     short enough that the whole run finishes in a few seconds.
+    /// </summary>
+    private const int PhaseSampleMs = 600;
+
+    /// <summary>
+    ///     How long to wait after applying a camera change before sampling
+    ///     starts, so transient state (frame allocations, dirty lookups,
+    ///     etc.) does not pollute the average.
+    /// </summary>
+    private const int PhaseSettleMs = 250;
+
+    /// <summary>
+    ///     Sampling interval inside a phase. About one wpf timer tick.
+    /// </summary>
+    private const int SampleIntervalMs = 16;
+
+    /// <summary>
+    ///     Run a fixed sequence of camera mutations and sample render
+    ///     metrics during each. Phases:
+    ///
+    ///     <list type="number">
+    ///     <item>baseline: whatever the user had set up before clicking</item>
+    ///     <item>fit-to-map: zoom out to encompass every grid on the active map</item>
+    ///     <item>wide stable: hold the wide shot for the sample window</item>
+    ///     <item>pan: walk through 4 waypoints around the map bounds</item>
+    ///     <item>zoom in 2x: half the wide-shot zoom factor</item>
+    ///     <item>zoom out 2x: double the wide-shot zoom factor</item>
+    ///     <item>restore: back to the baseline view</item>
+    ///     </list>
+    ///
+    ///     The mutations run on the game thread, but sampling happens in
+    ///     a wall clock loop that posts <see cref="RunOnGameThread"/>
+    ///     calls between Task.Delay yields. That way each sample is taken
+    ///     during a real RT frame and the host thread does not block.
+    /// </summary>
+    public async Task<BenchmarkResult> RunBenchmarkAsync()
+    {
+        _sawmill.Info("Benchmark: starting");
+
+        // Snapshot the baseline view so we can restore at the end and so
+        // every phase has a known reference. Read on the game thread to
+        // avoid racing the renderer.
+        Vector2 baselinePos = default;
+        Vector2 baselineZoom = default;
+        MapId baselineMap = default;
+        await RunOnGameThread(() =>
+        {
+            baselinePos = EditorEye.Position.Position;
+            baselineZoom = EditorEye.Zoom;
+            baselineMap = EditorEye.Position.MapId;
+        });
+
+        // Compute the union AABB of all grids on the active map. This
+        // becomes the wide shot framing.
+        Box2 mapBounds = default;
+        var hasBounds = false;
+        await RunOnGameThread(() =>
+        {
+            (mapBounds, hasBounds) = ComputeMapBounds(baselineMap);
+        });
+
+        if (!hasBounds)
+        {
+            _sawmill.Warning("Benchmark: no grids on active map, cannot compute fit to map");
+            // Fall back: still run the benchmark but use a fixed wide shot.
+            mapBounds = Box2.UnitCentered.Scale(40f); // 40x40 tile box centered on origin
+        }
+
+        // Translate the map AABB into a camera position + zoom that fits.
+        var (wideCenter, wideZoom) = ComputeFitCameraForBounds(mapBounds);
+
+        var phases = new List<BenchmarkPhase>();
+
+        // Phase 1: baseline.
+        phases.Add(await SamplePhaseAsync("baseline", PhaseSettleMs, PhaseSampleMs));
+
+        // Phase 2: fit to map (the wide shot is what we actually care
+        // about benchmarking).
+        await RunOnGameThread(() =>
+        {
+            EditorEye.Position = new MapCoordinates(wideCenter, baselineMap);
+            EditorEye.Zoom = wideZoom;
+        });
+        phases.Add(await SamplePhaseAsync("wide (fit-to-map)", PhaseSettleMs, PhaseSampleMs));
+
+        // Capture the visible entity count at the wide shot. This is the
+        // most useful single number for understanding what the renderer
+        // is up against.
+        var visibleAtWide = 0;
+        await RunOnGameThread(() =>
+        {
+            visibleAtWide = CountVisibleEntities(baselineMap, wideCenter, wideZoom);
+        });
+
+        // Phase 3-6: pan through 4 waypoints around the bounds, sampling
+        // at each.
+        var panRadius = MathF.Max(mapBounds.Width, mapBounds.Height) * 0.15f;
+        var waypoints = new[]
+        {
+            wideCenter + new Vector2(panRadius, 0),
+            wideCenter + new Vector2(0, panRadius),
+            wideCenter + new Vector2(-panRadius, 0),
+            wideCenter + new Vector2(0, -panRadius),
+        };
+        for (var i = 0; i < waypoints.Length; i++)
+        {
+            var wp = waypoints[i];
+            await RunOnGameThread(() =>
+            {
+                EditorEye.Position = new MapCoordinates(wp, baselineMap);
+            });
+            phases.Add(await SamplePhaseAsync($"pan {i + 1}/{waypoints.Length}", PhaseSettleMs, PhaseSampleMs));
+        }
+
+        // Phase 7: zoom in 2x from the wide shot.
+        await RunOnGameThread(() =>
+        {
+            EditorEye.Position = new MapCoordinates(wideCenter, baselineMap);
+            EditorEye.Zoom = wideZoom * 0.5f;
+        });
+        phases.Add(await SamplePhaseAsync("zoom in 2x", PhaseSettleMs, PhaseSampleMs));
+
+        // Phase 8: zoom out 2x from the wide shot.
+        await RunOnGameThread(() =>
+        {
+            EditorEye.Zoom = wideZoom * 2f;
+        });
+        phases.Add(await SamplePhaseAsync("zoom out 2x", PhaseSettleMs, PhaseSampleMs));
+
+        // Phase 9: restore baseline.
+        await RunOnGameThread(() =>
+        {
+            EditorEye.Position = new MapCoordinates(baselinePos, baselineMap);
+            EditorEye.Zoom = baselineZoom;
+        });
+
+        var result = new BenchmarkResult(
+            MapLabel: $"map {baselineMap}, bounds {mapBounds.Size}",
+            VisibleEntityCountAtWideShot: visibleAtWide,
+            Phases: phases);
+
+        _sawmill.Info("Benchmark: done\n" + result.FormatReport());
+        return result;
+    }
+
+    /// <summary>
+    ///     Compute the union AABB of every grid on the given map. Returns
+    ///     (default, false) when there are no grids.
+    /// </summary>
+    private (Box2 bounds, bool hasAny) ComputeMapBounds(MapId mapId)
+    {
+        Box2? union = null;
+        var query = _entityManager.EntityQueryEnumerator<MapGridComponent, TransformComponent>();
+        var transformSys = _entityManager.System<SharedTransformSystem>();
+        while (query.MoveNext(out var uid, out var grid, out var xform))
+        {
+            if (xform.MapID != mapId)
+                continue;
+
+            var worldMatrix = transformSys.GetWorldMatrix(uid);
+            var worldAabb = worldMatrix.TransformBox(grid.LocalAABB);
+            union = union == null ? worldAabb : union.Value.Union(worldAabb);
+        }
+        return union.HasValue ? (union.Value, true) : (default, false);
+    }
+
+    /// <summary>
+    ///     Given a world space AABB, compute a camera (Position, Zoom)
+    ///     that frames the box centered in the viewport with a small
+    ///     margin. Assumes the editor's viewport is roughly 980x720
+    ///     virtual pixels (matches the WPF window setup).
+    /// </summary>
+    private static (Vector2 center, Vector2 zoom) ComputeFitCameraForBounds(Box2 bounds)
+    {
+        const float pixelsPerTile = 32f;
+        const float marginFactor = 1.1f;
+        const float viewportW = 980f;
+        const float viewportH = 720f;
+
+        var center = bounds.Center;
+        var halfW = bounds.Width / 2f * marginFactor;
+        var halfH = bounds.Height / 2f * marginFactor;
+
+        // ScreenToWorld in EditorCamera is: world = position + (centeredPx * zoom / pixelsPerTile)
+        // Solving for zoom such that the viewport edge maps to the AABB
+        // edge: zoom = halfBounds * pixelsPerTile / halfViewport.
+        var zoomX = halfW * pixelsPerTile / (viewportW / 2f);
+        var zoomY = halfH * pixelsPerTile / (viewportH / 2f);
+        var zoom = MathF.Max(zoomX, zoomY);
+        return (center, new Vector2(zoom));
+    }
+
+    /// <summary>
+    ///     Approximate count of how many sprite component entities are
+    ///     visible from a given camera. Uses the same sprite tree query
+    ///     RT's renderer uses, so the number matches what would actually
+    ///     end up in <c>_drawingSpriteList</c>.
+    /// </summary>
+    private int CountVisibleEntities(MapId mapId, Vector2 center, Vector2 zoom)
+    {
+        const float pixelsPerTile = 32f;
+        const float viewportW = 980f;
+        const float viewportH = 720f;
+        var halfW = viewportW / 2f * zoom.X / pixelsPerTile;
+        var halfH = viewportH / 2f * zoom.Y / pixelsPerTile;
+        var aabb = Box2.CenteredAround(center, new Vector2(halfW * 2f, halfH * 2f));
+
+        var count = 0;
+        var query = _entityManager.EntityQueryEnumerator<SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out var _, out var sprite, out var xform))
+        {
+            if (xform.MapID != mapId || !sprite.Visible)
+                continue;
+            if (aabb.Contains(xform.WorldPosition))
+                count++;
+        }
+        return count;
+    }
+
+    /// <summary>
+    ///     Sample render metrics for the configured window. Sleeps a
+    ///     settle period first, then samples once per <see cref="SampleIntervalMs"/>
+    ///     until the window expires, returning the averages.
+    /// </summary>
+    private async Task<BenchmarkPhase> SamplePhaseAsync(string name, int settleMs, int sampleMs)
+    {
+        await Task.Delay(settleMs);
+
+        var fpsTotal = 0d;
+        var ftTotal = 0d;
+        var ftMax = 0d;
+        var clyTotal = 0d;
+        var glTotal = 0d;
+        var batchTotal = 0d;
+        var largestVTotal = 0d;
+        var samples = 0;
+
+        var deadline = DateTime.UtcNow.AddMilliseconds(sampleMs);
+        while (DateTime.UtcNow < deadline)
+        {
+            await Task.Delay(SampleIntervalMs);
+            await RunOnGameThread(() =>
+            {
+                var clyde = IoCManager.Resolve<IClyde>();
+                var timing = IoCManager.Resolve<IGameTiming>();
+                var stats = clyde.DebugStats;
+
+                fpsTotal += timing.FramesPerSecondAvg;
+                var ft = timing.RealFrameTime.TotalMilliseconds;
+                ftTotal += ft;
+                if (ft > ftMax) ftMax = ft;
+                clyTotal += stats.LastClydeDrawCalls;
+                glTotal += stats.LastGLDrawCalls;
+                batchTotal += stats.LastBatches;
+                largestVTotal += stats.LargestBatchSize.vertices;
+                samples++;
+            });
+        }
+
+        if (samples == 0)
+            return new BenchmarkPhase(name, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        return new BenchmarkPhase(
+            Name: name,
+            SampleCount: samples,
+            FpsAvg: fpsTotal / samples,
+            FrameTimeMsAvg: ftTotal / samples,
+            FrameTimeMsMax: ftMax,
+            SpriteDrawCallsAvg: clyTotal / samples,
+            GlDrawCallsAvg: glTotal / samples,
+            BatchCountAvg: batchTotal / samples,
+            LargestBatchVerticesAvg: largestVTotal / samples);
     }
 }
 

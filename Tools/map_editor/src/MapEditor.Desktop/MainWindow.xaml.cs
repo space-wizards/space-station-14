@@ -104,6 +104,54 @@ public partial class MainWindow : Window
 
     private void OnExitClick(object sender, RoutedEventArgs e) => Close();
 
+    // ---- Benchmark ----
+
+    private async void OnRunBenchmarkClick(object sender, RoutedEventArgs e)
+    {
+        var context = EditorContext.Current;
+        if (context == null)
+        {
+            StatusText.Text = "RT not ready.";
+            return;
+        }
+
+        // Disable the button so we cannot stack runs on top of each other.
+        RunBenchmarkButton.IsEnabled = false;
+        BenchmarkResultText.Text = "Running...";
+        StatusText.Text = "Benchmark: running...";
+        try
+        {
+            var result = await context.RunBenchmarkAsync();
+            BenchmarkResultText.Text = result.FormatReport();
+
+            // Also write to a timestamped file in the user data folder so
+            // multiple runs can be diffed.
+            try
+            {
+                var dir = System.IO.Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "MapEditor", "Benchmarks");
+                System.IO.Directory.CreateDirectory(dir);
+                var file = System.IO.Path.Combine(dir, $"bench-{DateTime.Now:yyyyMMdd-HHmmss}.txt");
+                System.IO.File.WriteAllText(file, result.FormatReport());
+                StatusText.Text = $"Benchmark: done. {file}";
+            }
+            catch (Exception writeEx)
+            {
+                StatusText.Text = $"Benchmark: done (file write failed: {writeEx.Message})";
+            }
+        }
+        catch (Exception ex)
+        {
+            BenchmarkResultText.Text = "";
+            StatusText.Text = $"Benchmark failed: {ex.Message}";
+        }
+        finally
+        {
+            RunBenchmarkButton.IsEnabled = true;
+        }
+    }
+
     // ---- Entity palette ----
 
     private void OnEntitySearchChanged(object sender, TextChangedEventArgs e)
