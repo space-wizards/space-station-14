@@ -318,17 +318,22 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     /// List of valid nodes in this coloration.
     /// </summary>
     [DataField]
-    public List<HueNodeClampedHsvColorationNode>? Nodes;
+    public List<HueNodeClampedHsvColorationNode> Nodes;
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
     public bool VerifySkinColor(Color color)
     {
         var hsv = Color.ToHsv(color);
-        var range = GetNodeValuesForHue(hsv.X);
+
+        // Clamp the hue between the first and last node.
+        // We don't want anything going outside of these values.
+        var hue = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+
+        var range = GetNodeValuesForHue(hue);
 
         // If no range was found, this color is invalid.
-        if (!VerifyNodeOrder() || range is null)
+        if (range is null)
             return false;
 
         // If a range is found, check if the saturation is within the provided ranges.
@@ -344,10 +349,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
     public Color ClosestSkinColor(Color color)
     {
-        if (Nodes is null)
-            return color;
-
         var hsv = Color.ToHsv(color);
+
+        // Clamp within specified nodes.
+        hsv.X = SkinColorationUtils.ClampHue(hsv.X, Nodes.First().Hue,  Nodes.Last().Hue);
+
         var range = GetNodeValuesForHue(hsv.X);
         if (range == null)
             return color;
@@ -365,7 +371,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     /// <returns>The nodes taking effect at the specified hue.</returns>
     private (HueNodeClampedHsvColorationNode, HueNodeClampedHsvColorationNode)? GetAffectingNodes(float hue)
     {
-        if (Nodes is null || Nodes.Count == 0)
+        if (Nodes.Count == 0)
             return null;
 
         // If only one node is provided we just consider it to control all values.
@@ -378,13 +384,12 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
             // There has to be at least one element here because we check the count above.
             var current = Nodes[i];
 
-            // If there is no element after this one, we just get the last element and give it full control of the color.
-            // Basically a node list of [0, 0.5] will fall back to node at 0.5 if the hue is ever higher.
-            // This could just set the next to current as well, but I don't think there is any difference.
-            var next = Nodes.ElementAtOrDefault(i + 1) ?? Nodes.Last();
+            // If there is no element after this one, we just loop back to the first element.
+            // Basically a node list of [0, 0.5] will fall back to node at 0 if the hue is ever higher.
+            var next = Nodes.ElementAtOrDefault(i + 1) ?? Nodes.First();
 
             // Is the hue within the range of the nodes we're considering?
-            if (current.Hue > hue || next.Hue < hue)
+            if (!SkinColorationUtils.IsHueInRange(hue, current.Hue, next.Hue))
                 continue;
 
             return (current, next);
@@ -400,7 +405,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     /// <returns>Node containing the value and saturation clamping.</returns>
     private HueNodeClampedHsvColorationNode? GetNodeValuesForHue(float hue)
     {
-        if (Nodes is null || Nodes.Count == 0)
+        if (Nodes.Count == 0)
             return null;
 
         // No node is actually affecting this coloring, so it's invalid.
@@ -426,27 +431,6 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         finalNode.Value.Item2 = MathHelper.Lerp(firstNode.Value.Item2, secondNode.Value.Item2, weight);
 
         return finalNode;
-    }
-
-    /// <summary>
-    /// Verifies whether the nodes are ordered correctly with ascending hue.
-    /// </summary>
-    /// <returns>True if nodes have correct hue, otherwise False.</returns>
-    private bool VerifyNodeOrder()
-    {
-        if (Nodes is null || Nodes.Count == 0)
-            return false;
-
-        float hue = 0f;
-        for (int i = 0; i < Nodes.Count; i++)
-        {
-            if (Nodes[i].Hue < hue)
-                return false;
-
-            hue = Nodes[i].Hue;
-        }
-
-        return true;
     }
 }
 
