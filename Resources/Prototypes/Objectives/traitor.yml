@@ -417,7 +417,7 @@
 - type: entity
   parent: BaseTraitorObjective
   id: MailFraudObjective
-  description: We're interested in Nanotrasen's correspondence. Letter opener not included.
+  description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
   components:
   - type: Objective
     difficulty: 0.5
