@@ -1299,11 +1299,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
                 if (filter.EntityRoles != null)
                 {
+                    var previousEntityEventIds = matchedEntityEventIds;
                     matchedEntityEventIds = entityParticipants
                         .Where(p => filter.EntityRoles.Contains(p.Role))
                         .Select(p => p.EventId)
                         .Distinct()
-                        .Where(eventId => matchedEntityEventIds.Contains(eventId));
+                        .Where(eventId => previousEntityEventIds.Contains(eventId));
                 }
 
                 query = query.Where(log => matchedEntityEventIds.Contains(log.Id));
