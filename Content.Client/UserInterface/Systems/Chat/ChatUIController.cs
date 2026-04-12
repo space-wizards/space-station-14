@@ -138,7 +138,7 @@ public sealed partial class ChatUIController : UIController
     /// <summary>
     ///     The typing preview bubble currently displayed on screen, if any.
     /// </summary>
-    private PreviewSpeechBubble? _previewBubble;
+    private PreviewBubble? _previewBubble;
 
     private readonly HashSet<ChatBox> _chats = new();
     public IReadOnlySet<ChatBox> Chats => _chats;
@@ -970,7 +970,7 @@ public sealed partial class ChatUIController : UIController
         // If no preview bubble exists, create one.
         if (_previewBubble == null)
         {
-            _previewBubble = new PreviewSpeechBubble(player);
+            _previewBubble = new PreviewBubble(player);
             _speechBubbleRoot.AddChild(_previewBubble);
         }
 

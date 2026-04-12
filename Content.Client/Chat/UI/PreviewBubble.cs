@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.UI;
 
-public sealed class PreviewSpeechBubble : Control
+public sealed class PreviewBubble : Control
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -39,7 +39,7 @@ public sealed class PreviewSpeechBubble : Control
 
     // MIKEY TODO - missing full fancy text box creation. it sort of works though as it differentiates it now as a preview
     // or is that cope
-    public PreviewSpeechBubble(EntityUid senderEntity)
+    public PreviewBubble(EntityUid senderEntity)
     {
         IoCManager.InjectDependencies(this);
         _senderEntity = senderEntity;
