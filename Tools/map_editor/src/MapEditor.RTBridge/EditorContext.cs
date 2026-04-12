@@ -426,21 +426,29 @@ public sealed class EditorContext
             cfg.SetCVar(CVars.RenderSpriteSimpleFastPath, true);
         });
 
-        // A/B comparison: disable GPU vertex transforms and re-run wide shot.
+        // A/B comparison: enable LOD culling at 4px threshold.
         await RunOnGameThread(() =>
         {
             var cfg = IoCManager.Resolve<IConfigurationManager>();
-            cfg.SetCVar(CVars.RenderGpuVertexTransform, false);
+            cfg.SetCVar(CVars.RenderMinSpriteSize, 4f);
             Camera.Position = wideCenter;
             Camera.Zoom = wideZoom;
         });
-        phases.Add(await SamplePhaseAsync("wide (GPU xform OFF)", PhaseSettleMs, PhaseSampleMs));
+        phases.Add(await SamplePhaseAsync("wide (LOD 4px)", PhaseSettleMs, PhaseSampleMs));
 
-        // Re-enable and restore.
+        // LOD culling at 2px threshold.
         await RunOnGameThread(() =>
         {
             var cfg = IoCManager.Resolve<IConfigurationManager>();
-            cfg.SetCVar(CVars.RenderGpuVertexTransform, true);
+            cfg.SetCVar(CVars.RenderMinSpriteSize, 2f);
+        });
+        phases.Add(await SamplePhaseAsync("wide (LOD 2px)", PhaseSettleMs, PhaseSampleMs));
+
+        // Disable LOD and restore.
+        await RunOnGameThread(() =>
+        {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.RenderMinSpriteSize, 0f);
             Camera.Position = baselinePos;
             Camera.Zoom = baselineZoom;
         });
