@@ -36,8 +36,8 @@ public sealed partial class XenoborgSystem : EntitySystem
     private void OnXenoborgDestroyed(EntityUid uid, XenoborgComponent component, DestructionEventArgs args)
     {
         // if a xenoborg is destroyed, it will check to see if it was the last one
-        var xenoborgQuery = AllEntityQuery<XenoborgComponent>(); // paused xenoborgs still count
-        while (xenoborgQuery.MoveNext(out var xenoborg, out _))
+        var xenoborgQuery = AllEntityQuery<XenoborgComponent, ActorComponent>(); // paused xenoborgs still count
+        while (xenoborgQuery.MoveNext(out var xenoborg, out _, out _))
         {
             if (xenoborg != uid)
                 return;
