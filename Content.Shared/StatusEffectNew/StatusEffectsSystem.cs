@@ -20,8 +20,8 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
-    [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
+    [Dependency] private readonly EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
+    [Dependency] private readonly EntityQuery<StatusEffectComponent> _effectQuery = default!;
 
     public readonly HashSet<string> StatusEffectPrototypes = [];
 

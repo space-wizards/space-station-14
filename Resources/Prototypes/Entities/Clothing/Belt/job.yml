@@ -135,11 +135,11 @@
       - WetFloorSign
       - HolosignProjector
       - Plunger
+      - TrashBagBlue
       - GoldenPlunger
       - WireBrush
-      components:
       - LightReplacer
-      - SmokeOnTrigger
+      - CleanerGrenade
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:
@@ -151,10 +151,46 @@
         whitelist:
           tags:
           - Spray
-      wrench:
+      light_replacer:
         whitelist:
           tags:
-          - Wrench
+          - LightReplacer
+      trashbag:
+        whitelist:
+          tags:
+          - TrashBag
+      trashbag_blue:
+        whitelist:
+          tags:
+          - TrashBagBlue
+      wetfloorsign:
+        whitelist:
+          tags:
+          - WetFloorSign
+      soap:
+        whitelist:
+          tags:
+          - Soap
+      wire_brush:
+        whitelist:
+          tags:
+          - WireBrush
+      holosign:
+        whitelist:
+          tags:
+          - HolosignProjector
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+      golden_plunger:
+        whitelist:
+          tags:
+          - GoldenPlunger
+      cleaner_grenade:
+        whitelist:
+          tags:
+          - CleanerGrenade
   - type: Appearance
 
 - type: entity
