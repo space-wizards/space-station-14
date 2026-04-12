@@ -3,7 +3,7 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageModifierSystem : EntitySystem
+public sealed class DamageModifierStatusEffectSystem : EntitySystem
 {
     public override void Initialize()
     {

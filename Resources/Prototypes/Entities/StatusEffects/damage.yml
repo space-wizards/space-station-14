@@ -4,8 +4,7 @@
   abstract: true
   parent: StatusEffectBase
   id: StatusEffectDamageModifierBase
-  name: damage modifier status
-  description: This is a status effect that modifies external sources of damage to the entity it's attached to. You shouldn't be seeing this.
+  description: Status effect for modifying incoming sources of damage. You shouldn't be seeing this.
   components:
   - type: DamageModifierStatusEffect
   - type: StatusEffect
@@ -13,19 +12,12 @@
       components:
       - Damageable
 
-- type: entity
-  abstract: true
-  parent: StatusEffectDamageModifierBase
-  id: StatusEffectDamageModifierDebuffBase
-  description: This is a status effect that modifies external sources of damage to the entity it's attached to. It's considered a debuff and is removed by rejuvenation. You shouldn't be seeing this.
-  components:
-  - type: RejuvenateRemovedStatusEffect
-
 ## Buff
 
 - type: entity
   parent: StatusEffectDamageModifierBase
   id: StatusEffectRadiationProtection
+  name: radiation protection
   components:
   - type: DamageModifierStatusEffect
     modifiers:
