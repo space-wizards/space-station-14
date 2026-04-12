@@ -936,10 +936,7 @@ public sealed partial class ChatUIController : UIController
     public void NotifyChatFocus(bool isFocused)
     {
         _typingIndicator?.ClientChangedChatFocus(isFocused);
-        // MIKEY - experiment with preview with changing chat box focus
     }
-
-    // ---- Typing preview bubble management ----
 
     /// <summary>
     ///     Called by <see cref="ChatBox"/> every time the player's chat input text changes.

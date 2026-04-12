@@ -208,7 +208,6 @@ public partial class ChatBox : UIWidget
         _controller.NotifyChatFocus(false);
 
         // Remove the typing preview when the chat box loses focus
-        // MIKEY - what happens if text is still there and focus is lost? does text reappear in preview when typing resumes?
         _controller.ClearTypingPreview();
     }
 

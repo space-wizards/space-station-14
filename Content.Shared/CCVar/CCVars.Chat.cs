@@ -55,9 +55,8 @@ public sealed partial class CCVars
             "Toggles displaying a background under the speaking character's name.");
 
     /// <summary>
-    ///     When enabled, shows a speech bubble above your character's head previewing the text
-    ///     you are currently typing — before you actually send it.
-    ///     The preview shows the full raw text including any channel prefix characters.
+    ///     When enabled, shows a speech bubble above the character's head previewing the text
+    ///     they are currently typing.
     /// </summary>
     public static readonly CVarDef<bool> ChatTypingPreviewEnabled =
         CVarDef.Create("chat.typing_preview_enabled",

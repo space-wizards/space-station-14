@@ -10,6 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.UI;
 
+// MIKEY TODO - this is mostly copied of SpeechBubble with minor janky variance.
+// Look into breaking out common functionality into a BaseBubble class
+// this duplication is messy
 public sealed class PreviewBubble : Control
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -38,7 +41,7 @@ public sealed class PreviewBubble : Control
     public Vector2 ContentSize { get; private set; }
 
     // MIKEY TODO - missing full fancy text box creation. it sort of works though as it differentiates it now as a preview
-    // or is that cope
+    // ....or is that cope
     public PreviewBubble(EntityUid senderEntity)
     {
         IoCManager.InjectDependencies(this);
@@ -80,9 +83,8 @@ public sealed class PreviewBubble : Control
         return ContentSize.Y - oldHeight;
     }
 
-    // thanks ai
-    // can i just steal this from speechbubble? hm
-    // most of this seems duplicative
+    // mostly copied from FrameUpdate of SpeechBubble, but without the dying/fade stuff
+    // MIKEY TODO - look into moving this into a base class BaseBubble or smth
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
