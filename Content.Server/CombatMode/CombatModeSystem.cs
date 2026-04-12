@@ -18,7 +18,7 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
 
         base.SetInCombatMode(entity, value, component);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.CombatModeToggle,
             LogImpact.Low,
             $"{entity:actor} toggled combat mode {(value ? "on" : "off")}",

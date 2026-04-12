@@ -145,7 +145,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument) || !TryComp(uid, out ActiveInstrumentComponent? activeInstrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
+        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer || args.SenderSession.AttachedEntity is not { } actor)
             return;
 
         if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
@@ -168,10 +168,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             .Where(t => t != null)
             .Select(t => t!.ToString()));
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Instrument,
             LogImpact.Low,
-            $"{args.SenderSession.AttachedEntity} set the midi channels for {uid} to {tracksString}");
+            $"{actor:actor} set the midi channels for {uid:subject} to {tracksString}");
 
         activeInstrument.Tracks = msg.Tracks;
 

@@ -29,7 +29,7 @@ public sealed partial class RehydratableSystem : EntitySystem
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionChangedEvent args)
     {
         var quantity = _solutions.GetTotalPrototypeQuantity(ent, ent.Comp.CatalystPrototype);
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner} was hydrated, now contains a solution of: {args.Solution}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner} was hydrated, now contains a solution of: {args.Solution}.");
         if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
         {
             Expand(ent);
@@ -47,7 +47,7 @@ public sealed partial class RehydratableSystem : EntitySystem
         var randomMob = _random.Pick(comp.PossibleSpawns);
 
         var target = Spawn(randomMob, Transform(uid).Coordinates);
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner} has been hydrated correctly and spawned: {target}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner} has been hydrated correctly and spawned: {target}.");
 
         _popup.PopupEntity(Loc.GetString("rehydratable-component-expands-message", ("owner", uid)), target);
 

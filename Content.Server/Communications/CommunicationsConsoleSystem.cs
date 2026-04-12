@@ -265,13 +265,13 @@ namespace Content.Server.Communications
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
 
-                _adminLogger.AddStructured(LogType.Chat, LogImpact.Low, $"{message.Actor:player} has sent the following global announcement: {msg}");
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{message.Actor:player} has sent the following global announcement: {msg}");
                 return;
             }
 
             _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.Color);
 
-            _adminLogger.AddStructured(LogType.Chat, LogImpact.Low, $"{message.Actor:player} has sent the following station announcement: {msg}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{message.Actor:player} has sent the following station announcement: {msg}");
 
         }
 
@@ -287,7 +287,7 @@ namespace Content.Server.Communications
 
             _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);
 
-            _adminLogger.AddStructured(LogType.DeviceNetwork, LogImpact.Low, $"{message.Actor:player} has sent the following broadcast: {message.Message:msg}");
+            _adminLogger.Add(LogType.DeviceNetwork, LogImpact.Low, $"{message.Actor:player} has sent the following broadcast: {message.Message:msg}");
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
@@ -312,7 +312,7 @@ namespace Content.Server.Communications
             }
 
             _roundEndSystem.RequestRoundEnd(mob, uid);
-            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{mob:player} has called the shuttle.");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{mob:player} has called the shuttle.");
         }
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
@@ -329,7 +329,7 @@ namespace Content.Server.Communications
             }
 
             _roundEndSystem.CancelRoundEndCountdown(mob, uid);
-            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{message.Actor:player} has recalled the shuttle.");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{message.Actor:player} has recalled the shuttle.");
         }
     }
 

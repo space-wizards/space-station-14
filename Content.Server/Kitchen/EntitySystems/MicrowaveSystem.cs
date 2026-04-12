@@ -475,8 +475,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 _container.EmptyContainer(machine.PartContainer);
             }
 
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
-                $"{ent} exploded from unsafe cooking!");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ent.Owner:subject} exploded from unsafe cooking!");
         }
         /// <summary>
         /// Handles the attempted cooking of unsafe objects

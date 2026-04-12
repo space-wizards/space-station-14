@@ -286,7 +286,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         // Does the user actually have the requested action?
         if (!component.Actions.Contains(actionEnt))
         {
-            _adminLogger.AddStructured(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 $"{user:user} attempted to perform an action that they do not have: {name}.");
             return false;
         }
@@ -339,7 +339,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
     private void OnInstantValidate(Entity<InstantActionComponent> ent, ref ActionValidateEvent args)
     {
-        _adminLogger.AddStructured(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             $"{args.User:user} is performing the {Name(ent):action} action provided by {args.Provider:provider}.");
     }
 
@@ -370,7 +370,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (!ValidateEntityTarget(user, target, ent))
             return;
 
-        _adminLogger.AddStructured(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             $"{user:user} is performing the {Name(ent):action} action (provided by {args.Provider:provider}) targeted at {target:target}.");
 
         ev.Target = target;
@@ -403,7 +403,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return;
         }
 
-        _adminLogger.AddStructured(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             $"{user:user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeting {targetEntity} at {target:target}.");
 
         if (ent.Comp.Event is {} ev)

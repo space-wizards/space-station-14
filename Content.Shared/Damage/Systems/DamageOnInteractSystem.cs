@@ -84,7 +84,7 @@ public sealed partial class DamageOnInteractSystem : EntitySystem
             entity.Comp.NextInteraction = _gameTiming.CurTime + TimeSpan.FromSeconds(entity.Comp.InteractTimer);
 
             args.Handled = true;
-            _adminLogger.AddStructured(LogType.Damaged, $"{args.User:user} injured their hand by interacting with {args.Target:target} and received {totalDamage.GetTotal():damage} damage");
+            _adminLogger.Add(LogType.Damaged, $"{args.User:user} injured their hand by interacting with {args.Target:target} and received {totalDamage.GetTotal():damage} damage");
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
 
             if (entity.Comp.PopupText != null)

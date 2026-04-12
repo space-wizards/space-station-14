@@ -21,7 +21,7 @@ public sealed class LogWindowTest : InteractionTest
         // First, generate a new log and let the server flush it to DB
         var log = Server.Resolve<IAdminLogManager>();
         var guid = Guid.NewGuid();
-        await Server.WaitPost(() => log.AddStructured(LogType.Unknown, $"{SPlayer} test log 1: {guid}"));
+        await Server.WaitPost(() => log.Add(LogType.Unknown, $"{SPlayer} test log 1: {guid}"));
         // Flush delay is 0 in tests — a few server ticks guarantees the DB write
         await RunTicks(10);
 
@@ -72,7 +72,7 @@ public sealed class LogWindowTest : InteractionTest
 
         // Add a new log and let the server flush it
         guid = Guid.NewGuid();
-        await Server.WaitPost(() => log.AddStructured(LogType.Unknown, $"{SPlayer} test log 2: {guid}"));
+        await Server.WaitPost(() => log.Add(LogType.Unknown, $"{SPlayer} test log 2: {guid}"));
         await RunTicks(10);
 
         // Update the search and refresh

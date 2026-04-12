@@ -45,7 +45,7 @@ public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
             ent.Comp.StolenMind = mind;
 
             _popup.PopupEntity(Loc.GetString("cursed-mask-takeover-popup"), wearer, session, PopupType.LargeCaution);
-            _adminLogger.AddStructured(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Extreme,
                 $"{wearer:player} had their body taken over and turned into an enemy through the cursed mask {ent:entity}");
         }
@@ -81,7 +81,7 @@ public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
             if (Exists(ent.Comp.StolenMind))
             {
                 _mind.TransferTo(ent.Comp.StolenMind.Value, args.Wearer);
-                _adminLogger.AddStructured(LogType.Action,
+                _adminLogger.Add(LogType.Action,
                     LogImpact.Medium,
                     $"{args.Wearer:player} was restored to their body after the removal of {ent:entity}.");
                 ent.Comp.StolenMind = null;

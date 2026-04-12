@@ -57,7 +57,6 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ISharedPlayerManager _player = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -509,35 +508,17 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(user, ev);
             if (ev.Handled)
             {
-                Guid[]? players = null;
-                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-                if (_player.TryGetSessionByEntity(user, out var userSession))
-                {
-                    players = [userSession.UserId.UserId];
-                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                    {
-                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-                    };
-                }
-
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.InteractHand,
                     LogImpact.Low,
-                    $"{user:user} interacted with {target:target}, but it was handled by another system",
+                    $"{user:actor} interacted with {target:target}, but it was handled by another system",
                     new
                     {
                         user = (int) user,
                         target = (int) target,
                         interactionType = LogType.InteractHand.ToString(),
                         handled = true
-                    },
-                    players: players,
-                    entities:
-                    [
-                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(target, AdminLogEntityRole.Target),
-                    ],
-                    playerRoles: playerRoles);
+                    });
                 return;
             }
 
@@ -549,35 +530,17 @@ namespace Content.Shared.Interaction
             var userMessage = new UserInteractHandEvent(user, target);
             RaiseLocalEvent(user, userMessage, true);
 
-            Guid[]? postInteractPlayers = null;
-            Dictionary<Guid, AdminLogEntityRole>? postInteractPlayerRoles = null;
-            if (_player.TryGetSessionByEntity(user, out var postInteractUserSession))
-            {
-                postInteractPlayers = [postInteractUserSession.UserId.UserId];
-                postInteractPlayerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                {
-                    [postInteractUserSession.UserId.UserId] = AdminLogEntityRole.Actor
-                };
-            }
-
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.InteractHand,
                 LogImpact.Low,
-                $"{user} interacted with {target}",
+                $"{user:actor} interacted with {target:target}",
                 new
                 {
                     user = (int) user,
                     target = (int) target,
                     interactionType = LogType.InteractHand.ToString(),
                     handled = false
-                },
-                players: postInteractPlayers,
-                entities:
-                [
-                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(target, AdminLogEntityRole.Target),
-                ],
-                playerRoles: postInteractPlayerRoles);
+                });
             DoContactInteraction(user, target, message);
             if (message.Handled || userMessage.Handled)
                 return;
@@ -601,67 +564,30 @@ namespace Content.Shared.Interaction
 
             if (target != null)
             {
-                Guid[]? players = null;
-                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-                if (_player.TryGetSessionByEntity(user, out var userSession))
-                {
-                    players = [userSession.UserId.UserId];
-                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                    {
-                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-                    };
-                }
-
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{user:user} interacted with {target:target} using {used:used}",
+                    $"{user:actor} interacted with {target:target} using {used:tool}",
                     new
                     {
                         user = (int) user,
                         target = (int) target,
                         used = (int) used,
                         interactionType = LogType.InteractUsing.ToString()
-                    },
-                    players: players,
-                    entities:
-                    [
-                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(target.Value, AdminLogEntityRole.Target),
-                        new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
-                    ],
-                    playerRoles: playerRoles);
+                    });
             }
             else
             {
-                Guid[]? players = null;
-                Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-                if (_player.TryGetSessionByEntity(user, out var userSession))
-                {
-                    players = [userSession.UserId.UserId];
-                    playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                    {
-                        [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-                    };
-                }
-
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{user:user} interacted with *nothing* using {used:used}",
+                    $"{user:actor} interacted with *nothing* using {used:tool}",
                     new
                     {
                         user = (int) user,
                         used = (int) used,
                         interactionType = LogType.InteractUsing.ToString()
-                    },
-                    players: players,
-                    entities:
-                    [
-                        new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
-                    ],
-                    playerRoles: playerRoles);
+                    });
             }
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed, checkDeletion: false))
@@ -1150,36 +1076,17 @@ namespace Content.Shared.Interaction
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
                 return false;
 
-            Guid[]? players = null;
-            Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-            if (_player.TryGetSessionByEntity(user, out var userSession))
-            {
-                players = [userSession.UserId.UserId];
-                playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                {
-                    [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-                };
-            }
-
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.InteractUsing,
                 LogImpact.Low,
-                $"{user:user} interacted with {target:target} using {used:used}",
+                $"{user:actor} interacted with {target:target} using {used:tool}",
                 new
                 {
                     user = (int) user,
                     target = (int) target,
                     used = (int) used,
                     interactionType = LogType.InteractUsing.ToString()
-                },
-                players: players,
-                entities:
-                [
-                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(target, AdminLogEntityRole.Target),
-                    new AdminLogEntityRef(used, AdminLogEntityRole.Tool),
-                ],
-                playerRoles: playerRoles);
+                });
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, canReach: true, checkDeletion: false))
                 return true;
@@ -1311,34 +1218,16 @@ namespace Content.Shared.Interaction
                 DoContactInteraction(user, used);
                 if (!activateMsg.WasLogged)
                 {
-                    Guid[]? players = null;
-                    Dictionary<Guid, AdminLogEntityRole>? playerRoles = null;
-                    if (_player.TryGetSessionByEntity(user, out var userSession))
-                    {
-                        players = [userSession.UserId.UserId];
-                        playerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                        {
-                            [userSession.UserId.UserId] = AdminLogEntityRole.Actor
-                        };
-                    }
-
-                    _adminLogger.AddStructured(
+                    _adminLogger.Add(
                         LogType.InteractActivate,
                         LogImpact.Low,
-                        $"{user:user} activated {used:used}",
+                        $"{user:actor} activated {used:subject}",
                         new
                         {
                             user = (int) user,
                             used = (int) used,
                             interactionType = LogType.InteractActivate.ToString()
-                        },
-                        players: players,
-                        entities:
-                        [
-                            new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                            new AdminLogEntityRef(used, AdminLogEntityRole.Subject),
-                        ],
-                        playerRoles: playerRoles);
+                        });
                 }
 
                 if (delayComponent != null)
@@ -1357,34 +1246,16 @@ namespace Content.Shared.Interaction
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
 
-            Guid[]? postActivatePlayers = null;
-            Dictionary<Guid, AdminLogEntityRole>? postActivatePlayerRoles = null;
-            if (_player.TryGetSessionByEntity(user, out var postActivateUserSession))
-            {
-                postActivatePlayers = [postActivateUserSession.UserId.UserId];
-                postActivatePlayerRoles = new Dictionary<Guid, AdminLogEntityRole>
-                {
-                    [postActivateUserSession.UserId.UserId] = AdminLogEntityRole.Actor
-                };
-            }
-
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.InteractActivate,
                 LogImpact.Low,
-                $"{user:user} activated {used:used}",
+                $"{user:actor} activated {used:subject}",
                 new
                 {
                     user = (int) user,
                     used = (int) used,
                     interactionType = LogType.InteractActivate.ToString()
-                },
-                players: postActivatePlayers,
-                entities:
-                [
-                    new AdminLogEntityRef(user, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(used, AdminLogEntityRole.Subject),
-                ],
-                playerRoles: postActivatePlayerRoles);
+                });
             return true;
         }
         #endregion

@@ -242,7 +242,7 @@ public abstract partial class SharedDefibrillatorSystem : EntitySystem
         if (!_powerCell.HasActivatableCharge(ent.Owner))
             _toggle.TryDeactivate(ent.Owner);
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{user:player} used defibrillator {ent.Owner:tool} on {target:target}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} used defibrillator {ent.Owner:tool} on {target:target}");
 
         var ev = new TargetDefibrillatedEvent(user, (ent.Owner, ent.Comp));
         RaiseLocalEvent(target, ref ev);

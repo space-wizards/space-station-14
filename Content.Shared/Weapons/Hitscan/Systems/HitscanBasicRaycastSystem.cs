@@ -56,7 +56,7 @@ public sealed partial class HitscanBasicRaycastSystem : EntitySystem
         // Admin logging
         if (result?.HitEntity != null)
         {
-            _adminLogger.AddStructured(LogType.HitScanHit,
+            _adminLogger.Add(LogType.HitScanHit,
                 $"{shooter:user} hit {result.Value.HitEntity:target}"
                 + $" using {args.Gun:entity}.");
         }

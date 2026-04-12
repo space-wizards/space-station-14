@@ -72,7 +72,7 @@ public sealed partial class WeldableSystem : EntitySystem
             return false;
 
         // Log attempt
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:user} is {(component.IsWelded ? "un" : "")}welding {uid:target} at {Transform(uid).Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:user} is {(component.IsWelded ? "un" : "")}welding {uid:target} at {Transform(uid).Coordinates:targetlocation}");
 
         return true;
     }
@@ -89,7 +89,7 @@ public sealed partial class WeldableSystem : EntitySystem
         SetWeldedState(uid, !component.IsWelded, component);
 
         // Log success
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.User:user} {(!component.IsWelded ? "un" : "")}welded {uid:target}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:user} {(!component.IsWelded ? "un" : "")}welded {uid:target}");
     }
 
     private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, ref WeldableChangedEvent args)

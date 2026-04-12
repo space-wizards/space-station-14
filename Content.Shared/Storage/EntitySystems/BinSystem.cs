@@ -91,7 +91,7 @@ public sealed partial class BinSystem : EntitySystem
             return;
 
         _hands.TryPickupAnyHand(args.User, toGrab.Value);
-        _adminLogger.AddStructured(LogType.Pickup, LogImpact.Low,
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low,
             $"{uid:player} removed {toGrab.Value} from bin {uid}.");
         args.Handled = true;
     }
@@ -124,7 +124,7 @@ public sealed partial class BinSystem : EntitySystem
         if (!TryInsertIntoBin(target, itemInHand, component))
             return;
 
-        _adminLogger.AddStructured(LogType.Pickup, LogImpact.Low, $"{target:player} inserted {user} into bin {target}.");
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{target:player} inserted {user} into bin {target}.");
     }
 
     /// <summary>

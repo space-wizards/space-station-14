@@ -184,7 +184,7 @@ public sealed partial class ChangeCvarCommand : IConsoleCommand
                 _configurationManager.SetCVar(cvar, parsed);
                 var oldValueText = oldValue.ToString() ?? "<null>";
                 var newValueText = parsed.ToString() ?? "<null>";
-                _adminLogger.AddStructured(LogType.AdminCommands,
+                _adminLogger.Add(LogType.AdminCommands,
                     LogImpact.Extreme,
                     $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValueText} to {newValueText}"
                     );

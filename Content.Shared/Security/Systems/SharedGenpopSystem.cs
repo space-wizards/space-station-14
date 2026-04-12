@@ -67,7 +67,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
         CreateId(ent, args.Name, args.Sentence, args.Crime);
 
         var permanent = args.Sentence <= 0;
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Action,
             LogImpact.Medium,
             $"{args.Actor:actor} configured GenPop locker {ent:target} for prisoner " +
@@ -166,7 +166,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             Act = () =>
             {
                 IdCard.ExpireId((linkedId, expire));
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Action,
                     LogImpact.Medium,
                     $"{user:actor} ended GenPop sentence early on locker {ent:target}",
@@ -184,7 +184,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             Act = () =>
             {
                 CancelIdCard(ent, user);
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Action,
                     LogImpact.Medium,
                     $"{user:actor} cancelled GenPop sentence on locker {ent:target}",
@@ -208,7 +208,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             Act = () =>
             {
                 IdCard.SetExpireTime((linkedId, expire), Timing.CurTime + genpopId.SentenceDuration);
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Action,
                     LogImpact.Medium,
                     $"{user:actor} reset GenPop sentence on locker {ent:target} ({servedTime * 100:F0}% served)",

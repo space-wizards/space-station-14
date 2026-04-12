@@ -131,7 +131,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
         var article = articles[msg.ArticleNum];
         if (CanUse(msg.Actor, ent.Owner))
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
                 $"{msg.Actor:actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
             );
@@ -216,14 +216,14 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
         if (actor != null)
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Chat,
                 LogImpact.Medium,
                 $"{actor:actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
         }
         else
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Chat,
                 LogImpact.Medium,
                 $"Created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");

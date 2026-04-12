@@ -178,7 +178,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasMixerComponent mixer, GasMixerToggleStatusMessage args)
         {
             mixer.Enabled = args.Enabled;
-            _adminLogger.AddStructured(LogType.AtmosPowerChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
@@ -187,7 +187,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnOutputPressureChangeMessage(EntityUid uid, GasMixerComponent mixer, GasMixerChangeOutputPressureMessage args)
         {
             mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, mixer.MaxTargetPressure);
-            _adminLogger.AddStructured(LogType.AtmosPressureChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
                 $"{args.Actor:player} set the pressure on {uid:device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
@@ -198,7 +198,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             float nodeOne = Math.Clamp(args.NodeOne, 0f, 100.0f) / 100.0f;
             mixer.InletOneConcentration = nodeOne;
             mixer.InletTwoConcentration = 1.0f - mixer.InletOneConcentration;
-            _adminLogger.AddStructured(LogType.AtmosRatioChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
                 $"{args.Actor:player} set the ratio on {uid:device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
         }

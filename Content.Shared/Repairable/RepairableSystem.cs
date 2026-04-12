@@ -69,7 +69,7 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairSomeDamage(Entity<DamageableComponent?> ent, float damageAmount, EntityUid user)
     {
         var damageChanged = _damageableSystem.HealEvenly(ent.Owner, damageAmount, origin: user);
-        _adminLogger.AddStructured(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
+        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairSomeDamage(Entity<DamageableComponent?> ent, Damage.DamageSpecifier damageAmount, EntityUid user)
     {
         var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
-        _adminLogger.AddStructured(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
+        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} by {damageChanged.GetTotal()}");
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairAllDamage(Entity<DamageableComponent?> ent, EntityUid user)
     {
         _damageableSystem.ClearAllDamage(ent);
-        _adminLogger.AddStructured(LogType.Healed, $"{user:user} repaired {ent.Owner:target} back to full health");
+        _adminLogger.Add(LogType.Healed, $"{user:user} repaired {ent.Owner:target} back to full health");
     }
 
     private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)

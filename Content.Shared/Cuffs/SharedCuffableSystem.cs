@@ -360,7 +360,7 @@ namespace Content.Shared.Cuffs
                 if (target == user)
                 {
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-self-success-message"), user, user);
-                    _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
                         $"{user:player} has cuffed himself");
                 }
                 else
@@ -369,7 +369,7 @@ namespace Content.Shared.Cuffs
                         ("otherName", Identity.Name(target, EntityManager, user))), user, user);
                     _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-by-other-success-message",
                         ("otherName", Identity.Name(user, EntityManager, target))), target, target);
-                    _adminLogger.AddStructured(LogType.Action, LogImpact.High,
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
                         $"{user:player} has cuffed {target:player}");
                 }
             }
@@ -657,7 +657,7 @@ namespace Content.Shared.Cuffs
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
                 return;
 
-            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{user:player} is trying to uncuff {target:subject}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{user:player} is trying to uncuff {target:subject}");
 
             var popupText = user == target.Owner
                 ? "cuffable-component-start-uncuffing-self-observer"
@@ -757,12 +757,12 @@ namespace Content.Shared.Cuffs
                 {
                     _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
                         ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
-                    _adminLogger.AddStructured(LogType.Action, LogImpact.High,
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
                         $"{user:player} has successfully uncuffed {target:player}");
                 }
                 else
                 {
-                    _adminLogger.AddStructured(LogType.Action, LogImpact.High,
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
                         $"{user:player} has successfully uncuffed themselves");
                 }
             }

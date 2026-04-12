@@ -58,7 +58,7 @@ public sealed partial class PlayerRateLimitManager : SharedPlayerRateLimitManage
         if (!datum.Announced)
         {
             registration.Registration.PlayerLimitedAction?.Invoke(player);
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 registration.Registration.AdminLogType,
                 LogImpact.Medium,
                 $"Player {player} breached '{key}' rate limit ");

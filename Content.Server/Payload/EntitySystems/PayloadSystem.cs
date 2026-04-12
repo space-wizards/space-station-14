@@ -176,7 +176,7 @@ public sealed partial class PayloadSystem : EntitySystem
         var solStringA = SharedSolutionContainerSystem.ToPrettyString(solutionA);
         var solStringB = SharedSolutionContainerSystem.ToPrettyString(solutionB);
 
-        _adminLogger.AddStructured(LogType.ChemicalReaction,
+        _adminLogger.Add(LogType.ChemicalReaction,
             $"Chemical bomb payload {entity.Owner:payload} at {_transform.GetMapCoordinates(entity.Owner):location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;

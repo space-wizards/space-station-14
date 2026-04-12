@@ -46,14 +46,14 @@ public sealed class AdminLogBulk : IConsoleCommand
         {
             Parallel.For(0, amount, _ =>
             {
-                logManager.AddStructured(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             });
         }
         else
         {
             for (var i = 0; i < amount; i++)
             {
-                logManager.AddStructured(LogType.Unknown, $"Debug log added by {entity:Player}");
+                logManager.Add(LogType.Unknown, $"Debug log added by {entity:Player}");
             }
         }
 

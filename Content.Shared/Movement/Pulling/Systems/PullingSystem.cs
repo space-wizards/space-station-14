@@ -386,7 +386,7 @@ public sealed partial class PullingSystem : EntitySystem
             // Messaging
             var message = new PullStoppedMessage(pullerUid, pullableUid);
             _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{pullerUid:user} stopped pulling {pullableUid:target}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{pullerUid:user} stopped pulling {pullableUid:target}");
 
             RaiseLocalEvent(pullerUid, message);
             RaiseLocalEvent(pullableUid, message);
@@ -593,7 +593,7 @@ public sealed partial class PullingSystem : EntitySystem
             Loc.GetString("getting-pulled-popup", ("puller", Identity.Entity(pullerUid, EntityManager)));
         _popup.PopupEntity(pullingMessage, pullableUid, pullableUid);
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Low,
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{pullerUid:user} started pulling {pullableUid:target}");
         return true;
     }

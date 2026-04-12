@@ -62,6 +62,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedCombatModeSystem CombatMode = default!;
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
     [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private   readonly ISharedPlayerManager _player = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedStaminaSystem _stamina = default!;
@@ -504,13 +505,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             // TODO: This needs fixing
             if (meleeUid == user)
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Low,
                     $"{user:actor} melee attacked (light) using their hands and missed");
             }
             else
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Low,
                     $"{user:actor} melee attacked (light) using {meleeUid:tool} and missed");
             }
@@ -559,13 +560,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 
             if (meleeUid == user)
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (light) {target.Value:target} using their hands and dealt {damageResult.GetTotal():damage} damage");
             }
             else
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (light) {target.Value:target} using {meleeUid:tool} and dealt {damageResult.GetTotal():damage} damage");
             }
@@ -605,13 +606,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         {
             if (meleeUid == user)
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Low,
                     $"{user:actor} melee attacked (heavy) using their hands and missed");
             }
             else
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Low,
                     $"{user:actor} melee attacked (heavy) using {meleeUid:tool} and missed");
             }
@@ -735,13 +736,13 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         {
             if (meleeUid == user)
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (heavy) {hitEntities[0]:target} using their hands and dealt {appliedDamage.GetTotal():damage} damage");
             }
             else
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (heavy) {hitEntities[0]:target} using {meleeUid:tool} and dealt {appliedDamage.GetTotal():damage} damage");
             }
@@ -749,23 +750,26 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         else if (hitEntities.Count > 1)
         {
             var names = string.Join(", ", hitEntities.Select(e => ToPrettyString(e)));
-            var targetRefs = hitEntities
-                .Select(e => new AdminLogEntityRef(e, AdminLogEntityRole.Victim))
-                .ToArray();
 
             if (meleeUid == user)
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                var semantics = AdminLogHelpers.GetActorVictimsSemantics(_player, user, hitEntities);
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using their hands, hitting {names} for {appliedDamage.GetTotal():damage} total damage",
-                    entities: targetRefs);
+                    players: semantics.Players,
+                    entities: semantics.Entities,
+                    playerRoles: semantics.PlayerRoles);
             }
             else
             {
-                _adminLogger.AddStructured(LogType.MeleeHit,
+                var semantics = AdminLogHelpers.GetActorVictimsToolSemantics(_player, user, hitEntities, meleeUid);
+                _adminLogger.Add(LogType.MeleeHit,
                     LogImpact.Medium,
                     $"{user:actor} melee attacked (heavy) {hitEntities.Count} targets using {meleeUid:tool}, hitting {names} for {appliedDamage.GetTotal():damage} total damage",
-                    entities: targetRefs);
+                    players: semantics.Players,
+                    entities: semantics.Entities,
+                    playerRoles: semantics.PlayerRoles);
             }
         }
 
@@ -961,7 +965,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
         }
 
         Interaction.DoContactInteraction(user, target);
-        _adminLogger.AddStructured(LogType.DisarmedAction, $"{user:user} used disarm on {target:target}");
+        _adminLogger.Add(LogType.DisarmedAction, $"{user:actor} used disarm on {target:target}");
 
         _audio.PlayPvs(combatMode.DisarmSuccessSound, target.Value, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
         var targetEnt = Identity.Entity(target.Value, EntityManager);
@@ -985,7 +989,7 @@ public abstract partial class SharedMeleeWeaponSystem : EntitySystem
             PopupSystem.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", userEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(user), true, PopupType.LargeCaution);
             PopupSystem.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), user, PopupType.Large);
 
-            _adminLogger.AddStructured(LogType.DisarmedKnockdown, LogImpact.Medium, $"{user:user} knocked down {target:target}");
+            _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{user:user} knocked down {target:target}");
         }
 
         return true;

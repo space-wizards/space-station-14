@@ -420,7 +420,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (user != null)
             {
-                _adminLogger.AddStructured(LogType.Landed,
+                _adminLogger.Add(LogType.Landed,
                     $"{user.Value:user} threw {entity:entity} which splashed a solution {spilled:solution} onto {owner:target}");
             }
 

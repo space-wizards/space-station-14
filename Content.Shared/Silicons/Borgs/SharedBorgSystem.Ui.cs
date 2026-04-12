@@ -27,7 +27,7 @@ public abstract partial class SharedBorgSystem
         if (chassis.Comp.BrainEntity is not { } brain)
             return;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{args.Actor} removed brain {brain} from borg {chassis.Owner}");
         _container.Remove(brain, chassis.Comp.BrainContainer);
         _hands.TryPickupAnyHand(args.Actor, brain);
@@ -57,7 +57,7 @@ public abstract partial class SharedBorgSystem
         if (metaData.EntityName.Equals(name, StringComparison.InvariantCulture))
             return;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Actor} set borg \"{chassis.Owner}\"'s name to: {name}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor} set borg \"{chassis.Owner}\"'s name to: {name}");
         _metaData.SetEntityName(chassis, name, metaData);
     }
 
@@ -71,7 +71,7 @@ public abstract partial class SharedBorgSystem
         if (!CanRemoveModule((module, Comp<BorgModuleComponent>(module))))
             return;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{args.Actor} removed module {module} from borg {chassis.Owner}");
         _container.Remove(module, chassis.Comp.ModuleContainer);
         _hands.TryPickupAnyHand(args.Actor, module);

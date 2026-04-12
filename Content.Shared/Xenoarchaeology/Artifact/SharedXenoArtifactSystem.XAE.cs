@@ -120,7 +120,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (node.Comp.Degraded)
             return false;
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.ArtifactNode,
             LogImpact.Low,
             $"{artifact.Owner} node {node} got activated at {coordinates}"

@@ -96,7 +96,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         }
 
         // Log unanchor attempt (server only)
-        _adminLogger.AddStructured(LogType.Anchor, LogImpact.Low, $"{userUid:user} is trying to unanchor {uid:entity} from {transform.Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{userUid:user} is trying to unanchor {uid:entity} from {transform.Coordinates:targetlocation}");
 
         _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
     }
@@ -141,7 +141,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, args.User);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Unanchor,
             LogImpact.Low,
             $"{args.User:user} unanchored {uid:anchored} using {used:using}"
@@ -193,7 +193,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, args.User);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Anchor,
             LogImpact.Low,
             $"{args.User:user} anchored {uid:anchored} using {used:using}"
@@ -251,7 +251,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         }
 
         // Log anchor attempt (server only)
-        _adminLogger.AddStructured(LogType.Anchor, LogImpact.Low, $"{userUid:user} is trying to anchor {uid:entity} to {transform.Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{userUid:user} is trying to anchor {uid:entity} to {transform.Coordinates:targetlocation}");
 
         if (!CanAnchorAt(uid, transform.Coordinates, userUid))
             return;

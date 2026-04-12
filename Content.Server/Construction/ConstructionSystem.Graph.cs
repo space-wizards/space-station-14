@@ -251,7 +251,7 @@ namespace Content.Server.Construction
             construction.Node = id;
 
             if (userUid != null)
-                _adminLogger.AddStructured(LogType.Construction, LogImpact.Low,
+                _adminLogger.Add(LogType.Construction, LogImpact.Low,
                     $"{userUid.Value:player} changed {uid:entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.

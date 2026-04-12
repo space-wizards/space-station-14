@@ -57,7 +57,7 @@ public sealed partial class RandomGiftSystem : EntitySystem
 
         var coords = Transform(args.User).Coordinates;
         var handsEnt = Spawn(component.SelectedEntity, coords);
-        _adminLogger.AddStructured(LogType.EntitySpawn, LogImpact.Low, $"{args.User} used {uid} which spawned {handsEnt}");
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{args.User} used {uid} which spawned {handsEnt}");
         if (component.Wrapper is not null)
             Spawn(component.Wrapper, coords);
 

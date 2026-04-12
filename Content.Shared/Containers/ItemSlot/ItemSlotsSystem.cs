@@ -297,7 +297,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             // Logging
             if (inserted != null && inserted.Value && user != null)
-                _adminLogger.AddStructured(LogType.Action,
+                _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
                     $"{user.Value} inserted {item} into {slot.ContainerSlot?.ID + " slot of "}{uid}");
 
@@ -548,7 +548,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             // Logging
             if (ejected != null && ejected.Value && user != null)
-                _adminLogger.AddStructured(LogType.Action,
+                _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
                     $"{user.Value} ejected {item} from {slot.ContainerSlot?.ID + " slot of "}{uid}");
 

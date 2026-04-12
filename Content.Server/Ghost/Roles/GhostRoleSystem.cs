@@ -576,7 +576,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
             return false;
 
         if (player.AttachedEntity != null)
-            _adminLogger.AddStructured(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {player.AttachedEntity.Value:entity}");
+            _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {player.AttachedEntity.Value:entity}");
 
         CloseEui(player);
         return true;

@@ -97,7 +97,7 @@ public abstract partial class SharedFlatpackSystem : EntitySystem
         if (_net.IsServer)
         {
             var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-            _adminLogger.AddStructured(LogType.Construction,
+            _adminLogger.Add(LogType.Construction,
                 LogImpact.Low,
                 $"{args.User:player} unpacked {spawn:entity} at {xform.Coordinates} from {uid:entity}");
             QueueDel(uid);

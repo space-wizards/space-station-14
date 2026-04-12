@@ -162,7 +162,7 @@ public sealed partial class MindSystem : SharedMindSystem
 
         if (owned.HasValue)
         {
-            _adminLogger.AddStructured(LogType.Mind, LogImpact.Low,
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
                 $"{session.Name} returned to {owned.Value}");
         }
     }

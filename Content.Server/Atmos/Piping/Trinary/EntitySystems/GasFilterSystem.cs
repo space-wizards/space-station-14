@@ -152,7 +152,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
             filter.Enabled = args.Enabled;
-            _adminLogger.AddStructured(LogType.AtmosPowerChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
@@ -161,7 +161,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
-            _adminLogger.AddStructured(LogType.AtmosVolumeChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{args.Actor:player} set the transfer rate on {uid:device} to {args.Rate}");
             DirtyUI(uid, filter);
 
@@ -174,7 +174,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 if (Enum.IsDefined(typeof(Gas), args.Gas))
                 {
                     filter.FilteredGas = args.Gas;
-                    _adminLogger.AddStructured(LogType.AtmosFilterChanged, LogImpact.Medium,
+                    _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
                         $"{args.Actor:player} set the filter on {uid:device} to {args.Gas.ToString()}");
                     DirtyUI(uid, filter);
                 }
@@ -186,7 +186,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             else
             {
                 filter.FilteredGas = null;
-                _adminLogger.AddStructured(LogType.AtmosFilterChanged, LogImpact.Medium,
+                _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
                     $"{args.Actor:player} set the filter on {uid:device} to none");
                 DirtyUI(uid, filter);
             }

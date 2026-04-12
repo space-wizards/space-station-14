@@ -59,7 +59,7 @@ public sealed partial class CodewordSystem : EntitySystem
         EnsureComp<CodewordComponent>(codewordsContainer)
             .Codewords = codewords;
         manager.Codewords[faction] = codewordsContainer;
-        _adminLogger.AddStructured(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {faction}: {string.Join(", ", codewords)}");
+        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {faction}: {string.Join(", ", codewords)}");
 
         return codewords;
     }

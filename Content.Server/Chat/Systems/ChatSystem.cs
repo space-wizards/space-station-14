@@ -314,7 +314,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Chat,
             LogImpact.Low,
             $"Global station announcement from {sender}: {message}",
@@ -346,27 +346,36 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
-        var sourcePlayer = source != null && _sharedPlayerManager.TryGetSessionByEntity(source.Value, out var sourceSession)
-            ? sourceSession.UserId.UserId
-            : (Guid?) null;
-
-        _adminLogger.AddStructured(
-            LogType.Chat,
-            LogImpact.Low,
-            $"Station announcement from {sender}: {message}",
-            JsonSerializer.SerializeToDocument(new
-            {
-                speaker = (int) (source ?? EntityUid.Invalid),
-                message,
-                channel = ChatChannel.Radio.ToString(),
-                sender,
-                scope = "filtered"
-            }),
-            players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-            entities: source != null ? new[] { new AdminLogEntityRef(source.Value, AdminLogEntityRole.Actor) } : null,
-            playerRoles: sourcePlayer != null
-                ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                : null);
+        if (source is { } sourceUid)
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Low,
+                $"Station announcement from {sourceUid:actor} as {sender}: {message}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = (int) sourceUid,
+                    message,
+                    channel = ChatChannel.Radio.ToString(),
+                    sender,
+                    scope = "filtered"
+                }));
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Low,
+                $"Station announcement from {sender}: {message}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = (int) EntityUid.Invalid,
+                    message,
+                    channel = ChatChannel.Radio.ToString(),
+                    sender,
+                    scope = "filtered"
+                }));
+        }
     }
 
     /// <inheritdoc />
@@ -400,14 +409,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
-        var sourcePlayer = _sharedPlayerManager.TryGetSessionByEntity(source, out var sourceSession)
-            ? sourceSession.UserId.UserId
-            : (Guid?) null;
-
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Chat,
             LogImpact.Low,
-            $"Station announcement on {station} from {sender}: {message}",
+            $"Station announcement on {station} from {source:actor} as {sender}: {message}",
             JsonSerializer.SerializeToDocument(new
             {
                 speaker = (int) source,
@@ -416,12 +421,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 sender,
                 station = station.Value.ToString(),
                 scope = "station"
-            }),
-            players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-            entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-            playerRoles: sourcePlayer != null
-                ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                : null);
+            }));
     }
 
     #endregion
@@ -484,15 +484,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (originalMessage == message)
         {
-            var sourcePlayer = _sharedPlayerManager.TryGetSessionByEntity(source, out var sourceSession)
-                ? sourceSession.UserId.UserId
-                : (Guid?) null;
-
             if (name != Name(source))
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Say from {source} as {name}: {originalMessage}.",
+                    $"Say from {source:actor} as {name}: {originalMessage}.",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
@@ -500,41 +496,27 @@ public sealed partial class ChatSystem : SharedChatSystem
                         channel = ChatChannel.Local.ToString(),
                         voiceName = name,
                         transformed = false
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
             else
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Say from {source}: {originalMessage}.",
+                    $"Say from {source:actor}: {originalMessage}.",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
                         message = originalMessage,
                         channel = ChatChannel.Local.ToString(),
                         transformed = false
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
         }
         else
         {
-            var sourcePlayer = _sharedPlayerManager.TryGetSessionByEntity(source, out var sourceSession)
-                ? sourceSession.UserId.UserId
-                : (Guid?) null;
-
             if (name != Name(source))
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Say from {source} as {name}, original: {originalMessage}, transformed: {message}.",
+                    $"Say from {source:actor} as {name}, original: {originalMessage}, transformed: {message}.",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
@@ -543,17 +525,12 @@ public sealed partial class ChatSystem : SharedChatSystem
                         channel = ChatChannel.Local.ToString(),
                         voiceName = name,
                         transformed = true
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
             else
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Say from {source}, original: {originalMessage}, transformed: {message}.",
+                    $"Say from {source:actor}, original: {originalMessage}, transformed: {message}.",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
@@ -561,12 +538,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                         transformedMessage = message,
                         channel = ChatChannel.Local.ToString(),
                         transformed = true
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
         }
     }
 
@@ -642,17 +614,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         RaiseLocalEvent(source, ev, true);
         if (!hideLog)
         {
-            var sourcePlayer = _sharedPlayerManager.TryGetSessionByEntity(source, out var sourceSession)
-                ? sourceSession.UserId.UserId
-                : (Guid?) null;
-
             if (originalMessage == message)
             {
                 if (name != Name(source))
-                    _adminLogger.AddStructured(
+                    _adminLogger.Add(
                         LogType.Chat,
                         LogImpact.Low,
-                        $"Whisper from {source} as {name}: {originalMessage}.",
+                        $"Whisper from {source:actor} as {name}: {originalMessage}.",
                         JsonSerializer.SerializeToDocument(new
                         {
                             speaker = (int) source,
@@ -660,37 +628,27 @@ public sealed partial class ChatSystem : SharedChatSystem
                             channel = channel?.ID ?? ChatChannel.Whisper.ToString(),
                             voiceName = name,
                             transformed = false
-                        }),
-                        players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                        entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                        playerRoles: sourcePlayer != null
-                            ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                            : null);
+                        }));
                 else
-                    _adminLogger.AddStructured(
+                    _adminLogger.Add(
                         LogType.Chat,
                         LogImpact.Low,
-                        $"Whisper from {source}: {originalMessage}.",
+                        $"Whisper from {source:actor}: {originalMessage}.",
                         JsonSerializer.SerializeToDocument(new
                         {
                             speaker = (int) source,
                             message = originalMessage,
                             channel = channel?.ID ?? ChatChannel.Whisper.ToString(),
                             transformed = false
-                        }),
-                        players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                        entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                        playerRoles: sourcePlayer != null
-                            ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                            : null);
+                        }));
             }
             else
             {
                 if (name != Name(source))
-                    _adminLogger.AddStructured(
+                    _adminLogger.Add(
                         LogType.Chat,
                         LogImpact.Low,
-                        $"Whisper from {source} as {name}, original: {originalMessage}, transformed: {message}.",
+                        $"Whisper from {source:actor} as {name}, original: {originalMessage}, transformed: {message}.",
                         JsonSerializer.SerializeToDocument(new
                         {
                             speaker = (int) source,
@@ -699,17 +657,12 @@ public sealed partial class ChatSystem : SharedChatSystem
                             channel = channel?.ID ?? ChatChannel.Whisper.ToString(),
                             voiceName = name,
                             transformed = true
-                        }),
-                        players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                        entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                        playerRoles: sourcePlayer != null
-                            ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                            : null);
+                        }));
                 else
-                    _adminLogger.AddStructured(
+                    _adminLogger.Add(
                         LogType.Chat,
                         LogImpact.Low,
-                        $"Whisper from {source}, original: {originalMessage}, transformed: {message}.",
+                        $"Whisper from {source:actor}, original: {originalMessage}, transformed: {message}.",
                         JsonSerializer.SerializeToDocument(new
                         {
                             speaker = (int) source,
@@ -717,12 +670,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                             transformedMessage = message,
                             channel = channel?.ID ?? ChatChannel.Whisper.ToString(),
                             transformed = true
-                        }),
-                        players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                        entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                        playerRoles: sourcePlayer != null
-                            ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                            : null);
+                        }));
             }
         }
     }
@@ -758,43 +706,29 @@ public sealed partial class ChatSystem : SharedChatSystem
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
         if (!hideLog)
         {
-            var sourcePlayer = _sharedPlayerManager.TryGetSessionByEntity(source, out var sourceSession)
-                ? sourceSession.UserId.UserId
-                : (Guid?) null;
-
             if (name != Name(source))
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Emote from {source} as {name}: {action}",
+                    $"Emote from {source:actor} as {name}: {action}",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
                         message = action,
                         channel = ChatChannel.Emotes.ToString(),
                         apparentName = name
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
             else
-                _adminLogger.AddStructured(
+                _adminLogger.Add(
                     LogType.Chat,
                     LogImpact.Low,
-                    $"Emote from {source}: {action}",
+                    $"Emote from {source:actor}: {action}",
                     JsonSerializer.SerializeToDocument(new
                     {
                         speaker = (int) source,
                         message = action,
                         channel = ChatChannel.Emotes.ToString()
-                    }),
-                    players: sourcePlayer != null ? new[] { sourcePlayer.Value } : null,
-                    entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                    playerRoles: sourcePlayer != null
-                        ? new Dictionary<Guid, AdminLogEntityRole> { [sourcePlayer.Value] = AdminLogEntityRole.Actor }
-                        : null);
+                    }));
         }
     }
 
@@ -818,19 +752,16 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(message)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Chat,
             LogImpact.Low,
-            $"LOOC from {source}: {message}",
+            $"LOOC from {source:actor}: {message}",
             JsonSerializer.SerializeToDocument(new
             {
                 speaker = (int) source,
                 message,
                 channel = ChatChannel.LOOC.ToString()
-            }),
-            players: new[] { player.UserId.UserId },
-            entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-            playerRoles: new Dictionary<Guid, AdminLogEntityRole> { [player.UserId.UserId] = AdminLogEntityRole.Actor });
+            }));
     }
 
     private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
@@ -844,20 +775,17 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                 ("userName", player.Channel.UserName),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Chat,
                 LogImpact.Low,
-                $"Admin dead chat from {source}: {message}",
+                $"Admin dead chat from {source:actor}: {message}",
                 JsonSerializer.SerializeToDocument(new
                 {
                     speaker = (int) source,
                     message,
                     channel = ChatChannel.Dead.ToString(),
                     admin = true
-                }),
-                players: new[] { player.UserId.UserId },
-                entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                playerRoles: new Dictionary<Guid, AdminLogEntityRole> { [player.UserId.UserId] = AdminLogEntityRole.Actor });
+                }));
         }
         else
         {
@@ -865,20 +793,17 @@ public sealed partial class ChatSystem : SharedChatSystem
                 ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
                 ("playerName", (playerName)),
                 ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Chat,
                 LogImpact.Low,
-                $"Dead chat from {source}: {message}",
+                $"Dead chat from {source:actor}: {message}",
                 JsonSerializer.SerializeToDocument(new
                 {
                     speaker = (int) source,
                     message,
                     channel = ChatChannel.Dead.ToString(),
                     admin = false
-                }),
-                players: new[] { player.UserId.UserId },
-                entities: new[] { new AdminLogEntityRef(source, AdminLogEntityRole.Actor) },
-                playerRoles: new Dictionary<Guid, AdminLogEntityRole> { [player.UserId.UserId] = AdminLogEntityRole.Actor });
+                }));
         }
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList(), author: player.UserId);

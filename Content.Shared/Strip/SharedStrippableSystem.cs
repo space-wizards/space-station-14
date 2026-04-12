@@ -215,7 +215,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         var prefix = stealth ? "stealthily " : "";
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s {slot} slot",
@@ -254,7 +254,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _inventorySystem.TryEquip(user, target, held, slot, triggerHandContact: true);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s {slot} slot",
@@ -333,7 +333,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         var prefix = stealth ? "stealthily " : "";
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s {slot} slot",
@@ -375,7 +375,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s {slot} slot",
@@ -449,7 +449,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         var prefix = stealth ? "stealthily " : "";
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}place the item {held:subject} in {target:victim}'s hands",
@@ -488,7 +488,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         _handsSystem.TryDrop(user, checkActionBlocker: false);
         _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: !stealth, handsComp: target.Comp);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Medium,
             $"{user:actor} has placed the item {held:subject} in {target:victim}'s hands",
@@ -568,7 +568,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         var prefix = stealth ? "stealthily " : "";
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.Low,
             $"{user:actor} is trying to {prefix}strip the item {item:subject} from {target:victim}'s hands",
@@ -610,7 +610,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
 
-        _adminLogger.AddStructured(
+        _adminLogger.Add(
             LogType.Stripping,
             LogImpact.High,
             $"{user:actor} has stripped the item {item:subject} from {target:victim}'s hands",

@@ -77,7 +77,7 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var proto in spawnEntities)
             {
                 entityToPlaceInHands = Spawn(proto, coords);
-                _adminLogger.AddStructured(LogType.EntitySpawn, LogImpact.Low, $"{args.User} used {uid} which spawned {entityToPlaceInHands.Value}");
+                _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{args.User} used {uid} which spawned {entityToPlaceInHands.Value}");
             }
 
             // The entity is often deleted, so play the sound at its position rather than parenting

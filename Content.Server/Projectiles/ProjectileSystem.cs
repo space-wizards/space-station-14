@@ -68,13 +68,9 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            // Build player list from shooter session if available.
-            Guid[]? players = null;
-            if (_player.TryGetSessionByEntity(component.Shooter!.Value, out var shooterSession))
-                players = [shooterSession.UserId.UserId];
-
             var weapon = component.Weapon;
-            _adminLogger.AddStructured(
+            var semantics = AdminLogHelpers.GetActorSubjectVictimSemantics(_player, component.Shooter!.Value, uid, target, weapon);
+            _adminLogger.Add(
                 LogType.BulletHit,
                 LogImpact.Medium,
                 $"{component.Shooter!.Value:user} shot {uid:projectile} and hit {otherName:target} for {damage:damage} damage",
@@ -86,23 +82,9 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
                     target = (int) target,
                     totalDamage = damage?.GetTotal()
                 }),
-                players: players,
-                entities: weapon is { } weaponUid
-                    ? [
-                        new AdminLogEntityRef(component.Shooter!.Value, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(weaponUid, AdminLogEntityRole.Tool),
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Subject),
-                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                    ]
-                    : [
-                        new AdminLogEntityRef(component.Shooter!.Value, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Subject),
-                        new AdminLogEntityRef(target, AdminLogEntityRole.Victim),
-                    ],
-                playerRoles: players != null && shooterSession != null
-                    ? new Dictionary<Guid, AdminLogEntityRole>
-                        { [shooterSession.UserId.UserId] = AdminLogEntityRole.Actor }
-                    : null);
+                players: semantics.Players,
+                entities: semantics.Entities,
+                playerRoles: semantics.PlayerRoles);
 
             component.ProjectileSpent = !TryPenetrate((uid, component), damage!, damageRequired);
         }

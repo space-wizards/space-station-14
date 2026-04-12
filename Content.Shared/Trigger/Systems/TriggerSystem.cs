@@ -98,12 +98,12 @@ public sealed partial class TriggerSystem : EntitySystem
 
         if (user != null)
         {
-            _adminLogger.AddStructured(LogType.Trigger,
+            _adminLogger.Add(LogType.Trigger,
                 $"{user.Value:user} started a {ent.Comp.Delay} second timer trigger on entity {ent.Owner:timer}");
         }
         else
         {
-            _adminLogger.AddStructured(LogType.Trigger,
+            _adminLogger.Add(LogType.Trigger,
                 $"{ent.Comp.Delay} second timer trigger started on entity {ent.Owner:timer}");
         }
 
@@ -143,7 +143,7 @@ public sealed partial class TriggerSystem : EntitySystem
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             _appearance.SetData(ent.Owner, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
 
-        _adminLogger.AddStructured(LogType.Trigger, $"A timer trigger was stopped before triggering on entity {ent.Owner:timer}");
+        _adminLogger.Add(LogType.Trigger, $"A timer trigger was stopped before triggering on entity {ent.Owner:timer}");
         return true;
     }
 

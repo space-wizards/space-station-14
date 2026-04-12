@@ -238,7 +238,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
             }
 
             _container.Insert(used, chassis.Comp.BrainContainer);
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium,
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
                 $"{args.User} installed brain {used} into borg {chassis.Owner}");
             args.Handled = true;
             return;
@@ -247,7 +247,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (module != null && CanInsertModule(chassis.AsNullable(), (used, module), args.User))
         {
             InsertModule(chassis, used);
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Low,
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{args.User} installed module {used} into borg {chassis.Owner}");
             args.Handled = true;
         }

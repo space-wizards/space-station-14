@@ -85,7 +85,7 @@ public sealed partial class PrayerSystem : EntitySystem
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
-        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{target.AttachedEntity.Value:target} received subtle message from {source?.Name ?? "unknown source"}: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{target.AttachedEntity.Value:target} received subtle message from {source?.Name ?? "unknown source"}: {message}");
     }
 
     /// <summary>
@@ -106,6 +106,6 @@ public sealed partial class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.AddStructured(LogType.AdminMessage, LogImpact.Low, $"{sender.AttachedEntity.Value:actor} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{sender.AttachedEntity.Value:actor} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
     }
 }

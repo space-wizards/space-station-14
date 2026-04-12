@@ -167,9 +167,9 @@ public sealed partial class RadioSystem : EntitySystem
         }
 
         if (name != Name(messageSource))
-            _adminLogger.AddStructured(LogType.Chat, LogImpact.Low, $"Radio message from {messageSource:user} as {name} on {channel.LocalizedName}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {messageSource:user} as {name} on {channel.LocalizedName}: {message}");
         else
-            _adminLogger.AddStructured(LogType.Chat, LogImpact.Low, $"Radio message from {messageSource:user} on {channel.LocalizedName}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {messageSource:user} on {channel.LocalizedName}: {message}");
 
         _replay.RecordServerMessage(chat);
         _messages.Remove(message);

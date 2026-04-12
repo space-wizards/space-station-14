@@ -127,7 +127,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.FirstPortal, out var portal))
                 portal.CanTeleportToOtherMaps = true;
 
-            _adminLogger.AddStructured(LogType.EntitySpawn, LogImpact.High, $"{user:player} opened {component.FirstPortal.Value} at {Transform(component.FirstPortal.Value).Coordinates} using {uid}");
+            _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{user:player} opened {component.FirstPortal.Value} at {Transform(component.FirstPortal.Value).Coordinates} using {uid}");
             _audio.PlayPvs(component.NewPortalSound, uid);
         }
         else if (Deleted(component.SecondPortal))
@@ -149,7 +149,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.SecondPortal, out var portal))
                 portal.CanTeleportToOtherMaps = true;
 
-            _adminLogger.AddStructured(LogType.EntitySpawn, LogImpact.High, $"{user:player} opened {component.SecondPortal.Value} at {Transform(component.SecondPortal.Value).Coordinates} linked to {component.FirstPortal!.Value} using {uid}");
+            _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{user:player} opened {component.SecondPortal.Value} at {Transform(component.SecondPortal.Value).Coordinates} linked to {component.FirstPortal!.Value} using {uid}");
             _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
             _audio.PlayPvs(component.NewPortalSound, uid);
         }
@@ -174,7 +174,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             portalStrings += " and ";
         portalStrings += ToPrettyString(entity.Comp.SecondPortal);
         if (portalStrings != "")
-            _adminLogger.AddStructured(LogType.EntityDelete, LogImpact.High, $"{user:player} closed {portalStrings} with {uid}");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{user:player} closed {portalStrings} with {uid}");
 
         // Clear both portals
         if (!Deleted(entity.Comp.FirstPortal))

@@ -52,7 +52,7 @@ public sealed class PreRoundAddTests : GameTest
 
         await server.WaitPost(() =>
         {
-            sAdminLogSystem.AddStructured(LogType.Unknown, $"test log: {guid}",
+            sAdminLogSystem.Add(LogType.Unknown, $"test log: {guid}",
                 payload: JsonSerializer.SerializeToDocument(new { guid = guid.ToString() }));
         });
 

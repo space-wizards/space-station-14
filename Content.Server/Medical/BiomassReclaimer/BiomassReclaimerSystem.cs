@@ -185,7 +185,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 _throwing.TryThrow(args.Climber, direction, 0.5f);
                 return;
             }
-            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Instigator:player} used a biomass reclaimer to gib {args.Climber:target} in {reclaimer:reclaimer}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Instigator:player} used a biomass reclaimer to gib {args.Climber:target} in {reclaimer:reclaimer}");
 
             StartProcessing(args.Climber, reclaimer);
         }
@@ -198,7 +198,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (args.Args.Used == null || args.Args.Target == null || !HasComp<BiomassReclaimerComponent>(args.Args.Target.Value))
                 return;
 
-            _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Args.User:player} used a biomass reclaimer to gib {args.Args.Target.Value:target} in {reclaimer:reclaimer}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Args.User:player} used a biomass reclaimer to gib {args.Args.Target.Value:target} in {reclaimer:reclaimer}");
             StartProcessing(args.Args.Used.Value, reclaimer);
 
             args.Handled = true;

@@ -129,7 +129,7 @@ namespace Content.Server.Atmos.Portable
             if (environment != null)
                 _atmosphereSystem.Merge(environment, component.Air);
 
-            _adminLogger.AddStructured(LogType.CanisterPurged, LogImpact.Medium, $"Portable scrubber {uid:canister} purged its contents of {component.Air} into the environment.");
+            _adminLogger.Add(LogType.CanisterPurged, LogImpact.Medium, $"Portable scrubber {uid:canister} purged its contents of {component.Air} into the environment.");
             component.Air.Clear();
         }
 

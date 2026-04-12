@@ -53,7 +53,7 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
         {
             var thrower = args.Component.Thrower.Value;
 
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Landed,
                 LogImpact.Low,
                 $"{args.Thrown:target} thrown by {thrower:actor} landed in {ent:container}");

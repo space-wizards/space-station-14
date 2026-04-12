@@ -42,7 +42,7 @@ public sealed class QueryTests : GameTest
         {
             player = sPlayers.Sessions.First();
 
-            sAdminLogSystem.AddStructured(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
+            sAdminLogSystem.Add(LogType.Unknown, $"{player.AttachedEntity:Entity} test log: {guid}");
         });
 
         var filter = new LogFilter

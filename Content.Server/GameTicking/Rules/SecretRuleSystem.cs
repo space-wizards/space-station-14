@@ -41,7 +41,7 @@ public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponen
         }
 
         Log.Info($"Selected {preset.ID} as the secret preset.");
-        _adminLogger.AddStructured(LogType.EventStarted, $"Selected {preset.ID} as the secret preset.");
+        _adminLogger.Add(LogType.EventStarted, $"Selected {preset.ID} as the secret preset.");
 
         foreach (var rule in preset.Rules)
         {

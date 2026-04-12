@@ -110,7 +110,7 @@ public sealed partial class RootableSystem : EntitySystem
 
         // Log solution addition by puddle.
         if (_blood.TryAddToBloodstream((ent, ent.Comp2), transferSolution))
-            _adminLogger.AddStructured(LogType.ForceFeed, LogImpact.Medium, $"{ent:target} absorbed puddle {transferSolution}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ent:target} absorbed puddle {transferSolution}");
     }
 
     private void OnCloning(Entity<RootableComponent> ent, ref CloningEvent args)

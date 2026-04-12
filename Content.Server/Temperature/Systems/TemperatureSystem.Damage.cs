@@ -102,7 +102,7 @@ public sealed partial class TemperatureSystem
         {
             if (!entity.Comp.TakingDamage)
             {
-                _adminLogger.AddStructured(LogType.Temperature, $"{entity:entity} started taking high temperature damage");
+                _adminLogger.Add(LogType.Temperature, $"{entity:entity} started taking high temperature damage");
                 entity.Comp.TakingDamage = true;
             }
 
@@ -114,7 +114,7 @@ public sealed partial class TemperatureSystem
         {
             if (!entity.Comp.TakingDamage)
             {
-                _adminLogger.AddStructured(LogType.Temperature, $"{entity:entity} started taking low temperature damage");
+                _adminLogger.Add(LogType.Temperature, $"{entity:entity} started taking low temperature damage");
                 entity.Comp.TakingDamage = true;
             }
 
@@ -125,7 +125,7 @@ public sealed partial class TemperatureSystem
         }
         else if (entity.Comp.TakingDamage)
         {
-            _adminLogger.AddStructured(LogType.Temperature, $"{entity:entity} stopped taking temperature damage");
+            _adminLogger.Add(LogType.Temperature, $"{entity:entity} stopped taking temperature damage");
             entity.Comp.TakingDamage = false;
         }
     }

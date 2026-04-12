@@ -59,7 +59,7 @@ public sealed partial class ShuttleConsoleSystem
         var angle = args.Angle.Reduced();
         var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {ent.Owner:target}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {ent.Owner:target}");
 
         ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID);
     }
@@ -77,7 +77,7 @@ public sealed partial class ShuttleConsoleSystem
         var targetCoordinates = new EntityCoordinates(mapUid, args.Coordinates.Position);
         var angle = args.Angle.Reduced();
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {entity.Owner:target}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {entity.Owner:target}");
 
         ConsoleFTL(entity, targetCoordinates, angle, args.Coordinates.MapId);
     }

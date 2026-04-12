@@ -539,7 +539,7 @@ namespace Content.Server.Construction
             }
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
-            _adminLogger.AddStructured(LogType.Construction, LogImpact.Low, $"{user:player} has turned a {ev.PrototypeName} construction ghost into {structure} at {Transform(structure).Coordinates}");
+            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{user:player} has turned a {ev.PrototypeName} construction ghost into {structure} at {Transform(structure).Coordinates}");
             Cleanup();
         }
     }

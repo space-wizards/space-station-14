@@ -320,7 +320,7 @@ public sealed partial class SolutionTransferSystem : EntitySystem
         var ev = new SolutionTransferredEvent(data.SourceEntity, data.TargetEntity, data.User, actualAmount);
         RaiseLocalEvent(data.TargetEntity, ref ev);
 
-        _adminLogger.AddStructured(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             LogImpact.Medium,
             $"{data.User:player} transferred {solution} to {data.TargetEntity:target}, which now contains {targetSolution}");
 

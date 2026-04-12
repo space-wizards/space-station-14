@@ -39,7 +39,7 @@ public abstract partial class SharedToolSystem
             return;
 
         SolutionContainerSystem.RemoveReagent(solutionComp.Value, entity.Comp.FuelReagent, entity.Comp.FuelLitCost);
-        _adminLogger.AddStructured(LogType.InteractActivate, LogImpact.Low,
+        _adminLogger.Add(LogType.InteractActivate, LogImpact.Low,
             $"{user:user} toggled {entity.Owner:welder} on");
 
         entity.Comp.Enabled = true;
@@ -48,7 +48,7 @@ public abstract partial class SharedToolSystem
 
     public void TurnOff(Entity<WelderComponent> entity, EntityUid? user)
     {
-        _adminLogger.AddStructured(LogType.InteractActivate, LogImpact.Low,
+        _adminLogger.Add(LogType.InteractActivate, LogImpact.Low,
             $"{user:user} toggled {entity.Owner:welder} off");
         entity.Comp.Enabled = false;
         Dirty(entity, entity.Comp);

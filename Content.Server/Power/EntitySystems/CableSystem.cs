@@ -53,7 +53,7 @@ public sealed partial class CableSystem : EntitySystem
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
-        _adminLogger.AddStructured(LogType.CableCut, LogImpact.High, $"The {uid} at {xform.Coordinates} was cut by {args.User}.");
+        _adminLogger.Add(LogType.CableCut, LogImpact.High, $"The {uid} at {xform.Coordinates} was cut by {args.User}.");
 
         Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);

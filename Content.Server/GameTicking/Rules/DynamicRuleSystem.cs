@@ -110,11 +110,11 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
             if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
                 entity.Comp.Budget -= cost.Cost;
-                _adminLogger.AddStructured(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
             }
             else
             {
-                _adminLogger.AddStructured(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} which had no cost.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} which had no cost.");
             }
         }
 

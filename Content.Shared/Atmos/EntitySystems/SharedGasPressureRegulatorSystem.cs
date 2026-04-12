@@ -56,7 +56,7 @@ public abstract partial class SharedGasPressureRegulatorSystem : EntitySystem
         ref GasPressureRegulatorChangeThresholdMessage args)
     {
         ent.Comp.Threshold = Math.Max(0f, args.ThresholdPressure);
-        _adminLogger.AddStructured(LogType.AtmosVolumeChanged,
+        _adminLogger.Add(LogType.AtmosVolumeChanged,
             LogImpact.Medium,
             $"{args.Actor:player} set the pressure threshold on {ent:device} to {ent.Comp.Threshold}");
         // Dirty the entire entity to ensure we get all of that Fresh:tm: UI info from the server.

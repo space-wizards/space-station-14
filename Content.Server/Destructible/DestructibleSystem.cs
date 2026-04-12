@@ -110,13 +110,13 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
                     if (args.Origin != null)
                     {
-                        _adminLogger.AddStructured(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"{args.Origin.Value:actor} caused {uid:subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        _adminLogger.AddStructured(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
                             $"Unknown damage source caused {uid:subject} to trigger [{triggeredBehaviors}]");
                     }

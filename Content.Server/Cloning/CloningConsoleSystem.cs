@@ -169,7 +169,7 @@ namespace Content.Server.Cloning
                 return;
 
             if (_cloningPodSystem.TryCloning(cloningPodUid, body.Value, (mindId, mind), cloningPod, scannerComp.CloningFailChanceMultiplier))
-                _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{uid} successfully cloned {body.Value}.");
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{uid} successfully cloned {body.Value}.");
         }
 
         public void RecheckConnections(EntityUid console, EntityUid? cloningPod, EntityUid? scanner, CloningConsoleComponent? consoleComp = null)

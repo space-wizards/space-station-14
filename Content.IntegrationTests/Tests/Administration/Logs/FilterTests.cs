@@ -39,7 +39,7 @@ public sealed class FilterTests : GameTest
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
 
-            sAdminLogSystem.AddStructured(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
         });
 
         await Task.Delay(2000);
@@ -48,7 +48,7 @@ public sealed class FilterTests : GameTest
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
 
-            sAdminLogSystem.AddStructured(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
+            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
         });
 
         await PoolManager.WaitUntil(server, async () =>

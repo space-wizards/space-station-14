@@ -458,9 +458,9 @@ public sealed partial class ExplosionSystem
                 {
                     // Log damage to player entities only; this will create a massive amount of log spam otherwise.
                     if (cause is not null)
-                        _adminLogger.AddStructured(LogType.ExplosionHit, LogImpact.Medium, $"Explosion of {cause:actor} dealt {damage.GetTotal()} damage to {entity:subject}");
+                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium, $"Explosion of {cause:actor} dealt {damage.GetTotal()} damage to {entity:subject}");
                     else
-                        _adminLogger.AddStructured(LogType.ExplosionHit, LogImpact.Medium, $"Explosion at {epicenter:epicenter} dealt {damage.GetTotal()} damage to {entity:subject}");
+                        _adminLogger.Add(LogType.ExplosionHit, LogImpact.Medium, $"Explosion at {epicenter:epicenter} dealt {damage.GetTotal()} damage to {entity:subject}");
                 }
             }
         }

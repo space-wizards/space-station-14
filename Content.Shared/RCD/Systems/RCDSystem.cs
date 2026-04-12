@@ -94,7 +94,7 @@ public sealed partial class RCDSystem : EntitySystem
         // Set the current RCD prototype to the one supplied
         component.ProtoId = args.ProtoId;
 
-        _adminLogger.AddStructured(LogType.RCD, LogImpact.Low, $"{args.Actor} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
+        _adminLogger.Add(LogType.RCD, LogImpact.Low, $"{args.Actor} set RCD mode to: {prototype.Mode} : {prototype.Prototype}");
 
         Dirty(uid, component);
     }
@@ -591,7 +591,7 @@ public sealed partial class RCDSystem : EntitySystem
                     return;
 
                 _tile.ReplaceTile(tile, (ContentTileDefinition) tileDef, gridUid, mapGrid);
-                _adminLogger.AddStructured(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} {position} to {prototype.Prototype}");
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} {position} to {prototype.Prototype}");
                 break;
 
             case RcdMode.ConstructObject:
@@ -610,7 +610,7 @@ public sealed partial class RCDSystem : EntitySystem
                         break;
                 }
 
-                _adminLogger.AddStructured(LogType.RCD, LogImpact.High, $"{user:user} used RCD to spawn {ent} at {position} on grid {gridUid}");
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to spawn {ent} at {position} on grid {gridUid}");
                 break;
 
             case RcdMode.Deconstruct:
@@ -619,12 +619,12 @@ public sealed partial class RCDSystem : EntitySystem
                 {
                     // Deconstruct tile, don't drop tile as item
                     if (_tile.DeconstructTile(tile, spawnItem: false))
-                        _adminLogger.AddStructured(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} tile: {position} open to space");
+                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} tile: {position} open to space");
                 }
                 else
                 {
                     // Deconstruct object
-                    _adminLogger.AddStructured(LogType.RCD, LogImpact.High, $"{user:user} used RCD to delete {target:target}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to delete {target:target}");
                     QueueDel(target);
                 }
 

@@ -111,7 +111,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
                 {
                     Act = () =>
                     {
-                        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{user:player} emptied container {ent}");
+                        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} emptied container {ent}");
                         var ents = _container.EmptyContainer(container);
                         foreach (var contained in ents)
                         {
@@ -145,7 +145,7 @@ public sealed partial class DragInsertContainerSystem : EntitySystem
         if (!_container.Insert(target, container))
             return false;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{user:player} inserted {target:player} into container {containerEntity}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} inserted {target:player} into container {containerEntity}");
         return true;
     }
 

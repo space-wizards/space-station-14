@@ -25,8 +25,8 @@ public sealed partial class AdminLog : IGraphAction
         var logManager = IoCManager.Resolve<IAdminLogManager>();
 
         if (userUid.HasValue)
-            logManager.AddStructured(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}, User: {entityManager.ToPrettyString(userUid.Value):player}");
+            logManager.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}, User: {entityManager.ToPrettyString(userUid.Value):player}");
         else
-            logManager.AddStructured(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}");
+            logManager.Add(LogType, Impact, $"{Message} - Entity: {entityManager.ToPrettyString(uid):entity}");
     }
 }

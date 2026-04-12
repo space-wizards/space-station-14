@@ -230,12 +230,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         if (door.State == DoorState.Closed)
         {
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} open");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} open");
             StartOpening(uid, door, args.User, true);
         }
         else if (door.State == DoorState.Open)
         {
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} closed");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} closed");
             StartClosing(uid, door, args.User, true);
         }
     }

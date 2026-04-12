@@ -37,9 +37,9 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
             _ => LogType.Action
         };
 
-        if (actorEntity != null)
+        if (actor is { } actorSession && actorEntity != null)
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 logType,
                 LogImpact.Medium,
                 $"{actorEntity.Value:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}",
@@ -49,7 +49,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                     coordinates = ev.Coordinates.ToString()
                 });
 
-            if (_adminManager.IsAdmin(actor, includeDeAdmin: true) &&
+            if (_adminManager.IsAdmin(actorSession, includeDeAdmin: true) &&
                 (ev.PlacementEventAction == PlacementEventAction.Create || ev.PlacementEventAction == PlacementEventAction.Erase))
             {
                 var action = ev.PlacementEventAction == PlacementEventAction.Create
@@ -57,7 +57,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
                     : AdminAuditAction.DeleteEntity;
 
                 _auditLog.LogAction(
-                    actor.UserId.UserId,
+                    actorSession.UserId.UserId,
                     action,
                     AuditSeverity.Notable,
                     $"Placement system {ev.PlacementEventAction.ToString().ToLower()}d entity {ToPrettyString(ev.EditedEntity)} at {ev.Coordinates}",
@@ -71,10 +71,10 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
             }
         }
         else if (actor != null)
-            _adminLogger.AddStructured(logType, LogImpact.Medium,
+            _adminLogger.Add(logType, LogImpact.Medium,
                 $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ev.EditedEntity:subject} at {ev.Coordinates}");
         else
-            _adminLogger.AddStructured(logType, LogImpact.Medium,
+            _adminLogger.Add(logType, LogImpact.Medium,
                 $"Placement system {ev.PlacementEventAction.ToString().ToLower()}ed {ev.EditedEntity:subject} at {ev.Coordinates}");
     }
 
@@ -86,7 +86,7 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
 
         if (actorEntity != null)
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 LogType.Tile,
                 LogImpact.Medium,
                 $"{actorEntity.Value:actor} used placement system to set tile {tileName} at {ev.Coordinates}",
@@ -98,12 +98,12 @@ public sealed partial class PlacementLoggerSystem : EntitySystem
         }
         else if (actor != null)
         {
-            _adminLogger.AddStructured(LogType.Tile, LogImpact.Medium,
+            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
                 $"{actor:player} used placement system to set tile {tileName} at {ev.Coordinates}");
         }
         else
         {
-            _adminLogger.AddStructured(LogType.Tile, LogImpact.Medium,
+            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
                 $"Placement system set tile {tileName} at {ev.Coordinates}");
         }
     }

@@ -242,18 +242,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     if (previous.Enabled != setData.Enabled)
                     {
                         string enabled = setData.Enabled ? "enabled" : "disabled" ;
-                        _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} {enabled}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} {enabled}");
                     }
 
                     if (previous.PumpDirection != setData.PumpDirection)
-                        _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} direction changed to {setData.PumpDirection}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} direction changed to {setData.PumpDirection}");
 
                     if (previous.PressureChecks != setData.PressureChecks)
-                        _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} pressure check changed to {setData.PressureChecks}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} pressure check changed to {setData.PressureChecks}");
 
                     if (previous.ExternalPressureBound != setData.ExternalPressureBound)
                     {
-                        _adminLogger.AddStructured(
+                        _adminLogger.Add(
                             LogType.AtmosDeviceSetting,
                             LogImpact.Medium,
                             $"{uid} external pressure bound changed from {previous.ExternalPressureBound} kPa to {setData.ExternalPressureBound} kPa"
@@ -262,7 +262,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                     if (previous.InternalPressureBound != setData.InternalPressureBound)
                     {
-                        _adminLogger.AddStructured(
+                        _adminLogger.Add(
                             LogType.AtmosDeviceSetting,
                             LogImpact.Medium,
                             $"{uid} internal pressure bound changed from {previous.InternalPressureBound} kPa to {setData.InternalPressureBound} kPa"
@@ -272,7 +272,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     if (previous.PressureLockoutOverride != setData.PressureLockoutOverride)
                     {
                         string enabled = setData.PressureLockoutOverride ? "enabled" : "disabled" ;
-                        _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} pressure lockout override {enabled}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} pressure lockout override {enabled}");
                     }
 
                     component.FromAirAlarmData(setData);

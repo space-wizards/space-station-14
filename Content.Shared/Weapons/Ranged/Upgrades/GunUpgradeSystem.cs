@@ -89,7 +89,7 @@ public sealed partial class GunUpgradeSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User, args.User);
         _gun.RefreshModifiers(ent.Owner);
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{args.User:player} inserted gun upgrade {args.Used} into {ent.Owner}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:player} inserted gun upgrade {args.Used} into {ent.Owner}.");
     }
 
     private void OnFireRateRefresh(Entity<GunUpgradeFireRateComponent> ent, ref GunRefreshModifiersEvent args)

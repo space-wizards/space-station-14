@@ -111,7 +111,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         _charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost);
 
         //This needs a ToPrettyString fix
-        _adminLogger.AddStructured(LogType.CrayonDraw, LogImpact.Low, $"{args.User:user} painted a {ent.Comp.SelectedDecal}");
+        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{args.User:user} painted a {ent.Comp.SelectedDecal}");
     }
 
     /// <summary>

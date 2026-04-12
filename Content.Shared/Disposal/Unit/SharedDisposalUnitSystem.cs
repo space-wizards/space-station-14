@@ -139,7 +139,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             Act = () =>
             {
                 _handsSystem.TryDropIntoContainer((args.User, args.Hands), args.Using.Value, component.Container, checkActionBlocker: false);
-                _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.User:player} inserted {args.Using.Value} into {uid}");
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User:player} inserted {args.Using.Value} into {uid}");
                 AfterInsert(uid, component, args.Using.Value, args.User);
             }
         };
@@ -217,7 +217,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{args.User:player} inserted {args.Used} into {uid}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User:player} inserted {args.Used} into {uid}");
         AfterInsert(uid, component, args.Used, args.User);
         args.Handled = true;
     }
@@ -464,7 +464,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Containers.Insert(toInsert, disposal.Container))
             return;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{user:player} inserted {toInsert} into {uid}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} inserted {toInsert} into {uid}");
         AfterInsert(uid, disposal, toInsert, user);
     }
 
@@ -479,7 +479,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
 
         if (user != inserted && user != null)
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{user.Value:player} inserted {inserted} into {uid}");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user.Value:player} inserted {inserted} into {uid}");
 
         QueueAutomaticEngage(uid, component);
 
@@ -723,11 +723,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         {
             case DisposalUnitComponent.UiButton.Eject:
                 TryEjectContents(uid, component);
-                _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{player:player} hit eject button on {uid}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:player} hit eject button on {uid}");
                 break;
             case DisposalUnitComponent.UiButton.Engage:
                 ToggleEngage(uid, component);
-                _adminLogger.AddStructured(LogType.Action, LogImpact.Low, $"{player:player} hit flush button on {uid}, it's now {(component.Engaged ? "on" : "off")}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:player} hit flush button on {uid}, it's now {(component.Engaged ? "on" : "off")}");
                 break;
             case DisposalUnitComponent.UiButton.Power:
                 _power.TogglePower(uid, user: args.Actor);

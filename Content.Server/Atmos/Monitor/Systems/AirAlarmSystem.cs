@@ -22,7 +22,7 @@ using System.Linq;
 using Content.Shared.Atmos.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
-using Robust.Shared.Player;
+
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -45,7 +45,6 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly DeviceListSystem _deviceList = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     #region Device Network API
@@ -300,17 +299,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
             if (args.Actor is { } actor)
             {
-                AdminLogHelpers.GetActorPlayerData(_player, actor, out var players, out var playerRoles);
-                _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                    $"{actor:player} changed {uid:target} mode to {args.Mode}",
-                    new { actor = (int) actor, target = (int) uid, mode = args.Mode },
-                    players: players,
-                    entities:
-                    [
-                        new AdminLogEntityRef(actor, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Target),
-                    ],
-                    playerRoles: playerRoles);
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                    $"{actor:actor} changed {uid:target} mode to {args.Mode}",
+                    new { actor = (int) actor, target = (int) uid, mode = args.Mode });
             }
             SetMode(uid, addr, args.Mode, false);
         }
@@ -326,17 +317,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         if (args.Actor is { } actor)
         {
-            AdminLogHelpers.GetActorPlayerData(_player, actor, out var players, out var playerRoles);
-            _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                $"{actor:player} changed {uid:target} auto mode to {args.Enabled}",
-                new { actor = (int) actor, target = (int) uid, enabled = args.Enabled },
-                players: players,
-                entities:
-                [
-                    new AdminLogEntityRef(actor, AdminLogEntityRole.Actor),
-                    new AdminLogEntityRef(uid, AdminLogEntityRole.Target),
-                ],
-                playerRoles: playerRoles);
+            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                $"{actor:actor} changed {uid:target} auto mode to {args.Enabled}",
+                new { actor = (int) actor, target = (int) uid, enabled = args.Enabled });
         }
         UpdateUI(uid, component);
     }
@@ -347,32 +330,17 @@ public sealed partial class AirAlarmSystem : EntitySystem
         {
             if (args.Actor is { } actor)
             {
-                AdminLogHelpers.GetActorPlayerData(_player, actor, out var players, out var playerRoles);
                 if (args.Gas != null)
                 {
-                    _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{actor:player} changed {args.Address} {args.Gas} {args.Type} threshold using {uid:target}",
-                        new { actor = (int) actor, target = (int) uid, address = args.Address, gas = args.Gas, thresholdType = args.Type },
-                        players: players,
-                        entities:
-                        [
-                            new AdminLogEntityRef(actor, AdminLogEntityRole.Actor),
-                            new AdminLogEntityRef(uid, AdminLogEntityRole.Target),
-                        ],
-                        playerRoles: playerRoles);
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                        $"{actor:actor} changed {args.Address} {args.Gas} {args.Type} threshold using {uid:target}",
+                        new { actor = (int) actor, target = (int) uid, address = args.Address, gas = args.Gas, thresholdType = args.Type });
                 }
                 else
                 {
-                    _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{actor:player} changed {args.Address} {args.Type} threshold using {uid:target}",
-                        new { actor = (int) actor, target = (int) uid, address = args.Address, thresholdType = args.Type },
-                        players: players,
-                        entities:
-                        [
-                            new AdminLogEntityRef(actor, AdminLogEntityRole.Actor),
-                            new AdminLogEntityRef(uid, AdminLogEntityRole.Target),
-                        ],
-                        playerRoles: playerRoles);
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                        $"{actor:actor} changed {args.Address} {args.Type} threshold using {uid:target}",
+                        new { actor = (int) actor, target = (int) uid, address = args.Address, thresholdType = args.Type });
                 }
             }
 
@@ -391,17 +359,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
         {
             if (args.Actor is { } actor)
             {
-                AdminLogHelpers.GetActorPlayerData(_player, actor, out var players, out var playerRoles);
-                _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                    $"{actor:player} changed {args.Address} settings using {uid:target}",
-                    new { actor = (int) actor, target = (int) uid, address = args.Address },
-                    players: players,
-                    entities:
-                    [
-                        new AdminLogEntityRef(actor, AdminLogEntityRole.Actor),
-                        new AdminLogEntityRef(uid, AdminLogEntityRole.Target),
-                    ],
-                    playerRoles: playerRoles);
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                    $"{actor:actor} changed {args.Address} settings using {uid:target}",
+                    new { actor = (int) actor, target = (int) uid, address = args.Address });
             }
 
             SetDeviceData(uid, args.Address, args.Data);
@@ -425,7 +385,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             case GasVentPumpData ventData:
                 foreach (string addr in component.VentData.Keys)
                 {
-                    _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to vent {addr}");
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to vent {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -433,7 +393,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
-                    _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to scrubber {addr}");
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to scrubber {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -462,7 +422,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
-            _adminLogger.AddStructured(LogType.AtmosDeviceSetting, LogImpact.Low, $"{user} attempted to access {uid} without access");
+            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Low, $"{user} attempted to access {uid} without access");
             return false;
         }
 

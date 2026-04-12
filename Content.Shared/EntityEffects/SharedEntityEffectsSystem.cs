@@ -121,7 +121,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
         if (effect.Impact is { } level)
         {
-            _adminLogger.AddStructured(
+            _adminLogger.Add(
                 effect.LogType,
                 level,
                 $"Entity effect {effect.GetType().Name:effect}"
