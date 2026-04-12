@@ -404,8 +404,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             || amount == 0)
             return false;
 
+        // TODO: Either make this percentage based regeneration and pre-pass the percentage.
+        // TODO: Solution regulation API that doesn't result in very minor FixedPoint2 errors (Currently gingerbreadman only regenerates 0.99u instead of 1.00u)
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
-        var ratio = amount / ent.Comp.BloodReferenceSolution.Volume;
+        var ratio = (float)amount / (float)ent.Comp.BloodReferenceSolution.Volume;
 
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
