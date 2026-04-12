@@ -471,13 +471,6 @@ public sealed partial class ChatUIController : UIController
             _activeSpeechBubbles.Add(entity, existing);
         }
 
-        // MIKEY i dont think i need?
-        // if (entity == _typingPreviewEntity && _typingPreviewBubble != null)
-        //     _typingPreviewBubble.VerticalOffset += bubble.ContentSize.Y;
-
-        // if (entity == _typingPreviewEntity && _typingPreviewBubble != null)
-        //     bubble.VerticalOffset += _typingPreviewBubble.ContentSize.Y;
-
         existing.Add(bubble);
         _speechBubbleRoot.AddChild(bubble);
 
