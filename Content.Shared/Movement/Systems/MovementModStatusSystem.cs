@@ -169,6 +169,7 @@ public sealed class MovementModStatusSystem : EntitySystem
 
         status.Comp.SprintSpeedModifier = sprintSpeedModifier;
         status.Comp.WalkSpeedModifier = walkSpeedModifier;
+
         Dirty(status);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
 
@@ -279,7 +280,6 @@ public sealed class MovementModStatusSystem : EntitySystem
 
         status.Comp.FrictionModifier = friction;
         status.Comp.AccelerationModifier = acceleration;
-
         Dirty(status);
 
         _movementSpeedModifier.RefreshFrictionModifiers(entity);
