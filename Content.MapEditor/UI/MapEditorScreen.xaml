@@ -1,0 +1,32 @@
+<editor:MapEditorScreen xmlns="https://spacestation14.io"
+    xmlns:editor="clr-namespace:Content.MapEditor.UI"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+
+    <LayoutContainer Name="RootLayout" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Name="MainLayout" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+
+            <!-- MenuBar placeholder: populated in code-behind -->
+            <BoxContainer Name="MenuBarContainer" Orientation="Horizontal"
+                          HorizontalExpand="True" MinHeight="24" />
+
+            <!-- Main viewport fills remaining space -->
+            <LayoutContainer Name="ViewportContainer" VerticalExpand="True" HorizontalExpand="True">
+                <controls:MainViewport Name="MainViewport" Access="Public" />
+            </LayoutContainer>
+
+            <!-- Status bar at bottom -->
+            <PanelContainer Name="StatusBarPanel" HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#222222DD" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal" Margin="4 2">
+                    <Label Name="StatusCoords" Text="(0, 0)" MinWidth="120" />
+                    <Label Name="StatusZoom" Text="Zoom: 1.0x" MinWidth="100" />
+                    <Label Name="StatusInfo" Text="No map loaded" HorizontalExpand="True" />
+                </BoxContainer>
+            </PanelContainer>
+
+        </BoxContainer>
+    </LayoutContainer>
+</editor:MapEditorScreen>
