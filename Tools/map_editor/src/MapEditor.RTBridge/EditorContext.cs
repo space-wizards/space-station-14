@@ -89,7 +89,8 @@ public sealed class EditorContext
         RunOnGameThread(() =>
         {
             EditorEye.DrawLight = enabled;
-            EditorEye.DrawFov = enabled;
+            // Keep FOV disabled — the editor needs full visibility, not player-perspective occlusion.
+            EditorEye.DrawFov = false;
         });
     }
 
