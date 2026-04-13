@@ -1,5 +1,5 @@
-using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.Prototypes;
 
 // todo big picture
 // check for stacking jitters in new status effects
@@ -7,6 +7,7 @@ using Content.Shared.StatusEffectNew;
 // todo fix namespace
 namespace Content.Shared.Jittering
 {
+
     /// <summary>
     /// A system for applying a jitter animation to any entity.
     /// </summary>
@@ -14,41 +15,17 @@ namespace Content.Shared.Jittering
     {
         [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
+        // This prototype exists as a compatibility layer with previous jittering.
+        // Ideally nothing calls `CreateJitter` but instead goes through status effects
+        private static readonly EntProtoId BasicJitter = "StatusEffectStandardJitter";
 
-            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
-        }
-
-        private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+        public void CreateJitter(EntityUid target, JitterSetting jitter, TimeSpan duration)
         {
-            if (!TryJitterFromStatuses(args.Target, out var setting))
+            if (!_statusEffects.TryAddStatusEffectDuration(target, BasicJitter, out var statusComp, duration))
                 return;
 
-            ApplyJitter(args.Target, setting);
-        }
-
-        private void OnStatusRemoved(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
-        {
-            if (TryJitterFromStatuses(args.Target, out var setting))
-                ApplyJitter(args.Target, setting);
-
-            else
-                RemCompDeferred<JitteringComponent>(args.Target);
-        }
-
-        public void ApplyJitter(EntityUid target, JitterSetting jitter)
-        {
-            var comp = EnsureComp<JitteringComponent>(target);
-            comp.Settings = jitter;
-            Dirty(target, comp);
-        }
-
-        public void EndJitter(EntityUid target)
-        {
-
+            var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusComp.Value);
+            jitterComp.Settings = jitter;
         }
 
         // todo make remark clearer
@@ -106,35 +83,6 @@ namespace Content.Shared.Jittering
             // jitter.MaxRadius = amplitude; //todo
             // jitter.Frequency = frequency;
             // Dirty(uid, jitter);
-        }
-
-        /// <summary>
-        /// Finds all the status effects with <see cref="JitteringStatusEffectComponent"/>
-        /// and combines them into a single jitter effect.
-        /// </summary>
-        protected bool TryJitterFromStatuses(EntityUid entity, out JitterSetting jitter)
-        {
-            jitter = new JitterSetting();
-
-            if (!_statusEffects.TryEffectsWithComp<JitteringStatusEffectComponent>(entity, out var effects))
-                return false;
-
-            foreach (var (_, jitterEffect, _) in effects)
-            {
-                jitter.Frequency += jitterEffect.Settings.Frequency;
-                jitter.MaxRadius += jitterEffect.Settings.MaxRadius;
-                jitter.MinRadius += jitterEffect.Settings.MinRadius;
-                // todo Do this properly by serializing Matrix2x3
-                var combinedMatrix = jitter.Matrix * jitterEffect.Settings.Matrix;
-                jitter.XSheer = combinedMatrix.X;
-                jitter.YSheer = combinedMatrix.Y;
-            }
-
-            jitter.Frequency /= effects.Count;
-            jitter.MaxRadius /= effects.Count;
-            jitter.MinRadius /= effects.Count;
-
-            return true;
         }
     }
 }

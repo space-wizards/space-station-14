@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Jittering;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
@@ -28,71 +29,85 @@ namespace Content.Client.Jittering
             SubscribeLocalEvent<JitteringComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<JitteringComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
+
+            // todo Yucky! This should be in the status effects relay but it's client only!
+            SubscribeLocalEvent<StatusEffectContainerComponent, AnimationCompletedEvent>(MakeRelay);
+            SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRelayedEvent<AnimationCompletedEvent>>(OnRelayAnimationCompleted);
         }
 
-        // Start the animation
+        private void MakeRelay(Entity<StatusEffectContainerComponent> ent, ref AnimationCompletedEvent args)
+        {
+            _statusEffects.RelayEvent(ent, args);
+        }
+
         private void OnStartup(Entity<JitteringComponent> ent, ref ComponentStartup args)
         {
             if (!_spriteQuery.TryComp(ent, out var sprite))
                 return;
 
-            var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent);
-
             ent.Comp.StartOffset = sprite.Offset;
-            DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer));
         }
 
-        // End the animation
         private void OnShutdown(Entity<JitteringComponent> ent, ref ComponentShutdown args)
         {
-            if (_animationQuery.TryComp(ent, out var animationPlayer))
-                _animationPlayer.Stop(ent, animationPlayer, _jitterAnimationKey);
-
             if (_spriteQuery.TryComp(ent, out var sprite))
                 _sprite.SetOffset((ent, sprite), sprite.Offset - ent.Comp.StartOffset);
         }
 
-        // repeat the animation
-        private void OnAnimationCompleted(Entity<JitteringComponent> ent, ref AnimationCompletedEvent args)
+        // Start the animation
+        private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
         {
-            if (args.Key != _jitterAnimationKey)
-                return;
-
-            // If the animation ended prematurely it's probably because of ComponentShutdown
-            if (!args.Finished)
-                return;
-
-            if (_spriteQuery.TryComp(ent, out var sprite)
-                && _animationQuery.TryComp(ent, out var animationPlayer))
-            {
-                DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer));
-            }
+            ApplyJitter(args.Target, ent.Comp.Settings);
         }
 
-        /// <summary>
-        /// Creates a jitter animation, then plays the animation on the entity.
-        /// </summary>
-        private void DoJitter(Entity<JitteringComponent, SpriteComponent, AnimationPlayerComponent> ent)
+        // End the animation if we're the last jitter
+        private void OnStatusRemoved(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
         {
-            var (uid, jittering, sprite, animationPlayer) = ent;
+            if (_statusEffects.HasEffectComp<JitteringStatusEffectComponent>(args.Target))
+                return;
+
+            RemCompDeferred<JitteringComponent>(args.Target);
+
+            if (_animationQuery.TryComp(args.Target, out var animationPlayer))
+                _animationPlayer.Stop(args.Target, animationPlayer, _jitterAnimationKey);
+        }
+
+        // Repeat the animation
+        private void OnRelayAnimationCompleted(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectRelayedEvent<AnimationCompletedEvent> args)
+        {
+            if (args.Args.Key != _jitterAnimationKey)
+                return;
+
+            ApplyJitter(args.Args.Uid, ent.Comp.Settings);
+        }
+
+        private void ApplyJitter(EntityUid target, JitterSetting jitter)
+        {
+            var playerComp = EnsureComp<AnimationPlayerComponent>(target);
+            if (_animationPlayer.HasRunningAnimation(target, _jitterAnimationKey))
+                return; // If we're already playing a jitter, wait for next time
+
+            if (!_spriteQuery.TryComp(target, out var spriteComp))
+                return;
+
+            var jitterComp = EnsureComp<JitteringComponent>(target);
 
             // Create a random offset
-            var offset = _random.NextVector2(jittering.Settings.MinRadius, jittering.Settings.MaxRadius);
-            offset = Vector2.Transform(offset, jittering.Settings.Matrix);
+            var offset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
+            offset = Vector2.Transform(offset, jitter.Matrix);
 
-            // If we're in the same quadrant as our last location, invert the offset
+            // If we're in the same quadrant as our current location, invert the offset
             // Reduces repetitive behavior and increases large movements
-            if (Math.Sign(offset.X) == Math.Sign(jittering.LastJitter.X)
-                && Math.Sign(offset.Y) == Math.Sign(jittering.LastJitter.Y))
+            if (Math.Sign(offset.X) == Math.Sign(spriteComp.Offset.X)
+                && Math.Sign(offset.Y) == Math.Sign(spriteComp.Offset.Y))
             {
                 offset = -offset;
             }
 
-            jittering.LastJitter = offset;
-
             // avoid dividing by 0 so animations don't try to be infinitely long
-            var length = jittering.Settings.Frequency <= 0 ? 0f : 1f / jittering.Settings.Frequency;
+            var length = jitter.Frequency <= 0 ? 0f : 1f / jitter.Frequency;
 
             // create and play the animation
             var animation = new Animation()
@@ -106,13 +121,13 @@ namespace Content.Client.Jittering
                         Property = nameof(SpriteComponent.Offset),
                         KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
-                            new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
+                            new AnimationTrackProperty.KeyFrame(spriteComp.Offset, 0f),
+                            new AnimationTrackProperty.KeyFrame(jitterComp.StartOffset + offset, length),
                         },
                     },
                 },
             };
-            _animationPlayer.Play((uid, animationPlayer), animation, _jitterAnimationKey);
+            _animationPlayer.Play((target, playerComp), animation, _jitterAnimationKey);
         }
     }
 }
