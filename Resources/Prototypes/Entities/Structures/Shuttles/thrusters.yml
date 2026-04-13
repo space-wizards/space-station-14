@@ -113,6 +113,7 @@
     access: [["Xenoborg"]]
   - type: Thruster
     canToggle: false # no turning it off by just clicking it
+  - type: LockableAnchoring
   - type: Anchorable
     flags:
     - Anchorable # no unwrenching it

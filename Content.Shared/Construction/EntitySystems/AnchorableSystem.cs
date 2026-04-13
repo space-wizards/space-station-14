@@ -7,6 +7,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -49,6 +50,8 @@ public sealed partial class AnchorableSystem : EntitySystem
         SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
         SubscribeLocalEvent<AnchorableComponent, ComponentStartup>(OnAnchorStartup);
         SubscribeLocalEvent<AnchorableComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
+
+        SubscribeLocalEvent<LockableAnchoringComponent, LockToggledEvent>(OnLock);
     }
 
     private void OnAnchorStartup(EntityUid uid, AnchorableComponent comp, ComponentStartup args)
@@ -59,6 +62,17 @@ public sealed partial class AnchorableSystem : EntitySystem
     private void OnAnchorStateChange(EntityUid uid, AnchorableComponent comp, AnchorStateChangedEvent args)
     {
         _appearance.SetData(uid, AnchorVisuals.Anchored, args.Anchored);
+    }
+
+    private void OnLock(Entity<LockableAnchoringComponent> entity, ref LockToggledEvent args)
+    {
+        if (!TryComp<AnchorableComponent>(entity, out var anchorable))
+            return;
+
+        if (args.Locked)
+            anchorable.Flags = entity.Comp.LockedFlags;
+        else
+            anchorable.Flags = entity.Comp.UnockedFlags;
     }
 
     /// <summary>
