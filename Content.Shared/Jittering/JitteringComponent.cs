@@ -67,20 +67,27 @@ public partial struct JitterSetting()
     public float MinRadius;
 
     /// <summary>
-    /// A linear transformation for X.
-    /// </summary>
-    [DataField]
-    public Vector2 XSheer = Vector2.UnitX;
-
-    /// <summary>
-    /// A linear transformation for Y.
-    /// </summary>
-    [DataField]
-    public Vector2 YSheer = Vector2.UnitY;
-
-    /// <summary>
     /// Jitter offsets are transformed by this matrix to finely control potential destinations.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Matrix3x2 Matrix => Matrix3x2.Create(XSheer, YSheer, Vector2.Zero);
+    public Matrix3x2 Matrix => Matrix3x2.Create(MatrixX, MatrixY, Vector2.Zero);
+
+    /// <summary>
+    /// Sheer applied to the X coordinate.
+    /// </summary>
+    [DataField]
+    public Vector2 MatrixX = Vector2.UnitX;
+
+    /// <summary>
+    /// Sheer applied to the Y coordinate.
+    /// </summary>
+    [DataField]
+    public Vector2 MatrixY = Vector2.UnitY;
+
+    // Too buggy without animation deltas
+    // /// <summary>
+    // /// A translation applied to the coordinates.
+    // /// </summary>
+    // [DataField]
+    // public Vector2 MatrixT = Vector2.UnitX;
 }

@@ -19,8 +19,8 @@ namespace Content.Shared.Jittering
         // Ideally nothing calls `CreateJitter` but instead goes through status effects
         private static readonly EntProtoId BasicJitter = "StatusEffectStandardJitter";
 
-        // This value approximates the old formulas used to translate "amplitude" into a coordinate position
-        private const float AmplitudeScalar = 0.055f;
+        // This value approximates the old formula used to translate "amplitude" into a coordinate position
+        private const float AmplitudeScalar = 0.01375f;
 
         public void CreateJitter(EntityUid target, JitterSetting jitter, TimeSpan? duration = null)
         {

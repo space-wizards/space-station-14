@@ -26,7 +26,6 @@ namespace Content.Client.Jittering
         {
             base.Initialize();
 
-            SubscribeLocalEvent<JitteringComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<JitteringComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
@@ -42,18 +41,10 @@ namespace Content.Client.Jittering
             _statusEffects.RelayEvent(ent, args);
         }
 
-        private void OnStartup(Entity<JitteringComponent> ent, ref ComponentStartup args)
-        {
-            if (!_spriteQuery.TryComp(ent, out var sprite))
-                return;
-
-            ent.Comp.StartOffset = sprite.Offset;
-        }
-
         private void OnShutdown(Entity<JitteringComponent> ent, ref ComponentShutdown args)
         {
             if (_spriteQuery.TryComp(ent, out var sprite))
-                _sprite.SetOffset((ent, sprite), sprite.Offset - ent.Comp.StartOffset);
+                _sprite.SetOffset((ent, sprite), ent.Comp.StartOffset);
         }
 
         // Start the animation
@@ -68,10 +59,10 @@ namespace Content.Client.Jittering
             if (_statusEffects.HasEffectComp<JitteringStatusEffectComponent>(args.Target))
                 return;
 
-            RemCompDeferred<JitteringComponent>(args.Target);
+            if (_animationQuery.TryComp(ent, out var animationPlayer))
+                _animationPlayer.Stop(ent, animationPlayer, _jitterAnimationKey);
 
-            if (_animationQuery.TryComp(args.Target, out var animationPlayer))
-                _animationPlayer.Stop(args.Target, animationPlayer, _jitterAnimationKey);
+            RemCompDeferred<JitteringComponent>(args.Target);
         }
 
         // Repeat the animation
@@ -92,11 +83,12 @@ namespace Content.Client.Jittering
             if (!_spriteQuery.TryComp(target, out var spriteComp))
                 return;
 
-            var jitterComp = EnsureComp<JitteringComponent>(target);
+            // Save the starting offset to reset it later
+            if (!EnsureComp<JitteringComponent>(target, out var jitterComp))
+                jitterComp.StartOffset = spriteComp.Offset;
 
             // Create a random offset
             var offset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
-            offset = Vector2.Transform(offset, jitter.Matrix);
 
             // If we're in the same quadrant as our current location, invert the offset
             // Reduces repetitive behavior and increases large movements
@@ -105,6 +97,8 @@ namespace Content.Client.Jittering
             {
                 offset = -offset;
             }
+
+            offset = Vector2.Transform(offset, jitter.Matrix);
 
             // avoid dividing by 0 so animations don't try to be infinitely long
             var length = jitter.Frequency <= 0 ? 0f : 1f / jitter.Frequency;
