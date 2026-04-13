@@ -8,7 +8,7 @@
     },
     "states": [
         {
-            "name": "bliue_sparkles",
+            "name": "blue_sparkles",
             "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
         },
         {
