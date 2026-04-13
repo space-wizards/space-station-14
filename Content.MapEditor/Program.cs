@@ -17,10 +17,11 @@ internal static class Program
             Sandboxing = false,
             PostInitCallback = () =>
             {
-                // Content.Client's EntryPoint has already run PreInit/Init/PostInit
-                // (registering IoC, components, prototypes, etc.) and switched to its
-                // default state.  Our EntryPoint (empty) ran as well.
-                // Override the state with our editor state.
+                // Start a single-player session so entity systems initialize
+                // and MapLoaderSystem becomes available.
+                var baseClient = IoCManager.Resolve<IBaseClient>();
+                baseClient.StartSinglePlayer();
+
                 var stateManager = IoCManager.Resolve<Robust.Client.State.IStateManager>();
                 stateManager.RequestStateChange<MapEditorState>();
             }
