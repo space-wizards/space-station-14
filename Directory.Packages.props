@@ -13,6 +13,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.NETCore.App" Version="2.1.30" />
     <PackageVersion Include="NetCord" Version="1.0.0-alpha.388" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageVersion Include="OpenTK" Version="4.9.4" />
