@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Jittering;
@@ -29,17 +30,18 @@ public sealed partial class JitteringComponent : Component
 /// Use only in conjunction with <see cref="StatusEffectComponent"/> on a status effect entity.
 /// </summary>
 [Access(typeof(SharedJitteringSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JitteringStatusEffectComponent : Component
 {
     /// <summary>
     /// The parameters of the jitter to apply.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public JitterSetting Settings = new()
     {
         Frequency = 3,
         MaxRadius = 0.15f,
+        MinRadius = 0.05f,
     };
 }
 

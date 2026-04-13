@@ -433,7 +433,7 @@
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectStandardJitter
-        time: 2
+        time: 1
         type: Add
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSuperJitter

@@ -90,7 +90,7 @@
   - type: JitteringStatusEffect
     settings:
       frequency: 3
-      maxRadius: 0.25
+      maxRadius: 0.15
 
 - type: entity
   parent: [StatusEffectBase, StatusEffectDebuff]
@@ -102,3 +102,4 @@
       frequency: 4
       maxRadius: 0.35
       minRadius: 0.10
+      xSheer: 0, 1

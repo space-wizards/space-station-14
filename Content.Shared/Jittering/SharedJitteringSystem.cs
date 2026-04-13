@@ -19,13 +19,18 @@ namespace Content.Shared.Jittering
         // Ideally nothing calls `CreateJitter` but instead goes through status effects
         private static readonly EntProtoId BasicJitter = "StatusEffectStandardJitter";
 
-        public void CreateJitter(EntityUid target, JitterSetting jitter, TimeSpan duration)
+        // This value approximates the old formulas used to translate "amplitude" into a coordinate position
+        private const float AmplitudeScalar = 0.055f;
+
+        public void CreateJitter(EntityUid target, JitterSetting jitter, TimeSpan? duration = null)
         {
-            if (!_statusEffects.TryAddStatusEffectDuration(target, BasicJitter, out var statusComp, duration))
+            // todo fix duration
+            if (!_statusEffects.TryUpdateStatusEffectDuration(target, BasicJitter, out var statusEnt, duration))
                 return;
 
-            var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusComp.Value);
+            var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt.Value);
             jitterComp.Settings = jitter;
+            Dirty(statusEnt.Value, jitterComp);
         }
 
         // todo make remark clearer
@@ -57,20 +62,14 @@ namespace Content.Shared.Jittering
         // bool forceValueChange = false,
         //     StatusEffectsComponent? status = null)
         {
-            // if (!Resolve(uid, ref status, false))
-            //     return;
-            //
-            // // todo
-            // if (_statusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
-            // {
-            //     var jittering = Comp<JitteringComponent>(uid);
-            //
-            //     // if(forceValueChange || jittering.Amplitude < amplitude)
-            //     //     jittering.Amplitude = amplitude;
-            //     //
-            //     // if (forceValueChange || jittering.Frequency < frequency)
-            //     //     jittering.Frequency = frequency;
-            // }
+            var jitter = new JitterSetting()
+            {
+                Frequency = frequency,
+                MinRadius = amplitude * AmplitudeScalar / 2,
+                MaxRadius = amplitude * AmplitudeScalar,
+            };
+
+            CreateJitter(uid, jitter, time);
         }
 
         // todo Shouldn't need this with new status effects
@@ -79,10 +78,14 @@ namespace Content.Shared.Jittering
         /// </summary>
         public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
         {
-            // var jitter = EnsureComp<JitteringComponent>(uid);
-            // jitter.MaxRadius = amplitude; //todo
-            // jitter.Frequency = frequency;
-            // Dirty(uid, jitter);
+            var jitter = new JitterSetting()
+            {
+                Frequency = frequency,
+                MinRadius = amplitude * AmplitudeScalar / 2,
+                MaxRadius = amplitude * AmplitudeScalar,
+            };
+
+            CreateJitter(uid, jitter);
         }
     }
 }
