@@ -162,13 +162,13 @@ public sealed partial class GunSystem
     {
         private readonly CustomBulletRenderer _customBulletRenderer;
 
-        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, float horizontalMult)
+        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture)
         {
             MinHeight = 15;
             HorizontalExpand = true;
             VerticalAlignment = VAlignment.Center;
 
-            AddChild(_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, horizontalMult)
+            AddChild(_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture)
             {
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,

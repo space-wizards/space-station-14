@@ -24,7 +24,6 @@
   - type: CustomSpriteAmmoCounter
     loadedAmmoSprite: Interface/ItemStatus/Tiles/tile.png
     spentAmmoSprite: Interface/ItemStatus/Tiles/tile_empty.png
-    horizontalMult: 0.6
   - type: AmmoCounter
   - type: Gun
     fireRate: 4

@@ -34,6 +34,6 @@ public sealed partial class GunSystem
         var loadedTexture = _sprite.GetFrame(ent.Comp.LoadedAmmoSprite, TimeSpan.Zero);
         var spentTexture = _sprite.GetFrame(ent.Comp.SpentAmmoSprite, TimeSpan.Zero);
 
-        args.Control = new CustomIconStatusControl(loadedTexture, spentTexture, ent.Comp.HorizontalMult);
+        args.Control = new CustomIconStatusControl(loadedTexture, spentTexture);
     }
 }
