@@ -24,8 +24,13 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
     layers:
-    - state: green_sparkles
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/jetpack.rsi
+      state: green_sparkles
 
 - type: entity
   id: JetpackEffectOrange
@@ -33,8 +38,13 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
     layers:
-    - state: orange_sparkles
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/jetpack.rsi
+      state: orange_sparkles
 
 - type: entity
   id: JetpackEffectPurple
@@ -42,8 +52,12 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
     layers:
-    - sprite: Effects/jetpack.rsi
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/jetpack.rsi
       state: purple_sparkles
 
 - type: entity
@@ -52,6 +66,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
+    drawdepth: SmallMobs
+    noRot: true
     layers:
-    - sprite: Effects/jetpack.rsi
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/jetpack.rsi
       state: red_sparkles
