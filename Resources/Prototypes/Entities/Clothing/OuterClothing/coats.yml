@@ -111,7 +111,8 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodChaplainHood
+      head:
+      - ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterCoatJensen

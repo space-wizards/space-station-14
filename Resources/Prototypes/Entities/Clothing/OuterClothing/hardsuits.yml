@@ -36,7 +36,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitAtmos
+      head:
+      - ClothingHeadHelmetHardsuitAtmos
   - type: Tag
     tags:
     - Hardsuit
@@ -73,7 +74,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitEngineering
+      head:
+      - ClothingHeadHelmetHardsuitEngineering
   - type: Tag
     tags:
     - Hardsuit
@@ -107,7 +109,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSpatio
+      head:
+      - ClothingHeadHelmetHardsuitSpatio
   - type: Tag
     tags:
     - Hardsuit
@@ -145,7 +148,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSalvage
+      head:
+      - ClothingHeadHelmetHardsuitSalvage
   - type: Tag
     tags:
     - Hardsuit
@@ -182,7 +186,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitGoliath
+      head:
+      - ClothingHeadHelmetHardsuitGoliath
   - type: Construction
     graph: HardsuitGoliath
     node: hardsuitGoliath
@@ -223,7 +228,8 @@
     coolingCoefficient: 0.001
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitMaxim
+      head:
+      - ClothingHeadHelmetHardsuitMaxim
 
 #Security Hardsuit
 - type: entity
@@ -255,7 +261,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSecurity
+      head:
+      - ClothingHeadHelmetHardsuitSecurity
   - type: Tag
     tags:
     - Hardsuit
@@ -287,7 +294,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitBrigmedic
+      head:
+      - ClothingHeadHelmetHardsuitBrigmedic
 
 #Warden's Hardsuit
 - type: entity
@@ -319,7 +327,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitWarden
+      head:
+      - ClothingHeadHelmetHardsuitWarden
 
 #Captain's Hardsuit
 - type: entity
@@ -352,7 +361,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitCap
+      head:
+      - ClothingHeadHelmetHardsuitCap
   - type: Tag
     tags:
     - Hardsuit
@@ -391,7 +401,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitEngineeringWhite
+      head:
+      - ClothingHeadHelmetHardsuitEngineeringWhite
   - type: Tag
     tags:
     - Hardsuit
@@ -423,7 +434,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitMedical
+      head:
+      - ClothingHeadHelmetHardsuitMedical
   - type: Tag
     tags:
     - Hardsuit
@@ -469,7 +481,8 @@
     - Hardsuit
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitRd
+      head:
+      - ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
     price: 750
   - type: StealTarget
@@ -506,7 +519,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSecurityRed
+      head:
+      - ClothingHeadHelmetHardsuitSecurityRed
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -540,7 +554,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitLuxury
+      head:
+      - ClothingHeadHelmetHardsuitLuxury
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -578,7 +593,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSyndie
+      head:
+      - ClothingHeadHelmetHardsuitSyndie
   - type: Tag
     tags:
     - MonkeyWearable
@@ -601,7 +617,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSyndieMedic
+      head:
+      - ClothingHeadHelmetHardsuitSyndieMedic
   - type: Tag
     tags:
     - Hardsuit
@@ -647,7 +664,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSyndieElite
+      head:
+      - ClothingHeadHelmetHardsuitSyndieElite
   - type: Tag
     tags:
     - Hardsuit
@@ -686,7 +704,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSyndieCommander
+      head:
+      - ClothingHeadHelmetHardsuitSyndieCommander
   - type: Tag
     tags:
     - Hardsuit
@@ -725,7 +744,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitCybersun
+      head:
+      - ClothingHeadHelmetHardsuitCybersun
   - type: Tag
     tags:
     - MonkeyWearable
@@ -763,7 +783,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitWizard
+      head:
+      - ClothingHeadHelmetHardsuitWizard
   - type: Tag
     tags:
     - Hardsuit
@@ -798,7 +819,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitLing
+      head:
+      - ClothingHeadHelmetHardsuitLing
 
 #Pirate EVA Suit (Deep Space EVA Suit)
 #Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
@@ -831,7 +853,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitPirateEVA
+      head:
+      - ClothingHeadHelmetHardsuitPirateEVA
   - type: StaticPrice
     price: 0
 
@@ -867,7 +890,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitPirateCap
+      head:
+      - ClothingHeadHelmetHardsuitPirateCap
   - type: StaticPrice
     price: 0
 
@@ -885,7 +909,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTLeader
+      head:
+      - ClothingHeadHelmetHardsuitERTLeader
 
 #ERT Chaplain Hardsuit
 - type: entity
@@ -900,7 +925,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTChaplain
+      head:
+      - ClothingHeadHelmetHardsuitERTChaplain
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -915,7 +941,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTEngineer
+      head:
+      - ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
     reduction: 0.8
 
@@ -932,7 +959,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTMedical
+      head:
+      - ClothingHeadHelmetHardsuitERTMedical
 
 #ERT Security Hardsuit
 - type: entity
@@ -947,7 +975,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTSecurity
+      head:
+      - ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
     tags:
     - Hardsuit
@@ -966,7 +995,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitERTJanitor
+      head:
+      - ClothingHeadHelmetHardsuitERTJanitor
 
 #Deathsquad
 - type: entity
@@ -1006,7 +1036,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitDeathsquad
+      head:
+      - ClothingHeadHelmetHardsuitDeathsquad
 
 #CBURN Hardsuit
 - type: entity
@@ -1046,7 +1077,8 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetCBURN
+      head:
+      - ClothingHeadHelmetCBURN
 
 #MISC. HARDSUITS
 #Clown Hardsuit
@@ -1081,7 +1113,8 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitClown
+      head:
+      - ClothingHeadHelmetHardsuitClown
 
 #Mime Hardsuit
 - type: entity
@@ -1099,7 +1132,8 @@
     node: mimeHardsuit
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitMime
+      head:
+      - ClothingHeadHelmetHardsuitMime
 
 #Santa's Hardsuit
 - type: entity
@@ -1130,4 +1164,5 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitSanta
+      head:
+      - ClothingHeadHelmetHardsuitSanta

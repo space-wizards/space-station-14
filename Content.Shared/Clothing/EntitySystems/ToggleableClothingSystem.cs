@@ -70,10 +70,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
-        if (text == null)
-            return;
-
         if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
             return;
 
@@ -89,7 +85,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             var verb = new EquipmentVerb()
             {
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-                Text = Loc.GetString(text),
+                Text = Loc.GetString(component.VerbText, ("entity", target)),
             };
 
             if (args.User == wearer)
@@ -110,7 +106,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             {
                 var verb = new EquipmentVerb()
                 {
-                    Text = Loc.GetString(text),
+                    Text = Loc.GetString(component.VerbText, ("entity", target)),
                     IconEntity = GetNetEntity(target),
                     Category = VerbCategory.ToggleClothing,
                 };
@@ -415,14 +411,17 @@ public sealed class ToggleableClothingSystem : EntitySystem
         else
         {
             var xform = Transform(uid);
-            foreach (var (slot, protoId) in component.ClothingPrototypes)
+            foreach (var (slot, protoIds) in component.ClothingPrototypes)
             {
-                var entity = Spawn(protoId, xform.Coordinates);
-                component.ClothingUids.Add(entity, slot);
-                var attachedClothing = EnsureComp<AttachedClothingComponent>(entity);
-                attachedClothing.AttachedUid = uid;
-                Dirty(entity, attachedClothing);
-                _containerSystem.Insert(entity, component.Container, containerXform: xform);
+                foreach (var protoId in protoIds)
+                {
+                    var entity = Spawn(protoId, xform.Coordinates);
+                    component.ClothingUids.Add(entity, slot);
+                    var attachedClothing = EnsureComp<AttachedClothingComponent>(entity);
+                    attachedClothing.AttachedUid = uid;
+                    Dirty(entity, attachedClothing);
+                    _containerSystem.Insert(entity, component.Container, containerXform: xform);
+                }
             }
             Dirty(uid, component);
         }

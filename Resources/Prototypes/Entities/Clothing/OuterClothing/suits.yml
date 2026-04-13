@@ -133,7 +133,8 @@
   - type: GroupExamine
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodRad
+      head:
+      - ClothingHeadHatHoodRad
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -277,7 +278,8 @@
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodIan
+      head:
+      - ClothingHeadHatHoodIan
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -307,7 +309,8 @@
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodCarp
+      head:
+      - ClothingHeadHatHoodCarp
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -329,7 +332,52 @@
     coolingCoefficient: 0.01
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetHardsuitCarp
+      head:
+      - ClothingHeadHelmetHardsuitCarp
   - type: StaticPrice
     price: 1500
 
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
+  id: ClothingOuterHardsuitEngineeringWhiteDebug
+  name: chief engineer's hardsuit debug
+  description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.02
+      lowPressureMultiplier: 1000
+    - type: FireProtection
+      reduction: 0.8
+    - type: ExplosionResistance
+      damageCoefficient: 0.2
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 0.4
+          Radiation: 0.0
+          Caustic: 0.7
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: HeldSpeedModifier
+    - type: ToggleableClothing
+      clothingPrototypes:
+        head: 
+        - ClothingHeadHelmetHardsuitEngineeringWhite
+        shoes: 
+        - ClothingShoesBootsMagAdv
+        gloves: 
+        - ClothingHandsGlovesColorYellow
+        - ClothingHandsGlovesColorWhite
+        - ClothingHandsGlovesColorBlack
+    - type: Tag
+      tags:
+        - Hardsuit
+        - WhitelistChameleon
