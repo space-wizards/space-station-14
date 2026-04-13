@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
@@ -14,6 +15,8 @@ namespace Content.Server.Speech.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
+
         // Regex of characters to stutter.
         private static readonly Regex Stutter = new(@"[b-df-hj-np-tv-wxyz]",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -22,7 +25,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
             SubscribeLocalEvent<StutteringAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccent);
-            SubscribeLocalEvent<StutteringAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args));
+            SubscribeLocalEvent<StutteringAccentComponent, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent);
         }
 
         public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh)
@@ -41,6 +44,14 @@ namespace Content.Server.Speech.EntitySystems
         public override void DoRemoveStutter(EntityUid uid)
         {
             Status.TryRemoveStatusEffect(uid, Stuttering);
+        }
+
+        private void OnInventoryRelayAccent(Entity<StutteringAccentComponent> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
+        {
+            if (!_relayAccentsQuery.HasComponent(ent))
+                return;
+
+            OnAccent(ent, ref args.Args);
         }
 
         private void OnAccent(Entity<StutteringAccentComponent> entity, ref AccentGetEvent args)

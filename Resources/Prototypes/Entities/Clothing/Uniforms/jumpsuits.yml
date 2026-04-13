@@ -1060,6 +1060,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
+  - type: RelayAccents
   - type: PirateAccent
 
 - type: entity

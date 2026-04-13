@@ -38,6 +38,7 @@
     sprite: Clothing/Head/Hats/beret_french.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_french.rsi
+  - type: RelayAccents
   - type: FrenchAccent
   - type: Tag
     tags:
@@ -502,9 +503,9 @@
     tags:
     - PetWearable
     - CorgiWearable
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: pirate
+  - type: RelayAccents
+  - type: ReplacementAccent
+    accent: pirate
 
 - type: entity
   parent: ClothingHeadBase
@@ -588,6 +589,7 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/sombrero.rsi
+  - type: RelayAccents
   - type: SpanishAccent
   - type: Tag
     tags:
@@ -676,6 +678,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Appearance
+  - type: RelayAccents
   - type: RussianAccent
   - type: Foldable
     canFoldInsideContainer: true
@@ -1049,9 +1052,9 @@
     sprite: Clothing/Head/Hats/piratetricord.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/piratetricord.rsi
-  - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: pirate
+  - type: RelayAccents
+  - type: ReplacementAccent
+    accent: pirate
 
 - type: entity
   parent: ClothingHeadBase
@@ -1330,9 +1333,9 @@
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
-    - type: AddAccentClothing
-      accent: ReplacementAccent
-      replacement: cowboy
+    - type: RelayAccents
+    - type: ReplacementAccent
+      accent: cowboy
     - type: Tag
       tags:
       - PetWearable

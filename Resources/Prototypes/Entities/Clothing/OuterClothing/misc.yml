@@ -133,6 +133,7 @@
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/classicponcho.rsi
+  - type: RelayAccents
   - type: SpanishAccent
 
 - type: entity
@@ -167,6 +168,7 @@
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/poncho.rsi
+  - type: RelayAccents
   - type: SpanishAccent
 
 - type: entity

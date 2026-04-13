@@ -22,18 +22,28 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
+    [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), after: [typeof(ReplacementAccentSystem)]);
+        SubscribeLocalEvent<DamagedSiliconAccentComponent, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, after: [typeof(ReplacementAccentSystem)]);
         SubscribeLocalEvent<DamagedSiliconAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
         {
             var accentGetEvent = ev.Args;
             OnAccent((e, c), ref accentGetEvent);
         },
             after: [typeof(ReplacementAccentSystem)]);
+    }
+
+    private void OnInventoryRelayAccent(Entity<DamagedSiliconAccentComponent> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
+    {
+        if (!_relayAccentsQuery.HasComponent(ent))
+            return;
+
+        OnAccent(ent, ref args.Args);
     }
 
     private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)

@@ -15,6 +15,8 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
     [Dependency] private readonly Shared.StatusEffect.StatusEffectsSystem _statusEffects = default!;
 
+    [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
+
     private static readonly ProtoId<StatusEffectPrototype> RatvarianKey = "RatvarianLanguage";
 
     // This is the word of Ratvar and those who speak it shall abide by His rules:
@@ -45,7 +47,7 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     {
         // Activate before other modifications so translation works properly
         SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
-        SubscribeLocalEvent<RatvarianLanguageComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args), before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
+        SubscribeLocalEvent<RatvarianLanguageComponent, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
         SubscribeLocalEvent<RatvarianLanguageComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
         {
             var accentGetEvent = ev.Args;
@@ -61,6 +63,14 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
             return;
 
         _statusEffects.TryAddStatusEffect<RatvarianLanguageComponent>(uid, RatvarianKey, time, refresh, status);
+    }
+
+    private void OnInventoryRelayAccent(Entity<RatvarianLanguageComponent> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
+    {
+        if (!_relayAccentsQuery.HasComponent(ent))
+            return;
+
+        OnAccent(ent, ref args.Args);
     }
 
     private void OnAccent(Entity<RatvarianLanguageComponent> entity, ref AccentGetEvent args)

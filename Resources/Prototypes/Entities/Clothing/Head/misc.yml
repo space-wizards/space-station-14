@@ -202,6 +202,7 @@
     proto: regal
   - type: StaticPrice
     price: 3000
+  - type: RelayAccents
   - type: MobsterAccent
 
 - type: entity
@@ -217,6 +218,7 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
+  - type: RelayAccents
   - type: OwOAccent
   - type: StaticPrice
     price: 15000
@@ -240,6 +242,7 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
+  - type: RelayAccents
   - type: OwOAccent
 
 - type: entity
@@ -259,6 +262,7 @@
     sprite: Clothing/Head/Hats/dogears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/dogears.rsi
+  - type: RelayAccents
   - type: BarkAccent
 
 - type: entity

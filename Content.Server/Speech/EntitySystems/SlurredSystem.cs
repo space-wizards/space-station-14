@@ -3,6 +3,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
 using Content.Shared.Inventory;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
@@ -16,6 +17,8 @@ public sealed class SlurredSystem : SharedSlurredSystem
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+
+    [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
 
     /// <summary>
     /// Divisor applied to total seconds used to get the odds of slurred speech occuring.
@@ -31,7 +34,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
         SubscribeLocalEvent<SlurredAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccentRelayed);
-        SubscribeLocalEvent<SlurredAccentComponent, InventoryRelayedEvent<AccentGetEvent>>((e, c, ev) => OnAccent((e, c), ref ev.Args));
+        SubscribeLocalEvent<SlurredAccentComponent, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent);
 
     }
 
@@ -48,6 +51,14 @@ public sealed class SlurredSystem : SharedSlurredSystem
         var magic = time.Item2 == null ? SlurredModifier : (float) (time.Item2 - _timing.CurTime).Value.TotalSeconds - SlurredThreshold;
 
         return Math.Clamp(magic / SlurredModifier, 0f, 1f);
+    }
+
+    private void OnInventoryRelayAccent(Entity<SlurredAccentComponent> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
+    {
+        if (!_relayAccentsQuery.HasComponent(ent))
+            return;
+
+        OnAccent(ent, ref args.Args);
     }
 
     private void OnAccent(Entity<SlurredAccentComponent> entity, ref AccentGetEvent args)

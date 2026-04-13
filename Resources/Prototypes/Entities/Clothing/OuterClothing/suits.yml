@@ -288,6 +288,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  - type: RelayAccents
   - type: BarkAccent
 
 - type: entity
