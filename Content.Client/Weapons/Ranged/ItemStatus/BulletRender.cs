@@ -291,8 +291,14 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        var itemSeparation = (HorizontalTotal - _loadedSprite.Width) / (Capacity / Rows - 1);
-        itemSeparation = itemSeparation > _baseSeparation ? _baseSeparation : itemSeparation;
+        var itemSeparation = _baseSeparation;
+
+        if (Capacity / Rows > 1)
+        {
+            itemSeparation = (HorizontalTotal - _loadedSprite.Width) / (Capacity / Rows - 1);
+            itemSeparation = itemSeparation < _baseSeparation ? itemSeparation : _baseSeparation;
+            itemSeparation = int.Max(1, itemSeparation);
+        }
 
         Parameters = new LayoutParameters()
         {
