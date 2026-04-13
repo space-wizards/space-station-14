@@ -11,7 +11,7 @@
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
       sprite: Effects/jetpack.rsi
-      state: bliue_sparkles
+      state: blue_sparkles
   - type: EffectVisuals
   - type: Tag
     tags:
@@ -43,7 +43,8 @@
   components:
   - type: Sprite
     layers:
-    - state: purple_sparkles
+    - sprite: Effects/jetpack.rsi
+      state: purple_sparkles
 
 - type: entity
   id: JetpackEffectRed
@@ -52,4 +53,5 @@
   components:
   - type: Sprite
     layers:
-    - state: red_sparkles
+    - sprite: Effects/jetpack.rsi
+      state: red_sparkles
