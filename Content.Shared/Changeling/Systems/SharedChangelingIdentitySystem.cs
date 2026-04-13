@@ -132,30 +132,25 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="settings">The settings to use for cloning.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? CloneToPausedMap(CloningSettingsPrototype settings, EntityUid target)
+    public EntityUid? CloneToPausedMap(ProtoId<CloningSettingsPrototype> settings, EntityUid target)
     {
         // Don't create client side duplicate clones or a clientside map.
         if (_net.IsClient)
             return null;
 
-        if (!TryComp<HumanoidProfileComponent>(target, out var humanoid)
-            || !_prototype.Resolve(humanoid.Species, out var speciesPrototype))
+        EnsurePausedMap();
+        if (PausedMapId == null)
             return null;
 
-        EnsurePausedMap();
-        var clone = Spawn(speciesPrototype.Prototype, new MapCoordinates(Vector2.Zero, PausedMapId!.Value));
+        var mapCoords = new MapCoordinates(0, 0, PausedMapId.Value);
+        if (!_cloningSystem.TryCloning(target, mapCoords, settings, out var clone))
+            return null;
 
-        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone);
-        storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference or the autonetworking source gen is fixed
+        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone.Value);
+        storedIdentity.OriginalEntity = target; // TODO: network this once we have a relations system so that this does not cause PVS errors.
 
         if (TryComp<ActorComponent>(target, out var actor))
             storedIdentity.OriginalSession = actor.PlayerSession;
-
-        _visualBody.CopyAppearanceFrom(target, clone);
-        _cloningSystem.CloneComponents(target, clone, settings);
-
-        var targetName = _nameMod.GetBaseName(target);
-        _metaSystem.SetEntityName(clone, targetName);
 
         return clone;
     }
@@ -168,10 +163,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// <param name="target">The target to clone.</param>
     public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
-        if (!_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
-            return null;
-
-        var clone = CloneToPausedMap(settings, target);
+        var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
             return null;

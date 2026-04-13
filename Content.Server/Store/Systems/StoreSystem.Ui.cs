@@ -220,6 +220,13 @@ public sealed partial class StoreSystem
             component.BalanceSpent[currency] += amount;
         }
 
+        //apply components
+        if (listing.ProductComponents != null)
+        {
+            if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
+                EntityManager.AddComponents(buyer, productComponentsEntity.Components);
+        }
+
         //spawn entity
         if (listing.ProductEntity != null)
         {

@@ -142,6 +142,10 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || _lock.IsLocked(ent.Owner))
             return;
 
+        // Don't show the verb if we don't have the BUI.
+        if (!UI.HasUi(ent, ChameleonUiKey.Key))
+            return;
+
         // Can't pass args from a ref event inside of lambdas
         var user = args.User;
 

@@ -21,8 +21,12 @@ public sealed partial class ChameleonClothingComponent : Component
     public SlotFlags Slot;
 
     /// <summary>
-    ///     EntityPrototype id that chameleon item is trying to mimic.
+    ///     The currently selected EntityPrototype ID that chameleon item is trying to mimic.
     /// </summary>
+    /// <remarks>
+    ///     TODO: Rename this, the name "Default" is misleading.
+    ///     Also should not be required, just make null use its original sprites.
+    /// </remarks>
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
@@ -37,6 +41,12 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [DataField]
     public string? RequireTag;
+
+    /// <summary>
+    ///     Can this item have its prototype changed by a <see cref="ChameleonControllerOutfitSelectedEvent"/>?
+    /// </summary>
+    [DataField]
+    public bool CanBeSetByController = true;
 
     /// <summary>
     ///     Will component owner be affected by EMP pulses?
