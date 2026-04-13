@@ -91,6 +91,12 @@ public sealed class EditorContext
             EditorEye.DrawLight = enabled;
             // Keep FOV disabled — the editor needs full visibility, not player-perspective occlusion.
             EditorEye.DrawFov = false;
+
+            // The default light/occluder caps (2048) are too low for viewing an
+            // entire station at once. Raise them when lighting is enabled.
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            cfg.SetCVar(CVars.MaxLightCount, enabled ? 16384 : 2048);
+            cfg.SetCVar(CVars.MaxOccluderCount, enabled ? 16384 : 2048);
         });
     }
 
