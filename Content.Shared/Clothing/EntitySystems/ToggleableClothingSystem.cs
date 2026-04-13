@@ -209,7 +209,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             if (component.Container.Contains(entity))
                 continue;
 
-            if (!_inventorySystem.TryUnequip(args.Equipee,
+            if (!_inventorySystem.TryUnequip(args.EquipTarget,
                     slot,
                     out var removed,
                     force: true,
