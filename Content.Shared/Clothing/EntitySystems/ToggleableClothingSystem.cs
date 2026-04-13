@@ -319,12 +319,15 @@ public sealed class ToggleableClothingSystem : EntitySystem
             // Determine if any of the unequipped clothes can be equipped. If they can, put them on. If they can't, then
             // instead try to unequip any currently equipped ones. This is so that if the user is wearing a piece of
             // clothing that blocks only one of the slots, the default action continues to function for the rest of the
-            // slots.
+            // slots. This also rejects clothing where there are multiple entries in a single slot.
             var unequippedClothing = container.ContainedEntities.Where(clothing =>
-                    CanEquip(user, clothing, component.ClothingUids[clothing]))
-                .ToArray();
-
-            if (unequippedClothing.Length != 0)
+                    CanEquip(user, clothing, component.ClothingUids[clothing])).ToList();
+            
+            // Sorting ensures that the client and server come to the same result, otherwise prediction breaks.
+            unequippedClothing.Sort((a, b) => a.CompareTo(b));
+            unequippedClothing = unequippedClothing.DistinctBy(clothing => component.ClothingUids[clothing]).ToList();
+            
+            if (unequippedClothing.Count != 0)
             {
                 foreach (var entity in unequippedClothing)
                 {
