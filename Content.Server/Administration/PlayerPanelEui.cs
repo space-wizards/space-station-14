@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
@@ -22,7 +24,8 @@ public sealed class PlayerPanelEui : BaseEui
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     private readonly LocatedPlayerData _targetPlayer;
     private int? _notes;
@@ -95,21 +98,54 @@ public sealed class PlayerPanelEui : BaseEui
 
                 if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
                 {
-                    _adminLog.Add(LogType.Action,$"{Player:actor} unfroze {_entity.ToPrettyString(session.AttachedEntity):subject}");
+                    _adminLogger.Add(LogType.Action,$"{Player:actor} unfroze {session.AttachedEntity:subject}");
                     _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                    _auditLog.LogAction(
+                        Player.UserId,
+                        AdminAuditAction.Unfreeze,
+                        AuditSeverity.Notable,
+                        $"Unfroze {_targetPlayer.Username}",
+                        targetPlayerUserId: _targetPlayer.UserId.UserId,
+                        targetEntity: session.AttachedEntity.Value,
+                        payload: JsonSerializer.SerializeToDocument(new
+                        {
+                            action = "unfreeze"
+                        }));
                     SetPlayerState();
                     return;
                 }
 
                 if (freezeMsg.Mute)
                 {
-                    _adminLog.Add(LogType.Action,$"{Player:actor} froze and muted {_entity.ToPrettyString(session.AttachedEntity):subject}");
+                    _adminLogger.Add(LogType.Action,$"{Player:actor} froze and muted {session.AttachedEntity:subject}");
                     frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
+                    _auditLog.LogAction(
+                        Player.UserId,
+                        AdminAuditAction.Freeze,
+                        AuditSeverity.Notable,
+                        $"Froze and muted {_targetPlayer.Username}",
+                        targetPlayerUserId: _targetPlayer.UserId.UserId,
+                        targetEntity: session.AttachedEntity.Value,
+                        payload: JsonSerializer.SerializeToDocument(new
+                        {
+                            action = "freeze_and_mute"
+                        }));
                 }
                 else
                 {
-                    _adminLog.Add(LogType.Action,$"{Player:actor} froze {_entity.ToPrettyString(session.AttachedEntity):subject}");
+                    _adminLogger.Add(LogType.Action,$"{Player:actor} froze {session.AttachedEntity:subject}");
                     _entity.EnsureComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                    _auditLog.LogAction(
+                        Player.UserId,
+                        AdminAuditAction.Freeze,
+                        AuditSeverity.Notable,
+                        $"Froze {_targetPlayer.Username}",
+                        targetPlayerUserId: _targetPlayer.UserId.UserId,
+                        targetEntity: session.AttachedEntity.Value,
+                        payload: JsonSerializer.SerializeToDocument(new
+                        {
+                            action = "freeze"
+                        }));
                 }
                 SetPlayerState();
                 break;
@@ -118,7 +154,7 @@ public sealed class PlayerPanelEui : BaseEui
                 if (!_admins.HasAdminFlag(Player, AdminFlags.Logs))
                     return;
 
-                _adminLog.Add(LogType.Action, $"{Player:actor} opened logs on {_targetPlayer.Username:subject}");
+                _adminLogger.Add(LogType.Action, $"{Player:actor} opened logs on {_targetPlayer.Username:subject}");
                 var ui = new AdminLogsEui();
                 _eui.OpenEui(ui, Player);
                 ui.SetLogFilter(search: _targetPlayer.Username);
@@ -132,7 +168,7 @@ public sealed class PlayerPanelEui : BaseEui
 
                 if (msg is PlayerPanelRejuvenationMessage)
                 {
-                    _adminLog.Add(LogType.Action,$"{Player:actor} rejuvenated {_entity.ToPrettyString(session.AttachedEntity):subject}");
+                    _adminLogger.Add(LogType.Action,$"{Player:actor} rejuvenated {session.AttachedEntity:subject}");
                     if (!_entity.TrySystem<RejuvenateSystem>(out var rejuvenate))
                         return;
 
@@ -140,7 +176,7 @@ public sealed class PlayerPanelEui : BaseEui
                 }
                 else
                 {
-                    _adminLog.Add(LogType.Action,$"{Player:actor} deleted {_entity.ToPrettyString(session.AttachedEntity):subject}");
+                    _adminLogger.Add(LogType.Action,$"{Player:actor} deleted {session.AttachedEntity:subject}");
                     _entity.DeleteEntity(session.AttachedEntity);
                 }
                 break;

@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -37,7 +36,26 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
 
         // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
         if (HasComp<MobStateComponent>(args.Target))
-            _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision");
+        {
+            var thrower = args.Component.Thrower;
+
+            if (thrower is { } source)
+            {
+                _adminLogger.Add(
+                    LogType.ThrowHit,
+                    LogImpact.Medium,
+                    $"{args.Target:victim} received {dmg.GetTotal():damage} damage from {uid:tool} thrown by {source:actor}",
+                    new { totalDamage = dmg.GetTotal() });
+            }
+            else
+            {
+                _adminLogger.Add(
+                    LogType.ThrowHit,
+                    LogImpact.Medium,
+                    $"{args.Target:victim} received {dmg.GetTotal():damage} damage from {uid:tool}",
+                    new { totalDamage = dmg.GetTotal() });
+            }
+        }
 
         if (!dmg.Empty)
         {

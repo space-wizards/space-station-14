@@ -1,9 +1,12 @@
-﻿using System.Linq;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -18,6 +21,7 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
         private readonly ISawmill _sawmill;
@@ -153,6 +157,18 @@ namespace Content.Server.Administration.UI
 
             await _db.RemoveAdminRankAsync(rr.Id);
 
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Removed admin rank {rank.Name}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "remove_rank",
+                    rankId = rr.Id,
+                    rankName = rank.Name
+                }));
+
             _adminManager.ReloadAdminsWithRank(rr.Id);
         }
 
@@ -178,10 +194,23 @@ namespace Content.Server.Administration.UI
 
             rank.Flags = GenRankFlagList(ur.Flags);
             rank.Name = ur.Name;
+            var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ur.Flags).Select(f => $"+{f}"));
 
             await _db.UpdateAdminRankAsync(rank);
 
-            var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ur.Flags).Select(f => $"+{f}"));
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Updated admin rank {rank.Name}/{flagText}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "update_rank",
+                    rankId = ur.Id,
+                    rankName = rank.Name,
+                    flags = flagText
+                }));
+
             _sawmill.Info($"{Player} updated admin rank {rank.Name}/{flagText}.");
 
             _adminManager.ReloadAdminsWithRank(ur.Id);
@@ -204,6 +233,19 @@ namespace Content.Server.Administration.UI
             await _db.AddAdminRankAsync(rank);
 
             var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ar.Flags).Select(f => $"+{f}"));
+
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Added admin rank {rank.Name}/{flagText}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "add_rank",
+                    rankName = rank.Name,
+                    flags = flagText
+                }));
+
             _sawmill.Info($"{Player} added admin rank {rank.Name}/{flagText}.");
         }
 
@@ -225,6 +267,19 @@ namespace Content.Server.Administration.UI
             await _db.RemoveAdminAsync(ra.UserId);
 
             var record = await _db.GetPlayerRecordByUserId(ra.UserId);
+
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "remove_admin",
+                    targetUserId = ra.UserId.UserId,
+                    targetName = record?.LastSeenUserName
+                }));
+
             _sawmill.Info($"{Player} removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}");
 
             if (_playerManager.TryGetSessionById(ra.UserId, out var player))
@@ -270,6 +325,22 @@ namespace Content.Server.Administration.UI
             var name = playerRecord?.LastSeenUserName ?? ua.UserId.ToString();
             var title = ua.Title ?? "<no title>";
             var flags = AdminFlagsHelper.PosNegFlagsText(ua.PosFlags, ua.NegFlags);
+
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Updated admin {name} to {title}/{rankName}/{flags}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "update_admin",
+                    targetUserId = ua.UserId.UserId,
+                    targetName = name,
+                    title = ua.Title,
+                    rankName,
+                    flags,
+                    suspended = ua.Suspended
+                }));
 
             _sawmill.Info($"{Player} updated admin {name} to {title}/{rankName}/{flags}");
 
@@ -345,6 +416,21 @@ namespace Content.Server.Administration.UI
 
             var title = ca.Title ?? "<no title>";
             var flags = AdminFlagsHelper.PosNegFlagsText(ca.PosFlags, ca.NegFlags);
+
+            _auditLog.LogAction(
+                Player.UserId,
+                AdminAuditAction.PermissionChange,
+                AuditSeverity.Critical,
+                $"Added admin {name} as {title}/{rankName}/{flags}",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    change = "add_admin",
+                    targetUserId = userId.UserId,
+                    targetName = name,
+                    title = ca.Title,
+                    rankName,
+                    flags
+                }));
 
             _sawmill.Info($"{Player} added admin {name} as {title}/{rankName}/{flags}");
 

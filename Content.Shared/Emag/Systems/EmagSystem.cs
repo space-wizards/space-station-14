@@ -80,7 +80,7 @@ public sealed class EmagSystem : EntitySystem
 
         _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent);
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {typeToUse}");
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{user:player} emagged {target:target} with flag(s): {typeToUse}");
 
         if (emaggedEvent.Handled)
             _sharedCharges.TryUseCharge(chargesEnt);

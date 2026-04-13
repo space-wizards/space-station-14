@@ -58,6 +58,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Misc/job_icons.rsi"), "Syndicate"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Traitor");
                 _antag.ForceMakeAntag<TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
             },
             Impact = LogImpact.High,
@@ -73,6 +74,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "InitialInfected"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "InitialInfected");
                 _antag.ForceMakeAntag<ZombieRuleComponent>(targetPlayer, DefaultInitialInfectedRule);
             },
             Impact = LogImpact.High,
@@ -88,6 +90,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "Zombie"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Zombie");
                 _zombie.ZombifyEntity(args.Target);
             },
             Impact = LogImpact.High,
@@ -103,6 +106,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hardsuits/syndicate.rsi"), "icon"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "NukeOp");
                 _antag.ForceMakeAntag<NukeopsRuleComponent>(targetPlayer, DefaultNukeOpRule);
             },
             Impact = LogImpact.High,
@@ -118,6 +122,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Pirate");
                 // pirates just get an outfit because they don't really have logic associated with them
                 _outfit.SetOutfit(args.Target, PirateGearId);
             },
@@ -134,6 +139,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "HeadRevolutionary"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Revolutionary");
                 _antag.ForceMakeAntag<RevolutionaryRuleComponent>(targetPlayer, DefaultRevsRule);
             },
             Impact = LogImpact.High,
@@ -149,6 +155,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/Color/black.rsi"), "icon"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Thief");
                 _antag.ForceMakeAntag<ThiefRuleComponent>(targetPlayer, DefaultThiefRule);
             },
             Impact = LogImpact.High,
@@ -164,6 +171,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Changeling");
                 _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
             },
             Impact = LogImpact.High,
@@ -179,6 +187,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "ParadoxClone"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "ParadoxClone");
                 var ruleEnt = _gameTicker.AddGameRule(ParadoxCloneRuleId);
 
                 if (!TryComp<ParadoxCloneRuleComponent>(ruleEnt, out var paradoxCloneRuleComp))
@@ -200,6 +209,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "Wizard"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "Wizard");
                 // Wizard has no rule components as of writing, but I gotta put something here to satisfy the machine so just make it wizard mind rule :)
                 _antag.ForceMakeAntag<WizardRoleComponent>(targetPlayer, DefaultWizardRule);
             },
@@ -216,6 +226,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
             Act = () =>
             {
+                AuditAntagAssign(args.User, args.Target, "SpaceNinja");
                 _antag.ForceMakeAntag<NinjaRoleComponent>(targetPlayer, DefaultNinjaRule);
             },
             Impact = LogImpact.High,
@@ -225,5 +236,18 @@ public sealed partial class AdminVerbSystem
 
         if (HasComp<HumanoidProfileComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
+    }
+
+    private void AuditAntagAssign(EntityUid admin, EntityUid target, string antagType)
+    {
+        if (_playerManager.TryGetSessionByEntity(admin, out var session))
+        {
+            _auditLog.LogAction(
+                session.UserId,
+                AdminAuditAction.SetRole,
+                AuditSeverity.Notable,
+                $"Made {ToPrettyString(target)} into {antagType}",
+                targetEntity: target);
+        }
     }
 }

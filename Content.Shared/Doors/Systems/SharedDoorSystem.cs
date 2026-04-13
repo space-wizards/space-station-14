@@ -29,7 +29,7 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract partial class SharedDoorSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
@@ -230,12 +230,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         if (door.State == DoorState.Closed)
         {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} open");
             StartOpening(uid, door, args.User, true);
         }
         else if (door.State == DoorState.Open)
         {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.User} pried {uid} closed");
             StartClosing(uid, door, args.User, true);
         }
     }

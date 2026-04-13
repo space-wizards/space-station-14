@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly IPrototypeManager _protoMan = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;

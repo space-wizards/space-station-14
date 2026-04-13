@@ -180,7 +180,7 @@ public sealed partial class ShuttleSystem
                 impact = LogImpact.Extreme;
             // TODO: would be nice for it to also log who is piloting the grid(s)
             if (CheckShouldLog(args.OurEntity) && CheckShouldLog(args.OtherEntity))
-                _logger.Add(LogType.ShuttleImpact, impact, $"Shuttle impact of {ToPrettyString(args.OurEntity)} with {ToPrettyString(args.OtherEntity)} at {worldPoint}");
+                _adminLogger.Add(LogType.ShuttleImpact, impact, $"Shuttle impact of {args.OurEntity} with {args.OtherEntity} at {worldPoint}");
 
             _impactedAt[args.OurEntity] = _gameTiming.CurTime;
             _impactedAt[args.OtherEntity] = _gameTiming.CurTime;

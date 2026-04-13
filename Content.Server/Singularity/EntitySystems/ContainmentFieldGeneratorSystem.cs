@@ -209,7 +209,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
         ChangeFieldVisualizer(generator);
 
-        _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
+        _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{uid} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
     }
 
     #endregion

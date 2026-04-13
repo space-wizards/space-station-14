@@ -100,7 +100,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
             _adminLogger.Add(LogType.Construction,
                 LogImpact.Low,
-                $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
+                $"{args.User:player} unpacked {spawn:entity} at {xform.Coordinates} from {uid:entity}");
             QueueDel(uid);
         }
 

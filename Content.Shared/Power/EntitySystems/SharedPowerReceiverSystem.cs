@@ -63,7 +63,7 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         SetPowerDisabled(uid, !receiver.PowerDisabled, receiver);
 
         if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user.Value:player} hit power button on {uid}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
 
         if (playSwitchSound)
         {

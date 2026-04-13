@@ -54,7 +54,7 @@ public sealed partial class CableSystem
 
         var newCable = Spawn(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));
         _adminLogger.Add(LogType.Construction, LogImpact.Low,
-            $"{ToPrettyString(args.User):player} placed {ToPrettyString(newCable):cable} at {Transform(newCable).Coordinates}");
+            $"{args.User:player} placed {newCable:cable} at {Transform(newCable).Coordinates}");
         args.Handled = true;
     }
 }

@@ -46,7 +46,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
      * Handles the escape shuttle + CentCom.
      */
 
-    [Dependency] private readonly IAdminLogManager _logger = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -208,6 +208,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             TryComp<FTLComponent>(uid, out var ftlComp) ? ftlComp.TravelTime : _shuttle.DefaultTravelTime
         );
 
+        _adminLogger.Add(
+            LogType.ShuttleLaunched,
+            LogImpact.High,
+            $"Emergency shuttle {uid:subject} launched from station toward CentComm. ETA: {ftlTime.TotalSeconds:F0}s");
+
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
             var payload = new NetworkPayload
@@ -229,6 +234,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
         var countdownTime = TimeSpan.FromSeconds(ConfigManager.GetCVar(CCVars.RoundRestartTime));
+
+        _adminLogger.Add(
+            LogType.ShuttleArrivedAtCentComm,
+            LogImpact.High,
+            $"Emergency shuttle {uid:subject} arrived at CentComm. Round restart in {countdownTime.TotalSeconds:F0}s. Post-round window open.");
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
@@ -277,10 +287,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         // UHH GOOD LUCK
         if (targetGrid == null)
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} unable to dock with station {ToPrettyString(stationUid)}");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} unable to dock with station {stationUid:target}");
 
             return new ShuttleDockResult
             {
@@ -292,10 +302,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         ShuttleDockResultType resultType;
         if (_shuttle.TryFTLDock(stationShuttle.EmergencyShuttle.Value, shuttle, targetGrid.Value, out var config, DockTag))
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} docked with stations");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} docked with station {stationUid:target}");
 
             resultType = _dock.IsConfigPriority(config, DockTag)
                 ? ShuttleDockResultType.PriorityDock
@@ -303,10 +313,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         }
         else
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} unable to find a valid docking port for station {stationUid:target}");
 
             resultType = ShuttleDockResultType.NoDock;
         }

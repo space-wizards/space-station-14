@@ -99,7 +99,8 @@ public sealed class ImmovableRodSystem : EntitySystem
             var coords = Transform(uid).Coordinates;
 
             _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
-            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{ToPrettyString(uid)} and {ToPrettyString(ent)} created singularity at X:{coords.X} Y:{coords.Y}");
+            //pretty sure this fails to log sometimes
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{uid:actor} and {ent:target} created singularity at X:{coords.X} Y:{coords.Y}");
 
             Del(uid);
             Del(ent);
@@ -131,7 +132,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             }
 
             var coords = Transform(uid).Coordinates;
-            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibbed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
+            _adminLogger.Add(LogType.Gib, LogImpact.Low, $"{uid:actor} gibbed {ent:victim} at X:{coords.X} Y:{coords.Y}");
 
             _gibbing.Gib(ent);
             return;

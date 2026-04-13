@@ -1,7 +1,9 @@
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -14,6 +16,7 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
     public override string Command => "whitelistadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -39,6 +42,17 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             }
 
             await _dbManager.AddToWhitelistAsync(guid);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.WhitelistAdd,
+                    AuditSeverity.Notable,
+                    $"Added {data.Username} to whitelist",
+                    targetPlayerUserId: guid.UserId);
+            }
+
             shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -62,6 +76,7 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "whitelistremove";
 
@@ -88,6 +103,17 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
             }
 
             await _dbManager.RemoveFromWhitelistAsync(guid);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.WhitelistRemove,
+                    AuditSeverity.Notable,
+                    $"Removed {data.Username} from whitelist",
+                    targetPlayerUserId: guid.UserId);
+            }
+
             shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
             return;
         }

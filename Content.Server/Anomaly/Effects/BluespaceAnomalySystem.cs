@@ -49,7 +49,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         _random.Shuffle(coords);
         for (var i = 0; i < allEnts.Count; i++)
         {
-            _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(allEnts[i])} has been shuffled to {coords[i]} by the {ToPrettyString(uid)} at {xform.Coordinates}");
+            _adminLogger.Add(LogType.Teleport, $"{allEnts[i]} has been shuffled to {coords[i]} by the {uid} at {xform.Coordinates}");
             _xform.SetWorldPosition(allEnts[i], coords[i]);
         }
     }
@@ -70,7 +70,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
 
             var pos = new Vector2(randomX, randomY);
 
-            _adminLogger.Add(LogType.Teleport, $"{ToPrettyString(ent)} has been teleported to {pos} by the supercritical {ToPrettyString(uid)} at {mapPos}");
+            _adminLogger.Add(LogType.Teleport, $"{ent} has been teleported to {pos} by the supercritical {uid} at {mapPos}");
 
             _xform.SetWorldPosition(ent, pos);
             _audio.PlayPvs(component.TeleportSound, ent);

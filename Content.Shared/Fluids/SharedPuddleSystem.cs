@@ -31,7 +31,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly OpenableSystem Openable = default!;
     [Dependency] protected readonly ReactiveSystem Reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;

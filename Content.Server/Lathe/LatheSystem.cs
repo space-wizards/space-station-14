@@ -504,7 +504,7 @@ namespace Content.Server.Lathe
                 {
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Low,
-                        $"{ToPrettyString(args.Actor):player} queued {args.Quantity} {GetRecipeName(recipe)} at {ToPrettyString(uid):lathe}");
+                        $"{args.Actor:player} queued {args.Quantity} {GetRecipeName(recipe)} at {uid:lathe}");
                 }
             }
             TryStartProducing(uid, component);
@@ -538,7 +538,7 @@ namespace Content.Server.Lathe
             var batch = node.Value;
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {ToPrettyString(uid):lathe}");
+                $"{args.Actor:player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {uid:lathe}");
 
             RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
@@ -597,7 +597,7 @@ namespace Content.Server.Lathe
 
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} aborted printing {GetRecipeName(component.CurrentRecipe.Value)} at {ToPrettyString(uid):lathe}");
+                $"{args.Actor:player} aborted printing {GetRecipeName(component.CurrentRecipe.Value)} at {uid:lathe}");
 
             RefundCurrentRecipe(uid, component);
             component.CurrentRecipe = null;

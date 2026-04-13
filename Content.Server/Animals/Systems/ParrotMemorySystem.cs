@@ -155,7 +155,7 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
     {
         // log a low-priority chat type log to the admin logger
         // specifies what message was learnt by what entity, and who taught the message to that entity
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(source):speaker}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {entity:entity} learned the phrase \"{message}\" from {source:speaker}");
 
         NetUserId? sourceNetUserId = null;
         if (_mind.TryGetMind(source, out _, out var mind))

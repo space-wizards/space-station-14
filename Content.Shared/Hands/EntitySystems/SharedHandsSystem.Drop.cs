@@ -247,7 +247,7 @@ public abstract partial class SharedHandsSystem
             _interactionSystem.DroppedInteraction(ent, entity.Value);
 
         if (log)
-            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(ent):user} dropped {ToPrettyString(entity):entity}");
+            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ent:user} dropped {entity:entity}");
 
         if (handId == ent.Comp.ActiveHandId)
             RaiseLocalEvent(entity.Value, new HandDeselectedEvent(ent));

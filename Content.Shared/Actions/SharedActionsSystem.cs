@@ -287,7 +287,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (!component.Actions.Contains(actionEnt))
         {
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
+                $"{user:user} attempted to perform an action that they do not have: {name}.");
             return false;
         }
 
@@ -340,7 +340,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
     private void OnInstantValidate(Entity<InstantActionComponent> ent, ref ActionValidateEvent args)
     {
         _adminLogger.Add(LogType.Action,
-            $"{ToPrettyString(args.User):user} is performing the {Name(ent):action} action provided by {ToPrettyString(args.Provider):provider}.");
+            $"{args.User:user} is performing the {Name(ent):action} action provided by {args.Provider:provider}.");
     }
 
     private void OnEntityValidate(Entity<EntityTargetActionComponent> ent, ref ActionValidateEvent args)
@@ -371,7 +371,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             return;
 
         _adminLogger.Add(LogType.Action,
-            $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {ToPrettyString(args.Provider):provider}) targeted at {ToPrettyString(target):target}.");
+            $"{user:user} is performing the {Name(ent):action} action (provided by {args.Provider:provider}) targeted at {target:target}.");
 
         ev.Target = target;
     }
@@ -404,7 +404,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Action,
-            $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeting {targetEntity} at {target:target}.");
+            $"{user:user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeting {targetEntity} at {target:target}.");
 
         if (ent.Comp.Event is {} ev)
         {

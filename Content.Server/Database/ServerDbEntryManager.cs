@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -17,23 +18,39 @@ public sealed class ServerDbEntryManager
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
-    private Task<Server>? _serverEntityTask;
+    private Server? _cachedServer;
 
     /// <summary>
-    /// The entity that represents this server in the database.
+    /// Returns the cached server entity, resolving it from the DB on first access.
+    /// After the first successful resolution, this always returns a completed task.
     /// </summary>
-    /// <remarks>
-    /// This value is cached when first requested. Do not re-use this entity; if you need data like the rounds,
-    /// request it manually with <see cref="IServerDbManager.AddOrGetServer"/>.
-    /// </remarks>
-    public Task<Server> ServerEntity => _serverEntityTask ??= GetServerEntity();
-
-    private async Task<Server> GetServerEntity()
+    public Task<Server> ServerEntity
     {
-        var name = _cfg.GetCVar(CCVars.AdminLogsServerName);
-        var server = await _db.AddOrGetServer(name);
+        get
+        {
+            if (_cachedServer != null)
+                return Task.FromResult(_cachedServer);
 
-        _logManager.GetSawmill("db").Verbose("Server name: {Name}, ID in database: {Id}", server, server.Id);
-        return server;
+            return ResolveAndCache();
+        }
+    }
+
+    private async Task<Server> ResolveAndCache()
+    {
+        var sawmill = _logManager.GetSawmill("db");
+
+        try
+        {
+            var name = _cfg.GetCVar(CCVars.AdminLogsServerName);
+            var server = await _db.AddOrGetServer(name);
+            sawmill.Verbose("Server name: {Name}, ID in database: {Id}", server, server.Id);
+            _cachedServer = server;
+            return server;
+        }
+        catch (Exception e)
+        {
+            sawmill.Error($"Failed to resolve server identity: {e}");
+            throw;
+        }
     }
 }

@@ -1,11 +1,13 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Audio;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
@@ -25,6 +27,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -55,6 +58,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void OnEjectFuel(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorEjectFuelMessage args)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.Actor:player} ejected fuel from {uid:target}");
         EmptyGenerator(uid);
     }
 
@@ -183,6 +187,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             args.TargetPower,
             component.MinTargetPower / 1000,
             component.MaxTargetPower / 1000) * 1000;
+        
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} set target power on {uid:target} to {component.TargetPower}W");
     }
 
     public void SetFuelGeneratorOn(EntityUid uid, bool on, FuelGeneratorComponent? generator = null)

@@ -359,7 +359,21 @@ public abstract partial class SharedMindSystem : EntitySystem
     public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
         var title = Name(objective);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {MindOwnerLoggingString(mind)}");
+
+        if (mind.OwnedEntity is { } ownedEntity)
+        {
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"Objective {objective} ({title}) added to mind of {ownedEntity:target}",
+                players: mind.UserId != null ? [mind.UserId.Value] : null);
+        }
+        else
+        {
+            var ownerId = mind.UserId ?? mind.OriginalOwnerUserId;
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"Objective {objective} ({title}) added to mind of player {ownerId}",
+                players: ownerId != null ? [ownerId.Value] : null);
+        }
+
         mind.Objectives.Add(objective);
     }
 
@@ -375,7 +389,21 @@ public abstract partial class SharedMindSystem : EntitySystem
         var objective = mind.Objectives[index];
 
         var title = Name(objective);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
+
+        if (mind.OwnedEntity is { } ownedEntity)
+        {
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"Objective {objective} ({title}) removed from the mind of {ownedEntity:target}",
+                players: mind.UserId != null ? [mind.UserId.Value] : null);
+        }
+        else
+        {
+            var ownerId = mind.UserId ?? mind.OriginalOwnerUserId;
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"Objective {objective} ({title}) removed from the mind of player {ownerId}",
+                players: ownerId != null ? [ownerId.Value] : null);
+        }
+
         mind.Objectives.Remove(objective);
 
         // garbage collection - only delete the objective entity if no mind uses it anymore

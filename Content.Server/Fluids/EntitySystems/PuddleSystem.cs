@@ -431,8 +431,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (user != null)
             {
-                AdminLogger.Add(LogType.Landed,
-                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(entity):entity} which splashed a solution {SharedSolutionContainerSystem.ToPrettyString(spilled):solution} onto {ToPrettyString(owner):target}");
+                _adminLogger.Add(LogType.Landed,
+                    $"{user.Value:user} threw {entity:entity} which splashed a solution {spilled:solution} onto {owner:target}");
             }
 
             targets.Add(owner);

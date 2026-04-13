@@ -156,7 +156,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         var timeForLogs = duration.HasValue
             ? duration.Value.Seconds.ToString()
             : "Infinite";
-        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {timeForLogs} seconds");
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{uid:user} stunned for {timeForLogs} seconds");
     }
 
     /// <summary>
@@ -282,12 +282,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time != null)
         {
             UpdateKnockdownTime((uid, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.Seconds} seconds");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{uid:user} was knocked down for {time.Value.Seconds} seconds");
         }
         else
         {
             Alerts.ShowAlert(uid, KnockdownAlert);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{uid:user} was knocked down");
         }
     }
 

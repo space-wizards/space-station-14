@@ -109,12 +109,12 @@ namespace Content.Server.Verbs
             if (holding == null)
             {
                 _adminLogger.Add(LogType.Verb, verb.Impact,
-                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
+                    $"{user:actor} {executionText} the {verbText:verb} verb targeting {target:target}");
             }
             else
             {
                 _adminLogger.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
+                    $"{user:actor} {executionText} the {verbText:verb} verb targeting {target:target} while holding {holding.Value:tool}");
             }
         }
     }

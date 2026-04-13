@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
@@ -23,7 +23,7 @@ namespace Content.Server.Power.EntitySystems;
 /// </remarks>
 public sealed class BatteryInterfaceSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
     [Dependency] private readonly SharedBatterySystem _battery = null!;
 
@@ -50,7 +50,7 @@ public sealed class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanCharge = args.On;
 
-        _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
+        _adminLogger.Add(LogType.Action, $"{args.Actor:actor} set input breaker to {args.On} on {ent:target}");
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
@@ -58,7 +58,7 @@ public sealed class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanDischarge = args.On;
 
-        _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
+        _adminLogger.Add(LogType.Action, $"{args.Actor:actor} set output breaker to {args.On} on {ent:target}");
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)

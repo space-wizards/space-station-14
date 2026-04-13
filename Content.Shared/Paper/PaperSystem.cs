@@ -203,7 +203,7 @@ public sealed class PaperSystem : EntitySystem
 
             _adminLogger.Add(LogType.Chat,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
+                $"{args.Actor:player} has written on {entity:entity} the following text: {args.Text}");
 
             _audio.PlayPvs(entity.Comp.Sound, entity);
         }

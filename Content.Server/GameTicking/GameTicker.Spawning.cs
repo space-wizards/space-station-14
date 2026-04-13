@@ -293,13 +293,13 @@ namespace Content.Server.GameTicking
             {
                 _adminLogger.Add(LogType.LateJoin,
                     LogImpact.Medium,
-                    $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
+                    $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {mob:entity} as a {jobName:jobName}.");
             }
             else
             {
                 _adminLogger.Add(LogType.RoundStartJoin,
                     LogImpact.Medium,
-                    $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
+                    $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {mob:entity} as a {jobName:jobName}.");
             }
 
             // Make sure they're aware of extended access.
@@ -433,7 +433,7 @@ namespace Content.Server.GameTicking
 
             _adminLogger.Add(LogType.LateJoin,
                 LogImpact.Low,
-                $"{player.Name} late joined the round as an Observer with {ToPrettyString(ghost):entity}.");
+                $"{player.Name} late joined the round as an Observer with {ghost:entity}.");
         }
 
         #region Spawn Points

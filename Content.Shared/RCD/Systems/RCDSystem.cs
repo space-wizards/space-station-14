@@ -591,7 +591,7 @@ public sealed class RCDSystem : EntitySystem
                     return;
 
                 _tile.ReplaceTile(tile, (ContentTileDefinition) tileDef, gridUid, mapGrid);
-                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {gridUid} {position} to {prototype.Prototype}");
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} {position} to {prototype.Prototype}");
                 break;
 
             case RcdMode.ConstructObject:
@@ -610,7 +610,7 @@ public sealed class RCDSystem : EntitySystem
                         break;
                 }
 
-                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {position} on grid {gridUid}");
+                _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to spawn {ent} at {position} on grid {gridUid}");
                 break;
 
             case RcdMode.Deconstruct:
@@ -619,12 +619,12 @@ public sealed class RCDSystem : EntitySystem
                 {
                     // Deconstruct tile, don't drop tile as item
                     if (_tile.DeconstructTile(tile, spawnItem: false))
-                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to set grid: {gridUid} tile: {position} open to space");
+                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to set grid: {gridUid} tile: {position} open to space");
                 }
                 else
                 {
                     // Deconstruct object
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to delete {ToPrettyString(target):target}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{user:user} used RCD to delete {target:target}");
                     QueueDel(target);
                 }
 

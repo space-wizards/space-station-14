@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Gibbing;
 using Content.Shared.Hands;
@@ -204,6 +205,11 @@ public abstract partial class InventorySystem
             TriggerHandContactInteraction(target);
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
+
+        if (actor == target)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{actor:player} equipped {itemUid:entity} to {slot}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{actor:player} equipped {itemUid:entity} on {target:target} to {slot}");
 
         return true;
     }
@@ -505,6 +511,11 @@ public abstract partial class InventorySystem
             TriggerHandContactInteraction(target);
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
+
+        if (actor == target)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{actor:player} unequipped item from {slot} on themselves");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{actor:player} unequipped item from {slot} on {target:target}");
 
         return true;
     }

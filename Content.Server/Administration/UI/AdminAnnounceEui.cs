@@ -1,9 +1,11 @@
+using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 
 namespace Content.Server.Administration.UI
@@ -12,6 +14,7 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
         private readonly ChatSystem _chatSystem;
 
         public AdminAnnounceEui()
@@ -47,10 +50,36 @@ namespace Content.Server.Administration.UI
                     {
                         case AdminAnnounceType.Server:
                             _chatManager.DispatchServerAnnouncement(doAnnounce.Announcement);
+                            var serverTruncated = doAnnounce.Announcement.Length > 100
+                                ? $"{doAnnounce.Announcement[..100]}..."
+                                : doAnnounce.Announcement;
+                            _auditLog.LogAction(
+                                Player.UserId,
+                                AdminAuditAction.Announce,
+                                AuditSeverity.Notable,
+                                $"Server announcement: {serverTruncated}",
+                                payload: JsonSerializer.SerializeToDocument(new
+                                {
+                                    announcement = doAnnounce.Announcement,
+                                    type = "Server"
+                                }));
                             break;
                         // TODO: Per-station announcement support
                         case AdminAnnounceType.Station:
                             _chatSystem.DispatchGlobalAnnouncement(doAnnounce.Announcement, doAnnounce.Announcer, colorOverride: Color.Gold);
+                            var globalTruncated = doAnnounce.Announcement.Length > 100
+                                ? $"{doAnnounce.Announcement[..100]}..."
+                                : doAnnounce.Announcement;
+                            _auditLog.LogAction(
+                                Player.UserId,
+                                AdminAuditAction.Announce,
+                                AuditSeverity.Notable,
+                                $"Global announcement: {globalTruncated}",
+                                payload: JsonSerializer.SerializeToDocument(new
+                                {
+                                    announcement = doAnnounce.Announcement,
+                                    type = "Global"
+                                }));
                             break;
                     }
 

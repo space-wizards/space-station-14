@@ -2,6 +2,10 @@
 
 namespace Content.Shared.Administration.Logs;
 
+/// <summary>
+///     Shared base implementation for <see cref="ISharedAdminLogManager"/>.
+///     lives on the interface so it appears consistently in shared call sites and generated API docs.
+/// </summary>
 [Virtual]
 public class SharedAdminLogManager : ISharedAdminLogManager
 {
@@ -10,15 +14,30 @@ public class SharedAdminLogManager : ISharedAdminLogManager
 
     public bool Enabled { get; protected set; }
 
+    /// <inheritdoc />
     public virtual string ConvertName(string name) => name;
 
-    public virtual void Add(LogType type, LogImpact impact, ref LogStringHandler handler)
+    /// <inheritdoc />
+    public virtual void Add(
+        LogType type,
+        LogImpact impact,
+        ref LogStringHandler handler,
+        object? payload = null,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null,
+        IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
     {
-        // noop
     }
 
-    public virtual void Add(LogType type, ref LogStringHandler handler)
+    /// <inheritdoc />
+    public virtual void Add(
+        LogType type,
+        ref LogStringHandler handler,
+        object? payload = null,
+        IReadOnlyCollection<Guid>? players = null,
+        IReadOnlyCollection<AdminLogEntityRef>? entities = null,
+        IReadOnlyDictionary<Guid, AdminLogEntityRole>? playerRoles = null)
     {
-        // noop
+        Add(type, LogImpact.Medium, ref handler, payload, players, entities, playerRoles);
     }
 }

@@ -116,7 +116,7 @@ public sealed class IonStormSystem : EntitySystem
 
         // adminlog is used to prevent adminlog spam.
         if (adminlog)
-            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
+            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ent:silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
         // laws unique to this silicon, dont use station laws anymore
         EnsureComp<SiliconLawProviderComponent>(ent);

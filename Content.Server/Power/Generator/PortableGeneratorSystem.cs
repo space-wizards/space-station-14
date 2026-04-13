@@ -1,7 +1,9 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
@@ -27,6 +29,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
     [Dependency] private readonly GeneratorSystem _generator = default!;
     [Dependency] private readonly PowerSwitchableSystem _switchable = default!;
     [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -50,16 +53,19 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (fuelGenerator.On)
             return;
 
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} switched output on {uid:target}");
         _switchable.Cycle(uid, args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} stopped generator {uid:target}");
         StopGenerator(uid, component, args.Actor);
     }
 
     private void GeneratorStartMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStartMessage args)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} started generator {uid:target}");
         StartGenerator(uid, component, args.Actor);
     }
 

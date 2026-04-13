@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
@@ -62,6 +63,8 @@ internal static class ServerContentIoC
         deps.Register<GhostKickManager>();
         deps.Register<ISharedAdminLogManager, AdminLogManager>();
         deps.Register<IAdminLogManager, AdminLogManager>();
+        deps.Register<IAdminAuditLogManager, AdminAuditLogManager>();
+        deps.Register<IAdminLogEventPublisher, NullAdminLogEventPublisher>();
         deps.Register<PlayTimeTrackingManager>();
         deps.Register<UserDbDataManager>();
         deps.Register<ServerInfoManager>();

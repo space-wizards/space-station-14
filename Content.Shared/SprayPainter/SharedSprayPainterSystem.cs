@@ -25,7 +25,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedChargesSystem Charges = default!;
@@ -113,9 +113,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             Group: args.Group);
         RaiseLocalEvent(target, ref ev);
 
-        AdminLogger.Add(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
+            $"{args.Args.User:user} painted {args.Args.Target.Value:target}");
 
         args.Handled = true;
     }
@@ -220,9 +220,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             return;
 
         // Log the attempt
-        AdminLogger.Add(LogType.Action,
+        _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{selectedStyle}' at {Transform(ent).Coordinates:targetlocation}");
+            $"{args.User:user} is painting {ent:target} to '{selectedStyle}' at {Transform(ent).Coordinates:targetlocation}");
     }
 
     /// <summary>

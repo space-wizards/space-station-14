@@ -116,7 +116,7 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Low,
-                $"Job Role of {ToPrettyString(mind.OwnedEntity)} changed from '{jobRole.Value.Comp1.JobPrototype}' to '{jobPrototype}'");
+                $"Job Role of {mind.OwnedEntity} changed from '{jobRole.Value.Comp1.JobPrototype}' to '{jobPrototype}'");
 
             jobRole.Value.Comp1.JobPrototype = jobPrototype;
         }
@@ -178,7 +178,7 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Low,
-                $"{name} added to mind of {ToPrettyString(mind.OwnedEntity)}");
+                $"{name} added to mind of {mind.OwnedEntity}");
         }
         else
         {
@@ -187,7 +187,7 @@ public abstract class SharedRoleSystem : EntitySystem
             Log.Error($"{ToPrettyString(mindId)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Low,
-                $"{name} added to {ToPrettyString(mindId)}");
+                $"{name} added to {mindId}");
         }
     }
 
@@ -271,13 +271,13 @@ public abstract class SharedRoleSystem : EntitySystem
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Medium,
-                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
+                $"Role Type of {mind} changed to {roleTypeId}, {subtype}");
             return;
         }
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.High,
-            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}, {subtype}");
+            $"Role Type of {comp.OwnedEntity} changed to {roleTypeId}, {subtype}");
     }
 
     /// <summary>
@@ -409,7 +409,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
-            $"All roles of type {logName} removed from mind of {ToPrettyString(mind.Comp.OwnedEntity)}");
+            $"All roles of type {logName} removed from mind of {mind.Comp.OwnedEntity}");
 
         return true;
     }

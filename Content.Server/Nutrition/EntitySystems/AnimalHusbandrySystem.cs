@@ -25,7 +25,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -126,7 +126,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
-        _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} (carrier) and {ToPrettyString(partner)} (partner) successfully bred.");
+        _adminLogger.Add(LogType.Action, $"{uid} (carrier) and {partner} (partner) successfully bred.");
         return true;
     }
 
@@ -198,7 +198,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
                 // Make sure the name prefix is applied
                 _nameMod.RefreshNameModifiers(offspring);
             }
-            _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} gave birth to {ToPrettyString(offspring)}.");
+            _adminLogger.Add(LogType.Action, $"{uid} gave birth to {offspring}.");
         }
 
         _popup.PopupEntity(Loc.GetString(component.BirthPopup, ("parent", Identity.Entity(uid, EntityManager))), uid);

@@ -241,7 +241,7 @@ public sealed class FaxSystem : EntitySystem
 
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid):tool} from \"{component.FaxName}\" to \"{newName}\"");
+                $"{args.User:user} renamed {uid:tool} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid);
             UpdateUserInterface(uid, component);
@@ -444,8 +444,8 @@ public sealed class FaxSystem : EntitySystem
         var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.Actor):actor} " +
-            $"added print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+            $"{args.Actor:actor} " +
+            $"added print job to \"{component.FaxName}\" {uid:tool} " +
             $"of {nameWithLabel}: {args.Content}");
     }
 
@@ -491,9 +491,9 @@ public sealed class FaxSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.Actor):actor} " +
-            $"added copy job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
-            $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
+            $"{args.Actor:actor} " +
+            $"added copy job to \"{component.FaxName}\" {uid:tool} " +
+            $"of {sendEntity:subject}: {printout.Content}");
     }
 
     /// <summary>
@@ -576,10 +576,10 @@ public sealed class FaxSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(args.Actor):actor} " +
-            $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+            $"{args.Actor:actor} " +
+            $"sent fax from \"{component.FaxName}\" {uid:tool} " +
             $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
-            $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
+            $"of {sendEntity:subject}: {paper.Content}");
 
         component.SendTimeoutRemaining += component.SendTimeout;
 
@@ -641,7 +641,7 @@ public sealed class FaxSystem : EntitySystem
             _labelSystem.Label(printed, label);
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {uid:tool} printed {printed:subject}: {printout.Content}");
     }
 
     private void NotifyAdmins(string faxName)

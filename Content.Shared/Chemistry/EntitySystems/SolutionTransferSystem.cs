@@ -321,7 +321,7 @@ public sealed class SolutionTransferSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Medium,
-            $"{ToPrettyString(data.User):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(data.TargetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
+            $"{data.User:player} transferred {solution} to {data.TargetEntity:target}, which now contains {targetSolution}");
 
         return actualAmount;
     }

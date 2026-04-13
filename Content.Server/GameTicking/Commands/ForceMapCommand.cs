@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -16,6 +18,7 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "forcemap";
 
@@ -37,6 +40,15 @@ namespace Content.Server.GameTicking.Commands
             }
 
             _configurationManager.SetCVar(CCVars.GameMap, name);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.ForceMap,
+                    AuditSeverity.Critical,
+                    string.IsNullOrEmpty(name) ? "Cleared forced map" : $"Forced map to {name}");
+            }
 
             if (string.IsNullOrEmpty(name))
                 shell.WriteLine(Loc.GetString("cmd-forcemap-cleared"));

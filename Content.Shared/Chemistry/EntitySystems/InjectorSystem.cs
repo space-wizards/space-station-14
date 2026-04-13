@@ -1,3 +1,4 @@
+
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -20,6 +21,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -37,6 +39,7 @@ public sealed partial class InjectorSystem : EntitySystem
     [Dependency] private readonly SharedForensicsSystem _forensics = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
@@ -222,15 +225,43 @@ public sealed partial class InjectorSystem : EntitySystem
 
         if (user == target)
         {
+            var selfActionSemantics = AdminLogHelpers.GetActorVictimToolSemantics(_player, user, user, injector.Owner);
+
             if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from themselves.");
+                _adminLogger.Add(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{user:actor} is attempting to draw {amount} units from themselves using {injector:tool}.",
+                    new
+                    {
+                        actor = (int) user,
+                        victim = (int) user,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    },
+                    players: selfActionSemantics.Players,
+                    entities: selfActionSemantics.Entities,
+                    playerRoles: selfActionSemantics.PlayerRoles);
             }
             else
             {
-                _adminLogger.Add(LogType.Ingestion,
-                    $"{ToPrettyString(user):user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.");
+                _adminLogger.Add(
+                    LogType.Ingestion,
+                    LogImpact.Medium,
+                    $"{user:actor} is attempting to inject themselves with a solution {injectorSolution:solution} using {injector:tool}.",
+                    new
+                    {
+                        actor = (int) user,
+                        victim = (int) user,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    },
+                    players: selfActionSemantics.Players,
+                    entities: selfActionSemantics.Entities,
+                    playerRoles: selfActionSemantics.PlayerRoles);
             }
         }
         else
@@ -242,13 +273,33 @@ public sealed partial class InjectorSystem : EntitySystem
 
             if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}");
+                _adminLogger.Add(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{user:actor} is attempting to draw {amount} units from {target:victim} using {injector:tool}",
+                    new
+                    {
+                        actor = (int) user,
+                        victim = (int) target,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    });
             }
             else
             {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
+                _adminLogger.Add(
+                    LogType.ForceFeed,
+                    LogImpact.Medium,
+                    $"{user:actor} is attempting to inject {target:victim} with a solution {injectorSolution:solution} using {injector:tool}",
+                    new
+                    {
+                        actor = (int) user,
+                        victim = (int) target,
+                        tool = (int) injector.Owner,
+                        attemptedTransferAmount = amount,
+                        injectorSolution = SerializeSolutionForAdminLog(injectorSolution)
+                    });
             }
         }
 
@@ -535,7 +586,39 @@ public sealed partial class InjectorSystem : EntitySystem
             _audio.PlayPredicted(activeMode.InjectSound, injector, user);
 
         // Log what happened.
-        _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}");
+        if (user == target)
+        {
+            var selfActionSemantics = AdminLogHelpers.GetActorVictimToolSemantics(_player, user, target, injector.Owner);
+
+            _adminLogger.Add(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{user:actor} injected themselves with a solution {removedSolution:removedSolution} using {injector:tool}",
+                new
+                {
+                    actor = (int) user,
+                    victim = (int) target,
+                    tool = (int) injector.Owner,
+                    transferredSolution = SerializeSolutionForAdminLog(removedSolution)
+                },
+                players: selfActionSemantics.Players,
+                entities: selfActionSemantics.Entities,
+                playerRoles: selfActionSemantics.PlayerRoles);
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{user:actor} injected {target:victim} with a solution {removedSolution:removedSolution} using {injector:tool}",
+                new
+                {
+                    actor = (int) user,
+                    victim = (int) target,
+                    tool = (int) injector.Owner,
+                    transferredSolution = SerializeSolutionForAdminLog(removedSolution)
+                });
+        }
 
         AfterInject(injector, user, target);
         return true;
@@ -700,6 +783,20 @@ public sealed partial class InjectorSystem : EntitySystem
             ToggleMode(injector, user, proto);
             return;
         }
+    }
+
+    private static object SerializeSolutionForAdminLog(Solution solution)
+    {
+        return new
+        {
+            volume = solution.Volume,
+            maxVolume = solution.MaxVolume,
+            reagents = solution.Contents.Select(reagent => new
+            {
+                id = reagent.Reagent.Prototype,
+                quantity = reagent.Quantity,
+            }),
+        };
     }
     #endregion Injecting/Drawing
 

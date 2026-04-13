@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
@@ -58,7 +58,7 @@ public abstract class SharedGasPressureRegulatorSystem : EntitySystem
         ent.Comp.Threshold = Math.Max(0f, args.ThresholdPressure);
         _adminLogger.Add(LogType.AtmosVolumeChanged,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(ent):device} to {ent.Comp.Threshold}");
+            $"{args.Actor:player} set the pressure threshold on {ent:device} to {ent.Comp.Threshold}");
         // Dirty the entire entity to ensure we get all of that Fresh:tm: UI info from the server.
         Dirty(ent);
         UpdateUi(ent);

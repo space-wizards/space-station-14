@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
@@ -16,6 +16,6 @@ public sealed class PortalSystem : SharedPortalSystem
         EntityCoordinates target)
     {
         if (HasComp<MindContainerComponent>(subject) && !HasComp<GhostComponent>(subject))
-            _adminLogger.Add(LogType.Teleport, LogImpact.Low, $"{ToPrettyString(subject):player} teleported via {ToPrettyString(portal)} from {source} to {target}");
+            _adminLogger.Add(LogType.Teleport, LogImpact.Low, $"{subject:player} teleported via {portal} from {source} to {target}");
     }
 }

@@ -18,7 +18,7 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ISharedAdminLogManager _log = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     [Dependency] private readonly EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
@@ -56,9 +56,9 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
         // Admin logging
         if (result?.HitEntity != null)
         {
-            _log.Add(LogType.HitScanHit,
-                $"{ToPrettyString(shooter):user} hit {ToPrettyString(result.Value.HitEntity):target}"
-                + $" using {ToPrettyString(args.Gun):entity}.");
+            _adminLogger.Add(LogType.HitScanHit,
+                $"{shooter:user} hit {result.Value.HitEntity:target}"
+                + $" using {args.Gun:entity}.");
         }
 
         var data = new HitscanRaycastFiredData

@@ -322,7 +322,7 @@ public sealed class RespiratorSystem : EntitySystem
     private void TakeSuffocationDamage(Entity<RespiratorComponent> ent)
     {
         if (ent.Comp.SuffocationCycles == 2)
-            _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
+            _adminLogger.Add(LogType.Asphyxiation, $"{ent:entity} started suffocating");
 
         _damageableSys.ChangeDamage(ent.Owner, ent.Comp.Damage, interruptsDoAfters: false, ignoreResistances: true);
 
@@ -336,7 +336,7 @@ public sealed class RespiratorSystem : EntitySystem
     private void StopSuffocation(Entity<RespiratorComponent> ent)
     {
         if (ent.Comp.SuffocationCycles >= 2)
-            _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} stopped suffocating");
+            _adminLogger.Add(LogType.Asphyxiation, $"{ent:entity} stopped suffocating");
 
         _damageableSys.ChangeDamage(ent.Owner, ent.Comp.DamageRecovery);
 

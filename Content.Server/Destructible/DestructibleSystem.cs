@@ -43,7 +43,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IAdminLogManager AdminLogger = default!;
+        [Dependency] public readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -83,15 +83,15 @@ namespace Content.Server.Destructible
 
                     if (args.Origin != null)
                     {
-                        AdminLogger.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
-                            $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                            $"{args.Origin.Value:actor} caused {uid:subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        AdminLogger.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             logImpact,
-                            $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
+                            $"Unknown damage source caused {uid:subject} to trigger [{triggeredBehaviors}]");
                     }
 
                     Execute(threshold, uid, args.Origin);

@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
@@ -58,6 +60,8 @@ public sealed partial class ShuttleConsoleSystem
         var angle = args.Angle.Reduced();
         var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
 
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {ent.Owner:target}");
+
         ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID);
     }
 
@@ -73,6 +77,9 @@ public sealed partial class ShuttleConsoleSystem
 
         var targetCoordinates = new EntityCoordinates(mapUid, args.Coordinates.Position);
         var angle = args.Angle.Reduced();
+
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} requested FTL travel from {entity.Owner:target}");
+
         ConsoleFTL(entity, targetCoordinates, angle, args.Coordinates.MapId);
     }
 

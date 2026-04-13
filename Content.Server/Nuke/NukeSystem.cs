@@ -5,9 +5,11 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Kitchen;
@@ -45,6 +47,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -200,6 +203,7 @@ public sealed class NukeSystem : EntitySystem
         {
             _transform.Unanchor(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, true);
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} unanchored {uid:target}");
         }
         else
         {
@@ -222,6 +226,7 @@ public sealed class NukeSystem : EntitySystem
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, false);
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{args.Actor:player} anchored {uid:target}");
         }
 
         UpdateUserInterface(uid, component);
@@ -277,6 +282,7 @@ public sealed class NukeSystem : EntitySystem
 
         else
         {
+            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"{args.Actor:player} is attempting to disarm nuclear bomb {uid:target}");
             DisarmBombDoAfter(uid, args.Actor, component);
         }
     }
@@ -291,6 +297,7 @@ public sealed class NukeSystem : EntitySystem
             return;
 
         DisarmBomb(uid, component);
+        _adminLogger.Add(LogType.Explosion, LogImpact.Extreme, $"{args.User:player} successfully disarmed nuclear bomb {uid:target}");
 
         var ev = new NukeDisarmSuccessEvent();
         RaiseLocalEvent(ev);
@@ -375,11 +382,13 @@ public sealed class NukeSystem : EntitySystem
                     var modifier = CompOrNull<NukeDiskComponent>(component.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
                     component.RemainingTime = MathF.Max(component.Timer + (float)modifier.TotalSeconds, component.MinimumTime);
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
+                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"Nuke code entered correctly on {uid:target}");
                 }
                 else
                 {
                     component.EnteredCode = "";
                     _audio.PlayPvs(component.AccessDeniedSound, uid);
+                    _adminLogger.Add(LogType.Action, LogImpact.High, $"Incorrect nuke code entered on {uid:target}");
                 }
 
                 break;
@@ -522,6 +531,7 @@ public sealed class NukeSystem : EntitySystem
         }
 
         component.Status = NukeStatus.ARMED;
+        _adminLogger.Add(LogType.Explosion, LogImpact.Extreme, $"Nuclear bomb {uid:target} has been armed with {(int) component.RemainingTime}s timer");
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
     }
@@ -566,6 +576,7 @@ public sealed class NukeSystem : EntitySystem
         _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
+        _adminLogger.Add(LogType.Explosion, LogImpact.Extreme, $"Nuclear bomb {uid:target} has been disarmed");
 
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
@@ -598,6 +609,8 @@ public sealed class NukeSystem : EntitySystem
             return;
 
         component.Exploded = true;
+
+        _adminLogger.Add(LogType.Explosion, LogImpact.Extreme, $"Nuclear bomb {uid:target} detonated");
 
         _explosions.QueueExplosion(uid,
             component.ExplosionType,

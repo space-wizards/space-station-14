@@ -16,7 +16,7 @@ namespace Content.Server.Respawn;
 
 public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -135,7 +135,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
-        _adminLog.Add(LogType.Respawn, LogImpact.Extreme, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {_transform.ToMapCoordinates(coords)} as {ToPrettyString(entity)}");
+        _adminLogger.Add(LogType.Respawn, LogImpact.Extreme, $"{oldEntity} was deleted and was respawned at {_transform.ToMapCoordinates(coords)} as {entity}");
         _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
 

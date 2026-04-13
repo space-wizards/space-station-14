@@ -163,7 +163,7 @@ public sealed class MindSystem : SharedMindSystem
         if (owned.HasValue)
         {
             _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"{session.Name} returned to {ToPrettyString(owned.Value)}");
+                $"{session.Name} returned to {owned.Value}");
         }
     }
 

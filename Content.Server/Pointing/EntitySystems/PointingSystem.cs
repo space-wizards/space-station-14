@@ -277,7 +277,7 @@ namespace Content.Server.Pointing.EntitySystems
                 var gotev = new AfterGotPointedAtEvent(player);
                 RaiseLocalEvent(pointed, ref gotev);
 
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:user} pointed at {pointed:target} {Transform(pointed).Coordinates}");
             }
             else
             {
@@ -297,7 +297,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", name));
 
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoordsPointed : position)}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{player:user} pointed at {name} {(position == null ? mapCoordsPointed : position)}");
             }
 
             _pointers[session] = _gameTiming.CurTime;

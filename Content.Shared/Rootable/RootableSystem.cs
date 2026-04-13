@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -34,7 +34,7 @@ public sealed class RootableSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -110,7 +110,7 @@ public sealed class RootableSystem : EntitySystem
 
         // Log solution addition by puddle.
         if (_blood.TryAddToBloodstream((ent, ent.Comp2), transferSolution))
-            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(ent):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ent:target} absorbed puddle {transferSolution}");
     }
 
     private void OnCloning(Entity<RootableComponent> ent, ref CloningEvent args)

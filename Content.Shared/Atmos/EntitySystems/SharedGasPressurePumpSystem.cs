@@ -72,7 +72,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         ent.Comp.Enabled = args.Enabled;
         _adminLogger.Add(LogType.AtmosPowerChanged,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent):device} to {args.Enabled}");
+            $"{args.Actor:player} set the power on {ent:device} to {args.Enabled}");
         Dirty(ent);
         UpdateAppearance(ent);
         UpdateUi(ent);
@@ -83,7 +83,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
         _adminLogger.Add(LogType.AtmosPressureChanged,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent):device} to {args.Pressure}kPa");
+            $"{args.Actor:player} set the pressure on {ent:device} to {args.Pressure}kPa");
         Dirty(ent);
         UpdateUi(ent);
     }

@@ -110,7 +110,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         _charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost);
 
-        AdminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} painted a {ent.Comp.SelectedDecal}");
+        //This needs a ToPrettyString fix
+        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{args.User:user} painted a {ent.Comp.SelectedDecal}");
     }
 
     /// <summary>

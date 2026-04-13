@@ -71,8 +71,20 @@ namespace Content.Server.Database
                 v => JsonDocumentToByteArray(v),
                 v => ByteArrayToJsonDocument(v));
 
-            modelBuilder.Entity<AdminLog>()
+            modelBuilder.Entity<AdminLogEventPayload>()
                 .Property(log => log.Json)
+                .HasConversion(jsonStringConverter);
+
+            // SearchVector is a PostgreSQL-only stored generated tsvector column.
+            // SQLite has no equivalent — ignore it.
+            modelBuilder.Entity<AdminLogEventPayload>()
+                .Ignore(p => p.SearchVector);
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .Ignore(e => e.SearchVector);
+
+            modelBuilder.Entity<AdminAuditEventPayload>()
+                .Property(p => p.Json)
                 .HasConversion(jsonStringConverter);
 
             modelBuilder.Entity<Profile>()
@@ -87,11 +99,6 @@ namespace Content.Server.Database
             modelBuilder.Entity<IPIntelCache>()
                 .HasIndex(p => p.Address)
                 .IsUnique();
-        }
-
-        public override int CountAdminLogs()
-        {
-            return AdminLog.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {

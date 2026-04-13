@@ -1,5 +1,7 @@
+using System.Text.Json;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
+using Content.Shared.Administration.Logs;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
@@ -21,6 +23,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
     public override void Initialize()
@@ -65,11 +68,25 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            _adminLogger.Add(LogType.BulletHit,
+            var weapon = component.Weapon;
+            var semantics = AdminLogHelpers.GetActorSubjectVictimSemantics(_player, component.Shooter!.Value, uid, target, weapon);
+            _adminLogger.Add(
+                LogType.BulletHit,
                 LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+                $"{component.Shooter!.Value:user} shot {uid:projectile} and hit {otherName:target} for {damage:damage} damage",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    shooter = (int) component.Shooter!.Value,
+                    projectile = (int) uid,
+                    weapon = weapon is { } w ? (int?) w : null,
+                    target = (int) target,
+                    totalDamage = damage?.GetTotal()
+                }),
+                players: semantics.Players,
+                entities: semantics.Entities,
+                playerRoles: semantics.PlayerRoles);
 
-            component.ProjectileSpent = !TryPenetrate((uid, component), damage, damageRequired);
+            component.ProjectileSpent = !TryPenetrate((uid, component), damage!, damageRequired);
         }
         else
         {

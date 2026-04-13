@@ -21,7 +21,7 @@ namespace Content.Server.Pinpointer;
 /// </summary>
 public sealed partial class NavMapSystem : SharedNavMapSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -193,8 +193,8 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             beacon.Enabled == args.Enabled)
             return;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} configured NavMapBeacon \'{ToPrettyString(ent):entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            $"{args.Actor:player} configured NavMapBeacon \'{ent:entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
 
         if (TryComp<WarpPointComponent>(ent, out var warpPoint))
         {

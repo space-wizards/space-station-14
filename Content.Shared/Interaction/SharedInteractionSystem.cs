@@ -1,3 +1,4 @@
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -507,7 +508,17 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(user, ev);
             if (ev.Handled)
             {
-                _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system");
+                _adminLogger.Add(
+                    LogType.InteractHand,
+                    LogImpact.Low,
+                    $"{user:actor} interacted with {target:target}, but it was handled by another system",
+                    new
+                    {
+                        user = (int) user,
+                        target = (int) target,
+                        interactionType = LogType.InteractHand.ToString(),
+                        handled = true
+                    });
                 return;
             }
 
@@ -519,7 +530,17 @@ namespace Content.Shared.Interaction
             var userMessage = new UserInteractHandEvent(user, target);
             RaiseLocalEvent(user, userMessage, true);
 
-            _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
+            _adminLogger.Add(
+                LogType.InteractHand,
+                LogImpact.Low,
+                $"{user:actor} interacted with {target:target}",
+                new
+                {
+                    user = (int) user,
+                    target = (int) target,
+                    interactionType = LogType.InteractHand.ToString(),
+                    handled = false
+                });
             DoContactInteraction(user, target, message);
             if (message.Handled || userMessage.Handled)
                 return;
@@ -546,14 +567,27 @@ namespace Content.Shared.Interaction
                 _adminLogger.Add(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
+                    $"{user:actor} interacted with {target:target} using {used:tool}",
+                    new
+                    {
+                        user = (int) user,
+                        target = (int) target,
+                        used = (int) used,
+                        interactionType = LogType.InteractUsing.ToString()
+                    });
             }
             else
             {
                 _adminLogger.Add(
                     LogType.InteractUsing,
                     LogImpact.Low,
-                    $"{ToPrettyString(user):user} interacted with *nothing* using {ToPrettyString(used):used}");
+                    $"{user:actor} interacted with *nothing* using {used:tool}",
+                    new
+                    {
+                        user = (int) user,
+                        used = (int) used,
+                        interactionType = LogType.InteractUsing.ToString()
+                    });
             }
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed, checkDeletion: false))
@@ -1045,7 +1079,14 @@ namespace Content.Shared.Interaction
             _adminLogger.Add(
                 LogType.InteractUsing,
                 LogImpact.Low,
-                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
+                $"{user:actor} interacted with {target:target} using {used:tool}",
+                new
+                {
+                    user = (int) user,
+                    target = (int) target,
+                    used = (int) used,
+                    interactionType = LogType.InteractUsing.ToString()
+                });
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, canReach: true, checkDeletion: false))
                 return true;
@@ -1176,7 +1217,18 @@ namespace Content.Shared.Interaction
             {
                 DoContactInteraction(user, used);
                 if (!activateMsg.WasLogged)
-                    _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+                {
+                    _adminLogger.Add(
+                        LogType.InteractActivate,
+                        LogImpact.Low,
+                        $"{user:actor} activated {used:subject}",
+                        new
+                        {
+                            user = (int) user,
+                            used = (int) used,
+                            interactionType = LogType.InteractActivate.ToString()
+                        });
+                }
 
                 if (delayComponent != null)
                     _useDelay.TryResetDelay(used, component: delayComponent);
@@ -1194,7 +1246,16 @@ namespace Content.Shared.Interaction
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
 
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            _adminLogger.Add(
+                LogType.InteractActivate,
+                LogImpact.Low,
+                $"{user:actor} activated {used:subject}",
+                new
+                {
+                    user = (int) user,
+                    used = (int) used,
+                    interactionType = LogType.InteractActivate.ToString()
+                });
             return true;
         }
         #endregion

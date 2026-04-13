@@ -322,7 +322,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     ent.Comp.PreSelectedSessions.Add(def, set = new HashSet<ICommonSession>());
                 set.Add(session); // Selection done!
                 Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-                _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
+                _adminLogger.Add(LogType.AntagSelection, LogImpact.Medium, $"Pre-selected {session.Name} as antagonist: {ent.Owner:entity}");
             }
         }
     }
@@ -355,7 +355,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public bool TryMakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false, bool checkPref = true, bool onlyPreSelect = false)
     {
-        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
+        _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session:player} become the antagonist: {ent:subject}");
 
         if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
             return false;
@@ -369,7 +369,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 ent.Comp.PreSelectedSessions.Add(def, set = new HashSet<ICommonSession>());
             set.Add(session);
             Log.Debug($"Pre-selected {session!.Name} as antagonist: {ToPrettyString(ent)}");
-            _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
+            _adminLogger.Add(LogType.AntagSelection, LogImpact.Medium, $"Pre-selected {session.Name} as antagonist: {ent.Owner:entity}");
         }
         else
         {
@@ -415,7 +415,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (antagEnt is not { } player)
         {
             Log.Error($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
-            _adminLogger.Add(LogType.AntagSelection, $"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
+            _adminLogger.Add(LogType.AntagSelection, LogImpact.High, $"Attempted to make {session} antagonist in gamerule {ent.Owner:entity} but there was no valid entity for player.");
             if (session != null && ent.Comp.RemoveUponFailedSpawn)
             {
                 ent.Comp.AssignedSessions.Remove(session);
@@ -446,7 +446,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!TryComp<GhostRoleAntagSpawnerComponent>(player, out var spawnerComp))
             {
                 Log.Error($"Antag spawner {player} does not have a GhostRoleAntagSpawnerComponent.");
-                _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {player} in gamerule {ToPrettyString(ent)} failed due to not having GhostRoleAntagSpawnerComponent.");
+                _adminLogger.Add(LogType.AntagSelection, LogImpact.High, $"Antag spawner {player:entity} in gamerule {ent.Owner:entity} failed due to not having GhostRoleAntagSpawnerComponent.");
                 if (session != null)
                 {
                     ent.Comp.AssignedSessions.Remove(session);
@@ -489,7 +489,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             SendBriefing(session, def.Briefing);
 
             Log.Debug($"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
-            _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(curMind)} as antagonist: {ToPrettyString(ent)}");
+            _adminLogger.Add(LogType.AntagSelection, $"Assigned {curMind:actor} as antagonist: {ent:subject}");
         }
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);

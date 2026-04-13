@@ -443,7 +443,7 @@ public sealed partial class CargoSystem
             return false;
         }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {uid}");
         component.TotalBounties++;
         return true;
     }

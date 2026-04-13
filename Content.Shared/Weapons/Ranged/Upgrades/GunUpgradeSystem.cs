@@ -18,7 +18,7 @@ namespace Content.Shared.Weapons.Ranged.Upgrades;
 
 public sealed class GunUpgradeSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -89,7 +89,7 @@ public sealed class GunUpgradeSystem : EntitySystem
         _gun.RefreshModifiers(ent.Owner);
         args.Handled = _container.Insert(args.Used, _container.GetContainer(ent, ent.Comp.UpgradesContainerId));
 
-        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} inserted gun upgrade {ToPrettyString(args.Used)} into {ToPrettyString(ent.Owner)}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:player} inserted gun upgrade {args.Used} into {ent.Owner}.");
     }
 
     private void OnFireRateRefresh(Entity<GunUpgradeFireRateComponent> ent, ref GunRefreshModifiersEvent args)

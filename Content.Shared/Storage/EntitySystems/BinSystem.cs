@@ -19,7 +19,7 @@ namespace Content.Shared.Storage.EntitySystems;
 public sealed class BinSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -91,8 +91,8 @@ public sealed class BinSystem : EntitySystem
             return;
 
         _hands.TryPickupAnyHand(args.User, toGrab.Value);
-        _admin.Add(LogType.Pickup, LogImpact.Low,
-            $"{ToPrettyString(uid):player} removed {ToPrettyString(toGrab.Value)} from bin {ToPrettyString(uid)}.");
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low,
+            $"{uid:player} removed {toGrab.Value} from bin {uid}.");
         args.Handled = true;
     }
 
@@ -124,7 +124,7 @@ public sealed class BinSystem : EntitySystem
         if (!TryInsertIntoBin(target, itemInHand, component))
             return;
 
-        _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(target):player} inserted {ToPrettyString(user)} into bin {ToPrettyString(target)}.");
+        _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{target:player} inserted {user} into bin {target}.");
     }
 
     /// <summary>

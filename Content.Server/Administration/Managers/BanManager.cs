@@ -1,8 +1,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -38,6 +40,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -168,6 +171,28 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
+        if (banInfo.BanningAdmin is { } adminUserId)
+        {
+            Guid? targetPlayer = banInfo.Users.Count > 0 ? banInfo.Users.First().UserId.UserId : null;
+            var durationMinutes = banInfo.Duration?.TotalMinutes;
+            _auditLog.LogAction(
+                adminUserId.UserId,
+                AdminAuditAction.Ban,
+                AuditSeverity.Critical,
+                $"Created server ban for {targetName} ({(durationMinutes is null ? "permanent" : $"{durationMinutes:F0} minutes")})",
+                targetPlayerUserId: targetPlayer,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    banType = BanType.Server.ToString(),
+                    targetName,
+                    reason = banInfo.Reason,
+                    durationMinutes,
+                    expires,
+                    severity = banDef.Severity.ToString(),
+                    userIds = banInfo.Users.Select(u => u.UserId.UserId).ToArray()
+                }));
+        }
+
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
     }
 
@@ -251,6 +276,28 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             ("role", string.Join(", ", roleDefs)),
             ("reason", banInfo.Reason),
             ("length", length)));
+
+        if (banInfo.BanningAdmin is { } adminUserId)
+        {
+            Guid? targetPlayer = banInfo.Users.Count > 0 ? banInfo.Users.First().UserId.UserId : null;
+            var durationMinutes = banInfo.Duration?.TotalMinutes;
+            var roles = roleDefs.Select(r => new { r.RoleType, r.RoleId }).ToArray();
+            _auditLog.LogAction(
+                adminUserId.UserId,
+                AdminAuditAction.RoleBan,
+                AuditSeverity.Critical,
+                $"Created role ban for {targetName} ({(durationMinutes is null ? "permanent" : $"{durationMinutes:F0} minutes")})",
+                targetPlayerUserId: targetPlayer,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    banType = BanType.Role.ToString(),
+                    targetName,
+                    reason = banInfo.Reason,
+                    durationMinutes,
+                    expires,
+                    roles
+                }));
+        }
 
         foreach (var (userId, _) in banInfo.Users)
         {
@@ -384,6 +431,24 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         }
 
         await _db.AddUnbanAsync(new UnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
+
+        if (unbanningAdmin is { } adminUserId)
+        {
+            Guid? targetPlayer = ban.UserIds.Length > 0 ? ban.UserIds[0].UserId : null;
+            _auditLog.LogAction(
+                adminUserId.UserId,
+                AdminAuditAction.RoleUnban,
+                AuditSeverity.Critical,
+                $"Pardoned role ban #{banId}",
+                targetPlayerUserId: targetPlayer,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    banId,
+                    banType = ban.Type.ToString(),
+                    reason = ban.Reason,
+                    roles = ban.Roles?.Select(r => new { r.RoleType, r.RoleId }).ToArray()
+                }));
+        }
 
         foreach (var user in ban.UserIds)
         {

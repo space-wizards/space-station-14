@@ -35,7 +35,7 @@ namespace Content.Server.Shuttles.Systems;
 [UsedImplicitly]
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
-    [Dependency] private readonly IAdminLogManager _logger = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;

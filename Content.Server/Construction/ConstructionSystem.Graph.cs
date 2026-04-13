@@ -254,7 +254,7 @@ namespace Content.Server.Construction
 
             if (userUid != null)
                 _adminLogger.Add(LogType.Construction, LogImpact.Low,
-                    $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
+                    $"{userUid.Value:player} changed {uid:entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
             if (node.Entity.GetId(uid, userUid, new(EntityManager)) is { } newEntity

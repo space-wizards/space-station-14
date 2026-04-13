@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -22,7 +21,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
+    private const string CsvHeader = "Date,ID,PlayerID,EntityParticipation,Severity,Type,Message";
 
     private ISawmill _sawmill;
 
@@ -35,10 +34,14 @@ public sealed class AdminLogsEui : BaseEui
         LogsControl = LogsWindow.Logs;
 
         LogsControl.LogSearch.OnTextEntered += _ => RequestLogs();
-        LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
+        LogsControl.EntityUidSearch.OnTextEntered += _ => RequestLogs();
+        LogsControl.SearchButton.OnPressed += _ => RequestLogs();
         LogsControl.NextButton.OnPressed += _ => NextLogs();
         LogsControl.PopOutButton.OnPressed += _ => PopOut();
         LogsControl.ExportLogs.OnPressed += _ => ExportLogs();
+
+        // Auto-request logs when the round changes
+        LogsControl.RoundSpinBox.ValueChanged += _ => RequestLogs();
 
         _sawmill = _log.GetSawmill("admin.logs.ui");
     }
@@ -66,18 +69,37 @@ public sealed class AdminLogsEui : BaseEui
 
     private void RequestLogs()
     {
+        // Parse entity UID search: comma- or space-separated.
+        int[]? anyEntities = null;
+        var entityText = LogsControl.EntitySearch;
+        if (!string.IsNullOrWhiteSpace(entityText))
+        {
+            anyEntities = entityText
+                .Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => int.TryParse(s.Trim(), out var uid) ? (int?) uid : null)
+                .Where(uid => uid.HasValue)
+                .Select(uid => uid!.Value)
+                .ToArray();
+
+            if (anyEntities.Length == 0)
+                anyEntities = null;
+        }
+
+        var hasPlayerFilter = LogsControl.SelectedPlayers.Count != 0;
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
             LogsControl.Search,
             LogsControl.SelectedTypes.ToHashSet(),
+            LogsControl.SelectedImpacts.ToHashSet(),
             null,
             null,
+            true,
+            hasPlayerFilter ? LogsControl.SelectedPlayers.ToArray() : null,
             null,
-            LogsControl.SelectedPlayers.Count != 0,
-            LogsControl.SelectedPlayers.ToArray(),
-            null,
-            LogsControl.IncludeNonPlayerLogs,
-            DateOrder.Descending);
+            LogsControl.IncludeNonPlayerLogs || !hasPlayerFilter,
+            DateOrder.Descending,
+            anyEntities: anyEntities,
+            searchMode: LogsControl.SelectedSearchMode);
 
         SendMessage(request);
     }
@@ -100,20 +122,19 @@ public sealed class AdminLogsEui : BaseEui
         var file = await _dialogManager.SaveFile(new FileDialogFilters(new FileDialogFilters.Group("csv")));
 
         if (file == null)
+        {
+            _currentlyExportingLogs = false;
+            LogsControl.ExportLogs.Disabled = false;
             return;
+        }
 
         try
         {
             // Buffer is set to 4KB for performance reasons. As the average export of 1000 logs is ~200KB
             await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
             await writer.WriteLineAsync(CsvHeader);
-            foreach (var child in LogsControl.LogsContainer.Children)
+            foreach (var log in LogsControl.GetShownLogs())
             {
-                if (child is not AdminLogLabel logLabel || !child.Visible)
-                    continue;
-
-                var log = logLabel.Log;
-
                 // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
                 await writer.WriteAsync(log.Date.ToString("s", System.Globalization.CultureInfo.InvariantCulture));
@@ -126,6 +147,14 @@ public sealed class AdminLogsEui : BaseEui
                 for (var i = 0; i < players.Length; i++)
                 {
                     await writer.WriteAsync(players[i] + (i == players.Length - 1 ? "" : " "));
+                }
+                await writer.WriteAsync(CsvSeparator);
+                // EntityParticipation
+                var entities = log.Entities;
+                for (var i = 0; i < entities.Length; i++)
+                {
+                    var entity = entities[i];
+                    await writer.WriteAsync($"{entity.EntityUid}:{entity.Role}:{entity.PrototypeId ?? entity.EntityName ?? string.Empty}" + (i == entities.Length - 1 ? "" : " "));
                 }
                 await writer.WriteAsync(CsvSeparator);
                 // Severity
@@ -197,6 +226,7 @@ public sealed class AdminLogsEui : BaseEui
 
         LogsControl.SetCurrentRound(s.RoundId);
         LogsControl.SetPlayers(s.Players);
+        LogsControl.SetServerName(s.CurrentServerName);
         LogsControl.UpdateCount(round: s.RoundLogs);
 
         if (!FirstState)
@@ -206,7 +236,6 @@ public sealed class AdminLogsEui : BaseEui
 
         FirstState = false;
         LogsControl.SetRoundSpinBox(s.RoundId);
-        RequestLogs();
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -218,7 +247,8 @@ public sealed class AdminLogsEui : BaseEui
             case NewLogs newLogs:
                 if (newLogs.Replace)
                 {
-                    LogsControl.SetLogs(newLogs.Logs);
+                    LogsControl.ClearLogs();
+                    LogsControl.AddLogs(newLogs.Logs);
                 }
                 else
                 {

@@ -155,7 +155,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (InsertBody(ent.Owner, args.Args.Target.Value, ent.Comp))
         {
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(ent.Owner)}");
+                $"{args.User} inserted {args.Args.Target.Value} into {ent.Owner}");
         }
         args.Handled = true;
     }
@@ -185,7 +185,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
         var ejected = EjectBody(uid, cryoPodComponent);
         if (ejected != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ejected.Value)} pried out of {ToPrettyString(uid)} by {ToPrettyString(args.User)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ejected.Value} pried out of {uid} by {args.User}");
     }
 
     private void OnPowerChanged(Entity<CryoPodComponent> ent, ref PowerChangedEvent args)
@@ -291,7 +291,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
         var ejected = EjectBody(uid, cryoPodComponent);
         if (ejected != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ejected.Value)} ejected from {ToPrettyString(uid)} by {ToPrettyString(userId)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ejected.Value} ejected from {uid} by {userId}");
     }
 
     /// <summary>

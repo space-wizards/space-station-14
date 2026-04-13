@@ -127,7 +127,7 @@ public sealed class ReflectSystem : EntitySystem
 
         if (Resolve(projectile, ref projectile.Comp, false))
         {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectile.Comp.Weapon)} shot by {projectile.Comp.Shooter}");
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{user} reflected {projectile} from {projectile.Comp.Weapon} shot by {projectile.Comp.Shooter}");
 
             projectile.Comp.Shooter = user;
             projectile.Comp.Weapon = user;
@@ -135,7 +135,7 @@ public sealed class ReflectSystem : EntitySystem
         }
         else
         {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)}");
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{user} reflected {projectile}");
         }
 
         return true;
@@ -163,9 +163,9 @@ public sealed class ReflectSystem : EntitySystem
         newDirection = -spread.RotateVec(direction);
 
         if (shooter != null)
-            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)} shot by {ToPrettyString(shooter.Value)}");
+            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{user} reflected hitscan from {shotSource} shot by {shooter.Value}");
         else
-            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)}");
+            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{user} reflected hitscan from {shotSource}");
 
         return true;
     }

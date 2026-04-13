@@ -479,7 +479,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(ent)} exploded from unsafe cooking!");
+                $"{ent.Owner:subject} exploded from unsafe cooking!");
         }
         /// <summary>
         /// Handles the attempted cooking of unsafe objects

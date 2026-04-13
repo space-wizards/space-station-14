@@ -1,6 +1,8 @@
+using System.Text.Json;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
@@ -21,7 +23,6 @@ using Content.Shared.Maps;
 using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
-using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -41,7 +42,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -257,8 +258,23 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         if (user == null)
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
-                $"{ToPrettyString(uid):entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
+            var semantics = AdminLogHelpers.GetActorSemantics(_playerManager, uid, uid);
+            _adminLogger.Add(
+                LogType.Explosion,
+                LogImpact.High,
+                $"{uid:entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    explosive = (int) uid,
+                    explosionType = typeId,
+                    coordinates = posFound ? gridPos.ToString() : "[Grid or Map not found]",
+                    totalIntensity,
+                    slope,
+                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                }),
+                players: semantics.Players,
+                entities: semantics.Entities,
+                playerRoles: semantics.PlayerRoles);
         }
         else
         {
@@ -266,10 +282,44 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             var logImpact = (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
                 ? LogImpact.Extreme
                 : LogImpact.High;
+            var semantics = AdminLogHelpers.GetActorSemantics(_playerManager, user.Value, uid);
+
             if (posFound)
-                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}");
+                _adminLogger.Add(
+                    LogType.Explosion,
+                    logImpact,
+                    $"{user.Value:user} caused {uid:entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user.Value,
+                        explosive = (int) uid,
+                        explosionType = typeId,
+                        coordinates = gridPos.ToString(),
+                        totalIntensity,
+                        slope,
+                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                    }),
+                    players: semantics.Players,
+                    entities: semantics.Entities,
+                    playerRoles: semantics.PlayerRoles);
             else
-                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}");
+                _adminLogger.Add(
+                    LogType.Explosion,
+                    logImpact,
+                    $"{user.Value:user} caused {uid:entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}",
+                    JsonSerializer.SerializeToDocument(new
+                    {
+                        actor = (int) user.Value,
+                        explosive = (int) uid,
+                        explosionType = typeId,
+                        coordinates = "[Grid or Map not found]",
+                        totalIntensity,
+                        slope,
+                        radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                    }),
+                    players: semantics.Players,
+                    entities: semantics.Entities,
+                    playerRoles: semantics.PlayerRoles);
         }
     }
 
@@ -298,7 +348,28 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
-            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+        {
+            var semantics = cause is { } causeEntity
+                ? AdminLogHelpers.GetActorSemantics(_playerManager, causeEntity)
+                : default(AdminLogExplicitSemantics);
+
+            _adminLogger.Add(
+                LogType.Explosion,
+                LogImpact.High,
+                $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    cause = cause is null ? null : (int?) cause.Value,
+                    explosionType = typeId,
+                    coordinates = epicenter.ToString(),
+                    totalIntensity,
+                    slope,
+                    radius = IntensityToRadius(totalIntensity, slope, maxTileIntensity)
+                }),
+                players: semantics.Players,
+                entities: semantics.Entities,
+                playerRoles: semantics.PlayerRoles);
+        }
 
         // try to combine explosions on the same tile if they are the same type
         foreach (var queued in _queuedExplosions)

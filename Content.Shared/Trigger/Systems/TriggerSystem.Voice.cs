@@ -69,7 +69,7 @@ public sealed partial class TriggerSystem
         if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.IndexOf(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase) is var index and >= 0)
         {
             _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
-                    $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
+                    $"A voice-trigger on {ent:entity} was triggered by {args.Source:speaker} speaking the key-phrase {component.KeyPhrase}.");
             Trigger(ent, args.Source, ent.Comp.KeyOut);
 
             var messageWithoutPhrase = message.Remove(index, component.KeyPhrase.Length).Trim();
@@ -144,9 +144,9 @@ public sealed partial class TriggerSystem
         EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
 
         if (user == null)
-            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ToPrettyString(ent):entity} has started recording.");
+            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording.");
         else
-            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ToPrettyString(ent):entity} has started recording. User: {ToPrettyString(user.Value):user}");
+            _adminLogger.Add(LogType.Trigger, LogImpact.Low, $"A voice-trigger on {ent:entity} has started recording. User: {user.Value:user}");
 
         _popup.PopupPredicted(Loc.GetString("trigger-on-voice-start-recording"), ent, user);
     }
@@ -175,7 +175,7 @@ public sealed partial class TriggerSystem
         Dirty(ent);
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
-                $"A voice-trigger on {ToPrettyString(ent):entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {ToPrettyString(source):speaker}");
+                $"A voice-trigger on {ent:entity} has recorded a new keyphrase: '{ent.Comp.KeyPhrase}'. Recorded from {source:speaker}");
 
         _popup.PopupEntity(Loc.GetString("trigger-on-voice-recorded", ("keyphrase", ent.Comp.KeyPhrase)), ent);
     }
@@ -205,7 +205,7 @@ public sealed partial class TriggerSystem
         UpdateListening(ent);
 
         _adminLogger.Add(LogType.Trigger, LogImpact.Low,
-            $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {ToPrettyString(user):speaker}");
+            $"A voice-trigger on {ent:entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {user:speaker}");
 
         _popup.PopupPredicted(Loc.GetString("trigger-on-voice-set-default", ("keyphrase", ent.Comp.KeyPhrase)), ent, user);
     }

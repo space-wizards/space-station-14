@@ -24,7 +24,7 @@ public sealed class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
@@ -170,7 +170,7 @@ public sealed class IdentitySystem : EntitySystem
 
         _metaData.SetEntityName(ident, name);
 
-        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(ent)} changed identity to {name}");
+        _adminLogger.Add(LogType.Identity, LogImpact.Medium, $"{ent} changed identity to {name}");
         var identityChangedEvent = new IdentityChangedEvent(ent, ident);
         RaiseLocalEvent(ent, ref identityChangedEvent);
         SetIdentityCriminalIcon(ent);

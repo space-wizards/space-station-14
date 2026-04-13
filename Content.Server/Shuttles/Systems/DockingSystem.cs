@@ -3,6 +3,8 @@ using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
@@ -31,6 +33,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         private const string DockingJoint = "docking";
 
@@ -373,6 +376,8 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested undocking of {dockEnt.Value:entity}");
+
             Undock(dock);
         }
 
@@ -418,6 +423,8 @@ namespace Content.Server.Shuttles.Systems
                 _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
                 return;
             }
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested docking of {ourDock.Value:entity} with {targetDock.Value:target}");
 
             Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
         }

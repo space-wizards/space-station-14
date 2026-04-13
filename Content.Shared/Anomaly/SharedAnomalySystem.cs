@@ -29,7 +29,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -94,7 +94,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
+        _adminLogger.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {uid} pulsed with severity {component.Severity}.");
         if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
@@ -134,7 +134,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         if(!Resolve(ent, ref ent.Comp))
             return;
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
+        _adminLogger.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ent.Owner} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
@@ -196,9 +196,9 @@ public abstract class SharedAnomalySystem : EntitySystem
             // Logging before resolve, in case the anomaly has deleted itself.
             if (_net.IsServer)
                 Log.Info($"Ending anomaly. Entity: {ToPrettyString(uid)}");
-            AdminLog.Add(LogType.Anomaly,
+            _adminLogger.Add(LogType.Anomaly,
                 supercritical ? LogImpact.High : LogImpact.Low,
-                $"Anomaly {ToPrettyString(uid)} {(supercritical ? "went supercritical" : "decayed")}.");
+                $"Anomaly {uid} {(supercritical ? "went supercritical" : "decayed")}.");
         }
 
         if (!Resolve(uid, ref component))

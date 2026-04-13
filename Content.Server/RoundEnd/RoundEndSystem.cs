@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
@@ -184,7 +185,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):player}{what}");
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester.Value:actor}{what}");
             else
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{what}");
 
@@ -254,7 +255,7 @@ namespace Content.Server.RoundEnd
 
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
             if (requester != null)
-                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):player}{what}");
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester.Value:actor}{what}");
             else
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{what}");
 

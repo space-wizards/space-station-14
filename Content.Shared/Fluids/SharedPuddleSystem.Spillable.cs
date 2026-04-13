@@ -163,10 +163,10 @@ public abstract partial class SharedPuddleSystem
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            AdminLogger.Add(LogType.MeleeHit,
-                $"{ToPrettyString(args.User):actor} "
-                + $"splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} "
-                + $"from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            _adminLogger.Add(LogType.MeleeHit,
+                $"{args.User:actor} "
+                + $"splashed {splitSolution:solution} "
+                + $"from {entity.Owner:entity} onto {hit:target}");
 
             Reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 

@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
@@ -34,6 +35,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
+using System.Text.Json;
 using System.Linq;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -65,6 +67,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly ExamineSystemShared _examine = default!;
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
@@ -243,6 +246,22 @@ namespace Content.Server.Administration.Systems
                         Act = () =>
                         {
                             EnsureComp<AdminFrozenComponent>(args.Target);
+
+                            Guid? targetPlayerUserId = null;
+                            if (TryComp(args.Target, out ActorComponent? targetActor))
+                                targetPlayerUserId = targetActor.PlayerSession.UserId.UserId;
+
+                            _auditLog.LogAction(
+                                player.UserId.UserId,
+                                AdminAuditAction.Freeze,
+                                AuditSeverity.Notable,
+                                $"Froze {ToPrettyString(args.Target)}",
+                                targetPlayerUserId: targetPlayerUserId,
+                                targetEntity: args.Target,
+                                payload: JsonSerializer.SerializeToDocument(new
+                                {
+                                    action = "freeze"
+                                }));
                         },
                         Impact = LogImpact.Medium,
                     });
@@ -260,6 +279,22 @@ namespace Content.Server.Administration.Systems
                         Act = () =>
                         {
                             _freeze.FreezeAndMute(args.Target);
+
+                            Guid? targetPlayerUserId = null;
+                            if (TryComp(args.Target, out ActorComponent? targetActor))
+                                targetPlayerUserId = targetActor.PlayerSession.UserId.UserId;
+
+                            _auditLog.LogAction(
+                                player.UserId.UserId,
+                                AdminAuditAction.Freeze,
+                                AuditSeverity.Notable,
+                                $"Froze and muted {ToPrettyString(args.Target)}",
+                                targetPlayerUserId: targetPlayerUserId,
+                                targetEntity: args.Target,
+                                payload: JsonSerializer.SerializeToDocument(new
+                                {
+                                    action = "freeze_and_mute"
+                                }));
                         },
                         Impact = LogImpact.Medium,
                     });
@@ -276,6 +311,22 @@ namespace Content.Server.Administration.Systems
                         Act = () =>
                         {
                             RemComp<AdminFrozenComponent>(args.Target);
+
+                            Guid? targetPlayerUserId = null;
+                            if (TryComp(args.Target, out ActorComponent? targetActor))
+                                targetPlayerUserId = targetActor.PlayerSession.UserId.UserId;
+
+                            _auditLog.LogAction(
+                                player.UserId.UserId,
+                                AdminAuditAction.Unfreeze,
+                                AuditSeverity.Notable,
+                                $"Unfroze {ToPrettyString(args.Target)}",
+                                targetPlayerUserId: targetPlayerUserId,
+                                targetEntity: args.Target,
+                                payload: JsonSerializer.SerializeToDocument(new
+                                {
+                                    action = "unfreeze"
+                                }));
                         },
                         Impact = LogImpact.Medium,
                     });

@@ -1,5 +1,8 @@
-﻿using Content.Server.Database;
+﻿using System.Text.Json;
+using Content.Server.Administration.AuditLog;
+using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -8,6 +11,7 @@ namespace Content.Server.Administration.Commands
     public sealed class PardonCommand : LocalizedCommands
     {
         [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "pardon";
 
@@ -51,6 +55,23 @@ namespace Content.Server.Administration.Commands
             }
 
             await _dbManager.AddUnbanAsync(new UnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+
+            if (player != null)
+            {
+                var targetPlayer = ban.UserIds.Length > 0 ? ban.UserIds[0].UserId : (Guid?) null;
+                _auditLog.LogAction(
+                    player.UserId.UserId,
+                    AdminAuditAction.Unban,
+                    AuditSeverity.Critical,
+                    $"Pardoned server ban #{banId}",
+                    targetPlayerUserId: targetPlayer,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        banId,
+                        banType = ban.Type.ToString(),
+                        reason = ban.Reason
+                    }));
+            }
 
             shell.WriteLine(Loc.GetString($"cmd-pardon-success", ("id", banId)));
         }

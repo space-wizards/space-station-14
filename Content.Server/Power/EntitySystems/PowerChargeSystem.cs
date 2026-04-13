@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
@@ -86,7 +86,7 @@ public sealed class PowerChargeSystem : EntitySystem
             return;
 
         if (user is { })
-            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(user):player} set {ToPrettyString(uid):target} to {(on ? "on" : "off")}");
+            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{user:player} set {uid:target} to {(on ? "on" : "off")}");
 
         component.SwitchedOn = on;
         UpdatePowerState(component, powerReceiver);

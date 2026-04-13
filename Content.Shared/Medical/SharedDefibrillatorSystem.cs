@@ -1,5 +1,7 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -39,6 +41,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private readonly HashSet<EntityUid> _interacters = new();
 
@@ -238,6 +241,8 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(ent.Owner))
             _toggle.TryDeactivate(ent.Owner);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user:player} used defibrillator {ent.Owner:tool} on {target:target}");
 
         var ev = new TargetDefibrillatedEvent(user, (ent.Owner, ent.Comp));
         RaiseLocalEvent(target, ref ev);

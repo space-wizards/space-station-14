@@ -32,7 +32,7 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class SmokeSystem : EntitySystem
 {
     // If I could do it all again this could probably use a lot more of puddles.
-    [Dependency] private readonly IAdminLogManager _logger = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -290,7 +290,7 @@ public sealed class SmokeSystem : EntitySystem
         if (_blood.TryAddToBloodstream((entity, bloodstream), transferSolution))
         {
             // Log solution addition by smoke
-            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} ingested smoke {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{entity:target} ingested smoke {transferSolution}");
         }
     }
 

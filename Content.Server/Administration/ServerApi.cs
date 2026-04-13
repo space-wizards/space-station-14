@@ -6,12 +6,12 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration.Managers;
@@ -64,6 +64,7 @@ public sealed partial class ServerApi : IPostInjectInit
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     private string _token = string.Empty;
     private ISawmill _sawmill = default!;
@@ -241,6 +242,12 @@ public sealed partial class ServerApi : IPostInjectInit
             }
 
             ticker.SetGamePreset(preset);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.ForcePreset,
+                AuditSeverity.Critical,
+                $"Forced round preset to {body.PresetId}",
+                payload: JsonSerializer.SerializeToDocument(new { preset = body.PresetId }));
             _sawmill.Info($"Forced the game to start with preset {body.PresetId} by {FormatLogActor(actor)}.");
 
             await RespondOk(context);
@@ -276,6 +283,16 @@ public sealed partial class ServerApi : IPostInjectInit
 
             _sawmill.Info($"Ended game rule {body.GameRuleId} by {FormatLogActor(actor)}.");
             ticker.EndGameRule(gameRule.Value);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.RemoveGameRule,
+                AuditSeverity.Critical,
+                $"Ended game rule {body.GameRuleId}",
+                targetEntity: gameRule.Value,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    gameRule = body.GameRuleId,
+                }));
 
             await RespondOk(context);
         });
@@ -309,6 +326,18 @@ public sealed partial class ServerApi : IPostInjectInit
                 ticker.StartGameRule(ruleEntity);
                 _sawmill.Info($"Started game rule {body.GameRuleId} by {FormatLogActor(actor)}.");
             }
+
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.AddGameRule,
+                AuditSeverity.Critical,
+                $"Added game rule {body.GameRuleId}",
+                targetEntity: ruleEntity,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    gameRule = body.GameRuleId,
+                    startedImmediately = ticker.RunLevel == GameRunLevel.InRound,
+                }));
 
             await RespondOk(context);
         });
@@ -408,6 +437,18 @@ public sealed partial class ServerApi : IPostInjectInit
             reason += " (kicked by admin)";
 
             _netManager.DisconnectChannel(player.Channel, reason);
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.Kick,
+                AuditSeverity.Critical,
+                $"Kicked player {player.Name} ({player.UserId})",
+                targetPlayerUserId: player.UserId.UserId,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    targetName = player.Name,
+                    targetUserId = player.UserId.UserId,
+                    reason = body.Reason
+                }));
             await RespondOk(context);
 
             _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) for {reason} by {FormatLogActor(actor)}");
@@ -454,6 +495,12 @@ public sealed partial class ServerApi : IPostInjectInit
             }
 
             roundEndSystem.EndRound();
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.EndRound,
+                AuditSeverity.Critical,
+                "Ended round",
+                payload: JsonSerializer.SerializeToDocument(new { action = "round_end" }));
             _sawmill.Info($"Forced round end by {FormatLogActor(actor)}");
             await RespondOk(context);
         });
@@ -466,6 +513,12 @@ public sealed partial class ServerApi : IPostInjectInit
             var ticker = _entitySystemManager.GetEntitySystem<GameTicker>();
 
             ticker.RestartRound();
+            _auditLog.LogAction(
+                actor.Guid,
+                AdminAuditAction.RestartRound,
+                AuditSeverity.Critical,
+                "Restarted round immediately",
+                payload: JsonSerializer.SerializeToDocument(new { action = "round_restart_now" }));
             _sawmill.Info($"Forced instant round restart by {FormatLogActor(actor)}");
             await RespondOk(context);
         });

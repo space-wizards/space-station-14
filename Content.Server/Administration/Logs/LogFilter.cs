@@ -1,4 +1,5 @@
-﻿using System.Threading;
+using System.Threading;
+using Content.Server.Database;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
@@ -10,7 +11,11 @@ public sealed class LogFilter
 
     public int? Round { get; set; }
 
+    public int? ServerId { get; set; }
+
     public string? Search { get; set; }
+
+    public LogSearchMode SearchMode { get; set; } = LogSearchMode.Keyword;
 
     public HashSet<LogType>? Types { get; set; }
 
@@ -22,13 +27,31 @@ public sealed class LogFilter
 
     public bool IncludePlayers  { get; set; } = true;
 
+    public int[]? AnyEntities { get; set; }
+
+    public int[]? AllEntities { get; set; }
+
+    public HashSet<AdminLogEntityRole>? EntityRoles { get; set; }
+
     public Guid[]? AnyPlayers { get; set; }
 
     public Guid[]? AllPlayers { get; set; }
 
     public bool IncludeNonPlayers { get; set; }
 
+    /// <summary>
+    /// Keyset cursor: the Id of the last log returned in the previous page.
+    /// When <see cref="LastOccurredAt"/> is also set, the query uses a compound
+    /// <c>(OccurredAt, Id)</c> cursor that can seek directly into the
+    /// <c>(ServerId, OccurredAt, Id)</c> index.
+    /// </summary>
     public int? LastLogId { get; set; }
+
+    /// <summary>
+    /// Keyset cursor: the OccurredAt timestamp of the last log returned.
+    /// Must be set together with <see cref="LastLogId"/> for compound keyset pagination.
+    /// </summary>
+    public DateTime? LastOccurredAt { get; set; }
 
     public int LogsSent { get; set; }
 

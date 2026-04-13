@@ -34,7 +34,7 @@ namespace Content.Shared.Kitchen;
 public sealed class SharedKitchenSpikeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
@@ -241,9 +241,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             // normally medium severity, but for humanoids high severity, so new players get relay'd to admin alerts.
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.High : LogImpact.Medium;
 
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 logSeverity,
-                $"{ToPrettyString(args.User):user} put {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} put {args.Target:target} on the {ent:spike}");
 
             _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
@@ -266,9 +266,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.Target.Value,
                 ent);
 
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Medium,
-                $"{ToPrettyString(args.User):user} took {ToPrettyString(args.Target):target} off the {ToPrettyString(ent):spike}");
+                $"{args.User:user} took {args.Target:target} off the {ent:spike}");
 
             _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
@@ -318,9 +318,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;
 
-            _logger.Add(LogType.Gib,
+            _adminLogger.Add(LogType.Gib,
                 logSeverity,
-                $"{ToPrettyString(args.User):user} finished butchering {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} finished butchering {args.Target:target} on the {ent:spike}");
         }
         else
         {
@@ -329,9 +329,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             _damageableSystem.ChangeDamage(args.Target.Value, ent.Comp.ButcherDamage, true);
 
             // Log severity for damaging other entities is normally medium.
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Medium,
-                $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} butchered {args.Target:target} on the {ent:spike}");
         }
 
         _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);

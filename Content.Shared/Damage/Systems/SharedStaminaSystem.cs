@@ -330,11 +330,11 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             return;
         if (source != null)
         {
-            _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(source.Value):user} caused {value} stamina damage to {ToPrettyString(uid):target}{(with != null ? $" using {ToPrettyString(with.Value):using}" : "")}");
+            _adminLogger.Add(LogType.Stamina, $"{source.Value:user} caused {value} stamina damage to {uid:target}{(with != null ? $" using {with.Value:using}" : "")}");
         }
         else
         {
-            _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(uid):target} took {value} stamina damage");
+            _adminLogger.Add(LogType.Stamina, $"{uid:target} took {value} stamina damage");
         }
 
         if (visual)
@@ -404,7 +404,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         component.NextUpdate = Timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
-        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{uid:user} entered stamina crit");
     }
 
     private void ExitStamCrit(EntityUid uid, StaminaComponent? component = null)
@@ -421,7 +421,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         UpdateStaminaVisuals((uid, component));
         Dirty(uid, component);
-        _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
+        _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{uid:user} recovered from stamina crit");
     }
 
     /// <summary>

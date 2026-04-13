@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Text.Json;
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -10,7 +12,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking;
 
@@ -19,6 +20,7 @@ public sealed partial class GameTicker
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
     [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -74,7 +76,7 @@ public sealed partial class GameTicker
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Added game rule {ruleEntity}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
 #if DEBUG
         _chatManager.SendAdminAlert(str);
@@ -142,7 +144,7 @@ public sealed partial class GameTicker
             {
                 _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
                 _adminLogger.Add(LogType.EventStarted,
-                    $"Queued start for game rule {ToPrettyString(ruleEntity)} with delay {delayTime}");
+                    $"Queued start for game rule {ruleEntity} with delay {delayTime}");
 
                 var delayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
                 delayed.RuleStartTime = _gameTiming.CurTime + (delayTime);
@@ -165,7 +167,7 @@ public sealed partial class GameTicker
         }
 
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStarted, $"Started game rule {ruleEntity}");
 
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
         ruleData.ActivatedAt = _gameTiming.CurTime;
@@ -195,7 +197,7 @@ public sealed partial class GameTicker
         EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
-        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
+        _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ruleEntity}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -418,6 +420,21 @@ public sealed partial class GameTicker
             if(RunLevel == GameRunLevel.InRound)
                 StartGameRule(ent);
 
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.AddGameRule,
+                    AuditSeverity.Critical,
+                    $"Added game rule {rule}",
+                    targetEntity: ent,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        gameRule = rule,
+                        startedImmediately = RunLevel == GameRunLevel.InRound,
+                    }));
+            }
+
         }
     }
 
@@ -445,7 +462,23 @@ public sealed partial class GameTicker
                 _adminLogger.Add(LogType.EventStopped, $"Unknown tried to end game rule [{rule}] via command");
             }
 
-            EndGameRule(ruleEnt.Value);
+            if (!EndGameRule(ruleEnt.Value))
+                continue;
+
+            if (shell.Player != null)
+            {
+                var ruleName = MetaData(ruleEnt.Value).EntityPrototype?.ID ?? rule;
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.RemoveGameRule,
+                    AuditSeverity.Critical,
+                    $"Ended game rule {ruleName}",
+                    targetEntity: ruleEnt.Value,
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        gameRule = ruleName,
+                    }));
+            }
         }
     }
 

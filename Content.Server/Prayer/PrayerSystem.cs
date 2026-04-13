@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
@@ -84,7 +85,7 @@ public sealed class PrayerSystem : EntitySystem
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.Channel);
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source?.Name ?? "unknown source"}: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{target.AttachedEntity.Value:target} received subtle message from {source?.Name ?? "unknown source"}: {message}");
     }
 
     /// <summary>
@@ -105,6 +106,6 @@ public sealed class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{sender.AttachedEntity.Value:actor} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
     }
 }

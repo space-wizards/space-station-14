@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -139,9 +139,9 @@ public sealed class SharpSystem : EntitySystem
         args.Handled = true;
 
         _adminLogger.Add(LogType.Gib,
-            $"{ToPrettyString(args.User):user} " +
-            $"has butchered {ToPrettyString(args.Target):target} " +
-            $"with {ToPrettyString(args.Used):knife}");
+            $"{args.User:user} " +
+            $"has butchered {args.Target:target} " +
+            $"with {args.Used:knife}");
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)

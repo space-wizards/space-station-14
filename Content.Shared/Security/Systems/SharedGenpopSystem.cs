@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -18,6 +19,7 @@ public abstract class SharedGenpopSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] protected readonly SharedIdCardSystem IdCard = default!;
@@ -63,6 +65,21 @@ public abstract class SharedGenpopSystem : EntitySystem
         _entityStorage.CloseStorage(ent);
 
         CreateId(ent, args.Name, args.Sentence, args.Crime);
+
+        var permanent = args.Sentence <= 0;
+        _adminLogger.Add(
+            LogType.Action,
+            LogImpact.Medium,
+            $"{args.Actor:actor} configured GenPop locker {ent:target} for prisoner " +
+            $"'{args.Name}' with crime '{args.Crime}' and sentence {(permanent ? "permanent" : $"{args.Sentence} min")}",
+            new
+            {
+                action = "genpop_configure",
+                prisonerName = args.Name,
+                crime = args.Crime,
+                sentenceMinutes = args.Sentence,
+                permanent,
+            });
     }
 
     private void OnCloseAttempt(Entity<GenpopLockerComponent> ent, ref StorageCloseAttemptEvent args)
@@ -143,11 +160,17 @@ public abstract class SharedGenpopSystem : EntitySystem
 
         var user = args.User;
         var hasAccess = _accessReader.IsAllowed(args.User, ent);
+        var linkedId = ent.Comp.LinkedId.Value;
         args.Verbs.Add(new Verb // End sentence early.
         {
             Act = () =>
             {
-                IdCard.ExpireId((ent.Comp.LinkedId.Value, expire));
+                IdCard.ExpireId((linkedId, expire));
+                _adminLogger.Add(
+                    LogType.Action,
+                    LogImpact.Medium,
+                    $"{user:actor} ended GenPop sentence early on locker {ent:target}",
+                    new { action = "genpop_end_early" });
             },
             Priority = 13,
             Text = Loc.GetString("genpop-locker-action-end-early"),
@@ -161,6 +184,11 @@ public abstract class SharedGenpopSystem : EntitySystem
             Act = () =>
             {
                 CancelIdCard(ent, user);
+                _adminLogger.Add(
+                    LogType.Action,
+                    LogImpact.Medium,
+                    $"{user:actor} cancelled GenPop sentence on locker {ent:target}",
+                    new { action = "genpop_cancel" });
             },
             Priority = 12,
             Text = Loc.GetString("genpop-locker-action-clear-id"),
@@ -179,7 +207,12 @@ public abstract class SharedGenpopSystem : EntitySystem
         {
             Act = () =>
             {
-                IdCard.SetExpireTime((ent.Comp.LinkedId.Value, expire), Timing.CurTime + genpopId.SentenceDuration);
+                IdCard.SetExpireTime((linkedId, expire), Timing.CurTime + genpopId.SentenceDuration);
+                _adminLogger.Add(
+                    LogType.Action,
+                    LogImpact.Medium,
+                    $"{user:actor} reset GenPop sentence on locker {ent:target} ({servedTime * 100:F0}% served)",
+                    new { action = "genpop_reset_sentence", percentServed = servedTime * 100 });
             },
             Priority = 11,
             Text = Loc.GetString("genpop-locker-action-reset-sentence", ("percent", Math.Clamp(servedTime, 0, 1) * 100)),

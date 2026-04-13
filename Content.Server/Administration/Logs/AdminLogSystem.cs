@@ -9,24 +9,24 @@ namespace Content.Server.Administration.Logs;
 /// </summary>
 public sealed class AdminLogSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartingEvent>(ev => _adminLogs.RoundStarting(ev.Id));
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(ev => _adminLogs.RunLevelChanged(ev.New));
+        SubscribeLocalEvent<RoundStartingEvent>(ev => _adminLogger.RoundStarting(ev.Id));
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(ev => _adminLogger.RunLevelChanged(ev.New));
     }
 
     public override void Update(float frameTime)
     {
-        _adminLogs.Update();
+        _adminLogger.Update();
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _adminLogs.Shutdown();
+        _adminLogger.Shutdown();
     }
 }

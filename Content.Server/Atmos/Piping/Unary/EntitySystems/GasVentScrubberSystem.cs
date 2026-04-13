@@ -172,36 +172,36 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     if (previous.Enabled != setData.Enabled)
                     {
                         string enabled = setData.Enabled ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {enabled}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} {enabled}");
                     }
 
                     // TODO: IgnoreAlarms?
 
                     if (previous.PumpDirection != setData.PumpDirection)
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} direction changed to {setData.PumpDirection}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} direction changed to {setData.PumpDirection}");
 
                     // TODO: This is iterating through both sets, it could probably be faster but they're both really small sets anyways
                     foreach (Gas gas in previous.FilterGases)
                         if (!setData.FilterGases.Contains(gas))
-                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {gas} filtering disabled");
+                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} {gas} filtering disabled");
 
                     foreach (Gas gas in setData.FilterGases)
                         if (!previous.FilterGases.Contains(gas))
-                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {gas} filtering enabled");
+                            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} {gas} filtering enabled");
 
                     if (previous.VolumeRate != setData.VolumeRate)
                     {
                         _adminLogger.Add(
                             LogType.AtmosDeviceSetting,
                             LogImpact.Medium,
-                            $"{ToPrettyString(uid)} volume rate changed from {previous.VolumeRate} L to {setData.VolumeRate} L"
+                            $"{uid} volume rate changed from {previous.VolumeRate} L to {setData.VolumeRate} L"
                         );
                     }
 
                     if (previous.WideNet != setData.WideNet)
                     {
                         string enabled = setData.WideNet ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} WideNet {enabled}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{uid} WideNet {enabled}");
                     }
 
                     component.FromAirAlarmData(setData);

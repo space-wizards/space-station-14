@@ -7,11 +7,14 @@ namespace Content.Shared.Administration.Logs;
 [Serializable, NetSerializable]
 public sealed class AdminLogsEuiState : EuiStateBase
 {
-    public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players, int roundLogs)
+    public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players, int roundLogs,
+        Dictionary<int, string> servers, string currentServerName = "")
     {
         RoundId = roundId;
         Players = players;
         RoundLogs = roundLogs;
+        Servers = servers;
+        CurrentServerName = currentServerName;
     }
 
     public bool IsLoading { get; set; }
@@ -21,6 +24,10 @@ public sealed class AdminLogsEuiState : EuiStateBase
     public Dictionary<Guid, string> Players { get; }
 
     public int RoundLogs { get; }
+
+    public Dictionary<int, string> Servers { get; }
+
+    public string CurrentServerName { get; }
 }
 
 public static class AdminLogsEuiMsg
@@ -69,7 +76,10 @@ public static class AdminLogsEuiMsg
             Guid[]? anyPlayers,
             Guid[]? allPlayers,
             bool includeNonPlayers,
-            DateOrder dateOrder)
+            DateOrder dateOrder,
+            int? serverId = null,
+            int[]? anyEntities = null,
+            LogSearchMode searchMode = LogSearchMode.Keyword)
         {
             RoundId = roundId;
             Search = search;
@@ -82,6 +92,9 @@ public static class AdminLogsEuiMsg
             AllPlayers = allPlayers is { Length: > 0 } ? allPlayers : null;
             IncludeNonPlayers = includeNonPlayers;
             DateOrder = dateOrder;
+            ServerId = serverId;
+            AnyEntities = anyEntities is { Length: > 0 } ? anyEntities : null;
+            SearchMode = searchMode;
         }
 
         public int? RoundId { get; set; }
@@ -95,6 +108,9 @@ public static class AdminLogsEuiMsg
         public Guid[]? AllPlayers { get; set; }
         public bool IncludeNonPlayers { get; set; }
         public DateOrder DateOrder { get; set; }
+        public int? ServerId { get; set; }
+        public int[]? AnyEntities { get; set; }
+        public LogSearchMode SearchMode { get; set; }
     }
 
     [Serializable, NetSerializable]

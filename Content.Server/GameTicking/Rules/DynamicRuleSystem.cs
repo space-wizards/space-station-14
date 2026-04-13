@@ -13,7 +13,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -110,11 +110,11 @@ public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
             if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
                 entity.Comp.Budget -= cost.Cost;
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
             }
             else
             {
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} which had no cost.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} which had no cost.");
             }
         }
 

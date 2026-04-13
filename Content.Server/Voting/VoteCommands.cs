@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Text.Json;
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Discord.WebhookMessages;
@@ -18,6 +20,7 @@ namespace Content.Server.Voting
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "createvote";
 
@@ -49,6 +52,20 @@ namespace Content.Server.Voting
             }
 
             _voteManager.CreateStandardVote(shell.Player, type, args.Skip(1).ToArray());
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.CreateVote,
+                    AuditSeverity.Notable,
+                    $"Created vote of type {type}",
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        voteType = type.ToString(),
+                        parameters = args.Skip(1).ToArray(),
+                    }));
+            }
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -71,6 +88,7 @@ namespace Content.Server.Voting
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly VoteWebhooks _voteWebhooks = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         private const int MaxArgCount = 10;
 
@@ -105,6 +123,21 @@ namespace Content.Server.Voting
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
 
             var vote = _voteManager.CreateVote(options);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.CreateVote,
+                    AuditSeverity.Notable,
+                    "Created vote of type Custom",
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        voteType = "Custom",
+                        title = options.Title,
+                        options = options.Options.Select(x => x.text).ToArray(),
+                    }));
+            }
 
             var webhookState = _voteWebhooks.CreateWebhookIfConfigured(options, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
 
@@ -223,6 +256,7 @@ namespace Content.Server.Voting
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "cancelvote";
 
@@ -241,7 +275,19 @@ namespace Content.Server.Voting
             }
 
             if (shell.Player != null)
+            {
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} canceled vote: {vote.Title}");
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.CancelVote,
+                    AuditSeverity.Notable,
+                    $"Cancelled vote {vote.Title}",
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        voteTitle = vote.Title,
+                        voteId = vote.Id,
+                    }));
+            }
             else
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Canceled vote: {vote.Title}");
             vote.Cancel();

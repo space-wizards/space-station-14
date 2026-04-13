@@ -74,7 +74,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(user):user} labeled {ToPrettyString(target):target} with {ToPrettyString(ent):labeler}");
+            $"{user:user} labeled {target:target} with {ent:labeler}");
     }
 
     private void RemoveLabelFrom(EntityUid uid, EntityUid user, EntityUid target)
@@ -86,7 +86,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
+            $"{user:user} removed label from {target:target} with {uid:labeler}");
     }
 
     private void OnUtilityVerb(Entity<HandLabelerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
@@ -141,7 +141,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
 
         // Log label change
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.Actor):user} set {ToPrettyString(uid):labeler} to apply label \"{handLabeler.AssignedLabel}\"");
+            $"{args.Actor:user} set {uid:labeler} to apply label \"{handLabeler.AssignedLabel}\"");
     }
 
     private void OnExamined(Entity<HandLabelerComponent> ent, ref ExaminedEvent args)

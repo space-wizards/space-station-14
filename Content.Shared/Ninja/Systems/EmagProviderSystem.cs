@@ -54,7 +54,7 @@ public sealed class EmagProviderSystem : EntitySystem
 
         _audio.PlayPredicted(comp.EmagSound, uid, uid);
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{uid:player} emagged {target:target} with flag(s): {ent.Comp.EmagType}");
         var ev = new EmaggedSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;

@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -12,6 +14,7 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "forcepreset";
 
@@ -37,6 +40,16 @@ namespace Content.Server.GameTicking.Commands
             }
 
             _ticker.SetGamePreset(type, true);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.ForcePreset,
+                    AuditSeverity.Critical,
+                    $"Forced preset to {name}");
+            }
+
             shell.WriteLine(Loc.GetString($"cmd-forcepreset-success", ("preset", name)));
             _ticker.UpdateInfoText();
         }

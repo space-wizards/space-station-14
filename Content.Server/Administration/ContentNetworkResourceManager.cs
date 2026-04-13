@@ -30,7 +30,9 @@ public sealed class ContentNetworkResourceManager
 
     private async void AutoDelete(int days)
     {
-        if (days > 0)
-            await _serverDb.PurgeUploadedResourceLogAsync(days);
+        if (days <= 0)
+            return;
+
+        await _serverDb.PurgeUploadedResourceLogAsync(days);
     }
 }

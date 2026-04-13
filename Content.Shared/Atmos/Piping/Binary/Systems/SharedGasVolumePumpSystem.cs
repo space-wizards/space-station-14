@@ -44,7 +44,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
     {
         pump.Enabled = args.Enabled;
         _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+            $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
 
         Dirty(uid, pump);
         UpdateUi((uid, pump));
@@ -57,7 +57,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
         Dirty(uid, pump);
         UpdateUi((uid, pump));
         _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.TransferRate}");
+            $"{args.Actor:player} set the transfer rate on {uid:device} to {args.TransferRate}");
     }
 
     private void OnExamined(EntityUid uid, GasVolumePumpComponent pump, ExaminedEvent args)

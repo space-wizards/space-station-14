@@ -22,7 +22,7 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract class SharedMaterialReclaimerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -106,9 +106,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         if (user != null)
         {
-            _adminLog.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.High,
-                $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
+                $"{user.Value:player} destroyed {item} in the material reclaimer, {uid}");
         }
 
         if (Timing.CurTime > component.NextSound)

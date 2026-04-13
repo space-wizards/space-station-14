@@ -1,4 +1,6 @@
-﻿using Content.Shared.Administration.Logs;
+using System.Linq;
+
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -23,6 +25,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -52,6 +55,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -290,12 +294,39 @@ public sealed partial class IngestionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("edible-force-feed", ("user", userName), ("verb", GetEdibleVerb(food))), args.User, entity);
 
             // logging
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} is forcing {ToPrettyString(entity):target} to eat {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+            _adminLogger.Add(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{args.User:actor} is forcing {entity.Owner:victim} to eat {food:tool} {foodSolution}",
+                new
+                {
+                    actor = (int) args.User,
+                    victim = (int) entity.Owner,
+                    tool = (int) food,
+                    stage = "attempt",
+                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
+                });
         }
         else
         {
             // log voluntary eating
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(entity):target} is eating {ToPrettyString(food):food} {SharedSolutionContainerSystem.ToPrettyString(foodSolution)}");
+            var selfActionSemantics = AdminLogHelpers.GetActorVictimToolSemantics(_player, entity.Owner, entity.Owner, food);
+
+            _adminLogger.Add(
+                LogType.Ingestion,
+                LogImpact.Low,
+                $"{entity.Owner:actor} is eating {food:tool} {foodSolution}",
+                new
+                {
+                    actor = (int) entity.Owner,
+                    victim = (int) entity.Owner,
+                    tool = (int) food,
+                    stage = "attempt",
+                    foodSolution = SerializeSolutionForAdminLog(foodSolution)
+                },
+                players: selfActionSemantics.Players,
+                entities: selfActionSemantics.Entities,
+                playerRoles: selfActionSemantics.PlayerRoles);
         }
     }
 
@@ -473,7 +504,18 @@ public sealed partial class IngestionSystem : EntitySystem
 
             // log successful forced feeding
             // TODO: Use correct verb
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
+            _adminLogger.Add(
+                LogType.ForceFeed,
+                LogImpact.Medium,
+                $"{args.User:actor} forced {args.Target:victim} to eat {entity.Owner:tool}",
+                new
+                {
+                    actor = (int) args.User,
+                    victim = (int) args.Target,
+                    tool = (int) entity.Owner,
+                    stage = "success",
+                    consumed = SerializeSolutionForAdminLog(args.Split)
+                });
         }
         else
         {
@@ -486,7 +528,23 @@ public sealed partial class IngestionSystem : EntitySystem
             // TODO: Use correct verb
             // the past tense is tricky here
             // localized admin logs when?
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
+            var selfActionSemantics = AdminLogHelpers.GetActorVictimToolSemantics(_player, args.User, args.Target, entity.Owner);
+
+            _adminLogger.Add(
+                LogType.Ingestion,
+                LogImpact.Low,
+                $"{args.User:actor} ate {entity.Owner:tool}",
+                new
+                {
+                    actor = (int) args.User,
+                    victim = (int) args.Target,
+                    tool = (int) entity.Owner,
+                    stage = "success",
+                    consumed = SerializeSolutionForAdminLog(args.Split)
+                },
+                players: selfActionSemantics.Players,
+                entities: selfActionSemantics.Entities,
+                playerRoles: selfActionSemantics.PlayerRoles);
         }
 
         // BREAK OUR UTENSILS
@@ -544,5 +602,19 @@ public sealed partial class IngestionSystem : EntitySystem
     {
         if (IsEmpty(entity))
             args.Cancelled = true;
+    }
+
+    private static object SerializeSolutionForAdminLog(Solution solution)
+    {
+        return new
+        {
+            volume = solution.Volume,
+            maxVolume = solution.MaxVolume,
+            reagents = solution.Contents.Select(reagent => new
+            {
+                id = reagent.Reagent.Prototype,
+                quantity = reagent.Quantity,
+            }),
+        };
     }
 }

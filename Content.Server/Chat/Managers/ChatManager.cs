@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
@@ -8,6 +9,7 @@ using Content.Server.Discord.DiscordLink;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -118,7 +120,16 @@ internal sealed partial class ChatManager : IChatManager
         ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride);
         _sawmill.Info(message);
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Server announcement: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) EntityUid.Invalid,
+                message,
+                channel = ChatChannel.Server.ToString()
+            }));
     }
 
     public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
@@ -127,7 +138,22 @@ internal sealed partial class ChatManager : IChatManager
         ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.Channel);
 
         if (!suppressLog)
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
+        {
+            var recipientSemantics = AdminLogHelpers.GetSessionSemantics(player, attachedEntityRole: AdminLogEntityRole.Victim);
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Low,
+                $"Server message to {player.Name}: {message}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = (int) EntityUid.Invalid,
+                    recipient = player.AttachedEntity is { Valid: true } attached ? (int) attached : (int) EntityUid.Invalid,
+                    message,
+                    channel = ChatChannel.Server.ToString()
+                }),
+                players: recipientSemantics.Players,
+                entities: recipientSemantics.Entities);
+        }
     }
 
     public void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist, AdminFlags? flagWhitelist)
@@ -152,7 +178,16 @@ internal sealed partial class ChatManager : IChatManager
             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
 
         ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Admin announcement: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) EntityUid.Invalid,
+                message,
+                channel = ChatChannel.Admin.ToString()
+            }));
     }
 
     public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
@@ -207,7 +242,17 @@ internal sealed partial class ChatManager : IChatManager
         }
         var wrappedMessage = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender), ("message", FormattedMessage.EscapeText(message)));
         ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, source: EntityUid.Invalid, hideChat: false, recordReplay: true);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Hook OOC from {sender}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) EntityUid.Invalid,
+                sender,
+                message,
+                channel = ChatChannel.OOC.ToString()
+            }));
     }
 
     public void SendHookAdmin(string sender, string message)
@@ -229,7 +274,17 @@ internal sealed partial class ChatManager : IChatManager
                 audioVolume: _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundVolume));
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Hook admin from {sender}: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Hook admin from {sender}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) EntityUid.Invalid,
+                sender,
+                message,
+                channel = ChatChannel.AdminChat.ToString()
+            }));
     }
 
     #endregion
@@ -298,14 +353,44 @@ internal sealed partial class ChatManager : IChatManager
         //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
         ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
         _discordLink.SendMessage(message, player.Name, ChatChannel.OOC);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
+
+        var actorEntity = player.AttachedEntity;
+        var actorSemantics = AdminLogHelpers.GetSessionSemantics(player, AdminLogEntityRole.Actor, AdminLogEntityRole.Actor);
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"OOC from {player.Name}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = actorEntity is { Valid: true } attached ? (int) attached : (int) EntityUid.Invalid,
+                message,
+                channel = ChatChannel.OOC.ToString()
+            }),
+            players: actorSemantics.Players,
+            entities: actorSemantics.Entities,
+            playerRoles: actorSemantics.PlayerRoles);
     }
 
     private void SendAdminChat(ICommonSession player, string message)
     {
         if (!_adminManager.IsAdmin(player))
         {
-            _adminLogger.Add(LogType.Chat, LogImpact.Extreme, $"{player:Player} attempted to send admin message but was not admin");
+            var unauthorizedActorEntity = player.AttachedEntity;
+            var unauthorizedActorSemantics = AdminLogHelpers.GetSessionSemantics(player, AdminLogEntityRole.Actor, AdminLogEntityRole.Actor);
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Extreme,
+                $"{player.Name} attempted to send admin message but was not admin",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = unauthorizedActorEntity is { Valid: true } unauthorizedAttached ? (int) unauthorizedAttached : (int) EntityUid.Invalid,
+                    message,
+                    channel = ChatChannel.AdminChat.ToString(),
+                    authorized = false
+                }),
+                players: unauthorizedActorSemantics.Players,
+                entities: unauthorizedActorSemantics.Entities,
+                playerRoles: unauthorizedActorSemantics.PlayerRoles);
             return;
         }
 
@@ -329,7 +414,23 @@ internal sealed partial class ChatManager : IChatManager
         }
 
         _discordLink.SendMessage(message, player.Name, ChatChannel.AdminChat);
-        _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
+
+        var actorEntity = player.AttachedEntity;
+        var actorSemantics = AdminLogHelpers.GetSessionSemantics(player, AdminLogEntityRole.Actor, AdminLogEntityRole.Actor);
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Medium,
+            $"Admin chat from {player.Name}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = actorEntity is { Valid: true } attached ? (int) attached : (int) EntityUid.Invalid,
+                message,
+                channel = ChatChannel.AdminChat.ToString(),
+                authorized = true
+            }),
+            players: actorSemantics.Players,
+            entities: actorSemantics.Entities,
+            playerRoles: actorSemantics.PlayerRoles);
     }
 
     #endregion

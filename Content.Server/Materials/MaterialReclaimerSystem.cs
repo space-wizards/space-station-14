@@ -4,6 +4,7 @@ using Content.Server.Ghost;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Server.Wires;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -190,7 +191,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (CanGib(uid, item, component))
         {
             var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
+            _adminLogger.Add(LogType.Gib, logImpact, $"{item:victim} was gibbed by {uid:actor}");
             if (component.ReclaimSolutions)
                 SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             _gibbing.Gib(item);

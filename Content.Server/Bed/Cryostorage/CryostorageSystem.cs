@@ -108,9 +108,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         if (entity == null)
             return;
 
-        AdminLog.Add(LogType.Action, LogImpact.High,
-            $"{ToPrettyString(attachedEntity):player} removed item {ToPrettyString(entity)} from cryostorage-contained player " +
-            $"{ToPrettyString(cryoContained):player}, stored in cryostorage {ToPrettyString(ent)}");
+        _adminLogger.Add(LogType.Action, LogImpact.High,
+            $"{attachedEntity:player} removed item {entity} from cryostorage-contained player " +
+            $"{cryoContained:player}, stored in cryostorage {ent}");
 
         _container.TryRemoveFromContainer(entity.Value);
         _transform.SetCoordinates(entity.Value, Transform(attachedEntity).Coordinates);
@@ -218,7 +218,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
-        AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent:player} was entered into cryostorage inside of {cryostorageEnt.Value}");
 
         if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
             return;
@@ -271,7 +271,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         comp.GracePeriodEndTime = null;
         cryostorageComponent.StoredPlayers.Remove(uid);
-        AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(entity):player} re-entered the game from cryostorage {ToPrettyString(cryostorage)}");
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{entity:player} re-entered the game from cryostorage {cryostorage}");
         UpdateCryostorageUIState((cryostorage, cryostorageComponent));
     }
 

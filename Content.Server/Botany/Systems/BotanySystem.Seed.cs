@@ -142,7 +142,7 @@ public sealed partial class BotanySystem : EntitySystem
         _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
 
         if (proto.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{ToPrettyString(user):player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
+            _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{user:player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
 
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }

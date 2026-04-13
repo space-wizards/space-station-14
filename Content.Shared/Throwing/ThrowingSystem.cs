@@ -196,7 +196,7 @@ public sealed class ThrowingSystem : EntitySystem
         }
 
         if (user != null)
-            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
+            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{user.Value:user} threw {uid:entity}");
 
         // if compensateFriction==true compensate for the distance the item will slide over the floor after landing by reducing the throw speed accordingly.
         // else let the item land on the cursor and from where it slides a little further.

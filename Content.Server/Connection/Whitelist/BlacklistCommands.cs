@@ -1,6 +1,8 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Connection.Whitelist;
@@ -10,6 +12,7 @@ public sealed class AddBlacklistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "blacklistadd";
 
@@ -46,6 +49,17 @@ public sealed class AddBlacklistCommand : LocalizedCommands
         }
 
         await _db.AddToBlacklistAsync(guid);
+
+        if (shell.Player != null)
+        {
+            _auditLog.LogAction(
+                shell.Player.UserId.UserId,
+                AdminAuditAction.BlacklistAdd,
+                AuditSeverity.Notable,
+                $"Added {data.Username} to blacklist",
+                targetPlayerUserId: guid.UserId);
+        }
+
         shell.WriteLine(Loc.GetString("cmd-blacklistadd-added", ("username", data.Username)));
     }
 
@@ -65,6 +79,7 @@ public sealed class RemoveBlacklistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "blacklistremove";
 
@@ -102,6 +117,17 @@ public sealed class RemoveBlacklistCommand : LocalizedCommands
         }
 
         await _db.RemoveFromBlacklistAsync(guid);
+
+        if (shell.Player != null)
+        {
+            _auditLog.LogAction(
+                shell.Player.UserId.UserId,
+                AdminAuditAction.BlacklistRemove,
+                AuditSeverity.Notable,
+                $"Removed {data.Username} from blacklist",
+                targetPlayerUserId: guid.UserId);
+        }
+
         shell.WriteLine(Loc.GetString("cmd-blacklistremove-removed", ("username", data.Username)));
     }
 

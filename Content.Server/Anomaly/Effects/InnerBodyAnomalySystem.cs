@@ -23,7 +23,7 @@ namespace Content.Server.Anomaly.Effects;
 
 public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly GibbingSystem _gibbing = default!;
@@ -119,7 +119,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
-            _adminLog.Add(LogType.Anomaly,LogImpact.Medium,$"{ToPrettyString(ent)} became anomaly host.");
+            _adminLogger.Add(LogType.Anomaly,LogImpact.Medium,$"{ent} became anomaly host.");
         }
         Dirty(ent);
     }
@@ -230,7 +230,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
-            _adminLog.Add(LogType.Anomaly, LogImpact.Medium,$"{ToPrettyString(ent)} is no longer a host for the anomaly.");
+            _adminLogger.Add(LogType.Anomaly, LogImpact.Medium,$"{ent} is no longer a host for the anomaly.");
         }
 
         ent.Comp.Injected = false;

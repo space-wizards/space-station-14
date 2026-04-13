@@ -16,7 +16,7 @@ namespace Content.Shared.EntityEffects;
 public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedEntityConditionsSystem _condition = default!;
 
     public override void Initialize()
@@ -121,7 +121,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
         if (effect.Impact is { } level)
         {
-            _adminLog.Add(
+            _adminLogger.Add(
                 effect.LogType,
                 level,
                 $"Entity effect {effect.GetType().Name:effect}"

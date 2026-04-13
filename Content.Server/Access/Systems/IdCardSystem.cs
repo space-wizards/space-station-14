@@ -53,7 +53,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
                         transformComponent.Coordinates);
                 }
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                    $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
+                    $"{args.Microwave} burnt {uid:entity}");
                 QueueDel(uid);
                 return;
             }
@@ -74,7 +74,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 Dirty(uid, access);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                    $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
+                    $"{args.Microwave} cleared access on {uid:entity}");
             }
             else
             {
@@ -93,7 +93,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             Dirty(uid, access);
 
             _adminLogger.Add(LogType.Action, LogImpact.High,
-                    $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
+                    $"{args.Microwave} added {random.ID} access to {uid:entity}");
 
         }
     }

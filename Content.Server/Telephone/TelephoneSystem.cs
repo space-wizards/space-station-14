@@ -379,9 +379,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         }
 
         if (name != Name(messageSource))
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} as {name} on {source}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {messageSource:user} as {name} on {source}: {message}");
         else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} on {source}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {messageSource:user} on {source}: {message}");
 
         _replay.RecordServerMessage(chat);
     }

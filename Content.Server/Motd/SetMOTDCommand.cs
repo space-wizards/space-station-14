@@ -15,7 +15,7 @@ namespace Content.Server.Motd;
 [AdminCommand(AdminFlags.Moderator)]
 public sealed class SetMotdCommand : LocalizedCommands
 {
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
@@ -36,12 +36,12 @@ public sealed class SetMotdCommand : LocalizedCommands
         if (string.IsNullOrEmpty(motd))
         {
             shell.WriteLine(Loc.GetString("cmd-set-motd-cleared-motd-message"));
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} cleared the MOTD for the server.");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} cleared the MOTD for the server.");
         }
         else
         {
             shell.WriteLine(Loc.GetString("cmd-set-motd-set-motd-message", ("motd", motd)));
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.Channel.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
         }
     }
 

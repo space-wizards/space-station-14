@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -43,7 +44,7 @@ namespace Content.Server.Ghost
     public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly IAdminLogManager _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedEyeSystem _eye = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly JobSystem _jobs = default!;
@@ -328,7 +329,7 @@ namespace Content.Server.Ghost
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {
-            _adminLog.Add(LogType.GhostWarp, $"{ToPrettyString(uid)} ghost warped to {ToPrettyString(target)}");
+            _adminLogger.Add(LogType.GhostWarp, $"{uid} ghost warped to {target}");
 
             if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
             {
@@ -512,9 +513,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
+                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:actor} was forced to ghost via command");
                 else
-                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+                    _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:actor} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -588,7 +589,7 @@ namespace Content.Server.Ghost
             }
 
             if (playerEntity != null)
-                _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+                _adminLogger.Add(LogType.Mind, $"{playerEntity.Value:actor} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 

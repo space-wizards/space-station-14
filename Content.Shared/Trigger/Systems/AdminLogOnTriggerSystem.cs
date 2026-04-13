@@ -12,7 +12,7 @@ public sealed class AdminLogOnTriggerSystem : XOnTriggerSystem<AdminLogOnTrigger
         _adminLogger.Add(
             ent.Comp.LogType,
             ent.Comp.LogImpact,
-            $"{ToPrettyString(args.User)} sent a trigger using {ToPrettyString(ent)}: {Loc.GetString(ent.Comp.Message)}"
+            $"{args.User} sent a trigger using {ent}: {Loc.GetString(ent.Comp.Message)}"
             );
         // Intentionally does not handle the event since this shouldn't affect the gamestate.
     }

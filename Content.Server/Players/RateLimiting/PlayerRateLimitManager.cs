@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Players.RateLimiting;
@@ -13,7 +13,7 @@ namespace Content.Server.Players.RateLimiting;
 
 public sealed class PlayerRateLimitManager : SharedPlayerRateLimitManager
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -58,7 +58,7 @@ public sealed class PlayerRateLimitManager : SharedPlayerRateLimitManager
         if (!datum.Announced)
         {
             registration.Registration.PlayerLimitedAction?.Invoke(player);
-            _adminLog.Add(
+            _adminLogger.Add(
                 registration.Registration.AdminLogType,
                 LogImpact.Medium,
                 $"Player {player} breached '{key}' rate limit ");

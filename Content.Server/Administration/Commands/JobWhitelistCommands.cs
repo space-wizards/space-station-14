@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Database;
 using Content.Server.Players.JobWhitelist;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -17,6 +19,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "jobwhitelistadd";
 
@@ -55,6 +58,17 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             }
 
             _jobWhitelist.AddWhitelist(guid, job);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.WhitelistAdd,
+                    AuditSeverity.Notable,
+                    $"Added job whitelist {job.Id} for {player}",
+                    targetPlayerUserId: guid.UserId);
+            }
+
             shell.WriteLine(Loc.GetString("cmd-jobwhitelistadd-added",
                 ("player", player),
                 ("jobId", job.Id),
@@ -145,6 +159,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "jobwhitelistremove";
 
@@ -183,6 +198,17 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
             }
 
             _jobWhitelist.RemoveWhitelist(guid, job);
+
+            if (shell.Player != null)
+            {
+                _auditLog.LogAction(
+                    shell.Player.UserId.UserId,
+                    AdminAuditAction.WhitelistRemove,
+                    AuditSeverity.Notable,
+                    $"Removed job whitelist {job.Id} for {player}",
+                    targetPlayerUserId: guid.UserId);
+            }
+
             shell.WriteLine(Loc.GetString("cmd-jobwhitelistremove-removed",
                 ("player", player),
                 ("jobId", job.Id),

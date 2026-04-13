@@ -1,8 +1,10 @@
 using System.Linq;
+using Content.Server.Administration.AuditLog;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Robust.Server.GameObjects;
@@ -17,6 +19,7 @@ public sealed class AGhostCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public override string Command => "aghost";
     public override string Help => "aghost";
@@ -70,6 +73,9 @@ public sealed class AGhostCommand : LocalizedCommands
             }
         }
 
+        if (player == null)
+            return;
+
         var mindSystem = _entities.System<SharedMindSystem>();
         var metaDataSystem = _entities.System<MetaDataSystem>();
         var ghostSystem = _entities.System<SharedGhostSystem>();
@@ -87,6 +93,14 @@ public sealed class AGhostCommand : LocalizedCommands
         if (mind.VisitingEntity != default && _entities.TryGetComponent<GhostComponent>(mind.VisitingEntity, out var oldGhostComponent))
         {
             mindSystem.UnVisit(mindId, mind);
+
+            _auditLog.LogAction(
+                shell.Player?.UserId.UserId ?? player.UserId.UserId,
+                AdminAuditAction.AdminGhost,
+                AuditSeverity.Routine,
+                $"Toggled admin ghost {(oldGhostComponent.CanGhostInteract ? "off" : "on")} for {player.Name}",
+                targetPlayerUserId: player.UserId.UserId);
+
             // If already an admin ghost, then return to body.
             if (oldGhostComponent.CanGhostInteract)
                 return;
@@ -118,5 +132,13 @@ public sealed class AGhostCommand : LocalizedCommands
 
         var comp = _entities.GetComponent<GhostComponent>(ghost);
         ghostSystem.SetCanReturnToBody((ghost, comp), canReturn);
+
+        _auditLog.LogAction(
+            shell.Player?.UserId.UserId ?? player.UserId.UserId,
+            AdminAuditAction.AdminGhost,
+            AuditSeverity.Routine,
+            $"Toggled admin ghost on for {player.Name}",
+            targetPlayerUserId: player.UserId.UserId,
+            targetEntity: ghost);
     }
 }

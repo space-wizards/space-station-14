@@ -1,9 +1,10 @@
-using Content.Shared.Hands.Components;
+using Content.Shared.Administration.Logs;
 
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

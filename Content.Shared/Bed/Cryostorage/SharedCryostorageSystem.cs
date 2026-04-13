@@ -23,7 +23,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] private   readonly MobStateSystem _mobState = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedMindSystem Mind = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -62,7 +62,7 @@ public sealed partial class BypassLockSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(user):user} is prying {ToPrettyString(target):target}'s lock open at {Transform(target).Coordinates:targetlocation}");
+            $"{user:user} is prying {target:target}'s lock open at {Transform(target).Coordinates:targetlocation}");
         return true;
     }
 

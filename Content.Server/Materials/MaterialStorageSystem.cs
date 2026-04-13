@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
@@ -114,7 +114,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         var count = stack?.Count ?? 1;
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+            $"{user:player} inserted {count} {toInsert:inserted} into {receiver:receiver}");
         return true;
     }
 

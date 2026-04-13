@@ -9,6 +9,7 @@ using System.Net;
 using System.Text.Json;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -26,8 +27,10 @@ namespace Content.Server.Database
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<Server> Server { get; set; } = null!;
-        public DbSet<AdminLog> AdminLog { get; set; } = null!;
-        public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
+        public DbSet<AdminLogEvent> AdminLogEvent { get; set; } = null!;
+        public DbSet<AdminLogEventPayload> AdminLogEventPayload { get; set; } = null!;
+        public DbSet<AdminLogEventParticipant> AdminLogEventParticipant { get; set; } = null!;
+        public DbSet<AdminLogEntityDimension> AdminLogEntityDimension { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
         public DbSet<Blacklist> Blacklist { get; set; } = null!;
         public DbSet<Ban> Ban { get; set; } = default!;
@@ -49,6 +52,8 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<AdminAuditEvent> AdminAuditEvent { get; set; } = null!;
+        public DbSet<AdminAuditEventPayload> AdminAuditEventPayload { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -120,33 +125,118 @@ namespace Content.Server.Database
                 .HasIndex(f => new {f.Flag, f.AdminRankId})
                 .IsUnique();
 
-            modelBuilder.Entity<AdminLog>()
-                .HasKey(log => new {log.RoundId, log.Id});
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasOne(log => log.Round)
+                .WithMany(round => round.AdminLogEvents)
+                .HasForeignKey(log => log.RoundId);
 
-            modelBuilder.Entity<AdminLog>()
-                .Property(log => log.Id);
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasOne(log => log.Server)
+                .WithMany()
+                .HasForeignKey(log => log.ServerId);
 
-            modelBuilder.Entity<AdminLog>()
-                .HasIndex(log => log.Date);
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.RoundId, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.Type, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.RoundId, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.RoundId, log.Type, log.OccurredAt, log.Id });
+
+            // Impact-first index
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.Impact, log.OccurredAt, log.Id });
+
+            // Round-scoped impact index
+            modelBuilder.Entity<AdminLogEvent>()
+                .HasIndex(log => new { log.ServerId, log.RoundId, log.Impact, log.OccurredAt, log.Id });
+
+            modelBuilder.Entity<AdminLogEventPayload>()
+                .HasOne(payload => payload.Event)
+                .WithOne(log => log.Payload)
+                .HasForeignKey<AdminLogEventPayload>(payload => payload.EventId);
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasOne(participant => participant.Event)
+                .WithMany(log => log.Participants)
+                .HasForeignKey(participant => participant.EventId);
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasOne(participant => participant.Server)
+                .WithMany()
+                .HasForeignKey(participant => participant.ServerId);
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.PlayerUserId, p.OccurredAt, p.EventId });
+
+            // Round-scoped player lookup
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.RoundId, p.PlayerUserId, p.OccurredAt, p.EventId });
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.EntityUid, p.OccurredAt, p.EventId });
+
+            modelBuilder.Entity<AdminLogEventParticipant>()
+                .HasIndex(p => new { p.ServerId, p.EntityUid, p.Role, p.OccurredAt, p.EventId });
+
+            modelBuilder.Entity<AdminLogEntityDimension>()
+                .HasKey(d => new { d.ServerId, d.RoundId, d.EntityUid });
+
+            modelBuilder.Entity<AdminLogEntityDimension>()
+                .HasOne(dim => dim.Server)
+                .WithMany()
+                .HasForeignKey(dim => dim.ServerId);
+
+            modelBuilder.Entity<AdminLogEntityDimension>()
+                .HasIndex(dim => new { dim.ServerId, dim.EntityUid });
+
+            // Admin Audit Log configuration
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasOne(e => e.Server)
+                .WithMany()
+                .HasForeignKey(e => e.ServerId);
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasOne(e => e.Round)
+                .WithMany()
+                .HasForeignKey(e => e.RoundId);
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.AdminUserId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.RoundId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.Action, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.TargetPlayerUserId, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasIndex(e => new { e.ServerId, e.Severity, e.OccurredAt, e.Id });
+
+            modelBuilder.Entity<AdminAuditEventPayload>()
+                .HasOne(p => p.Event)
+                .WithOne(e => e.Payload)
+                .HasForeignKey<AdminAuditEventPayload>(p => p.EventId);
 
             modelBuilder.Entity<PlayTime>()
                 .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
                 .IsUnique();
 
-            modelBuilder.Entity<AdminLogPlayer>()
-                .HasOne(player => player.Player)
-                .WithMany(player => player.AdminLogs)
-                .HasForeignKey(player => player.PlayerUserId)
-                .HasPrincipalKey(player => player.UserId);
-
-            modelBuilder.Entity<AdminLogPlayer>()
-                .HasIndex(p => p.PlayerUserId);
-
             modelBuilder.Entity<Round>()
                 .HasIndex(round => round.StartDate);
-
-            modelBuilder.Entity<AdminLogPlayer>()
-                .HasKey(logPlayer => new {logPlayer.RoundId, logPlayer.LogId, logPlayer.PlayerUserId});
 
             // Ban exemption can't have flags 0 since that wouldn't exempt anything.
             // The row should be removed if setting to 0.
@@ -298,12 +388,6 @@ namespace Content.Server.Database
             ModelBan.OnModelCreating(modelBuilder);
         }
 
-        public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
-        {
-            return query.Where(log => EF.Functions.Like(log.Message, "%" + searchText + "%"));
-        }
-
-        public abstract int CountAdminLogs();
     }
 
     public class Preference
@@ -497,13 +581,9 @@ namespace Content.Server.Database
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
         public TypedHwid? LastSeenHWId { get; set; }
-
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
-        public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
-
         public DateTime? LastReadRules { get; set; }
-
         public List<AdminNote> AdminNotesReceived { get; set; } = null!;
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;
         public List<AdminNote> AdminNotesLastEdited { get; set; } = null!;
@@ -593,7 +673,7 @@ namespace Content.Server.Database
 
         public List<Player> Players { get; set; } = default!;
 
-        public List<AdminLog> AdminLogs { get; set; } = default!;
+        public List<AdminLogEvent> AdminLogEvents { get; set; } = default!;
 
         [ForeignKey("Server")] public int ServerId { get; set; }
         public Server Server { get; set; } = default!;
@@ -613,38 +693,131 @@ namespace Content.Server.Database
         public List<ConnectionLog> ConnectionLogs { get; set; } = default!;
     }
 
-    [Index(nameof(Type))]
-    public class AdminLog
+    [Table("admin_log_event")]
+    public class AdminLogEvent
     {
-        [Key, ForeignKey("Round")] public int RoundId { get; set; }
-
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
+        [ForeignKey("Round")] public int RoundId { get; set; }
         public Round Round { get; set; } = default!;
 
         [Required] public LogType Type { get; set; }
 
         [Required] public LogImpact Impact { get; set; }
 
-        [Required] public DateTime Date { get; set; }
+        [Required] public DateTime OccurredAt { get; set; }
+
+        public AdminLogEventPayload Payload { get; set; } = default!;
+
+        public List<AdminLogEventParticipant> Participants { get; set; } = default!;
+    }
+
+    [Table("admin_log_event_payload")]
+    public class AdminLogEventPayload
+    {
+        [Key] public int EventId { get; set; }
+        [Required] public string Message { get; set; } = default!;
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        /// <summary>
+        ///     Postgres stored generated column: <c>to_tsvector('english', message)</c>.
+        ///     Cached at insert time
+        /// </summary>
+        public NpgsqlTsVector SearchVector { get; set; } = default!;
+
+        [ForeignKey(nameof(EventId))] public AdminLogEvent Event { get; set; } = default!;
+    }
+
+    [Table("admin_log_event_participant")]
+    public class AdminLogEventParticipant
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required] public int EventId { get; set; }
+
+        [Required] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
+        [Required] public int RoundId { get; set; }
+
+        [Required] public DateTime OccurredAt { get; set; }
+
+        [Required] public LogType Type { get; set; }
+
+        [Required] public LogImpact Impact { get; set; }
+
+        public Guid? PlayerUserId { get; set; }
+
+        public int? EntityUid { get; set; }
+
+        [Required] public AdminLogEntityRole Role { get; set; }
+
+        [ForeignKey(nameof(EventId))] public AdminLogEvent Event { get; set; } = default!;
+    }
+
+    [Table("admin_log_entity_dimension")]
+    public class AdminLogEntityDimension
+    {
+        [Required] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
+        [Required] public int RoundId { get; set; }
+
+        [Required] public int EntityUid { get; set; }
+
+        public string? PrototypeId { get; set; }
+
+        public string? EntityName { get; set; }
+    }
+
+    [Table("admin_audit_event")]
+    public class AdminAuditEvent
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("Server")] public int ServerId { get; set; }
+        public Server Server { get; set; } = default!;
+
+        [ForeignKey("Round")] public int? RoundId { get; set; }
+        public Round? Round { get; set; }
+
+        [Required] public Guid AdminUserId { get; set; }
+
+        [Required] public AdminAuditAction Action { get; set; }
+
+        [Required] public AuditSeverity Severity { get; set; }
+
+        [Required] public DateTime OccurredAt { get; set; }
+
+        public Guid? TargetPlayerUserId { get; set; }
+
+        public int? TargetEntityUid { get; set; }
+
+        public string? TargetEntityName { get; set; }
+
+        public string? TargetEntityPrototype { get; set; }
 
         [Required] public string Message { get; set; } = default!;
 
-        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+        public NpgsqlTsVector SearchVector { get; set; } = default!;
 
-        public List<AdminLogPlayer> Players { get; set; } = default!;
+        public AdminAuditEventPayload Payload { get; set; } = default!;
     }
 
-    public class AdminLogPlayer
+    [Table("admin_audit_event_payload")]
+    public class AdminAuditEventPayload
     {
-        [Required, Key] public int RoundId { get; set; }
-        [Required, Key] public int LogId { get; set; }
+        [Key] public int EventId { get; set; }
 
-        [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
-        public Player Player { get; set; } = default!;
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
 
-        [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
+        [ForeignKey(nameof(EventId))] public AdminAuditEvent Event { get; set; } = default!;
     }
 
     /// <summary>

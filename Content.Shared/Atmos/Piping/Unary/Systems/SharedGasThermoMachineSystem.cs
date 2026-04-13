@@ -41,7 +41,7 @@ public abstract class SharedGasThermoMachineSystem : EntitySystem
     private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
     {
         var powerState = _receiver.TogglePower(uid, user: args.Actor);
-        _adminLogger.Add(LogType.AtmosPowerChanged, $"{ToPrettyString(args.Actor)} turned {(powerState ? "On" : "Off")} {ToPrettyString(uid)}");
+        _adminLogger.Add(LogType.AtmosPowerChanged, $"{args.Actor} turned {(powerState ? "On" : "Off")} {uid}");
         DirtyUI(uid, thermoMachine);
     }
 
@@ -52,7 +52,7 @@ public abstract class SharedGasThermoMachineSystem : EntitySystem
         else
             thermoMachine.TargetTemperature = MathF.Max(args.Temperature, thermoMachine.MinTemperature);
         thermoMachine.TargetTemperature = MathF.Max(thermoMachine.TargetTemperature, Atmospherics.TCMB);
-        _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{ToPrettyString(args.Actor)} set temperature on {ToPrettyString(uid)} to {thermoMachine.TargetTemperature}");
+        _adminLogger.Add(LogType.AtmosTemperatureChanged, $"{args.Actor} set temperature on {uid} to {thermoMachine.TargetTemperature}");
         Dirty(uid, thermoMachine);
         DirtyUI(uid, thermoMachine);
     }

@@ -10,7 +10,7 @@ namespace Content.Shared.Wires;
 
 public abstract class SharedWiresSystem : EntitySystem
 {
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
@@ -42,7 +42,7 @@ public abstract class SharedWiresSystem : EntitySystem
         if (!TogglePanel(uid, panel, !panel.Open, args.User))
             return;
 
-        AdminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(uid):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:user} screwed {uid:target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
 
         var sound = panel.Open ? panel.ScrewdriverOpenSound : panel.ScrewdriverCloseSound;
         Audio.PlayPredicted(sound, uid, args.User);
@@ -68,8 +68,8 @@ public abstract class SharedWiresSystem : EntitySystem
             return;
         }
 
-        AdminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(ent):target}'s {(ent.Comp.Open ? "open" : "closed")} maintenance panel at {Transform(ent).Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{args.User:user} is screwing {ent:target}'s {(ent.Comp.Open ? "open" : "closed")} maintenance panel at {Transform(ent).Coordinates:targetlocation}");
         args.Handled = true;
     }
 

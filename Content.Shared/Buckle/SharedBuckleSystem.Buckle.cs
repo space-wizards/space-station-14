@@ -354,9 +354,9 @@ public abstract partial class SharedBuckleSystem
     private void Buckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled themselves to {ToPrettyString(strap)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} buckled themselves to {strap}");
         else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckle)} to {ToPrettyString(strap)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:player} buckled {buckle} to {strap}");
 
         _audio.PlayPredicted(strap.Comp.BuckleSound, strap, user);
 
@@ -445,9 +445,9 @@ public abstract partial class SharedBuckleSystem
     private void Unbuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} unbuckled themselves from {ToPrettyString(strap):strap}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:user} unbuckled themselves from {strap:strap}");
         else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} unbuckled {ToPrettyString(buckle):target} from {ToPrettyString(strap):strap}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user:user} unbuckled {buckle:target} from {strap:strap}");
 
         _audio.PlayPredicted(strap.Comp.UnbuckleSound, strap, user);
 

@@ -234,7 +234,7 @@ namespace Content.Server.Decals
             if (eventArgs.SenderSession.AttachedEntity != null)
             {
                 _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
-                    $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+                    $"{eventArgs.SenderSession.AttachedEntity.Value:actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
             }
             else
             {
@@ -268,7 +268,7 @@ namespace Content.Server.Decals
                 if (eventArgs.SenderSession.AttachedEntity != null)
                 {
                     _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
-                        $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                        $"{eventArgs.SenderSession.AttachedEntity.Value:actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
                 }
                 else
                 {

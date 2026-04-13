@@ -41,7 +41,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly EuiManager _euiMan = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -157,9 +157,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (ev.User != null)
         {
-            _adminLogManager.Add(LogType.Mind,
+            _adminLogger.Add(LogType.Mind,
                 LogImpact.Medium,
-                $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+                $"{ev.User.Value} converted {ev.Target} into a Revolutionary");
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -237,7 +237,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 _stun.TryUpdateParalyzeDuration(uid, stunTime);
                 RemCompDeferred<RevolutionaryComponent>(uid);
                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
-                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
+                _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{uid} was deconverted due to all Head Revolutionaries dying.");
 
                 if (!_mind.TryGetMind(uid, out var mindId, out var mind, mc))
                     continue;

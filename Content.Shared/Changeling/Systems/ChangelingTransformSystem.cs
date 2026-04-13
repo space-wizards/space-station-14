@@ -144,9 +144,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         }
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
@@ -186,9 +186,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _cloning.CloneComponents(targetIdentity, args.User, settings);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\"");
 
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.

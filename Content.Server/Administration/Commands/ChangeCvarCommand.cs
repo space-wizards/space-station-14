@@ -1,4 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
+using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -18,8 +20,9 @@ namespace Content.Server.Administration.Commands;
 public sealed class ChangeCvarCommand : IConsoleCommand
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly CVarControlManager _cVarControlManager = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     /// <summary>
     /// Searches the list of cvars for a cvar that matches the search string.
@@ -179,10 +182,24 @@ public sealed class ChangeCvarCommand : IConsoleCommand
 
                 var oldValue = _configurationManager.GetCVar<object>(cvar);
                 _configurationManager.SetCVar(cvar, parsed);
-                _adminLogManager.Add(LogType.AdminCommands,
+                var oldValueText = oldValue.ToString() ?? "<null>";
+                var newValueText = parsed.ToString() ?? "<null>";
+                _adminLogger.Add(LogType.AdminCommands,
                     LogImpact.Extreme,
-                    $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValue.ToString()} to {parsed.ToString()}"
+                    $"{shell.Player!.Name} ({shell.Player!.UserId}) changed CVAR {cvar} from {oldValueText} to {newValueText}"
                     );
+
+                _auditLog.LogAction(
+                    shell.Player!.UserId.UserId,
+                    AdminAuditAction.CvarChange,
+                    AuditSeverity.Critical,
+                    $"Changed CVar {cvar}: {oldValueText} → {newValueText}",
+                    payload: JsonSerializer.SerializeToDocument(new
+                    {
+                        cvarName = cvar,
+                        oldValue = oldValueText,
+                        newValue = newValueText,
+                    }));
 
                 shell.WriteLine(Loc.GetString("cmd-changecvar-success", ("cvar", cvar), ("old", oldValue), ("value", parsed)));
             }

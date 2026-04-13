@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Prying.Components;
 
@@ -95,6 +97,12 @@ public abstract partial class SharedDoorSystem
         ent.Comp.BoltsDown = value;
         Dirty(ent, ent.Comp);
         UpdateBoltLightStatus(ent);
+
+        // Log bolt state changes if user is present
+        if (user != null)
+        {
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{user.Value:player} set door bolt {(value ? "enabled" : "disabled")} on {ent:target}");
+        }
 
         // used to reset the auto-close timer after unbolting
         var ev = new DoorBoltsChangedEvent(value);

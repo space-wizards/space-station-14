@@ -4,7 +4,9 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -38,6 +40,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -337,6 +340,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         ActionBlockerSystem.UpdateCanMove(entity);
         pilotComponent.Position = Comp<TransformComponent>(entity).Coordinates;
         Dirty(entity, pilotComponent);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{entity:player} started piloting {uid:target}");
     }
 
     public void RemovePilot(EntityUid pilotUid, PilotComponent pilotComponent)
@@ -356,6 +361,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         _alertsSystem.ClearAlert(pilotUid, pilotComponent.PilotingAlert);
 
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{pilotUid:player} stopped piloting");
 
         if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
             RemComp<PilotComponent>(pilotUid);
