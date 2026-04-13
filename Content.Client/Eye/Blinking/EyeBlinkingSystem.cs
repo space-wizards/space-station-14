@@ -24,7 +24,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EyeBlinkingComponent, ApplyOrganProfileDataEvent>(OnComponentInit);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
     }
 
@@ -36,11 +36,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         InitEyeBlinking(ent);
     }
 
-    private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
+    private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         InitEyeBlinking(ent);
     }
 
