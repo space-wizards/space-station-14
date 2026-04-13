@@ -29,7 +29,7 @@ public sealed partial class ToggleableClothingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true), AutoNetworkedField]
-    public Dictionary<string, EntProtoId> ClothingPrototypes = new();
+    public Dictionary<string, List<EntProtoId>> ClothingPrototypes = new();
 
     /// <summary>
     ///     The inventory slot flags required for this component to function.
@@ -60,7 +60,7 @@ public sealed partial class ToggleableClothingComponent : Component
     public TimeSpan? StripDelay = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ActionEntity"/> action.
+    ///     Text shown in the toggle-clothing verb.
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId VerbText = "toggle-clothing-verb-default";

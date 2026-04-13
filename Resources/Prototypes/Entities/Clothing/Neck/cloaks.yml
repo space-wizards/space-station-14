@@ -154,7 +154,8 @@
     sprite: Clothing/Neck/Cloaks/goliathcloak.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodGoliathCloak
+      head:
+      - ClothingHeadHatHoodGoliathCloak
     requiredSlot:
     - neck
   - type: ContainerContainer
@@ -180,7 +181,8 @@
     sprite: Clothing/Neck/Cloaks/moth.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodMoth
+      head:
+      - ClothingHeadHatHoodMoth
     requiredSlot:
     - neck
   - type: ContainerContainer
@@ -199,7 +201,8 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodVoidCloak
+      head:
+      - ClothingHeadHatHoodVoidCloak
     requiredSlot:
     - neck
   - type: ContainerContainer

@@ -54,7 +54,8 @@
     coolingCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetEVALarge
+      head:
+      - ClothingHeadHelmetEVALarge
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -141,7 +142,8 @@
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHelmetVoidParamed
+      head:
+      - ClothingHeadHelmetVoidParamed
   - type: ItemToggle
     onUse: false
     soundActivate:

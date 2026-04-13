@@ -110,7 +110,8 @@
   components:
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodWinterDefault
+      head:
+      - ClothingHeadHatHoodWinterDefault
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -220,7 +221,8 @@
   components:
   - type: ToggleableClothing
     clothingPrototypes:
-      head: ClothingHeadHatHoodWinterDefault
+      head:
+      - ClothingHeadHatHoodWinterDefault
     verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:

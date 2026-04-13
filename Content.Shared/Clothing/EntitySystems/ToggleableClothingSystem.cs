@@ -412,14 +412,17 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         else
         {
             var xform = Transform(uid);
-            foreach (var (slot, protoId) in component.ClothingPrototypes)
+            foreach (var (slot, protoIds) in component.ClothingPrototypes)
             {
-                var entity = Spawn(protoId, xform.Coordinates);
-                component.ClothingUids.Add(entity, slot);
-                var attachedClothing = EnsureComp<AttachedClothingComponent>(entity);
-                attachedClothing.AttachedUid = uid;
-                Dirty(entity, attachedClothing);
-                _containerSystem.Insert(entity, component.Container, containerXform: xform);
+                foreach (var protoId in protoIds)
+                {
+                    var entity = Spawn(protoId, xform.Coordinates);
+                    component.ClothingUids.Add(entity, slot);
+                    var attachedClothing = EnsureComp<AttachedClothingComponent>(entity);
+                    attachedClothing.AttachedUid = uid;
+                    Dirty(entity, attachedClothing);
+                    _containerSystem.Insert(entity, component.Container, containerXform: xform);
+                }
             }
             Dirty(uid, component);
         }
