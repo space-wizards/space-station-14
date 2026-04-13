@@ -57,12 +57,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
 
         var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
-        vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, SetConsumePeriod);
-    }
-
-    private void OnHorizonMapInit(EntityUid uid, EventHorizonComponent component, MapInitEvent args)
-    {
-        component.NextConsumeWaveTime = _timing.CurTime;
+        vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, (uid, value, comp) => SetConsumePeriod((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -84,16 +79,18 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         {
             var curTime = _timing.CurTime;
             if (eventHorizon.NextConsumeWaveTime <= curTime)
-                Update(uid, eventHorizon, xform);
+                Update((uid, eventHorizon, xform));
         }
     }
 
     /// <summary>
     /// Makes an event horizon consume everything nearby and resets the cooldown it for the next automated wave.
     /// </summary>
-    public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
+    public void Update(Entity<EventHorizonComponent?, TransformComponent?> entity)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        var (uid, eventHorizon, xform) = entity;
+
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         eventHorizon.NextConsumeWaveTime += eventHorizon.TargetConsumePeriod;
@@ -105,15 +102,15 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
         // Handle singularities some admin smited into a locker.
         if (_containerSystem.TryGetContainingContainer((uid, xform, null), out var container)
-        && !AttemptConsumeEntity(uid, container.Owner, eventHorizon))
+            && !AttemptConsumeEntity((uid, eventHorizon), container.Owner))
         {
             // Locker is indestructible. Consume everything else in the locker instead of magically teleporting out.
-            ConsumeEntitiesInContainer(uid, container, eventHorizon, container);
+            ConsumeEntitiesInContainer((uid, eventHorizon), container);
             return;
         }
 
         if (eventHorizon.Radius > 0.0f)
-            ConsumeEverythingInRange(uid, eventHorizon.Radius, xform, eventHorizon);
+            ConsumeEverythingInRange((uid, eventHorizon, xform), eventHorizon.Radius);
     }
 
     #region Consume
@@ -123,7 +120,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a given entity.
     /// </summary>
-    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    public void ConsumeEntity(Entity<EventHorizonComponent> hungry, EntityUid morsel, BaseContainer? outerContainer = null)
     {
         if (EntityManager.IsQueuedForDeletion(morsel)) // already handled, and we're substepping
             return;
@@ -136,8 +133,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         }
 
         QueueDel(morsel);
-        var evSelf = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
-        var evEaten = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
+
+        var evSelf = new EntityConsumedByEventHorizonEvent(hungry, morsel, outerContainer);
+        var evEaten = new EventHorizonConsumedEntityEvent(hungry, morsel, outerContainer);
         RaiseLocalEvent(hungry, ref evSelf);
         RaiseLocalEvent(morsel, ref evEaten);
     }
@@ -145,21 +143,21 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon attempt to consume a given entity.
     /// </summary>
-    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    public bool AttemptConsumeEntity(Entity<EventHorizonComponent> hungry, EntityUid morsel, BaseContainer? outerContainer = null)
     {
-        if (!CanConsumeEntity(hungry, morsel, eventHorizon))
+        if (!CanConsumeEntity(hungry, morsel))
             return false;
 
-        ConsumeEntity(hungry, morsel, eventHorizon, outerContainer);
+        ConsumeEntity(hungry, morsel, outerContainer);
         return true;
     }
 
     /// <summary>
     /// Checks whether an event horizon can consume a given entity.
     /// </summary>
-    public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
+    public bool CanConsumeEntity(Entity<EventHorizonComponent> hungry, EntityUid uid)
     {
-        var ev = new EventHorizonAttemptConsumeEntityEvent(uid, hungry, eventHorizon);
+        var ev = new EventHorizonAttemptConsumeEntityEvent(hungry, uid);
         RaiseLocalEvent(uid, ref ev);
         return !ev.Cancelled;
     }
@@ -168,8 +166,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Attempts to consume all entities within a given distance of an entity;
     /// Excludes the center entity.
     /// </summary>
-    public void ConsumeEntitiesInRange(EntityUid uid, float range, PhysicsComponent? body = null, EventHorizonComponent? eventHorizon = null)
+    public void ConsumeEntitiesInRange(Entity<EventHorizonComponent?, PhysicsComponent?> horizon, float range)
     {
+        var (uid, eventHorizon, body) = horizon;
+
         if (!Resolve(uid, ref body, ref eventHorizon))
             return;
 
@@ -183,7 +183,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             if (_physicsQuery.TryComp(entity, out var otherBody) && !_physics.IsHardCollidable((uid, null, body), (entity, null, otherBody)))
                 continue;
 
-            AttemptConsumeEntity(uid, entity, eventHorizon);
+            AttemptConsumeEntity((uid, eventHorizon), entity);
         }
     }
 
@@ -192,14 +192,14 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Excludes the event horizon itself.
     /// All immune entities within the container will be dumped to a given container or the map/grid if that is impossible.
     /// </summary>
-    public void ConsumeEntitiesInContainer(EntityUid hungry, BaseContainer container, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    public void ConsumeEntitiesInContainer(Entity<EventHorizonComponent> hungry, BaseContainer container, BaseContainer? outerContainer = null)
     {
         // Removing the immune entities from the container needs to be deferred until after iteration or the iterator raises an error.
         List<EntityUid> immune = new();
 
         foreach (var entity in container.ContainedEntities)
         {
-            if (entity == hungry || !AttemptConsumeEntity(hungry, entity, eventHorizon, outerContainer))
+            if (entity == hungry.Owner || !AttemptConsumeEntity(hungry, entity, outerContainer))
                 immune.Add(entity); // The first check keeps singularities an admin smited into a locker from consuming themselves.
                                     // The second check keeps things that have been rendered immune to singularities from being deleted by a singularity eating their container.
         }
@@ -234,47 +234,48 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a specific tile on a grid.
     /// </summary>
-    public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    public void ConsumeTile(Entity<EventHorizonComponent> eventHorizon, TileRef tile)
     {
-        ConsumeTiles(hungry, new List<(Vector2i, Tile)>(new[] { (tile.GridIndices, Tile.Empty) }), tile.GridUid, Comp<MapGridComponent>(tile.GridUid), eventHorizon);
+        ConsumeTiles(eventHorizon, (tile.GridUid, Comp<MapGridComponent>(tile.GridUid)), [(tile.GridIndices, Tile.Empty)]);
     }
 
     /// <summary>
     /// Makes an event horizon attempt to consume a specific tile on a grid.
     /// </summary>
-    public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    public void AttemptConsumeTile(Entity<EventHorizonComponent> eventHorizon, TileRef tile)
     {
-        AttemptConsumeTiles(hungry, new TileRef[1] { tile }, tile.GridUid, Comp<MapGridComponent>(tile.GridUid), eventHorizon);
+        AttemptConsumeTiles(eventHorizon, (tile.GridUid, Comp<MapGridComponent>(tile.GridUid)), [tile]);
     }
 
     /// <summary>
     /// Makes an event horizon consume a set of tiles on a grid.
     /// </summary>
-    public void ConsumeTiles(EntityUid hungry, List<(Vector2i, Tile)> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    public void ConsumeTiles(Entity<EventHorizonComponent> hungry, Entity<MapGridComponent> grid, List<(Vector2i, Tile)> tiles)
     {
         if (tiles.Count <= 0)
             return;
 
-        var ev = new TilesConsumedByEventHorizonEvent(tiles, gridId, grid, hungry, eventHorizon);
+        var ev = new TilesConsumedByEventHorizonEvent(hungry, grid, tiles);
         RaiseLocalEvent(hungry, ref ev);
-        _mapSystem.SetTiles(gridId, grid, tiles);
+        _mapSystem.SetTiles(grid, tiles);
     }
 
     /// <summary>
     /// Makes an event horizon attempt to consume a set of tiles on a grid.
     /// </summary>
-    public int AttemptConsumeTiles(EntityUid hungry, IEnumerable<TileRef> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    public int AttemptConsumeTiles(Entity<EventHorizonComponent> hungry, Entity<MapGridComponent> grid, IEnumerable<TileRef> tiles)
     {
         var toConsume = new List<(Vector2i, Tile)>();
         foreach (var tile in tiles)
         {
-            if (CanConsumeTile((hungry, eventHorizon), tile, (gridId, grid)))
+            if (CanConsumeTile(hungry, tile, grid))
                 toConsume.Add((tile.GridIndices, Tile.Empty));
         }
 
         var result = toConsume.Count;
         if (toConsume.Count > 0)
-            ConsumeTiles(hungry, toConsume, gridId, grid, eventHorizon);
+            ConsumeTiles(hungry, grid, toConsume);
+
         return result;
     }
 
@@ -286,29 +287,23 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         foreach (var blockingEntity in _mapSystem.GetAnchoredEntities(grid, tile.GridIndices))
         {
-            if (!CanConsumeEntity(hungry, blockingEntity, hungry.Comp))
+            if (!CanConsumeEntity(hungry, blockingEntity))
                 return false;
         }
-        return true;
-    }
 
-    /// <inheritdoc cref="CanConsumeTile(EntityUid, TileRef, Entity{MapGridComponent}, EventHorizonComponent)"/>
-    [Obsolete("Use the Entity<T> overload")]
-    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
-    {
-        return CanConsumeTile((hungry, eventHorizon), tile, (grid.Owner, grid));
+        return true;
     }
 
     /// <summary>
     /// Consumes all tiles within a given distance of an entity.
     /// Some entities are immune to consumption.
     /// </summary>
-    public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
+    public void ConsumeTilesInRange(Entity<EventHorizonComponent?, TransformComponent?> eventHorizon, float range)
     {
-        if (!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
+        if (!Resolve(eventHorizon, ref eventHorizon.Comp1, ref eventHorizon.Comp2))
             return;
 
-        var mapPos = _xformSystem.GetMapCoordinates(uid, xform: xform);
+        var mapPos = _xformSystem.GetMapCoordinates((eventHorizon.Owner, eventHorizon.Comp2));
         var box = Box2.CenteredAround(mapPos.Position, new Vector2(range, range));
         var circle = new Circle(mapPos.Position, range);
         var grids = new List<Entity<MapGridComponent>>();
@@ -316,8 +311,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
         foreach (var grid in grids)
         {
-            // TODO: Remover grid.Owner when this iterator returns entityuids as well.
-            AttemptConsumeTiles(uid, _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, circle), grid, grid, eventHorizon);
+            AttemptConsumeTiles((eventHorizon.Owner, eventHorizon.Comp1), grid, _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, circle));
         }
     }
 
@@ -327,15 +321,16 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Consumes most entities and tiles within a given distance of an entity.
     /// Some entities are immune to consumption.
     /// </summary>
-    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
+    public void ConsumeEverythingInRange(Entity<EventHorizonComponent?, TransformComponent?> eventHorizon, float range)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        if (!HorizonQuery.Resolve(eventHorizon, ref eventHorizon.Comp1))
             return;
 
-        if (eventHorizon.ConsumeEntities)
-            ConsumeEntitiesInRange(uid, range, null, eventHorizon);
-        if (eventHorizon.ConsumeTiles)
-            ConsumeTilesInRange(uid, range, xform, eventHorizon);
+        if (eventHorizon.Comp1.ConsumeEntities)
+            ConsumeEntitiesInRange((eventHorizon, eventHorizon, null), range);
+
+        if (eventHorizon.Comp1.ConsumeTiles)
+            ConsumeTilesInRange(eventHorizon, range);
     }
 
     #endregion Consume
@@ -347,21 +342,23 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// The value is specifically how long the subsystem should wait between scans.
     /// If the new scanning period would have already prompted a scan given the previous scan time one is prompted immediately.
     /// </summary>
-    public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
+    public void SetConsumePeriod(Entity<EventHorizonComponent?> horizon, TimeSpan value)
     {
-        if (!Resolve(uid, ref eventHorizon))
+        var (uid, eventHorizon) = horizon;
+
+        if (!HorizonQuery.Resolve(uid, ref eventHorizon))
             return;
 
         if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))
             return;
 
-        var diff = (value - eventHorizon.TargetConsumePeriod);
+        var diff = value - eventHorizon.TargetConsumePeriod;
         eventHorizon.TargetConsumePeriod = value;
         eventHorizon.NextConsumeWaveTime += diff;
 
         var curTime = _timing.CurTime;
         if (eventHorizon.NextConsumeWaveTime < curTime)
-            Update(uid, eventHorizon);
+            Update((uid, eventHorizon, null));
     }
 
     #endregion Getters/Setters
@@ -369,15 +366,23 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     #region Event Handlers
 
     /// <summary>
+    /// Initializes the event horizon scan time.
+    /// </summary>
+    private void OnHorizonMapInit(Entity<EventHorizonComponent> eventHorizon, ref MapInitEvent args)
+    {
+        eventHorizon.Comp.NextConsumeWaveTime = _timing.CurTime;
+    }
+
+    /// <summary>
     /// Prevents a singularity from colliding with anything it is incapable of consuming.
     /// </summary>
-    protected override bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    protected override bool PreventCollide(Entity<EventHorizonComponent> eventHorizon, ref PreventCollideEvent args)
     {
-        if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
+        if (base.PreventCollide(eventHorizon, ref args) || args.Cancelled)
             return true;
 
         // If we can eat it we don't want to bounce off of it. If we can't eat it we want to bounce off of it (containment fields).
-        args.Cancelled = args.OurFixture.Hard && CanConsumeEntity(uid, args.OtherEntity, comp);
+        args.Cancelled = args.OurFixture.Hard && CanConsumeEntity(eventHorizon, args.OtherEntity);
         return false;
     }
 
@@ -398,7 +403,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         if (args.Cancelled)
             return;
-        if (!args.EventHorizon.CanBreachContainment)
+        if (!args.EventHorizon.Comp.CanBreachContainment)
             PreventConsume(uid, comp, ref args);
     }
 
@@ -413,7 +418,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (args.OurFixtureId != comp.ConsumerFixtureId)
             return;
 
-        AttemptConsumeEntity(uid, args.OtherEntity, comp);
+        AttemptConsumeEntity((uid, comp), args.OtherEntity);
     }
 
     /// <summary>
@@ -421,9 +426,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Specifically prevents event horizons from consuming themselves.
     /// Also ensures that if this event horizon has already been consumed by another event horizon it cannot be consumed again.
     /// </summary>
-    private void OnAnotherEventHorizonAttemptConsumeThisEventHorizon(EntityUid uid, EventHorizonComponent comp, ref EventHorizonAttemptConsumeEntityEvent args)
+    private void OnAnotherEventHorizonAttemptConsumeThisEventHorizon(Entity<EventHorizonComponent> eventHorizon, ref EventHorizonAttemptConsumeEntityEvent args)
     {
-        if (!args.Cancelled && (args.EventHorizon == comp || comp.BeingConsumedByAnotherEventHorizon))
+        if (!args.Cancelled && (args.EventHorizon == eventHorizon || eventHorizon.Comp.BeingConsumedByAnotherEventHorizon))
             args.Cancelled = true;
     }
 
@@ -431,9 +436,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Prevents two singularities from annihilating one another.
     /// Specifically ensures if this event horizon is consumed by another event horizon it knows that it has been consumed.
     /// </summary>
-    private void OnAnotherEventHorizonConsumedThisEventHorizon(EntityUid uid, EventHorizonComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnAnotherEventHorizonConsumedThisEventHorizon(Entity<EventHorizonComponent> eventHorizon, ref EventHorizonConsumedEntityEvent args)
     {
-        comp.BeingConsumedByAnotherEventHorizon = true;
+        eventHorizon.Comp.BeingConsumedByAnotherEventHorizon = true;
     }
 
     /// <summary>
@@ -460,6 +465,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var uid = args.Entity;
         if (!Exists(uid))
             return;
+
         var comp = args.EventHorizon;
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
@@ -467,26 +473,130 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var containerEntity = args.Args.Container.Owner;
         if (!Exists(containerEntity))
             return;
-        if (AttemptConsumeEntity(uid, containerEntity, comp))
+
+        if (AttemptConsumeEntity((uid, comp), containerEntity))
             return; // If we consume the entity we also consume everything in the containers it has.
 
-        ConsumeEntitiesInContainer(uid, args.Args.Container, comp, args.Args.Container);
+        ConsumeEntitiesInContainer((uid, comp), args.Args.Container, args.Args.Container);
     }
 
     /// <summary>
     /// Recursively consumes all entities within a container that is consumed by the singularity.
     /// If an entity within a consumed container cannot be consumed itself it is removed from the container.
     /// </summary>
-    private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnContainerConsumed(Entity<ContainerManagerComponent> containerEntity, ref EventHorizonConsumedEntityEvent args)
     {
-        var drop_container = args.Container;
+        var drop_container = args.OuterContainer;
         if (drop_container is null)
-            _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
+            _containerSystem.TryGetContainingContainer((containerEntity, null, null), out drop_container);
 
-        foreach (var container in _containerSystem.GetAllContainers(uid))
+        foreach (var container in _containerSystem.GetAllContainers(containerEntity))
         {
-            ConsumeEntitiesInContainer(args.EventHorizonUid, container, args.EventHorizon, drop_container);
+            ConsumeEntitiesInContainer(args.EventHorizon, container, drop_container);
         }
     }
+
     #endregion Event Handlers
+
+    #region Obsolete API
+
+    /// <inheritdoc cref="Update(Entity{EventHorizonComponent?, TransformComponent?})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override")]
+    public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
+    {
+        Update((uid, eventHorizon, xform));
+    }
+
+    /// <inheritdoc cref="ConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        ConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeEntity(Entity{EventHorizonComponent?}, EntityUid, BaseContainer?)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool AttemptConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        return AttemptConsumeEntity((hungry, eventHorizon), morsel, outerContainer);
+    }
+
+    /// <inheritdoc cref="CanConsumeEntity(Entity{EventHorizonComponent?}, EntityUid)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
+    {
+        return CanConsumeEntity((hungry, eventHorizon), uid);
+    }
+
+    /// <inheritdoc cref="ConsumeEntitiesInRange(Entity{EventHorizonComponent?, PhysicsComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntitiesInRange(EntityUid uid, float range, PhysicsComponent? body = null, EventHorizonComponent? eventHorizon = null)
+    {
+        ConsumeEntitiesInRange((uid, eventHorizon, body), range);
+    }
+
+    /// <inheritdoc cref="ConsumeEntitiesInContainer(Entity{EventHorizonComponent?}, BaseContainer, BaseContainer)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEntitiesInContainer(EntityUid hungry, BaseContainer container, EventHorizonComponent eventHorizon, BaseContainer? outerContainer = null)
+    {
+        ConsumeEntitiesInContainer((hungry, eventHorizon), container, outerContainer);
+    }
+
+    /// <inheritdoc cref="ConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    {
+        ConsumeTile((hungry, eventHorizon), tile);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeTile(Entity{EventHorizonComponent}, TileRef)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
+    {
+        AttemptConsumeTile((hungry, eventHorizon), tile);
+    }
+
+    /// <inheritdoc cref="ConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, List{ValueTuple{Vector2i, Tile}})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTiles(EntityUid hungry, List<(Vector2i, Tile)> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        ConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
+    }
+
+    /// <inheritdoc cref="AttemptConsumeTiles(Entity{EventHorizonComponent}, Entity{MapGridComponent}, IEnumerable{TileRef})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public int AttemptConsumeTiles(EntityUid hungry, IEnumerable<TileRef> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        return AttemptConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
+    }
+
+    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, TileRef, Entity{MapGridComponent})"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        return CanConsumeTile((hungry, eventHorizon), tile, (grid.Owner, grid));
+    }
+
+    /// <inheritdoc cref="ConsumeTilesInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeTilesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
+    {
+        ConsumeTilesInRange((uid, eventHorizon, xform), range);
+    }
+
+    /// <inheritdoc cref="ConsumeEverythingInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void ConsumeEverythingInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
+    {
+        ConsumeEverythingInRange((uid, eventHorizon, xform), range);
+    }
+
+    /// <inheritdoc cref="SetConsumePeriod(Entity{EventHorizonComponent?}, TimeSpan)"/>
+    [Obsolete("This method is obsolete, use the Entity<T> override.")]
+    public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
+    {
+        SetConsumePeriod((uid, eventHorizon), value);
+    }
+
+    #endregion Obsolete API
 }

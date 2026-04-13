@@ -449,7 +449,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (args.Cancelled)
             return;
-        if (comp.IsConnected && !args.EventHorizon.CanBreachContainment)
+        if (comp.IsConnected && !args.EventHorizon.Comp.CanBreachContainment)
             args.Cancelled = true;
     }
 }
