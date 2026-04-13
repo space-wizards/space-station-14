@@ -435,6 +435,10 @@
         effectProto: StatusEffectStandardJitter
         time: 2
         type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSuperJitter
+        time: 2
+        type: Add
     Digestion:
       effects:
       - !type:SatiateThirst

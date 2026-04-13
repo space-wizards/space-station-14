@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Jittering;
@@ -9,9 +10,12 @@ namespace Content.Shared.Jittering;
 /// Should only be applied to an entity by <see cref="JitteringStatusEffectComponent"/>.
 /// </summary>
 [Access(typeof(SharedJitteringSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JitteringComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public JitterSetting Settings;
+
     /// <summary>
     /// The current position of the sprite.
     /// </summary>
@@ -38,36 +42,46 @@ public sealed partial class JitteringStatusEffectComponent : Component
     /// The parameters of the jitter to apply.
     /// </summary>
     [DataField]
-    public JitterParams Settings = new(3, 0.25f, 0);
+    public JitterSetting Settings = new()
+    {
+        Frequency = 3,
+        MaxRadius = 0.15f,
+    };
 }
 
-[Serializable, NetSerializable]
-public struct JitterParams(float frequency, float maxRadius, float minRadius)
+[DataDefinition, Serializable, NetSerializable]
+public partial struct JitterSetting()
 {
     /// <summary>
     /// How many jitters will be preformed per second.
     /// </summary>
-    public float Frequency = frequency;
+    [DataField]
+    public float Frequency;
 
     /// <summary>
     /// The maximum distance the sprite will travel from the entity's actual position.
     /// </summary>
-    public float MaxRadius = maxRadius;
+    [DataField]
+    public float MaxRadius;
 
     /// <summary>
     /// The minimum distance to travel from origin.
     /// </summary>
-    public float MinRadius = minRadius;
+    [DataField]
+    public float MinRadius;
 
     /// <summary>
     /// A linear transformation to apply to X.
     /// </summary>
+    [DataField]
     public Vector2 XSheer = Vector2.UnitX;
 
     /// <summary>
     /// A linear transformation to apply to Y.
     /// </summary>
-    public Vector2 YSheer =  Vector2.UnitY;
+    [DataField]
+    public Vector2 YSheer = Vector2.UnitY;
 
-    public Matrix3x2 MovementMatrix => Matrix3x2.Create(XSheer, YSheer, Vector2.Zero);
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Matrix3x2 Matrix => Matrix3x2.Create(XSheer, YSheer, Vector2.Zero);
 }

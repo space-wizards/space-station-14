@@ -24,12 +24,31 @@ namespace Content.Shared.Jittering
 
         private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
         {
-            EnsureComp<JitteringComponent>(ent);
+            if (!TryJitterFromStatuses(args.Target, out var setting))
+                return;
+
+            ApplyJitter(args.Target, setting);
         }
 
         private void OnStatusRemoved(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
         {
-            RemCompDeferred<JitteringComponent>(ent);
+            if (TryJitterFromStatuses(args.Target, out var setting))
+                ApplyJitter(args.Target, setting);
+
+            else
+                RemCompDeferred<JitteringComponent>(args.Target);
+        }
+
+        public void ApplyJitter(EntityUid target, JitterSetting jitter)
+        {
+            var comp = EnsureComp<JitteringComponent>(target);
+            comp.Settings = jitter;
+            Dirty(target, comp);
+        }
+
+        public void EndJitter(EntityUid target)
+        {
+
         }
 
         // todo make remark clearer
@@ -93,9 +112,9 @@ namespace Content.Shared.Jittering
         /// Finds all the status effects with <see cref="JitteringStatusEffectComponent"/>
         /// and combines them into a single jitter effect.
         /// </summary>
-        protected bool TryGetCombinedStatusJitters(EntityUid entity, out JitterParams jitter)
+        protected bool TryJitterFromStatuses(EntityUid entity, out JitterSetting jitter)
         {
-            jitter = new JitterParams();
+            jitter = new JitterSetting();
 
             if (!_statusEffects.TryEffectsWithComp<JitteringStatusEffectComponent>(entity, out var effects))
                 return false;
@@ -105,8 +124,10 @@ namespace Content.Shared.Jittering
                 jitter.Frequency += jitterEffect.Settings.Frequency;
                 jitter.MaxRadius += jitterEffect.Settings.MaxRadius;
                 jitter.MinRadius += jitterEffect.Settings.MinRadius;
-                jitter.XSheer *= jitterEffect.Settings.XSheer;
-                jitter.YSheer *= jitterEffect.Settings.YSheer;
+                // todo Do this properly by serializing Matrix2x3
+                var combinedMatrix = jitter.Matrix * jitterEffect.Settings.Matrix;
+                jitter.XSheer = combinedMatrix.X;
+                jitter.YSheer = combinedMatrix.Y;
             }
 
             jitter.Frequency /= effects.Count;

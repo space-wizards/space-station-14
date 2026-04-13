@@ -39,11 +39,8 @@ namespace Content.Client.Jittering
 
             var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent);
 
-            if (!TryGetCombinedStatusJitters(ent, out var newJitter))
-                return;
-
             ent.Comp.StartOffset = sprite.Offset;
-            DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer), newJitter);
+            DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer));
         }
 
         // End the animation
@@ -66,24 +63,23 @@ namespace Content.Client.Jittering
             if (!args.Finished)
                 return;
 
-            if (TryGetCombinedStatusJitters(ent, out var newJitter)
-                && _spriteQuery.TryComp(ent, out var sprite)
+            if (_spriteQuery.TryComp(ent, out var sprite)
                 && _animationQuery.TryComp(ent, out var animationPlayer))
             {
-                DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer), newJitter);
+                DoJitter((ent.Owner, ent.Comp, sprite, animationPlayer));
             }
         }
 
         /// <summary>
         /// Creates a jitter animation, then plays the animation on the entity.
         /// </summary>
-        private void DoJitter(Entity<JitteringComponent, SpriteComponent, AnimationPlayerComponent> ent, JitterParams newJitter)
+        private void DoJitter(Entity<JitteringComponent, SpriteComponent, AnimationPlayerComponent> ent)
         {
             var (uid, jittering, sprite, animationPlayer) = ent;
 
             // Create a random offset
-            var offset = _random.NextVector2(newJitter.MinRadius, newJitter.MaxRadius);
-            offset = Vector2.Transform(offset, Matrix3x2.Create(newJitter.XSheer, newJitter.YSheer, Vector2.Zero));
+            var offset = _random.NextVector2(jittering.Settings.MinRadius, jittering.Settings.MaxRadius);
+            offset = Vector2.Transform(offset, jittering.Settings.Matrix);
 
             // If we're in the same quadrant as our last location, invert the offset
             // Reduces repetitive behavior and increases large movements
@@ -96,7 +92,7 @@ namespace Content.Client.Jittering
             jittering.LastJitter = offset;
 
             // avoid dividing by 0 so animations don't try to be infinitely long
-            var length = newJitter.Frequency <= 0 ? 0f : 1f / newJitter.Frequency;
+            var length = jittering.Settings.Frequency <= 0 ? 0f : 1f / jittering.Settings.Frequency;
 
             // create and play the animation
             var animation = new Animation()
@@ -112,9 +108,9 @@ namespace Content.Client.Jittering
                         {
                             new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
                             new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
             _animationPlayer.Play((uid, animationPlayer), animation, _jitterAnimationKey);
         }
