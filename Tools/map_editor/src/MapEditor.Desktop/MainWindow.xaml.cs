@@ -20,6 +20,12 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        Closing += OnClosing;
+    }
+
+    private void OnClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        EditorContext.Current?.Shutdown();
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -103,12 +109,6 @@ public partial class MainWindow : Window
     }
 
     private void OnExitClick(object sender, RoutedEventArgs e) => Close();
-
-    private void OnLightingToggle(object sender, RoutedEventArgs e)
-    {
-        var enabled = LightingCheckBox.IsChecked == true;
-        EditorContext.Current?.SetLighting(enabled);
-    }
 
     // ---- Benchmark ----
 

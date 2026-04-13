@@ -27,11 +27,6 @@
                                    Foreground="#7a7a8e" FontSize="11"
                                    Margin="0,8,0,8" TextWrapping="Wrap"
                                    Text="Waiting for RT..." />
-                        <CheckBox x:Name="LightingCheckBox"
-                                  Content="Enable lighting"
-                                  Foreground="#cfcfe0"
-                                  Margin="0,0,0,4"
-                                  Click="OnLightingToggle" />
                         <Button x:Name="RunBenchmarkButton"
                                 Content="Run render benchmark"
                                 Background="#2a2a3e" Foreground="#cfcfe0"

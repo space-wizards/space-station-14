@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Threading.Tasks;
+using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Asynchronous;
@@ -81,22 +82,14 @@ public sealed class EditorContext
     public Eye EditorEye { get; internal set; } = default!;
 
     /// <summary>
-    ///     Toggle lighting (DrawLight + DrawFov) on the editor eye.
-    ///     Must be called from the WPF thread — marshals to the game thread.
+    ///     Tell RT to stop its game loop. Call from the WPF Closing event
+    ///     so the process actually exits when the window is closed.
     /// </summary>
-    public void SetLighting(bool enabled)
+    public void Shutdown()
     {
-        RunOnGameThread(() =>
+        _taskManager.RunOnMainThread(() =>
         {
-            EditorEye.DrawLight = enabled;
-            // Keep FOV disabled — the editor needs full visibility, not player-perspective occlusion.
-            EditorEye.DrawFov = false;
-
-            // The default light/occluder caps (2048) are too low for viewing an
-            // entire station at once. Raise them when lighting is enabled.
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
-            cfg.SetCVar(CVars.MaxLightCount, enabled ? 16384 : 2048);
-            cfg.SetCVar(CVars.MaxOccluderCount, enabled ? 16384 : 2048);
+            IoCManager.Resolve<IGameController>().Shutdown("Editor window closed");
         });
     }
 
