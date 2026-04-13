@@ -1570,8 +1570,9 @@
     components:
     - type: Electrified
       requirePower: false
+      shockDamage: 10
       shockDelay: 10
-      shockTime: 3 # takes at least 4 engi xenoborgs with this module to stun lock someone
+      shockTime: 1.5
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
