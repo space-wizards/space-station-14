@@ -81,6 +81,19 @@ public sealed class EditorContext
     public Eye EditorEye { get; internal set; } = default!;
 
     /// <summary>
+    ///     Toggle lighting (DrawLight + DrawFov) on the editor eye.
+    ///     Must be called from the WPF thread — marshals to the game thread.
+    /// </summary>
+    public void SetLighting(bool enabled)
+    {
+        RunOnGameThread(() =>
+        {
+            EditorEye.DrawLight = enabled;
+            EditorEye.DrawFov = enabled;
+        });
+    }
+
+    /// <summary>
     ///     The editor camera. This is the source of truth for viewport
     ///     position and zoom: the viewport's <c>FrameUpdate</c> reads
     ///     from here and writes back to the eye every frame, so

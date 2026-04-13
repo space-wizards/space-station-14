@@ -104,6 +104,12 @@ public partial class MainWindow : Window
 
     private void OnExitClick(object sender, RoutedEventArgs e) => Close();
 
+    private void OnLightingToggle(object sender, RoutedEventArgs e)
+    {
+        var enabled = LightingCheckBox.IsChecked == true;
+        EditorContext.Current?.SetLighting(enabled);
+    }
+
     // ---- Benchmark ----
 
     private async void OnRunBenchmarkClick(object sender, RoutedEventArgs e)
