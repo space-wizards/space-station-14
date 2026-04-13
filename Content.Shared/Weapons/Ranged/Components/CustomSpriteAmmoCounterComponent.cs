@@ -20,4 +20,11 @@ public sealed partial class CustomSpriteAmmoCounterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public SpriteSpecifier SpentAmmoSprite;
+
+    /// <summary>
+    /// How much to multiply the separation between items in the ammo counter ui
+    /// Set to less than 1 to make them more tightly packed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float HorizontalMult = 1f;
 }

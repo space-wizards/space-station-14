@@ -269,7 +269,7 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
     private const int Separation = 2;
 
-    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
+    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite, float horizontalMult)
     {
         _loadedSprite = loadedSprite;
         _spentSprite = spentSprite;
@@ -278,7 +278,7 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
         {
             ItemWidth = _loadedSprite.Width,
             ItemHeight = _loadedSprite.Height,
-            ItemSeparation = _loadedSprite.Width + Separation,
+            ItemSeparation = (int)((_loadedSprite.Width + Separation) * horizontalMult),
             MinCountPerRow = 3,
             VerticalSeparation = Separation,
         };
