@@ -161,6 +161,9 @@ public sealed class MapEditorState : State
         // Populate the entity palette.
         _screen.PopulateEntityPalette(_prototypeManager);
 
+        // Show subfloor entities by default (pipes, cables visible through floors).
+        _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>().ShowAll = true;
+
         // Register hover highlight overlay.
         _editorOverlay = new EditorOverlay();
         IoCManager.Resolve<IOverlayManager>().AddOverlay(_editorOverlay);
@@ -1206,15 +1209,10 @@ public sealed class MapEditorState : State
 
     private void OnToggleShowSubfloor()
     {
-        var show = _screen.ShowSubfloor;
-        var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, SpriteComponent, TransformComponent>();
-        while (query.MoveNext(out _, out _, out var sprite, out var xform))
-        {
-            if (xform.MapID != _loadedMapId)
-                continue;
-
-            sprite.Visible = show;
-        }
+        // Use the engine's built-in ShowAll toggle on SubFloorHideSystem.
+        // This reveals all pipes/cables/subfloor entities without modifying individual sprites.
+        var subFloorSystem = _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>();
+        subFloorSystem.ShowAll = _screen.ShowSubfloor;
     }
 
     #endregion
