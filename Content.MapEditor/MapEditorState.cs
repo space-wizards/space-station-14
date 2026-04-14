@@ -1214,23 +1214,20 @@ public sealed class MapEditorState : State
     }
 
     /// <summary>
-    ///     Controls subfloor entity visibility on the loaded map.
-    ///     When ON: force all SubFloorHide entities visible (reveal pipes/cables under floors).
-    ///     When OFF: hide entities that are marked as under cover by SubFloorHideComponent.
+    ///     Controls subfloor entity visibility using the engine's SubFloorHideSystem.ShowAll.
+    ///     Wrapped in try-catch because the setter tries to send network events and update
+    ///     sandbox UI, which may fail in the editor's standalone environment.
     /// </summary>
     private void ApplySubfloorVisibility(bool showAll)
     {
-        var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, SpriteComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var subfloor, out var sprite, out var xform))
+        try
         {
-            if (xform.MapID != _loadedMapId)
-                continue;
-
-            // When showAll is true, make everything visible.
-            // When false, hide entities that are under floor cover (pipes/cables under non-subfloor tiles).
-            // On paused maps, IsUnderCover defaults to false, so most things stay visible —
-            // only entities explicitly marked as covered get hidden.
-            sprite.Visible = showAll || !subfloor.IsUnderCover;
+            var subFloorSystem = _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>();
+            subFloorSystem.ShowAll = showAll;
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Warning($"SubFloorHideSystem.ShowAll failed (expected in editor): {ex.Message}");
         }
     }
 
