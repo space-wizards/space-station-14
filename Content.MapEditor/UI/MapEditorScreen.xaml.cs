@@ -558,7 +558,9 @@ public sealed partial class MapEditorScreen : UIScreen
             var item = list[args.ItemIndex];
             if (item.Metadata is EntityUid selectedUid)
                 onSelected(selectedUid);
-            CloseEntityPicker();
+            // Defer close to next frame to avoid disposing controls mid-event processing.
+            var uiMgr = IoCManager.Resolve<IUserInterfaceManager>();
+            uiMgr.DeferAction(CloseEntityPicker);
         };
 
         vbox.AddChild(list);
