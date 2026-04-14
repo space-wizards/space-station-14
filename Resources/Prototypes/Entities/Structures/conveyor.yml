@@ -84,4 +84,6 @@
     node: item
   - type: StaticPrice
     price: 40
-
+  - type: Stack
+    stackType: ConveyorBeltStack
+    count: 1

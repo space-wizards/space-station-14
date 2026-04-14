@@ -13,3 +13,9 @@
   name: stack-gunpowder
   icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: MaterialGunpowder
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: ConveyorBeltStack
+  name: conveyor_belt
+  spawn: ConveyorBeltAssembly
