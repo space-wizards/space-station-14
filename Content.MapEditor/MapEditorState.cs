@@ -381,18 +381,23 @@ public sealed class MapEditorState : State
             else if (selectTool.Selection != null)
             {
                 _editorOverlay.SelectionBox = selectTool.Selection;
-                _editorOverlay.IsDraggingSelection = false;
+                _editorOverlay.IsDraggingSelection = selectTool.IsMoving;
             }
             else
             {
                 _editorOverlay.SelectionBox = null;
                 _editorOverlay.IsDraggingSelection = false;
             }
+
+            // Ghost tiles during move.
+            _editorOverlay.MoveGhostTiles = selectTool.MoveGhostTiles;
+            _editorOverlay.MoveGhostOffset = selectTool.MoveOffset;
         }
         else
         {
             _editorOverlay.SelectionBox = null;
             _editorOverlay.IsDraggingSelection = false;
+            _editorOverlay.MoveGhostTiles = null;
         }
     }
 

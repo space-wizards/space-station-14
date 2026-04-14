@@ -63,9 +63,21 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public bool IsDraggingSelection { get; set; }
 
+    /// <summary>
+    ///     Ghost tile positions during a selection move. Rendered as semi-transparent blue tiles
+    ///     offset by <see cref="MoveGhostOffset"/>.
+    /// </summary>
+    public List<Vector2i>? MoveGhostTiles { get; set; }
+
+    /// <summary>
+    ///     Current offset applied to ghost tiles during a move drag.
+    /// </summary>
+    public Vector2i MoveGhostOffset { get; set; }
+
     // Cyan/blue tint for selection — clearly distinct from the white hover highlight.
     private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
     private static readonly Color SelectionBorderColor = new(0.3f, 0.7f, 1.0f, 0.9f);
+    private static readonly Color GhostTileColor = new(0.3f, 0.5f, 1.0f, 0.4f);
 
     protected override void Draw(in OverlayDrawArgs args)
     {
@@ -90,6 +102,19 @@ public sealed class EditorOverlay : Overlay
             var worldBox = new Box2(tile.X, tile.Y, tile.X + 1, tile.Y + 1);
             handle.DrawRect(worldBox, HighlightColor);
             handle.DrawRect(worldBox, BorderColor, filled: false);
+        }
+
+        // Draw ghost tiles during a selection move.
+        if (MoveGhostTiles != null && MoveGhostTiles.Count > 0)
+        {
+            var offset = MoveGhostOffset;
+            foreach (var pos in MoveGhostTiles)
+            {
+                var gx = pos.X + offset.X;
+                var gy = pos.Y + offset.Y;
+                var ghostBox = new Box2(gx, gy, gx + 1, gy + 1);
+                handle.DrawRect(ghostBox, GhostTileColor);
+            }
         }
 
         // Draw selection box on top of everything so it is always visible.

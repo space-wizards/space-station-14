@@ -38,6 +38,15 @@ public sealed class SelectTool : IEditorTool
     private Box2i _originalSelection;
     private Vector2i _totalMoveOffset;
 
+    /// <summary>
+    ///     Tile positions (in grid coords) that were non-empty when the move started.
+    ///     Used by the overlay to render ghost tiles during drag.
+    /// </summary>
+    public System.Collections.Generic.List<Vector2i>? MoveGhostTiles { get; private set; }
+
+    /// <summary>Current move offset from the original position, for ghost rendering.</summary>
+    public Vector2i MoveOffset => _totalMoveOffset;
+
     public void OnMouseDown(ToolContext ctx, Vector2i tilePos)
     {
         // If clicking inside an existing selection, enter move mode.
@@ -47,6 +56,20 @@ public sealed class SelectTool : IEditorTool
             _moveOrigin = tilePos;
             _originalSelection = Selection.Value;
             _totalMoveOffset = Vector2i.Zero;
+
+            // Snapshot non-empty tile positions for ghost rendering.
+            MoveGhostTiles = new System.Collections.Generic.List<Vector2i>();
+            var gridUid = ctx.ActiveGridUid;
+            var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
+            for (var x = _originalSelection.Left; x < _originalSelection.Right; x++)
+            {
+                for (var y = _originalSelection.Bottom; y < _originalSelection.Top; y++)
+                {
+                    var pos = new Vector2i(x, y);
+                    if (ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile != Tile.Empty)
+                        MoveGhostTiles.Add(pos);
+                }
+            }
             return;
         }
 
@@ -82,6 +105,7 @@ public sealed class SelectTool : IEditorTool
         if (_isMoving)
         {
             _isMoving = false;
+            MoveGhostTiles = null;
 
             // Apply the tile move if there was actual displacement.
             if (_totalMoveOffset != Vector2i.Zero)
