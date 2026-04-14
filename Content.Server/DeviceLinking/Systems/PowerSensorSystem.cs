@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
@@ -93,8 +94,8 @@ public sealed class PowerSensorSystem : EntitySystem
     private void UpdateOutputs(EntityUid uid, PowerSensorComponent comp)
     {
         // get power stats on the power network that's been switched to
-        var powerSwitchable = Comp<PowerSwitchableComponent>(uid);
-        var cable = powerSwitchable.Cables[powerSwitchable.ActiveIndex];
+        var voltageToggler = Comp<VoltageTogglerComponent>(uid);
+        var cable = voltageToggler.Settings[voltageToggler.SelectedVoltageLevel];
         var nodeContainer = Comp<NodeContainerComponent>(uid);
         var deviceNode = (CableDeviceNode) nodeContainer.Nodes[cable.Node];
 
