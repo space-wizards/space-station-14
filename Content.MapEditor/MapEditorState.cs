@@ -1220,6 +1220,8 @@ public sealed class MapEditorState : State
     /// </summary>
     private void ApplySubfloorVisibility(bool showAll)
     {
+        // Set the ShowAll flag. The setter tries to send a network event (which fails
+        // in standalone editor mode) but the _showAll field still gets set correctly.
         try
         {
             var subFloorSystem = _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>();
@@ -1227,7 +1229,17 @@ public sealed class MapEditorState : State
         }
         catch (Exception ex)
         {
-            _sawmill.Warning($"SubFloorHideSystem.ShowAll failed (expected in editor): {ex.Message}");
+            _sawmill.Warning($"SubFloorHideSystem.ShowAll setter error (expected): {ex.Message}");
+        }
+
+        // The setter's UpdateAll() normally runs via a network round-trip that doesn't
+        // exist in the editor. Manually queue appearance updates for all subfloor entities
+        // so the visibility changes actually take effect.
+        var appearanceSystem = _entityManager.System<AppearanceSystem>();
+        var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out _, out var appearance))
+        {
+            appearanceSystem.QueueUpdate(uid, appearance);
         }
     }
 
