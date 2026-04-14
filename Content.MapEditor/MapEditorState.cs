@@ -158,7 +158,8 @@ public sealed class MapEditorState : State
         // Set fullbright since the editor has DrawLight=false — otherwise the outline is invisible.
         _selectionOutlineShader = _prototypeManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
         _selectionOutlineShader.SetParameter("outline_fullbright", true);
-        _selectionOutlineShader.SetParameter("outline_width", 2.0f);
+        _selectionOutlineShader.SetParameter("outline_width", 4.0f);
+        _selectionOutlineShader.SetParameter("outline_color", new Robust.Shared.Maths.Color(0.1f, 1.0f, 0.3f, 0.8f));
 
         // Set initial toolbar state.
         _screen.SetActiveToolButton(_activeToolKey);
