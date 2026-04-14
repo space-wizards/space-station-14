@@ -332,26 +332,25 @@ public sealed partial class MapEditorScreen : UIScreen
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            if (args.Function == EngineKeyFunctions.UIClick)
+            Robust.Shared.Log.Logger.GetSawmill("map_editor").Debug($"Interceptor KeyBindDown: {args.Function}");
+            if (args.Function == EngineKeyFunctions.UIClick
+                || args.Function == EngineKeyFunctions.Use)
             {
                 _screen.RaiseViewportLeftDown(args.PointerLocation);
                 args.Handle();
                 return;
             }
-
-            // Let other key binds pass through to the viewport underneath.
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
         {
-            if (args.Function == EngineKeyFunctions.UIClick)
+            if (args.Function == EngineKeyFunctions.UIClick
+                || args.Function == EngineKeyFunctions.Use)
             {
                 _screen.RaiseViewportLeftUp(args.PointerLocation);
                 args.Handle();
                 return;
             }
-
-            // Pass through.
         }
     }
 }

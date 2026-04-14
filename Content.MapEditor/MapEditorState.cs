@@ -368,7 +368,9 @@ public sealed class MapEditorState : State
         gridUid = default;
         tilePos = default;
 
-        var mapCoords = _eyeManager.PixelToMap(screenPos);
+        // Use the Vector2 overload which goes through MainViewport directly,
+        // not MouseGetControl (which would hit our scroll interceptor overlay).
+        var mapCoords = _eyeManager.PixelToMap(screenPos.Position);
         if (mapCoords.MapId == MapId.Nullspace)
             return false;
 
