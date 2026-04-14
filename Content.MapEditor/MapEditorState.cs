@@ -119,10 +119,11 @@ public sealed class MapEditorState : State
                     // Zoom = pixels per world unit conceptually.
                     // Higher zoom = more zoomed in = smaller world delta for the same pixel delta.
                     var zoom = _eye.Zoom;
-                    // Screen pixels to world units: divide by (zoom * PPM).
+                    // Screen pixels to world units. In RT, smaller zoom = more zoomed in,
+                    // so multiply by zoom to get consistent drag speed at all zoom levels.
                     var ppm = EyeManager.PixelsPerMeter;
-                    var worldDx = -dx / (zoom.X * ppm);
-                    var worldDy = dy / (zoom.Y * ppm); // Y is inverted (screen Y-down, world Y-up)
+                    var worldDx = -dx * zoom.X / ppm;
+                    var worldDy = dy * zoom.Y / ppm;
 
                     var pos = _eye.Position;
                     _eye.Position = new MapCoordinates(
