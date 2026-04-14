@@ -246,7 +246,7 @@
       node: mv
       name: power-voltage-medium
     - voltage: Apc
-      node: node: lv
+      node: lv
       name: power-voltage-high
   - type: UseDelay
     delay: 1
