@@ -16,7 +16,7 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
     private void OnExamined(Entity<VoltageTogglerComponent> entity, ref ExaminedEvent args)
     {
         var voltage = entity.Comp.Settings[entity.Comp.SelectedVoltageLevel].Voltage;
-        args.PushMarkup(Loc.GetString(entity.Comp.ExamineText, ("voltage", VoltageString(voltage))));
+        args.PushMarkup(Loc.GetString(entity.Comp.ExamineText, ("voltage", VoltageString(voltage, true))));
     }
 
     private void OnGetVerb(Entity<VoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -57,7 +57,7 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
         }
     }
 
-    public string VoltageString(Voltage voltage)
+    public string VoltageString(Voltage voltage, bool color=false)
     {
         var voltageNoColor = voltage switch
         {
@@ -67,7 +67,10 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
             _ => "Unknown",
         };
 
-        return Loc.GetString("power-voltage", ("voltage", voltageNoColor));
+        if (color)
+            return Loc.GetString("power-voltage", ("voltage", voltageNoColor));
+
+        return voltageNoColor;
     }
 
     /// <summary>
