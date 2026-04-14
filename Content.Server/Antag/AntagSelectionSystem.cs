@@ -414,9 +414,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!antag.Active)
                 return false;
 
-            // Try to assign them an entity if the game rule allows it. We don't throw an error if this fails since we may have to wait until the player has spawned first!
-            if (TryInitializeAntag(antag.GameRule, antag.Definition, player))
+            // Try to assign them an entity if the game rule allows it.
+            // We don't deselect fails since we may have to wait until the player has spawned first!
+            if (TryGetAntagEntity(antag.GameRule, antag.Definition, player, out var antagEnt))
+            {
+                InitializeAntag(antag.GameRule, antag.Definition, antagEnt.Value, player);
                 return true;
+            }
 
             // If we didn't assign an antag, try again after the player has spawned.
             _delayedAntags.Add((antag.GameRule, antag.Definition, player));
@@ -769,7 +773,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
-        _role.MindAddRoles(mind, prototype.MindRoles, null, true);
+        _role.MindAddRoles(mind, prototype.MindRoles, silent: true);
         AssignMind(gameRule, prototype, mind, antag);
 
         Log.Debug($"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");

@@ -539,7 +539,7 @@ public sealed partial class AntagSelectionSystem
     public bool IsAssignedAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player)
     {
         // First check our mindroles.
-        if (_role.MindIsAntagonist(player.AttachedEntity))
+        if (_role.PlayerIsAntagonist(player))
             return true;
 
         foreach (var (_, sessions) in gameRule.Comp.PreSelectedSessions)
@@ -579,7 +579,7 @@ public sealed partial class AntagSelectionSystem
     public bool IsAssignedAntag(ICommonSession player, params HashSet<EntityUid> ignored)
     {
         // First check our mindroles.
-        if (_role.MindIsAntagonist(player.AttachedEntity))
+        if (_role.PlayerIsAntagonist(player))
             return true;
 
         var query = QueryAllRules();
