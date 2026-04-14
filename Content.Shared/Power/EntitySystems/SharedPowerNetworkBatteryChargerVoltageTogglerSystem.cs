@@ -23,8 +23,8 @@ public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : Ent
             Voltage.Apc => "LV",
             _ => "Unknown",
         };
-        var voltageString = Loc.GetString("power-switchable-voltage", ("voltage", voltageStringSimple));
-        args.PushMarkup(Loc.GetString("power-network-battery-charger-voltage-toggler-examine", ("voltage", voltageString)));
+        var voltageString = Loc.GetString("voltage-toggler-voltage", ("voltage", voltageStringSimple));
+        args.PushMarkup(Loc.GetString("voltage-toggler-examine", ("voltage", voltageString)));
     }
 
     private void OnGetVerb(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
