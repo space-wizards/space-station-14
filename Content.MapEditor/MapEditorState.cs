@@ -162,7 +162,8 @@ public sealed class MapEditorState : State
         _screen.PopulateEntityPalette(_prototypeManager);
 
         // Show subfloor entities by default (pipes, cables visible through floors).
-        _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>().ShowAll = true;
+        // We toggle visibility directly on sprites rather than using SubFloorHideSystem.ShowAll
+        // because ShowAll tries to send network events and interact with sandbox UI.
 
         // Register hover highlight overlay.
         _editorOverlay = new EditorOverlay();
@@ -1039,6 +1040,9 @@ public sealed class MapEditorState : State
             // Populate grid tabs and set active grid to the first one.
             PopulateGridTabs(_loadedMapId);
 
+            // Show subfloor entities by default.
+            ApplySubfloorVisibility(_screen.ShowSubfloor);
+
             _sawmill.Info($"Map loaded: {grids.Count} grids on map {_loadedMapId}");
         }
         catch (Exception ex)
@@ -1209,10 +1213,23 @@ public sealed class MapEditorState : State
 
     private void OnToggleShowSubfloor()
     {
-        // Use the engine's built-in ShowAll toggle on SubFloorHideSystem.
-        // This reveals all pipes/cables/subfloor entities without modifying individual sprites.
-        var subFloorSystem = _entityManager.System<Content.Client.SubFloor.SubFloorHideSystem>();
-        subFloorSystem.ShowAll = _screen.ShowSubfloor;
+        ApplySubfloorVisibility(_screen.ShowSubfloor);
+    }
+
+    /// <summary>
+    ///     Sets visibility on all subfloor entities (pipes, cables, etc.) on the loaded map.
+    ///     Called on toggle and after map load.
+    /// </summary>
+    private void ApplySubfloorVisibility(bool show)
+    {
+        var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out var sprite, out var xform))
+        {
+            if (xform.MapID != _loadedMapId)
+                continue;
+
+            sprite.Visible = show;
+        }
     }
 
     #endregion
