@@ -1040,9 +1040,6 @@ public sealed class MapEditorState : State
             // Populate grid tabs and set active grid to the first one.
             PopulateGridTabs(_loadedMapId);
 
-            // Show subfloor entities by default.
-            ApplySubfloorVisibility(_screen.ShowSubfloor);
-
             _sawmill.Info($"Map loaded: {grids.Count} grids on map {_loadedMapId}");
         }
         catch (Exception ex)
@@ -1217,18 +1214,23 @@ public sealed class MapEditorState : State
     }
 
     /// <summary>
-    ///     Sets visibility on all subfloor entities (pipes, cables, etc.) on the loaded map.
-    ///     Called on toggle and after map load.
+    ///     Controls subfloor entity visibility on the loaded map.
+    ///     When ON: force all SubFloorHide entities visible (reveal pipes/cables under floors).
+    ///     When OFF: hide entities that are marked as under cover by SubFloorHideComponent.
     /// </summary>
-    private void ApplySubfloorVisibility(bool show)
+    private void ApplySubfloorVisibility(bool showAll)
     {
         var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, SpriteComponent, TransformComponent>();
-        while (query.MoveNext(out _, out _, out var sprite, out var xform))
+        while (query.MoveNext(out _, out var subfloor, out var sprite, out var xform))
         {
             if (xform.MapID != _loadedMapId)
                 continue;
 
-            sprite.Visible = show;
+            // When showAll is true, make everything visible.
+            // When false, hide entities that are under floor cover (pipes/cables under non-subfloor tiles).
+            // On paused maps, IsUnderCover defaults to false, so most things stay visible —
+            // only entities explicitly marked as covered get hidden.
+            sprite.Visible = showAll || !subfloor.IsUnderCover;
         }
     }
 
