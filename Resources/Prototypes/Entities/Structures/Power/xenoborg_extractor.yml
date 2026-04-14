@@ -75,9 +75,9 @@
     onInteractUsing: false
     onBump: false
     requirePower: true
-    highVoltageNode: input_lv
+    highVoltageNode: input_hv
     mediumVoltageNode: input_mv
-    lowVoltageNode: input_hv
+    lowVoltageNode: input_lv
   - type: Battery
     maxCharge: 4000000 # 4MJ
     netsync: false
