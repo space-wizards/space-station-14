@@ -49,13 +49,12 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
                     entity.Comp.SelectedVoltageLevel = currIndex;
                     Dirty(entity);
 
-                    ChangeVoltage(entity, setting);
+                    var ev = new VoltageChangedEvent(setting);
+                    RaiseLocalEvent(entity, ref ev);
                 }
             };
             args.Verbs.Add(verb);
             index++;
         }
     }
-
-    protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting) {}
 }

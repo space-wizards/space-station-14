@@ -12,8 +12,6 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 {
-    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -22,24 +20,9 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 
     private void OnMapInit(Entity<VoltageTogglerComponent> entity, ref MapInitEvent args)
     {
-        ChangeVoltage(entity, entity.Comp.Settings[entity.Comp.SelectedVoltageLevel]);
-    }
+        var startSetting = entity.Comp.Settings[entity.Comp.SelectedVoltageLevel];
+        var ev = new VoltageChangedEvent(startSetting);
 
-    protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
-    {
-        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp) ||
-            !TryComp<PowerNetworkBatteryComponent>(entity, out var powerNetworkBatteryComp) ||
-            !TryComp<BatteryChargerComponent>(entity, out var batteryChargerComp))
-            return;
-
-        foreach (var settingAlt in entity.Comp.Settings)
-        {
-            var node = (CableDeviceNode) nodeContainerComp.Nodes[settingAlt.Node];
-            node.Enabled = settingAlt.Voltage == setting.Voltage;
-            _nodeGroupSystem.QueueReflood(node);
-        }
-
-        batteryChargerComp.Voltage = setting.Voltage;
-        powerNetworkBatteryComp.MaxChargeRate = setting.Wattage;
+        RaiseLocalEvent(entity, ref ev);
     }
 }
