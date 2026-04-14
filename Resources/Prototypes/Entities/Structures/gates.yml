@@ -241,13 +241,13 @@
     settings:
     - voltage: High
       node: hv
-      name: power-voltage-low
+      name: power-voltage-low-high
     - voltage: Medium
       node: mv
       name: power-voltage-medium
     - voltage: Apc
       node: lv
-      name: power-voltage-high
+      name: power-voltage-low
   - type: UseDelay
     delay: 1
   - type: NodeContainer
