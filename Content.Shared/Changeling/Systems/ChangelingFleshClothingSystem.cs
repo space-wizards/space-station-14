@@ -123,7 +123,12 @@ public sealed class ChangelingFleshClothingSystem : EntitySystem
 
             // If the item in our slot is flesh clothing then set the chameleon prototype to mirror the target.
             if (HasComp<ChangelingFleshClothingComponent>(targetItem))
-                _chameleonClothing.SetSelectedPrototype(targetItem.Value, chameleonProtoId);
+            {
+                if (TryComp<ChameleonClothingComponent>(originalItem, out var originalChameleonComp))
+                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, originalChameleonComp.Default); // If it is also a chameleon item then use whatever that is mimicing.
+                else
+                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, chameleonProtoId);
+            }
         }
     }
 }
