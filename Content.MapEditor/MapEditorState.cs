@@ -155,7 +155,10 @@ public sealed class MapEditorState : State
         IoCManager.Resolve<IOverlayManager>().AddOverlay(_editorOverlay);
 
         // Prepare the selection outline shader (uses the game's existing outline shader).
+        // Set fullbright since the editor has DrawLight=false — otherwise the outline is invisible.
         _selectionOutlineShader = _prototypeManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+        _selectionOutlineShader.SetParameter("outline_fullbright", true);
+        _selectionOutlineShader.SetParameter("outline_width", 2.0f);
 
         // Set initial toolbar state.
         _screen.SetActiveToolButton(_activeToolKey);
