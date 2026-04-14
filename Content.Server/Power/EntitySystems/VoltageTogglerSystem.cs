@@ -1,4 +1,5 @@
-﻿using Content.Server.Popups;
+﻿using Content.Server.Power.Generator;
+using Content.Server.Popups;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Timing;
@@ -21,6 +22,15 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
     private void OnMapInit(Entity<VoltageTogglerComponent> entity, ref MapInitEvent args)
     {
         ChangeVoltage(entity, entity.Comp.SelectedVoltageLevel, null);
+    }
+
+    /// <summary>
+    /// This is used by <see cref="PortableGeneratorSystem"/>
+    /// </summary>
+    public void Cycle(Entity<VoltageTogglerComponent> entity, EntityUid? user)
+    {
+        var nextVoltageLevel = (entity.Comp.SelectedVoltageLevel + 1) % entity.Comp.Settings.Length;
+        ChangeVoltage(entity, nextVoltageLevel, user);
     }
 
     protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user)
