@@ -105,7 +105,8 @@ public sealed class AllGamePresetsStartTest : GameTest
             }
         });
 
-        min = Math.Max(antags, min);
+        // No preset should ever try to spawn more antags roundstart than it can spawn players.
+        Assert.That(antags <= min, Is.True);
         if (min > 1)
         {
             var dummies = await pair.Server.AddDummySessions(min - 1);
