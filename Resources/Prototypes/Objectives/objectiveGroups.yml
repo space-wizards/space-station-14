@@ -30,6 +30,7 @@
   id: TraitorObjectiveGroupKill
   weights:
     KillRandomPersonObjective: 1
+    KillStationAiObjective: 0.25
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
@@ -50,6 +51,7 @@
   id: TraitorObjectiveGroupSabotage 
   weights:
     OverloadAmeObjective: 1
+    SupercritAnomaliesObjective: 1
 
 #misc objectives that don't fall other another category
 - type: weightedRandom
