@@ -1079,14 +1079,17 @@ public sealed class MapEditorState : State
         _screen.SetStatusTool(_activeTool.Name);
 
         // Show entity info when EntitySelectTool has a selection.
-        if (_activeTool is EntitySelectTool { SelectedEntity: { } selectedUid } &&
+        if (_activeTool is EntitySelectTool { SelectedEntity: { } selectedUid } entitySel &&
             _entityManager.EntityExists(selectedUid))
         {
             var meta = _entityManager.GetComponent<MetaDataComponent>(selectedUid);
             var xform = _entityManager.GetComponent<TransformComponent>(selectedUid);
             var entPos = xform.Coordinates.Position;
             var protoId = meta.EntityPrototype?.ID ?? "unknown";
-            _screen.SetStatusInfo($"Entity: {protoId} @ ({entPos.X:F1}, {entPos.Y:F1}) [uid={selectedUid}]");
+            var cycleInfo = entitySel.CycleCount > 1
+                ? $" [{entitySel.CyclePosition}/{entitySel.CycleCount} — scroll to cycle]"
+                : "";
+            _screen.SetStatusInfo($"Entity: {protoId} @ ({entPos.X:F1}, {entPos.Y:F1}){cycleInfo}");
         }
     }
 

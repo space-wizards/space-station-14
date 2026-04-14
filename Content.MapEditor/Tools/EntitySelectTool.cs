@@ -44,6 +44,16 @@ public sealed class EntitySelectTool : IEditorTool
     private Vector2i _cycleTilePos;
 
     /// <summary>
+    ///     Number of entities at the current cycle tile (for UI display).
+    /// </summary>
+    public int CycleCount => _entitiesAtTile.Count;
+
+    /// <summary>
+    ///     Current index in the cycle (1-based for display).
+    /// </summary>
+    public int CyclePosition => _cycleIndex + 1;
+
+    /// <summary>
     ///     Cycle through entities at the selected tile via scroll wheel.
     ///     Returns true if the scroll was consumed (suppresses zoom).
     /// </summary>
@@ -128,11 +138,24 @@ public sealed class EntitySelectTool : IEditorTool
                 entities.Add(ent);
         }
 
-        // Filter out the grid entity itself and map entities.
+        // Filter out the grid entity itself, map entities, and entities not actually on this tile.
         entities.RemoveAll(e =>
-            e == gridUid
-            || ctx.EntityManager.HasComponent<MapGridComponent>(e)
-            || ctx.EntityManager.HasComponent<MapComponent>(e));
+        {
+            if (e == gridUid
+                || ctx.EntityManager.HasComponent<MapGridComponent>(e)
+                || ctx.EntityManager.HasComponent<MapComponent>(e))
+                return true;
+
+            // Check that the entity's position actually falls in this tile (not a neighbor).
+            if (ctx.EntityManager.TryGetComponent<TransformComponent>(e, out var xform))
+            {
+                var entTile = ctx.MapSystem.CoordinatesToTile(gridUid, grid, xform.Coordinates);
+                if (entTile != tilePos)
+                    return true;
+            }
+
+            return false;
+        });
 
         // If clicking on a tile that contains the already-selected entity, start a drag move.
         if (SelectedEntity != null
