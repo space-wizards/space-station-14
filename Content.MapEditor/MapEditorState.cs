@@ -324,8 +324,8 @@ public sealed class MapEditorState : State
 
         if (leftDown && !_wasLeftDown)
         {
-            // Left mouse just pressed — start tool stroke.
-            if (!_isPanning && TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            // Only start a tool stroke if the click is on the viewport, not on UI panels.
+            if (!_isPanning && IsMouseOverViewport(screenPos) && TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
             {
                 _isToolActive = true;
                 _lastToolTilePos = tilePos;
@@ -362,6 +362,16 @@ public sealed class MapEditorState : State
     /// <summary>
     ///     Converts a screen position to a grid entity + tile position.
     ///     Returns false if no grid is found under the cursor.
+    /// <summary>
+    ///     Returns true if the mouse position is within the viewport control bounds.
+    /// </summary>
+    private bool IsMouseOverViewport(ScreenCoordinates screenPos)
+    {
+        var viewport = _screen.MainViewport;
+        var vpRect = viewport.GlobalPixelRect;
+        return vpRect.Contains((int) screenPos.Position.X, (int) screenPos.Position.Y);
+    }
+
     /// </summary>
     private bool TryResolveGridTile(ScreenCoordinates screenPos, out EntityUid gridUid, out Vector2i tilePos)
     {
