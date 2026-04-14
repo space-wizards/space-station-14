@@ -8,6 +8,7 @@ using Content.MapEditor.Commands;
 using Content.MapEditor.Systems;
 using Content.MapEditor.Tools;
 using Content.MapEditor.UI;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.State;
@@ -86,6 +87,10 @@ public sealed class MapEditorState : State
     private bool _wasGDown;
     private bool _wasQDown;
 
+    // Entity outline shader for selection highlight.
+    private ShaderInstance? _selectionOutlineShader;
+    private EntityUid? _outlinedEntity;
+
     public MapEditorState()
     {
         IoCManager.InjectDependencies(this);
@@ -149,6 +154,9 @@ public sealed class MapEditorState : State
         _editorOverlay = new EditorOverlay();
         IoCManager.Resolve<IOverlayManager>().AddOverlay(_editorOverlay);
 
+        // Prepare the selection outline shader (uses the game's existing outline shader).
+        _selectionOutlineShader = _prototypeManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+
         // Set initial toolbar state.
         _screen.SetActiveToolButton(_activeToolKey);
     }
@@ -167,6 +175,16 @@ public sealed class MapEditorState : State
         _screen.OnGridTabSelected -= OnGridTabSelected;
         _screen.OnAddGridPressed -= OnAddGridPressed;
         _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
+
+        // Remove outline from any selected entity.
+        if (_outlinedEntity != null
+            && _entityManager.EntityExists(_outlinedEntity.Value)
+            && _entityManager.TryGetComponent<SpriteComponent>(_outlinedEntity.Value, out var outlinedSprite))
+        {
+            outlinedSprite.PostShader = null;
+            outlinedSprite.RenderOrder = 0;
+        }
+        _outlinedEntity = null;
 
         IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_editorOverlay);
 
@@ -374,14 +392,32 @@ public sealed class MapEditorState : State
             _editorOverlay.PreviewBorderColor = new Color(fill.R, fill.G, fill.B, 0.5f);
         }
 
-        // Update entity selection highlight for the EntitySelectTool.
+        // Update entity selection outline shader (PostShader on the entity's SpriteComponent).
+        EntityUid? currentSelection = null;
         if (_activeTool is EntitySelectTool entitySelect)
+            currentSelection = entitySelect.SelectedEntity;
+
+        if (currentSelection != _outlinedEntity)
         {
-            _editorOverlay.SelectedEntityUid = entitySelect.SelectedEntity;
-        }
-        else
-        {
-            _editorOverlay.SelectedEntityUid = null;
+            // Remove outline from previously selected entity.
+            if (_outlinedEntity != null
+                && _entityManager.EntityExists(_outlinedEntity.Value)
+                && _entityManager.TryGetComponent<SpriteComponent>(_outlinedEntity.Value, out var oldSprite))
+            {
+                oldSprite.PostShader = null;
+                oldSprite.RenderOrder = 0;
+            }
+
+            // Apply outline to newly selected entity.
+            if (currentSelection != null
+                && _entityManager.EntityExists(currentSelection.Value)
+                && _entityManager.TryGetComponent<SpriteComponent>(currentSelection.Value, out var newSprite))
+            {
+                newSprite.PostShader = _selectionOutlineShader;
+                newSprite.RenderOrder = unchecked((uint)Environment.TickCount);
+            }
+
+            _outlinedEntity = currentSelection;
         }
 
         // Update the selection box for the SelectTool — both during drag and after.

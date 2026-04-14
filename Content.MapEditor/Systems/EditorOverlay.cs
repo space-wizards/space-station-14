@@ -130,27 +130,8 @@ public sealed class EditorOverlay : Overlay
             }
         }
 
-        // Draw entity selection highlight using sprite bounds.
-        if (SelectedEntityUid != null)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var uid = SelectedEntityUid.Value;
-            if (entMan.EntityExists(uid)
-                && entMan.TryGetComponent<TransformComponent>(uid, out var xform)
-                && entMan.TryGetComponent<SpriteComponent>(uid, out var sprite))
-            {
-                var spriteSystem = entMan.System<SpriteSystem>();
-                var spriteBounds = spriteSystem.GetLocalBounds((uid, sprite));
-                var entPos = xform.WorldPosition;
-
-                // Draw at the entity's world position (not grid-relative).
-                handle.SetTransform(Matrix3x2.Identity);
-                var worldBox = spriteBounds.Translated(entPos);
-                handle.DrawRect(worldBox, EntityHighlightFill);
-                handle.DrawRect(worldBox, EntityHighlightBorder, filled: false);
-                handle.SetTransform(GridWorldMatrix);
-            }
-        }
+        // Entity selection outline is handled via PostShader (set in MapEditorState),
+        // not drawn here.
 
         // Draw selection box on top of everything so it is always visible.
         if (SelectionBox != null)
