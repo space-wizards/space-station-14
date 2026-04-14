@@ -75,8 +75,12 @@ public sealed class MapEditorState : State
     private bool _wasRDown;
     private bool _wasLDown;
     private bool _wasCDown;
+    private bool _wasSDown;
+    private bool _wasXDown;
+    private bool _wasVDown;
     private bool _wasZDown;
     private bool _wasYDown;
+    private bool _wasDeleteDown;
 
     public MapEditorState()
     {
@@ -338,6 +342,8 @@ public sealed class MapEditorState : State
         {
             preview = _activeTool switch
             {
+                SelectTool sel when sel.DragStart != null && sel.DragEnd != null
+                    => ComputeRectanglePreview(sel.DragStart.Value, sel.DragEnd.Value),
                 RectangleTool rect when rect.DragStart != null && rect.DragEnd != null
                     => ComputeRectanglePreview(rect.DragStart.Value, rect.DragEnd.Value),
                 LineTool line when line.DragStart != null && line.DragEnd != null
@@ -356,6 +362,16 @@ public sealed class MapEditorState : State
             var fill = _editorOverlay.HighlightColor;
             _editorOverlay.PreviewFillColor = new Color(fill.R, fill.G, fill.B, 0.2f);
             _editorOverlay.PreviewBorderColor = new Color(fill.R, fill.G, fill.B, 0.5f);
+        }
+
+        // Update the persistent selection box for the SelectTool.
+        if (_activeTool is SelectTool selectTool && selectTool.Selection != null)
+        {
+            _editorOverlay.SelectionBox = selectTool.Selection;
+        }
+        else
+        {
+            _editorOverlay.SelectionBox = null;
         }
     }
 
@@ -442,6 +458,35 @@ public sealed class MapEditorState : State
             _commandStack.Redo();
         }
 
+        // --- SelectTool operations (Ctrl+C, Ctrl+X, Ctrl+V, Delete) ---
+        if (_activeTool is SelectTool selectTool)
+        {
+            var deleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
+            if (deleteDown && !_wasDeleteDown)
+                selectTool.DeleteSelection(_toolContext);
+
+            if (ctrl)
+            {
+                var cDown = _input.IsKeyDown(Keyboard.Key.C);
+                if (cDown && !_wasCDown)
+                    selectTool.CopySelection(_toolContext);
+
+                var xDown = _input.IsKeyDown(Keyboard.Key.X);
+                // Reuse _wasEDown isn't right — need dedicated tracking; but X has no prior tracker.
+                // We'll check edge via a simple approach: X maps to no prior tool shortcut, safe to use fresh.
+                if (xDown && !_wasXDown)
+                    selectTool.CutSelection(_toolContext);
+
+                var vDown = _input.IsKeyDown(Keyboard.Key.V);
+                if (vDown && !_wasVDown)
+                {
+                    var screenPos = _input.MouseScreenPosition;
+                    if (TryResolveGridTile(screenPos, out var pastePos))
+                        selectTool.PasteClipboard(_toolContext, pastePos);
+                }
+            }
+        }
+
         // --- Tool shortcuts (only without modifiers) ---
         if (!ctrl)
         {
@@ -472,6 +517,10 @@ public sealed class MapEditorState : State
             var cDown = _input.IsKeyDown(Keyboard.Key.C);
             if (cDown && !_wasCDown)
                 OnToolSelected("circle");
+
+            var sDown = _input.IsKeyDown(Keyboard.Key.S);
+            if (sDown && !_wasSDown)
+                OnToolSelected("select");
         }
 
         UpdatePreviousKeyState();
@@ -486,8 +535,12 @@ public sealed class MapEditorState : State
         _wasRDown = _input.IsKeyDown(Keyboard.Key.R);
         _wasLDown = _input.IsKeyDown(Keyboard.Key.L);
         _wasCDown = _input.IsKeyDown(Keyboard.Key.C);
+        _wasSDown = _input.IsKeyDown(Keyboard.Key.S);
+        _wasXDown = _input.IsKeyDown(Keyboard.Key.X);
+        _wasVDown = _input.IsKeyDown(Keyboard.Key.V);
         _wasZDown = _input.IsKeyDown(Keyboard.Key.Z);
         _wasYDown = _input.IsKeyDown(Keyboard.Key.Y);
+        _wasDeleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
     }
 
     #endregion
@@ -542,6 +595,10 @@ public sealed class MapEditorState : State
                 _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 1.0f, 0.7f);
                 break;
+            case "select":
+                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 1.0f, 0.15f);
+                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 1.0f, 0.8f);
+                break;
             default: // paint
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
@@ -560,6 +617,7 @@ public sealed class MapEditorState : State
             "rectangle" => new RectangleTool(),
             "line" => new LineTool(),
             "circle" => new CircleTool(),
+            "select" => new SelectTool(),
             _ => new PaintTool(),
         };
 

@@ -160,6 +160,7 @@ public sealed partial class MapEditorScreen : UIScreen
         AddToolButton("rectangle", "R");
         AddToolButton("line", "L");
         AddToolButton("circle", "C");
+        AddToolButton("select", "S");
 
         // Wire tile search filtering.
         TileSearchEdit.OnTextChanged += OnTileSearchChanged;

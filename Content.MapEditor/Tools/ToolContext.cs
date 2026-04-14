@@ -23,4 +23,9 @@ public sealed class ToolContext
     ///     The tile type to paint with. Set by the tile palette.
     /// </summary>
     public Tile SelectedTile { get; set; }
+
+    /// <summary>
+    ///     Clipboard data for copy/paste operations. Shared across tool instances.
+    /// </summary>
+    public ClipboardData? Clipboard { get; set; }
 }

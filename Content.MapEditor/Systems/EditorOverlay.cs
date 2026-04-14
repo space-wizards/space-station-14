@@ -51,12 +51,30 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public Color PreviewBorderColor { get; set; } = new(0.3f, 0.6f, 1.0f, 0.5f);
 
+    /// <summary>
+    ///     Persistent selection rectangle from the SelectTool. Rendered as a filled + bordered box.
+    ///     Uses Box2i where Left/Bottom is the min corner and Right/Top is max corner (exclusive).
+    /// </summary>
+    public Box2i? SelectionBox { get; set; }
+
+    private static readonly Color SelectionFillColor = new(1.0f, 1.0f, 1.0f, 0.1f);
+    private static readonly Color SelectionBorderColor = new(1.0f, 1.0f, 1.0f, 0.8f);
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
         handle.SetTransform(GridWorldMatrix);
 
-        // Draw shape preview tiles first (behind the hover highlight).
+        // Draw persistent selection box (behind everything else).
+        if (SelectionBox != null)
+        {
+            var sel = SelectionBox.Value;
+            var selBox = new Box2(sel.Left, sel.Bottom, sel.Right, sel.Top);
+            handle.DrawRect(selBox, SelectionFillColor);
+            handle.DrawRect(selBox, SelectionBorderColor, filled: false);
+        }
+
+        // Draw shape preview tiles (behind the hover highlight).
         if (PreviewTiles != null && PreviewTiles.Count > 0)
         {
             foreach (var tile in PreviewTiles)
