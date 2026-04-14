@@ -112,12 +112,13 @@ public sealed partial class MapEditorScreen : UIScreen
         SetAnchorPreset(ViewportContainer, LayoutPreset.Wide);
         SetAnchorPreset(MainViewport, LayoutPreset.Wide);
 
-        // Initialize the viewport size (normally done by ViewportUIController on gameplay load).
-        // 21x15 tiles at 32 pixels/meter is the standard SS14 viewport.
-        var vpSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
-        MainViewport.Viewport.ViewportSize = vpSize;
+        // Set initial viewport size and update it when the control resizes
+        // so the render target always matches the available pixel space (no black bars).
         MainViewport.Viewport.HorizontalExpand = true;
         MainViewport.Viewport.VerticalExpand = true;
+        MainViewport.OnResized += UpdateViewportSize;
+        // Set a reasonable initial size (will be overridden on first layout).
+        MainViewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
 
         // Add a transparent overlay control to intercept scroll-wheel events over the viewport.
         var scrollInterceptor = new ViewportScrollInterceptor(this);
@@ -555,6 +556,19 @@ public sealed partial class MapEditorScreen : UIScreen
     }
 
     #endregion
+
+    /// <summary>
+    ///     Updates the viewport render target size to match the control's pixel size.
+    ///     This prevents black bars / letterboxing when the window is resized.
+    /// </summary>
+    private void UpdateViewportSize()
+    {
+        var pixelSize = MainViewport.PixelSize;
+        if (pixelSize.X > 0 && pixelSize.Y > 0)
+        {
+            MainViewport.Viewport.ViewportSize = pixelSize;
+        }
+    }
 
     /// <summary>
     ///     Transparent control placed over the viewport to intercept mouse wheel events.
