@@ -69,6 +69,18 @@ public sealed partial class MapEditorScreen : UIScreen
     /// </summary>
     public event Action<string>? OnEntityPrototypeSelected;
 
+    /// <summary>Raised when the Rotate CW button is clicked in the entity info panel.</summary>
+    public event Action? OnEntityRotateCW;
+
+    /// <summary>Raised when the Rotate CCW button is clicked in the entity info panel.</summary>
+    public event Action? OnEntityRotateCCW;
+
+    /// <summary>Raised when the Delete button is clicked in the entity info panel.</summary>
+    public event Action? OnEntityDelete;
+
+    /// <summary>Raised when the Deselect button is clicked in the entity info panel.</summary>
+    public event Action? OnEntityDeselect;
+
     /// <summary>
     ///     Raised when a grid tab is clicked.
     ///     The EntityUid parameter is the grid entity to switch to.
@@ -91,6 +103,12 @@ public sealed partial class MapEditorScreen : UIScreen
 
     // Maximum entity results shown in the list for performance.
     private const int MaxEntityResults = 500;
+
+    // Entity info panel labels and buttons (built in code-behind).
+    private Label _entityInfoProtoLabel = default!;
+    private Label _entityInfoNameLabel = default!;
+    private Label _entityInfoPosLabel = default!;
+    private Label _entityInfoRotLabel = default!;
 
     // Grid tab buttons keyed by grid EntityUid.
     private readonly Dictionary<EntityUid, Button> _gridTabButtons = new();
@@ -170,6 +188,9 @@ public sealed partial class MapEditorScreen : UIScreen
         menuBar.Menus.Add(ViewMenu);
 
         MenuBarContainer.AddChild(menuBar);
+
+        // Build entity info panel controls.
+        BuildEntityInfoPanel();
 
         // Build toolbar buttons with descriptive labels and keyboard shortcut tooltips.
         AddToolButton("paint", "Paint", "Paint tiles (B)");
@@ -266,6 +287,86 @@ public sealed partial class MapEditorScreen : UIScreen
         {
             btn.Pressed = uid == activeUid;
         }
+    }
+
+    #endregion
+
+    #region Entity Info Panel
+
+    private void BuildEntityInfoPanel()
+    {
+        var content = EntityInfoContent;
+
+        var header = new Label
+        {
+            Text = "Entity Info",
+            FontColorOverride = new Color(0.6f, 1.0f, 0.6f, 1.0f),
+            Margin = new Thickness(0, 0, 0, 4),
+        };
+        content.AddChild(header);
+
+        _entityInfoProtoLabel = new Label { Text = "ID: —" };
+        content.AddChild(_entityInfoProtoLabel);
+
+        _entityInfoNameLabel = new Label { Text = "Name: —" };
+        content.AddChild(_entityInfoNameLabel);
+
+        _entityInfoPosLabel = new Label { Text = "Pos: —" };
+        content.AddChild(_entityInfoPosLabel);
+
+        _entityInfoRotLabel = new Label { Text = "Rot: —" };
+        content.AddChild(_entityInfoRotLabel);
+
+        var buttonRow = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 4, 0, 0),
+        };
+
+        var rotCCW = new Button { Text = "↶ CCW", MinWidth = 50, MinHeight = 24, ToolTip = "Rotate counter-clockwise (Shift+R)" };
+        var rotCW = new Button { Text = "↷ CW", MinWidth = 50, MinHeight = 24, ToolTip = "Rotate clockwise (R)" };
+        var delete = new Button { Text = "Delete", MinWidth = 50, MinHeight = 24, ToolTip = "Delete entity (Del)" };
+        var deselect = new Button { Text = "Deselect", MinWidth = 60, MinHeight = 24, ToolTip = "Clear selection" };
+
+        rotCCW.OnPressed += _ => OnEntityRotateCCW?.Invoke();
+        rotCW.OnPressed += _ => OnEntityRotateCW?.Invoke();
+        delete.OnPressed += _ => OnEntityDelete?.Invoke();
+        deselect.OnPressed += _ => OnEntityDeselect?.Invoke();
+
+        buttonRow.AddChild(rotCCW);
+        buttonRow.AddChild(rotCW);
+        buttonRow.AddChild(delete);
+        buttonRow.AddChild(deselect);
+        content.AddChild(buttonRow);
+    }
+
+    /// <summary>
+    ///     Updates the entity info panel with the selected entity's data.
+    ///     Pass null to hide the panel.
+    /// </summary>
+    public void UpdateEntityInfoPanel(string? protoId, string? displayName, Vector2? position, float? rotationDeg)
+    {
+        if (protoId == null)
+        {
+            EntityInfoPanel.Visible = false;
+            return;
+        }
+
+        EntityInfoPanel.Visible = true;
+        _entityInfoProtoLabel.Text = $"ID: {protoId}";
+        _entityInfoNameLabel.Text = $"Name: {displayName ?? protoId}";
+        _entityInfoPosLabel.Text = position != null
+            ? $"Pos: ({position.Value.X:F1}, {position.Value.Y:F1})"
+            : "Pos: —";
+        _entityInfoRotLabel.Text = rotationDeg != null
+            ? $"Rot: {rotationDeg.Value:F0}°"
+            : "Rot: 0°";
+    }
+
+    /// <summary>Hides the entity info panel.</summary>
+    public void HideEntityInfoPanel()
+    {
+        EntityInfoPanel.Visible = false;
     }
 
     #endregion

@@ -200,6 +200,16 @@ public sealed class EntitySelectTool : IEditorTool
     }
 
     /// <summary>
+    ///     Clears the current selection without deleting the entity.
+    /// </summary>
+    public void Deselect()
+    {
+        SelectedEntity = null;
+        SelectedTilePos = null;
+        _entitiesAtTile = new List<EntityUid>();
+    }
+
+    /// <summary>
     ///     Cancels a pending pick without selecting anything.
     /// </summary>
     public void CancelPick()

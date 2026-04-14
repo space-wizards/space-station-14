@@ -144,6 +144,12 @@ public sealed class MapEditorState : State
         // Wire entity palette events.
         _screen.OnEntityPrototypeSelected += OnEntityPrototypeSelected;
 
+        // Wire entity info panel button events.
+        _screen.OnEntityRotateCW += OnEntityInfoRotateCW;
+        _screen.OnEntityRotateCCW += OnEntityInfoRotateCCW;
+        _screen.OnEntityDelete += OnEntityInfoDelete;
+        _screen.OnEntityDeselect += OnEntityInfoDeselect;
+
         // Populate the tile palette.
         _screen.PopulateTilePalette(_tileDefs);
 
@@ -179,6 +185,10 @@ public sealed class MapEditorState : State
         _screen.OnGridTabSelected -= OnGridTabSelected;
         _screen.OnAddGridPressed -= OnAddGridPressed;
         _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
+        _screen.OnEntityRotateCW -= OnEntityInfoRotateCW;
+        _screen.OnEntityRotateCCW -= OnEntityInfoRotateCCW;
+        _screen.OnEntityDelete -= OnEntityInfoDelete;
+        _screen.OnEntityDeselect -= OnEntityInfoDeselect;
 
         // Remove outline from any selected entity.
         if (_outlinedEntity != null
@@ -1090,7 +1100,41 @@ public sealed class MapEditorState : State
                 ? $" [{entitySel.CyclePosition}/{entitySel.CycleCount} — scroll to cycle]"
                 : "";
             _screen.SetStatusInfo($"Entity: {protoId} @ ({entPos.X:F1}, {entPos.Y:F1}){cycleInfo}");
+
+            // Update the entity info panel.
+            string? displayName = null;
+            try { displayName = meta.EntityName; } catch { /* localization may fail */ }
+            var rotDeg = (float)(xform.LocalRotation.Degrees);
+            _screen.UpdateEntityInfoPanel(protoId, displayName, entPos, rotDeg);
         }
+        else
+        {
+            _screen.HideEntityInfoPanel();
+        }
+    }
+
+    private void OnEntityInfoRotateCW()
+    {
+        if (_activeTool is EntitySelectTool entitySelect)
+            entitySelect.RotateSelectedCW(_toolContext);
+    }
+
+    private void OnEntityInfoRotateCCW()
+    {
+        if (_activeTool is EntitySelectTool entitySelect)
+            entitySelect.RotateSelectedCCW(_toolContext);
+    }
+
+    private void OnEntityInfoDelete()
+    {
+        if (_activeTool is EntitySelectTool entitySelect)
+            entitySelect.DeleteSelected(_toolContext);
+    }
+
+    private void OnEntityInfoDeselect()
+    {
+        if (_activeTool is EntitySelectTool entitySelect)
+            entitySelect.Deselect();
     }
 
     #endregion
