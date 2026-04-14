@@ -232,6 +232,7 @@ public sealed partial class GameTicker
         }
     }
 
+    /// <inhereitdoc cref="GetMinimumPlayerCount(GamePresetPrototype)"/>
     [PublicAPI]
     public int GetMinimumPlayerCount(ProtoId<GamePresetPrototype> proto)
     {
@@ -242,10 +243,11 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
-    /// Gets the minimum number of players required for a
+    /// Gets the minimum number of players required for a game preset to start.
+    /// Checks both the preset itself, and all rules to find the minimum.
     /// </summary>
-    /// <param name="proto"></param>
-    /// <returns></returns>
+    /// <param name="proto">Game preset prototype we're checking.</param>
+    /// <returns>Minimum number of players required for the rule to start.</returns>
     [PublicAPI]
     public int GetMinimumPlayerCount(GamePresetPrototype proto)
     {
