@@ -255,10 +255,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         var jitter = new JitterParameters // Small but frequent up and down motion
         {
-            Frequency = 15f,
-            MaxRadius = 0.05f,
+            Frequency = 1f,
+            MaxRadius = 0.08f,
             MinRadius = 0.04f,
-            MatrixX = new Vector2(0.05f, 0f),
+            MatrixX = new Vector2(0.4f, 0f),
         };
         _jitter.CreateJitter(ent, jitter);
 

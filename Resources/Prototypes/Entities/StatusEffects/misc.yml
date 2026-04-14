@@ -108,8 +108,8 @@
   - type: JitteringStatusEffect
     jitter:
       frequency: 3
-      maxRadius: 0.15
-      minRadius: 0.05
+      maxRadius: 0.08
+      minRadius: 0.02
 
 - type: entity
   parent: StatusEffectJitter
@@ -118,9 +118,10 @@
   components:
   - type: JitteringStatusEffect
     jitter:
-      frequency: 12
-      maxRadius: 0.05
-      minRadius: 0.05
+      frequency: 15
+      maxRadius: 0.03
+      minRadius: 0.03
+
 
 - type: entity
   parent: StatusEffectJitter
@@ -129,7 +130,7 @@
   components:
   - type: JitteringStatusEffect
     jitter:
-      frequency: 1
-      maxRadius: 0.2
-      minRadius: 0.15
-      matrixY: 0, 0.3
+      frequency: 0.7
+      maxRadius: 0.3
+      minRadius: 0.1
+      matrixY: 0, 0.1
