@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -20,6 +21,9 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         SubscribeLocalEvent<BatteryDischargerComponent, ComponentRemove>(OnRemove<BatteryDischargerComponent, IPowerNet>);
         SubscribeLocalEvent<PowerConsumerComponent, ComponentRemove>(OnRemove<PowerConsumerComponent, IBasePowerNet>);
         SubscribeLocalEvent<PowerSupplierComponent, ComponentRemove>(OnRemove<PowerSupplierComponent, IBasePowerNet>);
+
+        SubscribeLocalEvent<BatteryChargerComponent, VoltageChangedEvent>(OnVoltageChanged);
+        SubscribeLocalEvent<BatteryDischargerComponent, VoltageChangedEvent>(OnVoltageChanged);
     }
 
     private void OnRemove<TComp, TNet>(EntityUid uid, TComp component, ComponentRemove args)
@@ -60,5 +64,12 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         {
             component.TryFindAndSetNet();
         }
+    }
+
+    private void OnVoltageChanged<TComp>(Entity<TComp> entity, ref VoltageChangedEvent args)
+        where TComp : BasePowerNetComponent
+    {
+        var voltage = args.NewVoltage.Voltage;
+        entity.Comp.Voltage = voltage;
     }
 }

@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Nodes;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.NodeContainer.EntitySystems
@@ -29,6 +31,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ReAnchorEvent>(OnReAnchor);
             SubscribeLocalEvent<NodeContainerComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<NodeContainerComponent, VoltageChangedEvent>(OnVoltageChanged);
 
             _query = GetEntityQuery<NodeContainerComponent>();
         }
@@ -222,6 +225,16 @@ namespace Content.Server.NodeContainer.EntitySystems
                             Loc.GetString("node-container-component-on-examine-details-apc"));
                         break;
                 }
+            }
+        }
+
+        private void OnVoltageChanged(Entity<NodeContainerComponent> entity, ref VoltageChangedEvent args)
+        {
+            foreach (var node in entity.Comp.Nodes)
+            {
+                var cableNode = (CableDeviceNode)node.Value;
+                cableNode.Enabled = args.NewVoltage.Node == node.Key;
+                _nodeGroupSystem.QueueReflood(cableNode);
             }
         }
     }
