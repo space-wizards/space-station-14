@@ -10,22 +10,22 @@ using Content.Shared.Verbs;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerNetworkBatteryChargerVoltageTogglerSystem : SharedPowerNetworkBatteryChargerVoltageTogglerSystem
+public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 {
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<VoltageTogglerComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref MapInitEvent args)
+    private void OnMapInit(Entity<VoltageTogglerComponent> entity, ref MapInitEvent args)
     {
         ChangeVoltage(entity, entity.Comp.Settings[entity.Comp.SelectedVoltageLevel]);
     }
 
-    protected override void ChangeVoltage(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, VoltageSetting setting)
+    protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting)
     {
         if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp) ||
             !TryComp<PowerNetworkBatteryComponent>(entity, out var powerNetworkBatteryComp) ||

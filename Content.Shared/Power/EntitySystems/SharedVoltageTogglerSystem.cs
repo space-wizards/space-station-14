@@ -4,16 +4,16 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : EntitySystem
+public abstract class SharedVoltageTogglerSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<VoltageTogglerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<VoltageTogglerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
-    private void OnExamined(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref ExaminedEvent args)
+    private void OnExamined(Entity<VoltageTogglerComponent> entity, ref ExaminedEvent args)
     {
         var voltage = entity.Comp.Settings[entity.Comp.SelectedVoltageLevel].Voltage;
         var voltageStringSimple = voltage switch
@@ -27,7 +27,7 @@ public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : Ent
         args.PushMarkup(Loc.GetString("voltage-toggler-examine", ("voltage", voltageString)));
     }
 
-    private void OnGetVerb(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<VoltageTogglerComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -57,5 +57,5 @@ public abstract class SharedPowerNetworkBatteryChargerVoltageTogglerSystem : Ent
         }
     }
 
-    protected virtual void ChangeVoltage(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, VoltageSetting setting) {}
+    protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, VoltageSetting setting) {}
 }
