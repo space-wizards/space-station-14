@@ -22,6 +22,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Content.Shared.SubFloor;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -144,6 +145,10 @@ public sealed class MapEditorState : State
         // Wire entity palette events.
         _screen.OnEntityPrototypeSelected += OnEntityPrototypeSelected;
 
+        // Wire view toggle events.
+        _screen.ViewShowEntitiesButton.OnPressed += OnToggleShowEntities;
+        _screen.ViewShowSubfloorButton.OnPressed += OnToggleShowSubfloor;
+
         // Wire entity info panel button events.
         _screen.OnEntityRotateCW += OnEntityInfoRotateCW;
         _screen.OnEntityRotateCCW += OnEntityInfoRotateCCW;
@@ -189,6 +194,8 @@ public sealed class MapEditorState : State
         _screen.OnEntityRotateCCW -= OnEntityInfoRotateCCW;
         _screen.OnEntityDelete -= OnEntityInfoDelete;
         _screen.OnEntityDeselect -= OnEntityInfoDeselect;
+        _screen.ViewShowEntitiesButton.OnPressed -= OnToggleShowEntities;
+        _screen.ViewShowSubfloorButton.OnPressed -= OnToggleShowSubfloor;
 
         // Remove outline from any selected entity.
         if (_outlinedEntity != null
@@ -1175,6 +1182,39 @@ public sealed class MapEditorState : State
     {
         if (_activeTool is EntitySelectTool entitySelect)
             entitySelect.Deselect();
+    }
+
+    #endregion
+
+    #region View Toggles
+
+    private void OnToggleShowEntities()
+    {
+        var show = _screen.ShowEntities;
+        var query = _entityManager.AllEntityQueryEnumerator<SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var sprite, out var xform))
+        {
+            if (xform.MapID != _loadedMapId)
+                continue;
+            // Skip grid and map entities — we only toggle placed entities.
+            if (_entityManager.HasComponent<MapGridComponent>(uid) || _entityManager.HasComponent<MapComponent>(uid))
+                continue;
+
+            sprite.Visible = show;
+        }
+    }
+
+    private void OnToggleShowSubfloor()
+    {
+        var show = _screen.ShowSubfloor;
+        var query = _entityManager.AllEntityQueryEnumerator<SubFloorHideComponent, SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out var sprite, out var xform))
+        {
+            if (xform.MapID != _loadedMapId)
+                continue;
+
+            sprite.Visible = show;
+        }
     }
 
     #endregion
