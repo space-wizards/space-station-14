@@ -181,7 +181,7 @@ public sealed partial class MapEditorScreen : UIScreen
 
         ViewResetZoomButton = new MenuBar.MenuButton { Text = "Reset Zoom" };
         ViewShowEntitiesButton = new MenuBar.MenuButton { Text = "\u2713 Show Entities" };
-        ViewShowSubfloorButton = new MenuBar.MenuButton { Text = "\u2713 Show Subfloor" };
+        ViewShowSubfloorButton = new MenuBar.MenuButton { Text = "  Show Subfloor" };
         ViewShowEntitiesButton.OnPressed += OnToggleShowEntities;
         ViewShowSubfloorButton.OnPressed += OnToggleShowSubfloor;
         ViewMenu = new MenuBar.Menu
@@ -967,7 +967,7 @@ public sealed partial class MapEditorScreen : UIScreen
 
     // Toggle state for view menu checkboxes (non-functional placeholders for now).
     private bool _showEntities = true;
-    private bool _showSubfloor = true;
+    private bool _showSubfloor = false;
 
     /// <summary>Whether "Show Entities" is currently checked.</summary>
     public bool ShowEntities => _showEntities;
