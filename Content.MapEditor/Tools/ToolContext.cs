@@ -15,6 +15,11 @@ public sealed class ToolContext
     public required CommandStack CommandStack { get; init; }
 
     /// <summary>
+    ///     The grid currently being edited. Set by the grid tab bar.
+    /// </summary>
+    public EntityUid ActiveGridUid { get; set; }
+
+    /// <summary>
     ///     The tile type to paint with. Set by the tile palette.
     /// </summary>
     public Tile SelectedTile { get; set; }

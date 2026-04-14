@@ -10,6 +10,14 @@
             <BoxContainer Name="MenuBarContainer" Orientation="Horizontal"
                           HorizontalExpand="True" MinHeight="24" />
 
+            <!-- Grid tab bar -->
+            <PanelContainer Name="GridTabBarPanel" HorizontalExpand="True" MinHeight="28">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1E1E1EDD" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Name="GridTabBar" Orientation="Horizontal" Margin="4 2" />
+            </PanelContainer>
+
             <!-- Middle row: Toolbar | Viewport | Palette -->
             <BoxContainer Name="MiddleRow" Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
 

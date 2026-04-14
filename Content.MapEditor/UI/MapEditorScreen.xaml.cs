@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -56,11 +57,31 @@ public sealed partial class MapEditorScreen : UIScreen
     /// </summary>
     public event Action<int>? OnTileSelected;
 
+    /// <summary>
+    ///     Raised when a grid tab is clicked.
+    ///     The EntityUid parameter is the grid entity to switch to.
+    /// </summary>
+    public event Action<EntityUid>? OnGridTabSelected;
+
+    /// <summary>
+    ///     Raised when the "+" button is clicked to create a new grid.
+    /// </summary>
+    public event Action? OnAddGridPressed;
+
     // Toolbar buttons keyed by tool name.
     private readonly Dictionary<string, Button> _toolButtons = new();
 
     // Tile definitions cached for filtering.
     private readonly List<(string Name, int TileId)> _allTileDefs = new();
+
+    // Grid tab buttons keyed by grid EntityUid.
+    private readonly Dictionary<EntityUid, Button> _gridTabButtons = new();
+    private Button? _addGridButton;
+
+    /// <summary>
+    ///     Number of grid tabs currently shown.
+    /// </summary>
+    public int GridTabCount => _gridTabButtons.Count;
 
     public MapEditorScreen()
     {
@@ -139,7 +160,81 @@ public sealed partial class MapEditorScreen : UIScreen
         // Wire tile search filtering.
         TileSearchEdit.OnTextChanged += OnTileSearchChanged;
         TileList.OnItemSelected += OnTileItemSelected;
+
+        // Add the "+" button to the grid tab bar (always present).
+        _addGridButton = new Button
+        {
+            Text = "+",
+            MinWidth = 28,
+            MinHeight = 24,
+            ToolTip = "Add new grid",
+        };
+        _addGridButton.OnPressed += _ => OnAddGridPressed?.Invoke();
+        GridTabBar.AddChild(_addGridButton);
     }
+
+    #region Grid Tabs
+
+    /// <summary>
+    ///     Replaces all grid tabs with the given list.
+    /// </summary>
+    public void PopulateGridTabs(List<(EntityUid Uid, string Label)> grids)
+    {
+        // Remove existing tab buttons (keep the "+" button).
+        foreach (var (_, btn) in _gridTabButtons)
+        {
+            GridTabBar.RemoveChild(btn);
+        }
+        _gridTabButtons.Clear();
+
+        // Add tab buttons before the "+" button.
+        foreach (var (uid, label) in grids)
+        {
+            AddGridTabButton(uid, label);
+        }
+    }
+
+    /// <summary>
+    ///     Adds a single grid tab to the bar.
+    /// </summary>
+    public void AddGridTab(EntityUid uid, string label)
+    {
+        AddGridTabButton(uid, label);
+    }
+
+    private void AddGridTabButton(EntityUid uid, string label)
+    {
+        var button = new Button
+        {
+            Text = label,
+            MinWidth = 60,
+            MinHeight = 24,
+            ToggleMode = true,
+            ToolTip = $"Switch to {label} ({uid})",
+        };
+
+        var capturedUid = uid;
+        button.OnPressed += _ => OnGridTabSelected?.Invoke(capturedUid);
+
+        _gridTabButtons[uid] = button;
+
+        // Insert before the "+" button by adding then repositioning "+" to the end.
+        GridTabBar.AddChild(button);
+        _addGridButton!.SetPositionInParent(GridTabBar.ChildCount - 1);
+    }
+
+    /// <summary>
+    ///     Highlights the active grid tab and un-presses others.
+    /// </summary>
+    public void SetActiveGridTab(EntityUid activeUid)
+    {
+        foreach (var (uid, btn) in _gridTabButtons)
+        {
+            btn.Pressed = uid == activeUid;
+        }
+    }
+
+    #endregion
 
     #region Toolbar
 

@@ -51,6 +51,9 @@ public sealed class MapEditorState : State
     private string? _loadedFileName;
     private MapId _loadedMapId;
 
+    // Active grid — all tool operations target this grid.
+    private EntityUid _activeGridUid;
+
     // Tool system
     private readonly CommandStack _commandStack = new();
     private ToolContext _toolContext = default!;
@@ -59,7 +62,6 @@ public sealed class MapEditorState : State
     private bool _isToolActive; // true while left mouse is held and tool is in a stroke
     private bool _wasLeftDown;
     private Vector2i _lastToolTilePos;
-    private EntityUid _lastToolGridUid;
 
     // Keyboard shortcut edge detection (tracks previous frame state to detect press edges)
     private bool _wasBDown;
@@ -114,6 +116,10 @@ public sealed class MapEditorState : State
         _screen.OnToolSelected += OnToolSelected;
         _screen.OnTileSelected += OnTileSelected;
 
+        // Wire grid tab events.
+        _screen.OnGridTabSelected += OnGridTabSelected;
+        _screen.OnAddGridPressed += OnAddGridPressed;
+
         // Populate the tile palette.
         _screen.PopulateTilePalette(_tileDefs);
 
@@ -132,10 +138,83 @@ public sealed class MapEditorState : State
         _screen.OnViewportScroll -= OnViewportScroll;
         _screen.OnToolSelected -= OnToolSelected;
         _screen.OnTileSelected -= OnTileSelected;
+        _screen.OnGridTabSelected -= OnGridTabSelected;
+        _screen.OnAddGridPressed -= OnAddGridPressed;
 
         _uiManager.UnloadScreen();
         _sawmill.Info("MapEditorState shutdown");
     }
+
+    #region Active Grid
+
+    /// <summary>
+    ///     Sets the active grid and updates the tool context.
+    /// </summary>
+    private void SetActiveGrid(EntityUid gridUid)
+    {
+        _activeGridUid = gridUid;
+        _toolContext.ActiveGridUid = gridUid;
+        _sawmill.Debug($"Active grid set to {gridUid}");
+    }
+
+    /// <summary>
+    ///     Enumerates all grids on the given map and populates the grid tab bar.
+    ///     Sets the active grid to the first one found.
+    /// </summary>
+    private void PopulateGridTabs(MapId mapId)
+    {
+        var grids = new List<(EntityUid Uid, string Label)>();
+        var query = _entityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+        var index = 0;
+
+        while (query.MoveNext(out var uid, out _, out var xform))
+        {
+            if (xform.MapID != mapId)
+                continue;
+
+            grids.Add((uid, $"Grid {index}"));
+            index++;
+        }
+
+        _screen.PopulateGridTabs(grids);
+
+        if (grids.Count > 0)
+        {
+            SetActiveGrid(grids[0].Uid);
+            _screen.SetActiveGridTab(grids[0].Uid);
+        }
+        else
+        {
+            SetActiveGrid(EntityUid.Invalid);
+        }
+    }
+
+    private void OnGridTabSelected(EntityUid gridUid)
+    {
+        SetActiveGrid(gridUid);
+        _screen.SetActiveGridTab(gridUid);
+    }
+
+    private void OnAddGridPressed()
+    {
+        if (_loadedMapId == default)
+            return;
+
+        var newGrid = _mapManager.CreateGridEntity(_loadedMapId);
+        var uid = newGrid.Owner;
+
+        // Count existing tabs for label.
+        var tabCount = _screen.GridTabCount;
+        _screen.AddGridTab(uid, $"Grid {tabCount}");
+
+        SetActiveGrid(uid);
+        _screen.SetActiveGridTab(uid);
+
+        _sawmill.Info($"Created new grid {uid} on map {_loadedMapId}");
+        _screen.SetStatusInfo($"Created new grid");
+    }
+
+    #endregion
 
     #region Camera
 
@@ -314,7 +393,7 @@ public sealed class MapEditorState : State
         }
     }
 
-/// <summary>
+    /// <summary>
     ///     Polls left mouse button each frame to dispatch tool start/drag/end.
     /// </summary>
     private void UpdateToolInput()
@@ -325,12 +404,11 @@ public sealed class MapEditorState : State
         if (leftDown && !_wasLeftDown)
         {
             // Only start a tool stroke if the click is on the viewport, not on UI panels.
-            if (!_isPanning && IsMouseOverViewport(screenPos) && TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            if (!_isPanning && IsMouseOverViewport(screenPos) && TryResolveGridTile(screenPos, out var tilePos))
             {
                 _isToolActive = true;
                 _lastToolTilePos = tilePos;
-                _lastToolGridUid = gridUid;
-                _activeTool.OnMouseDown(_toolContext, tilePos, gridUid);
+                _activeTool.OnMouseDown(_toolContext, tilePos);
 
                 if (_activeToolKey == "eyedropper")
                     _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
@@ -339,13 +417,12 @@ public sealed class MapEditorState : State
         else if (leftDown && _isToolActive)
         {
             // Left mouse held — drag.
-            if (TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            if (TryResolveGridTile(screenPos, out var tilePos))
             {
-                if (tilePos != _lastToolTilePos || gridUid != _lastToolGridUid)
+                if (tilePos != _lastToolTilePos)
                 {
                     _lastToolTilePos = tilePos;
-                    _lastToolGridUid = gridUid;
-                    _activeTool.OnMouseDrag(_toolContext, tilePos, gridUid);
+                    _activeTool.OnMouseDrag(_toolContext, tilePos);
                 }
             }
         }
@@ -360,9 +437,6 @@ public sealed class MapEditorState : State
     }
 
     /// <summary>
-    ///     Converts a screen position to a grid entity + tile position.
-    ///     Returns false if no grid is found under the cursor.
-    /// <summary>
     ///     Returns true if the mouse position is within the viewport control bounds.
     /// </summary>
     private bool IsMouseOverViewport(ScreenCoordinates screenPos)
@@ -372,73 +446,24 @@ public sealed class MapEditorState : State
         return vpRect.Contains((int) screenPos.Position.X, (int) screenPos.Position.Y);
     }
 
+    /// <summary>
+    ///     Converts a screen position to tile coordinates on the active grid.
+    ///     Returns false if no active grid is set or the position is in nullspace.
     /// </summary>
-    private bool TryResolveGridTile(ScreenCoordinates screenPos, out EntityUid gridUid, out Vector2i tilePos)
+    private bool TryResolveGridTile(ScreenCoordinates screenPos, out Vector2i tilePos)
     {
-        gridUid = default;
         tilePos = default;
 
-        // Use the Vector2 overload which goes through MainViewport directly,
-        // not MouseGetControl (which would hit our scroll interceptor overlay).
+        if (_activeGridUid == EntityUid.Invalid)
+            return false;
+
         var mapCoords = _eyeManager.PixelToMap(screenPos.Position);
         if (mapCoords.MapId == MapId.Nullspace)
             return false;
 
+        var gridComp = _entityManager.GetComponent<MapGridComponent>(_activeGridUid);
         var mapSystem = _toolContext.MapSystem;
-
-        // Find grids at the cursor position (point query via tiny AABB).
-        var worldPos = mapCoords.Position;
-        var pointBox = new Box2(worldPos, worldPos);
-        var grids = new List<Entity<MapGridComponent>>();
-        _mapManager.FindGridsIntersecting(mapCoords.MapId, pointBox, ref grids);
-
-        if (grids.Count > 0)
-        {
-            // Grid found at cursor — use it.
-            var grid = grids[0];
-            gridUid = grid.Owner;
-            tilePos = mapSystem.CoordinatesToTile(gridUid, grid.Comp, mapCoords);
-            return true;
-        }
-
-        // No grid at cursor — fall back to the active grid (or first grid on the map).
-        // This allows placing tiles on erased areas and building into empty space.
-        if (TryGetActiveGrid(mapCoords.MapId, out gridUid))
-        {
-            var gridComp = _entityManager.GetComponent<MapGridComponent>(gridUid);
-            tilePos = mapSystem.CoordinatesToTile(gridUid, gridComp, mapCoords);
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    ///     Gets the active grid for editing. Falls back to the first grid on the map.
-    ///     If no grid exists, creates one.
-    /// </summary>
-    private bool TryGetActiveGrid(MapId mapId, out EntityUid gridUid)
-    {
-        gridUid = default;
-
-        // Find any grid on this map.
-        var query = _entityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var xform))
-        {
-            if (xform.MapID != mapId)
-                continue;
-
-            gridUid = uid;
-            return true;
-        }
-
-        // No grid exists — create one for new map editing.
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-        if (mapUid == EntityUid.Invalid)
-            return false;
-
-        var newGrid = _mapManager.CreateGridEntity(mapId);
-        gridUid = newGrid.Owner;
+        tilePos = mapSystem.CoordinatesToTile(_activeGridUid, gridComp, mapCoords);
         return true;
     }
 
@@ -505,6 +530,9 @@ public sealed class MapEditorState : State
 
             // Move the eye to the loaded map and center on the first grid.
             CenterOnMap(map.Value, grids);
+
+            // Populate grid tabs and set active grid to the first one.
+            PopulateGridTabs(_loadedMapId);
 
             _sawmill.Info($"Map loaded: {grids.Count} grids on map {_loadedMapId}");
         }
