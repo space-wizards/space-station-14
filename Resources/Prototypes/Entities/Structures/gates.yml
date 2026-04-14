@@ -241,7 +241,7 @@
     settings:
     - voltage: High
       node: hv
-      name: power-voltage-low-high
+      name: power-voltage-high
     - voltage: Medium
       node: mv
       name: power-voltage-medium
