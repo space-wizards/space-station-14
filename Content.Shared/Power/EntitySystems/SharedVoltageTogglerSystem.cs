@@ -43,6 +43,15 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
                     ChangeVoltage(entity, currIndex, user);
                 }
             };
+
+            var ev = new ToggleVoltageCheckEvent();
+            RaiseLocalEvent(entity, ref ev);
+            if (ev.DisableMessage != null)
+            {
+                verb.Message = ev.DisableMessage;
+                verb.Disabled = true;
+            }
+
             args.Verbs.Add(verb);
             index++;
         }
@@ -61,5 +70,25 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
         return Loc.GetString("power-voltage", ("voltage", voltageNoColor));
     }
 
+    /// <summary>
+    /// This is used by the GeneretorWindow.xaml.cs
+    /// </summary>
+    public Voltage GetVoltage(Entity<VoltageTogglerComponent> entity)
+    {
+        return entity.Comp.Settings[entity.Comp.SelectedVoltageLevel].Voltage;
+    }
+
+    /// <summary>
+    /// This is used by the GeneretorWindow.xaml.cs
+    /// </summary>
+    public Voltage GetNextVoltage(Entity<VoltageTogglerComponent> entity)
+    {
+        var nextVoltageLevel = (entity.Comp.SelectedVoltageLevel + 1) % entity.Comp.Settings.Length;
+        return entity.Comp.Settings[nextVoltageLevel].Voltage;
+    }
+
     protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user) {}
 }
+
+[ByRefEvent]
+public record struct ToggleVoltageCheckEvent(string? DisableMessage = null);
