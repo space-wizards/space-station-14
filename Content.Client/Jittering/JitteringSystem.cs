@@ -17,14 +17,11 @@ namespace Content.Client.Jittering
         [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
         [Dependency] private readonly EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
+        [Dependency] private readonly EntityQuery<JitteringComponent> _jitterQuery = default!;
         [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
 
         private readonly string _jitterAnimationKey = "jittering";
         private readonly string _jitterReturnAnimationKey = "jitteringReturn";
-
-        // The least of all evils when dealing with resetting the sprite after we're done jittering
-        // Ideally animations use deltas instead of setters so we don't need to worry about resetting it
-        private static readonly Vector2 SpriteOrigin = Vector2.Zero;
 
         public override void Initialize()
         {
@@ -61,11 +58,14 @@ namespace Content.Client.Jittering
 
             // If we have no jitter status, end the jitter animation and take us home
             if (!_animationQuery.TryComp(ent, out var player)
-                || !_spriteQuery.TryComp(ent, out var sprite))
+                || !_spriteQuery.TryComp(ent, out var sprite)
+                || !_jitterQuery.TryComp(ent, out var jitter))
                 return;
 
             _animation.Stop((ent, player), _jitterAnimationKey);
-            _animation.Play((ent, player), GetReturnAnimation(sprite.Offset, SpriteOrigin), _jitterReturnAnimationKey);
+            _animation.Play((ent, player),
+                            GetReturnAnimation(sprite.Offset, jitter.StartOffset),
+                            _jitterReturnAnimationKey);
 
             RemCompDeferred<JitteringComponent>(ent);
         }
@@ -94,11 +94,12 @@ namespace Content.Client.Jittering
             if (!_spriteQuery.TryComp(target, out var spriteComp))
                 return;
 
-            EnsureComp<JitteringComponent>(target);
+            if (!EnsureComp<JitteringComponent>(target, out var jitterComp))
+                jitterComp.StartOffset = spriteComp.Offset;
 
             var playerComp = EnsureComp<AnimationPlayerComponent>(target);
             _animation.Play((target, playerComp),
-                                    GetJitterAnimation(jitter, spriteComp.Offset, SpriteOrigin),
+                                    GetJitterAnimation(jitter, spriteComp.Offset, jitterComp.StartOffset),
                                     _jitterAnimationKey);
         }
 

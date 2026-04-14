@@ -30,13 +30,13 @@ public sealed class VentHordeSystem : EntitySystem
 
     private void OnSpawnerInit(Entity<VentHordeSpawnerComponent> entity, ref MapInitEvent args)
     {
-        _jitter.AddJitter(entity);
+        _jitter.CreateJitter(entity);
     }
 
     private void OnSpawnerShutdown(Entity<VentHordeSpawnerComponent> entity, ref ComponentShutdown args)
     {
         _audio.Stop(entity.Comp.AudioStream);
-        RemCompDeferred<JitteringComponent>(entity);
+        _jitter.RemoveJitter(entity);
     }
 
     private void OnSpawnerBreakage(Entity<VentHordeSpawnerComponent> entity, ref BreakageEventArgs args)

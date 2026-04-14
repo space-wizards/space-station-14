@@ -6,14 +6,21 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Jittering;
 
 /// <summary>
-/// Marker component so that we can properly handle the jittering animation.
+/// Marker component so that we can properly handle the jittering animation and returning it to where it started.
 /// Should only be applied by <see cref="JitteringStatusEffectComponent"/>.
 /// </summary>
 /// <remarks>
 /// Removing this component requires either animation deltas or better container system prediction, or both.
 /// </remarks>
 [RegisterComponent, Access(typeof(SharedJitteringSystem))]
-public sealed partial class JitteringComponent : Component;
+public sealed partial class JitteringComponent : Component
+{
+    /// <summary>
+    /// The offset that an entity had before jittering so we can reset it properly.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Vector2 StartOffset;
+}
 
 /// <summary>
 /// Causes the sprite of the status target to move around erratically.

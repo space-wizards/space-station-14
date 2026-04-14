@@ -127,14 +127,21 @@ namespace Content.Server.Medical.BiomassReclaimer
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
-            _jitteringSystem.AddJitter(uid, -10, 100);
+            var jitter = new JitterParameters // Small but frequent side to side motion
+            {
+                Frequency = 10f,
+                MaxRadius = 0.05f,
+                MinRadius = 0.02f,
+                MatrixY = Vector2.Zero,
+            };
+            _jitteringSystem.CreateJitter(uid, jitter);
             _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
         private void OnShutdown(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentShutdown args)
         {
-            RemComp<JitteringComponent>(uid);
+            _jitteringSystem.RemoveJitter(uid);
             _ambientSoundSystem.SetAmbience(uid, false);
         }
 

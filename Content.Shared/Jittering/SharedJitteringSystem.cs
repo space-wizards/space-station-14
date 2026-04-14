@@ -23,62 +23,38 @@ namespace Content.Shared.Jittering
         /// </summary>
         /// <param name="target">The entity that will begin jittering.</param>
         /// <param name="jitter">What kind of jitter to apply.</param>
-        /// <param name="duration">How long the entity should jitter.</param>
+        /// <param name="duration">How long the entity should jitter. Permanent if null.</param>
+        /// <param name="refresh">Status duration is set if true, or accumulated if false.</param>
         [Obsolete("Jittering should be applied by a bespoke effect from StatusEffectsSystem.")]
-        public void CreateJitter(EntityUid target, JitterParameters jitter, TimeSpan? duration)
+        public void CreateJitter(EntityUid target, JitterParameters? jitter = null, TimeSpan? duration = null, bool refresh = false)
         {
-            // todo fix duration
-            if (!_statusEffects.TryUpdateStatusEffectDuration(target, BasicJitter, out var statusEnt, duration))
-                return;
+            EntityUid? statusEnt;
+            if (!refresh && duration != null)
+            {
+                if (!_statusEffects.TryAddStatusEffectDuration(target, BasicJitter, out statusEnt, duration.Value))
+                    return;
+            }
+            else
+            {
+                if (!_statusEffects.TryUpdateStatusEffectDuration(target, BasicJitter, out statusEnt, duration))
+                    return;
+            }
 
             var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt.Value);
-            jitterComp.Jitter = jitter;
+            if (jitter == null)
+                return;
+
+            jitterComp.Jitter = jitter.Value;
             Dirty(statusEnt.Value, jitterComp);
         }
 
-        // todo
         /// <summary>
-        /// Applies a jitter effect to the specified entity.
+        /// Removes jitter effects applied by <see cref="CreateJitter"/>.
+        /// Important if a duration was not set.
         /// </summary>
-        /// <param name="uid">Entity to start jittering.</param>
-        /// <param name="time">For how much time to apply the effect.</param>
-        /// <param name="refresh">The status effect cooldown should be refreshed (true) or accumulated (false).</param>
-        /// <param name="amplitude">Distance the jitter travels.</param>
-        /// <param name="frequency">Jitters per second.</param>
-        /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
-        [Obsolete("Jittering should be applied by a bespoke effect from StatusEffectsSystem.")]
-        public void DoJitter(EntityUid uid,
-                            TimeSpan time,
-                            bool refresh,
-                            float amplitude = 10f,
-                            float frequency = 4f,
-                            bool forceValueChange = false)
+        public void RemoveJitter(EntityUid target)
         {
-            var jitter = new JitterParameters()
-            {
-                Frequency = frequency,
-                MinRadius = amplitude * AmplitudeScalar / 2,
-                MaxRadius = amplitude * AmplitudeScalar,
-            };
-
-            CreateJitter(uid, jitter, time);
-        }
-
-        // todo
-        /// <summary>
-        /// For non mobs.
-        /// </summary>
-        [Obsolete("Jittering should be applied by a bespoke effect from StatusEffectsSystem.")]
-        public void AddJitter(EntityUid uid, float amplitude = 10f, float frequency = 4f)
-        {
-            var jitter = new JitterParameters()
-            {
-                Frequency = frequency,
-                MinRadius = amplitude * AmplitudeScalar / 2,
-                MaxRadius = amplitude * AmplitudeScalar,
-            };
-
-            CreateJitter(uid, jitter, TimeSpan.Zero); // todo
+            _statusEffects.TryRemoveStatusEffect(target, BasicJitter);
         }
     }
 }

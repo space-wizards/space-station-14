@@ -68,8 +68,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const float StutteringTimeMultiplier = 1.5f;
 
     private const float JitterTimeMultiplier = 0.75f;
-    private const float JitterAmplitude = 80f;
-    private const float JitterFrequency = 8f;
+    private static readonly JitterParameters Jitter = new()
+    {
+        Frequency = 8f,
+        MaxRadius = 1.1f,
+        MinRadius = 0.55f,
+    };
 
     public override void Initialize()
     {
@@ -413,7 +417,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
-        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true);
+        _jittering.CreateJitter(uid, Jitter, time * JitterTimeMultiplier, refresh);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 

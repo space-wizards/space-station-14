@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -252,8 +253,16 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
                 return;
         }
 
+        var jitter = new JitterParameters // Small but frequent up and down motion
+        {
+            Frequency = 15f,
+            MaxRadius = 0.05f,
+            MinRadius = 0.04f,
+            MatrixX = new Vector2(0.05f, 0f),
+        };
+        _jitter.CreateJitter(ent, jitter);
+
         EnsureComp<ActiveReagentGrinderComponent>(ent);
-        _jitter.AddJitter(ent, -10, 100);
         _powerState.TrySetWorkingState(ent.Owner, true); // Not all grinders need power.
         ent.Comp.Program = program;
         ent.Comp.EndTime = _timing.CurTime + ent.Comp.WorkTime * ent.Comp.WorkTimeMultiplier;
@@ -281,7 +290,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
-        RemCompDeferred<JitteringComponent>(ent);
+        _jitter.RemoveJitter(ent);
         _powerState.TrySetWorkingState(ent.Owner, false);
 
         var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);
