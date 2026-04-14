@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.MapEditor.Commands;
+using Content.MapEditor.Systems;
 using Content.MapEditor.Tools;
 using Content.MapEditor.UI;
 using Robust.Client.Graphics;
@@ -62,6 +63,9 @@ public sealed class MapEditorState : State
     private bool _isToolActive; // true while left mouse is held and tool is in a stroke
     private bool _wasLeftDown;
     private Vector2i _lastToolTilePos;
+
+    // Hover highlight overlay
+    private EditorOverlay _editorOverlay = default!;
 
     // Keyboard shortcut edge detection (tracks previous frame state to detect press edges)
     private bool _wasBDown;
@@ -123,6 +127,10 @@ public sealed class MapEditorState : State
         // Populate the tile palette.
         _screen.PopulateTilePalette(_tileDefs);
 
+        // Register hover highlight overlay.
+        _editorOverlay = new EditorOverlay();
+        IoCManager.Resolve<IOverlayManager>().AddOverlay(_editorOverlay);
+
         // Set initial toolbar state.
         _screen.SetActiveToolButton(_activeToolKey);
     }
@@ -140,6 +148,8 @@ public sealed class MapEditorState : State
         _screen.OnTileSelected -= OnTileSelected;
         _screen.OnGridTabSelected -= OnGridTabSelected;
         _screen.OnAddGridPressed -= OnAddGridPressed;
+
+        IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_editorOverlay);
 
         _uiManager.UnloadScreen();
         _sawmill.Info("MapEditorState shutdown");
@@ -223,6 +233,7 @@ public sealed class MapEditorState : State
         UpdatePan();
         UpdateKeyboardShortcuts();
         UpdateToolInput();
+        UpdateHoverHighlight();
         UpdateStatusBar();
     }
 
@@ -283,6 +294,32 @@ public sealed class MapEditorState : State
     private void OnResetZoomPressed()
     {
         _eye.Zoom = Vector2.One;
+    }
+
+    private void UpdateHoverHighlight()
+    {
+        var screenPos = _input.MouseScreenPosition;
+
+        if (_activeGridUid == EntityUid.Invalid || !IsMouseOverViewport(screenPos))
+        {
+            _editorOverlay.HoveredTile = null;
+            return;
+        }
+
+        var mapCoords = _eyeManager.PixelToMap(screenPos.Position);
+        if (mapCoords.MapId == MapId.Nullspace)
+        {
+            _editorOverlay.HoveredTile = null;
+            return;
+        }
+
+        var gridComp = _entityManager.GetComponent<MapGridComponent>(_activeGridUid);
+        var tilePos = _toolContext.MapSystem.CoordinatesToTile(_activeGridUid, gridComp, mapCoords);
+        _editorOverlay.HoveredTile = tilePos;
+
+        // Set grid world transform so the highlight renders at the correct position.
+        var xformSystem = _entityManager.System<SharedTransformSystem>();
+        _editorOverlay.GridWorldMatrix = xformSystem.GetWorldMatrix(_activeGridUid);
     }
 
     #endregion
@@ -367,6 +404,28 @@ public sealed class MapEditorState : State
         _activeTool = tool;
         _activeToolKey = toolKey;
         _screen.SetActiveToolButton(toolKey);
+
+        // Update hover highlight color per tool.
+        UpdateHighlightColorForTool(toolKey);
+    }
+
+    private void UpdateHighlightColorForTool(string toolKey)
+    {
+        switch (toolKey)
+        {
+            case "erase":
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 0.3f, 0.3f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 0.3f, 0.7f);
+                break;
+            case "eyedropper":
+                _editorOverlay.HighlightColor = new Color(0.3f, 1.0f, 0.4f, 0.3f);
+                _editorOverlay.BorderColor = new Color(0.3f, 1.0f, 0.4f, 0.7f);
+                break;
+            default: // paint
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
+                break;
+        }
     }
 
     private void OnToolSelected(string toolKey)
