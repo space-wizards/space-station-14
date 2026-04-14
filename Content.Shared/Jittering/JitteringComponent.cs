@@ -6,38 +6,28 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Jittering;
 
 /// <summary>
-/// Marker component for an entity's sprite to move erratically around their position.
-/// Should only be applied to an entity by <see cref="JitteringStatusEffectComponent"/>.
+/// Marker component so that we can properly handle the jittering animation.
+/// Should only be applied by <see cref="JitteringStatusEffectComponent"/>.
 /// </summary>
 /// <remarks>
-/// This component only exists to keep track of where to reset the sprite.
-/// With animation deltas this component can be removed.
+/// Removing this component requires either animation deltas or better container system prediction, or both.
 /// </remarks>
-[Access(typeof(SharedJitteringSystem))]
-[RegisterComponent]
-public sealed partial class JitteringComponent : Component
-{
-    /// <summary>
-    /// The offset that an entity had before jittering started,
-    /// so that we can reset it properly.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Vector2 StartOffset = Vector2.Zero;
-}
+[RegisterComponent, Access(typeof(SharedJitteringSystem))]
+public sealed partial class JitteringComponent : Component;
 
 /// <summary>
 /// Causes the sprite of the status target to move around erratically.
-/// Use only in conjunction with <see cref="StatusEffectComponent"/> on a status effect entity.
+/// Used in conjunction with <see cref="StatusEffectComponent"/> on a status effect entity.
 /// </summary>
 [Access(typeof(SharedJitteringSystem))]
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JitteringStatusEffectComponent : Component
 {
     /// <summary>
-    /// The parameters of the jitter to apply.
+    /// Parameters for the behavior and movement of a jitter.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public JitterSetting Settings = new()
+    public JitterParameters Jitter = new()
     {
         Frequency = 3,
         MaxRadius = 0.15f,
@@ -46,7 +36,7 @@ public sealed partial class JitteringStatusEffectComponent : Component
 }
 
 [DataDefinition, Serializable, NetSerializable]
-public partial struct JitterSetting()
+public partial struct JitterParameters()
 {
     /// <summary>
     /// How many jitters will be preformed per second.
@@ -70,7 +60,7 @@ public partial struct JitterSetting()
     /// Jitter offsets are transformed by this matrix to finely control potential destinations.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Matrix3x2 Matrix => Matrix3x2.Create(MatrixX, MatrixY, Vector2.Zero);
+    public Matrix3x2 Matrix => Matrix3x2.Create(MatrixX, MatrixY, MatrixT);
 
     /// <summary>
     /// Sheer applied to the X coordinate.
@@ -84,10 +74,9 @@ public partial struct JitterSetting()
     [DataField]
     public Vector2 MatrixY = Vector2.UnitY;
 
-    // Too buggy without animation deltas
-    // /// <summary>
-    // /// A translation applied to the coordinates.
-    // /// </summary>
-    // [DataField]
-    // public Vector2 MatrixT = Vector2.UnitX;
+    /// <summary>
+    /// A translation applied to the coordinates.
+    /// </summary>
+    [DataField]
+    public Vector2 MatrixT = Vector2.Zero;
 }
