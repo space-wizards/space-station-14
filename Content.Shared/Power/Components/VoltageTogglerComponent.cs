@@ -53,3 +53,6 @@ public partial struct VoltageSetting
     [DataField(required: true)]
     public LocId Name;
 }
+
+[ByRefEvent]
+public record struct VoltageChangedEvent(VoltageSetting NewVoltage);
