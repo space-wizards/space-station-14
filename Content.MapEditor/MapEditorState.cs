@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
+using Content.MapEditor.Commands;
+using Content.MapEditor.Tools;
 using Content.MapEditor.UI;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -16,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.MapEditor;
@@ -46,6 +50,14 @@ public sealed class MapEditorState : State
     private string? _loadedFileName;
     private MapId _loadedMapId;
 
+    // Tool system
+    private readonly CommandStack _commandStack = new();
+    private ToolContext _toolContext = default!;
+    private IEditorTool _activeTool = new PaintTool();
+    private bool _isToolActive; // true while left mouse is held and tool is in a stroke
+    private Vector2i _lastToolTilePos;
+    private EntityUid _lastToolGridUid;
+
     public MapEditorState()
     {
         IoCManager.InjectDependencies(this);
@@ -69,14 +81,26 @@ public sealed class MapEditorState : State
         _eyeManager.CurrentEye = _eye;
         _eyeManager.MainViewport = _screen.MainViewport.Viewport;
 
+        // Initialize tool context.
+        _toolContext = new ToolContext
+        {
+            EntityManager = _entityManager,
+            MapSystem = _entityManager.System<SharedMapSystem>(),
+            CommandStack = _commandStack,
+        };
+
         // Wire menu button events.
         _screen.FileOpenButton.OnPressed += OnFileOpenPressed;
         _screen.FileSaveButton.OnPressed += OnFileSavePressed;
         _screen.FileExitButton.OnPressed += OnFileExitPressed;
+        _screen.EditUndoButton.OnPressed += OnUndoPressed;
+        _screen.EditRedoButton.OnPressed += OnRedoPressed;
         _screen.ViewResetZoomButton.OnPressed += OnResetZoomPressed;
 
         // Wire scroll-wheel zoom from the viewport overlay.
         _screen.OnViewportScroll += OnViewportScroll;
+        _screen.OnViewportLeftDown += OnViewportLeftDown;
+        _screen.OnViewportLeftUp += OnViewportLeftUp;
     }
 
     protected override void Shutdown()
@@ -84,8 +108,12 @@ public sealed class MapEditorState : State
         _screen.FileOpenButton.OnPressed -= OnFileOpenPressed;
         _screen.FileSaveButton.OnPressed -= OnFileSavePressed;
         _screen.FileExitButton.OnPressed -= OnFileExitPressed;
+        _screen.EditUndoButton.OnPressed -= OnUndoPressed;
+        _screen.EditRedoButton.OnPressed -= OnRedoPressed;
         _screen.ViewResetZoomButton.OnPressed -= OnResetZoomPressed;
         _screen.OnViewportScroll -= OnViewportScroll;
+        _screen.OnViewportLeftDown -= OnViewportLeftDown;
+        _screen.OnViewportLeftUp -= OnViewportLeftUp;
 
         _uiManager.UnloadScreen();
         _sawmill.Info("MapEditorState shutdown");
@@ -96,6 +124,7 @@ public sealed class MapEditorState : State
     public override void FrameUpdate(FrameEventArgs e)
     {
         UpdatePan();
+        UpdateToolDrag();
         UpdateStatusBar();
     }
 
@@ -156,6 +185,118 @@ public sealed class MapEditorState : State
     private void OnResetZoomPressed()
     {
         _eye.Zoom = Vector2.One;
+    }
+
+    #endregion
+
+    #region Tool Dispatch
+
+    /// <summary>
+    ///     Sets the active editor tool (Paint, Erase, Eyedropper, etc.).
+    /// </summary>
+    public void SetActiveTool(IEditorTool tool)
+    {
+        // End any in-progress stroke before switching.
+        if (_isToolActive)
+        {
+            _activeTool.OnMouseUp(_toolContext);
+            _isToolActive = false;
+        }
+
+        _activeTool = tool;
+    }
+
+    private void OnViewportLeftDown(ScreenCoordinates screenPos)
+    {
+        if (_isPanning)
+            return;
+
+        if (!TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            return;
+
+        _isToolActive = true;
+        _lastToolTilePos = tilePos;
+        _lastToolGridUid = gridUid;
+        _activeTool.OnMouseDown(_toolContext, tilePos, gridUid);
+    }
+
+    private void OnViewportLeftUp(ScreenCoordinates screenPos)
+    {
+        if (!_isToolActive)
+            return;
+
+        _isToolActive = false;
+        _activeTool.OnMouseUp(_toolContext);
+    }
+
+    /// <summary>
+    ///     Called every frame to dispatch drag events while left mouse is held.
+    /// </summary>
+    private void UpdateToolDrag()
+    {
+        if (!_isToolActive)
+            return;
+
+        // If left mouse was released without going through our event (e.g. focus lost), clean up.
+        if (!_input.IsKeyDown(Keyboard.Key.MouseLeft))
+        {
+            _isToolActive = false;
+            _activeTool.OnMouseUp(_toolContext);
+            return;
+        }
+
+        var currentScreenPos = _input.MouseScreenPosition;
+        if (!TryResolveGridTile(currentScreenPos, out var gridUid, out var tilePos))
+            return;
+
+        // Only dispatch drag if the tile position changed.
+        if (tilePos == _lastToolTilePos && gridUid == _lastToolGridUid)
+            return;
+
+        _lastToolTilePos = tilePos;
+        _lastToolGridUid = gridUid;
+        _activeTool.OnMouseDrag(_toolContext, tilePos, gridUid);
+    }
+
+    /// <summary>
+    ///     Converts a screen position to a grid entity + tile position.
+    ///     Returns false if no grid is found under the cursor.
+    /// </summary>
+    private bool TryResolveGridTile(ScreenCoordinates screenPos, out EntityUid gridUid, out Vector2i tilePos)
+    {
+        gridUid = default;
+        tilePos = default;
+
+        var mapCoords = _eyeManager.PixelToMap(screenPos);
+        if (mapCoords.MapId == MapId.Nullspace)
+            return false;
+
+        var mapSystem = _toolContext.MapSystem;
+
+        // Find grids at the cursor position (point query via tiny AABB).
+        var worldPos = mapCoords.Position;
+        var pointBox = new Box2(worldPos, worldPos);
+        var grids = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(mapCoords.MapId, pointBox, ref grids);
+
+        if (grids.Count == 0)
+            return false;
+
+        // Use the first grid found (most maps have one main grid).
+        var grid = grids[0];
+        gridUid = grid.Owner;
+        tilePos = mapSystem.CoordinatesToTile(gridUid, grid.Comp, mapCoords);
+        return true;
+    }
+
+    private void OnUndoPressed()
+    {
+        _commandStack.Undo();
+    }
+
+    private void OnRedoPressed()
+    {
+        _commandStack.Redo();
     }
 
     #endregion
@@ -308,6 +449,8 @@ public sealed class MapEditorState : State
 
         var zoom = _eye.Zoom.X;
         _screen.SetStatusZoom($"Zoom: {zoom:F2}x");
+
+        _screen.SetStatusTool(_activeTool.Name);
     }
 
     #endregion

@@ -23,6 +23,7 @@
                 <BoxContainer Orientation="Horizontal" Margin="4 2">
                     <Label Name="StatusCoords" Text="(0, 0)" MinWidth="120" />
                     <Label Name="StatusZoom" Text="Zoom: 1.0x" MinWidth="100" />
+                    <Label Name="StatusTool" Text="Tool: Paint" MinWidth="100" />
                     <Label Name="StatusInfo" Text="No map loaded" HorizontalExpand="True" />
                 </BoxContainer>
             </PanelContainer>

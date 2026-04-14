@@ -6,7 +6,9 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.MapEditor.UI;
 
@@ -30,6 +32,16 @@ public sealed partial class MapEditorScreen : UIScreen
     ///     The float parameter is the scroll delta (positive = up/zoom in).
     /// </summary>
     public event Action<float>? OnViewportScroll;
+
+    /// <summary>
+    ///     Raised when the user presses the left mouse button over the viewport.
+    /// </summary>
+    public event Action<ScreenCoordinates>? OnViewportLeftDown;
+
+    /// <summary>
+    ///     Raised when the user releases the left mouse button over the viewport.
+    /// </summary>
+    public event Action<ScreenCoordinates>? OnViewportLeftUp;
 
     public MapEditorScreen()
     {
@@ -106,6 +118,16 @@ public sealed partial class MapEditorScreen : UIScreen
         OnViewportScroll?.Invoke(delta);
     }
 
+    internal void RaiseViewportLeftDown(ScreenCoordinates pos)
+    {
+        OnViewportLeftDown?.Invoke(pos);
+    }
+
+    internal void RaiseViewportLeftUp(ScreenCoordinates pos)
+    {
+        OnViewportLeftUp?.Invoke(pos);
+    }
+
     /// <summary>
     ///     Update the coordinate display in the status bar.
     /// </summary>
@@ -120,6 +142,14 @@ public sealed partial class MapEditorScreen : UIScreen
     public void SetStatusZoom(string text)
     {
         StatusZoom.Text = text;
+    }
+
+    /// <summary>
+    ///     Update the active tool display in the status bar.
+    /// </summary>
+    public void SetStatusTool(string toolName)
+    {
+        StatusTool.Text = $"Tool: {toolName}";
     }
 
     /// <summary>
@@ -154,12 +184,25 @@ public sealed partial class MapEditorScreen : UIScreen
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            // Let key binds pass through to the viewport underneath.
-            // Do NOT handle them here — we only intercept scroll wheel.
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                _screen.RaiseViewportLeftDown(args.PointerLocation);
+                args.Handle();
+                return;
+            }
+
+            // Let other key binds pass through to the viewport underneath.
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
         {
+            if (args.Function == EngineKeyFunctions.UIClick)
+            {
+                _screen.RaiseViewportLeftUp(args.PointerLocation);
+                args.Handle();
+                return;
+            }
+
             // Pass through.
         }
     }
