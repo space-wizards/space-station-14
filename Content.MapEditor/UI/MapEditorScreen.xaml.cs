@@ -34,6 +34,8 @@ public sealed partial class MapEditorScreen : UIScreen
     public MenuBar.MenuButton EditUndoButton { get; }
     public MenuBar.MenuButton EditRedoButton { get; }
     public MenuBar.MenuButton ViewResetZoomButton { get; }
+    public MenuBar.MenuButton ViewShowEntitiesButton { get; }
+    public MenuBar.MenuButton ViewShowSubfloorButton { get; }
 
     /// <summary>
     ///     Raised when the user scrolls the mouse wheel over the viewport.
@@ -178,12 +180,19 @@ public sealed partial class MapEditorScreen : UIScreen
         };
 
         ViewResetZoomButton = new MenuBar.MenuButton { Text = "Reset Zoom" };
+        ViewShowEntitiesButton = new MenuBar.MenuButton { Text = "\u2713 Show Entities" };
+        ViewShowSubfloorButton = new MenuBar.MenuButton { Text = "\u2713 Show Subfloor" };
+        ViewShowEntitiesButton.OnPressed += OnToggleShowEntities;
+        ViewShowSubfloorButton.OnPressed += OnToggleShowSubfloor;
         ViewMenu = new MenuBar.Menu
         {
             Title = "View",
             Entries =
             {
                 ViewResetZoomButton,
+                new MenuBar.MenuSeparator(),
+                ViewShowEntitiesButton,
+                ViewShowSubfloorButton,
             }
         };
 
@@ -508,6 +517,9 @@ public sealed partial class MapEditorScreen : UIScreen
         if (item.Metadata is int tileId)
         {
             OnTileSelected?.Invoke(tileId);
+
+            // Update the preview panel with the selected tile's texture and name.
+            UpdatePreview(item.Icon, item.Text ?? "Tile");
         }
     }
 
@@ -674,6 +686,9 @@ public sealed partial class MapEditorScreen : UIScreen
         if (item.Metadata is string protoId)
         {
             OnEntityPrototypeSelected?.Invoke(protoId);
+
+            // Update the preview panel with the selected entity's sprite and name.
+            UpdatePreview(item.Icon, item.Text ?? protoId);
         }
     }
 
@@ -915,6 +930,61 @@ public sealed partial class MapEditorScreen : UIScreen
     public void SetStatusInfo(string text)
     {
         StatusInfo.Text = text;
+    }
+
+    /// <summary>
+    ///     Update the dimension/size display in the status bar (shown during drag operations).
+    /// </summary>
+    public void SetStatusDimension(string text)
+    {
+        StatusDimension.Text = text;
+    }
+
+    #endregion
+
+    #region Preview Panel
+
+    /// <summary>
+    ///     Updates the preview panel with the given texture and label.
+    ///     Pass null texture to hide the panel.
+    /// </summary>
+    public void UpdatePreview(Texture? texture, string label)
+    {
+        if (texture == null)
+        {
+            PreviewPanel.Visible = false;
+            return;
+        }
+
+        PreviewPanel.Visible = true;
+        PreviewTexture.Texture = texture;
+        PreviewLabel.Text = label;
+    }
+
+    #endregion
+
+    #region View Menu Toggles
+
+    // Toggle state for view menu checkboxes (non-functional placeholders for now).
+    private bool _showEntities = true;
+    private bool _showSubfloor = true;
+
+    /// <summary>Whether "Show Entities" is currently checked.</summary>
+    public bool ShowEntities => _showEntities;
+
+    /// <summary>Whether "Show Subfloor" is currently checked.</summary>
+    public bool ShowSubfloor => _showSubfloor;
+
+    private void OnToggleShowEntities()
+    {
+        _showEntities = !_showEntities;
+        ViewShowEntitiesButton.Text = _showEntities ? "\u2713 Show Entities" : "  Show Entities";
+    }
+
+    private void OnToggleShowSubfloor()
+    {
+        _showSubfloor = !_showSubfloor;
+        ViewShowSubfloorButton.Text = _showSubfloor ? "\u2713 Show Subfloor" : "  Show Subfloor";
     }
 
     #endregion

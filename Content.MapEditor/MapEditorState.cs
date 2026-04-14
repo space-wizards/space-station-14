@@ -388,10 +388,12 @@ public sealed class MapEditorState : State
 
     /// <summary>
     ///     Computes preview tiles for shape tools during a drag and sends them to the overlay.
+    ///     Also computes dimension labels for display in the status bar.
     /// </summary>
     private void UpdateShapePreview()
     {
         List<Vector2i>? preview = null;
+        string dimensionLabel = "";
 
         if (_isToolActive)
         {
@@ -406,8 +408,23 @@ public sealed class MapEditorState : State
                     => ComputeCirclePreview(circle.DragStart.Value, circle.DragEnd.Value),
                 _ => null,
             };
+
+            // Compute dimension labels for shape tools during drag.
+            dimensionLabel = _activeTool switch
+            {
+                RectangleTool rect when rect.DragStart != null && rect.DragEnd != null
+                    => ComputeRectDimLabel(rect.DragStart.Value, rect.DragEnd.Value),
+                LineTool line when line.DragStart != null && line.DragEnd != null
+                    => ComputeLineDimLabel(line.DragStart.Value, line.DragEnd.Value),
+                CircleTool circle when circle.DragStart != null && circle.DragEnd != null
+                    => ComputeCircleDimLabel(circle.DragStart.Value, circle.DragEnd.Value),
+                SelectTool sel when sel.DragStart != null && sel.DragEnd != null
+                    => ComputeRectDimLabel(sel.DragStart.Value, sel.DragEnd.Value),
+                _ => "",
+            };
         }
 
+        _screen.SetStatusDimension(dimensionLabel);
         _editorOverlay.PreviewTiles = preview;
 
         // Update preview colors to match the active tool's highlight color.
@@ -530,6 +547,29 @@ public sealed class MapEditorState : State
             }
         }
         return tiles;
+    }
+
+    private static string ComputeRectDimLabel(Vector2i start, Vector2i end)
+    {
+        var w = Math.Abs(end.X - start.X) + 1;
+        var h = Math.Abs(end.Y - start.Y) + 1;
+        return $"{w}x{h}";
+    }
+
+    private static string ComputeLineDimLabel(Vector2i start, Vector2i end)
+    {
+        var dx = end.X - start.X;
+        var dy = end.Y - start.Y;
+        var length = (int) Math.Ceiling(Math.Sqrt(dx * dx + dy * dy)) + 1;
+        return $"L:{length}";
+    }
+
+    private static string ComputeCircleDimLabel(Vector2i center, Vector2i end)
+    {
+        var dx = end.X - center.X;
+        var dy = end.Y - center.Y;
+        var radius = (int) Math.Ceiling(Math.Sqrt(dx * dx + dy * dy));
+        return $"R:{radius}";
     }
 
     #endregion

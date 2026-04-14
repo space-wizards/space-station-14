@@ -45,6 +45,19 @@
                         <BoxContainer Name="EntityInfoContent" Orientation="Vertical" Margin="6 4" />
                     </PanelContainer>
 
+                    <!-- Preview panel showing the selected tile/entity at larger size -->
+                    <PanelContainer Name="PreviewPanel" HorizontalExpand="True" MinHeight="120" Visible="False">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1E2E1EDD" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" Margin="4">
+                            <TextureRect Name="PreviewTexture" MinWidth="96" MinHeight="96"
+                                         HorizontalAlignment="Center" Stretch="KeepAspectCentered" />
+                            <Label Name="PreviewLabel" Text="" HorizontalAlignment="Center"
+                                   Margin="0 2 0 0" />
+                        </BoxContainer>
+                    </PanelContainer>
+
                     <!-- Palette panel with Tiles/Entities tabs -->
                     <PanelContainer Name="PalettePanel" VerticalExpand="True">
                         <PanelContainer.PanelOverride>
@@ -82,6 +95,7 @@
                     <Label Name="StatusCoords" Text="(0, 0)" MinWidth="120" />
                     <Label Name="StatusZoom" Text="Zoom: 1.0x" MinWidth="100" />
                     <Label Name="StatusTool" Text="Tool: Paint" MinWidth="100" />
+                    <Label Name="StatusDimension" Text="" MinWidth="80" />
                     <Label Name="StatusInfo" Text="No map loaded" HorizontalExpand="True" />
                 </BoxContainer>
             </PanelContainer>
