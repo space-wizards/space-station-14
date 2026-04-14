@@ -156,6 +156,10 @@ public sealed partial class MapEditorScreen : UIScreen
         AddToolButton("paint", "P");
         AddToolButton("erase", "E");
         AddToolButton("eyedropper", "I");
+        AddToolButton("fill", "F");
+        AddToolButton("rectangle", "R");
+        AddToolButton("line", "L");
+        AddToolButton("circle", "C");
 
         // Wire tile search filtering.
         TileSearchEdit.OnTextChanged += OnTileSearchChanged;

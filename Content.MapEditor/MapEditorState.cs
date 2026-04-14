@@ -71,6 +71,10 @@ public sealed class MapEditorState : State
     private bool _wasBDown;
     private bool _wasEDown;
     private bool _wasIDown;
+    private bool _wasFDown;
+    private bool _wasRDown;
+    private bool _wasLDown;
+    private bool _wasCDown;
     private bool _wasZDown;
     private bool _wasYDown;
 
@@ -234,6 +238,7 @@ public sealed class MapEditorState : State
         UpdateKeyboardShortcuts();
         UpdateToolInput();
         UpdateHoverHighlight();
+        UpdateShapePreview();
         UpdateStatusBar();
     }
 
@@ -322,6 +327,86 @@ public sealed class MapEditorState : State
         _editorOverlay.GridWorldMatrix = xformSystem.GetWorldMatrix(_activeGridUid);
     }
 
+    /// <summary>
+    ///     Computes preview tiles for shape tools during a drag and sends them to the overlay.
+    /// </summary>
+    private void UpdateShapePreview()
+    {
+        List<Vector2i>? preview = null;
+
+        if (_isToolActive)
+        {
+            preview = _activeTool switch
+            {
+                RectangleTool rect when rect.DragStart != null && rect.DragEnd != null
+                    => ComputeRectanglePreview(rect.DragStart.Value, rect.DragEnd.Value),
+                LineTool line when line.DragStart != null && line.DragEnd != null
+                    => ComputeLinePreview(line.DragStart.Value, line.DragEnd.Value),
+                CircleTool circle when circle.DragStart != null && circle.DragEnd != null
+                    => ComputeCirclePreview(circle.DragStart.Value, circle.DragEnd.Value),
+                _ => null,
+            };
+        }
+
+        _editorOverlay.PreviewTiles = preview;
+
+        // Update preview colors to match the active tool's highlight color.
+        if (preview != null)
+        {
+            var fill = _editorOverlay.HighlightColor;
+            _editorOverlay.PreviewFillColor = new Color(fill.R, fill.G, fill.B, 0.2f);
+            _editorOverlay.PreviewBorderColor = new Color(fill.R, fill.G, fill.B, 0.5f);
+        }
+    }
+
+    private static List<Vector2i> ComputeRectanglePreview(Vector2i start, Vector2i end)
+    {
+        var minX = Math.Min(start.X, end.X);
+        var maxX = Math.Max(start.X, end.X);
+        var minY = Math.Min(start.Y, end.Y);
+        var maxY = Math.Max(start.Y, end.Y);
+
+        var tiles = new List<Vector2i>((maxX - minX + 1) * (maxY - minY + 1));
+        for (var x = minX; x <= maxX; x++)
+        {
+            for (var y = minY; y <= maxY; y++)
+            {
+                tiles.Add(new Vector2i(x, y));
+            }
+        }
+        return tiles;
+    }
+
+    private static List<Vector2i> ComputeLinePreview(Vector2i start, Vector2i end)
+    {
+        var tiles = new List<Vector2i>();
+        foreach (var pos in LineTool.GetLinePoints(start, end))
+        {
+            tiles.Add(pos);
+        }
+        return tiles;
+    }
+
+    private static List<Vector2i> ComputeCirclePreview(Vector2i center, Vector2i end)
+    {
+        var dx = end.X - center.X;
+        var dy = end.Y - center.Y;
+        var radiusSq = dx * dx + dy * dy;
+        var radius = (int) Math.Ceiling(Math.Sqrt(radiusSq));
+
+        var tiles = new List<Vector2i>();
+        for (var x = center.X - radius; x <= center.X + radius; x++)
+        {
+            for (var y = center.Y - radius; y <= center.Y + radius; y++)
+            {
+                var distSq = (x - center.X) * (x - center.X) + (y - center.Y) * (y - center.Y);
+                if (distSq <= radiusSq)
+                    tiles.Add(new Vector2i(x, y));
+            }
+        }
+        return tiles;
+    }
+
     #endregion
 
     #region Keyboard Shortcuts
@@ -371,6 +456,22 @@ public sealed class MapEditorState : State
             var iDown = _input.IsKeyDown(Keyboard.Key.I);
             if (iDown && !_wasIDown)
                 OnToolSelected("eyedropper");
+
+            var fDown = _input.IsKeyDown(Keyboard.Key.F);
+            if (fDown && !_wasFDown)
+                OnToolSelected("fill");
+
+            var rDown = _input.IsKeyDown(Keyboard.Key.R);
+            if (rDown && !_wasRDown)
+                OnToolSelected("rectangle");
+
+            var lDown = _input.IsKeyDown(Keyboard.Key.L);
+            if (lDown && !_wasLDown)
+                OnToolSelected("line");
+
+            var cDown = _input.IsKeyDown(Keyboard.Key.C);
+            if (cDown && !_wasCDown)
+                OnToolSelected("circle");
         }
 
         UpdatePreviousKeyState();
@@ -381,6 +482,10 @@ public sealed class MapEditorState : State
         _wasBDown = _input.IsKeyDown(Keyboard.Key.B);
         _wasEDown = _input.IsKeyDown(Keyboard.Key.E);
         _wasIDown = _input.IsKeyDown(Keyboard.Key.I);
+        _wasFDown = _input.IsKeyDown(Keyboard.Key.F);
+        _wasRDown = _input.IsKeyDown(Keyboard.Key.R);
+        _wasLDown = _input.IsKeyDown(Keyboard.Key.L);
+        _wasCDown = _input.IsKeyDown(Keyboard.Key.C);
         _wasZDown = _input.IsKeyDown(Keyboard.Key.Z);
         _wasYDown = _input.IsKeyDown(Keyboard.Key.Y);
     }
@@ -421,6 +526,22 @@ public sealed class MapEditorState : State
                 _editorOverlay.HighlightColor = new Color(0.3f, 1.0f, 0.4f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 1.0f, 0.4f, 0.7f);
                 break;
+            case "fill":
+                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 0.2f, 0.3f);
+                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 0.2f, 0.7f);
+                break;
+            case "rectangle":
+                _editorOverlay.HighlightColor = new Color(0.2f, 1.0f, 1.0f, 0.3f);
+                _editorOverlay.BorderColor = new Color(0.2f, 1.0f, 1.0f, 0.7f);
+                break;
+            case "line":
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.6f, 0.2f, 0.3f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.6f, 0.2f, 0.7f);
+                break;
+            case "circle":
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 1.0f, 0.3f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 1.0f, 0.7f);
+                break;
             default: // paint
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
@@ -435,6 +556,10 @@ public sealed class MapEditorState : State
             "paint" => new PaintTool(),
             "erase" => new EraseTool(),
             "eyedropper" => new EyedropperTool(),
+            "fill" => new FillTool(),
+            "rectangle" => new RectangleTool(),
+            "line" => new LineTool(),
+            "circle" => new CircleTool(),
             _ => new PaintTool(),
         };
 
