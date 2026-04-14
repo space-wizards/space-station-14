@@ -295,7 +295,7 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
         if (Capacity / Rows > 1)
         {
             itemSeparation = (int)(Size.X - _loadedSprite.Width) / (Capacity / Rows - 1);
-            itemSeparation = itemSeparation < _baseSeparation ? itemSeparation : _baseSeparation;
+            itemSeparation = int.Min(_baseSeparation, itemSeparation);
             itemSeparation = int.Max(1, itemSeparation);
         }
 
