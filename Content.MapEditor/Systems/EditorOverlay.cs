@@ -57,22 +57,20 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public Box2i? SelectionBox { get; set; }
 
-    private static readonly Color SelectionFillColor = new(1.0f, 1.0f, 1.0f, 0.1f);
-    private static readonly Color SelectionBorderColor = new(1.0f, 1.0f, 1.0f, 0.8f);
+    /// <summary>
+    ///     When true, the SelectTool is in an active drag. The hover highlight is suppressed
+    ///     so it does not visually occlude the in-progress selection rectangle.
+    /// </summary>
+    public bool IsDraggingSelection { get; set; }
+
+    // Cyan/blue tint for selection — clearly distinct from the white hover highlight.
+    private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
+    private static readonly Color SelectionBorderColor = new(0.3f, 0.7f, 1.0f, 0.9f);
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
         handle.SetTransform(GridWorldMatrix);
-
-        // Draw persistent selection box (behind everything else).
-        if (SelectionBox != null)
-        {
-            var sel = SelectionBox.Value;
-            var selBox = new Box2(sel.Left, sel.Bottom, sel.Right, sel.Top);
-            handle.DrawRect(selBox, SelectionFillColor);
-            handle.DrawRect(selBox, SelectionBorderColor, filled: false);
-        }
 
         // Draw shape preview tiles (behind the hover highlight).
         if (PreviewTiles != null && PreviewTiles.Count > 0)
@@ -85,13 +83,22 @@ public sealed class EditorOverlay : Overlay
             }
         }
 
-        // Draw hover highlight on top.
-        if (HoveredTile != null)
+        // Draw hover highlight (suppressed during an active SelectTool drag).
+        if (HoveredTile != null && !IsDraggingSelection)
         {
             var tile = HoveredTile.Value;
             var worldBox = new Box2(tile.X, tile.Y, tile.X + 1, tile.Y + 1);
             handle.DrawRect(worldBox, HighlightColor);
             handle.DrawRect(worldBox, BorderColor, filled: false);
+        }
+
+        // Draw selection box on top of everything so it is always visible.
+        if (SelectionBox != null)
+        {
+            var sel = SelectionBox.Value;
+            var selBox = new Box2(sel.Left, sel.Bottom, sel.Right, sel.Top);
+            handle.DrawRect(selBox, SelectionFillColor);
+            handle.DrawRect(selBox, SelectionBorderColor, filled: false);
         }
 
         handle.SetTransform(Matrix3x2.Identity);

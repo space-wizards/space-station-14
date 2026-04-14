@@ -376,19 +376,23 @@ public sealed class MapEditorState : State
                 var maxX = Math.Max(s.X, e.X);
                 var maxY = Math.Max(s.Y, e.Y);
                 _editorOverlay.SelectionBox = new Box2i(minX, minY, maxX + 1, maxY + 1);
+                _editorOverlay.IsDraggingSelection = true;
             }
             else if (selectTool.Selection != null)
             {
                 _editorOverlay.SelectionBox = selectTool.Selection;
+                _editorOverlay.IsDraggingSelection = false;
             }
             else
             {
                 _editorOverlay.SelectionBox = null;
+                _editorOverlay.IsDraggingSelection = false;
             }
         }
         else
         {
             _editorOverlay.SelectionBox = null;
+            _editorOverlay.IsDraggingSelection = false;
         }
     }
 

@@ -18,6 +18,7 @@
   <Import Project="..\RobustToolbox\Imports\Testing.props" />
   <ItemGroup>
     <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
+    <ProjectReference Include="..\Content.MapEditor\Content.MapEditor.csproj" />
     <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
