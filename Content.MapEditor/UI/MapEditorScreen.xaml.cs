@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.MapEditor.UI;
@@ -382,7 +383,17 @@ public sealed partial class MapEditorScreen : UIScreen
                 continue;
             }
 
-            TileList.AddItem(name, icon: icon, metadata: tileId);
+            // Scale icon to ~24px height, capped at 1.0 so small icons don't enlarge.
+            var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
+            var item = TileList.AddItem(name, icon: icon, metadata: tileId, iconScale: iconScale);
+
+            // Crop sprite strips (wider than tall) to the first tile-sized region.
+            if (icon != null && icon.Width > icon.Height)
+            {
+                item.IconRegion = new UIBox2(0, 0, icon.Height, icon.Height);
+            }
+
+            item.TooltipText = name;
         }
     }
 
@@ -468,7 +479,10 @@ public sealed partial class MapEditorScreen : UIScreen
                 continue;
             }
 
-            EntityList.AddItem(display, icon: icon, metadata: protoId);
+            // Scale icon to ~24px height, capped at 1.0 so small icons don't enlarge.
+            var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
+            var item = EntityList.AddItem(display, icon: icon, metadata: protoId, iconScale: iconScale);
+            item.TooltipText = protoId;
             count++;
 
             if (count >= MaxEntityResults)
