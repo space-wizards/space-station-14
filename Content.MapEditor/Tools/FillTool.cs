@@ -22,8 +22,9 @@ public sealed class FillTool : IEditorTool
         var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
         var originTile = ctx.MapSystem.GetTileRef(gridUid, grid, tilePos).Tile;
 
-        // If the origin tile is already the selected tile, nothing to do.
-        if (originTile == ctx.SelectedTile)
+        // If the origin tile is already the selected tile type, nothing to do.
+        // Compare only TypeId so that different variants/flags don't block the fill.
+        if (originTile.TypeId == ctx.SelectedTile.TypeId)
             return;
 
         var batch = new BatchCommand();
@@ -37,7 +38,7 @@ public sealed class FillTool : IEditorTool
             var pos = queue.Dequeue();
             var currentTile = ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile;
 
-            if (currentTile != originTile)
+            if (currentTile.TypeId != originTile.TypeId)
                 continue;
 
             var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, currentTile, ctx.SelectedTile);
