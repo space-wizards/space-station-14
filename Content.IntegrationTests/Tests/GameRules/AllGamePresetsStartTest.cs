@@ -42,9 +42,8 @@ public sealed class AllGamePresetsStartTest : GameTest
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var client = pair.Client;
+        var server = Pair.Server;
+        var client = Pair.Client;
         var protoMan = server.ProtoMan;
         var entMan = server.EntMan;
         var ticker = server.System<GameTicker>();
@@ -109,12 +108,12 @@ public sealed class AllGamePresetsStartTest : GameTest
         Assert.That(antags <= min, Is.True);
         if (min > 1)
         {
-            var dummies = await pair.Server.AddDummySessions(min - 1);
+            var dummies = await server.AddDummySessions(min - 1);
             // Put our client at the front of the list.
             players = players.Union(dummies).ToList();
         }
 
-        await pair.RunUntilSynced();
+        await Pair.RunUntilSynced();
 
         // This also ensures that admin commands work properly :P
         await server.WaitPost(() =>
@@ -127,15 +126,15 @@ public sealed class AllGamePresetsStartTest : GameTest
         {
             for (var count = 0; count < amount; count++)
             {
-                await pair.SetAntagPreference(antag.PrefRoles.FirstOrDefault(), true, players[i++].UserId);
+                await Pair.SetAntagPreference(antag.PrefRoles.FirstOrDefault(), true, players[i++].UserId);
                 Assert.That(i < min, $"Tried to assign more antags than there were players");
             }
         }
 
-        await pair.RunUntilSynced();
-        await pair.WaitCommand($"setgamepreset {presetId}");
-        await pair.WaitCommand("startround");
-        await pair.RunUntilSynced();
+        await Pair.RunUntilSynced();
+        await Pair.WaitCommand($"setgamepreset {presetId}");
+        await Pair.WaitCommand("startround");
+        await Pair.RunUntilSynced();
 
         // Game should have started
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
@@ -143,7 +142,7 @@ public sealed class AllGamePresetsStartTest : GameTest
         Assert.That(ticker.PlayerGameStatuses.Count == players.Count);
         Assert.That(client.EntMan.EntityExists(client.AttachedEntity));
 
-        var player = pair.Player!.AttachedEntity!.Value;
+        var player = Pair.Player!.AttachedEntity!.Value;
         Assert.That(entMan.EntityExists(player));
 
         // Start all game presets so antags spawn!
@@ -151,7 +150,7 @@ public sealed class AllGamePresetsStartTest : GameTest
         {
             ticker.StartGamePresetRules();
         });
-        await pair.RunUntilSynced();
+        await Pair.RunUntilSynced();
 
         await server.WaitPost(() =>
         {
@@ -170,8 +169,8 @@ public sealed class AllGamePresetsStartTest : GameTest
         Assert.That(entMan.Count<MapGridComponent>(), Is.GreaterThan(0));
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
 
-        await pair.WaitCommand("golobby");
-        await pair.RunUntilSynced();
+        await Pair.WaitCommand("golobby");
+        await Pair.RunUntilSynced();
         void AssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
         {
             Assert.That(mind.TryGetMind(session, out var mindEnt, out var mindComp),
