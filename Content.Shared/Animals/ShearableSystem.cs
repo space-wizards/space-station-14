@@ -131,7 +131,7 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Override function for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
+    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
     /// </summary>
     public bool CanShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
@@ -139,14 +139,14 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Override function for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
+    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
     /// </summary>
     public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
         return CanShear(ent, out _, out _, out _, out _, usedItem, checkItem);
     }
     /// <summary>
-    ///     Override function for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
+    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
     /// </summary>
     public bool CanShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
     {
