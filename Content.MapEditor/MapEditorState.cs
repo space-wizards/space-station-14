@@ -33,6 +33,7 @@ public sealed class MapEditorState : State
     [Dependency] private readonly IFileDialogManager _fileDialog = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
 
     private ISawmill _sawmill = default!;
     private MapEditorScreen _screen = default!;
@@ -54,6 +55,7 @@ public sealed class MapEditorState : State
     private readonly CommandStack _commandStack = new();
     private ToolContext _toolContext = default!;
     private IEditorTool _activeTool = new PaintTool();
+    private string _activeToolKey = "paint";
     private bool _isToolActive; // true while left mouse is held and tool is in a stroke
     private Vector2i _lastToolTilePos;
     private EntityUid _lastToolGridUid;
@@ -101,6 +103,16 @@ public sealed class MapEditorState : State
         _screen.OnViewportScroll += OnViewportScroll;
         _screen.OnViewportLeftDown += OnViewportLeftDown;
         _screen.OnViewportLeftUp += OnViewportLeftUp;
+
+        // Wire toolbar and palette events.
+        _screen.OnToolSelected += OnToolSelected;
+        _screen.OnTileSelected += OnTileSelected;
+
+        // Populate the tile palette.
+        _screen.PopulateTilePalette(_tileDefs);
+
+        // Set initial toolbar state.
+        _screen.SetActiveToolButton(_activeToolKey);
     }
 
     protected override void Shutdown()
@@ -114,6 +126,8 @@ public sealed class MapEditorState : State
         _screen.OnViewportScroll -= OnViewportScroll;
         _screen.OnViewportLeftDown -= OnViewportLeftDown;
         _screen.OnViewportLeftUp -= OnViewportLeftUp;
+        _screen.OnToolSelected -= OnToolSelected;
+        _screen.OnTileSelected -= OnTileSelected;
 
         _uiManager.UnloadScreen();
         _sawmill.Info("MapEditorState shutdown");
@@ -194,7 +208,7 @@ public sealed class MapEditorState : State
     /// <summary>
     ///     Sets the active editor tool (Paint, Erase, Eyedropper, etc.).
     /// </summary>
-    public void SetActiveTool(IEditorTool tool)
+    public void SetActiveTool(IEditorTool tool, string toolKey)
     {
         // End any in-progress stroke before switching.
         if (_isToolActive)
@@ -204,6 +218,32 @@ public sealed class MapEditorState : State
         }
 
         _activeTool = tool;
+        _activeToolKey = toolKey;
+        _screen.SetActiveToolButton(toolKey);
+    }
+
+    private void OnToolSelected(string toolKey)
+    {
+        IEditorTool tool = toolKey switch
+        {
+            "paint" => new PaintTool(),
+            "erase" => new EraseTool(),
+            "eyedropper" => new EyedropperTool(),
+            _ => new PaintTool(),
+        };
+
+        SetActiveTool(tool, toolKey);
+    }
+
+    private void OnTileSelected(int tileId)
+    {
+        _toolContext.SelectedTile = new Tile(tileId);
+
+        // If user selects a tile, auto-switch to paint tool for convenience.
+        if (_activeToolKey != "paint")
+        {
+            SetActiveTool(new PaintTool(), "paint");
+        }
     }
 
     private void OnViewportLeftDown(ScreenCoordinates screenPos)
@@ -218,6 +258,12 @@ public sealed class MapEditorState : State
         _lastToolTilePos = tilePos;
         _lastToolGridUid = gridUid;
         _activeTool.OnMouseDown(_toolContext, tilePos, gridUid);
+
+        // If the eyedropper picked a tile, update the palette to reflect it.
+        if (_activeToolKey == "eyedropper")
+        {
+            _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
+        }
     }
 
     private void OnViewportLeftUp(ScreenCoordinates screenPos)

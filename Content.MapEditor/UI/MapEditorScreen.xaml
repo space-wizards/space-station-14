@@ -10,10 +10,35 @@
             <BoxContainer Name="MenuBarContainer" Orientation="Horizontal"
                           HorizontalExpand="True" MinHeight="24" />
 
-            <!-- Main viewport fills remaining space -->
-            <LayoutContainer Name="ViewportContainer" VerticalExpand="True" HorizontalExpand="True">
-                <controls:MainViewport Name="MainViewport" Access="Public" />
-            </LayoutContainer>
+            <!-- Middle row: Toolbar | Viewport | Palette -->
+            <BoxContainer Name="MiddleRow" Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+
+                <!-- Left toolbar -->
+                <PanelContainer Name="ToolbarPanel" MinWidth="36">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#2A2A2ADD" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Name="ToolbarButtons" Orientation="Vertical" Margin="2 4" />
+                </PanelContainer>
+
+                <!-- Main viewport fills remaining space -->
+                <LayoutContainer Name="ViewportContainer" VerticalExpand="True" HorizontalExpand="True">
+                    <controls:MainViewport Name="MainViewport" Access="Public" />
+                </LayoutContainer>
+
+                <!-- Right tile palette -->
+                <PanelContainer Name="PalettePanel" MinWidth="250" MaxWidth="250">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#2A2A2ADD" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Name="PaletteLayout" Orientation="Vertical" Margin="4">
+                        <Label Text="Tiles" Margin="0 0 0 4" />
+                        <LineEdit Name="TileSearchEdit" HorizontalExpand="True" PlaceHolder="Search tiles..." Margin="0 0 0 4" />
+                        <ItemList Name="TileList" VerticalExpand="True" HorizontalExpand="True" />
+                    </BoxContainer>
+                </PanelContainer>
+
+            </BoxContainer>
 
             <!-- Status bar at bottom -->
             <PanelContainer Name="StatusBarPanel" HorizontalExpand="True">
