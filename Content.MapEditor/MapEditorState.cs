@@ -326,7 +326,19 @@ public sealed class MapEditorState : State
 
     private void OnViewportScroll(float delta)
     {
-        // delta > 0 = scroll up = zoom in
+        // If EntitySelectTool is active and has a selection, scroll cycles through entities
+        // at the selected tile instead of zooming (matching ss14editor behavior).
+        if (_activeTool is EntitySelectTool entitySelect && entitySelect.SelectedEntity != null)
+        {
+            var screenPos = _input.MouseScreenPosition;
+            if (TryResolveGridTile(screenPos, out var tilePos))
+            {
+                if (entitySelect.OnScroll(_toolContext, tilePos, delta))
+                    return; // Consumed — don't zoom.
+            }
+        }
+
+        // Default: zoom in/out.
         var factor = delta > 0 ? 0.8f : 1.25f;
         var zoom = _eye.Zoom;
         var newZoom = Math.Clamp(zoom.X * factor, MinZoom, MaxZoom);
@@ -790,13 +802,6 @@ public sealed class MapEditorState : State
                 _isToolActive = true;
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
-
-                // Check if EntitySelectTool wants to show a stack picker popup.
-                if (_activeTool is EntitySelectTool { PendingPick: { } pendingEntities } entityPicker)
-                {
-                    ShowEntityStackPicker(entityPicker, pendingEntities, screenPos);
-                    _isToolActive = false; // Don't start a drag while the picker is open.
-                }
 
                 if (_activeToolKey == "eyedropper")
                     _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);

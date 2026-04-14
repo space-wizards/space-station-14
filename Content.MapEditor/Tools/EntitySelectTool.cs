@@ -38,6 +38,35 @@ public sealed class EntitySelectTool : IEditorTool
     /// </summary>
     public List<EntityUid>? PendingPick { get; private set; }
 
+    // Scroll-to-cycle: entities at the last selected tile, for cycling via scroll wheel.
+    private List<EntityUid> _entitiesAtTile = new();
+    private int _cycleIndex;
+    private Vector2i _cycleTilePos;
+
+    /// <summary>
+    ///     Cycle through entities at the selected tile via scroll wheel.
+    ///     Returns true if the scroll was consumed (suppresses zoom).
+    /// </summary>
+    public bool OnScroll(ToolContext ctx, Vector2i tilePos, float delta)
+    {
+        // Only cycle if we have a selection and we're hovering the same tile.
+        if (SelectedEntity == null || _entitiesAtTile.Count < 2 || tilePos != _cycleTilePos)
+            return false;
+
+        // Refresh the list in case entities changed.
+        _entitiesAtTile.RemoveAll(uid => !ctx.EntityManager.EntityExists(uid));
+        if (_entitiesAtTile.Count < 2)
+            return false;
+
+        if (delta > 0)
+            _cycleIndex = (_cycleIndex + 1) % _entitiesAtTile.Count;
+        else
+            _cycleIndex = (_cycleIndex - 1 + _entitiesAtTile.Count) % _entitiesAtTile.Count;
+
+        SelectedEntity = _entitiesAtTile[_cycleIndex];
+        return true;
+    }
+
     /// <summary>
     ///     The tile position associated with the pending pick, used to set
     ///     <see cref="SelectedTilePos"/> after the user picks an entity.
@@ -118,21 +147,21 @@ public sealed class EntitySelectTool : IEditorTool
         }
 
         // Select a new entity (or clear selection).
-        if (entities.Count > 1)
-        {
-            // Multiple entities — expose them for a picker popup.
-            PendingPick = entities;
-            PendingPickTilePos = tilePos;
-        }
-        else if (entities.Count == 1)
+        if (entities.Count >= 1)
         {
             SelectedEntity = entities[0];
             SelectedTilePos = tilePos;
+
+            // Populate scroll-to-cycle list for tiles with multiple entities.
+            _entitiesAtTile = entities;
+            _cycleIndex = 0;
+            _cycleTilePos = tilePos;
         }
         else
         {
             SelectedEntity = null;
             SelectedTilePos = null;
+            _entitiesAtTile = new List<EntityUid>();
         }
     }
 
