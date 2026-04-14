@@ -377,11 +377,11 @@ public sealed class MapEditorState : State
         // Update entity selection highlight for the EntitySelectTool.
         if (_activeTool is EntitySelectTool entitySelect)
         {
-            _editorOverlay.SelectedEntityPos = entitySelect.SelectedTilePos;
+            _editorOverlay.SelectedEntityUid = entitySelect.SelectedEntity;
         }
         else
         {
-            _editorOverlay.SelectedEntityPos = null;
+            _editorOverlay.SelectedEntityUid = null;
         }
 
         // Update the selection box for the SelectTool — both during drag and after.

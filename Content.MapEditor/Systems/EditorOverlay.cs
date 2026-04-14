@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Content.MapEditor.Tools;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.MapEditor.Systems;
@@ -75,9 +78,10 @@ public sealed class EditorOverlay : Overlay
     public Vector2i MoveGhostOffset { get; set; }
 
     /// <summary>
-    ///     Tile position of the selected entity (from EntitySelectTool), for green highlight.
+    ///     The selected entity UID (from EntitySelectTool). When set, draws a highlight
+    ///     around the entity's sprite bounds.
     /// </summary>
-    public Vector2i? SelectedEntityPos { get; set; }
+    public EntityUid? SelectedEntityUid { get; set; }
 
     // Cyan/blue tint for selection — clearly distinct from the white hover highlight.
     private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
@@ -126,13 +130,26 @@ public sealed class EditorOverlay : Overlay
             }
         }
 
-        // Draw entity selection highlight.
-        if (SelectedEntityPos != null)
+        // Draw entity selection highlight using sprite bounds.
+        if (SelectedEntityUid != null)
         {
-            var ep = SelectedEntityPos.Value;
-            var entityBox = new Box2(ep.X, ep.Y, ep.X + 1, ep.Y + 1);
-            handle.DrawRect(entityBox, EntityHighlightFill);
-            handle.DrawRect(entityBox, EntityHighlightBorder, filled: false);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var uid = SelectedEntityUid.Value;
+            if (entMan.EntityExists(uid)
+                && entMan.TryGetComponent<TransformComponent>(uid, out var xform)
+                && entMan.TryGetComponent<SpriteComponent>(uid, out var sprite))
+            {
+                var spriteSystem = entMan.System<SpriteSystem>();
+                var spriteBounds = spriteSystem.GetLocalBounds((uid, sprite));
+                var entPos = xform.WorldPosition;
+
+                // Draw at the entity's world position (not grid-relative).
+                handle.SetTransform(Matrix3x2.Identity);
+                var worldBox = spriteBounds.Translated(entPos);
+                handle.DrawRect(worldBox, EntityHighlightFill);
+                handle.DrawRect(worldBox, EntityHighlightBorder, filled: false);
+                handle.SetTransform(GridWorldMatrix);
+            }
         }
 
         // Draw selection box on top of everything so it is always visible.
