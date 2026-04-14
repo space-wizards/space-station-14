@@ -32,10 +32,12 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
+        var user = args.User;
+
         var index = 0;
         foreach (var setting in entity.Comp.Settings)
         {
-            // This is because Act wont work with index.
+            // This is because Act won't work with index.
             // Needs it to be saved in the loop.
             var currIndex = index;
             var verb = new Verb
@@ -46,15 +48,24 @@ public abstract class SharedVoltageTogglerSystem : EntitySystem
                 Text = Loc.GetString(setting.Name),
                 Act = () =>
                 {
-                    entity.Comp.SelectedVoltageLevel = currIndex;
-                    Dirty(entity);
-
-                    var ev = new VoltageChangedEvent(setting);
-                    RaiseLocalEvent(entity, ref ev);
+                    ChangeVoltage(entity, currIndex, user);
                 }
             };
             args.Verbs.Add(verb);
             index++;
         }
     }
+
+    public string VoltageString(Voltage voltage)
+    {
+        return voltage switch
+        {
+            Voltage.High => "HV",
+            Voltage.Medium => "MV",
+            Voltage.Apc => "LV",
+            _ => "Unknown",
+        };
+    }
+
+    protected virtual void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user) {}
 }

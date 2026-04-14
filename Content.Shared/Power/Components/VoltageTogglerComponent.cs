@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Components;
 
@@ -19,6 +20,19 @@ public sealed partial class VoltageTogglerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int SelectedVoltageLevel;
+
+    /// <summary>
+    /// Locale id for the popup shown when switching voltages.
+    /// It is given "voltage" as a colored voltage string.
+    /// </summary>
+    [DataField(required: true)]
+    public string SwitchText = string.Empty;
+
+    /// <summary>
+    /// Sound that plays when the cable is switched.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? SwitchSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
 
 /// <summary>
