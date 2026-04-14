@@ -74,10 +74,19 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public Vector2i MoveGhostOffset { get; set; }
 
+    /// <summary>
+    ///     Tile position of the selected entity (from EntitySelectTool), for green highlight.
+    /// </summary>
+    public Vector2i? SelectedEntityPos { get; set; }
+
     // Cyan/blue tint for selection — clearly distinct from the white hover highlight.
     private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
     private static readonly Color SelectionBorderColor = new(0.3f, 0.7f, 1.0f, 0.9f);
     private static readonly Color GhostTileColor = new(0.3f, 0.5f, 1.0f, 0.4f);
+
+    // Green highlight for selected entity.
+    private static readonly Color EntityHighlightFill = new(0.2f, 1.0f, 0.3f, 0.25f);
+    private static readonly Color EntityHighlightBorder = new(0.2f, 1.0f, 0.3f, 0.8f);
 
     protected override void Draw(in OverlayDrawArgs args)
     {
@@ -115,6 +124,15 @@ public sealed class EditorOverlay : Overlay
                 var ghostBox = new Box2(gx, gy, gx + 1, gy + 1);
                 handle.DrawRect(ghostBox, GhostTileColor);
             }
+        }
+
+        // Draw entity selection highlight.
+        if (SelectedEntityPos != null)
+        {
+            var ep = SelectedEntityPos.Value;
+            var entityBox = new Box2(ep.X, ep.Y, ep.X + 1, ep.Y + 1);
+            handle.DrawRect(entityBox, EntityHighlightFill);
+            handle.DrawRect(entityBox, EntityHighlightBorder, filled: false);
         }
 
         // Draw selection box on top of everything so it is always visible.
