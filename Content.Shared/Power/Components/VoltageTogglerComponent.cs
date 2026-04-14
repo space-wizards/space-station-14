@@ -3,7 +3,7 @@
 namespace Content.Shared.Power.Components;
 
 /// <summary>
-/// Changes the voltage of a device with <see cref="PowerConsumerComponent"/>
+/// Changes the voltage of a device that has some field related to voltage
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VoltageTogglerComponent : Component
@@ -22,16 +22,13 @@ public sealed partial class VoltageTogglerComponent : Component
 }
 
 /// <summary>
-/// A voltage setting that the the entity with <see cref="PowerConsumerComponent"/> and
-/// <see cref="VoltageTogglerComponent"/> can be toggled into.
+/// A voltage setting from which a device can be set to change to.
 /// </summary>
 [DataDefinition]
 public partial struct VoltageSetting
 {
     /// <summary>
-    /// The voltage of the setting,
-    /// that being which cable type the entity with <see cref="PowerConsumerComponent"/>
-    /// will consume power from.
+    /// The voltage of the setting
     /// </summary>
     [DataField(required: true)]
     public Voltage Voltage;
@@ -46,8 +43,9 @@ public partial struct VoltageSetting
     /// <summary>
     /// Power usage in that voltage.
     /// </summary>
-    [DataField(required: true)]
-    public float Wattage;
+    /// <remarks>If null it doesn't change any power use</remarks>
+    [DataField]
+    public float? Wattage = null;
 
     /// <summary>
     /// Name of the setting.
