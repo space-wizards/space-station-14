@@ -241,6 +241,11 @@ public sealed partial class GameTicker
         return GetMinimumPlayerCount(preset);
     }
 
+    /// <summary>
+    /// Gets the minimum number of players required for a
+    /// </summary>
+    /// <param name="proto"></param>
+    /// <returns></returns>
     [PublicAPI]
     public int GetMinimumPlayerCount(GamePresetPrototype proto)
     {

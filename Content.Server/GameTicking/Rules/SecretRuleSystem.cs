@@ -153,6 +153,6 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         if (selected == null)
             return false;
 
-        return players > GameTicker.GetMinimumPlayerCount(selected);
+        return players >= GameTicker.GetMinimumPlayerCount(selected);
     }
 }
