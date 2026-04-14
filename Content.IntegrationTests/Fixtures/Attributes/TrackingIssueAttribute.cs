@@ -28,7 +28,7 @@ public sealed class TrackingIssueAttribute : PropertyAttribute
         "github.com"
     ];
 
-    private static readonly Regex GithubStyleIssueMatch = new(@"^\/[a-z\-\$\#]*\/[a-z\-\$\#]*\/(issues|pulls)\/\d*$",
+    private static readonly Regex GithubStyleIssueMatch = new(@"^\/[a-z\d\-\$\#]*\/[a-z\d\-\$\#]*\/(issues|pulls)\/\d*$",
         RegexOptions.Compiled | RegexOptions.NonBacktracking | RegexOptions.IgnoreCase);
 
     public TrackingIssueAttribute([StringSyntax(StringSyntaxAttribute.Uri)] string url) : base(url)

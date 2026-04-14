@@ -1,19 +1,22 @@
 ﻿using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class SecretStartsTest
+public sealed class SecretStartsTest : GameTest
 {
+    public override PoolSettings PoolSettings => new PoolSettings { Dirty = true };
+
     /// <summary>
     ///     Tests that when secret is started, all of the game rules it successfully adds are also started.
     /// </summary>
     [Test]
     public async Task TestSecretStarts()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var pair = Pair;
 
         var server = pair.Server;
         await server.WaitIdleAsync();
@@ -38,7 +41,5 @@ public sealed class SecretStartsTest
             // End all rules
             gameTicker.ClearGameRules();
         });
-
-        await pair.CleanReturnAsync();
     }
 }
