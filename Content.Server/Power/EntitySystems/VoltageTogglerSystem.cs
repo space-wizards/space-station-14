@@ -52,9 +52,12 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
         if (user == null)
             return;
 
-        var voltage = setting.Voltage;
-        var popup = Loc.GetString(entity.Comp.SwitchText, ("voltage", VoltageString(voltage)));
-        _popup.PopupEntity(popup, entity, user.Value);
+        if (entity.Comp.SwitchText != null)
+        {
+            var voltage = setting.Voltage;
+            var popup = Loc.GetString(entity.Comp.SwitchText, ("voltage", VoltageString(voltage)));
+            _popup.PopupEntity(popup, entity, user.Value);
+        }
 
         _audio.PlayPvs(entity.Comp.SwitchSound, entity);
     }

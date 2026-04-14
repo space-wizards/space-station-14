@@ -25,8 +25,8 @@ public sealed partial class VoltageTogglerComponent : Component
     /// Locale id for the popup shown when switching voltages.
     /// It is given "voltage" as a colored voltage string.
     /// </summary>
-    [DataField(required: true)]
-    public string SwitchText = string.Empty;
+    [DataField]
+    public string? SwitchText;
 
     /// <summary>
     /// Locale id for text shown when examined.
