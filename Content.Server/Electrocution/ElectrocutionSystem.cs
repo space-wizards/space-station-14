@@ -71,8 +71,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private static readonly JitterParameters Jitter = new()
     {
         Frequency = 8f,
-        MaxRadius = 1.1f,
-        MinRadius = 0.55f,
+        MaxRadius = 0.35f,
+        MinRadius = 0.3f,
     };
 
     public override void Initialize()

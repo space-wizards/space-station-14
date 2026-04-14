@@ -131,7 +131,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             {
                 Frequency = 10f,
                 MaxRadius = 0.05f,
-                MinRadius = 0.02f,
+                MinRadius = 0.05f,
                 MatrixY = Vector2.Zero,
             };
             _jitteringSystem.CreateJitter(uid, jitter);

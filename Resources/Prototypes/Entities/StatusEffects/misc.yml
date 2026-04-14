@@ -99,9 +99,24 @@
   name: drunk
 
 ## Jitter
-#- type: entity
-#  parent: StatusEffectDebuff
-#  id: StatusEffectJitter
-#  name: jitter
-#  components:
-#  - type: JitteringStatusEffect
+
+- type: entity
+  parent: [StatusEffectBase, StatusEffectDebuff]
+  id: StatusEffectBasicJitter
+  name: jittering
+  components:
+  - type: JitteringStatusEffect
+
+- type: entity
+  parent: StatusEffectBasicJitter
+  id: StatusEffectFastJitter
+  name: heavy jittering
+  components:
+  - type: JitteringStatusEffect
+
+- type: entity
+  parent: StatusEffectBasicJitter
+  id: StatusEffectWideJitter
+  name: swaying
+  components:
+  - type: JitteringStatusEffect
