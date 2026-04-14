@@ -554,8 +554,9 @@ public sealed class MapEditorState : State
             }
         }
 
-        // --- Tool shortcuts (only without modifiers) ---
-        if (!ctrl)
+        // --- Tool shortcuts (only without modifiers, and not when entity select tool
+        //     is active since R is used for rotation there) ---
+        if (!ctrl && _activeTool is not EntitySelectTool)
         {
             var bDown = _input.IsKeyDown(Keyboard.Key.B);
             if (bDown && !_wasBDown)
