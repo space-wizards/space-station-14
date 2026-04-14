@@ -21,14 +21,6 @@ public sealed class PowerNetworkBatteryChargerVoltageTogglerSystem : SharedPower
             !TryComp<BatteryChargerComponent>(entity, out var batteryChargerComp))
             return;
 
-        var newNodeGroupId = setting.Voltage switch
-        {
-            Voltage.Apc => NodeGroupID.Apc,
-            Voltage.Medium => NodeGroupID.MVPower,
-            Voltage.High => NodeGroupID.HVPower,
-            _ => NodeGroupID.Default,
-        };
-
         foreach (var settingAlt in entity.Comp.Settings)
         {
             var node = (CableDeviceNode) nodeContainerComp.Nodes[settingAlt.Node];
