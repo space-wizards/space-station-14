@@ -28,4 +28,9 @@ public sealed class ToolContext
     ///     Clipboard data for copy/paste operations. Shared across tool instances.
     /// </summary>
     public ClipboardData? Clipboard { get; set; }
+
+    /// <summary>
+    ///     The entity prototype ID to place. Set by the entity palette.
+    /// </summary>
+    public string? SelectedEntityPrototype { get; set; }
 }

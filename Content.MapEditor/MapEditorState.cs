@@ -21,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.MapEditor;
@@ -35,6 +36,7 @@ public sealed class MapEditorState : State
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private ISawmill _sawmill = default!;
     private MapEditorScreen _screen = default!;
@@ -81,6 +83,8 @@ public sealed class MapEditorState : State
     private bool _wasZDown;
     private bool _wasYDown;
     private bool _wasDeleteDown;
+    private bool _wasGDown;
+    private bool _wasQDown;
 
     public MapEditorState()
     {
@@ -132,8 +136,14 @@ public sealed class MapEditorState : State
         _screen.OnGridTabSelected += OnGridTabSelected;
         _screen.OnAddGridPressed += OnAddGridPressed;
 
+        // Wire entity palette events.
+        _screen.OnEntityPrototypeSelected += OnEntityPrototypeSelected;
+
         // Populate the tile palette.
         _screen.PopulateTilePalette(_tileDefs);
+
+        // Populate the entity palette.
+        _screen.PopulateEntityPalette(_prototypeManager);
 
         // Register hover highlight overlay.
         _editorOverlay = new EditorOverlay();
@@ -156,6 +166,7 @@ public sealed class MapEditorState : State
         _screen.OnTileSelected -= OnTileSelected;
         _screen.OnGridTabSelected -= OnGridTabSelected;
         _screen.OnAddGridPressed -= OnAddGridPressed;
+        _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
 
         IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_editorOverlay);
 
@@ -363,6 +374,16 @@ public sealed class MapEditorState : State
             _editorOverlay.PreviewBorderColor = new Color(fill.R, fill.G, fill.B, 0.5f);
         }
 
+        // Update entity selection highlight for the EntitySelectTool.
+        if (_activeTool is EntitySelectTool entitySelect)
+        {
+            _editorOverlay.SelectedEntityPos = entitySelect.SelectedTilePos;
+        }
+        else
+        {
+            _editorOverlay.SelectedEntityPos = null;
+        }
+
         // Update the selection box for the SelectTool — both during drag and after.
         if (_activeTool is SelectTool selectTool)
         {
@@ -484,6 +505,26 @@ public sealed class MapEditorState : State
             _commandStack.Redo();
         }
 
+        // --- EntitySelectTool operations (Delete, R/Shift+R for rotate) ---
+        if (_activeTool is EntitySelectTool entitySelectTool)
+        {
+            var deleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
+            if (deleteDown && !_wasDeleteDown)
+                entitySelectTool.DeleteSelected(_toolContext);
+
+            if (!ctrl)
+            {
+                var rDown = _input.IsKeyDown(Keyboard.Key.R);
+                if (rDown && !_wasRDown)
+                {
+                    if (_input.IsKeyDown(Keyboard.Key.Shift))
+                        entitySelectTool.RotateSelectedCCW(_toolContext);
+                    else
+                        entitySelectTool.RotateSelectedCW(_toolContext);
+                }
+            }
+        }
+
         // --- SelectTool operations (Ctrl+C, Ctrl+X, Ctrl+V, Delete) ---
         if (_activeTool is SelectTool selectTool)
         {
@@ -547,6 +588,14 @@ public sealed class MapEditorState : State
             var sDown = _input.IsKeyDown(Keyboard.Key.S);
             if (sDown && !_wasSDown)
                 OnToolSelected("select");
+
+            var gDown = _input.IsKeyDown(Keyboard.Key.G);
+            if (gDown && !_wasGDown)
+                OnToolSelected("entityplace");
+
+            var qDown = _input.IsKeyDown(Keyboard.Key.Q);
+            if (qDown && !_wasQDown)
+                OnToolSelected("entityselect");
         }
 
         UpdatePreviousKeyState();
@@ -567,6 +616,8 @@ public sealed class MapEditorState : State
         _wasZDown = _input.IsKeyDown(Keyboard.Key.Z);
         _wasYDown = _input.IsKeyDown(Keyboard.Key.Y);
         _wasDeleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
+        _wasGDown = _input.IsKeyDown(Keyboard.Key.G);
+        _wasQDown = _input.IsKeyDown(Keyboard.Key.Q);
     }
 
     #endregion
@@ -625,6 +676,14 @@ public sealed class MapEditorState : State
                 _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 1.0f, 0.15f);
                 _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 1.0f, 0.8f);
                 break;
+            case "entityplace":
+                _editorOverlay.HighlightColor = new Color(0.4f, 1.0f, 0.6f, 0.3f);
+                _editorOverlay.BorderColor = new Color(0.4f, 1.0f, 0.6f, 0.7f);
+                break;
+            case "entityselect":
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.8f, 1.0f, 0.25f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.8f, 1.0f, 0.7f);
+                break;
             default: // paint
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
@@ -644,6 +703,8 @@ public sealed class MapEditorState : State
             "line" => new LineTool(),
             "circle" => new CircleTool(),
             "select" => new SelectTool(),
+            "entityplace" => new EntityPlaceTool(),
+            "entityselect" => new EntitySelectTool(),
             _ => new PaintTool(),
         };
 
@@ -658,6 +719,17 @@ public sealed class MapEditorState : State
         if (_activeToolKey != "paint")
         {
             SetActiveTool(new PaintTool(), "paint");
+        }
+    }
+
+    private void OnEntityPrototypeSelected(string protoId)
+    {
+        _toolContext.SelectedEntityPrototype = protoId;
+
+        // Auto-switch to entity place tool when an entity is selected.
+        if (_activeToolKey != "entityplace")
+        {
+            SetActiveTool(new EntityPlaceTool(), "entityplace");
         }
     }
 
@@ -900,6 +972,17 @@ public sealed class MapEditorState : State
         _screen.SetStatusZoom($"Zoom: {zoom:F2}x");
 
         _screen.SetStatusTool(_activeTool.Name);
+
+        // Show entity info when EntitySelectTool has a selection.
+        if (_activeTool is EntitySelectTool { SelectedEntity: { } selectedUid } &&
+            _entityManager.EntityExists(selectedUid))
+        {
+            var meta = _entityManager.GetComponent<MetaDataComponent>(selectedUid);
+            var xform = _entityManager.GetComponent<TransformComponent>(selectedUid);
+            var entPos = xform.Coordinates.Position;
+            var protoId = meta.EntityPrototype?.ID ?? "unknown";
+            _screen.SetStatusInfo($"Entity: {protoId} @ ({entPos.X:F1}, {entPos.Y:F1}) [uid={selectedUid}]");
+        }
     }
 
     #endregion

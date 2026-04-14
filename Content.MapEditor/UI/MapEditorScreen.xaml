@@ -34,16 +34,26 @@
                     <controls:MainViewport Name="MainViewport" Access="Public" />
                 </LayoutContainer>
 
-                <!-- Right tile palette -->
+                <!-- Right palette panel with Tiles/Entities tabs -->
                 <PanelContainer Name="PalettePanel" MinWidth="250" MaxWidth="250">
                     <PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BackgroundColor="#2A2A2ADD" />
                     </PanelContainer.PanelOverride>
-                    <BoxContainer Name="PaletteLayout" Orientation="Vertical" Margin="4">
-                        <Label Text="Tiles" Margin="0 0 0 4" />
-                        <LineEdit Name="TileSearchEdit" HorizontalExpand="True" PlaceHolder="Search tiles..." Margin="0 0 0 4" />
-                        <ItemList Name="TileList" VerticalExpand="True" HorizontalExpand="True" />
-                    </BoxContainer>
+                    <TabContainer Name="PaletteTabContainer" VerticalExpand="True" HorizontalExpand="True">
+
+                        <!-- Tiles tab -->
+                        <BoxContainer Name="TileTabContent" Orientation="Vertical" Margin="4">
+                            <LineEdit Name="TileSearchEdit" HorizontalExpand="True" PlaceHolder="Search tiles..." Margin="0 0 0 4" />
+                            <ItemList Name="TileList" VerticalExpand="True" HorizontalExpand="True" />
+                        </BoxContainer>
+
+                        <!-- Entities tab -->
+                        <BoxContainer Name="EntityTabContent" Orientation="Vertical" Margin="4">
+                            <LineEdit Name="EntitySearchEdit" HorizontalExpand="True" PlaceHolder="Search entities..." Margin="0 0 0 4" />
+                            <ItemList Name="EntityList" VerticalExpand="True" HorizontalExpand="True" />
+                        </BoxContainer>
+
+                    </TabContainer>
                 </PanelContainer>
 
             </BoxContainer>
