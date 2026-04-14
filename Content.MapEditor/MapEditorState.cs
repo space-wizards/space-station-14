@@ -392,13 +392,53 @@ public sealed class MapEditorState : State
         var grids = new List<Entity<MapGridComponent>>();
         _mapManager.FindGridsIntersecting(mapCoords.MapId, pointBox, ref grids);
 
-        if (grids.Count == 0)
+        if (grids.Count > 0)
+        {
+            // Grid found at cursor — use it.
+            var grid = grids[0];
+            gridUid = grid.Owner;
+            tilePos = mapSystem.CoordinatesToTile(gridUid, grid.Comp, mapCoords);
+            return true;
+        }
+
+        // No grid at cursor — fall back to the active grid (or first grid on the map).
+        // This allows placing tiles on erased areas and building into empty space.
+        if (TryGetActiveGrid(mapCoords.MapId, out gridUid))
+        {
+            var gridComp = _entityManager.GetComponent<MapGridComponent>(gridUid);
+            tilePos = mapSystem.CoordinatesToTile(gridUid, gridComp, mapCoords);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Gets the active grid for editing. Falls back to the first grid on the map.
+    ///     If no grid exists, creates one.
+    /// </summary>
+    private bool TryGetActiveGrid(MapId mapId, out EntityUid gridUid)
+    {
+        gridUid = default;
+
+        // Find any grid on this map.
+        var query = _entityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
+        {
+            if (xform.MapID != mapId)
+                continue;
+
+            gridUid = uid;
+            return true;
+        }
+
+        // No grid exists — create one for new map editing.
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        if (mapUid == EntityUid.Invalid)
             return false;
 
-        // Use the first grid found (most maps have one main grid).
-        var grid = grids[0];
-        gridUid = grid.Owner;
-        tilePos = mapSystem.CoordinatesToTile(gridUid, grid.Comp, mapCoords);
+        var newGrid = _mapManager.CreateGridEntity(mapId);
+        gridUid = newGrid.Owner;
         return true;
     }
 
