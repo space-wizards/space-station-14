@@ -94,7 +94,7 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectSway ]
   id: StatusEffectDrunk
   name: drunk
 
@@ -102,21 +102,34 @@
 
 - type: entity
   parent: [StatusEffectBase, StatusEffectDebuff]
-  id: StatusEffectBasicJitter
+  id: StatusEffectJitter
   name: jittering
   components:
   - type: JitteringStatusEffect
+    jitter:
+      frequency: 3
+      maxRadius: 0.15
+      minRadius: 0.05
 
 - type: entity
-  parent: StatusEffectBasicJitter
+  parent: StatusEffectJitter
   id: StatusEffectFastJitter
   name: heavy jittering
   components:
   - type: JitteringStatusEffect
+    jitter:
+      frequency: 12
+      maxRadius: 0.05
+      minRadius: 0.05
 
 - type: entity
-  parent: StatusEffectBasicJitter
-  id: StatusEffectWideJitter
+  parent: StatusEffectJitter
+  id: StatusEffectSway
   name: swaying
   components:
   - type: JitteringStatusEffect
+    jitter:
+      frequency: 1
+      maxRadius: 0.2
+      minRadius: 0.15
+      matrixY: 0, 0.3

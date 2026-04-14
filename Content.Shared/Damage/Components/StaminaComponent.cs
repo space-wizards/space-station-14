@@ -105,6 +105,7 @@ public sealed partial class StaminaComponent : Component
     [DataField]
     public float AnimationThreshold = 50;
 
+    //todo
     /// <summary>
     /// Minimum y vector displacement for breathing at AnimationThreshold
     /// </summary>

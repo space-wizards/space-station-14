@@ -651,7 +651,7 @@
     Bloodstream:
       effects:
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition

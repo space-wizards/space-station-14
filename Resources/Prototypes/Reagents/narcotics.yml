@@ -93,7 +93,7 @@
         type: Remove
       # Side effects
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
       - !type:PopupMessage
         visualType: Medium
@@ -237,8 +237,8 @@
         time: 16
         type: Add
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectWideJitter
-        time: 4
+        effectProto: StatusEffectSway
+        time: 6
         type: Add
 
 - type: reagent

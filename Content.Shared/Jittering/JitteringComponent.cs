@@ -33,13 +33,8 @@ public sealed partial class JitteringStatusEffectComponent : Component
     /// <summary>
     /// Parameters for the behavior and movement of a jitter.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public JitterParameters Jitter = new()
-    {
-        Frequency = 3,
-        MaxRadius = 0.15f,
-        MinRadius = 0.05f,
-    };
+    [DataField(required: true), AutoNetworkedField]
+    public JitterParameters Jitter;
 }
 
 [DataDefinition, Serializable, NetSerializable]

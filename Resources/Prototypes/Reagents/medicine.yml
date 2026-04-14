@@ -42,7 +42,7 @@
           types:
             Blunt: 2
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -89,7 +89,7 @@
         reagent: Histamine
         amount: -3.0
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         time: 3.0
         type: Remove
       - !type:ModifyStatusEffect
@@ -167,7 +167,7 @@
           min: 30
         probability: 0.02
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -251,7 +251,7 @@
             Cold: 2
             Blunt: 0.5
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -424,7 +424,7 @@
           types:
            Heat: 2
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -580,7 +580,7 @@
         key: Stutter
         component: StutteringAccent
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
       - !type:Emote
         emote: Scream
@@ -992,7 +992,7 @@
     Bloodstream:
       effects:
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
       - !type:GenericStatusEffect
         key: Stutter
@@ -1063,7 +1063,7 @@
           types:
             Heat: 1 # 4 per u
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -1303,7 +1303,7 @@
           min: 12
         amount: -30000
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         type: Add
         conditions:
         - !type:ReagentCondition
@@ -1419,7 +1419,7 @@
         type: Add
         time: 8
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         time: 2.0
         type: Remove
       - !type:ModifyStatusEffect
@@ -1480,7 +1480,7 @@
         time: 4
         type: Add
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectBasicJitter
+        effectProto: StatusEffectJitter
         time: 4.0
         type: Remove
       - !type:ModifyStatusEffect
