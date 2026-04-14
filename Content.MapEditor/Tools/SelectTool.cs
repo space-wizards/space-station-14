@@ -17,12 +17,16 @@ public sealed class SelectTool : IEditorTool
     private Vector2i _dragStart;
     private Vector2i _dragEnd;
     private bool _isDragging;
+    private bool _isMoving;
+    private Vector2i _moveOrigin;
 
     /// <summary>
     ///     The finalized selection rectangle, or null if nothing is selected.
-    ///     Uses inclusive tile coordinates: Bottom-Left is min corner, Top-Right+1 is max corner.
     /// </summary>
     public Box2i? Selection { get; private set; }
+
+    /// <summary>True if currently moving the selection.</summary>
+    public bool IsMoving => _isMoving;
 
     /// <summary>Start corner of the in-progress drag, exposed for overlay preview.</summary>
     public Vector2i? DragStart => _isDragging ? _dragStart : null;
@@ -30,32 +34,116 @@ public sealed class SelectTool : IEditorTool
     /// <summary>Current end corner of the in-progress drag, exposed for overlay preview.</summary>
     public Vector2i? DragEnd => _isDragging ? _dragEnd : null;
 
+    // For move mode: track the original selection and accumulated offset.
+    private Box2i _originalSelection;
+    private Vector2i _totalMoveOffset;
+
     public void OnMouseDown(ToolContext ctx, Vector2i tilePos)
     {
+        // If clicking inside an existing selection, enter move mode.
+        if (Selection != null && Selection.Value.Contains(tilePos))
+        {
+            _isMoving = true;
+            _moveOrigin = tilePos;
+            _originalSelection = Selection.Value;
+            _totalMoveOffset = Vector2i.Zero;
+            return;
+        }
+
+        // Otherwise start a new selection drag.
         _isDragging = true;
+        _isMoving = false;
         _dragStart = tilePos;
         _dragEnd = tilePos;
-        Selection = null; // clear previous selection on new drag
+        Selection = null;
     }
 
     public void OnMouseDrag(ToolContext ctx, Vector2i tilePos)
     {
+        if (_isMoving)
+        {
+            // Update visual selection position as user drags.
+            var delta = tilePos - _moveOrigin;
+            _totalMoveOffset += delta;
+            Selection = new Box2i(
+                Selection!.Value.Left + delta.X,
+                Selection.Value.Bottom + delta.Y,
+                Selection.Value.Right + delta.X,
+                Selection.Value.Top + delta.Y);
+            _moveOrigin = tilePos;
+            return;
+        }
+
         _dragEnd = tilePos;
     }
 
     public void OnMouseUp(ToolContext ctx)
     {
+        if (_isMoving)
+        {
+            _isMoving = false;
+
+            // Apply the tile move if there was actual displacement.
+            if (_totalMoveOffset != Vector2i.Zero)
+                ApplyMove(ctx, _originalSelection, _totalMoveOffset);
+            return;
+        }
+
         if (!_isDragging)
             return;
 
         _isDragging = false;
 
-        // Finalize selection as a Box2i (tiles are inclusive, so +1 on max).
         var minX = Math.Min(_dragStart.X, _dragEnd.X);
         var minY = Math.Min(_dragStart.Y, _dragEnd.Y);
         var maxX = Math.Max(_dragStart.X, _dragEnd.X);
         var maxY = Math.Max(_dragStart.Y, _dragEnd.Y);
         Selection = new Box2i(minX, minY, maxX + 1, maxY + 1);
+    }
+
+    /// <summary>
+    ///     Moves tiles from the original selection area by the given offset.
+    ///     Clears the source tiles and places them at the destination.
+    /// </summary>
+    private void ApplyMove(ToolContext ctx, Box2i source, Vector2i offset)
+    {
+        var gridUid = ctx.ActiveGridUid;
+        var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
+        var batch = new BatchCommand();
+
+        // Collect source tiles first (before modifying anything).
+        var tiles = new System.Collections.Generic.Dictionary<Vector2i, Tile>();
+        for (var x = source.Left; x < source.Right; x++)
+        {
+            for (var y = source.Bottom; y < source.Top; y++)
+            {
+                var pos = new Vector2i(x, y);
+                var tile = ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile;
+                if (tile != Tile.Empty)
+                    tiles[pos] = tile;
+            }
+        }
+
+        // Clear source positions.
+        foreach (var (pos, tile) in tiles)
+        {
+            var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, tile, Tile.Empty);
+            cmd.Execute();
+            batch.Add(cmd);
+        }
+
+        // Place at destination positions.
+        foreach (var (pos, tile) in tiles)
+        {
+            var destPos = pos + offset;
+            var oldDest = ctx.MapSystem.GetTileRef(gridUid, grid, destPos).Tile;
+            var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, destPos, oldDest, tile);
+            cmd.Execute();
+            batch.Add(cmd);
+        }
+
+        if (batch.Count > 0)
+            ctx.CommandStack.Push(batch);
     }
 
     /// <summary>
