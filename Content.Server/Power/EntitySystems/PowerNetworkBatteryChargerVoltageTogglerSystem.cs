@@ -14,6 +14,17 @@ public sealed class PowerNetworkBatteryChargerVoltageTogglerSystem : SharedPower
 {
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<PowerNetworkBatteryChargerVoltageTogglerComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, ref MapInitEvent args)
+    {
+        ChangeVoltage(entity, entity.Comp.Settings[entity.Comp.SelectedVoltageLevel]);
+    }
+
     protected override void ChangeVoltage(Entity<PowerNetworkBatteryChargerVoltageTogglerComponent> entity, VoltageSetting setting)
     {
         if (!TryComp<NodeContainerComponent>(entity, out var nodeContainerComp) ||
