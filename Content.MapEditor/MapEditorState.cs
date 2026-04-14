@@ -60,6 +60,13 @@ public sealed class MapEditorState : State
     private Vector2i _lastToolTilePos;
     private EntityUid _lastToolGridUid;
 
+    // Keyboard shortcut edge detection (tracks previous frame state to detect press edges)
+    private bool _wasBDown;
+    private bool _wasEDown;
+    private bool _wasIDown;
+    private bool _wasZDown;
+    private bool _wasYDown;
+
     public MapEditorState()
     {
         IoCManager.InjectDependencies(this);
@@ -138,6 +145,7 @@ public sealed class MapEditorState : State
     public override void FrameUpdate(FrameEventArgs e)
     {
         UpdatePan();
+        UpdateKeyboardShortcuts();
         UpdateToolDrag();
         UpdateStatusBar();
     }
@@ -199,6 +207,69 @@ public sealed class MapEditorState : State
     private void OnResetZoomPressed()
     {
         _eye.Zoom = Vector2.One;
+    }
+
+    #endregion
+
+    #region Keyboard Shortcuts
+
+    /// <summary>
+    ///     Polls key states each frame and fires actions on press edges.
+    ///     B = Paint, E = Erase, I = Eyedropper, Ctrl+Z = Undo, Ctrl+Y / Ctrl+Shift+Z = Redo.
+    /// </summary>
+    private void UpdateKeyboardShortcuts()
+    {
+        // Don't process shortcuts while a tool stroke is in progress.
+        if (_isToolActive)
+        {
+            UpdatePreviousKeyState();
+            return;
+        }
+
+        var ctrl = _input.IsKeyDown(Keyboard.Key.Control);
+
+        // --- Undo / Redo ---
+        var zDown = _input.IsKeyDown(Keyboard.Key.Z);
+        if (zDown && !_wasZDown && ctrl)
+        {
+            if (_input.IsKeyDown(Keyboard.Key.Shift))
+                _commandStack.Redo();
+            else
+                _commandStack.Undo();
+        }
+
+        var yDown = _input.IsKeyDown(Keyboard.Key.Y);
+        if (yDown && !_wasYDown && ctrl)
+        {
+            _commandStack.Redo();
+        }
+
+        // --- Tool shortcuts (only without modifiers) ---
+        if (!ctrl)
+        {
+            var bDown = _input.IsKeyDown(Keyboard.Key.B);
+            if (bDown && !_wasBDown)
+                OnToolSelected("paint");
+
+            var eDown = _input.IsKeyDown(Keyboard.Key.E);
+            if (eDown && !_wasEDown)
+                OnToolSelected("erase");
+
+            var iDown = _input.IsKeyDown(Keyboard.Key.I);
+            if (iDown && !_wasIDown)
+                OnToolSelected("eyedropper");
+        }
+
+        UpdatePreviousKeyState();
+    }
+
+    private void UpdatePreviousKeyState()
+    {
+        _wasBDown = _input.IsKeyDown(Keyboard.Key.B);
+        _wasEDown = _input.IsKeyDown(Keyboard.Key.E);
+        _wasIDown = _input.IsKeyDown(Keyboard.Key.I);
+        _wasZDown = _input.IsKeyDown(Keyboard.Key.Z);
+        _wasYDown = _input.IsKeyDown(Keyboard.Key.Y);
     }
 
     #endregion
