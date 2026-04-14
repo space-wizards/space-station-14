@@ -432,12 +432,8 @@
     Bloodstream:
       effects:
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectStandardJitter
+        effectProto: StatusEffectBasicJitter
         time: 1
-        type: Add
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSuperJitter
-        time: 2
         type: Add
     Digestion:
       effects:

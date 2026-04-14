@@ -1,0 +1,10 @@
+# Status effects which apply cosmetic changes
+
+# Jittering
+
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectBasicJitter
+  name: jittering
+  components:
+  - type: JitteringStatusEffect

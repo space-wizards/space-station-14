@@ -110,7 +110,7 @@ namespace Content.Client.Jittering
             var newOffset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
 
             // If we're in the same quadrant as our current location, invert the offset
-            // Reduces repetitive behavior and increases large movements
+            // Reduces repetitive behavior and increases large movements, but breaks if the matrix has a translation
             if (Math.Sign(newOffset.X) == Math.Sign(currentOffset.X)
                 && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y))
             {
