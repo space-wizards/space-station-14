@@ -32,7 +32,7 @@ public sealed partial class VoltageTogglerComponent : Component
     /// Locale id for text shown when examined.
     /// It is given "voltage" as a colored voltage string.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public string ExamineText = "voltage-toggler-examine";
 
     /// <summary>
