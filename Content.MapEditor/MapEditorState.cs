@@ -57,6 +57,7 @@ public sealed class MapEditorState : State
     private IEditorTool _activeTool = new PaintTool();
     private string _activeToolKey = "paint";
     private bool _isToolActive; // true while left mouse is held and tool is in a stroke
+    private bool _wasLeftDown;
     private Vector2i _lastToolTilePos;
     private EntityUid _lastToolGridUid;
 
@@ -108,8 +109,6 @@ public sealed class MapEditorState : State
 
         // Wire scroll-wheel zoom from the viewport overlay.
         _screen.OnViewportScroll += OnViewportScroll;
-        _screen.OnViewportLeftDown += OnViewportLeftDown;
-        _screen.OnViewportLeftUp += OnViewportLeftUp;
 
         // Wire toolbar and palette events.
         _screen.OnToolSelected += OnToolSelected;
@@ -131,8 +130,6 @@ public sealed class MapEditorState : State
         _screen.EditRedoButton.OnPressed -= OnRedoPressed;
         _screen.ViewResetZoomButton.OnPressed -= OnResetZoomPressed;
         _screen.OnViewportScroll -= OnViewportScroll;
-        _screen.OnViewportLeftDown -= OnViewportLeftDown;
-        _screen.OnViewportLeftUp -= OnViewportLeftUp;
         _screen.OnToolSelected -= OnToolSelected;
         _screen.OnTileSelected -= OnTileSelected;
 
@@ -146,7 +143,7 @@ public sealed class MapEditorState : State
     {
         UpdatePan();
         UpdateKeyboardShortcuts();
-        UpdateToolDrag();
+        UpdateToolInput();
         UpdateStatusBar();
     }
 
@@ -317,62 +314,49 @@ public sealed class MapEditorState : State
         }
     }
 
-    private void OnViewportLeftDown(ScreenCoordinates screenPos)
-    {
-        if (_isPanning)
-            return;
-
-        if (!TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
-            return;
-
-        _isToolActive = true;
-        _lastToolTilePos = tilePos;
-        _lastToolGridUid = gridUid;
-        _activeTool.OnMouseDown(_toolContext, tilePos, gridUid);
-
-        // If the eyedropper picked a tile, update the palette to reflect it.
-        if (_activeToolKey == "eyedropper")
-        {
-            _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
-        }
-    }
-
-    private void OnViewportLeftUp(ScreenCoordinates screenPos)
-    {
-        if (!_isToolActive)
-            return;
-
-        _isToolActive = false;
-        _activeTool.OnMouseUp(_toolContext);
-    }
-
-    /// <summary>
-    ///     Called every frame to dispatch drag events while left mouse is held.
+/// <summary>
+    ///     Polls left mouse button each frame to dispatch tool start/drag/end.
     /// </summary>
-    private void UpdateToolDrag()
+    private void UpdateToolInput()
     {
-        if (!_isToolActive)
-            return;
+        var leftDown = _input.IsKeyDown(Keyboard.Key.MouseLeft);
+        var screenPos = _input.MouseScreenPosition;
 
-        // If left mouse was released without going through our event (e.g. focus lost), clean up.
-        if (!_input.IsKeyDown(Keyboard.Key.MouseLeft))
+        if (leftDown && !_wasLeftDown)
         {
+            // Left mouse just pressed — start tool stroke.
+            if (!_isPanning && TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            {
+                _isToolActive = true;
+                _lastToolTilePos = tilePos;
+                _lastToolGridUid = gridUid;
+                _activeTool.OnMouseDown(_toolContext, tilePos, gridUid);
+
+                if (_activeToolKey == "eyedropper")
+                    _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
+            }
+        }
+        else if (leftDown && _isToolActive)
+        {
+            // Left mouse held — drag.
+            if (TryResolveGridTile(screenPos, out var gridUid, out var tilePos))
+            {
+                if (tilePos != _lastToolTilePos || gridUid != _lastToolGridUid)
+                {
+                    _lastToolTilePos = tilePos;
+                    _lastToolGridUid = gridUid;
+                    _activeTool.OnMouseDrag(_toolContext, tilePos, gridUid);
+                }
+            }
+        }
+        else if (!leftDown && _isToolActive)
+        {
+            // Left mouse released — end stroke.
             _isToolActive = false;
             _activeTool.OnMouseUp(_toolContext);
-            return;
         }
 
-        var currentScreenPos = _input.MouseScreenPosition;
-        if (!TryResolveGridTile(currentScreenPos, out var gridUid, out var tilePos))
-            return;
-
-        // Only dispatch drag if the tile position changed.
-        if (tilePos == _lastToolTilePos && gridUid == _lastToolGridUid)
-            return;
-
-        _lastToolTilePos = tilePos;
-        _lastToolGridUid = gridUid;
-        _activeTool.OnMouseDrag(_toolContext, tilePos, gridUid);
+        _wasLeftDown = leftDown;
     }
 
     /// <summary>
