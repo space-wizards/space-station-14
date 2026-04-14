@@ -1,8 +1,7 @@
 using Content.Shared.FixedPoint;
-using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Store.Components;
+namespace Content.Shared.Store.Components;
 
 /// <summary>
 /// Identifies a component that can be inserted into a store

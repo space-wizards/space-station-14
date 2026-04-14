@@ -1,12 +1,12 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Mind;
-using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Store.Systems;
+namespace Content.Shared.Store;
 
-public sealed partial class StoreSystem
+
+public abstract partial class SharedStoreSystem
 {
     /// <summary>
     /// Refreshes all listings on a store.
@@ -46,7 +46,7 @@ public sealed partial class StoreSystem
     public HashSet<ListingDataWithCostModifiers> GetAllListings()
     {
         var clones = new HashSet<ListingDataWithCostModifiers>();
-        foreach (var prototype in _proto.EnumeratePrototypes<ListingPrototype>())
+        foreach (var prototype in Proto.EnumeratePrototypes<ListingPrototype>())
         {
             clones.Add(new ListingDataWithCostModifiers(prototype));
         }
@@ -62,7 +62,7 @@ public sealed partial class StoreSystem
     /// <returns>Whether or not the listing was added successfully</returns>
     public bool TryAddListing(StoreComponent component, string listingId)
     {
-        if (!_proto.TryIndex<ListingPrototype>(listingId, out var proto))
+        if (!Proto.TryIndex<ListingPrototype>(listingId, out var proto))
         {
             Log.Error("Attempted to add invalid listing.");
             return false;
@@ -145,7 +145,7 @@ public sealed partial class StoreSystem
     /// <param name="buyer">The buying entity.</param>
     public EntityUid GetBuyerMind(EntityUid buyer)
     {
-        if (!HasComp<MindComponent>(buyer) && _mind.TryGetMind(buyer, out var buyerMind, out var _))
+        if (!HasComp<MindComponent>(buyer) && Mind.TryGetMind(buyer, out var buyerMind, out _))
             return buyerMind;
 
         return buyer;
