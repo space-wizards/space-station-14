@@ -99,10 +99,14 @@ public sealed partial class MapEditorScreen : UIScreen
     private readonly List<(string Name, int TileId, Texture? Icon)> _allTileDefs = new();
 
     // Entity prototypes cached for filtering (includes sprite icon when available).
-    private readonly List<(string Display, string ProtoId, Texture? Icon)> _allEntityProtos = new();
+    private readonly List<(string Display, string ProtoId, Texture? Icon, string Category)> _allEntityProtos = new();
 
     // Maximum entity results shown in the list for performance.
     private const int MaxEntityResults = 500;
+
+    // Entity category sections for collapsible browsing.
+    private readonly Dictionary<string, (Collapsible Section, ItemList List)> _categorySections = new();
+    private ItemList? _entityFlatList;
 
     // Entity info panel labels and buttons (built in code-behind).
     private Label _entityInfoProtoLabel = default!;
@@ -214,7 +218,6 @@ public sealed partial class MapEditorScreen : UIScreen
 
         // Wire entity search filtering.
         EntitySearchEdit.OnTextChanged += OnEntitySearchChanged;
-        EntityList.OnItemSelected += OnEntityItemSelected;
 
         // Add the "+" button to the grid tab bar (always present).
         _addGridButton = new Button
@@ -527,6 +530,19 @@ public sealed partial class MapEditorScreen : UIScreen
             if (proto.HideSpawnMenu || proto.Abstract)
                 continue;
 
+            // Skip entities whose categories include one with HideSpawnMenu.
+            var hiddenByCategory = false;
+            foreach (var cat in proto.Categories)
+            {
+                if (cat.HideSpawnMenu)
+                {
+                    hiddenByCategory = true;
+                    break;
+                }
+            }
+            if (hiddenByCategory)
+                continue;
+
             // Display as "Name [ID]" if Name differs from ID, otherwise just ID.
             string display;
             try
@@ -554,7 +570,22 @@ public sealed partial class MapEditorScreen : UIScreen
                 // Some prototypes may fail to resolve textures — fall back to no icon.
             }
 
-            _allEntityProtos.Add((display, proto.ID, icon));
+            // Determine category from EntityCategoryPrototype, fall back to first letter.
+            var category = "Uncategorized";
+            foreach (var cat in proto.Categories)
+            {
+                if (!cat.HideSpawnMenu)
+                {
+                    category = cat.Name ?? cat.ID;
+                    break;
+                }
+            }
+            if (category == "Uncategorized" && proto.ID.Length > 0)
+            {
+                category = char.ToUpperInvariant(proto.ID[0]).ToString();
+            }
+
+            _allEntityProtos.Add((display, proto.ID, icon, category));
         }
 
         // Sort alphabetically by prototype ID.
@@ -570,31 +601,89 @@ public sealed partial class MapEditorScreen : UIScreen
 
     private void RefreshEntityList(string filter)
     {
-        EntityList.Clear();
-        var count = 0;
+        // Clear previous content.
+        EntityListContainer.RemoveAllChildren();
+        _categorySections.Clear();
+        _entityFlatList = null;
 
-        foreach (var (display, protoId, icon) in _allEntityProtos)
+        var isSearching = !string.IsNullOrEmpty(filter);
+
+        if (isSearching)
         {
-            if (!string.IsNullOrEmpty(filter) &&
-                !display.Contains(filter, StringComparison.OrdinalIgnoreCase))
+            // Flat filtered list when searching.
+            var flatList = new ItemList
             {
-                continue;
+                VerticalExpand = true,
+                HorizontalExpand = true,
+                MinHeight = 400,
+            };
+            flatList.OnItemSelected += OnEntityItemSelected;
+            _entityFlatList = flatList;
+
+            var count = 0;
+            foreach (var (display, protoId, icon, _) in _allEntityProtos)
+            {
+                if (!display.Contains(filter, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
+                var item = flatList.AddItem(display, icon: icon, metadata: protoId, iconScale: iconScale);
+                item.TooltipText = protoId;
+                count++;
+
+                if (count >= MaxEntityResults)
+                    break;
             }
 
-            // Scale icon to ~24px height, capped at 1.0 so small icons don't enlarge.
-            var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
-            var item = EntityList.AddItem(display, icon: icon, metadata: protoId, iconScale: iconScale);
-            item.TooltipText = protoId;
-            count++;
+            EntityListContainer.AddChild(flatList);
+        }
+        else
+        {
+            // Collapsible category sections when browsing.
+            var categoryGroups = new SortedDictionary<string, List<(string Display, string ProtoId, Texture? Icon)>>(
+                StringComparer.OrdinalIgnoreCase);
 
-            if (count >= MaxEntityResults)
-                break;
+            foreach (var (display, protoId, icon, category) in _allEntityProtos)
+            {
+                if (!categoryGroups.TryGetValue(category, out var list))
+                {
+                    list = new List<(string, string, Texture?)>();
+                    categoryGroups[category] = list;
+                }
+                list.Add((display, protoId, icon));
+            }
+
+            foreach (var (categoryName, entities) in categoryGroups)
+            {
+                var body = new CollapsibleBody();
+                var itemList = new ItemList
+                {
+                    HorizontalExpand = true,
+                    MinHeight = Math.Min(entities.Count * 28 + 4, 300),
+                };
+                itemList.OnItemSelected += OnEntityItemSelected;
+
+                foreach (var (display, protoId, icon) in entities)
+                {
+                    var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
+                    var item = itemList.AddItem(display, icon: icon, metadata: protoId, iconScale: iconScale);
+                    item.TooltipText = protoId;
+                }
+
+                body.AddChild(itemList);
+
+                var heading = new CollapsibleHeading($"{categoryName} ({entities.Count})");
+                var collapsible = new Collapsible(heading, body);
+
+                _categorySections[categoryName] = (collapsible, itemList);
+                EntityListContainer.AddChild(collapsible);
+            }
         }
     }
 
     private void OnEntityItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
-        var item = EntityList[args.ItemIndex];
+        var item = args.ItemList[args.ItemIndex];
         if (item.Metadata is string protoId)
         {
             OnEntityPrototypeSelected?.Invoke(protoId);

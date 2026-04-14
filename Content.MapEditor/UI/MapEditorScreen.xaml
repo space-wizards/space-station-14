@@ -61,7 +61,9 @@
                             <!-- Entities tab -->
                             <BoxContainer Name="EntityTabContent" Orientation="Vertical" Margin="4">
                                 <LineEdit Name="EntitySearchEdit" HorizontalExpand="True" PlaceHolder="Search entities..." Margin="0 0 0 4" />
-                                <ItemList Name="EntityList" VerticalExpand="True" HorizontalExpand="True" />
+                                <ScrollContainer Name="EntityScrollContainer" VerticalExpand="True" HorizontalExpand="True">
+                                    <BoxContainer Name="EntityListContainer" Orientation="Vertical" HorizontalExpand="True" />
+                                </ScrollContainer>
                             </BoxContainer>
 
                         </TabContainer>
