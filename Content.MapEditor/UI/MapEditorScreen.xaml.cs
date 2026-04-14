@@ -570,20 +570,7 @@ public sealed partial class MapEditorScreen : UIScreen
                 // Some prototypes may fail to resolve textures — fall back to no icon.
             }
 
-            // Determine category from EntityCategoryPrototype, fall back to first letter.
-            var category = "Uncategorized";
-            foreach (var cat in proto.Categories)
-            {
-                if (!cat.HideSpawnMenu)
-                {
-                    category = cat.Name ?? cat.ID;
-                    break;
-                }
-            }
-            if (category == "Uncategorized" && proto.ID.Length > 0)
-            {
-                category = char.ToUpperInvariant(proto.ID[0]).ToString();
-            }
+            var category = GetEntityCategory(proto, protoManager);
 
             _allEntityProtos.Add((display, proto.ID, icon, category));
         }
@@ -689,6 +676,99 @@ public sealed partial class MapEditorScreen : UIScreen
             OnEntityPrototypeSelected?.Invoke(protoId);
         }
     }
+
+    private string GetEntityCategory(EntityPrototype proto, IPrototypeManager protoManager)
+    {
+        // Check the prototype's own categories first.
+        foreach (var cat in proto.Categories)
+        {
+            if (!cat.HideSpawnMenu)
+                return cat.Name ?? cat.ID;
+        }
+
+        // Walk parent chain to find a meaningful category.
+        var current = proto;
+        var depth = 0;
+        while (current.Parents != null && current.Parents.Length > 0 && depth < 10)
+        {
+            var parentId = current.Parents[0];
+
+            // Check for well-known parent names.
+            if (CategoryMap.TryGetValue(parentId, out var category))
+                return category;
+
+            if (!protoManager.TryIndex<EntityPrototype>(parentId, out var parent))
+                break;
+
+            // Check if the parent has categories.
+            foreach (var cat in parent.Categories)
+            {
+                if (!cat.HideSpawnMenu)
+                    return cat.Name ?? cat.ID;
+            }
+
+            current = parent;
+            depth++;
+        }
+
+        // Fall back to first letter.
+        return proto.ID.Length > 0 ? char.ToUpperInvariant(proto.ID[0]).ToString() : "Other";
+    }
+
+    private static readonly Dictionary<string, string> CategoryMap = new(StringComparer.OrdinalIgnoreCase)
+    {
+        // Structures
+        { "BaseStructure", "Structures" },
+        { "BaseStructureDynamic", "Structures" },
+        { "BaseWall", "Walls" },
+        { "BaseDoor", "Doors" },
+        { "BaseSign", "Signs" },
+        { "PosterBase", "Posters" },
+        // Machines
+        { "BaseMachine", "Machines" },
+        { "VendingMachine", "Vending Machines" },
+        { "BaseComputer", "Computers" },
+        { "BaseMachineCircuitboard", "Circuitboards" },
+        { "BaseComputerCircuitboard", "Circuitboards" },
+        { "Holopad", "Holopads" },
+        // Items
+        { "BaseItem", "Items" },
+        { "BaseTool", "Tools" },
+        { "BaseWeapon", "Weapons" },
+        { "BaseBullet", "Ammunition" },
+        { "FloorTileItemBase", "Floor Tiles" },
+        { "BookBase", "Books" },
+        // Clothing
+        { "ClothingBase", "Clothing" },
+        { "ClothingHeadBase", "Clothing/Hats" },
+        { "ClothingUniformBase", "Clothing/Uniforms" },
+        { "ClothingUniformSkirtBase", "Clothing/Uniforms" },
+        { "ClothingNeckBase", "Clothing/Neck" },
+        // Food & Drink
+        { "FoodBase", "Food" },
+        { "FoodMeatBase", "Food" },
+        { "FoodProduceBase", "Food/Produce" },
+        { "FoodBowlBase", "Food" },
+        { "DrinkBase", "Drinks" },
+        { "DrinkGlass", "Drinks/Glasses" },
+        { "BaseChemistryBottleFilled", "Chemistry" },
+        { "Jug", "Chemistry" },
+        { "BaseChemical", "Chemicals" },
+        // Mobs
+        { "BaseMob", "Mobs" },
+        { "MobBase", "Mobs" },
+        // Markers & Spawners
+        { "MarkerBase", "Markers" },
+        { "SpawnPointJobBase", "Spawn Points" },
+        // Lighting
+        { "BaseLight", "Lighting" },
+        // Botany
+        { "SeedBase", "Seeds" },
+        // Misc
+        { "BaseFigurine", "Figurines" },
+        { "BasePlushieLizardJob", "Plushies" },
+        { "IDCardStandard", "ID Cards" },
+    };
 
     #endregion
 

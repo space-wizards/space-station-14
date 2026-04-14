@@ -35,7 +35,7 @@
                 </LayoutContainer>
 
                 <!-- Right sidebar: Entity Info Panel + Palette tabs -->
-                <BoxContainer Name="RightSidebar" Orientation="Vertical" MinWidth="250" MaxWidth="250">
+                <BoxContainer Name="RightSidebar" Orientation="Vertical" MinWidth="360">
 
                     <!-- Entity Info Panel (hidden when no entity selected) -->
                     <PanelContainer Name="EntityInfoPanel" HorizontalExpand="True" Visible="False">
