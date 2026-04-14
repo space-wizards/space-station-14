@@ -258,6 +258,9 @@
     blacklist:
       tags:
         - Backpack
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.95
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
