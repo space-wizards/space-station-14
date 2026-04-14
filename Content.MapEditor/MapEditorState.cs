@@ -342,8 +342,7 @@ public sealed class MapEditorState : State
         {
             preview = _activeTool switch
             {
-                SelectTool sel when sel.DragStart != null && sel.DragEnd != null
-                    => ComputeRectanglePreview(sel.DragStart.Value, sel.DragEnd.Value),
+                // SelectTool uses SelectionBox overlay instead of individual preview tiles.
                 RectangleTool rect when rect.DragStart != null && rect.DragEnd != null
                     => ComputeRectanglePreview(rect.DragStart.Value, rect.DragEnd.Value),
                 LineTool line when line.DragStart != null && line.DragEnd != null
@@ -364,10 +363,28 @@ public sealed class MapEditorState : State
             _editorOverlay.PreviewBorderColor = new Color(fill.R, fill.G, fill.B, 0.5f);
         }
 
-        // Update the persistent selection box for the SelectTool.
-        if (_activeTool is SelectTool selectTool && selectTool.Selection != null)
+        // Update the selection box for the SelectTool — both during drag and after.
+        if (_activeTool is SelectTool selectTool)
         {
-            _editorOverlay.SelectionBox = selectTool.Selection;
+            if (selectTool.DragStart != null && selectTool.DragEnd != null)
+            {
+                // Show the in-progress selection rectangle during drag.
+                var s = selectTool.DragStart.Value;
+                var e = selectTool.DragEnd.Value;
+                var minX = Math.Min(s.X, e.X);
+                var minY = Math.Min(s.Y, e.Y);
+                var maxX = Math.Max(s.X, e.X);
+                var maxY = Math.Max(s.Y, e.Y);
+                _editorOverlay.SelectionBox = new Box2i(minX, minY, maxX + 1, maxY + 1);
+            }
+            else if (selectTool.Selection != null)
+            {
+                _editorOverlay.SelectionBox = selectTool.Selection;
+            }
+            else
+            {
+                _editorOverlay.SelectionBox = null;
+            }
         }
         else
         {
