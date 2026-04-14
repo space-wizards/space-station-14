@@ -270,7 +270,6 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
     private readonly int _baseSeparation;
 
     private const int Separation = 2;
-    private const int HorizontalTotal = 110;
 
     public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
     {
@@ -295,7 +294,7 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
         if (Capacity / Rows > 1)
         {
-            itemSeparation = (HorizontalTotal - _loadedSprite.Width) / (Capacity / Rows - 1);
+            itemSeparation = (int)(Size.X - _loadedSprite.Width) / (Capacity / Rows - 1);
             itemSeparation = itemSeparation < _baseSeparation ? itemSeparation : _baseSeparation;
             itemSeparation = int.Max(1, itemSeparation);
         }
