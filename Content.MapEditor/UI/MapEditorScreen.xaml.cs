@@ -502,6 +502,96 @@ public sealed partial class MapEditorScreen : UIScreen
 
     #endregion
 
+    #region Entity Stack Picker
+
+    private Popup? _entityPickerPopup;
+
+    /// <summary>
+    ///     Shows a popup listing the given entities so the user can pick one.
+    ///     Calls <paramref name="onSelected"/> with the chosen EntityUid, or
+    ///     <paramref name="onCancelled"/> if the popup is dismissed.
+    /// </summary>
+    public void ShowEntityPicker(
+        List<(EntityUid Uid, string Label, Texture? Icon)> entities,
+        Vector2 screenPos,
+        Action<EntityUid> onSelected,
+        Action? onCancelled = null)
+    {
+        // Close any existing picker.
+        CloseEntityPicker();
+
+        var popup = new Popup();
+        _entityPickerPopup = popup;
+
+        var panel = new PanelContainer
+        {
+            ModulateSelfOverride = new Color(0.15f, 0.15f, 0.18f, 0.95f),
+        };
+
+        var vbox = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            MinWidth = 220,
+        };
+
+        var header = new Label
+        {
+            Text = $"Select Entity ({entities.Count})",
+            Margin = new Thickness(4, 2, 4, 4),
+        };
+        vbox.AddChild(header);
+
+        var list = new ItemList
+        {
+            MinHeight = Math.Min(entities.Count * 28 + 8, 300),
+            MinWidth = 220,
+        };
+
+        foreach (var (uid, label, icon) in entities)
+        {
+            var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
+            list.AddItem(label, icon: icon, metadata: uid, iconScale: iconScale);
+        }
+
+        list.OnItemSelected += args =>
+        {
+            var item = list[args.ItemIndex];
+            if (item.Metadata is EntityUid selectedUid)
+                onSelected(selectedUid);
+            CloseEntityPicker();
+        };
+
+        vbox.AddChild(list);
+        panel.AddChild(vbox);
+        popup.AddChild(panel);
+
+        popup.OnPopupHide += () =>
+        {
+            onCancelled?.Invoke();
+            _entityPickerPopup = null;
+        };
+
+        var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+        uiManager.ModalRoot.AddChild(popup);
+        popup.Open(UIBox2.FromDimensions(screenPos, new Vector2(240, Math.Min(entities.Count * 28 + 40, 320))));
+    }
+
+    /// <summary>
+    ///     Closes the entity picker popup if one is open.
+    /// </summary>
+    public void CloseEntityPicker()
+    {
+        if (_entityPickerPopup != null)
+        {
+            _entityPickerPopup.Close();
+            // Remove from parent to avoid orphan nodes.
+            _entityPickerPopup.Parent?.RemoveChild(_entityPickerPopup);
+            _entityPickerPopup = null;
+        }
+    }
+
+    #endregion
+
     #region Viewport Events
 
     internal void RaiseViewportScroll(float delta)

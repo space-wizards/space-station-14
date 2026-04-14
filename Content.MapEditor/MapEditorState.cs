@@ -791,6 +791,13 @@ public sealed class MapEditorState : State
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
 
+                // Check if EntitySelectTool wants to show a stack picker popup.
+                if (_activeTool is EntitySelectTool { PendingPick: { } pendingEntities } entityPicker)
+                {
+                    ShowEntityStackPicker(entityPicker, pendingEntities, screenPos);
+                    _isToolActive = false; // Don't start a drag while the picker is open.
+                }
+
                 if (_activeToolKey == "eyedropper")
                     _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
             }
@@ -846,6 +853,58 @@ public sealed class MapEditorState : State
         var mapSystem = _toolContext.MapSystem;
         tilePos = mapSystem.CoordinatesToTile(_activeGridUid, gridComp, mapCoords);
         return true;
+    }
+
+    /// <summary>
+    ///     Shows a popup listing all entities at a tile so the user can pick one.
+    /// </summary>
+    private void ShowEntityStackPicker(EntitySelectTool tool, List<EntityUid> entities, ScreenCoordinates mousePos)
+    {
+        var items = new List<(EntityUid Uid, string Label, Robust.Client.Graphics.Texture? Icon)>();
+
+        foreach (var uid in entities)
+        {
+            if (!_entityManager.EntityExists(uid))
+                continue;
+
+            var meta = _entityManager.GetComponent<MetaDataComponent>(uid);
+            var protoId = meta.EntityPrototype?.ID ?? "unknown";
+            var label = $"{protoId} [uid={uid}]";
+
+            // Try to get a sprite icon for the entity.
+            Robust.Client.Graphics.Texture? icon = null;
+            if (_entityManager.TryGetComponent<SpriteComponent>(uid, out var sprite))
+            {
+                try
+                {
+                    icon = sprite.Icon?.Default;
+                }
+                catch
+                {
+                    // Icon access can fail — fall back to no icon.
+                }
+            }
+
+            items.Add((uid, label, icon));
+        }
+
+        if (items.Count == 0)
+        {
+            tool.CancelPick();
+            return;
+        }
+
+        _screen.ShowEntityPicker(
+            items,
+            mousePos.Position,
+            selectedUid =>
+            {
+                tool.ConfirmPick(selectedUid);
+            },
+            () =>
+            {
+                tool.CancelPick();
+            });
     }
 
     private void OnUndoPressed()
