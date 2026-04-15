@@ -62,13 +62,6 @@ public partial struct VoltageSetting
     public string Node = string.Empty;
 
     /// <summary>
-    /// Power usage in that voltage.
-    /// </summary>
-    /// <remarks>If null it doesn't change any power use</remarks>
-    [DataField]
-    public float? Wattage = null;
-
-    /// <summary>
     /// Name of the setting.
     /// </summary>
     [DataField(required: true)]
