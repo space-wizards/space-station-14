@@ -1189,7 +1189,27 @@ public sealed class MapEditorState : State
     {
         var viewport = _screen.MainViewport;
         var vpRect = viewport.GlobalPixelRect;
-        return vpRect.Contains((int) screenPos.Position.X, (int) screenPos.Position.Y);
+        if (!vpRect.Contains((int) screenPos.Position.X, (int) screenPos.Position.Y))
+            return false;
+
+        // Check that no UI popup/menu is covering the viewport at the mouse position.
+        // MouseGetControl returns the topmost control under the cursor.
+        var controlUnderMouse = _uiManager.MouseGetControl(screenPos);
+        if (controlUnderMouse != null)
+        {
+            // If the control is the viewport or its scroll interceptor, that's fine.
+            // If it's something else (menu, popup, sidebar), don't treat it as viewport.
+            var parent = controlUnderMouse;
+            while (parent != null)
+            {
+                if (parent == _screen.MainViewport)
+                    return true;
+                parent = parent.Parent;
+            }
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>

@@ -7,8 +7,13 @@
         <BoxContainer Name="MainLayout" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
 
             <!-- MenuBar placeholder: populated in code-behind -->
-            <BoxContainer Name="MenuBarContainer" Orientation="Horizontal"
-                          HorizontalExpand="True" MinHeight="24" />
+            <PanelContainer HorizontalExpand="True" MinHeight="24">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1E1E28DD" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Name="MenuBarContainer" Orientation="Horizontal"
+                              HorizontalExpand="True" />
+            </PanelContainer>
 
             <!-- Grid tab bar -->
             <PanelContainer Name="GridTabBarPanel" HorizontalExpand="True" MinHeight="28">
