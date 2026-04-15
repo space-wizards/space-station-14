@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Monkeys, Kobolds & Scurrets can now shove/disarm like regular species!
-    type: Tweak
-  id: 9127
-  time: '2025-10-19T19:09:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38542
-- author: PotentiallyTom
-  changes:
-  - message: AI Law boards now have a link to the lawsets guide page
-    type: Tweak
-  - message: Added the My, Robot book.
-    type: Add
-  id: 9128
-  time: '2025-10-19T21:10:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40944
-- author: aspiringLich
-  changes:
-  - message: UIs have been brought more in line with each other with a standardized
-      palette, as well as other changes resulting from a new styling mechanism.
-    type: Tweak
-  id: 9129
-  time: '2025-10-19T21:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29903
 - author: ArtisticRoomba, seam_less
   changes:
   - message: Job-themed lizard plushies! You can equip them in your loadout if you
@@ -4031,3 +4007,26 @@
   id: 9638
   time: '2026-04-11T21:35:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43494
+- author: Princess-Cheeseballs
+  changes:
+  - message: Paradox clones will no longer be slow when spawning.
+    type: Fix
+  id: 9639
+  time: '2026-04-12T19:15:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43528
+- author: Princess-Cheeseballs
+  changes:
+  - message: Target station map at the nuclear operative outpost will now show the
+      target station.
+    type: Fix
+  id: 9640
+  time: '2026-04-13T13:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43583
+- author: Glissadia
+  changes:
+  - message: The ChemMaster UI now updates automatically when reagents are dragged
+      and dropped into the ChemMaster.
+    type: Fix
+  id: 9641
+  time: '2026-04-13T20:08:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43584
