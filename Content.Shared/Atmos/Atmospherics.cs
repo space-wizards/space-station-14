@@ -138,8 +138,19 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MinimumAirToSuspend = (MolesCellStandard * MinimumAirRatioToSuspend);
 
-        public const float MinimumTemperatureToMove = (T20C + 100f);
+        /// <summary>
+        /// The minimum difference in temperature between <see cref="GasMixture"/>s
+        /// (<see cref="TileAtmosphere"/>s) required
+        /// for LINDA to report a pressure difference between them for space wind.
+        /// In Kelvin.
+        /// </summary>
+        public const float MinimumTemperatureToMove = 5f;
 
+        /// <summary>
+        /// The minimum difference in moles between <see cref="GasMixture"/>s
+        /// (<see cref="TileAtmosphere"/>s) required for LINDA to
+        /// report a pressure difference between them for space wind.
+        /// </summary>
         public const float MinimumMolesDeltaToMove = (MolesCellStandard * MinimumAirRatioToMove);
 
         /// <summary>
@@ -169,22 +180,6 @@ namespace Content.Shared.Atmos
         /// making space "actually cold" for gameplay reasons.
         /// </summary>
         public const float SpaceHeatCapacity = 7000f;
-
-        /// <summary>
-        ///     Dictionary of chemical abbreviations for <see cref="Gas"/>
-        /// </summary>
-        public static Dictionary<Gas, string> GasAbbreviations = new Dictionary<Gas, string>()
-        {
-            [Gas.Ammonia] = Loc.GetString("gas-ammonia-abbreviation"),
-            [Gas.CarbonDioxide] = Loc.GetString("gas-carbon-dioxide-abbreviation"),
-            [Gas.Frezon] = Loc.GetString("gas-frezon-abbreviation"),
-            [Gas.Nitrogen] = Loc.GetString("gas-nitrogen-abbreviation"),
-            [Gas.NitrousOxide] = Loc.GetString("gas-nitrous-oxide-abbreviation"),
-            [Gas.Oxygen] = Loc.GetString("gas-oxygen-abbreviation"),
-            [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
-            [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
-            [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
-        };
 
         #region Excited Groups
 
@@ -235,8 +230,8 @@ namespace Content.Shared.Atmos
         public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
-        public const float PlasmaMinimumBurnTemperature = (100f+T0C);
-        public const float PlasmaUpperTemperature = (1370f+T0C);
+        public const float PlasmaMinimumBurnTemperature = 100f + T0C;
+        public const float PlasmaUpperTemperature = 1370f + T0C;
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
 

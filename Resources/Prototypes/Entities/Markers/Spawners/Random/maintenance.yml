@@ -95,6 +95,7 @@
     - !type:GroupSelector
       weight: 23
       children:
+      - id: TravelCamera
       - id: ClothingNeckCloakHerald
       - id: ClothingHeadHelmetTemplar
       # Cloaks
