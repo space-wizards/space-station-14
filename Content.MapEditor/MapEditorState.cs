@@ -1020,6 +1020,7 @@ public sealed class MapEditorState : State
             var options = new DeserializationOptions
             {
                 InitializeMaps = true,
+                PauseMaps = false, // Load unpaused so entity systems (node groups, etc.) run
             };
 
             if (!mapLoader.TryLoadMap(reader, source, out var map, out var grids, options))
@@ -1033,6 +1034,19 @@ public sealed class MapEditorState : State
             _loadedMapId = map.Value.Comp.MapId;
             _loadedFileName = "loaded map";
             _screen.SetStatusInfo($"Loaded map ({grids!.Count} grid(s))");
+
+            // Initialize the map to run entity startup events (node groups, icon smoothing, etc.).
+            // Without this, cables/pipes render as dots because NodeGroupSystem never builds
+            // connection data on paused entities. After init, re-pause to stop game logic.
+            try
+            {
+                _mapManager.DoMapInitialize(_loadedMapId);
+                _mapManager.SetMapPaused(_loadedMapId, true);
+            }
+            catch (Exception initEx)
+            {
+                _sawmill.Warning($"Map init/pause error (non-fatal): {initEx.Message}");
+            }
 
             // Move the eye to the loaded map and center on the first grid.
             CenterOnMap(map.Value, grids);
