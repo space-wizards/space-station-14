@@ -300,12 +300,8 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Checks whether the entity can be sheared and applies appropriate examine additions.
-        if (CanShear(ent, out var shearingSolutionToRemove, checkItem: false))
+        if (CanShear(ent, out var shearingSolutionToRemove, checkItem: false) && ent.Comp.ShearableMarkupText != null)
         {
-            if (string.IsNullOrEmpty(ent.Comp.ShearableMarkupText))
-            {
-                return;
-            }
             // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation have a blank variable..
             var toolQuality = string.Empty;
             var toolQualityProto = _proto.Index(ent.Comp.ToolQuality);
@@ -322,23 +318,14 @@ public sealed class SharedShearableSystem : EntitySystem
                 }
             }
             // ALL SYSTEMS GO!
-            args.PushMarkup(Loc.GetString(ent.Comp.ShearableMarkupText, ("target", Identity.Entity(ent.Owner, EntityManager)), ("toolQuality", toolQuality)));
+            args.PushMarkup(Loc.GetString(ent.Comp.ShearableMarkupText.Value, ("target", Identity.Entity(ent.Owner, EntityManager)), ("toolQuality", toolQuality)));
             return;
         }
-        else
-        {
-            // Check if the description has been set.
-            if (string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
-            {
-                return;
-            }
-            // Check if the entity is out of shearable material, if so append to description.
-            if (shearingSolutionToRemove <= 0)
-            {
-                args.PushMarkup(Loc.GetString(ent.Comp.UnShearableMarkupText, ("target", Identity.Entity(ent.Owner, EntityManager))));
-                return;
-            }
-        }
+
+        if (ent.Comp.UnShearableMarkupText == null || !(shearingSolutionToRemove <= 0))
+            return;
+
+        args.PushMarkup(Loc.GetString(ent.Comp.UnShearableMarkupText.Value, ("target", Identity.Entity(ent.Owner, EntityManager))));
     }
 
     /// <summary>
