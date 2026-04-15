@@ -3,10 +3,10 @@
   id: ChangelingFleshClothing
   clickEvent: !type:ToggleFleshClothingEvent
   icons:
-  - sprite: /Textures/Interface/Alerts/stealthy.rsi #TODO
-    state: stealthy-off
-  - sprite: /Textures/Interface/Alerts/stealthy.rsi
-    state: stealthy-on
+  - sprite: /Textures/Interface/Alerts/changeling.rsi
+    state: flesh-clothing-off
+  - sprite: /Textures/Interface/Alerts/changeling.rsi
+    state: flesh-clothing-on
   name: changeling-flesh-clothing-alert-name
   description: changeling-flesh-clothing-alert-desc
   minSeverity: 0
