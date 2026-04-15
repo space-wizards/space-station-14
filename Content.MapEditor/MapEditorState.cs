@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.MapEditor.Commands;
 using Content.MapEditor.Systems;
 using Content.MapEditor.Tools;
 using Content.MapEditor.UI;
+using Robust.Client;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -39,8 +42,13 @@ public sealed class MapEditorState : State
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefs = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IBaseClient _baseClient = default!;
 
     private ISawmill _sawmill = default!;
+
+    // Headless server process for proper entity system support (NodeGroupSystem, etc.)
+    private Process? _serverProcess;
+    private const int ServerPort = 1212;
     private MapEditorScreen _screen = default!;
     private Eye _eye = default!;
 
@@ -101,6 +109,22 @@ public sealed class MapEditorState : State
     {
         _sawmill = _logManager.GetSawmill("map_editor");
         _sawmill.Info("MapEditorState started");
+
+        // Launch headless server for proper entity system support.
+        LaunchServer();
+
+        // Connect to the server.
+        try
+        {
+            _baseClient.ConnectToServer(new DnsEndPoint("localhost", ServerPort));
+            _sawmill.Info($"Connecting to headless server on port {ServerPort}");
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to connect to server: {ex.Message}");
+            // Fall back to single-player mode if server connection fails.
+            _baseClient.StartSinglePlayer();
+        }
 
         _uiManager.LoadScreen<MapEditorScreen>();
         _screen = (MapEditorScreen) _uiManager.ActiveScreen!;
@@ -214,8 +238,86 @@ public sealed class MapEditorState : State
         IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_editorOverlay);
 
         _uiManager.UnloadScreen();
+
+        // Kill the headless server process.
+        KillServer();
+
         _sawmill.Info("MapEditorState shutdown");
     }
+
+    #region Server Process
+
+    private void LaunchServer()
+    {
+        // Find the Content.Server executable relative to our binary.
+        var editorDir = AppDomain.CurrentDomain.BaseDirectory;
+        var serverExe = Path.Combine(editorDir, "..", "Content.Server", "Content.Server.exe");
+        serverExe = Path.GetFullPath(serverExe);
+
+        if (!File.Exists(serverExe))
+        {
+            _sawmill.Error($"Content.Server.exe not found at {serverExe}");
+            return;
+        }
+
+        _sawmill.Info($"Launching headless server: {serverExe}");
+
+        _serverProcess = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = serverExe,
+                Arguments = $"--cvar net.port={ServerPort} --cvar net.bindto=127.0.0.1",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            },
+            EnableRaisingEvents = true,
+        };
+
+        try
+        {
+            _serverProcess.Start();
+            _sawmill.Info($"Server process started (PID {_serverProcess.Id})");
+
+            // Give the server a moment to start listening.
+            // A proper implementation would poll the port, but a simple delay works for now.
+            System.Threading.Thread.Sleep(3000);
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to start server: {ex.Message}");
+            _serverProcess = null;
+        }
+    }
+
+    private void KillServer()
+    {
+        if (_serverProcess == null)
+            return;
+
+        try
+        {
+            if (!_serverProcess.HasExited)
+            {
+                _sawmill.Info($"Killing server process (PID {_serverProcess.Id})");
+                _serverProcess.Kill(entireProcessTree: true);
+                _serverProcess.WaitForExit(3000);
+            }
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Warning($"Error killing server: {ex.Message}");
+        }
+        finally
+        {
+            _serverProcess.Dispose();
+            _serverProcess = null;
+        }
+    }
+
+    #endregion
 
     #region Active Grid
 

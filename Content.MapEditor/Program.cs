@@ -10,18 +10,13 @@ internal static class Program
         ContentStart.StartLibrary(args, new GameControllerOptions
         {
             DefaultWindowTitle = "SS14 Map Editor",
-            // Use our output directory so the mod loader finds all Content.* DLLs
-            // (Content.Client, Content.Shared, Content.MapEditor) and registers
-            // them as content assemblies — required for State instantiation.
             ContentBuildDirectory = "Content.MapEditor",
             Sandboxing = false,
             PostInitCallback = () =>
             {
-                // Start a single-player session so entity systems initialize
-                // and MapLoaderSystem becomes available.
-                var baseClient = IoCManager.Resolve<IBaseClient>();
-                baseClient.StartSinglePlayer();
-
+                // Don't call StartSinglePlayer — MapEditorState will launch a real
+                // headless server process and connect to it so that server-side systems
+                // (NodeGroupSystem, CableVisSystem, etc.) run properly.
                 var stateManager = IoCManager.Resolve<Robust.Client.State.IStateManager>();
                 stateManager.RequestStateChange<MapEditorState>();
             }
