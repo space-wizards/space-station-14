@@ -153,6 +153,7 @@ public sealed class MapEditorState : State
         };
 
         // Wire menu button events.
+        _screen.FileNewButton.OnPressed += OnFileNewPressed;
         _screen.FileOpenButton.OnPressed += OnFileOpenPressed;
         _screen.FileSaveButton.OnPressed += OnFileSavePressed;
         _screen.FileExitButton.OnPressed += OnFileExitPressed;
@@ -211,6 +212,34 @@ public sealed class MapEditorState : State
 
         // Set initial toolbar state.
         _screen.SetActiveToolButton(_activeToolKey);
+
+        // Create a default empty map so the editor isn't a black void on startup.
+        CreateNewMap();
+    }
+
+    /// <summary>
+    ///     Creates a new empty map with a single grid and positions the camera at the origin.
+    /// </summary>
+    private void CreateNewMap()
+    {
+        var mapSystem = _entityManager.System<SharedMapSystem>();
+        mapSystem.CreateMap(out var mapId);
+        _loadedMapId = mapId;
+        _loadedFileName = null;
+
+        // Create a grid on the new map.
+        var newGrid = _mapManager.CreateGridEntity(mapId);
+        var gridUid = newGrid.Owner;
+
+        // Position the eye on the new map.
+        _eye.Position = new MapCoordinates(new Vector2(0, 0), mapId);
+        _eye.Zoom = Vector2.One;
+
+        // Populate grid tabs.
+        PopulateGridTabs(mapId);
+
+        _screen.SetStatusInfo("New map");
+        _sawmill.Info($"Created new map {mapId} with grid {gridUid}");
     }
 
     protected override void Shutdown()
@@ -219,6 +248,7 @@ public sealed class MapEditorState : State
         if (_infrastructureMode)
             DeactivateInfrastructureMode();
 
+        _screen.FileNewButton.OnPressed -= OnFileNewPressed;
         _screen.FileOpenButton.OnPressed -= OnFileOpenPressed;
         _screen.FileSaveButton.OnPressed -= OnFileSavePressed;
         _screen.FileExitButton.OnPressed -= OnFileExitPressed;
@@ -1248,6 +1278,11 @@ public sealed class MapEditorState : State
     #endregion
 
     #region File Open / Save
+
+    private void OnFileNewPressed()
+    {
+        CreateNewMap();
+    }
 
     private void OnFileOpenPressed()
     {

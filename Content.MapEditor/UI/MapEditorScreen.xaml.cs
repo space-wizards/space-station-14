@@ -28,6 +28,7 @@ public sealed partial class MapEditorScreen : UIScreen
     public MenuBar.Menu ViewMenu { get; }
 
     // Menu items exposed for MapEditorState to wire up events.
+    public MenuBar.MenuButton FileNewButton { get; }
     public MenuBar.MenuButton FileOpenButton { get; }
     public MenuBar.MenuButton FileSaveButton { get; }
     public MenuBar.MenuButton FileExitButton { get; }
@@ -174,6 +175,7 @@ public sealed partial class MapEditorScreen : UIScreen
         // Build the menu bar in code (MenuBar doesn't support XAML item declaration).
         var menuBar = new MenuBar();
 
+        FileNewButton = new MenuBar.MenuButton { Text = "New Map" };
         FileOpenButton = new MenuBar.MenuButton { Text = "Open Map..." };
         FileSaveButton = new MenuBar.MenuButton { Text = "Save Map..." };
         FileExitButton = new MenuBar.MenuButton { Text = "Exit" };
@@ -182,6 +184,7 @@ public sealed partial class MapEditorScreen : UIScreen
             Title = "File",
             Entries =
             {
+                FileNewButton,
                 FileOpenButton,
                 FileSaveButton,
                 new MenuBar.MenuSeparator(),
