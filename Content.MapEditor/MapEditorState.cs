@@ -110,12 +110,11 @@ public sealed class MapEditorState : State
     /// </summary>
     private static readonly Type[] InfrastructureComponents =
     {
-        typeof(SubFloorHideComponent),            // Content.Shared.SubFloor
-        typeof(CableVisualizerComponent),         // Content.Client.Power.Visualizers
-        typeof(SharedApcPowerReceiverComponent),   // Content.Shared.Power.Components
-        typeof(BatteryComponent),                  // Content.Shared.Power.Components
-        typeof(AtmosDeviceComponent),              // Content.Shared.Atmos.Components
-        typeof(PowerStateComponent),               // Content.Shared.Power.Components
+        typeof(SubFloorHideComponent),            // cables, pipes, subfloor entities
+        typeof(CableVisualizerComponent),         // cable visualization
+        typeof(BatteryComponent),                  // SMES, batteries
+        typeof(AtmosDeviceComponent),              // vents, scrubbers, atmos devices
+        typeof(Content.Client.Power.APC.ApcVisualsComponent), // APCs
     };
 
     public MapEditorState()
@@ -1393,10 +1392,17 @@ public sealed class MapEditorState : State
             var isInfra = false;
             foreach (var compType in InfrastructureComponents)
             {
-                if (_entityManager.HasComponent(uid, compType))
+                try
                 {
-                    isInfra = true;
-                    break;
+                    if (_entityManager.HasComponent(uid, compType))
+                    {
+                        isInfra = true;
+                        break;
+                    }
+                }
+                catch
+                {
+                    // Component type not registered on client — skip.
                 }
             }
 
