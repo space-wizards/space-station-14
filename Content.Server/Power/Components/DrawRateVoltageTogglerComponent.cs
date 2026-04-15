@@ -17,5 +17,9 @@ public sealed partial class DrawRateVoltageTogglerComponent : Component
     public Dictionary<Voltage, float> DrawRatePerVoltage;
 }
 
+/// <summary>
+/// Event called when the draw rate of a device is changed via <see cref="DrawRateVoltageTogglerComponent"/>
+/// </summary>
+/// <param name="NewDrawRate">new draw rate</param>
 [ByRefEvent]
-public record struct DrawRateChangedEvent(float NewDrawRate);
+public record struct DrawRateChangeEvent(float NewDrawRate);

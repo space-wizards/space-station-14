@@ -22,8 +22,8 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         SubscribeLocalEvent<PowerConsumerComponent, ComponentRemove>(OnRemove<PowerConsumerComponent, IBasePowerNet>);
         SubscribeLocalEvent<PowerSupplierComponent, ComponentRemove>(OnRemove<PowerSupplierComponent, IBasePowerNet>);
 
-        SubscribeLocalEvent<BatteryChargerComponent, VoltageChangedEvent>(OnVoltageChanged);
-        SubscribeLocalEvent<BatteryDischargerComponent, VoltageChangedEvent>(OnVoltageChanged);
+        SubscribeLocalEvent<BatteryChargerComponent, VoltageChangeEvent>(OnVoltageChanged);
+        SubscribeLocalEvent<BatteryDischargerComponent, VoltageChangeEvent>(OnVoltageChanged);
     }
 
     private void OnRemove<TComp, TNet>(EntityUid uid, TComp component, ComponentRemove args)
@@ -66,7 +66,7 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         }
     }
 
-    private void OnVoltageChanged<TComp>(Entity<TComp> entity, ref VoltageChangedEvent args)
+    private void OnVoltageChanged<TComp>(Entity<TComp> entity, ref VoltageChangeEvent args)
         where TComp : BasePowerNetComponent
     {
         var voltage = args.NewVoltage.Voltage;

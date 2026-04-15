@@ -73,4 +73,4 @@ public partial struct VoltageSetting
 /// </summary>
 /// <param name="NewVoltage">the new voltage setting</param>
 [ByRefEvent]
-public record struct VoltageChangedEvent(VoltageSetting NewVoltage);
+public record struct VoltageChangeEvent(VoltageSetting NewVoltage);

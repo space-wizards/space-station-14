@@ -56,22 +56,22 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
-            SubscribeLocalEvent<PowerNetworkBatteryComponent, DrawRateChangedEvent>(BatteryDrawRateChanged);
+            SubscribeLocalEvent<PowerNetworkBatteryComponent, DrawRateChangeEvent>(BatteryDrawRateChanged);
 
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
             SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
             SubscribeLocalEvent<PowerConsumerComponent, EntityUnpausedEvent>(PowerConsumerUnpaused);
-            SubscribeLocalEvent<PowerConsumerComponent, VoltageChangedEvent>(PowerConsumerVoltageChanged);
-            SubscribeLocalEvent<PowerConsumerComponent, DrawRateChangedEvent>(PowerConsumerDrawRateChanged);
+            SubscribeLocalEvent<PowerConsumerComponent, VoltageChangeEvent>(PowerConsumerVoltageChanged);
+            SubscribeLocalEvent<PowerConsumerComponent, DrawRateChangeEvent>(PowerConsumerDrawRateChanged);
 
             SubscribeLocalEvent<PowerSupplierComponent, ComponentInit>(PowerSupplierInit);
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
             SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
             SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
-            SubscribeLocalEvent<PowerSupplierComponent, VoltageChangedEvent>(PowerSupplierVoltageChanged);
+            SubscribeLocalEvent<PowerSupplierComponent, VoltageChangeEvent>(PowerSupplierVoltageChanged);
 
-            SubscribeLocalEvent<DrawRateVoltageTogglerComponent, VoltageChangedEvent>(OnVoltageChanged);
+            SubscribeLocalEvent<DrawRateVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
 
             Subs.CVar(_cfg, CCVars.DebugPow3rDisableParallel, DebugPow3rDisableParallelChanged);
         }
@@ -138,14 +138,14 @@ namespace Content.Server.Power.EntitySystems
             component.NetworkBattery.Paused = false;
         }
 
-        private void BatteryDrawRateChanged(Entity<PowerNetworkBatteryComponent> entity, ref DrawRateChangedEvent args)
+        private void BatteryDrawRateChanged(Entity<PowerNetworkBatteryComponent> entity, ref DrawRateChangeEvent args)
         {
             entity.Comp.MaxChargeRate = args.NewDrawRate;
         }
 
-        private void OnVoltageChanged(Entity<DrawRateVoltageTogglerComponent> entity, ref VoltageChangedEvent args)
+        private void OnVoltageChanged(Entity<DrawRateVoltageTogglerComponent> entity, ref VoltageChangeEvent args)
         {
-            var ev = new DrawRateChangedEvent(entity.Comp.DrawRatePerVoltage[args.NewVoltage.Voltage]);
+            var ev = new DrawRateChangeEvent(entity.Comp.DrawRatePerVoltage[args.NewVoltage.Voltage]);
             RaiseLocalEvent(entity, ref ev);
         }
 
@@ -170,12 +170,12 @@ namespace Content.Server.Power.EntitySystems
             component.NetworkLoad.Paused = false;
         }
 
-        private void PowerConsumerVoltageChanged(Entity<PowerConsumerComponent> entity, ref VoltageChangedEvent args)
+        private void PowerConsumerVoltageChanged(Entity<PowerConsumerComponent> entity, ref VoltageChangeEvent args)
         {
             entity.Comp.Voltage = args.NewVoltage.Voltage;
         }
 
-        private void PowerConsumerDrawRateChanged(Entity<PowerConsumerComponent> entity, ref DrawRateChangedEvent args)
+        private void PowerConsumerDrawRateChanged(Entity<PowerConsumerComponent> entity, ref DrawRateChangeEvent args)
         {
             entity.Comp.DrawRate = args.NewDrawRate;
         }
@@ -201,7 +201,7 @@ namespace Content.Server.Power.EntitySystems
             component.NetworkSupply.Paused = false;
         }
 
-        private void PowerSupplierVoltageChanged(Entity<PowerSupplierComponent> entity, ref VoltageChangedEvent args)
+        private void PowerSupplierVoltageChanged(Entity<PowerSupplierComponent> entity, ref VoltageChangeEvent args)
         {
             entity.Comp.Voltage = args.NewVoltage.Voltage;
         }

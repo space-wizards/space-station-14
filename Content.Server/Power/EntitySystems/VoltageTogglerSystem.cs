@@ -43,7 +43,7 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 
         Dirty(entity);
 
-        var ev = new VoltageChangedEvent(setting);
+        var ev = new VoltageChangeEvent(setting);
         RaiseLocalEvent(entity, ref ev);
 
         if (useDelay != null)

@@ -31,7 +31,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ReAnchorEvent>(OnReAnchor);
             SubscribeLocalEvent<NodeContainerComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<NodeContainerComponent, VoltageChangedEvent>(OnVoltageChanged);
+            SubscribeLocalEvent<NodeContainerComponent, VoltageChangeEvent>(OnVoltageChanged);
 
             _query = GetEntityQuery<NodeContainerComponent>();
         }
@@ -228,7 +228,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private void OnVoltageChanged(Entity<NodeContainerComponent> entity, ref VoltageChangedEvent args)
+        private void OnVoltageChanged(Entity<NodeContainerComponent> entity, ref VoltageChangeEvent args)
         {
             foreach (var node in entity.Comp.Nodes)
             {
