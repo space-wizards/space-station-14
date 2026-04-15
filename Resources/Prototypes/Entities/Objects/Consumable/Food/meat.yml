@@ -613,6 +613,10 @@
       right:
       - state: snake-inhand-right
         color: "#333333"
+  - type: Construction
+    graph: SpiderLegs
+    node: start
+    defaultTarget: spider legs
 
 - type: entity
   parent: FoodMeatBase
@@ -1481,9 +1485,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: FoodMeatSpiderLeg
   id: FoodMeatSpiderlegCooked
-  name: boiled spider leg
+  name: cooked spider leg
   description: A giant spider's leg that's still twitching after being cooked. Gross!
   components:
   - type: Tag
@@ -1505,15 +1509,7 @@
     entries:
       Burger: MeatSpiderBurger
       Taco: MeatSpider
-  - type: Item
-    storedOffset: -1,-1
-    inhandVisuals:
-      left:
-      - state: snake-inhand-left
-        color: "#44201A"
-      right:
-      - state: snake-inhand-right
-        color: "#44201A"
+      Skewer: SpiderLegSkewer
 
 - type: entity
   parent: FoodMeatBase

@@ -2514,6 +2514,8 @@
     spawned:
     - id: FoodMeatSpider
       amount: 2
+    - id: FoodMeatSpiderLeg
+      amount: 2 # maybe 8 one day
   - type: CombatMode
   - type: MobThresholds
     thresholds:

@@ -271,7 +271,7 @@
 
 - type: foodSequenceElement
   id: MeatSpider
-  name: food-sequence-content-spider
+  name: food-sequence-content-spider-legs
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: spiderleg-cooked
@@ -285,6 +285,16 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: spiderleg-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: SpiderLegSkewer
+  name: food-sequence-content-spider-legs
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-tail-cooked
   tags:
   - Cooked
   - Meat
@@ -316,6 +326,7 @@
 
 - type: foodSequenceElement
   id: MeatCutlet
+  name: food-sequence-content-meat
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: cutlet-cooked
@@ -326,6 +337,7 @@
 
 - type: foodSequenceElement
   id: MeatCutletSkewer
+  name: food-sequence-content-meat
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-meat
@@ -349,10 +361,10 @@
 
 - type: foodSequenceElement
   id: BearCutletSkewer
+  name: food-sequence-content-bear
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer-meat-alpha
-    color: brown
+    state: skewer-meat #TODO - update when sprite specifiers support color
   tags:
   - Cooked
   - Cutlet
@@ -395,6 +407,7 @@
 
 - type: foodSequenceElement
   id: PenguinCutletSkewer
+  name: food-sequence-content-penguin
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-meat
@@ -419,6 +432,7 @@
 
 - type: foodSequenceElement
   id: ChickenCutletSkewer
+  name: food-sequence-content-chicken
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-meat
@@ -443,6 +457,7 @@
 
 - type: foodSequenceElement
   id: DuckCutletSkewer
+  name: food-sequence-content-duck
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-meat
@@ -451,7 +466,7 @@
   - Cutlet
   - Meat
 
-# Spider cutlet
+# Lizard cutlet
 
 - type: foodSequenceElement
   id: LizardCutlet
@@ -477,10 +492,10 @@
 
 - type: foodSequenceElement
   id: LizardCutletSkewer
+  name: food-sequence-content-lizard
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer-meat-alpha
-    color: green
+    state: skewer-meat #TODO - update when sprite specifiers support color
   tags:
   - Cooked
   - Cutlet
@@ -512,10 +527,10 @@
 
 - type: foodSequenceElement
   id: SpiderCutletSkewer
+  name: food-sequence-content-spider
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer-meat-alpha
-    color: '#3A7600FF'
+    state: skewer-meat #TODO - update when sprite specifiers support color
   tags:
   - Cooked
   - Cutlet
@@ -536,11 +551,10 @@
 
 - type: foodSequenceElement
   id: XenoCutletSkewer
+  name: food-sequence-content-xeno
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer-meat-alpha
-    color: '#49990EFF'
-  tags:
+    state: skewer-meat #TODO - update when sprite specifiers support color
   - Cooked
   - Cutlet
   - Meat
@@ -560,10 +574,10 @@
 
 - type: foodSequenceElement
   id: DragonCutletSkewer
+  name: food-sequence-content-dragon
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer-meat-alpha
-    color: '#6d067AFF'
+    state: skewer-meat #TODO - update when sprite specifiers support color
   tags:
   - Cooked
   - Cutlet
@@ -1678,8 +1692,6 @@
 #  name: food-sequence-cotton-burger-content-among-pequeno
 #  sprites:
 #  - sprite: Objects/Fun/pequeno.rsi
-
-#Ian Toy
 
 - type: foodSequenceElement
   id: SnakeSkewer
