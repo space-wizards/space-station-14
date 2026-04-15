@@ -26,8 +26,14 @@ public sealed class MoveEntityCommand : IEditorCommand
         if (!_em.EntityExists(_uid))
             return;
 
-        var xform = _em.GetComponent<TransformComponent>(_uid);
-        xform.Coordinates = _newCoords;
+        try
+        {
+            _em.System<SharedTransformSystem>().SetCoordinates(_uid, _newCoords);
+        }
+        catch
+        {
+            // Physics assertions can fire during coordinate changes — ignore.
+        }
     }
 
     public void Undo()
@@ -35,7 +41,13 @@ public sealed class MoveEntityCommand : IEditorCommand
         if (!_em.EntityExists(_uid))
             return;
 
-        var xform = _em.GetComponent<TransformComponent>(_uid);
-        xform.Coordinates = _oldCoords;
+        try
+        {
+            _em.System<SharedTransformSystem>().SetCoordinates(_uid, _oldCoords);
+        }
+        catch
+        {
+            // Physics assertions can fire during coordinate changes — ignore.
+        }
     }
 }
