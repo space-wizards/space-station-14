@@ -453,13 +453,16 @@ public sealed partial class MapEditorScreen : UIScreen
     {
         var button = new Button
         {
-            Text = label,
-            MinWidth = 60,
-            MinHeight = 32,
+            Text = $"■ {label}",
+            MinWidth = 80,
+            MinHeight = 36,
             ToggleMode = true,
             ToolTip = tooltip,
-            ModulateSelfOverride = color,
+            Margin = new Thickness(0, 0, 4, 0),
         };
+
+        // Set the text color to the cable color so users can identify types.
+        button.Label.FontColorOverride = color;
 
         var capturedProtoId = protoId;
         button.OnPressed += _ =>
