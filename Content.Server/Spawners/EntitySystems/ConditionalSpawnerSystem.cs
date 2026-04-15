@@ -112,11 +112,10 @@ namespace Content.Server.Spawners.EntitySystems
                 return;
 
             var offset = component.Offset;
-            var xOffset = _robustRandom.NextFloat(-offset, offset);
-            var yOffset = _robustRandom.NextFloat(-offset, offset);
+            var vOffset = _robustRandom.NextVector2(-offset, offset);
 
             var xform = Transform(uid);
-            var coords = _xform.GetMapCoordinates(uid, xform).Offset(new Vector2(xOffset, yOffset));
+            var coords = _xform.GetMapCoordinates(uid, xform).Offset(vOffset);
             var rotation = _xform.GetWorldRotation(xform);
 
             Spawn(proto, coords, rotation: rotation);
@@ -167,9 +166,8 @@ namespace Content.Server.Spawners.EntitySystems
             var spawns = _entityTable.GetSpawns(ent.Comp.Table);
             foreach (var proto in spawns)
             {
-                var xOffset = _robustRandom.NextFloat(-offset, offset);
-                var yOffset = _robustRandom.NextFloat(-offset, offset);
-                var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
+                var vOffset = _robustRandom.NextVector2(-offset, offset);
+                var trueCoords = coords.Offset(vOffset);
 
                 Spawn(proto, trueCoords, rotation: rotation);
             }
