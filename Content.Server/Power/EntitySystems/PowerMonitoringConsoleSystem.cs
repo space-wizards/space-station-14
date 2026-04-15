@@ -320,6 +320,21 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Reset RoguePowerConsumer flag
         component.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
 
+        // Check to see if a power network battery is recieving too much power
+        var powerNetworkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, TransformComponent>();
+        while (powerNetworkBatteryQuery.MoveNext(out var ent, out var powerNetworkBattery, out var xform))
+        {
+            if (xform.Anchored == false || xform.GridUid != gridUid)
+                continue;
+
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
+                continue;
+
+            // Flag an alert if power consumption is ridiculous
+            if (powerNetworkBattery.CurrentReceiving >= RoguePowerConsumerThreshold)
+                component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
+        }
+
         // Record the load value of all non-tracked power consumers on the same grid as the console
         var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, TransformComponent>();
         while (powerConsumerQuery.MoveNext(out var ent, out var powerConsumer, out var xform))
