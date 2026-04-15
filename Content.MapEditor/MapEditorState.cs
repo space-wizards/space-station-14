@@ -719,12 +719,14 @@ public sealed class MapEditorState : State
                 _commandStack.Redo();
             else
                 _commandStack.Undo();
+            _cablesDirty = true;
         }
 
         var yDown = _input.IsKeyDown(Keyboard.Key.Y);
         if (yDown && !_wasYDown && ctrl)
         {
             _commandStack.Redo();
+            _cablesDirty = true;
         }
 
         // --- EntitySelectTool operations (Delete, R/Shift+R for rotate) ---
