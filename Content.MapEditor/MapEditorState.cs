@@ -170,6 +170,7 @@ public sealed class MapEditorState : State
 
         // Wire grid tab events.
         _screen.OnGridTabSelected += OnGridTabSelected;
+        _screen.OnGridTabDeleted += OnGridTabDeleted;
         _screen.OnAddGridPressed += OnAddGridPressed;
 
         // Wire entity palette events.
@@ -259,6 +260,7 @@ public sealed class MapEditorState : State
         _screen.OnToolSelected -= OnToolSelected;
         _screen.OnTileSelected -= OnTileSelected;
         _screen.OnGridTabSelected -= OnGridTabSelected;
+        _screen.OnGridTabDeleted -= OnGridTabDeleted;
         _screen.OnAddGridPressed -= OnAddGridPressed;
         _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
         _screen.OnCableTypeSelected -= OnCableTypeSelected;
@@ -335,6 +337,39 @@ public sealed class MapEditorState : State
     {
         SetActiveGrid(gridUid);
         _screen.SetActiveGridTab(gridUid);
+    }
+
+    private void OnGridTabDeleted(EntityUid gridUid)
+    {
+        if (!_entityManager.EntityExists(gridUid))
+            return;
+
+        // Don't delete the last grid.
+        if (_screen.GridTabCount <= 1)
+        {
+            _screen.SetStatusInfo("Cannot delete the last grid");
+            return;
+        }
+
+        // If deleting the active grid, switch to another one first.
+        if (gridUid == _activeGridUid)
+        {
+            // Find another grid to switch to.
+            var query = _entityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out _, out var xform))
+            {
+                if (xform.MapID == _loadedMapId && uid != gridUid)
+                {
+                    SetActiveGrid(uid);
+                    _screen.SetActiveGridTab(uid);
+                    break;
+                }
+            }
+        }
+
+        _entityManager.DeleteEntity(gridUid);
+        _screen.RemoveGridTab(gridUid);
+        _screen.SetStatusInfo("Grid deleted");
     }
 
     private void OnAddGridPressed()

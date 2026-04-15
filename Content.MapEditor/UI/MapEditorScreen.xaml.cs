@@ -103,6 +103,11 @@ public sealed partial class MapEditorScreen : UIScreen
     public event Action<EntityUid>? OnGridTabSelected;
 
     /// <summary>
+    ///     Raised when a grid tab's delete button is clicked.
+    /// </summary>
+    public event Action<EntityUid>? OnGridTabDeleted;
+
+    /// <summary>
     ///     Raised when the "+" button is clicked to create a new grid.
     /// </summary>
     public event Action? OnAddGridPressed;
@@ -289,10 +294,12 @@ public sealed partial class MapEditorScreen : UIScreen
     /// </summary>
     public void PopulateGridTabs(List<(EntityUid Uid, string Label)> grids)
     {
-        // Remove existing tab buttons (keep the "+" button).
+        // Remove existing tab containers (keep the "+" button).
         foreach (var (_, btn) in _gridTabButtons)
         {
-            GridTabBar.RemoveChild(btn);
+            // The button is inside a BoxContainer — remove the container.
+            if (btn.Parent is { } parent)
+                GridTabBar.RemoveChild(parent);
         }
         _gridTabButtons.Clear();
 
@@ -313,22 +320,41 @@ public sealed partial class MapEditorScreen : UIScreen
 
     private void AddGridTabButton(EntityUid uid, string label)
     {
+        // Container holds the grid name button + delete "×" button.
+        var container = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 0, 2, 0),
+        };
+
         var button = new Button
         {
             Text = label,
-            MinWidth = 60,
+            MinWidth = 50,
             MinHeight = 24,
             ToggleMode = true,
             ToolTip = $"Switch to {label} ({uid})",
         };
 
+        var deleteBtn = new Button
+        {
+            Text = "×",
+            MinWidth = 20,
+            MinHeight = 24,
+            ToolTip = $"Delete {label}",
+        };
+
         var capturedUid = uid;
         button.OnPressed += _ => OnGridTabSelected?.Invoke(capturedUid);
+        deleteBtn.OnPressed += _ => OnGridTabDeleted?.Invoke(capturedUid);
+
+        container.AddChild(button);
+        container.AddChild(deleteBtn);
 
         _gridTabButtons[uid] = button;
 
         // Insert before the "+" button by adding then repositioning "+" to the end.
-        GridTabBar.AddChild(button);
+        GridTabBar.AddChild(container);
         _addGridButton!.SetPositionInParent(GridTabBar.ChildCount - 1);
     }
 
@@ -340,6 +366,16 @@ public sealed partial class MapEditorScreen : UIScreen
         foreach (var (uid, btn) in _gridTabButtons)
         {
             btn.Pressed = uid == activeUid;
+        }
+    }
+
+    public void RemoveGridTab(EntityUid uid)
+    {
+        if (_gridTabButtons.TryGetValue(uid, out var btn))
+        {
+            if (btn.Parent is { } parent)
+                GridTabBar.RemoveChild(parent);
+            _gridTabButtons.Remove(uid);
         }
     }
 
