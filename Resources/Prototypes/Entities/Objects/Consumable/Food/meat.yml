@@ -702,6 +702,8 @@
             Quantity: 5
     - type: FoodSequenceElement
       entries:
+        Taco: SnakeTaco
+        Burger: SnakeBurger
         Skewer: SnakeSkewer
     - type: FlavorProfile
       flavors:
