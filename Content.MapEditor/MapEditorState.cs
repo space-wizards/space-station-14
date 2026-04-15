@@ -464,6 +464,84 @@ public sealed class MapEditorState : State
         // Set grid world transform so the highlight renders at the correct position.
         var xformSystem = _entityManager.System<SharedTransformSystem>();
         _editorOverlay.GridWorldMatrix = xformSystem.GetWorldMatrix(_activeGridUid);
+
+        // Update placement ghost preview based on active tool.
+        UpdatePlacementPreview();
+    }
+
+    private void UpdatePlacementPreview()
+    {
+        Texture? previewTex = null;
+        Angle previewRot = Angle.Zero;
+
+        switch (_activeToolKey)
+        {
+            case "paint":
+            case "fill":
+            case "rectangle":
+            case "line":
+            case "circle":
+            {
+                // Show selected tile texture.
+                var tileId = _toolContext.SelectedTile.TypeId;
+                if (tileId > 0 && _tileDefs.TryGetDefinition(tileId, out var tileDef) && tileDef.Sprite != null)
+                {
+                    var resourceCache = IoCManager.Resolve<Robust.Client.ResourceManagement.IResourceCache>();
+                    var spritePath = tileDef.Sprite.ToString();
+                    if (spritePath != null && resourceCache.TryGetResource<Robust.Client.ResourceManagement.TextureResource>(
+                            spritePath, out var texRes))
+                        previewTex = texRes.Texture;
+                }
+                break;
+            }
+            case "entityplace":
+            {
+                // Show selected entity prototype sprite.
+                if (!string.IsNullOrEmpty(_toolContext.SelectedEntityPrototype)
+                    && _prototypeManager.TryIndex<EntityPrototype>(_toolContext.SelectedEntityPrototype, out var proto))
+                {
+                    try
+                    {
+                        var spriteSystem = _entityManager.System<SpriteSystem>();
+                        previewTex = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault()?.Default;
+                    }
+                    catch { }
+                }
+                break;
+            }
+            case "cabledraw":
+            {
+                if (!string.IsNullOrEmpty(_toolContext.SelectedCablePrototype)
+                    && _prototypeManager.TryIndex<EntityPrototype>(_toolContext.SelectedCablePrototype, out var proto))
+                {
+                    try
+                    {
+                        var spriteSystem = _entityManager.System<SpriteSystem>();
+                        previewTex = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault()?.Default;
+                    }
+                    catch { }
+                }
+                break;
+            }
+            case "pipedraw":
+            {
+                if (!string.IsNullOrEmpty(_toolContext.SelectedPipePrototype)
+                    && _prototypeManager.TryIndex<EntityPrototype>(_toolContext.SelectedPipePrototype, out var proto))
+                {
+                    try
+                    {
+                        var spriteSystem = _entityManager.System<SpriteSystem>();
+                        previewTex = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault()?.Default;
+                    }
+                    catch { }
+                }
+                previewRot = _toolContext.PlacementRotation;
+                break;
+            }
+        }
+
+        _editorOverlay.PlacementPreviewTexture = previewTex;
+        _editorOverlay.PlacementPreviewRotation = previewRot;
     }
 
     /// <summary>
