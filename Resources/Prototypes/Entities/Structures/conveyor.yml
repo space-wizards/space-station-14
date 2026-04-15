@@ -13,7 +13,7 @@
     anchored: true
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_stopped_cw
+    state: conveyor_stopped
     drawdepth: HighFloorObjects
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -47,9 +47,9 @@
     visuals:
       enum.ConveyorVisuals.State:
         enum.ConveyorState.Off:
-          Off: { state: conveyor_stopped_cw }
-          Forward: { state: conveyor_started_cw }
-          Reverse: { state: conveyor_started_cw_r }
+          Off: { state: conveyor_stopped }
+          Forward: { state: conveyor_started }
+          Reverse: { state: conveyor_started_r }
   - type: Construction
     graph: ConveyorGraph
     node: entity

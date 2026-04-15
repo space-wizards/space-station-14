@@ -18,4 +18,5 @@
   parent: BaseVerySmallStack
   id: ConveyorBeltStack
   name: conveyor_belt
+  # icon: # might want to add a sprite
   spawn: ConveyorBeltAssembly
