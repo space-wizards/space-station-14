@@ -946,52 +946,52 @@ public sealed class MapEditorState : State
         switch (toolKey)
         {
             case "erase":
-                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 0.3f, 0.3f);
-                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 0.3f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 0.3f, 0.1f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 0.3f, 0.5f);
                 break;
             case "eyedropper":
-                _editorOverlay.HighlightColor = new Color(0.3f, 1.0f, 0.4f, 0.3f);
-                _editorOverlay.BorderColor = new Color(0.3f, 1.0f, 0.4f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.3f, 1.0f, 0.4f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.3f, 1.0f, 0.4f, 0.5f);
                 break;
             case "fill":
-                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 0.2f, 0.3f);
-                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 0.2f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 0.2f, 0.1f);
+                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 0.2f, 0.5f);
                 break;
             case "rectangle":
-                _editorOverlay.HighlightColor = new Color(0.2f, 1.0f, 1.0f, 0.3f);
-                _editorOverlay.BorderColor = new Color(0.2f, 1.0f, 1.0f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.2f, 1.0f, 1.0f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.2f, 1.0f, 1.0f, 0.5f);
                 break;
             case "line":
-                _editorOverlay.HighlightColor = new Color(1.0f, 0.6f, 0.2f, 0.3f);
-                _editorOverlay.BorderColor = new Color(1.0f, 0.6f, 0.2f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.6f, 0.2f, 0.1f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.6f, 0.2f, 0.5f);
                 break;
             case "circle":
-                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 1.0f, 0.3f);
-                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 1.0f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.3f, 1.0f, 0.1f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.3f, 1.0f, 0.5f);
                 break;
             case "select":
-                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 1.0f, 0.15f);
-                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 1.0f, 0.8f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 1.0f, 1.0f, 0.08f);
+                _editorOverlay.BorderColor = new Color(1.0f, 1.0f, 1.0f, 0.6f);
                 break;
             case "entityplace":
-                _editorOverlay.HighlightColor = new Color(0.4f, 1.0f, 0.6f, 0.3f);
-                _editorOverlay.BorderColor = new Color(0.4f, 1.0f, 0.6f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.4f, 1.0f, 0.6f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.4f, 1.0f, 0.6f, 0.5f);
                 break;
             case "entityselect":
-                _editorOverlay.HighlightColor = new Color(0.3f, 0.8f, 1.0f, 0.25f);
-                _editorOverlay.BorderColor = new Color(0.3f, 0.8f, 1.0f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.8f, 1.0f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.8f, 1.0f, 0.5f);
                 break;
             case "cabledraw":
-                _editorOverlay.HighlightColor = new Color(1.0f, 0.7f, 0.1f, 0.3f);
-                _editorOverlay.BorderColor = new Color(1.0f, 0.7f, 0.1f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.7f, 0.1f, 0.1f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.7f, 0.1f, 0.5f);
                 break;
             case "pipedraw":
-                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
-                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.5f);
                 break;
             default: // paint
-                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
-                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.1f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.5f);
                 break;
         }
     }
