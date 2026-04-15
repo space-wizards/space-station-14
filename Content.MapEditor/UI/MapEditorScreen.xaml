@@ -76,7 +76,9 @@
                             <!-- Tiles tab -->
                             <BoxContainer Name="TileTabContent" Orientation="Vertical" Margin="4">
                                 <LineEdit Name="TileSearchEdit" HorizontalExpand="True" PlaceHolder="Search tiles..." Margin="0 0 0 4" />
-                                <ItemList Name="TileList" VerticalExpand="True" HorizontalExpand="True" />
+                                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                                    <WrapContainer Name="TileGrid" HorizontalExpand="True" SeparationOverride="4" CrossSeparationOverride="4" />
+                                </ScrollContainer>
                             </BoxContainer>
 
                             <!-- Entities tab -->

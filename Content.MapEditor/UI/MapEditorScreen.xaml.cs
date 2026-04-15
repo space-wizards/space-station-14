@@ -112,6 +112,10 @@ public sealed partial class MapEditorScreen : UIScreen
     // Tile definitions cached for filtering (includes icon texture when available).
     private readonly List<(string Name, int TileId, Texture? Icon)> _allTileDefs = new();
 
+    // Currently selected tile button (for highlight tracking).
+    private ContainerButton? _selectedTileButton;
+    private int _selectedTileId = -1;
+
     // Entity prototypes cached for filtering (includes sprite icon when available).
     private readonly List<(string Display, string ProtoId, Texture? Icon, string Category)> _allEntityProtos = new();
 
@@ -246,7 +250,6 @@ public sealed partial class MapEditorScreen : UIScreen
 
         // Wire tile search filtering.
         TileSearchEdit.OnTextChanged += OnTileSearchChanged;
-        TileList.OnItemSelected += OnTileItemSelected;
 
         // Wire entity search filtering.
         EntitySearchEdit.OnTextChanged += OnEntitySearchChanged;
@@ -668,7 +671,7 @@ public sealed partial class MapEditorScreen : UIScreen
         // Sort alphabetically.
         _allTileDefs.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
 
-        RefreshTileList(string.Empty);
+        RefreshTileGrid(string.Empty);
     }
 
     /// <summary>
@@ -677,12 +680,12 @@ public sealed partial class MapEditorScreen : UIScreen
     /// </summary>
     public void SelectTileInPalette(int tileId)
     {
-        for (var i = 0; i < TileList.Count; i++)
+        // Walk the TileGrid children to find the matching button and activate it.
+        foreach (var child in TileGrid.Children)
         {
-            var item = TileList[i];
-            if (item.Metadata is int id && id == tileId)
+            if (child is ContainerButton btn && btn.GetValue<int>(TileIdProperty) == tileId)
             {
-                item.Selected = true;
+                SetSelectedTileButton(btn, tileId);
                 return;
             }
         }
@@ -690,12 +693,13 @@ public sealed partial class MapEditorScreen : UIScreen
 
     private void OnTileSearchChanged(LineEdit.LineEditEventArgs args)
     {
-        RefreshTileList(args.Text);
+        RefreshTileGrid(args.Text);
     }
 
-    private void RefreshTileList(string filter)
+    private void RefreshTileGrid(string filter)
     {
-        TileList.Clear();
+        TileGrid.RemoveAllChildren();
+        _selectedTileButton = null;
 
         foreach (var (name, tileId, icon) in _allTileDefs)
         {
@@ -705,30 +709,102 @@ public sealed partial class MapEditorScreen : UIScreen
                 continue;
             }
 
-            // Scale icon to ~24px height, capped at 1.0 so small icons don't enlarge.
-            var iconScale = icon != null ? MathF.Min(1f, 24f / icon.Height) : 1f;
-            var item = TileList.AddItem(name, icon: icon, metadata: tileId, iconScale: iconScale);
-
-            // Crop sprite strips (wider than tall) to the first tile-sized region.
-            if (icon != null && icon.Width > icon.Height)
+            // Outer panel provides the selection highlight border.
+            var panel = new PanelContainer
             {
-                item.IconRegion = new UIBox2(0, 0, icon.Height, icon.Height);
+                MinWidth = 44,
+                MinHeight = 44,
+                ToolTip = name,
+            };
+            panel.SetValue(TileIdProperty, tileId);
+
+            // ContainerButton handles click + hover visuals.
+            var button = new ContainerButton
+            {
+                MinWidth = 44,
+                MinHeight = 44,
+                ToolTip = name,
+            };
+            button.SetValue(TileIdProperty, tileId);
+
+            if (icon != null)
+            {
+                // Crop sprite strips (wider than tall) to a square region covering the first tile.
+                // AtlasTexture requires SubRegion.Right strictly < Width and Bottom strictly < Height,
+                // so only crop when height < width AND height >= 2 (giving at least a 1px margin).
+                Texture displayTexture = icon;
+                if (icon.Width > icon.Height && icon.Height >= 2)
+                {
+                    // Use (height - 1) to keep the sub-region strictly inside the texture bounds.
+                    var cropEdge = icon.Height - 1;
+                    displayTexture = new AtlasTexture(icon, new UIBox2(0, 0, cropEdge, cropEdge));
+                }
+
+                var texRect = new TextureRect
+                {
+                    Texture = displayTexture,
+                    Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                    CanShrink = true,
+                    MinWidth = 40,
+                    MinHeight = 40,
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center,
+                };
+                button.AddChild(texRect);
             }
 
-            item.TooltipText = name;
+            var capturedTileId = tileId;
+            var capturedName = name;
+            var capturedIcon = icon;
+            button.OnPressed += _ =>
+            {
+                SetSelectedTileButton(button, capturedTileId);
+                OnTileSelected?.Invoke(capturedTileId);
+                UpdatePreview(capturedIcon, capturedName);
+            };
+
+            panel.AddChild(button);
+            TileGrid.AddChild(panel);
+
+            // Re-apply selection highlight if this tile was previously selected.
+            if (tileId == _selectedTileId)
+            {
+                ApplyTileButtonHighlight(panel, selected: true);
+                _selectedTileButton = button;
+            }
         }
     }
 
-    private void OnTileItemSelected(ItemList.ItemListSelectedEventArgs args)
-    {
-        var item = TileList[args.ItemIndex];
-        if (item.Metadata is int tileId)
-        {
-            OnTileSelected?.Invoke(tileId);
+    private static readonly AttachedProperty<int> TileIdProperty =
+        AttachedProperty<int>.Create("TileId", typeof(MapEditorScreen), defaultValue: -1);
 
-            // Update the preview panel with the selected tile's texture and name.
-            UpdatePreview(item.Icon, item.Text ?? "Tile");
+    private void SetSelectedTileButton(ContainerButton button, int tileId)
+    {
+        // Clear previous highlight.
+        if (_selectedTileButton != null && _selectedTileButton.Parent is PanelContainer oldPanel)
+        {
+            ApplyTileButtonHighlight(oldPanel, selected: false);
         }
+
+        _selectedTileButton = button;
+        _selectedTileId = tileId;
+
+        if (button.Parent is PanelContainer newPanel)
+        {
+            ApplyTileButtonHighlight(newPanel, selected: true);
+        }
+    }
+
+    private static void ApplyTileButtonHighlight(PanelContainer panel, bool selected)
+    {
+        panel.PanelOverride = selected
+            ? new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.2f, 0.5f, 0.9f, 0.55f),
+                BorderColor = new Color(0.4f, 0.7f, 1.0f, 1.0f),
+                BorderThickness = new Thickness(2),
+            }
+            : null;
     }
 
     #endregion
