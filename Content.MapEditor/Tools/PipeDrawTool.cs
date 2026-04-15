@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.MapEditor.Commands;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
@@ -57,8 +58,14 @@ public sealed class PipeDrawTool : IEditorTool
 
         var uid = ctx.EntityManager.SpawnEntity(ctx.SelectedPipePrototype, coords);
 
+        // Apply placement rotation to the pipe.
+        if (ctx.PlacementRotation != Angle.Zero)
+        {
+            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
+            xformSystem.SetLocalRotation(uid, ctx.PlacementRotation);
+        }
+
         var cmd = new SpawnEntityCommand(ctx.EntityManager, uid);
-        cmd.Execute(); // Already spawned, but satisfy the command pattern.
         _batch.Add(cmd);
     }
 }

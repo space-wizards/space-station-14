@@ -50,4 +50,10 @@ public sealed class ToolContext
     ///     Tools can use this to adjust behavior (e.g. erase only infra entities).
     /// </summary>
     public bool InfrastructureMode { get; set; }
+
+    /// <summary>
+    ///     Rotation applied to placed pipes (in radians). Cycled with R/Shift+R.
+    ///     0 = default, π/2 = 90° CW, π = 180°, 3π/2 = 270°.
+    /// </summary>
+    public Robust.Shared.Maths.Angle PlacementRotation { get; set; }
 }

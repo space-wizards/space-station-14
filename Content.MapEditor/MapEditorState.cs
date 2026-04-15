@@ -722,9 +722,23 @@ public sealed class MapEditorState : State
             }
         }
 
-        // --- Tool shortcuts (only without modifiers, and not when entity select tool
+        // --- Pipe rotation (R/Shift+R cycles placement angle when pipe draw is active) ---
+        if (!ctrl && _activeTool is PipeDrawTool)
+        {
+            var rDown = _input.IsKeyDown(Keyboard.Key.R);
+            if (rDown && !_wasRDown)
+            {
+                var delta = _input.IsKeyDown(Keyboard.Key.Shift) ? -Math.PI / 2 : Math.PI / 2;
+                _toolContext.PlacementRotation += new Angle(delta);
+                var deg = (int) Math.Round(_toolContext.PlacementRotation.Degrees) % 360;
+                if (deg < 0) deg += 360;
+                _screen.SetStatusInfo($"Pipe rotation: {deg}°");
+            }
+        }
+
+        // --- Tool shortcuts (only without modifiers, and not when entity select or pipe draw
         //     is active since R is used for rotation there) ---
-        if (!ctrl && _activeTool is not EntitySelectTool)
+        if (!ctrl && _activeTool is not EntitySelectTool && _activeTool is not PipeDrawTool)
         {
             var bDown = _input.IsKeyDown(Keyboard.Key.B);
             if (bDown && !_wasBDown)
@@ -818,6 +832,9 @@ public sealed class MapEditorState : State
         _activeTool = tool;
         _activeToolKey = toolKey;
         _screen.SetActiveToolButton(toolKey);
+
+        // Reset placement rotation when switching tools.
+        _toolContext.PlacementRotation = Angle.Zero;
 
         // Activate/deactivate infrastructure mode based on tool type.
         var isInfraTool = toolKey is "cabledraw" or "pipedraw";
