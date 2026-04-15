@@ -25,7 +25,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Content.Client.Power.Visualizers;
 using Content.Shared.SubFloor;
+using Content.Shared.Wires;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -1144,6 +1146,11 @@ public sealed class MapEditorState : State
             // Populate grid tabs and set active grid to the first one.
             PopulateGridTabs(_loadedMapId);
 
+            // Compute cable connection masks so cables render properly.
+            // Normally done by server-side NodeGroupSystem, but we do it client-side
+            // by checking cardinal neighbors for matching cable types.
+            ComputeCableConnections();
+
             _sawmill.Info($"Map loaded: {grids.Count} grids on map {_loadedMapId}");
         }
         catch (Exception ex)
@@ -1345,6 +1352,86 @@ public sealed class MapEditorState : State
         {
             appearanceSystem.QueueUpdate(uid, appearance);
         }
+    }
+
+    #endregion
+
+    #region Cable Connection Fix
+
+    /// <summary>
+    ///     Computes cable connection masks client-side after map load.
+    ///     Normally done by server-side NodeGroupSystem, but since we're client-only,
+    ///     we check cardinal neighbors for matching cable types and set the appearance data.
+    /// </summary>
+    private void ComputeCableConnections()
+    {
+        var appearanceSys = _entityManager.System<AppearanceSystem>();
+
+        // Build a lookup: tile position → list of (EntityUid, StatePrefix) for cables on that tile.
+        var cableTiles = new Dictionary<(EntityUid Grid, Vector2i Tile), List<(EntityUid Uid, string Prefix)>>();
+
+        var query = _entityManager.AllEntityQueryEnumerator<CableVisualizerComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var cableVis, out var xform))
+        {
+            if (xform.MapID != _loadedMapId)
+                continue;
+
+            var gridUid = xform.GridUid;
+            if (gridUid == null || !_entityManager.TryGetComponent<MapGridComponent>(gridUid.Value, out var grid))
+                continue;
+
+            var prefix = cableVis.StatePrefix ?? "cable";
+            var tile = _entityManager.System<SharedMapSystem>().CoordinatesToTile(gridUid.Value, grid, xform.Coordinates);
+            var key = (gridUid.Value, tile);
+
+            if (!cableTiles.TryGetValue(key, out var list))
+            {
+                list = new List<(EntityUid, string)>();
+                cableTiles[key] = list;
+            }
+            list.Add((uid, prefix));
+        }
+
+        // For each cable, check cardinal neighbors for same-prefix cables.
+        var directions = new (Vector2i Offset, WireVisDirFlags Flag)[]
+        {
+            (new Vector2i(0, 1), WireVisDirFlags.North),
+            (new Vector2i(0, -1), WireVisDirFlags.South),
+            (new Vector2i(1, 0), WireVisDirFlags.East),
+            (new Vector2i(-1, 0), WireVisDirFlags.West),
+        };
+
+        foreach (var ((gridUid, tile), cables) in cableTiles)
+        {
+            foreach (var (uid, prefix) in cables)
+            {
+                var mask = WireVisDirFlags.None;
+
+                foreach (var (offset, flag) in directions)
+                {
+                    var neighborKey = (gridUid, tile + offset);
+                    if (cableTiles.TryGetValue(neighborKey, out var neighbors))
+                    {
+                        foreach (var (_, neighborPrefix) in neighbors)
+                        {
+                            if (neighborPrefix == prefix)
+                            {
+                                mask |= flag;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Set the appearance data so the CableVisualizerSystem picks it up.
+                if (_entityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
+                {
+                    appearanceSys.SetData(uid, WireVisVisuals.ConnectedMask, mask, appearance);
+                }
+            }
+        }
+
+        _sawmill.Info($"Computed cable connections for {cableTiles.Count} tile positions");
     }
 
     #endregion
