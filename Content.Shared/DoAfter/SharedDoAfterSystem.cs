@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -38,7 +39,28 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        SubscribeLocalEvent<DoAfterComponent, EffectiveMoverChangedEvent>(OnEffectiveMoverChanged);
         SubscribeLocalEvent<GetInteractingEntitiesEvent>(OnGetInteractingEntities);
+    }
+
+    private void OnEffectiveMoverChanged(EntityUid uid, DoAfterComponent comp, ref EffectiveMoverChangedEvent args)
+    {
+        // Effective mover changed, so move-sensitive do-afters cancel now
+        var dirty = false;
+        foreach (var doAfter in comp.DoAfters.Values)
+        {
+            if (doAfter.Cancelled || doAfter.Completed || !doAfter.Args.BreakOnMove)
+                continue;
+
+            if (doAfter.MovementEntity != args.OldMover)
+                continue;
+
+            InternalCancel(doAfter, comp);
+            dirty = true;
+        }
+
+        if (dirty)
+            Dirty(uid, comp);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)

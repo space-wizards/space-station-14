@@ -26,13 +26,17 @@ public abstract partial class SharedMoverController
 
     private void OnRelayCanMoveUpdated(Entity<RelayInputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
-        if (args.CanMove)
-            return;
-
         if (MoverQuery.TryComp(ent.Comp.RelayEntity, out var inputMoverComponent))
-            SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
+        {
+            if (!args.CanMove)
+                SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
 
-        if (MoverQuery.TryComp(ent.Owner, out var sourceMover))
+            // Relay can-move state to the active mover target, not just the source
+            var relayEvent = new CanMoveUpdatedEvent(args.CanMove);
+            RaiseLocalEvent(ent.Comp.RelayEntity, ref relayEvent);
+        }
+
+        if (!args.CanMove && MoverQuery.TryComp(ent.Owner, out var sourceMover))
             SetMoveInput((ent.Owner, sourceMover), MoveButtons.None);
     }
 
@@ -49,6 +53,7 @@ public abstract partial class SharedMoverController
         }
 
         var component = EnsureComp<RelayInputMoverComponent>(uid);
+        var oldEffectiveMover = GetEffectiveMover(uid);
         if (component.RelayEntity == relayEntity)
             return;
 
@@ -62,9 +67,11 @@ public abstract partial class SharedMoverController
         var targetComp = EnsureComp<MovementRelayTargetComponent>(relayEntity);
         if (TryComp(targetComp.Source, out RelayInputMoverComponent? oldRelay))
         {
+            var oldRelayEffectiveMover = GetEffectiveMover(targetComp.Source);
             oldRelay.RelayEntity = EntityUid.Invalid;
             RemComp(targetComp.Source, oldRelay);
             PhysicsSystem.UpdateIsPredicted(targetComp.Source);
+            RaiseEffectiveMoverChanged(targetComp.Source, oldRelayEffectiveMover, targetComp.Source);
         }
 
         PhysicsSystem.UpdateIsPredicted(uid);
@@ -75,6 +82,7 @@ public abstract partial class SharedMoverController
         Dirty(relayEntity, targetComp);
         _blocker.UpdateCanMove(uid);
         UpdateMoverStatus((relayEntity, null, targetComp));
+        RaiseEffectiveMoverChanged(uid, oldEffectiveMover, relayEntity);
     }
 
     /// <summary>
@@ -95,6 +103,7 @@ public abstract partial class SharedMoverController
 
     private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ref ComponentShutdown args)
     {
+        var oldEffectiveMover = entity.Comp.RelayEntity;
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
         PhysicsSystem.UpdateIsPredicted(entity.Comp.RelayEntity);
 
@@ -108,6 +117,7 @@ public abstract partial class SharedMoverController
             RemComp(entity.Comp.RelayEntity, target);
 
         _blocker.UpdateCanMove(entity.Owner);
+        RaiseEffectiveMoverChanged(entity.Owner, oldEffectiveMover, entity.Owner);
     }
 
     protected virtual void OnTargetRelayShutdown(Entity<MovementRelayTargetComponent> entity, ref ComponentShutdown args)
@@ -126,4 +136,17 @@ public abstract partial class SharedMoverController
     }
 
     protected virtual void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent) { }
+
+    /// <summary>
+    ///     Raises an event when the effective mover changes.
+    ///     Used to cancel move-sensitive do-afters.
+    /// </summary>
+    private void RaiseEffectiveMoverChanged(EntityUid uid, EntityUid oldMover, EntityUid newMover)
+    {
+        if (oldMover == newMover)
+            return;
+
+        var ev = new EffectiveMoverChangedEvent(oldMover, newMover);
+        RaiseLocalEvent(uid, ref ev);
+    }
 }

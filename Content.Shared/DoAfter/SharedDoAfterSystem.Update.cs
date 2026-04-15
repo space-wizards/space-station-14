@@ -218,10 +218,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
-            var movementEntity = _mover.GetEffectiveMover(args.User);
-
-            if (movementEntity != doAfter.MovementEntity)
-                return true;
+            var movementEntity = doAfter.MovementEntity;
 
             if (!TryComp(movementEntity, out TransformComponent? movementXform))
                 return true;
