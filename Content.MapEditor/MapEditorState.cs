@@ -496,18 +496,31 @@ public sealed class MapEditorState : State
             }
             case "entityplace":
             {
-                // Show selected entity prototype sprite with rotation.
+                // Show the directional sprite for the current placement rotation.
                 if (!string.IsNullOrEmpty(_toolContext.SelectedEntityPrototype)
                     && _prototypeManager.TryIndex<EntityPrototype>(_toolContext.SelectedEntityPrototype, out var proto))
                 {
                     try
                     {
                         var spriteSystem = _entityManager.System<SpriteSystem>();
-                        previewTex = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault()?.Default;
+                        var dirTexProvider = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault();
+                        if (dirTexProvider != null)
+                        {
+                            if (_toolContext.PlacementRotation != Angle.Zero)
+                            {
+                                // Get the directional sprite for the target direction.
+                                var dir = _toolContext.PlacementRotation.GetCardinalDir();
+                                previewTex = dirTexProvider.TextureFor(dir);
+                            }
+                            else
+                            {
+                                previewTex = dirTexProvider.Default;
+                            }
+                        }
                     }
                     catch { }
                 }
-                previewRot = _toolContext.PlacementRotation;
+                // Don't set previewRot — the directional sprite already faces the right way.
                 break;
             }
             case "cabledraw":
@@ -532,11 +545,23 @@ public sealed class MapEditorState : State
                     try
                     {
                         var spriteSystem = _entityManager.System<SpriteSystem>();
-                        previewTex = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault()?.Default;
+                        var dirTexProvider = spriteSystem.GetPrototypeTextures(proto).FirstOrDefault();
+                        if (dirTexProvider != null)
+                        {
+                            if (_toolContext.PlacementRotation != Angle.Zero)
+                            {
+                                var dir = _toolContext.PlacementRotation.GetCardinalDir();
+                                previewTex = dirTexProvider.TextureFor(dir);
+                            }
+                            else
+                            {
+                                previewTex = dirTexProvider.Default;
+                            }
+                        }
                     }
                     catch { }
                 }
-                previewRot = _toolContext.PlacementRotation;
+                // Don't set previewRot — directional sprite handles it.
                 break;
             }
         }
