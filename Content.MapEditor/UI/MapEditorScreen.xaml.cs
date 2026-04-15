@@ -230,17 +230,30 @@ public sealed partial class MapEditorScreen : UIScreen
         // Build infrastructure panel controls (cables/pipes selector).
         BuildInfrastructurePanel();
 
-        // Build toolbar buttons with descriptive labels and keyboard shortcut tooltips.
+        // Build toolbar buttons grouped by category.
+        AddToolbarLabel("Tiles");
         AddToolButton("paint", "Paint", "Paint tiles (B)");
         AddToolButton("erase", "Erase", "Erase tiles (E)");
         AddToolButton("eyedropper", "Pick", "Eyedropper / pick tile (I)");
         AddToolButton("fill", "Fill", "Flood fill (F)");
+
+        AddToolbarSpacer();
+        AddToolbarLabel("Shapes");
         AddToolButton("rectangle", "Rect", "Rectangle draw (R)");
         AddToolButton("line", "Line", "Line draw (L)");
         AddToolButton("circle", "Circle", "Circle draw (C)");
+
+        AddToolbarSpacer();
+        AddToolbarLabel("Select");
         AddToolButton("select", "Select", "Select region (S)");
-        AddToolButton("entityplace", "E.Place", "Place entities (P)");
-        AddToolButton("entityselect", "E.Sel", "Select entities (V)");
+
+        AddToolbarSpacer();
+        AddToolbarLabel("Entities");
+        AddToolButton("entityplace", "Place", "Place entities (G)");
+        AddToolButton("entityselect", "Select", "Select entities (Q)");
+
+        AddToolbarSpacer();
+        AddToolbarLabel("Infra");
         AddToolButton("cabledraw", "Cable", "Draw cables (K)");
         AddToolButton("pipedraw", "Pipe", "Draw pipes (J)");
 
@@ -595,6 +608,26 @@ public sealed partial class MapEditorScreen : UIScreen
     #endregion
 
     #region Toolbar
+
+    private void AddToolbarLabel(string text)
+    {
+        var label = new Label
+        {
+            Text = text,
+            FontColorOverride = new Color(0.6f, 0.6f, 0.7f, 1.0f),
+            HorizontalAlignment = HAlignment.Center,
+            Margin = new Thickness(0, 2, 0, 0),
+        };
+        // Use a smaller font feel by scaling — RTUI doesn't have easy font size control,
+        // but the label will be compact enough.
+        ToolbarButtons.AddChild(label);
+    }
+
+    private void AddToolbarSpacer()
+    {
+        var spacer = new Control { MinHeight = 6 };
+        ToolbarButtons.AddChild(spacer);
+    }
 
     private void AddToolButton(string toolKey, string label, string? tooltip = null)
     {
