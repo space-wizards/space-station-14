@@ -75,5 +75,9 @@ public partial struct VoltageSetting
     public LocId Name;
 }
 
+/// <summary>
+/// Event called when the voltage of a device with <see cref="VoltageTogglerComponent"/> is toggled
+/// </summary>
+/// <param name="NewVoltage">the new voltage setting</param>
 [ByRefEvent]
 public record struct VoltageChangedEvent(VoltageSetting NewVoltage);
