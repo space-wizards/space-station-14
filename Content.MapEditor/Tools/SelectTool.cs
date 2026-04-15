@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Content.MapEditor.Commands;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
@@ -37,6 +39,7 @@ public sealed class SelectTool : IEditorTool
     // For move mode: track the original selection and accumulated offset.
     private Box2i _originalSelection;
     private Vector2i _totalMoveOffset;
+    private List<EntityUid>? _moveEntities;
 
     /// <summary>
     ///     Tile positions (in grid coords) that were non-empty when the move started.
@@ -57,8 +60,9 @@ public sealed class SelectTool : IEditorTool
             _originalSelection = Selection.Value;
             _totalMoveOffset = Vector2i.Zero;
 
-            // Snapshot non-empty tile positions for ghost rendering.
-            MoveGhostTiles = new System.Collections.Generic.List<Vector2i>();
+            // Snapshot non-empty tile positions and entities for ghost rendering and move.
+            MoveGhostTiles = new List<Vector2i>();
+            _moveEntities = new List<EntityUid>();
             var gridUid = ctx.ActiveGridUid;
             var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
             for (var x = _originalSelection.Left; x < _originalSelection.Right; x++)
@@ -68,6 +72,13 @@ public sealed class SelectTool : IEditorTool
                     var pos = new Vector2i(x, y);
                     if (ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile != Tile.Empty)
                         MoveGhostTiles.Add(pos);
+
+                    // Collect anchored entities at this tile.
+                    foreach (var ent in ctx.MapSystem.GetAnchoredEntities(gridUid, grid, pos))
+                    {
+                        if (ctx.EntityManager.EntityExists(ent))
+                            _moveEntities.Add(ent);
+                    }
                 }
             }
             return;
@@ -107,7 +118,7 @@ public sealed class SelectTool : IEditorTool
             _isMoving = false;
             MoveGhostTiles = null;
 
-            // Apply the tile move if there was actual displacement.
+            // Apply the tile + entity move if there was actual displacement.
             if (_totalMoveOffset != Vector2i.Zero)
                 ApplyMove(ctx, _originalSelection, _totalMoveOffset);
             return;
@@ -164,6 +175,28 @@ public sealed class SelectTool : IEditorTool
             var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, destPos, oldDest, tile);
             cmd.Execute();
             batch.Add(cmd);
+        }
+
+        // Move entities that were in the selection.
+        if (_moveEntities != null)
+        {
+            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
+            var worldOffset = new System.Numerics.Vector2(offset.X, offset.Y);
+
+            foreach (var entUid in _moveEntities)
+            {
+                if (!ctx.EntityManager.EntityExists(entUid))
+                    continue;
+
+                var xform = ctx.EntityManager.GetComponent<TransformComponent>(entUid);
+                var oldCoords = xform.Coordinates;
+                var newPos = oldCoords.Position + worldOffset;
+                var newCoords = new EntityCoordinates(oldCoords.EntityId, newPos);
+
+                var cmd = new MoveEntityCommand(ctx.EntityManager, entUid, oldCoords, newCoords);
+                cmd.Execute();
+                batch.Add(cmd);
+            }
         }
 
         if (batch.Count > 0)
