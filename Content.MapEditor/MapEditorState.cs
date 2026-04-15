@@ -1092,8 +1092,10 @@ public sealed class MapEditorState : State
     {
         _toolContext.SelectedTile = new Tile(tileId);
 
-        // If user selects a tile, auto-switch to paint tool for convenience.
-        if (_activeToolKey != "paint")
+        // Only auto-switch to paint if the current tool isn't already tile-based.
+        var isTileTool = _activeToolKey is "paint" or "erase" or "eyedropper" or "fill"
+            or "rectangle" or "line" or "circle";
+        if (!isTileTool)
         {
             SetActiveTool(new PaintTool(), "paint");
         }
