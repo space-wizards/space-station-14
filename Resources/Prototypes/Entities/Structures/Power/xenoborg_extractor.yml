@@ -113,7 +113,7 @@
     - voltage: High
       node: input_hv
       name: power-voltage-high
-  - type: ChargeRateVoltageToggler
+  - type: DrawRateVoltageToggler
     chargeRatePerVoltage:
       Apc: 32000 # 32kW - 125 seconds to spawn one
       Medium: 80000 # 80kW - 50 seconds to spawn one
