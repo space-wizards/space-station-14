@@ -114,7 +114,7 @@
       node: input_hv
       name: power-voltage-high
   - type: DrawRateVoltageToggler
-    chargeRatePerVoltage:
+    drawRatePerVoltage:
       Apc: 32000 # 32kW - 125 seconds to spawn one
       Medium: 80000 # 80kW - 50 seconds to spawn one
       High: 200000 # 200kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
