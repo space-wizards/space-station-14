@@ -1,10 +1,6 @@
 ﻿using System.Linq;
-using System.Numerics;
-using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
-using Content.Shared.Humanoid;
-using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -16,12 +12,9 @@ namespace Content.Shared.Changeling.Systems;
 public abstract class SharedChangelingIdentitySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
 
     public MapId? PausedMapId;
