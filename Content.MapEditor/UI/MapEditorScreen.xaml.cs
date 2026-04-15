@@ -84,6 +84,12 @@ public sealed partial class MapEditorScreen : UIScreen
     public event Action? OnEntityDeselect;
 
     /// <summary>
+    ///     Raised when a cable type is selected in the infrastructure panel.
+    ///     The string parameter is the cable prototype ID (e.g. "CableHV").
+    /// </summary>
+    public event Action<string>? OnCableTypeSelected;
+
+    /// <summary>
     ///     Raised when a grid tab is clicked.
     ///     The EntityUid parameter is the grid entity to switch to.
     /// </summary>
@@ -115,6 +121,9 @@ public sealed partial class MapEditorScreen : UIScreen
     private Label _entityInfoNameLabel = default!;
     private Label _entityInfoPosLabel = default!;
     private Label _entityInfoRotLabel = default!;
+
+    // Infrastructure panel cable type buttons.
+    private readonly Dictionary<string, Button> _cableButtons = new();
 
     // Grid tab buttons keyed by grid EntityUid.
     private readonly Dictionary<EntityUid, Button> _gridTabButtons = new();
@@ -205,6 +214,9 @@ public sealed partial class MapEditorScreen : UIScreen
         // Build entity info panel controls.
         BuildEntityInfoPanel();
 
+        // Build infrastructure panel controls (cables/pipes selector).
+        BuildInfrastructurePanel();
+
         // Build toolbar buttons with descriptive labels and keyboard shortcut tooltips.
         AddToolButton("paint", "Paint", "Paint tiles (B)");
         AddToolButton("erase", "Erase", "Erase tiles (E)");
@@ -216,6 +228,7 @@ public sealed partial class MapEditorScreen : UIScreen
         AddToolButton("select", "Select", "Select region (S)");
         AddToolButton("entityplace", "E.Place", "Place entities (P)");
         AddToolButton("entityselect", "E.Sel", "Select entities (V)");
+        AddToolButton("cabledraw", "Cable", "Draw cables (K)");
 
         // Set tab titles for the palette tabs.
         PaletteTabContainer.SetTabTitle(0, "Tiles");
@@ -379,6 +392,111 @@ public sealed partial class MapEditorScreen : UIScreen
     public void HideEntityInfoPanel()
     {
         EntityInfoPanel.Visible = false;
+    }
+
+    #endregion
+
+    #region Infrastructure Panel
+
+    private void BuildInfrastructurePanel()
+    {
+        var content = InfrastructurePanelContent;
+
+        var header = new Label
+        {
+            Text = "Infrastructure",
+            FontColorOverride = new Color(0.5f, 0.7f, 1.0f, 1.0f),
+            Margin = new Thickness(0, 0, 0, 6),
+        };
+        content.AddChild(header);
+
+        // Cables section
+        var cableHeader = new Label
+        {
+            Text = "Cables",
+            FontColorOverride = new Color(0.8f, 0.8f, 0.8f, 1.0f),
+            Margin = new Thickness(0, 0, 0, 2),
+        };
+        content.AddChild(cableHeader);
+
+        var cableRow = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 8),
+        };
+
+        AddCableButton(cableRow, "CableHV", "HV", new Color(1.0f, 0.6f, 0.1f, 1.0f), "High Voltage cable");
+        AddCableButton(cableRow, "CableMV", "MV", new Color(1.0f, 1.0f, 0.2f, 1.0f), "Medium Voltage cable");
+        AddCableButton(cableRow, "CableApcExtension", "APC", new Color(0.2f, 1.0f, 0.3f, 1.0f), "APC Extension cable");
+
+        content.AddChild(cableRow);
+
+        // Pipes section (placeholder for future pipe tool)
+        var pipeHeader = new Label
+        {
+            Text = "Pipes",
+            FontColorOverride = new Color(0.8f, 0.8f, 0.8f, 1.0f),
+            Margin = new Thickness(0, 4, 0, 2),
+        };
+        content.AddChild(pipeHeader);
+
+        var pipePlaceholder = new Label
+        {
+            Text = "(Coming soon)",
+            FontColorOverride = new Color(0.5f, 0.5f, 0.5f, 1.0f),
+            Margin = new Thickness(4, 0, 0, 0),
+        };
+        content.AddChild(pipePlaceholder);
+    }
+
+    private void AddCableButton(BoxContainer row, string protoId, string label, Color color, string tooltip)
+    {
+        var button = new Button
+        {
+            Text = label,
+            MinWidth = 60,
+            MinHeight = 32,
+            ToggleMode = true,
+            ToolTip = tooltip,
+            ModulateSelfOverride = color,
+        };
+
+        var capturedProtoId = protoId;
+        button.OnPressed += _ =>
+        {
+            // Un-press all other cable buttons.
+            foreach (var (id, btn) in _cableButtons)
+            {
+                btn.Pressed = id == capturedProtoId;
+            }
+
+            OnCableTypeSelected?.Invoke(capturedProtoId);
+        };
+
+        _cableButtons[protoId] = button;
+        row.AddChild(button);
+    }
+
+    /// <summary>
+    ///     Shows or hides the infrastructure panel and toggles the palette panel accordingly.
+    /// </summary>
+    public void SetInfrastructurePanelVisible(bool visible)
+    {
+        InfrastructurePanel.Visible = visible;
+
+        // When infrastructure panel is visible, hide the palette; otherwise show it.
+        PalettePanel.Visible = !visible;
+    }
+
+    /// <summary>
+    ///     Highlights the selected cable type button.
+    /// </summary>
+    public void SetActiveCableButton(string? protoId)
+    {
+        foreach (var (id, btn) in _cableButtons)
+        {
+            btn.Pressed = id == protoId;
+        }
     }
 
     #endregion

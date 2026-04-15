@@ -58,6 +58,14 @@
                         </BoxContainer>
                     </PanelContainer>
 
+                    <!-- Infrastructure panel (shown when cable/pipe tools are active) -->
+                    <PanelContainer Name="InfrastructurePanel" HorizontalExpand="True" Visible="False">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1A1A2ADD" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Name="InfrastructurePanelContent" Orientation="Vertical" Margin="6 4" />
+                    </PanelContainer>
+
                     <!-- Palette panel with Tiles/Entities tabs -->
                     <PanelContainer Name="PalettePanel" VerticalExpand="True">
                         <PanelContainer.PanelOverride>
