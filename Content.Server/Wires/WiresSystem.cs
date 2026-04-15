@@ -786,6 +786,54 @@ public sealed partial class WiresSystem : SharedWiresSystem
         wires.WiresQueue.Remove(id);
     }
 
+    public bool TryForceWireAction(EntityUid uid, int id, WiresAction action, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return false;
+        
+        var wire = TryGetWire(uid, id, wires);
+        if (wire == null)
+            return false;
+
+        return TryForceWireAction(uid, wire, action, wires);
+    }
+
+    public bool TryForceWireAction(EntityUid uid, Wire wire, WiresAction action, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return false;
+
+        if (wire.Owner != uid)
+            return false;
+        
+        switch (action)
+        {
+            case WiresAction.Cut:
+                if (wire.Action == null || wire.Action.Cut(null, wire))
+                {
+                    wire.IsCut = true;
+                }
+
+                UpdateUserInterface(uid);
+                break;
+            case WiresAction.Mend:
+                if (wire.Action == null || wire.Action.Mend(null, wire))
+                {
+                    wire.IsCut = false;
+                }
+
+                UpdateUserInterface(uid);
+                break;
+            case WiresAction.Pulse:
+                wire.Action?.Pulse(null, wire);
+
+                UpdateUserInterface(uid);
+                break;
+        }
+
+        return true;
+    }
+
     /// <summary>
     ///     Tries to get the stateful data stored in this entity's WiresComponent.
     /// </summary>

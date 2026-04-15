@@ -14,7 +14,7 @@ public sealed partial class CryoPodEjectLockWireAction : ComponentWireAction<Cry
     public override bool LightRequiresPower { get; set; } = false;
 
     public override object? StatusKey { get; } = CryoPodWireActionKey.Key;
-    public override bool Cut(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
+    public override bool Cut(EntityUid? user, Wire wire, CryoPodComponent cryoPodComponent)
     {
         if (!cryoPodComponent.PermaLocked)
         {
@@ -25,7 +25,7 @@ public sealed partial class CryoPodEjectLockWireAction : ComponentWireAction<Cry
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
+    public override bool Mend(EntityUid? user, Wire wire, CryoPodComponent cryoPodComponent)
     {
         if (!cryoPodComponent.PermaLocked)
         {
@@ -36,7 +36,7 @@ public sealed partial class CryoPodEjectLockWireAction : ComponentWireAction<Cry
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent) { }
+    public override void Pulse(EntityUid? user, Wire wire, CryoPodComponent cryoPodComponent) { }
 
     public override StatusLightState? GetLightState(Wire wire, CryoPodComponent comp)
         => comp.Locked ? StatusLightState.On : StatusLightState.Off;

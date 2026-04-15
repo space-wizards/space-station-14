@@ -21,7 +21,7 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
         return component.Enabled ? StatusLightState.On : StatusLightState.BlinkingSlow;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Cut(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
 
@@ -30,13 +30,13 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Mend(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.CanBeEnabled = true;
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override void Pulse(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
         var multipartMachine = EntityManager.System<MultipartMachineSystem>();

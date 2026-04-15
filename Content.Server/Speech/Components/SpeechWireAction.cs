@@ -26,19 +26,19 @@ public sealed partial class SpeechWireAction : ComponentWireAction<SpeechCompone
         _popup = EntityManager.System<PopupSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, SpeechComponent component)
+    public override bool Cut(EntityUid? user, Wire wire, SpeechComponent component)
     {
         _speech.SetSpeech(wire.Owner, false, component);
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, SpeechComponent component)
+    public override bool Mend(EntityUid? user, Wire wire, SpeechComponent component)
     {
         _speech.SetSpeech(wire.Owner, true, component);
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, SpeechComponent component)
+    public override void Pulse(EntityUid? user, Wire wire, SpeechComponent component)
     {
         _popup.PopupEntity(Loc.GetString("wire-speech-pulse", ("name", wire.Owner)), wire.Owner);
     }

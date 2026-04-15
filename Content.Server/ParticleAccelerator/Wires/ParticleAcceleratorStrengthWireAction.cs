@@ -18,7 +18,7 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
         return component.StrengthLocked ? StatusLightState.BlinkingSlow : StatusLightState.On;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Cut(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = true;
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
@@ -26,7 +26,7 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override bool Mend(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = false;
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
@@ -34,7 +34,7 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
+    public override void Pulse(EntityUid? user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
         paSystem.SetStrength(wire.Owner, (ParticleAcceleratorPowerState) ((int) controller.SelectedStrength + 1), user, controller);

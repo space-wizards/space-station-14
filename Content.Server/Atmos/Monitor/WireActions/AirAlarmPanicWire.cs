@@ -28,7 +28,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
         _airAlarmSystem = EntityManager.System<AirAlarmSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire, AirAlarmComponent comp)
+    public override bool Cut(EntityUid? user, Wire wire, AirAlarmComponent comp)
     {
         comp.PanicWireCut = true;
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
@@ -39,7 +39,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire, AirAlarmComponent alarm)
+    public override bool Mend(EntityUid? user, Wire wire, AirAlarmComponent alarm)
     {
         alarm.PanicWireCut = false;
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet)
@@ -51,7 +51,7 @@ public sealed partial class AirAlarmPanicWire : ComponentWireAction<AirAlarmComp
         return true;
     }
 
-    public override void Pulse(EntityUid user, Wire wire, AirAlarmComponent comp)
+    public override void Pulse(EntityUid? user, Wire wire, AirAlarmComponent comp)
     {
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
