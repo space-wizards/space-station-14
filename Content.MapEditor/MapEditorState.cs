@@ -110,21 +110,9 @@ public sealed class MapEditorState : State
         _sawmill = _logManager.GetSawmill("map_editor");
         _sawmill.Info("MapEditorState started");
 
-        // Launch headless server for proper entity system support.
+        // Launch headless server in background. Connection happens later when user
+        // loads a map (the server handles map loading for proper cable/pipe visualization).
         LaunchServer();
-
-        // Connect to the server.
-        try
-        {
-            _baseClient.ConnectToServer(new DnsEndPoint("localhost", ServerPort));
-            _sawmill.Info($"Connecting to headless server on port {ServerPort}");
-        }
-        catch (Exception ex)
-        {
-            _sawmill.Error($"Failed to connect to server: {ex.Message}");
-            // Fall back to single-player mode if server connection fails.
-            _baseClient.StartSinglePlayer();
-        }
 
         _uiManager.LoadScreen<MapEditorScreen>();
         _screen = (MapEditorScreen) _uiManager.ActiveScreen!;

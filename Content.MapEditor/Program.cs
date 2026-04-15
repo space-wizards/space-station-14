@@ -14,9 +14,11 @@ internal static class Program
             Sandboxing = false,
             PostInitCallback = () =>
             {
-                // Don't call StartSinglePlayer — MapEditorState will launch a real
-                // headless server process and connect to it so that server-side systems
-                // (NodeGroupSystem, CableVisSystem, etc.) run properly.
+                // Start single-player to initialize the ECS. MapEditorState will then
+                // launch a headless server and connect to it for proper entity support.
+                var baseClient = IoCManager.Resolve<IBaseClient>();
+                baseClient.StartSinglePlayer();
+
                 var stateManager = IoCManager.Resolve<Robust.Client.State.IStateManager>();
                 stateManager.RequestStateChange<MapEditorState>();
             }
