@@ -90,6 +90,12 @@ public sealed partial class MapEditorScreen : UIScreen
     public event Action<string>? OnCableTypeSelected;
 
     /// <summary>
+    ///     Raised when a pipe type is selected in the infrastructure panel.
+    ///     The string parameter is the pipe prototype ID (e.g. "GasPipeHalf").
+    /// </summary>
+    public event Action<string>? OnPipeTypeSelected;
+
+    /// <summary>
     ///     Raised when a grid tab is clicked.
     ///     The EntityUid parameter is the grid entity to switch to.
     /// </summary>
@@ -124,6 +130,9 @@ public sealed partial class MapEditorScreen : UIScreen
 
     // Infrastructure panel cable type buttons.
     private readonly Dictionary<string, Button> _cableButtons = new();
+
+    // Infrastructure panel pipe type buttons.
+    private readonly Dictionary<string, Button> _pipeButtons = new();
 
     // Grid tab buttons keyed by grid EntityUid.
     private readonly Dictionary<EntityUid, Button> _gridTabButtons = new();
@@ -229,6 +238,7 @@ public sealed partial class MapEditorScreen : UIScreen
         AddToolButton("entityplace", "E.Place", "Place entities (P)");
         AddToolButton("entityselect", "E.Sel", "Select entities (V)");
         AddToolButton("cabledraw", "Cable", "Draw cables (K)");
+        AddToolButton("pipedraw", "Pipe", "Draw pipes (J)");
 
         // Set tab titles for the palette tabs.
         PaletteTabContainer.SetTabTitle(0, "Tiles");
@@ -431,7 +441,7 @@ public sealed partial class MapEditorScreen : UIScreen
 
         content.AddChild(cableRow);
 
-        // Pipes section (placeholder for future pipe tool)
+        // Pipes section
         var pipeHeader = new Label
         {
             Text = "Pipes",
@@ -440,13 +450,16 @@ public sealed partial class MapEditorScreen : UIScreen
         };
         content.AddChild(pipeHeader);
 
-        var pipePlaceholder = new Label
+        var pipeRow = new BoxContainer
         {
-            Text = "(Coming soon)",
-            FontColorOverride = new Color(0.5f, 0.5f, 0.5f, 1.0f),
-            Margin = new Thickness(4, 0, 0, 0),
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 8),
         };
-        content.AddChild(pipePlaceholder);
+
+        AddPipeButton(pipeRow, "GasPipeHalf", "Supply", new Color(0.3f, 0.6f, 1.0f, 1.0f), "Supply pipe (atmos)");
+        AddPipeButton(pipeRow, "DisposalPipe", "Disposal", new Color(0.6f, 0.4f, 0.2f, 1.0f), "Disposal pipe");
+
+        content.AddChild(pipeRow);
     }
 
     private void AddCableButton(BoxContainer row, string protoId, string label, Color color, string tooltip)
@@ -497,6 +510,48 @@ public sealed partial class MapEditorScreen : UIScreen
     public void SetActiveCableButton(string? protoId)
     {
         foreach (var (id, btn) in _cableButtons)
+        {
+            btn.Pressed = id == protoId;
+        }
+    }
+
+    private void AddPipeButton(BoxContainer row, string protoId, string label, Color color, string tooltip)
+    {
+        var button = new Button
+        {
+            Text = $"■ {label}",
+            MinWidth = 80,
+            MinHeight = 36,
+            ToggleMode = true,
+            ToolTip = tooltip,
+            Margin = new Thickness(0, 0, 4, 0),
+        };
+
+        // Set the text color to the pipe color so users can identify types.
+        button.Label.FontColorOverride = color;
+
+        var capturedProtoId = protoId;
+        button.OnPressed += _ =>
+        {
+            // Un-press all other pipe buttons.
+            foreach (var (id, btn) in _pipeButtons)
+            {
+                btn.Pressed = id == capturedProtoId;
+            }
+
+            OnPipeTypeSelected?.Invoke(capturedProtoId);
+        };
+
+        _pipeButtons[protoId] = button;
+        row.AddChild(button);
+    }
+
+    /// <summary>
+    ///     Highlights the selected pipe type button.
+    /// </summary>
+    public void SetActivePipeButton(string? protoId)
+    {
+        foreach (var (id, btn) in _pipeButtons)
         {
             btn.Pressed = id == protoId;
         }

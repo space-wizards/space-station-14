@@ -90,6 +90,7 @@ public sealed class MapEditorState : State
     private bool _wasDeleteDown;
     private bool _wasGDown;
     private bool _wasQDown;
+    private bool _wasJDown;
     private bool _wasKDown;
 
     // Entity outline shader for selection highlight.
@@ -175,6 +176,7 @@ public sealed class MapEditorState : State
 
         // Wire infrastructure panel events.
         _screen.OnCableTypeSelected += OnCableTypeSelected;
+        _screen.OnPipeTypeSelected += OnPipeTypeSelected;
 
         // Wire view toggle events.
         _screen.ViewShowEntitiesButton.OnPressed += OnToggleShowEntities;
@@ -230,6 +232,7 @@ public sealed class MapEditorState : State
         _screen.OnAddGridPressed -= OnAddGridPressed;
         _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
         _screen.OnCableTypeSelected -= OnCableTypeSelected;
+        _screen.OnPipeTypeSelected -= OnPipeTypeSelected;
         _screen.OnEntityRotateCW -= OnEntityInfoRotateCW;
         _screen.OnEntityRotateCCW -= OnEntityInfoRotateCCW;
         _screen.OnEntityDelete -= OnEntityInfoDelete;
@@ -763,6 +766,10 @@ public sealed class MapEditorState : State
             if (qDown && !_wasQDown)
                 OnToolSelected("entityselect");
 
+            var jDown = _input.IsKeyDown(Keyboard.Key.J);
+            if (jDown && !_wasJDown)
+                OnToolSelected("pipedraw");
+
             var kDown = _input.IsKeyDown(Keyboard.Key.K);
             if (kDown && !_wasKDown)
                 OnToolSelected("cabledraw");
@@ -788,6 +795,7 @@ public sealed class MapEditorState : State
         _wasDeleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
         _wasGDown = _input.IsKeyDown(Keyboard.Key.G);
         _wasQDown = _input.IsKeyDown(Keyboard.Key.Q);
+        _wasJDown = _input.IsKeyDown(Keyboard.Key.J);
         _wasKDown = _input.IsKeyDown(Keyboard.Key.K);
     }
 
@@ -866,6 +874,10 @@ public sealed class MapEditorState : State
                 _editorOverlay.HighlightColor = new Color(1.0f, 0.7f, 0.1f, 0.3f);
                 _editorOverlay.BorderColor = new Color(1.0f, 0.7f, 0.1f, 0.7f);
                 break;
+            case "pipedraw":
+                _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
+                _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
+                break;
             default: // paint
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
@@ -888,6 +900,7 @@ public sealed class MapEditorState : State
             "entityplace" => new EntityPlaceTool(),
             "entityselect" => new EntitySelectTool(),
             "cabledraw" => new CableDrawTool(),
+            "pipedraw" => new PipeDrawTool(),
             _ => new PaintTool(),
         };
 
@@ -898,6 +911,13 @@ public sealed class MapEditorState : State
         {
             _toolContext.SelectedCablePrototype = "CableHV";
             _screen.SetActiveCableButton("CableHV");
+        }
+
+        // Default to GasPipeHalf when switching to pipe draw without a prior selection.
+        if (toolKey == "pipedraw" && string.IsNullOrEmpty(_toolContext.SelectedPipePrototype))
+        {
+            _toolContext.SelectedPipePrototype = "GasPipeHalf";
+            _screen.SetActivePipeButton("GasPipeHalf");
         }
     }
 
@@ -934,6 +954,17 @@ public sealed class MapEditorState : State
         }
     }
 
+    private void OnPipeTypeSelected(string protoId)
+    {
+        _toolContext.SelectedPipePrototype = protoId;
+
+        // If not already on the pipe draw tool, switch to it.
+        if (_activeToolKey != "pipedraw")
+        {
+            SetActiveTool(new PipeDrawTool(), "pipedraw");
+        }
+    }
+
     /// <summary>
     ///     Polls left mouse button each frame to dispatch tool start/drag/end.
     /// </summary>
@@ -951,8 +982,8 @@ public sealed class MapEditorState : State
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
 
-                // Mark cables dirty if we placed an entity or cable.
-                if (_activeToolKey is "entityplace" or "cabledraw")
+                // Mark cables dirty if we placed an entity, cable, or pipe.
+                if (_activeToolKey is "entityplace" or "cabledraw" or "pipedraw")
                     _cablesDirty = true;
 
                 if (_activeToolKey == "eyedropper")
