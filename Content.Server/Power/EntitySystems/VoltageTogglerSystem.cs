@@ -35,8 +35,7 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 
     protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user)
     {
-        // no sound spamming
-        if (!TryComp<UseDelayComponent>(entity, out var useDelay) || _useDelay.IsDelayed((entity, useDelay)))
+        if (TryComp<UseDelayComponent>(entity, out var useDelay) && _useDelay.IsDelayed((entity, useDelay)))
             return;
 
         entity.Comp.SelectedVoltageLevel = settingIndex;
@@ -47,7 +46,8 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
         var ev = new VoltageChangedEvent(setting);
         RaiseLocalEvent(entity, ref ev);
 
-        _useDelay.TryResetDelay((entity, useDelay));
+        if (useDelay != null)
+            _useDelay.TryResetDelay((entity, useDelay));
 
         if (user == null)
             return;
