@@ -496,7 +496,7 @@ public sealed class MapEditorState : State
             }
             case "entityplace":
             {
-                // Show selected entity prototype sprite.
+                // Show selected entity prototype sprite with rotation.
                 if (!string.IsNullOrEmpty(_toolContext.SelectedEntityPrototype)
                     && _prototypeManager.TryIndex<EntityPrototype>(_toolContext.SelectedEntityPrototype, out var proto))
                 {
@@ -507,6 +507,7 @@ public sealed class MapEditorState : State
                     }
                     catch { }
                 }
+                previewRot = _toolContext.PlacementRotation;
                 break;
             }
             case "cabledraw":
@@ -816,8 +817,8 @@ public sealed class MapEditorState : State
             }
         }
 
-        // --- Pipe rotation (R/Shift+R cycles placement angle when pipe draw is active) ---
-        if (!ctrl && _activeTool is PipeDrawTool)
+        // --- Placement rotation (R/Shift+R cycles angle for pipe draw and entity place) ---
+        if (!ctrl && _activeTool is PipeDrawTool or EntityPlaceTool)
         {
             var rDown = _input.IsKeyDown(Keyboard.Key.R);
             if (rDown && !_wasRDown)
@@ -826,13 +827,13 @@ public sealed class MapEditorState : State
                 _toolContext.PlacementRotation += new Angle(delta);
                 var deg = (int) Math.Round(_toolContext.PlacementRotation.Degrees) % 360;
                 if (deg < 0) deg += 360;
-                _screen.SetStatusInfo($"Pipe rotation: {deg}°");
+                _screen.SetStatusInfo($"Rotation: {deg}°");
             }
         }
 
-        // --- Tool shortcuts (only without modifiers, and not when entity select or pipe draw
-        //     is active since R is used for rotation there) ---
-        if (!ctrl && _activeTool is not EntitySelectTool && _activeTool is not PipeDrawTool)
+        // --- Tool shortcuts (only without modifiers, and not when entity select, pipe draw,
+        //     or entity place is active since R is used for rotation there) ---
+        if (!ctrl && _activeTool is not EntitySelectTool && _activeTool is not PipeDrawTool && _activeTool is not EntityPlaceTool)
         {
             var bDown = _input.IsKeyDown(Keyboard.Key.B);
             if (bDown && !_wasBDown)

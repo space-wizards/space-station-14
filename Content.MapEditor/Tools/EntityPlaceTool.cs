@@ -1,4 +1,5 @@
 using Content.MapEditor.Commands;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
@@ -23,6 +24,13 @@ public sealed class EntityPlaceTool : IEditorTool
         var coords = ctx.MapSystem.GridTileToLocal(gridUid, grid, tilePos);
 
         var uid = ctx.EntityManager.SpawnEntity(ctx.SelectedEntityPrototype, coords);
+
+        // Apply placement rotation if set.
+        if (ctx.PlacementRotation != Angle.Zero)
+        {
+            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
+            xformSystem.SetLocalRotation(uid, ctx.PlacementRotation);
+        }
 
         var cmd = new SpawnEntityCommand(ctx.EntityManager, uid);
         ctx.CommandStack.Push(cmd);
