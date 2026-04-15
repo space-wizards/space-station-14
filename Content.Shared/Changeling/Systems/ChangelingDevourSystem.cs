@@ -172,10 +172,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
 
-        if (_inventorySystem.TryGetSlotEntity(target, "jumpsuit", out var item)
-            && TryComp<ButcherableComponent>(item, out var butcherable))
-            RipClothing(target, (item.Value, butcherable));
-
         if (!TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityStorage))
             return;
 
@@ -269,19 +265,5 @@ public sealed class ChangelingDevourSystem : EntitySystem
         }
 
         return false;
-    }
-
-    // TODO: This should just be an API method in the butcher system
-    private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
-    {
-        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
-
-        foreach (var proto in spawnEntities)
-        {
-            // TODO: once predictedRandom is in, make this a Coordinate offset of 0.25f from the victims position
-            PredictedSpawnNextToOrDrop(proto, victim);
-        }
-
-        PredictedQueueDel(item.Owner);
     }
 }
