@@ -18,7 +18,7 @@
   id: ChangelingFleshClothing
   name: changeling-catalog-flesh-clothing-name
   description: changeling-catalog-flesh-clothing-desc
-  #icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon } TODO
+  icon: { sprite: /Textures/Interface/Actions/Changeling2.rsi, state: flesh_clothing }
   cost:
     ChangelingDNA: 10
   categories:
