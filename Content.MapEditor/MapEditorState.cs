@@ -412,11 +412,27 @@ public sealed class MapEditorState : State
             }
         }
 
-        // Default: zoom in/out.
+        // Zoom toward the cursor position (not the center of the viewport).
+        // 1. Get the world position under the cursor before zoom.
+        var mouseScreen = _input.MouseScreenPosition;
+        var worldBefore = _eyeManager.PixelToMap(mouseScreen.Position);
+
+        // 2. Apply zoom.
         var factor = delta > 0 ? 0.8f : 1.25f;
         var zoom = _eye.Zoom;
         var newZoom = Math.Clamp(zoom.X * factor, MinZoom, MaxZoom);
         _eye.Zoom = new Vector2(newZoom, newZoom);
+
+        // 3. Get the world position under the cursor after zoom.
+        var worldAfter = _eyeManager.PixelToMap(mouseScreen.Position);
+
+        // 4. Adjust the eye position so the same world point stays under the cursor.
+        if (worldBefore.MapId != MapId.Nullspace && worldAfter.MapId != MapId.Nullspace)
+        {
+            var correction = worldBefore.Position - worldAfter.Position;
+            var pos = _eye.Position;
+            _eye.Position = new MapCoordinates(pos.Position + correction, pos.MapId);
+        }
     }
 
     private void OnResetZoomPressed()
@@ -1024,9 +1040,7 @@ public sealed class MapEditorState : State
             // Left mouse released — end stroke.
             _isToolActive = false;
             _activeTool.OnMouseUp(_toolContext);
-            // Only recompute cable connections when relevant tools are used.
-            if (_activeToolKey is "cabledraw" or "entityplace" or "entityselect" or "select")
-                _cablesDirty = true;
+            _cablesDirty = true; // Recompute cable connections after any tool stroke.
         }
 
         _wasLeftDown = leftDown;
