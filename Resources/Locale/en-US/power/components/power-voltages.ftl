@@ -1,6 +1,6 @@
-power-voltage-low = Low voltage
-power-voltage-medium = Medium voltage
-power-voltage-high = High voltage
+power-voltage-low = [color=green]Low[/color] voltage
+power-voltage-medium = [color=yellow]Medium[/color] voltage
+power-voltage-high = [color=orange]High[/color] voltage
 
 power-voltage = { $voltage ->
     [HV] [color=orange]HV[/color]
