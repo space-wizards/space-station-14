@@ -18,7 +18,7 @@
   id: ChangelingFleshClothing
   name: changeling-catalog-flesh-clothing-name
   description: changeling-catalog-flesh-clothing-desc
-  icon: { sprite: /Textures/Interface/Actions/Changeling2.rsi, state: flesh_clothing }
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
     ChangelingDNA: 10
   categories:
