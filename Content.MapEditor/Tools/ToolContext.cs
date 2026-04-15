@@ -33,4 +33,21 @@ public sealed class ToolContext
     ///     The entity prototype ID to place. Set by the entity palette.
     /// </summary>
     public string? SelectedEntityPrototype { get; set; }
+
+    /// <summary>
+    ///     The cable prototype ID to draw (e.g. "CableHV", "CableMV", "CableApcExtension").
+    ///     Set by the infrastructure panel when a cable type is selected.
+    /// </summary>
+    public string? SelectedCablePrototype { get; set; }
+
+    /// <summary>
+    ///     The pipe prototype ID to draw. Set by the infrastructure panel.
+    /// </summary>
+    public string? SelectedPipePrototype { get; set; }
+
+    /// <summary>
+    ///     Whether infrastructure mode is currently active.
+    ///     Tools can use this to adjust behavior (e.g. erase only infra entities).
+    /// </summary>
+    public bool InfrastructureMode { get; set; }
 }

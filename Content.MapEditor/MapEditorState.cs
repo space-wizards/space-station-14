@@ -23,6 +23,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Content.Client.Power.Visualizers;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.SubFloor;
 using Content.Shared.Wires;
 using Robust.Shared.Prototypes;
@@ -88,6 +90,7 @@ public sealed class MapEditorState : State
     private bool _wasDeleteDown;
     private bool _wasGDown;
     private bool _wasQDown;
+    private bool _wasKDown;
 
     // Entity outline shader for selection highlight.
     private ShaderInstance? _selectionOutlineShader;
@@ -96,6 +99,24 @@ public sealed class MapEditorState : State
     // Cable connection recompute flag — set when entities are added/removed/moved.
     private bool _cablesDirty;
     private float _cableRecomputeTimer;
+
+    // Infrastructure mode — hides non-infrastructure entities and shows subfloor.
+    private bool _infrastructureMode;
+    private Dictionary<EntityUid, bool>? _savedVisibility;
+
+    /// <summary>
+    ///     Component types that remain visible during infrastructure mode.
+    ///     Entities with any of these components are considered "infrastructure".
+    /// </summary>
+    private static readonly Type[] InfrastructureComponents =
+    {
+        typeof(SubFloorHideComponent),            // Content.Shared.SubFloor
+        typeof(CableVisualizerComponent),         // Content.Client.Power.Visualizers
+        typeof(SharedApcPowerReceiverComponent),   // Content.Shared.Power.Components
+        typeof(BatteryComponent),                  // Content.Shared.Power.Components
+        typeof(AtmosDeviceComponent),              // Content.Shared.Atmos.Components
+        typeof(PowerStateComponent),               // Content.Shared.Power.Components
+    };
 
     public MapEditorState()
     {
@@ -153,6 +174,9 @@ public sealed class MapEditorState : State
         // Wire entity palette events.
         _screen.OnEntityPrototypeSelected += OnEntityPrototypeSelected;
 
+        // Wire infrastructure panel events.
+        _screen.OnCableTypeSelected += OnCableTypeSelected;
+
         // Wire view toggle events.
         _screen.ViewShowEntitiesButton.OnPressed += OnToggleShowEntities;
         _screen.ViewShowSubfloorButton.OnPressed += OnToggleShowSubfloor;
@@ -190,6 +214,10 @@ public sealed class MapEditorState : State
 
     protected override void Shutdown()
     {
+        // Restore visibility if infrastructure mode was active.
+        if (_infrastructureMode)
+            DeactivateInfrastructureMode();
+
         _screen.FileOpenButton.OnPressed -= OnFileOpenPressed;
         _screen.FileSaveButton.OnPressed -= OnFileSavePressed;
         _screen.FileExitButton.OnPressed -= OnFileExitPressed;
@@ -202,6 +230,7 @@ public sealed class MapEditorState : State
         _screen.OnGridTabSelected -= OnGridTabSelected;
         _screen.OnAddGridPressed -= OnAddGridPressed;
         _screen.OnEntityPrototypeSelected -= OnEntityPrototypeSelected;
+        _screen.OnCableTypeSelected -= OnCableTypeSelected;
         _screen.OnEntityRotateCW -= OnEntityInfoRotateCW;
         _screen.OnEntityRotateCCW -= OnEntityInfoRotateCCW;
         _screen.OnEntityDelete -= OnEntityInfoDelete;
@@ -734,6 +763,10 @@ public sealed class MapEditorState : State
             var qDown = _input.IsKeyDown(Keyboard.Key.Q);
             if (qDown && !_wasQDown)
                 OnToolSelected("entityselect");
+
+            var kDown = _input.IsKeyDown(Keyboard.Key.K);
+            if (kDown && !_wasKDown)
+                OnToolSelected("cabledraw");
         }
 
         UpdatePreviousKeyState();
@@ -756,6 +789,7 @@ public sealed class MapEditorState : State
         _wasDeleteDown = _input.IsKeyDown(Keyboard.Key.Delete);
         _wasGDown = _input.IsKeyDown(Keyboard.Key.G);
         _wasQDown = _input.IsKeyDown(Keyboard.Key.Q);
+        _wasKDown = _input.IsKeyDown(Keyboard.Key.K);
     }
 
     #endregion
@@ -777,6 +811,13 @@ public sealed class MapEditorState : State
         _activeTool = tool;
         _activeToolKey = toolKey;
         _screen.SetActiveToolButton(toolKey);
+
+        // Activate/deactivate infrastructure mode based on tool type.
+        var isInfraTool = toolKey is "cabledraw" or "pipedraw";
+        if (isInfraTool && !_infrastructureMode)
+            ActivateInfrastructureMode();
+        else if (!isInfraTool && _infrastructureMode)
+            DeactivateInfrastructureMode();
 
         // Update hover highlight color per tool.
         UpdateHighlightColorForTool(toolKey);
@@ -822,6 +863,10 @@ public sealed class MapEditorState : State
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.8f, 1.0f, 0.25f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.8f, 1.0f, 0.7f);
                 break;
+            case "cabledraw":
+                _editorOverlay.HighlightColor = new Color(1.0f, 0.7f, 0.1f, 0.3f);
+                _editorOverlay.BorderColor = new Color(1.0f, 0.7f, 0.1f, 0.7f);
+                break;
             default: // paint
                 _editorOverlay.HighlightColor = new Color(0.3f, 0.6f, 1.0f, 0.3f);
                 _editorOverlay.BorderColor = new Color(0.3f, 0.6f, 1.0f, 0.7f);
@@ -843,10 +888,18 @@ public sealed class MapEditorState : State
             "select" => new SelectTool(),
             "entityplace" => new EntityPlaceTool(),
             "entityselect" => new EntitySelectTool(),
+            "cabledraw" => new CableDrawTool(),
             _ => new PaintTool(),
         };
 
         SetActiveTool(tool, toolKey);
+
+        // Default to HV cable when switching to cable draw without a prior selection.
+        if (toolKey == "cabledraw" && string.IsNullOrEmpty(_toolContext.SelectedCablePrototype))
+        {
+            _toolContext.SelectedCablePrototype = "CableHV";
+            _screen.SetActiveCableButton("CableHV");
+        }
     }
 
     private void OnTileSelected(int tileId)
@@ -871,6 +924,17 @@ public sealed class MapEditorState : State
         }
     }
 
+    private void OnCableTypeSelected(string protoId)
+    {
+        _toolContext.SelectedCablePrototype = protoId;
+
+        // If not already on the cable draw tool, switch to it.
+        if (_activeToolKey != "cabledraw")
+        {
+            SetActiveTool(new CableDrawTool(), "cabledraw");
+        }
+    }
+
     /// <summary>
     ///     Polls left mouse button each frame to dispatch tool start/drag/end.
     /// </summary>
@@ -888,8 +952,8 @@ public sealed class MapEditorState : State
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
 
-                // Mark cables dirty if we placed an entity.
-                if (_activeToolKey == "entityplace")
+                // Mark cables dirty if we placed an entity or cable.
+                if (_activeToolKey is "entityplace" or "cabledraw")
                     _cablesDirty = true;
 
                 if (_activeToolKey == "eyedropper")
@@ -1294,6 +1358,93 @@ public sealed class MapEditorState : State
         {
             appearanceSystem.QueueUpdate(uid, appearance);
         }
+    }
+
+    #endregion
+
+    #region Infrastructure Mode
+
+    /// <summary>
+    ///     Activates infrastructure mode: hides all non-infrastructure entities and shows subfloor.
+    ///     Saves the previous visibility state so it can be restored on deactivation.
+    /// </summary>
+    private void ActivateInfrastructureMode()
+    {
+        if (_infrastructureMode)
+            return;
+
+        _infrastructureMode = true;
+        _toolContext.InfrastructureMode = true;
+
+        _savedVisibility = new Dictionary<EntityUid, bool>();
+        var query = _entityManager.AllEntityQueryEnumerator<SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var sprite, out var xform))
+        {
+            if (xform.MapID != _loadedMapId)
+                continue;
+
+            // Skip grid and map entities — only toggle placed entities.
+            if (_entityManager.HasComponent<MapGridComponent>(uid) || _entityManager.HasComponent<MapComponent>(uid))
+                continue;
+
+            _savedVisibility[uid] = sprite.Visible;
+
+            // Check if entity has any infrastructure component.
+            var isInfra = false;
+            foreach (var compType in InfrastructureComponents)
+            {
+                if (_entityManager.HasComponent(uid, compType))
+                {
+                    isInfra = true;
+                    break;
+                }
+            }
+
+            sprite.Visible = isInfra;
+        }
+
+        // Show subfloor entities (pipes, cables).
+        ApplySubfloorVisibility(true);
+
+        // Show the infrastructure panel, hide the palette panel.
+        _screen.SetInfrastructurePanelVisible(true);
+
+        _sawmill.Debug("Infrastructure mode activated");
+    }
+
+    /// <summary>
+    ///     Deactivates infrastructure mode: restores all entity visibility to the saved state
+    ///     and reverts subfloor visibility to the View menu toggle state.
+    /// </summary>
+    private void DeactivateInfrastructureMode()
+    {
+        if (!_infrastructureMode)
+            return;
+
+        _infrastructureMode = false;
+        _toolContext.InfrastructureMode = false;
+
+        if (_savedVisibility != null)
+        {
+            foreach (var (uid, wasVisible) in _savedVisibility)
+            {
+                if (_entityManager.EntityExists(uid)
+                    && _entityManager.TryGetComponent<SpriteComponent>(uid, out var sprite))
+                {
+                    sprite.Visible = wasVisible;
+                }
+            }
+
+            _savedVisibility = null;
+        }
+
+        // Restore subfloor to the View menu toggle state.
+        ApplySubfloorVisibility(_screen.ShowSubfloor);
+
+        // Hide the infrastructure panel, show the palette panel.
+        _screen.SetInfrastructurePanelVisible(false);
+
+        _sawmill.Debug("Infrastructure mode deactivated");
     }
 
     #endregion
