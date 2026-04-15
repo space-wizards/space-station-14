@@ -1192,21 +1192,19 @@ public sealed class MapEditorState : State
         if (!vpRect.Contains((int) screenPos.Position.X, (int) screenPos.Position.Y))
             return false;
 
-        // Check that no UI popup/menu is covering the viewport at the mouse position.
-        // MouseGetControl returns the topmost control under the cursor.
+        // Check that no popup/menu is currently open on top of the viewport.
+        // If a popup exists under the mouse, don't treat this as a viewport click.
         var controlUnderMouse = _uiManager.MouseGetControl(screenPos);
         if (controlUnderMouse != null)
         {
-            // If the control is the viewport or its scroll interceptor, that's fine.
-            // If it's something else (menu, popup, sidebar), don't treat it as viewport.
+            // Walk up the tree to see if we hit a Popup (menu dropdown, entity picker, etc.)
             var parent = controlUnderMouse;
             while (parent != null)
             {
-                if (parent == _screen.MainViewport)
-                    return true;
+                if (parent is Robust.Client.UserInterface.Controls.Popup)
+                    return false; // A popup is consuming this area.
                 parent = parent.Parent;
             }
-            return false;
         }
 
         return true;
