@@ -1,5 +1,4 @@
 using Content.Server.Radio.EntitySystems;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Radio;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
@@ -13,7 +12,7 @@ using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
-using Content.Server.Construction;
+using Content.Shared.Construction.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
