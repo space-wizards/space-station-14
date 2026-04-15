@@ -786,6 +786,13 @@ public sealed partial class WiresSystem : SharedWiresSystem
         wires.WiresQueue.Remove(id);
     }
 
+    /// <summary>
+    /// Causes the passed wire action to be activated on the target entity and wire ID.
+    /// </summary>
+    /// <param name="uid">The target entity</param>
+    /// <param name="id">The ID of the wire to call the action on</param>
+    /// <param name="action">The wire action to activate</param>
+    /// <returns>True if the action was called, false otherwise</returns>
     public bool TryForceWireAction(EntityUid uid, int id, WiresAction action, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -798,6 +805,13 @@ public sealed partial class WiresSystem : SharedWiresSystem
         return TryForceWireAction(uid, wire, action, wires);
     }
 
+    /// <summary>
+    /// Causes the passed wire action to be activated on the target entity and wire.
+    /// </summary>
+    /// <param name="uid">The target entity</param>
+    /// <param name="wire">The wire to call the action on</param>
+    /// <param name="action">The wire action to activate</param>
+    /// <returns>True if the action was called, false otherwise</returns>
     public bool TryForceWireAction(EntityUid uid, Wire wire, WiresAction action, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
