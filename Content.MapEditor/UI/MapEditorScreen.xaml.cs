@@ -441,10 +441,10 @@ public sealed partial class MapEditorScreen : UIScreen
 
         content.AddChild(cableRow);
 
-        // Pipes section
+        // Pipes section — network type
         var pipeHeader = new Label
         {
-            Text = "Pipes",
+            Text = "Pipe Network",
             FontColorOverride = new Color(0.8f, 0.8f, 0.8f, 1.0f),
             Margin = new Thickness(0, 4, 0, 2),
         };
@@ -453,13 +453,45 @@ public sealed partial class MapEditorScreen : UIScreen
         var pipeRow = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
-            Margin = new Thickness(0, 0, 0, 8),
+            Margin = new Thickness(0, 0, 0, 4),
         };
 
-        AddPipeButton(pipeRow, "GasPipeHalf", "Supply", new Color(0.3f, 0.6f, 1.0f, 1.0f), "Supply pipe (atmos)");
+        AddPipeButton(pipeRow, "GasPipeStraight", "Supply", new Color(0.3f, 0.6f, 1.0f, 1.0f), "Supply pipe (atmos)");
         AddPipeButton(pipeRow, "DisposalPipe", "Disposal", new Color(0.6f, 0.4f, 0.2f, 1.0f), "Disposal pipe");
 
         content.AddChild(pipeRow);
+
+        // Pipe fitting type selector
+        var fittingHeader = new Label
+        {
+            Text = "Pipe Fitting",
+            FontColorOverride = new Color(0.8f, 0.8f, 0.8f, 1.0f),
+            Margin = new Thickness(0, 4, 0, 2),
+        };
+        content.AddChild(fittingHeader);
+
+        var fittingRow1 = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 2),
+        };
+
+        AddPipeButton(fittingRow1, "GasPipeHalf", "Half", new Color(0.5f, 0.7f, 1.0f, 1.0f), "Half pipe (dead end)");
+        AddPipeButton(fittingRow1, "GasPipeStraight", "Straight", new Color(0.5f, 0.7f, 1.0f, 1.0f), "Straight pipe");
+        AddPipeButton(fittingRow1, "GasPipeBend", "Bend", new Color(0.5f, 0.7f, 1.0f, 1.0f), "Bend pipe (90°)");
+
+        content.AddChild(fittingRow1);
+
+        var fittingRow2 = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 8),
+        };
+
+        AddPipeButton(fittingRow2, "GasPipeTJunction", "T-Junc", new Color(0.5f, 0.7f, 1.0f, 1.0f), "T-junction pipe");
+        AddPipeButton(fittingRow2, "GasPipeFourway", "4-Way", new Color(0.5f, 0.7f, 1.0f, 1.0f), "Four-way pipe");
+
+        content.AddChild(fittingRow2);
     }
 
     private void AddCableButton(BoxContainer row, string protoId, string label, Color color, string tooltip)

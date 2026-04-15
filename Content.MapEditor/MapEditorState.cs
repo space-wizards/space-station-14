@@ -913,11 +913,11 @@ public sealed class MapEditorState : State
             _screen.SetActiveCableButton("CableHV");
         }
 
-        // Default to GasPipeHalf when switching to pipe draw without a prior selection.
+        // Default to GasPipeStraight when switching to pipe draw without a prior selection.
         if (toolKey == "pipedraw" && string.IsNullOrEmpty(_toolContext.SelectedPipePrototype))
         {
-            _toolContext.SelectedPipePrototype = "GasPipeHalf";
-            _screen.SetActivePipeButton("GasPipeHalf");
+            _toolContext.SelectedPipePrototype = "GasPipeStraight";
+            _screen.SetActivePipeButton("GasPipeStraight");
         }
     }
 
