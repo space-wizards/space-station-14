@@ -102,6 +102,10 @@ public sealed class MapEditorState : State
     private ShaderInstance? _selectionOutlineShader;
     private EntityUid? _outlinedEntity;
 
+    // Cable connection recompute flag — set when entities are added/removed/moved.
+    private bool _cablesDirty;
+    private float _cableRecomputeTimer;
+
     public MapEditorState()
     {
         IoCManager.InjectDependencies(this);
@@ -390,6 +394,19 @@ public sealed class MapEditorState : State
         UpdateHoverHighlight();
         UpdateShapePreview();
         UpdateStatusBar();
+
+        // Recompute cable connections after a short delay when dirty.
+        // Batches rapid changes (e.g., placing multiple cables quickly).
+        if (_cablesDirty)
+        {
+            _cableRecomputeTimer += e.DeltaSeconds;
+            if (_cableRecomputeTimer > 0.2f) // 200ms debounce
+            {
+                ComputeCableConnections();
+                _cablesDirty = false;
+                _cableRecomputeTimer = 0f;
+            }
+        }
     }
 
     private void UpdatePan()
@@ -956,6 +973,10 @@ public sealed class MapEditorState : State
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
 
+                // Mark cables dirty if we placed an entity.
+                if (_activeToolKey == "entityplace")
+                    _cablesDirty = true;
+
                 if (_activeToolKey == "eyedropper")
                     _screen.SelectTileInPalette(_toolContext.SelectedTile.TypeId);
             }
@@ -1068,11 +1089,13 @@ public sealed class MapEditorState : State
     private void OnUndoPressed()
     {
         _commandStack.Undo();
+        _cablesDirty = true;
     }
 
     private void OnRedoPressed()
     {
         _commandStack.Redo();
+        _cablesDirty = true;
     }
 
     #endregion
@@ -1290,7 +1313,10 @@ public sealed class MapEditorState : State
     private void OnEntityInfoDelete()
     {
         if (_activeTool is EntitySelectTool entitySelect)
+        {
             entitySelect.DeleteSelected(_toolContext);
+            _cablesDirty = true;
+        }
     }
 
     private void OnEntityInfoDeselect()
@@ -1433,6 +1459,7 @@ public sealed class MapEditorState : State
 
         _sawmill.Info($"Computed cable connections for {cableTiles.Count} tile positions");
     }
+
 
     #endregion
 }
