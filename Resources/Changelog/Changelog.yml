@@ -1,106 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Folders and clipboards now recycle into sensible material components,
-      rather than only cardboard.
-    type: Fix
-  - message: Clipboards and plastic clipboards require slightly more steel to produce
-      in autolathes.
-    type: Tweak
-  id: 9117
-  time: '2025-10-18T09:25:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40954
-- author: PicklOH
-  changes:
-  - message: Rags can no longer be used to remove evidence.
-    type: Remove
-  id: 9118
-  time: '2025-10-18T13:49:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40818
-- author: MissKay1994
-  changes:
-  - message: Vox organs now have unique sprites.
-    type: Add
-  id: 9119
-  time: '2025-10-18T17:07:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40555
-- author: Hitlinemoss
-  changes:
-  - message: Cargo orders containing beverages now ship in freezers.
-    type: Tweak
-  id: 9120
-  time: '2025-10-18T17:20:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40955
-- author: perryprog
-  changes:
-  - message: Drag-and-dropping liquids between containers has been adjusted.
-    type: Tweak
-  - message: You can no longer insert liquids into foods by clicking. Using syringes
-      still works as before.
-    type: Tweak
-  id: 9121
-  time: '2025-10-18T17:58:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38871
-- author: Mehnix
-  changes:
-  - message: All pens now embed when thrown.
-    type: Tweak
-  id: 9122
-  time: '2025-10-18T21:39:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39104
-- author: JackRyd3r
-  changes:
-  - message: You can now put the Energy Magnum to into jackboots/combat boots and
-      security belts/carriers
-    type: Fix
-  id: 9123
-  time: '2025-10-19T06:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40974
-- author: AlwyAnri
-  changes:
-  - message: Added a ninja headset.
-    type: Add
-  id: 9124
-  time: '2025-10-19T11:45:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40054
-- author: Pgriha
-  changes:
-  - message: Cotton seeds added to seeds crate from Cargo.
-    type: Add
-  id: 9125
-  time: '2025-10-19T16:02:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40970
-- author: SpaceLizard24
-  changes:
-  - message: Creating crystal chemical reaction now can produce yellow and black crystals!
-    type: Fix
-  id: 9126
-  time: '2025-10-19T18:37:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40985
-- author: Kittygyat
-  changes:
-  - message: Monkeys, Kobolds & Scurrets can now shove/disarm like regular species!
-    type: Tweak
-  id: 9127
-  time: '2025-10-19T19:09:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38542
-- author: PotentiallyTom
-  changes:
-  - message: AI Law boards now have a link to the lawsets guide page
-    type: Tweak
-  - message: Added the My, Robot book.
-    type: Add
-  id: 9128
-  time: '2025-10-19T21:10:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40944
-- author: aspiringLich
-  changes:
-  - message: UIs have been brought more in line with each other with a standardized
-      palette, as well as other changes resulting from a new styling mechanism.
-    type: Tweak
-  id: 9129
-  time: '2025-10-19T21:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29903
 - author: ArtisticRoomba, seam_less
   changes:
   - message: Job-themed lizard plushies! You can equip them in your loadout if you
@@ -4030,3 +3928,105 @@
   id: 9628
   time: '2026-04-08T05:40:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43513
+- author: themias
+  changes:
+  - message: Wizards can hear the sound of their fireball spell again
+    type: Fix
+  id: 9629
+  time: '2026-04-09T21:42:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43535
+- author: AndrewFenriz
+  changes:
+  - message: 'Added visual overlays to the janibelt for: Soap, Cleaner Grenade, Plungers,
+      Light Replacer, Wire Brush, Wet Floor Signs, and Holosign Projector.'
+    type: Add
+  - message: Added missing sprites for trash bags when equipped on the belt.
+    type: Add
+  id: 9630
+  time: '2026-04-10T06:12:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43492
+- author: SirWarock
+  changes:
+  - message: Fixed the Prediction Issue when trying to forcefeed someone with a pulled-down
+      mask!
+    type: Fix
+  id: 9631
+  time: '2026-04-10T13:24:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43543
+- author: aada
+  changes:
+  - message: The wire brush can now scrub away spiderwebs and posters.
+    type: Add
+  id: 9632
+  time: '2026-04-10T16:38:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43537
+- author: ahandleman
+  changes:
+  - message: Kudzu Gene Removal Effect to Plant-B-Gone!
+    type: Add
+  - message: Removed Magic Shared Seed Kudzu Removal!
+    type: Fix
+  id: 9633
+  time: '2026-04-10T20:22:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43385
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed the pneumatic valve overshooting gas equalization between the two
+      connected pipenets.
+    type: Fix
+  id: 9634
+  time: '2026-04-10T20:41:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43542
+- author: Buunie099
+  changes:
+  - message: Revenants will passively chill their environments based on how much essence
+      they have
+    type: Add
+  id: 9635
+  time: '2026-04-11T10:49:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43500
+- author: ProPeperos
+  changes:
+  - message: Fixed stacks of concrete and astro mowed/jungle grass splitting in to
+      wrong items
+    type: Fix
+  id: 9636
+  time: '2026-04-11T19:05:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43547
+- author: BeatusCrow
+  changes:
+  - message: NPCs no longer detect invisible targets.
+    type: Add
+  id: 9637
+  time: '2026-04-11T21:20:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43562
+- author: AndrewFenriz
+  changes:
+  - message: Fixed Cutter Machine rotation to be consistent with other lathes.
+    type: Fix
+  id: 9638
+  time: '2026-04-11T21:35:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43494
+- author: Princess-Cheeseballs
+  changes:
+  - message: Paradox clones will no longer be slow when spawning.
+    type: Fix
+  id: 9639
+  time: '2026-04-12T19:15:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43528
+- author: Princess-Cheeseballs
+  changes:
+  - message: Target station map at the nuclear operative outpost will now show the
+      target station.
+    type: Fix
+  id: 9640
+  time: '2026-04-13T13:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43583
+- author: Glissadia
+  changes:
+  - message: The ChemMaster UI now updates automatically when reagents are dragged
+      and dropped into the ChemMaster.
+    type: Fix
+  id: 9641
+  time: '2026-04-13T20:08:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43584
