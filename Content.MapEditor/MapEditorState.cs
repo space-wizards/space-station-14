@@ -1024,7 +1024,9 @@ public sealed class MapEditorState : State
             // Left mouse released — end stroke.
             _isToolActive = false;
             _activeTool.OnMouseUp(_toolContext);
-            _cablesDirty = true; // Recompute cable connections after any tool stroke.
+            // Only recompute cable connections when relevant tools are used.
+            if (_activeToolKey is "cabledraw" or "entityplace" or "entityselect" or "select")
+                _cablesDirty = true;
         }
 
         _wasLeftDown = leftDown;
