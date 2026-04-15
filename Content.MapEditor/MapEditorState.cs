@@ -1438,6 +1438,15 @@ public sealed class MapEditorState : State
 
             var (stream, _) = result.Value;
 
+            // Ensure the file has a .yml extension. FileStream exposes the path.
+            if (stream is FileStream fs && !fs.Name.EndsWith(".yml", StringComparison.OrdinalIgnoreCase)
+                                        && !fs.Name.EndsWith(".yaml", StringComparison.OrdinalIgnoreCase))
+            {
+                var newPath = fs.Name + ".yml";
+                await stream.DisposeAsync();
+                stream = new FileStream(newPath, FileMode.Create, FileAccess.Write, FileShare.None);
+            }
+
             await using (stream)
             {
                 using var writer = new StreamWriter(stream);
