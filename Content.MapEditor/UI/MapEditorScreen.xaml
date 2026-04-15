@@ -76,8 +76,8 @@
                             <!-- Tiles tab -->
                             <BoxContainer Name="TileTabContent" Orientation="Vertical" Margin="4">
                                 <LineEdit Name="TileSearchEdit" HorizontalExpand="True" PlaceHolder="Search tiles..." Margin="0 0 0 4" />
-                                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
-                                    <WrapContainer Name="TileGrid" HorizontalExpand="True" SeparationOverride="4" CrossSeparationOverride="4" />
+                                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                                    <GridContainer Name="TileGrid" HorizontalExpand="True" Columns="6" />
                                 </ScrollContainer>
                             </BoxContainer>
 
