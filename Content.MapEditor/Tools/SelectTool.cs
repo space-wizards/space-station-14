@@ -178,10 +178,41 @@ public sealed class SelectTool : IEditorTool
             batch.Add(cmd);
         }
 
-        // TODO: Entity moving during selection drag causes physics assertion crashes.
-        // Entities are collected in _moveEntities but not moved for now.
-        // This needs investigation into how to safely reposition entities without
-        // triggering the physics broadphase contact system.
+        // Move entities that were in the selection.
+        // Temporarily disable physics collision on each entity to prevent broadphase
+        // assertion crashes, then restore after repositioning.
+        if (_moveEntities != null)
+        {
+            var worldOffset = new System.Numerics.Vector2(offset.X, offset.Y);
+
+            foreach (var entUid in _moveEntities)
+            {
+                if (!ctx.EntityManager.EntityExists(entUid))
+                    continue;
+
+                // Disable collision before moving to avoid physics contact assertions.
+                bool hadCollision = false;
+                if (ctx.EntityManager.TryGetComponent<Robust.Shared.Physics.Components.PhysicsComponent>(entUid, out var physics))
+                {
+                    hadCollision = physics.CanCollide;
+                    if (hadCollision)
+                        ctx.EntityManager.System<Robust.Shared.Physics.Systems.SharedPhysicsSystem>().SetCanCollide(entUid, false, body: physics);
+                }
+
+                var xform = ctx.EntityManager.GetComponent<TransformComponent>(entUid);
+                var oldCoords = xform.Coordinates;
+                var newPos = oldCoords.Position + worldOffset;
+                var newCoords = new EntityCoordinates(oldCoords.EntityId, newPos);
+
+                var cmd = new MoveEntityCommand(ctx.EntityManager, entUid, oldCoords, newCoords);
+                cmd.Execute();
+                batch.Add(cmd);
+
+                // Restore collision.
+                if (hadCollision && ctx.EntityManager.TryGetComponent<Robust.Shared.Physics.Components.PhysicsComponent>(entUid, out physics))
+                    ctx.EntityManager.System<Robust.Shared.Physics.Systems.SharedPhysicsSystem>().SetCanCollide(entUid, true, body: physics);
+            }
+        }
 
         if (batch.Count > 0)
             ctx.CommandStack.Push(batch);

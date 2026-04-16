@@ -1,10 +1,13 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.MapEditor.Commands;
 
 /// <summary>
 ///     Moves an entity from one position to another. Supports undo by restoring the original coordinates.
+///     Temporarily disables physics collision during the move to prevent broadphase crashes.
 /// </summary>
 public sealed class MoveEntityCommand : IEditorCommand
 {
@@ -23,31 +26,32 @@ public sealed class MoveEntityCommand : IEditorCommand
 
     public void Execute()
     {
-        if (!_em.EntityExists(_uid))
-            return;
-
-        try
-        {
-            _em.System<SharedTransformSystem>().SetCoordinates(_uid, _newCoords);
-        }
-        catch
-        {
-            // Physics assertions can fire during coordinate changes — ignore.
-        }
+        MoveEntity(_newCoords);
     }
 
     public void Undo()
     {
+        MoveEntity(_oldCoords);
+    }
+
+    private void MoveEntity(EntityCoordinates target)
+    {
         if (!_em.EntityExists(_uid))
             return;
 
-        try
+        // Disable collision before moving to avoid physics broadphase assertion crashes.
+        var hadCollision = false;
+        if (_em.TryGetComponent<PhysicsComponent>(_uid, out var physics))
         {
-            _em.System<SharedTransformSystem>().SetCoordinates(_uid, _oldCoords);
+            hadCollision = physics.CanCollide;
+            if (hadCollision)
+                _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, false, body: physics);
         }
-        catch
-        {
-            // Physics assertions can fire during coordinate changes — ignore.
-        }
+
+        _em.System<SharedTransformSystem>().SetCoordinates(_uid, target);
+
+        // Restore collision.
+        if (hadCollision && _em.TryGetComponent<PhysicsComponent>(_uid, out physics))
+            _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, true, body: physics);
     }
 }
