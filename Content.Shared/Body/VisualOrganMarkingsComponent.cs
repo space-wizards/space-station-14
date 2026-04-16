@@ -42,8 +42,8 @@ public sealed partial class VisualOrganMarkingsComponent : Component
     /// Optional displacement data for this organ to apply to markings.
     /// Only applies to markings which support displacement data.
     /// </summary>
-    [DataField]
-    public DisplacementData? MarkingsDisplacement;
+    [DataField, AutoNetworkedField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 
     /// <summary>
     /// Client only - the last markings applied by this component
