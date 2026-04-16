@@ -20,6 +20,8 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly TrayScanRevealSystem _trayScanReveal = default!;
+    [Dependency] private readonly EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
+    [Dependency] private readonly EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
@@ -35,16 +37,14 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
         // TODO: Multiple viewports or w/e
         var player = _player.LocalEntity;
-        var xformQuery = GetEntityQuery<TransformComponent>();
 
-        if (!xformQuery.TryGetComponent(player, out var playerXform))
+        if (!TryComp(player, out TransformComponent? playerXform))
             return;
 
-        var playerPos = _transform.GetWorldPosition(playerXform, xformQuery);
+        var playerPos = _transform.GetWorldPosition(playerXform);
         var playerMap = playerXform.MapID;
         var range = 0f;
         HashSet<Entity<SubFloorHideComponent>> inRange;
-        var scannerQuery = GetEntityQuery<TrayScannerComponent>();
 
         // TODO: Should probably sub to player attached changes / inventory changes but inventory's
         // API is extremely skrungly. If this ever shows up on dottrace ping me and laugh.
@@ -57,7 +57,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             {
                 foreach (var ent in slot.ContainedEntities)
                 {
-                    if (!scannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
+                    if (!_trayScannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
                         continue;
 
                     canSee = true;
@@ -71,7 +71,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             if (!_hands.TryGetHeldItem(player.Value, hand, out var heldEntity))
                 continue;
 
-            if (!scannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)
+            if (!_trayScannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)
                 continue;
 
             range = MathF.Max(heldScanner.Range, range);
@@ -93,13 +93,12 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         }
 
         var revealedQuery = AllEntityQuery<TrayRevealedComponent, SpriteComponent>();
-        var subfloorQuery = GetEntityQuery<SubFloorHideComponent>();
 
         while (revealedQuery.MoveNext(out var uid, out _, out var sprite))
         {
             // Revealing
             // Add buffer range to avoid flickers.
-            if (subfloorQuery.TryGetComponent(uid, out var subfloor) &&
+            if (_subFloorHideQuery.TryGetComponent(uid, out var subfloor) &&
                 inRange.Contains((uid, subfloor)))
             {
                 // Due to the fact client is predicting this server states will reset it constantly

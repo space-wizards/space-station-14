@@ -23,8 +23,8 @@ public sealed partial class DamageableSystem : EntitySystem
     [Dependency] private readonly SharedChemistryGuideDataSystem _chemistryGuideData = default!;
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
 
-    private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private readonly EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+    [Dependency] private readonly EntityQuery<DamageableComponent> _damageableQuery = default!;
 
     public float UniversalAllDamageModifier { get; private set; } = 1f;
     public float UniversalAllHealModifier { get; private set; } = 1f;

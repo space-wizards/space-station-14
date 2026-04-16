@@ -124,15 +124,6 @@
   color: yellow
 
 - type: reagent
-  id: JuicePotato
-  name: reagent-name-juice-potato
-  parent: BaseJuice
-  desc: reagent-desc-juice-potato
-  physicalDesc: reagent-physical-desc-starchy
-  flavor: potatoes
-  color: "#302000"
-
-- type: reagent
   id: JuiceTomato
   name: reagent-name-juice-tomato
   parent: BaseJuice

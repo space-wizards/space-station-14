@@ -1,71 +1,75 @@
 - type: entity
+  parent: MarkerBase
   id: RandomFoodSingle
   name: random food spawner
   suffix: Single Serving
-  parent: MarkerBase
   placement:
     mode: AlignTileAny
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Food/burger.rsi
-        state: plain
-  - type: RandomSpawner
-    prototypes:
-      - FoodBagel
-      - FoodBagelPoppy
-      - FoodBurgerJelly
-      - FoodBurgerCarp
-      - FoodBurgerTofu
-      - FoodBurgerXeno
-      - FoodBurgerBig
-      - FoodBurgerFive
-      - FoodBurgerRat
-      - FoodBurgerBacon
-      - FoodBurgerEmpowered
-      - FoodBurgerCrab
-      - FoodBurgerHuman
-      - FoodBurgerSoy
-      - FoodBurgerMcrib
-      - FoodBurgerMcguffin
-      - FoodBurgerChicken
-      - FoodBurgerDuck
-      - FoodBurgerCheese
-      - FoodNoodlesBoiled
-      - FoodNoodles
-      - FoodNoodlesCopy
-      - FoodNoodlesButter
-      - FoodPizzaMargheritaSlice
-      - FoodPizzaMeatSlice
-      - FoodPizzaMushroomSlice
-      - FoodPizzaVegetableSlice
-      - FoodPizzaDonkpocketSlice
-      - FoodPizzaDankSlice
-      - FoodPizzaSassysageSlice
-      - FoodPizzaPineappleSlice
-      - FoodPizzaMoldySlice
-      - FoodBakedDumplings
-      - FoodBakedChevreChaud
-      - FoodBakedNugget
-      - FoodTacoShell
-    chance: 0.8
+    - state: red
+    - sprite: Objects/Consumable/Food/burger.rsi
+      state: plain
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 0.95
+        prob: 0.8
+        children:
+        - id: FoodBagel
+        - id: FoodBagelPoppy
+        - id: FoodBurgerJelly
+        - id: FoodBurgerCarp
+        - id: FoodBurgerTofu
+        - id: FoodBurgerXeno
+        - id: FoodBurgerBig
+        - id: FoodBurgerFive
+        - id: FoodBurgerRat
+        - id: FoodBurgerBacon
+        - id: FoodBurgerEmpowered
+        - id: FoodBurgerCrab
+        - id: FoodBurgerHuman
+        - id: FoodBurgerSoy
+        - id: FoodBurgerMcrib
+        - id: FoodBurgerMcguffin
+        - id: FoodBurgerChicken
+        - id: FoodBurgerDuck
+        - id: FoodBurgerCheese
+        - id: FoodNoodlesBoiled
+        - id: FoodNoodles
+        - id: FoodNoodlesCopy
+        - id: FoodNoodlesButter
+        - id: FoodPizzaMargheritaSlice
+        - id: FoodPizzaMeatSlice
+        - id: FoodPizzaMushroomSlice
+        - id: FoodPizzaVegetableSlice
+        - id: FoodPizzaDonkpocketSlice
+        - id: FoodPizzaDankSlice
+        - id: FoodPizzaSassysageSlice
+        - id: FoodPizzaPineappleSlice
+        - id: FoodPizzaMoldySlice
+        - id: FoodBakedDumplings
+        - id: FoodBakedChevreChaud
+        - id: FoodBakedNugget
+        - id: FoodTacoShell
+      - !type:GroupSelector #rare
+        weight: 0.05
+        children:
+        - id: FoodBurgerAppendix
+        - id: FoodBurgerRobot
+        - id: FoodBurgerBaseball
+        - id: FoodBurgerBear
+        - id: FoodBurgerCat
+        - id: FoodBurgerClown
+        - id: FoodBurgerMime
+        - id: FoodBurgerBrain
+        - id: FoodBurgerGhost
+        - id: FoodBurgerSpell
+        - id: FoodBurgerSuper
+        - id: FoodBurgerCrazy
+        - id: FoodPizzaArnoldSlice
+        - id: FoodPizzaUraniumSlice
+        - id: FoodPizzaWorldpeasSlice
     offset: 0.0
-    #rare
-    rarePrototypes:
-      - FoodBurgerAppendix
-      - FoodBurgerRobot
-      - FoodBurgerBaseball
-      - FoodBurgerBear
-      - FoodBurgerCat
-      - FoodBurgerClown
-      - FoodBurgerMime
-      - FoodBurgerBrain
-      - FoodBurgerGhost
-      - FoodBurgerSpell
-      - FoodBurgerSuper
-      - FoodBurgerCrazy
-      - FoodPizzaArnoldSlice
-      - FoodPizzaUraniumSlice
-      - FoodPizzaWorldpeasSlice
-    rareChance: 0.05

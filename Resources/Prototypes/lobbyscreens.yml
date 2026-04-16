@@ -5,6 +5,12 @@
   artist: lobby-state-background-warden-artist
 
 - type: lobbyBackground
+  id: InvisibleWall
+  background: /Textures/LobbyScreens/invisiblewall.webp
+  title: lobby-state-background-invisiblewall-title
+  artist: lobby-state-background-invisiblewall-artist
+
+- type: lobbyBackground
   id: Pharmacy
   background: /Textures/LobbyScreens/pharmacy.webp
   title: lobby-state-background-pharmacy-title

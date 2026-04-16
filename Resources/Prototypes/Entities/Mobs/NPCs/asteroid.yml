@@ -20,7 +20,6 @@
     allowed:
     - Electrocution
     - TemporaryBlindness
-    - RadiationProtection
     - Adrenaline
   - type: StandingState
   - type: Tag

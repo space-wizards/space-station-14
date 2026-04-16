@@ -309,7 +309,7 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
-    /// Gets all the gamerule entities which are currently active.
+    /// Gets all the gamerule entities that have been added.
     /// </summary>
     public IEnumerable<EntityUid> GetAddedGameRules()
     {
@@ -322,6 +322,20 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
+    /// Gets all the gamerule entities with {T} component that have been added.
+    /// </summary>
+    public IEnumerable<Entity<T>> GetAddedGameRules<T>() where T : Component
+    {
+        var query = EntityQueryEnumerator<T, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var ruleData))
+        {
+            if (IsGameRuleAdded(uid, ruleData))
+                yield return (uid, comp);
+        }
+    }
+
+
+    /// <summary>
     /// Gets all the gamerule entities which are currently active.
     /// </summary>
     public IEnumerable<EntityUid> GetActiveGameRules()
@@ -330,6 +344,18 @@ public sealed partial class GameTicker
         while (query.MoveNext(out var uid, out _, out _))
         {
             yield return uid;
+        }
+    }
+
+    /// <summary>
+    /// Gets all the gamerule entities with {T} component that are currently active.
+    /// </summary>
+    public IEnumerable<Entity<T>> GetActiveGameRules<T>() where T : Component
+    {
+        var query = EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp, out _, out _))
+        {
+            yield return (uid, comp);
         }
     }
 

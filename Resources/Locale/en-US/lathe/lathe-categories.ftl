@@ -31,8 +31,12 @@ lathe-category-faux-tile = Faux
 lathe-category-maints-tile = Maints
 lathe-category-marble = Marble
 lathe-category-steel-tile = Steel
+lathe-category-shuttle-tile = Shuttle
 lathe-category-white-tile = White
 lathe-category-wood-tile = Wood
+lathe-category-plastic-tile = Plastic
+lathe-category-precious-tile = Precious
+lathe-category-industrial-tile = Industrial
 
 # Science
 lathe-category-mechs = Mechs

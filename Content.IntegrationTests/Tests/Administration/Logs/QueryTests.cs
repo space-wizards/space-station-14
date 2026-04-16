@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Shared.Database;
@@ -11,12 +12,19 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class QueryTests
+public sealed class QueryTests : GameTest
 {
+    public override PoolSettings PoolSettings => new()
+    {
+        AdminLogsEnabled = true,
+        DummyTicker = false,
+        Connected = true
+    };
+
     [Test]
     public async Task QuerySingleLog()
     {
-        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
+        var pair = Pair;
         var server = pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
@@ -55,7 +63,5 @@ public sealed class QueryTests
 
             return false;
         });
-
-        await pair.CleanReturnAsync();
     }
 }

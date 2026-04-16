@@ -26,9 +26,8 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     public const float FTLBufferRange = 8f;
     public const float TileDensityMultiplier = 0.5f;
 
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private List<Entity<MapGridComponent>> _grids = new();
 
@@ -37,10 +36,6 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
-
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
@@ -58,7 +53,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, EntityUid consoleUid)
     {
         var mapUid = Maps.GetMapOrInvalid(targetMap);
-        var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
+        var shuttleMap = Transform(shuttleUid).MapID;
 
         if (shuttleMap == targetMap)
             return true;
@@ -190,7 +185,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones)
     {
         if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
-            !_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform))
+            !TryComp(shuttleUid, out TransformComponent? shuttleXform))
         {
             return false;
         }
