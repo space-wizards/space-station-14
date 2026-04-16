@@ -1095,6 +1095,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             ent.Comp.UndamagedSwings = 0;
             ent.Comp.LastUndamagedHitEntity = target;
+            DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.LastUndamagedHitEntity));
         }
 
         ent.Comp.UndamagedSwings++;
@@ -1110,7 +1111,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
 
             ent.Comp.UndamagedSwings = 0;
-            DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.UndamagedSwings));
         }
+
+        DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.UndamagedSwings));
     }
 }
