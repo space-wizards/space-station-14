@@ -2,7 +2,6 @@
   parent: BaseStructure
   id: LootCrateBase
   name: base loot crate
-  suffix: DO NOT MAP
   description: A large container that once contained many items. Now it contains significantly less items. Maybe there's still some goodies to be found though.
   placement:
     mode: SnapgridCenter

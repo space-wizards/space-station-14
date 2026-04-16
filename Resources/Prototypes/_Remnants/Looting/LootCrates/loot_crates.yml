@@ -18,3 +18,24 @@
     commonLootTable: LootTableCommonMedicalBasic
     rareLootTable: LootTableRareMedicalBasic
     legendaryLootTable: LootTableLegendaryMedicalBasic
+
+- type: entity
+  parent: LootCrateBase
+  id: LootCrateTrash
+  name: trash loot cart
+  description: A large container that once contained...Actually, no, still contains lots and lots of trash. There's barely anything of value in this. Good luck finding something useful.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/Crates/trashcart.rsi
+    layers:
+    - state: base
+    - state: closed
+  - type: Icon
+    sprite: Structures/Storage/Crates/trashcart.rsi
+    state: icon
+  - type: LootCrate
+    commonLootTable: LootTableCommonTrash
+    rareLootTable: LootTableRareTrash
+    legendaryLootTable: LootTableLegendaryTrash
+

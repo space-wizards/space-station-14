@@ -60,4 +60,46 @@
     - PyraAutoInjector
     - Stimpack
     - CombatMedipen
-    - WehMedipen
+
+# Trashcart tables
+- type: entity
+  id: LootTableCommonTrash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - FoodPacketBoritosTrash
+    - FoodPacketCnDsTrash
+    - FoodPacketCheesieTrash
+    - FoodPacketChipsTrash
+    - FoodPacketChocolateTrash
+    - FoodPacketEnergyTrash
+    - FoodPacketPistachioTrash
+    - FoodPacketPopcornTrash
+    - FoodPacketRaisinsTrash
+    - FoodPacketSemkiTrash
+    - FoodPacketSusTrash
+    - FoodPacketSyndiTrash
+    - FoodPacketCupRamenTrash
+    - FoodPacketChowMeinTrash
+    - FoodPacketDanDanTrash
+    - FoodPacketMRETrash
+
+- type: entity
+  id: LootTableRareTrash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - TrashBag
+    - TrashBagBlue
+    - TrashBananaPeel
+    - TrashBakedBananaPeel
+
+- type: entity
+  id: LootTableLegendaryTrash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - TrashBananaPeelExplosiveUnarmed

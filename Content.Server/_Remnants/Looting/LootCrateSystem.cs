@@ -83,7 +83,9 @@ public sealed class LootCrateSystem : EntitySystem
             QueueDel(tableUid);
 
             var coords = Transform(uid).Coordinates;
-            _entMan.SpawnEntity(selectedItem, coords);
+            var spawned = _entMan.SpawnEntity(selectedItem, coords);
+
+            EnsureComp<FoundInRaidComponent>(spawned);
 
             var cooldown = _random.Next((int)component.CooldownMin.TotalSeconds, (int)component.CooldownMax.TotalSeconds);
 
