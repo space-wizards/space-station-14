@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.MapEditor.Commands;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -41,6 +42,12 @@ public sealed class SelectTool : IEditorTool
     private Vector2i _totalMoveOffset;
     private List<EntityUid>? _moveEntities;
 
+    // Cached entity list from the last selection — reused across multiple moves
+    // so that after undo, the same entities are picked up even if their positions
+    // have subtle floating point differences from SetCoordinates round-trips.
+    private List<EntityUid>? _selectionEntities;
+    private Box2i? _selectionEntitiesBox;
+
     /// <summary>
     ///     Tile positions (in grid coords) that were non-empty when the move started.
     ///     Used by the overlay to render ghost tiles during drag.
@@ -60,12 +67,10 @@ public sealed class SelectTool : IEditorTool
             _originalSelection = Selection.Value;
             _totalMoveOffset = Vector2i.Zero;
 
-            // Snapshot non-empty tile positions and ALL entities for ghost rendering and move.
+            // Snapshot tile positions for ghost rendering.
             MoveGhostTiles = new List<Vector2i>();
-            _moveEntities = new List<EntityUid>();
             var gridUid = ctx.ActiveGridUid;
             var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
-            var entitySet = new HashSet<EntityUid>();
 
             for (var x = _originalSelection.Left; x < _originalSelection.Right; x++)
             {
@@ -74,35 +79,58 @@ public sealed class SelectTool : IEditorTool
                     var pos = new Vector2i(x, y);
                     if (ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile != Tile.Empty)
                         MoveGhostTiles.Add(pos);
+                }
+            }
 
-                    // Collect anchored entities at this tile.
-                    foreach (var ent in ctx.MapSystem.GetAnchoredEntities(gridUid, grid, pos))
+            // Use cached entity list if the selection box hasn't changed (e.g. after undo).
+            // This ensures the same entities are picked up even if SetCoordinates round-trips
+            // caused subtle position differences that would miss the tile bounds check.
+            if (_selectionEntities != null && _selectionEntitiesBox.HasValue && _selectionEntitiesBox.Value.Equals(_originalSelection))
+            {
+                // Filter out deleted entities.
+                _moveEntities = _selectionEntities
+                    .Where(uid => ctx.EntityManager.EntityExists(uid))
+                    .ToList();
+            }
+            else
+            {
+                // Fresh entity collection for a new selection.
+                var entitySet = new HashSet<EntityUid>();
+
+                for (var x = _originalSelection.Left; x < _originalSelection.Right; x++)
+                {
+                    for (var y = _originalSelection.Bottom; y < _originalSelection.Top; y++)
                     {
-                        if (ctx.EntityManager.EntityExists(ent))
-                            entitySet.Add(ent);
+                        var pos = new Vector2i(x, y);
+                        foreach (var ent in ctx.MapSystem.GetAnchoredEntities(gridUid, grid, pos))
+                        {
+                            if (ctx.EntityManager.EntityExists(ent))
+                                entitySet.Add(ent);
+                        }
                     }
                 }
-            }
 
-            // Also collect non-anchored entities via spatial lookup.
-            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
-            var allQuery = ctx.EntityManager.AllEntityQueryEnumerator<TransformComponent>();
-            while (allQuery.MoveNext(out var uid, out var xform))
-            {
-                if (xform.GridUid != gridUid || entitySet.Contains(uid))
-                    continue;
-                if (ctx.EntityManager.HasComponent<MapGridComponent>(uid) || ctx.EntityManager.HasComponent<MapComponent>(uid))
-                    continue;
-
-                var entTile = ctx.MapSystem.CoordinatesToTile(gridUid, grid, xform.Coordinates);
-                if (entTile.X >= _originalSelection.Left && entTile.X < _originalSelection.Right
-                    && entTile.Y >= _originalSelection.Bottom && entTile.Y < _originalSelection.Top)
+                // Also collect non-anchored entities via transform position check.
+                var allQuery = ctx.EntityManager.AllEntityQueryEnumerator<TransformComponent>();
+                while (allQuery.MoveNext(out var uid, out var xform))
                 {
-                    entitySet.Add(uid);
-                }
-            }
+                    if (xform.GridUid != gridUid || entitySet.Contains(uid))
+                        continue;
+                    if (ctx.EntityManager.HasComponent<MapGridComponent>(uid) || ctx.EntityManager.HasComponent<MapComponent>(uid))
+                        continue;
 
-            _moveEntities = new List<EntityUid>(entitySet);
+                    var entTile = ctx.MapSystem.CoordinatesToTile(gridUid, grid, xform.Coordinates);
+                    if (entTile.X >= _originalSelection.Left && entTile.X < _originalSelection.Right
+                        && entTile.Y >= _originalSelection.Bottom && entTile.Y < _originalSelection.Top)
+                    {
+                        entitySet.Add(uid);
+                    }
+                }
+
+                _moveEntities = new List<EntityUid>(entitySet);
+                _selectionEntities = new List<EntityUid>(entitySet);
+                _selectionEntitiesBox = _originalSelection;
+            }
             return;
         }
 
@@ -112,6 +140,8 @@ public sealed class SelectTool : IEditorTool
         _dragStart = tilePos;
         _dragEnd = tilePos;
         Selection = null;
+        _selectionEntities = null;
+        _selectionEntitiesBox = null;
     }
 
     public void OnMouseDrag(ToolContext ctx, Vector2i tilePos)
