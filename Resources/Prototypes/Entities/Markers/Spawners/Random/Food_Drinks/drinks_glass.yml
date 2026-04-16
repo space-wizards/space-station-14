@@ -123,8 +123,6 @@
         - id: DrinkShakeWhite
         - id: DrinkTheMartinez
         - id: DrinkMoonshineGlass
-        - id: DrinkPearJuice
-        - id: DrinkPearonade
       - !type:GroupSelector #rare
         weight: 0.05
         children:
