@@ -88,7 +88,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -100,7 +100,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -112,7 +112,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -126,7 +126,7 @@
         amount: 2
       - !type:SpawnPrototype
         prototype: CableApcStack1 # I have no idea why this does not work
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -138,7 +138,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -151,7 +151,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -163,7 +163,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -176,7 +176,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -192,7 +192,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -208,7 +208,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -224,7 +224,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -241,7 +241,7 @@
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -256,7 +256,7 @@
         amount: 2
       - !type:SpawnPrototype
         prototype: CableApcStack1
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1
@@ -270,7 +270,7 @@
         amount: 2
       - !type:SpawnPrototype
         prototype: CableApcStack1
-      - !type:DeleteEntity
+      - !type:DestroyEntity
       steps:
       - tool: Welding
         doAfter: 1

@@ -1,10 +1,13 @@
 - type: entity
+  abstract: true
   parent: BaseSign
   id: PosterBase
-  abstract: true
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -18,7 +21,7 @@
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -31,6 +34,9 @@
             min: 1
             max: 1
         offset: 0
+  - type: Construction
+    graph: PosterGraph
+    node: start
 
 - type: entity
   parent: BaseSign
@@ -42,6 +48,8 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
+  - type: Damageable
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger:
@@ -53,6 +61,9 @@
           path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: PosterGraph
+    node: tornPoster
 
 # Contraband
 - type: entity
@@ -1127,6 +1138,15 @@
   components:
   - type: Sprite
     state: poster55_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBotanyFear
+  name: "Fear of hydroponics"
+  description: "Think three times before opening the airlock to hydroponics, a red threat might be hiding there."
+  components:
+  - type: Sprite
+    state: poster56_legit
 
 #maps
 

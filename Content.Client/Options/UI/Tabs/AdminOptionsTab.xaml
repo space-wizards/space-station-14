@@ -9,9 +9,6 @@
                 <ui:OptionDropDown Name="DropDownPlayerTabSymbolSetting" Title="{Loc 'ui-options-admin-player-tab-symbol-setting'}" />
                 <ui:OptionDropDown Name="DropDownPlayerTabRoleSetting" Title="{Loc 'ui-options-admin-player-tab-role-setting'}" />
                 <ui:OptionDropDown Name="DropDownPlayerTabColorSetting" Title="{Loc 'ui-options-admin-player-tab-color-setting'}" />
-                <Label Text="{Loc 'ui-options-admin-logs-title'}"
-                       StyleClasses="LabelKeyText"/>
-                <ui:OptionColorSlider Name="ColorSliderLogsHighlight" Title="{Loc 'ui-options-admin-logs-highlight-color'}" />
                 <Label Text="{Loc 'ui-options-admin-overlay-title'}"
                        StyleClasses="LabelKeyText"/>
                 <ui:OptionDropDown Name="DropDownOverlayAntagFormat" Title="{Loc 'ui-options-admin-overlay-antag-format'}" />

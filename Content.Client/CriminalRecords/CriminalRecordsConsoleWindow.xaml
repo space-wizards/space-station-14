@@ -58,7 +58,7 @@
                            StyleClasses="LabelBig" />
                     <BoxContainer Orientation="Horizontal"
                                   Margin="0 0 0 5">
-                        <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
+                        <Label Text="{Loc 'crew-monitoring-ui-job-label'}"
                                FontColorOverride="DarkGray" />
                         <TextureRect Name="PersonJobIcon"
                                      TextureScale="2 2"

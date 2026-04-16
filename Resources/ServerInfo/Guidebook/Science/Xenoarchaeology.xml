@@ -1,57 +1,51 @@
 <Document>
-# Xenoarchaeology
-Xenoarchaeology is a science subdepartment focused on researching and experimenting on alien artifacts.
+  # Xenoarchaeology
 
-At the start of each shift, the Science department will usually have access to at least two artifacts to experiment on. You can buy more by talking to the Cargo department.
+  Xenoarchaeology is a branch of Science focused on researching alien [bold]artifacts[/bold].
 
-By researching the unique things each artifact can do, you gain Research Points, increase the artifact's sale value, and potentially discover a useful ability or two that can help your department or the whole station!
+  Unlocking their secrets grants research points and reveals strange, potentially useful, or dangerous effects.
 
-## Artifact Nodes
-<Box>
-<GuideEntityEmbed Entity="ComplexXenoArtifact" Caption=""/>
-<GuideEntityEmbed Entity="ComplexXenoArtifactItem" Caption=""/>
-</Box>
-Artifacts consist of a randomly-generated tree of nodes. These nodes have a "[color=#a4885c]depth[/color]", representing how dangerous the node is, and the number of other nodes connected to it, called "[color=#a4885c]edges[/color]",
+  At round start, Science usually has one or two artifacts in the lab. More can be:
+  - Ordered from [color=orange]Cargo[/color]
+  - Found by [color=orange]Salvage[/color]
+  - Assembled from [bold]fragments[/bold]
+  - Appear during certain station events
 
-Artifacts always start at depth zero, the root of the tree. Travelling the tree to find as many nodes as possible is the main goal of the scientists working on them. Knowledge is extracted from nodes to gain Research Points and increase the artifact's sale value.
+  ## Artifacts
+  <Box>
+    <GuideEntityEmbed Entity="ComplexXenoArtifact" Caption=""/>
+    <GuideEntityEmbed Entity="ComplexXenoArtifactItem" Caption=""/>
+  </Box>
 
-Each node has two components: its [color=#a4885c]stimulus[/color] and a [color=#a4885c]reaction[/color].
+  Artifacts contain [bold]nodes[/bold] arranged in [bold]layers[/bold].
+  - Unlocking a node unlocks connected nodes on upper layers.
+  - Each node has [bold]triggers[/bold], actions that must be performed near the artifact to unlock a node.
+  - When a node is unlocked, its [bold]effect[/bold] will trigger, and the node becomes [bold][color=plum]Active[/color][/bold].
+  - Each node has [bold]durability[/bold]: the number of times it can be manually activated after being unlocked.
+  - Higher nodes are harder to reach but give more [bold]research points[/bold].
+  - Unlocking all nodes provides no special bonus, but every node yields research points.
 
-A stimulus is the external behavior that triggers the reaction. There's a variety of these, and higher depth nodes have more difficult to accomplish stimuli. Some stimuli will need improvisation to trigger, and you may need to talk to other departments to get everything you need.
+  ## Equipment
+  <Box>
+    <GuideEntityEmbed Entity="MachineArtifactAnalyzer" Caption="Analyzer"/>
+    <GuideEntityEmbed Entity="ComputerAnalysisConsole" Caption="Analysis Console"/>
+    <GuideEntityEmbed Entity="NodeScanner" Caption="Node Scanner"/>
+  </Box>
+  - [bold]Artifact Analyzer:[/bold] Stationary device that scans artifacts, sending data to the Console.
+  - [bold][textlink="Analysis Console:" link="AnalysisConsole"][/bold] Stationary device that is used to display the node tree. Must be linked to an Analyzer with a multitool.
+  - [bold]Node Scanner:[/bold] Small hand-held device that can show the ID of the node currently being activated and whether the artifact is ready to trigger, letting scientist have minimal required knowledge for operating inside chamber near artifact and far without direct access to console.
 
-Some reactions are instantaneous effects while others are permanent changes. Once an artifact is triggered, the reaction causes the artifact to randomly move to another node it is linked to.
-
-With some experimental science, you can begin to grasp how the different nodes of an artifact are connected, and how to move between them by repeatedly activating nodes.
-
-All non-zero-depth nodes will have exactly one edge that leads up to its parent node. All other edges a node has lead down to the next depth.
-
-## Artifact Analyzer and Analysis Console
-<Box>
-<GuideEntityEmbed Entity="MachineArtifactAnalyzer"/>
-<GuideEntityEmbed Entity="ComputerAnalysisConsole"/>
-</Box>
-The main equipment that you'll be using for Xenoarchaeology is the [color=#a4885c]artifact analyzer[/color] and the [color=#a4885c]analysis console[/color]. You can use these to create reports that contain valuable information about an artifact.
-
-To set them up, simply link them with a network configurator and set an artifact on top of the analyzer. Every station has at least one of these machines already set up.
-
-Use the console's [color=#a4885c]scan[/color] button to discover what stimulus the artifact needs and what its reaction will do. Scanning takes thirty seconds.
-
-Use the [color=#a4885c]print[/color] button to save the scan result, so you can refer to it later.
-
-Once you've discovered a new node, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button.
-
-## Assembling Artifacts
-<GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
-
-It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, who usually find these while mining asteroids or on Expeditions.
-
-## Traversal Bias
-<Box>
-  <GuideEntityEmbed Entity="MachineArtifactAnalyzer"/>
-</Box>
-Artifacts placed on top of a powered artifact analyzer are subjected to a bias which affects which node they will move to after being activated. The bias can be set in the artifact console.
-
-There are two types of biases:
-- [color=#a4885c]Up:[/color] favors nodes closer to the origin. Results in a decrease of depth.
-- [color=#a4885c]Down:[/color] favors nodes farther away from the origin. Results in an increase of depth.
+  <Box>
+    <GuideEntityEmbed Entity="CrateArtifactContainer" Caption="Artifact Container"/>
+    <GuideEntityEmbed Entity="HandheldArtifactContainer" Caption="Handheld Container"/>
+  </Box>
+  - [bold]Artifact Containers:[/bold] Safely store and transports artifacts and prevent nodes from triggering.
+  <Box>
+    <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="Crusher"/>
+  </Box>
+  - [bold]Artifact Crusher:[/bold] Crushes artifacts into fragments. Four fragments can be rebuilt into a new artifact.
+  <Box>
+    <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+  </Box>
+  - [bold]Artifact Fragment:[/bold] Pieces of destroyed artifacts. Four fragments can be rebuilt into a new artifact using the craft menu.
 </Document>

@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseCartridge
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseCartridge
   components:
   - type: Sprite
     drawdepth: Items
