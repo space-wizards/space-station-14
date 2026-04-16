@@ -46,6 +46,7 @@ public sealed class TileToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
                 SelectedTile = new Tile(2, 0, 0), // Paint with tile type 2.
             };
@@ -110,6 +111,7 @@ public sealed class TileToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
                 SelectedTile = new Tile(3, 0, 0),
             };
@@ -170,6 +172,7 @@ public sealed class TileToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
             };
 
@@ -227,6 +230,7 @@ public sealed class TileToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid2,
                 SelectedTile = new Tile(5, 0, 0),
             };

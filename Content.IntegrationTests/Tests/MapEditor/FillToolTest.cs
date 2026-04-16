@@ -45,6 +45,7 @@ public sealed class FillToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
                 SelectedTile = new Tile(2, 0, 0), // Fill with tile type 2.
             };
@@ -108,6 +109,7 @@ public sealed class FillToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
                 SelectedTile = new Tile(2, 0, 0),
             };

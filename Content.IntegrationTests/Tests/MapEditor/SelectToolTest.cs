@@ -45,6 +45,7 @@ public sealed class SelectToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
             };
 
@@ -110,6 +111,7 @@ public sealed class SelectToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
             };
 
@@ -162,6 +164,7 @@ public sealed class SelectToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
             };
 
@@ -229,6 +232,7 @@ public sealed class SelectToolTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = grid,
             };
 

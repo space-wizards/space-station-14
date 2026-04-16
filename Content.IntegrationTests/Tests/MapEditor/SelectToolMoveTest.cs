@@ -55,6 +55,7 @@ public sealed class SelectToolMoveTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = gridUid,
             };
 
@@ -171,6 +172,7 @@ public sealed class SelectToolMoveTest : GameTest
                 EntityManager = entManager,
                 MapSystem = mapSystem,
                 CommandStack = commandStack,
+                TileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>(),
                 ActiveGridUid = gridUid,
             };
 

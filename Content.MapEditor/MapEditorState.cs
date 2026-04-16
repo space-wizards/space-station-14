@@ -56,7 +56,6 @@ public sealed class MapEditorState : State
     private const float MaxZoom = 10f;
 
     // Loaded map tracking
-    private string? _loadedFileName;
     private MapId _loadedMapId;
 
     // Active grid all tool operations target this grid.
@@ -208,7 +207,8 @@ public sealed class MapEditorState : State
 
         // Prepare the selection outline shader (uses the game's existing outline shader).
         // Set fullbright since the editor has DrawLight=false otherwise the outline is invisible.
-        _selectionOutlineShader = _prototypeManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
+        var outlineProtoId = new Robust.Shared.Prototypes.ProtoId<ShaderPrototype>("SelectionOutlineInrange");
+        _selectionOutlineShader = _prototypeManager.Index(outlineProtoId).InstanceUnique();
         _selectionOutlineShader.SetParameter("outline_fullbright", true);
         _selectionOutlineShader.SetParameter("outline_width", 4.0f);
         _selectionOutlineShader.SetParameter("outline_color", new Robust.Shared.Maths.Color(0.1f, 1.0f, 0.3f, 0.8f));
@@ -228,7 +228,7 @@ public sealed class MapEditorState : State
         var mapSystem = _entityManager.System<SharedMapSystem>();
         mapSystem.CreateMap(out var mapId);
         _loadedMapId = mapId;
-        _loadedFileName = null;
+
 
         // Create a grid on the new map.
         var newGrid = _mapManager.CreateGridEntity(mapId);
@@ -1438,7 +1438,6 @@ public sealed class MapEditorState : State
 
             // Successfully loaded record the map.
             _loadedMapId = map.Value.Comp.MapId;
-            _loadedFileName = "loaded map";
             _screen.SetStatusInfo($"Loaded map ({grids!.Count} grid(s))");
 
             // Initialize the map to run entity startup events (node groups, icon smoothing, etc.).
