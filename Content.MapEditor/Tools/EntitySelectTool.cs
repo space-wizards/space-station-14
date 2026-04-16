@@ -100,7 +100,7 @@ public sealed class EntitySelectTool : IEditorTool
         // Collect all entities at this tile: anchored + non-anchored via spatial lookup.
         var entities = new List<EntityUid>();
 
-        // 1. Anchored entities (the fast path — grid-indexed).
+        // 1. Anchored entities (the fast path grid-indexed).
         foreach (var ent in ctx.MapSystem.GetAnchoredEntities(gridUid, grid, tilePos))
         {
             if (ctx.EntityManager.EntityExists(ent))
@@ -277,7 +277,7 @@ public sealed class EntitySelectTool : IEditorTool
     {
         if (SelectedEntity == null || !ctx.EntityManager.EntityExists(SelectedEntity.Value))
         {
-            // Stale selection — clear it.
+            // Stale selection clear it.
             SelectedEntity = null;
             SelectedTilePos = null;
             return;

@@ -4,7 +4,7 @@ namespace Content.MapEditor.Commands;
 
 /// <summary>
 ///     Tracks a spawned entity for undo support. The entity is already spawned before
-///     this command is created — undo deletes it. Redo is not supported (UID is gone).
+///     this command is created undo deletes it. Redo is not supported (UID is gone).
 /// </summary>
 public sealed class SpawnEntityCommand : IEditorCommand
 {

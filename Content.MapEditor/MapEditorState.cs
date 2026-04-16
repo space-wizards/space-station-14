@@ -59,7 +59,7 @@ public sealed class MapEditorState : State
     private string? _loadedFileName;
     private MapId _loadedMapId;
 
-    // Active grid — all tool operations target this grid.
+    // Active grid all tool operations target this grid.
     private EntityUid _activeGridUid;
 
     // Tool system
@@ -97,11 +97,11 @@ public sealed class MapEditorState : State
     private ShaderInstance? _selectionOutlineShader;
     private EntityUid? _outlinedEntity;
 
-    // Cable connection recompute flag — set when entities are added/removed/moved.
+    // Cable connection recompute flag set when entities are added/removed/moved.
     private bool _cablesDirty;
     private float _cableRecomputeTimer;
 
-    // Infrastructure mode — hides non-infrastructure entities and shows subfloor.
+    // Infrastructure mode hides non-infrastructure entities and shows subfloor.
     private bool _infrastructureMode;
     private Dictionary<EntityUid, bool>? _savedVisibility;
 
@@ -205,7 +205,7 @@ public sealed class MapEditorState : State
         IoCManager.Resolve<IOverlayManager>().AddOverlay(_editorOverlay);
 
         // Prepare the selection outline shader (uses the game's existing outline shader).
-        // Set fullbright since the editor has DrawLight=false — otherwise the outline is invisible.
+        // Set fullbright since the editor has DrawLight=false otherwise the outline is invisible.
         _selectionOutlineShader = _prototypeManager.Index<ShaderPrototype>("SelectionOutlineInrange").InstanceUnique();
         _selectionOutlineShader.SetParameter("outline_fullbright", true);
         _selectionOutlineShader.SetParameter("outline_width", 4.0f);
@@ -473,7 +473,7 @@ public sealed class MapEditorState : State
             if (TryResolveGridTile(screenPos, out var tilePos))
             {
                 if (entitySelect.OnScroll(_toolContext, tilePos, delta))
-                    return; // Consumed — don't zoom.
+                    return; // Consumed don't zoom.
             }
         }
 
@@ -585,7 +585,7 @@ public sealed class MapEditorState : State
                     }
                     catch { }
                 }
-                // Don't set previewRot — the directional sprite already faces the right way.
+                // Don't set previewRot the directional sprite already faces the right way.
                 break;
             }
             case "cabledraw":
@@ -626,7 +626,7 @@ public sealed class MapEditorState : State
                     }
                     catch { }
                 }
-                // Don't set previewRot — directional sprite handles it.
+                // Don't set previewRot directional sprite handles it.
                 break;
             }
         }
@@ -712,7 +712,7 @@ public sealed class MapEditorState : State
             _outlinedEntity = currentSelection;
         }
 
-        // Update the selection box for the SelectTool — both during drag and after.
+        // Update the selection box for the SelectTool both during drag and after.
         if (_activeTool is SelectTool selectTool)
         {
             if (selectTool.DragStart != null && selectTool.DragEnd != null)
@@ -892,7 +892,7 @@ public sealed class MapEditorState : State
                     selectTool.CopySelection(_toolContext);
 
                 var xDown = _input.IsKeyDown(Keyboard.Key.X);
-                // Reuse _wasEDown isn't right — need dedicated tracking; but X has no prior tracker.
+                // Reuse _wasEDown isn't right need dedicated tracking; but X has no prior tracker.
                 // We'll check edge via a simple approach: X maps to no prior tool shortcut, safe to use fresh.
                 if (xDown && !_wasXDown)
                     selectTool.CutSelection(_toolContext);
@@ -1196,7 +1196,7 @@ public sealed class MapEditorState : State
         }
         else if (leftDown && _isToolActive)
         {
-            // Left mouse held — drag.
+            // Left mouse held drag.
             if (TryResolveGridTile(screenPos, out var tilePos))
             {
                 if (tilePos != _lastToolTilePos)
@@ -1208,7 +1208,7 @@ public sealed class MapEditorState : State
         }
         else if (!leftDown && _isToolActive)
         {
-            // Left mouse released — end stroke.
+            // Left mouse released end stroke.
             _isToolActive = false;
             _activeTool.OnMouseUp(_toolContext);
             _cablesDirty = true; // Recompute cable connections after any tool stroke.
@@ -1292,7 +1292,7 @@ public sealed class MapEditorState : State
                 }
                 catch
                 {
-                    // Icon access can fail — fall back to no icon.
+                    // Icon access can fail fall back to no icon.
                 }
             }
 
@@ -1382,7 +1382,7 @@ public sealed class MapEditorState : State
                 return;
             }
 
-            // Successfully loaded — record the map.
+            // Successfully loaded record the map.
             _loadedMapId = map.Value.Comp.MapId;
             _loadedFileName = "loaded map";
             _screen.SetStatusInfo($"Loaded map ({grids!.Count} grid(s))");
@@ -1528,7 +1528,7 @@ public sealed class MapEditorState : State
             var entPos = xform.Coordinates.Position;
             var protoId = meta.EntityPrototype?.ID ?? "unknown";
             var cycleInfo = entitySel.CycleCount > 1
-                ? $" [{entitySel.CyclePosition}/{entitySel.CycleCount} — scroll to cycle]"
+                ? $" [{entitySel.CyclePosition}/{entitySel.CycleCount} scroll to cycle]"
                 : "";
             _screen.SetStatusInfo($"Entity: {protoId} @ ({entPos.X:F1}, {entPos.Y:F1}){cycleInfo}");
 
@@ -1583,7 +1583,7 @@ public sealed class MapEditorState : State
         {
             if (xform.MapID != _loadedMapId)
                 continue;
-            // Skip grid and map entities — we only toggle placed entities.
+            // Skip grid and map entities we only toggle placed entities.
             if (_entityManager.HasComponent<MapGridComponent>(uid) || _entityManager.HasComponent<MapComponent>(uid))
                 continue;
 
@@ -1649,7 +1649,7 @@ public sealed class MapEditorState : State
             if (xform.MapID != _loadedMapId)
                 continue;
 
-            // Skip grid and map entities — only toggle placed entities.
+            // Skip grid and map entities only toggle placed entities.
             if (_entityManager.HasComponent<MapGridComponent>(uid) || _entityManager.HasComponent<MapComponent>(uid))
                 continue;
 
@@ -1669,7 +1669,7 @@ public sealed class MapEditorState : State
                 }
                 catch
                 {
-                    // Component type not registered on client — skip.
+                    // Component type not registered on client skip.
                 }
             }
 

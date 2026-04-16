@@ -42,7 +42,7 @@ public sealed class SelectTool : IEditorTool
     private Vector2i _totalMoveOffset;
     private List<EntityUid>? _moveEntities;
 
-    // Cached entity list from the last selection — reused across multiple moves
+    // Cached entity list from the last selection reused across multiple moves
     // so that after undo, the same entities are picked up even if their positions
     // have subtle floating point differences from SetCoordinates round-trips.
     private List<EntityUid>? _selectionEntities;
@@ -198,8 +198,37 @@ public sealed class SelectTool : IEditorTool
 
         var batch = new BatchCommand();
 
-        // Collect source tiles first (before modifying anything).
-        var tiles = new System.Collections.Generic.Dictionary<Vector2i, Tile>();
+        // Entity commands are added FIRST so they undo LAST (BatchCommand undoes in
+        // reverse order). This ensures tiles are restored before entities are moved
+        // back. Without this, entities at the original position have no tile under
+        // them and get re-parented to the map, corrupting their coordinates.
+
+        // Move entities first (added to batch first = undo last).
+        if (_moveEntities != null)
+        {
+            var localOffset = new System.Numerics.Vector2(offset.X, offset.Y);
+
+            foreach (var entUid in _moveEntities)
+            {
+                if (!ctx.EntityManager.EntityExists(entUid))
+                    continue;
+
+                if (ctx.EntityManager.TryGetComponent<Robust.Shared.Physics.Components.PhysicsComponent>(entUid, out var phys) && phys.CanCollide)
+                    ctx.EntityManager.System<Robust.Shared.Physics.Systems.SharedPhysicsSystem>().SetCanCollide(entUid, false, body: phys);
+
+                var xform = ctx.EntityManager.GetComponent<TransformComponent>(entUid);
+                var oldLocal = xform.LocalPosition;
+                var newLocal = oldLocal + localOffset;
+
+                var cmd = new LocalMoveEntityCommand(ctx.EntityManager, entUid, oldLocal, newLocal);
+                cmd.Execute();
+                batch.Add(cmd);
+            }
+        }
+
+        // Tile operations after entities (added to batch last = undo first).
+        // This ensures tiles are restored before entities on undo.
+        var tiles = new Dictionary<Vector2i, Tile>();
         for (var x = source.Left; x < source.Right; x++)
         {
             for (var y = source.Bottom; y < source.Top; y++)
@@ -211,7 +240,6 @@ public sealed class SelectTool : IEditorTool
             }
         }
 
-        // Clear source positions.
         foreach (var (pos, tile) in tiles)
         {
             var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, tile, Tile.Empty);
@@ -219,7 +247,6 @@ public sealed class SelectTool : IEditorTool
             batch.Add(cmd);
         }
 
-        // Place at destination positions.
         foreach (var (pos, tile) in tiles)
         {
             var destPos = pos + offset;
@@ -228,11 +255,6 @@ public sealed class SelectTool : IEditorTool
             cmd.Execute();
             batch.Add(cmd);
         }
-
-        // TODO: Bulk entity movement in selections causes coordinate/physics issues.
-        // Individual entity move (EntitySelectTool drag) works fine.
-        // Bulk move needs deeper investigation into grid-relative vs world coordinates
-        // and physics broadphase interactions during batch operations.
 
         if (batch.Count > 0)
             ctx.CommandStack.Push(batch);

@@ -93,7 +93,7 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public Angle PlacementPreviewRotation { get; set; }
 
-    // Cyan/blue tint for selection — clearly distinct from the white hover highlight.
+    // Cyan/blue tint for selection clearly distinct from the white hover highlight.
     private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
     private static readonly Color SelectionBorderColor = new(0.3f, 0.7f, 1.0f, 0.9f);
     private static readonly Color GhostTileColor = new(0.3f, 0.5f, 1.0f, 0.4f);

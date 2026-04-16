@@ -156,7 +156,11 @@ public sealed class SelectToolMoveTest : GameTest
             gridUid = mapManager.CreateGridEntity(mapId);
             var gridComp = entManager.GetComponent<MapGridComponent>(gridUid);
 
-            // Seed a 5×5 area so the grid is stable during entity spatial queries.
+            // Move grid to a non-zero world position to catch coordinate system bugs.
+            var xformSys = entManager.System<SharedTransformSystem>();
+            xformSys.SetWorldPosition(gridUid, new System.Numerics.Vector2(50f, 30f));
+
+            // Seed tiles so the grid is stable.
             for (var x = 0; x <= 9; x++)
                 for (var y = 0; y <= 9; y++)
                     mapSystem.SetTile(gridUid, gridComp, new Vector2i(x, y), new Tile(1, 0, 0));
@@ -174,7 +178,9 @@ public sealed class SelectToolMoveTest : GameTest
             var entityCoords = mapSystem.GridTileToLocal(gridUid, gridComp, new Vector2i(3, 3));
             var testEntity = entManager.SpawnEntity(null, entityCoords);
 
-            var xformSys = entManager.System<SharedTransformSystem>();
+            // Record the entity's initial local position (relative to grid parent).
+            var entXform = entManager.GetComponent<TransformComponent>(testEntity);
+            var initialLocalPos = entXform.LocalPosition;
 
             var tool = new SelectTool();
 
@@ -201,10 +207,14 @@ public sealed class SelectToolMoveTest : GameTest
             Assert.That(mapSystem.GetTileRef(gridUid, gcAfter1, new Vector2i(5, 2)).Tile.IsEmpty,
                 Is.False, "Destination tile (5,2) should be filled after first move");
 
-            // Entity should have moved +3 in X (from tile 3,3 to tile 6,3 in world).
-            var entWorldPos1 = xformSys.GetWorldPosition(testEntity);
-            Assert.That(Math.Round(entWorldPos1.X - entityCoords.Position.X), Is.EqualTo(3),
-                "Entity world X should have moved by +3 after first move");
+            // Check entity state after first move.
+            var entXformAfter1 = entManager.GetComponent<TransformComponent>(testEntity);
+            var localAfter1 = entXformAfter1.LocalPosition;
+            var parentAfter1 = entXformAfter1.ParentUid;
+            Assert.That(parentAfter1, Is.EqualTo(gridUid),
+                $"Entity parent should still be grid after first move, got {parentAfter1}");
+            Assert.That(Math.Abs(localAfter1.X - (initialLocalPos.X + 3)) < 0.1f, Is.True,
+                $"Entity local X should be {initialLocalPos.X + 3} after first move, got {localAfter1.X}");
 
             // === Step 3: Undo — tiles and entities revert. ===
             Assert.That(commandStack.CanUndo, Is.True);
@@ -214,10 +224,11 @@ public sealed class SelectToolMoveTest : GameTest
             Assert.That(mapSystem.GetTileRef(gridUid, gcUndo, new Vector2i(2, 2)).Tile.IsEmpty,
                 Is.False, "Source tile (2,2) should be restored after undo");
 
-            // Entity should be back at original position.
-            var entWorldPosUndo = xformSys.GetWorldPosition(testEntity);
-            Assert.That(Math.Abs(entWorldPosUndo.X - entityCoords.Position.X) < 0.1f, Is.True,
-                $"Entity world X should be back at original after undo (got {entWorldPosUndo.X}, expected ~{entityCoords.Position.X})");
+            // Entity should be back at original local position.
+            var entXformUndo = entManager.GetComponent<TransformComponent>(testEntity);
+            var localUndo = entXformUndo.LocalPosition;
+            Assert.That(Math.Abs(localUndo.X - initialLocalPos.X) < 0.1f, Is.True,
+                $"Entity local X should be back at {initialLocalPos.X} after undo, got {localUndo.X}");
 
             // Selection is still at Box2i(2,2,4,4) — the fix ensures it was never moved.
             Assert.That(tool.Selection!.Value, Is.EqualTo(new Box2i(2, 2, 4, 4)),
@@ -242,10 +253,11 @@ public sealed class SelectToolMoveTest : GameTest
             Assert.That(mapSystem.GetTileRef(gridUid, gcAfter2, new Vector2i(3, 2)).Tile.IsEmpty,
                 Is.False, "Destination tile (3,2) should be filled after second move");
 
-            // Verify second move — entity should have moved by +1 in X from original.
-            var entWorldPos2 = xformSys.GetWorldPosition(testEntity);
-            Assert.That(Math.Round(entWorldPos2.X - entityCoords.Position.X), Is.EqualTo(1),
-                $"Entity world X should have moved by +1 after second move (got {entWorldPos2.X}, expected ~{entityCoords.Position.X + 1})");
+            // Verify second move — entity local X should have moved by +1 from original.
+            var entXformAfter2 = entManager.GetComponent<TransformComponent>(testEntity);
+            var localAfter2 = entXformAfter2.LocalPosition;
+            Assert.That(Math.Abs(localAfter2.X - (initialLocalPos.X + 1)) < 0.1f, Is.True,
+                $"Entity local X should be {initialLocalPos.X + 1} after second move, got {localAfter2.X}");
         });
 
         await server.WaitPost(() => mapSystem.DeleteMap(mapId));

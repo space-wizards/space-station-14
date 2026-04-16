@@ -6,7 +6,7 @@ namespace Content.MapEditor.Commands;
 
 /// <summary>
 ///     Holds copied tile data for paste operations.
-///     Tile positions are stored relative to (0,0) — offset from the selection's min corner.
+///     Tile positions are stored relative to (0,0) offset from the selection's min corner.
 /// </summary>
 public sealed class ClipboardData
 {

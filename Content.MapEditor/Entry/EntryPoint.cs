@@ -4,7 +4,7 @@ namespace Content.MapEditor.Entry;
 
 /// <summary>
 ///     Content entry point for the map editor assembly.
-///     Kept intentionally empty — all IoC registration and component setup is
+///     Kept intentionally empty all IoC registration and component setup is
 ///     handled by Content.Client's EntryPoint (which is loaded first because
 ///     Content.MapEditor references Content.Client). The actual state switch
 ///     to <see cref="MapEditorState"/> happens via the

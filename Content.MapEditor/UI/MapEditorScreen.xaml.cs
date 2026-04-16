@@ -297,7 +297,7 @@ public sealed partial class MapEditorScreen : UIScreen
         // Remove existing tab containers (keep the "+" button).
         foreach (var (_, btn) in _gridTabButtons)
         {
-            // The button is inside a BoxContainer — remove the container.
+            // The button is inside a BoxContainer remove the container.
             if (btn.Parent is { } parent)
                 GridTabBar.RemoveChild(parent);
         }
@@ -496,7 +496,7 @@ public sealed partial class MapEditorScreen : UIScreen
 
         content.AddChild(cableRow);
 
-        // Pipes section — network type
+        // Pipes section network type
         var pipeHeader = new Label
         {
             Text = "Pipe Network",
@@ -657,7 +657,7 @@ public sealed partial class MapEditorScreen : UIScreen
             HorizontalAlignment = HAlignment.Center,
             Margin = new Thickness(0, 2, 0, 0),
         };
-        // Use a smaller font feel by scaling — RTUI doesn't have easy font size control,
+        // Use a smaller font feel by scaling RTUI doesn't have easy font size control,
         // but the label will be compact enough.
         ToolbarButtons.AddChild(label);
     }
@@ -718,7 +718,7 @@ public sealed partial class MapEditorScreen : UIScreen
             if (def.EditorHidden)
                 continue;
 
-            // Skip the "Space" tile (ID 0) — it's not useful to paint.
+            // Skip the "Space" tile (ID 0) it's not useful to paint.
             if (def.TileId == 0)
                 continue;
 
@@ -733,7 +733,7 @@ public sealed partial class MapEditorScreen : UIScreen
                 }
                 catch
                 {
-                    // Texture load can fail for missing/invalid paths — fall back to no icon.
+                    // Texture load can fail for missing/invalid paths fall back to no icon.
                 }
             }
 
@@ -935,7 +935,7 @@ public sealed partial class MapEditorScreen : UIScreen
             }
             catch
             {
-                // Some prototypes may fail to resolve textures — fall back to no icon.
+                // Some prototypes may fail to resolve textures fall back to no icon.
             }
 
             var category = GetEntityCategory(proto, protoManager);
