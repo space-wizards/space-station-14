@@ -40,8 +40,9 @@ public sealed partial class BorgModuleComponent : Component
 /// Raised on a chassis before a module is inserted into it.
 /// </summary>
 /// <param name="ModuleEnt">The module being added.</param>
+/// <param name="ChassisEnt">The chassis being added to.</param>
 [ByRefEvent]
-public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, bool Cancelled = false, string? Reason = null);
+public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, EntityUid ChassisEnt, bool Cancelled = false, string? Reason = null);
 
 /// <summary>
 /// Raised on a module when it is installed in order to add specific behavior to an entity.
@@ -51,9 +52,8 @@ public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, bool Canc
 public readonly record struct BorgModuleInstalledEvent(EntityUid ChassisEnt);
 
 /// <summary>
-/// Raised on a module when it's uninstalled in order to
+/// Raised on a module when it is uninstalled
 /// </summary>
 /// <param name="ChassisEnt">The borg the module is being uninstalled from.</param>
-/// <param name="ModuleEnt">The module being uninstalled.</param>
 [ByRefEvent]
-public readonly record struct BorgModuleUninstalledEvent(EntityUid ChassisEnt, EntityUid ModuleEnt);
+public readonly record struct BorgModuleUninstalledEvent(EntityUid ChassisEnt);

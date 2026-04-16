@@ -83,7 +83,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotEjectAttemptEvent>(OnItemSlotEjectAttempt);
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
-        SubscribeLocalEvent<BorgChassisComponent, BorgModuleUninstalledEvent>(OnModuleRemoved);
         SubscribeLocalEvent<BorgChassisComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<BorgChassisComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<BorgChassisComponent, AfterInteractUsingEvent>(OnChassisInteractUsing);
@@ -185,6 +184,37 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
+        //TODO: Replace this with a relayed event based system once there's a QueueRemove
+        // or something similar implemented
+        var toRemove = new List<EntityUid>();
+        foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
+        {
+            if (containedModuleUid == args.Entity ||
+                !TryComp<BorgModuleWhitelistComponent>(containedModuleUid, out var whitelist) ||
+                whitelist.ModuleWhitelist == null)
+                continue;
+
+            var keep = false;
+
+            foreach (var checkAgainstModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
+            {
+                if (checkAgainstModuleUid == containedModuleUid ||
+                    checkAgainstModuleUid == args.Entity)
+                    continue;
+
+                if (_whitelist.IsWhitelistPass(whitelist.ModuleWhitelist, checkAgainstModuleUid))
+                {
+                    keep = true;
+                    break;
+                }
+            }
+            if (!keep)
+                toRemove.Add(containedModuleUid);
+        }
+
+        foreach (var moduleUid in toRemove)
+            _container.Remove(moduleUid, chassis.Comp.ModuleContainer);
+
         if (args.Container != chassis.Comp.BrainContainer)
             return;
 
@@ -192,31 +222,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
-    }
-
-    private void OnModuleRemoved(Entity<BorgChassisComponent> chassis, ref BorgModuleUninstalledEvent args)
-    {
-        var toRemove = new List<EntityUid>();
-        foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-        {
-            if (containedModuleUid == args.ModuleEnt ||
-                !TryComp<BorgModuleWhitelistComponent>(containedModuleUid, out var whitelist) ||
-                whitelist.ModuleWhitelist == null)
-                continue;
-
-            foreach (var checkAgainstModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-            {
-                if (checkAgainstModuleUid == containedModuleUid ||
-                    checkAgainstModuleUid == args.ModuleEnt)
-                    continue;
-
-                if (_whitelist.IsWhitelistPass(whitelist.ModuleWhitelist, checkAgainstModuleUid))
-                    return;
-            }
-            toRemove.Add(containedModuleUid);
-        }
-        foreach (var moduleUid in toRemove)
-            _container.Remove(moduleUid, chassis.Comp.ModuleContainer);
     }
 
     private void OnMindAdded(Entity<BorgChassisComponent> chassis, ref MindAddedMessage args)

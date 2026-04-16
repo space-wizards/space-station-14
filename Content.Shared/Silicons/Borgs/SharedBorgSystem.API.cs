@@ -153,7 +153,7 @@ public abstract partial class SharedBorgSystem
 
         module.Comp.InstalledEntity = null;
         Dirty(module);
-        var ev = new BorgModuleUninstalledEvent(borg.Owner, module.Owner);
+        var ev = new BorgModuleUninstalledEvent(borg.Owner);
         RaiseLocalEvent(module, ref ev);
     }
 
@@ -236,28 +236,9 @@ public abstract partial class SharedBorgSystem
             }
         }
 
-        if (TryComp<BorgModuleWhitelistComponent>(module, out var whitelist))
-        {
-            var prerequisiteFulfilled = false;
-            foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-            {
-                if (_whitelist.IsWhitelistPass(whitelist.ModuleBlacklist, containedModuleUid))
-                {
-                    _popup.PopupClient(Loc.GetString("borg-module-incompatible", ("existing", containedModuleUid)), chassis.Owner, user);
-                    return false;
-                }
-                if (prerequisiteFulfilled || _whitelist.IsWhitelistPassOrNull(whitelist.ModuleWhitelist, containedModuleUid))
-                    prerequisiteFulfilled = true;
-            }
-            if (!prerequisiteFulfilled)
-            {
-                _popup.PopupClient(Loc.GetString("borg-module-prerequisite-unfulfilled"), chassis.Owner, user);
-                return false;
-            }
-        }
-
-        var attemptEv = new BorgModuleInsertAttemptEvent(module.Owner);
+        var attemptEv = new BorgModuleInsertAttemptEvent(module.Owner, chassis.Owner);
         RaiseLocalEvent(chassis, ref attemptEv);
+        RaiseLocalEvent(module, ref attemptEv);
 
         if (attemptEv.Cancelled)
         {

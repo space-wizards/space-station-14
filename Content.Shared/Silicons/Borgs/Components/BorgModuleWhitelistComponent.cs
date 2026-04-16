@@ -11,31 +11,17 @@ namespace Content.Shared.Silicons.Borgs.Components;
 public sealed partial class BorgModuleWhitelistComponent : Component
 {
     /// <summary>
-    /// List of module groups this module is a part of.
-    /// This only affects examine text.
+    /// Examine text informing the player of what type of module this is
+    /// as well as which modules are incompatible or required
     /// </summary>
     [DataField]
-    public List<LocId>? ModuleTypes;
-
-    /// <summary>
-    /// List of module groups this module is incompatible with.
-    /// This only affects examine text.
-    /// </summary>
-    [DataField]
-    public List<LocId>? BlacklistedTypes;
+    public LocId WhitelistInfo;
 
     /// <summary>
     /// List of module tags this module is incompatible with
     /// </summary>
     [DataField]
     public EntityWhitelist? ModuleBlacklist;
-
-    /// <summary>
-    /// List of module groups this module required to be installed beforehand.
-    /// This only affects examine text.
-    /// </summary>
-    [DataField]
-    public List<LocId>? RequiredTypes;
 
     /// <summary>
     /// List of module tags required for the module to be installed
