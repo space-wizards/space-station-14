@@ -41,7 +41,7 @@ public sealed class FillTool : IEditorTool
             if (currentTile.TypeId != originTile.TypeId)
                 continue;
 
-            var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, currentTile, ctx.SelectedTile);
+            var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, currentTile, ctx.GetVariantTile());
             cmd.Execute();
             batch.Add(cmd);
 

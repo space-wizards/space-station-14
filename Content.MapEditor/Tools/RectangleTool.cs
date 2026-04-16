@@ -55,10 +55,10 @@ public sealed class RectangleTool : IEditorTool
                 var pos = new Vector2i(x, y);
                 var oldTile = ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile;
 
-                if (oldTile == ctx.SelectedTile)
+                if (oldTile.TypeId == ctx.SelectedTile.TypeId)
                     continue;
 
-                var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, oldTile, ctx.SelectedTile);
+                var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, oldTile, ctx.GetVariantTile());
                 cmd.Execute();
                 batch.Add(cmd);
             }

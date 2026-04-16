@@ -151,6 +151,7 @@ public sealed class MapEditorState : State
             EntityManager = _entityManager,
             MapSystem = _entityManager.System<SharedMapSystem>(),
             CommandStack = _commandStack,
+            TileDefinitionManager = _tileDefs,
         };
 
         // Wire menu button events.

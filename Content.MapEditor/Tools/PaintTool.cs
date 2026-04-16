@@ -54,10 +54,10 @@ public sealed class PaintTool : IEditorTool
         var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
         var oldTile = ctx.MapSystem.GetTileRef(gridUid, grid, pos).Tile;
 
-        if (oldTile == ctx.SelectedTile)
-            return; // No change needed.
+        if (oldTile.TypeId == ctx.SelectedTile.TypeId)
+            return; // No change needed (same type, keep existing variant).
 
-        var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, oldTile, ctx.SelectedTile);
+        var cmd = new SetTileCommand(ctx.MapSystem, gridUid, grid, pos, oldTile, ctx.GetVariantTile());
         cmd.Execute(); // Apply immediately for visual feedback.
         _batch.Add(cmd);
     }

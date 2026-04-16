@@ -1,4 +1,6 @@
+using System;
 using Content.MapEditor.Commands;
+using Content.Shared.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -13,6 +15,9 @@ public sealed class ToolContext
     public required IEntityManager EntityManager { get; init; }
     public required SharedMapSystem MapSystem { get; init; }
     public required CommandStack CommandStack { get; init; }
+    public required ITileDefinitionManager TileDefinitionManager { get; init; }
+
+    private readonly Random _variantRng = new();
 
     /// <summary>
     ///     The grid currently being edited. Set by the grid tab bar.
@@ -67,4 +72,41 @@ public sealed class ToolContext
     ///     Whether Shift is held (enables free placement mode).
     /// </summary>
     public bool ShiftHeld { get; set; }
+
+    /// <summary>
+    ///     Returns a copy of <see cref="SelectedTile"/> with a random variant chosen
+    ///     using the tile definition's <see cref="ContentTileDefinition.PlacementVariants"/> weights.
+    /// </summary>
+    public Tile GetVariantTile()
+    {
+        var tileId = SelectedTile.TypeId;
+        if (tileId <= 0 || !TileDefinitionManager.TryGetDefinition(tileId, out var def))
+            return SelectedTile;
+
+        if (def is not ContentTileDefinition contentDef || contentDef.Variants <= 1)
+            return SelectedTile;
+
+        var variant = PickVariant(contentDef);
+        return new Tile(tileId, variant: variant);
+    }
+
+    private byte PickVariant(ContentTileDefinition tileDef)
+    {
+        var variants = tileDef.PlacementVariants;
+        var sum = 0f;
+        foreach (var w in variants)
+            sum += w;
+
+        var rand = (float)(_variantRng.NextDouble() * sum);
+        var accumulated = 0f;
+
+        for (byte i = 0; i < variants.Length; i++)
+        {
+            accumulated += variants[i];
+            if (accumulated >= rand)
+                return i;
+        }
+
+        return 0;
+    }
 }
