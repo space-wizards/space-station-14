@@ -42,6 +42,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSkeletonPerson
+  categories: [ HideSpawnMenu ]
   name: skeletonperson appearance
   components:
   - type: Inventory
