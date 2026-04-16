@@ -190,7 +190,7 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
 
                 if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
                 {
-                    var layer = _sprite.AddLayer(target, sprite, index + i + 1);
+                    var layer = _sprite.AddLayer(target, sprite, index + i + 1, index);
                     _sprite.LayerMapSet(target, layerId, layer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
                 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Sprite;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -29,6 +30,7 @@ namespace Content.Client.Damage;
 public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SpriteDirectionLayeringSystem _spriteDirection = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
@@ -256,7 +258,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             foreach (var layer in damageVisComp.TargetLayerMapKeys)
             {
                 var layerCount = spriteComponent.AllLayers.Count();
-                var index = SpriteSystem.LayerMapGet((entity, spriteComponent), layer);
+                var baseIndex = SpriteSystem.LayerMapGet((entity, spriteComponent), layer);
+                var index = baseIndex;
                 // var layerState = spriteComponent.LayerGetState(index).ToString()!;
 
                 if (index + 1 != layerCount)
@@ -276,7 +279,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                             sprite,
                             $"{layer}_{group}_{damageVisComp.Thresholds[1]}",
                             $"{layer}{group}",
-                            index);
+                            index,
+                            baseIndex);
                     }
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
@@ -290,7 +294,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                         damageVisComp.DamageOverlay,
                         $"{layer}_{damageVisComp.Thresholds[1]}",
                         $"{layer}trackDamage",
-                        index);
+                        index,
+                        baseIndex);
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
             }
@@ -320,19 +325,22 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 damageVisComp.TopMostLayerKey = $"DamageOverlay";
             }
         }
+
+        _spriteDirection.RegenerateCachedOverrides(entity);
     }
 
     /// <summary>
     ///     Adds a damage tracking layer to a given sprite component.
     /// </summary>
-    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null)
+    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null, int? parentIndex = null)
     {
         var newLayer = SpriteSystem.AddLayer(
             spriteEnt,
             new SpriteSpecifier.Rsi(
                 new(sprite.Sprite), state
             ),
-            index
+            index,
+            parentIndex
         );
         SpriteSystem.LayerMapSet(spriteEnt, mapKey, newLayer);
         if (sprite.Color != null)
