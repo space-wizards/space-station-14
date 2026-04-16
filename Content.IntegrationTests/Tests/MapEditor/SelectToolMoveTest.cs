@@ -120,4 +120,113 @@ public sealed class SelectToolMoveTest : GameTest
 
         await server.WaitPost(() => mapSystem.DeleteMap(mapId));
     }
+
+    /// <summary>
+    ///     Regression test: after a selection is moved and then undone, clicking the
+    ///     original selection region must still enter move mode so the user can move
+    ///     the tiles a second time.
+    ///
+    ///     Bug: <see cref="SelectTool.OnMouseDrag"/> mutated <c>Selection</c> each frame
+    ///     during a move to follow the cursor, so after the move finished <c>Selection</c>
+    ///     pointed at the destination.  After undo, the tiles reverted to the origin but
+    ///     <c>Selection</c> stayed at the destination, so
+    ///     <c>Selection.Value.Contains(originalTile)</c> returned false and
+    ///     <see cref="SelectTool.OnMouseDown"/> started a new drag instead of a move.
+    ///
+    ///     Fix: <see cref="SelectTool.OnMouseDrag"/> no longer touches <c>Selection</c>
+    ///     during move mode — it only accumulates <c>_totalMoveOffset</c> for ghost
+    ///     rendering.  <c>Selection</c> stays at <c>_originalSelection</c> for the
+    ///     entire move gesture, so it is still valid after an undo.
+    /// </summary>
+    [Test]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GridFill), false)]
+    public async Task MoveAfterUndo_SecondMoveWorks()
+    {
+        var server = Pair.Server;
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = entManager.System<SharedMapSystem>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+
+        MapId mapId = default;
+        EntityUid gridUid = default;
+
+        await server.WaitAssertion(() =>
+        {
+            mapSystem.CreateMap(out mapId);
+            gridUid = mapManager.CreateGridEntity(mapId);
+            var gridComp = entManager.GetComponent<MapGridComponent>(gridUid);
+
+            // Seed a 5×5 area so the grid is stable during entity spatial queries.
+            for (var x = 0; x <= 9; x++)
+                for (var y = 0; y <= 9; y++)
+                    mapSystem.SetTile(gridUid, gridComp, new Vector2i(x, y), new Tile(1, 0, 0));
+
+            var commandStack = new CommandStack();
+            var ctx = new ToolContext
+            {
+                EntityManager = entManager,
+                MapSystem = mapSystem,
+                CommandStack = commandStack,
+                ActiveGridUid = gridUid,
+            };
+
+            var tool = new SelectTool();
+
+            // === Step 1: Draw selection at (2,2)..(3,3) → Box2i(2,2,4,4). ===
+            tool.OnMouseDown(ctx, new Vector2i(2, 2));
+            tool.OnMouseDrag(ctx, new Vector2i(3, 3));
+            tool.OnMouseUp(ctx);
+
+            Assert.That(tool.Selection!.Value, Is.EqualTo(new Box2i(2, 2, 4, 4)),
+                "Selection should be Box2i(2,2,4,4) after initial drag");
+
+            // === Step 2: First move — click inside, drag (+3,0), release. ===
+            tool.OnMouseDown(ctx, new Vector2i(3, 3));  // inside selection
+            Assert.That(tool.IsMoving, Is.True, "Should enter move mode");
+
+            tool.OnMouseDrag(ctx, new Vector2i(6, 3));  // delta = (+3, 0)
+            tool.OnMouseUp(ctx);                        // ApplyMove: source=(2,2,4,4), offset=(+3,0)
+            Assert.That(tool.IsMoving, Is.False, "Should exit move mode after mouse-up");
+
+            // Tile at source should now be empty; destination should have the tile.
+            var gcAfter1 = entManager.GetComponent<MapGridComponent>(gridUid);
+            Assert.That(mapSystem.GetTileRef(gridUid, gcAfter1, new Vector2i(2, 2)).Tile.IsEmpty,
+                Is.True, "Source tile (2,2) should be empty after first move");
+            Assert.That(mapSystem.GetTileRef(gridUid, gcAfter1, new Vector2i(5, 2)).Tile.IsEmpty,
+                Is.False, "Destination tile (5,2) should be filled after first move");
+
+            // === Step 3: Undo — tiles revert to (2,2). ===
+            Assert.That(commandStack.CanUndo, Is.True);
+            commandStack.Undo();
+
+            var gcUndo = entManager.GetComponent<MapGridComponent>(gridUid);
+            Assert.That(mapSystem.GetTileRef(gridUid, gcUndo, new Vector2i(2, 2)).Tile.IsEmpty,
+                Is.False, "Source tile (2,2) should be restored after undo");
+
+            // Selection is still at Box2i(2,2,4,4) — the fix ensures it was never moved.
+            Assert.That(tool.Selection!.Value, Is.EqualTo(new Box2i(2, 2, 4, 4)),
+                "Selection must still be at the original region after undo so the second move can start");
+
+            // === Step 4: Second move — click the original region, drag (+1,0), release. ===
+            // This is the regression scenario: before the fix, Selection would have been
+            // at (5,2,7,4) (the post-move destination), so clicking (3,3) would fall
+            // outside it and start a new drag instead of a move.
+            tool.OnMouseDown(ctx, new Vector2i(3, 3));  // must enter move mode, not drag mode
+            Assert.That(tool.IsMoving, Is.True,
+                "REGRESSION: clicking original selection region after undo must enter move mode, " +
+                "not start a new drag — Selection must not have drifted to the destination");
+
+            tool.OnMouseDrag(ctx, new Vector2i(4, 3));  // delta = (+1, 0)
+            tool.OnMouseUp(ctx);                        // ApplyMove: source=(2,2,4,4), offset=(+1,0)
+
+            // Verify the second move was actually applied.
+            var gcAfter2 = entManager.GetComponent<MapGridComponent>(gridUid);
+            Assert.That(mapSystem.GetTileRef(gridUid, gcAfter2, new Vector2i(2, 2)).Tile.IsEmpty,
+                Is.True, "Source tile (2,2) should be empty after second move");
+            Assert.That(mapSystem.GetTileRef(gridUid, gcAfter2, new Vector2i(3, 2)).Tile.IsEmpty,
+                Is.False, "Destination tile (3,2) should be filled after second move");
+        });
+
+        await server.WaitPost(() => mapSystem.DeleteMap(mapId));
+    }
 }

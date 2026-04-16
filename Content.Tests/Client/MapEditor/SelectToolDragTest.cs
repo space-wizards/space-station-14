@@ -354,4 +354,5 @@ public sealed class SelectToolDragTest
 
         Assert.That(tool.Selection!.Value, Is.EqualTo(new Box2i(-3, -2, 2, 3)));
     }
+
 }

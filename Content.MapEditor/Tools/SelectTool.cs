@@ -118,14 +118,13 @@ public sealed class SelectTool : IEditorTool
     {
         if (_isMoving)
         {
-            // Update visual selection position as user drags.
+            // Accumulate the move offset for ghost rendering and ApplyMove.
+            // Selection intentionally stays at _originalSelection so that after
+            // an undo the user can still click the original region to re-enter
+            // move mode.  The ghost overlay uses MoveGhostTiles + MoveOffset
+            // for the visual preview, not Selection.
             var delta = tilePos - _moveOrigin;
             _totalMoveOffset += delta;
-            Selection = new Box2i(
-                Selection!.Value.Left + delta.X,
-                Selection.Value.Bottom + delta.Y,
-                Selection.Value.Right + delta.X,
-                Selection.Value.Top + delta.Y);
             _moveOrigin = tilePos;
             return;
         }
