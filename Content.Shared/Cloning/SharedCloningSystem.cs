@@ -122,7 +122,7 @@ public abstract partial class SharedCloningSystem : EntitySystem
     {
         foreach (var effect in _statusEffects.EnumerateStatusEffects(original, _cloneableEffectQuery))
         {
-            //We are not interested in temporary effects, only permanent ones.
+            // We are not interested in temporary effects, only permanent ones.
             if (effect.Comp1.EndEffectTime is not null)
                 continue;
 
