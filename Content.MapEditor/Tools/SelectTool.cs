@@ -60,11 +60,13 @@ public sealed class SelectTool : IEditorTool
             _originalSelection = Selection.Value;
             _totalMoveOffset = Vector2i.Zero;
 
-            // Snapshot non-empty tile positions and entities for ghost rendering and move.
+            // Snapshot non-empty tile positions and ALL entities for ghost rendering and move.
             MoveGhostTiles = new List<Vector2i>();
             _moveEntities = new List<EntityUid>();
             var gridUid = ctx.ActiveGridUid;
             var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
+            var entitySet = new HashSet<EntityUid>();
+
             for (var x = _originalSelection.Left; x < _originalSelection.Right; x++)
             {
                 for (var y = _originalSelection.Bottom; y < _originalSelection.Top; y++)
@@ -77,10 +79,30 @@ public sealed class SelectTool : IEditorTool
                     foreach (var ent in ctx.MapSystem.GetAnchoredEntities(gridUid, grid, pos))
                     {
                         if (ctx.EntityManager.EntityExists(ent))
-                            _moveEntities.Add(ent);
+                            entitySet.Add(ent);
                     }
                 }
             }
+
+            // Also collect non-anchored entities via spatial lookup.
+            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
+            var allQuery = ctx.EntityManager.AllEntityQueryEnumerator<TransformComponent>();
+            while (allQuery.MoveNext(out var uid, out var xform))
+            {
+                if (xform.GridUid != gridUid || entitySet.Contains(uid))
+                    continue;
+                if (ctx.EntityManager.HasComponent<MapGridComponent>(uid) || ctx.EntityManager.HasComponent<MapComponent>(uid))
+                    continue;
+
+                var entTile = ctx.MapSystem.CoordinatesToTile(gridUid, grid, xform.Coordinates);
+                if (entTile.X >= _originalSelection.Left && entTile.X < _originalSelection.Right
+                    && entTile.Y >= _originalSelection.Bottom && entTile.Y < _originalSelection.Top)
+                {
+                    entitySet.Add(uid);
+                }
+            }
+
+            _moveEntities = new List<EntityUid>(entitySet);
             return;
         }
 
