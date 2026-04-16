@@ -1,0 +1,20 @@
+﻿- type: entity
+  parent: LootCrateBase
+  id: LootCrateMedicalBasic
+  name: medical loot crate
+  suffix: Basic
+  description: A large container that once contained lots of medical equipment. Used to be sterile, but the passage of time likely killed any hope of that off now. Maybe there's still some leftover medical supplies inside.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/Crates/medical.rsi
+    layers:
+    - state: base
+    - state: closed
+  - type: Icon
+    sprite: Structures/Storage/Crates/medical.rsi
+    state: icon
+  - type: LootCrate
+    commonLootTable: LootTableCommonMedicalBasic
+    rareLootTable: LootTableRareMedicalBasic
+    legendaryLootTable: LootTableLegendaryMedicalBasic

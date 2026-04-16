@@ -1,0 +1,63 @@
+﻿# Placeholder Tables
+- type: entity
+  id: LootTableCommonPlaceholder
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - PlushieLizard
+    - PlushieLizardInversed
+
+- type: entity
+  id: LootTableRarePlaceholder
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - PlushieLizardJobCaptain
+    - PlushieLizardJobClown
+
+- type: entity
+  id: LootTableLegendaryPlaceholder
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - PlushieLizardJobMultiweh
+
+# Regular Medical Tables
+- type: entity
+  id: LootTableCommonMedicalBasic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - Brutepack1
+    - Ointment1
+    - Gauze1
+    - Bloodpack1
+
+- type: entity
+  id: LootTableRareMedicalBasic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - BrutepackAdvanced1
+    - OintmentAdvanced1
+    - EmergencyMedipen
+    - BruteAutoInjector
+    - BurnAutoInjector
+    - StimpackMini
+
+- type: entity
+  id: LootTableLegendaryMedicalBasic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LootTable
+    entries:
+    - PunctAutoInjector
+    - PyraAutoInjector
+    - Stimpack
+    - CombatMedipen
+    - WehMedipen

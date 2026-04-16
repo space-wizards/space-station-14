@@ -1,0 +1,47 @@
+﻿- type: entity
+  parent: BaseStructure
+  id: LootCrateBase
+  name: base loot crate
+  suffix: DO NOT MAP
+  description: A large container that once contained many items. Now it contains significantly less items. Maybe there's still some goodies to be found though.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: base
+    - state: closed
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 50
+        mask:
+        - CrateMask
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: RequireProjectileTarget
+  - type: Clickable
+  - type: LootCrate
+    cooldownMin: 600
+    cooldownMax: 1200
+    commonLootTable: LootTableCommonPlaceholder
+    rareLootTable: LootTableRarePlaceholder
+    legendaryLootTable: LootTableLegendaryPlaceholder
