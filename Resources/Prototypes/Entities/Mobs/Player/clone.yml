@@ -17,6 +17,9 @@
   - NpcFactionMember
   - RandomPrice
   - CreamPied
+  - MeleeWeapon # Attack animation, damage and sound
+  - TemperatureSpeed
+  - TemperatureDamage
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
@@ -60,6 +63,7 @@
   - StutteringAccent
   eventComponents:
   - Vocal # voice sounds
+  - Puller
 
 # for job-specific traits etc.
 - type: cloningSettings

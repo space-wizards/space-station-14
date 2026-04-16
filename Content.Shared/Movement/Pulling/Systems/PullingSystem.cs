@@ -614,4 +614,15 @@ public sealed class PullingSystem : EntitySystem
         StopPulling(pullableUid, pullable);
         return true;
     }
+
+    public void CopyPullerComponent(Entity<PullerComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        var targetComp = EnsureComp<PullerComponent>(target);
+        targetComp.NeedsHands = source.Comp.NeedsHands;
+        targetComp.PullingAlert = source.Comp.PullingAlert;
+        Dirty(target, targetComp);
+    }
 }

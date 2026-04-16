@@ -38,10 +38,10 @@ public sealed partial class PullerComponent : Component
     /// <summary>
     ///     Does this entity need hands to be able to pull something?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool NeedsHands = true;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
 }
 

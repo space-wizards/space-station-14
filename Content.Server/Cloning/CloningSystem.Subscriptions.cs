@@ -6,6 +6,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Paper;
 using Content.Shared.Stacks;
@@ -32,6 +34,7 @@ public sealed partial class CloningSystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
 
     public override void Initialize()
     {
@@ -54,6 +57,7 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<StorageComponent, CloningEvent>(OnCloneStorage);
         SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloneInventory);
         SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
+        SubscribeLocalEvent<PullerComponent, CloningEvent>(OnClonePuller);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -126,5 +130,13 @@ public sealed partial class CloningSystem
             return;
 
         _movementSpeedModifier.CopyComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnClonePuller(Entity<PullerComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _pulling.CopyPullerComponent(ent.AsNullable(), args.CloneUid);
     }
 }
