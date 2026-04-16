@@ -47,15 +47,20 @@ public sealed class LocalMoveEntityCommand : IEditorCommand
         if (_em.TryGetComponent<PhysicsComponent>(_uid, out var phys) && phys.CanCollide)
             _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, false, body: phys);
 
-        // Use SetLocalPositionRotation which explicitly sets position without re-parenting.
         var xform = _em.GetComponent<TransformComponent>(_uid);
         var xformSys = _em.System<SharedTransformSystem>();
+
+        // Unanchor before moving. Anchored entities ignore position changes.
+        if (xform.Anchored)
+            xformSys.Unanchor(_uid, xform);
 
         // Ensure correct parent.
         if (xform.ParentUid != parent && _em.EntityExists(parent))
             xformSys.SetParent(_uid, xform, parent);
 
-        // Detach and reattach to force coordinate recalculation.
         xformSys.SetLocalPositionRotation(_uid, localPos, xform.LocalRotation);
+
+        // Re-anchor at the new position.
+        xformSys.AnchorEntity(_uid, xform);
     }
 }
