@@ -37,7 +37,7 @@ public sealed partial class BorgModuleComponent : Component
 }
 
 /// <summary>
-/// Raised on a chassis before a module is inserted into it.
+/// Raised on a chassis and module before a module is inserted into it.
 /// </summary>
 /// <param name="ModuleEnt">The module being added.</param>
 /// <param name="ChassisEnt">The chassis being added to.</param>
