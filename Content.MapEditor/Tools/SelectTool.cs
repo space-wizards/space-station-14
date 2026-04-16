@@ -229,26 +229,10 @@ public sealed class SelectTool : IEditorTool
             batch.Add(cmd);
         }
 
-        // Move entities that were in the selection using world positions
-        // to avoid coordinate parent issues after undo/redo cycles.
-        if (_moveEntities != null)
-        {
-            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
-            var worldOffset = new System.Numerics.Vector2(offset.X, offset.Y);
-
-            foreach (var entUid in _moveEntities)
-            {
-                if (!ctx.EntityManager.EntityExists(entUid))
-                    continue;
-
-                var oldWorldPos = xformSystem.GetWorldPosition(entUid);
-                var newWorldPos = oldWorldPos + worldOffset;
-
-                var cmd = new WorldMoveEntityCommand(ctx.EntityManager, entUid, oldWorldPos, newWorldPos);
-                cmd.Execute();
-                batch.Add(cmd);
-            }
-        }
+        // TODO: Bulk entity movement in selections causes coordinate/physics issues.
+        // Individual entity move (EntitySelectTool drag) works fine.
+        // Bulk move needs deeper investigation into grid-relative vs world coordinates
+        // and physics broadphase interactions during batch operations.
 
         if (batch.Count > 0)
             ctx.CommandStack.Push(batch);
