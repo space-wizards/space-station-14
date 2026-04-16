@@ -1,12 +1,14 @@
 using Content.MapEditor.Commands;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
 namespace Content.MapEditor.Tools;
 
 /// <summary>
-///     Spawns the selected entity prototype at the clicked tile position on the active grid.
+///     Spawns the selected entity prototype at the clicked position on the active grid.
+///     Snaps to tile center by default. Hold Shift for free (non-snapped) placement.
 /// </summary>
 public sealed class EntityPlaceTool : IEditorTool
 {
@@ -20,8 +22,20 @@ public sealed class EntityPlaceTool : IEditorTool
         var gridUid = ctx.ActiveGridUid;
         var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
 
-        // GridTileToLocal already returns tile center (adds TileSizeHalfVector).
-        var coords = ctx.MapSystem.GridTileToLocal(gridUid, grid, tilePos);
+        EntityCoordinates coords;
+        if (ctx.ShiftHeld)
+        {
+            // Free placement: use exact cursor world position, convert to grid-local.
+            var xformSys = ctx.EntityManager.System<SharedTransformSystem>();
+            var invMatrix = xformSys.GetInvWorldMatrix(gridUid);
+            var gridLocal = System.Numerics.Vector2.Transform(ctx.CursorWorldPosition, invMatrix);
+            coords = new EntityCoordinates(gridUid, gridLocal);
+        }
+        else
+        {
+            // Snapped: tile center.
+            coords = ctx.MapSystem.GridTileToLocal(gridUid, grid, tilePos);
+        }
 
         var uid = ctx.EntityManager.SpawnEntity(ctx.SelectedEntityPrototype, coords);
 

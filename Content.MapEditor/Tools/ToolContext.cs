@@ -56,4 +56,15 @@ public sealed class ToolContext
     ///     0 = default, π/2 = 90° CW, π = 180°, 3π/2 = 270°.
     /// </summary>
     public Robust.Shared.Maths.Angle PlacementRotation { get; set; }
+
+    /// <summary>
+    ///     Exact cursor world position (not snapped to tile grid).
+    ///     Used for free placement when Shift is held.
+    /// </summary>
+    public System.Numerics.Vector2 CursorWorldPosition { get; set; }
+
+    /// <summary>
+    ///     Whether Shift is held (enables free placement mode).
+    /// </summary>
+    public bool ShiftHeld { get; set; }
 }

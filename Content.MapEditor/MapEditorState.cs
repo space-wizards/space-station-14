@@ -1182,6 +1182,11 @@ public sealed class MapEditorState : State
             // Only start a tool stroke if the click is on the viewport, not on UI panels.
             if (!_isPanning && IsMouseOverViewport(screenPos) && TryResolveGridTile(screenPos, out var tilePos))
             {
+                // Set cursor context for free placement.
+                var worldCoords = _eyeManager.PixelToMap(screenPos.Position);
+                _toolContext.CursorWorldPosition = worldCoords.Position;
+                _toolContext.ShiftHeld = _input.IsKeyDown(Keyboard.Key.Shift);
+
                 _isToolActive = true;
                 _lastToolTilePos = tilePos;
                 _activeTool.OnMouseDown(_toolContext, tilePos);
