@@ -4,11 +4,14 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     private void InitializeRefund()
     {
         SubscribeLocalEvent<StoreComponent, EntityTerminatingEvent>(OnStoreTerminating);
