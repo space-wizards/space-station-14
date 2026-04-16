@@ -26,11 +26,5 @@ public sealed partial class JetpackComponent : Component
     public float WeightlessModifier = 1.2f;
 
     [DataField]
-    public float EffectCooldown = 0.3f;
-
-    [DataField]
-    public float EffectMaxDistance = 0.7f;
-
-    [DataField]
-    public EntProtoId EffectPrototype = "JetpackEffect";
+    public float UsageCooldown = 0.3f;
 }
