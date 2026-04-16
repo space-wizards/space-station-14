@@ -229,11 +229,11 @@ public sealed class SelectTool : IEditorTool
             batch.Add(cmd);
         }
 
-        // Move entities that were in the selection.
-        // Temporarily disable physics collision on each entity to prevent broadphase
-        // assertion crashes, then restore after repositioning.
+        // Move entities that were in the selection using world positions
+        // to avoid coordinate parent issues after undo/redo cycles.
         if (_moveEntities != null)
         {
+            var xformSystem = ctx.EntityManager.System<SharedTransformSystem>();
             var worldOffset = new System.Numerics.Vector2(offset.X, offset.Y);
 
             foreach (var entUid in _moveEntities)
@@ -241,12 +241,10 @@ public sealed class SelectTool : IEditorTool
                 if (!ctx.EntityManager.EntityExists(entUid))
                     continue;
 
-                var xform = ctx.EntityManager.GetComponent<TransformComponent>(entUid);
-                var oldCoords = xform.Coordinates;
-                var newPos = oldCoords.Position + worldOffset;
-                var newCoords = new EntityCoordinates(oldCoords.EntityId, newPos);
+                var oldWorldPos = xformSystem.GetWorldPosition(entUid);
+                var newWorldPos = oldWorldPos + worldOffset;
 
-                var cmd = new MoveEntityCommand(ctx.EntityManager, entUid, oldCoords, newCoords);
+                var cmd = new WorldMoveEntityCommand(ctx.EntityManager, entUid, oldWorldPos, newWorldPos);
                 cmd.Execute();
                 batch.Add(cmd);
             }

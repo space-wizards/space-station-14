@@ -170,6 +170,12 @@ public sealed class SelectToolMoveTest : GameTest
                 ActiveGridUid = gridUid,
             };
 
+            // Spawn an entity at tile (3,3) to verify entity movement across undo+re-move.
+            var entityCoords = mapSystem.GridTileToLocal(gridUid, gridComp, new Vector2i(3, 3));
+            var testEntity = entManager.SpawnEntity(null, entityCoords);
+
+            var xformSys = entManager.System<SharedTransformSystem>();
+
             var tool = new SelectTool();
 
             // === Step 1: Draw selection at (2,2)..(3,3) → Box2i(2,2,4,4). ===
@@ -195,13 +201,23 @@ public sealed class SelectToolMoveTest : GameTest
             Assert.That(mapSystem.GetTileRef(gridUid, gcAfter1, new Vector2i(5, 2)).Tile.IsEmpty,
                 Is.False, "Destination tile (5,2) should be filled after first move");
 
-            // === Step 3: Undo — tiles revert to (2,2). ===
+            // Entity should have moved +3 in X (from tile 3,3 to tile 6,3 in world).
+            var entWorldPos1 = xformSys.GetWorldPosition(testEntity);
+            Assert.That(Math.Round(entWorldPos1.X - entityCoords.Position.X), Is.EqualTo(3),
+                "Entity world X should have moved by +3 after first move");
+
+            // === Step 3: Undo — tiles and entities revert. ===
             Assert.That(commandStack.CanUndo, Is.True);
             commandStack.Undo();
 
             var gcUndo = entManager.GetComponent<MapGridComponent>(gridUid);
             Assert.That(mapSystem.GetTileRef(gridUid, gcUndo, new Vector2i(2, 2)).Tile.IsEmpty,
                 Is.False, "Source tile (2,2) should be restored after undo");
+
+            // Entity should be back at original position.
+            var entWorldPosUndo = xformSys.GetWorldPosition(testEntity);
+            Assert.That(Math.Abs(entWorldPosUndo.X - entityCoords.Position.X) < 0.1f, Is.True,
+                $"Entity world X should be back at original after undo (got {entWorldPosUndo.X}, expected ~{entityCoords.Position.X})");
 
             // Selection is still at Box2i(2,2,4,4) — the fix ensures it was never moved.
             Assert.That(tool.Selection!.Value, Is.EqualTo(new Box2i(2, 2, 4, 4)),
@@ -219,12 +235,17 @@ public sealed class SelectToolMoveTest : GameTest
             tool.OnMouseDrag(ctx, new Vector2i(4, 3));  // delta = (+1, 0)
             tool.OnMouseUp(ctx);                        // ApplyMove: source=(2,2,4,4), offset=(+1,0)
 
-            // Verify the second move was actually applied.
+            // Verify the second move was actually applied — tiles.
             var gcAfter2 = entManager.GetComponent<MapGridComponent>(gridUid);
             Assert.That(mapSystem.GetTileRef(gridUid, gcAfter2, new Vector2i(2, 2)).Tile.IsEmpty,
                 Is.True, "Source tile (2,2) should be empty after second move");
             Assert.That(mapSystem.GetTileRef(gridUid, gcAfter2, new Vector2i(3, 2)).Tile.IsEmpty,
                 Is.False, "Destination tile (3,2) should be filled after second move");
+
+            // Verify second move — entity should have moved by +1 in X from original.
+            var entWorldPos2 = xformSys.GetWorldPosition(testEntity);
+            Assert.That(Math.Round(entWorldPos2.X - entityCoords.Position.X), Is.EqualTo(1),
+                $"Entity world X should have moved by +1 after second move (got {entWorldPos2.X}, expected ~{entityCoords.Position.X + 1})");
         });
 
         await server.WaitPost(() => mapSystem.DeleteMap(mapId));
