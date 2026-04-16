@@ -36,14 +36,6 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public bool ExclusiveAntag;
 
     /// <summary>
-    /// The Mind that this role belongs to.
-    /// </summary>
-    /// <remarks>
-    /// TODO: Make this a datafield. Also components should not store other components.
-    /// </remarks>
-    public Entity<MindComponent> Mind;
-
-    /// <summary>
     /// The Antagonist prototype of this role.
     /// </summary>
     [DataField]

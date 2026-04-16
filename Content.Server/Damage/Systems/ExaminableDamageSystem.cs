@@ -1,6 +1,7 @@
 ﻿using Content.Server.Damage.Components;
 using Content.Server.Destructible;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
 using Robust.Shared.Prototypes;
@@ -11,6 +12,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
 {
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -20,7 +22,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
 
     private void OnExamine(Entity<ExaminableDamageComponent> ent, ref ExaminedEvent args)
     {
-        if (!_prototype.TryIndex(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
+        if (!_prototype.Resolve(ent.Comp.Messages, out var proto) || proto.Values.Count == 0)
             return;
 
         var percent = GetDamagePercent(ent);
@@ -39,7 +41,7 @@ public sealed class ExaminableDamageSystem : EntitySystem
         if (!TryComp<DamageableComponent>(ent, out var damageable))
             return 0;
 
-        var damage = damageable.TotalDamage;
+        var damage = _damageable.GetTotalDamage((ent, damageable));
         var damageThreshold = _destructible.DestroyedAt(ent);
 
         if (damageThreshold == 0)

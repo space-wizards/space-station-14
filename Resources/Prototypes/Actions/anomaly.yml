@@ -6,6 +6,6 @@
   components:
   - type: Action
     useDelay: 30
-    icon: Structures/Specific/anomaly.rsi/anom1.png
+    icon: { sprite: Structures/Specific/anomaly.rsi, state: anom1 }
   - type: InstantAction
     event: !type:ActionAnomalyPulseEvent

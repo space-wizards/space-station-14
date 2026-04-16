@@ -41,13 +41,15 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var comp = EnsureComp<SericultureComponent>(args.CloneUid);
-        comp.PopupText = ent.Comp.PopupText;
-        comp.ProductionLength = ent.Comp.ProductionLength;
-        comp.HungerCost = ent.Comp.HungerCost;
-        comp.EntityProduced = ent.Comp.EntityProduced;
-        comp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
-        Dirty(args.CloneUid, comp);
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<SericultureComponent>();
+        cloneComp.PopupText = ent.Comp.PopupText;
+        cloneComp.EntityProduced = ent.Comp.EntityProduced;
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.ProductionLength = ent.Comp.ProductionLength;
+        cloneComp.HungerCost = ent.Comp.HungerCost;
+        cloneComp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     /// <summary>
@@ -68,8 +70,8 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
-        if (TryComp<HungerComponent>(uid, out var hungerComp)
-            && _hungerSystem.IsHungerBelowState(uid,
+        if (!TryComp<HungerComponent>(uid, out var hungerComp)
+            || _hungerSystem.IsHungerBelowState(uid,
                 comp.MinHungerThreshold,
                 _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
                 hungerComp))
@@ -95,9 +97,9 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
-        if (TryComp<HungerComponent>(uid,
+        if (!TryComp<HungerComponent>(uid,
                 out var hungerComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-            && _hungerSystem.IsHungerBelowState(uid,
+            || _hungerSystem.IsHungerBelowState(uid,
                 comp.MinHungerThreshold,
                 _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
                 hungerComp))
@@ -106,7 +108,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
             return;
         }
 
-        _hungerSystem.ModifyHunger(uid, -comp.HungerCost);
+        _hungerSystem.ModifyHunger(uid, -comp.HungerCost, hungerComp);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {
