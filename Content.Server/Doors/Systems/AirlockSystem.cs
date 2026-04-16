@@ -12,8 +12,6 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class AirlockSystem : SharedAirlockSystem
 {
-    [Dependency] private readonly WiresSystem _wiresSystem = default!;
-
     public override void Initialize()
     {
         base.Initialize();
