@@ -40,18 +40,10 @@ public sealed class MoveEntityCommand : IEditorCommand
             return;
 
         // Disable collision before moving to avoid physics broadphase assertion crashes.
-        var hadCollision = false;
-        if (_em.TryGetComponent<PhysicsComponent>(_uid, out var physics))
-        {
-            hadCollision = physics.CanCollide;
-            if (hadCollision)
-                _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, false, body: physics);
-        }
+        // We don't re-enable it — physics collision is irrelevant in the editor.
+        if (_em.TryGetComponent<PhysicsComponent>(_uid, out var physics) && physics.CanCollide)
+            _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, false, body: physics);
 
         _em.System<SharedTransformSystem>().SetCoordinates(_uid, target);
-
-        // Restore collision.
-        if (hadCollision && _em.TryGetComponent<PhysicsComponent>(_uid, out physics))
-            _em.System<SharedPhysicsSystem>().SetCanCollide(_uid, true, body: physics);
     }
 }

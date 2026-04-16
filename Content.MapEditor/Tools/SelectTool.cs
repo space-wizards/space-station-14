@@ -190,15 +190,6 @@ public sealed class SelectTool : IEditorTool
                 if (!ctx.EntityManager.EntityExists(entUid))
                     continue;
 
-                // Disable collision before moving to avoid physics contact assertions.
-                bool hadCollision = false;
-                if (ctx.EntityManager.TryGetComponent<Robust.Shared.Physics.Components.PhysicsComponent>(entUid, out var physics))
-                {
-                    hadCollision = physics.CanCollide;
-                    if (hadCollision)
-                        ctx.EntityManager.System<Robust.Shared.Physics.Systems.SharedPhysicsSystem>().SetCanCollide(entUid, false, body: physics);
-                }
-
                 var xform = ctx.EntityManager.GetComponent<TransformComponent>(entUid);
                 var oldCoords = xform.Coordinates;
                 var newPos = oldCoords.Position + worldOffset;
@@ -207,10 +198,6 @@ public sealed class SelectTool : IEditorTool
                 var cmd = new MoveEntityCommand(ctx.EntityManager, entUid, oldCoords, newCoords);
                 cmd.Execute();
                 batch.Add(cmd);
-
-                // Restore collision.
-                if (hadCollision && ctx.EntityManager.TryGetComponent<Robust.Shared.Physics.Components.PhysicsComponent>(entUid, out physics))
-                    ctx.EntityManager.System<Robust.Shared.Physics.Systems.SharedPhysicsSystem>().SetCanCollide(entUid, true, body: physics);
             }
         }
 
