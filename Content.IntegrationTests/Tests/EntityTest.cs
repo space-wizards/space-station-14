@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Text;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Utility;
 using Robust.Shared;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Configuration;
@@ -33,10 +34,47 @@ namespace Content.IntegrationTests.Tests
             Dirty = true,
         };
 
+        /// <summary>
+        /// How many <see cref="EntProtoId"/>s to include in each batch.
+        /// </summary>
+        /// <remarks>
+        /// A lower value will result in more test runs being needed, which will increase
+        /// overhead from pair recycling.
+        /// A higher value will need fewer test runs, but will increase RAM/CPU usage of each run.
+        /// </remarks>
+        private const int BatchSize = 20;
+
+        private static string[][] GetEntityBatches()
+        {
+            var allProtos = GameDataScrounger.PrototypesOfKind<EntityPrototype>();
+
+            // Filter out entities that would cause problems
+            var roomFills = GameDataScrounger.EntitiesWithComponent("RoomFill");
+            var filteredProtos = allProtos.Except(roomFills).ToArray();
+
+            var batchCount = (int)MathF.Ceiling((float)filteredProtos.Length / BatchSize);
+            var batches = new string[batchCount][];
+
+            for (var i = 0; i < batchCount; i++)
+            {
+                // The final batch probably is smaller, containing just the remainder
+                var len = i == batchCount - 1 ? filteredProtos.Length % BatchSize : BatchSize;
+
+                batches[i] = new string[len];
+                for (var j = 0; j < batches[i].Length; j++)
+                {
+                    batches[i][j] = filteredProtos[i * BatchSize + j];
+                }
+            }
+            return batches;
+        }
+
         [Test]
         [PairConfig(nameof(Disconnected))]
-        public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
+        [TestCaseSource(nameof(GetEntityBatches))]
+        public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps(string[] protoIds)
         {
+            TestContext.Out.WriteLine($"Batch: [{string.Join(", ", protoIds)}]");
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
             // is minimal relative to the rest of the test.
             var pair = Pair;
@@ -49,17 +87,9 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                var protoIds = prototypeMan
-                    .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
-                    .Where(p => !pair.IsTestPrototype(p))
-                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
-                    .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
-                    .Select(p => p.ID)
-                    .ToList();
-
                 foreach (var protoId in protoIds)
                 {
+                    var proto = prototypeMan.Index(protoId);
                     mapSystem.CreateMap(out var mapId);
                     var grid = mapManager.CreateGridEntity(mapId);
                     // TODO: Fix this better in engine.
