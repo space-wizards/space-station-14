@@ -161,9 +161,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         component.NextAttack = minimum;
-        component.UndamagedSwings = 0;
+        ResetUndamagedSwingsCount((uid, component));
         DirtyField(uid, component, nameof(MeleeWeaponComponent.NextAttack));
-        DirtyField(uid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
     }
 
     private void OnGetBonusMeleeDamage(EntityUid uid, BonusMeleeDamageComponent component, ref GetMeleeDamageEvent args)
@@ -583,9 +582,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             if (damageResult.GetTotal() > FixedPoint2.Zero)
             {
                 DoDamageEffect(targets, user, targetXform);
-
-                component.UndamagedSwings = 0;
-                DirtyField(meleeUid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
+                ResetUndamagedSwingsCount((meleeUid, component));
             }
             else
             {
@@ -762,9 +759,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             if (appliedDamage.GetTotal() > FixedPoint2.Zero)
             {
                 DoDamageEffect(targets, user, Transform(targets[0]));
-
-                component.UndamagedSwings = 0;
-                DirtyField(meleeUid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
+                ResetUndamagedSwingsCount((meleeUid, component));
             }
             else
             {
@@ -1088,6 +1083,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void UndamagedAttack(Entity<MeleeWeaponComponent> ent, EntityUid target, EntityUid user)
     {
+        if (!_netMan.IsClient)
+            return;
+
         if (ent.Comp.UndamagedAlertThreshold == 0)
             return;
 
@@ -1095,7 +1093,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             ent.Comp.UndamagedSwings = 0;
             ent.Comp.LastUndamagedHitEntity = target;
-            DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.LastUndamagedHitEntity));
         }
 
         ent.Comp.UndamagedSwings++;
@@ -1112,7 +1109,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             ent.Comp.UndamagedSwings = 0;
         }
+    }
 
-        DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.UndamagedSwings));
+    private void ResetUndamagedSwingsCount(Entity<MeleeWeaponComponent> ent)
+    {
+        if (!_netMan.IsClient)
+            return;
+
+        ent.Comp.UndamagedSwings = 0;
     }
 }
