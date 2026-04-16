@@ -615,6 +615,11 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Copies compatible datafields of <see cref="PullerComponent"/> onto the target entity.
+    /// </summary>
+    /// <param name="source">The target who's component will be taken.</param>
+    /// <param name="target">The target to apply it to.</param>
     public void CopyPullerComponent(Entity<PullerComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))
