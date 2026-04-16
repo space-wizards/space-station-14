@@ -161,7 +161,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         component.NextAttack = minimum;
+        component.UndamagedSwings = 0;
         DirtyField(uid, component, nameof(MeleeWeaponComponent.NextAttack));
+        DirtyField(uid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
     }
 
     private void OnGetBonusMeleeDamage(EntityUid uid, BonusMeleeDamageComponent component, ref GetMeleeDamageEvent args)
@@ -576,9 +578,19 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
 
-        if (damageResult.GetTotal() > FixedPoint2.Zero && !TerminatingOrDeleted(target.Value))
+        if (!TerminatingOrDeleted(target.Value))
         {
-            DoDamageEffect(targets, user, targetXform);
+            if (damageResult.GetTotal() > FixedPoint2.Zero)
+            {
+                DoDamageEffect(targets, user, targetXform);
+
+                component.UndamagedSwings = 0;
+                DirtyField(meleeUid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
+            }
+            else
+            {
+                UndamagedAttack((meleeUid, component), target.Value, user);
+            }
         }
     }
 
@@ -745,9 +757,19 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             _meleeSound.PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component);
         }
 
-        if (appliedDamage.GetTotal() > FixedPoint2.Zero && targets.Count > 0)
+        if (targets.Count > 0)
         {
-            DoDamageEffect(targets, user, Transform(targets[0]));
+            if (appliedDamage.GetTotal() > FixedPoint2.Zero)
+            {
+                DoDamageEffect(targets, user, Transform(targets[0]));
+
+                component.UndamagedSwings = 0;
+                DirtyField(meleeUid, component, nameof(MeleeWeaponComponent.UndamagedSwings));
+            }
+            else
+            {
+                UndamagedAttack((meleeUid, component), targets[0], user);
+            }
         }
 
         return true;
@@ -1061,6 +1083,34 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 meleeWeapon.Hidden = true;
             }
+        }
+    }
+
+    private void UndamagedAttack(Entity<MeleeWeaponComponent> ent, EntityUid target, EntityUid user)
+    {
+        if (ent.Comp.UndamagedAlertThreshold == 0)
+            return;
+
+        if (ent.Comp.LastUndamagedHitEntity != target)
+        {
+            ent.Comp.UndamagedSwings = 0;
+            ent.Comp.LastUndamagedHitEntity = target;
+        }
+
+        ent.Comp.UndamagedSwings++;
+        if (ent.Comp.UndamagedSwings >= ent.Comp.UndamagedAlertThreshold)
+        {
+            if (ent.Owner == user)
+            {
+                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", target)), target, user);
+            }
+            else
+            {
+                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", target)), target, user);
+            }
+
+            ent.Comp.UndamagedSwings = 0;
+            DirtyField(ent.Owner, ent.Comp, nameof(MeleeWeaponComponent.UndamagedSwings));
         }
     }
 }

@@ -172,6 +172,7 @@
     damage:
       types:
         Blunt: 0.3 # Not even close to real damage, but creates the red flash to give the illusion of damage
+    undamagedAlertThreshold: 0
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]

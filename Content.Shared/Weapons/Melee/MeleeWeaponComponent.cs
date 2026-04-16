@@ -167,6 +167,27 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool MustBeEquippedToUse = false;
+
+    /// <summary>
+    /// The last entity hit that the weapon was unable to damage.
+    /// Used to track <see cref="UndamagedSwings"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? LastUndamagedHitEntity;
+
+    /// <summary>
+    /// The number of failed swings against an entity required to display a pop-up that the weapon isn't dealing any damage.
+    /// If set to 0, no pop-up will be displayed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int UndamagedAlertThreshold = 5;
+
+    /// <summary>
+    /// Tracks the number of swings that dealt no damage to <see cref="LastUndamagedHitEntity"/>.
+    /// <seealso cref="UndamagedAlertThreshold"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int UndamagedSwings = 0;
 }
 
 /// <summary>
