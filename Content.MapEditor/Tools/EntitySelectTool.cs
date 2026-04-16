@@ -83,10 +83,17 @@ public sealed class EntitySelectTool : IEditorTool
     /// </summary>
     public Vector2i? PendingPickTilePos { get; private set; }
 
+    /// <summary>
+    ///     During a Shift (free) drag, the grid-local target position for the ghost preview.
+    ///     Null when snapped dragging or not dragging.
+    /// </summary>
+    public System.Numerics.Vector2? FreeDragPosition { get; private set; }
+
     // Drag state
     private Vector2i _dragStartTile;
     private Vector2i _lastDragTile;
     private EntityCoordinates _dragStartCoords;
+    private EntityCoordinates? _freeDragCoords;
 
     public void OnMouseDown(ToolContext ctx, Vector2i tilePos)
     {
@@ -223,19 +230,32 @@ public sealed class EntitySelectTool : IEditorTool
         if (!IsDragging || SelectedEntity == null || !ctx.EntityManager.EntityExists(SelectedEntity.Value))
             return;
 
-        if (tilePos == _lastDragTile)
-            return;
-
-        _lastDragTile = tilePos;
-
-        // Move the entity visually during the drag (final command applied on mouse up).
         var gridUid = ctx.ActiveGridUid;
         var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
-        var newCoords = ctx.MapSystem.GridTileToLocal(gridUid, grid, tilePos);
+        var xformSys = ctx.EntityManager.System<SharedTransformSystem>();
 
-        var xform = ctx.EntityManager.GetComponent<TransformComponent>(SelectedEntity.Value);
-        xform.Coordinates = newCoords;
+        if (ctx.ShiftHeld)
+        {
+            // Free positioning: show ghost preview at cursor, commit on mouseup.
+            var invMatrix = xformSys.GetInvWorldMatrix(gridUid);
+            var gridLocal = System.Numerics.Vector2.Transform(ctx.CursorWorldPosition, invMatrix);
+            FreeDragPosition = gridLocal;
+            _freeDragCoords = new EntityCoordinates(gridUid, gridLocal);
+        }
+        else
+        {
+            // Snapped: move entity to tile center in real-time.
+            FreeDragPosition = null;
+            _freeDragCoords = null;
 
+            if (tilePos == _lastDragTile)
+                return;
+
+            var newCoords = ctx.MapSystem.GridTileToLocal(gridUid, grid, tilePos);
+            xformSys.SetCoordinates(SelectedEntity.Value, newCoords);
+        }
+
+        _lastDragTile = tilePos;
         SelectedTilePos = tilePos;
     }
 
@@ -244,21 +264,35 @@ public sealed class EntitySelectTool : IEditorTool
         if (!IsDragging || SelectedEntity == null)
         {
             IsDragging = false;
+            FreeDragPosition = null;
+            _freeDragCoords = null;
             return;
         }
 
         IsDragging = false;
+        var freeCoords = _freeDragCoords;
+        FreeDragPosition = null;
+        _freeDragCoords = null;
 
         if (!ctx.EntityManager.EntityExists(SelectedEntity.Value))
             return;
 
-        // Only create a command if the entity actually moved.
-        if (_lastDragTile == _dragStartTile)
-            return;
+        EntityCoordinates newCoords;
+        if (freeCoords != null)
+        {
+            // Shift free drag: use exact cursor position.
+            newCoords = freeCoords.Value;
+        }
+        else
+        {
+            // Snapped drag: use tile center. Skip if entity didn't move.
+            if (_lastDragTile == _dragStartTile)
+                return;
 
-        var gridUid = ctx.ActiveGridUid;
-        var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
-        var newCoords = ctx.MapSystem.GridTileToLocal(gridUid, grid, _lastDragTile);
+            var gridUid = ctx.ActiveGridUid;
+            var grid = ctx.EntityManager.GetComponent<MapGridComponent>(gridUid);
+            newCoords = ctx.MapSystem.GridTileToLocal(gridUid, grid, _lastDragTile);
+        }
 
         // Revert to start position so Execute() applies the move cleanly for undo/redo.
         var xform = ctx.EntityManager.GetComponent<TransformComponent>(SelectedEntity.Value);

@@ -96,6 +96,7 @@ public sealed class MapEditorState : State
     // Entity outline shader for selection highlight.
     private ShaderInstance? _selectionOutlineShader;
     private EntityUid? _outlinedEntity;
+    private Texture? _dragGhostTexture;
 
     // Cable connection recompute flag set when entities are added/removed/moved.
     private bool _cablesDirty;
@@ -530,6 +531,20 @@ public sealed class MapEditorState : State
         var xformSystem = _entityManager.System<SharedTransformSystem>();
         _editorOverlay.GridWorldMatrix = xformSystem.GetWorldMatrix(_activeGridUid);
 
+        // When Shift is held and a placement/select tool is active, show the ghost at the
+        // exact cursor position (grid-local) instead of snapping to tile center.
+        if (_input.IsKeyDown(Keyboard.Key.Shift)
+            && (_activeToolKey == "entityplace" || _activeToolKey == "entityselect"))
+        {
+            var invMatrix = xformSystem.GetInvWorldMatrix(_activeGridUid);
+            var gridLocal = Vector2.Transform(mapCoords.Position, invMatrix);
+            _editorOverlay.FreePreviewPosition = gridLocal;
+        }
+        else
+        {
+            _editorOverlay.FreePreviewPosition = null;
+        }
+
         // Update placement ghost preview based on active tool.
         UpdatePlacementPreview();
     }
@@ -629,6 +644,31 @@ public sealed class MapEditorState : State
                 // Don't set previewRot directional sprite handles it.
                 break;
             }
+        }
+
+        // During EntitySelectTool Shift drag, show the selected entity's sprite as a ghost
+        // at the free cursor position (same visual as entity place with Shift).
+        if (_activeTool is EntitySelectTool { IsDragging: true, FreeDragPosition: { } freeDragPos, SelectedEntity: { } draggedUid }
+            && _entityManager.EntityExists(draggedUid))
+        {
+            _editorOverlay.FreePreviewPosition = freeDragPos;
+
+            // Use cached texture for the drag to avoid per-frame Icon lookups.
+            if (_dragGhostTexture == null)
+            {
+                try
+                {
+                    if (_entityManager.TryGetComponent<SpriteComponent>(draggedUid, out var sprite))
+                        _dragGhostTexture = sprite.Icon?.Default;
+                }
+                catch { }
+            }
+
+            previewTex ??= _dragGhostTexture;
+        }
+        else
+        {
+            _dragGhostTexture = null;
         }
 
         _editorOverlay.PlacementPreviewTexture = previewTex;
@@ -745,8 +785,10 @@ public sealed class MapEditorState : State
         else
         {
             _editorOverlay.SelectionBox = null;
-            _editorOverlay.IsDraggingSelection = false;
             _editorOverlay.MoveGhostTiles = null;
+
+            // Suppress hover highlight while EntitySelectTool is dragging an entity.
+            _editorOverlay.IsDraggingSelection = _activeTool is EntitySelectTool { IsDragging: true };
         }
     }
 
@@ -1201,10 +1243,16 @@ public sealed class MapEditorState : State
         }
         else if (leftDown && _isToolActive)
         {
+            // Update cursor context for free placement during drag.
+            var dragWorldCoords = _eyeManager.PixelToMap(screenPos.Position);
+            _toolContext.CursorWorldPosition = dragWorldCoords.Position;
+            _toolContext.ShiftHeld = _input.IsKeyDown(Keyboard.Key.Shift);
+
             // Left mouse held drag.
             if (TryResolveGridTile(screenPos, out var tilePos))
             {
-                if (tilePos != _lastToolTilePos)
+                // Always fire drag for free placement tools so position updates every frame.
+                if (tilePos != _lastToolTilePos || _toolContext.ShiftHeld)
                 {
                     _lastToolTilePos = tilePos;
                     _activeTool.OnMouseDrag(_toolContext, tilePos);

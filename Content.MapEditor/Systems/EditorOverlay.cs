@@ -93,6 +93,12 @@ public sealed class EditorOverlay : Overlay
     /// </summary>
     public Angle PlacementPreviewRotation { get; set; }
 
+    /// <summary>
+    ///     When set, the placement preview renders at this grid-local position
+    ///     instead of the tile center. Used for Shift free placement.
+    /// </summary>
+    public Vector2? FreePreviewPosition { get; set; }
+
     // Cyan/blue tint for selection clearly distinct from the white hover highlight.
     private static readonly Color SelectionFillColor = new(0.2f, 0.6f, 1.0f, 0.2f);
     private static readonly Color SelectionBorderColor = new(0.3f, 0.7f, 1.0f, 0.9f);
@@ -121,8 +127,8 @@ public sealed class EditorOverlay : Overlay
         // Draw placement ghost preview (semi-transparent texture of what will be placed).
         if (HoveredTile != null && PlacementPreviewTexture != null)
         {
-            var tile = HoveredTile.Value;
-            var center = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
+            // Use free position if Shift is held, otherwise snap to tile center.
+            var center = FreePreviewPosition ?? new Vector2(HoveredTile.Value.X + 0.5f, HoveredTile.Value.Y + 0.5f);
             var texSize = PlacementPreviewTexture.Size / (float) EyeManager.PixelsPerMeter;
             var halfSize = texSize / 2f;
 
