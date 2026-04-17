@@ -24,11 +24,11 @@ public sealed class BlindfoldSystem : EntitySystem
 
     private void OnEquipped(Entity<BlindfoldComponent> blindfold, ref GotEquippedEvent args)
     {
-        _blindableSystem.UpdateIsBlind(args.Equipee);
+        _blindableSystem.UpdateIsBlind(args.EquipTarget);
     }
 
     private void OnUnequipped(Entity<BlindfoldComponent> blindfold, ref GotUnequippedEvent args)
     {
-        _blindableSystem.UpdateIsBlind(args.Equipee);
+        _blindableSystem.UpdateIsBlind(args.EquipTarget);
     }
 }
