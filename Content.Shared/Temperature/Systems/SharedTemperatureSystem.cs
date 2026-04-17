@@ -17,7 +17,7 @@ public abstract class SharedTemperatureSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
 
-    protected EntityQuery<TemperatureComponent> TemperatureQuery;
+    [Dependency] protected readonly EntityQuery<TemperatureComponent> TemperatureQuery = default!;
 
     /// <summary>
     /// Band-aid for unpredicted atmos. Delays the application for a short period so that laggy clients can get the replicated temperature.
@@ -32,8 +32,6 @@ public abstract class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, TemperatureChangedEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-
-        TemperatureQuery = GetEntityQuery<TemperatureComponent>();
     }
 
     protected virtual void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)

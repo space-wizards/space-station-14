@@ -1691,5 +1691,21 @@ Entries:
   id: 206
   time: '2026-03-08T23:41:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41427
+- author: SlamBamActionman
+  changes:
+  - message: adduplink command now works properly, gives an uplink implant if there's
+      no PDA, and returns the uplink code in the command terminal.
+    type: Fix
+  id: 207
+  time: '2026-04-04T20:14:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38712
+- author: mikeysaurus
+  changes:
+  - message: The debug SetOutfit command now also fills target's storage containers
+      based on the gear preset.
+    type: Tweak
+  id: 208
+  time: '2026-04-09T05:05:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43346
 Name: Admin
 Order: 3
