@@ -320,36 +320,38 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Reset RoguePowerConsumer flag
         component.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
 
-        // Check to see if a power network battery is recieving too much power
-        var powerNetworkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, TransformComponent>();
-        while (powerNetworkBatteryQuery.MoveNext(out var ent, out var powerNetworkBattery, out var xform))
+        // Create queries of things that are consuming power on the station
+        var powerNetworkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, PowerMonitoringDeviceComponent, TransformComponent>();
+        var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, PowerMonitoringDeviceComponent, TransformComponent>();
+
+        // Create a list of how much power each entity is consuming, and also where they are
+        var powerConsumers = new List<(TransformComponent xForm, float Watts)>();
+
+        // populate powerConsumers with entities with PowerNetworkBatteryComponent
+        while (powerNetworkBatteryQuery.MoveNext(out _, out var powerBatteryComp, out _, out var xform))
         {
-            if (xform.Anchored == false || xform.GridUid != gridUid)
-                continue;
-
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
-                continue;
-
-            // Flag an alert if power consumption is ridiculous
-            if (powerNetworkBattery.CurrentReceiving >= RoguePowerConsumerThreshold)
-                component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
+            var batteryLoad = powerBatteryComp.CurrentReceiving - powerBatteryComp.CurrentSupply;
+            batteryLoad = batteryLoad > 0f ? batteryLoad : 0f;
+            powerConsumers.Add((xform, batteryLoad));
         }
 
-        // Record the load value of all non-tracked power consumers on the same grid as the console
-        var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, TransformComponent>();
-        while (powerConsumerQuery.MoveNext(out var ent, out var powerConsumer, out var xform))
+        // populate powerConsumers with entities with PowerConsumerComponent
+        while (powerConsumerQuery.MoveNext(out _, out var powerConsumerComp, out _, out var xform))
         {
-            if (xform.Anchored == false || xform.GridUid != gridUid)
+            powerConsumers.Add((xform, powerConsumerComp.ReceivedPower));
+        }
+
+        // for each consumer, check if they are in the same grid and also anchored
+        foreach (var watt in powerConsumers)
+        {
+            if (watt.xForm.Anchored == false || watt.xForm.GridUid != gridUid)
                 continue;
 
-            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
-                continue;
-
-            // Flag an alert if power consumption is ridiculous
-            if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
+            // send the alert if consumer is consuming too much power
+            if (watt.Watts >= RoguePowerConsumerThreshold)
                 component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
-            totalLoads += powerConsumer.DrawRate;
+            totalLoads += watt.Watts;
         }
 
         if (component.Flags != flags)
