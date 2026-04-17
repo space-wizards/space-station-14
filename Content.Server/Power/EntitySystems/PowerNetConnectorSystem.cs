@@ -66,8 +66,7 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         }
     }
 
-    private void OnVoltageChanged<TComp>(Entity<TComp> entity, ref VoltageChangeEvent args)
-        where TComp : BasePowerNetComponent
+    private void OnVoltageChanged<TComp>(Entity<TComp> entity, ref VoltageChangeEvent args) where TComp : BasePowerNetComponent
     {
         var voltage = args.NewVoltage.Voltage;
         entity.Comp.Voltage = voltage;
