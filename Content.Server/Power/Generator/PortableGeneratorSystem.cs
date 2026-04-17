@@ -51,8 +51,8 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (fuelGenerator.On)
             return;
 
-        var voltageTogglerComp = Comp<VoltageTogglerComponent>(uid);
-        _voltageToggler.Cycle((uid, voltageTogglerComp), args.Actor);
+        if (TryComp<VoltageTogglerComponent>(uid, out var voltageTogglerComp))
+            _voltageToggler.Cycle((uid, voltageTogglerComp), args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
