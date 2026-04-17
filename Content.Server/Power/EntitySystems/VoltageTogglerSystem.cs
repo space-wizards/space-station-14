@@ -40,6 +40,9 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 
     protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user)
     {
+        if (settingIndex < 0 || settingIndex >= entity.Comp.Settings.Length)
+            throw new IndexOutOfRangeException();
+
         if (TryComp<UseDelayComponent>(entity, out var useDelay) && _useDelay.IsDelayed((entity, useDelay)))
             return;
 
