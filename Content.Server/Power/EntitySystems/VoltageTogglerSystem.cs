@@ -29,10 +29,13 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
     /// Or the first one if the current setting is the last.
     /// </summary>
     /// <remarks>This is used by <see cref="PortableGeneratorSystem"/></remarks>
-    public void Cycle(Entity<VoltageTogglerComponent> entity, EntityUid? user)
+    public void Cycle(Entity<VoltageTogglerComponent?> entity, EntityUid? user)
     {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return;
+
         var nextVoltageLevel = (entity.Comp.SelectedVoltageLevel + 1) % entity.Comp.Settings.Length;
-        ChangeVoltage(entity, nextVoltageLevel, user);
+        ChangeVoltage((entity, entity.Comp), nextVoltageLevel, user);
     }
 
     protected override void ChangeVoltage(Entity<VoltageTogglerComponent> entity, int settingIndex, EntityUid? user)
