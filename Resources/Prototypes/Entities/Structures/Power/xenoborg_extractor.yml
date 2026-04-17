@@ -102,6 +102,7 @@
   - type: PowerNetworkBattery
     canDischarge: false
     maxChargeRate: 32000
+    efficiency: 0.95
   - type: VoltageToggler
     settings:
     - voltage: Apc
