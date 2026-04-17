@@ -1,5 +1,8 @@
-﻿using Content.Server.Power.Generator;
+﻿using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Power.Generator;
 using Content.Server.Popups;
+using Content.Server.Power.Nodes;
+using Content.Shared.NodeContainer;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Timing;
@@ -12,6 +15,7 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
     [Dependency] private readonly UseDelaySystem _useDelay = null!;
     [Dependency] private readonly PopupSystem _popup = null!;
     [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
 
     public override void Initialize()
     {
@@ -46,8 +50,18 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
         if (TryComp<UseDelayComponent>(entity, out var useDelay) && _useDelay.IsDelayed((entity, useDelay)))
             return;
 
+        if (!TryComp<NodeContainerComponent>(entity, out var nodeContainer))
+            return;
+
         entity.Comp.SelectedVoltageLevel = settingIndex;
         var setting = entity.Comp.Settings[settingIndex];
+
+        foreach (var node in nodeContainer.Nodes)
+        {
+            var cableNode = (CableDeviceNode)node.Value;
+            cableNode.Enabled = setting.Node == node.Key;
+            _nodeGroupSystem.QueueReflood(cableNode);
+        }
 
         Dirty(entity);
 

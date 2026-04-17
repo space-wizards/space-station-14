@@ -31,7 +31,6 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, ReAnchorEvent>(OnReAnchor);
             SubscribeLocalEvent<NodeContainerComponent, MoveEvent>(OnMoveEvent);
             SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<NodeContainerComponent, VoltageChangeEvent>(OnVoltageChanged);
 
             _query = GetEntityQuery<NodeContainerComponent>();
         }
@@ -225,16 +224,6 @@ namespace Content.Server.NodeContainer.EntitySystems
                             Loc.GetString("node-container-component-on-examine-details-apc"));
                         break;
                 }
-            }
-        }
-
-        private void OnVoltageChanged(Entity<NodeContainerComponent> entity, ref VoltageChangeEvent args)
-        {
-            foreach (var node in entity.Comp.Nodes)
-            {
-                var cableNode = (CableDeviceNode)node.Value;
-                cableNode.Enabled = args.NewVoltage.Node == node.Key;
-                _nodeGroupSystem.QueueReflood(cableNode);
             }
         }
     }
