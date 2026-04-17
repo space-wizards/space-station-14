@@ -26,14 +26,14 @@ public sealed partial class VoltageTogglerComponent : Component
     /// It is given "voltage" as a colored voltage string.
     /// </summary>
     [DataField]
-    public string? SwitchText;
+    public LocId? SwitchText;
 
     /// <summary>
     /// Locale id for text shown when examined.
     /// It is given "voltage" as a colored voltage string.
     /// </summary>
     [DataField]
-    public string ExamineText = "voltage-toggler-examine";
+    public LocId ExamineText = "voltage-toggler-examine";
 
     /// <summary>
     /// Sound that plays when the cable is switched.
