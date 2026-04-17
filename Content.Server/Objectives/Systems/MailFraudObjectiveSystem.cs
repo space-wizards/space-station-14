@@ -26,14 +26,13 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
         if (!_mind.TryGetMind(args.User, out _, out var mind))
             return;
 
-        var counterQuery = EntityQueryEnumerator<MailFraudConditionComponent, CounterConditionComponent>();
-
-        while (counterQuery.MoveNext(out var uid, out var mailFraudConditionComponent, out var counterObjComp))
+        foreach (var obj in mind.Objectives)
         {
-            if (!mind.Objectives.Contains(uid))
-                continue;
-
-            counterObjComp.Count++;
+            if (HasComp<MailFraudConditionComponent>(obj) && TryComp<CounterConditionComponent>(obj, out var counterObjComp))
+            {
+                counterObjComp.Count++;
+                break;
+            }
         }
     }
 }

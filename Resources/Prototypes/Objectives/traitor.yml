@@ -415,7 +415,7 @@
     limit: 1
 
 - type: entity
-  parent: BaseTraitorObjective
+  parent: [BaseTraitorObjective, BaseCounterObjective]
   id: MailFraudObjective
   description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
   components:
@@ -425,7 +425,6 @@
       sprite: Objects/Specific/Cargo/mail_bag.rsi
       state: icon
   - type: MailFraudCondition
-  - type: CounterCondition
   - type: NumberObjective
     min: 8
     max: 12

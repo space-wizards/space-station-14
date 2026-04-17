@@ -16,7 +16,6 @@ public sealed class CounterConditionSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<CounterConditionComponent, ObjectiveGetProgressEvent>(OnCounterGetProgress);
-
     }
 
     private void OnCounterGetProgress(Entity<CounterConditionComponent> ent, ref ObjectiveGetProgressEvent args)
