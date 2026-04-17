@@ -425,6 +425,7 @@
       sprite: Objects/Specific/Cargo/mail_bag.rsi
       state: icon
   - type: MailFraudCondition
+  - type: CounterCondition
   - type: NumberObjective
     min: 8
     max: 12

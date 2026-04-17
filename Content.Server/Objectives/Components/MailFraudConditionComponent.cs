@@ -7,9 +7,5 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent]
 public sealed partial class MailFraudConditionComponent : Component
 {
-    /// <summary>
-    /// The number of letters and packages that have been cut into since this objective was added.
-    /// </summary>
-    [DataField]
-    public int MailFraudCommitted = 0;
+
 }
