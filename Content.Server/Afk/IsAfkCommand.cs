@@ -10,6 +10,7 @@ public sealed class IsAfkCommand : ToolshedCommand
 {
     [Dependency] private readonly IAfkManager _afkManager = default!;
 
+    [CommandImplementation]
     public void IsAfk(IInvocationContext ctx, ICommonSession player)
     {
         ctx.WriteLine(Loc.GetString(_afkManager.IsAfk(player) ? "cmd-isafk-true" : "cmd-isafk-false"));
