@@ -483,7 +483,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ BaseMinorContraband, ClothingOuterArmorBase ]
+  parent: ClothingOuterArmorBase
   id: CardArmour
   name: cardboard armour
   description: A medieval chestpiece built from cardboard.
