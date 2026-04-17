@@ -25,8 +25,10 @@ public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
     }
 
     /// <summary>
-    /// This is used by <see cref="PortableGeneratorSystem"/>
+    /// This changes the voltage to the next one in the voltage settings list.
+    /// Or the first one if the current setting is the last.
     /// </summary>
+    /// <remarks>This is used by <see cref="PortableGeneratorSystem"/></remarks>
     public void Cycle(Entity<VoltageTogglerComponent> entity, EntityUid? user)
     {
         var nextVoltageLevel = (entity.Comp.SelectedVoltageLevel + 1) % entity.Comp.Settings.Length;
