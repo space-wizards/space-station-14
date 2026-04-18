@@ -3,6 +3,7 @@ rp-goals-ui-subtitle = Выберите одну RP-safe цель. Это доб
 rp-goals-ui-accept = Выбрать
 rp-goals-ui-reroll = Реролл ({$count} осталось)
 rp-goals-selection-confirmed = Личная цель выбрана: {$goal}
+rp-goals-character-info-entry = Личная RP-цель: {$goal}
 
 rp-goal-service-paperwork-excellence = Поддерживайте образцовый порядок в своей рабочей зоне и доведите хотя бы один рутинный процесс до заметно лучшего состояния.
 rp-goal-medical-warm-reception = Сделайте работу с экипажем максимально понятной и спокойной: хотя бы нескольким пациентам объясните, что с ними происходит и что делать дальше.

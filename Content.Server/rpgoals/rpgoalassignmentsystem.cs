@@ -19,7 +19,6 @@ public sealed class RPGoalAssignmentSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     private readonly Dictionary<NetUserId, RPGoalSession> _sessions = new();
     private readonly IRPGoalStorage _storage = new NullRPGoalStorage();
@@ -43,6 +42,9 @@ public sealed class RPGoalAssignmentSystem : EntitySystem
 
     public void PrepareSession(NetUserId userId, PlayerRoleContext context)
     {
+        if (_sessions.TryGetValue(userId, out var existing) && existing.Finalized)
+            return;
+
         var session = new RPGoalSession
         {
             UserId = context.UserId,
@@ -95,6 +97,7 @@ public sealed class RPGoalAssignmentSystem : EntitySystem
 
         session.Finalized = true;
         session.SelectedGoalId = selected.GoalId;
+        PersistSelection(args.SenderSession.UserId, selected);
         _storage.SaveSelection(args.SenderSession.UserId, session);
 
         _chat.DispatchServerMessage(args.SenderSession,
@@ -175,6 +178,16 @@ public sealed class RPGoalAssignmentSystem : EntitySystem
                 break;
             }
         }
+    }
+
+    private void PersistSelection(NetUserId userId, RPGoalOption selected)
+    {
+        if (!_mind.TryGetMind(userId, out var mindId, out var mind))
+            return;
+
+        mind.RPGoalId = selected.GoalId;
+        mind.RPGoalLocaleKey = selected.LocaleKey;
+        Dirty(mindId.Value, mind);
     }
 
     private PlayerRoleContext? GetRoleContext(ICommonSession session, string? fallbackJobId)
