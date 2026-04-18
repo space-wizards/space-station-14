@@ -174,7 +174,7 @@
           container: machine_board
         - !type:MachineFrameRegenerateProgress
       edges:
-        - to: machineUnWelded
+        - to: machine
           conditions:
             - !type:EntityAnchored
             - !type:MachineFrameComplete
