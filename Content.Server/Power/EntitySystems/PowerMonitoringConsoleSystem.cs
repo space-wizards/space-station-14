@@ -326,7 +326,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         {
             if (xform.Anchored == false || xform.GridUid != gridUid)
                 continue;
-            
+
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
                 continue;
 
