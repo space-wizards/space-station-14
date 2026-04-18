@@ -108,12 +108,11 @@
   - type: Machine
     board: ThrusterXenoborgMachineCircuitboard
   # temporary solution until thruster rework
-  - type: Lock
-  - type: AccessReader
-    access: [["Xenoborg"]]
+  - type: Construction
+    graph: machineWelded
+    node: machine
   - type: Thruster
     canToggle: false # no turning it off by just clicking it
-  - type: LockableAnchoring
   - type: Anchorable
     flags:
     - Anchorable # no unwrenching it
