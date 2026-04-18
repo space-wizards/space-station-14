@@ -57,9 +57,6 @@ public sealed partial class GunSystem
 
     private void OnChamberMagazineCounter(Entity<ChamberMagazineAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
-        if (HasComp<CustomSpriteAmmoCounterComponent>(ent))
-            return;
-
         args.Control = new ChamberMagazineStatusControl();
     }
 

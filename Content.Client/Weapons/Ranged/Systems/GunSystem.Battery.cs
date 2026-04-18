@@ -22,9 +22,6 @@ public sealed partial class GunSystem
 
     private void OnControl(Entity<BatteryAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
-        if (HasComp<CustomSpriteAmmoCounterComponent>(ent))
-            return;
-
         args.Control = new BoxesStatusControl();
     }
 }
