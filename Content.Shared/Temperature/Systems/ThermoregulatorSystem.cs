@@ -160,7 +160,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
     }
 
     [PublicAPI]
-    public (float regulatorTemperature, float temperature) TransferHeatFromEntity(
+    public static (float regulatorTemperature, float temperature) TransferHeatFromEntity(
         float regulatorHeatCapacity,
         float regulatorTemperature,
         float heatCapacity,
@@ -201,8 +201,8 @@ public sealed class ThermoregulatorSystem : EntitySystem
         //      ^This is a common form, and has the following solution:
         //      Tdiff(t) = Tdiff(0)*e^(-r*t)
         //
-
-        // TODO: Should the HeatContainers work this way?
+        // TODO: Finish explanation.
+        // TODO: Should the HeatContainers work this way too? After all, I'm basically reinventing HeatContainers Conduction function.
 
 
 

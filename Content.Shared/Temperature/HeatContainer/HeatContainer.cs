@@ -13,7 +13,10 @@ namespace Content.Shared.Temperature.HeatContainer;
 /// This allows for consistent heat transfer mechanics across different objects and systems.
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
-//[Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
+// [Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
+// TODO:
+// Access restriction removed, as it makes utilizing Clone() impossible, despite it only being a read.
+// Figure out the right way to fix this so that Access can still be used.
 public partial struct HeatContainer : IRobustCloneable<HeatContainer>
 {
     /// <summary>
