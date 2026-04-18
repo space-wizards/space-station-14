@@ -37,6 +37,7 @@ public sealed class BatterySystem : SharedBatterySystem
         DebugTools.Assert(!HasComp<PowerConsumerComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
     }
 
+
     private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
     {
         ent.Comp.NetworkBattery.CurrentStorage = ent.Comp.NetworkBattery.Capacity;
