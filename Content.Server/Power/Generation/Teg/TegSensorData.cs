@@ -43,10 +43,12 @@ public sealed class TegSensorData
     /// <param name="OutletPressure">Pressure measured at the circulator's output pipe</param>
     /// <param name="InletTemperature">Temperature measured at the circulator's input pipe</param>
     /// <param name="OutletTemperature">Temperature measured at the circulator's output pipe</param>
+    /// <param name="Temperature">Temperature of the circulator's heat buffer</param>
     public record struct Circulator(
         float InletPressure,
         float OutletPressure,
         float InletTemperature,
-        float OutletTemperature);
+        float OutletTemperature,
+        float Temperature);
 }
 
