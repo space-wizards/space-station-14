@@ -155,12 +155,6 @@ public sealed class ThermoregulatorSystem : EntitySystem
             temperature,
             (float) ent.Comp.UpdateInterval.TotalSeconds);
 
-        // TODO: THIS IS JANK. There are two less jank options:
-        // 1) Run HeatContainers Transfer heat function for subdivisions of the delta time
-        // 2) Slam the Temperatures to their intersection point.
-        // The former is more accurate. The latter is more efficient. Though, it should be noted that,
-        // for two heat containers exchanging heat without external stimuli, the latter comes to the correct steady-state temperature.
-        // Also, I'd argue this choice should be abstracted. The Heat Container helper functions should probably make the judgement call on whether to subdivide heat transfer calculations or not.
         ent.Comp.HeatData.ConductHeatToTemp(newRegTemp);
         temperature = newTemp;
     }
@@ -174,60 +168,53 @@ public sealed class ThermoregulatorSystem : EntitySystem
         float deltaTime,
         float thermalConductivity = DefaultThermalConductivity)
     {
+        // Explanation:
+        // According to Newton's Law of Cooling:
+        //     ΔQ/Δt = k * (T2(t) - T1(t))
+        // Where:
+        //     Q = heat transferred (J)
+        //     t = time (s)
+        //     k = thermal conductivity
+        //
+        // However, it isn't uncommon in this game for the deltatime to be to large.
+        // We can instead expand the differential equations for the temperatures of the two bodies
+        // The equation above is the flow of energy from body 2 to body 1.
+        // This changes the internal heat capacity for body 1, which can be represented as U = m1*c1*T1(t)
+        //      So ΔQ/Δt = ΔU/Δt = Δ(C1*T1(t))/Δt = C1*Δ(T1(t))/Δt
+        // Where:
+        //      m1 = mass of body 1
+        //      c1 = specific heat capacity of body 1
+        //      C1 = m1 * c1 = Heat capacity of body 1.
+        // The same is true for body 2 but the flow is opposite so: -ΔQ/Δt = ΔU/Δt, and the variables are C2 and T2.
+        // We now have multiple definitions of ΔQ/Δt that are equivalent.
+        //      C2 ΔT2/Δt = -k (T2 - T1); C1 ΔT1/Δt = k (T2 - T1)
+        //      ΔT2/Δt = -k (T2 - T1)/C2 ; ΔT1/Δt = k (T2 - T1)/C1
+
+        // Now we have ΔT2/Δt and ΔT1/Δt
+        // Define Tdiff = T2 - T1
+        //      Then derivative of it is ΔTdiff/Δt = ΔT2/Δt - ΔT1/Δt
+        //      Substitute our ealier equations for ΔT2/Δt and ΔT1/Δt:
+        //      So, ΔTdiff/Δt = -k Tdiff/C2 - k Tdiff/C1 = -kTdiff (1/C2 + 1/C1)
+
+        // Define some r = k(1/C2 + 1/C1) then
+        //      Then ΔTdiff/Δt = -r * Tdiff
+        //      ^This is a common form, and has the following solution:
+        //      Tdiff(t) = Tdiff(0)*e^(-r*t)
+        //
+
+        // TODO: Should the HeatContainers work this way?
+
+
+
         var T1 = regulatorTemperature;
         var T2 = temperature;
         var C1 = regulatorHeatCapacity;
         var C2 = heatCapacity;
         var Tdiff = T2 - T1;
         var Teq = (C1 * T1 + C2 * T2) / (C1 + C2);
-        var exp_decay_characteristic_time= C1 * C2 / (thermalConductivity * (C1 + C2));
-        var T1_t = Teq + C2/(C1+C2) * Tdiff * MathF.Exp(-deltaTime / exp_decay_characteristic_time);
-        var T2_t = Teq + C1/(C1+C2) * Tdiff * MathF.Exp(-deltaTime / exp_decay_characteristic_time);
-
-        // TODO: Delete old explanation. Write new explanation.
-        // According to Newton's Law of Cooling:
-        //     ΔQ/Δt = k * (T2 - T1)
-        // Where:
-        //     ΔQ = heat transferred
-        //     Δt = time
-        //     k = thermal conductivity
-        //
-        // Over a small time interval deltaTime, total heat flow is:
-        //     ΔQ = k * (T2 - T1) * deltaTime
-
-        // Our deltaTime (for sufficiently small heat capacities), is not small enough for this to work.
-        // We overshoot at 1u heating and cooling.
-        // var tempDiff = (T2 - T1);
-        // var heatFlow = thermalConductivity * tempDiff * deltaTime;
-
-        // Now we distribute this heat between the two bodies.
-        // ΔT = ΔQ / C   (change in temperature = heat / heat capacity)
-        //
-        // One body gains heat, the other loses it.
-
-
-        // These are two lines.
-        // y = (heatflow / C1) * x + T1;
-        // y = -(heatflow / C2) * x + T2;
-        // (heatflow / C1) * x = -(heatflow / C2) * x + T2
-        // (heatflow / C1) * x = -(heatflow / C2) * x + T2 - T1
-        // ((heatflow / C1)-(heatflow / C2)) * x = T2 - T1
-        // x = (T2 - T1)/((heatflow / C1)-(heatflow / C2))
-        // y = (heatflow / C1) * (T2 - T1)/((heatflow / C1)-(heatflow / C2)) + T1;
-        // heatFlow/C1 ==
-
-        // MMMM, I should be able to directly compute the Temperatures with math:
-        // // If this approximation overshot, set the temperature of both objects to the intersection of their temperature derivatives.
-        // var deltaT1 = heatFlow / C1;
-        // var deltaT2 = heatFlow / C2;
-        // var intersectDeltaTime = (T2 - T1) / (deltaT1 - deltaT2); // Where a value of 1 means deltaTime was exactly enough time for the temperatures to meet
-        // if (intersectDeltaTime < 1)
-        // {
-        //     var intersectTemperature = deltaT1 * intersectDeltaTime + T1;
-        //     return (intersectTemperature, intersectTemperature);
-        // }
-        // var newRegulatorTemperature = T1 + heatFlow / C1;
-        // var newTemperature = T2 - heatFlow / C2;
+        var exp_decay_rate=  thermalConductivity * (C1 + C2) / (C1 * C2);
+        var T1_t = Teq + C2/(C1+C2) * Tdiff * MathF.Exp(-exp_decay_rate * deltaTime);
+        var T2_t = Teq + C1/(C1+C2) * Tdiff * MathF.Exp(-exp_decay_rate * deltaTime);
 
         return (T1_t, T2_t);
     }

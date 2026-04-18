@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Temperature.HeatContainer;
@@ -11,7 +13,7 @@ namespace Content.Shared.Temperature.HeatContainer;
 /// This allows for consistent heat transfer mechanics across different objects and systems.
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
-[Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
+//[Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
 public partial struct HeatContainer : IRobustCloneable<HeatContainer>
 {
     /// <summary>
