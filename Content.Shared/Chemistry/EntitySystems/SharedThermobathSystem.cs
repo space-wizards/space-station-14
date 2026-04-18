@@ -55,7 +55,10 @@ public abstract class SharedThermobathSystem : EntitySystem
             return;
 
         // If we have a beaker then we want to transfer heat
-        if (ent.Comp.HasBeaker && TryGetSolutionFromContainer(ent, out var soln, out var solution))
+        // Added && solution.Volume > 0 to stop thermobath from breaking when 0 solution volume is present,
+        // but if ever some other system tries to use the Thermoregulator component, it will have the same issue.
+        // Perhaps, I need to fix this there, rather than here?
+        if (ent.Comp.HasBeaker && TryGetSolutionFromContainer(ent, out var soln, out var solution) && solution.Volume > 0)
         {
             var solutionTemperature = solution.Temperature;
             var solutionHeatCapacity = solution.GetHeatCapacity(_proto);
