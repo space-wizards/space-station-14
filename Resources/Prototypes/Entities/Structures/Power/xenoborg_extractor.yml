@@ -108,12 +108,12 @@
     drawRatePerVoltage:
       Apc: 15000 # 15kW - 60 seconds to spawn one
       Medium: 60000 # 60kW (30kW effectively) - 30 seconds to spawn one
-      High: 270000 # 270kW (90kW effectively) - 10 seconds to spawn one # sets off the rogue power consuming device alert!
+      High: 270000 # 240kW (60kW effectively) - 15 seconds to spawn one # sets off the rogue power consuming device alert!
   - type: PowerConsumerBatteryChargerEfficiencyVoltageToggler
     efficiencyPerVoltage:
       Apc: 1 
       Medium: 0.5
-      High: 0.33
+      High: 0.25
   - type: Battery
     maxCharge: 900000 # 900KJ
     netsync: false
