@@ -67,6 +67,15 @@ public sealed partial class MindComponent : Component
     public string? CharacterName { get; set; }
 
     /// <summary>
+    ///     Player-selected RP-safe round goal, persisted on the mind so it survives transfers.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public string? RPGoalId { get; set; }
+
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public string? RPGoalLocaleKey { get; set; }
+
+    /// <summary>
     ///     The time of death for this Mind.
     ///     Can be null - will be null if the Mind is not considered "dead".
     /// </summary>

@@ -54,6 +54,14 @@ public sealed class CharacterInfoSystem : EntitySystem
 
             // Get briefing
             briefing = _roles.MindGetBriefing(mindId);
+
+            if (!string.IsNullOrWhiteSpace(mind.RPGoalLocaleKey))
+            {
+                var goalText = Loc.GetString(mind.RPGoalLocaleKey);
+                briefing = string.IsNullOrWhiteSpace(briefing)
+                    ? Loc.GetString("rp-goals-character-info-entry", ("goal", goalText))
+                    : $"{briefing}\n\n{Loc.GetString("rp-goals-character-info-entry", ("goal", goalText))}";
+            }
         }
 
         RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing), args.SenderSession);
