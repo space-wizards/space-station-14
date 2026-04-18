@@ -17,8 +17,8 @@ public sealed partial class ThermobathMenu : FancyWindow
 
     // Consts for adjustment buttons
     private const float InitialAdjustmentRate = 0.1f;
-    private const float MaxAdjustmentRate = 50f;
-    private const float AdjustmentAcceleration = 1.5f;
+    private const float MaxAdjustmentRate = 100f;
+    private const float AdjustmentAcceleration = 3.0f;
 
     // Style box for status indicator
     private readonly StyleBoxFlat _powerIndicatorStyle;
@@ -88,9 +88,8 @@ public sealed partial class ThermobathMenu : FancyWindow
             if (_buttonHeldTime < 0.2f)
             {
                 AdjustSetpoint(InitialAdjustmentRate);
+                OnSetpointChanged?.Invoke(_setpoint);
             }
-
-            OnSetpointChanged?.Invoke(_setpoint);
         };
 
         DecreaseButton.OnButtonDown += _ =>
@@ -107,9 +106,8 @@ public sealed partial class ThermobathMenu : FancyWindow
             if (_buttonHeldTime < 0.2f)
             {
                 AdjustSetpoint(-InitialAdjustmentRate);
+                OnSetpointChanged?.Invoke(_setpoint);
             }
-
-            OnSetpointChanged?.Invoke(_setpoint);
         };
 
         ModeSlider.OnValueChanged += value =>
@@ -297,14 +295,7 @@ public sealed partial class ThermobathMenu : FancyWindow
                 adjustment = -adjustment;
 
             AdjustSetpoint(adjustment);
-
-            // Send setpoint updates based on hysteresis
-            var delta = Math.Abs(_setpoint - _lastSentSetpoint);
-            if (delta >= _hysteresis)
-            {
-                _lastSentSetpoint = _setpoint;
-                OnSetpointChanged?.Invoke(_setpoint);
-            }
+            OnSetpointChanged?.Invoke(_setpoint);
         }
     }
 }
