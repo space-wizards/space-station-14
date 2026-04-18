@@ -273,6 +273,15 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
     {
         _loadedSprite = loadedSprite;
         _spentSprite = spentSprite;
+
+        Parameters = new LayoutParameters
+        {
+            ItemWidth = _loadedSprite.Width,
+            ItemHeight = _loadedSprite.Height,
+            ItemSeparation = _loadedSprite.Width + Separation,
+            MinCountPerRow = 3,
+            VerticalSeparation = Separation,
+        };
     }
 
     protected override void Draw(DrawingHandleScreen handle)
