@@ -91,8 +91,8 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Break any pulls
-            if (TryComp(uid, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
-                _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
+            if (TryComp(uid, out PullerComponent? puller))
+                _pullingSystem.TryStopPull(puller.Pulling);
 
             var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
             if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
