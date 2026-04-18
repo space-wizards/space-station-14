@@ -8,7 +8,7 @@ public static partial class HeatContainerHelpers
     /// Conducts heat between a <see cref="IHeatContainer"/> and some body with a different temperature,
     /// given some constant thermal conductance g and a small time delta.
     /// </summary>
-    /// <param name="c">The <see cref="IHeatContainer"/> to conduct heat to.</param>
+    /// <param name="c">The <see cref="IHeatContainer"/> that should conduct heat.</param>
     /// <param name="temp">The temperature of the second object that we are conducting heat with, in kelvin.</param>
     /// <param name="deltaTime">
     /// The amount of time that the heat is allowed to conduct, in seconds.
@@ -37,8 +37,8 @@ public static partial class HeatContainerHelpers
     /// Conducts heat between two <see cref="IHeatContainer"/>s,
     /// given some constant thermal conductance g and a small time delta.
     /// </summary>
-    /// <param name="cA">The first <see cref="IHeatContainer"/> to conduct heat to.</param>
-    /// <param name="cB">The second <see cref="IHeatContainer"/> to conduct heat to.</param>
+    /// <param name="cA">The first <see cref="IHeatContainer"/> that should conduct heat.</param>
+    /// <param name="cB">The second <see cref="IHeatContainer"/> that should conduct heat.</param>
     /// <param name="deltaTime">
     /// The amount of time that the heat is allowed to conduct, in seconds.
     /// This value should be small such that deltaTime &lt;&lt; C / g where C is the heat capacity of the containers.
@@ -67,7 +67,7 @@ public static partial class HeatContainerHelpers
     /// Calculates the amount of heat that would be conducted between a <see cref="IHeatContainer"/> and some body with a different temperature,
     /// given some constant thermal conductance g and a small time delta.
     /// </summary>
-    /// <param name="c">The <see cref="IHeatContainer"/> to conduct heat to.</param>
+    /// <param name="c">The <see cref="IHeatContainer"/> that should conduct heat.</param>
     /// <param name="temp">The temperature of the second object that we are conducting heat with, in kelvin.</param>
     /// <param name="deltaTime">
     /// The amount of time that the heat is allowed to conduct, in seconds.
@@ -98,8 +98,8 @@ public static partial class HeatContainerHelpers
     /// Calculates the amount of heat that would be conducted between two <see cref="IHeatContainer"/>s,
     /// given some conductivity constant k and a time delta. Does not modify the containers.
     /// </summary>
-    /// <param name="c1">The first <see cref="IHeatContainer"/> to conduct heat to.</param>
-    /// <param name="c2">The second <see cref="IHeatContainer"/> to conduct heat to.</param>
+    /// <param name="c1">The first <see cref="IHeatContainer"/> that should conduct heat.</param>
+    /// <param name="c2">The second <see cref="IHeatContainer"/> that should conduct heat.</param>
     /// <param name="deltaTime">
     /// The amount of time that the heat is allowed to conduct, in seconds.
     /// This value should be small such that deltaTime &lt;&lt; C / g where C is the heat capacity of the container.
@@ -121,8 +121,7 @@ public static partial class HeatContainerHelpers
         where T2 : IHeatContainer
     {
         var dQ = g * (c2.Temperature - c1.Temperature) * deltaTime;
-        var dQMax = Math.Min(Math.Abs(ConductHeatToTempQuery(ref c1, c2.Temperature)),
-            Math.Abs(ConductHeatToTempQuery(ref c2, c1.Temperature)));
+        var dQMax = Math.Abs(EquilibriumHeatQuery(ref c1, ref c2));
 
         // Clamp the transferred heat amount in case we are overshooting the equilibrium temperature because our time step was too large.
         return Math.Clamp(dQ, -dQMax, dQMax);

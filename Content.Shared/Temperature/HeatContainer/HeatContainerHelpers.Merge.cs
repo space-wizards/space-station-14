@@ -18,9 +18,8 @@ public static partial class HeatContainerHelpers
         var combinedHeatCapacity = cA.HeatCapacity + cB.HeatCapacity;
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(combinedHeatCapacity);
 
-        var temp = (cA.InternalEnergy + cB.InternalEnergy) / combinedHeatCapacity;
         cA.HeatCapacity = combinedHeatCapacity;
-        cA.Temperature = temp;
+        cA.Temperature = (cA.InternalEnergy + cB.InternalEnergy) / combinedHeatCapacity;
     }
 
 
