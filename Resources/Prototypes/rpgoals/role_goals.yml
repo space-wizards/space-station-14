@@ -1,0 +1,100 @@
+- type: rpGoalDefinition
+  id: RPGoalServicePaperworkExcellence
+  localeKey: rp-goal-service-paperwork-excellence
+  category: Service
+  weight: 1.0
+  allowedRoles:
+    - Bartender
+    - Chef
+    - Janitor
+  requirements:
+    department: Civilian
+    requiredJobTags: [Service]
+
+- type: rpGoalDefinition
+  id: RPGoalMedicalWarmReception
+  localeKey: rp-goal-medical-warm-reception
+  category: Medical
+  weight: 1.0
+  allowedRoles:
+    - MedicalDoctor
+    - Chemist
+    - Paramedic
+  requirements:
+    department: Medical
+    requiredJobTags: [Medical]
+
+- type: rpGoalDefinition
+  id: RPGoalEngineeringPreventiveChecks
+  localeKey: rp-goal-engineering-preventive-checks
+  category: Engineering
+  weight: 1.0
+  allowedRoles:
+    - StationEngineer
+    - AtmosphericTechnician
+  requirements:
+    department: Engineering
+    requiredJobTags: [Engineering]
+
+- type: rpGoalDefinition
+  id: RPGoalScienceShareKnowledge
+  localeKey: rp-goal-science-share-knowledge
+  category: Science
+  weight: 0.9
+  allowedRoles:
+    - Scientist
+    - ResearchDirector
+  requirements:
+    department: Science
+    requiredJobTags: [Science]
+
+- type: rpGoalDefinition
+  id: RPGoalCargoOrganizedDelivery
+  localeKey: rp-goal-cargo-organized-delivery
+  category: Cargo
+  weight: 1.0
+  allowedRoles:
+    - CargoTechnician
+    - Quartermaster
+  requirements:
+    department: Cargo
+    requiredJobTags: [Cargo]
+
+- type: rpGoalDefinition
+  id: RPGoalCommandSupportCrew
+  localeKey: rp-goal-command-support-crew
+  category: Command
+  weight: 0.7
+  allowedRoles:
+    - HeadOfPersonnel
+    - Captain
+  forbiddenTags:
+    - CommandBreach
+  requirements:
+    minRoundMinutes: 10
+    department: Command
+    requiredJobTags: [Command]
+
+- type: rpGoalDefinition
+  id: RPGoalSecurityVisiblePatrol
+  localeKey: rp-goal-security-visible-patrol
+  category: Security
+  weight: 0.8
+  allowedRoles:
+    - SecurityOfficer
+    - Warden
+  requirements:
+    department: Security
+    requiredJobTags: [Security]
+
+- type: rpGoalDefinition
+  id: RPGoalUnsafeSabotageExample
+  localeKey: rp-goal-unsafe-sabotage-example
+  category: UnsafeExample
+  weight: 0.1
+  allowedRoles:
+    - Assistant
+  unsafeTags:
+    - Sabotage
+  requirements:
+    department: Civilian
