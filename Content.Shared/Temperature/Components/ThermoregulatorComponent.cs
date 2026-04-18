@@ -19,20 +19,10 @@ public sealed partial class ThermoregulatorComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    /// Current temperature in Kelvin.
+    /// Thermal information about this entity. It stores the heat capacity and temperature.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Temperature = 293.15f; // TODO: This should be on TemperatureComponent when it's networked and generic
-
-    /// <summary>
-    /// Heat capacity of the thermoregulator in J/K.
-    /// </summary>
-    /// <remarks>
-    /// This determines how quickly temperature changes in response to heating/cooling.
-    /// It represents the heat capacity of whatever heating/cooling element there is.
-    /// </remarks>
-    [DataField]
-    public float HeatCapacity = 500f; // TODO: This should be on TemperatureComponent when it's networked and generic
+    public HeatContainer.HeatContainer HeatData = new (500f, 293.15f);
 
     /// <summary>
     /// The <see cref="TimeSpan"/> interval between updates of the controller.

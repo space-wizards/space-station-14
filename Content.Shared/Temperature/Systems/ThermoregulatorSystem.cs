@@ -1,4 +1,5 @@
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainer;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
@@ -57,8 +58,8 @@ public sealed class ThermoregulatorSystem : EntitySystem
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, TimeSpan curTime)
     {
         var dt = ent.Comp.UpdateInterval.TotalSeconds;     // Time between updates
-        var T = ent.Comp.Temperature;                        // Current temperature
-        var C = ent.Comp.HeatCapacity;                       // Heat capacity
+        var T = ent.Comp.HeatData.Temperature;                        // Current temperature
+        var C = ent.Comp.HeatData.HeatCapacity;                       // Heat capacity
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
         var H = ent.Comp.Hysteresis;                         // Hysteresis band
         var SB = ent.Comp.ScaleBand;                         // Power scaling range beyond hysteresis
@@ -107,8 +108,6 @@ public sealed class ThermoregulatorSystem : EntitySystem
 
         // Convert power to temperature change via Q = P × Δt and ΔT = Q / C
         var energy = power * (float)dt;
-        var deltaT = energy / C;
-        var newTemperature = T + deltaT;
 
         // Update the active state for the UI
         var newState = ThermoregulatorActiveMode.Idle;
@@ -116,8 +115,8 @@ public sealed class ThermoregulatorSystem : EntitySystem
             newState = needsHeating ? ThermoregulatorActiveMode.Heating : ThermoregulatorActiveMode.Cooling;
 
         // Update temperature but DON'T dirty it yet - event handlers might modify it
-        var originalTemperature = ent.Comp.Temperature;
-        ent.Comp.Temperature = newTemperature;
+        var originalTemperature = ent.Comp.HeatData.Temperature;
+        ent.Comp.HeatData.AddHeat(energy);
 
         // Update active mode
         if (ent.Comp.ActiveMode != newState)
@@ -134,9 +133,9 @@ public sealed class ThermoregulatorSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         // Now dirty Temperature once with the final value (after all modifications)
-        if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
+        if (!MathHelper.CloseTo(originalTemperature, ent.Comp.HeatData.Temperature))
         {
-            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
+            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.HeatData));
         }
     }
 
@@ -150,13 +149,19 @@ public sealed class ThermoregulatorSystem : EntitySystem
             return;
 
         var (newRegTemp, newTemp) = TransferHeatFromEntity(
-            ent.Comp.HeatCapacity,
-            ent.Comp.Temperature,
+            ent.Comp.HeatData.HeatCapacity,
+            ent.Comp.HeatData.Temperature,
             heatCapacity,
             temperature,
             (float) ent.Comp.UpdateInterval.TotalSeconds);
 
-        ent.Comp.Temperature = newRegTemp;
+        // TODO: THIS IS JANK. There are two less jank options:
+        // 1) Run HeatContainers Transfer heat function for subdivisions of the delta time
+        // 2) Slam the Temperatures to their intersection point.
+        // The former is more accurate. The latter is more efficient. Though, it should be noted that,
+        // for two heat containers exchanging heat without external stimuli, the latter comes to the correct steady-state temperature.
+        // Also, I'd argue this choice should be abstracted. The Heat Container helper functions should probably make the judgement call on whether to subdivide heat transfer calculations or not.
+        ent.Comp.HeatData.ConductHeatToTemp(newRegTemp);
         temperature = newTemp;
     }
 
@@ -170,11 +175,16 @@ public sealed class ThermoregulatorSystem : EntitySystem
         float thermalConductivity = DefaultThermalConductivity)
     {
         var T1 = regulatorTemperature;
-        var C1 = regulatorHeatCapacity;
-
         var T2 = temperature;
+        var C1 = regulatorHeatCapacity;
         var C2 = heatCapacity;
+        var Tdiff = T2 - T1;
+        var Teq = (C1 * T1 + C2 * T2) / (C1 + C2);
+        var exp_decay_characteristic_time= C1 * C2 / (thermalConductivity * (C1 + C2));
+        var T1_t = Teq + C2/(C1+C2) * Tdiff * MathF.Exp(-deltaTime / exp_decay_characteristic_time);
+        var T2_t = Teq + C1/(C1+C2) * Tdiff * MathF.Exp(-deltaTime / exp_decay_characteristic_time);
 
+        // TODO: Delete old explanation. Write new explanation.
         // According to Newton's Law of Cooling:
         //     ΔQ/Δt = k * (T2 - T1)
         // Where:
@@ -184,16 +194,42 @@ public sealed class ThermoregulatorSystem : EntitySystem
         //
         // Over a small time interval deltaTime, total heat flow is:
         //     ΔQ = k * (T2 - T1) * deltaTime
-        var heatFlow = thermalConductivity * (T2 - T1) * deltaTime;
+
+        // Our deltaTime (for sufficiently small heat capacities), is not small enough for this to work.
+        // We overshoot at 1u heating and cooling.
+        // var tempDiff = (T2 - T1);
+        // var heatFlow = thermalConductivity * tempDiff * deltaTime;
 
         // Now we distribute this heat between the two bodies.
         // ΔT = ΔQ / C   (change in temperature = heat / heat capacity)
         //
         // One body gains heat, the other loses it.
-        var newRegulatorTemperature = T1 + heatFlow / C1;
-        var newTemperature = T2 - heatFlow / C2;
 
-        return (newRegulatorTemperature, newTemperature);
+
+        // These are two lines.
+        // y = (heatflow / C1) * x + T1;
+        // y = -(heatflow / C2) * x + T2;
+        // (heatflow / C1) * x = -(heatflow / C2) * x + T2
+        // (heatflow / C1) * x = -(heatflow / C2) * x + T2 - T1
+        // ((heatflow / C1)-(heatflow / C2)) * x = T2 - T1
+        // x = (T2 - T1)/((heatflow / C1)-(heatflow / C2))
+        // y = (heatflow / C1) * (T2 - T1)/((heatflow / C1)-(heatflow / C2)) + T1;
+        // heatFlow/C1 ==
+
+        // MMMM, I should be able to directly compute the Temperatures with math:
+        // // If this approximation overshot, set the temperature of both objects to the intersection of their temperature derivatives.
+        // var deltaT1 = heatFlow / C1;
+        // var deltaT2 = heatFlow / C2;
+        // var intersectDeltaTime = (T2 - T1) / (deltaT1 - deltaT2); // Where a value of 1 means deltaTime was exactly enough time for the temperatures to meet
+        // if (intersectDeltaTime < 1)
+        // {
+        //     var intersectTemperature = deltaT1 * intersectDeltaTime + T1;
+        //     return (intersectTemperature, intersectTemperature);
+        // }
+        // var newRegulatorTemperature = T1 + heatFlow / C1;
+        // var newTemperature = T2 - heatFlow / C2;
+
+        return (T1_t, T2_t);
     }
 
     /// <summary>

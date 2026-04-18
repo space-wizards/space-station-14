@@ -16,6 +16,9 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
     [ViewVariables]
     private ThermobathMenu? _window;
 
+    private ThermobathComponent? thermobath;
+    private ThermoregulatorComponent? thermoregulator;
+
     private InputCoalescer<ThermoregulatorMode> _modeCoalescer;
 
     public ThermobathBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -37,17 +40,12 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
 
         _window.SetPowered(_power.IsPowered(Owner));
 
-        if (EntMan.TryGetComponent(Owner, out ThermobathComponent? thermbath) && EntMan.TryGetComponent(Owner, out ThermoregulatorComponent? thermoregulator))
+        if (EntMan.TryGetComponent(Owner, out thermobath) && EntMan.TryGetComponent(Owner, out thermoregulator))
         {
-            _window.SetTemperatureLimits(thermoregulator.MinTemperature, thermoregulator.MaxTemperature);
-            _window.SetCurrentTemperature(thermoregulator.Temperature);
-            _window.SetSetpoint(thermoregulator.Setpoint);
             _window.SetMode(thermoregulator.Mode);
             _window.SetHysteresis(thermoregulator.Hysteresis);
-            _window.UpdateStatusIndicators(thermoregulator.ActiveMode);
-
-            _window.SetBeakerPresent(thermbath.HasBeaker);
-            _window.SetSolutionTemperature(thermbath.SolutionTemperature);
+            UpdateThermoBath(_window, thermobath);
+            UpdateThermoRegulator(_window, thermoregulator);
         }
     }
 
@@ -64,21 +62,28 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
 
         _window.SetPowered(_power.IsPowered(Owner));
 
-        if (EntMan.TryGetComponent(Owner, out ThermobathComponent? thermobath))
+        if (thermobath != null)
         {
-            _window.SetBeakerPresent(thermobath.HasBeaker);
-            _window.SetSolutionTemperature(thermobath.SolutionTemperature);
+            UpdateThermoBath(_window, thermobath);
         }
 
-        if (EntMan.TryGetComponent(Owner, out ThermoregulatorComponent? thermoregulator))
+        if (thermoregulator != null)
         {
-            _window.SetCurrentTemperature(thermoregulator.Temperature);
-            _window.SetTemperatureLimits(thermoregulator.MinTemperature, thermoregulator.MaxTemperature);
-            _window.SetSetpoint(thermoregulator.Setpoint, 5f); // We add tolerance to account for the temp exchange jitter
-            _window.UpdateStatusIndicators(thermoregulator.ActiveMode);
-            // _window.SetMode(thermoregulator.Mode);
-            // TODO: Sliders are jank so this only gets when we open the UI to hide the jittering,
-            // but this should never be set by the server so we're fine.
+            UpdateThermoRegulator(_window, thermoregulator);
         }
+    }
+
+    private void UpdateThermoBath(ThermobathMenu window, ThermobathComponent comp)
+    {
+        window.SetBeakerPresent(comp.HasBeaker);
+        window.SetSolutionTemperature(comp.SolutionTemperature);
+    }
+
+    private void UpdateThermoRegulator(ThermobathMenu window, ThermoregulatorComponent comp)
+    {
+        window.SetCurrentTemperature(comp.HeatData.Temperature);
+        window.SetTemperatureLimits(comp.MinTemperature, comp.MaxTemperature);
+        window.SetSetpoint(comp.Setpoint, 5f); // We add tolerance to account for the temp exchange jitter
+        window.UpdateStatusIndicators(comp.ActiveMode);
     }
 }
