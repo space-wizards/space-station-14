@@ -1,4 +1,5 @@
-﻿using Content.Shared.Popups;
+﻿using Content.Shared.Atmos;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -9,7 +10,6 @@ public abstract class SharedPneumaticCannonSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-
 
     public override void Initialize()
     {

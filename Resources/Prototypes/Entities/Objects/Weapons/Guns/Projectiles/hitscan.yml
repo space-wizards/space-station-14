@@ -201,3 +201,45 @@
     damage:
       types:
         Blunt: 20000
+
+- type: entity
+  parent: BasicHitscan
+  id: ChemicalLaser
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 17
+        Caustic: 3
+        Structural: 8
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_chem
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_chem
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_chem
+
+- type: entity
+  parent: BasicHitscan
+  id: ChemicalMultilaser
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 6
+        Caustic: 2
+        Structural: 5
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_chem_multi
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_chem_multi
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_chem_multi

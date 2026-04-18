@@ -205,6 +205,25 @@
       - NukeOpsUplink
 
 - type: listing
+  id: UplinkChemMultilaserBundle
+  name: uplink-chemmultilaser-name
+  description: uplink-chemmultilaser-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_multilaser.rsi, state: icon }
+  productEntity: BriefcaseWeaponMultiChemLaserFilled
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 5
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkC20RBundle
   name: uplink-c20r-bundle-name
   description: uplink-c20r-bundle-desc
@@ -293,6 +312,25 @@
   conditions:
   - !type:StoreWhitelistCondition
     blacklist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkChemlaserBundle
+  name: uplink-chemlaser-bundle-name
+  description: uplink-chemlaser-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Battery/chem_laser.rsi, state: icon }
+  productEntity: BriefcaseWeaponChemLaser
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 14
+  cost:
+    Telecrystal: 16
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
       tags:
       - NukeOpsUplink
 
@@ -623,6 +661,22 @@
     Telecrystal: 2
   categories:
   - UplinkAmmo
+
+# for the gorlex chem-lasers
+- type: listing
+  id: UplinkChemlaserAmmo
+  name: uplink-plasmacell-ammo-name
+  description: uplink-plasmacell-ammo-desc
+  productEntity: GorlexPlasmaCellFilled
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkAmmoBundle

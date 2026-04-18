@@ -202,3 +202,20 @@
       moles:
         Plasma: 2.051379050
       temperature: 293.15
+
+- type: entity
+  id: GorlexPlasmaCellFilled
+  parent: GorlexPlasmaCell
+  name: plasma cell
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 12
+      moles:
+        - 0  # oxygen
+        - 0  # nitrogen
+        - 0  # CO2
+        - 12 # plasma
+      temperature: 293.15
