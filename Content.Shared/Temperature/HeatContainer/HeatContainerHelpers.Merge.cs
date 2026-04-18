@@ -29,14 +29,13 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="IHeatContainer"/> to merge.
     /// This will be modified to contain the merged result.</param>
     /// <param name="cN">The array of <see cref="IHeatContainer"/>s to merge.</param>
-    /// <param name="temp">A temporary <see cref="IHeatContainer"/> used to perform the merge.</param>
     [PublicAPI]
-    public static void Merge<T1, T2, T3>(ref T1 cA, T2[] cN, ref T3 temp)
+    public static void Merge<T1, T2>(ref T1 cA, T2[] cN)
         where T1 : IHeatContainer
         where T2 : IHeatContainer
-        where T3 : IHeatContainer
     {
         // merge the first array and then merge the result with cA to avoid alloc
+        var temp = new HeatContainer();
         cN.Merge(ref temp);
         Merge(ref cA, ref temp);
     }
