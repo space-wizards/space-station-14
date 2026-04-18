@@ -30,7 +30,7 @@ namespace Content.Client.Options.UI
             var isAdmin = _adminManager.IsAdmin(true);
             Tabs.SetTabVisible(5, isAdmin);
 
-            GraphicsTab.Control.ReloadValues();
+            GraphicsTab.ReloadTab();
             MiscTab.Control.ReloadValues();
             AccessibilityTab.Control.ReloadValues();
             AudioTab.Control.ReloadValues();

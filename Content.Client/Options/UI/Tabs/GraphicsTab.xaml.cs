@@ -20,8 +20,8 @@ public sealed partial class GraphicsTab : Control
         RobustXamlLoader.Load(this);
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
-        VSyncCheckBox.OnToggled += _ => UpdateFrameLimitSlider();
-        Control.AddOptionSlider(CVars.DisplayMaxFPS, FrameLimitSlider, 0, 60);
+        VSyncCheckBox.OnToggled += _ => UpdateFrameSettingVisibility();
+        Control.AddOptionSlider(CVars.DisplayMaxFPS, FrameLimitSlider, 0, 240);
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
@@ -78,12 +78,17 @@ public sealed partial class GraphicsTab : Control
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
         _cfg.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportWidthRange());
 
-        UpdateFrameLimitSlider();
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();
     }
 
-    private void UpdateFrameLimitSlider()
+    public void ReloadTab()
+    {
+        Control.ReloadValues();
+        UpdateFrameSettingVisibility();
+    }
+
+    private void UpdateFrameSettingVisibility()
     {
         VsyncExclude.Visible = VSyncCheckBox.Pressed;
         FrameLimitSlider.Visible = !VSyncCheckBox.Pressed;
