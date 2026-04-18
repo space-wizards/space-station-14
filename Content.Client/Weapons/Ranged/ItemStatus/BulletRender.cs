@@ -267,35 +267,22 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
     private readonly Texture _loadedSprite;
     private readonly Texture _spentSprite;
 
-    private readonly int _baseSeparation;
-
     private const int Separation = 2;
 
     public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
     {
         _loadedSprite = loadedSprite;
         _spentSprite = spentSprite;
-
-        _baseSeparation = _loadedSprite.Width + Separation;
-
-        Parameters = new LayoutParameters
-        {
-            ItemWidth = _loadedSprite.Width,
-            ItemHeight = _loadedSprite.Height,
-            ItemSeparation = _baseSeparation,
-            MinCountPerRow = 3,
-            VerticalSeparation = Separation,
-        };
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        var itemSeparation = _baseSeparation;
+        var itemSeparation = _loadedSprite.Width + Separation;
 
         if (Capacity / Rows > 1)
         {
             itemSeparation = (int)(Size.X - _loadedSprite.Width) / (Capacity / Rows - 1);
-            itemSeparation = int.Min(_baseSeparation, itemSeparation);
+            itemSeparation = int.Min(_loadedSprite.Width + Separation, itemSeparation);
             itemSeparation = int.Max(1, itemSeparation);
         }
 
