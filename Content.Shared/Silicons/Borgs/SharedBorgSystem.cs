@@ -185,7 +185,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
             return; // The changes are already networked with the same game state
 
         //TODO: Replace this with a relayed event based system once there's a QueueRemove
-        // or something similar implemented
+        //or something similar implemented that defers entity removal from containers to the following tick
+        //this cannot be implemented as a relayed event because the act of removing a module
+        //from a chassis modifies the relay's foreach loop collection to be modified, thus throwing an error
         var toRemove = new List<EntityUid>();
         foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
         {

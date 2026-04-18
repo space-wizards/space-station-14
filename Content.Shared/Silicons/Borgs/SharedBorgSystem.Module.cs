@@ -301,6 +301,8 @@ public abstract partial class SharedBorgSystem
         if (args.Cancelled || !TryComp<BorgChassisComponent>(args.ChassisEnt, out var chassis))
             return;
 
+        //loop over all other contained modules to see if any conflict with this module's blacklist
+        //while simultaneously checking if any module fits its prerequisite criteria
         var prerequisiteFulfilled = false;
         foreach (var containedModuleUid in chassis.ModuleContainer.ContainedEntities)
         {
@@ -310,7 +312,7 @@ public abstract partial class SharedBorgSystem
                 args.Cancelled = true;
                 return;
             }
-            if (prerequisiteFulfilled || _whitelist.IsWhitelistPassOrNull(ent.Comp.ModuleWhitelist, containedModuleUid))
+            if (!prerequisiteFulfilled && _whitelist.IsWhitelistPassOrNull(ent.Comp.ModuleWhitelist, containedModuleUid))
                 prerequisiteFulfilled = true;
         }
         if (!prerequisiteFulfilled)
@@ -319,6 +321,7 @@ public abstract partial class SharedBorgSystem
             args.Cancelled = true;
         }
     }
+
     private void OnCheckBlacklistRelay(Entity<BorgModuleWhitelistComponent> ent,
         ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
