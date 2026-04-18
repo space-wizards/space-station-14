@@ -1,5 +1,3 @@
-
-
 using Content.Shared.Alert;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Clothing.Components;
