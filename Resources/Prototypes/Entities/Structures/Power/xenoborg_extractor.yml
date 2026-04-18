@@ -74,10 +74,6 @@
     highVoltageNode: input_hv
     mediumVoltageNode: input_mv
     lowVoltageNode: input_lv
-  - type: Battery
-    maxCharge: 4000000 # 4MJ
-    netsync: false
-  - type: ExaminableBattery
   - type: NodeContainer
     examinable: false # The VoltageToggler will show the current voltage
     nodes:
@@ -94,10 +90,9 @@
         nodeGroupID: HVPower
         enabled: false
   - type: PowerConsumerBatteryCharger
-    efficiency: 0.95
   - type: PowerConsumer
     voltage: Apc
-    drawRate: 32000
+    drawRate: 15000
   - type: VoltageToggler
     settings:
     - voltage: Apc
@@ -111,12 +106,21 @@
       name: power-voltage-high
   - type: DrawRateVoltageToggler
     drawRatePerVoltage:
-      Apc: 32000 # 32kW - 125 seconds to spawn one
-      Medium: 80000 # 80kW - 50 seconds to spawn one
-      High: 200000 # 200kW - 20 seconds to spawn one # sets off the rogue power consuming device alert!
+      Apc: 15000 # 15kW - 60 seconds to spawn one
+      Medium: 60000 # 60kW (30kW effectively) - 30 seconds to spawn one
+      High: 270000 # 270kW (90kW effectively) - 10 seconds to spawn one # sets off the rogue power consuming device alert!
+  - type: PowerConsumerBatteryChargerEfficiencyVoltageToggler
+    efficiencyPerVoltage:
+      Apc: 1 
+      Medium: 0.5
+      High: 0.33
+  - type: Battery
+    maxCharge: 900000 # 900KJ
+    netsync: false
+  - type: ExaminableBattery
   - type: SpawnOnBatteryLevel
     prototype: MaterialXenoborgCrystal1
-    charge: 4000000 # 4MJ
+    charge: 900000 # 4MJ
 
 - type: entity
   parent: XenoborgExtractor
