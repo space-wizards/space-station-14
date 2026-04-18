@@ -320,38 +320,21 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Reset RoguePowerConsumer flag
         component.Flags &= ~PowerMonitoringFlags.RoguePowerConsumer;
 
-        // Create queries of things that are consuming power on the station
-        var powerNetworkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, PowerMonitoringDeviceComponent, TransformComponent>();
-        var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, PowerMonitoringDeviceComponent, TransformComponent>();
-
-        // Create a list of how much power each entity is consuming, and also where they are
-        var powerConsumers = new List<(TransformComponent xForm, float Watts)>();
-
-        // populate powerConsumers with entities with PowerNetworkBatteryComponent
-        while (powerNetworkBatteryQuery.MoveNext(out _, out var powerBatteryComp, out _, out var xform))
+        // Record the load value of all non-tracked power consumers on the same grid as the console
+        var powerConsumerQuery = AllEntityQuery<PowerConsumerComponent, TransformComponent>();
+        while (powerConsumerQuery.MoveNext(out var ent, out var powerConsumer, out var xform))
         {
-            var batteryLoad = powerBatteryComp.CurrentReceiving - powerBatteryComp.CurrentSupply;
-            batteryLoad = batteryLoad > 0f ? batteryLoad : 0f;
-            powerConsumers.Add((xform, batteryLoad));
-        }
-
-        // populate powerConsumers with entities with PowerConsumerComponent
-        while (powerConsumerQuery.MoveNext(out _, out var powerConsumerComp, out _, out var xform))
-        {
-            powerConsumers.Add((xform, powerConsumerComp.ReceivedPower));
-        }
-
-        // for each consumer, check if they are in the same grid and also anchored
-        foreach (var watt in powerConsumers)
-        {
-            if (watt.xForm.Anchored == false || watt.xForm.GridUid != gridUid)
+            if (xform.Anchored == false || xform.GridUid != gridUid)
+                continue;
+            
+            if (TryComp<PowerMonitoringDeviceComponent>(ent, out var device))
                 continue;
 
-            // send the alert if consumer is consuming too much power
-            if (watt.Watts >= RoguePowerConsumerThreshold)
+            // Flag an alert if power consumption is ridiculous
+            if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
                 component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
-            totalLoads += watt.Watts;
+            totalLoads += powerConsumer.DrawRate;
         }
 
         if (component.Flags != flags)
