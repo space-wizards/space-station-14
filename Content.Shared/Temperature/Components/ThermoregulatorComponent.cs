@@ -89,13 +89,13 @@ public sealed partial class ThermoregulatorComponent : Component
     /// Heating power in watts.
     /// </summary>
     [DataField]
-    public float HeatingPower = 100f;
+    public float HeatingPower = 200f;
 
     /// <summary>
     /// Cooling power in watts.
     /// </summary>
     [DataField]
-    public float CoolingPower = 30f;
+    public float CoolingPower = 60f;
 }
 
 [Serializable, NetSerializable]
