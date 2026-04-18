@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Nodes;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
-using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.NodeContainer.EntitySystems
