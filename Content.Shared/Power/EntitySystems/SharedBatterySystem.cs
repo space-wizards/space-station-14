@@ -160,9 +160,9 @@ public abstract partial class SharedBatterySystem : EntitySystem
         // Update the appearance data for the charge rate.
         // We have a separate component for this to not duplicate the networking cost unless we actually use it.
         var state = BatteryChargingState.Constant;
-        if (args.CurrentChargeRate > 0f || args.Delta > 0f)
+        if (args.CurrentChargeRate > 0f)
             state = BatteryChargingState.Charging;
-        else if (args.CurrentChargeRate < 0f || args.Delta < 0f)
+        else if (args.CurrentChargeRate < 0f)
             state = BatteryChargingState.Decharging;
 
         _appearance.SetData(ent.Owner, BatteryVisuals.Charging, state);
