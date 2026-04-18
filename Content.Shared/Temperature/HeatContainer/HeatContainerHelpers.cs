@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Content.Shared.Temperature.HeatContainers;
+namespace Content.Shared.Temperature.HeatContainer;
 
 /// <summary>
 /// Class containing helper methods for working with <see cref="IHeatContainer"/>s.

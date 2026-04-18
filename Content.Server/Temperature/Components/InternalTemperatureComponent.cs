@@ -1,5 +1,7 @@
 using Content.Server.Temperature.Systems;
+using Content.Shared.Atmos;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainer;
 
 namespace Content.Server.Temperature.Components;
 
@@ -13,14 +15,22 @@ namespace Content.Server.Temperature.Components;
 /// Too cold? Suffering hypothermia, start shivering to warm up and increase hunger.
 /// </remarks>
 [RegisterComponent, Access(typeof(TemperatureSystem))]
-public sealed partial class InternalTemperatureComponent : Component
+public sealed partial class InternalTemperatureComponent : Component, IHeatContainer
 {
+    // TODO: These values probably shouldn't be duplicated from temperature component, but they're only used for the chef atm so low priority.
     /// <summary>
     /// Internal temperature which is modified by surface temperature.
-    /// This gets set to <see cref="TemperatureComponent.CurrentTemperature"/> on mapinit.
+    /// This gets set to <see cref="TemperatureComponent.Temperature"/> on mapinit.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Temperature;
+    [DataField]
+    public float Temperature { get; set; } = Atmospherics.T20C;
+
+    /// <summary>
+    /// Heat capacity of our internal temperature.
+    /// This gets set to <see cref="TemperatureComponent.HeatCapacity"/> on mapinit.
+    /// </summary>
+    [DataField]
+    public float HeatCapacity { get; set; }
 
     /// <summary>
     /// Thermal Conductance in W/K to this entity's <see cref="TemperatureComponent"/>.
@@ -32,4 +42,6 @@ public sealed partial class InternalTemperatureComponent : Component
     /// </summary>
     [DataField]
     public float Conductance = 40f;
+
+
 }

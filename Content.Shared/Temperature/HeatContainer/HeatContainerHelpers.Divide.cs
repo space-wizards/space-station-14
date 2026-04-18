@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Content.Shared.Temperature.HeatContainers;
+namespace Content.Shared.Temperature.HeatContainer;
 
 public static partial class HeatContainerHelpers
 {

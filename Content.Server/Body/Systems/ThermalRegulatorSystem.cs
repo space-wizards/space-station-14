@@ -55,10 +55,10 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         var totalMetabolismTempChange = ent.Comp1.MetabolismHeat - ent.Comp1.RadiatedHeat;
 
         // implicit heat regulation
-        var tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
+        var tempDiff = Math.Abs(ent.Comp2.Temperature - ent.Comp1.NormalBodyTemperature);
         var heatCapacity = ent.Comp2.HeatCapacity;
         var targetHeat = tempDiff * heatCapacity;
-        if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
+        if (ent.Comp2.Temperature > ent.Comp1.NormalBodyTemperature)
         {
             totalMetabolismTempChange -= Math.Min(targetHeat, ent.Comp1.ImplicitHeatRegulation);
         }
@@ -70,7 +70,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         _tempSys.ChangeHeat((ent, ent.Comp2), totalMetabolismTempChange, ignoreHeatResistance: true);
 
         // recalc difference and target heat
-        tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
+        tempDiff = Math.Abs(ent.Comp2.Temperature - ent.Comp1.NormalBodyTemperature);
         targetHeat = tempDiff * heatCapacity;
 
         // if body temperature is not within comfortable, thermal regulation
@@ -78,7 +78,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
         if (tempDiff < ent.Comp1.ThermalRegulationTemperatureThreshold)
             return;
 
-        if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
+        if (ent.Comp2.Temperature > ent.Comp1.NormalBodyTemperature)
         {
             if (!_actionBlockerSys.CanSweat(ent))
                 return;

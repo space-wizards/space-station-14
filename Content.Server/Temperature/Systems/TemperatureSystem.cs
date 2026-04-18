@@ -6,7 +6,7 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Content.Shared.Projectiles;
 using Content.Shared.Temperature.Components;
-using Content.Shared.Temperature.HeatContainers;
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 
 namespace Content.Server.Temperature.Systems;
@@ -36,7 +36,7 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
 
         // Make sure entities don't spawn cold!
         if (_thermalRegulatorQuery.TryComp(entity, out var comp))
-            entity.Comp.HeatContainer.Temperature = comp.NormalBodyTemperature;
+            entity.Comp.Temperature = comp.NormalBodyTemperature;
     }
 
     public override void Update(float frameTime)
@@ -48,13 +48,12 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         while (query.MoveNext(out var uid, out var comp, out var temp))
         {
             // don't do anything if they equalized
-            var diff = Math.Abs(temp.CurrentTemperature - comp.Temperature);
+            var diff = Math.Abs(temp.Temperature - comp.Temperature);
             if (diff < 0.1f)
                 continue;
 
-            // TODO: Heat containers one day. Currently not worth the effort though.
-            var dQ = ConductHeat((uid, temp), comp.Temperature, frameTime, comp.Conductance, true);
-            comp.Temperature -= dQ / temp.HeatCapacity;
+            if (ConductHeat((uid, temp), ref comp, frameTime, comp.Conductance, true) != 0)
+                Dirty(uid, comp);
         }
 
         UpdateDamage();
@@ -78,8 +77,9 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         if (!TemperatureQuery.TryComp(entity, out var temp))
             return;
 
-        // TODO: Make this use heat containers as well. Rn I'm lazy and it's only used for the chef who I hate!!!
-        entity.Comp.Temperature = temp.HeatContainer.Temperature;
+        // TODO: This shouldn't copy temperature component, but this component is so niche it's not worth the effort of fixing.
+        entity.Comp.Temperature = temp.Temperature;
+        entity.Comp.HeatCapacity = temp.HeatCapacity;
     }
 
     private void OnRejuvenate(Entity<TemperatureComponent> entity, ref RejuvenateEvent args)

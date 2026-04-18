@@ -400,7 +400,7 @@ namespace Content.Server.Construction
                     }
                     else if (TryComp<TemperatureComponent>(uid, out var tempComp))
                     {
-                        temp = tempComp.CurrentTemperature;
+                        temp = tempComp.Temperature;
                     }
                     else
                     {

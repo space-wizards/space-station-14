@@ -1,4 +1,6 @@
-using Content.Shared.Temperature.HeatContainers;
+using Content.Shared.Atmos;
+using Content.Shared.Temperature.HeatContainer;
+using Content.Shared.Temperature.Systems;
 
 namespace Content.Shared.Temperature.Components;
 
@@ -7,31 +9,20 @@ namespace Content.Shared.Temperature.Components;
 /// informing others of the current temperature.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TemperatureComponent : Component
+[Access(typeof(SharedTemperatureSystem))]
+public sealed partial class TemperatureComponent : Component, IHeatContainer
 {
-    /// <summary>
-    /// Surface temperature which is modified by the environment.
-    /// </summary>
-    [DataField]
-    public HeatContainer HeatContainer = new ();
-
     /// <summary>
     /// The specific heat capacity of this entity in J/(kg*K). Humans are about 3kJ/(kg*K)
     /// </summary>
     [DataField]
     public float SpecificHeat = 3000f;
 
-    /// <summary>
-    /// Easy access for the current temperature of the entity.
-    /// </summary>
-    [ViewVariables]
-    public float CurrentTemperature => HeatContainer.Temperature;
+    [DataField]
+    public float HeatCapacity { get; set; }
 
-    /// <summary>
-    /// Easy access for the current heat capacity of the entity.
-    /// </summary>
-    [ViewVariables]
-    public float HeatCapacity => HeatContainer.HeatCapacity;
+    [DataField]
+    public float Temperature { get; set; } = Atmospherics.T20C;
 
     /// <summary>
     /// Thermal Conductivity in W/(K*m^2).
