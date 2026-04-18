@@ -54,7 +54,7 @@ public sealed partial class StatusEffectsSystem
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
-        var effects = statusEffect.Comp.ActiveStatusEffects?.ContainedEntities.ToHashSet() ?? [];
+        var effects = statusEffect.Comp.ActiveStatusEffects?.ContainedEntities.ToList() ?? [];
         foreach (var activeEffect in effects)
         {
             RaiseLocalEvent(activeEffect, ref ev);
