@@ -2644,7 +2644,7 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 6
+        Piercing: 4
 
 - type: entity
   parent:
@@ -2690,7 +2690,7 @@
         path: /Audio/Effects/bite.ogg
       damage:
         types:
-          Piercing: 8
+          Piercing: 6
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
