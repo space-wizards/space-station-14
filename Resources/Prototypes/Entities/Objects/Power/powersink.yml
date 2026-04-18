@@ -48,6 +48,7 @@
       maxCharge: 250000000
       pricePerJoule: 0.000009
     - type: ExaminableBattery
+    - type: PowerConsumerBatteryCharger
     - type: PowerConsumer
       voltage: High
       drawRate: 10000000
