@@ -438,7 +438,7 @@
     targetSolutionName: wool
     shearedProductID: MaterialDurathread1
     productsPerSolution: 0.2
-    toolQuality: Cutting # Wirecutters and barber's scissors.
+    toolQuality: Shearing
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
     # Caused problems (SAD), to be re-implemented when we get a real particle system.

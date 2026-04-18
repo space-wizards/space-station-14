@@ -1197,12 +1197,13 @@
     reagentId: MilkSheep
     quantityPerUpdate: 25
     growthDelay: 20
+  - type: ExaminableHunger
   - type: Wooly
   - type: Shearable
     targetSolutionName: wool
     shearedProductID: MaterialCotton1 # Cotton is spawned because there is no wool item.
     productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
-    toolQuality: Cutting # Wirecutters and barber's scissors.
+    toolQuality: Shearing
     shearableMarkupText: sheep-shearable-examine-markup
     unShearableMarkupText: sheep-not-shearable-examine-markup
   - type: Edible
@@ -1236,6 +1237,8 @@
       collection: Sheep
       params:
         variation: 0.05
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0015
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1245,9 +1248,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
     baseSprintSpeed: 0.8
+  - type: GuideHelp
+    guides:
+    - Chef
+    - FoodRecipes
 
 - type: entity
-  parent: [MobSheepBase, SimpleMobBase]
+  parent: [ MobSheepBase, SimpleMobBase ]
   id: MobSheep
   name: sheep
   description: An adorable genetically engineered chemical factory producing milk and cotton.
@@ -1269,7 +1276,7 @@
     targetSolutionName: wool
     shearedProductID: LeavesCannabisRainbow
     productsPerSolution: 0.2
-    toolQuality: Cutting
+    toolQuality: Shearing
     shearableMarkupText: rainbow-sheep-shearable-examine-markup
     unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
     verb: rainbow-sheep-shearable-verb
@@ -1285,6 +1292,9 @@
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 25
+  - type: FlavorProfile
+    flavors:
+    - leafy
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
