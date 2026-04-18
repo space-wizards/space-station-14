@@ -22,6 +22,7 @@
   - type: ChameleonClothing # has the component, but not the BUI, so that it cannot be set manually
     affectedByEmp: false
     canBeSetByController: false
+    showVerb: false
   - type: FlavorProfile
     flavors:
     - meaty

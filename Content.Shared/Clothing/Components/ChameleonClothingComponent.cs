@@ -49,6 +49,12 @@ public sealed partial class ChameleonClothingComponent : Component
     public bool CanBeSetByController = true;
 
     /// <summary>
+    ///     Show a verb for toggling the UI?
+    /// </summary>
+    [DataField]
+    public bool ShowVerb = true;
+
+    /// <summary>
     ///     Will component owner be affected by EMP pulses?
     /// </summary>
     [DataField]
