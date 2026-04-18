@@ -2,16 +2,12 @@ using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Rejuvenate;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
 
 public sealed class BatterySystem : SharedBatterySystem
 {
-    [Dependency] private readonly IGameTiming _timing = null!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = null!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -39,25 +35,6 @@ public sealed class BatterySystem : SharedBatterySystem
         DebugTools.Assert(!HasComp<ApcPowerReceiverBatteryComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
         DebugTools.Assert(!HasComp<PowerNetworkBatteryComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
         DebugTools.Assert(!HasComp<PowerConsumerComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // If a battery with BatteryVisualsComponent hasn't gotten a ChargeChangedEvent in a while, change the state to
-        // Constant if the ChargeRate is 0
-        var batteryVisualsQuery = EntityQueryEnumerator<BatteryComponent, BatteryVisualsComponent>();
-        while (batteryVisualsQuery.MoveNext(out var uid, out var battery, out _))
-        {
-            if (battery.ChargeRate != 0f)
-                continue; // No need to check if the battery has a constant chargeRate
-
-            if (battery.LastUpdate >= _timing.CurTime - TimeSpan.FromSeconds(1))
-                continue; // last update was too soon
-
-            _appearance.SetData(uid, BatteryVisuals.Charging, BatteryChargingState.Constant);
-        }
     }
 
     private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
