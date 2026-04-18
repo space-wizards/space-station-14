@@ -160,7 +160,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-aloxadone
+    currentLabel: reagent-name-aloxadone
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -175,7 +175,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol
+    currentLabel: reagent-name-ambuzol
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -190,7 +190,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-ambuzol-plus
+    currentLabel: reagent-name-ambuzol-plus
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -220,7 +220,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-barozine
+    currentLabel: reagent-name-barozine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -250,7 +250,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-bruizine
+    currentLabel: reagent-name-bruizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -265,7 +265,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-cognizine
+    currentLabel: reagent-name-cognizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -625,7 +625,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-oculine
+    currentLabel: reagent-name-oculine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -655,7 +655,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-opporozidone
+    currentLabel: reagent-name-opporozidone
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -850,7 +850,7 @@
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
-    currentLabel: reagent-tranexamic-acid
+    currentLabel: reagent-name-tranexamic-acid
   - type: SolutionContainerManager
     solutions:
       drink:

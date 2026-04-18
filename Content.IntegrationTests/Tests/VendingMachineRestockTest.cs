@@ -1,5 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.VendingMachines;
 using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
@@ -21,7 +22,7 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     [TestOf(typeof(VendingMachineRestockComponent))]
     [TestOf(typeof(VendingMachineSystem))]
-    public sealed class VendingMachineRestockTest : EntitySystem
+    public sealed class VendingMachineRestockTest : GameTest
     {
         private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
 
@@ -111,7 +112,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAllRestocksAreAvailableToBuy()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -121,76 +122,85 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                HashSet<string> restocks = new();
-                Dictionary<string, List<string>> restockStores = new();
-
-                // Collect all the prototypes with restock components.
+                // Collect all entity prototypes which are vending machine restocks.
+                var restockEntities = new HashSet<EntProtoId<VendingMachineRestockComponent>>();
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
                     if (proto.Abstract
                         || pair.IsTestPrototype(proto)
                         || !proto.HasComponent<VendingMachineRestockComponent>())
-                    {
                         continue;
-                    }
 
-                    restocks.Add(proto.ID);
+                    restockEntities.Add(proto.ID);
                 }
 
-                // Collect all the prototypes with EntityTableContainerFills referencing those entities.
+                // Collect all entity prototypes with `EntityTableContainerFill`s which contain those restock entities.
+                // Specifically, this is a mapping of entities-with-container-fill to their-contained-entities-which-are-restocks.
+                Dictionary<EntProtoId<EntityTableContainerFillComponent>,
+                    List<EntProtoId<VendingMachineRestockComponent>>> entitiesWhichSpawnRestocks = new();
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
+                    if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, compFact))
                         continue;
 
-                    var containers = storage.Containers;
+                    var containers = fill.Containers;
 
-                    if (!containers.TryGetValue(SharedEntityStorageSystem.ContainerName, out var container)) // We only care about this container type.
+                    // We only care about the special known container.
+                    if (!containers.TryGetValue(SharedEntityStorageSystem.ContainerName, out var container))
                         continue;
 
-                    List<string> restockStore = new();
-
-                    foreach (var spawnEntry in entityTable.GetSpawns(container))
+                    var entitiesInProtoContainingRestock = new List<EntProtoId<VendingMachineRestockComponent>>();
+                    foreach (var (fillSpawnEntry, _) in entityTable.ListSpawns(container))
                     {
-                        if (restocks.Contains(spawnEntry))
-                            restockStore.Add(spawnEntry);
+                        if (restockEntities.Contains(fillSpawnEntry.Id))
+                            entitiesInProtoContainingRestock.Add(fillSpawnEntry.Id);
                     }
 
-                    if (restockStore.Count > 0)
-                        restockStores.Add(proto.ID, restockStore);
+                    if (entitiesInProtoContainingRestock.Count > 0)
+                        entitiesWhichSpawnRestocks.Add(proto.ID, entitiesInProtoContainingRestock);
                 }
 
-                // Iterate through every CargoProduct and make sure each
-                // prototype with a restock component is referenced in a
-                // purchaseable entity with an EntityTableContianerFill.
+                // Remove all restock entities from our set which are either directly purchasable as a CargoProduct, or
+                // which are spawned by EntityTableContainerFill on a CargoProduct.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    if (restockStores.ContainsKey(proto.Product))
-                    {
-                        foreach (var entry in restockStores[proto.Product])
-                            restocks.Remove(entry);
+                    // If the cargo product's product is the restock itself, just remove it.
+                    restockEntities.Remove(proto.Product.Id);
 
-                        restockStores.Remove(proto.Product);
+                    // Check if the product is an entity which spawns a restock.
+                    if (entitiesWhichSpawnRestocks.TryGetValue(proto.Product.Id, out var restocksSpawnedByProduct))
+                    {
+                        foreach (var entry in restocksSpawnedByProduct)
+                        {
+                            restockEntities.Remove(entry);
+                        }
+
+                        entitiesWhichSpawnRestocks.Remove(proto.Product.Id);
                     }
                 }
+                // Any entities left in restockEntities are restocks which can't be bought from Cargo.
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(restockStores, Has.Count.EqualTo(0),
-                        $"Some entities containing entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restockStores.Keys)}");
+                    const string restockCompName = nameof(VendingMachineRestockComponent);
 
-                    Assert.That(restocks, Has.Count.EqualTo(0),
-                        $"Some entities with VendingMachineRestock components are unavailable for purchase: \n - {string.Join("\n - ", restocks)}");
+                    Assert.That(entitiesWhichSpawnRestocks,
+                        Has.Count.EqualTo(0),
+                        $"Some entities containing entities with {restockCompName} are unavailable for purchase: \n - {string.Join("\n - ", entitiesWhichSpawnRestocks.Keys)}");
+
+
+
+                    Assert.That(restockEntities,
+                        Has.Count.EqualTo(0),
+                        $"Some entities with {restockCompName} are unavailable for purchase: \n - {string.Join("\n - ", restockEntities)}");
                 });
             });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestCompleteRestockProcess()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -269,14 +279,12 @@ namespace Content.IntegrationTests.Tests
 
                 mapSystem.DeleteMap(testMap.MapId);
             });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestRestockBreaksOpen()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -331,14 +339,12 @@ namespace Content.IntegrationTests.Tests
 
                 mapSystem.DeleteMap(testMap.MapId);
             });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestRestockInventoryBounds()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -377,10 +383,6 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(vendingMachineSystem.GetAvailableInventory(machine)[0].Amount, Is.EqualTo(3),
                     "Machine's available inventory did not stay the same after a third restock.");
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }
-
-#nullable disable
