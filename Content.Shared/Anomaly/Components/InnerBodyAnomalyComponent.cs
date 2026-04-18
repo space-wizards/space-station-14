@@ -29,6 +29,13 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public float StunDuration = 4f;
 
     /// <summary>
+    /// A temporary status effect added to the host when get stunned by their anomaly.
+    /// </summary>
+    /// <remarks>Stunned status effect is applied separately from this status.</remarks>
+    [DataField]
+    public EntProtoId StunnedStatus = "StatusEffectInnerAnomalyJitter";
+
+    /// <summary>
     /// A message sent in chat to a player who has become infected by an anomaly
     /// </summary>
     [DataField]

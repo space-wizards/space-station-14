@@ -25,6 +25,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
@@ -54,6 +55,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
         public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
@@ -127,21 +129,14 @@ namespace Content.Server.Medical.BiomassReclaimer
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
-            var jitter = new JitterParameters // Small but frequent side to side motion
-            {
-                Frequency = 10f,
-                MaxRadius = 0.05f,
-                MinRadius = 0.05f,
-                MatrixY = Vector2.Zero,
-            };
-            _jitteringSystem.CreateJitter(uid, jitter);
+            _statusEffects.TrySetStatusEffectDuration(uid, component.ActiveStatus);
             _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
         private void OnShutdown(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentShutdown args)
         {
-            _jitteringSystem.RemoveJitter(uid);
+            _statusEffects.TryRemoveStatusEffect(uid, component.ActiveStatus);
             _ambientSoundSystem.SetAmbience(uid, false);
         }
 

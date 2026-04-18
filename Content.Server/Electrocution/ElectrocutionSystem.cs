@@ -47,6 +47,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly Shared.StatusEffectNew.StatusEffectsSystem _statusEffectsNew = default!;
     [Dependency] private readonly SharedJitteringSystem _jittering = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -59,6 +60,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
+    private static readonly EntProtoId JitterStatus = "StatusEffectElectrocutionJitter";
+
     // Multiply and shift the log scale for shock damage.
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -68,12 +71,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const float StutteringTimeMultiplier = 1.5f;
 
     private const float JitterTimeMultiplier = 0.75f;
-    private static readonly JitterParameters Jitter = new()
-    {
-        Frequency = 8f,
-        MaxRadius = 0.25f,
-        MinRadius = 0.2f,
-    };
 
     public override void Initialize()
     {
@@ -417,7 +414,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
-        _jittering.CreateJitter(uid, Jitter, time * JitterTimeMultiplier, refresh);
+        _statusEffectsNew.TryUpdateStatusEffectDuration(uid, JitterStatus, time * JitterTimeMultiplier);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 

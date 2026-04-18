@@ -14,6 +14,18 @@ public abstract class SharedJitteringSystem : EntitySystem
     // Ideally nothing calls `CreateJitter` but instead goes through status effects in their own way
     private static readonly EntProtoId BasicJitter = "StatusEffectJitter";
 
+    public void AdjustJitter(EntityUid target,
+                            EntProtoId<JitteringStatusEffectComponent> statusId,
+                            JitterParameters jitter)
+    {
+        if (!_statusEffects.TryGetStatusEffect(target, statusId, out var statusEnt))
+            return;
+
+        var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt.Value);
+        jitterComp.Jitter = jitter;
+        Dirty(statusEnt.Value, jitterComp);
+    }
+
     /// <summary>
     /// Creates a new status effect on an entity that causes its sprite to move erratically.
     /// </summary>

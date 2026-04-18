@@ -122,7 +122,6 @@
       maxRadius: 0.03
       minRadius: 0.03
 
-
 - type: entity
   parent: StatusEffectJitter
   id: StatusEffectSway
@@ -134,3 +133,28 @@
       maxRadius: 0.3
       minRadius: 0.1
       matrixY: 0, 0.1
+
+- type: entity
+  parent: StatusEffectFastJitter
+  id: StatusEffectInnerAnomalyJitter
+
+- type: entity
+  parent: StatusEffectJitter
+  id: StatusEffectActiveBiomassReclaimer
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 10
+      maxRadius: 0.05
+      minRadius: 0.05
+      matrixY: 0, 0
+
+- type: entity
+  parent: StatusEffectJitter
+  id: StatusEffectElectrocutionJitter
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 8
+      maxRadius: 0.25
+      minRadius: 0.2
