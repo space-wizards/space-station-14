@@ -42,8 +42,7 @@
   - type: AtmosExposed
   - type: Temperature
     thermalConductivity: 1
-    heatContainer:
-      heatCapacity: 750
+    heatCapacity: 750
   - type: TemperatureDamage
   # required for cooking to work
   - type: InternalTemperature

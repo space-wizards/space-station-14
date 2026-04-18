@@ -89,9 +89,8 @@
   - type: AtmosExposed
   - type: Temperature
     thermalConductivity: 1
-    heatContainer:
-      temperature: 293.15
-      heatCapacity: 750
+    temperature: 293.15
+    heatCapacity: 750
   - type: TemperatureDamage
   - type: InternalTemperature
   - type: Tag

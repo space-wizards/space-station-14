@@ -28,9 +28,8 @@
           layer:
           - MidImpassable
     - type: Temperature
-      heatContainer:
-        temperature: 293.15
-        heatCapacity: 21000
+      temperature: 293.15
+      heatCapacity: 21000
 
 
 - type: entity
