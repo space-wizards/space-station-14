@@ -23,8 +23,8 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
-    private EntityQuery<RefillableSolutionComponent> _refillableQuery;
-    private EntityQuery<DrainableSolutionComponent> _drainableQuery;
+    [Dependency] private readonly EntityQuery<RefillableSolutionComponent> _refillableQuery = default!;
+    [Dependency] private readonly EntityQuery<DrainableSolutionComponent> _drainableQuery = default!;
 
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
@@ -40,9 +40,6 @@ public sealed class SolutionTransferSystem : EntitySystem
         SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<SolutionTransferComponent, SolutionDrainTransferDoAfterEvent>(OnSolutionDrainTransferDoAfter);
         SubscribeLocalEvent<SolutionTransferComponent, SolutionRefillTransferDoAfterEvent>(OnSolutionFillTransferDoAfter);
-
-        _refillableQuery = GetEntityQuery<RefillableSolutionComponent>();
-        _drainableQuery = GetEntityQuery<DrainableSolutionComponent>();
     }
 
     private void AddSetTransferVerbs(Entity<SolutionTransferComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -99,7 +96,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         ent.Comp.TransferAmount = newTransferAmount;
 
         if (message.Actor is { Valid: true } user)
-            _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent.Owner, user);
+            _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent.Owner, user);
 
         Dirty(ent.Owner, ent.Comp);
     }

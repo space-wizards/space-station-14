@@ -11,7 +11,7 @@ public sealed partial class DamageableSystem
     {
         foreach (var (uid, damageable) in damageables)
         {
-            TryChangeDamage((uid, damageable), damage);
+            ChangeDamage((uid, damageable), damage);
         }
     }
 }

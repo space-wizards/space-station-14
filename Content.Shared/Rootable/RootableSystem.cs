@@ -44,15 +44,12 @@ public sealed class RootableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    private EntityQuery<PuddleComponent> _puddleQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _puddleQuery = GetEntityQuery<PuddleComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RootableComponent, MapInitEvent>(OnRootableMapInit);
         SubscribeLocalEvent<RootableComponent, ComponentShutdown>(OnRootableShutdown);
@@ -102,17 +99,17 @@ public sealed class RootableSystem : EntitySystem
     /// </summary>
     private void ReactWithEntity(Entity<RootableComponent, BloodstreamComponent> ent, Entity<PuddleComponent> puddleEntity, Solution solution)
     {
-        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp2.ChemicalSolutionName, ref ent.Comp2.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
+        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp2.BloodSolutionName, ref ent.Comp2.BloodSolution, out var bloodSolution) || bloodSolution.AvailableVolume <= 0)
             return;
 
         var availableTransfer = FixedPoint2.Min(solution.Volume, ent.Comp1.TransferRate);
-        var transferAmount = FixedPoint2.Min(availableTransfer, chemSolution.AvailableVolume);
+        var transferAmount = FixedPoint2.Min(availableTransfer, bloodSolution.AvailableVolume);
         var transferSolution = _solutionContainer.SplitSolution(puddleEntity.Comp.Solution!.Value, transferAmount);
 
         _reactive.DoEntityReaction(ent, transferSolution, ReactionMethod.Ingestion);
 
         // Log solution addition by puddle.
-        if (_blood.TryAddToChemicals((ent, ent.Comp2), transferSolution))
+        if (_blood.TryAddToBloodstream((ent, ent.Comp2), transferSolution))
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(ent):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
     }
 
@@ -121,12 +118,15 @@ public sealed class RootableSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var cloneComp = EnsureComp<RootableComponent>(args.CloneUid);
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<RootableComponent>();
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.RootedAlert = ent.Comp.RootedAlert;
         cloneComp.TransferRate = ent.Comp.TransferRate;
         cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
         cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
         cloneComp.RootSound = ent.Comp.RootSound;
-        Dirty(args.CloneUid, cloneComp);
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> ent, ref MapInitEvent args)
