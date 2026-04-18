@@ -56,7 +56,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
-            SubscribeLocalEvent<PowerNetworkBatteryComponent, DrawRateChangeEvent>(BatteryDrawRateChanged);
 
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
@@ -135,11 +134,6 @@ namespace Content.Server.Power.EntitySystems
         private static void BatteryUnpaused(EntityUid uid, PowerNetworkBatteryComponent component, ref EntityUnpausedEvent args)
         {
             component.NetworkBattery.Paused = false;
-        }
-
-        private void BatteryDrawRateChanged(Entity<PowerNetworkBatteryComponent> entity, ref DrawRateChangeEvent args)
-        {
-            entity.Comp.MaxChargeRate = args.NewDrawRate;
         }
 
         private void OnVoltageChanged(Entity<DrawRateVoltageTogglerComponent> entity, ref VoltageChangeEvent args)
