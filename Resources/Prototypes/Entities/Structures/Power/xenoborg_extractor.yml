@@ -97,12 +97,11 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
         enabled: false
-  - type: BatteryCharger
-    voltage: Apc
-  - type: PowerNetworkBattery
-    canDischarge: false
-    maxChargeRate: 32000
+  - type: PowerConsumerBatteryCharger
     efficiency: 0.95
+  - type: PowerConsumer
+    voltage: Apc
+    drawRate: 32000
   - type: VoltageToggler
     settings:
     - voltage: Apc
