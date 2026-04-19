@@ -1,85 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba, seam_less
-  changes:
-  - message: Job-themed lizard plushies! You can equip them in your loadout if you
-      have 20 hours on the job.
-    type: Add
-  id: 9130
-  time: '2025-10-19T22:28:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34127
-- author: AsnDen
-  changes:
-  - message: Large thruster (2x2) was added.
-    type: Add
-  id: 9131
-  time: '2025-10-19T23:51:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37681
-- author: ArtisticRoomba
-  changes:
-  - message: Slimes can now metabolize their own slime to restore their blood level.
-    type: Add
-  - message: Slime is no longer effective at satiating hunger when metabolized by
-      a Slime.
-    type: Tweak
-  id: 9132
-  time: '2025-10-20T00:40:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32537
-- author: Kittygyat
-  changes:
-  - message: Added a cosmetic carp suit to the AutoDrobe's contraband inventory!
-    type: Add
-  id: 9133
-  time: '2025-10-20T02:56:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40995
-- author: Princess-Cheeseballs
-  changes:
-  - message: Zombies can no longer hurt Initial Infected
-    type: Tweak
-  id: 9134
-  time: '2025-10-20T18:06:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41007
-- author: B_Kirill
-  changes:
-  - message: Hostile and Eliminated criminal statuses
-    type: Add
-  id: 9135
-  time: '2025-10-21T08:56:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36244
-- author: michaelchessall
-  changes:
-  - message: Matches can now be placed into ashtrays.
-    type: Tweak
-  id: 9136
-  time: '2025-10-21T09:37:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41016
-- author: SnappingOpossum
-  changes:
-  - message: Upgraded solar panels can now take structural damage.
-    type: Fix
-  id: 9137
-  time: '2025-10-21T09:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40992
-- author: qwerltaz
-  changes:
-  - message: Goats and cows eat kudzu again.
-    type: Fix
-  id: 9138
-  time: '2025-10-21T10:02:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40220
-- author: Krzeszny
-  changes:
-  - message: Updated the controls guide.
-    type: Tweak
-  id: 9139
-  time: '2025-10-21T10:14:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40978
-- author: Quasr
-  changes:
-  - message: The "Friendly Fauna" artifact node no longer spawns hostile mobs
-    type: Tweak
-  id: 9140
-  time: '2025-10-21T10:27:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40979
 - author: Fildrance
   changes:
   - message: Door remotes now have a radial menu for changing modes.
@@ -4030,3 +3949,100 @@
   id: 9641
   time: '2026-04-13T20:08:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43584
+- author: peaceful-joules
+  changes:
+  - message: Airlocks that were hacked via access breaker no longer have buggy examine
+      window.
+    type: Fix
+  id: 9642
+  time: '2026-04-16T17:25:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43564
+- author: perryprog
+  changes:
+  - message: Door wire panels are now viewed via Alt + E, or via right clicking on
+      the door. Left clicking with a multitool or wirecutters still works as before.
+      Left clicking with other items now opens the door instead of the wire panel.
+    type: Tweak
+  id: 9643
+  time: '2026-04-16T22:37:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38733
+- author: 11BelowStudio
+  changes:
+  - message: Closed the legal loophole which allowed security officers to use web
+      vests.
+    type: Fix
+  - message: Bartenders may only use their own armour vests.
+    type: Tweak
+  id: 9644
+  time: '2026-04-17T02:53:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42862
+- author: ThatGuyUSA
+  changes:
+  - message: elite webvest has pockets again.
+    type: Fix
+  id: 9645
+  time: '2026-04-17T03:41:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43615
+- author: jessicamaybe
+  changes:
+  - message: Changed the sound for closing airlocks.
+    type: Tweak
+  - message: Fixed door animations being interrupted during normal use.
+    type: Fix
+  id: 9646
+  time: '2026-04-17T10:31:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43613
+- author: Boaz1111
+  changes:
+  - message: Fixes the trit-frezon ratio in the guidebook being incorrect.
+    type: Fix
+  id: 9647
+  time: '2026-04-17T19:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43622
+- author: piskaczek
+  changes:
+  - message: Reduced the amount of wirebrushes in the janicloset and janicrate.
+    type: Tweak
+  id: 9648
+  time: '2026-04-18T10:56:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43629
+- author: SlamBamActionman
+  changes:
+  - message: Wizard's Knock spell no longer unlocks cryosleep units, magic lamps and
+      the locker trap spell.
+    type: Fix
+  id: 9649
+  time: '2026-04-18T16:58:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43641
+- author: jessicamaybe
+  changes:
+  - message: Monkeys will now put people in critical condition into disposal bins
+    type: Add
+  id: 9650
+  time: '2026-04-18T22:00:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37983
+- author: Princess-Cheeseballs
+  changes:
+  - message: Gas Canisters can now explode from overpressure.
+    type: Add
+  - message: Max Caps have been entirely reworked with different fuse lengths and
+      explosive strengths.
+    type: Tweak
+  - message: Max Cap intensity limits have been removed.
+    type: Tweak
+  - message: Tritium fire energy production has been divided by 10, returning to its
+      intended value.
+    type: Tweak
+  - message: The TEG now produces 25% more power.
+    type: Tweak
+  id: 9651
+  time: '2026-04-19T05:36:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43281
+- author: ArtisticRoomba
+  changes:
+  - message: Passive gates now have better equalization behavior and have less of
+      a tendency to over-equalize.
+    type: Fix
+  id: 9652
+  time: '2026-04-19T05:51:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43552

@@ -10,7 +10,7 @@ public abstract class SharedDestructibleSystem : EntitySystem
     /// <summary>
     /// Force entity to be destroyed and deleted.
     /// </summary>
-    public bool DestroyEntity(Entity<MetaDataComponent?> owner)
+    public bool DestroyEntity(EntityUid owner)
     {
         var ev = new DestructionAttemptEvent();
         RaiseLocalEvent(owner, ev);
