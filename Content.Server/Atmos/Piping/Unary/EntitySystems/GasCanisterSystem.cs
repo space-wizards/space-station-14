@@ -83,7 +83,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
     private void ToggleSafetyValve(Entity<GasCanisterComponent> entity, bool open)
     {
-        entity.Comp.SafetyValveOpen = true;
+        entity.Comp.SafetyValveOpen = open;
         Audio.PlayPvs(entity.Comp.ValveSound, entity);
     }
 
@@ -117,7 +117,9 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
                 ? _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true)
                 : CompOrNull<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value)?.Air;
 
-            _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure, args.dt,ReleaseArea);
+            // Only let gas flow one way!
+            if (output?.Pressure < entity.Comp.ReleasePressure)
+                _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure - output.Pressure, args.dt, ReleaseArea);
         }
 
         // If last pressure is very close to the current pressure, do nothing.
