@@ -136,6 +136,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
