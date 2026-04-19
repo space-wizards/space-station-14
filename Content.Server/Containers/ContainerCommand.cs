@@ -11,7 +11,7 @@ public sealed class ContainerCommand : ToolshedCommand
 {
     private SharedContainerSystem? _container;
 
-    [CommandImplementation("query")]
+    [CommandImplementation("contents")]
     public IEnumerable<EntityUid> ContainerQuery([PipedArgument] IEnumerable<EntityUid> storageEnts, string id) =>
         storageEnts.SelectMany(x => ContainerQueryBase(x, id));
 
