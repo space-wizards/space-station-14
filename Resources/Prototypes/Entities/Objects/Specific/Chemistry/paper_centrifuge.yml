@@ -1,0 +1,60 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseHandheldMixer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      mixer:
+        maxVol: 10
+  - type: MixableSolution
+    solution: mixer
+  - type: RefillableSolution
+    solution: mixer
+  - type: DrainableSolution
+    solution: mixer
+  - type: ExaminableSolution
+    solution: mixer
+    exactVolume: true
+  - type: DrawableSolution
+    solution: mixer
+  - type: InjectableSolution
+    solution: mixer
+  - type: Spillable
+    solution: mixer
+  - type: SolutionTransfer
+  - type: SolutionItemStatus
+    solution: mixer
+  - type: Appearance
+  - type: DnaSubstanceTrace
+  - type: ReactionMixer
+
+- type: entity
+  parent: BaseHandheldMixer
+  id: HandheldMixerPaperCentrifuge
+  name: paper centrifuge
+  description: A small portable makeshift centrifuge. Works by rotating the paper sheets when its cords are pulled.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/paper_centrifuge.rsi
+    layers:
+    - state: icon
+    - state: fill-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
+  - type: Construction
+    graph: MakeshiftCentrifuge
+    node: makeshiftCentrifuge
+  - type: ReactionMixer
+    reactionTypes:
+    - Centrifuge
+    mixerType: Handheld
+    mixMessage: handheld-centrifuge-success
+    timeToMix: 10
+    mixingSound: !type:SoundPathSpecifier
+      path: /Audio/Items/Medical/paper_centrifuge.ogg
+      params:
+        loop: true
