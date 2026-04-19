@@ -819,7 +819,7 @@ public partial class AtmosphereSystem
     public static float ExponentialMovingAverage(float newValue,
         float oldValue,
         float deltaTime,
-        float tau = 1)
+        float tau = 0.5f)
     {
         var a = deltaTime / tau;
         return a * newValue + (1 - a) * oldValue;
