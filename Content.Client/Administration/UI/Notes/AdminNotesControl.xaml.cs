@@ -139,7 +139,7 @@ public sealed partial class AdminNotesControl : Control
         }
         else
         {
-            alpha = (float) (1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
+            alpha = (float)(1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
         }
 
         input.Modulate = input.Modulate.WithAlpha(alpha);
@@ -208,22 +208,15 @@ public sealed partial class AdminNotesControl : Control
         NewNoteButton.Disabled = !create;
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-        {
-            return;
-        }
+        base.ExitedTree();
 
         Inputs.Clear();
         NewNoteButton.OnPressed -= OnNewNoteButtonPressed;
 
-        if (_popup != null)
-        {
-            UserInterfaceManager.PopupRoot.RemoveChild(_popup);
-        }
+        _popup?.Close();
+        _popup = null;
 
         NoteDeleted = null;
     }

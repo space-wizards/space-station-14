@@ -43,8 +43,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
             base.FrameUpdate(args);
 
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
-                ("color",_crayon.Comp.Color),
-                ("state",_crayon.Comp.SelectedState),
+                ("color", _crayon.Comp.Color),
+                ("state", _crayon.Comp.SelectedState),
                 ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
                 ("capacity", _capacity)));
         }

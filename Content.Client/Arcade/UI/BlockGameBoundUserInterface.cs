@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Arcade;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
@@ -71,6 +70,7 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
         if (!disposing)
             return;
 
-        _menu?.Dispose();
+        _menu?.Close();
+        _menu = null;
     }
 }

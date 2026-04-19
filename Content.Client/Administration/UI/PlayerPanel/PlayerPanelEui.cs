@@ -21,7 +21,7 @@ public sealed class PlayerPanelEui : BaseEui
     {
         PlayerPanel = new PlayerPanel(_admin);
 
-        PlayerPanel.OnUsernameCopy += username => _clipboard.SetText(username);
+        PlayerPanel.OnUsernameCopy += _clipboard.SetText;
         PlayerPanel.OnOpenNotes += id => _console.ExecuteCommand($"adminnotes \"{id}\"");
         // Kick command does not support GUIDs
         PlayerPanel.OnKick += username => _console.ExecuteCommand($"kick \"{username}\"");

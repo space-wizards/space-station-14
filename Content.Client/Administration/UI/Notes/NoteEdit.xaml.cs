@@ -43,30 +43,30 @@ public sealed partial class NoteEdit : FancyWindow
         ResetSubmitButton();
 
         // It's weird to use minutes as the IDs, but it works and makes sense kind of :)
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-minutes"), (int) Multipliers.Minutes);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-hours"), (int) Multipliers.Hours);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-days"), (int) Multipliers.Days);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-weeks"), (int) Multipliers.Weeks);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-months"), (int) Multipliers.Months);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-years"), (int) Multipliers.Years);
-        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-centuries"), (int) Multipliers.Centuries);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-minutes"), (int)Multipliers.Minutes);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-hours"), (int)Multipliers.Hours);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-days"), (int)Multipliers.Days);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-weeks"), (int)Multipliers.Weeks);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-months"), (int)Multipliers.Months);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-years"), (int)Multipliers.Years);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-centuries"), (int)Multipliers.Centuries);
         ExpiryLengthDropdown.OnItemSelected += OnLengthChanged;
 
-        ExpiryLengthDropdown.SelectId((int) Multipliers.Weeks);
+        ExpiryLengthDropdown.SelectId((int)Multipliers.Weeks);
 
         ExpiryLineEdit.OnTextChanged += OnTextChanged;
 
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-note"), (int) NoteType.Note);
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-message"), (int) NoteType.Message);
-        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-watchlist"), (int) NoteType.Watchlist);
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-note"), (int)NoteType.Note);
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-message"), (int)NoteType.Message);
+        TypeOption.AddItem(Loc.GetString("admin-note-editor-type-watchlist"), (int)NoteType.Watchlist);
         TypeOption.OnItemSelected += OnTypeChanged;
 
 
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-select"), -1);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) Shared.Database.NoteSeverity.None);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) Shared.Database.NoteSeverity.Minor);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) Shared.Database.NoteSeverity.Medium);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int) Shared.Database.NoteSeverity.High);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int)Shared.Database.NoteSeverity.None);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int)Shared.Database.NoteSeverity.Minor);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int)Shared.Database.NoteSeverity.Medium);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int)Shared.Database.NoteSeverity.High);
         SeverityOption.OnItemSelected += OnSeverityChanged;
 
         PermanentCheckBox.OnPressed += OnPermanentPressed;
@@ -87,8 +87,8 @@ public sealed partial class NoteEdit : FancyWindow
             NoteId = note.Id;
 
             NoteType = note.NoteType;
-            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-server-ban"), (int) NoteType.ServerBan);
-            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-role-ban"), (int) NoteType.RoleBan);
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-server-ban"), (int)NoteType.ServerBan);
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-role-ban"), (int)NoteType.RoleBan);
             TypeOption.SelectId((int)NoteType);
             TypeOption.Disabled = true;
 
@@ -153,7 +153,7 @@ public sealed partial class NoteEdit : FancyWindow
         // We should be resetting the underlying values too but the server handles that anyway
         switch (args.Id)
         {
-            case (int) NoteType.Note: // Note: your standard note, does nothing special
+            case (int)NoteType.Note: // Note: your standard note, does nothing special
                 NoteType = NoteType.Note;
                 SecretCheckBox.Disabled = false;
                 SecretCheckBox.Pressed = false;
@@ -162,22 +162,22 @@ public sealed partial class NoteEdit : FancyWindow
                 SubmitButton.Disabled = true;
                 UpdatePermanentCheckboxFields();
                 break;
-            case (int) NoteType.Message: // Message: these are shown to the player when they log on
+            case (int)NoteType.Message: // Message: these are shown to the player when they log on
                 NoteType = NoteType.Message;
                 SecretCheckBox.Disabled = true;
                 SecretCheckBox.Pressed = false;
                 SeverityOption.Disabled = true;
-                SeverityOption.SelectId((int) Shared.Database.NoteSeverity.None);
+                SeverityOption.SelectId((int)Shared.Database.NoteSeverity.None);
                 NoteSeverity = null;
                 PermanentCheckBox.Pressed = false;
                 UpdatePermanentCheckboxFields();
                 break;
-            case (int) NoteType.Watchlist: // Watchlist: these are always secret and only shown to admins when the player logs on
+            case (int)NoteType.Watchlist: // Watchlist: these are always secret and only shown to admins when the player logs on
                 NoteType = NoteType.Watchlist;
                 SecretCheckBox.Disabled = true;
                 SecretCheckBox.Pressed = true;
                 SeverityOption.Disabled = true;
-                SeverityOption.SelectId((int) Shared.Database.NoteSeverity.None);
+                SeverityOption.SelectId((int)Shared.Database.NoteSeverity.None);
                 NoteSeverity = null;
                 PermanentCheckBox.Pressed = false;
                 UpdatePermanentCheckboxFields();
@@ -210,7 +210,7 @@ public sealed partial class NoteEdit : FancyWindow
 
     private void OnSeverityChanged(OptionButton.ItemSelectedEventArgs args)
     {
-        NoteSeverity = args.Id == -1 ? NoteSeverity = null : (NoteSeverity) args.Id;
+        NoteSeverity = args.Id == -1 ? NoteSeverity = null : (NoteSeverity)args.Id;
         SeverityOption.SelectId(args.Id);
     }
 
@@ -308,13 +308,13 @@ public sealed partial class NoteEdit : FancyWindow
 
         var mult = ExpiryLengthDropdown.SelectedId switch
         {
-            (int) Multipliers.Minutes => TimeSpan.FromMinutes(1).TotalMinutes,
-            (int) Multipliers.Hours => TimeSpan.FromHours(1).TotalMinutes,
-            (int) Multipliers.Days => TimeSpan.FromDays(1).TotalMinutes,
-            (int) Multipliers.Weeks => TimeSpan.FromDays(7).TotalMinutes,
-            (int) Multipliers.Months => TimeSpan.FromDays(30).TotalMinutes,
-            (int) Multipliers.Years => TimeSpan.FromDays(365).TotalMinutes,
-            (int) Multipliers.Centuries => TimeSpan.FromDays(36525).TotalMinutes,
+            (int)Multipliers.Minutes => TimeSpan.FromMinutes(1).TotalMinutes,
+            (int)Multipliers.Hours => TimeSpan.FromHours(1).TotalMinutes,
+            (int)Multipliers.Days => TimeSpan.FromDays(1).TotalMinutes,
+            (int)Multipliers.Weeks => TimeSpan.FromDays(7).TotalMinutes,
+            (int)Multipliers.Months => TimeSpan.FromDays(30).TotalMinutes,
+            (int)Multipliers.Years => TimeSpan.FromDays(365).TotalMinutes,
+            (int)Multipliers.Centuries => TimeSpan.FromDays(36525).TotalMinutes,
             _ => throw new ArgumentOutOfRangeException(nameof(ExpiryLengthDropdown.SelectedId), "Multiplier out of range :(")
         };
         ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * mult);
@@ -322,14 +322,9 @@ public sealed partial class NoteEdit : FancyWindow
         return true;
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-        {
-            return;
-        }
+        base.ExitedTree();
 
         PermanentCheckBox.OnPressed -= OnPermanentPressed;
         SecretCheckBox.OnPressed -= OnSecretPressed;

@@ -32,7 +32,7 @@ namespace Content.Client.Ame.UI
         {
             base.UpdateState(state);
 
-            var castState = (AmeControllerBoundUserInterfaceState) state;
+            var castState = (AmeControllerBoundUserInterfaceState)state;
             _window?.UpdateState(castState); //Update window state
         }
 

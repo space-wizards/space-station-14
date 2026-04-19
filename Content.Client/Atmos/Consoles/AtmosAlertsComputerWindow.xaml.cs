@@ -49,8 +49,8 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _monitorBlipColor = Color.Cyan;
     private Color _untrackedEntColor = Color.DimGray;
     private Color _regionBaseColor = new Color(154, 154, 154);
-    private Color _inactiveColor = StyleNano.DisabledFore;
-    private Color _statusTextColor = StyleNano.GoodGreenFore;
+    private Color _inactiveColor = Color.FromHex("#5A5A5A");
+    private Color _statusTextColor = Color.FromHex("#31843E");
     private Color _goodColor = Color.LimeGreen;
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);
@@ -77,7 +77,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         {
             NavMap.MapUid = xform.GridUid;
 
-            // Assign station name      
+            // Assign station name
             if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
                 stationName = stationMetaData.EntityName;
 

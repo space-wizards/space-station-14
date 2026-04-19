@@ -17,7 +17,6 @@ public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindowCenteredLeft<GasAnalyzerWindow>();
-        _window.OnClose += Close;
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

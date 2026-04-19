@@ -21,7 +21,7 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly ILogManager _logManager = default!;
         private readonly ISawmill _logMill = default!;
 
-        private readonly IdCardConsoleBoundUserInterface _owner;
+        public event Action<string, string, List<ProtoId<AccessLevelPrototype>>, ProtoId<JobPrototype>?>? OnSubmit;
 
         private AccessLevelControl _accessButtons = new();
         private readonly List<string> _jobPrototypeIds = new();
@@ -33,14 +33,11 @@ namespace Content.Client.Access.UI
         // The job that will be picked if the ID doesn't have a job on the station.
         private static ProtoId<JobPrototype> _defaultJob = "Passenger";
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessLevelPrototype>> accessLevels)
+        public IdCardConsoleWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _logMill = _logManager.GetSawmill(SharedIdCardConsoleSystem.Sawmill);
-
-            _owner = owner;
 
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
             FullNameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
@@ -58,20 +55,6 @@ namespace Content.Client.Access.UI
             };
             JobTitleSaveButton.OnPressed += _ => SubmitData();
 
-            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>().ToList();
-            jobs.Sort((x, y) => string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCulture));
-
-            foreach (var job in jobs)
-            {
-                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
-                {
-                    continue;
-                }
-
-                _jobPrototypeIds.Add(job.ID);
-                JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
-            }
-
             SelectAllButton.OnPressed += _ =>
             {
                 SetAllAccess(true);
@@ -85,12 +68,45 @@ namespace Content.Client.Access.UI
             };
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
-            _accessButtons.Populate(accessLevels, prototypeManager);
             AccessLevelControlContainer.AddChild(_accessButtons);
+        }
 
-            foreach (var (id, button) in _accessButtons.ButtonsList)
+        public void SetAccessLevels(List<ProtoId<AccessLevelPrototype>> accessLevels)
+        {
+            _accessButtons.ButtonsList.Clear();
+            _accessButtons.RemoveAllChildren();
+
+            _accessButtons.Populate(accessLevels, _prototypeManager);
+
+            foreach (var (_, button) in _accessButtons.ButtonsList)
             {
-                button.OnPressed += _ => SubmitData();
+                button.OnPressed -= OnAccessButtonPressed;
+                button.OnPressed += OnAccessButtonPressed;
+            }
+        }
+
+        private void OnAccessButtonPressed(BaseButton.ButtonEventArgs _)
+        {
+            SubmitData();
+        }
+
+        public void PopulateJobPresets()
+        {
+            _jobPrototypeIds.Clear();
+            JobPresetOptionButton.Clear();
+
+            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>().ToList();
+            jobs.Sort((x, y) => string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCulture));
+
+            foreach (var job in jobs)
+            {
+                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
+                {
+                    continue;
+                }
+
+                _jobPrototypeIds.Add(job.ID);
+                JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
             }
         }
 
@@ -146,6 +162,8 @@ namespace Content.Client.Access.UI
 
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
         {
+            PopulateJobPresets();
+
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
                 ? Loc.GetString("id-card-console-window-eject-button")
                 : Loc.GetString("id-card-console-window-insert-button");
@@ -211,7 +229,7 @@ namespace Content.Client.Access.UI
             var jobProtoDirty = _lastJobProto != null &&
                                 _jobPrototypeIds[JobPresetOptionButton.SelectedId] != _lastJobProto;
 
-            _owner.SubmitData(
+            OnSubmit?.Invoke(
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair

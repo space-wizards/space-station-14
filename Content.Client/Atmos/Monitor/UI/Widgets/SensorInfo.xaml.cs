@@ -25,7 +25,7 @@ public sealed partial class SensorInfo : BoxContainer
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
-    private Button _copySettings => CCopySettings;
+    private Button CopySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
@@ -95,7 +95,7 @@ public sealed partial class SensorInfo : BoxContainer
             OnThresholdUpdate?.Invoke(_address, type, threshold, arg3);
         };
 
-        _copySettings.OnPressed += _ =>
+        CopySettings.OnPressed += _ =>
         {
             SensorDataCopied?.Invoke(data);
         };
@@ -151,5 +151,4 @@ public sealed partial class SensorInfo : BoxContainer
             control.UpdateThresholdData(threshold, data.Gases[gas] / data.TotalMoles);
         }
     }
-
- }
+}

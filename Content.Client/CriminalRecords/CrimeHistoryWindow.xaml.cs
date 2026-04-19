@@ -64,7 +64,7 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
         };
         DeleteButton.OnPressed += _ =>
         {
-            if (_index is not {} index)
+            if (_index is not { } index)
                 return;
 
             OnDeleteHistory?.Invoke(index);
@@ -76,7 +76,7 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
 
         History.OnItemSelected += args =>
         {
-            _index = (uint) args.ItemIndex;
+            _index = (uint)args.ItemIndex;
             DeleteButton.Disabled = false;
         };
         History.OnItemDeselected += args =>
@@ -101,7 +101,7 @@ public sealed partial class CrimeHistoryWindow : FancyWindow
         }
 
         // deselect if something goes wrong
-        if (_index is {} index && record.History.Count >= index)
+        if (_index is { } index && record.History.Count >= index)
             _index = null;
     }
 }

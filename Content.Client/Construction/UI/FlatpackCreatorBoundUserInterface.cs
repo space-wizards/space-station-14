@@ -25,8 +25,6 @@ namespace Content.Client.Construction.UI
             {
                 SendMessage(new FlatpackCreatorStartPackBuiMessage());
             };
-
-            _menu.OpenCentered();
         }
     }
 }

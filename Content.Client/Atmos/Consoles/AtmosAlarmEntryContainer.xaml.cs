@@ -24,6 +24,11 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
     private readonly IEntityManager _entManager;
     private readonly IResourceCache _cache;
     private readonly SharedAtmosphereSystem _atmosphere;
+    private readonly Color _disabledFore = Color.FromHex("#5A5A5A");
+    private readonly Color _goodGreenFore = Color.FromHex("#31843E");
+    private readonly Color _concerningOrangeFore = Color.FromHex("#A5762F");
+    private readonly Color _dangerousRedFore = Color.FromHex("#BB3232");
+    private const string StyleClassButtonColorGreen = "ButtonColorGreen";
 
     private Dictionary<AtmosAlarmType, string> _alarmStrings = new Dictionary<AtmosAlarmType, string>()
     {
@@ -135,7 +140,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
                     {
                         Text = Loc.GetString("atmos-alerts-window-other-gases-value-nil"),
                         FontOverride = normalFont,
-                        FontColorOverride = StyleNano.DisabledFore,
+                        FontColorOverride = _disabledFore,
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                         HorizontalExpand = true,
@@ -175,13 +180,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
     public void SetAsFocus()
     {
-        FocusButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+        FocusButton.AddStyleClass(StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/inverted_triangle.svg.png";
     }
 
     public void RemoveAsFocus()
     {
-        FocusButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+        FocusButton.RemoveStyleClass(StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/triangle_right.png";
         FocusContainer.Visible = false;
     }
@@ -191,13 +196,13 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         switch (alarmType)
         {
             case AtmosAlarmType.Normal:
-                return StyleNano.GoodGreenFore;
+                return _goodGreenFore;
             case AtmosAlarmType.Warning:
-                return StyleNano.ConcerningOrangeFore;
+                return _concerningOrangeFore;
             case AtmosAlarmType.Danger:
-                return StyleNano.DangerousRedFore;
+                return _dangerousRedFore;
         }
 
-        return StyleNano.DisabledFore;
+        return _disabledFore;
     }
 }

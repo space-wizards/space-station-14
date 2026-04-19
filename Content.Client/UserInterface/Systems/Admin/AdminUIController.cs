@@ -79,8 +79,8 @@ public sealed class AdminUIController : UIController,
 
     public void OnSystemUnloaded(AdminSystem system)
     {
-        if (_window != null)
-            _window.Dispose();
+        _window?.Close();
+        _window = null;
 
         _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
@@ -93,7 +93,7 @@ public sealed class AdminUIController : UIController,
             return;
 
         if (_window?.Disposed ?? false)
-            OnWindowDisposed();
+            OnWindowExitedTree();
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
@@ -105,7 +105,7 @@ public sealed class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
-        _window.OnDisposed += OnWindowDisposed;
+        _window.OnExitedTree += OnWindowExitedTree;
     }
 
     public void UnloadButton()
@@ -138,7 +138,7 @@ public sealed class AdminUIController : UIController,
         AdminButton?.SetClickPressed(false);
     }
 
-    private void OnWindowDisposed()
+    private void OnWindowExitedTree()
     {
         if (AdminButton != null)
             AdminButton.Pressed = false;
@@ -150,7 +150,7 @@ public sealed class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
         _window.OnOpen -= OnWindowOpen;
         _window.OnClose -= OnWindowClosed;
-        _window.OnDisposed -= OnWindowDisposed;
+        _window.OnExitedTree -= OnWindowExitedTree;
         _window = null;
     }
 
@@ -167,7 +167,7 @@ public sealed class AdminUIController : UIController,
 
     private void Toggle()
     {
-        if (_window is {IsOpen: true})
+        if (_window is { IsOpen: true })
         {
             _window.Close();
         }
@@ -179,7 +179,7 @@ public sealed class AdminUIController : UIController,
 
     private void PlayerTabEntryKeyBindDown(GUIBoundKeyEventArgs args, ListData? data)
     {
-        if (data is not PlayerListData {Info: var info})
+        if (data is not PlayerListData { Info: var info })
             return;
 
         if (info.NetEntity == null)

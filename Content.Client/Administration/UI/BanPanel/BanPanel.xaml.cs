@@ -124,32 +124,32 @@ public sealed partial class BanPanel : DefaultWindow
         LastConnCheckbox.Pressed = _cfg.GetCVar(CCVars.ServerBanUseLastDetails);
         EraseCheckbox.Pressed = _cfg.GetCVar(CCVars.ServerBanErasePlayer);
 
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) NoteSeverity.None);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) NoteSeverity.Minor);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) NoteSeverity.Medium);
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int) NoteSeverity.High);
-        SeverityOption.SelectId((int) NoteSeverity.Medium);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int)NoteSeverity.None);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int)NoteSeverity.Minor);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int)NoteSeverity.Medium);
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int)NoteSeverity.High);
+        SeverityOption.SelectId((int)NoteSeverity.Medium);
         SeverityOption.OnItemSelected += args => SeverityOption.SelectId(args.Id);
 
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-minutes"), (int) Multipliers.Minutes);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-hours"), (int) Multipliers.Hours);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-days"), (int) Multipliers.Days);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-weeks"), (int) Multipliers.Weeks);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-months"), (int) Multipliers.Months);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-years"), (int) Multipliers.Years);
-        MultiplierOption.AddItem(Loc.GetString("ban-panel-permanent"), (int) Multipliers.Permanent);
-        MultiplierOption.SelectId((int) Multipliers.Minutes);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-minutes"), (int)Multipliers.Minutes);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-hours"), (int)Multipliers.Hours);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-days"), (int)Multipliers.Days);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-weeks"), (int)Multipliers.Weeks);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-months"), (int)Multipliers.Months);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-years"), (int)Multipliers.Years);
+        MultiplierOption.AddItem(Loc.GetString("ban-panel-permanent"), (int)Multipliers.Permanent);
+        MultiplierOption.SelectId((int)Multipliers.Minutes);
         OnMultiplierChanged();
 
-        Tabs.SetTabTitle((int) TabNumbers.BasicInfo, Loc.GetString("ban-panel-tabs-basic"));
+        Tabs.SetTabTitle((int)TabNumbers.BasicInfo, Loc.GetString("ban-panel-tabs-basic"));
         //Tabs.SetTabTitle((int) TabNumbers.Text, Loc.GetString("ban-panel-tabs-reason"));
-        Tabs.SetTabTitle((int) TabNumbers.Players, Loc.GetString("ban-panel-tabs-players"));
-        Tabs.SetTabTitle((int) TabNumbers.Roles, Loc.GetString("ban-panel-tabs-role"));
-        Tabs.SetTabVisible((int) TabNumbers.Roles, false);
+        Tabs.SetTabTitle((int)TabNumbers.Players, Loc.GetString("ban-panel-tabs-players"));
+        Tabs.SetTabTitle((int)TabNumbers.Roles, Loc.GetString("ban-panel-tabs-role"));
+        Tabs.SetTabVisible((int)TabNumbers.Roles, false);
 
-        TypeOption.AddItem(Loc.GetString("ban-panel-select"), (int) Types.None);
-        TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int) Types.Server);
-        TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role);
+        TypeOption.AddItem(Loc.GetString("ban-panel-select"), (int)Types.None);
+        TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int)Types.Server);
+        TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int)Types.Role);
 
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
@@ -247,7 +247,7 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
             else
             {
@@ -266,7 +266,7 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
         };
 
@@ -407,16 +407,16 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void OnMultiplierChanged()
     {
-        TimeLine.Editable = MultiplierOption.SelectedId != (int) Multipliers.Permanent;
+        TimeLine.Editable = MultiplierOption.SelectedId != (int)Multipliers.Permanent;
         Multiplier = MultiplierOption.SelectedId switch
         {
-            (int) Multipliers.Minutes => 1,
-            (int) Multipliers.Hours => 60,
-            (int) Multipliers.Days => 60 * 24,
-            (int) Multipliers.Weeks => 60 * 24 * 7,
-            (int) Multipliers.Months => 60 * 24 * 30,
-            (int) Multipliers.Years => 60 * 24 * 365,
-            (int) Multipliers.Permanent => 0,
+            (int)Multipliers.Minutes => 1,
+            (int)Multipliers.Hours => 60,
+            (int)Multipliers.Days => 60 * 24,
+            (int)Multipliers.Weeks => 60 * 24 * 7,
+            (int)Multipliers.Months => 60 * 24 * 30,
+            (int)Multipliers.Years => 60 * 24 * 365,
+            (int)Multipliers.Permanent => 0,
             _ => throw new ArgumentOutOfRangeException(nameof(MultiplierOption.SelectedId), "Multiplier out of range")
         };
         UpdateExpiresLabel();
@@ -424,7 +424,7 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void UpdateExpiresLabel()
     {
-        var minutes = (uint) (TimeEntered * Multiplier);
+        var minutes = (uint)(TimeEntered * Multiplier);
         ExpiresLabel.Text = minutes == 0
             ? $"{Loc.GetString("admin-note-editor-expiry-label")} {Loc.GetString("server-ban-string-never")}"
             : $"{Loc.GetString("admin-note-editor-expiry-label")} {DateTime.Now + TimeSpan.FromMinutes(minutes):yyyy/MM/dd HH:mm:ss}";
@@ -458,7 +458,7 @@ public sealed partial class BanPanel : DefaultWindow
         }
 
         if (hidInt == 0)
-            hidInt = (byte) (parsedIp.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32);
+            hidInt = (byte)(parsedIp.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32);
         IpAddress = (parsedIp, hidInt);
         ErrorLevel &= ~ErrorLevelEnum.IpAddress;
         IpLine.ModulateSelfOverride = null;
@@ -492,11 +492,11 @@ public sealed partial class BanPanel : DefaultWindow
     private void OnTypeChanged()
     {
         TypeOption.ModulateSelfOverride = null;
-        Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
-            NoteSeverity? newSeverity = null;
-            switch (TypeOption.SelectedId)
-            {
-                case (int)Types.Server:
+        Tabs.SetTabVisible((int)TabNumbers.Roles, TypeOption.SelectedId == (int)Types.Role);
+        NoteSeverity? newSeverity = null;
+        switch (TypeOption.SelectedId)
+        {
+            case (int)Types.Server:
                 if (Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), true, out NoteSeverity serverSeverity))
                     newSeverity = serverSeverity;
                 else
@@ -506,22 +506,22 @@ public sealed partial class BanPanel : DefaultWindow
                 }
 
                 break;
-                case (int) Types.Role:
+            case (int)Types.Role:
 
-                    if (Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity roleSeverity))
-                    {
-                        newSeverity = roleSeverity;
-                    }
-                    else
-                    {
-                        _banPanelSawmill
-                            .Warning("Role ban severity could not be parsed from config!");
-                    }
-                    break;
-            }
+                if (Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity roleSeverity))
+                {
+                    newSeverity = roleSeverity;
+                }
+                else
+                {
+                    _banPanelSawmill
+                        .Warning("Role ban severity could not be parsed from config!");
+                }
+                break;
+        }
 
-            if (newSeverity != null)
-                SeverityOption.SelectId((int) newSeverity.Value);
+        if (newSeverity != null)
+            SeverityOption.SelectId((int)newSeverity.Value);
     }
 
     private void UpdateSubmitEnabled()
@@ -562,7 +562,7 @@ public sealed partial class BanPanel : DefaultWindow
         ProtoId<JobPrototype>[]? jobs = null;
         ProtoId<AntagPrototype>[]? antags = null;
 
-        if (TypeOption.SelectedId == (int) Types.Role)
+        if (TypeOption.SelectedId == (int)Types.Role)
         {
             var jobList = new List<ProtoId<JobPrototype>>();
             var antagList = new List<ProtoId<AntagPrototype>>();
@@ -590,7 +590,7 @@ public sealed partial class BanPanel : DefaultWindow
 
             if (jobList.Count + antagList.Count == 0)
             {
-                Tabs.CurrentTab = (int) TabNumbers.Roles;
+                Tabs.CurrentTab = (int)TabNumbers.Roles;
 
                 return;
             }
@@ -599,10 +599,10 @@ public sealed partial class BanPanel : DefaultWindow
             antags = antagList.ToArray();
         }
 
-        if (TypeOption.SelectedId == (int) Types.None)
+        if (TypeOption.SelectedId == (int)Types.None)
         {
             TypeOption.ModulateSelfOverride = Color.Red;
-            Tabs.CurrentTab = (int) TabNumbers.BasicInfo;
+            Tabs.CurrentTab = (int)TabNumbers.BasicInfo;
 
             return;
         }
@@ -611,7 +611,7 @@ public sealed partial class BanPanel : DefaultWindow
         if (string.IsNullOrWhiteSpace(reason))
         {
             //Tabs.CurrentTab = (int) TabNumbers.Text;
-            Tabs.CurrentTab = (int) TabNumbers.BasicInfo;
+            Tabs.CurrentTab = (int)TabNumbers.BasicInfo;
             ReasonTextEdit.GrabKeyboardFocus();
             ReasonTextEdit.ModulateSelfOverride = Color.Red;
             ReasonTextEdit.OnKeyBindDown += ResetTextEditor;
@@ -631,7 +631,7 @@ public sealed partial class BanPanel : DefaultWindow
         var player = PlayerCheckbox.Pressed ? PlayerUsername : null;
         var useLastIp = IpCheckbox.Pressed && LastConnCheckbox.Pressed && IpAddress is null;
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
-        var severity = (NoteSeverity) SeverityOption.SelectedId;
+        var severity = (NoteSeverity)SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
 
         var ban = new Ban(

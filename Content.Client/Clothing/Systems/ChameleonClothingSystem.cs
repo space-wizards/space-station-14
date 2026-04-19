@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Content.Client.PDA;
+﻿using Content.Client.PDA;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -11,6 +9,8 @@ namespace Content.Client.Clothing.Systems;
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -37,7 +37,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (TryComp(uid, out SpriteComponent? sprite)
             && proto.TryGetComponent(out SpriteComponent? otherSprite, Factory))
         {
-            sprite.CopyFrom(otherSprite);
+            _sprite.CopySprite((EntityUid.Invalid, otherSprite), (uid, sprite));
         }
 
         // Edgecase for PDAs to include visuals when UI is open

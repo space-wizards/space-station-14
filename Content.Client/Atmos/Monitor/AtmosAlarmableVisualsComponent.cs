@@ -5,16 +5,16 @@ namespace Content.Client.Atmos.Monitor;
 [RegisterComponent]
 public sealed partial class AtmosAlarmableVisualsComponent : Component
 {
-    [DataField("layerMap")]
+    [DataField]
     public string LayerMap { get; private set; } = string.Empty;
 
-    [DataField("alarmStates")]
+    [DataField]
     public Dictionary<AtmosAlarmType, string> AlarmStates = new();
 
-    [DataField("hideOnDepowered")]
+    [DataField]
     public List<string>? HideOnDepowered;
 
     // eh...
-    [DataField("setOnDepowered")]
+    [DataField]
     public Dictionary<string, string>? SetOnDepowered;
 }

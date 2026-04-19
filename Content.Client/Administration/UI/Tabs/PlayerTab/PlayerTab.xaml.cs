@@ -100,20 +100,17 @@ public sealed partial class PlayerTab : Control
         RefreshPlayerList(_players);
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
+        base.ExitedTree();
 
-        if (disposing)
-        {
-            _adminSystem.PlayerListChanged -= RefreshPlayerList;
-            _adminSystem.OverlayEnabled -= OverlayEnabled;
-            _adminSystem.OverlayDisabled -= OverlayDisabled;
+        _adminSystem.PlayerListChanged -= RefreshPlayerList;
+        _adminSystem.OverlayEnabled -= OverlayEnabled;
+        _adminSystem.OverlayDisabled -= OverlayDisabled;
 
-            OverlayButton.OnPressed -= OverlayButtonPressed;
+        OverlayButton.OnPressed -= OverlayButtonPressed;
 
-            ListHeader.OnHeaderClicked -= HeaderClicked;
-        }
+        ListHeader.OnHeaderClicked -= HeaderClicked;
     }
 
     #region ListContainer
@@ -161,7 +158,7 @@ public sealed partial class PlayerTab : Control
 
     private void GenerateButton(ListData data, ListContainerButton button)
     {
-        if (data is not PlayerListData { Info: var player})
+        if (data is not PlayerListData { Info: var player })
             return;
 
         var entry = new PlayerTabEntry(
@@ -185,7 +182,7 @@ public sealed partial class PlayerTab : Control
     /// <returns>Whether <paramref name="filter"/> is contained in <paramref name="listData"/>.FilteringString.</returns>
     private bool DataFilterCondition(string filter, ListData listData)
     {
-        if (listData is not PlayerListData {Info: var info, FilteringString: var playerString})
+        if (listData is not PlayerListData { Info: var info, FilteringString: var playerString })
             return false;
 
         if (!_showDisconnected && !info.Connected)

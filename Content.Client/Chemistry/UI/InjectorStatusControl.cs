@@ -26,7 +26,7 @@ public sealed class InjectorStatusControl : Control
 
     public InjectorStatusControl(Entity<InjectorComponent> parent, SharedSolutionContainerSystem solutionContainers, IPrototypeManager prototypeManager)
     {
-        _prototypeManager  = prototypeManager;
+        _prototypeManager = prototypeManager;
 
         _parent = parent;
         _solutionContainers = solutionContainers;

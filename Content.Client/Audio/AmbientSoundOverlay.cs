@@ -29,8 +29,8 @@ public sealed class AmbientSoundOverlay : Overlay
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var xformSystem = _entManager.System<SharedTransformSystem>();
 
-        const float Size = 0.25f;
-        const float Alpha = 0.25f;
+        const float size = 0.25f;
+        const float alpha = 0.25f;
 
         foreach (var ent in _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds))
         {
@@ -41,16 +41,16 @@ public sealed class AmbientSoundOverlay : Overlay
             {
                 if (_ambient.IsActive((ent, ambientSound)))
                 {
-                    worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), Size, Color.LightGreen.WithAlpha(Alpha * 2f));
+                    worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), size, Color.LightGreen.WithAlpha(alpha * 2f));
                 }
                 else
                 {
-                    worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), Size, Color.Orange.WithAlpha(Alpha));
+                    worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), size, Color.Orange.WithAlpha(alpha));
                 }
             }
             else
             {
-                worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), Size, Color.Red.WithAlpha(Alpha));
+                worldHandle.DrawCircle(xformSystem.GetWorldPosition(xform), size, Color.Red.WithAlpha(alpha));
             }
         }
     }

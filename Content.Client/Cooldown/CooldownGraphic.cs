@@ -59,7 +59,7 @@ namespace Content.Client.Cooldown
             var progress = (curTime - start).TotalSeconds / length;
             var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
 
-            Progress = MathHelper.Clamp((float) ratio, -1, 1);
+            Progress = MathHelper.Clamp((float)ratio, -1, 1);
             Visible = ratio > -1f;
         }
     }

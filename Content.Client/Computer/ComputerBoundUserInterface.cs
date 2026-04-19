@@ -36,7 +36,7 @@ namespace Content.Client.Computer
                 return;
             }
 
-            _window.UpdateState((TState) state);
+            _window.UpdateState((TState)state);
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

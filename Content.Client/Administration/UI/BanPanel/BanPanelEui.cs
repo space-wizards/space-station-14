@@ -37,6 +37,5 @@ public sealed class BanPanelEui : BaseEui
     public override void Closed()
     {
         BanPanel.Close();
-        BanPanel.Dispose();
     }
 }

@@ -20,18 +20,18 @@ public sealed partial class ScrubberControl : BoxContainer
     private string _address;
 
     public event Action<string, IAtmosDeviceData>? ScrubberDataChanged;
-	public event Action<IAtmosDeviceData>? ScrubberDataCopied;
+    public event Action<IAtmosDeviceData>? ScrubberDataCopied;
 
-    private CheckBox _enabled => CEnableDevice;
-    private CollapsibleHeading _addressLabel => CAddress;
-    private OptionButton _pumpDirection => CPumpDirection;
-    private FloatSpinBox _volumeRate => CVolumeRate;
-    private CheckBox _wideNet => CWideNet;
-    private Button _copySettings => CCopySettings;
-    private Button _selectAll => CSelectAll;
-    private Button _deselectAll => CDeselectAll;
+    private CheckBox Enabled => CEnableDevice;
+    private CollapsibleHeading AddressLabel => CAddress;
+    private OptionButton PumpDirection => CPumpDirection;
+    private FloatSpinBox VolumeRate => CVolumeRate;
+    private CheckBox WideNet => CWideNet;
+    private Button CopySettings => CCopySettings;
+    private Button SelectAll => CSelectAll;
+    private Button DeselectAll => CDeselectAll;
 
-    private GridContainer _gases => CGasContainer;
+    private GridContainer Gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
 
     public ScrubberControl(GasVentScrubberData data, string address)
@@ -47,57 +47,57 @@ public sealed partial class ScrubberControl : BoxContainer
         _data = data;
         _address = address;
 
-        _addressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
+        AddressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
 
-        _enabled.Pressed = data.Enabled;
-        _enabled.OnToggled += _ =>
+        Enabled.Pressed = data.Enabled;
+        Enabled.OnToggled += _ =>
         {
-            _data.Enabled = _enabled.Pressed;
+            _data.Enabled = Enabled.Pressed;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
-        _wideNet.Pressed = data.WideNet;
-        _wideNet.OnToggled += _ =>
+        WideNet.Pressed = data.WideNet;
+        WideNet.OnToggled += _ =>
         {
-            _data.WideNet = _wideNet.Pressed;
+            _data.WideNet = WideNet.Pressed;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
-        _volumeRate.Value = _data.VolumeRate;
-        _volumeRate.OnValueChanged += _ =>
+        VolumeRate.Value = _data.VolumeRate;
+        VolumeRate.OnValueChanged += _ =>
         {
-            _data.VolumeRate = _volumeRate.Value;
+            _data.VolumeRate = VolumeRate.Value;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
-        _volumeRate.IsValid += value => value >= 0;
+        VolumeRate.IsValid += value => value >= 0;
 
         foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
         {
-            _pumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int) value);
+            PumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int)value);
         }
 
-        _pumpDirection.SelectId((int) _data.PumpDirection);
-        _pumpDirection.OnItemSelected += args =>
+        PumpDirection.SelectId((int)_data.PumpDirection);
+        PumpDirection.OnItemSelected += args =>
         {
-            _pumpDirection.SelectId(args.Id);
-            _data.PumpDirection = (ScrubberPumpDirection) args.Id;
+            PumpDirection.SelectId(args.Id);
+            _data.PumpDirection = (ScrubberPumpDirection)args.Id;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
-        _pumpDirection.Disabled = data.AirAlarmPanicWireCut;
+        PumpDirection.Disabled = data.AirAlarmPanicWireCut;
 
-        _copySettings.OnPressed += _ =>
+        CopySettings.OnPressed += _ =>
         {
             ScrubberDataCopied?.Invoke(_data);
         };
 
         var allGases = Enum.GetValues<Gas>();
-        _selectAll.OnPressed += _ =>
+        SelectAll.OnPressed += _ =>
         {
             _data.FilterGases = new HashSet<Gas>(allGases);
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
-        _deselectAll.OnPressed += _ =>
+        DeselectAll.OnPressed += _ =>
         {
             _data.FilterGases = [];
             ScrubberDataChanged?.Invoke(_address, _data);
@@ -126,7 +126,7 @@ public sealed partial class ScrubberControl : BoxContainer
                 ScrubberDataChanged?.Invoke(_address, _data);
             };
             _gasControls.Add(value, gasButton);
-            _gases.AddChild(gasButton);
+            Gases.AddChild(gasButton);
         }
 
     }
@@ -134,17 +134,17 @@ public sealed partial class ScrubberControl : BoxContainer
     public void ChangeData(GasVentScrubberData data)
     {
         _data.Enabled = data.Enabled;
-        _enabled.Pressed = _data.Enabled;
+        Enabled.Pressed = _data.Enabled;
 
         _data.PumpDirection = data.PumpDirection;
-        _pumpDirection.Select((int) _data.PumpDirection);
-        _pumpDirection.Disabled = data.AirAlarmPanicWireCut;
+        PumpDirection.Select((int)_data.PumpDirection);
+        PumpDirection.Disabled = data.AirAlarmPanicWireCut;
 
         _data.VolumeRate = data.VolumeRate;
-        _volumeRate.Value = _data.VolumeRate;
+        VolumeRate.Value = _data.VolumeRate;
 
         _data.WideNet = data.WideNet;
-        _wideNet.Pressed = _data.WideNet;
+        WideNet.Pressed = _data.WideNet;
         _data.FilterGases = data.FilterGases;
 
         foreach (var value in Enum.GetValues<Gas>())

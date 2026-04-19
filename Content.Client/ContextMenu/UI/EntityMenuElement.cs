@@ -4,7 +4,6 @@ using Content.Client.Administration.Systems;
 using Content.Client.UserInterface;
 using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 
 namespace Content.Client.ContextMenu.UI
@@ -41,9 +40,9 @@ namespace Content.Client.ContextMenu.UI
             UpdateEntity();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
+            base.ExitedTree();
             Entity = null;
             Count = 0;
         }

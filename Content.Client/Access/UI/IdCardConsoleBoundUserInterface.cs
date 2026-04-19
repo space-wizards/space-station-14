@@ -4,6 +4,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
@@ -11,10 +12,10 @@ namespace Content.Client.Access.UI
 {
     public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SharedIdCardConsoleSystem _idCardConsoleSystem = default!;
-
         private IdCardConsoleWindow? _window;
+
+        private List<ProtoId<AccessLevelPrototype>> _accessLevels = [];
 
         public IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -24,48 +25,51 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
-            List<ProtoId<AccessLevelPrototype>> accessLevels;
 
             if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
             {
-                accessLevels = idCard.AccessLevels;
+                _accessLevels = idCard.AccessLevels;
             }
             else
             {
-                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
+                _accessLevels = [];
                 _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
             }
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels)
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            };
+            _window = this.CreateWindow<IdCardConsoleWindow>();
+
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
-
-            _window.OnClose += Close;
-            _window.OpenCentered();
+            _window.OnSubmit += SubmitData;
         }
 
-        protected override void Dispose(bool disposing)
+        public override void OnProtoReload(PrototypesReloadedEventArgs args)
         {
-            base.Dispose(disposing);
-            if (!disposing)
+            base.OnProtoReload(args);
+            if (!args.WasModified<AccessLevelPrototype>())
                 return;
 
-            _window?.Dispose();
+            if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
+            {
+                _accessLevels = idCard.AccessLevels;
+                _window?.SetAccessLevels(_accessLevels);
+            }
+
+            if (State != null)
+                _window?.UpdateState((IdCardConsoleBoundUserInterfaceState)State);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            var castState = (IdCardConsoleBoundUserInterfaceState) state;
+            var castState = (IdCardConsoleBoundUserInterfaceState)state;
             _window?.UpdateState(castState);
         }
 
-        public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, ProtoId<JobPrototype>? newJobPrototype)
+        private void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, ProtoId<JobPrototype>? newJobPrototype)
         {
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,

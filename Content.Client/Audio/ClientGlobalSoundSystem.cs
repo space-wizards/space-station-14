@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -64,7 +63,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 
     private void PlayAdminSound(AdminSoundEvent soundEvent)
     {
-        if(!_adminAudioEnabled) return;
+        if (!_adminAudioEnabled) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Specifier, Filter.Local(), false, soundEvent.AudioParams);
         _adminAudio.Add(stream?.Entity);
@@ -73,7 +72,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     private void PlayStationEventMusic(StationEventMusicEvent soundEvent)
     {
         // Either the cvar is disabled or it's already playing
-        if(!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
+        if (!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Specifier, Filter.Local(), false, soundEvent.AudioParams);
         _eventAudio.Add(soundEvent.Type, stream?.Entity);

@@ -21,7 +21,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
 
     // Just an array to initialize the pixels of a new OwnedTexture
-    private static readonly Rgba32[] EmptyTexture = new Rgba32[32*32];
+    private static readonly Rgba32[] EmptyTexture = new Rgba32[32 * 32];
 
     public override void Initialize()
     {
@@ -34,7 +34,7 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
     private void OnComponentInit(Entity<AnomalyScannerScreenComponent> ent, ref ComponentInit args)
     {
-        if(!_sprite.TryGetLayer(ent.Owner, AnomalyScannerVisualLayers.Base, out var layer, true))
+        if (!_sprite.TryGetLayer(ent.Owner, AnomalyScannerVisualLayers.Base, out var layer, true))
             return;
 
         // Allocate the OwnedTexture
@@ -80,16 +80,16 @@ public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
         // Calculate the bar color
         // Hue "angle" of two colors to interpolate between depending on severity
         // Just a lerp from Green hue at severity = 0.5 to Red hue at 1.0
-        var hue = Math.Clamp(2*GreenHue * (1 - severity), RedHue, GreenHue);
+        var hue = Math.Clamp(2 * GreenHue * (1 - severity), RedHue, GreenHue);
         var color = new Rgba32(Color.FromHsv(new Vector4(hue, 1f, 1f, 1f)).RGBA);
 
         var transparent = new Rgba32(0, 0, 0, 255);
 
-        for(var y = 0; y < ent.Comp.Size.Y; y++)
+        for (var y = 0; y < ent.Comp.Size.Y; y++)
         {
             for (var x = 0; x < ent.Comp.Size.X; x++)
             {
-                ent.Comp.BarBuf[y*ent.Comp.Size.X + x]  = x < barLength ? color : transparent;
+                ent.Comp.BarBuf[y * ent.Comp.Size.X + x] = x < barLength ? color : transparent;
             }
         }
 

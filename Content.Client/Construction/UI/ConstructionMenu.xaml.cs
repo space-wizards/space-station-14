@@ -95,7 +95,7 @@ namespace Content.Client.Construction.UI
             Recipes.NoItemSelected += () => RecipeSelected?.Invoke(this, null);
             Recipes.GenerateItem += (data, button) =>
             {
-                if (data is not ConstructionMenuListData (var prototype, var targetPrototype))
+                if (data is not ConstructionMenuListData(var prototype, var targetPrototype))
                     return;
 
                 var entProtoView = new EntityPrototypeView()

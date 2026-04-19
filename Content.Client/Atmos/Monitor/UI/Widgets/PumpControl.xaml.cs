@@ -13,15 +13,15 @@ public sealed partial class PumpControl : BoxContainer
     private string _address;
 
     public event Action<string, IAtmosDeviceData>? PumpDataChanged;
-	public event Action<IAtmosDeviceData>? PumpDataCopied;
+    public event Action<IAtmosDeviceData>? PumpDataCopied;
 
-    private CheckBox _enabled => CEnableDevice;
-    private CollapsibleHeading _addressLabel => CAddress;
-    private OptionButton _pumpDirection => CPumpDirection;
-    private OptionButton _pressureCheck => CPressureCheck;
-    private FloatSpinBox _externalBound => CExternalBound;
-    private FloatSpinBox _internalBound => CInternalBound;
-    private Button _copySettings => CCopySettings;
+    private CheckBox Enabled => CEnableDevice;
+    private CollapsibleHeading AddressLabel => CAddress;
+    private OptionButton PumpDirection => CPumpDirection;
+    private OptionButton PressureCheck => CPressureCheck;
+    private FloatSpinBox ExternalBound => CExternalBound;
+    private FloatSpinBox InternalBound => CInternalBound;
+    private Button CopySettings => CCopySettings;
 
     public PumpControl(GasVentPumpData data, string address)
     {
@@ -32,58 +32,58 @@ public sealed partial class PumpControl : BoxContainer
         _data = data;
         _address = address;
 
-        _addressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
+        AddressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
 
-        _enabled.Pressed = data.Enabled;
-        _enabled.OnToggled += _ =>
+        Enabled.Pressed = data.Enabled;
+        Enabled.OnToggled += _ =>
         {
-            _data.Enabled = _enabled.Pressed;
+            _data.Enabled = Enabled.Pressed;
             PumpDataChanged?.Invoke(_address, _data);
         };
 
-        _internalBound.Value = _data.InternalPressureBound;
-        _internalBound.OnValueChanged += _ =>
+        InternalBound.Value = _data.InternalPressureBound;
+        InternalBound.OnValueChanged += _ =>
         {
-            _data.InternalPressureBound = _internalBound.Value;
+            _data.InternalPressureBound = InternalBound.Value;
             PumpDataChanged?.Invoke(_address, _data);
         };
-        _internalBound.IsValid += value => value >= 0;
+        InternalBound.IsValid += value => value >= 0;
 
-        _externalBound.Value = _data.ExternalPressureBound;
-        _externalBound.OnValueChanged += _ =>
+        ExternalBound.Value = _data.ExternalPressureBound;
+        ExternalBound.OnValueChanged += _ =>
         {
-            _data.ExternalPressureBound = _externalBound.Value;
+            _data.ExternalPressureBound = ExternalBound.Value;
             PumpDataChanged?.Invoke(_address, _data);
         };
-        _externalBound.IsValid += value => value >= 0;
+        ExternalBound.IsValid += value => value >= 0;
 
         foreach (var value in Enum.GetValues<VentPumpDirection>())
         {
-            _pumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int) value);
+            PumpDirection.AddItem(Loc.GetString($"air-alarm-ui-pump-direction-{value.ToString().ToLower()}"), (int)value);
         }
 
-        _pumpDirection.SelectId((int) _data.PumpDirection);
-        _pumpDirection.OnItemSelected += args =>
+        PumpDirection.SelectId((int)_data.PumpDirection);
+        PumpDirection.OnItemSelected += args =>
         {
-            _pumpDirection.SelectId(args.Id);
-            _data.PumpDirection = (VentPumpDirection) args.Id;
+            PumpDirection.SelectId(args.Id);
+            _data.PumpDirection = (VentPumpDirection)args.Id;
             PumpDataChanged?.Invoke(_address, _data);
         };
 
         foreach (var value in Enum.GetValues<VentPressureBound>())
         {
-            _pressureCheck.AddItem(Loc.GetString($"air-alarm-ui-pressure-bound-{value.ToString().ToLower()}"), (int) value);
+            PressureCheck.AddItem(Loc.GetString($"air-alarm-ui-pressure-bound-{value.ToString().ToLower()}"), (int)value);
         }
 
-        _pressureCheck.SelectId((int) _data.PressureChecks);
-        _pressureCheck.OnItemSelected += args =>
+        PressureCheck.SelectId((int)_data.PressureChecks);
+        PressureCheck.OnItemSelected += args =>
         {
-            _pressureCheck.SelectId(args.Id);
-            _data.PressureChecks = (VentPressureBound) args.Id;
+            PressureCheck.SelectId(args.Id);
+            _data.PressureChecks = (VentPressureBound)args.Id;
             PumpDataChanged?.Invoke(_address, _data);
         };
 
-        _copySettings.OnPressed += _ =>
+        CopySettings.OnPressed += _ =>
         {
             PumpDataCopied?.Invoke(_data);
         };
@@ -92,18 +92,18 @@ public sealed partial class PumpControl : BoxContainer
     public void ChangeData(GasVentPumpData data)
     {
         _data.Enabled = data.Enabled;
-        _enabled.Pressed = _data.Enabled;
+        Enabled.Pressed = _data.Enabled;
 
         _data.PumpDirection = data.PumpDirection;
-        _pumpDirection.SelectId((int) _data.PumpDirection);
+        PumpDirection.SelectId((int)_data.PumpDirection);
 
         _data.PressureChecks = data.PressureChecks;
-        _pressureCheck.SelectId((int) _data.PressureChecks);
+        PressureCheck.SelectId((int)_data.PressureChecks);
 
         _data.ExternalPressureBound = data.ExternalPressureBound;
-        _externalBound.Value = _data.ExternalPressureBound;
+        ExternalBound.Value = _data.ExternalPressureBound;
 
         _data.InternalPressureBound = data.InternalPressureBound;
-        _internalBound.Value = _data.InternalPressureBound;
+        InternalBound.Value = _data.InternalPressureBound;
     }
 }

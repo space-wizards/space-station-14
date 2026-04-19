@@ -47,6 +47,8 @@ namespace Content.Client.Construction.UI
         private const string FavoriteCatName = "construction-category-favorites";
         private const string ForAllCategoryName = "construction-category-all";
 
+        private Color _buttonColorDefault = Color.FromHex("#464966");
+
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -229,7 +231,7 @@ namespace Content.Client.Construction.UI
 
                 var itemButtonPanelContainer = new PanelContainer
                 {
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = StyleNano.ButtonColorDefault },
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColorDefault },
                     Children = { itemButton },
                 };
 
@@ -312,7 +314,7 @@ namespace Content.Client.Construction.UI
                 return;
 
             button.Children.Single().Modulate = select ? Color.Green : Color.White;
-            var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
+            var buttonColor = select ? _buttonColorDefault : Color.Transparent;
             buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
 
@@ -436,11 +438,10 @@ namespace Content.Client.Construction.UI
                 }
 
                 _placementManager.BeginPlacing(new PlacementInformation
-                    {
-                        IsTile = false,
-                        PlacementOption = _selected.PlacementMode
-                    },
-                    new ConstructionPlacementHijack(_constructionSystem, _selected));
+                {
+                    IsTile = false,
+                    PlacementOption = _selected.PlacementMode
+                }, new ConstructionPlacementHijack(_constructionSystem, _selected));
 
                 UpdateGhostPlacement();
             }
@@ -464,11 +465,10 @@ namespace Content.Client.Construction.UI
             var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 
             _placementManager.BeginPlacing(new PlacementInformation()
-                {
-                    IsTile = false,
-                    PlacementOption = _selected.PlacementMode,
-                },
-                new ConstructionPlacementHijack(constructSystem, _selected));
+            {
+                IsTile = false,
+                PlacementOption = _selected.PlacementMode,
+            }, new ConstructionPlacementHijack(constructSystem, _selected));
 
             _constructionView.BuildButtonPressed = true;
         }

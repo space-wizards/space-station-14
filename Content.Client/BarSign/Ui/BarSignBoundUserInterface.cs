@@ -21,16 +21,13 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
             .OrderBy(p => Loc.GetString(p.Name))
             .ToList();
 
-        _menu = this.CreateWindow<BarSignMenu>();
+        _menu = this.CreateWindowCenteredLeft<BarSignMenu>();
         _menu.LoadSigns(allSigns);
 
         _menu.OnSignSelected += id =>
         {
             SendPredictedMessage(new SetBarSignMessage(id));
         };
-
-        _menu.OnClose += Close;
-        _menu.OpenToLeft();
     }
 
     public override void Update()

@@ -17,13 +17,13 @@ public sealed partial class VaporVisualsComponent : Component
     /// <summary>
     /// The amount of time over which the spray animation is played.
     /// </summary>
-    [DataField("animationTime")]
+    [DataField]
     public float AnimationTime = 0.25f;
 
     /// <summary>
     /// The RSI state that is flicked when the vapor is sprayed.
     /// </summary>
-    [DataField("animationState")]
+    [DataField]
     public string AnimationState = "chempuff";
 
     /// <summary>

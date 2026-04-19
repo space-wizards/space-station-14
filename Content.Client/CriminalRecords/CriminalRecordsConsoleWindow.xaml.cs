@@ -184,7 +184,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonContainer.Visible = selected;
         RecordUnselected.Visible = !selected;
 
-        _access = _player.LocalSession?.AttachedEntity is {} player
+        _access = _player.LocalSession?.AttachedEntity is { } player
             && _accessReader.IsAllowed(player, Console);
 
         // hide access-required editing parts when no access
@@ -212,12 +212,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             return;
         }
 
-        var entries = listing.Select(i => new ItemList.Item(RecordListing) {
-                Text = i.Value,
-                Metadata = i.Key
+        var entries = listing.Select(i => new ItemList.Item(RecordListing)
+        {
+            Text = i.Value,
+            Metadata = i.Key
         }).ToList();
         entries.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-        RecordListing.SetItems(entries, (a,b) => string.Compare(a.Text, b.Text));
+        RecordListing.SetItems(entries, (a, b) => string.Compare(a.Text, b.Text));
     }
 
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
@@ -233,12 +234,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             PersonJobIcon.Texture = _spriteSystem.Frame0(proto.Icon);
         }
 
-        PersonPrints.Text = stationRecord.Fingerprint ??  Loc.GetString("generic-not-available-shorthand");
-        PersonDna.Text = stationRecord.DNA ??  Loc.GetString("generic-not-available-shorthand");
+        PersonPrints.Text = stationRecord.Fingerprint ?? Loc.GetString("generic-not-available-shorthand");
+        PersonDna.Text = stationRecord.DNA ?? Loc.GetString("generic-not-available-shorthand");
 
         if (criminalRecord.Status != SecurityStatus.None)
         {
-            specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
+            specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"), GetStatusIcon(criminalRecord.Status));
         }
         PersonStatusTX.SetFromSpriteSpecifier(specifier);
         PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);

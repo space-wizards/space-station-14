@@ -8,7 +8,7 @@ namespace Content.Client.Chemistry.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TransferAmountWindow : DefaultWindow
 {
-    private int _max = Int32.MaxValue;
+    private int _max = int.MaxValue;
     private int _min = 1;
 
     public TransferAmountWindow()

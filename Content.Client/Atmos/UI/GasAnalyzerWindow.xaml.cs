@@ -159,9 +159,9 @@ namespace Content.Client.Atmos.UI
                 VerticalExpand = true,
                 HorizontalExpand = true,
                 Margin = new Thickness(4),
-                PanelOverride = new StyleBoxFlat{BorderColor = Color.FromHex("#4f4f4f"), BorderThickness = new Thickness(1)}
+                PanelOverride = new StyleBoxFlat { BorderColor = Color.FromHex("#4f4f4f"), BorderThickness = new Thickness(1) }
             };
-            var dataContainer = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, VerticalExpand = true, Margin = new Thickness(4)};
+            var dataContainer = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, VerticalExpand = true, Margin = new Thickness(4) };
 
 
             parent.AddChild(panel);
@@ -310,11 +310,11 @@ namespace Content.Client.Atmos.UI
             }
 
             tableKey.AddChild(new Label
-                { Text = Loc.GetString("gas-analyzer-window-gas-column-name"), Align = Label.AlignMode.Center });
+            { Text = Loc.GetString("gas-analyzer-window-gas-column-name"), Align = Label.AlignMode.Center });
             tableVal.AddChild(new Label
-                { Text = Loc.GetString("gas-analyzer-window-molarity-column-name"), Align = Label.AlignMode.Center });
+            { Text = Loc.GetString("gas-analyzer-window-molarity-column-name"), Align = Label.AlignMode.Center });
             tablePercent.AddChild(new Label
-                { Text = Loc.GetString("gas-analyzer-window-percentage-column-name"), Align = Label.AlignMode.Center });
+            { Text = Loc.GetString("gas-analyzer-window-percentage-column-name"), Align = Label.AlignMode.Center });
 
             tableKey.AddChild(new StripeBack());
             tableVal.AddChild(new StripeBack());

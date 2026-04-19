@@ -27,7 +27,7 @@ public sealed partial class LogProbeUiFragment : BoxContainer
 
         ProbedDeviceContainer.RemoveAllChildren();
 
-        var count =  1;
+        var count = 1;
         foreach (var log in logs)
         {
             AddAccessLog(log, count);

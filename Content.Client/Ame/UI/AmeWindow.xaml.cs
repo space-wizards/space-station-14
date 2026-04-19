@@ -29,7 +29,7 @@ namespace Content.Client.Ame.UI
         /// <param name="state">State data sent by the server.</param>
         public void UpdateState(BoundUserInterfaceState state)
         {
-            var castState = (AmeControllerBoundUserInterfaceState) state;
+            var castState = (AmeControllerBoundUserInterfaceState)state;
 
             // Disable all buttons if not powered
             if (Contents.Children.Any())

@@ -28,7 +28,8 @@ namespace Content.Client.Clickable
         [ViewVariables]
         private readonly Dictionary<Texture, ClickMap> _textureMaps = new();
 
-        [ViewVariables] private readonly Dictionary<RSI, RsiClickMapData> _rsiMaps =
+        [ViewVariables]
+        private readonly Dictionary<RSI, RsiClickMapData> _rsiMaps =
             new();
 
         public void PostInject()
@@ -80,12 +81,12 @@ namespace Content.Client.Clickable
                 return false;
             }
 
-            if (!rsiData.Offsets.TryGetValue(state, out var stateDat) || stateDat.Length <= (int) dir)
+            if (!rsiData.Offsets.TryGetValue(state, out var stateDat) || stateDat.Length <= (int)dir)
             {
                 return false;
             }
 
-            var dirDat = stateDat[(int) dir];
+            var dirDat = stateDat[(int)dir];
             if (dirDat.Length <= frame)
             {
                 return false;
@@ -168,11 +169,11 @@ namespace Content.Client.Clickable
 
             public static ClickMap FromImage<T>(Image<T> image, float threshold) where T : unmanaged, IPixel<T>
             {
-                var threshByte = (byte) (threshold * 255);
+                var threshByte = (byte)(threshold * 255);
                 var width = image.Width;
                 var height = image.Height;
 
-                var dataSize = (int) Math.Ceiling(width * height / 8f);
+                var dataSize = (int)Math.Ceiling(width * height / 8f);
                 var data = new byte[dataSize];
 
                 var pixelSpan = image.GetPixelSpan();
@@ -183,7 +184,7 @@ namespace Content.Client.Clickable
                     pixelSpan[i].ToRgba32(ref rgba);
                     if (rgba.A >= threshByte)
                     {
-                        data[i / 8] |= (byte) (1 << (i % 8));
+                        data[i / 8] |= (byte)(1 << (i % 8));
                     }
                 }
 
