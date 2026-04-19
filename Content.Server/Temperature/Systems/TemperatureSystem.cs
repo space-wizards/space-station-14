@@ -52,8 +52,7 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
             if (diff < 0.1f)
                 continue;
 
-            if (ConductHeat((uid, temp), ref comp, frameTime, comp.Conductance, true) != 0)
-                Dirty(uid, comp);
+            ConductHeat((uid, temp), ref comp, frameTime, comp.Conductance, true);
         }
 
         UpdateDamage();
