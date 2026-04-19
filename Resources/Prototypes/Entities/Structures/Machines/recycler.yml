@@ -58,7 +58,6 @@
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
   - type: RecyclerVisuals
-
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer
     enabled: false
@@ -117,24 +116,24 @@
     speechSounds: SyndieBorg
 
 - type: entity
-  id: IndustrialShredder
+  id: IndustrialSmelter
   parent: BaseMachinePowered
-  name: industrial shredder
+  name: industrial smelter
   description: Testing Entity
   components:
   - type: Sprite
     drawdepth: Doors
-    sprite: Structures/Machines/shredder.rsi
+    sprite: Structures/Machines/smelter.rsi
     layers:
-    - state: shredder0
+    - state: smelter0
       map: ["enum.RecyclerVisualLayers.Main"]
     offset: 0, 0.5
   - type: Appearance
   - type: RecyclerVisuals
-    baseKey: shredder
+    baseKey: smelter
   - type: Conveyor
     angle: 90 # Conveyor goes sideways
-  - type: DeviceLinkSink # SLAM-TODO: This needs to not be unlinkable and should be done via the magnet
+  - type: DeviceLinkSink
     ports:
     - Reverse
     - Forward
@@ -147,8 +146,7 @@
     scaleProcessSpeed: false
     minimumProcessDuration: 0
     efficiency: 0.1
-    # whitelist: # SLAM-TODO: Ya you gotta figure out this whole thing
-    blacklist:
+    blacklist: # TODO: This will need to be iterated on to properly balance all items
       components:
       - Material
       - Pda
@@ -156,6 +154,7 @@
       - GrapplingProjectile
       tags:
       - HighRiskItem
+      - SmeltingImmune
     sound:
       path: /Audio/Effects/saw.ogg
       params:
@@ -163,10 +162,16 @@
     cutOffSound: false
   - type: TileReclaimer
     sound:
-      path: /Audio/Effects/grind.ogg # SLAM-TODO: Needs more CRONCH
+      path: /Audio/Effects/grind.ogg # TODO: Needs more CRONCH, more SMELT
       params:
         volume: -3
     recyclingBox: "-0.35, 0.5, 0.35, 0.75"
+    blacklist:
+      components:
+      - StationMember
+      - CargoShuttle
+      - ArrivalsShuttle
+      - EmergencyShuttle
   - type: Fixtures
     fixtures:
       brrt:
@@ -176,10 +181,10 @@
         hard: false
         layer:
         - FullTileLayer
-        - DoorPassable # SLAM-TODO: Put this here to hit floor objects like carpets etc, probably wrong way to go about it
+        - DoorPassable # Here to hit floor objects like carpets etc.
         mask:
-        - FullTileMask # SLAM-TODO: Necessary for grilles??
-        - TabletopMachineLayer # SLAM-TODO: I need to put this here... For lights????
+        - FullTileMask # Necessary for grilles.
+        - TabletopMachineLayer # This is needed for lights.
       collision:
         shape:
           !type:PhysShapeAabb
@@ -226,3 +231,14 @@
   - type: Repairable
     doAfterDelay: 5
     fuelCost: 25
+  - type: Tag
+    tags:
+    - EmagImmune
+
+- type: entity
+  id: IndustrialSmelterAdmeme
+  parent: IndustrialSmelter
+  suffix: No Grid Whitelist, Admeme
+  components:
+  - type: TileReclaimer
+    blacklist: null

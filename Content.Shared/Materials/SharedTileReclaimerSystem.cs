@@ -21,12 +21,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Update(float frameTime)
     {
@@ -40,8 +35,9 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
 
     private void Update(Entity<TileReclaimerComponent, TransformComponent> ent)
     {
+        //TODO: The recycler is hardcoded to rely on the conveyor component for its powered state, and this system is based on the same functionality. That should be fixed into a more general solution for both systems, but for the sake of consistency I'm not doing that now.
         if (!TryComp<ConveyorComponent>(ent, out var conveyor) || conveyor.State == ConveyorState.Off)
-            return; // SLAM-TODO: The recycler is hardcoded to rely on the conveyor component for its powered state. That should be fixed into a more general solution, but for the sake of prototyping I'm not doing that now.
+            return;
 
         var reclaimerGrid = _transform.GetGrid((ent, ent));
 
@@ -64,10 +60,9 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
             if (grid == reclaimerGrid)
                 continue;
 
-            // SLAM-TODO: This will be checking for wreck grids
-            //if (_whitelistSystem.IsWhitelistFail(ent.Comp1.Whitelist, grid) ||
-            //    _whitelistSystem.IsWhitelistPass(ent.Comp1.Blacklist, grid))
-            //    continue;
+            if (_whitelist.IsWhitelistFail(ent.Comp1.Whitelist, grid) ||
+                _whitelist.IsWhitelistPass(ent.Comp1.Blacklist, grid))
+                continue;
 
             foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
             {
@@ -87,7 +82,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
                 shredded = true;
 
                 // We suck in the grid slurrrrp
-                // SLAM-TODO: Should be set via component, AND also impulses cause stacking speed so that should be tempered
+                // TODO: This can probably be refined, as it applies a stacking speed which could theoretically get out of hand if a grid is very long.
                 _physics.ApplyLinearImpulse(grid, ent.Comp1.SlurpStrength * _transform.GetWorldRotation(ent.Comp2).ToWorldVec(), tile.GridIndices);
             }
         }
