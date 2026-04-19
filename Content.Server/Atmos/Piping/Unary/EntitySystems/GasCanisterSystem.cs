@@ -118,8 +118,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
                 : CompOrNull<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value)?.Air;
 
             // Only let gas flow one way!
-            if (output?.Pressure < entity.Comp.ReleasePressure)
-                _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure - output.Pressure, args.dt, ReleaseArea);
+            _atmos.ReleaseGasTo(entity.Comp.Air, output, entity.Comp.ReleasePressure);
         }
 
         // If last pressure is very close to the current pressure, do nothing.
