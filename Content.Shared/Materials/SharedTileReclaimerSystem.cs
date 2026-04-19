@@ -9,7 +9,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Materials;
 
-// SLAM-TODO: Note to self; deleting grid tiles sometimes causes a flashing effect not seen in other similar systems. Figure out why.
+/// <summary>
+/// Handles interactions and logic related to <see cref="TileReclaimerComponent"/>.
+/// </summary>
 public abstract class SharedTileReclaimerSystem : EntitySystem
 {
 

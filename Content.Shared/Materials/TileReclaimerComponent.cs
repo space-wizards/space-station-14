@@ -7,27 +7,26 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Materials;
 
 /// <summary>
-/// Makes an entity into a grid reclaimer, able to delete grids in a square in front of it.
+/// Makes an entity into a grid reclaimer, able to delete grids in front of it and produce materials.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedTileReclaimerSystem))]
 public sealed partial class TileReclaimerComponent : Component
 {
     /// <summary>
-    /// Whether or not the machine has power. We put it here
-    /// so we can network and predict it.
+    /// Whether or not the machine has power.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Powered;
 
     /// <summary>
-    /// An "enable" toggle for things like interfacing with machine linking
+    /// An "enable" toggle for things like interfacing with machine linking.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>
-    /// A master control for whether or not the recycler is broken and can function.
+    /// A master control for whether or not the reclaimer is broken and can function.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Broken;
