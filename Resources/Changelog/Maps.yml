@@ -1078,4 +1078,13 @@
   id: 132
   time: '2026-03-24T21:43:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43046
+- author: ProPeperos
+  changes:
+  - message: On Fland Evac shuttle (Delta) Added missing APC in the upper left room
+    type: Tweak
+  - message: On Fland Evac shuttle (Delta) Moved air canister connector
+    type: Tweak
+  id: 133
+  time: '2026-04-06T18:34:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43481
 Order: 2

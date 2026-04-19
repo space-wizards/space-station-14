@@ -9,12 +9,17 @@
   id: Body
   components:
   # general
+  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
   - Grammar # Pronouns
   - HumanoidProfile # Age, Sex, Gender
+  - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
+  - RandomPrice
+  - TemperatureDamage
+  - TemperatureSpeed
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
@@ -57,6 +62,7 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Puller
   - Vocal # voice sounds
 
 # for job-specific traits etc.
