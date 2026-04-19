@@ -71,8 +71,8 @@ public sealed partial class TileReclaimerComponent : Component
     /// <summary>
     /// Next time a recycling attempt can be made.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
-    [AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextRecycle;
 
     /// <summary>

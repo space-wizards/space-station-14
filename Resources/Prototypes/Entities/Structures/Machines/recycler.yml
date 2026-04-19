@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: Recycler
   parent: BaseMachinePowered
+  id: Recycler
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
@@ -116,11 +116,11 @@
     speechSounds: SyndieBorg
 
 - type: entity
-  id: IndustrialSmelter
   parent: BaseMachinePowered
+  id: IndustrialSmelter
   name: industrial smelter
-  description: A massive stationary machine capable of chewing through flooring and walls. Must be powered to function.
   suffix: Do Not Map
+  description: A massive stationary machine capable of chewing through flooring and walls. Must be powered to function.
   components:
   - type: Sprite
     drawdepth: Doors
