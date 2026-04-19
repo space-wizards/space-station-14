@@ -119,7 +119,7 @@
   id: IndustrialSmelter
   parent: BaseMachinePowered
   name: industrial smelter
-  description: Testing Entity
+  description: A massive stationary machine capable of chewing through flooring and walls. Must be powered to function.
   components:
   - type: Sprite
     drawdepth: Doors
@@ -234,6 +234,9 @@
   - type: Tag
     tags:
     - EmagImmune
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg
 
 - type: entity
   id: IndustrialSmelterAdmeme
