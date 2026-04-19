@@ -123,9 +123,9 @@ public sealed class ChangelingFleshClothingSystem : EntitySystem
             if (HasComp<ChangelingFleshClothingComponent>(targetItem))
             {
                 if (TryComp<ChameleonClothingComponent>(originalItem, out var originalChameleonComp))
-                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, originalChameleonComp.Default); // If it is also a chameleon item then use whatever that is mimicing.
+                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, originalChameleonComp.Default, validate: false); // If it is also a chameleon item then use whatever that is mimicing.
                 else
-                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, chameleonProtoId);
+                    _chameleonClothing.SetSelectedPrototype(targetItem.Value, chameleonProtoId, validate: false); // We don't validate because a lot of clothing is not chameleon whitelisted, like warden's beret.
             }
         }
     }

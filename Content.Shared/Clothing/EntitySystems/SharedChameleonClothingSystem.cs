@@ -195,6 +195,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         // check if it's valid clothing
         if (!proto.TryGetComponent(out ClothingComponent? clothing, Factory))
             return false;
+
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
 
@@ -261,7 +262,15 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     }
 
     // TODO: Predict and use component states for the UI
-    public virtual void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    /// <summary>
+    /// Change chameleon items name, description and sprite to mimic other entity prototype.
+    /// </summary>
+    /// <param name="uid">The entity who's appearance to swap.</param>
+    /// <param name="protoId">The target protoId of the target appearance.</param>
+    /// <param name="forceUpdate">Whether to force update appearance, even if the same one was selected.</param>
+    /// <param name="validate">Whether to validate if the target prototype is a valid chameleon target.</param>
+    /// <param name="component">The <see cref="ChameleonClothingComponent"/> of the entity we are updating.</param>
+    public virtual void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false, bool validate = true,
         ChameleonClothingComponent? component = null)
     { }
 }
