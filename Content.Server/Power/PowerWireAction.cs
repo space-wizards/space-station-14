@@ -115,9 +115,6 @@ public sealed partial class PowerWireAction : BaseWireAction
     /// <returns>false if failed, true otherwise, or if the entity cannot be electrified</returns>
     private bool TrySetElectrocution(EntityUid? user, Wire wire, bool timed = false)
     {
-        if (user is null)
-            return true;
-        
         if (!EntityManager.TryGetComponent<ElectrifiedComponent>(wire.Owner, out var electrified))
         {
             return true;
@@ -125,6 +122,9 @@ public sealed partial class PowerWireAction : BaseWireAction
 
         // always set this to true
         SetElectrified(wire.Owner, true, electrified);
+
+        if (user is null)
+            return true;
 
         var electrifiedAttempt = _electrocution.TryDoElectrifiedAct(wire.Owner, user.Value);
 
