@@ -560,12 +560,12 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         damageTotal = damageTotal / damageVisComp.Divisor;
         var thresholdIndex = damageVisComp.Thresholds.BinarySearch(damageTotal);
 
-        if (thresholdIndex < 0)
+        if (thresholdIndex < -1)
         {
             thresholdIndex = ~thresholdIndex;
             threshold = damageVisComp.Thresholds[thresholdIndex - 1];
         }
-        else
+        else if (thresholdIndex >= 0)
         {
             threshold = damageVisComp.Thresholds[thresholdIndex];
         }
