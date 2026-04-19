@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.Borgs;
 
 public abstract partial class SharedBorgSystem
 {
-    private EntityQuery<BorgModuleComponent> _moduleQuery;
+    [Dependency] private readonly EntityQuery<BorgModuleComponent> _moduleQuery = default!;
 
     public void InitializeModule()
     {
@@ -30,8 +30,6 @@ public abstract partial class SharedBorgSystem
 
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
             OnComponentModuleInstalledRelay);
-
-        _moduleQuery = GetEntityQuery<BorgModuleComponent>();
     }
 
     #region BorgModule
