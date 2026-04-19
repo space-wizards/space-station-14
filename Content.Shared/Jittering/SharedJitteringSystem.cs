@@ -1,4 +1,5 @@
 using Content.Shared.StatusEffectNew;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Jittering;
@@ -14,8 +15,16 @@ public abstract class SharedJitteringSystem : EntitySystem
     // Ideally nothing calls `CreateJitter` but instead goes through status effects in their own way
     private static readonly EntProtoId BasicJitter = "StatusEffectJitter";
 
+    /// <summary>
+    /// Adjusts the jittering of an active status effect.
+    /// Adds jittering if the status did not previously have it.
+    /// </summary>
+    /// <param name="target">The entity with the status.</param>
+    /// <param name="statusId">Prototype of the status effect.</param>
+    /// <param name="jitter">The new parameters for the jitter.</param>
+    [PublicAPI]
     public void AdjustJitter(EntityUid target,
-                            EntProtoId<JitteringStatusEffectComponent> statusId,
+                            EntProtoId statusId,
                             JitterParameters jitter)
     {
         if (!_statusEffects.TryGetStatusEffect(target, statusId, out var statusEnt))
@@ -24,45 +33,5 @@ public abstract class SharedJitteringSystem : EntitySystem
         var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt.Value);
         jitterComp.Jitter = jitter;
         Dirty(statusEnt.Value, jitterComp);
-    }
-
-    /// <summary>
-    /// Creates a new status effect on an entity that causes its sprite to move erratically.
-    /// </summary>
-    /// <param name="target">The entity that will begin jittering.</param>
-    /// <param name="jitter">What kind of jitter to apply.</param>
-    /// <param name="duration">How long the entity should jitter. Permanent if null.</param>
-    /// <param name="refresh">Status duration is set if true, or accumulated if false.</param>
-    [Obsolete("Jittering should be applied through StatusEffectsSystem and not directly.")]
-    public void CreateJitter(EntityUid target, JitterParameters? jitter = null, TimeSpan? duration = null, bool refresh = false)
-    {
-        EntityUid? statusEnt;
-        if (!refresh && duration != null)
-        {
-            if (!_statusEffects.TryAddStatusEffectDuration(target, BasicJitter, out statusEnt, duration.Value))
-                return;
-        }
-        else
-        {
-            if (!_statusEffects.TryUpdateStatusEffectDuration(target, BasicJitter, out statusEnt, duration))
-                return;
-        }
-
-        var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt.Value);
-        if (jitter == null)
-            return;
-
-        jitterComp.Jitter = jitter.Value;
-        Dirty(statusEnt.Value, jitterComp);
-    }
-
-    /// <summary>
-    /// Removes jitter effects applied by <see cref="CreateJitter"/>.
-    /// Important if a duration was not set.
-    /// </summary>
-    [Obsolete("Lifestage of jittering should be handled by StatusEffectsSystem.")]
-    public void RemoveJitter(EntityUid target)
-    {
-        _statusEffects.TryRemoveStatusEffect(target, BasicJitter);
     }
 }

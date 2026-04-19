@@ -142,12 +142,23 @@
   parent: StatusEffectJitter
   id: StatusEffectActiveBiomassReclaimer
   components:
-  - type: JitteringStatusEffect
+  - type: JitteringStatusEffect # Quickly side to side
     jitter:
       frequency: 10
       maxRadius: 0.05
       minRadius: 0.05
       matrixY: 0, 0
+
+- type: entity
+  parent: StatusEffectJitter
+  id: StatusEffectActiveReagentGrinder
+  components:
+  - type: JitteringStatusEffect # Quickly up and down
+    jitter:
+      frequency: 10
+      maxRadius: 0.08
+      minRadius: 0.04
+      matrixX: 0.4, 0
 
 - type: entity
   parent: StatusEffectJitter
@@ -158,3 +169,7 @@
       frequency: 8
       maxRadius: 0.25
       minRadius: 0.2
+
+- type: entity
+  parent: StatusEffectFastJitter
+  id: StatusEffectVentHordeJitter

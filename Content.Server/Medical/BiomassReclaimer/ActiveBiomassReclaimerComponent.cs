@@ -1,3 +1,4 @@
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical.BiomassReclaimer;
@@ -12,5 +13,5 @@ public sealed partial class ActiveBiomassReclaimerComponent : Component
     /// Status effect that's applied for component lifetime.
     /// </summary>
     [DataField]
-    public EntProtoId ActiveStatus = "StatusEffectActiveBiomassReclaimer";
+    public EntProtoId<StatusEffectComponent> ActiveStatus = "StatusEffectActiveBiomassReclaimer";
 }

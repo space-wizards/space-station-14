@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -12,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -37,6 +37,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private readonly SharedJitteringSystem _jitter = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
@@ -253,14 +254,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
                 return;
         }
 
-        var jitter = new JitterParameters // Small but frequent up and down motion
-        {
-            Frequency = 1f,
-            MaxRadius = 0.08f,
-            MinRadius = 0.04f,
-            MatrixX = new Vector2(0.4f, 0f),
-        };
-        _jitter.CreateJitter(ent, jitter);
+        _statusEffects.TrySetStatusEffectDuration(ent, ent.Comp.ActiveStatus);
 
         EnsureComp<ActiveReagentGrinderComponent>(ent);
         _powerState.TrySetWorkingState(ent.Owner, true); // Not all grinders need power.
@@ -290,7 +284,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
-        _jitter.RemoveJitter(ent);
+        _statusEffects.TryRemoveStatusEffect(ent, ent.Comp.ActiveStatus);
         _powerState.TrySetWorkingState(ent.Owner, false);
 
         var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);

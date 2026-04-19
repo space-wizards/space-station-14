@@ -1,6 +1,6 @@
 using Content.Server.VentHorde.Components;
 using Content.Shared.Destructible;
-using Content.Shared.Jittering;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -13,9 +13,9 @@ public sealed class VentHordeSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
 
     public override void Initialize()
     {
@@ -30,13 +30,13 @@ public sealed class VentHordeSystem : EntitySystem
 
     private void OnSpawnerInit(Entity<VentHordeSpawnerComponent> entity, ref MapInitEvent args)
     {
-        _jitter.CreateJitter(entity);
+        _statusEffects.TrySetStatusEffectDuration(entity, entity.Comp.Status);
     }
 
     private void OnSpawnerShutdown(Entity<VentHordeSpawnerComponent> entity, ref ComponentShutdown args)
     {
+        _statusEffects.TryRemoveStatusEffect(entity, entity.Comp.Status);
         _audio.Stop(entity.Comp.AudioStream);
-        _jitter.RemoveJitter(entity);
     }
 
     private void OnSpawnerBreakage(Entity<VentHordeSpawnerComponent> entity, ref BreakageEventArgs args)
