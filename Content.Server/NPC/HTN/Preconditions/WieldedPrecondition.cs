@@ -5,11 +5,19 @@ using Content.Shared.Wieldable.Components;
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
-/// Checks if the NPC can wield the current weapon.
+/// Checks if the item in the active hand has <see cref="WieldableComponent"/> and whether its
+/// <see cref="WieldableComponent.Wielded"/> state matches the expected value.
+/// When <see cref="Wielded"/> is false, also checks that the item can actually be wielded.
 /// </summary>
-public sealed partial class CanWieldPrecondition : HTNPrecondition
+public sealed partial class WieldedPrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+
+    /// <summary>
+    /// The wield state to check for.
+    /// </summary>
+    [DataField]
+    public bool Wielded = true;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -22,12 +30,16 @@ public sealed partial class CanWieldPrecondition : HTNPrecondition
         if (!handsSystem.TryGetHeldItem(owner, activeHand, out var heldEntity))
             return false;
 
-        if (!_entManager.TryGetComponent<WieldableComponent>(heldEntity, out var wieldable) ||
-            wieldable.Wielded)
+        if (!_entManager.TryGetComponent<WieldableComponent>(heldEntity, out var wieldable))
+            return false;
+
+        if (Wielded)
+            return wieldable.Wielded;
+
+        if (wieldable.Wielded)
             return false;
 
         var wieldableSystem = _entManager.System<SharedWieldableSystem>();
-
         return wieldableSystem.CanWield(heldEntity.Value, wieldable, owner, quiet: true);
     }
 }

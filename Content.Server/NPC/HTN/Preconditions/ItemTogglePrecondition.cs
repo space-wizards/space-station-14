@@ -4,12 +4,18 @@ using Content.Shared.Item.ItemToggle.Components;
 namespace Content.Server.NPC.HTN.Preconditions;
 
 /// <summary>
-/// Checks if the NPC's weapon needs to be activated.
-/// Returns true if the weapon has ItemToggleComponent and is not activated.
+/// Checks if the item in the active hand has <see cref="ItemToggleComponent"/> and whether its
+/// <see cref="ItemToggleComponent.Activated"/> state matches the expected value.
 /// </summary>
-public sealed partial class NeedToActivateWeaponPrecondition : HTNPrecondition
+public sealed partial class ItemTogglePrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+
+    /// <summary>
+    /// The activation state to check for.
+    /// </summary>
+    [DataField]
+    public bool Activated = true;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
@@ -25,6 +31,9 @@ public sealed partial class NeedToActivateWeaponPrecondition : HTNPrecondition
         if (!_entManager.TryGetComponent<ItemToggleComponent>(heldEntity, out var itemToggle))
             return false;
 
-        return !itemToggle.Activated && itemToggle.OnUse;
+        if (!itemToggle.OnUse)
+            return false;
+
+        return itemToggle.Activated == Activated;
     }
 }

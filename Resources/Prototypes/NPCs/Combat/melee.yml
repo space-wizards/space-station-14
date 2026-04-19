@@ -58,7 +58,8 @@
               damage:
                 types:
                   Blunt: 0
-        - !type:CanWieldPrecondition
+        - !type:WieldedPrecondition
+          wielded: false
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:WieldOperator
@@ -71,10 +72,11 @@
               damage:
                 types:
                   Blunt: 0
-        - !type:NeedToActivateWeaponPrecondition
+        - !type:ItemTogglePrecondition
+          activated: false
       tasks:
         - !type:HTNPrimitiveTask
-          operator: !type:ActivateWeaponOperator
+          operator: !type:UseItemInHandOperator
 
     # Melee combat (unarmed or otherwise)
     - tasks:

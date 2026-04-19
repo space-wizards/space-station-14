@@ -113,7 +113,8 @@
         - !type:ActiveHandComponentPrecondition
           components:
             - type: Gun
-        - !type:CanWieldPrecondition
+        - !type:WieldedPrecondition
+          wielded: false
       tasks:
         - !type:HTNPrimitiveTask
           operator: !type:WieldOperator

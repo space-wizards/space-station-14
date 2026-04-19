@@ -2,10 +2,10 @@ using Content.Server.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 /// <summary>
-/// Operator that racks the bolt of a gun with ChamberMagazineAmmoProviderComponent.
+/// Operator that racks the bolt of a gun with <see cref="ChamberMagazineAmmoProviderComponent"/>.
 /// </summary>
 public sealed partial class RackBoltOperator : HTNOperator
 {
@@ -26,19 +26,7 @@ public sealed partial class RackBoltOperator : HTNOperator
             return HTNOperatorStatus.Failed;
 
         var gunSystem = _entManager.System<SharedGunSystem>();
-
-        if (chamberMagazine.CanRack)
-        {
-            gunSystem.UseChambered(gunUid.Value, chamberMagazine, owner);
-        }
-        else if (chamberMagazine.BoltClosed is not null)
-        {
-            gunSystem.ToggleBolt(gunUid.Value, chamberMagazine, owner);
-        }
-        else
-        {
-            return HTNOperatorStatus.Failed;
-        }
+        gunSystem.UseChambered(gunUid.Value, chamberMagazine, owner);
 
         return HTNOperatorStatus.Finished;
     }
