@@ -563,9 +563,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (thresholdIndex < 0)
         {
             thresholdIndex = ~thresholdIndex;
-            if (thresholdIndex > 0)
-                thresholdIndex--;
-            threshold = damageVisComp.Thresholds[thresholdIndex];
+            threshold = damageVisComp.Thresholds[thresholdIndex - 1];
         }
         else
         {
