@@ -179,7 +179,7 @@ public sealed partial class BorgSystem
             return 1;
         }
 
-        return 1 - ((FixedPoint2)(damageable.TotalDamage / threshold)).Float();
+        return 1 - ((FixedPoint2)(_damageable.GetTotalDamage((uid, damageable)) / threshold)).Float();
     }
 
     /// <summary>
