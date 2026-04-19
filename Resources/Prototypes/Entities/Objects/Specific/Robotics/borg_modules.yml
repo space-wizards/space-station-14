@@ -1560,7 +1560,7 @@
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleOilGun
   name: oil gun xenoborg module
-  description: Module with a gun that shoots ampoules filled with flamable oil.
+  description: Module with a gun that shoots ampoules filled with flammable oil.
   components:
   - type: Sprite
     layers:
