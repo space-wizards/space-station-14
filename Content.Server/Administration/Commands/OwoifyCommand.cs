@@ -1,48 +1,23 @@
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Administration;
-using Robust.Shared.Console;
-using Robust.Shared.Random;
+using Robust.Shared.Toolshed;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Fun)]
-public sealed class OwoifyCommand : IConsoleCommand
+[ToolshedCommand, AdminCommand(AdminFlags.Fun)]
+public sealed class OwoifyCommand : ToolshedCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    private OwOAccentSystem? _owoSystem;
+    private MetaDataSystem? _metaSystem;
 
-    public string Command => "owoify";
-
-    public string Description => "For when you need everything to be cat. Uses OwOAccent's formatting on the name and description of an entity.";
-
-    public string Help => "owoify <id>";
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public void Owoify(EntityUid entityUid)
     {
-        if (args.Length != 1)
-        {
-            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
-            return;
-        }
+        var meta = Comp<MetaDataComponent>(entityUid);
 
-        if (!int.TryParse(args[0], out var targetId))
-        {
-            shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
-            return;
-        }
+        _owoSystem ??= GetSys<OwOAccentSystem>();
+        _metaSystem ??= GetSys<MetaDataSystem>();
 
-        var nent = new NetEntity(targetId);
-
-        if (!_entManager.TryGetEntity(nent, out var eUid))
-        {
-            return;
-        }
-
-        var meta = _entManager.GetComponent<MetaDataComponent>(eUid.Value);
-
-        var owoSys = _entManager.System<OwOAccentSystem>();
-        var metaDataSys = _entManager.System<MetaDataSystem>();
-
-        metaDataSys.SetEntityName(eUid.Value, owoSys.Accentuate(meta.EntityName), meta);
-        metaDataSys.SetEntityDescription(eUid.Value, owoSys.Accentuate(meta.EntityDescription), meta);
+        _metaSystem.SetEntityName(entityUid, _owoSystem.Accentuate(meta.EntityName), meta);
+        _metaSystem.SetEntityDescription(entityUid, _owoSystem.Accentuate(meta.EntityDescription), meta);
     }
 }
