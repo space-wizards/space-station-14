@@ -13,6 +13,8 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
 
         SubscribeLocalEvent<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
+
+        SubscribeLocalEvent<PowerConsumerBatteryChargerComponent, PowerConsumedEvent>(OnPowerConsumed);
     }
 
     private void OnMapInit(
@@ -38,17 +40,11 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
         powerConsumerBatteryCharger.Efficiency = entity.Comp.EfficiencyPerVoltage[args.NewVoltage.Voltage];
     }
 
-    public override void Update(float frameTime)
+    private void OnPowerConsumed(Entity<PowerConsumerBatteryChargerComponent> entity, ref PowerConsumedEvent args)
     {
-        var query = EntityQueryEnumerator<PowerConsumerBatteryChargerComponent, PowerConsumerComponent, BatteryComponent>();
-        while (query.MoveNext(out var entityUid, out var powerConsumerBatteryCharger, out var powerConsumer, out var battery))
-        {
-            var energyConsumed = powerConsumer.ReceivedPower * frameTime;
+        if (!TryComp<BatteryComponent>(entity, out var battery))
+            return;
 
-            if (energyConsumed == 0)
-                continue;
-
-            _battery.ChangeCharge((entityUid, battery), energyConsumed * powerConsumerBatteryCharger.Efficiency);
-        }
+        _battery.ChangeCharge((entity, battery), args.PowerConsumed * entity.Comp.Efficiency);
     }
 }
