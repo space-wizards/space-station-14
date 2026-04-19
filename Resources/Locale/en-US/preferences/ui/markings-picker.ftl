@@ -42,7 +42,7 @@ markings-organ-Eyes = Eyes
 
 markings-layer-Special = Special
 markings-layer-Tail = Tail
-markings-layer-Tail-Moth = Wings
+markings-layer-Wings = Wings
 markings-layer-Hair = Hair
 markings-layer-FacialHair = Facial Hair
 markings-layer-UndergarmentTop = Undershirt
