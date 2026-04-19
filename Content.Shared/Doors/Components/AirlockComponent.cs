@@ -83,6 +83,9 @@ public sealed partial class AirlockComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string AutoClosePort = "AutoClose";
 
+    [DataField]
+    public LocId PryFailedPopup = "airlock-component-cannot-pry-is-powered-message";
+
     #region Graphics
 
     /// <summary>
