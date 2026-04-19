@@ -120,6 +120,7 @@
   parent: BaseMachinePowered
   name: industrial smelter
   description: A massive stationary machine capable of chewing through flooring and walls. Must be powered to function.
+  suffix: Do Not Map
   components:
   - type: Sprite
     drawdepth: Doors
