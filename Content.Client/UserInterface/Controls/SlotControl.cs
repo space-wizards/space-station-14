@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Content.Shared.Contraband;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -17,6 +18,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }
         public SpriteView HoverSpriteView { get; }
+        public Control AdminOverlays { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
@@ -166,6 +168,8 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false,
             });
 
+            AddChild(AdminOverlays = new Control());
+
             StorageButton.OnKeyBindDown += args =>
             {
                 if (args.Function != EngineKeyFunctions.UIClick)
@@ -227,6 +231,30 @@ namespace Content.Client.UserInterface.Controls
             SpriteView.Visible = true;
             ProtoView.Visible = false;
             UpdateButtonTexture();
+        }
+
+        public void SetChameleon()
+        {
+            var texture = new TextureRect
+            {
+                TexturePath = "/Textures/Interface/Default/Slots/camo.png",
+                TextureScale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
+                Modulate = new Color(147, 112, 219),
+            };
+            AdminOverlays.AddChild(texture);
+        }
+
+        public void SetContraband(ContrabandSeverityPrototype contraProto)
+        {
+            var icon = new TextureRect
+            {
+                TexturePath = "/Textures/Interface/Default/Slots/contra.png",
+                TextureScale = new Vector2(2, 2),
+                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
+                Modulate = contraProto.Color,
+            };
+            AdminOverlays.AddChild(icon);
         }
 
         /// <summary>

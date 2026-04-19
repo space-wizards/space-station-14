@@ -19,6 +19,12 @@ public sealed partial class ContrabandSeverityPrototype : IPrototype
     public LocId ExamineText;
 
     /// <summary>
+    ///
+    /// </summary>
+    [DataField]
+    public Color Color;
+
+    /// <summary>
     /// When examining the contraband, should this take into account the viewer's departments and job?
     /// </summary>
     [DataField]

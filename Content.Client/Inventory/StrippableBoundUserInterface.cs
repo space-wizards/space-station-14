@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Administration.Managers;
 using Content.Client.Examine;
 using Content.Client.Hands.Systems;
 using Content.Client.Strip;
@@ -7,6 +8,8 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Contraband;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Ensnaring.Components;
@@ -23,6 +26,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
@@ -33,12 +37,17 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private readonly IClientAdminManager _admin = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         private readonly ExamineSystem _examine;
         private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
+        private readonly ContrabandSystem _contraband;
+
+        private bool IsAdminView = true;
 
         [ViewVariables]
         private const int ButtonSeparation = 4;
@@ -71,6 +80,7 @@ namespace Content.Client.Inventory
             _inv = EntMan.System<InventorySystem>();
             _cuffable = EntMan.System<SharedCuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
+            _contraband = EntMan.System<ContrabandSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
@@ -159,7 +169,22 @@ namespace Content.Client.Inventory
 
                 button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
 
-                _strippingMenu.SnareContainer.AddChild(button);
+                _strippingMenu.ButtonCointainer.AddChild(button);
+            }
+
+            if (_admin.IsAdmin())
+            {
+                var adminButton = new Button()
+                {
+                    Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button"),
+                    StyleClasses = { StyleClass.ButtonOpenRight },
+                    ToggleMode = true,
+                    Pressed = IsAdminView,
+                };
+
+                adminButton.OnToggled += args => { IsAdminView = !IsAdminView; args.Button.Pressed = IsAdminView; UpdateMenu(); };
+
+                _strippingMenu.ButtonCointainer.AddChild(adminButton);
             }
 
             // TODO fix layout container measuring (its broken atm).
@@ -176,7 +201,9 @@ namespace Content.Client.Inventory
             var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
             var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
             if (snare?.IsEnsnared == true)
-                verticalMenuSize += 20;
+                verticalMenuSize += 25;
+            if (_admin.IsAdmin())
+                verticalMenuSize += 25;
             _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
         }
 
@@ -194,8 +221,10 @@ namespace Content.Client.Inventory
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
-            UpdateEntityIcon(button, heldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
+
+            UpdateEntityIcon(button, heldEntity);
+
             LayoutContainer.SetPosition(button, new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
             _handCount++;
         }
@@ -273,6 +302,16 @@ namespace Content.Client.Inventory
                 return;
 
             button.SetEntity(viewEnt);
+
+            if (_admin.IsAdmin() && IsAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
+            {
+                button.SetChameleon();
+            }
+
+            if (_admin.IsAdmin() && IsAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+            {
+                button.SetContraband(_proto.Index(contraProtoId));
+            }
         }
     }
 }
