@@ -663,6 +663,13 @@
             - !type:ReagentCondition
               reagent: Ambuzol
               min: 10
+    Digestion:
+      effects:
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentCondition
+              reagent: Ambuzol
+              min: 10
 
 - type: reagent
   id: AmbuzolPlus
@@ -681,6 +688,14 @@
             - !type:ReagentCondition
               reagent: AmbuzolPlus
               min: 5
+    Digestion:
+      effects:
+      - !type:CureZombieInfection
+        innoculate: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: AmbuzolPlus
+          min: 5
 
 - type: reagent
   id: PulpedBananaPeel
@@ -818,12 +833,18 @@
       effects:
       - !type:EvenHealthChange
         conditions:
-        - !type:TotalDamageCondition
-          max: 50
+        - !type:MobStateCondition # no healing in crit so that dedicated single damage type meds can still have a niche.
+          mobstate: Alive
         damage:
           Brute: -1
           Burn: -1
-          Toxin: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          types:
+            Poison: -0.5 # Same as what it was before the second coming of offmed
 
 - type: reagent
   id: Lipozine
@@ -1160,8 +1181,6 @@
         factor: 3
       - !type:HealthChange
         conditions:
-        - !type:TotalDamageCondition
-          max: 50
         damage:
           types:
             Blunt: -0.2
@@ -1312,53 +1331,9 @@
         conditions:
         - !type:TemperatureCondition
           max: 213.0
-        - !type:TotalDamageCondition
-          min: 199.9
         damage:
-          Brute: -2
-          Burn: -2
-      - !type:EvenHealthChange
-        conditions:
-        - !type:TemperatureCondition
-          max: 213.0
-        - !type:TotalDamageCondition
-          min: 500
-        damage:
-          Brute: -4
-          Burn: -4
-
-- type: reagent
-  id: Necrosol
-  name: reagent-name-necrosol
-  group: Medicine
-  desc: reagent-desc-necrosol
-  physicalDesc: reagent-physical-desc-necrotic
-  flavor: medicine
-  color: "#86a5bd"
-  worksOnTheDead: true
-  plantMetabolism:
-  - !type:PlantAdjustToxins
-    amount: -5
-  - !type:PlantAdjustHealth
-    amount: 5
-  - !type:PlantCryoxadone {}
-  metabolisms:
-    Bloodstream:
-      effects:
-        - !type:EvenHealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            Brute: -2
-            Burn: -2
-        - !type:HealthChange
-          conditions:
-          - !type:TemperatureCondition
-            max: 213.0
-          damage:
-            types:
-              Poison: -2
+          Brute: -3
+          Burn: -3
 
 - type: reagent
   id : Aloxadone
@@ -1455,9 +1430,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:GenericStatusEffect
-        key: RadiationProtection
-        component: RadiationProtection
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectRadiationProtection
         time: 2
         type: Add
       - !type:HealthChange

@@ -14,15 +14,6 @@ public abstract class SharedObjectivesSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    private EntityQuery<MetaDataComponent> _metaQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _metaQuery = GetEntityQuery<MetaDataComponent>();
-    }
-
     /// <summary>
     /// Checks requirements and duplicate objectives to see if an objective can be assigned.
     /// </summary>
@@ -39,10 +30,10 @@ public abstract class SharedObjectivesSystem : EntitySystem
         // only check for duplicate prototypes if it's unique
         if (comp.Unique)
         {
-            var proto = _metaQuery.GetComponent(uid).EntityPrototype?.ID;
+            var proto = MetaData(uid).EntityPrototype?.ID;
             foreach (var objective in mind.Objectives)
             {
-                if (_metaQuery.GetComponent(objective).EntityPrototype?.ID == proto)
+                if (MetaData(objective).EntityPrototype?.ID == proto)
                     return false;
             }
         }
