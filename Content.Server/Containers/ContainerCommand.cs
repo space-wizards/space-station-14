@@ -30,6 +30,10 @@ public sealed class ContainerCommand : ToolshedCommand
     public IEnumerable<BaseContainer> ContainerGet([PipedArgument] IEnumerable<EntityUid> storageEnts, string id) =>
         storageEnts.Select(x => ContainerGetBase(x, id)).Where(s => s != null).Select(s => s!);
 
+    [CommandImplementation("id")]
+    public IEnumerable<string> ContainerId([PipedArgument] IEnumerable<BaseContainer> containers) =>
+        containers.Select(x => x.ID);
+
 
     public BaseContainer? ContainerGetBase(EntityUid ent, string id)
     {
