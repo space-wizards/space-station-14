@@ -49,7 +49,10 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     /// Sound made when air is leaked out of this device.
     /// </summary>
     [DataField]
-    public SoundSpecifier? ReleaseSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+    public SoundSpecifier? ReleaseSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/spray.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
 
     /// <summary>
     /// The mixture of air contained in this device.
@@ -67,7 +70,7 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     public float SafetyPressure { get; set; } = 15 * Atmospherics.OneAtmosphere;
 
     [DataField]
-    public float Overpressure { get; set; } = 20 * Atmospherics.OneAtmosphere;
+    public float Overpressure { get; set; } = 15 * Atmospherics.OneAtmosphere;
 
     [DataField]
     public LocId? SafetyAlert { get; set; } = "gas-max-pressure-alert";

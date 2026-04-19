@@ -127,7 +127,7 @@
       maxIntegrity: 25 # 5 times stronger than a gas tank
       integrity: 25
       maxReleasePressure: 1013.25
-      safetyPressure: 7599.375 # High enough that liquid tanks don't burst immediately
+      safetyPressure: 10132.5 # High enough that liquid tanks don't burst immediately, with an extra 33% wiggle room to work with
       overpressure: 20265 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
       gasTankSlot:
         name: comp-gas-canister-slot-name-gas-tank
