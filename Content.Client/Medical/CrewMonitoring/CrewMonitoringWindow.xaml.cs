@@ -38,6 +38,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     private bool _colorBlindFriendly;
 
+    private const float AlertTreshold = 0.625f; // = 2.5 / 4 = boundary between poor (2) and bad (3)
+
     public CrewMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
@@ -111,8 +113,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
 
         // Create alerts list
-        // Alerts = all dead, and over 62.5 damage (bad, bad! and crit)
-        var alertsSensors = orderedSensors.Where(d => d.IsAlive != true || (d.DamagePercentage != null && d.DamagePercentage.Value > 0.625f));
+        var alertsSensors = orderedSensors.Where(d => d.IsAlive != true || (d.DamagePercentage != null && d.DamagePercentage.Value > AlertTreshold));
         if (alertsSensors != null && alertsSensors.Any())
         {
             var alertsLabel = new RichTextLabel()
@@ -210,17 +211,19 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
             // Add a button that will hold a username and other details
             NavMap.LocalizedNames.TryAdd(sensor.SuitSensorUid, sensor.Name + ", " + sensor.Job);
-            
+
             var blipColor = Color.LimeGreen;
-            if (!_colorBlindFriendly) {
+            if (!_colorBlindFriendly)
+            {
                 if (!sensor.IsAlive)
                     blipColor = Color.Magenta;
+
                 else if (sensor.DamagePercentage != null)
                 {
                     if (sensor.DamagePercentage.Value >= 1.0f)
                         blipColor = new Color(255, 32, 32, 255);
-                    
-                    else if (sensor.DamagePercentage.Value >= 0.625f)
+
+                    else if (sensor.DamagePercentage.Value >= AlertTreshold)
                         blipColor = Color.Orange;
                 }
             }
