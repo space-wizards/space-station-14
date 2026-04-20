@@ -1,0 +1,23 @@
+<Document>
+  # Skeletons
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSkeletonCloset"/>
+    <GuideEntityEmbed Entity="MobSkeletonPirate"/>
+    <GuideEntityEmbed Entity="MobSkeletonBiker"/>
+  </Box>
+
+  Skeletons are undead humanoids that have emerged from closets and other forgotten corners of the station.
+  They can speak, move freely, and interact with the station like any humanoid crew member — but they are decidedly [bold]not alive[/bold].
+
+  As a skeleton you are [bold]immune to biological hazards[/bold] such as toxins, radiation, and suffocation.
+  You also don't need to eat or drink, which gives you surprising freedom of movement around the station.
+
+  You have [bold]no assigned objectives[/bold]. Whether you make friends with the crew, cause minor mischief, or simply wander the halls rattling ominously is entirely up to you.
+
+  ## Variants
+
+  - [bold]Closet Skeleton[/bold] — a standard skeleton in passenger clothing who was apparently waiting inside a closet for the right moment.
+  - [bold]Skeleton Pirate[/bold] — same skeleton, different wardrobe. Arr.
+  - [bold]Skeleton Biker[/bold] — dressed for the open road, despite there being no roads on a space station.
+</Document>

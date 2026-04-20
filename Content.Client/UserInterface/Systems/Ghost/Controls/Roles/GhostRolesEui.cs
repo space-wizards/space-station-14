@@ -1,10 +1,13 @@
 using System.Linq;
 using Content.Client.Eui;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Guidebook;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -27,6 +30,12 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 {
                     SendMessage(new LeaveGhostRoleRaffleMessage(info.Identifier));
                     return;
+                }
+
+                if (info.GuideEntry is { } guideEntry)
+                {
+                    var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+                    uiManager.GetUIController<GuidebookUIController>().OpenGuidebook(selected: guideEntry);
                 }
 
                 _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>

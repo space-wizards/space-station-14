@@ -673,6 +673,7 @@ public sealed class GhostRoleSystem : EntitySystem
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
+                GuideEntry = role.GuideEntry,
                 RolePrototypes = (jobs, antags),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,

@@ -1,0 +1,21 @@
+<Document>
+  # Mice
+
+  <Box>
+    <GuideEntityEmbed Entity="MobMouse"/>
+    <GuideEntityEmbed Entity="MobMouseCancer"/>
+  </Box>
+
+  Mice are tiny creatures that have lived aboard the station far longer than most of the crew.
+  They squeeze through vents, steal crumbs, and occasionally squeak at passersby.
+
+  As a mouse you are [bold]very small[/bold] — small enough to slip under doors, into vents, and into spaces no crew member can reach.
+  You can speak, though your squeaky voice may not command much authority.
+
+  You have [bold]no offensive capabilities[/bold] and cannot harm crew members. You are harmless by nature.
+
+  ## Variants
+
+  - [bold]Mouse[/bold] — a perfectly ordinary station mouse. Squeak.
+  - [bold]Cancer Mouse[/bold] — a mouse that glows an eerie green from too much time spent near the genetics lab. Emits mild [color=LightGreen]radiation[/color], which may concern nearby crew members.
+</Document>

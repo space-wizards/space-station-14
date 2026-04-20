@@ -208,6 +208,7 @@
     name: ghost-role-information-honkbot-name
     description: ghost-role-information-honkbot-description
     rules: ghost-role-information-freeagent-rules
+    guideEntry: FreeAgentBots
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
     raffle:
@@ -242,6 +243,7 @@
     name: ghost-role-information-jonkbot-name
     description: ghost-role-information-jonkbot-description
     rules: ghost-role-information-freeagent-rules
+    guideEntry: FreeAgentBots
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
     raffle:
