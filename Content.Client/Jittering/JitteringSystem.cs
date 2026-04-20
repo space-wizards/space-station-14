@@ -5,12 +5,15 @@ using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Jittering;
 
 /// <inheritdoc />
 public sealed class JitteringSystem : SharedJitteringSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -22,14 +25,22 @@ public sealed class JitteringSystem : SharedJitteringSystem
     private readonly string _jitterAnimationKey = "jittering";
     private readonly string _jitterReturnAnimationKey = "jitteringReturn";
 
+    private const float ReturnSpeed = 0.2f;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+        SubscribeLocalEvent<JitteringStatusEffectComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationComplete);
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRelayedEvent<AnimationCompletedEvent>>(OnRelayAnimationCompleted);
+    }
+
+    private void OnShutdown(Entity<JitteringStatusEffectComponent> ent, ref ComponentShutdown args)
+    {
+        Log.Debug("Hello");
     }
 
     #region Subscriptions
@@ -63,7 +74,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
 
         _animation.Stop((ent, player), _jitterAnimationKey);
         _animation.Play((ent, player),
-                        GetReturnAnimation(sprite.Offset, jitter.StartOffset),
+                        GetLineAnimation(sprite.Offset, jitter.StartOffset, ReturnSpeed),
                         _jitterReturnAnimationKey);
 
         RemCompDeferred<JitteringComponent>(ent);
@@ -107,6 +118,12 @@ public sealed class JitteringSystem : SharedJitteringSystem
     /// </returns>
     private Animation GetJitterAnimation(JitterParameters jitter, Vector2 currentOffset, Vector2 origin)
     {
+        if (jitter.Frequency <= 0) // Preempt divide by 0 and strange animation durations
+        {
+            Log.Warning($"Attempted to start a jitter animation with a frequency of 0 or less. Frequency was: {jitter.Frequency}");
+            return new Animation();
+        }
+
         var newOffset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
 
         // If we're in the same quadrant as our current location, invert the offset
@@ -118,11 +135,23 @@ public sealed class JitteringSystem : SharedJitteringSystem
         }
 
         newOffset = Vector2.Transform(newOffset, jitter.Matrix);
+        var length = 1f / jitter.Frequency;
 
-        // avoid dividing by 0 so animations don't try to be infinitely long
-        var length = jitter.Frequency <= 0 ? 0f : 1f / jitter.Frequency;
+        switch (jitter.Type)
+        {
+            case JitterType.Line:
+                return GetLineAnimation(currentOffset, origin + newOffset, length);
 
-        // create and play the animation
+            case JitterType.Arch:
+                return GetArchAnimation(currentOffset, origin + newOffset, length);
+
+            default:
+                return new Animation();
+        }
+    }
+
+    private static Animation GetLineAnimation(Vector2 current, Vector2 destination, float length)
+    {
         return new Animation()
         {
             Length = TimeSpan.FromSeconds(length),
@@ -134,21 +163,23 @@ public sealed class JitteringSystem : SharedJitteringSystem
                     Property = nameof(SpriteComponent.Offset),
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(currentOffset, 0f),
-                        new AnimationTrackProperty.KeyFrame(origin + newOffset, length),
+                        new AnimationTrackProperty.KeyFrame(current, 0f),
+                        new AnimationTrackProperty.KeyFrame(destination, length),
                     },
                 },
             },
         };
     }
 
-    /// <returns>A simple lerp from <c>currentOffset</c> to <c>origin</c>.</returns>
-    private static Animation GetReturnAnimation(Vector2 currentOffset, Vector2 origin, float returnSpeed = 0.2f)
+    private static Animation GetArchAnimation(Vector2 current, Vector2 destination, float length, float heightScalar = 1.2f)
     {
-        // create and play the animation
+        var midpoint = (current + destination) / 2;
+        var height = Math.Max(current.Y, destination.Y) * heightScalar;
+        midpoint = midpoint with { Y = height };
+
         return new Animation()
         {
-            Length = TimeSpan.FromSeconds(returnSpeed),
+            Length = TimeSpan.FromSeconds(length),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
@@ -157,8 +188,9 @@ public sealed class JitteringSystem : SharedJitteringSystem
                     Property = nameof(SpriteComponent.Offset),
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(currentOffset, 0f),
-                        new AnimationTrackProperty.KeyFrame(origin, returnSpeed),
+                        new AnimationTrackProperty.KeyFrame(current, 0f),
+                        new AnimationTrackProperty.KeyFrame(midpoint, length / 2),
+                        new AnimationTrackProperty.KeyFrame(destination, length),
                     },
                 },
             },

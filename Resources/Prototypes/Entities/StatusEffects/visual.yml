@@ -1,0 +1,103 @@
+# These status effects change visual aspects of a sprite
+
+- type: entity
+  abstract: true
+  parent: StatusEffectBase
+  id: StatusEffectBaseVisual
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - Sprite
+
+## Jitter
+
+- type: entity
+  abstract: true
+  parent: [ StatusEffectBaseVisual, StatusEffectDebuff ]
+  id: StatusEffectBaseJitter
+  components:
+  - type: JitteringStatusEffect
+
+# Common jitters
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectJitter
+  name: jittering
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 3
+      maxRadius: 0.08
+      minRadius: 0.02
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectFastJitter
+  name: heavy jittering
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 15
+      maxRadius: 0.03
+      minRadius: 0.03
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectSway
+  name: swaying
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 0.7
+      maxRadius: 0.3
+      minRadius: 0.1
+      matrixY: 0, 0.1
+      #type: Arch
+
+# Specific jitters
+
+- type: entity
+  parent: StatusEffectFastJitter
+  id: StatusEffectInnerAnomalyJitter
+
+- type: entity
+  parent: StatusEffectFastJitter
+  id: StatusEffectVentHordeJitter
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectStaminaVisuals
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectActiveBiomassReclaimer
+  components:
+  - type: JitteringStatusEffect # Quickly side to side
+    jitter:
+      frequency: 10
+      maxRadius: 0.05
+      minRadius: 0.05
+      matrixY: 0, 0
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectActiveReagentGrinder
+  components:
+  - type: JitteringStatusEffect # Quickly up and down
+    jitter:
+      frequency: 10
+      maxRadius: 0.08
+      minRadius: 0.04
+      matrixX: 0.4, 0
+
+- type: entity
+  parent: StatusEffectBaseJitter
+  id: StatusEffectElectrocutionJitter
+  components:
+  - type: JitteringStatusEffect
+    jitter:
+      frequency: 8
+      maxRadius: 0.25
+      minRadius: 0.2

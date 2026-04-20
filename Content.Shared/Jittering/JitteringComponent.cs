@@ -81,4 +81,21 @@ public partial struct JitterParameters()
     /// </summary>
     [DataField]
     public Vector2 MatrixT = Vector2.Zero;
+
+    /// <summary>
+    /// The animation type to play.
+    /// </summary>
+    [DataField]
+    public JitterType Type = JitterType.Line;
+}
+
+/// <summary>
+/// Switch for different jitter animations.
+/// </summary>
+public enum JitterType
+{
+    // The jitter plays in straight lines from point to point
+    Line,
+    // The jitter passes through a third, highest point between two points
+    Arch,
 }

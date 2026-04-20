@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
+using Content.Shared.Jittering;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -105,6 +106,12 @@ public sealed partial class StaminaComponent : Component
     [DataField]
     public float AnimationThreshold = 50;
 
+    public JitterParameters BaseJitter = new()
+    {
+        Frequency = 4,
+        MatrixY = new Vector2(0, 0.25f),
+    };
+
     //todo
     /// <summary>
     /// Minimum y vector displacement for breathing at AnimationThreshold
@@ -131,16 +138,10 @@ public sealed partial class StaminaComponent : Component
     public float JitterAmplitudeMod = 0.04f;
 
     /// <summary>
-    /// Min multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
+    /// Maximum multiplier to jitter distance.
     /// </summary>
     [DataField]
-    public Vector2 JitterMin = Vector2.Create(0.5f, 0.125f);
-
-    /// <summary>
-    /// Max multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
-    /// </summary>
-    [DataField]
-    public Vector2 JitterMax = Vector2.Create(1f, 0.25f);
+    public float JitterAmplitudeMod2 = 2f;
 
     /// <summary>
     /// Minimum total animations per second
@@ -153,25 +154,6 @@ public sealed partial class StaminaComponent : Component
     /// </summary>
     [DataField]
     public float FrequencyMod = 1.75f;
-
-    /// <summary>
-    /// Jitter keyframes per animation
-    /// </summary>
-    [DataField]
-    public int Jitters = 4;
-
-    /// <summary>
-    /// Vector of the last Jitter so we can make sure we don't jitter in the same quadrant twice in a row.
-    /// </summary>
-    [DataField]
-    public Vector2 LastJitter;
-
-    /// <summary>
-    ///     The offset that an entity had before jittering started,
-    ///     so that we can reset it properly.
-    /// </summary>
-    [DataField]
-    public Vector2 StartOffset = Vector2.Zero;
 
     #endregion
 }

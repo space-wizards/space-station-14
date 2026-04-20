@@ -8,6 +8,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Jittering;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Projectiles;
@@ -26,12 +27,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
 public abstract partial class SharedStaminaSystem : EntitySystem
 {
     public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
+    public static readonly EntProtoId StaminaVisuals = "StatusEffectStaminaVisuals";
 
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
@@ -42,6 +45,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
 
@@ -228,11 +232,38 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
     {
         SetStaminaAlert(entity, entity.Comp);
-        SetStaminaAnimation(entity);
+        // SetStaminaAnimation(entity);
     }
 
     // Here so server can properly tell all clients in PVS range to start the animation
-    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity){}
+    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity)
+    {
+        DebugTools.Assert(entity.Comp.CritThreshold > entity.Comp.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+
+        if (!_status.TrySetStatusEffectDuration(entity, StaminaVisuals, out var statusEnt))
+            return;
+
+        // Get the intensity of the jitter
+        var step = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
+                              (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
+            0f,
+            1f); // The things I do for project 0 warnings
+
+        var distanceAmp = entity.Comp.JitterAmplitudeMin + step * entity.Comp.JitterAmplitudeMod;
+        var breathing = entity.Comp.BreathingAmplitudeMin + step * entity.Comp.BreathingAmplitudeMod;
+
+        var jitter = new JitterParameters()
+        {
+            Frequency = entity.Comp.FrequencyMin + step * entity.Comp.FrequencyMod,
+
+        };
+
+        if (step == 0f)
+            _status.TryRemoveStatusEffect(entity, StaminaVisuals);
+            //_jitter.RemoveJitter(statusEnt.Value);
+        else
+            _jitter.AdjustJitter(statusEnt.Value, jitter);
+    }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
