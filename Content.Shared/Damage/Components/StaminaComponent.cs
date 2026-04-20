@@ -108,52 +108,24 @@ public sealed partial class StaminaComponent : Component
 
     public JitterParameters BaseJitter = new()
     {
-        Frequency = 4,
+        Frequency = 1.5f,
+        MinRadius = 0.03f,
+        MaxRadius = 0.05f,
         MatrixY = new Vector2(0, 0.25f),
+        Type = JitterType.Arch,
     };
 
-    //todo
     /// <summary>
-    /// Minimum y vector displacement for breathing at AnimationThreshold
+    /// Maximum multiplier to jitter radius.
     /// </summary>
     [DataField]
-    public float BreathingAmplitudeMin = 0.04f;
+    public float RadiusScalar = 4f;
 
     /// <summary>
-    /// Maximum y vector amount we add to the BreathingAmplitudeMin
+    /// Maximum amount added to the Frequency.
     /// </summary>
     [DataField]
-    public float BreathingAmplitudeMod = 0.04f;
-
-    /// <summary>
-    /// Minimum vector displacement for jittering at AnimationThreshold
-    /// </summary>
-    [DataField]
-    public float JitterAmplitudeMin;
-
-    /// <summary>
-    /// Maximum vector amount we add to the JitterAmplitudeMin
-    /// </summary>
-    [DataField]
-    public float JitterAmplitudeMod = 0.04f;
-
-    /// <summary>
-    /// Maximum multiplier to jitter distance.
-    /// </summary>
-    [DataField]
-    public float JitterAmplitudeMod2 = 2f;
-
-    /// <summary>
-    /// Minimum total animations per second
-    /// </summary>
-    [DataField]
-    public float FrequencyMin = 0.25f;
-
-    /// <summary>
-    /// Maximum amount we add to the Frequency min just before crit
-    /// </summary>
-    [DataField]
-    public float FrequencyMod = 1.75f;
+    public float AddedFrequency = 3f;
 
     #endregion
 }

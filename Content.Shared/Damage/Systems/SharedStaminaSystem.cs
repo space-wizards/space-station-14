@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Jittering;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Projectiles;
@@ -68,6 +69,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<StaminaComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
 
@@ -77,6 +79,12 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
+    }
+
+    private void OnMobStateChanged(Entity<StaminaComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+            UpdateStaminaVisuals(ent);
     }
 
     protected virtual void OnStamHandleState(Entity<StaminaComponent> entity, ref AfterAutoHandleStateEvent args)
@@ -232,37 +240,36 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
     {
         SetStaminaAlert(entity, entity.Comp);
-        // SetStaminaAnimation(entity);
+        SetStaminaAnimation(entity);
     }
 
     // Here so server can properly tell all clients in PVS range to start the animation
-    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity)
+    private void SetStaminaAnimation(Entity<StaminaComponent> entity)
     {
         DebugTools.Assert(entity.Comp.CritThreshold > entity.Comp.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+
+        // Get the intensity of the jitter
+        var intensity = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
+                                            (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
+                                        0f,
+                                        1f); // The things I do for project 0 warnings
+
+        if (intensity == 0f)
+        {
+            _status.TryRemoveStatusEffect(entity, StaminaVisuals);
+            return;
+        }
 
         if (!_status.TrySetStatusEffectDuration(entity, StaminaVisuals, out var statusEnt))
             return;
 
-        // Get the intensity of the jitter
-        var step = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
-                              (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
-            0f,
-            1f); // The things I do for project 0 warnings
+        // intensify the base jitter
+        var newJitter = entity.Comp.BaseJitter;
+        newJitter.Frequency = entity.Comp.BaseJitter.Frequency + intensity * entity.Comp.AddedFrequency;
+        newJitter.MinRadius = entity.Comp.BaseJitter.MinRadius * intensity * entity.Comp.RadiusScalar;
+        newJitter.MaxRadius = entity.Comp.BaseJitter.MaxRadius * intensity * entity.Comp.RadiusScalar;
 
-        var distanceAmp = entity.Comp.JitterAmplitudeMin + step * entity.Comp.JitterAmplitudeMod;
-        var breathing = entity.Comp.BreathingAmplitudeMin + step * entity.Comp.BreathingAmplitudeMod;
-
-        var jitter = new JitterParameters()
-        {
-            Frequency = entity.Comp.FrequencyMin + step * entity.Comp.FrequencyMod,
-
-        };
-
-        if (step == 0f)
-            _status.TryRemoveStatusEffect(entity, StaminaVisuals);
-            //_jitter.RemoveJitter(statusEnt.Value);
-        else
-            _jitter.AdjustJitter(statusEnt.Value, jitter);
+        _jitter.AdjustJitter(statusEnt.Value, newJitter);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)

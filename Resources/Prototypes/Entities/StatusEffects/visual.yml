@@ -4,11 +4,11 @@
   abstract: true
   parent: StatusEffectBase
   id: StatusEffectBaseVisual
-  components:
-  - type: StatusEffect
-    whitelist:
-      components:
-      - Sprite
+#  components:
+#  - type: StatusEffect
+#    whitelist:
+#      components:
+#      - Sprite # Causes mispredicts from SpriteComponent not existing on server
 
 ## Jitter
 
@@ -16,6 +16,7 @@
   abstract: true
   parent: [ StatusEffectBaseVisual, StatusEffectDebuff ]
   id: StatusEffectBaseJitter
+  name: jittering
   components:
   - type: JitteringStatusEffect
 
@@ -24,7 +25,6 @@
 - type: entity
   parent: StatusEffectBaseJitter
   id: StatusEffectJitter
-  name: jittering
   components:
   - type: JitteringStatusEffect
     jitter:
@@ -50,11 +50,11 @@
   components:
   - type: JitteringStatusEffect
     jitter:
-      frequency: 0.7
+      frequency: 0.4
       maxRadius: 0.3
       minRadius: 0.1
-      matrixY: 0, 0.1
-      #type: Arch
+      matrixY: 0, 0.2
+      type: Arch
 
 # Specific jitters
 

@@ -1,20 +1,12 @@
-using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Jittering;
 
 /// <summary>
-/// Handles "jitter" animations where a sprite moves around a point erratically.
+/// Handles "jitter" animations where a sprite erratically moves around its origin.
 /// </summary>
 public abstract class SharedJitteringSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-
-    // This prototype exists as a compatibility layer with previous jittering.
-    // Ideally nothing calls `CreateJitter` but instead goes through status effects in their own way
-    private static readonly EntProtoId BasicJitter = "StatusEffectJitter";
-
     /// <summary>
     /// Adjusts the jittering of an active status effect.
     /// Adds jittering if the status did not previously have it.

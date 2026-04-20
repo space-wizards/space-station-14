@@ -33,8 +33,8 @@ public sealed partial class JitteringStatusEffectComponent : Component
     /// <summary>
     /// Parameters for the behavior and movement of a jitter.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public JitterParameters Jitter;
+    [DataField, AutoNetworkedField]
+    public JitterParameters Jitter = new();
 }
 
 [DataDefinition, Serializable, NetSerializable]
@@ -59,6 +59,12 @@ public partial struct JitterParameters()
     public float MinRadius;
 
     /// <summary>
+    /// The animation type to play.
+    /// </summary>
+    [DataField]
+    public JitterType Type = JitterType.Line;
+
+    /// <summary>
     /// Jitter offsets are transformed by this matrix to finely control potential destinations.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
@@ -81,12 +87,6 @@ public partial struct JitterParameters()
     /// </summary>
     [DataField]
     public Vector2 MatrixT = Vector2.Zero;
-
-    /// <summary>
-    /// The animation type to play.
-    /// </summary>
-    [DataField]
-    public JitterType Type = JitterType.Line;
 }
 
 /// <summary>
@@ -96,6 +96,6 @@ public enum JitterType
 {
     // The jitter plays in straight lines from point to point
     Line,
-    // The jitter passes through a third, highest point between two points
+    // The jitter adds a midpoint with the highest Y position of the three points
     Arch,
 }

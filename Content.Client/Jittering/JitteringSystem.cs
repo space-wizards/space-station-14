@@ -5,15 +5,12 @@ using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Jittering;
 
 /// <inheritdoc />
 public sealed class JitteringSystem : SharedJitteringSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -32,15 +29,9 @@ public sealed class JitteringSystem : SharedJitteringSystem
         base.Initialize();
 
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-        SubscribeLocalEvent<JitteringStatusEffectComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationComplete);
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRelayedEvent<AnimationCompletedEvent>>(OnRelayAnimationCompleted);
-    }
-
-    private void OnShutdown(Entity<JitteringStatusEffectComponent> ent, ref ComponentShutdown args)
-    {
-        Log.Debug("Hello");
     }
 
     #region Subscriptions
@@ -113,9 +104,9 @@ public sealed class JitteringSystem : SharedJitteringSystem
                                 _jitterAnimationKey);
     }
 
-    /// <returns>
-    /// A lerp between <c>currentOffset</c> and a position derived from <c>origin</c> and <c>jitter</c>.
-    /// </returns>
+    /// <summary>
+    /// Unwraps <c>JitterParameters</c> and returns a new sprite animation between two points.
+    /// </summary>
     private Animation GetJitterAnimation(JitterParameters jitter, Vector2 currentOffset, Vector2 origin)
     {
         if (jitter.Frequency <= 0) // Preempt divide by 0 and strange animation durations
@@ -129,7 +120,8 @@ public sealed class JitteringSystem : SharedJitteringSystem
         // If we're in the same quadrant as our current location, invert the offset
         // Reduces repetitive behavior and increases large movements, but breaks if the matrix has a translation
         if (Math.Sign(newOffset.X) == Math.Sign(currentOffset.X)
-            && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y))
+            && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y)
+            && jitter.MatrixT == Vector2.Zero)
         {
             newOffset = -newOffset;
         }
@@ -150,6 +142,9 @@ public sealed class JitteringSystem : SharedJitteringSystem
         }
     }
 
+    /// <summary>
+    /// Returns a simple lerp between two points.
+    /// </summary>
     private static Animation GetLineAnimation(Vector2 current, Vector2 destination, float length)
     {
         return new Animation()
@@ -171,11 +166,13 @@ public sealed class JitteringSystem : SharedJitteringSystem
         };
     }
 
-    private static Animation GetArchAnimation(Vector2 current, Vector2 destination, float length, float heightScalar = 1.2f)
+    /// <summary>
+    /// Returns a lerp between three points, with its midpoint always being the largest on the Y axis.
+    /// </summary>
+    private static Animation GetArchAnimation(Vector2 current, Vector2 destination, float length)
     {
         var midpoint = (current + destination) / 2;
-        var height = Math.Max(current.Y, destination.Y) * heightScalar;
-        midpoint = midpoint with { Y = height };
+        midpoint.Y = Math.Max(current.Y, destination.Y) + Math.Abs(current.Y - destination.Y);
 
         return new Animation()
         {
