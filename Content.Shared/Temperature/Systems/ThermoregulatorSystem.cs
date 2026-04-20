@@ -59,7 +59,6 @@ public sealed class ThermoregulatorSystem : EntitySystem
     {
         var dt = ent.Comp.UpdateInterval.TotalSeconds;     // Time between updates
         var T = ent.Comp.HeatData.Temperature;                        // Current temperature
-        var C = ent.Comp.HeatData.HeatCapacity;                       // Heat capacity
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
         var H = ent.Comp.Hysteresis;                         // Hysteresis band
         var SB = ent.Comp.ScaleBand;                         // Power scaling range beyond hysteresis
@@ -203,8 +202,6 @@ public sealed class ThermoregulatorSystem : EntitySystem
         //
         // TODO: Finish explanation.
         // TODO: Should the HeatContainers work this way too? After all, I'm basically reinventing HeatContainers Conduction function.
-
-
 
         var T1 = regulatorTemperature;
         var T2 = temperature;

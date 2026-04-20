@@ -19,6 +19,7 @@ public sealed partial class ThermobathMenu : FancyWindow
     private const float InitialAdjustmentRate = 0.1f;
     private const float MaxAdjustmentRate = 100f;
     private const float AdjustmentAcceleration = 3.0f;
+    private const float ButtonHoldThreshold = .2f;
 
     // Style box for status indicator
     private readonly StyleBoxFlat _powerIndicatorStyle;
@@ -85,7 +86,7 @@ public sealed partial class ThermobathMenu : FancyWindow
         {
             _increasePressed = false;
             // If button was only clicked briefly, do a single increment
-            if (_buttonHeldTime < 0.2f)
+            if (_buttonHeldTime < ButtonHoldThreshold)
             {
                 AdjustSetpoint(InitialAdjustmentRate);
                 OnSetpointChanged?.Invoke(_setpoint);
@@ -103,7 +104,7 @@ public sealed partial class ThermobathMenu : FancyWindow
         {
             _decreasePressed = false;
             // If button was only clicked briefly, do a single decrement
-            if (_buttonHeldTime < 0.2f)
+            if (_buttonHeldTime < ButtonHoldThreshold)
             {
                 AdjustSetpoint(-InitialAdjustmentRate);
                 OnSetpointChanged?.Invoke(_setpoint);
@@ -282,12 +283,12 @@ public sealed partial class ThermobathMenu : FancyWindow
             _buttonHeldTime += args.DeltaSeconds;
 
             // Accelerate adjustment rate the longer the button is held
-            if (!(_buttonHeldTime > 0.5f))
+            if (!(_buttonHeldTime > ButtonHoldThreshold))
                 return;
 
             _currentAdjustmentRate = Math.Min(
                 MaxAdjustmentRate,
-                InitialAdjustmentRate + (_buttonHeldTime - 0.5f) * AdjustmentAcceleration
+                InitialAdjustmentRate + (_buttonHeldTime - ButtonHoldThreshold) * AdjustmentAcceleration
             );
 
             var adjustment = _currentAdjustmentRate * args.DeltaSeconds;
