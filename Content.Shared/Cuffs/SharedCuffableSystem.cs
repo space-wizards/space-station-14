@@ -574,7 +574,7 @@ namespace Content.Shared.Cuffs
         /// <returns></returns>
         public bool IsCuffed(Entity<CuffableComponent?> target, bool requireFullyCuffed = true)
         {
-            if (!Resolve(target, ref target.Comp))
+            if (!Resolve(target, ref target.Comp, false))
                 return false;
 
             if (!TryComp<HandsComponent>(target, out var hands))

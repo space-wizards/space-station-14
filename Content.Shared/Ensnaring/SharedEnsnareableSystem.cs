@@ -211,7 +211,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
             return;
 
         if (ensnared.IsEnsnared)
-            ForceFree(uid, component);
+            ForceFree((uid, component));
     }
 
     private void AttemptStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggerAttemptEvent args)
@@ -274,24 +274,24 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     /// <summary>
     /// Used to force free someone for things like if the <see cref="EnsnaringComponent"/> is removed
     /// </summary>
-    public void ForceFree(EntityUid ensnare, EnsnaringComponent? component = null)
+    public void ForceFree(Entity<EnsnaringComponent?> entity)
     {
-        if (!Resolve(ensnare, ref component, false))
+        if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnareable))
+        if (!TryComp<EnsnareableComponent>(entity.Comp.Ensnared, out var ensnareable))
             return;
 
-        var target = component.Ensnared.Value;
+        var target = entity.Comp.Ensnared.Value;
 
-        Container.Remove(ensnare, ensnareable.Container, force: true);
+        Container.Remove(entity.Owner, ensnareable.Container, force: true);
 
         ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
-        Dirty(component.Ensnared.Value, ensnareable);
-        component.Ensnared = null;
+        Dirty(entity.Comp.Ensnared.Value, ensnareable);
+        entity.Comp.Ensnared = null;
 
         UpdateAlert(target, ensnareable);
-        var ev = new EnsnareRemoveEvent(component.WalkSpeed, component.SprintSpeed);
+        var ev = new EnsnareRemoveEvent(entity.Comp.WalkSpeed, entity.Comp.SprintSpeed);
         RaiseLocalEvent(target, ev);
     }
 
