@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Components;
 /// </summary>
 public abstract partial class GasMaxPressureHolderComponent : Component, IGasMaxPressureHolder
 {
-    private const int DefaultIntegrity = 5;
+    private const float DefaultIntegrity = 3f;
     private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
     /// <summary>
@@ -70,14 +70,14 @@ public abstract partial class GasMaxPressureHolderComponent : Component, IGasMax
     public float SafetyPressure { get; set; } = 15 * Atmospherics.OneAtmosphere;
 
     [DataField]
-    public float Overpressure { get; set; } = 15 * Atmospherics.OneAtmosphere;
+    public float Overpressure { get; set; } = 20 * Atmospherics.OneAtmosphere;
 
     [DataField]
     public LocId? SafetyAlert { get; set; } = "gas-max-pressure-alert";
 
     [DataField]
-    public int MaxIntegrity { get; set; } = DefaultIntegrity;
+    public float MaxIntegrity { get; set; } = DefaultIntegrity;
 
     [DataField]
-    public int Integrity { get; set; } = DefaultIntegrity;
+    public float Integrity { get; set; } = DefaultIntegrity;
 }

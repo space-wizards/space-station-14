@@ -23,7 +23,7 @@ public sealed class GasTankSystem : SharedGasTankSystem
 
     private const float MinimumSoundValvePressure = 21.3f; // Arbitrary number
 
-    private const float ReleaseArea = 0.001f; // About 10cm^2
+    private const float ReleaseArea = 0.0005f; // About 5cm^2
 
     // A vector bias for throwing our gas tanks in radians. Averages about -43 degrees since the sprite is at a 45-degree angle.
     private static readonly Vector2 ThrowVector = new (-1.0f, -0.5f);
@@ -139,12 +139,6 @@ public sealed class GasTankSystem : SharedGasTankSystem
     public GasMixture RemoveAir(Entity<GasTankComponent> gasTank, float amount)
     {
         return gasTank.Comp.Air.Remove(amount);
-    }
-
-    public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
-    {
-        _atmosphereSystem.Merge(ent.Comp.Air, giver);
-        CheckStatus(ent);
     }
 
     protected override void SafetyMeasures(Entity<GasTankComponent> entity)
