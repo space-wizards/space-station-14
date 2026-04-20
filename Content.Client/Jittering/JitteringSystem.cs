@@ -106,7 +106,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
     }
 
     /// <summary>
-    /// Unwraps <c>JitterParameters</c> and returns a new sprite animation between two points.
+    /// Unwraps <c>JitterParameters</c> and returns a new sprite animation.
     /// </summary>
     private Animation GetJitterAnimation(JitterParameters jitter, Vector2 currentOffset, Vector2 origin)
     {
@@ -119,10 +119,11 @@ public sealed class JitteringSystem : SharedJitteringSystem
         var newOffset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
 
         // If we're in the same quadrant as our current location, invert the offset
-        // Reduces repetitive behavior and increases large movements, but breaks if the matrix has a translation
+        // Reduces repetitive behavior and increases large movements
+        // This is fragile and assumes our base offset is (0, 0), but in most cases it is
         if (Math.Sign(newOffset.X) == Math.Sign(currentOffset.X)
             && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y)
-            && jitter.MatrixT == Vector2.Zero)
+            && jitter.MatrixT == Vector2.Zero) // offset is certainly not (0, 0)
         {
             newOffset = -newOffset;
         }

@@ -108,9 +108,9 @@ public sealed partial class StaminaComponent : Component
 
     public JitterParameters BaseJitter = new()
     {
-        Frequency = 1.5f,
+        Frequency = 1f,
         MinRadius = 0.03f,
-        MaxRadius = 0.05f,
+        MaxRadius = 0.04f,
         MatrixY = new Vector2(0, 0.25f),
         Type = JitterType.Arch,
     };
@@ -119,7 +119,7 @@ public sealed partial class StaminaComponent : Component
     /// Maximum multiplier to jitter radius.
     /// </summary>
     [DataField]
-    public float RadiusScalar = 4f;
+    public float RadiusScalar = 3.5f;
 
     /// <summary>
     /// Maximum amount added to the Frequency.

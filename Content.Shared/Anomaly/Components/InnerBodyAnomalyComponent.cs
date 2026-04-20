@@ -30,7 +30,7 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public float StunDuration = 4f;
 
     /// <summary>
-    /// A temporary status effect added to the host when get stunned by their anomaly.
+    /// A temporary status effect added to the host when they get stunned by their anomaly.
     /// </summary>
     /// <remarks>Stunned status effect is applied separately from this status.</remarks>
     [DataField]
