@@ -146,7 +146,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        HeatContainerHelpers.ConductHeat<IHeatContainer>(ref ent.Comp, ref otherHeatContainer, (float) ent.Comp.UpdateInterval.TotalSeconds,DefaultThermalConductivity);
+        HeatContainerHelpers.ConductHeat(ref ent.Comp, ref otherHeatContainer, (float) ent.Comp.UpdateInterval.TotalSeconds,DefaultThermalConductivity);
 
     }
 
