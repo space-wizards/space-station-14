@@ -317,7 +317,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     /// <summary>
     /// List of valid nodes in this coloration.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public List<HueNodeClampedHsvColorationNode> Nodes;
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
