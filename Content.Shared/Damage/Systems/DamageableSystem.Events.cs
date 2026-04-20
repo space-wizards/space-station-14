@@ -230,7 +230,7 @@ public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid?
 ///
 ///     For example, armor.
 /// </summary>
-public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null, float penetration = 0f)
     : EntityEventArgs, IInventoryRelayEvent
 {
     /// <inheritdoc/>
@@ -254,6 +254,8 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     ///     Contains the entity which caused the damage, if any was responsible.
     /// </summary>
     public readonly EntityUid? Origin = origin;
+
+    public float Penetration = penetration;
 }
 
 public sealed class DamageChangedEvent : EntityEventArgs
@@ -300,21 +302,21 @@ public sealed class DamageChangedEvent : EntityEventArgs
     {
         Damageable = damageable;
         DamageDelta = damageDelta;
-        Origin = origin;
+            Origin = origin;
 
-        if (DamageDelta is null)
-            return;
+            if (DamageDelta is null)
+                return;
 
-        foreach (var damageChange in DamageDelta.DamageDict.Values)
-        {
-            if (damageChange <= 0)
-                continue;
+            foreach (var damageChange in DamageDelta.DamageDict.Values)
+            {
+                if (damageChange <= 0)
+                    continue;
 
-            DamageIncreased = true;
+                DamageIncreased = true;
 
-            break;
+                break;
+            }
+
+            InterruptsDoAfters = interruptsDoAfters && DamageIncreased;
         }
-
-        InterruptsDoAfters = interruptsDoAfters && DamageIncreased;
     }
-}

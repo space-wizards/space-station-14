@@ -57,6 +57,20 @@ public abstract partial class SharedGunSystem
             return;
 
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), damageType);
+
+        if (proto.TryGetComponent<ProjectileComponent>(out var projectile))
+        {
+            var pen = projectile.ArmorPenetration;
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("damage-penetration-projectile", ("pen", pen)));
+        }
+
+        if (proto.TryGetComponent<HitscanBasicDamageComponent>(out var laser))
+        {
+            var pen = laser.ArmorPenetration;
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("damage-penetration-hitscan", ("pen", pen)));
+        }
     }
 
     private void OnBatteryTakeAmmo(Entity<BatteryAmmoProviderComponent> ent, ref TakeAmmoEvent args)

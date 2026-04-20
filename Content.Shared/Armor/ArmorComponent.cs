@@ -17,6 +17,9 @@ public sealed partial class ArmorComponent : Component
     [DataField(required: true)]
     public DamageModifierSet Modifiers = default!;
 
+    [DataField]
+    public int ArmorClass = 0;
+
     /// <summary>
     /// A multiplier applied to the calculated point value
     /// to determine the monetary value of the armor

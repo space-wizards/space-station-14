@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Verbs;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Armor;
@@ -15,6 +16,7 @@ namespace Content.Shared.Armor;
 public abstract class SharedArmorSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -48,7 +50,26 @@ public abstract class SharedArmorSystem : EntitySystem
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;
 
-        args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+        var penetration = args.Args.Penetration;
+        var armorClass = component.ArmorClass * 10;
+        var penCheck = armorClass - penetration;
+
+        if (penCheck <= 0)  // If penCheck is below or equal to 0, penetrate armor. Good for damage sources and armors that do not have penetration or armor class
+            return; // Yes, I know this is doing nothing. No, I do not care :)
+        else if (penCheck > 0 && penCheck < 10) // If penCheck is between 1-9, turn that into a random chance. Higher the value, the more likely it is to penetrate
+        {
+            var blockChance = _random.Next(1, 101);
+            var penAmount = penetration * 10;
+            if (blockChance > penAmount)
+            {
+                args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+            }
+        }
+        else if (penCheck >= 10) // If penCheck is more than or is 10, armor is guaranteed to block
+        {
+            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+        }
+
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
@@ -65,7 +86,7 @@ public abstract class SharedArmorSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess || !component.ShowArmorOnExamine)
             return;
 
-        var examineMarkup = GetArmorExamine(component.Modifiers);
+        var examineMarkup = GetArmorExamine(component.Modifiers, component);
 
         var ev = new ArmorExamineEvent(examineMarkup);
         RaiseLocalEvent(uid, ref ev);
@@ -75,9 +96,11 @@ public abstract class SharedArmorSystem : EntitySystem
             Loc.GetString("armor-examinable-verb-message"));
     }
 
-    private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
+    private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers, ArmorComponent component)
     {
         var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow(Loc.GetString("armor-class-value-examine", ("armorClass", component.ArmorClass)));
+        msg.PushNewline();
         msg.AddMarkupOrThrow(Loc.GetString("armor-examine"));
 
         foreach (var coefficientArmor in armorModifiers.Coefficients)

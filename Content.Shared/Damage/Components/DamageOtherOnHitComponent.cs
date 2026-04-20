@@ -21,4 +21,7 @@ public sealed partial class DamageOtherOnHitComponent : Component
     [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 
+    [DataField]
+    public float ArmorPenetration = 0f;
+
 }

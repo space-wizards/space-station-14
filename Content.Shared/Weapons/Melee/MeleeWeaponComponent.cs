@@ -77,6 +77,9 @@ public sealed partial class MeleeWeaponComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = default!;
 
+    [DataField]
+    public float ArmorPenetration = 0f;
+
     [DataField, AutoNetworkedField]
     public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
 

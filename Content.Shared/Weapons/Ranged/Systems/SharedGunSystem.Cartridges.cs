@@ -33,7 +33,17 @@ public abstract partial class SharedGunSystem
         if (damageSpec == null)
             return;
 
+        if (!ProtoManager.TryIndex(ent.Comp.Prototype, out var proto))
+            return;
+
+        if (!proto.TryGetComponent<ProjectileComponent>(out var projectile))
+            return;
+
+        var pen = projectile.ArmorPenetration;
+
         _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-projectile"));
+        args.Message.PushNewline();
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-penetration-projectile", ("pen", pen)));
     }
 
     private DamageSpecifier? GetProjectileDamage(EntProtoId proto)

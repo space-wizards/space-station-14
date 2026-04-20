@@ -46,6 +46,12 @@ public sealed partial class ProjectileComponent : Component
     public DamageSpecifier Damage = new();
 
     /// <summary>
+    ///     Penetration value of the projectile. 1-60.
+    /// </summary>
+    [DataField]
+    public float ArmorPenetration = 0f;
+
+    /// <summary>
     ///     If the projectile should be deleted on collision.
     /// </summary>
     [DataField]

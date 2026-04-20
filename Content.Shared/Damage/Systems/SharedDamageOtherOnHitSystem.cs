@@ -19,7 +19,10 @@ public abstract class SharedDamageOtherOnHitSystem : EntitySystem
 
     private void OnDamageExamine(Entity<DamageOtherOnHitComponent> ent, ref DamageExamineEvent args)
     {
+        var comp = ent.Comp;
         _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ent.Comp.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"));
+        args.Message.PushNewline();
+        args.Message.AddMarkupOrThrow(Loc.GetString("damage-penetration-throwing", ("pen", comp.ArmorPenetration)));
     }
 
     /// <summary>

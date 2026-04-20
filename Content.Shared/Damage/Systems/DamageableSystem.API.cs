@@ -64,12 +64,13 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
+        float penetration = 0f,
         bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
+        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, penetration, ignoreGlobalModifiers);
     }
 
     /// <summary>
@@ -90,12 +91,13 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
+        float penetration = 0f,
         bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
+        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, penetration, ignoreGlobalModifiers);
         return !newDamage.Empty;
     }
 
@@ -116,6 +118,7 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
+        float penetration = 0f,
         bool ignoreGlobalModifiers = false
     )
     {
@@ -144,7 +147,7 @@ public sealed partial class DamageableSystem
 
             // TODO DAMAGE
             // byref struct event.
-            var ev = new DamageModifyEvent(damage, origin);
+            var ev = new DamageModifyEvent(damage, origin, penetration);
             RaiseLocalEvent(ent, ev);
             damage = ev.Damage;
 
