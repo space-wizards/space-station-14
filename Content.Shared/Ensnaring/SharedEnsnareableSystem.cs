@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
@@ -273,9 +274,9 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     /// <summary>
     /// Used to force free someone for things like if the <see cref="EnsnaringComponent"/> is removed
     /// </summary>
-    public void ForceFree(EntityUid ensnare, EnsnaringComponent component)
+    public void ForceFree(EntityUid ensnare, EnsnaringComponent? component = null)
     {
-        if (component.Ensnared == null)
+        if (!Resolve(ensnare, ref component, false))
             return;
 
         if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnareable))
@@ -283,14 +284,30 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         var target = component.Ensnared.Value;
 
-        Container.Remove(ensnare, ensnareable.Container, force: true);
         ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
         Dirty(component.Ensnared.Value, ensnareable);
         component.Ensnared = null;
 
+        Container.Remove(ensnare, ensnareable.Container, force: true);
+
         UpdateAlert(target, ensnareable);
         var ev = new EnsnareRemoveEvent(component.WalkSpeed, component.SprintSpeed);
         RaiseLocalEvent(ensnare, ev);
+    }
+
+    /// <summary>
+    /// Removes all ensnares from an entity.
+    /// </summary>
+    /// <param name="entity">The entity to remove snares from.</param>
+    public void ForceFreeAll(Entity<EnsnareableComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        foreach (var snare in entity.Comp.Container.ContainedEntities.ToList())
+        {
+            ForceFree(snare);
+        }
     }
 
     /// <summary>

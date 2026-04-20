@@ -1,12 +1,18 @@
 ﻿{
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by TiniestShark (github)",
+    "copyright": "Created by TiniestShark (github). Biodegrade taken from tgstation at https://github.com/tgstation/tgstation/commit/16aef3a2fd640e6cd97f5704aaaf5959d75921c3 and edited by ScarKy0 (Github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+            "name": "background"
+        },
+        {
+            "name": "frame"
+        },
         {
             "name": "transform"
         },
