@@ -49,7 +49,7 @@ namespace Content.Client.Inventory
 
         // Is the BUI in admin view? If in admin view, has custom UI elements to help admins see things
         // (E.g contraband status icon, is the item chameleon etc...)
-        private bool _isAdminView = true;
+        private bool _isAdminView;
 
         #region Admin overlay vars
 
@@ -94,6 +94,8 @@ namespace Content.Client.Inventory
             _contraband = EntMan.System<ContrabandSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
+
+            _isAdminView = _admin.IsAdmin();
         }
 
         protected override void Open()
