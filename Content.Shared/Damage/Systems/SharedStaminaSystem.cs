@@ -69,7 +69,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<StaminaComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
 
@@ -79,12 +78,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
-    }
-
-    private void OnMobStateChanged(Entity<StaminaComponent> ent, ref MobStateChangedEvent args)
-    {
-        if (args.NewMobState == MobState.Dead)
-            UpdateStaminaVisuals(ent);
     }
 
     protected virtual void OnStamHandleState(Entity<StaminaComponent> entity, ref AfterAutoHandleStateEvent args)

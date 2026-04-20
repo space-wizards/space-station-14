@@ -22,7 +22,8 @@ public sealed class JitteringSystem : SharedJitteringSystem
     private readonly string _jitterAnimationKey = "jittering";
     private readonly string _jitterReturnAnimationKey = "jitteringReturn";
 
-    private const float ReturnSpeed = 0.2f;
+    // When jittering stops, a final animation is played using this
+    private const float ReturnSpeed = 0.35f;
 
     public override void Initialize()
     {
@@ -41,11 +42,11 @@ public sealed class JitteringSystem : SharedJitteringSystem
     {
         StartJitter(args.Target, ent.Comp.Jitter);
     }
-
-    // This could be handled by StatusEffectRemovedEvent and a generic relay for AnimationCompletedEvent,
-    // But container prediction was making it difficult without a marker component
     private void OnAnimationComplete(Entity<JitteringComponent> ent, ref AnimationCompletedEvent args)
     {
+        // This could be handled by StatusEffectRemovedEvent and a generic relay for AnimationCompletedEvent,
+        // But container prediction was making it difficult without a marker component
+
         if (args.Key != _jitterAnimationKey)
             return;
 
@@ -167,7 +168,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
     }
 
     /// <summary>
-    /// Returns a lerp between three points, with its midpoint always being the largest on the Y axis.
+    /// Returns a lerp between three points where the midpoint is largest on the Y axis.
     /// </summary>
     private static Animation GetArchAnimation(Vector2 current, Vector2 destination, float length)
     {
