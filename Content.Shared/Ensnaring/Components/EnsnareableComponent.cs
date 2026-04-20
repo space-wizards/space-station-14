@@ -8,6 +8,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on an entity that you would like to be ensnared by anything that has the <see cref="EnsnaringComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SharedEnsnareableSystem))]
 public sealed partial class EnsnareableComponent : Component
 {
     /// <summary>

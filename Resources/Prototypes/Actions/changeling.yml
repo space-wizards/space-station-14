@@ -27,7 +27,7 @@
   description: Vomit acid over your restraints, setting yourself free.
   components:
   - type: Action
-    useDelay: 60
+    useDelay: 90 # TODO: Short cooldown but chemical cost
     raiseOnAction: true
     itemIconStyle: BigAction
     checkCanInteract: false

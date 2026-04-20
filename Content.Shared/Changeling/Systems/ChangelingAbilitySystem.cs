@@ -1,11 +1,13 @@
-﻿using Content.Shared.Changeling.Components;
+﻿using System.Linq;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Ensnaring;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -28,7 +30,8 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
     private void OnBiodegradeAction(Entity<ChangelingBiodegradeAbilityComponent> ent, ref ChangelingBiodegradeActionEvent args)
     {
-        if (!TryComp<CuffableComponent>(args.Performer, out var cuffs) || !_cuffable.TryGetLastCuff(args.Performer, out var cuff))
+        // Nothing can be done :(
+        if (!_cuffable.IsCuffed(args.Performer) && !_snare.IsEnsnared(args.Performer))
             return;
 
         if (_pulling.GetPuller(args.Performer) is { } puller)
@@ -36,19 +39,34 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
             _stun.TryAddParalyzeDuration(puller, ent.Comp.PullerStunDuration);
         }
 
-        _audio.PlayPredicted(ent.Comp.ActivatedSound, args.Performer, args.Performer);
+        List<EntityUid> toDelete = new List<EntityUid>();
 
+        _cuffable.TryGetAllCuffs(args.Performer, out var cuffs);
+        foreach (var cuff in cuffs.ToList())
+        {
+            _cuffable.Uncuff(args.Performer, args.Performer, cuff);
+            toDelete.Add(cuff);
+        }
 
-        var selfPopup = Loc.TryGetString(ent.Comp.ActivatedPopupSelf, out var self, ("user", args.Performer), ("cuffs", cuff)) ? self : null;
-        var othersPopup = Loc.TryGetString(ent.Comp.ActivatedPopup, out var others, ("user", args.Performer), ("cuffs", cuff)) ? others : null;
-
-        _popup.PopupPredicted(othersPopup, selfPopup, args.Performer, args.Performer, PopupType.LargeCaution);
-
-        _cuffable.Uncuff(args.Performer, args.Performer, cuff.Value);
-        _snare.ForceFreeAll(args.Performer);
-
-        // TODO: Should probably spawn a puddle of acid. But solutions are frozen due to an upcoming refactor.
+        toDelete.AddRange(_snare.ForceFreeAll(args.Performer));
 
         args.Handled = true;
+
+        // How can you be ensnared/cuffed and have nothing detected??
+        if (toDelete.Count == 0)
+            return;
+
+        var selfPopup = Loc.TryGetString(ent.Comp.ActivatedPopupSelf, out var self, ("user", Identity.Entity(args.Performer, EntityManager)), ("cuffs", toDelete.First())) ? self : null;
+        var othersPopup = Loc.TryGetString(ent.Comp.ActivatedPopup, out var others, ("user", Identity.Entity(args.Performer, EntityManager)), ("cuffs", toDelete.First())) ? others : null;
+
+        _popup.PopupPredicted(othersPopup, selfPopup, args.Performer, args.Performer, PopupType.LargeCaution);
+        _audio.PlayPredicted(ent.Comp.ActivatedSound, args.Performer, args.Performer);
+
+        foreach (var deleted in toDelete)
+        {
+            PredictedQueueDel(deleted);
+        }
+
+        // TODO: Should probably spawn a puddle of acid. But solutions are frozen due to an upcoming refactor.
     }
 }

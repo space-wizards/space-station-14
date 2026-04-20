@@ -6,7 +6,7 @@
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 25
+    ChangelingDNA: 10 # TODO: Reasonable prices once we get DNA per devour. It's low for the sake of testing.
   categories:
   - ChangelingAbilities
   conditions:
@@ -20,7 +20,7 @@
   description: changeling-catalog-flesh-clothing-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 10 # TODO: Reasonable prices once we get DNA per devour. It's low for the sake of testing.
   categories:
   - ChangelingAbilities
   conditions:
@@ -35,7 +35,7 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
   applyToMob: true
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 10 # TODO: Reasonable prices once we get DNA per devour. It's low for the sake of testing.
   categories:
   - ChangelingAbilities
   conditions:

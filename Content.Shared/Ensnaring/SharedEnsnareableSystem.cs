@@ -83,11 +83,11 @@ public abstract class SharedEnsnareableSystem : EntitySystem
             return;
         }
 
+        _hands.PickupOrDrop(args.Args.User, args.Args.Used.Value);
+
         component.IsEnsnared = component.Container.ContainedEntities.Count > 0;
         Dirty(uid, component);
         ensnaring.Ensnared = null;
-
-        _hands.PickupOrDrop(args.Args.User, args.Args.Used.Value);
 
         if (args.User == args.Target)
             Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, args.User, PopupType.Medium);
@@ -284,30 +284,49 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         var target = component.Ensnared.Value;
 
+        Container.Remove(ensnare, ensnareable.Container, force: true);
+
         ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
         Dirty(component.Ensnared.Value, ensnareable);
         component.Ensnared = null;
 
-        Container.Remove(ensnare, ensnareable.Container, force: true);
-
         UpdateAlert(target, ensnareable);
         var ev = new EnsnareRemoveEvent(component.WalkSpeed, component.SprintSpeed);
-        RaiseLocalEvent(ensnare, ev);
+        RaiseLocalEvent(target, ev);
     }
 
     /// <summary>
     /// Removes all ensnares from an entity.
     /// </summary>
     /// <param name="entity">The entity to remove snares from.</param>
-    public void ForceFreeAll(Entity<EnsnareableComponent?> entity)
+    /// <returns>The list of removed snares.</returns>
+    public List<EntityUid> ForceFreeAll(Entity<EnsnareableComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
-            return;
+            return new List<EntityUid>();
+
+        List<EntityUid> snares = new();
 
         foreach (var snare in entity.Comp.Container.ContainedEntities.ToList())
         {
             ForceFree(snare);
+            snares.Add(snare);
         }
+
+        return snares;
+    }
+
+    /// <summary>
+    /// Checks whether an entity is currently being ensnared.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    /// <returns>True if ensnared, otherwise False.</returns>
+    public bool IsEnsnared(Entity<EnsnareableComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        return entity.Comp.IsEnsnared;
     }
 
     /// <summary>
