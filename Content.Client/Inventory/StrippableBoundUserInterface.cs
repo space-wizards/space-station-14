@@ -47,7 +47,9 @@ namespace Content.Client.Inventory
         private readonly StrippableSystem _strippable;
         private readonly ContrabandSystem _contraband;
 
-        private bool IsAdminView = true;
+        // Is the BUI in admin view? If in admin view, has custom UI elements to help admins see things
+        // (E.g contraband status icon, is the item chameleon etc...)
+        private bool _isAdminView = true;
 
         [ViewVariables]
         private const int ButtonSeparation = 4;
@@ -179,10 +181,10 @@ namespace Content.Client.Inventory
                     Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button"),
                     StyleClasses = { StyleClass.ButtonOpenRight },
                     ToggleMode = true,
-                    Pressed = IsAdminView,
+                    Pressed = _isAdminView,
                 };
 
-                adminButton.OnToggled += args => { IsAdminView = !IsAdminView; args.Button.Pressed = IsAdminView; UpdateMenu(); };
+                adminButton.OnToggled += args => { _isAdminView = !_isAdminView; args.Button.Pressed = _isAdminView; UpdateMenu(); };
 
                 _strippingMenu.ButtonCointainer.AddChild(adminButton);
             }
@@ -303,12 +305,12 @@ namespace Content.Client.Inventory
 
             button.SetEntity(viewEnt);
 
-            if (_admin.IsAdmin() && IsAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
+            if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
             {
                 button.SetChameleon();
             }
 
-            if (_admin.IsAdmin() && IsAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+            if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
             {
                 button.SetContraband(_proto.Index(contraProtoId));
             }
