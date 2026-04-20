@@ -9,6 +9,7 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private readonly CounterConditionSystem _counterCondition = default!;
 
     public override void Initialize()
     {
@@ -28,9 +29,9 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
 
         foreach (var obj in mind.Objectives)
         {
-            if (HasComp<MailFraudConditionComponent>(obj) && TryComp<CounterConditionComponent>(obj, out var counterObjComp))
+            if (HasComp<MailFraudConditionComponent>(obj))
             {
-                counterObjComp.Count++;
+                _counterCondition.IncreaseCount(obj);
                 break;
             }
         }

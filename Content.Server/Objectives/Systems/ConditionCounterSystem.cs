@@ -1,5 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
+using JetBrains.Annotations;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -10,12 +11,14 @@ namespace Content.Server.Objectives.Systems;
 public sealed class CounterConditionSystem : EntitySystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
+    private EntityQuery<CounterConditionComponent> _compQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<CounterConditionComponent, ObjectiveGetProgressEvent>(OnCounterGetProgress);
+        _compQuery = GetEntityQuery<CounterConditionComponent>();
     }
 
     private void OnCounterGetProgress(Entity<CounterConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -33,5 +36,14 @@ public sealed class CounterConditionSystem : EntitySystem
             return 1f;
 
         return (float)ent.Comp.Count / target;
+    }
+
+    [PublicAPI]
+    public void IncreaseCount(EntityUid objectiveEntity)
+    {
+        if (_compQuery.TryGetComponent(objectiveEntity, out var counterObjComp))
+        {
+            counterObjComp.Count++;
+        }
     }
 }
