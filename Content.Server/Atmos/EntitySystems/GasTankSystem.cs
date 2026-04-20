@@ -21,7 +21,7 @@ public sealed class GasTankSystem : SharedGasTankSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
 
-    private const float MinimumSoundValvePressure = 21.3f; // Artibrary number
+    private const float MinimumSoundValvePressure = 21.3f; // Arbitrary number
 
     private const float ReleaseArea = 0.001f; // About 10cm^2
 
