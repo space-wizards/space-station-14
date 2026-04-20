@@ -10,16 +10,16 @@ public sealed partial class ItemSlotVisualsComponent : Component
     public string? FillBaseName;
 
     [DataField]
-    public string? InHandsFillBaseName;
-
-    [DataField]
     public int InHandsMaxFillLevels;
 
     [DataField]
-    public string? EquippedFillBaseName;
+    public string? InHandsFillBaseName;
 
     [DataField]
     public int EquippedMaxFillLevels;
+
+    [DataField]
+    public string? EquippedFillBaseName;
 
     [DataField("layer")]
     public ItemSlotVisualLayers FillLayer = ItemSlotVisualLayers.Fill;

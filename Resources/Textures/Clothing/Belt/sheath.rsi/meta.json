@@ -12,14 +12,30 @@
         "directions": 4
     },
     {
-        "name": "sheath-sabre-equipped-BELT",
+        "name": "equipped-belt-fill-1",
         "directions": 4
     },
     {
-        "name": "sheath-sabre"
+        "name": "fill-1"
     },
     {
-        "name": "sheath"
+        "name": "icon"
+    },
+    {
+        "name": "inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "inhand-left-fill-1",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right-fill-1",
+        "directions": 4
     }
   ]
 }

@@ -8,7 +8,11 @@
   components:
   - type: Sprite
     sprite: Clothing/Belt/sheath.rsi
-    state: sheath
+    layers:
+    - state: icon
+    - state: fill-1
+      map: [ "enum.ItemSlotVisualLayers.Fill" ]
+      visible: false
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
@@ -16,7 +20,7 @@
   - type: ItemSlots
     slots:
       item:
-        name: Sabre
+        name: fill-1
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg
@@ -26,10 +30,17 @@
           - CaptainSabre
   - type: ItemMapper
     mapLayers:
-      sheath-sabre:
+      fill-1:
         whitelist:
           tags:
           - CaptainSabre
+  - type: ItemSlotVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
+    EquippedMaxFillLevels: 1
+    equippedFillBaseName: -fill-
   - type: Appearance
 
 - type: entity
