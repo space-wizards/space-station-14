@@ -106,7 +106,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (args.Slot == "mask")
             {
-                _forensics.TransferDna(entity.Owner, args.Equipee, false);
+                _forensics.TransferDna(entity.Owner, args.EquipTarget, false);
             }
         }
 
