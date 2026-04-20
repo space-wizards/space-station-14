@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
@@ -187,7 +188,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!Resolve(changeling, ref changeling.Comp, false))
             return false;
 
-        return changeling.Comp.ConsumedIdentities.ContainsValue(devoured);
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured) != null;
     }
 
     /// <summary>

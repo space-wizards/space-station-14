@@ -34,14 +34,14 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         if (!EntMan.TryGetComponent<ChangelingIdentityComponent>(Owner, out var lingIdentity))
             return;
 
-        var models = ConvertToButtons(lingIdentity.ConsumedIdentities.Keys, lingIdentity?.CurrentIdentity);
+        var models = ConvertToButtons(lingIdentity.ConsumedIdentities, lingIdentity.CurrentIdentity);
 
         _menu.SetButtons(models);
     }
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
-        IEnumerable<EntityUid> identities,
-        EntityUid? currentIdentity
+        IEnumerable<ChangelingIdentityData> identities,
+        ChangelingIdentityData? currentIdentity
     )
     {
         var buttons = new List<RadialMenuOptionBase>();
@@ -49,10 +49,13 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
 
         foreach (var identity in identities)
         {
+            if (identity.Identity == null)
+                continue;
+
             // Options for selecting identities.
-            var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, EntMan.GetNetEntity(identity))
+            var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, EntMan.GetNetEntity(identity.Identity.Value))
             {
-                IconSpecifier = RadialMenuIconSpecifier.With(identity),
+                IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
                 ToolTip = Loc.GetString("changeling-transform-bui-select-entity", ("entity", identity)),
                 BackgroundColor = (currentIdentity == identity) ? SelectedOptionBackground : null, // mark as selected
                 HoverBackgroundColor = (currentIdentity == identity) ? SelectedOptionHoverBackground : null
@@ -60,9 +63,9 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             buttons.Add(option);
 
             // Options for dropping identities.
-            var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity))
+            var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity.Identity.Value))
             {
-                IconSpecifier = RadialMenuIconSpecifier.With(identity),
+                IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
                 ToolTip = (currentIdentity == identity)
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
                     : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity)),

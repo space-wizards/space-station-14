@@ -1,11 +1,15 @@
 ﻿using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -16,6 +20,8 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
 
     public MapId? PausedMapId;
 
@@ -46,7 +52,9 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         // Make a backup of our current identity so we can transform back.
         var clone = CloneToPausedMap(ent, ent.Owner);
-        ent.Comp.CurrentIdentity = clone;
+        ent.Comp.CurrentIdentity = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == clone);
+
+        Dirty(ent);
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
@@ -67,15 +75,14 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
                 continue;
 
             var keysToUpdate = identityComp.ConsumedIdentities
-                .Where(kvp => kvp.Value == ent.Owner)
-                .Select(kvp => kvp.Key)
+                .Where(kvp => kvp.Original == ent.Owner)
                 .ToList();
 
             if (keysToUpdate.Count == 0)
                 continue; // No need to dirty.
 
             foreach (var key in keysToUpdate)
-                identityComp.ConsumedIdentities[key] = null;
+                key.Original = null;
 
             Dirty(ling, identityComp);
         }
@@ -99,7 +106,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
 
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity.Key);
+            QueueDel(consumedIdentity.Identity);
         }
     }
 
@@ -109,13 +116,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// <param name="ent">The changeling entity</param>
     private void CleanupDevouredReferences(Entity<ChangelingIdentityComponent> ent)
     {
-        foreach (var devouredUid in ent.Comp.ConsumedIdentities.Values)
+        foreach (var devouredUid in ent.Comp.ConsumedIdentities)
         {
-            if (!TryComp<ChangelingDevouredComponent>(devouredUid, out var devouredComp))
+            if (!TryComp<ChangelingDevouredComponent>(devouredUid.Original, out var devouredComp))
                 continue;
 
             if (devouredComp.DevouredBy.Remove(ent.Owner))
-                Dirty(devouredUid.Value, devouredComp);
+                Dirty(devouredUid.Original.Value, devouredComp);
         }
     }
 
@@ -161,7 +168,9 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (clone == null)
             return null;
 
-        ent.Comp.ConsumedIdentities.Add(clone.Value, target);
+        var newIdentity = CreateIdentityData(clone.Value, target);
+
+        ent.Comp.ConsumedIdentities.Add(newIdentity);
 
         Dirty(ent);
         HandlePvsOverride(ent, clone.Value);
@@ -180,9 +189,19 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (!HasComp<ChangelingStoredIdentityComponent>(identity))
             return; // Not a stored identity.
 
+        var toDrop = ent.Comp.ConsumedIdentities.Where(data => data.Identity == identity).ToList();
+
+        foreach (var dropped in toDrop)
+        {
+            dropped.Identity = null;
+        }
+
         PredictedQueueDel(identity);
-        if (ent.Comp.ConsumedIdentities.Remove(identity))
+
+        if (toDrop.Count > 0)
+        {
             Dirty(ent);
+        }
     }
 
     /// <summary>
@@ -207,7 +226,10 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.RemoveSessionOverride(identity.Key, session);
+            if (identity.Identity == null)
+                continue;
+
+            _pvsOverrideSystem.RemoveSessionOverride(identity.Identity.Value, session);
         }
     }
 
@@ -220,7 +242,10 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.AddSessionOverride(identity.Key, session);
+            if (identity.Identity == null)
+                continue;
+
+            _pvsOverrideSystem.AddSessionOverride(identity.Identity.Value, session);
         }
     }
 
@@ -236,5 +261,29 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityName(mapUid, Loc.GetString("changeling-paused-map-name"));
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
+    }
+
+    /// <summary>
+    /// Creates a ChangelingIdentityData for given entities.
+    /// </summary>
+    /// <param name="identity">The created identity this is supposed to refer to.</param>
+    /// <param name="original">The original entity this is supposed to refer to.</param>
+    /// <returns>Identity data based on the given parameters.</returns>
+    public ChangelingIdentityData CreateIdentityData(EntityUid identity, EntityUid original)
+    {
+        ChangelingIdentityData identityData = new ChangelingIdentityData();
+        identityData.Identity = identity;
+        identityData.Original = original;
+
+        var foundMind = _mind.TryGetMind(original, out var mindId, out _);
+        identityData.OriginalMind = mindId;
+
+        if (foundMind)
+        {
+            _job.MindTryGetJobId(mindId, out var jobId);
+            identityData.OriginalJob = jobId;
+        }
+
+        return identityData;
     }
 }
