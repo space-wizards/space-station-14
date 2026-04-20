@@ -33,6 +33,7 @@ changeling-flesh-clothing-examine-wearer = [color=crimson]This item is a camoufl
 changeling-flesh-clothing-alert-name = Flesh Clothing Ability
 changeling-flesh-clothing-alert-desc = Whether clothing transformation is enabled. Click to toggle.
 changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$cuffs}!
+changeling-biodegrade-used-popup-self = We vomit acid over our {$cuffs}!
 
 
 # other

@@ -29,7 +29,7 @@ public sealed partial class ChangelingBiodegradeAbilityComponent : Component
     /// Only visible to the user
     /// </summary>
     [DataField]
-    public LocId ActivatedPopupSelf = "changeling-biodegrade-used-popup";
+    public LocId ActivatedPopupSelf = "changeling-biodegrade-used-popup-self";
 
     /// <summary>
     /// The sound to play when the ability is successfully used.
