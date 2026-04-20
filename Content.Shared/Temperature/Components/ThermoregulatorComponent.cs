@@ -1,3 +1,5 @@
+using Content.Shared.Atmos;
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -10,7 +12,7 @@ namespace Content.Shared.Temperature.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ThermoregulatorSystem))]
 [AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
-public sealed partial class ThermoregulatorComponent : Component
+public sealed partial class ThermoregulatorComponent : Component, IHeatContainer
 {
     /// <summary>
     /// Whether the thermoregulator is enabled.
@@ -22,7 +24,11 @@ public sealed partial class ThermoregulatorComponent : Component
     /// Thermal information about this entity. It stores the heat capacity and temperature.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HeatContainer.HeatContainer HeatData = new (500f, 293.15f);
+    public float HeatCapacity { get; set; } = 500f; // about 1kg of water
+
+    /// <inheritdoc/>
+    [DataField, AutoNetworkedField]
+    public float Temperature { get; set; } = Atmospherics.T20C;
 
     /// <summary>
     /// The <see cref="TimeSpan"/> interval between updates of the controller.
