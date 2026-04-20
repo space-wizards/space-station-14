@@ -60,8 +60,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
         if (args.Handled
-            || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target)
-            || !HasComp<ChangelingIdentityComponent>(ent))
+            || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target))
             return;
 
         args.Handled = true;
@@ -176,6 +175,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         // We add a reference to ourselves to prevent repeated identity gain.
         var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
         targetDevoured.DevouredBy.Add(ent.Owner);
+        targetDevoured.Recent = true;
         Dirty(target, targetDevoured);
         Dirty(ent);
     }
@@ -188,7 +188,18 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!Resolve(changeling, ref changeling.Comp, false))
             return false;
 
-        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured) != null;
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
+    }
+
+    /// <summary>
+    /// Has this entity been devoured by a changeling already before getting revived?
+    /// </summary>
+    public bool WasDevouredRecently(Entity<ChangelingDevouredComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        return entity.Comp.Recent;
     }
 
     /// <summary>
@@ -213,6 +224,13 @@ public sealed class ChangelingDevourSystem : EntitySystem
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
+        }
+
+        if (WasDevouredRecently(victim))
+        {
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
@@ -261,5 +279,19 @@ public sealed class ChangelingDevourSystem : EntitySystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Checks whether this changeling has devoured the target entity at any point before.
+    /// </summary>
+    /// <param name="ent">The changeling.</param>
+    /// <param name="devoured">The target entity.</param>
+    /// <returns>True if target was previously devoured, False otherwise.</returns>
+    public bool IsUniqueDevour(Entity<ChangelingIdentityComponent?> ent, EntityUid devoured)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return _changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out _);
     }
 }

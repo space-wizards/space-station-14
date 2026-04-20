@@ -41,7 +41,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(
         IEnumerable<ChangelingIdentityData> identities,
-        ChangelingIdentityData? currentIdentity
+        EntityUid? currentIdentity
     )
     {
         var buttons = new List<RadialMenuOptionBase>();
@@ -57,8 +57,8 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
                 ToolTip = Loc.GetString("changeling-transform-bui-select-entity", ("entity", identity)),
-                BackgroundColor = (currentIdentity == identity) ? SelectedOptionBackground : null, // mark as selected
-                HoverBackgroundColor = (currentIdentity == identity) ? SelectedOptionHoverBackground : null
+                BackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionBackground : null, // mark as selected
+                HoverBackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionHoverBackground : null
             };
             buttons.Add(option);
 
@@ -66,11 +66,11 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             var dropOption = new RadialMenuActionOption<NetEntity>(SendIdentityDrop, EntMan.GetNetEntity(identity.Identity.Value))
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
-                ToolTip = (currentIdentity == identity)
+                ToolTip = (currentIdentity == identity.Identity)
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
                     : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity)),
-                BackgroundColor = (currentIdentity == identity) ? DisabledOptionBackground : null, // cannot drop your current identity
-                HoverBackgroundColor = (currentIdentity == identity) ? DisabledOptionHoverBackground : null
+                BackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionBackground : null, // cannot drop your current identity
+                HoverBackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionHoverBackground : null
             };
             dropButtons.Add(dropOption);
         }

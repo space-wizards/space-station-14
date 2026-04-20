@@ -1,15 +1,15 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Mind;
-using Content.Shared.Roles;
+using Content.Shared.Mobs;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -36,6 +36,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
+        SubscribeLocalEvent<ChangelingDevouredComponent, MobStateChangedEvent>(OnDevouredMobState);
     }
 
     private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
@@ -52,9 +53,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         // Make a backup of our current identity so we can transform back.
         var clone = CloneToPausedMap(ent, ent.Owner);
-        ent.Comp.CurrentIdentity = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == clone);
-
-        Dirty(ent);
+        ent.Comp.CurrentIdentity = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == clone)?.Identity;
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
@@ -74,18 +73,18 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
                 continue;
 
-            var keysToUpdate = identityComp.ConsumedIdentities
-                .Where(kvp => kvp.Original == ent.Owner)
-                .ToList();
-
-            if (keysToUpdate.Count == 0)
-                continue; // No need to dirty.
-
-            foreach (var key in keysToUpdate)
-                key.Original = null;
-
-            Dirty(ling, identityComp);
+            RemoveDevourReference((ling,  identityComp), ent);
         }
+    }
+
+    private void OnDevouredMobState(Entity<ChangelingDevouredComponent> ent, ref MobStateChangedEvent args)
+    {
+        // Once we are revived the body is no longer "recent".
+        if (args.NewMobState != MobState.Alive)
+            return;
+
+        ent.Comp.Recent = false;
+        Dirty(ent);
     }
 
     private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
@@ -124,6 +123,22 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             if (devouredComp.DevouredBy.Remove(ent.Owner))
                 Dirty(devouredUid.Original.Value, devouredComp);
         }
+    }
+
+    /// <summary>
+    /// Removes reference to an original entity from <see cref="ChangelingIdentityComponent"/>.
+    /// </summary>
+    /// <param name="ent">The changeling.</param>
+    /// <param name="original">The entity to remove from identity originals.</param>
+    private void RemoveDevourReference(Entity<ChangelingIdentityComponent> ent, EntityUid original)
+    {
+        foreach (var identity in ent.Comp.ConsumedIdentities)
+        {
+            if (identity.Original == original)
+                identity.Original = null;
+        }
+
+        Dirty(ent);
     }
 
     /// <summary>
@@ -168,12 +183,20 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         if (clone == null)
             return null;
 
-        var newIdentity = CreateIdentityData(clone.Value, target);
+        // We see if we already have a identity slot for this entity.
 
-        ent.Comp.ConsumedIdentities.Add(newIdentity);
+        TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity);
 
-        Dirty(ent);
+        if (newIdentity == null)
+        {
+            newIdentity = CreateIdentityData(clone.Value, target);
+            ent.Comp.ConsumedIdentities.Add(newIdentity);
+        }
+
+        newIdentity.Identity = clone;
+
         HandlePvsOverride(ent, clone.Value);
+        Dirty(ent);
 
         return clone;
     }
@@ -193,6 +216,12 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
 
         foreach (var dropped in toDrop)
         {
+            if (TryComp<ChangelingDevouredComponent>(dropped.Original, out var devoured))
+            {
+                if (devoured.DevouredBy.Remove(ent))
+                    Dirty(dropped.Original.Value, devoured);
+            }
+
             dropped.Identity = null;
         }
 
@@ -285,5 +314,27 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         }
 
         return identityData;
+    }
+
+    public bool TryGetDataFromIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
+    {
+        identityData = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == identity);
+
+        return identityData != null;
+    }
+
+    public bool TryGetDataFromOriginal(Entity<ChangelingIdentityComponent?> ent, EntityUid original, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
+    {
+        identityData = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == original);
+
+        return identityData != null;
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Robust.Client.GameObjects;
@@ -13,15 +14,15 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangelingIdentityComponent, ComponentHandleState>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ComponentHandleState>(OnHandleState);
     }
 
-    private void OnAfterAutoHandleState(Entity<ChangelingIdentityComponent> ent, ref ComponentHandleState args)
+    private void OnHandleState(Entity<ChangelingIdentityComponent> ent, ref ComponentHandleState args)
     {
-        if (args.Next is not ChangelingIdentityComponentState state)
+        if (args.Current is not ChangelingIdentityComponentState state)
             return;
 
-        ent.Comp.ConsumedIdentities = new HashSet<ChangelingIdentityData>();
+        ent.Comp.ConsumedIdentities = new List<ChangelingIdentityData>();
 
         foreach (var identities in state.ConsumedIdentities)
         {
@@ -29,26 +30,14 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
             data.Identity = GetEntity(identities.Identity);
             data.Original = GetEntity(identities.Original);
-            data.OriginalMind = null;
+            data.OriginalMind = null; // Don't network the mind!
             data.OriginalJob = identities.OriginalJob;
             data.GrantedDna = identities.GrantedDna;
 
             ent.Comp.ConsumedIdentities.Add(data);
         }
 
-        if (state.CurrentIdentity == null)
-        {
-            ent.Comp.CurrentIdentity = null;
-        }
-        else
-        {
-            ent.Comp.CurrentIdentity = new ChangelingIdentityData();
-            ent.Comp.CurrentIdentity.Identity = GetEntity(state.CurrentIdentity.Identity);
-            ent.Comp.CurrentIdentity.Original = GetEntity(state.CurrentIdentity.Identity);
-            ent.Comp.CurrentIdentity.OriginalMind = null;
-            ent.Comp.CurrentIdentity.GrantedDna = state.CurrentIdentity.GrantedDna;
-            ent.Comp.CurrentIdentity.OriginalJob = state.CurrentIdentity.OriginalJob;
-        }
+        ent.Comp.CurrentIdentity = GetEntity(state.CurrentIdentity);
 
         ent.Comp.IdentityCloningSettings = state.IdentityCloningSettings;
 

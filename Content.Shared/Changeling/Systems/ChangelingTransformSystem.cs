@@ -91,7 +91,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
-        if (identity.CurrentIdentity?.Identity == targetIdentity)
+        if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
         if (identity.ConsumedIdentities.FirstOrDefault(data => data.Identity == targetIdentity) == null)
@@ -109,7 +109,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
-        if (identity.CurrentIdentity?.Identity == targetIdentity)
+        if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
 
         if (identity.ConsumedIdentities.FirstOrDefault(data => data.Identity == targetIdentity) == null)
@@ -198,7 +198,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         if (TryComp<ChangelingIdentityComponent>(ent, out var identity)) // in case we ever get changelings that don't store identities
         {
-            identity.CurrentIdentity = identity.ConsumedIdentities.FirstOrDefault(data => data.Identity == targetIdentity);
+            identity.CurrentIdentity = targetIdentity;
             Dirty(ent.Owner, identity);
         }
 

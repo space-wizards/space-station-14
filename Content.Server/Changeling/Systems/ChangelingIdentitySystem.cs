@@ -15,7 +15,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
     private void OnGetState(Entity<ChangelingIdentityComponent> entity, ref ComponentGetState args)
     {
-        HashSet<ChangelingNetworkedIdentityData> sentIdentities = new();
+        List<ChangelingNetworkedIdentityData> sentIdentities = new();
 
         foreach (var identity in entity.Comp.ConsumedIdentities)
         {
@@ -31,21 +31,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
         var current = entity.Comp.CurrentIdentity;
 
-        ChangelingNetworkedIdentityData? netCurrent;
-
-        if (current != null)
-        {
-            netCurrent = new ChangelingNetworkedIdentityData();
-
-            netCurrent.Identity = GetNetEntity(current.Identity);
-            netCurrent.Original = GetNetEntity(current.Original);
-            netCurrent.GrantedDna = current.GrantedDna;
-            netCurrent.OriginalJob = current.OriginalJob;
-        }
-        else
-        {
-            netCurrent = null;
-        }
+        var netCurrent = GetNetEntity(current);
 
         args.State = new ChangelingIdentityComponentState(sentIdentities, netCurrent, entity.Comp.IdentityCloningSettings);
     }
