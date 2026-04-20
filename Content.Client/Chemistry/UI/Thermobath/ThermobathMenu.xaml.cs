@@ -31,7 +31,6 @@ public sealed partial class ThermobathMenu : FancyWindow
     private bool _increasePressed;
     private bool _decreasePressed;
     private float _buttonHeldTime;
-    private float _lastSentSetpoint;
 
     // These are set from the component, we just cache it here
     private bool _powered;
