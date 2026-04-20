@@ -51,6 +51,15 @@ namespace Content.Client.Inventory
         // (E.g contraband status icon, is the item chameleon etc...)
         private bool _isAdminView = true;
 
+        #region Admin overlay vars
+
+        private const string ChameleonClothingTexturePath = "/Textures/Interface/Default/Slots/camo.png";
+        private const string ContrabandTexturePath = "/Textures/Interface/Default/Slots/contra.png";
+
+        private readonly Color _chameleonColor = new(147, 112, 219);
+
+        #endregion
+
         [ViewVariables]
         private const int ButtonSeparation = 4;
 
@@ -307,12 +316,12 @@ namespace Content.Client.Inventory
 
             if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
             {
-                button.SetChameleon();
+                button.AddAdminOverlay(ChameleonClothingTexturePath, _chameleonColor);
             }
 
             if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
             {
-                button.SetContraband(_proto.Index(contraProtoId));
+                button.AddAdminOverlay(ContrabandTexturePath, _proto.Index(contraProtoId).Color);
             }
         }
     }

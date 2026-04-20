@@ -233,28 +233,14 @@ namespace Content.Client.UserInterface.Controls
             UpdateButtonTexture();
         }
 
-        public void SetChameleon()
+        /// <summary>
+        /// Add an overlay to in the admin overlays location
+        /// </summary>
+        /// <param name="texturePath">The texture path to overlay.</param>
+        /// <param name="color">Color to modulate the texture with - if null no modulation.</param>
+        public void AddAdminOverlay(string texturePath, Color? color = null)
         {
-            var texture = new TextureRect
-            {
-                TexturePath = "/Textures/Interface/Default/Slots/camo.png",
-                TextureScale = new Vector2(2, 2),
-                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
-                Modulate = new Color(147, 112, 219),
-            };
-            AdminOverlays.AddChild(texture);
-        }
-
-        public void SetContraband(ContrabandSeverityPrototype contraProto)
-        {
-            var icon = new TextureRect
-            {
-                TexturePath = "/Textures/Interface/Default/Slots/contra.png",
-                TextureScale = new Vector2(2, 2),
-                SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
-                Modulate = contraProto.Color,
-            };
-            AdminOverlays.AddChild(icon);
+            AdminOverlays.AddChild(new SimpleSlotOverlay(texturePath, color));
         }
 
         /// <summary>
