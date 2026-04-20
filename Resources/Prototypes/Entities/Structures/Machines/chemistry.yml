@@ -12,8 +12,8 @@
     - state: icon
   - type: Thermobath
   - type: Thermoregulator
-    heatingPower: 600
-    coolingPower: 200
+    heatingPower: 1200
+    coolingPower: 400
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot
