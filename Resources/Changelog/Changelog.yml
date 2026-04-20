@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Krzeszny
-  changes:
-  - message: Updated the controls guide.
-    type: Tweak
-  id: 9139
-  time: '2025-10-21T10:14:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40978
-- author: Quasr
-  changes:
-  - message: The "Friendly Fauna" artifact node no longer spawns hostile mobs
-    type: Tweak
-  id: 9140
-  time: '2025-10-21T10:27:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40979
-- author: Fildrance
-  changes:
-  - message: Door remotes now have a radial menu for changing modes.
-    type: Tweak
-  id: 9141
-  time: '2025-10-21T12:28:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36378
 - author: TrixxedHeart
   changes:
   - message: Vox can now have up to 4 head markings.
@@ -4035,3 +4014,35 @@
   id: 9650
   time: '2026-04-18T22:00:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37983
+- author: Princess-Cheeseballs
+  changes:
+  - message: Gas Canisters can now explode from overpressure.
+    type: Add
+  - message: Max Caps have been entirely reworked with different fuse lengths and
+      explosive strengths.
+    type: Tweak
+  - message: Max Cap intensity limits have been removed.
+    type: Tweak
+  - message: Tritium fire energy production has been divided by 10, returning to its
+      intended value.
+    type: Tweak
+  - message: The TEG now produces 25% more power.
+    type: Tweak
+  id: 9651
+  time: '2026-04-19T05:36:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43281
+- author: ArtisticRoomba
+  changes:
+  - message: Passive gates now have better equalization behavior and have less of
+      a tendency to over-equalize.
+    type: Fix
+  id: 9652
+  time: '2026-04-19T05:51:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43552
+- author: AffleWaffle
+  changes:
+  - message: Intercom Assembly is now breakable.
+    type: Fix
+  id: 9653
+  time: '2026-04-20T02:39:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43647
