@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using JetBrains.Annotations;
@@ -58,7 +59,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, TimeSpan curTime)
     {
         var dt = ent.Comp.UpdateInterval.TotalSeconds;     // Time between updates
-        var T = ent.Comp.HeatData.Temperature;                        // Current temperature
+        var T = ent.Comp.Temperature;                        // Current temperature
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
         var H = ent.Comp.Hysteresis;                         // Hysteresis band
         var SB = ent.Comp.ScaleBand;                         // Power scaling range beyond hysteresis
@@ -114,8 +115,8 @@ public sealed class ThermoregulatorSystem : EntitySystem
             newState = needsHeating ? ThermoregulatorActiveMode.Heating : ThermoregulatorActiveMode.Cooling;
 
         // Update temperature but DON'T dirty it yet - event handlers might modify it
-        var originalTemperature = ent.Comp.HeatData.Temperature;
-        HeatContainerHelpers.AddHeat(ref ent.Comp.HeatData, energy);
+        var originalTemperature = ent.Comp.Temperature;
+        HeatContainerHelpers.AddHeat(ref ent.Comp, energy);
 
         // Update active mode
         if (ent.Comp.ActiveMode != newState)
@@ -132,101 +133,21 @@ public sealed class ThermoregulatorSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         // Now dirty Temperature once with the final value (after all modifications)
-        if (!MathHelper.CloseTo(originalTemperature, ent.Comp.HeatData.Temperature))
+        if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
         {
-            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.HeatData));
+            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
         }
     }
 
-    [PublicAPI]
     public void TransferHeatFromEntity(
         Entity<ThermoregulatorComponent?> ent,
-        float heatCapacity,
-        ref float temperature)
+        ref HeatContainer.HeatContainer otherHeatContainer)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var (newRegTemp, newTemp) = TransferHeatFromEntity(
-            ent.Comp.HeatData.HeatCapacity,
-            ent.Comp.HeatData.Temperature,
-            heatCapacity,
-            temperature,
-            (float) ent.Comp.UpdateInterval.TotalSeconds);
+        HeatContainerHelpers.ConductHeat<IHeatContainer>(ref ent.Comp, ref otherHeatContainer, (float) ent.Comp.UpdateInterval.TotalSeconds,DefaultThermalConductivity);
 
-        HeatContainerHelpers.ConductHeatToTemp(ref ent.Comp.HeatData, newRegTemp);
-        temperature = newTemp;
-    }
-
-    [PublicAPI]
-    public static (float regulatorTemperature, float temperature) TransferHeatFromEntity(
-        float regulatorHeatCapacity,
-        float regulatorTemperature,
-        float heatCapacity,
-        float temperature,
-        float deltaTime,
-        float thermalConductivity = DefaultThermalConductivity)
-    {
-        // Explanation:
-        // According to Newton's Law of Cooling:
-        //     ΔQ/Δt = k * (T2(t) - T1(t))
-        // Where:
-        //     Q = heat transferred (J)
-        //     t = time (s)
-        //     k = thermal conductivity
-        //
-        // However, it isn't uncommon in this game for the deltatime to be to large.
-        // We can instead expand the differential equations for the temperatures of the two bodies
-        // The equation above is the flow of energy from body 2 to body 1.
-        // This changes the internal heat capacity for body 1, which can be represented as U = m1*c1*T1(t) + some constant depending on how you define your system.
-        //      So ΔQ/Δt = ΔU/Δt = Δ(C1*T1(t))/Δt = C1*Δ(T1(t))/Δt
-        // Where:
-        //      m1 = mass of body 1
-        //      c1 = specific heat capacity of body 1
-        //      C1 = m1 * c1 = Heat capacity of body 1.
-        // The same is true for body 2 but the flow is opposite so: -ΔQ/Δt = ΔU/Δt, and the variables are C2 and T2.
-        // We now have multiple definitions of ΔQ/Δt that are equivalent.
-        //      C2 ΔT2/Δt = -k (T2 - T1); C1 ΔT1/Δt = k (T2 - T1)
-        //      ΔT2/Δt = -k (T2 - T1)/C2 ; ΔT1/Δt = k (T2 - T1)/C1
-
-        // Now we have ΔT2/Δt and ΔT1/Δt
-        // Define Tdiff = T2 - T1
-        //      Then derivative of it is ΔTdiff/Δt = ΔT2/Δt - ΔT1/Δt
-        //      Substitute our ealier equations for ΔT2/Δt and ΔT1/Δt:
-        //      So, ΔTdiff/Δt = -k Tdiff/C2 - k Tdiff/C1 = -kTdiff (1/C2 + 1/C1)
-
-        // Define some r = k(1/C2 + 1/C1) then
-        //      Then ΔTdiff/Δt = -r * Tdiff
-        //      ^This is a common form, and has the following solution:
-        //      Tdiff(t) = Tdiff(0)*e^(-r*t)
-
-        // Now, it's always true that T(inf)(C1 + C2) == T1(t) * C1 + T2(t) * C2; (by conservation of energy)
-        // Note: T(inf) is more accurately T1(inf) of T2(inf), but they're equal so, doesn't matter.
-        // Take that and plug T1 = T2 - Tdiff for for T1
-        //      T(inf)(C1 + C2) = (T2 - Tdiff) * C1 + T2(t) * C2;  (Now Isolate T2)
-        //      T(inf)(C1 + C2) = T2*C1 - Tdiff*C1 + T2(t)*C2
-        //      T(inf)(C1 + C2) = T2(C1+C2) - Tdiff*C1
-        //      T(inf) = T2 - Tdiff*C1/(C1+C2)
-        //      T2(t) = T(inf) + Tdiff(t)*C1/(C1+C2)  // sub our new formula for Tdiff(t)
-        //      T2(t) = T(inf) + C1/(C1+C2) * Tdiff(0) * e^(-r*t)
-        // Yippee!
-        // The same can be done for T1
-
-        // TODO:
-        // Should the HeatContainers work this way too? After all, I'm basically reinventing HeatContainers ConductHeatFunction,
-        // but with a dead-accurate (albiet more expensive) formula.
-
-        var T1 = regulatorTemperature;
-        var T2 = temperature;
-        var C1 = regulatorHeatCapacity;
-        var C2 = heatCapacity;
-        var Tdiff = T2 - T1;                                        // The difference in temperature right now.
-        var Tinf = (C1 * T1 + C2 * T2) / (C1 + C2);                  // Equilibrium temperature (Tinf)
-        var exp_decay_rate=  thermalConductivity * (C1 + C2) / (C1 * C2); // Decay rate based on solved differential equation.
-        var T1_t = Tinf + C2/(C1+C2) * Tdiff * MathF.Exp(-exp_decay_rate * deltaTime); // T1(deltaTime)
-        var T2_t = Tinf + C1/(C1+C2) * Tdiff * MathF.Exp(-exp_decay_rate * deltaTime); // T2(deltaTime)
-
-        return (T1_t, T2_t);
     }
 
     /// <summary>

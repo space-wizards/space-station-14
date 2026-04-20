@@ -81,7 +81,7 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
 
     private void UpdateThermoRegulator(ThermobathMenu window, ThermoregulatorComponent comp)
     {
-        window.SetCurrentTemperature(comp.HeatData.Temperature);
+        window.SetCurrentTemperature(comp.Temperature);
         window.SetTemperatureLimits(comp.MinTemperature, comp.MaxTemperature);
         window.SetSetpoint(comp.Setpoint, 5f); // We add tolerance to account for the temp exchange jitter
         window.UpdateStatusIndicators(comp.ActiveMode);

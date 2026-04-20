@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -56,14 +57,11 @@ public abstract class SharedThermobathSystem : EntitySystem
 
         if (ent.Comp.HasBeaker && TryGetSolutionFromContainer(ent, out var soln, out var solution) && solution.Volume > 0)
         {
-            var solutionTemperature = solution.Temperature;
-            var solutionHeatCapacity = solution.GetHeatCapacity(_proto);
-
+            var solutionHeatContainer = new HeatContainer(solution.GetHeatCapacity(_proto), solution.Temperature);
             _thermoregulator.TransferHeatFromEntity((ent, args.Thermoregulator),
-                solutionHeatCapacity,
-                ref solutionTemperature);
-            _solutionContainer.SetTemperature(soln.Value, solutionTemperature);
-            ent.Comp.SolutionTemperature = solutionTemperature;
+                ref solutionHeatContainer);
+            _solutionContainer.SetTemperature(soln.Value, solutionHeatContainer.Temperature);
+            ent.Comp.SolutionTemperature = solutionHeatContainer.Temperature;
 
             DirtyField(ent.AsNullable(), nameof(ThermobathComponent.SolutionTemperature));
         }
