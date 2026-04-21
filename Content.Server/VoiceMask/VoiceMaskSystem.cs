@@ -30,9 +30,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-    
+
     private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
-    
+
     // CCVar.
     private int _maxNameLength;
 
@@ -57,15 +57,15 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
-        
+
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
-}
+    }
 
     private void OnInnateTransformSpeakerName(Entity<VoiceMaskComponent> ent, ref TransformSpeakerNameEvent args)
     {
         if (!ent.Comp.IsInnate)
             return;
-            
+
         TransformVoice(ent, args);
     }
 
@@ -73,7 +73,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!ent.Comp.IsInnate)
             return;
-            
+
         _actions.AddAction(ent, ent.Comp.Action);
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _uiSystem.SetUi((ent, userInterfaceComp), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
@@ -100,7 +100,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
-            
+
         TransformSpeech(entity, args.Args);
     }
 
@@ -109,7 +109,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
-            
+
         TransformSpeech(entity, args.Event);
     }
 
@@ -118,7 +118,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
-            
+
         TransformVoice(entity, args.Args);
     }
 
@@ -127,7 +127,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
-            
+
         TransformVoice(entity, args.Event);
     }
 
@@ -138,7 +138,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
             return;
-            
+
         args.NameOverride = GetCurrentVoiceName(entity);
     }
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
@@ -154,7 +154,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
-            
+
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -163,7 +163,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
-            
+
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -219,8 +219,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Update identity because of possible name override
         _identity.QueueIdentityUpdate(args.Actor);
 
-        // This line is basically ducktape for the desync that happens when you mash this button fast enough.
-        // *quack*
         UpdateUI(entity);
     }
 
@@ -228,8 +226,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-accent-toggle"), entity, args.Actor);
         entity.Comp.AccentHide = !entity.Comp.AccentHide;
-        
-        // Same reason of being there as in OnToggle
+
         UpdateUI(entity);
     }
     #endregion
@@ -243,7 +240,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be equiped
         if (component.IsInnate)
             return;
-            
+
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
