@@ -1,10 +1,8 @@
-using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Toolshed.Syntax;
 
 namespace Content.Shared.Changeling.Components;
 
@@ -90,36 +88,25 @@ public sealed partial class ChangelingIdentityData
     public ProtoId<JobPrototype>? OriginalJob;
 
     /// <summary>
-    /// Whether this identity has granted DNA to the previous changeling.
+    /// Whether this identity counts as unique.
+    /// Used for the sake of objectives.
     /// </summary>
     [DataField]
-    public bool GrantedDna = false;
+    public bool IsUnique = true;
 }
 
 [Serializable, NetSerializable]
 public sealed partial class ChangelingNetworkedIdentityData
 {
-    /// <summary>
-    /// The stored identity used for cloning appearance and components.
-    /// </summary>
     [DataField]
     public NetEntity? Identity;
 
-    /// <summary>
-    /// The original entity that was devoured to obtain this identity.
-    /// </summary>
     [DataField]
     public NetEntity? Original;
 
-    /// <summary>
-    /// Job prototype of the original entity at the time of devouring.
-    /// </summary>
     [DataField]
     public ProtoId<JobPrototype>? OriginalJob;
 
-    /// <summary>
-    /// Whether this identity has granted DNA to the previous changeling.
-    /// </summary>
     [DataField]
-    public bool GrantedDna = false;
+    public bool IsUnique = true;
 }

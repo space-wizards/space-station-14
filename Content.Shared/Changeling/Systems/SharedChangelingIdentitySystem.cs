@@ -73,7 +73,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
                 continue;
 
-            RemoveDevourReference((ling,  identityComp), ent);
+            RemoveOriginalReference((ling,  identityComp), ent);
         }
     }
 
@@ -130,7 +130,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The changeling.</param>
     /// <param name="original">The entity to remove from identity originals.</param>
-    private void RemoveDevourReference(Entity<ChangelingIdentityComponent> ent, EntityUid original)
+    private void RemoveOriginalReference(Entity<ChangelingIdentityComponent> ent, EntityUid original)
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
@@ -184,7 +184,6 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return null;
 
         // We see if we already have a identity slot for this entity.
-
         TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity);
 
         if (newIdentity == null)
@@ -316,6 +315,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         return identityData;
     }
 
+    /// <summary>
+    /// Fetches the relevant <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the identity's EntityUid.
+    /// </summary>
+    /// <param name="ent">The changeling entity.</param>
+    /// <param name="identity">The identity's EntityUid.</param>
+    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> if one is found.</param>
+    /// <returns>True if identity data is found, otherwise False.</returns>
     public bool TryGetDataFromIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
     {
         identityData = null;
@@ -327,6 +333,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         return identityData != null;
     }
 
+    /// <summary>
+    /// Fetches the relevant <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the original entity's EntityUid.
+    /// </summary>
+    /// <param name="ent">The changeling entity.</param>
+    /// <param name="original">The original entity's EntityUid.</param>
+    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> if one is found.</param>
+    /// <returns>True if identity data is found, otherwise False.</returns>
     public bool TryGetDataFromOriginal(Entity<ChangelingIdentityComponent?> ent, EntityUid original, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
     {
         identityData = null;

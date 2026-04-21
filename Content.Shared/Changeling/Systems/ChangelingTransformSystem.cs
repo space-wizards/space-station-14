@@ -94,7 +94,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
-        if (identity.ConsumedIdentities.FirstOrDefault(data => data.Identity == targetIdentity) == null)
+        if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
         TransformInto(ent.AsNullable(), targetIdentity.Value);
@@ -112,7 +112,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
 
-        if (identity.ConsumedIdentities.FirstOrDefault(data => data.Identity == targetIdentity) == null)
+        if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
         _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
