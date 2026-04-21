@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Storage.Components;
+﻿namespace Content.Shared.Containers.ItemSlot;
 
 [RegisterComponent]
 public sealed partial class ItemSlotVisualsComponent : Component

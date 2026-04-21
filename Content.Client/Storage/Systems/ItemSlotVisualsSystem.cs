@@ -1,7 +1,7 @@
 ﻿using Content.Client.Items.Systems;
-using Content.Client.Storage.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
