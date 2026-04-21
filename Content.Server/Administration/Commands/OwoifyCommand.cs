@@ -21,13 +21,4 @@ public sealed class OwoifyCommand : ToolshedCommand
         _metaSystem.SetEntityName(entityUid, _owoSystem.Accentuate(meta.EntityName), meta);
         _metaSystem.SetEntityDescription(entityUid, _owoSystem.Accentuate(meta.EntityDescription), meta);
     }
-
-    [CommandImplementation]
-    public void Owoify([PipedArgument] IEnumerable<EntityUid> entityUids)
-    {
-        foreach (var entityUid in entityUids)
-        {
-            Owoify(entityUid);
-        }
-    }
 }
