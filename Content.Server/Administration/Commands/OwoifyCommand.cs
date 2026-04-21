@@ -10,6 +10,7 @@ public sealed class OwoifyCommand : ToolshedCommand
     private OwOAccentSystem? _owoSystem;
     private MetaDataSystem? _metaSystem;
 
+    [CommandImplementation]
     public void Owoify(EntityUid entityUid)
     {
         var meta = Comp<MetaDataComponent>(entityUid);
@@ -19,5 +20,14 @@ public sealed class OwoifyCommand : ToolshedCommand
 
         _metaSystem.SetEntityName(entityUid, _owoSystem.Accentuate(meta.EntityName), meta);
         _metaSystem.SetEntityDescription(entityUid, _owoSystem.Accentuate(meta.EntityDescription), meta);
+    }
+
+    [CommandImplementation]
+    public void Owoify([PipedArgument] IEnumerable<EntityUid> entityUids)
+    {
+        foreach (var entityUid in entityUids)
+        {
+            Owoify(entityUid);
+        }
     }
 }
