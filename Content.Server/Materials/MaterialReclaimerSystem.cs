@@ -226,7 +226,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
         }
 
-        _materialStorage.SpawnMaterialFromStorage((reclaimer, storage), xform.Coordinates, true);
+        _materialStorage.EjectAllMaterial(reclaimer, xform.Coordinates, storage, true);
     }
 
     private void SpawnChemicalsFromComposition(EntityUid reclaimer,

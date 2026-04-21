@@ -47,7 +47,7 @@ public sealed partial class TileReclaimerComponent : Component
     /// The delay after a grid has been consumed that it can recycle again.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan RecycleDelay = TimeSpan.FromSeconds(0.5);
+    public TimeSpan RecycleDelay = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
     /// The bounding box in local coordinates for where it will check for grids to reclaim.

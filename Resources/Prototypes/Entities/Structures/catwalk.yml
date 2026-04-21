@@ -1,7 +1,7 @@
 # TODO move this to tiles once tile smoothing is supported
 - type: entity
-  id: Catwalk
   parent: BaseStructure
+  id: Catwalk
   name: catwalk
   description: A catwalk for easier EVA maneuvering and cable placement.
   placement:
@@ -10,7 +10,6 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/catwalk.rsi
     drawdepth: FloorTiles
@@ -68,6 +67,6 @@
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 5
         mask:
-        - DoorPassable
+        - LowImpassable
         layer:
         - DoorPassable

@@ -8,21 +8,19 @@ public sealed class TileReclaimerSystem : SharedTileReclaimerSystem
 {
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
 
-    protected override void SpawnMaterialsFromComposition(EntityUid reclaimer,
+    protected override void SpawnMaterialsFromComposition(Entity<MaterialStorageComponent?, TransformComponent?> ent,
         ContentTileDefinition tileDefinition,
-        float efficiency,
-        MaterialStorageComponent? storage = null,
-        TransformComponent? xform = null)
+        float efficiency)
     {
-        if (!Resolve(reclaimer, ref storage, ref xform, false))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return;
 
         foreach (var (material, amount) in tileDefinition.MaterialComposition)
         {
             var outputAmount = (int) (amount * efficiency);
-            _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
+            _materialStorage.TryChangeMaterialAmount(ent, material, outputAmount, ent.Comp1);
         }
 
-        _materialStorage.SpawnMaterialFromStorage((reclaimer, storage), xform.Coordinates, true);
+        _materialStorage.EjectAllMaterial(ent, ent.Comp2.Coordinates, ent.Comp1, true);
     }
 }

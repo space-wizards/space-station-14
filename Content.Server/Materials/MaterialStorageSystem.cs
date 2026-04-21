@@ -224,11 +224,13 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     /// <param name="entity">The entity with storage to eject from.</param>
     /// <param name="coordinates">The position where to spawn the created sheets. If not given, they're spawned next to the entity.</param>
     /// <param name="component">The storage component on <paramref name="entity"/>. Resolved automatically if not given.</param>
+    /// <param name="mergeContacts">If true, spawned stacks will attempt to merge with existing stacks in the area.</param>
     /// <returns>The stack entities that were spawned.</returns>
     public List<EntityUid> EjectAllMaterial(
         EntityUid entity,
         EntityCoordinates? coordinates = null,
-        MaterialStorageComponent? component = null)
+        MaterialStorageComponent? component = null,
+        bool mergeContacts = false)
     {
         if (!Resolve(entity, ref component))
             return new List<EntityUid>();
@@ -242,29 +244,14 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
             allSpawned.AddRange(spawned);
         }
 
-        return allSpawned;
-    }
-
-    public void SpawnMaterialFromStorage(Entity<MaterialStorageComponent?> ent, EntityCoordinates coordinates, bool mergeContacts)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        foreach (var (storedMaterial, storedAmount) in ent.Comp.Storage)
+        if (mergeContacts)
         {
-            var stacks = SpawnMultipleFromMaterial(storedAmount,
-                storedMaterial,
-                coordinates,
-                out var materialOverflow);
-            var amountConsumed = storedAmount - materialOverflow;
-            TryChangeMaterialAmount(ent, storedMaterial, -amountConsumed, ent.Comp);
-            if (mergeContacts)
+            foreach (var stack in allSpawned)
             {
-                foreach (var stack in stacks)
-                {
-                    _stackSystem.TryMergeToContacts(stack);
-                }
+                _stackSystem.TryMergeToContacts(stack);
             }
         }
+
+        return allSpawned;
     }
 }

@@ -14,7 +14,6 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract class SharedTileReclaimerSystem : EntitySystem
 {
-
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -25,18 +24,34 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<TileReclaimerComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<TileReclaimerComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextRecycle = _timing.CurTime;
+    }
+
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<TileReclaimerComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var tileReclaimer, out var xform))
         {
-            if (tileReclaimer.NextRecycle <= _timing.CurTime)
-                Update((uid, tileReclaimer, xform));
+            if (tileReclaimer.NextRecycle > _timing.CurTime)
+                return;
+
+            Update((uid, tileReclaimer, xform));
         }
     }
 
     private void Update(Entity<TileReclaimerComponent, TransformComponent> ent)
     {
+        ent.Comp1.NextRecycle += ent.Comp1.RecycleDelay;
+
         //TODO: The recycler is hardcoded to rely on the conveyor component for its powered state, and this system is based on the same functionality. That should be fixed into a more general solution for both systems, but for the sake of consistency I'm not doing that now.
         if (!TryComp<ConveyorComponent>(ent, out var conveyor) || conveyor.State == ConveyorState.Off)
             return;
@@ -62,8 +77,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
             if (grid == reclaimerGrid)
                 continue;
 
-            if (_whitelist.IsWhitelistFail(ent.Comp1.Whitelist, grid) ||
-                _whitelist.IsWhitelistPass(ent.Comp1.Blacklist, grid))
+            if (!_whitelist.CheckBoth(grid, ent.Comp1.Blacklist, ent.Comp1.Whitelist))
                 continue;
 
             foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
@@ -80,7 +94,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
 
                 var mapGrid = Comp<MapGridComponent>(tile.GridUid);
                 _mapSystem.SetTile(tile.GridUid, mapGrid, tile.GridIndices, Tile.Empty);
-                SpawnMaterialsFromComposition(ent, tileDef, ent.Comp1.Efficiency, null, ent.Comp2);
+                SpawnMaterialsFromComposition((ent, null, ent.Comp2), tileDef, ent.Comp1.Efficiency);
                 shredded = true;
 
                 // We suck in the grid slurrrrp
@@ -92,16 +106,18 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
         if (!shredded)
             return;
 
-        ent.Comp1.NextRecycle = _timing.CurTime + ent.Comp1.RecycleDelay;
-
         _audio.PlayPredicted(ent.Comp1.Sound, ent, null);
     }
 
-    protected virtual void SpawnMaterialsFromComposition(EntityUid reclaimer,
+    /// <summary>
+    /// Spawns materials from the <see cref="ContentTileDefinition.MaterialComposition"/> of the given tile.
+    /// </summary>
+    /// <param name="ent">Entity performing the spawning action.</param>
+    /// <param name="tileDefinition">Tile definition of the tile being reclaimed.</param>
+    /// <param name="efficiency">Multiplier of the material amount.</param>
+    protected virtual void SpawnMaterialsFromComposition(Entity<MaterialStorageComponent?, TransformComponent?> ent,
         ContentTileDefinition tileDefinition,
-        float efficiency,
-        MaterialStorageComponent? storage = null,
-        TransformComponent? xform = null)
+        float efficiency)
     {
         // Handled on the server because that's where MaterialStorageSystem is.
     }

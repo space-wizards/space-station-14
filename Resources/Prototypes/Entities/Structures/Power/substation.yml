@@ -148,8 +148,8 @@
 
 # Compact Wall Substation Base
 - type: entity
-  id: BaseSubstationWall
   parent: [ CoreSubstation, BaseWallmount ]
+  id: BaseSubstationWall
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
@@ -208,6 +208,15 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.45,0.35,0.20"
+        density: 5
+        mask:
+        - FullTileMask
 
 # Substations in use
 

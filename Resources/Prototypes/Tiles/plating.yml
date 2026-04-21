@@ -105,7 +105,7 @@
   heatCapacity: 10000
   mass: 200
   materialComposition:
-      Steel: 50 # 0.5 sheets = 1 rod
+    Steel: 50 # 0.5 sheets = 1 rod
 
 - type: tile
   id: TrainLattice

@@ -27,7 +27,7 @@
           bounds: "-0.45,-0.45,0.45,0.45"
         density: 5
         mask:
-        - DoorPassable
+        - LowImpassable
         layer:
         - DoorPassable
   - type: Damageable

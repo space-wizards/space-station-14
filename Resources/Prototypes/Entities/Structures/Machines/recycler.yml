@@ -240,8 +240,8 @@
     speechSounds: SyndieBorg
 
 - type: entity
-  id: IndustrialSmelterAdmeme
   parent: IndustrialSmelter
+  id: IndustrialSmelterAdmeme
   suffix: No Grid Whitelist, Admeme
   components:
   - type: TileReclaimer
