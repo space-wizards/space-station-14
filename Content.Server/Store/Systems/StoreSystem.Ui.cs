@@ -76,6 +76,7 @@ public sealed partial class StoreSystem
     /// </summary>
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
+        Log.Warning("hello from buy method");
         var listing = component.FullListingsCatalog.FirstOrDefault(x => x.ID.Equals(msg.Listing.Id));
 
         if (listing == null) //make sure this listing actually exists
@@ -122,12 +123,16 @@ public sealed partial class StoreSystem
 
             component.BalanceSpent[currency] += amount;
         }
-
+        Log.Warning("consume");
         //apply components
         if (listing.ProductComponents != null)
         {
+            Log.Warning("fuck my life a");
             if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
+            {
+                Log.Warning("fuck my life b");
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
+            }
         }
 
         //spawn entity

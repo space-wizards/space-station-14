@@ -30,7 +30,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-
+    
+    private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
     // CCVar.
     private int _maxNameLength;
 
@@ -40,6 +41,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameInventory);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<SeeIdentityAttemptEvent>>(OnSeeIdentityAttemptEvent);
+        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnInnateTransformSpeakerName);
+        SubscribeLocalEvent<VoiceMaskComponent, SeeIdentityAttemptEvent>(OnInnateSeeIdentityAttemptEvent);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRemovedEvent>(OnImplantRemovedEventEvent);
         SubscribeLocalEvent<VoiceMaskComponent, LockToggledEvent>(OnLockToggled);
@@ -52,8 +55,24 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
+    }
+    private void OnInnateTransformSpeakerName(Entity<VoiceMaskComponent> ent, ref TransformSpeakerNameEvent args)
+    {
+        if (!ent.Comp.IsInnate)
+            return;
+        TransformVoice(ent, args);
+    }
 
-        Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+    private void OnMapInit(Entity<VoiceMaskComponent> ent, ref MapInitEvent args)
+    {
+        if (!ent.Comp.IsInnate)
+            return;
+        _actions.AddAction(ent, ent.Comp.Action);
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
+        _uiSystem.SetUi((ent, userInterfaceComp), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
+        _identity.QueueIdentityUpdate(ent.Owner);
+
     }
 
     /// <summary>
@@ -90,6 +109,15 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         TransformVoice(entity, args.Event);
     }
 
+    /// <summary>
+    /// Same as <cref="OnTransformSpeakerNameImplant"> but for innate voice masks
+    /// </summary>
+    private void OnInnateSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref SeeIdentityAttemptEvent args)
+    {
+        if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
+            return;
+        args.NameOverride = GetCurrentVoiceName(entity);
+    }
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active)
@@ -139,7 +167,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         }
 
         var nameUpdatedEvent = new VoiceMaskNameUpdatedEvent(entity, entity.Comp.VoiceMaskName, message.Name);
-        RaiseLocalEvent(message.Actor, ref nameUpdatedEvent);
+        if (entity.Comp.IsInnate)
+            RaiseLocalEvent(entity.Owner, ref nameUpdatedEvent);
+        else
+            RaiseLocalEvent(message.Actor, ref nameUpdatedEvent);
 
         entity.Comp.VoiceMaskName = message.Name;
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(message.Actor):player} set voice of {ToPrettyString(entity):mask}: {entity.Comp.VoiceMaskName}");
@@ -170,7 +201,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_lock.IsLocked(uid))
             return;
-
+        // Innate voice masks can't be equiped
+        if (component.IsInnate)
+            return;
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
@@ -180,10 +213,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
         if (!TryComp<VoiceMaskComponent>(maskEntity, out var voiceMaskComp))
             return;
-
         if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key))
             return;
-
         _uiSystem.OpenUi(maskEntity.Value, VoiceMaskUIKey.Key, ev.Performer);
         UpdateUI((maskEntity.Value, voiceMaskComp));
     }

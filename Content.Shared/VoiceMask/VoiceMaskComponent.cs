@@ -5,7 +5,7 @@ namespace Content.Shared.VoiceMask;
 
 /// <summary>
 ///     This component is for voice mask items! Adding this component to clothing will give the the voice mask UI
-///     and allow the wearer to change their voice and verb at will.
+///     and allow the wearer to change their voice and verb at will. Having this on an entity will give it an innate voice masking ability.
 /// </summary>
 /// <remarks>
 ///     DO NOT use this if you do not want the interface.
@@ -61,5 +61,11 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public bool ChangeIDName = false;
+
+    /// <summary>
+    ///     Wether the voice mask is innate to the entity.
+    /// </summary>
+    [DataField]
+    public bool IsInnate = false;
 }
 
