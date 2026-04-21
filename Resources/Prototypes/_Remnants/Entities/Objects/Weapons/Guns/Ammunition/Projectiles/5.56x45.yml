@@ -1,0 +1,49 @@
+- type: entity
+  parent: BaseBullet
+  id: Bullet556x45_M995
+  categories: [ HideSpawnMenu ]
+  name: bullet (5.56x45mm M995)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 34
+    armorPenetration: 53
+
+- type: entity
+  parent: BaseBullet
+  id: Bullet556x45_M193
+  categories: [ HideSpawnMenu ]
+  name: bullet (5.56x45mm M193)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 46
+    armorPenetration: 32
+
+- type: entity
+  parent: BaseBullet
+  id: Bullet556x45_Mk311Mod0
+  categories: [ HideSpawnMenu ]
+  name: bullet (5.56x45mm Mk 311 Mod 0)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 40
+    armorPenetration: 19
+  - type: StaminaDamageOnCollide
+    damage: 15
+
+- type: entity
+  parent: BaseBullet
+  id: Bullet556x45_Mk255Mod0
+  categories: [ HideSpawnMenu ]
+  name: bullet (5.56x45mm Mk 255 Mod 0)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 51
+    armorPenetration: 4

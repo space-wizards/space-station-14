@@ -1,0 +1,36 @@
+- type: entity
+  parent: BaseCartridgeRifle
+  id: Cartridge556x45_M995
+  name: cartridge (5.56x45mm M995)
+  description: An incredibly powerful armor piercing round. Featuring a Tungsten carbide core, it's incredibly efficient in piercing armor.
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet556x45_M995
+
+- type: entity
+  parent: BaseCartridgeRifle
+  id: Cartridge556x45_M193
+  name: cartridge (5.56x45mm M193)
+  description: An extremely old ammo type, used all the way back in the Vietnam war before Earth even had space travel. Despite it's age, it is still a rather reliable round.
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet556x45_M193
+
+- type: entity
+  parent: BaseCartridgeRifle
+  id: Cartridge556x45_Mk311Mod0
+  name: cartridge (5.56x45mm Mk 311 Mod 0)
+  description: A specialized frangible round designed to disintegrate upon impact. Despite it's limited penetration, it can throw someone off their feet with enough shots.
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet556x45_Mk311Mod0
+
+- type: entity
+  parent: BaseCartridgeRifle
+  id: Cartridge556x45_Mk255Mod0
+  name: cartridge (5.56x45mm Mk 255 Mod 0)
+  description: A specialized round for CQC developped by NATO for Urban operations. By design it has very little penetration, but it still packs a punch.
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet556x45_Mk255Mod0
+

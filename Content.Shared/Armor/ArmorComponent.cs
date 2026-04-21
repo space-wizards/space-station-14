@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Inventory;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
@@ -18,7 +19,7 @@ public sealed partial class ArmorComponent : Component
     public DamageModifierSet Modifiers = default!;
 
     [DataField]
-    public int ArmorClass = 0;
+    public int ArmorClass;
 
     /// <summary>
     /// A multiplier applied to the calculated point value

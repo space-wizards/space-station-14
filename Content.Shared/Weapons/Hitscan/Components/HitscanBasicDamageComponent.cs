@@ -16,5 +16,5 @@ public sealed partial class HitscanBasicDamageComponent : Component
     public DamageSpecifier Damage;
 
     [DataField]
-    public float ArmorPenetration = 0f;
+    public float ArmorPenetration;
 }

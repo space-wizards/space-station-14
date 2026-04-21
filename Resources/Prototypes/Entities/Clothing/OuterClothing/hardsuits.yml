@@ -62,10 +62,11 @@
       coefficients:
         Blunt: 0.9
         Slash: 0.9
-        Piercing: 0.9
+        Piercing: 0.5
         Shock: 0.8
         Caustic: 0.5
         Radiation: 0.2
+    armorClass: 1
   - type: ClothingSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -243,6 +244,7 @@
         Piercing: 0.6
         Heat: 0.8
         Caustic: 0.7
+    armorClass: 3
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
@@ -970,6 +972,7 @@
         Heat: 0.1
         Radiation: 0.1
         Caustic: 0.1
+    armorClass: 6
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
