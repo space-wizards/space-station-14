@@ -80,6 +80,7 @@ public sealed partial class StoreSystem
 
         if (listing == null) //make sure this listing actually exists
         {
+            Log.Debug("listing does not exist");
             return;
         }
 
