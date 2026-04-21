@@ -229,3 +229,8 @@
   - type: FireVisuals
     alternateState: Standing
   - type: StunVisuals
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      199: Critical
+      200: Dead
