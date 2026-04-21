@@ -68,6 +68,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
             SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
             SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
+            SubscribeLocalEvent<PowerSupplierComponent, VoltageChangeEvent>(PowerSupplierVoltageChanged);
 
             SubscribeLocalEvent<DrawRateVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
 
@@ -192,6 +193,11 @@ namespace Content.Server.Power.EntitySystems
         private static void PowerSupplierUnpaused(EntityUid uid, PowerSupplierComponent component, ref EntityUnpausedEvent args)
         {
             component.NetworkSupply.Paused = false;
+        }
+
+        private void PowerSupplierVoltageChanged(Entity<PowerSupplierComponent> entity, ref VoltageChangeEvent args)
+        {
+            entity.Comp.Voltage = args.NewVoltage.Voltage;
         }
 
         public void InitPowerNet(PowerNet powerNet)
