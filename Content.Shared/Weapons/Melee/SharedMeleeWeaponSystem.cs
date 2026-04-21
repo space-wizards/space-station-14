@@ -1081,41 +1081,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
     }
 
-    private void UndamagedAttack(Entity<MeleeWeaponComponent> ent, EntityUid target, EntityUid user)
-    {
-        if (!_netMan.IsClient)
-            return;
+    /// <summary>
+    /// Updates <see cref="MeleeWeaponComponent.UndamagedSwings"/> and triggers a message if it meets <see cref="MeleeWeaponComponent.UndamagedAlertThreshold"/>.
+    /// </summary>
+    /// <param name="ent">The weapon entity tracking swings.</param>
+    /// <param name="target">The target entity that was hit without damage.</param>
+    /// <param name="user">The user swinging the weapon.</param>
+    protected virtual void UndamagedAttack(Entity<MeleeWeaponComponent> ent, EntityUid target, EntityUid user) { }
 
-        if (ent.Comp.UndamagedAlertThreshold == 0)
-            return;
-
-        if (ent.Comp.LastUndamagedHitEntity != target)
-        {
-            ent.Comp.UndamagedSwings = 0;
-            ent.Comp.LastUndamagedHitEntity = target;
-        }
-
-        ent.Comp.UndamagedSwings++;
-        if (ent.Comp.UndamagedSwings >= ent.Comp.UndamagedAlertThreshold)
-        {
-            if (ent.Owner == user)
-            {
-                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", target)), target, user);
-            }
-            else
-            {
-                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", target)), target, user);
-            }
-
-            ent.Comp.UndamagedSwings = 0;
-        }
-    }
-
-    private void ResetUndamagedSwingsCount(Entity<MeleeWeaponComponent> ent)
-    {
-        if (!_netMan.IsClient)
-            return;
-
-        ent.Comp.UndamagedSwings = 0;
-    }
+    /// <summary>
+    /// Resets the <see cref="MeleeWeaponComponent.UndamagedSwings"/>; necessary to not trigger undamaged attacks messages too often.
+    /// </summary>
+    /// <param name="ent">The weapon entity tracking swings.</param>
+    protected virtual void ResetUndamagedSwingsCount(Entity<MeleeWeaponComponent> ent) { }
 }
