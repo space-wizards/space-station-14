@@ -17,9 +17,7 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
         SubscribeLocalEvent<PowerConsumerBatteryChargerComponent, PowerConsumedEvent>(OnPowerConsumed);
     }
 
-    private void OnMapInit(
-        Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity,
-        ref MapInitEvent args)
+    private void OnMapInit(Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity, ref MapInitEvent args)
     {
         if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
             return;
