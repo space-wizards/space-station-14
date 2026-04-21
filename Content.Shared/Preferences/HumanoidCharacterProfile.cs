@@ -452,6 +452,24 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile WithMothTailMigration() // Migrate moth tails to moth wings.
+        {
+            if (Species == "Moth")
+            {
+                var markings = Appearance.Markings;
+                var torsoLayers = markings["Torso"];
+
+                if (torsoLayers.Remove(HumanoidVisualLayers.Tail, out var tailMarkings))
+                {
+                    torsoLayers[HumanoidVisualLayers.Wings] = tailMarkings;
+                    var newAppearance = Appearance.WithMarkings(markings);
+                    return new(this) { Appearance = newAppearance };
+                }
+            }
+
+            return this;
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -807,7 +825,7 @@ namespace Content.Shared.Preferences
             else if (root["version"].Equals(new YamlScalarNode("2")))
             {
                 var export = serialization.Read<HumanoidProfileExportV2>(root.ToDataNode(), notNullableOverride: true);
-                profile = export.Profile;
+                profile = export.Profile.WithMothTailMigration();
             }
             else
             {
