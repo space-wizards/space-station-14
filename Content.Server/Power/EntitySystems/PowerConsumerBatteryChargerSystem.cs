@@ -25,9 +25,7 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
         powerConsumer.Efficiency = entity.Comp.EfficiencyPerVoltage[powerConsumer.Voltage];
     }
 
-    private void OnVoltageChanged(
-        Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity,
-        ref VoltageChangeEvent args)
+    private void OnVoltageChanged(Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity, ref VoltageChangeEvent args)
     {
         if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
             return;
