@@ -57,7 +57,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
 
-            SubscribeLocalEvent<PowerConsumerComponent, MapInitEvent>(PowerConsumerMapInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
             SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
@@ -141,11 +140,6 @@ namespace Content.Server.Power.EntitySystems
         {
             var ev = new DrawRateChangeEvent(entity.Comp.DrawRatePerVoltage[args.NewVoltage.Voltage]);
             RaiseLocalEvent(entity, ref ev);
-        }
-
-        private void PowerConsumerMapInit(EntityUid uid, PowerConsumerComponent component, ref MapInitEvent args)
-        {
-            _appearance.SetData(uid, PowerDeviceVisuals.Powered, component.ReceivedPower > 0);
         }
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
