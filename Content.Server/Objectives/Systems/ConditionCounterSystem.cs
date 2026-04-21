@@ -39,11 +39,11 @@ public sealed class CounterConditionSystem : EntitySystem
     }
 
     [PublicAPI]
-    public void IncreaseCount(EntityUid objectiveEntity)
+    public void IncreaseCount(Entity<CounterConditionComponent?> objective)
     {
-        if (_compQuery.TryGetComponent(objectiveEntity, out var counterObjComp))
+        if (_compQuery.Resolve(objective, ref objective.Comp))
         {
-            counterObjComp.Count++;
+            objective.Comp.Count++;
         }
     }
 }
