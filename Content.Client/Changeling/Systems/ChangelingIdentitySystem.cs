@@ -32,7 +32,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
             data.Original = GetEntity(identities.Original);
             data.OriginalMind = null; // Don't network the mind!
             data.OriginalJob = identities.OriginalJob;
-            data.GrantedDna = identities.GrantedDna;
+            data.Starting = identities.Starting;
 
             ent.Comp.ConsumedIdentities.Add(data);
         }

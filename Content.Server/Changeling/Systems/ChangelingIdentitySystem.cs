@@ -23,7 +23,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
             netData.Identity = GetNetEntity(identity.Identity);
             netData.Original = GetNetEntity(identity.Original);
-            netData.GrantedDna = identity.GrantedDna;
+            netData.Starting = identity.Starting;
             netData.OriginalJob = identity.OriginalJob;
 
             sentIdentities.Add(netData);

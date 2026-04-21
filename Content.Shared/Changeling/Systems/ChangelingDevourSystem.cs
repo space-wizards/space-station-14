@@ -167,17 +167,15 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
 
-        if (!TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityStorage))
-            return;
+        // If this entity has never been devoured before, it counts as unique.
+        var unique = !_changelingIdentitySystem.TryGetDataFromOriginal(ent.Owner, target, out _);
 
-        _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+        // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
+        var becomesIdentity = !HasDevoured(ent.Owner, target);
 
-        // We add a reference to ourselves to prevent repeated identity gain.
-        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
-        targetDevoured.DevouredBy.Add(ent.Owner);
-        targetDevoured.Recent = true;
-        Dirty(target, targetDevoured);
-        Dirty(ent);
+        var ev = new ChangelingDevouredEntityEvent(ent.Owner, target, becomesIdentity, unique);
+        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(ref ev); // We broadcast the event to allow relevant objectives to update.
     }
 
     /// <summary>
@@ -217,13 +215,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
-            return false;
-        }
-
-        if (HasDevoured(changeling.Owner, victim))
-        {
-            if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 

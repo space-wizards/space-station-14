@@ -88,11 +88,10 @@ public sealed partial class ChangelingIdentityData
     public ProtoId<JobPrototype>? OriginalJob;
 
     /// <summary>
-    /// Whether this identity counts as unique.
-    /// Used for the sake of objectives.
+    /// Whether this is the identity the entity started with.
     /// </summary>
     [DataField]
-    public bool IsUnique = true;
+    public bool Starting = false;
 }
 
 [Serializable, NetSerializable]
@@ -108,5 +107,5 @@ public sealed partial class ChangelingNetworkedIdentityData
     public ProtoId<JobPrototype>? OriginalJob;
 
     [DataField]
-    public bool IsUnique = true;
+    public bool Starting;
 }

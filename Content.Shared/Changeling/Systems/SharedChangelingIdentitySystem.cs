@@ -33,10 +33,27 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingDevouredEntityEvent>(OnDevouredEntity);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
         SubscribeLocalEvent<ChangelingDevouredComponent, MobStateChangedEvent>(OnDevouredMobState);
+    }
+
+    private void OnDevouredEntity(Entity<ChangelingIdentityComponent> ent, ref ChangelingDevouredEntityEvent args)
+    {
+        // We're not supposed to be given an identity.
+        if (!args.ObtainedIdentity)
+            return;
+
+        CloneToPausedMap(ent, args.Devoured);
+
+        // We add a reference to ourselves to prevent repeated identity gain.
+        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(args.Devoured);
+        targetDevoured.DevouredBy.Add(ent.Owner);
+        targetDevoured.Recent = true;
+        Dirty(args.Devoured, targetDevoured);
+        Dirty(ent);
     }
 
     private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
@@ -53,7 +70,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         // Make a backup of our current identity so we can transform back.
         var clone = CloneToPausedMap(ent, ent.Owner);
-        ent.Comp.CurrentIdentity = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == clone)?.Identity;
+
+        if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
+            return;
+
+        data.Starting = true;
+
+        ent.Comp.CurrentIdentity = data.Identity;
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)

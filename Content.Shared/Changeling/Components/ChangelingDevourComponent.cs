@@ -127,3 +127,13 @@ public sealed partial class ChangelingDevourComponent : Component
 
     public override bool SendOnlyToOwner => true;
 }
+
+/// <summary>
+/// Event raised on the changeling and broadcast when a given changeling devours an entity.
+/// </summary>
+/// <param name="Changeling">The changeling devouring this entity.</param>
+/// <param name="Devoured">The entity that was devoured.</param>
+/// <param name="ObtainedIdentity">Whether the changeling is going to be given the target's identity after devouring.</param>
+/// <param name="Unique">Whether this entity was eaten by the changeling before.</param>
+[ByRefEvent]
+public record struct ChangelingDevouredEntityEvent(EntityUid Changeling, EntityUid Devoured, bool ObtainedIdentity, bool Unique);
