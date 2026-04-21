@@ -65,6 +65,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!ent.Comp.IsInnate)
             return;
+            
         TransformVoice(ent, args);
     }
 
