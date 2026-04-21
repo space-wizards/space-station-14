@@ -4,11 +4,11 @@ using Content.Shared.Power.Components;
 namespace Content.Server.Power.Components;
 
 /// <summary>
-/// Changes the efficiency of <see cref="PowerConsumerBatteryChargerComponent"/>
+/// Changes the efficiency of <see cref="PowerConsumerComponent"/>
 /// when the voltage is changed via the <see cref="VoltageTogglerComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed partial class PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent : Component
+public sealed partial class PowerConsumerEfficiencyVoltageTogglerComponent : Component
 {
     /// <summary>
     /// Different efficiencies per voltage

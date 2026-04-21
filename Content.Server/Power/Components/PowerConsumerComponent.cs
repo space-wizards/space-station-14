@@ -21,6 +21,12 @@ namespace Content.Server.Power.Components
         public bool ShowInMonitor { get; set; } = true;
 
         /// <summary>
+        /// Out of much power consumed can be used to power devices and charge batteries
+        /// </summary>
+        [DataField]
+        public float Efficiency = 1f;
+
+        /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.
         /// </summary>
         [ViewVariables]

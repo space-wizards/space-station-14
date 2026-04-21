@@ -11,33 +11,30 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
+        SubscribeLocalEvent<PowerConsumerEfficiencyVoltageTogglerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PowerConsumerEfficiencyVoltageTogglerComponent, VoltageChangeEvent>(OnVoltageChanged);
 
         SubscribeLocalEvent<PowerConsumerBatteryChargerComponent, PowerConsumedEvent>(OnPowerConsumed);
     }
 
     private void OnMapInit(
-        Entity<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent> entity,
+        Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity,
         ref MapInitEvent args)
     {
-        if (!TryComp<PowerConsumerBatteryChargerComponent>(entity, out var powerConsumerBatteryCharger))
-            return;
-
         if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
             return;
 
-        powerConsumerBatteryCharger.Efficiency = entity.Comp.EfficiencyPerVoltage[powerConsumer.Voltage];
+        powerConsumer.Efficiency = entity.Comp.EfficiencyPerVoltage[powerConsumer.Voltage];
     }
 
     private void OnVoltageChanged(
-        Entity<PowerConsumerBatteryChargerEfficiencyVoltageTogglerComponent> entity,
+        Entity<PowerConsumerEfficiencyVoltageTogglerComponent> entity,
         ref VoltageChangeEvent args)
     {
-        if (!TryComp<PowerConsumerBatteryChargerComponent>(entity, out var powerConsumerBatteryCharger))
+        if (!TryComp<PowerConsumerComponent>(entity, out var powerConsumer))
             return;
 
-        powerConsumerBatteryCharger.Efficiency = entity.Comp.EfficiencyPerVoltage[args.NewVoltage.Voltage];
+        powerConsumer.Efficiency = entity.Comp.EfficiencyPerVoltage[args.NewVoltage.Voltage];
     }
 
     private void OnPowerConsumed(Entity<PowerConsumerBatteryChargerComponent> entity, ref PowerConsumedEvent args)
@@ -45,6 +42,6 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
         if (!TryComp<BatteryComponent>(entity, out var battery))
             return;
 
-        _battery.ChangeCharge((entity, battery), args.PowerConsumed * entity.Comp.Efficiency);
+        _battery.ChangeCharge((entity, battery), args.EffectivePower);
     }
 }

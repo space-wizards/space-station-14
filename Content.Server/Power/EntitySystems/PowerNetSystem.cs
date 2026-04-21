@@ -437,7 +437,7 @@ namespace Content.Server.Power.EntitySystems
 
                 if (newRecv > 0)
                 {
-                    var ev = new PowerConsumedEvent(newRecv * frameTime);
+                    var ev = new PowerConsumedEvent(newRecv * frameTime, newRecv * frameTime * consumer.Efficiency);
                     RaiseLocalEvent(uid, ref ev);
                 }
 
@@ -607,8 +607,11 @@ namespace Content.Server.Power.EntitySystems
     /// <summary>
     /// Raised every time a <see cref="PowerConsumerComponent"/> consumes power.
     /// </summary>
+    /// <remarks>
+    /// EffectivePower is how much power from the PowerConsumed that can be used to power devices or charge batteries
+    /// </remarks>
     [ByRefEvent]
-    public readonly record struct PowerConsumedEvent(float PowerConsumed);
+    public readonly record struct PowerConsumedEvent(float PowerConsumed, float EffectivePower);
 
     /// <summary>
     /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
