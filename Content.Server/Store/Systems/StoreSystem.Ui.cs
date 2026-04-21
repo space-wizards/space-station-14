@@ -122,6 +122,7 @@ public sealed partial class StoreSystem
 
             component.BalanceSpent[currency] += amount;
         }
+
         //apply components
         if (listing.ProductComponents != null)
         {
