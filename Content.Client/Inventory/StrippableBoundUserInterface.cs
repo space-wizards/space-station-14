@@ -182,7 +182,7 @@ namespace Content.Client.Inventory
 
                 button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
 
-                _strippingMenu.ButtonCointainer.AddChild(button);
+                _strippingMenu.ButtonContainer.AddChild(button);
             }
 
             if (_admin.IsAdmin())
@@ -195,9 +195,14 @@ namespace Content.Client.Inventory
                     Pressed = _isAdminView,
                 };
 
-                adminButton.OnToggled += args => { _isAdminView = !_isAdminView; args.Button.Pressed = _isAdminView; UpdateMenu(); };
+                adminButton.OnToggled += args =>
+                {
+                    _isAdminView = !_isAdminView;
+                    args.Button.Pressed = _isAdminView;
+                    UpdateMenu();
+                };
 
-                _strippingMenu.ButtonCointainer.AddChild(adminButton);
+                _strippingMenu.ButtonContainer.AddChild(adminButton);
             }
 
             // TODO fix layout container measuring (its broken atm).
@@ -213,10 +218,7 @@ namespace Content.Client.Inventory
             // +27 vertically from the window header
             var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
             var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
-            if (snare?.IsEnsnared == true)
-                verticalMenuSize += 25;
-            if (_admin.IsAdmin())
-                verticalMenuSize += 25;
+            verticalMenuSize += 25 * _strippingMenu.ButtonContainer.Children.Count();
             _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
         }
 

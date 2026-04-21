@@ -9,7 +9,7 @@ namespace Content.Client.Strip
     {
         public LayoutContainer InventoryContainer = new();
         public LayoutContainer HandsContainer = new();
-        public BoxContainer ButtonCointainer = new() { Orientation = LayoutOrientation.Vertical };
+        public BoxContainer ButtonContainer = new() { Orientation = LayoutOrientation.Vertical };
         public bool Dirty = true;
 
         public event Action? OnDirty;
@@ -18,7 +18,7 @@ namespace Content.Client.Strip
         {
             var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 8) };
             ContentsContainer.AddChild(box);
-            box.AddChild(ButtonCointainer);
+            box.AddChild(ButtonContainer);
             box.AddChild(HandsContainer);
             box.AddChild(InventoryContainer);
         }
@@ -27,7 +27,7 @@ namespace Content.Client.Strip
         {
             InventoryContainer.RemoveAllChildren();
             HandsContainer.RemoveAllChildren();
-            ButtonCointainer.RemoveAllChildren();
+            ButtonContainer.RemoveAllChildren();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
