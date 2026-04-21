@@ -27,6 +27,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
@@ -53,8 +54,8 @@ namespace Content.Client.Inventory
 
         #region Admin overlay vars
 
-        private const string ChameleonClothingTexturePath = "/Textures/Interface/Default/Slots/camo.png";
-        private const string ContrabandTexturePath = "/Textures/Interface/Default/Slots/contra.png";
+        private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/camo.png");
+        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/contra.png");
 
         private readonly Color _chameleonColor = new(147, 112, 219);
 
@@ -318,12 +319,12 @@ namespace Content.Client.Inventory
 
             if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
             {
-                button.AddAdminOverlay(ChameleonClothingTexturePath, _chameleonColor);
+                button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
             }
 
             if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
             {
-                button.AddAdminOverlay(ContrabandTexturePath, _proto.Index(contraProtoId).Color);
+                button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
             }
         }
     }

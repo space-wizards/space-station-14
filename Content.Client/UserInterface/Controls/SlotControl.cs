@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -238,9 +239,9 @@ namespace Content.Client.UserInterface.Controls
         /// </summary>
         /// <param name="texturePath">The texture path to overlay.</param>
         /// <param name="color">Color to modulate the texture with - if null no modulation.</param>
-        public void AddAdminOverlay(string texturePath, Color? color = null)
+        public void AddAdminOverlay(ResPath texturePath, Color? color = null)
         {
-            AdminOverlays.AddChild(new SimpleSlotOverlay(texturePath, color));
+            AdminOverlays.AddChild(new SimpleSlotOverlay(texturePath.CanonPath, color));
         }
 
         /// <summary>
