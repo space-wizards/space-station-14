@@ -37,9 +37,6 @@ public sealed class PowerConsumerBatteryChargerSystem : EntitySystem
 
     private void OnPowerConsumed(Entity<PowerConsumerBatteryChargerComponent> entity, ref PowerConsumedEvent args)
     {
-        if (!TryComp<BatteryComponent>(entity, out var battery))
-            return;
-
-        _battery.ChangeCharge((entity, battery), args.EffectivePower);
+        _battery.ChangeCharge(entity.Owner, args.EffectivePower);
     }
 }
