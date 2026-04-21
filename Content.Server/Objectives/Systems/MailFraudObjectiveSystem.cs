@@ -32,7 +32,6 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
             if (HasComp<MailFraudConditionComponent>(obj))
             {
                 _counterCondition.IncreaseCount(obj);
-                break;
             }
         }
     }
