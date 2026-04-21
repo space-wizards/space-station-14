@@ -37,6 +37,20 @@ public sealed partial class AtmosphereSystem
         return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
     }
 
+    public override float GetMass(GasMixture mix)
+    {
+        return GetMass(mix.Moles);
+    }
+
+    public override float GetMass(float[] moles)
+    {
+        var tmp = new float[moles.Length];
+        NumericsHelpers.Multiply(moles, GasMolarMasses, tmp);
+
+        // Conversion of grams to kilograms.
+        return NumericsHelpers.HorizontalAdd(tmp) * Atmospherics.gToKg;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override float GetHeatCapacityCalculation(float[] moles, bool space)
     {

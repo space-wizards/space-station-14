@@ -27,8 +27,8 @@ public sealed partial class ChangelingIdentityComponent : Component
     public EntityUid? CurrentIdentity;
 
     /// <summary>
-    /// The cloning settings passed to the CloningSystem, contains a list of all components to copy or have handled by their
-    /// respective systems.
+    /// The cloning settings to use when cloning a devoured identity to the paused map.
+    /// This contains a whitelist of all components that need to be backed up so that the changeling can transform into them later.
     /// </summary>
     [DataField]
     public ProtoId<CloningSettingsPrototype> IdentityCloningSettings = "ChangelingCloningSettings";

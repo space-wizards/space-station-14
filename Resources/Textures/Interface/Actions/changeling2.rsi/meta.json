@@ -1,0 +1,17 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by ketufaispikinut from a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (scientist suit), a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (hydro suit) and the changeling ability border/background sprites created by TiniestShark.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "flesh_clothing"
+        },
+        {
+            "name": "flesh_clothing_alt"
+        }
+    ]
+}

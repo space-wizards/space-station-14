@@ -5,50 +5,66 @@ namespace Content.Shared.Temperature.HeatContainer;
 public static partial class HeatContainerHelpers
 {
     /// <summary>
-    /// Splits a <see cref="HeatContainer"/> into two.
+    /// Splits a <see cref="IHeatContainer"/> into two.
     /// </summary>
-    /// <param name="c">The <see cref="HeatContainer"/> to split. This will be modified to contain the remaining heat capacity.</param>
+    /// <param name="c">The <see cref="IHeatContainer"/> to split. This will be modified to contain the remaining heat capacity.</param>
+    /// <param name="cSplit">A <see cref="IHeatContainer"/> that will be modified to contain
+    /// the specified fraction of the original container's heat capacity and the same temperature.</param>
     /// <param name="fraction">The fraction of the heat capacity to move to the new container. Clamped between 0 and 1.</param>
-    /// <returns>A new <see cref="HeatContainer"/> containing the specified fraction of the original container's heat capacity and the same temperature.</returns>
     [PublicAPI]
-    public static HeatContainer Split(this ref HeatContainer c, float fraction = 0.5f)
+    public static void Split<T1, T2>(ref T1 c, ref T2 cSplit, float fraction = 0.5f)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         fraction = Math.Clamp(fraction, 0f, 1f);
         var newHeatCapacity = c.HeatCapacity * fraction;
 
-        var newContainer = new HeatContainer
-        {
-            HeatCapacity = newHeatCapacity,
-            Temperature = c.Temperature,
-        };
+        cSplit.HeatCapacity = newHeatCapacity;
+        cSplit.Temperature = c.Temperature;
 
         c.HeatCapacity -= newHeatCapacity;
-
-        return newContainer;
     }
 
     /// <summary>
-    /// Divides a source <see cref="HeatContainer"/> into a specified number of equal parts.
+    /// Splits a <see cref="IHeatContainer"/> into two,
+    /// modifying the original container to contain the specified fraction of the original heat capacity and the same temperature.
     /// </summary>
-    /// <param name="c">The input <see cref="HeatContainer"/> to split.</param>
-    /// <param name="num">The number of <see cref="HeatContainer"/>s
-    /// to split the source <see cref="HeatContainer"/> into.</param>
-    /// <exception cref="ArgumentException">Thrown when attempting to divide the source container by zero.</exception>
-    /// <returns>An array of <see cref="HeatContainer"/>s equally split from the source <see cref="HeatContainer"/>.</returns>
+    /// <param name="c">A <see cref="IHeatContainer"/> that will be modified to contain
+    /// the specified fraction of the original container's heat capacity and the same temperature.</param>
+    /// <param name="fraction">The fraction of the heat capacity to move to the new container. Clamped between 0 and 1.</param>
+    /// <remarks>This discards the leftover fraction. Be very careful with using this as you may void heat unintentionally.</remarks>
     [PublicAPI]
-    public static HeatContainer[] Divide(this HeatContainer c, uint num)
+    public static void Split<T>(ref T c, float fraction = 0.5f)
+        where T : IHeatContainer
     {
-        ArgumentOutOfRangeException.ThrowIfZero(num);
+        fraction = Math.Clamp(fraction, 0f, 1f);
+        var newHeatCapacity = c.HeatCapacity * fraction;
+        c.HeatCapacity = newHeatCapacity;
+    }
+
+    /// <summary>
+    /// Divides a source <see cref="IHeatContainer"/> into a specified number of equal parts.
+    /// </summary>
+    /// <param name="c">The input <see cref="IHeatContainer"/> to split.</param>
+    /// <param name="dividedArray">An array of <see cref="IHeatContainer"/>s equally split from the source <see cref="IHeatContainer"/>.
+    /// This will be written to. This must be the same length as num.</param>
+    /// <param name="num">The number of <see cref="IHeatContainer"/>s
+    /// to split the source <see cref="IHeatContainer"/> into.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when attempting to divide the source container by zero.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the divided array does not match the specified number of divisions.</exception>
+    [PublicAPI]
+    public static void Divide<T>(this T c, T[] dividedArray, int num)
+        where T : struct, IHeatContainer // if we allowed classes you'd just have an array reffing the same obj
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(num);
+        ArgumentOutOfRangeException.ThrowIfNotEqual(dividedArray.Length, num);
 
         var fraction = 1f / num;
-        var cFrac = c.Split(fraction);
-        var containers = new HeatContainer[num];
+        Split(ref c, fraction);
 
         for (var i = 0; i < num; i++)
         {
-            containers[i] = cFrac;
+            dividedArray[i] = c;
         }
-
-        return containers;
     }
 }

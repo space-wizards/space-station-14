@@ -24,7 +24,6 @@
           amount: 2
         - id: BoxCleanerGrenades
         - id: WireBrush
-          amount: 2
 
 - type: entity
   parent: CratePlastic
