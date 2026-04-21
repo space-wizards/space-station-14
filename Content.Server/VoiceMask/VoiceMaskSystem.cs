@@ -206,12 +206,19 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
         // Update identity because of possible name override
         _identity.QueueIdentityUpdate(args.Actor);
+
+        // This line is basically ducktape for the desync that happens when you mash this button fast enough.
+        // *quack*
+        UpdateUI(entity);
     }
 
     private void OnAccentToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskAccentToggleMessage args)
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-accent-toggle"), entity, args.Actor);
         entity.Comp.AccentHide = !entity.Comp.AccentHide;
+        
+        // Same reason of being there as in OnToggle
+        UpdateUI(entity);
     }
     #endregion
 
