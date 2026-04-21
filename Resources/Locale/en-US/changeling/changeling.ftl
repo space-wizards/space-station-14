@@ -31,5 +31,8 @@ changeling-transform-bui-drop-identity-entity = Drop {$entity}
 changeling-transform-bui-drop-identity-entity-popup = You dropped {$entity} from your memory.
 changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your current identity.
 
+# voice mimicry
+changeling-voice-mimic-window-title = Voice Mimicry
+
 # other
 changeling-paused-map-name = Changeling identity storage map
