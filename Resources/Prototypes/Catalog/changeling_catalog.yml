@@ -34,8 +34,7 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-  # balance this, I dont know what I'm doing
-    ChangelingDNA: 10
+    ChangelingDNA: 10 # TODO: Balance this once we have DNA from devour. It's currently cheap for testing purposes.
   categories:
   - ChangelingAbilities
   conditions:

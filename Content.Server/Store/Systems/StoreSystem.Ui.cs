@@ -80,6 +80,7 @@ public sealed partial class StoreSystem
 
         if (listing == null) //make sure this listing actually exists
         {
+            Log.Debug("listing does not exist");
             return;
         }
 
@@ -121,13 +122,12 @@ public sealed partial class StoreSystem
 
             component.BalanceSpent[currency] += amount;
         }
+
         //apply components
         if (listing.ProductComponents != null)
         {
             if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
-            {
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
-            }
         }
 
         //spawn entity

@@ -63,10 +63,11 @@ public sealed partial class VoiceMaskComponent : Component
     public bool ChangeIDName = false;
 
     /// <summary>
-    ///     Wether the voice mask is innate to the entity.
+    ///     Whether the voice mask is innate to the entity.
     /// </summary>
     [DataField]
     public bool IsInnate = false;
+    
     /// <summary>
     ///     Is used as the title text in the UI.
     /// </summary>

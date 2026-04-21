@@ -32,6 +32,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     
     private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
+    
     // CCVar.
     private int _maxNameLength;
 
@@ -56,12 +57,15 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
+        
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
-    }
+}
+
     private void OnInnateTransformSpeakerName(Entity<VoiceMaskComponent> ent, ref TransformSpeakerNameEvent args)
     {
         if (!ent.Comp.IsInnate)
             return;
+            
         TransformVoice(ent, args);
     }
 
@@ -69,6 +73,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!ent.Comp.IsInnate)
             return;
+            
         _actions.AddAction(ent, ent.Comp.Action);
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _uiSystem.SetUi((ent, userInterfaceComp), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
@@ -95,6 +100,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
+            
         TransformSpeech(entity, args.Args);
     }
 
@@ -103,6 +109,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         TransformSpeech(entity, args.Event);
     }
 
@@ -111,6 +118,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
+            
         TransformVoice(entity, args.Args);
     }
 
@@ -119,6 +127,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         TransformVoice(entity, args.Event);
     }
 
@@ -129,6 +138,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
             return;
+            
         args.NameOverride = GetCurrentVoiceName(entity);
     }
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
@@ -144,6 +154,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -152,6 +163,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -227,9 +239,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_lock.IsLocked(uid))
             return;
+
         // Innate voice masks can't be equiped
         if (component.IsInnate)
             return;
+            
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
@@ -239,8 +253,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
         if (!TryComp<VoiceMaskComponent>(maskEntity, out var voiceMaskComp))
             return;
+
         if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key))
             return;
+
         _uiSystem.OpenUi(maskEntity.Value, VoiceMaskUIKey.Key, ev.Performer);
         UpdateUI((maskEntity.Value, voiceMaskComp));
     }
