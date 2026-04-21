@@ -11,7 +11,7 @@ namespace Content.Server.Objectives.Systems;
 public sealed class CounterConditionSystem : EntitySystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
-    private EntityQuery<CounterConditionComponent> _compQuery;
+    [Dependency] private EntityQuery<CounterConditionComponent> _compQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
