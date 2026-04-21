@@ -73,6 +73,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!ent.Comp.IsInnate)
             return;
+            
         _actions.AddAction(ent, ent.Comp.Action);
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
         _uiSystem.SetUi((ent, userInterfaceComp), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
