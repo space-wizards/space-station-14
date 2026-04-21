@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Server.Power.Components;
 
@@ -10,10 +10,10 @@ namespace Content.Server.Power.Components;
 public sealed partial class SpawnOnBatteryLevelComponent : Component
 {
     /// <summary>
-    /// Entity prototype to spawn.
+    /// The entity table to spawn stuff from.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId Prototype;
+    public EntityTableSelector Table;
 
     /// <summary>
     /// Amount of power in the battery (in joules) to spawn entity

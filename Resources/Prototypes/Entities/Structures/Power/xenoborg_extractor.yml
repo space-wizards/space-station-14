@@ -119,8 +119,16 @@
     netsync: false
   - type: ExaminableBattery
   - type: SpawnOnBatteryLevel
-    prototype: MaterialXenoborgCrystal1
+    table: !type:NestedSelector
+      tableId: XenoborgExtractorCrystals
     charge: 900000 # 4MJ
+
+- type: entityTable
+  id: XenoborgExtractorCrystals
+  table: !type:GroupSelector
+    children:
+    - id: MaterialXenoborgCrystal1
+      weight: 1
 
 - type: entity
   parent: XenoborgExtractor
