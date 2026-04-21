@@ -32,6 +32,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     
     private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
+    
     // CCVar.
     private int _maxNameLength;
 
