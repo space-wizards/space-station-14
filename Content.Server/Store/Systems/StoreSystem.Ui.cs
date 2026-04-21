@@ -126,9 +126,7 @@ public sealed partial class StoreSystem
         if (listing.ProductComponents != null)
         {
             if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
-            {
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
-            }
         }
 
         //spawn entity
