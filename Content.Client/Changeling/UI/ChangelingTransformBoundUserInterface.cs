@@ -56,7 +56,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, EntMan.GetNetEntity(identity.Identity.Value))
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
-                ToolTip = Loc.GetString("changeling-transform-bui-select-entity", ("entity", identity)),
+                ToolTip = Loc.GetString("changeling-transform-bui-select-entity", ("entity", identity.Identity)),
                 BackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionBackground : null, // mark as selected
                 HoverBackgroundColor = (currentIdentity == identity.Identity) ? SelectedOptionHoverBackground : null
             };
@@ -68,7 +68,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
                 IconSpecifier = RadialMenuIconSpecifier.With(identity.Identity.Value),
                 ToolTip = (currentIdentity == identity.Identity)
                     ? Loc.GetString("changeling-transform-bui-drop-identity-cannot-drop")
-                    : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity)),
+                    : Loc.GetString("changeling-transform-bui-drop-identity-entity", ("entity", identity.Identity)),
                 BackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionBackground : null, // cannot drop your current identity
                 HoverBackgroundColor = (currentIdentity == identity.Identity) ? DisabledOptionHoverBackground : null
             };
