@@ -67,6 +67,7 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public bool IsInnate = false;
+    
     /// <summary>
     ///     Is used as the title text in the UI.
     /// </summary>

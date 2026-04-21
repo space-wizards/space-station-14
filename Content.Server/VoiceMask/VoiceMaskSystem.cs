@@ -100,6 +100,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
+            
         TransformSpeech(entity, args.Args);
     }
 
@@ -108,6 +109,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         TransformSpeech(entity, args.Event);
     }
 
@@ -116,6 +118,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be used in the inventory (they only affect themselves)
         if (entity.Comp.IsInnate)
             return;
+            
         TransformVoice(entity, args.Args);
     }
 
@@ -124,6 +127,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         TransformVoice(entity, args.Event);
     }
 
@@ -134,6 +138,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
             return;
+            
         args.NameOverride = GetCurrentVoiceName(entity);
     }
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
@@ -149,6 +154,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -157,6 +163,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Innate voice masks can't be implanted
         if (entity.Comp.IsInnate)
             return;
+            
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -225,9 +232,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_lock.IsLocked(uid))
             return;
+
         // Innate voice masks can't be equiped
         if (component.IsInnate)
             return;
+            
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
