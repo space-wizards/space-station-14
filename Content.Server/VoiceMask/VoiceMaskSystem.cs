@@ -92,21 +92,33 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnTransformSpeechInventory(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeechEvent> args)
     {
+        // Innate voice masks can't be used in the inventory (they only affect themselves)
+        if (entity.Comp.IsInnate)
+            return;
         TransformSpeech(entity, args.Args);
     }
 
     private void OnTransformSpeechImplant(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<TransformSpeechEvent> args)
     {
+        // Innate voice masks can't be implanted
+        if (entity.Comp.IsInnate)
+            return;
         TransformSpeech(entity, args.Event);
     }
 
     private void OnTransformSpeakerNameInventory(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
     {
+        // Innate voice masks can't be used in the inventory (they only affect themselves)
+        if (entity.Comp.IsInnate)
+            return;
         TransformVoice(entity, args.Args);
     }
 
     private void OnTransformSpeakerNameImplant(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<TransformSpeakerNameEvent> args)
     {
+        // Innate voice masks can't be implanted
+        if (entity.Comp.IsInnate)
+            return;
         TransformVoice(entity, args.Event);
     }
 
@@ -129,11 +141,17 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnImplantImplantedEvent(Entity<VoiceMaskComponent> entity, ref ImplantImplantedEvent ev)
     {
+        // Innate voice masks can't be implanted
+        if (entity.Comp.IsInnate)
+            return;
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
     private void OnImplantRemovedEventEvent(Entity<VoiceMaskComponent> entity, ref ImplantRemovedEvent ev)
     {
+        // Innate voice masks can't be implanted
+        if (entity.Comp.IsInnate)
+            return;
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
