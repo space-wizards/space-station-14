@@ -1,4 +1,5 @@
 ﻿using Content.Server.Power.Components;
+using Content.Shared.EntityTable;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 
@@ -6,7 +7,8 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed class SpawnOnBatteryLevelSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly BatterySystem _battery = null!;
+    [Dependency] private readonly EntityTableSystem _entityTable =  null!;
 
     public override void Initialize()
     {
@@ -23,7 +25,11 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         if (battery.LastCharge < entity.Comp.Charge)
             return;
 
-        Spawn(entity.Comp.Prototype, Transform(entity).Coordinates);
+        var spawns = _entityTable.GetSpawns(entity.Comp.Table);
+        foreach (var spawn in spawns)
+        {
+            Spawn(spawn, Transform(entity).Coordinates);
+        }
 
         _battery.ChangeCharge((entity, battery), -entity.Comp.Charge);
     }
