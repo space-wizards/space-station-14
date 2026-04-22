@@ -16,6 +16,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
         [Dependency] private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
+        [Dependency] private readonly DocumentParsingManager _docParsing = IoCManager.Resolve<DocumentParsingManager>();
         private float _timer;
 
         public GhostRoleRulesWindow(string rules, ProtoId<GuideEntryPrototype>? guideEntry, Action<BaseButton.ButtonEventArgs> requestAction)
@@ -24,12 +25,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var ghostRoleTime = _cfg.GetCVar(CCVars.GhostRoleTime);
             _timer = ghostRoleTime;
 
-            var docParsing = IoCManager.Resolve<DocumentParsingManager>();
             var usedGuide = false;
 
             if (guideEntry != null)
             {
-                usedGuide = docParsing.TryAddMarkup(ContentBox, guideEntry.Value);
+                usedGuide = _docParsing.TryAddMarkup(ContentBox, guideEntry.Value);
                 if (!usedGuide)
                     ContentBox.RemoveAllChildren();
             }

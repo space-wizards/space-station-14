@@ -4,4 +4,4 @@ ghost-role-rules-centcom-allowed =
 ghost-role-rules-centcom-not-allowed =
     - Kill people outside your given objectives
     - Gib anybody without direct instructions
-    - Station or power sabotauge
+    - Station or power sabotage
