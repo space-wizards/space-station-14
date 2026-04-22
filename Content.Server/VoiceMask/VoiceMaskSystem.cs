@@ -30,9 +30,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-    
+
     private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
-    
+
     // CCVar.
     private int _maxNameLength;
 
@@ -188,8 +188,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // Update identity because of possible name override
         _identity.QueueIdentityUpdate(args.Actor);
 
-        // This line is basically ducktape for the desync that happens when you mash this button fast enough.
-        // *quack*
         UpdateUI(entity);
     }
 
@@ -207,6 +205,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void OnEquip(EntityUid uid, VoiceMaskComponent component, ClothingGotEquippedEvent args)
     {
         if (_lock.IsLocked(uid))
+            return;
+
+        // Innate voice masks can't be equiped
+        if (component.IsInnate)
             return;
             
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
