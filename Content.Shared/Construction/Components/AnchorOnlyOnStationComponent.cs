@@ -1,9 +1,11 @@
-﻿namespace Content.Shared.Construction.Components;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Construction.Components;
 
 /// <summary>
 /// If a entity has this component it can only be anchored to the station
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class AnchorOnlyOnStationComponent : Component
 {
     /// <summary>
