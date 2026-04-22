@@ -427,7 +427,7 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void  UpdatePowerConsumer(float frameTime)
+        private void UpdatePowerConsumer(float frameTime)
         {
             var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var uid, out var consumer))
