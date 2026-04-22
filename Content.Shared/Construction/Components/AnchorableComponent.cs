@@ -51,7 +51,7 @@ namespace Content.Shared.Construction.Components
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, string? failMessage=null)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, string? failMessage = null)
         {
             User = user;
             Tool = tool;
