@@ -635,6 +635,7 @@
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
     rules: ghost-role-information-nonantagonist-rules
+    guideEntry: Pets
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
@@ -772,6 +773,7 @@
     name: ghost-role-information-willow-name
     description: ghost-role-information-willow-description
     rules: ghost-role-information-nonantagonist-rules
+    guideEntry: Pets
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
@@ -851,6 +853,7 @@
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
     rules: ghost-role-information-nonantagonist-rules
+    guideEntry: Pets
     raffle: null
   - type: Grammar
     attributes:
@@ -871,6 +874,7 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+    guideEntry: Pets
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike

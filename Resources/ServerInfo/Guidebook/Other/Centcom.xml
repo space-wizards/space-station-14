@@ -1,0 +1,30 @@
+<Document>
+  # CentCommm Roles
+
+  <GhostRoleRulesEmbed Id="centcom"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="RandomHumanoidSpawnerCentcomOfficial"/>
+    <GuideEntityEmbed Entity="RandomHumanoidSpawnerERTLeader"/>
+    <GuideEntityEmbed Entity="RandomHumanoidSpawnerERTSecurity"/>
+    <GuideEntityEmbed Entity="RandomHumanoidSpawnerCBURNUnit"/>
+  </Box>
+
+  CentCommm roles are special ghost roles dispatched directly by Central Command. These roles are [bold]spawned exclusively at admin discretion[/bold] in response to specific in-round events. Do [bold]not[/bold] request or beg for these roles.
+
+  All CentCommm roles are [bold]crew-aligned[/bold] unless otherwise noted. You are expected to act professionally and represent Central Command accordingly.
+
+  ## Emergency Response Team (ERT)
+
+  ERT personnel are dispatched to stations experiencing crises beyond the crew's ability to handle. They arrive equipped for their specialization and operate under the ERT Leader's command.
+
+  Roles include: Leader, Security, Engineer, Medic, Janitor, and Chaplain.
+
+  ## CBURN
+
+  CBURN (Contained Biological Unit Response) agents are specialized Centcomm operatives trained for containment of biological threats, primarily zombie outbreaks. They arrive with dedicated containment equipment.
+
+  ## CentCommm Official
+
+  A Central Command representative sent to observe or intervene in station affairs. Has authority over station command and acts as a direct extension of CentComm.
+</Document>

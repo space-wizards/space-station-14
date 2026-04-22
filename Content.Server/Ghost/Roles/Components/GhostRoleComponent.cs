@@ -107,7 +107,7 @@ public sealed partial class GhostRoleComponent : Component
     public ProtoId<JobPrototype>? JobProto = null;
 
     /// <summary>
-    /// If set, the guidebook will open to this entry when a player clicks the request/join-raffle button.
+    /// If set, the ghost role rules window will render this guidebook entry inline instead of showing the raw rules text.
     /// </summary>
     [DataField]
     public ProtoId<GuideEntryPrototype>? GuideEntry;

@@ -11,7 +11,7 @@ role_loadout_timers = false
 enabled = false
 
 [ghost]
-role_time = 0.5
+role_time = 2
 quick_lottery = true
 
 [gateway]

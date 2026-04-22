@@ -1,6 +1,8 @@
 <Document>
   # Space Ninja
-  
+
+  <GhostRoleRulesEmbed Id="space-ninja"/>
+
   <Box>
     [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
   </Box>

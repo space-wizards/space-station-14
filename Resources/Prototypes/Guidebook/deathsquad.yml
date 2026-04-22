@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: DeathSquad
+  name: guide-entry-death-squad
+  text: "/ServerInfo/Guidebook/Other/DeathSquad.xml"

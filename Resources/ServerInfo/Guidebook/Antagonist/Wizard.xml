@@ -1,6 +1,8 @@
 ﻿<Document>
   # The Wizard
 
+  <GhostRoleRulesEmbed Id="wizard"/>
+
   <Box>
     [color=#457573][italic]IT'S WIZARD TIME MOTHERF-...[italic][/color]
   </Box>

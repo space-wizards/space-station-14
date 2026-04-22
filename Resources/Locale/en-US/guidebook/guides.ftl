@@ -144,6 +144,11 @@ guide-entry-space-ninja = Space Ninja
 guide-entry-thieves = Thieves
 guide-entry-wizard = Wizard
 guide-entry-xenoborgs = Xenoborgs
+guide-entry-paradox-clone = Paradox Clone
+guide-entry-revenant = Revenant
+guide-entry-rat-king = Rat King
+guide-entry-space-dragon = Space Dragon
+guide-entry-angry-mobs = Slimes and Spiders
 guide-entry-free-agents = Free Agents
 guide-entry-free-agent-skeletons = Skeletons
 guide-entry-free-agent-mice = Mice
@@ -152,6 +157,11 @@ guide-entry-free-agent-snails = Snails
 guide-entry-free-agent-bots = Bots
 guide-entry-free-agent-visitors = Visitors
 guide-entry-free-agent-artifact = Sentient Artifact
+
+guide-entry-other = Other Roles
+guide-entry-pets = Station Pets
+guide-entry-centcom = CentComm Roles
+guide-entry-death-squad = Death Squad
 
 guide-entry-rules = Server Rules
 guide-entry-rules-core-only = Core Only Ruleset

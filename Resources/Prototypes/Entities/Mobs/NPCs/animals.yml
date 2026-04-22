@@ -2609,7 +2609,7 @@
     name: ghost-role-information-giant-spider-name
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
-    guideEntry: MinorAntagonists
+    guideEntry: AngryMobs
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:

@@ -1,0 +1,47 @@
+- type: guideEntry
+  id: FreeAgents
+  name: guide-entry-free-agents
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgents.xml"
+  children:
+  - FreeAgentSkeletons
+  - FreeAgentMice
+  - FreeAgentMothroach
+  - FreeAgentSnails
+  - FreeAgentBots
+  - FreeAgentVisitors
+  - FreeAgentArtifact
+
+- type: guideEntry
+  id: FreeAgentSkeletons
+  name: guide-entry-free-agent-skeletons
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentSkeletons.xml"
+
+- type: guideEntry
+  id: FreeAgentMice
+  name: guide-entry-free-agent-mice
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentMice.xml"
+
+- type: guideEntry
+  id: FreeAgentMothroach
+  name: guide-entry-free-agent-mothroach
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentMothroach.xml"
+
+- type: guideEntry
+  id: FreeAgentSnails
+  name: guide-entry-free-agent-snails
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentSnails.xml"
+
+- type: guideEntry
+  id: FreeAgentBots
+  name: guide-entry-free-agent-bots
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentBots.xml"
+
+- type: guideEntry
+  id: FreeAgentVisitors
+  name: guide-entry-free-agent-visitors
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentVisitors.xml"
+
+- type: guideEntry
+  id: FreeAgentArtifact
+  name: guide-entry-free-agent-artifact
+  text: "/ServerInfo/Guidebook/Antagonist/FreeAgentArtifact.xml"

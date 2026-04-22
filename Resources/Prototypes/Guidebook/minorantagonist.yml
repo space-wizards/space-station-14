@@ -1,0 +1,29 @@
+- type: guideEntry
+  id: MinorAntagonists
+  name: guide-entry-minor-antagonists
+  text: "/ServerInfo/Guidebook/Antagonist/MinorAntagonists.xml"
+  children:
+  - ParadoxClone
+  - Revenant
+  - RatKing
+  - AngryMobs
+
+- type: guideEntry
+  id: ParadoxClone
+  name: guide-entry-paradox-clone
+  text: "/ServerInfo/Guidebook/Antagonist/ParadoxClone.xml"
+
+- type: guideEntry
+  id: Revenant
+  name: guide-entry-revenant
+  text: "/ServerInfo/Guidebook/Antagonist/Revenant.xml"
+
+- type: guideEntry
+  id: RatKing
+  name: guide-entry-rat-king
+  text: "/ServerInfo/Guidebook/Antagonist/RatKing.xml"
+
+- type: guideEntry
+  id: AngryMobs
+  name: guide-entry-angry-mobs
+  text: "/ServerInfo/Guidebook/Antagonist/AngryMobs.xml"

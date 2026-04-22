@@ -20,7 +20,7 @@ namespace Content.Shared.Ghost.Roles
         public (List<ProtoId<JobPrototype>>?,List<ProtoId<AntagPrototype>>?)  RolePrototypes;
 
         /// <summary>
-        /// If set, the guidebook will open to this entry when the player clicks request/join-raffle.
+        /// If set, the ghost role rules window renders this guidebook entry inline instead of the raw rules text.
         /// </summary>
         public ProtoId<GuideEntryPrototype>? GuideEntry { get; set; }
 

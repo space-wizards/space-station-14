@@ -1,23 +1,24 @@
 <Document>
   # Snails
 
+  <GhostRoleRulesEmbed Id="free-agent-snails"/>
+
   <Box>
     <GuideEntityEmbed Entity="MobSnail"/>
     <GuideEntityEmbed Entity="MobSnailSpeed"/>
     <GuideEntityEmbed Entity="MobSnailMoth"/>
   </Box>
 
-  Snails are slow, small, and surprisingly durable molluscs that have made themselves at home aboard the station.
-  They cannot speak, but they can emote, and their presence is known to inspire existential reflection in some crew members.
+  Snails are small, durable molluscs that have made their way aboard the station.
+  They cannot speak but can emote.
 
-  As a snail you are [bold]tiny[/bold], able to fit into small spaces and largely ignored by the crew unless you make yourself known.
-  You are [bold]harmless[/bold] and have no way to attack.
+  As a snail you are [bold]tiny[/bold], able to fit into small spaces. You are [bold]harmless[/bold] and have no way to attack.
 
-  Be careful around [color=yellow]salt[/color] — contact with salt or saline solutions will [bold]hurt you[/bold].
+  Be careful around [color=yellow]salt[/color]. Contact with salt or saline solutions will [bold]hurt you[/bold].
 
   ## Variants
 
-  - [bold]Snail[/bold] — a standard garden snail that found its way onto a space station. Moves slowly. Has a rich inner life.
-  - [bold]Speed Snail[/bold] — a snail of unusual velocity. Do not underestimate it.
-  - [bold]Snoth[/bold] — part snail, part moth. The genetics lab strikes again. Can fit into moth-sized spaces and has a unique appearance.
+  - [bold]Snail[/bold]: a standard snail.
+  - [bold]Speed Snail[/bold]: a snail with significantly increased movement speed.
+  - [bold]Snoth[/bold]: a snail and moth hybrid produced by genetics. Has a distinctive appearance and can fit into spaces suited to moth-sized creatures.
 </Document>

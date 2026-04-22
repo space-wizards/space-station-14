@@ -125,6 +125,7 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
+    guideEntry: AngrMobs
     raffle:
       settings: short
   - type: Speech
@@ -164,6 +165,7 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      guideEntry: AngryMobs
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
       raffle:
@@ -204,6 +206,7 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      guideEntry: AngryMobs
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
       raffle:
@@ -243,6 +246,7 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      guideEntry: AngryMobs
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
       raffle:

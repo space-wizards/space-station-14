@@ -1,0 +1,15 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              HorizontalExpand="True">
+    <Collapsible HorizontalExpand="True">
+        <CollapsibleHeading Title="{Loc 'ghost-role-rules-embed-header'}"/>
+        <CollapsibleBody>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 2 5 5">
+                <Label Text="{Loc 'ghost-role-rules-embed-allowed-header'}" HorizontalExpand="True"/>
+                <RichTextLabel Name="AllowedContent" HorizontalExpand="True" Margin="5 0 0 5"/>
+                <Label Text="{Loc 'ghost-role-rules-embed-not-allowed-header'}" HorizontalExpand="True"/>
+                <RichTextLabel Name="NotAllowedContent" HorizontalExpand="True" Margin="5 0 0 0"/>
+            </BoxContainer>
+        </CollapsibleBody>
+    </Collapsible>
+</BoxContainer>

@@ -1,0 +1,17 @@
+- type: guideEntry
+  id: Other
+  name: guide-entry-other
+  text: "/ServerInfo/Guidebook/Other/Other.xml"
+  children:
+  - Pets
+  - Centcom
+
+- type: guideEntry
+  id: Pets
+  name: guide-entry-pets
+  text: "/ServerInfo/Guidebook/Other/Pets.xml"
+
+- type: guideEntry
+  id: Centcom
+  name: guide-entry-centcom
+  text: "/ServerInfo/Guidebook/Other/Centcom.xml"

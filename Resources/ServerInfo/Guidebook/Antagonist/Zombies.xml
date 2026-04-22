@@ -1,6 +1,8 @@
 <Document>
   # Zombies
 
+  <GhostRoleRulesEmbed Id="zombies"/>
+
   <Box>
     [color=#999999][italic]"They're coming to get you, Barbara!"[/italic][/color]
   </Box>
