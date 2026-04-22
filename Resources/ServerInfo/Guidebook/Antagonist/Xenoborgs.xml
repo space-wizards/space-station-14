@@ -140,20 +140,20 @@
     <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
     <GuideEntityEmbed Entity="MaterialXenoborgCrystal" Caption="xenoborg crystal"/>
   </Box>
-  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg crystals.
+  The extractor is a machine necessary for the xenoborgs to grow their army. It steals power from cables connected to it in order to produce xenoborg crystals.
 
   The mothership core can produce a xenoborg extractor flatpack for 10 steel.
 
-  Once its anchored on top of a cable it needs to be set to that cable voltage to start draining power.
+  When anchored it will start draining power from the cable corresponding to the voltage it's set to.
 
-  Once it's battery is full it will produce one xenoborg crystal.
+  It will produce a xenoborg crystal everytime its internal battery fills up.
 
   Energy consumption and efficiency vary depending on the voltage.
   - low voltage - 15kW - 1 minute to produce one xenoborg crystal.
   - medium voltage - 60kW - 30 seconds to produce one xenoborg crystal.
   - high voltage - 240kW - 15 seconds to produce one xenoborg crystal.
 
-  Attention! at the highest voltage it will trigger the rogue power consuming device alert! and anyone using the power monitor device will know something is wrong.
+  [bold]Attention![/bold] At the highest voltage it will trigger the rogue power consuming device alert! Anyone using the power monitor device will know something is wrong.
 
   ## Preparation and Tactics
   Before FTLing near the station, make sure the IFF is off.
