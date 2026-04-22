@@ -156,7 +156,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, DisposalUnitComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null || component.IsDestroyed)
             return;
 
         AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);

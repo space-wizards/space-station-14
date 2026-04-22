@@ -117,6 +117,11 @@ public sealed partial class DisposalUnitComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan? NextFlush;
 
+    /// <summary>
+    /// Destroyed flag for escaping race conditions
+    /// </summary>
+    public bool IsDestroyed = false;
+
     [Serializable, NetSerializable]
     public enum Visuals : byte
     {

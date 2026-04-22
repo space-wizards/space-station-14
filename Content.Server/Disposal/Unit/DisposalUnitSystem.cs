@@ -34,6 +34,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void OnDestruction(EntityUid uid, DisposalUnitComponent component, DestructionEventArgs args)
     {
+        component.IsDestroyed = true;
         TryEjectContents(uid, component);
     }
 
