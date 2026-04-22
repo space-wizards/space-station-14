@@ -77,6 +77,7 @@ public sealed partial class VoiceMaskComponent : Component
     /// <summary>
     ///     Is used as the text of the toggle button in the UI window.
     /// </summary>
-    public LocId ToggleText = "voice-mask-name-change-toggle"; 
+    [DataField]
+    public LocId ToggleText = "voice-mask-name-change-toggle";
 }
 
