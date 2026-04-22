@@ -63,7 +63,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
     private void OnAnchorOnStation(Entity<AnchorOnlyOnStationComponent> ent, ref AnchorAttemptEvent args)
     {
-        if (_stationSystem.IsOnStation(ent))
+        if (_stationSystem.IsOnStation(ent, ent.Comp.OnlyCountLargestGrid))
             return;
 
         args.FailMessage = Loc.GetString(ent.Comp.PopupMessageAnchorFail);
