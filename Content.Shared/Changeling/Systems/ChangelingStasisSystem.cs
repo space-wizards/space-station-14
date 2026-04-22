@@ -2,7 +2,6 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.Mobs;
@@ -111,11 +110,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         var stasisDuration = ent.Comp.MinStasisCooldown;
 
-        if (TryComp<DamageableComponent>(ent.Owner, out var damageable))
-        {
-            stasisDuration += ent.Comp.BonusCooldownPerDamage * (double)damageable.TotalDamage;
-            stasisDuration = new TimeSpan(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks)); // No clamp method for TimeSpans
-        }
+        stasisDuration += ent.Comp.BonusCooldownPerDamage * (double)_damage.GetTotalDamage(ent.Owner);
+        stasisDuration = new TimeSpan(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks)); // No clamp method for TimeSpans
 
         _metaData.SetEntityName(ent.Comp.RegenStasisActionEntity.Value, Loc.GetString("changeling-stasis-active-name"));
         _metaData.SetEntityDescription(ent.Comp.RegenStasisActionEntity.Value, Loc.GetString("changeling-stasis-active-desc"));
@@ -142,7 +138,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
         // Heal bloodloss and stop bleeding.
         if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
         {
-            _bloodstream.TryModifyBloodLevel((ent, bloodstream), bloodstream.BloodMaxVolume);
+            _bloodstream.TryRegulateBloodLevel((ent, bloodstream), bloodstream.BloodReferenceSolution.MaxVolume);
             _bloodstream.TryModifyBleedAmount((ent, bloodstream), -bloodstream.BleedAmount);
         }
 
