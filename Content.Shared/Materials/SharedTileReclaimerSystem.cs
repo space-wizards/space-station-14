@@ -80,20 +80,24 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
             if (!_whitelist.CheckBoth(grid, ent.Comp1.Blacklist, ent.Comp1.Whitelist))
                 continue;
 
+            var intersectingEntities = new HashSet<EntityUid>();
+
             foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
             {
                 var tileDef = _turf.GetContentTileDefinition(tile);
                 if (tileDef.Indestructible)
                     continue;
 
-                foreach (var entityOnTile in _lookup.GetLocalEntitiesIntersecting(tile))
+                intersectingEntities.Clear();
+                _lookup.GetLocalEntitiesIntersecting(tile.GridUid, tile.GridIndices, intersectingEntities);
+
+                foreach (var entityOnTile in intersectingEntities)
                 {
                     _physics.SetCanCollide(entityOnTile, true);
                     _physics.ApplyLinearImpulse(entityOnTile, _physics.GetLinearVelocity(grid.Owner, Transform(entityOnTile).LocalPosition));
                 }
 
-                var mapGrid = Comp<MapGridComponent>(tile.GridUid);
-                _mapSystem.SetTile(tile.GridUid, mapGrid, tile.GridIndices, Tile.Empty);
+                _mapSystem.SetTile(tile.GridUid, grid, tile.GridIndices, Tile.Empty);
                 SpawnMaterialsFromComposition((ent, null, ent.Comp2), tileDef, ent.Comp1.Efficiency);
                 shredded = true;
 
@@ -106,7 +110,7 @@ public abstract class SharedTileReclaimerSystem : EntitySystem
         if (!shredded)
             return;
 
-        _audio.PlayPredicted(ent.Comp1.Sound, ent, null);
+        _audio.PlayPvs(ent.Comp1.Sound, ent);
     }
 
     /// <summary>

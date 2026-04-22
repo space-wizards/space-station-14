@@ -133,8 +133,8 @@ namespace Content.Shared.Maps
         /// <summary>
         /// If this tile is reclaimed, what materials would come out of it?
         /// </summary>
-        [DataField(customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
-        public Dictionary<string, int> MaterialComposition = new();
+        [DataField]
+        public Dictionary<ProtoId<MaterialPrototype>, int> MaterialComposition = new();
 
         /// <summary>
         ///     Hide this tile in the tile placement editor.
