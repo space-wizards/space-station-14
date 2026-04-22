@@ -127,15 +127,16 @@ namespace Content.Server.Spawners.EntitySystems
                 return;
 
             var coords = Transform(ent).Coordinates;
+            var offset = ent.Comp.Offset;
 
             var spawns = _entityTable.GetSpawns(ent.Comp.Table);
             foreach (var proto in spawns)
             {
-                var xOffset = _robustRandom.NextFloat(-ent.Comp.Offset, ent.Comp.Offset);
-                var yOffset = _robustRandom.NextFloat(-ent.Comp.Offset, ent.Comp.Offset);
+                var xOffset = _robustRandom.NextFloat(-offset, offset);
+                var yOffset = _robustRandom.NextFloat(-offset, offset);
                 var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
 
-                SpawnAtPosition(proto, trueCoords);
+                SpawnAttachedTo(proto, trueCoords);
             }
         }
     }

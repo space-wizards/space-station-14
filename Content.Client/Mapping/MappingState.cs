@@ -37,7 +37,10 @@ namespace Content.Client.Mapping;
 
 public sealed class MappingState : GameplayStateBase
 {
+    #if !FULL_RELEASE
     [Dependency] private readonly IClientAdminManager _admin = default!;
+    #endif
+
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntityNetworkManager _entityNetwork = default!;
     [Dependency] private readonly IInputManager _input = default!;
@@ -746,12 +749,13 @@ public sealed class MappingState : GameplayStateBase
     {
 #if FULL_RELEASE
         return false;
-#endif
+#else
         if (!_admin.IsAdmin(true) || !_admin.HasFlag(AdminFlags.Host))
             return false;
 
         SaveMap();
         return true;
+#endif
     }
 
     private bool HandleEnablePick(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
