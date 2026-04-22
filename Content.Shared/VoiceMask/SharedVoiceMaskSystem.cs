@@ -15,15 +15,17 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly string? Verb;
     public readonly bool Active;
     public readonly bool AccentHide;
-    public readonly string TitleText;
+    public readonly LocId TitleText;
+    public readonly LocId ToggleText;
 
-    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, string titleText)
+    public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide, LocId titleText, LocId toggleText)
     {
         Name = name;
         Verb = verb;
         Active = active;
         AccentHide = accentHide;
         TitleText = titleText;
+        ToggleText = toggleText;
     }
 }
 
