@@ -148,7 +148,7 @@
 
   Once it's battery is full it will produce one xenoborg crystal.
 
-  It drains different amounts of power depending on the voltage.
+  Energy consumption and efficiency vary depending on the voltage.
   - low voltage - 15kW - 1 minute to produce one xenoborg crystal.
   - medium voltage - 60kW - 30 seconds to produce one xenoborg crystal.
   - high voltage - 240kW - 15 seconds to produce one xenoborg crystal.
