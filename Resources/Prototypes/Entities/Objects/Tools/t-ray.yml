@@ -10,15 +10,16 @@
     - state: tray-off
       map: ["base"]
   - type: TrayScanner
+  - type: ItemToggle
   - type: Item
     sprite: Objects/Tools/t-ray.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.TrayScannerVisual.Visual:
+      enum.ToggleableVisuals.Enabled:
         base:
-          On: { state: tray-on }
-          Off: { state: tray-off }
+          True: { state: tray-on }
+          False: { state: tray-off }
   - type: PhysicalComposition
     materialComposition:
       Steel: 400
