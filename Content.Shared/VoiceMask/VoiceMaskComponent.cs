@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.VoiceMask;
 
 /// <summary>
-///     This component is for voice mask items! Adding this component to clothing will give he voice mask UI
+///     This component is for voice mask items & voice-masking entities! Adding this component to clothing will give the voice mask UI
 ///     and allow the wearer to change their voice and verb at will.
-///     Having this on an entity will give it an innate voice masking ability.
+///     Having this on an entity while the IsInnate field is true will give it an innate voice masking ability.
 /// </summary>
 /// <remarks>
 ///     DO NOT use this if you do not want the interface.
@@ -64,7 +64,9 @@ public sealed partial class VoiceMaskComponent : Component
     public bool ChangeIDName = false;
 
     /// <summary>
-    ///     Whether the voice mask is innate to the entity.
+    ///     Whether the voice mask is innate to the entity. 
+    ///     When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to change its voice.
+    ///     When this field is set to false, then the entity with this component will be a provider (either trough implanting or trough wearing) of the voice masking abilities for another entity.
     /// </summary>
     [DataField]
     public bool IsInnate = false;
@@ -74,10 +76,5 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public LocId TitleText = "voice-mask-name-change-window";
-    /// <summary>
-    ///     Is used as the text of the toggle button in the UI window.
-    /// </summary>
-    [DataField]
-    public LocId ToggleText = "voice-mask-name-change-toggle";
 }
 

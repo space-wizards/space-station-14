@@ -33,7 +33,6 @@ changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your curren
 
 # voice mimicry
 changeling-voice-mimic-window-title = Voice Mimicry
-changeling-voice-mimic-window-toggle = Mimic voice
 
 # other
 changeling-paused-map-name = Changeling identity storage map

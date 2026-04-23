@@ -30,7 +30,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-
+    /// <summary>
+    ///  The name of the client-side type that represents the user interface window.
+    ///  Used for innate voice masks, which need to be able to create their own UIs.
+    /// </summary>
     private const string UiGeneratedName = "VoiceMaskBoundUserInterface";
 
     // CCVar.
@@ -62,11 +65,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
-}
+    }
+
     private void OnMapInit(Entity<VoiceMaskComponent> ent, ref MapInitEvent args)
     {
         if (!ent.Comp.IsInnate)
             return;
+        
         _actions.AddAction(ent, ent.Comp.Action);
         _uiSystem.SetUi((ent, null), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
         _identity.QueueIdentityUpdate(ent.Owner);
@@ -85,24 +90,22 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         TransformSpeech(entity, args);
     }
+
     private void OnTransformSpeechInventory(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeechEvent> args)
     {
-        // Innate voice masks can't be used in the inventory (they only affect themselves)
-        if (entity.Comp.IsInnate)
-            return;
         TransformSpeech(entity, args.Args);
     }
+
     private void OnTransformSpeechImplant(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<TransformSpeechEvent> args)
     {
-        // Innate voice masks can't be implanted
-        if (entity.Comp.IsInnate)
-            return;
         TransformSpeech(entity, args.Event);
     }
+
     private void OnInnateTransformSpeakerName(Entity<VoiceMaskComponent> ent, ref TransformSpeakerNameEvent args)
     {
         TransformVoice(ent, args);
     }
+
     private void OnTransformSpeakerNameInventory(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
     {
         TransformVoice(entity, args.Args);
@@ -112,12 +115,15 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         TransformVoice(entity, args.Event);
     }
+
     private void OnInnateSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref SeeIdentityAttemptEvent args)
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
             return;
+        
         args.NameOverride = GetCurrentVoiceName(entity);
     }
+
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active)
@@ -195,8 +201,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-accent-toggle"), entity, args.Actor);
         entity.Comp.AccentHide = !entity.Comp.AccentHide;
-
-        // Same reason of being there as in OnToggle
         UpdateUI(entity);
     }
     #endregion
@@ -205,10 +209,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void OnEquip(EntityUid uid, VoiceMaskComponent component, ClothingGotEquippedEvent args)
     {
         if (_lock.IsLocked(uid))
-            return;
-
-        // Innate voice masks can't be equiped
-        if (component.IsInnate)
             return;
             
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
@@ -231,7 +231,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void UpdateUI(Entity<VoiceMaskComponent> entity)
     {
         if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
-            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active, entity.Comp.AccentHide, entity.Comp.TitleText, entity.Comp.ToggleText));
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active, entity.Comp.AccentHide, entity.Comp.TitleText));
     }
     #endregion
 
