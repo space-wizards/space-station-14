@@ -776,7 +776,7 @@
   id: MaxCapCanister # As of writing canisters currently have about 9000 explosive intensity. 95% the total damage of a syndicate bomb but spread across a larger area.
   categories: [ Debug ]
   name: max cap in a can
-  suffix: DEBUG, Max Cap
+  suffix: Max Cap
   components:
   - type: GasCanister
     air:
