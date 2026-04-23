@@ -255,7 +255,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
-                .Where(p => p.Categories.All(x => IgnoredCategories.Contains(x.ID)))
+                .Where(p => p.Categories.All(x => !IgnoredCategories.Contains(x.ID)))
                 .Select(p => p.ID)
                 .ToList();
 
