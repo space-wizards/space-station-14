@@ -11,14 +11,23 @@ namespace Content.Shared.Kitchen
 
         public void Initialize()
         {
-            Recipes = new List<FoodRecipePrototype>();
-            foreach (var item in _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>())
-            {
-                if (!item.SecretRecipe)
-                    Recipes.Add(item);
-            }
+            ReloadRecipes();
+            _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+        }
 
-            Recipes.Sort(new RecipeComparer());
+        private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+        {
+            if (args.WasModified<FoodRecipePrototype>())
+                ReloadRecipes();
+        }
+
+        private void ReloadRecipes()
+        {
+            Recipes = _prototypeManager
+                .EnumeratePrototypes<FoodRecipePrototype>()
+                .Where(x => !x.SecretRecipe)
+                .OrderByDescending(x => x.IngredientCount())
+                .ToList();
         }
         /// <summary>
         /// Check if a prototype ids appears in any of the recipes that exist.
@@ -26,21 +35,6 @@ namespace Content.Shared.Kitchen
         public bool SolidAppears(string solidId)
         {
             return Recipes.Any(recipe => recipe.IngredientsSolids.ContainsKey(solidId));
-        }
-
-        private sealed class RecipeComparer : Comparer<FoodRecipePrototype>
-        {
-            public override int Compare(FoodRecipePrototype? x, FoodRecipePrototype? y)
-            {
-                if (x == null || y == null)
-                {
-                    return 0;
-                }
-
-                var nx = x.IngredientCount();
-                var ny = y.IngredientCount();
-                return -nx.CompareTo(ny);
-            }
         }
     }
 }

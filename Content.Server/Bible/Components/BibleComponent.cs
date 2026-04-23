@@ -54,6 +54,22 @@ namespace Content.Server.Bible.Components
         [DataField("locPrefix")]
         public string LocPrefix = "bible";
 
+        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ReviveDeadChance;
+
+        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ReviveDeadDamageFraction = 0.99f;
+
+        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool RestoreBloodOnRevive;
+
+        [DataField]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ReviveDeadOncePerBody = true;
+
         /// <summary>
         /// A short light effect to display when successfully healing someone
         /// </summary>

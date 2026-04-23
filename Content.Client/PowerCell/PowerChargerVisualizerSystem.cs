@@ -1,10 +1,33 @@
+using Content.Client.Items;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.PowerCell;
+using Content.Shared.PowerCell.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.PowerCell;
 
 public sealed class PowerChargerVisualizerSystem : VisualizerSystem<PowerChargerVisualsComponent>
 {
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Subs.ItemStatus<PowerCellSlotComponent>(OnCollectPowerCellStatus);
+    }
+
+    private Control? OnCollectPowerCellStatus(Entity<PowerCellSlotComponent> ent)
+    {
+        if (MetaData(ent).EntityPrototype?.ID != "WireBrushElectrical")
+            return null;
+
+        return new WireBrushPowerCellStatusControl(ent, _powerCell, _battery);
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, PowerChargerVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
