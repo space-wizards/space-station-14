@@ -64,9 +64,9 @@ public sealed partial class VoiceMaskComponent : Component
     public bool ChangeIDName = false;
 
     /// <summary>
-    ///     Whether the voice mask is innate to the entity. 
+    ///     Whether the voice mask is innate to the entity.
     ///     When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to change its voice.
-    ///     When this field is set to false, then the entity with this component will be a provider (either trough implanting or trough wearing) of the voice masking abilities for another entity.
+    ///     When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the voice masking abilities for another entity.
     /// </summary>
     [DataField]
     public bool IsInnate = false;
