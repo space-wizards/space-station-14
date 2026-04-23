@@ -18,6 +18,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
     [Dependency] private readonly EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
     [Dependency] private readonly EntityQuery<JitteringComponent> _jitterQuery = default!;
     [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private readonly EntityQuery<StatusEffectComponent> _statusQuery = default!;
 
     private readonly string _jitterAnimationKey = "jittering";
     private readonly string _jitterReturnAnimationKey = "jitteringReturn";
@@ -29,7 +30,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+        SubscribeLocalEvent<JitteringStatusEffectComponent, ComponentStartup>(OnStatusApplied);
 
         SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationComplete);
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRelayedEvent<AnimationCompletedEvent>>(OnRelayAnimationCompleted);
@@ -38,9 +39,10 @@ public sealed class JitteringSystem : SharedJitteringSystem
     #region Subscriptions
 
     // Start the animation
-    private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref ComponentStartup args)
     {
-        StartJitter(args.Target, ent.Comp.Jitter);
+        if (_statusQuery.TryComp(ent, out var status) && status.AppliedTo != null)
+            StartJitter(status.AppliedTo.Value, ent.Comp.Jitter);
     }
     private void OnAnimationComplete(Entity<JitteringComponent> ent, ref AnimationCompletedEvent args)
     {
@@ -117,6 +119,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
         }
 
         var newOffset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
+        newOffset = Vector2.Transform(newOffset, jitter.Matrix);
 
         // If we're in the same quadrant as our current location, invert the offset
         // Reduces repetitive behavior and increases large movements
@@ -128,7 +131,6 @@ public sealed class JitteringSystem : SharedJitteringSystem
             newOffset = -newOffset;
         }
 
-        newOffset = Vector2.Transform(newOffset, jitter.Matrix);
         var length = 1f / jitter.Frequency;
 
         switch (jitter.Type)

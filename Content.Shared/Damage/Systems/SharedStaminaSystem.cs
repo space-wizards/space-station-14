@@ -35,7 +35,6 @@ namespace Content.Shared.Damage.Systems;
 public abstract partial class SharedStaminaSystem : EntitySystem
 {
     public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
-    public static readonly EntProtoId StaminaVisuals = "StatusEffectStaminaVisuals";
 
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
@@ -237,25 +236,24 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SetStaminaAnimation(entity);
     }
 
-    // Here so server can properly tell all clients in PVS range to start the animation
     private void SetStaminaAnimation(Entity<StaminaComponent> entity)
     {
-        DebugTools.Assert(entity.Comp.CritThreshold > entity.Comp.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+        DebugTools.Assert(entity.Comp.CritThreshold > entity.Comp.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was greater than or equal to the crit threshold. This will cause no animation to be played.");
+
+        if (!_status.TryGetStatusEffect(entity, StaminaLow, out var status))
+            return;
 
         // Get the intensity of the jitter
         var intensity = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
                                             (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
                                         0f,
-                                        1f); // The things I do for project 0 warnings
+                                        1f); // The things we do for project 0 warnings
 
         if (intensity == 0f)
         {
-            _status.TryRemoveStatusEffect(entity, StaminaVisuals);
+            _jitter.RemoveJitter(status.Value);
             return;
         }
-
-        if (!_status.TrySetStatusEffectDuration(entity, StaminaVisuals, out var statusEnt))
-            return;
 
         // intensify the base jitter
         var newJitter = entity.Comp.BaseJitter;
@@ -263,7 +261,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         newJitter.MinRadius = entity.Comp.BaseJitter.MinRadius * intensity * entity.Comp.RadiusScalar;
         newJitter.MaxRadius = entity.Comp.BaseJitter.MaxRadius * intensity * entity.Comp.RadiusScalar;
 
-        _jitter.AdjustJitter(statusEnt.Value, newJitter);
+        _jitter.AdjustJitter(status.Value, newJitter);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
@@ -333,7 +331,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         UpdateStaminaVisuals((uid, component));
 
         // Checking if the stamina damage has decreased to zero after exiting the stamcrit
-        if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
+        if (oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
             component.AfterCritical = false; // Since the recovery from the crit has been completed, we are no longer 'after crit'
             _status.TryRemoveStatusEffect(uid, StaminaLow);

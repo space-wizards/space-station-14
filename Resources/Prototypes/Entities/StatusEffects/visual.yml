@@ -67,19 +67,15 @@
   id: StatusEffectVentHordeJitter
 
 - type: entity
-  parent: StatusEffectBaseJitter
-  id: StatusEffectStaminaVisuals
-
-- type: entity
-  parent: StatusEffectBaseJitter
+  parent: StatusEffectFastJitter
   id: StatusEffectActiveBiomassReclaimer
   components:
   - type: JitteringStatusEffect # Quickly side to side
     jitter:
-      frequency: 10
-      maxRadius: 0.05
-      minRadius: 0.05
-      matrixY: 0, 0
+      frequency: 15
+      maxRadius: 0.04
+      minRadius: 0.03
+      matrixY: 0, 0.05
 
 - type: entity
   parent: StatusEffectBaseJitter
@@ -87,10 +83,11 @@
   components:
   - type: JitteringStatusEffect # Quickly up and down
     jitter:
-      frequency: 10
-      maxRadius: 0.08
+      frequency: 15
+      maxRadius: 0.05
       minRadius: 0.04
       matrixX: 0.4, 0
+      type: Arch
 
 - type: entity
   parent: StatusEffectBaseJitter
