@@ -120,7 +120,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         if (healthy.Count == 1) // Only one human left. spooky
             _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
 
-        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieCburnCallPercentage && !zombieRuleComponent.CburnCalled)
+        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !zombieRuleComponent.CburnCalled)
         {
             foreach (var station in _station.GetStations())
             {

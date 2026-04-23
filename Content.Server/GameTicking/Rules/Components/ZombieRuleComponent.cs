@@ -21,19 +21,13 @@ public sealed partial class ZombieRuleComponent : Component
     public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// After this amount of the crew become zombies, the shuttle will be automatically called.
+    /// After this amount of the crew become zombies, the shuttle will be automatically called, and a CBURN squad will spawn as reinforcement.
     /// </summary>
     [DataField]
-    public float ZombieShuttleCallPercentage = 0.9f;
+    public float ZombieShuttleCallPercentage = 0.7f;
 
-    /// <summary>
-    /// After this amount of the crew becomes zombies, a CBURN squad will be automatically dispatched.
-    /// </summary>
-    [DataField]
-    public float ZombieCburnCallPercentage = 0.6f;
-
-    /// <summary>
-    /// The CBURN squad game rule that is dispatched when `ZombieCburnCallPercentage` is reached.
+     /// <summary>
+    /// The CBURN squad game rule that is sppawned when `ZombieShuttleCallPercentage` is reached.
     /// </summary>
     [DataField]
     public EntProtoId CburnGameRule = "CburnSquad";
