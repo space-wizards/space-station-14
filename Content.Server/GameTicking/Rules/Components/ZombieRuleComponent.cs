@@ -24,5 +24,22 @@ public sealed partial class ZombieRuleComponent : Component
     /// After this amount of the crew become zombies, the shuttle will be automatically called.
     /// </summary>
     [DataField]
-    public float ZombieShuttleCallPercentage = 0.7f;
+    public float ZombieShuttleCallPercentage = 0.9f;
+
+    /// <summary>
+    /// After this amount of the crew becomes zombies, a CBURN squad will be automatically dispatched.
+    /// </summary>
+    [DataField]
+    public float ZombieCburnCallPercentage = 0.6f;
+
+    /// <summary>
+    /// The CBURN squad game rule that is dispatched when `ZombieCburnCallPercentage` is reached.
+    /// </summary>
+    [DataField]
+    public EntProtoId CburnGameRule = "CburnSquad";
+
+    /// <summary>
+    /// Tracks wether a CBURN squad has been called.
+    /// </summary>
+    public bool CburnCalled = false;
 }

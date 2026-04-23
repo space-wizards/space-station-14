@@ -35,6 +35,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
 
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -117,6 +119,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var healthy = GetHealthyHumans();
         if (healthy.Count == 1) // Only one human left. spooky
             _popup.PopupEntity(Loc.GetString("zombie-alone"), healthy[0], healthy[0]);
+
+        if (GetInfectedFraction(false) > zombieRuleComponent.ZombieCburnCallPercentage && !zombieRuleComponent.CburnCalled)
+        {
+            foreach (var station in _station.GetStations())
+            {
+                _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-cburn-call"), colorOverride: Color.Blue);
+            }
+            // TODO: call CBURN itself
+            _gameTicker.StartGameRule(zombieRuleComponent.CburnGameRule);
+            // we don't want two CBURN squads!
+            zombieRuleComponent.CburnCalled = true;
+        }
 
         if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
         {
