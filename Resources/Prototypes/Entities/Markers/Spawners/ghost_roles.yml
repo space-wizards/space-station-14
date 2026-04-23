@@ -92,6 +92,7 @@
   components:
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
+    guideEntry: NuclearOperatives
     mindRoles:
     - MindRoleNukeops
     raffle:
@@ -114,6 +115,7 @@
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
+    guideEntry: NuclearOperatives
     mindRoles:
     - MindRoleLoneops
   - type: Sprite
@@ -132,6 +134,7 @@
     name: roles-antag-nuclear-operative-commander-name
     description: roles-antag-nuclear-operative-commander-objective
     rules: ghost-role-information-rules-default-team-antagonist
+    guideEntry: NuclearOperatives
     mindRoles:
     - MindRoleNukeopsCommander
 
@@ -144,6 +147,7 @@
     name: roles-antag-nuclear-operative-agent-name
     description: roles-antag-nuclear-operative-agent-objective
     rules: ghost-role-information-rules-default-team-antagonist
+    guideEntry: NuclearOperatives
     mindRoles:
     - MindRoleNukeopsMedic
 
@@ -156,6 +160,7 @@
     name: roles-antag-nuclear-operative-name
     description: roles-antag-nuclear-operative-objective
     rules: ghost-role-information-rules-default-team-antagonist
+    guideEntry: NuclearOperatives
     mindRoles:
     - MindRoleNukeops
 
@@ -168,6 +173,7 @@
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
+    guideEntry: SpaceDragon
     mindRoles:
     - MindRoleDragon
   - type: Sprite
@@ -263,6 +269,7 @@
     name: ghost-role-information-mothership-core-name
     description: ghost-role-information-mothership-core-desc
     rules: ghost-role-information-silicon-rules
+    guideEntry: Xenoborgs
     mindRoles:
     - MindRoleMothershipCore
   - type: Sprite
@@ -285,6 +292,7 @@
     name: ghost-role-information-xenoborg-name
     description: ghost-role-information-xenoborg-desc
     rules: ghost-role-information-silicon-rules
+    guideEntry: Xenoborgs
     mindRoles:
     - MindRoleXenoborg
   - type: Sprite
@@ -353,6 +361,7 @@
     name: ghost-role-information-wizard-name
     description: ghost-role-information-wizard-desc
     rules: ghost-role-information-antagonist-rules
+    guideEntry: Wizard
     mindRoles:
     - MindRoleWizard
     raffle:
