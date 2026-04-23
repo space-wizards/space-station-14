@@ -29,12 +29,4 @@ public sealed class RecipeManager
             .OrderByDescending(x => x.IngredientCount())
             .ToList();
     }
-
-    /// <summary>
-    /// Check if a prototype ids appears in any of the recipes that exist.
-    /// </summary>
-    public bool SolidAppears(string solidId)
-    {
-        return Recipes.Any(recipe => recipe.IngredientsSolids.ContainsKey(solidId));
-    }
 }
