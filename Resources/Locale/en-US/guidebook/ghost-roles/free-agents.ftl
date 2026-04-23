@@ -5,10 +5,10 @@ ghost-role-rules-embed-not-allowed-header = Not Allowed
 
 # Skeletons
 ghost-role-rules-free-agent-skeletons-allowed =
-    - Killing people who look at you funny
+    - Killing anybody because you feel like it
     - Teaming with traitors, nukies, Dragon, etc.
 ghost-role-rules-free-agent-skeletons-not-allowed =
-    - Round removing crew
+    - Round removing crew for no reason
     - Sabotauging power sources (Loose, TEG, AME)
     - Plasma/Trit flooding
 
@@ -57,7 +57,6 @@ ghost-role-rules-free-agent-artifact-not-allowed =
 
 # Station Pets
 ghost-role-rules-pets-allowed =
-    - N/A
     - Attack crew in self defense or if threatened
 ghost-role-rules-pets-not-allowed =
     - Act like a free agent

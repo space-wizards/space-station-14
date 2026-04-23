@@ -23,11 +23,11 @@ ghost-role-rules-zombies-not-allowed =
 # Revolutionaries
 ghost-role-rules-revolutionaries-allowed =
     - Convert command / sec (instead of killing or gibbing)
-    - Order your minions to suicide bomb somewhere to progress your objectives
-    - Sacrifice a minion to keep your cover
+    - Order revolutionaries to suicide bomb somewhere to progress your objectives
+    - Sacrifice revolutionaries to keep your cover
     - Team up with lesser threats (Xenoborgs, Ninja)
 ghost-role-rules-revolutionaries-not-allowed =
-    - Order your minions to round remove themselves for no reason
+    - Order revolutionaries to round remove themselves for no reason
     - Loose, or order a loose
     - Trit / Plasma flood without directive from Headrev
     - Team up with station destroying threats (Nukies, Dragon)
