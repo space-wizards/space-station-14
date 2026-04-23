@@ -2,7 +2,7 @@
 ghost-role-rules-traitors-allowed =
     - Team up with Nukies (they can still shoot you)
 ghost-role-rules-traitors-not-allowed =
-    - N/A
+    - Doing a prisoner exchange with a corpse that you are not allowed to RR (they tend to rot before being saved)
 
 # Nuclear Operatives
 ghost-role-rules-nuclear-operatives-allowed =
@@ -34,8 +34,7 @@ ghost-role-rules-revolutionaries-not-allowed =
 
 # Space Ninja
 ghost-role-rules-space-ninja-allowed =
-    - Sabotauge power
-    - Trit / Plasma flood
+    - Teaming with other threats
 ghost-role-rules-space-ninja-not-allowed =
     - Same limitations as traitor without DAGD
 
@@ -49,13 +48,14 @@ ghost-role-rules-wizard-not-allowed =
 ghost-role-rules-xenoborgs-allowed =
     - Use cyberbrains instead of crew brains
 ghost-role-rules-xenoborgs-not-allowed =
-    - N/A
+    - Loose
 
 # Space Dragon
 ghost-role-rules-space-dragon-allowed =
     - Teaming with other threats
 ghost-role-rules-space-dragon-not-allowed =
-    - N/A
+    - Loosing
+    - (As Fish) Attacking power sources without directive from Dragon
 
 # Thieves
 ghost-role-rules-thieves-allowed =

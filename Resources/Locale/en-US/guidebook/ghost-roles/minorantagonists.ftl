@@ -18,6 +18,7 @@ ghost-role-rules-rat-king-not-allowed =
 
 # Slimes and Spiders
 ghost-role-rules-angry-mobs-allowed =
-    - Pointing or gesturing to communicate
+    - Pointing or gesturing to communicate with other Mobs
 ghost-role-rules-angry-mobs-not-allowed =
+    - Pointing or gesturing to communicate with crew
     - Become a pet
