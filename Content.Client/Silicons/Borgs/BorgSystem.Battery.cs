@@ -13,16 +13,11 @@ public sealed partial class BorgSystem
     // Don't put this on the component because we only need to track the time for a single entity
     // and we don't want to TryComp it every single tick.
     private TimeSpan _nextAlertUpdate = TimeSpan.Zero;
-    private EntityQuery<BorgChassisComponent> _chassisQuery;
-    private EntityQuery<PowerCellSlotComponent> _slotQuery;
 
     public void InitializeBattery()
     {
         SubscribeLocalEvent<BorgChassisComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<BorgChassisComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-
-        _chassisQuery = GetEntityQuery<BorgChassisComponent>();
-        _slotQuery = GetEntityQuery<PowerCellSlotComponent>();
     }
 
     private void OnPlayerAttached(Entity<BorgChassisComponent> ent, ref LocalPlayerAttachedEvent args)

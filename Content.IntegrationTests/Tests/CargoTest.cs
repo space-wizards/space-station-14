@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
@@ -17,7 +18,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class CargoTest
+public sealed class CargoTest : GameTest
 {
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
@@ -28,7 +29,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -54,13 +55,11 @@ public sealed class CargoTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
     [Test]
     public async Task NoCargoBountyArbitrageTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -94,14 +93,12 @@ public sealed class CargoTest
 
             mapSystem.DeleteMap(mapId);
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var protoManager = server.ProtoMan;
@@ -133,8 +130,6 @@ public sealed class CargoTest
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -144,7 +139,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -209,8 +204,6 @@ public sealed class CargoTest
             }
             mapSystem.DeleteMap(mapId);
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [TestPrototypes]
@@ -233,7 +226,7 @@ public sealed class CargoTest
     [Test]
     public async Task StackPrice()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var entManager = server.ResolveDependency<IEntityManager>();
 
@@ -245,14 +238,12 @@ public sealed class CargoTest
             var price = priceSystem.GetPrice(ent);
             Assert.That(price, Is.EqualTo(100.0));
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task MobPrice()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
 
         var componentFactory = pair.Server.ResolveDependency<IComponentFactory>();
 
@@ -266,7 +257,5 @@ public sealed class CargoTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }
