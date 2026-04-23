@@ -125,7 +125,7 @@
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
     rules: ghost-role-information-nonantagonist-rules
-    guideEntry: AngrMobs
+    guideEntry: AngryMobs
     raffle:
       settings: short
   - type: Speech
