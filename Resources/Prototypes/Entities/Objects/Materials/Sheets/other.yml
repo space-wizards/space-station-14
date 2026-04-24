@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: BaseSheet
   id: SheetOtherBase
   description: A sheet of material, used often on the station in various applications.
   components:
@@ -42,7 +42,6 @@
     - paper
     - paper_2
     - paper_3
-  - type: Material
   - type: PhysicalComposition
     materialComposition:
       Paper: 100
@@ -53,16 +52,11 @@
       map: ["base"]
   - type: Item
     heldPrefix: paper
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: paper
-  - type: SolutionContainerManager
-    solutions:
-      paper:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 3
-
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cellulose
+        Quantity: 5
 
 - type: entity
   parent: SheetPaper
@@ -81,7 +75,6 @@
   name: plasma
   suffix: Full
   components:
-  - type: Material
   - type: PhysicalComposition
     materialComposition:
       Plasma: 100
@@ -99,16 +92,11 @@
       map: ["base"]
   - type: Item
     heldPrefix: plasma
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: plasma
-  - type: SolutionContainerManager
-    solutions:
-      plasma:
-        reagents:
-        - ReagentId: Plasma
-          Quantity: 10
-        canReact: false
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Plasma
+        Quantity: 10
 
 - type: entity
   parent: SheetPlasma
@@ -142,7 +130,6 @@
     - Plastic
     - Sheet
     - ConstructionMaterial
-  - type: Material
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
@@ -160,18 +147,13 @@
       map: ["base"]
   - type: Item
     heldPrefix: plastic
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: plastic
-  - type: SolutionContainerManager
-    solutions:
-      plastic:
-        reagents:
-        - ReagentId: Oil
-          Quantity: 5
-        - ReagentId: Phosphorus
-          Quantity: 5
-        canReact: false
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Oil
+        Quantity: 5
+      - ReagentId: Phosphorus
+        Quantity: 5
 
 - type: entity
   parent: SheetPlastic
@@ -196,14 +178,14 @@
     count: 1
 
 - type: entity
-  parent: [SheetOtherBase, EdibleBase]
+  parent: [SheetOtherBase, FoodBase]
   id: SheetUranium
   name: uranium
   suffix: Full
   components:
-  - type: Material
   - type: Edible
     transferAmount: 10
+    solution: composite
   - type: BadFood
   - type: PhysicalComposition
     materialComposition:
@@ -220,20 +202,15 @@
     layers:
     - state: uranium_3
       map: ["base"]
-  - type: Appearance
   - type: Item
     heldPrefix: uranium
-  - type: Extractable
-    grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Uranium
-          Quantity: 8
-        - ReagentId: Radium
-          Quantity: 2
-        canReact: false
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 8
+      - ReagentId: Radium
+        Quantity: 2
 
 - type: entity
   parent: SheetUranium
@@ -272,17 +249,13 @@
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
-    - type: Extractable
-      grindableSolutionName: meatsheet
-    - type: SolutionContainerManager
-      solutions:
-        meatsheet:
-          reagents:
-          - ReagentId: Protein
-            Quantity: 7
-          - ReagentId: Fat
-            Quantity: 3
-          canReact: false
+    - type: Solution
+      solution:
+        reagents:
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   parent: MaterialSheetMeat
