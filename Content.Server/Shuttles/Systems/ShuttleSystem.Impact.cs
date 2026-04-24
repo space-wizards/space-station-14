@@ -2,14 +2,11 @@ using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
-using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -43,8 +40,8 @@ public sealed partial class ShuttleSystem
     private float _platingMass;
 
     private const float _sparkChance = 0.2f;
-    // shuttle mass to consider the neutral point for inertia scaling
-    private const float _baseShuttleMass = 50f;
+    // shuttle mass to consider the neutral point for inertia scaling: 100 tiles at standard weight
+    private const float _baseShuttleMass = 100f * TileDensityMultiplier;
     // exists primarily for optimisation so not a cvar
     private const float _minImpulseVelocity = 0.07f;
     // high-speed collisions tend to be a series of increasingly smaller collisions so don't spam admin logs

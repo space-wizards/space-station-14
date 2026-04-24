@@ -216,7 +216,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MinimumImpactInertia =
-        CVarDef.Create("shuttle.impact.minimum_inertia", 5f * 50f, CVar.SERVERONLY); // 100tile grid (cargo shuttle) going at 5 m/s
+        CVarDef.Create("shuttle.impact.minimum_inertia", 5f * 80000f, CVar.SERVERONLY); // 100tile grid (cargo shuttle) at 800 kg/tile going at 5 m/s
 
     /// <summary>
     /// Minimum velocity difference between 2 bodies for a shuttle impact to be guaranteed to trigger any special behaviors like damage.
@@ -230,7 +230,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> TileBreakEnergyMultiplier =
-        CVarDef.Create("shuttle.impact.tile_break_energy", 240000f, CVar.SERVERONLY);  //SLAM-TODO: Ensure this value matches old behavior, because of changed grid density.
+        CVarDef.Create("shuttle.impact.tile_break_energy", 3000f, CVar.SERVERONLY);
 
     /// <summary>
     /// Multiplier of damage done to entities on colliding areas
