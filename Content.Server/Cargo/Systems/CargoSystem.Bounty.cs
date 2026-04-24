@@ -126,15 +126,7 @@ public sealed partial class CargoSystem
                 continue;
             var targetStatus = args.Status;
             var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
-            var newData = new CargoBountyData
-            {
-                Id = bounty.Id,
-                Bounty = bounty.Bounty,
-                ClaimedBy = bounty.ClaimedBy,
-                Status = status?.ID ?? "Undelivered"
-            };
-
-            bountyDbComp.Bounties[i] = newData;
+            bountyDbComp.Bounties[i] = bounty with { Status = status?.ID ?? "Undelivered"};;
         }
 
         _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
@@ -161,16 +153,7 @@ public sealed partial class CargoSystem
             {
                 name = Loc.GetString("bounty-console-claimed-by-unknown");
             }
-
-            var newData = new CargoBountyData
-            {
-                Id = bounty.Id,
-                Bounty = bounty.Bounty,
-                ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name,
-                Status = bounty.Status,
-            };
-
-            bountyDbComp.Bounties[i] = newData;
+            bountyDbComp.Bounties[i] = bounty with { ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name};
         }
 
         _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));

@@ -19,19 +19,16 @@ bounty-console-status-label = Status: {$status ->
         [OnShuttle] [color=limegreen]On Shuttle[/color]
         [Waiting] Waiting
         [Undelivered] [color=orange]Undelivered[/color]
-        *[other] {$status}
     }
 bounty-console-status = {$status ->
         [OnShuttle] On Shuttle
         [Waiting] Waiting
         [Undelivered] Undelivered
-        *[other] {$status}
     }
 bounty-console-status-tooltip = {$status ->
     [OnShuttle] This bounty is on the shuttle, ready to be delivered to the trade station
     [Waiting] This bounty is waiting to be fulfilled
     [Undelivered] This bounty has not yet been sent out for fulfilment
-    *[other] {$status}
     }
 bounty-console-id-label = ID#{$id}
 

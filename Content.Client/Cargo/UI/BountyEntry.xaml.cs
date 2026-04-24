@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-
 namespace Content.Client.Cargo.UI;
 
 [GenerateTypedNameReferences]
@@ -49,13 +48,15 @@ public sealed partial class BountyEntry : BoxContainer
         SkipButton.OnPressed += _ => OnSkipButtonPressed?.Invoke();
 
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
-        foreach(var status in _prototype.EnumeratePrototypes<CargoBountyStatusPrototype>())
+        var states = new List<CargoBountyStatusPrototype>(_prototype.EnumeratePrototypes<CargoBountyStatusPrototype>());
+        states.Sort((a, b) => a.Index.CompareTo(b.Index));
+        foreach(var status in states)
         {
             BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)),status.Index);
-            if (bounty.Status==status.ID){
-                BountyStatusSelector.Select(BountyStatusSelector.GetIdx(status.Index));
-            }
         }
+        if (!_prototype.Resolve<CargoBountyStatusPrototype>(bounty.Status, out var bountyStatusPrototype))
+            return;
+        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusPrototype.Index));
         BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bounty.Status));
 
         var claimedByText = string.IsNullOrEmpty(bounty.ClaimedBy) ? Loc.GetString("bounty-console-claimed-by-none") : bounty.ClaimedBy;
