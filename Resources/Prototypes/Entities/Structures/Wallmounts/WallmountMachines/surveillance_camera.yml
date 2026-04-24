@@ -12,7 +12,7 @@
       light:
         shape:
           !type:PhysShapeCircle
-          radius: 5
+          radius: 0.5
         hard: false
         mask:
         - GhostImpassable
@@ -25,7 +25,8 @@
         - None
         layer:
         - TabletopMachineLayer
-  - type: LightOnCollide
+  - type: CameraActiveOnCollide
+    requiresPower: false # TODO: Change this when AI can no longer see via unpowered cameras
   - type: PointLight
     enabled: false
     radius: 5
@@ -49,6 +50,8 @@
     layoutId: SurveillanceCamera
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Sprite
     sprite: Structures/Wallmounts/camera.rsi
     layers:
@@ -231,8 +234,9 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Sprite
       drawdepth: WallMountedItems
       sprite: Structures/Wallmounts/camera.rsi

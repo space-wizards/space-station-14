@@ -53,7 +53,7 @@ public sealed class TriggerOnEquipmentSystem : TriggerOnXSystem
         if ((ent.Comp.SlotFlags & args.SlotFlags) == 0)
             return;
 
-        Trigger.Trigger(ent.Owner, args.Equipee, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.EquipTarget, ent.Comp.KeyOut);
     }
 
     private void OnGotUnequipped(Entity<TriggerOnGotUnequippedComponent> ent, ref GotUnequippedEvent args)
@@ -64,6 +64,6 @@ public sealed class TriggerOnEquipmentSystem : TriggerOnXSystem
         if ((ent.Comp.SlotFlags & args.SlotFlags) == 0)
             return;
 
-        Trigger.Trigger(ent.Owner, args.Equipee, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.EquipTarget, ent.Comp.KeyOut);
     }
 }
