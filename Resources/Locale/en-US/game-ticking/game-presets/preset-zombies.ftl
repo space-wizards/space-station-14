@@ -35,4 +35,4 @@ zombie-round-end-survivor-count = {$count ->
 zombie-round-end-user-was-survivor = - [color=White]{$name}[/color] ([color=gray]{$username}[/color]) survived the outbreak.
 
 # todo: do a nukie-like station name (e.g. station Dev is currently enduring[...])
-cburn-welcome = You are a CentComm Quarantine Officer, a member of one of Nanotransen's elite CBURN squads. A highly contagious pathogen has appeared on station <STATION NAME HERE>, and an evacuation shuttle has been called. The infected must not make it to Central Command. Recover any remaining healthy personnel. Good luck.
+cburn-welcome = You are a CentComm Quarantine Officer, a member of one of Nanotransen's elite CBURN squads. A highly contagious pathogen has appeared on station <STATION NAME HERE>, and an evacuation shuttle has been called. The infected must not make it to Central Command. You may recover any remaining healthy personnel. Good luck.
