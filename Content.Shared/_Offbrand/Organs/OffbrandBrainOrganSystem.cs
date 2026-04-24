@@ -34,7 +34,7 @@ public sealed class OffbrandBrainOrganSystem : EntitySystem
         var damage = Comp<DamageableOrganComponent>(ent);
         args.Args = args.Args with
         {
-            Tone = 1f - ent.Comp.VascularToneCurve.Clamped(damage.Damage.Float() / damage.MaxDamage.Float()),
+            Tone = ent.Comp.VascularToneCurve.Clamped(damage.Damage.Float() / damage.MaxDamage.Float()),
         };
     }
 }

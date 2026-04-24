@@ -32,8 +32,8 @@
     vascularToneCurve:
       !type:LogisticCurve
       l: 1.1
-      k: -7.5
-      x0: 3
+      k: -10
+      x0: 6
   - type: DamageableOrgan
     maxDamage: 100
     damage: 0
