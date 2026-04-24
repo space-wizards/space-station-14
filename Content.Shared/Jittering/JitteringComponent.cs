@@ -10,7 +10,9 @@ namespace Content.Shared.Jittering;
 /// Should only be applied by <see cref="JitteringStatusEffectComponent"/>.
 /// </summary>
 /// <remarks>
-/// Removing this component requires either animation deltas or better container system prediction, or both.
+/// This component breaks best practices for status effects, ideally it does not exist.
+/// It's required for now due to prediction sometimes falsely raising
+/// StatusEffectRemovedEvent by removing the status effect from its container before the effect is properly done.
 /// </remarks>
 [RegisterComponent, Access(typeof(SharedJitteringSystem))]
 public sealed partial class JitteringComponent : Component
