@@ -8,13 +8,13 @@ public sealed partial class GasFilterComponent : Component
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
-    [DataField]
+    [DataField("inlet")]
     public string InletName = "inlet";
 
-    [DataField]
+    [DataField("filter")]
     public string FilterName = "filter";
 
-    [DataField]
+    [DataField("outlet")]
     public string OutletName = "outlet";
 
     [DataField, AutoNetworkedField]

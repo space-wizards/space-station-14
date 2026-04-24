@@ -119,7 +119,7 @@ public sealed class GasMixerSystem : SharedGasMixerSystem
         Dirty(ent);
         UpdateAppearance(ent);
         _ambientSoundSystem.SetAmbience(ent.Owner, false);
-        _ui.CloseUi(ent.Owner, GasFilterUiKey.Key);
+        _ui.CloseUi(ent.Owner, GasMixerUiKey.Key);
     }
 
     /// <summary>

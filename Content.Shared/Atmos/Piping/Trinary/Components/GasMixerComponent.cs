@@ -9,13 +9,13 @@ public sealed partial class GasMixerComponent : Component
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
-    [ViewVariables]
+    [DataField("inletOne")]
     public string InletOneName = "inletOne";
 
-    [ViewVariables]
+    [DataField("inletTwo")]
     public string InletTwoName = "inletTwo";
 
-    [ViewVariables]
+    [DataField("outlet")]
     public string OutletName = "outlet";
 
     [DataField, AutoNetworkedField]

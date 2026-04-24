@@ -32,6 +32,8 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
         _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
         _window.MixerOutputPressureChanged += OnMixerOutputPressurePressed;
         _window.MixerNodePercentageChanged += OnMixerSetPercentagePressed;
+
+        Update();
     }
 
     private void OnToggleStatusButtonPressed(bool status)
