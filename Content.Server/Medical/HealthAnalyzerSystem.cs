@@ -24,7 +24,6 @@ public sealed class HealthAnalyzerSystem : AbstractAnalyzerSystem<HealthAnalyzer
 
     /// <inheritdoc/>
     public override void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
-
     {
         if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key)
             || !HasComp<DamageableComponent>(target))
