@@ -2,7 +2,6 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-
 namespace Content.Client.Cargo.BUI;
 
 [UsedImplicitly]

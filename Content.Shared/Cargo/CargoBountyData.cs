@@ -10,6 +10,7 @@ namespace Content.Shared.Cargo;
 [DataDefinition, NetSerializable, Serializable]
 public readonly partial record struct CargoBountyData
 {
+
     /// <summary>
     /// A unique id used to identify the bounty
     /// </summary>
@@ -23,22 +24,20 @@ public readonly partial record struct CargoBountyData
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
+    [DataField]
+    public string ClaimedBy { get; init; } = string.Empty;
+
+    [DataField]
+    public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = "Undelivered";
+
+
     public CargoBountyData(CargoBountyPrototype bounty, int uniqueIdentifier)
     {
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
     }
 
-    [DataField]
-    public string ClaimedBy { get; init; } = string.Empty;
 
-    [DataField]
-    public CargoBountyStatus Status { get; init; } = CargoBountyStatus.Undelivered;
-}
 
-public enum CargoBountyStatus
-{
-    Undelivered,
-    Waiting,
-    OnShuttle,
+
 }

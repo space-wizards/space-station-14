@@ -49,15 +49,18 @@ public sealed partial class BountyEntry : BoxContainer
         SkipButton.OnPressed += _ => OnSkipButtonPressed?.Invoke();
 
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
-        BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", 0)), 0);
-        BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", 1)), 1);
-        BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", 2)), 2);
-        BountyStatusSelector.Select((int) bounty.Status);
-        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", (int) bounty.Status));
+        foreach(var status in _prototype.EnumeratePrototypes<CargoBountyStatusPrototype>())
+        {
+            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)),status.Index);
+            if (bounty.Status==status.ID){
+                BountyStatusSelector.Select(BountyStatusSelector.GetIdx(status.Index));
+            }
+        }
+        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bounty.Status));
 
         var claimedByText = string.IsNullOrEmpty(bounty.ClaimedBy) ? Loc.GetString("bounty-console-claimed-by-none") : bounty.ClaimedBy;
         ClaimedBylabel.SetMarkup(Loc.GetString("bounty-console-claimed-by", ("claimant", claimedByText)));
-        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", (int) bounty.Status)));
+        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bounty.Status)));
     }
 
     private void UpdateSkipButton(float deltaSeconds)

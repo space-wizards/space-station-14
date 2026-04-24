@@ -124,13 +124,14 @@ public sealed partial class CargoSystem
 
             if (bounty.Id != args.BountyId)
                 continue;
-
+            var targetStatus = args.Status;
+            var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
             var newData = new CargoBountyData
             {
                 Id = bounty.Id,
                 Bounty = bounty.Bounty,
                 ClaimedBy = bounty.ClaimedBy,
-                Status = (CargoBountyStatus)args.Status,
+                Status = status?.ID ?? "Undelivered"
             };
 
             bountyDbComp.Bounties[i] = newData;
