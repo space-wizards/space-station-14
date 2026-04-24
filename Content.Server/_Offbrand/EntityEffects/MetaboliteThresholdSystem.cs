@@ -12,7 +12,6 @@ namespace Content.Server._Offbrand.EntityEffects;
 
 public sealed class MetaboliteThresholdEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetaboliteThresholdCondition>
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
 
     private static readonly ProtoId<MetabolismStagePrototype> MetabolitesStage = "Metabolites";

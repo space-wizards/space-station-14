@@ -41,7 +41,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    // [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!; // Offbrand - we don't need this
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
