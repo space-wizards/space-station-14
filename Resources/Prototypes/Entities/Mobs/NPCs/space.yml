@@ -304,7 +304,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        45: Dead
+        30: Dead
     - type: Stamina
       baseCritThreshold: 150
     - type: DamageStateVisuals
@@ -347,8 +347,8 @@
       animation: WeaponArcBite
       damage:
         types:
-          Piercing: 6
-          Poison: 4
+          Piercing: 4
+          Poison: 3
     - type: SolutionContainerManager
       solutions:
         melee:

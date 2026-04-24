@@ -402,7 +402,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 5
+        Piercing: 3
   - type: SolutionContainerManager
     solutions:
       melee:

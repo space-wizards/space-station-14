@@ -2516,7 +2516,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Dead
+      50: Dead
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -2642,7 +2642,7 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 6
+        Piercing: 4
 
 - type: entity
   parent:
@@ -2677,7 +2677,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        180: Dead
+        90: Dead
     - type: Spider
       webPrototype: SpiderWebClown
     - type: MeleeWeapon
@@ -2688,7 +2688,7 @@
         path: /Audio/Effects/bite.ogg
       damage:
         types:
-          Piercing: 8
+          Piercing: 6
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast

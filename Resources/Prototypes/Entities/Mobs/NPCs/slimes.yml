@@ -25,7 +25,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 4
@@ -96,9 +96,9 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Blunt: 6
+        Blunt: 4
         Structural: 4
-        Caustic: 4
+        Caustic: 3
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-slimes
@@ -186,10 +186,10 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 6
+          Blunt: 4
           Structural: 4
           Caustic: 1
-          Poison: 4
+          Poison: 3
 
 - type: entity
   name: green slime
@@ -226,9 +226,9 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 6
+          Blunt: 4
           Structural: 4
-          Caustic: 4
+          Caustic: 3
 
 - type: entity
   name: yellow slime
