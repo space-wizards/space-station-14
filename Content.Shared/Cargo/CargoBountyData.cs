@@ -10,7 +10,6 @@ namespace Content.Shared.Cargo;
 [DataDefinition, NetSerializable, Serializable]
 public readonly partial record struct CargoBountyData
 {
-
     /// <summary>
     /// A unique id used to identify the bounty
     /// </summary>
@@ -35,8 +34,4 @@ public readonly partial record struct CargoBountyData
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
     }
-
-
-
-
 }
