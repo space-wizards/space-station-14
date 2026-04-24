@@ -51,6 +51,8 @@
     flavors:
     - paper
   - type: BadFood
+  - type: Extractable
+    grindableSolutionName: paper
   - type: SolutionContainerManager
     solutions:
       food:
@@ -58,6 +60,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 1
+      paper:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
   - type: Item
     size: Tiny
   - type: PhysicalComposition
