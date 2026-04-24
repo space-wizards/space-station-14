@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Stunnable;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Creatures.TheCreature;
@@ -223,7 +224,7 @@ public sealed class CreatureSystem : EntitySystem
         // Also replenish the creature's own bloodstream (ferrochromic acid) — capped at solution max
         Entity<SolutionComponent>? bloodSolEnt = null;
         if (_solutionContainer.ResolveSolution((uid, null), BloodstreamComponent.DefaultBloodSolutionName, ref bloodSolEnt))
-            _solutionContainer.TryAddReagent(bloodSolEnt.Value, "FerrochromicAcid", FixedPoint2.New(bloodGained), out _);
+            _solutionContainer.TryAddReagent(bloodSolEnt.Value, "FerrochromicAcid", FixedPoint2.New(bloodGained));
     }
 
     private bool IsBloodReagent(string prototypeId)

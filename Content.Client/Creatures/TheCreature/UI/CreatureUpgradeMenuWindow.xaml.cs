@@ -220,7 +220,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         return new RankCellRefs(root, rankLabel, costLabel, ctaLabel, index);
     }
 
-    private void RefreshRow(UpgradeRowState row, int rank, int bloodPool)
+    private void RefreshRow(UpgradeRowState row, int rank, float bloodPool)
     {
         var maxed = rank >= CreatureUpgradeData.MaxRank;
 
@@ -278,7 +278,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         cell.CtaLabel.Visible = true;
     }
 
-    private static void ApplyNextUnaffordable(RankCellRefs cell, int cost, int shortfall)
+    private static void ApplyNextUnaffordable(RankCellRefs cell, int cost, float shortfall)
     {
         cell.Root.StyleBoxOverride = CellBox(NextBg, GoldAccent);
         cell.Root.Disabled = true;
@@ -286,7 +286,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         cell.RankLabel.FontColorOverride = GoldAccent;
         cell.CostLabel.Text = $"{cost}u";
         cell.CostLabel.FontColorOverride = MutedText;
-        cell.CtaLabel.Text = $"NEED {shortfall}u MORE";
+        cell.CtaLabel.Text = $"NEED {shortfall:F2}u MORE";
         cell.CtaLabel.FontColorOverride = MutedText;
         cell.CtaLabel.Visible = true;
     }
