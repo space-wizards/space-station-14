@@ -6,15 +6,15 @@ namespace Content.Shared.Creatures.TheCreature;
 [Serializable, NetSerializable]
 public sealed class CreatureUpgradeMenuBuiState : BoundUserInterfaceState
 {
-    public readonly int BloodPool;
+    public readonly float BloodPool;
     public readonly int MaxBloodPool;
-    public readonly int BloodConsumedTotal;
+    public readonly float BloodConsumedTotal;
     public readonly Dictionary<string, int> UpgradeRanks;
 
     public CreatureUpgradeMenuBuiState(
-        int bloodPool,
+        float bloodPool,
         int maxBloodPool,
-        int bloodConsumedTotal,
+        float bloodConsumedTotal,
         Dictionary<string, int> upgradeRanks)
     {
         BloodPool = bloodPool;

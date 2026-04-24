@@ -4,7 +4,6 @@ namespace Content.Shared.Creatures.TheCreature;
 
 /// <summary>
 ///     Static definitions for all Creature upgrade tracks.
-///     Costs are placeholders — flag for balance pass before ship.
 /// </summary>
 public sealed record CreatureUpgradeData(
     string Id,
@@ -15,47 +14,49 @@ public sealed record CreatureUpgradeData(
 {
     public const int MaxRank = 3;
 
+    // Each upgrade: 100 / 145 / 185 u = 430 u total
+    // 7 upgrades × 430 = 3010 u ≈ 10 full kills to max out
     public static readonly IReadOnlyList<CreatureUpgradeData> All = new[]
     {
         new CreatureUpgradeData(
-            "predator", "Predator's Strike", "ATTACK",
-            new[] { 40, 80, 140 },
+            "predator", "Strike", "ATTACK",
+            new[] { 100, 145, 185 },
             new[]
             {
-                "Melee damage +15%.",
-                "Melee damage +30%.",
-                "Melee damage +50%. Hits apply a brief slow.",
+                "Bite damage +5.",
+                "Bite damage +10.",
+                "Bite damage +15.",
             }),
         new CreatureUpgradeData(
             "quickness", "Quickness", "MOVE",
-            new[] { 35, 75, 130 },
+            new[] { 100, 145, 185 },
             new[]
             {
                 "Move speed +8%.",
                 "Move speed +16%.",
-                "Move speed +25%. Visibility gained per tile reduced.",
+                "Move speed +25%.",
             }),
         new CreatureUpgradeData(
             "shadow", "Shadow", "STEALTH",
-            new[] { 50, 100, 180 },
+            new[] { 100, 145, 185 },
             new[]
             {
-                "Passive visibility decay +25%.",
-                "Passive visibility decay +60%.",
-                "Near-instant decay while standing still.",
+                "Passive fade speed +33%.",
+                "Passive fade speed +80%.",
+                "Passive fade speed +153%.",
             }),
         new CreatureUpgradeData(
             "venom", "Venom", "STING",
-            new[] { 45, 90, 160 },
+            new[] { 100, 145, 185 },
             new[]
             {
-                "Sting stun +0.8s.",
-                "Sting stun +1.6s, sting deals minor damage.",
-                "Sting stun +2.4s, applies bleed.",
+                "Sting stun 8 seconds.",
+                "Sting stun 11 seconds.",
+                "Sting stun 14 seconds.",
             }),
         new CreatureUpgradeData(
             "ravenous", "Ravenous", "FEED",
-            new[] { 55, 110, 200 },
+            new[] { 100, 145, 185 },
             new[]
             {
                 "Drink Blood channel 20% faster.",
@@ -64,21 +65,21 @@ public sealed record CreatureUpgradeData(
             }),
         new CreatureUpgradeData(
             "pry", "Pry Mastery", "PRY",
-            new[] { 30, 70, 150 },
+            new[] { 100, 145, 185 },
             new[]
             {
                 "Door pry 25% faster.",
                 "Door pry 60% faster.",
-                "Near-instant pry; pry sound suppressed.",
+                "Near-instant pry.",
             }),
         new CreatureUpgradeData(
             "ironhide", "Iron Hide", "ARMOR",
-            new[] { 50, 100, 170 },
+            new[] { 100, 145, 185 },
             new[]
             {
                 "All damage taken −10%.",
                 "All damage taken −20%.",
-                "Damage −30%. Drag bodies at full speed.",
+                "All damage taken −30%.",
             }),
     };
 

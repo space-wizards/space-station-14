@@ -53,16 +53,16 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
 
     public void UpdateState(CreatureUpgradeMenuBuiState state)
     {
-        BloodAvailableLabel.Text = state.BloodPool.ToString("D4");
+        BloodAvailableLabel.Text = state.BloodPool.ToString("0000.00");
         BloodFractionLabel.Text =
-            $"{state.BloodPool} / {state.MaxBloodPool} · " +
+            $"{state.BloodPool:F2} / {state.MaxBloodPool} u · " +
             $"{(int)(state.BloodPool * 100f / Math.Max(1, state.MaxBloodPool))}%";
         _bloodVial.SetFill(state.BloodPool / (float)Math.Max(1, state.MaxBloodPool));
 
         var totalRanks = state.UpgradeRanks.Values.Sum();
         var maxRanks   = CreatureUpgradeData.All.Count * CreatureUpgradeData.MaxRank;
 
-        LifetimeLabel.Text  = $"{state.BloodConsumedTotal} ml";
+        LifetimeLabel.Text  = $"{state.BloodConsumedTotal:F2} u";
         MutationsLabel.Text = $"{totalRanks} / {maxRanks}";
         MutationsLabel.FontColorOverride = totalRanks >= maxRanks ? GreenGood : GoldAccent;
 
@@ -199,6 +199,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
             Text = upgrade.Effects[index],
             StyleClasses = { "LabelSubText" },
             HorizontalExpand = true,
+            ClipText = true,
             Margin = new Thickness(0, 4, 0, 0),
         };
         inner.AddChild(effectLabel);
@@ -207,6 +208,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         {
             HorizontalAlignment = HAlignment.Center,
             HorizontalExpand = true,
+            ClipText = true,
             Margin = new Thickness(0, 4, 0, 0),
             Visible = false,
         };
@@ -269,9 +271,9 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         cell.Root.Disabled = false;
         cell.RankLabel.Text = $"▶ RANK {Numerals[cell.Index]}";
         cell.RankLabel.FontColorOverride = GoldAccent;
-        cell.CostLabel.Text = $"{cost}ml";
+        cell.CostLabel.Text = $"{cost}u";
         cell.CostLabel.FontColorOverride = BloodRedText;
-        cell.CtaLabel.Text = $"▸ EVOLVE · {cost}ml";
+        cell.CtaLabel.Text = $"▸ EVOLVE · {cost}u";
         cell.CtaLabel.FontColorOverride = BloodRedText;
         cell.CtaLabel.Visible = true;
     }
@@ -282,9 +284,9 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         cell.Root.Disabled = true;
         cell.RankLabel.Text = $"▶ RANK {Numerals[cell.Index]}";
         cell.RankLabel.FontColorOverride = GoldAccent;
-        cell.CostLabel.Text = $"{cost}ml";
+        cell.CostLabel.Text = $"{cost}u";
         cell.CostLabel.FontColorOverride = MutedText;
-        cell.CtaLabel.Text = $"NEED {shortfall}ml MORE";
+        cell.CtaLabel.Text = $"NEED {shortfall}u MORE";
         cell.CtaLabel.FontColorOverride = MutedText;
         cell.CtaLabel.Visible = true;
     }
@@ -295,7 +297,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         cell.Root.Disabled = true;
         cell.RankLabel.Text = $"▢ RANK {Numerals[cell.Index]}";
         cell.RankLabel.FontColorOverride = MutedText;
-        cell.CostLabel.Text = $"{cost}ml";
+        cell.CostLabel.Text = $"{cost}u";
         cell.CostLabel.FontColorOverride = LockedBorder;
         cell.CtaLabel.Visible = false;
     }

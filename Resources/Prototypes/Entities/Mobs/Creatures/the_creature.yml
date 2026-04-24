@@ -23,6 +23,8 @@
     states:
       Alive:
         Base: enforcer
+      Critical:
+        Base: enforcer_dead
       Dead:
         Base: enforcer_dead
 
@@ -42,10 +44,11 @@
   # ── Biology ───────────────────────────────────────────────────────────────
   - type: SolutionContainerManager
   - type: Bloodstream
+    maxVolumeModifier: 2.0
     bloodReferenceSolution:
       reagents:
       - ReagentId: FerrochromicAcid
-        Quantity: 75
+        Quantity: 300
     bloodlossDamage:
       types:
         Bloodloss: 0.5
@@ -58,14 +61,15 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      400: Critical
+      500: Dead
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 600
       behaviors:
       - !type:GibBehavior { }
   - type: StatusEffects
@@ -80,20 +84,22 @@
   # ── Melee ─────────────────────────────────────────────────────────────────
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Weapons/slash.ogg
+      path: /Audio/Effects/bite.ogg
     angle: 0
-    animation: WeaponArcClaw
+    animation: WeaponArcBite
     damage:
       types:
         Slash: 10
-        Blunt: 5
 
   # ── Stealth ───────────────────────────────────────────────────────────────
   - type: Stealth
-    enabled: false
   - type: StealthOnMove
     passiveVisibilityRate: -0.15
     movementVisibilityRate: 0.15
+
+  # ── Pulling ───────────────────────────────────────────────────────────────
+  - type: Puller
+  - type: Pullable
 
   # ── Prying ────────────────────────────────────────────────────────────────
   - type: Prying
@@ -103,12 +109,8 @@
 
   # ── Creature-specific state ───────────────────────────────────────────────
   - type: Creature
-    bloodPool: 215
+    bloodPool: 0
     maxBloodPool: 400
-    upgradeRanks:
-      predator: 1
-      shadow: 2
-      ravenous: 1
 
   # ── Upgrade menu BUI ──────────────────────────────────────────────────────
   - type: UserInterface
@@ -173,6 +175,4 @@
     damage:
       types:
         Piercing: 1
-  - type: StunOnCollide
-    knockdownAmount: 20
-    drop: false
+  - type: CreatureStingProjectile

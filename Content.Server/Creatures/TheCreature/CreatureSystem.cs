@@ -1,11 +1,17 @@
 using System.Linq;
+using Content.Server.Stunnable;
 using Content.Shared.Actions;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Creatures.TheCreature;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
+using Content.Shared.FixedPoint;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition;
+using Content.Shared.Projectiles;
 using Content.Shared.Prying.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
@@ -23,20 +29,26 @@ public sealed class CreatureSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     // Per-rank multiplier tables (index = rank, 0 = unpurchased)
-    private static readonly float[] AttackMultipliers    = { 1.00f, 1.15f, 1.30f, 1.50f };
-    private static readonly float[] SpeedMultipliers     = { 1.00f, 1.08f, 1.16f, 1.25f };
-    private static readonly float[] ArmorCoefficients    = { 1.00f, 0.90f, 0.80f, 0.70f };
-    private static readonly float[] PassiveDecayRates    = { -0.15f, -0.19f, -0.24f, -1.00f };
-    private static readonly float[] PrySpeedModifiers    = { 1.00f, 0.75f, 0.40f, 0.05f };
+    private static readonly float[] AttackMultipliers = { 1.00f, 1.50f, 2.00f, 2.50f };
+    private static readonly float[] SpeedMultipliers  = { 1.00f, 1.08f, 1.16f, 1.25f };
+    private static readonly float[] ArmorCoefficients = { 1.00f, 0.90f, 0.80f, 0.70f };
+    private static readonly float[] PassiveDecayRates = { -0.15f, -0.20f, -0.27f, -0.38f };
+    private static readonly float[] PrySpeedModifiers = { 1.00f, 0.75f, 0.40f, 0.05f };
+
+    // Sting stun duration per rank: 5s base, +3s per rank
+    private static readonly float[] StingStunSeconds  = { 5f, 8f, 11f, 14f };
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<CreatureComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<CreatureComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         // Action → open upgrade menu
         SubscribeLocalEvent<CreatureComponent, CreatureUpgradeMenuActionEvent>(OnMenuAction);
@@ -53,6 +65,9 @@ public sealed class CreatureSystem : EntitySystem
         SubscribeLocalEvent<CreatureComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<CreatureComponent, DamageModifyEvent>(OnDamageModify);
 
+        // Sting hit — apply rank-scaled knockdown
+        SubscribeLocalEvent<CreatureStingProjectileComponent, ProjectileHitEvent>(OnStingHit);
+
         // Blood feeding
         SubscribeLocalEvent<CreatureComponent, IngestingEvent>(OnCreatureIngesting);
     }
@@ -62,6 +77,12 @@ public sealed class CreatureSystem : EntitySystem
     private void OnMapInit(EntityUid uid, CreatureComponent comp, MapInitEvent args)
     {
         ApplyUpgrades(uid, comp);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, CreatureComponent comp, MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+            _stealth.SetEnabled(uid, false);
     }
 
     // ── BUI ───────────────────────────────────────────────────────────────────
@@ -116,7 +137,7 @@ public sealed class CreatureSystem : EntitySystem
 
     /// <summary>
     ///     Apply all upgrades that need explicit component mutation.
-    ///     Event-based upgrades (attack, armor, speed) are handled by their own subscribers.
+    ///     Event-based upgrades (attack, armor, speed, sting) are handled by their own subscribers.
     /// </summary>
     private void ApplyUpgrades(EntityUid uid, CreatureComponent comp)
     {
@@ -125,9 +146,6 @@ public sealed class CreatureSystem : EntitySystem
 
         comp.UpgradeRanks.TryGetValue("pry", out var pryRank);
         ApplyPryUpgrade(uid, pryRank);
-
-        comp.UpgradeRanks.TryGetValue("sting", out var stingRank);
-        ApplyStingUpgrade(uid, stingRank);
 
         // Movement speed is event-driven but needs an explicit refresh after a rank change.
         _movement.RefreshMovementSpeedModifiers(uid);
@@ -139,8 +157,6 @@ public sealed class CreatureSystem : EntitySystem
             return;
 
         stealthMove.PassiveVisibilityRate = PassiveDecayRates[rank];
-
-        _stealth.SetEnabled(uid, rank >= 1);
     }
 
     private void ApplyPryUpgrade(EntityUid uid, int rank)
@@ -149,14 +165,6 @@ public sealed class CreatureSystem : EntitySystem
             return;
 
         prying.SpeedModifier = PrySpeedModifiers[rank];
-    }
-
-    private void ApplyStingUpgrade(EntityUid uid, int rank)
-    {
-        if (!TryComp<ActionGunComponent>(uid, out var actionGun) || actionGun.ActionEntity is not { } ae)
-            return;
-
-        _actions.SetEnabled(ae, rank >= 1);
     }
 
     // ── Event handlers for runtime upgrade effects ────────────────────────────
@@ -183,23 +191,39 @@ public sealed class CreatureSystem : EntitySystem
         args.ModifySpeed(SpeedMultipliers[rank], SpeedMultipliers[rank]);
     }
 
+    private void OnStingHit(EntityUid uid, CreatureStingProjectileComponent comp, ref ProjectileHitEvent args)
+    {
+        if (args.Shooter is not { } shooter || !TryComp<CreatureComponent>(shooter, out var creature))
+            return;
+
+        creature.UpgradeRanks.TryGetValue("venom", out var rank);
+        var stunTime = TimeSpan.FromSeconds(StingStunSeconds[rank]);
+        _stun.TryKnockdown(args.Target, stunTime, refresh: true, autoStand: true, drop: false, force: true);
+    }
+
     private void OnCreatureIngesting(EntityUid uid, CreatureComponent comp, ref IngestingEvent args)
     {
-        var bloodGained = 0;
+        var bloodGained = 0f;
         foreach (var rq in args.Split.Contents)
         {
             if (IsBloodReagent(rq.Reagent.Prototype))
-                bloodGained += (int) rq.Quantity;
+                bloodGained += (float) rq.Quantity;
         }
 
-        if (bloodGained == 0)
+        if (bloodGained == 0f)
             return;
 
+        // Add to upgrade blood pool resource
         var absorbed = Math.Min(bloodGained, comp.MaxBloodPool - comp.BloodPool);
         comp.BloodPool += absorbed;
         comp.BloodConsumedTotal += absorbed;
         Dirty(uid, comp);
         UpdateBuiState(uid, comp);
+
+        // Also replenish the creature's own bloodstream (ferrochromic acid) — capped at solution max
+        Entity<SolutionComponent>? bloodSolEnt = null;
+        if (_solutionContainer.ResolveSolution((uid, null), BloodstreamComponent.DefaultBloodSolutionName, ref bloodSolEnt))
+            _solutionContainer.TryAddReagent(bloodSolEnt.Value, "FerrochromicAcid", FixedPoint2.New(bloodGained), out _);
     }
 
     private bool IsBloodReagent(string prototypeId)

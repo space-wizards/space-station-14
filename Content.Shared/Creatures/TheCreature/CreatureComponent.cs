@@ -8,9 +8,9 @@ namespace Content.Shared.Creatures.TheCreature;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CreatureComponent : Component
 {
-    /// <summary>Spendable blood right now.</summary>
+    /// <summary>Spendable blood right now. Stored as float to preserve fractional units from impure blood.</summary>
     [DataField, AutoNetworkedField]
-    public int BloodPool = 200;
+    public float BloodPool = 0f;
 
     /// <summary>Current blood pool ceiling.</summary>
     [DataField, AutoNetworkedField]
@@ -18,7 +18,7 @@ public sealed partial class CreatureComponent : Component
 
     /// <summary>Lifetime blood consumed this round (for objective tracking).</summary>
     [DataField, AutoNetworkedField]
-    public int BloodConsumedTotal = 0;
+    public float BloodConsumedTotal = 0f;
 
     /// <summary>Upgrade ID → current rank (0 = unpurchased, max 3).</summary>
     [DataField, AutoNetworkedField]

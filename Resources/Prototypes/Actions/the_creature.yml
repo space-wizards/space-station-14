@@ -14,12 +14,11 @@
   parent: BaseAction
   id: ActionCreatureSting
   name: Venom Spit
-  description: Spit a paralyzing bolt that knocks the target down for 20 seconds.
+  description: Spit a paralyzing bolt that knocks the target down. Stun duration scales with Venom upgrade rank.
   components:
   - type: Action
     icon: { sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi, state: crossbowbolt }
     useDelay: 45
-    enabled: false
     checkCanInteract: false
     itemIconStyle: BigAction
   - type: TargetAction
