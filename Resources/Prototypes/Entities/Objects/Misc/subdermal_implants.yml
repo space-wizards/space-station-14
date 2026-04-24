@@ -158,7 +158,7 @@
     - Syndicate
 
 - type: entity
-  parent: [ BaseSubdermalImplant, StorePresetUplink ]
+  parent: BaseSubdermalImplant
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
