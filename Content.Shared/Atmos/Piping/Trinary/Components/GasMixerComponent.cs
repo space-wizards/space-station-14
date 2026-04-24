@@ -1,7 +1,6 @@
-using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Atmos.Piping.Trinary.Components;
+namespace Content.Shared.Atmos.Piping.Trinary.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 //[Access(typeof(GasMixerSystem))]

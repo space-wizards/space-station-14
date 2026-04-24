@@ -27,10 +27,8 @@ public sealed class GasFilterBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        var atmosSystem = EntMan.System<AtmosphereSystem>();
-
         _window = this.CreateWindow<GasFilterWindow>();
-        _window.PopulateGasList(atmosSystem.Gases);
+        _window.PopulateGasList(_atmosphere.Gases);
 
         _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
         _window.FilterTransferRateChanged += OnFilterTransferRatePressed;
