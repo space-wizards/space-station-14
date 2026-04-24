@@ -1,8 +1,8 @@
 # Traitors
 ghost-role-rules-traitors-allowed =
-    - Team up with Nukies (they can still shoot you)
+    - Team up with Nukies (they can still shoot you - and you are still limited if no DAGD)
 ghost-role-rules-traitors-not-allowed =
-    - Doing a prisoner exchange with a corpse that you are not allowed to RR (they tend to rot before being saved)
+    - N/A
 
 # Nuclear Operatives
 ghost-role-rules-nuclear-operatives-allowed =
