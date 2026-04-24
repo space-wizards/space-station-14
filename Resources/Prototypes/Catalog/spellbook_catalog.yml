@@ -278,6 +278,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookNecromanticStone
+  name: spellbook-necromantic-stone-name
+  description: spellbook-necromantic-stone-description
+  productEntity: RelicNecromanticStone
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts

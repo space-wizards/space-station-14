@@ -24,6 +24,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -67,8 +68,9 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly ExamineSystemShared _examine= default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -449,7 +451,7 @@ public abstract class SharedMagicSystem : EntitySystem
         EntityUid? wand = null;
         foreach (var item in _hands.EnumerateHeld((ev.Performer, handsComp)))
         {
-            if (!_tag.HasTag(item, ev.WandTag))
+            if (!_whitelist.IsWhitelistPass(ev.Whitelist, item))
                 continue;
 
             wand = item;

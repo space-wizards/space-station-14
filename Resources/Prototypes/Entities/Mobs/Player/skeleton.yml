@@ -37,18 +37,18 @@
 
 - type: entity
   parent: MobSkeletonPerson
-  id: MobSkeletonCloset
-  name: closet skeleton
+  id: MobSkeletonSummon
+  name: skeleton
   components:
   - type: GhostRole
-    name: ghost-role-information-closet-skeleton-name
-    description: ghost-role-information-closet-skeleton-description
-    rules: ghost-role-information-freeagent-rules
+    name: ghost-role-information-skeleton-summon-name
+    description: ghost-role-information-skeleton-summon-description
+    rules: ghost-role-information-familiar-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFamiliar
     raffle:
       settings: default
+  # normally the player the skeleton is summoned from will control the skeleton,
+  # but in case they disconnect someone else may take over
   - type: GhostTakeoverAvailable
-  - type: Loadout
-    prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance

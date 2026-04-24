@@ -27,7 +27,7 @@ spellbook-polymorph-rod-name = Rod Polymorph
 spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movement.
 
 spellbook-charge-name = Charge
-spellbook-charge-desc = Adds a charge back to your wand!
+spellbook-charge-desc = Adds a charge back to your wand or relic!
 
 spellbook-ethereal-jaunt-name = Ethereal Jaunt
 spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away from your enemies!
@@ -69,6 +69,9 @@ spellbook-hammer-singularity-description = Ever wonder what it'd be like to be t
 
 spellbook-staff-animation-name = Staff of Animation
 spellbook-staff-animation-description = Bring inanimate objects to life!
+
+spellbook-necromantic-stone-name = Necromantic Stone
+spellbook-necromantic-stone-description = Use this on a dead humanoid to turn them into a skeleton thrall. Has 3 charges.
 
 # Events
 

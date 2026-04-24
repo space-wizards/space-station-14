@@ -185,6 +185,9 @@ namespace Content.Client.Popups
 
         public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
         {
+            if (!filter.Recipients.Contains(_playerManager.LocalSession))
+                return;
+
             PopupCoordinates(message, coordinates, type);
         }
 
