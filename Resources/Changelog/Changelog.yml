@@ -1,72 +1,4 @@
 ﻿Entries:
-- author: ToastEnjoyer
-  changes:
-  - message: A security flashlight now spawns in the HoS's locker roundstart.
-    type: Add
-  id: 9146
-  time: '2025-10-22T13:32:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41031
-- author: SolidSyn
-  changes:
-  - message: Wizards Slippery Slope spell no longer requires a robe and hat to be
-      cast.
-    type: Tweak
-  id: 9147
-  time: '2025-10-23T01:28:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41038
-- author: Moomoobeef
-  changes:
-  - message: Fixed banana bread being missing from the guidebook.
-    type: Fix
-  id: 9148
-  time: '2025-10-23T07:00:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41047
-- author: Absotively
-  changes:
-  - message: Minor hand labeler UI improvements
-    type: Tweak
-  id: 9149
-  time: '2025-10-23T15:27:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40318
-- author: Silverfur-underscore
-  changes:
-  - message: The Mime Job Lizard plushie no longer breaks its vow when being thrown
-      against something or eaten.
-    type: Fix
-  id: 9150
-  time: '2025-10-24T00:02:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41063
-- author: MDuch369
-  changes:
-  - message: Added guidebook entry for gas recycler.
-    type: Add
-  - message: Gas recycler can now be rotated.
-    type: Fix
-  id: 9151
-  time: '2025-10-24T01:07:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39212
-- author: Princess_Chzblz, AdmiralObvious, hyphenation, Is-A-Slark, beck
-  changes:
-  - message: PAIs will no longer get uplinks instead of traitors when a player is
-      selected as an traitor and holding a pAI
-    type: Fix
-  id: 9152
-  time: '2025-10-24T05:58:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41069
-- author: slarticodefast
-  changes:
-  - message: Fixed being able to wield two-handed weapons when having only one hand.
-    type: Fix
-  id: 9153
-  time: '2025-10-24T07:36:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40966
-- author: TheGrimbeeper
-  changes:
-  - message: Fix artifact radiation trigger not being triggered by ambient radiation.
-    type: Fix
-  id: 9154
-  time: '2025-10-24T09:21:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41065
 - author: PicklOH
   changes:
   - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
@@ -4052,3 +3984,68 @@
   id: 9657
   time: '2026-04-23T03:07:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40714
+- author: themias
+  changes:
+  - message: Dropping or putting away an RCD now cancels the construction
+    type: Fix
+  id: 9658
+  time: '2026-04-24T06:37:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43655
+- author: psykana
+  changes:
+  - message: T-ray scanner now has dedicated wiring and piping modes.
+    type: Add
+  id: 9659
+  time: '2026-04-24T08:46:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43161
+- author: Nox38
+  changes:
+  - message: All military boots (jack, combat, merc) now have the 50% injury slowdown
+      resistance effect.
+    type: Tweak
+  id: 9660
+  time: '2026-04-24T09:01:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35653
+- author: Princess-Cheeseballs
+  changes:
+  - message: Dragons and other flying mobs no longer continue sliding while dead.
+    type: Fix
+  id: 9661
+  time: '2026-04-24T09:31:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38691
+- author: K-Dynamic
+  changes:
+  - message: Detectives can now choose to start the shift in a winter coat.
+    type: Tweak
+  id: 9662
+  time: '2026-04-24T10:07:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39044
+- author: zHonys
+  changes:
+  - message: Falling asleep while crit will no longer cause you to say whatever is
+      typed in your chatbox.
+    type: Fix
+  id: 9663
+  time: '2026-04-24T10:48:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37572
+- author: JacksonBailey
+  changes:
+  - message: Windoors no longer close on their own when someone is standing in them.
+    type: Tweak
+  id: 9664
+  time: '2026-04-24T11:52:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40519
+- author: Princess-Cheeseballs
+  changes:
+  - message: Randomly generated characters will now be colored correctly.
+    type: Fix
+  id: 9665
+  time: '2026-04-24T15:57:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43380
+- author: Tuchila-Adi-Bogdan
+  changes:
+  - message: You can no longer eat with the radiation hood on.
+    type: Tweak
+  id: 9666
+  time: '2026-04-24T17:31:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43699
