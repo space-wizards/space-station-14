@@ -229,7 +229,7 @@
 - type: damageModifierSet
   id: Skeleton
   coefficients:
-    Blunt: 1.1
+    Blunt: 1.8 # significant blunt damage should cause their bones to crumble
     Slash: 0.8
     Piercing: 0.6
     Cold: 0.0
@@ -240,7 +240,7 @@
     Cellular: 0.0
     Holy: 0.5
   flatReductions:
-    Blunt: 5
+    Blunt: 5 # no soft tissue to be affected by minor blunt damage
 
 # hurt a lot by blunt, immune to a good amount of other stuff because they're a cookie
 - type: damageModifierSet
