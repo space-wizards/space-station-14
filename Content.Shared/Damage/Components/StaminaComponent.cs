@@ -106,26 +106,30 @@ public sealed partial class StaminaComponent : Component
     [DataField]
     public float AnimationThreshold = 50;
 
-    public JitterParameters BaseJitter = new()
+    /// <summary>
+    /// The jitter that occurs at exactly the animation threshold.
+    /// </summary>
+    [DataField]
+    public JitterParameters JitterBase = new()
     {
-        Frequency = 1f,
-        MinRadius = 0.03f,
-        MaxRadius = 0.04f,
-        MatrixY = new Vector2(0, 0.25f),
-        Type = JitterType.Arch,
+        Frequency = 0.6f,
+        MinRadius = 0.02f,
+        MaxRadius = 0.025f,
+        MatrixX = new Vector2(0.75f, 0),
+        Type = JitterType.Arch, // 1 Frequency = 1 "breath"
     };
 
     /// <summary>
-    /// Maximum multiplier to jitter radius.
+    /// Maximum multiplier to jitter radius (min and max).
     /// </summary>
     [DataField]
-    public float RadiusScalar = 3.5f;
+    public float JitterRadiusScalar = 3.5f;
 
     /// <summary>
     /// Maximum amount added to the Frequency.
     /// </summary>
     [DataField]
-    public float AddedFrequency = 3f;
+    public float JitterAddedFrequency = 2f;
 
     #endregion
 }

@@ -28,7 +28,7 @@
   components:
   - type: JitteringStatusEffect
     jitter:
-      frequency: 3
+      frequency: 4
       maxRadius: 0.08
       minRadius: 0.02
 

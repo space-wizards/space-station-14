@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Jittering;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Random;
@@ -11,8 +12,8 @@ namespace Content.Client.Jittering;
 /// <inheritdoc />
 public sealed class JitteringSystem : SharedJitteringSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     [Dependency] private readonly EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
@@ -21,7 +22,6 @@ public sealed class JitteringSystem : SharedJitteringSystem
     [Dependency] private readonly EntityQuery<StatusEffectComponent> _statusQuery = default!;
 
     private readonly string _jitterAnimationKey = "jittering";
-    private readonly string _jitterReturnAnimationKey = "jitteringReturn";
 
     // When jittering stops, a final animation is played using this
     private const float ReturnSpeed = 0.35f;
@@ -30,7 +30,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<JitteringStatusEffectComponent, ComponentStartup>(OnStatusApplied);
+        SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
 
         SubscribeLocalEvent<JitteringComponent, AnimationCompletedEvent>(OnAnimationComplete);
         SubscribeLocalEvent<JitteringStatusEffectComponent, StatusEffectRelayedEvent<AnimationCompletedEvent>>(OnRelayAnimationCompleted);
@@ -39,11 +39,11 @@ public sealed class JitteringSystem : SharedJitteringSystem
     #region Subscriptions
 
     // Start the animation
-    private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref ComponentStartup args)
+    private void OnStatusApplied(Entity<JitteringStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (_statusQuery.TryComp(ent, out var status) && status.AppliedTo != null)
-            StartJitter(status.AppliedTo.Value, ent.Comp.Jitter);
+        StartJitter(args.Target, ent.Comp.Jitter);
     }
+
     private void OnAnimationComplete(Entity<JitteringComponent> ent, ref AnimationCompletedEvent args)
     {
         // This could be handled by StatusEffectRemovedEvent and a generic relay for AnimationCompletedEvent,
@@ -69,9 +69,10 @@ public sealed class JitteringSystem : SharedJitteringSystem
         _animation.Stop((ent, player), _jitterAnimationKey);
         _animation.Play((ent, player),
                         GetLineAnimation(sprite.Offset, jitter.StartOffset, ReturnSpeed),
-                        _jitterReturnAnimationKey);
+                        _jitterAnimationKey);
 
-        RemCompDeferred<JitteringComponent>(ent);
+        // Not deferred. Nothing else should care about this component
+        RemComp<JitteringComponent>(ent);
     }
 
     // Repeat the animation
@@ -83,6 +84,16 @@ public sealed class JitteringSystem : SharedJitteringSystem
 
     #endregion
     #region Helpers
+
+    /// <inheritdoc/>
+    [PublicAPI]
+    public override void AdjustJitter(EntityUid statusEnt, JitterParameters jitter)
+    {
+        base.AdjustJitter(statusEnt, jitter);
+
+        if (_statusQuery.TryComp(statusEnt, out var status) && status.AppliedTo != null)
+            StartJitter(status.AppliedTo.Value, jitter);
+    }
 
     /// <summary>
     /// Starts a jitter animation on an entity if it doesn't already have an existing jitter.
@@ -113,20 +124,16 @@ public sealed class JitteringSystem : SharedJitteringSystem
     private Animation GetJitterAnimation(JitterParameters jitter, Vector2 currentOffset, Vector2 origin)
     {
         if (jitter.Frequency <= 0) // Preempt divide by 0 and strange animation durations
-        {
-            Log.Warning($"Attempted to start a jitter animation with a frequency of 0 or less. Frequency was: {jitter.Frequency}");
             return new Animation();
-        }
 
         var newOffset = _random.NextVector2(jitter.MinRadius, jitter.MaxRadius);
         newOffset = Vector2.Transform(newOffset, jitter.Matrix);
 
         // If we're in the same quadrant as our current location, invert the offset
         // Reduces repetitive behavior and increases large movements
-        // This is fragile and assumes our base offset is (0, 0), but in most cases it is
-        if (Math.Sign(newOffset.X) == Math.Sign(currentOffset.X)
-            && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y)
-            && jitter.MatrixT == Vector2.Zero) // offset is certainly not (0, 0)
+        if (jitter.MatrixT == Vector2.Zero
+            && Math.Sign(newOffset.X) == Math.Sign(currentOffset.X - origin.X)
+            && Math.Sign(newOffset.Y) == Math.Sign(currentOffset.Y - origin.Y))
         {
             newOffset = -newOffset;
         }
@@ -175,8 +182,9 @@ public sealed class JitteringSystem : SharedJitteringSystem
     /// </summary>
     private static Animation GetArchAnimation(Vector2 current, Vector2 destination, float length)
     {
+        // We don't want the height of the midpoint too high, so we add the differance of our two Y's to constrain it
         var midpoint = (current + destination) / 2;
-        midpoint.Y = Math.Max(current.Y, destination.Y) + Math.Abs(current.Y - destination.Y);
+        midpoint.Y += Math.Abs(current.Y - destination.Y);
 
         return new Animation()
         {
@@ -190,7 +198,7 @@ public sealed class JitteringSystem : SharedJitteringSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(current, 0f),
-                        new AnimationTrackProperty.KeyFrame(midpoint, length / 2),
+                        new AnimationTrackProperty.KeyFrame(midpoint, length / 2f),
                         new AnimationTrackProperty.KeyFrame(destination, length),
                     },
                 },

@@ -14,7 +14,7 @@ public abstract class SharedJitteringSystem : EntitySystem
     /// <param name="statusEnt">An active status effect.</param>
     /// <param name="jitter">The new parameters for the jitter.</param>
     [PublicAPI]
-    public void AdjustJitter(EntityUid statusEnt, JitterParameters jitter)
+    public virtual void AdjustJitter(EntityUid statusEnt, JitterParameters jitter)
     {
         var jitterComp = EnsureComp<JitteringStatusEffectComponent>(statusEnt);
         jitterComp.Jitter = jitter;

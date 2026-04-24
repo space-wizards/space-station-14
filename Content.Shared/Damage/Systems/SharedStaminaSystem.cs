@@ -256,10 +256,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
 
         // intensify the base jitter
-        var newJitter = entity.Comp.BaseJitter;
-        newJitter.Frequency = entity.Comp.BaseJitter.Frequency + intensity * entity.Comp.AddedFrequency;
-        newJitter.MinRadius = entity.Comp.BaseJitter.MinRadius * intensity * entity.Comp.RadiusScalar;
-        newJitter.MaxRadius = entity.Comp.BaseJitter.MaxRadius * intensity * entity.Comp.RadiusScalar;
+        var newJitter = entity.Comp.JitterBase;
+        newJitter.Frequency = entity.Comp.JitterBase.Frequency + intensity * entity.Comp.JitterAddedFrequency;
+        newJitter.MinRadius = entity.Comp.JitterBase.MinRadius * intensity * entity.Comp.JitterRadiusScalar;
+        newJitter.MaxRadius = entity.Comp.JitterBase.MaxRadius * intensity * entity.Comp.JitterRadiusScalar;
 
         _jitter.AdjustJitter(status.Value, newJitter);
     }
