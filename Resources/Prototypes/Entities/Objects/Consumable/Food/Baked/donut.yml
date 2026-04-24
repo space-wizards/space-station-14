@@ -9,6 +9,9 @@
   - type: Tag
     tags:
     - Donut
+  - type: FlavorProfile
+    flavors:
+      - sweet
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
   - type: SolutionContainerManager
@@ -31,6 +34,36 @@
     tags:
     - Donut
     - Fruit
+
+- type: entity
+  abstract: true
+  parent: FoodDonutBase
+  id: FoodDonutJellyBase
+  description: What, you jelly?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - jelly
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  abstract: true
+  parent: FoodDonutJellyBase
+  id: FoodDonutJellyFruitBase
+  components:
+  - type: Tag
+    tags:
+    - Donut
+    - Fruit
 # Tastes like donut.
 
 # The sprinkles are now an overlay, so you can put them on any donut! If we really
@@ -47,31 +80,18 @@
   parent: FoodDonutBase
   id: FoodDonutPlain
   components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
   - type: Sprite
     state: plain
+#Tastes sweet
 
 - type: entity
   name: plain jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyPlain
   components:
-  - type: FlavorProfile
-    flavors:
-      - jelly
   - type: Sprite
     state: jelly-plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+#Tastes sweet, like jelly
 
 # Donuts
 
@@ -82,15 +102,17 @@
   components:
   - type: FlavorProfile
     flavors:
+      - sweet
       - pink
   - type: Sprite
     state: homer
   - type: Item
     heldPrefix: pink
+  # Tastes sweet, like pink.
 
 - type: entity
   name: chaos donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutChaos
   description: Like life, it never quite tastes the same.
   components:
@@ -102,7 +124,7 @@
       - tingly
   - type: Sprite
     state: chaos
-# Tastes like donut, chaos.
+# Tastes sweet, funny, magical, tingly.
 
 - type: entity
   name: meat donut
@@ -110,16 +132,24 @@
   id: FoodDonutMeat
   description: Tastes as gross as it looks.
   components:
-  - type: FlavorProfile
-    flavors:
-      - meaty
   - type: Sprite
     state: meat
   - type: Tag
     tags:
     - Meat
     - Donut
-# Tastes like meat.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+        - ReagentId: Fat
+          Quantity: 1
+# Tastes sweet, bitter, terrible.
 
 - type: entity
   name: pink donut
@@ -129,11 +159,13 @@
   components:
   - type: FlavorProfile
     flavors:
+      - sweet
       - pink
   - type: Sprite
     state: pink
   - type: Item
     heldPrefix: pink
+# Tastes sweet, like pink.
 
 - type: entity
   name: spaceman's donut
@@ -143,21 +175,36 @@
   components:
   - type: Sprite
     state: purple
-# Tastes like donut, violets.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: PolypyryliumOligomers
+          Quantity: 1
+# Tastes sweet, like violets.
 
 - type: entity
   name: apple donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutApple
   description: Goes great with a shot of cinnamon schnapps.
   components:
   - type: FlavorProfile
-    flavors:
-      - sweet
-      - apple
   - type: Sprite
     state: green
-# Tastes like donut, green apples.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: JuiceApple
+          Quantity: 1
+# Tastes sweet, like apples.
 
 - type: entity
   name: caramel donut
@@ -165,9 +212,14 @@
   id: FoodDonutCaramel
   description: Goes great with a mug of hot coco.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - nutty
+      - butter
   - type: Sprite
     state: beige
-# Tastes like donut, buttery sweetness.
+# Tastes sweet, nutty and like butter.
 
 - type: entity
   name: chocolate donut
@@ -175,9 +227,6 @@
   id: FoodDonutChocolate
   description: Goes great with a glass of warm milk.
   components:
-  - type: FlavorProfile
-    flavors:
-      - chocolate
   - type: Sprite
     state: choc
   - type: SolutionContainerManager
@@ -187,37 +236,58 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
-        - ReagentId: Theobromine
+        - ReagentId: CocoaPowder
           Quantity: 1
-# Tastes like donut, bitterness.
+# Tastes sweet, like chocolate.
 
 - type: entity
   name: blue pumpkin donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-      - bluepumpkin
   - type: Sprite
     state: blue
-# Tastes like donut, blue pumpkin.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Ammonia
+          Quantity: 1
+        - ReagentId: Chlorine
+          Quantity: 0.5
+        - ReagentId: JuiceBluePumpkin
+          Quantity: 0.5
+# Tastes sweet, bitter, like a mouthful of pool water.
 
 - type: entity
   name: bungo donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutBungo
   description: Goes great with a mason jar of hippie's delight.
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
       - bungo
+# Theoretically, we don't need to establish this flavor because of the bungo juice, but i don't know how to remove the "sweet"
+# flavor from the base (because bungo juice is already "like tropical sweetness"), so this is just here to override it.
   - type: Sprite
     state: yellow
-# Tastes like donut, tropical sweetness.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: JuiceBungo
+          Quantity: 1
+        - ReagentId: Enzyme
+          Quantity: 1
+# Tastes like tropical sweetness, bitter.
 
 - type: entity
   name: matcha donut
@@ -225,12 +295,18 @@
   id: FoodDonut
   description: The L-theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
-  - type: FlavorProfile
-    flavors:
-      - tea
   - type: Sprite
     state: olive
-# Tastes like donut, matcha.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Tea
+          Quantity: 1
+# Tastes sweet, like tea.
 
 - type: entity
   name: sweet pea donut
@@ -238,55 +314,53 @@
   id: FoodDonutSweetpea
   description: Goes great with a bottle of Bastion Burbon!
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - peas
   - type: Sprite
     state: laugh
-# Tastes like donut, fizzy tutti frutti.
+# Tastes sweet, like peas.
 
 # Jelly Donuts
+#Some of these use the FoodDonutJellyBase parent, some use FoodDonutBase and some use FoodDonutFruitBase.
 
 - type: entity
   name: jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyHomer
-  description: You jelly?
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - jelly
+      - pink
   - type: Sprite
     state: jelly-homer
   - type: Item
     heldPrefix: pink
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+  # Tastes sweet, like jelly, like pink.
 
 - type: entity
   name: pink jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyPink
   description: Goes great with a soy latte.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - jelly
+      - pink
   - type: Sprite
     state: jelly-pink
   - type: Item
     heldPrefix: pink
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+  # Tastes sweet, like jelly, like pink.
 
 - type: entity
   name: spaceman's jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellySpaceman
   description: Goes great with a cold beaker of malk.
   components:
@@ -299,13 +373,15 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: PolypyryliumOligomers
+          Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, violets.
+# Tastes sweet, like jelly, like violets.
 
 - type: entity
   name: apple jelly-donut
-  parent: FoodDonutFruitBase
+  parent: FoodDonutJellyFruitBase
   id: FoodDonutJellyApple
   description: Goes great with a shot of cinnamon schnapps.
   components:
@@ -318,33 +394,31 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: JuiceApple
+          Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
-
-# Tastes like jelly-donut, green apples.
+# Tastes sweet, like jelly, like apples.
 
 - type: entity
   name: caramel jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyCaramel
   description: Goes great with a mug of hot coco.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - jelly
+      - nutty
+      - butter
   - type: Sprite
     state: jelly-beige
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like jelly-donut, buttery sweetness.
+# Tastes sweet, nutty, like jelly, like butter.
 
 - type: entity
   name: chocolate jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyChocolate
   description: Goes great with a glass of warm milk.
   components:
@@ -357,22 +431,18 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
-        - ReagentId: Theobromine
+        - ReagentId: CocoaPowder
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, bitterness.
+# Tastes sweet, like jelly, like chocolate.
 
 - type: entity
   name: blue pumpkin jelly-donut
-  parent: FoodDonutFruitBase
+  parent: FoodDonutJellyFruitBase
   id: FoodDonutJellyBluePumpkin
   description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-      - bluepumpkin
   - type: Sprite
     state: jelly-blue
   - type: SolutionContainerManager
@@ -382,16 +452,25 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: Ammonia
+          Quantity: 0.5
+        - ReagentId: Chlorine
+          Quantity: 0.25
+        - ReagentId: JuiceBluePumpkin
+          Quantity: 0.25
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, blue pumpkin.
+# Tastes sweet, bitter, like jelly, like a mouthful of pool water.
 
 - type: entity
   name: bungo jelly-donut
-  parent: FoodDonutFruitBase
+  parent: FoodDonutJellyFruitBase
   id: FoodDonutJellyBungo
   description: Goes great with a mason jar of hippie's delight.
   components:
+  - type: FlavorProfile
+    flavors:
+      - jelly
   - type: Sprite
     state: jelly-yellow
   - type: SolutionContainerManager
@@ -401,13 +480,17 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: JuiceBungo
+          Quantity: 0.5
+        - ReagentId: Enzyme
+          Quantity: 0.5
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, tropical sweetness.
+# Tastes bitter, like tropical sweetness, like jelly.
 
 - type: entity
   name: matcha jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJelly
   description: The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
@@ -420,37 +503,45 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: Tea
+          Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, matcha.
+# Tastes sweet, like jelly, like tea.
 
 - type: entity
   name: sweet pea jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellySweetpea
   description: Goes great with a bottle of Bastion Burbon!
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - jelly
+      - peas
   - type: Sprite
     state: jelly-laugh
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like jelly-donut, fizzy tutti frutti.
+# Tastes sweet, funny, like jelly, like peas.
 
 - type: entity
   name: scurret jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutJellyBase
   id: FoodDonutJellyScurret
   description: No holes in this donut in case a suspicious looking pole shows up.
   components:
+  - type: FlavorProfile
+    flavors:
+      - slimy
+      - corn
+      - meaty
   - type: Sprite
     state: jelly-slug
+  - type: Tag
+    tags:
+    - Donut
+    - Fruit
+    - Meat
   - type: SolutionContainerManager
     solutions:
       food:
@@ -458,9 +549,19 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: EggCooked
+          Quantity: 0.25
+        - ReagentId: BlueCuracao
+          Quantity: 0.25
+        - ReagentId: Vampiro
+          Quantity: 0.25
+        - ReagentId: ZombieCocktail
+          Quantity: 0.25
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, fizzy tutti frutti.
+# Tastes slimy, meaty, like corn, like egg, like orange flowers, fruity, savoury and spicy, like eating brains.
+# Each of the flavors is a reference to a food source from rain world.
+# Also it's mildly alcoholic. Maybe it should be called a hydrated scurret jelly-donut.
 
 # Poison donut
 - type: entity
@@ -471,7 +572,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5
         reagents:
-        - ReagentId: Amatoxin
-          Quantity: 10
+        - ReagentId: Lexorin
+          Quantity: 5
+# Tastes sweet, like pink.
+# This used to be 10 units of Amatoxin, which would deal 150 poison damage, critting you by itself.
+# But, did you know that if you ingest 5 units of any chemical, and you are at full health when you do,
+# and you are under normal conditions, and you take no additional damage, it won't crit you?
+# Lexorin deals exactly 100, but because it's airlosss and bloodloos, you regenerate some of it during metabolisation,
+# so you live. Lead should deal 100 damage on paper, but because of rounding it does... 
+# 99.99. 99.99 poison damage per 5u. So, yeah, these unfortunately don't crit people from full health anymore.
