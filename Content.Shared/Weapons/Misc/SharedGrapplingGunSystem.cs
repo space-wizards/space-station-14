@@ -327,7 +327,7 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                     massFactor = grapplerBodyA.Mass / (grapplerBodyA.Mass + grapplerBodyB.Mass);
                 }
 
-                // Note that this way of calculating the impulse does not take into account objects being stuck on things, e.g. a movable grapple point lodged in a wall.
+                // Note that this way of calculating the impulse does not take into account objects being stuck on things, e.g. a movable grapple point stuck behind a wall.
                 // Ideally the contraction of the joint itself should take this into account, but alas, this works for now.
 
                 var massFactorA = (1 - massFactor); // Was previously grapplerBodyA.Mass * (1 - massFactor)

@@ -75,7 +75,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
     /// <summary>
     /// Gets an entity's weightless status.
     /// </summary>
-    /// <returns>First bool returns true if the entity is weightless. Second bool returns true if the first bool was given via the grid/map gravity.</returns>
+    /// <returns>First bool returns true if the entity is weightless. Second bool returns true if the first bool was given via the grid/map gravity, false if from the entity.</returns>
     private (bool, bool) GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
     {
         if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
