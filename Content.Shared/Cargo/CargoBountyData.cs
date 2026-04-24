@@ -28,8 +28,7 @@ public readonly partial record struct CargoBountyData
     public string ClaimedBy { get; init; } = string.Empty;
 
     [DataField]
-    public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = "Undelivered";
-
+    public CargoBountyStatusPrototype Status { get; init; } = default!;
 
     public CargoBountyData(CargoBountyPrototype bounty, int uniqueIdentifier)
     {

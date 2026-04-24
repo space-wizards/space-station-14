@@ -10,7 +10,7 @@ public sealed partial class CargoBountyStatusPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; private set; } = default!;
+    public string ID { get; private set; } = "Undelivered";
 
     [DataField]
     public int Index = 0;

@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+
 namespace Content.Client.Cargo.UI;
 
 [GenerateTypedNameReferences]
@@ -46,22 +47,20 @@ public sealed partial class BountyEntry : BoxContainer
 
         PrintButton.OnPressed += _ => OnLabelButtonPressed?.Invoke();
         SkipButton.OnPressed += _ => OnSkipButtonPressed?.Invoke();
-
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
+
         var states = new List<CargoBountyStatusPrototype>(_prototype.EnumeratePrototypes<CargoBountyStatusPrototype>());
         states.Sort((a, b) => a.Index.CompareTo(b.Index));
-        foreach(var status in states)
+        foreach (var status in states)
         {
-            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)),status.Index);
+            BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)), status.Index);
         }
-        if (!_prototype.Resolve<CargoBountyStatusPrototype>(bounty.Status, out var bountyStatusPrototype))
-            return;
-        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusPrototype.Index));
-        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bounty.Status));
+        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bounty.Status.Index));
+        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bounty.Status.ID));
 
         var claimedByText = string.IsNullOrEmpty(bounty.ClaimedBy) ? Loc.GetString("bounty-console-claimed-by-none") : bounty.ClaimedBy;
         ClaimedBylabel.SetMarkup(Loc.GetString("bounty-console-claimed-by", ("claimant", claimedByText)));
-        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bounty.Status)));
+        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bounty.Status.ID)));
     }
 
     private void UpdateSkipButton(float deltaSeconds)
