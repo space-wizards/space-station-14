@@ -155,6 +155,9 @@ ghost-role-information-skeleton-pirate-description = Cause chaos and loot the st
 ghost-role-information-skeleton-biker-name = Skeleton Biker
 ghost-role-information-skeleton-biker-description = Ride around on your sweet ride.
 
+ghost-role-information-skeleton-summon-name = Skeleton
+ghost-role-information-skeleton-summon-description = You are a spooky, scary skeleton summoned by a necromancer to do his bidding.
+
 ghost-role-information-remilia-name = Remilia, the Chaplain's Familiar
 ghost-role-information-remilia-description = Follow and obey the chaplain. Eat fruit. Screech loudly into people's ears and write it off as echolocation.
 

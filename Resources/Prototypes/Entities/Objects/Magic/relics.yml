@@ -1,0 +1,24 @@
+- type: entity
+  parent: [ BaseItem, BaseMagicalContraband]
+  id: RelicNecromanticStone
+  name: necromantic stone
+  description: A shard capable of resurrecting humanoids as skeleton thralls.
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/wizard.rsi
+    state: necrostone
+  - type: Item
+    size: Tiny
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: NecromanticSummoner
+    whitelist:
+      components:
+      - HumanoidProfile
+    summonSound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      params:
+        variation: 0.125
+  - type: Tag
+    tags:
+    - WizardRechargeable

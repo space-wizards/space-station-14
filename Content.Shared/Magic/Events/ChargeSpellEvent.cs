@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Magic.Events;
 
@@ -7,9 +8,15 @@ namespace Content.Shared.Magic.Events;
 /// </summary>
 public sealed partial class ChargeSpellEvent : InstantActionEvent
 {
+    /// <summary>
+    /// How many charges to refill.
+    /// </summary>
     [DataField(required: true)]
     public int Charge;
 
+    /// <summary>
+    /// Whitelist for entities that can be recharged.
+    /// </summary>
     [DataField]
-    public string WandTag = "WizardWand";
+    public EntityWhitelist Whitelist = new();
 }

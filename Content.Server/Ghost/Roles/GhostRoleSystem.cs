@@ -572,16 +572,28 @@ public sealed class GhostRoleSystem : EntitySystem
         if (!_ghostRoles.TryGetValue(identifier, out var role))
             return false;
 
+        if (!Takeover(role, player))
+            return false;
+
+        CloseEui(player);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts having the player take over the ghost role on the given entity.
+    /// </summary>
+    /// <returns>True if takeover was successful, otherwise false.</returns>
+    public bool Takeover(Entity<GhostRoleComponent> ent, ICommonSession player)
+    {
         var ev = new TakeGhostRoleEvent(player);
-        RaiseLocalEvent(role, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
         if (!ev.TookRole)
             return false;
 
         if (player.AttachedEntity != null)
-            _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.Comp.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+            _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {ent.Comp.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
-        CloseEui(player);
         return true;
     }
 

@@ -13,5 +13,8 @@
   - type: InstantAction
     event: !type:ChargeSpellEvent
       charge: 1
+      whitelist:
+        tags:
+        - WizardRechargeable
   - type: SpeakOnAction
     sentence: action-speech-spell-charge

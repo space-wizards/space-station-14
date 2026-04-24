@@ -34,3 +34,21 @@
   - type: Loadout
     prototypes: [SkeletonBiker]
   - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonSummon
+  name: skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-skeleton-summon-name
+    description: ghost-role-information-skeleton-summon-description
+    rules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: default
+  # normally the player the skeleton is summoned from will control the skeleton,
+  # but in case they disconnect someone else may take over
+  - type: GhostTakeoverAvailable
+  - type: RandomHumanoidAppearance
