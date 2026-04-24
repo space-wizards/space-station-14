@@ -136,8 +136,7 @@ public sealed partial class CargoSystem
             bountyDbComp.Bounties[i] = newData;
         }
 
-        var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, untilNextSkip));
+        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
     }
 
     private void OnBountyClaimedMessage(Entity<CargoBountyConsoleComponent> ent, ref BountyClaimedMessage args)
@@ -173,8 +172,7 @@ public sealed partial class CargoSystem
             bountyDbComp.Bounties[i] = newData;
         }
 
-        var untilNextSkip = bountyDbComp.NextSkipTime - Timing.CurTime;
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, untilNextSkip));
+        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
     }
 
     public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)
