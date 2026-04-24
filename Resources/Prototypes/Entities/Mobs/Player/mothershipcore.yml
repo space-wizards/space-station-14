@@ -11,6 +11,7 @@
   - type: Appearance
   - type: WiresVisuals
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Fixtures
     fixtures:

@@ -18,8 +18,9 @@
     - ConstructionMaterial
   - type: Material
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Appearance
   - type: Destructible
     thresholds:
