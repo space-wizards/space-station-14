@@ -46,10 +46,11 @@ public sealed class FingerprintReaderSystem : EntitySystem
     /// <param name="user">User trying to gain access.</param>
     /// <param name="showPopup">Whether to display a popup with the reason you are not allowed to access this.</param>
     /// <param name="denyReason">The reason why access was denied.</param>
+    /// <param name="checkGloves">Allows bypassing glove check regardless of the component's IgnoreGloves param.</param>
     /// <returns>True if access was granted, otherwise false.</returns>
     // TODO: Remove showPopup, just keeping it here for backwards compatibility while I refactor mail
     [PublicAPI]
-    public bool IsAllowed(Entity<FingerprintReaderComponent?> target, EntityUid user, [NotNullWhen(false)] out string? denyReason, bool showPopup = true)
+    public bool IsAllowed(Entity<FingerprintReaderComponent?> target, EntityUid user, [NotNullWhen(false)] out string? denyReason, bool showPopup = true, bool checkGloves = true)
     {
         denyReason = null;
         if (!Resolve(target, ref target.Comp, false))
@@ -59,7 +60,7 @@ public sealed class FingerprintReaderSystem : EntitySystem
             return true;
 
         // Check for gloves first
-        if (!target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
+        if (checkGloves && !target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
         {
             denyReason = Loc.GetString("fingerprint-reader-fail-gloves", ("blocker", gloves));
 

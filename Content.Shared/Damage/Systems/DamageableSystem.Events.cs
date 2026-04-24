@@ -22,6 +22,7 @@ public sealed partial class DamageableSystem
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
         SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+        SubscribeLocalEvent<InjurableComponent, DamageDealtEvent>(OnDamageDealt);
 
         // Damage modifier CVars are updated and stored here to be queried in other systems.
         // Note that certain modifiers requires reloading the guidebook.
@@ -188,9 +189,7 @@ public sealed partial class DamageableSystem
     {
         args.State = new DamageableComponentState(
             _netMan.IsServer ? ent.Comp.Damage : ent.Comp.Damage.Clone(),
-            ent.Comp.DamageContainerID,
-            ent.Comp.DamageModifierSetId,
-            ent.Comp.HealthBarThreshold
+            ent.Comp.DamageModifierSetId
         );
     }
 
@@ -199,9 +198,7 @@ public sealed partial class DamageableSystem
         if (args.Current is not DamageableComponentState state)
             return;
 
-        ent.Comp.DamageContainerID = state.DamageContainerId;
         ent.Comp.DamageModifierSetId = state.ModifierSetId;
-        ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
 
         // Has the damage actually changed?
         var newDamage = state.Damage.Clone();
@@ -214,6 +211,34 @@ public sealed partial class DamageableSystem
         ent.Comp.Damage = newDamage;
 
         OnEntityDamageChanged(ent, delta);
+    }
+
+    private void OnDamageDealt(Entity<InjurableComponent> ent, ref DamageDealtEvent args)
+    {
+        if (!_damageableQuery.TryGetComponent(ent, out var damageable))
+            return;
+
+        var damageDone = new DamageSpecifier();
+
+        damageDone.DamageDict.EnsureCapacity(args.Damage.DamageDict.Count);
+
+        var dict = damageable.Damage.DamageDict;
+        foreach (var (type, value) in args.Damage.DamageDict)
+        {
+            if (!SupportsType(ent.Comp.DamageContainer, type))
+                continue;
+
+            var oldValue = dict.GetValueOrDefault(type);
+            var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + value);
+            if (newValue == oldValue)
+                continue;
+
+            dict[type] = newValue;
+            damageDone.DamageDict[type] = newValue - oldValue;
+        }
+
+        if (!damageDone.Empty)
+            OnEntityDamageChanged((ent, damageable), damageDone, args.InterruptsDoAfters, args.Origin);
     }
 }
 
@@ -256,6 +281,16 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
     public readonly EntityUid? Origin = origin;
 }
 
+/// <summary>
+/// Event raised when an entity with <see cref="DamageableComponent" /> has taken some amount of damage.
+/// </summary>
+/// <param name="Damage">The amount of damage the entity is being subject to.</param>
+/// <param name="Origin">The originator of the damage</param>
+/// <param name="InterruptsDoAfters">If the damage being dealt will interrupt do-afters</param>
+[ByRefEvent]
+public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters);
+
+[Obsolete("Will be replaced with damage-model specific events; general 'took damage' can be served by DamageDealtEvent")]
 public sealed class DamageChangedEvent : EntityEventArgs
 {
     /// <summary>

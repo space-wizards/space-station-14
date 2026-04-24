@@ -9,7 +9,7 @@ namespace Content.Shared.Temperature.HeatContainer;
 /// </summary>
 [Serializable, NetSerializable, DataDefinition]
 [Access(typeof(HeatContainerHelpers), typeof(SharedAtmosphereSystem))]
-public partial struct HeatContainer : IRobustCloneable<HeatContainer>, IHeatContainer
+public partial struct HeatContainer : IHeatContainer
 {
     /// <inheritdoc/>
     [DataField]
@@ -29,27 +29,15 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>, IHeatCont
 
     public HeatContainer(float heatCapacity, float temperature)
     {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heatCapacity);
+        ArgumentOutOfRangeException.ThrowIfNegative(temperature);
         HeatCapacity = heatCapacity;
         Temperature = temperature;
     }
 
     public HeatContainer(float heatCapacity)
     {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heatCapacity);
         HeatCapacity = heatCapacity;
-    }
-
-    /// <summary>
-    /// Copy constructor for implementing ICloneable.
-    /// </summary>
-    /// <param name="c">The HeatContainer to copy.</param>
-    private HeatContainer(HeatContainer c)
-    {
-        HeatCapacity = c.HeatCapacity;
-        Temperature = c.Temperature;
-    }
-
-    public HeatContainer Clone()
-    {
-        return new HeatContainer(this);
     }
 }
