@@ -6,7 +6,9 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Creatures.TheCreature.UI;
 
@@ -31,6 +33,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
     private static readonly string[] Numerals = { "I", "II", "III" };
 
     private readonly BloodVialControl _bloodVial;
+    private readonly IPrototypeManager _protoMan;
     private readonly List<UpgradeRowState> _rows = new();
 
     /// <summary>Raised when the player clicks to evolve the next rank of an upgrade.</summary>
@@ -43,16 +46,24 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         _bloodVial = new BloodVialControl();
         BloodVialContainer.AddChild(_bloodVial);
 
-        foreach (var upgrade in CreatureUpgradeData.All)
-        {
-            var row = BuildUpgradeRow(upgrade);
-            UpgradeRowContainer.AddChild(row.Root);
-            _rows.Add(row);
-        }
+        _protoMan = IoCManager.Resolve<IPrototypeManager>();
     }
 
     public void UpdateState(CreatureUpgradeMenuBuiState state)
     {
+        // Lazy row initialization on first state push.
+        if (_rows.Count == 0)
+        {
+            foreach (var upgradeId in CreatureUpgradeData.UpgradeOrder)
+            {
+                if (!_protoMan.TryIndex<CreatureUpgradePrototype>(upgradeId, out var proto))
+                    continue;
+                var row = BuildUpgradeRow(proto);
+                UpgradeRowContainer.AddChild(row.Root);
+                _rows.Add(row);
+            }
+        }
+
         BloodAvailableLabel.Text = state.BloodPool.ToString("0000.00");
         BloodFractionLabel.Text =
             $"{state.BloodPool:F2} / {state.MaxBloodPool} u · " +
@@ -60,7 +71,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         _bloodVial.SetFill(state.BloodPool / (float)Math.Max(1, state.MaxBloodPool));
 
         var totalRanks = state.UpgradeRanks.Values.Sum();
-        var maxRanks   = CreatureUpgradeData.All.Count * CreatureUpgradeData.MaxRank;
+        var maxRanks   = CreatureUpgradeData.UpgradeOrder.Count * CreatureUpgradePrototype.MaxRank;
 
         LifetimeLabel.Text  = $"{state.BloodConsumedTotal:F2} u";
         MutationsLabel.Text = $"{totalRanks} / {maxRanks}";
@@ -75,7 +86,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
 
     // ── Row construction ─────────────────────────────────────────────────────
 
-    private UpgradeRowState BuildUpgradeRow(CreatureUpgradeData upgrade)
+    private UpgradeRowState BuildUpgradeRow(CreatureUpgradePrototype upgrade)
     {
         var root = new PanelContainer
         {
@@ -166,10 +177,10 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
 
         body.AddChild(rankBox);
 
-        return new UpgradeRowState(upgrade.Id, root, rankDisplay, rankCells);
+        return new UpgradeRowState(upgrade.ID, root, rankDisplay, rankCells);
     }
 
-    private RankCellRefs BuildRankCell(CreatureUpgradeData upgrade, int index)
+    private RankCellRefs BuildRankCell(CreatureUpgradePrototype upgrade, int index)
     {
         var root = new ContainerButton
         {
@@ -214,7 +225,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
         };
         inner.AddChild(ctaLabel);
 
-        var capturedId = upgrade.Id;
+        var capturedId = upgrade.ID;
         root.OnPressed += _ => OnEvolve?.Invoke(capturedId);
 
         return new RankCellRefs(root, rankLabel, costLabel, ctaLabel, index);
@@ -222,14 +233,16 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
 
     private void RefreshRow(UpgradeRowState row, int rank, float bloodPool)
     {
-        var maxed = rank >= CreatureUpgradeData.MaxRank;
+        var maxed = rank >= CreatureUpgradePrototype.MaxRank;
 
         row.RankDisplay.Text = maxed
             ? "RANK III / III  ▣ MAX"
             : $"RANK {(rank == 0 ? "0" : Numerals[rank - 1])} / III";
         row.RankDisplay.FontColorOverride = maxed ? GreenGood : MutedText;
 
-        var upgrade = CreatureUpgradeData.ById[row.UpgradeId];
+        if (!_protoMan.TryIndex<CreatureUpgradePrototype>(row.UpgradeId, out var upgrade))
+            return;
+
         for (var i = 0; i < 3; i++)
         {
             var cell = row.RankCells[i];

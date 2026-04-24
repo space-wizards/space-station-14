@@ -25,7 +25,7 @@ public sealed class CreatureUpgradeMenuBoundUserInterface : BoundUserInterface
                 comp.BloodPool,
                 comp.MaxBloodPool,
                 comp.BloodConsumedTotal,
-                comp.UpgradeRanks));
+                new Dictionary<string, int>(comp.UpgradeRanks)));
         }
     }
 

@@ -1,0 +1,85 @@
+# magnitudes[rank] interpretation per upgrade:
+#   Predator  - damage multiplier
+#   Quickness - speed multiplier
+#   Shadow    - passiveVisibilityRate (more negative = faster fade)
+#   Venom     - knockdown duration in seconds
+#   Ravenous  - eat-time multiplier (lower = faster)
+#   Pry       - pry speed modifier (lower = faster)
+#   Ironhide  - incoming damage coefficient (lower = less damage taken)
+
+- type: CreatureUpgrade
+  id: CreatureUpgradePredator
+  name: Strike
+  stat: ATTACK
+  costs: [100, 185, 215]
+  effects:
+  - "Bite damage +5."
+  - "Bite damage +10."
+  - "Bite damage +15."
+  magnitudes: [1.0, 1.5, 2.0, 2.5]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradeQuickness
+  name: Quickness
+  stat: MOVE
+  costs: [100, 145, 185]
+  effects:
+  - "Move speed +8%."
+  - "Move speed +16%."
+  - "Move speed +25%."
+  magnitudes: [1.0, 1.08, 1.16, 1.25]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradeShadow
+  name: Shadow
+  stat: STEALTH
+  costs: [100, 145, 185]
+  effects:
+  - "Passive fade speed +33%."
+  - "Passive fade speed +80%."
+  - "Passive fade speed +153%."
+  magnitudes: [-0.15, -0.20, -0.27, -0.38]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradeVenom
+  name: Venom
+  stat: STING
+  costs: [100, 145, 185]
+  effects:
+  - "Sting stun 8 seconds."
+  - "Sting stun 11 seconds."
+  - "Sting stun 14 seconds."
+  magnitudes: [5.0, 8.0, 11.0, 14.0]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradeRavenous
+  name: Ravenous
+  stat: FEED
+  costs: [100, 145, 185]
+  effects:
+  - "Drink blood 20% faster."
+  - "Drink blood 35% faster."
+  - "Drink blood 50% faster."
+  magnitudes: [1.0, 0.80, 0.65, 0.50]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradePry
+  name: Pry Mastery
+  stat: PRY
+  costs: [100, 145, 185]
+  effects:
+  - "Door pry 25% faster."
+  - "Door pry 60% faster."
+  - "Near-instant pry."
+  magnitudes: [1.0, 0.75, 0.40, 0.05]
+
+- type: CreatureUpgrade
+  id: CreatureUpgradeIronhide
+  name: Iron Hide
+  stat: ARMOR
+  costs: [100, 145, 185]
+  effects:
+  - "All damage taken -10%."
+  - "All damage taken -20%."
+  - "All damage taken -30%."
+  magnitudes: [1.0, 0.90, 0.80, 0.70]

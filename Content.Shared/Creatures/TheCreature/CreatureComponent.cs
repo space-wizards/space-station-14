@@ -23,4 +23,5 @@ public sealed partial class CreatureComponent : Component
     /// <summary>Upgrade ID → current rank (0 = unpurchased, max 3).</summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, int> UpgradeRanks = new();
+
 }

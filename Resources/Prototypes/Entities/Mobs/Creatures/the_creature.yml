@@ -11,6 +11,7 @@
     context: "human"
   - type: Eye
     drawFov: true
+    drawLight: false
   - type: CombatMode
 
   # ── Visuals ───────────────────────────────────────────────────────────────
