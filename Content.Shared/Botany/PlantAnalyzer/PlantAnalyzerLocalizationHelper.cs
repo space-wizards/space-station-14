@@ -15,13 +15,13 @@ public sealed class PlantAnalyzerLocalizationHelper : EntitySystem
         if (gases.Count == 0)
             return "";
 
-        List<int> gasIds = [];
+        List<string> gasIds = [];
         foreach (var gas in gases)
-            gasIds.Add((int)gas);
+            gasIds.Add(gas.ToString());
 
         List<string> gasesLoc = [];
         foreach (var gas in _prototypeManager.EnumeratePrototypes<GasPrototype>())
-            if (gasIds.Contains(int.Parse(gas.ID)))
+            if (gasIds.Contains(gas.ID))
                 gasesLoc.Add(Loc.GetString(gas.Name));
 
         return ContentLocalizationManager.FormatList(gasesLoc);
