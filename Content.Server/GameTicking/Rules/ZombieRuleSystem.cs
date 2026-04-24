@@ -126,7 +126,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         // This might just be wrong and they could be merged though.
         if (GetInfectedFraction(false) > zombieRuleComponent.ZombieShuttleCallPercentage && !zombieRuleComponent.CburnCalled)
         {
-            // TODO: call CBURN itself
             _gameTicker.StartGameRule(zombieRuleComponent.CburnGameRule);
             // we don't want two CBURN squads!
             zombieRuleComponent.CburnCalled = true;
