@@ -48,13 +48,20 @@ public sealed partial class AntagSpecifierPrototype : IPrototype, IInheritingPro
     [DataField]
     public bool PickPlayer = true;
 
-    // TODO: JobWhitelist?
+    /// <summary>
+    /// A list of whitelisted jobs for this antagonist.
+    /// Useful for antags that should only roll on a specific job, such as Malf AI.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public HashSet<ProtoId<JobPrototype>>? JobWhitelist;
+
     /// <summary>
     /// A list of blacklisted jobs for this antagonist.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
-    public HashSet<ProtoId<JobPrototype>> JobBlacklist = new();
+    public HashSet<ProtoId<JobPrototype>>? JobBlacklist;
 
     /// <remarks>
     /// Mostly just here for legacy compatibility and reducing boilerplate

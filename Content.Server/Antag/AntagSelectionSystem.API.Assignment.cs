@@ -130,9 +130,16 @@ public sealed partial class AntagSelectionSystem
     /// <returns>True if there is nothing stopping this mind entity from being this antag.</returns>
     private bool IsMindValid([NotNullWhen(true)] EntityUid? mind, AntagSpecifierPrototype def)
     {
+        // The jobless can always be antag!
+        if (!_jobs.MindTryGetJob(mind, out var job))
+            return true;
+
         // "Sorry buddy, but you can't be a traitor and the head of security" - Urist 1984
         // This checks nullability for our mind for free as well!
-        if (_jobs.MindTryGetJob(mind, out var job) && def.JobBlacklist.Contains(job))
+        if (def.JobBlacklist?.Contains(job) ?? false)
+            return false;
+
+        if (!def.JobWhitelist?.Contains(job) ?? false)
             return false;
 
         return true;

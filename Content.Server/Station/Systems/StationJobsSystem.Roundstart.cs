@@ -345,7 +345,7 @@ public sealed partial class StationJobsSystem
     {
         var outputDict = new Dictionary<NetUserId, List<string>>(profiles.Count);
 
-        var antags = _antag.GetAntagBlockedJobs();
+        var antags = _antag.GetAntagJobs();
 
         foreach (var (player, profile) in profiles)
         {
@@ -358,7 +358,7 @@ public sealed partial class StationJobsSystem
             if (!_player.TryGetSessionById(player, out var session))
                 continue;
 
-            antags.TryGetValue(session, out var antagBlocked);
+            var (whitelist, blacklist) = antags.GetValueOrDefault(session);
 
             List<string>? availableJobs = null;
 
@@ -372,7 +372,10 @@ public sealed partial class StationJobsSystem
                 if (!_prototypeManager.Resolve(jobId, out var job))
                     continue;
 
-                if (antagBlocked != null && antagBlocked.Contains(jobId))
+                if (whitelist != null && !whitelist.Contains(jobId))
+                    continue;
+
+                if (blacklist != null && blacklist.Contains(jobId))
                     continue;
 
                 if (weight is not null && job.Weight != weight.Value)

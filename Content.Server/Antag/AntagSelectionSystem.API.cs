@@ -385,14 +385,15 @@ public sealed partial class AntagSelectionSystem
     }
 
     /// <summary>
-    /// Returns a list of all antag players who have blacklisted jobs, and a hashset of those blacklisted jobs.
+    /// Returns a list of all antag players who are constrained by a job whitelist or blacklist from an antag.
     /// </summary>
-    /// <param name="except">Antag prototypes we're excluding for our returned job blacklist.</param>
+    /// <param name="except">Antag prototypes we're excluding for our returned job whitelist/blacklist.</param>
     /// <returns>A dictionary of antag sessions, and their job blacklists.</returns>
     [PublicAPI]
-    public Dictionary<ICommonSession, HashSet<ProtoId<JobPrototype>>> GetAntagBlockedJobs(params HashSet<ProtoId<AntagSpecifierPrototype>> except)
+    public Dictionary<ICommonSession, (HashSet<ProtoId<JobPrototype>>? Whitelist, HashSet<ProtoId<JobPrototype>>? Blacklist)>
+        GetAntagJobs(params HashSet<ProtoId<AntagSpecifierPrototype>> except)
     {
-        var result = new Dictionary<ICommonSession, HashSet<ProtoId<JobPrototype>>>();
+        var result = new Dictionary<ICommonSession, (HashSet<ProtoId<JobPrototype>>? Whitelist, HashSet<ProtoId<JobPrototype>>? Blacklist)>();
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {
@@ -407,15 +408,34 @@ public sealed partial class AntagSelectionSystem
                 if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !Proto.Resolve(antag.Proto, out var proto))
                     continue;
 
-                if (proto.JobBlacklist.Count == 0)
+                // Check this here so we don't make a dictionary entry for a bunch of players, with empty blacklists and whitelists.
+                if (proto.JobBlacklist == null && proto.JobWhitelist == null)
                     continue;
 
                 foreach (var player in set)
                 {
                     if (result.TryGetValue(player, out var jobs))
-                        jobs.UnionWith(proto.JobBlacklist);
+                    {
+                        if (proto.JobWhitelist != null)
+                        {
+                            if (jobs.Whitelist == null)
+                                jobs.Whitelist = proto.JobWhitelist;
+                            else
+                                jobs.Whitelist.UnionWith(proto.JobWhitelist);
+                        }
+
+                        if (proto.JobBlacklist != null)
+                        {
+                            if (jobs.Blacklist == null)
+                                jobs.Blacklist = proto.JobBlacklist;
+                            else
+                                jobs.Blacklist.UnionWith(proto.JobBlacklist);
+                        }
+                    }
                     else
-                        result.Add(player, proto.JobBlacklist);
+                    {
+                        result.Add(player, (proto.JobWhitelist, proto.JobBlacklist));
+                    }
                 }
             }
         }
@@ -424,15 +444,17 @@ public sealed partial class AntagSelectionSystem
     }
 
     /// <summary>
-    /// Returns a list of all blocked jobs for this player due to antags.
+    /// Returns a list of all blacklisted and whitelisted jobs for this player
     /// </summary>
     /// <param name="player">Player we're checking the blocked jobs of</param>
     /// <param name="except">Antag prototypes we're excluding in our search</param>
-    /// <returns>A hashset of all blocked jobs for this player.</returns>
+    /// <returns>A tuple of a whitelist and blacklist hashset for this player.</returns>
     [PublicAPI]
-    public HashSet<ProtoId<JobPrototype>> GetAntagBlockedJobs(ICommonSession player, params HashSet<ProtoId<AntagSpecifierPrototype>> except)
+    public (HashSet<ProtoId<JobPrototype>>? Whitelist, HashSet<ProtoId<JobPrototype>>? Blacklist)
+        GetAntagJobs(ICommonSession player, params HashSet<ProtoId<AntagSpecifierPrototype>> except)
     {
-        var result = new HashSet<ProtoId<JobPrototype>>();
+        HashSet<ProtoId<JobPrototype>>? whitelist = null;
+        HashSet<ProtoId<JobPrototype>>? blacklist = null;
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {
@@ -444,18 +466,31 @@ public sealed partial class AntagSelectionSystem
                 if (except.Contains(antag))
                     continue;
 
-                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !Proto.Resolve(antag.Proto, out var proto))
+                if (!comp.PreSelectedSessions.TryGetValue(antag, out var set) || !set.Contains(player))
                     continue;
 
-                if (proto.JobBlacklist.Count == 0)
+                if (!Proto.Resolve(antag.Proto, out var proto))
                     continue;
 
-                if (set.Contains(player))
-                    result.UnionWith(proto.JobBlacklist);
+                if (proto.JobWhitelist != null)
+                {
+                    if (whitelist == null)
+                        whitelist = proto.JobWhitelist;
+                    else
+                        whitelist.UnionWith(proto.JobWhitelist);
+                }
+
+                if (proto.JobBlacklist != null)
+                {
+                    if (blacklist == null)
+                        blacklist = proto.JobBlacklist;
+                    else
+                        blacklist.UnionWith(proto.JobBlacklist);
+                }
             }
         }
 
-        return result;
+        return (whitelist, blacklist);
     }
 
     /// <summary>
