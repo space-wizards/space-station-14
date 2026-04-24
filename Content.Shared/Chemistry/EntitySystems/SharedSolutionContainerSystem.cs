@@ -12,6 +12,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Localizations;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -785,19 +786,22 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds some thermal energy to a solution and then checks for reaction processing.
     /// </summary>
-    /// <param name="owner">The entity in which the solution is located.</param>
-    /// <param name="solution">The solution to set the thermal energy of.</param>
-    /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
+    /// <param name="soln">The solution to add the thermal energy to.</param>
+    /// <param name="thermalEnergy">The value in Joules of thermal energy to add.</param>
     public void AddThermalEnergy(Entity<SolutionComponent> soln, float thermalEnergy)
     {
-        var (_, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (thermalEnergy == 0.0f)
             return;
 
         var heatCap = solution.GetHeatCapacity(PrototypeManager);
-        solution.Temperature += heatCap == 0 ? 0 : thermalEnergy / heatCap;
+        if (heatCap <= 0)
+            return;
+
+        var heatContainer = new HeatContainer(heatCap, solution.Temperature);
+        heatContainer.AddHeat(thermalEnergy);
+        solution.Temperature = heatContainer.Temperature;
         UpdateChemicals(soln);
     }
 
