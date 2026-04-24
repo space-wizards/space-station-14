@@ -23,8 +23,7 @@ public sealed partial class SabotageConditionSystem : EntitySystem
         var query = EntityQueryEnumerator<SabotageConditionComponent>();
         while (query.MoveNext(out var uid, out var sabotageCondition))
         {
-            if (_whitelist.IsWhitelistPass(sabotageCondition.Whitelist, ent) // passes the whitelist
-            && _whitelist.IsWhitelistFailOrNull(sabotageCondition.Blacklist, ent) // doesn't pass the blacklist (or it doesn't exist)
+            if (_whitelist.CheckBoth(ent, sabotageCondition.Blacklist, sabotageCondition.Whitelist) // matches the conditions
             && sabotageCondition.RequireConfirmation == confirmationCompletion) // and this is the right context for the greentext
                 _codeCondition.SetCompleted(uid);
         }

@@ -22,7 +22,7 @@ public sealed partial class CargoSystem
 
     private void UpdateHack(float frameTime)
     {
-        var query = EntityQueryEnumerator<HackingBeaconComponent, StickyComponent>();
+        var query = EntityQueryEnumerator<ActiveHackingBeaconComponent, StickyComponent>();
         while (query.MoveNext(out _, out var hack, out var sticky))
         {
             if (sticky.StuckTo == null || !TryComp<CargoPalletComponent>(sticky.StuckTo, out var pallet))
@@ -32,7 +32,7 @@ public sealed partial class CargoSystem
             if (!TryComp<TradeStationComponent>(gridUid, out var station))
                 continue;
 
-            if (hack.TimePlanted >= station.HackCompletionTime && !hack.HackCompleted)
+            if (_timing.CurTime - hack.TimePlanted >= station.HackCompletionTime && !hack.HackCompleted)
             {
                 hack.HackCompleted = true;
                 var ev = new StructureHackCompletedEvent();
@@ -48,7 +48,7 @@ public sealed partial class CargoSystem
     /// <returns>Whether the ATS is currently being hacked.</returns>
     public bool IsTradeStationBeingHacked()
     {
-        var query = EntityQueryEnumerator<HackingBeaconComponent, StickyComponent>();
+        var query = EntityQueryEnumerator<ActiveHackingBeaconComponent, StickyComponent>();
         while (query.MoveNext(out var hack, out var sticky))
         {
             if (HasComp<CargoPalletComponent>(sticky.StuckTo) && !hack.HackCompleted)
