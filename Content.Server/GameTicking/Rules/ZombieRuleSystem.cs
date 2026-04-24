@@ -229,7 +229,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
         return healthy;
     }
-
+    #region CBURN-related
     /// <summary>
     ///  This sends the join message for CBURN agents. 
     /// </summary>
@@ -243,8 +243,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             Color.Orange, null);
     }
 
-     private void OnGetBriefing(Entity<CBurnRoleComponent> role, ref GetBriefingEvent args)
+    private void OnGetBriefing(Entity<CburnRoleComponent> role, ref GetBriefingEvent args)
     {
         args.Append(Loc.GetString("cburn-briefing"));
-
+    }
+    #endregion
 }
