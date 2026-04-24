@@ -44,15 +44,12 @@ public sealed class RootableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    private EntityQuery<PuddleComponent> _puddleQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] private readonly EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _puddleQuery = GetEntityQuery<PuddleComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RootableComponent, MapInitEvent>(OnRootableMapInit);
         SubscribeLocalEvent<RootableComponent, ComponentShutdown>(OnRootableShutdown);

@@ -10,13 +10,10 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -30,10 +27,8 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
     {
@@ -59,29 +54,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Checkes if the targets outerclothing is beyond a DamageCoefficientThreshold to protect them from being devoured.
-    /// </summary>
-    /// <param name="target">The Targeted entity</param>
-    /// <param name="ent">Changelings Devour Component</param>
-    /// <returns>Is the target Protected from the attack</returns>
-    private bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
-    {
-        var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
-
-        RaiseLocalEvent(target, ev);
-
-        foreach (var compProtectiveDamageType in ent.Comp.ProtectiveDamageTypes)
-        {
-            if (!ev.DamageModifiers.Coefficients.TryGetValue(compProtectiveDamageType, out var coefficient))
-                continue;
-            if (coefficient < 1f - ent.Comp.DevourPreventionPercentageThreshold)
-                return true;
-        }
-
-        return false;
-    }
-
     // The action was used.
     // Start the first doafter for the windup.
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
@@ -94,33 +66,13 @@ public sealed class ChangelingDevourSystem : EntitySystem
         args.Handled = true;
         var target = args.Target;
 
-        if (target == ent.Owner)
-            return; // don't eat yourself
-
-        if (!_mobState.IsDead(target))
-        {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), args.Performer, args.Performer, PopupType.Medium);
+        if (!CanDevour(ent.AsNullable(), target))
             return;
-        }
-
-        if (HasComp<RottingComponent>(target))
-        {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), args.Performer, args.Performer, PopupType.Medium);
-            return;
-        }
-
-        if (IsTargetProtected(target, ent))
-        {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), ent, ent, PopupType.Medium);
-            return;
-        }
 
         if (_net.IsServer)
         {
             ent.Comp.CurrentDevourSound = _audio.Stop(ent.Comp.CurrentDevourSound);
-            var pvsSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent);
-            if (pvsSound != null)
-                ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
+            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise, ent)?.Entity;
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
@@ -162,17 +114,12 @@ public sealed class ChangelingDevourSystem : EntitySystem
         _popupSystem.PopupPredicted(
             selfMessage,
             othersMessage,
-            args.User,
-            args.User,
+            ent.Owner,
+            ent.Owner,
             PopupType.LargeCaution);
 
         if (_net.IsServer)
-        {
-            var pvsSound = _audio.PlayPvs(ent.Comp.ConsumeNoise, ent);
-
-            if (pvsSound != null)
-                ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
-        }
+            ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.ConsumeNoise, ent)?.Entity;
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} began to devour {ToPrettyString(target):player}'s identity");
 
@@ -203,50 +150,115 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (args.Target is not { } target)
             return;
 
+        // Damage first before the CanDevour check to make sure they don't gib in-between and to kill them again in case they somehow revived.
         _damageable.ChangeDamage(target, ent.Comp.DevourDamage, true, true, ent.Owner);
 
-        if (!_mobState.IsDead(target))
-        {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), args.User, args.User, PopupType.Medium);
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} unsuccessfully devoured {ToPrettyString(args.Target):player}'s identity");
+        if (!CanDevour(ent.AsNullable(), target)) // Check again if the conditions are still met.
             return;
-        }
 
-        var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(args.User, EntityManager)));
-        var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(args.User, EntityManager)));
+        var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
         _popupSystem.PopupPredicted(
             selfMessage,
             othersMessage,
-            args.User,
-            args.User,
+            ent.Owner,
+            ent.Owner,
             PopupType.LargeCaution);
 
-        if (_mobState.IsDead(target)
-            && HasComp<HumanoidProfileComponent>(target)
-            && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
-        {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
-            _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
 
-            if (_inventorySystem.TryGetSlotEntity(target, "jumpsuit", out var item)
-                && TryComp<ButcherableComponent>(item, out var butcherable))
-                RipClothing(target, (item.Value, butcherable));
-        }
+        if (!TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityStorage))
+            return;
 
+        _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+
+        // We add a reference to ourselves to prevent repeated identity gain.
+        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
+        targetDevoured.DevouredBy.Add(ent.Owner);
+        Dirty(target, targetDevoured);
         Dirty(ent);
     }
 
-    // TODO: This should just be an API method in the butcher system
-    private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
+    /// <summary>
+    /// Has the given victim been devoured by the given changeling before?
+    /// </summary>
+    public bool HasDevoured(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
     {
-        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
+        if (!Resolve(changeling, ref changeling.Comp, false))
+            return false;
 
-        foreach (var proto in spawnEntities)
+        return changeling.Comp.ConsumedIdentities.ContainsValue(devoured);
+    }
+
+    /// <summary>
+    /// Can the given changeling devour the given victim?
+    /// </summary>
+    public bool CanDevour(Entity<ChangelingDevourComponent?> changeling, EntityUid victim, bool showPopup = true)
+    {
+        if (!Resolve(changeling, ref changeling.Comp))
+            return false;
+
+        if (changeling.Owner == victim)
+            return false; // Can't devour yourself.
+
+        if (!HasComp<HumanoidProfileComponent>(victim))
         {
-            // TODO: once predictedRandom is in, make this a Coordinate offset of 0.25f from the victims position
-            PredictedSpawnNextToOrDrop(proto, victim);
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-cannot-devour"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
         }
 
-        PredictedQueueDel(item.Owner);
+        if (HasDevoured(changeling.Owner, victim))
+        {
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
+        }
+
+        if (!_mobState.IsDead(victim))
+        {
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
+        }
+
+        if (HasComp<RottingComponent>(victim))
+        {
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
+        }
+
+        if (IsTargetProtected(victim, changeling!))
+        {
+            if (showPopup)
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if the target's outerclothing is beyond a DamageCoefficientThreshold to protect them from being devoured.
+    /// </summary>
+    /// <param name="target">The Targeted entity</param>
+    /// <param name="ent">Changelings Devour Component</param>
+    /// <returns>Is the target Protected from the attack</returns>
+    private bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
+    {
+        var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
+
+        RaiseLocalEvent(target, ev);
+
+        foreach (var compProtectiveDamageType in ent.Comp.ProtectiveDamageTypes)
+        {
+            if (!ev.DamageModifiers.Coefficients.TryGetValue(compProtectiveDamageType, out var coefficient))
+                continue;
+            if (coefficient < 1f - ent.Comp.DevourPreventionPercentageThreshold)
+                return true;
+        }
+
+        return false;
     }
 }

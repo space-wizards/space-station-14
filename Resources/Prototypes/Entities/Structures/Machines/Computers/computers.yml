@@ -681,9 +681,13 @@
     energy: 4.0
     color: "#3c5eb5"
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+<<<<<<< tot-hack-beacon
   - type: BeaconHackable
+=======
+  - type: Injurable
+    damageContainer: StructuralInorganic
+>>>>>>> master
 
 - type: entity
   abstract: true
@@ -1204,8 +1208,9 @@
     speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: GuideHelp
     guides:
     - Cloning

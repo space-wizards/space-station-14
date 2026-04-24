@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Store.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Store;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -95,18 +95,20 @@ public sealed class RingerSystem : SharedRingerSystem
     }
 
     /// <inheritdoc/>
-    public override bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null)
+    public override bool TryToggleUplink(Entity<RingerUplinkComponent?> entity, Note[] ringtone, EntityUid? user = null)
     {
-        if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
+        if (!Resolve(entity, ref entity.Comp))
             return false;
 
         // On the server, we always check if the code matches
-        if (!TryMatchRingtoneToStore(ringtone, out var store, uid))
+        if (!TryMatchRingtoneToStore(ringtone, out var store, entity))
             return false;
 
-        uplink.TargetStore = store;
+        // If the store is not this entity, we make sure to properly set the remote store.
+        if (store != entity.Owner)
+            Store.SetRemoteStore(entity.Owner, store);
 
-        return ToggleUplinkInternal((uid, uplink));
+        return ToggleUplinkInternal((entity, entity.Comp));
     }
 
     /// <summary>

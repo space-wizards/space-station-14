@@ -311,11 +311,11 @@ namespace Content.Server.PDA
         private bool TryGetUnlockedStore(EntityUid uid, [NotNullWhen(true)] out EntityUid? store)
         {
             store = null;
-            if (!TryComp<RingerUplinkComponent>(uid, out var uplink) || !uplink.Unlocked || uplink.TargetStore == null)
+            if (!TryComp<RingerUplinkComponent>(uid, out var uplink) || !uplink.Unlocked)
                 return false;
 
-            store = uplink.TargetStore;
-            return true;
+            store = _store.GetStore(uid);
+            return store != null;
         }
 
         private void UpdateStationName(EntityUid uid, PdaComponent pda)
