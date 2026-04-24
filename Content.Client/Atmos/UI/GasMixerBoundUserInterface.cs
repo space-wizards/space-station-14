@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Piping.Trinary.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -64,7 +63,7 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
         if (_window == null || !EntMan.TryGetComponent(Owner, out GasMixerComponent? mixer))
             return;
 
-        _window.Title = Identity.Name(Owner, EntMan);
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         _window.SetMixerStatus(mixer.Enabled);
         _window.SetOutputPressure(mixer.TargetPressure);
         _window.SetNodePercentages(mixer.InletOneConcentration);

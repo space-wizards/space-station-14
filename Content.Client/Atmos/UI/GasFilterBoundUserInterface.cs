@@ -1,7 +1,6 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -74,7 +73,7 @@ public sealed class GasFilterBoundUserInterface : BoundUserInterface
         if (_window == null || !EntMan.TryGetComponent(Owner, out GasFilterComponent? filter))
             return;
 
-        _window.Title = Identity.Name(Owner, EntMan);
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         _window.SetFilterStatus(filter.Enabled);
         _window.SetTransferRate(filter.TransferRate);
 
