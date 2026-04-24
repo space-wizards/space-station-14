@@ -5,7 +5,7 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class BrainDamageOnDamageSystem : EntitySystem
+public sealed class BrainDamageOnDamageSystem : OffbrandDamageSystem
 {
     [Dependency] private readonly BrainDamageSystem _brain = default!;
 

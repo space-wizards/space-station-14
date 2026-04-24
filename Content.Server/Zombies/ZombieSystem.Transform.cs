@@ -166,7 +166,6 @@ public sealed partial class ZombieSystem
             RemComp<BrainDamageThresholdsComponent>(target);
             RemComp<BrainDamageOnDamageComponent>(target);
             RemComp<HeartDamageOnDamageComponent>(target);
-            RemComp<MaximumDamageComponent>(target);
             RemComp<CprTargetComponent>(target);
             RemComp<Content.Server.Construction.Components.ConstructionComponent>(target);
             RemComp<CryostasisFactorComponent>(target);

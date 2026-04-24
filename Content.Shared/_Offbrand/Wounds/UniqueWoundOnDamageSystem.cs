@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed partial class UniqueWoundOnDamageSystem : EntitySystem
+public sealed partial class UniqueWoundOnDamageSystem : OffbrandDamageSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly WoundableSystem _woundable = default!;
@@ -42,7 +42,7 @@ public sealed partial class UniqueWoundOnDamageSystem : EntitySystem
             if (!rand.Prob(probability))
                 continue;
 
-            _woundable.TryWound((ent.Owner, woundable), wound.WoundPrototype, wound.WoundDamages, unique: true, refreshDamage: true);
+            _woundable.TryWound((ent.Owner, woundable), wound.WoundPrototype, wound.WoundDamages, unique: true);
         }
     }
 }

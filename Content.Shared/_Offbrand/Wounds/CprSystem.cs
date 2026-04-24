@@ -59,7 +59,7 @@ public sealed class CprSystem : EntitySystem
 
         if (rand.Prob(ent.Comp.WoundProbability) && TryComp<WoundableComponent>(ent, out var woundable))
         {
-            if (_woundable.TryWound((ent, woundable), ent.Comp.Wound, unique: true, refreshDamage: true))
+            if (_woundable.TryWound((ent, woundable), ent.Comp.Wound, unique: true))
             {
                 _popup.PopupClient(
                     Loc.GetString(ent.Comp.WoundPopup, ("target", Identity.Entity(ent, EntityManager))),

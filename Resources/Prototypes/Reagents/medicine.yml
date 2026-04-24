@@ -777,11 +777,11 @@
         - !type:ReagentCondition
           reagent: AmbuzolPlus
           min: 5
-          # Begin Offbrand Additions
-        - !type:AdjustReagent
-          reagent: Romerol
-          amount: -5
-          # End Offbrand Additions
+        # Begin Offbrand Additions
+      - !type:AdjustReagent
+        reagent: Romerol
+        amount: -5
+        # End Offbrand Additions
 
 - type: reagent
   id: PulpedBananaPeel
@@ -928,14 +928,14 @@
         damage:
           Brute: -1
           Burn: -1
-      - !type:HealthChange
-        conditions:
         # Begin Offbrand Removals
-        # - !type:MobStateCondition
-        #   mobstate: Alive
-        # damage:
-        #  types:
-        #    Poison: -0.5 # Same as what it was before the second coming of offmed
+        # - !type:HealthChange
+        #   conditions:
+        #   - !type:MobStateCondition
+        #     mobstate: Alive
+        #   damage:
+        #    types:
+        #      Poison: -0.5 # Same as what it was before the second coming of offmed
         # End Offbrand Removals
 
 - type: reagent

@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class IntrinsicPainSystem : EntitySystem
+public sealed class IntrinsicPainSystem : OffbrandDamageSystem
 {
     public override void Initialize()
     {

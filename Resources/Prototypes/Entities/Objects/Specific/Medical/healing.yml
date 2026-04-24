@@ -191,8 +191,10 @@
     woundWhitelist:
       tags: [WoundBrute]
     damage:
-      groups:
-        Brute: -15
+      types:
+        Blunt: -5
+        Piercing: -5
+        Slash: -5
     tendingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:
@@ -258,8 +260,10 @@
     woundWhitelist:
       tags: [WoundBrute]
     damage:
-      groups:
-        Brute: -30
+      types:
+        Blunt: -10
+        Piercing: -10
+        Slash: -10
     tendingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:

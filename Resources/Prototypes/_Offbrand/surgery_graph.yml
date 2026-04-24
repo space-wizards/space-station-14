@@ -14,7 +14,7 @@
         - !type:AddWound
           wound: WoundIncision
           damages:
-            damageDict:
+            types:
               Slash: 10
   - node: OpenIncision
     edges:
@@ -33,7 +33,7 @@
         - !type:DamageEntity
           damage:
             types:
-              Burn: 10
+              Heat: 10
     - to: ClampedBleeders
       steps:
       - tool: Clamping
@@ -42,7 +42,7 @@
         - !type:AddWound
           wound: WoundClamped
           damages:
-            damageDict:
+            types:
               Blunt: 5
   - node: ClampedBleeders
     edges:
@@ -55,7 +55,7 @@
         - !type:AddWound
           wound: WoundRetracted
           damages:
-            damageDict:
+            types:
               Blunt: 5
   - node: RetractedIncision
     edges:
@@ -82,7 +82,7 @@
       - !type:AddWound
         wound: WoundOpenRibCage
         damages:
-          damageDict:
+          types:
             Blunt: 5
       steps:
       - tool: Sawing

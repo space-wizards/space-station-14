@@ -26,6 +26,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         base.Initialize();
 
         SubscribeLocalEvent<InjurableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+        SubscribeLocalEvent<BrainDamageComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent); // Offbrand
         SubscribeLocalEvent<ShowHealthIconsComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
@@ -66,6 +67,15 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     }
 
     // Begin Offbrand
+    private void OnGetStatusIconsEvent(Entity<BrainDamageComponent> ent, ref GetStatusIconsEvent args)
+    {
+        if (!IsActive || !TryComp<BrainDamageThresholdsComponent>(ent, out var thresholds))
+            return;
+
+        var healthIcons = DecideBrainHealthIcons((ent, ent, thresholds));
+        args.StatusIcons.AddRange(healthIcons);
+    }
+
     private List<HealthIconPrototype> DecideBrainHealthIcons(Entity<BrainDamageComponent, BrainDamageThresholdsComponent> ent)
     {
         if (ent.Comp2.CurrentState == MobState.Dead)
@@ -93,13 +103,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     private IReadOnlyList<HealthIconPrototype> DecideHealthIcons(Entity<InjurableComponent> entity)
     {
-        if (TryComp<BrainDamageComponent>(entity, out var brain) &&
-            TryComp<BrainDamageThresholdsComponent>(entity, out var thresholds))
-        {
-            return DecideBrainHealthIcons((entity.Owner, brain, thresholds));
-        }
-
-        var damageableComponent = entity.Comp;
+        var injurableComp = entity.Comp;
 
         if (injurableComp.DamageContainer == null ||
             !DamageContainers.Contains(injurableComp.DamageContainer))

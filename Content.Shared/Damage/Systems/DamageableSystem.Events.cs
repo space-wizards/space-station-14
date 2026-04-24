@@ -326,23 +326,16 @@ public sealed class DamageChangedEvent : EntityEventArgs
     /// </summary>
     public readonly EntityUid? Origin;
 
-    /// <summary>
-    ///     Offbrand - If this damage changed happened as part of a forced refresh
-    /// </summary>
-    public readonly bool ForcedRefresh;
-
     public DamageChangedEvent(
         DamageableComponent damageable,
         DamageSpecifier? damageDelta,
         bool interruptsDoAfters,
-        EntityUid? origin,
-        bool forcedRefresh // Offbrand
+        EntityUid? origin
     )
     {
         Damageable = damageable;
         DamageDelta = damageDelta;
         Origin = origin;
-        ForcedRefresh = forcedRefresh; // Offbrand
 
         if (DamageDelta is null)
             return;

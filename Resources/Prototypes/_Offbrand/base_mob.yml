@@ -4,13 +4,26 @@
   components:
   - type: StatusEffectContainer
   - type: Woundable
+    damageContainer: Biological
+    maximumDamage:
+      Blunt: [200, 10]
+      Slash: [200, 10]
+      Piercing: [200, 10]
+      Heat: [200, 10]
+      Cold: [200, 10]
+      Caustic: [200, 10]
+      Shock: [200, 10]
+      Poison: [100, 10]
+      Radiation: [100, 10]
+      Cellular: [100, 10]
+      Asphyxiation: [100, 0]
+      Bloodloss: [0, 0]
   - type: HealthExaminable
     examinableTypes:
     - Asphyxiation
     - Radiation
   - type: Deathgasp
   - type: Damageable
-    damageContainer: Biological
   - type: RadiationReceiver
   - type: Stamina
   - type: MobState
@@ -24,20 +37,6 @@
   - type: LightningTarget
     priority: 2
     lightningExplode: false
-  - type: MaximumDamage
-    damage:
-      Blunt: [200, 10]
-      Slash: [200, 10]
-      Piercing: [200, 10]
-      Heat: [200, 10]
-      Cold: [200, 10]
-      Caustic: [200, 10]
-      Shock: [200, 10]
-      Poison: [100, 10]
-      Radiation: [100, 10]
-      Cellular: [100, 10]
-      Asphyxiation: [100, 0]
-      Bloodloss: [0, 0]
   - type: UniqueWoundOnDamage
     wounds:
     - damageTypes: [Slash, Blunt, Piercing]
@@ -45,7 +44,7 @@
       minimumTotalDamage: 25
       woundPrototype: WoundArterialBleeding
       woundDamages:
-        damageDict:
+        types:
           Slash: 5
       damageProbabilityCoefficient: 0.01
       damageProbabilityConstant: 0
@@ -54,7 +53,7 @@
       minimumTotalDamage: 40
       woundPrototype: WoundFracture
       woundDamages:
-        damageDict:
+        types:
           Blunt: 10
       damageProbabilityCoefficient: 0.005
       damageProbabilityConstant: 0
@@ -63,7 +62,7 @@
       minimumTotalDamage: 250
       woundPrototype: WoundHusking
       woundDamages:
-        damageDict:
+        types:
           Heat: 100
           Blunt: 100
       damageProbabilityCoefficient: 0.25
@@ -73,7 +72,7 @@
       minimumTotalDamage: 0
       woundPrototype: WoundHusking
       woundDamages:
-        damageDict:
+        types:
           Heat: 100
           Blunt: 100
       damageProbabilityCoefficient: 1
@@ -83,7 +82,7 @@
       minimumTotalDamage: 300
       woundPrototype: WoundBoneDeath
       woundDamages:
-        damageDict:
+        types:
           Blunt: 50
           Slash: 50
           Piercing: 50
@@ -94,7 +93,7 @@
       minimumTotalDamage: 0
       woundPrototype: WoundBoneDeath
       woundDamages:
-        damageDict:
+        types:
           Blunt: 50
           Slash: 50
           Piercing: 50

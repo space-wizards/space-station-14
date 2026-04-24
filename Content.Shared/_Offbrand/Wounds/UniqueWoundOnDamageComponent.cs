@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
@@ -45,7 +46,7 @@ public sealed partial class UniqueWoundSpecifier
     /// The damages to inflict it with
     /// </summary>
     [DataField(required: true)]
-    public Damages WoundDamages;
+    public DamageSpecifier WoundDamages;
 
     /// <summary>
     /// The probability coefficient of the amount of incoming damage

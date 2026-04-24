@@ -84,15 +84,15 @@ public sealed partial class BloodstreamComponent : Component
     /// The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
     /// The default values are defined per mob/species in YML.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public DamageSpecifier? BloodlossDamage = new(); // Offbrand: we don't need this
+    [DataField(required: true)] // Offbrand: we don't need this
+    public DamageSpecifier? BloodlossDamage; // Offbrand: we don't need this
 
     /// <summary>
     /// The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
     /// The default values are defined per mob/species in YML.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public DamageSpecifier? BloodlossHealDamage = new(); // Offbrand: we don't need this
+    [DataField(required: true)] // Offbrand: we don't need this
+    public DamageSpecifier? BloodlossHealDamage; // Offbrand: we don't need this
 
     // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
     /// <summary>

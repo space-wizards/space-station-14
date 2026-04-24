@@ -60,13 +60,12 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        bool forceRefresh = false // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers, forceRefresh);
+        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
     }
 
     /// <summary>
@@ -87,13 +86,12 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        bool forceRefresh = false // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers, forceRefresh); // Offbrand
+        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers); // Offbrand
         return !newDamage.Empty;
     }
 
@@ -114,8 +112,7 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        bool forceRefresh = false // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         var damageDone = new DamageSpecifier();
@@ -123,7 +120,7 @@ public sealed partial class DamageableSystem
         if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return damageDone;
 
-        if (damage.Empty && !forceRefresh)
+        if (damage.Empty)
             return damageDone;
 
         var before = new BeforeDamageChangedEvent(damage, origin);
@@ -147,7 +144,7 @@ public sealed partial class DamageableSystem
             RaiseLocalEvent(ent, ev);
             damage = ev.Damage;
 
-            if (damage.Empty && !forceRefresh) // Offbrand
+            if (damage.Empty)
                 return damageDone;
         }
 

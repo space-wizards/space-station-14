@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class WoundableSystem : EntitySystem
+public sealed class WoundableSystem : OffbrandDamageSystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -30,8 +30,7 @@ public sealed class WoundableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WoundableComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<WoundableComponent, BeforeDamageCommitEvent>(OnBeforeDamageCommit);
-        SubscribeLocalEvent<WoundableComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<WoundableComponent, DamageDealtEvent>(OnDamageDealt);
         SubscribeLocalEvent<WoundableComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined, before: [typeof(SharedBloodstreamSystem)]);
         SubscribeLocalEvent<WoundableComponent, MapInitEvent>(OnMapInit);
 
@@ -125,74 +124,6 @@ public sealed class WoundableSystem : EntitySystem
         }
     }
 
-    private void ValidateWounds(EntityUid ent, DamageSpecifier? incoming)
-    {
-#if DEBUG
-        var damageable = Comp<DamageableComponent>(ent);
-
-        var evt = new WoundGetDamageEvent(new());
-        RaiseLocalEvent(ent, ref evt);
-
-        foreach (var (type, currentValue) in damageable.Damage.DamageDict)
-        {
-            if (!evt.Accumulator.DamageDict.TryGetValue(type, out var expectedValue))
-                continue;
-
-            if (incoming is not null && incoming.DamageDict.TryGetValue(type, out var delta) && delta <= 0)
-            {
-                DebugTools.AssertEqual(currentValue + delta, expectedValue, $"wounds and damageable after delta don't line up for {type}");
-            }
-            else
-            {
-                DebugTools.AssertEqual(currentValue, expectedValue, $"wounds and damageable don't line up for {type}");
-            }
-        }
-#endif
-    }
-
-    private void OnBeforeDamageCommit(Entity<WoundableComponent> ent, ref BeforeDamageCommitEvent args)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        var damageable = Comp<DamageableComponent>(ent);
-
-        if (args.Damage.AnyNegative() && !args.ForceRefresh)
-            OnHealed(ent, DamageSpecifier.GetNegative(args.Damage));
-
-        var evt = new WoundGetDamageEvent(new());
-        RaiseLocalEvent(ent, ref evt);
-
-        var minimumDamage = evt.Accumulator;
-
-        var dict = damageable.Damage.DamageDict;
-
-        var hasCloned = false;
-        foreach (var (type, minimumValue) in minimumDamage.DamageDict)
-        {
-            var deltaValue = args.Damage.DamageDict.GetValueOrDefault(type, FixedPoint2.Zero);
-            var oldValue = dict.GetValueOrDefault(type, FixedPoint2.Zero);
-
-            var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + deltaValue);
-
-            var delta = newValue - minimumValue;
-
-            if (delta >= 0)
-                continue;
-
-            if (!hasCloned)
-            {
-                hasCloned = true;
-                args.Damage = new(args.Damage);
-            }
-
-            args.Damage.DamageDict[type] = deltaValue - delta;
-        }
-
-        if (!args.ForceRefresh)
-            ValidateWounds(ent, args.Damage);
-    }
-
     private void OnWoundRemoved(Entity<WoundComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (_timing.ApplyingState)
@@ -201,15 +132,19 @@ public sealed class WoundableSystem : EntitySystem
         if (ent.Comp.Damage.Empty)
             return;
 
-        _damageable.TryChangeDamage(args.Target, -ent.Comp.Damage.ToSpecifier(), true, false, forceRefresh: true);
-        ValidateWounds(args.Target, null);
+        RefreshWounds(args.Target, false, null);
     }
 
-    private void OnDamaged(Entity<WoundableComponent> ent, DamageSpecifier overall)
+    private void OnDamaged(Entity<WoundableComponent, DamageableComponent> ent, DamageSpecifier overall)
     {
         foreach (var (type, damage) in overall.DamageDict)
         {
-            var incoming = new DamageSpecifier() { DamageDict = new() { { type, damage } } };
+            var existing = ent.Comp2.Damage.DamageDict.GetValueOrDefault(type, FixedPoint2.Zero);
+            var delta = ent.Comp1.MaximumDamage.TryGetValue(type, out var data)
+                ? ComputeDelta(existing, existing + damage, data)
+                : FixedPoint2.Zero;
+
+            var incoming = new DamageSpecifier() { DamageDict = new() { { type, damage - delta } } };
 
             var evt = new GetWoundsWithSpaceEvent(new(), incoming);
             RaiseLocalEvent(ent, ref evt);
@@ -223,7 +158,7 @@ public sealed class WoundableSystem : EntitySystem
             if (DecideOnWoundType(incoming) is not { } woundToSpawn)
                 continue;
 
-            TryWound(ent, woundToSpawn, damage: new(incoming));
+            TryWound(ent, woundToSpawn, damage: new(incoming), refresh: false);
         }
     }
 
@@ -231,7 +166,7 @@ public sealed class WoundableSystem : EntitySystem
     {
         var damageable = Comp<DamageableComponent>(ent);
         if (damageable.Damage.AnyPositive())
-            OnDamaged(ent, DamageSpecifier.GetPositive(damageable.Damage));
+            OnDamaged((ent, ent, damageable), DamageSpecifier.GetPositive(damageable.Damage));
     }
 
     public void SetHealable(Entity<HealableWoundComponent> ent)
@@ -240,7 +175,7 @@ public sealed class WoundableSystem : EntitySystem
         Dirty(ent);
     }
 
-    public bool TryWound(Entity<WoundableComponent> ent, EntProtoId woundToSpawn, Damages? damage = null, bool unique = false, bool refreshDamage = false)
+    public bool TryWound(Entity<WoundableComponent> ent, EntProtoId woundToSpawn, DamageSpecifier? damage = null, bool unique = false, bool refresh = true)
     {
         if (unique && _statusEffects.HasStatusEffect(ent, woundToSpawn))
             return false;
@@ -261,10 +196,10 @@ public sealed class WoundableSystem : EntitySystem
         comp.WoundedAt = _timing.CurTime;
         comp.CreatedAt = _timing.CurTime;
 
-        if (refreshDamage)
-            _damageable.TryChangeDamage(ent.Owner, new(), true, true, null, forceRefresh: true);
-
         Dirty(wound.Value, comp);
+        if (refresh)
+            RefreshWounds((ent, ent, null), false, null);
+
         return true;
     }
 
@@ -274,18 +209,75 @@ public sealed class WoundableSystem : EntitySystem
         RaiseLocalEvent(ent, ref evt);
     }
 
-    private void OnDamageChanged(Entity<WoundableComponent> ent, ref DamageChangedEvent args)
+    /// <param name="current">The current amount of damage</param>
+    /// <param name="incoming">The incoming amount of damage, that is, <see cref="current"/> + some damage specifier</param>
+    /// <param name="modifier">The modifier to curve damage above the maximum by</param>
+    /// <returns>The amount to subtract from the damage specifier added to <see cref="current"/></returns>
+    private FixedPoint2 ComputeDelta(FixedPoint2 current, FixedPoint2 incoming, (FixedPoint2 Base, FixedPoint2 Factor) modifier)
     {
-        if (_timing.ApplyingState)
+        DebugTools.Assert(incoming > 0);
+
+        if (current >= modifier.Base && modifier.Factor != FixedPoint2.Zero)
+        {
+            var factor = modifier.Factor.Double();
+            var @base = modifier.Base.Double();
+            Func<FixedPoint2, double> fn = x => Math.Log( Math.Abs(factor - @base + x.Double()) ) * factor;
+
+            var maximumFromNow = FixedPoint2.New(fn(incoming + current) - fn(current));
+
+            return FixedPoint2.Max(incoming - maximumFromNow, FixedPoint2.Zero);
+        }
+        if (modifier.Factor != FixedPoint2.Zero)
+        {
+            var delta = FixedPoint2.Max((incoming + current) - modifier.Base, FixedPoint2.Zero);
+
+            if (delta <= 0)
+                return delta;
+
+            var adjustedIncoming = incoming - delta;
+            var adjustedCurrent = current + adjustedIncoming;
+            var adjustedRemainder = incoming - adjustedIncoming;
+
+            return FixedPoint2.Max( delta - ComputeDelta(adjustedCurrent, adjustedRemainder, modifier), FixedPoint2.Zero );
+        }
+
+        return FixedPoint2.Max((incoming + current) - modifier.Base, FixedPoint2.Zero);
+    }
+
+    private void OnDamageDealt(Entity<WoundableComponent> ent, ref DamageDealtEvent args)
+    {
+        if (_timing.ApplyingState || !TryComp<DamageableComponent>(ent, out var damageable))
             return;
 
-        if (args.DamageDelta is not { } delta || args.ForcedRefresh)
+        if (args.Damage.AnyPositive())
+            OnDamaged((ent, ent, damageable), DamageSpecifier.GetPositive(args.Damage));
+
+        if (args.Damage.AnyNegative())
+            OnHealed(ent, DamageSpecifier.GetNegative(args.Damage));
+
+        RefreshWounds((ent, ent, null), args.InterruptsDoAfters, args.Origin);
+    }
+
+    private void RefreshWounds(Entity<WoundableComponent?, DamageableComponent?> ent, bool interruptsDoAfters, EntityUid? origin)
+    {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        if (delta.AnyPositive())
-            OnDamaged(ent, DamageSpecifier.GetPositive(delta));
+        var evt = new WoundGetDamageEvent(new());
+        RaiseLocalEvent(ent, ref evt);
 
-        ValidateWounds(ent, null);
+        var dict = ent.Comp2.Damage.DamageDict;
+
+        var damageDone = new DamageSpecifier();
+        foreach (var (type, newValue) in evt.Accumulator.DamageDict)
+        {
+            var oldValue = dict.GetValueOrDefault(type, FixedPoint2.Zero);
+
+            damageDone.DamageDict[type] = newValue - oldValue;
+        }
+
+        ent.Comp2.Damage = evt.Accumulator;
+        _damageable.OnEntityDamageChanged((ent, ent.Comp2), damageDone, interruptsDoAfters, origin);
     }
 
     private void OnHealHealableWounds(Entity<HealableWoundComponent> ent, ref StatusEffectRelayedEvent<HealWoundsEvent> args)
@@ -295,7 +287,7 @@ public sealed class WoundableSystem : EntitySystem
 
         var comp = Comp<WoundComponent>(ent);
 
-        args.Args = args.Args with { Damage = comp.Damage.Heal(args.Args.Damage).ToSpecifier() };
+        args.Args = args.Args with { Damage = comp.Damage.Heal(args.Args.Damage) };
 
         comp.Damage.TrimZeros();
         args.Args.Damage.TrimZeros();
@@ -429,7 +421,7 @@ public sealed class WoundableSystem : EntitySystem
         args.Args = args.Args with { Pain = args.Args.Pain + lastingPain + freshPain };
     }
 
-    public void AddWoundDamage(Entity<WoundComponent?> ent, DamageSpecifier specifier)
+    private void AddWoundDamage(Entity<WoundComponent?> ent, DamageSpecifier specifier)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
@@ -453,16 +445,7 @@ public sealed class WoundableSystem : EntitySystem
             if (wound.Damage.Empty)
                 PredictedQueueDel(ent);
 
-            var changeBy = damage - remainder.ToSpecifier();
-            changeBy.TrimZeros();
-            if (changeBy.AnyNegative())
-            {
-                var actualDelta = _damageable.ChangeDamage(woundable.Owner, changeBy, true, false, null, forceRefresh: true);
-                DebugTools.Assert(!actualDelta.Empty);
-                DebugTools.Assert(changeBy.Equals(actualDelta!), $"{changeBy} == {actualDelta!}");
-            }
-
-            ValidateWounds(woundable, null);
+            RefreshWounds((woundable, woundable.Comp, null), false, null);
         }
         Dirty(ent);
     }

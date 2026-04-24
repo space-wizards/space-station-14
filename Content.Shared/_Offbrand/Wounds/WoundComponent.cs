@@ -15,7 +15,7 @@ public sealed partial class WoundComponent : Component
     /// The amount of damage this wound represents
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Damages Damage = new();
+    public DamageSpecifier Damage = new();
 
     /// <summary>
     /// The maximum amount of damage this wound can take

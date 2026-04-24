@@ -15,7 +15,7 @@
   components:
   - type: Wound
     damage:
-      damageDict:
+      types:
         Blunt: 10
     maximumDamage: 10
   - type: MovementModStatusEffect
@@ -37,7 +37,7 @@
   components:
   - type: Wound
     damage:
-      damageDict:
+      types:
         Slash: 5
     maximumDamage: 5
   - type: BleedingWound
@@ -63,7 +63,7 @@
   components:
   - type: Wound
     damage:
-      damageDict:
+      types:
         Heat: 100
         Blunt: 100
     maximumDamage: 200
@@ -100,7 +100,7 @@
   components:
   - type: Wound
     damage:
-      damageDict:
+      types:
         Blunt: 50
         Slash: 50
         Piercing: 50

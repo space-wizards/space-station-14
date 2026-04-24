@@ -36,6 +36,7 @@
   - type: StaticPrice
     price: 60
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -116,8 +117,9 @@
     noRot: true
   - type: Pullable
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Anchorable
   - type: Rotatable
   - type: Destructible

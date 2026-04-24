@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class LungDamageSystem : EntitySystem
+public sealed class LungDamageSystem : OffbrandDamageSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;

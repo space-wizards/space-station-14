@@ -86,7 +86,7 @@ public sealed class DamageOverlayUiController : UIController
     private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null, InjurableComponent? injurable = null)
     {
 // Begin Offbrand Changes
-        TryUpdateSimpleOverlays(entity, mobState, damageable, thresholds);
+        TryUpdateSimpleOverlays(entity, mobState, damageable, thresholds, injurable);
         TryUpdateWoundableOverlays(entity);
     }
 
@@ -132,7 +132,7 @@ public sealed class DamageOverlayUiController : UIController
 
     }
 
-    private void TryUpdateSimpleOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null)
+    private void TryUpdateSimpleOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null, InjurableComponent? injurable = null)
     {
 // End Offbrand Changes
         if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState) ||

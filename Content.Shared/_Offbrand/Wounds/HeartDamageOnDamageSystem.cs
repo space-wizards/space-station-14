@@ -5,7 +5,7 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class HeartDamageOnDamageSystem : EntitySystem
+public sealed class HeartDamageOnDamageSystem : OffbrandDamageSystem
 {
     [Dependency] private readonly HeartSystem _heart = default!;
 
@@ -13,20 +13,21 @@ public sealed class HeartDamageOnDamageSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HeartDamageOnDamageComponent, DamageChangedEvent>(OnDamageChanged, after: [typeof(WoundableSystem)]);
+        SubscribeLocalEvent<HeartDamageOnDamageComponent, DamageDealtEvent>(OnDamageDealt, after: [typeof(WoundableSystem)]);
     }
 
-    private void OnDamageChanged(Entity<HeartDamageOnDamageComponent> ent, ref DamageChangedEvent args)
+    private void OnDamageDealt(Entity<HeartDamageOnDamageComponent> ent, ref DamageDealtEvent args)
     {
-        if (args.DamageDelta is not { } delta || !args.DamageIncreased)
+        if (!args.Damage.AnyPositive())
             return;
 
+        var positive = DamageSpecifier.GetPositive(args.Damage);
         var damageable = Comp<DamageableComponent>(ent);
         var heart = Comp<HeartrateComponent>(ent);
 
         foreach (var threshold in ent.Comp.Thresholds)
         {
-            var incomingAmount = ThresholdHelpers.Count(threshold.DamageTypes, delta);
+            var incomingAmount = ThresholdHelpers.Count(threshold.DamageTypes, positive);
             var totalAmount = ThresholdHelpers.Count(threshold.DamageTypes, damageable.Damage);
 
             var damageAmount = FixedPoint2.Max(incomingAmount - FixedPoint2.Max(threshold.MinimumTotalDamage - totalAmount, FixedPoint2.Zero), FixedPoint2.Zero);

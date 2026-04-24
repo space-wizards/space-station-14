@@ -23,23 +23,3 @@ public sealed partial class UpdateStatusEffectOnTriggerComponent : BaseXOnTrigge
     [DataField, AutoNetworkedField]
     public TimeSpan? Duration;
 }
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SetStatusEffectOnTriggerComponent : BaseXOnTriggerComponent
-{
-    [DataField(required: true), AutoNetworkedField]
-    public EntProtoId EffectProto;
-
-    [DataField, AutoNetworkedField]
-    public TimeSpan? Duration;
-}
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class RemoveStatusEffectOnTriggerComponent : BaseXOnTriggerComponent
-{
-    [DataField(required: true), AutoNetworkedField]
-    public EntProtoId EffectProto;
-
-    [DataField, AutoNetworkedField]
-    public TimeSpan? Duration;
-}

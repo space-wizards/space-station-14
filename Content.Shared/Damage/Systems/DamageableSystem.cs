@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -48,12 +49,12 @@ public sealed partial class DamageableSystem : EntitySystem
     ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
     ///     The damage changed event is used by other systems, such as damage thresholds.
     /// </remarks>
-    private void OnEntityDamageChanged(
+    [Access(typeof(DamageableSystem), typeof(WoundableSystem))] // Offbrand
+    public void OnEntityDamageChanged( // Offbrand
         Entity<DamageableComponent> ent,
         DamageSpecifier? damageDelta = null,
         bool interruptsDoAfters = true,
-        EntityUid? origin = null,
-        bool forceRefresh = false // Offbrand
+        EntityUid? origin = null
     )
     {
         ent.Comp.Damage.GetDamagePerGroup(_prototypeManager, ent.Comp.DamagePerGroup);
@@ -72,7 +73,7 @@ public sealed partial class DamageableSystem : EntitySystem
 
         // TODO DAMAGE
         // byref struct event.
-        RaiseLocalEvent(ent, new DamageChangedEvent(ent.Comp, damageDelta, interruptsDoAfters, origin, forceRefresh)); // Offbrand
+        RaiseLocalEvent(ent, new DamageChangedEvent(ent.Comp, damageDelta, interruptsDoAfters, origin));
     }
 
     /// <summary>
