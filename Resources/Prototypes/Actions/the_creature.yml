@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseAction
+  id: ActionCreatureUpgradeMenu
+  name: Evolve
+  description: Opens the evolution terminal to spend blood on upgrades.
+  components:
+  - type: Action
+    icon: Interface/Actions/shop.png
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:CreatureUpgradeMenuActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionCreatureSting
+  name: Venom Spit
+  description: Spit a paralyzing bolt that knocks the target down for 20 seconds.
+  components:
+  - type: Action
+    icon: { sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi, state: crossbowbolt }
+    useDelay: 45
+    enabled: false
+    checkCanInteract: false
+    itemIconStyle: BigAction
+  - type: TargetAction
+    checkCanAccess: false
+    range: 8
+  - type: WorldTargetAction
+    event: !type:ActionGunShootEvent

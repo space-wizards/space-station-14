@@ -1,0 +1,178 @@
+- type: entity
+  id: MobCreatureTest
+  parent: [ BaseMob, BaseMobAnimal ]
+  name: the creature
+  description: Something ancient and hungry has found its way aboard.
+  suffix: TEST
+  components:
+
+  # ── Player control ────────────────────────────────────────────────────────
+  - type: Input
+    context: "human"
+  - type: Eye
+    drawFov: true
+  - type: CombatMode
+
+  # ── Visuals ───────────────────────────────────────────────────────────────
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+    layers:
+    - state: enforcer
+      map: ["enum.DamageStateVisualLayers.Base"]
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: enforcer
+      Dead:
+        Base: enforcer_dead
+
+  # ── Physics / collision ───────────────────────────────────────────────────
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+  # ── Biology ───────────────────────────────────────────────────────────────
+  - type: SolutionContainerManager
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: FerrochromicAcid
+        Quantity: 75
+    bloodlossDamage:
+      types:
+        Bloodloss: 0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -1
+
+  # ── Health ────────────────────────────────────────────────────────────────
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+  - type: StatusEffects
+    allowed:
+    - Electrocution
+    - TemporaryBlindness
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Pacified
+
+  # ── Melee ─────────────────────────────────────────────────────────────────
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/slash.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 10
+        Blunt: 5
+
+  # ── Stealth ───────────────────────────────────────────────────────────────
+  - type: Stealth
+    enabled: false
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.15
+    movementVisibilityRate: 0.15
+
+  # ── Prying ────────────────────────────────────────────────────────────────
+  - type: Prying
+    speedModifier: 1.0
+    pryPowered: true
+    force: true
+
+  # ── Creature-specific state ───────────────────────────────────────────────
+  - type: Creature
+    bloodPool: 215
+    maxBloodPool: 400
+    upgradeRanks:
+      predator: 1
+      shadow: 2
+      ravenous: 1
+
+  # ── Upgrade menu BUI ──────────────────────────────────────────────────────
+  - type: UserInterface
+    interfaces:
+      enum.CreatureUiKey.UpgradeMenu:
+        type: CreatureUpgradeMenuBoundUserInterface
+
+  # ── Upgrade menu action ───────────────────────────────────────────────────
+  - type: ActionGrant
+    actions:
+    - ActionCreatureUpgradeMenu
+
+  # ── Sting ability (gated by sting upgrade rank) ───────────────────────────
+  - type: ActionGun
+    action: ActionCreatureSting
+    gunProto: CreatureStingGun
+
+  # ── Ghost role ────────────────────────────────────────────────────────────
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-creature-test-name
+    description: ghost-role-information-creature-test-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+# ── Sting supporting entities ──────────────────────────────────────────────
+
+- type: entity
+  id: CreatureStingGun
+  categories: [ HideSpawnMenu ]
+  name: creature sting gland
+  components:
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileCreatureSting
+    capacity: 1
+    count: 1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 1
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
+    soundEmpty: null
+
+- type: entity
+  parent: BaseBullet
+  id: ProjectileCreatureSting
+  categories: [ HideSpawnMenu ]
+  name: venom bolt
+  components:
+  - type: Ammo
+    muzzleFlash: null
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: crossbowbolt
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 1
+  - type: StunOnCollide
+    knockdownAmount: 20
+    drop: false

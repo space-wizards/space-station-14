@@ -1,0 +1,117 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'creature-upgrade-menu-title'}"
+                      MinSize="940 510"
+                      SetSize="940 510"
+                      Resizable="False">
+
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+
+        <!-- Body: left blood rail + right catalog -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+
+            <!-- Left rail: blood stores (fixed 200px) -->
+            <PanelContainer Name="LeftRail" MinWidth="200" MaxWidth="200" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#232430" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical" Margin="10" VerticalExpand="True">
+
+                    <!-- "BLOOD · ml" heading row -->
+                    <BoxContainer Orientation="Horizontal" Margin="0 0 0 6">
+                        <Label Text="{Loc 'creature-upgrade-blood-section'}"
+                               StyleClasses="LabelHeading" />
+                        <Control HorizontalExpand="True" />
+                        <Label Text="ml" StyleClasses="LabelSubText" VAlign="Bottom" />
+                    </BoxContainer>
+
+                    <!-- Big blood value -->
+                    <Label Name="BloodAvailableLabel"
+                           FontColorOverride="#ff6b6b"
+                           StyleClasses="LabelHeadingBigger" />
+                    <Label Name="BloodFractionLabel"
+                           StyleClasses="LabelSubText"
+                           Margin="0 0 0 6" />
+
+                    <!-- Blood vial — injected by code-behind into this container -->
+                    <Control Name="BloodVialContainer"
+                             VerticalExpand="True"
+                             MinHeight="120"
+                             HorizontalExpand="True" />
+
+                    <!-- Bottom stats: LIFETIME + MUTATIONS -->
+                    <PanelContainer Margin="0 8 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#25252A"
+                                              BorderColor="#434863"
+                                              BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" Margin="8 6">
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'creature-upgrade-lifetime'}"
+                                       StyleClasses="LabelSubText" />
+                                <Control HorizontalExpand="True" />
+                                <Label Name="LifetimeLabel" />
+                            </BoxContainer>
+                            <PanelContainer StyleClasses="LowDivider" Margin="0 3" />
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'creature-upgrade-mutations'}"
+                                       StyleClasses="LabelSubText" />
+                                <Control HorizontalExpand="True" />
+                                <Label Name="MutationsLabel" />
+                            </BoxContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                </BoxContainer>
+            </PanelContainer>
+
+            <!-- Thin vertical separator -->
+            <PanelContainer MinWidth="2" MaxWidth="2" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#434863" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+
+            <!-- Right: mutation catalog -->
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          Margin="10 10 10 6">
+
+                <!-- Catalog heading row -->
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 8">
+                    <Label Text="{Loc 'creature-upgrade-catalog-section'}"
+                           StyleClasses="LabelHeading" />
+                    <PanelContainer StyleClasses="LowDivider"
+                                    HorizontalExpand="True"
+                                    Margin="8 0" />
+                    <Label Text="{Loc 'creature-upgrade-catalog-hint'}"
+                           StyleClasses="LabelSubText"
+                           VAlign="Bottom" />
+                </BoxContainer>
+
+                <ScrollContainer HScrollEnabled="False"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
+                    <BoxContainer Name="UpgradeRowContainer"
+                                  Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  SeparationOverride="4" />
+                </ScrollContainer>
+
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <PanelContainer StyleClasses="HighDivider" />
+        <BoxContainer Orientation="Horizontal" Margin="10 2">
+            <Label Text="{Loc 'creature-upgrade-footer'}"
+                   StyleClasses="WindowFooterText"
+                   HorizontalExpand="True" />
+            <Label Text="◉ REC" StyleClasses="WindowFooterText" />
+        </BoxContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>

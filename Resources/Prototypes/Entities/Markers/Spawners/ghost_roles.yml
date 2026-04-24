@@ -360,3 +360,26 @@
     - state: green
     - sprite: Clothing/Head/Hats/wizardhat.rsi
       state: icon
+
+- type: entity
+  id: SpawnPointGhostCreatureTest
+  name: ghost role spawn point
+  suffix: creature test
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-creature-test-name
+    description: ghost-role-information-creature-test-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobCreatureTest
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+      state: enforcer
