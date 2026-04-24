@@ -27,7 +27,7 @@ public sealed partial class ZombieRuleComponent : Component
     public float ZombieShuttleCallPercentage = 0.7f;
 
      /// <summary>
-    /// The CBURN squad game rule that is sppawned when `ZombieShuttleCallPercentage` is reached.
+    /// The CBURN squad game rule that is spawned when `ZombieShuttleCallPercentage` is reached.
     /// </summary>
     [DataField]
     public EntProtoId CburnGameRule = "CBURNSquad";
