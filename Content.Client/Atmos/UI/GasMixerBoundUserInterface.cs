@@ -39,11 +39,7 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
 
     private void OnMixerOutputPressurePressed(string value)
     {
-        if (UserInputParser.TryFloat(value, out var pressure) || !EntMan.TryGetComponent(Owner, out GasMixerComponent? mixer))
-            return;
-
-        if (pressure > mixer.MaxTargetPressure)
-            pressure = mixer.MaxTargetPressure;
+        var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
 
         SendPredictedMessage(new GasMixerChangeOutputPressureMessage(pressure));
     }

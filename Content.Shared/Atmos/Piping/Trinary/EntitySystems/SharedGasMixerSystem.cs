@@ -40,7 +40,7 @@ public abstract class SharedGasMixerSystem : EntitySystem
     {
         ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxTargetPressure);
         _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent.Owner):device} to {args.Pressure}kPa");
+            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent.Owner):device} to {ent.Comp.TargetPressure}kPa");
         Dirty(ent);
         UpdateUi(ent);
     }
