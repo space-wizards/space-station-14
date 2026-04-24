@@ -115,6 +115,7 @@
         - id: ClothingNeckCloakGay
         - id: ClothingNeckCloakEnby
         - id: ClothingNeckCloakPan
+        - id: ClothingNeckCloakPoly
       - id: ToyFigurineSkeleton
       - id: MysteryFigureBox
       # Cult
@@ -152,6 +153,7 @@
         - id: ClothingNeckNonBinaryPin
         - id: ClothingNeckPansexualPin
         - id: ClothingNeckPluralPin
+        - id: ClothingNeckPolyPin
         - id: ClothingNeckOmnisexualPin
         - id: ClothingNeckGenderqueerPin
         - id: ClothingNeckGenderfluidPin
