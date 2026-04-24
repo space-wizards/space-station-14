@@ -3,7 +3,6 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Atmos.Piping.Trinary.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-//[Access(typeof(GasMixerSystem))]
 public sealed partial class GasMixerComponent : Component
 {
     [DataField, AutoNetworkedField]

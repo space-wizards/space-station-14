@@ -1,4 +1,3 @@
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
@@ -8,14 +7,11 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-/// Initializes a <see cref="GasMixerWindow"/> and updates it when new server messages are received.
+/// Initializes a <see cref="GasMixerWindow"/> and updates it from the entity's <see cref="GasMixerComponent"/>.
 /// </summary>
 [UsedImplicitly]
 public sealed class GasMixerBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
-    private const float MaxPressure = Atmospherics.MaxOutputPressure;
-
     [ViewVariables]
     private GasMixerWindow? _window;
 
@@ -43,9 +39,11 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
 
     private void OnMixerOutputPressurePressed(string value)
     {
-        var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
-        if (pressure > MaxPressure)
-            pressure = MaxPressure;
+        if (UserInputParser.TryFloat(value, out var pressure) || !EntMan.TryGetComponent(Owner, out GasMixerComponent? mixer))
+            return;
+
+        if (pressure > mixer.MaxTargetPressure)
+            pressure = mixer.MaxTargetPressure;
 
         SendPredictedMessage(new GasMixerChangeOutputPressureMessage(pressure));
     }
