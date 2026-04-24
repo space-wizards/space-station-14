@@ -303,7 +303,7 @@
         cart_garbage:
           whitelist:
             tags:
-              - TrashBag
+            - TrashBag
         cart_garbage_blue:
           whitelist:
             tags:
