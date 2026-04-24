@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Containers.ItemSlot;
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Shared.Containers.ItemSlot;
 
 [RegisterComponent]
 public sealed partial class ItemSlotVisualsComponent : Component
@@ -25,6 +27,7 @@ public sealed partial class ItemSlotVisualsComponent : Component
     public ItemSlotVisualLayers FillLayer = ItemSlotVisualLayers.Fill;
 }
 
+[Serializable, NetSerializable]
 public enum ItemSlotVisualLayers : byte
 {
     ContainsItem,

@@ -25,21 +25,24 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component))
+        if (component.FillBaseName == null)
             return;
+
+        //if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component))
+        //    return;
 
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
             return;
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.MaxFillLevels + 1);
+        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.MaxFillLevels + 1);
 
-        if (closestFillSprite > 0)
+        //if (closestFillSprite > 0)
+
+        if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component)
+            && contains)
         {
-            if (component.FillBaseName == null)
-                return;
-
             SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
-            var stateName = component.FillBaseName + closestFillSprite;
+            var stateName = component.FillBaseName + component.MaxFillLevels;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
         }
         else
@@ -61,17 +64,21 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (!TryComp<ItemComponent>(uid, out var item))
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
-            return;
+        //if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
+        //    return;
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.InHandsMaxFillLevels + 1);
+        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.InHandsMaxFillLevels + 1);
 
-        if (closestFillSprite > 0)
+        //if (closestFillSprite > 0)
+
+        if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
+            && contains)
         {
             var layer = new PrototypeLayerData();
 
             var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
+
+            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + component.InHandsMaxFillLevels;
 
             layer.State = key;
 
@@ -90,22 +97,24 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
-            return;
+        //if (!AppearanceSystem.TryGetData<int>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
+        //    return;
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, ent.Comp.EquippedMaxFillLevels + 1);
 
-        if (closestFillSprite > 0)
+        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, ent.Comp.EquippedMaxFillLevels + 1);
+
+        //if (closestFillSprite > 0)
+
+        if (AppearanceSystem.TryGetData<bool>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
+            && contains)
         {
             var layer = new PrototypeLayerData();
 
-            var equippedPrefix = clothing.EquippedPrefix == null
-                ? $"equipped-{args.Slot}"
-                : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
+            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
 
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null ||
-                !sprite.BaseRSI.TryGetState(key, out _))
+            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + ent.Comp.EquippedMaxFillLevels;
+
+            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
                 return;
 
             layer.State = key;

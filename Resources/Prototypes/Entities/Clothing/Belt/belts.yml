@@ -39,7 +39,7 @@
     fillBaseName: fill-
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
-    EquippedMaxFillLevels: 1
+    equippedMaxFillLevels: 1
     equippedFillBaseName: -fill-
   - type: Appearance
 

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
@@ -33,6 +34,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -265,7 +267,13 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-                Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
+                if (TryComp(uid, out AppearanceComponent? appearance) && TryComp(uid, out ItemSlotVisualsComponent? _))
+                {
+                    Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
+                    _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, slot.HasItem, appearance);
+                }
+                else
+                    Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
 
                 if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
