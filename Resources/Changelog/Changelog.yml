@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed being able to wield two-handed weapons when having only one hand.
-    type: Fix
-  id: 9153
-  time: '2025-10-24T07:36:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40966
-- author: TheGrimbeeper
-  changes:
-  - message: Fix artifact radiation trigger not being triggered by ambient radiation.
-    type: Fix
-  id: 9154
-  time: '2025-10-24T09:21:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41065
 - author: PicklOH
   changes:
   - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
@@ -4049,3 +4035,17 @@
   id: 9664
   time: '2026-04-24T11:52:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40519
+- author: Princess-Cheeseballs
+  changes:
+  - message: Randomly generated characters will now be colored correctly.
+    type: Fix
+  id: 9665
+  time: '2026-04-24T15:57:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43380
+- author: Tuchila-Adi-Bogdan
+  changes:
+  - message: You can no longer eat with the radiation hood on.
+    type: Tweak
+  id: 9666
+  time: '2026-04-24T17:31:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43699
