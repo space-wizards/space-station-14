@@ -75,7 +75,7 @@ public sealed partial class HeartSystem : EntitySystem
             var strainChanged = new AfterStrainChangedEvent();
             RaiseLocalEvent(uid, ref strainChanged);
 
-            var respiration = new ApplyRespiratoryRateModifiersEvent(ComputeRespiratoryRateModifier((uid, heartrate)), ComputeExhaleEfficiencyModifier((uid, heartrate)));
+            var respiration = new ApplyRespiratoryRateModifiersEvent(ComputeRespiratoryRateModifier((uid, heartrate)));
             RaiseLocalEvent(uid, ref respiration);
 
             if (!heartrate.Running)

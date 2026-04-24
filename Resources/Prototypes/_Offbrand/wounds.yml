@@ -11,6 +11,7 @@
   - type: RejuvenateRemovedStatusEffect
   - type: Wound
   - type: HealableWound
+    requiresTendingAbove: 10
   - type: PainfulWound
     painCoefficients:
       Blunt: 0.8

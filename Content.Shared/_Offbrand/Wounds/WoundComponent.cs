@@ -89,6 +89,12 @@ public sealed partial class HealableWoundComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool CanHeal = true;
+
+    /// <summary>
+    /// Wound must be tended before they can passively regenerate if it has this much damage
+    /// </summary>
+    [DataField(required: true)]
+    public FixedPoint2 RequiresTendingAbove;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -152,7 +158,7 @@ public record struct GetWoundsWithSpaceEvent(List<EntityUid> Wounds, DamageSpeci
 /// Raised on an entity to attempt to heal its wounds with the given damage
 /// </summary>
 [ByRefEvent]
-public record struct HealWoundsEvent(DamageSpecifier Damage);
+public record struct HealWoundsEvent(DamageSpecifier Damage, bool Passive);
 
 /// <summary>
 /// Raised on an entity to get the sum total of pain

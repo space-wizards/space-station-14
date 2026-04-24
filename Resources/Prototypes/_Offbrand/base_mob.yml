@@ -22,6 +22,15 @@
     examinableTypes:
     - Asphyxiation
     - Radiation
+  - type: WoundRegeneration
+    damage:
+      types:
+        Blunt: -0.5
+        Piercing: -0.5
+        Slash: -0.5
+        Heat: -0.5
+        Cold: -0.5
+        Shock: -0.5
   - type: Deathgasp
   - type: Damageable
   - type: RadiationReceiver
@@ -187,7 +196,7 @@
     maxStrain: 4
   - type: SolutionContainerManager
   - type: InjectableSolution
-    solution: chemicals
+    solution: bloodstream
   - type: Bloodstream
     bleedReductionAmount: 0
     damageBleedModifiers: null
@@ -219,6 +228,11 @@
     damage: 0
     maxOxygen: 10
     oxygen: 10
+    vascularToneCurve:
+      !type:LogisticCurve
+      l: 1.1
+      k: -7.5
+      x0: 3
   - type: BrainDamageOxygenation
     oxygenationDamageThresholds:
       0.10: [1.0, [100, 0.75]]
@@ -231,6 +245,8 @@
     oxygenRegeneration: 1
     maxPassivelyHealableDamage: 30
     damageHealing: 1
+    damageStageSize: 10
+    damageStageMaximumHealing: 8
   - type: BrainDamageThresholds
     damageStateThresholds:
       70: Critical

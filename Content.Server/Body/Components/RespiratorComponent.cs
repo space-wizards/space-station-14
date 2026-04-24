@@ -48,12 +48,6 @@ namespace Content.Server.Body.Components
         public float BreathRateMultiplier = 1f;
 
         /// <summary>
-        /// Offbrand - Multiplier applied to exhalation to determine how efficient the purging of gases from the body is
-        /// </summary>
-        [DataField]
-        public float ExhaleEfficacyModifier = 1f;
-
-        /// <summary>
         /// Offbrand - Multiplier that determines if an entity is hyperventilating (should audibly breathe)
         /// </summary>
         [DataField]

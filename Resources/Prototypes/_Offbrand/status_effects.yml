@@ -317,10 +317,6 @@
   - type: CannotUseHeadsetStatusEffect
   - type: SilencedStatusEffect
   - type: BlockMovementWhenPulledStatusEffect
-  - type: GunBackfireStatusEffect
-    probability: 0.9
-  - type: HyposprayBackfireStatusEffect
-    probability: 0.9
   - type: DisruptOnAttackStatusEffect
 
 - type: entity
@@ -373,10 +369,6 @@
     attackRateConstant: -0.1
   - type: GunAccuracyStatusEffect
     angleRangeModifier: 24
-  - type: GunBackfireStatusEffect
-    probability: 0.9
-  - type: HyposprayBackfireStatusEffect
-    probability: 0.9
   - type: DisruptOnAttackStatusEffect
 
 - type: entity

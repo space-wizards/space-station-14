@@ -196,7 +196,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
-        var ev = new ExhaledGasEvent(gas, entity.Comp.ExhaleEfficacyModifier);
+        var ev = new ExhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref ev);
     }
 
@@ -390,7 +390,6 @@ public sealed class RespiratorSystem : EntitySystem
     private void OnApplyRespiratoryRateModifiers(Entity<RespiratorComponent> ent, ref ApplyRespiratoryRateModifiersEvent args)
     {
         ent.Comp.BreathRateMultiplier = args.BreathRate;
-        ent.Comp.ExhaleEfficacyModifier = args.PurgeRate;
     }
     // End Offbrand
 
@@ -411,8 +410,8 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnGasExhaled(Entity<LungComponent> ent, ref BodyRelayedEvent<ExhaledGasEvent> args)
     {
-        _atmosSys.Merge(args.Args.Gas, ent.Comp.Air.RemoveRatio(args.Args.ExhaleEfficacyModifier * 1.1f)); // Offbrand - apply exhale efficacy as well as a magic 1.1 nudge to prevent microscopic buildup
-        // ent.Comp.Air.Clear(); - Offbrand - we RemoveRatio in this place
+        _atmosSys.Merge(args.Args.Gas, ent.Comp.Air);
+        ent.Comp.Air.Clear();
 
         if (_solutionContainerSystem.ResolveSolution(ent.Owner, ent.Comp.SolutionName, ref ent.Comp.Solution))
             _solutionContainerSystem.RemoveAllSolution(ent.Comp.Solution.Value);
@@ -452,10 +451,9 @@ public record struct InhaledGasEvent(GasMixture Gas, bool Handled = false, bool 
 /// Event raised when an entity is exhaling
 /// </summary>
 /// <param name="Gas">The gas mixture we're exhaling into.</param>
-/// <param name="ExhaleEfficacyModifier">Offbrand - the efficacy modifier of exhalation.</param>
 /// <param name="Handled">Whether we have successfully exhaled or not.</param>
 [ByRefEvent]
-public record struct ExhaledGasEvent(GasMixture Gas, float ExhaleEfficacyModifier, bool Handled = false);
+public record struct ExhaledGasEvent(GasMixture Gas, bool Handled = false);
 
 /// <summary>
 /// Raised when an entity starts suffocating and when suffocation progresses.

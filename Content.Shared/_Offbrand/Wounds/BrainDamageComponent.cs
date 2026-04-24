@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Maths;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -32,6 +33,12 @@ public sealed partial class BrainDamageComponent : Component
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public FixedPoint2 Oxygen;
+
+    /// <summary>
+    /// The curve to use for vascular tone.
+    /// </summary>
+    [DataField(required: true)]
+    public ICurve VascularToneCurve;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
@@ -74,6 +81,21 @@ public sealed partial class BrainDamageOxygenationComponent : Component
     /// </summary>
     [DataField(required: true)]
     public FixedPoint2 DamageHealing;
+
+    /// <summary>
+    /// How large a stage of damage is.
+    /// </summary>
+    [DataField(required: true)]
+    public FixedPoint2 DamageStageSize;
+
+    /// <summary>
+    /// How much you can heal within a stage of damage.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="DamageStageSize" /> - this should be less than <see cref="DamageHealing" />
+    /// </remarks>
+    [DataField(required: true)]
+    public FixedPoint2 DamageStageMaximumHealing;
 
     [DataField, AutoNetworkedField]
     public float UpdateIntervalMultiplier = 1f;

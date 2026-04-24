@@ -314,7 +314,7 @@ public record struct ModifiedRespiratoryRateEvent(float Rate);
 /// Raised on an entity to update its respiratory rate
 /// </summary>
 [ByRefEvent]
-public record struct ApplyRespiratoryRateModifiersEvent(float BreathRate, float PurgeRate);
+public record struct ApplyRespiratoryRateModifiersEvent(float BreathRate);
 
 /// <summary>
 /// Raised on an entity to determine if the heart should stop

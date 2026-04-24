@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Maths;
 using Content.Shared.Body.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Events;
@@ -63,7 +64,7 @@ public sealed partial class BrainDamageSystem : EntitySystem
 
     private void OnBaseVascularTone(Entity<BrainDamageComponent> ent, ref BaseVascularToneEvent args)
     {
-        args.Tone *= 1f - ent.Comp.Damage.Float() / ent.Comp.MaxDamage.Float();
+        args.Tone *= ent.Comp.VascularToneCurve.Clamped(ent.Comp.Damage.Float() / ent.Comp.MaxDamage.Float());
     }
 
     private void OnApplyMetabolicMultiplier(Entity<BrainDamageOxygenationComponent> ent, ref ApplyMetabolicMultiplierEvent args)
@@ -173,7 +174,10 @@ public sealed partial class BrainDamageSystem : EntitySystem
         if (ent.Comp1.Damage == FixedPoint2.Zero)
             return;
 
-        var evt = new BeforeHealBrainDamage(ent.Comp1.Damage < ent.Comp2.MaxPassivelyHealableDamage);
+        var passivelyHealable = ent.Comp1.Damage < ent.Comp2.MaxPassivelyHealableDamage;
+        var stageHealable = ent.Comp1.Damage.Float() % ent.Comp2.DamageStageSize.Float() <= ent.Comp2.DamageStageMaximumHealing.Float();
+
+        var evt = new BeforeHealBrainDamage(passivelyHealable || stageHealable);
         RaiseLocalEvent(ent, ref evt);
 
         if (!evt.Heal)
