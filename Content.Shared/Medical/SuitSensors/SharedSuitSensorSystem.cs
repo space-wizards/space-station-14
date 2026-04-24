@@ -45,7 +45,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    // [Dependency] private readonly DamageableSystem _damageable = default!; - Offbrand - we don't need that
 
     [Dependency] private readonly EntityQuery<SuitSensorComponent> _sensorQuery = default!;
 
