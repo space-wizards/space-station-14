@@ -1,17 +1,12 @@
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Sound.Components;
-using Content.Shared.UserInterface;
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 using Robust.Shared.Timing;
-using Robust.Shared.Network;
 
 namespace Content.Server.Sound;
 
 public sealed class EmitSoundSystem : SharedEmitSoundSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public override void Update(float frameTime)
     {
@@ -38,14 +33,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
         SubscribeLocalEvent<SpamEmitSoundComponent, MapInitEvent>(HandleSpamEmitSoundMapInit);
-    }
-
-    private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
-    {
-        TryEmitSound(uid, component, args.User, false);
-        args.Handled = true;
     }
 
     private void HandleSpamEmitSoundMapInit(Entity<SpamEmitSoundComponent> entity, ref MapInitEvent args)
@@ -59,9 +47,6 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
     private void SpamEmitSoundReset(Entity<SpamEmitSoundComponent> entity)
     {
-        if (_net.IsClient)
-            return;
-
         entity.Comp.NextSound = _timing.CurTime + ((entity.Comp.MinInterval < entity.Comp.MaxInterval)
             ? Random.Next(entity.Comp.MinInterval, entity.Comp.MaxInterval)
             : entity.Comp.MaxInterval);

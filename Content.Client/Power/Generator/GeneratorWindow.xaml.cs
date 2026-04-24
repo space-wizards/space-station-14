@@ -92,19 +92,19 @@ public sealed partial class GeneratorWindow : FancyWindow
         if (starting)
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-starting");
-            StatusLabel.SetOnlyStyleClass("Caution");
+            StatusLabel.SetOnlyStyleClass("negative");
 
             StartProgress.Value = progress;
         }
         else if (on)
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-running");
-            StatusLabel.SetOnlyStyleClass("Good");
+            StatusLabel.SetOnlyStyleClass("positive");
         }
         else
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-stopped");
-            StatusLabel.SetOnlyStyleClass("Danger");
+            StatusLabel.SetOnlyStyleClass("highlight");
         }
 
         var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableComponent? switchable);
@@ -131,7 +131,7 @@ public sealed partial class GeneratorWindow : FancyWindow
                 ("supply", netStats.Supply));
 
             var good = netStats.Load <= netStats.Supply;
-            NetworkStats.SetOnlyStyleClass(good ? "Good" : "Caution");
+            NetworkStats.SetOnlyStyleClass(good ? "positive" : "highlight");
         }
         else
         {

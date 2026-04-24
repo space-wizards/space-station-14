@@ -438,20 +438,22 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 if (Deleted(master))
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
 
                 var masterActive = activeQuery.CompOrNull(master);
                 if (masterActive == null)
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
 
                 var trans = transformQuery.GetComponent(uid);
                 var masterTrans = transformQuery.GetComponent(master);
-                if (!_transform.InRange(masterTrans.Coordinates, trans.Coordinates, 10f)
-)
+                if (!_transform.InRange(masterTrans.Coordinates, trans.Coordinates, 10f))
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
             }
 
@@ -461,7 +463,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.InstrumentPlayer is {Valid: true} mob)
                 {
-                    _stuns.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
+                    _stuns.TryUpdateParalyzeDuration(mob, TimeSpan.FromSeconds(1));
 
                     _popup.PopupEntity(Loc.GetString("instrument-component-finger-cramps-max-message"),
                         uid, mob, PopupType.LargeCaution);

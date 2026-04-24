@@ -18,7 +18,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20241111193608_ConnectionTrust")]
     partial class ConnectionTrust
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2073,6 +2072,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

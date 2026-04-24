@@ -3,11 +3,11 @@
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                MinSize="300 120" Title="{Loc comp-gas-thermomachine-ui-title-freezer}">
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc comp-gas-thermomachine-ui-toggle}"/>
-            <Control MinSize="5 0" />
-            <Button Access="Public" Name="ToggleStatusButton"/>
-        </BoxContainer>
+        <controls:SwitchButton
+            Name="ToggleStatusButton"
+            HorizontalAlignment="Left"
+            Pressed="True"
+            Access="Public" />
         <BoxContainer Name="SpinboxHBox" Orientation="Horizontal">
             <Label Text="{Loc comp-gas-thermomachine-ui-temperature}"/>
         </BoxContainer>

@@ -2,6 +2,7 @@ using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Roles;
 using Content.Shared.Humanoid;
+using Content.Shared.Roles.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -37,7 +38,7 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 
     private string MakeBriefing(EntityUid ent)
     {
-        var isHuman = HasComp<HumanoidAppearanceComponent>(ent);
+        var isHuman = HasComp<HumanoidProfileComponent>(ent);
         var briefing = isHuman
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");

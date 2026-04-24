@@ -53,7 +53,7 @@ namespace Content.Client.Crayon.UI
         private void RefreshList()
         {
             // Clear
-            Grids.DisposeAllChildren();
+            Grids.RemoveAllChildren();
 
             if (_decals == null || _allDecals == null)
                 return;
@@ -137,7 +137,8 @@ namespace Content.Client.Crayon.UI
 
         private void ButtonOnPressed(ButtonEventArgs obj)
         {
-            if (obj.Button.Name == null) return;
+            if (obj.Button.Name == null)
+                return;
 
             _selected = obj.Button.Name;
             _autoSelected = null;

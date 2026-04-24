@@ -1,0 +1,59 @@
+- type: organCategory
+  id: Torso
+
+- type: organCategory
+  id: Head
+
+- type: organCategory
+  id: ArmLeft
+
+- type: organCategory
+  id: ArmRight
+
+- type: organCategory
+  id: HandRight
+
+- type: organCategory
+  id: HandLeft
+
+- type: organCategory
+  id: LegLeft
+
+- type: organCategory
+  id: LegRight
+
+- type: organCategory
+  id: FootLeft
+
+- type: organCategory
+  id: FootRight
+
+- type: organCategory
+  id: Brain
+
+- type: organCategory
+  id: Eyes
+
+- type: organCategory
+  id: Tongue
+
+- type: organCategory
+  id: Appendix
+
+- type: organCategory
+  id: Ears
+
+- type: organCategory
+  id: Lungs
+
+- type: organCategory
+  id: Heart
+
+- type: organCategory
+  id: Stomach
+
+- type: organCategory
+  id: Liver
+
+- type: organCategory
+  id: Kidneys

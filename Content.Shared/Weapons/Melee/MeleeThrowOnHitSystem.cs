@@ -97,7 +97,7 @@ public sealed class MeleeThrowOnHitSystem : EntitySystem
         RaiseLocalEvent(target, ref startEvent);
 
         if (ent.Comp.StunTime != null)
-            _stun.TryParalyze(target, ent.Comp.StunTime.Value, false);
+            _stun.TryAddParalyzeDuration(target, ent.Comp.StunTime.Value);
 
         if (direction == Vector2.Zero)
             return;

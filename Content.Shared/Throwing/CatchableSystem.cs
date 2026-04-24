@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -22,17 +23,14 @@ public sealed partial class CatchableSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
-    private EntityQuery<HandsComponent> _handsQuery;
-    private EntityQuery<CombatModeComponent> _combatModeQuery;
+    [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
+    [Dependency] private readonly EntityQuery<CombatModeComponent> _combatModeQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<CatchableComponent, ThrowDoHitEvent>(OnDoHit);
-
-        _handsQuery = GetEntityQuery<HandsComponent>();
-        _combatModeQuery = GetEntityQuery<CombatModeComponent>();
     }
 
     private void OnDoHit(Entity<CatchableComponent> ent, ref ThrowDoHitEvent args)
@@ -54,10 +52,7 @@ public sealed partial class CatchableSystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = HashCode.Combine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-        if (!rand.Prob(ent.Comp.CatchChance))
+        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.CatchChance, GetNetEntity(ent)))
             return;
 
         // Try to catch!

@@ -17,7 +17,6 @@ namespace Content.Server.Database.Migrations.Postgres
     [Migration("20230402214647_BanAutoDelete")]
     partial class BanAutoDelete
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1361,6 +1360,5 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }
