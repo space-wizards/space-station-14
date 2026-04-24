@@ -17,6 +17,6 @@
 - type: stack
   parent: BaseVerySmallStack
   id: ConveyorBeltStack
-  name: conveyor_belt
-  # icon: # might want to add a sprite
+  name: stack-conveyor-belt
+  # icon: might want to add a sprite in the future
   spawn: ConveyorBeltAssembly
