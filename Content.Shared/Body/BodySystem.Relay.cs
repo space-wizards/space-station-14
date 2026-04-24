@@ -1,7 +1,12 @@
+using Content.Shared._Offbrand.Organs;
+using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body.Events;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Body;
@@ -18,6 +23,19 @@ public sealed partial class BodySystem
         SubscribeLocalEvent<BodyComponent, ApplyOrganMarkingsEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, OrganCopyAppearanceEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, HumanoidLayerVisibilityChangedEvent>(RefRelayBodyEvent);
+        // Begin Offbrand
+        SubscribeLocalEvent<BodyComponent, SuicideEvent>(RelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(RelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BeforeInhaledGasEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BeforeBreathEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BaseLungFunctionEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(RelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BaseCardiacOutputEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, CardiacCompensationEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, HeartBeatEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, TargetDefibrillatedEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, BaseVascularToneEvent>(RefRelayBodyEvent);
+        // End Offbrand
     }
 
     private void RefRelayBodyEvent<T>(EntityUid uid, BodyComponent component, ref T args) where T : struct

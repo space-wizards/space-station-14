@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Organs;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
@@ -105,8 +106,8 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
             return false;
 
         // Begin Offbrand
-        if (TryComp<HeartrateComponent>(target, out var heartrate) && heartrate.Running)
-            return false;
+        if (HasComp<PerfusionComponent>(target))
+            return true;
         // End Offbrand
 
         if (!targetCanBeAlive && _mobState.IsAlive(target, mobState))

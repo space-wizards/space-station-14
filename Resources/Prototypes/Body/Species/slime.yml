@@ -177,7 +177,7 @@
         Asphyxiation: -1.0
     maxSaturation: 15
   # Begin Offbrand Additions
-  - type: Heartrate
+  - type: Perfusion
     etco2Name: etco2-nitrous-oxide
     etco2GasName: reagent-name-nitrous-oxide
     spo2Name: spo2-nitrogen
@@ -275,7 +275,7 @@
     stages: [ Digestion, Bloodstream, Metabolites ]
 
 - type: entity
-  parent: [ OrganBaseLungs, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]
+  parent: [ OrganBaseLungs, OrganBaseHeart, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]
   id: OrganSlimePersonLungs
   name: gas sacs
   components:

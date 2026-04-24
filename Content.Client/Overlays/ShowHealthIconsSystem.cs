@@ -26,7 +26,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         base.Initialize();
 
         SubscribeLocalEvent<InjurableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-        SubscribeLocalEvent<BrainDamageComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent); // Offbrand
+        SubscribeLocalEvent<BrainDamageThresholdsComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent); // Offbrand
         SubscribeLocalEvent<ShowHealthIconsComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
@@ -67,36 +67,36 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     }
 
     // Begin Offbrand
-    private void OnGetStatusIconsEvent(Entity<BrainDamageComponent> ent, ref GetStatusIconsEvent args)
+    private void OnGetStatusIconsEvent(Entity<BrainDamageThresholdsComponent> ent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive || !TryComp<BrainDamageThresholdsComponent>(ent, out var thresholds))
+        if (!IsActive)
             return;
 
-        var healthIcons = DecideBrainHealthIcons((ent, ent, thresholds));
+        var healthIcons = DecideBrainHealthIcons(ent);
         args.StatusIcons.AddRange(healthIcons);
     }
 
-    private List<HealthIconPrototype> DecideBrainHealthIcons(Entity<BrainDamageComponent, BrainDamageThresholdsComponent> ent)
+    private List<HealthIconPrototype> DecideBrainHealthIcons(Entity<BrainDamageThresholdsComponent> ent)
     {
-        if (ent.Comp2.CurrentState == MobState.Dead)
+        if (ent.Comp.CurrentState == MobState.Dead)
         {
-            return new() { _prototypeMan.Index(ent.Comp2.DeadIcon) };
+            return new() { _prototypeMan.Index(ent.Comp.DeadIcon) };
         }
 
-        var current = ent.Comp1.Damage;
-        var max = ent.Comp1.MaxDamage;
+        var current = ent.Comp.DisplayDamage;
+        var max = ent.Comp.DisplayMaxDamage;
 
-        if (ent.Comp2.CurrentState == MobState.Critical || ent.Comp1.Oxygen == 0)
+        if (ent.Comp.CurrentState == MobState.Critical || ent.Comp.DisplayOxygen == 0)
         {
-            var amount = ent.Comp2.CriticalDamageIcons.Count;
+            var amount = ent.Comp.CriticalDamageIcons.Count;
             var idx = Math.Clamp((int)Math.Floor(amount - (amount / max.Double()) * current.Double()), 0, amount-1);
-            return new() { _prototypeMan.Index(ent.Comp2.CriticalDamageIcons[idx]) };
+            return new() { _prototypeMan.Index(ent.Comp.CriticalDamageIcons[idx]) };
         }
         else
         {
-            var amount = ent.Comp2.AliveDamageIcons.Count;
+            var amount = ent.Comp.AliveDamageIcons.Count;
             var idx = Math.Clamp((int)Math.Floor(amount - (amount / max.Double()) * current.Double()), 0, amount-1);
-            return new() { _prototypeMan.Index(ent.Comp2.AliveDamageIcons[idx]) };
+            return new() { _prototypeMan.Index(ent.Comp.AliveDamageIcons[idx]) };
         }
     }
     // End Offbrand

@@ -1,4 +1,4 @@
-cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } no pulse and is gasping for breath![/color]
+cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } no pulse and { CONJUGATE-BE($target) } gasping for breath![/color]
 
 fracture-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BASIC($target, "look", "looks") } like something is shaped wrong under { POSS-ADJ($target) } skin![/color]
 arterial-bleeding-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } spurting blood![/color]

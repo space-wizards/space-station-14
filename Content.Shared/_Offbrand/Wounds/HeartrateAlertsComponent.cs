@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(HeartrateAlertsSystem))]
 public sealed partial class HeartrateAlertsComponent : Component
 {
@@ -33,4 +33,7 @@ public sealed partial class HeartrateAlertsComponent : Component
     /// </summary>
     [DataField(required: true)]
     public FixedPoint2 MaxStrain;
+
+    [DataField, AutoNetworkedField]
+    public bool Beating;
 }

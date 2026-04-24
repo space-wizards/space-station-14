@@ -13,9 +13,6 @@ public sealed partial class WoundableHealthAnalyzerData
     public float BrainHealth;
 
     [DataField]
-    public float HeartHealth;
-
-    [DataField]
     public (int, int) BloodPressure;
 
     [DataField]
@@ -29,9 +26,6 @@ public sealed partial class WoundableHealthAnalyzerData
 
     [DataField]
     public float Spo2;
-
-    [DataField]
-    public float LungHealth;
 
     [DataField]
     public bool AnyVitalCritical;
@@ -73,8 +67,7 @@ public enum MetricRanking : byte
 
 public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly BrainDamageSystem _brainDamage = default!;
-    [Dependency] private readonly HeartSystem _heart = default!;
+    [Dependency] private readonly PerfusionSystem _perfusion = default!;
     [Dependency] private readonly ShockThresholdsSystem _shockThresholds = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
@@ -105,10 +98,10 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         return null;
     }
 
-    public MetricRanking Ranking(Entity<HeartrateComponent> ent)
+    public MetricRanking Ranking(Entity<PerfusionComponent> ent)
     {
-        var strain = (MetricRanking)Math.Min((int)MathF.Round(4f * _heart.Strain(ent)), 4);
-        var spo2 = (MetricRanking)Math.Min((int)MathF.Round(4f * (1f - _heart.Spo2(ent).Float())), 4);
+        var strain = (MetricRanking)Math.Min((int)MathF.Round(4f * ent.Comp.Strain), 4);
+        var spo2 = (MetricRanking)Math.Min((int)MathF.Round(4f * (1f - _perfusion.Spo2(ent.AsNullable()).Float())), 4);
 
         if ((byte)spo2 > (byte)strain)
             return spo2;
@@ -121,34 +114,23 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         if (!HasComp<WoundableComponent>(uid))
             return null;
 
-        if (!TryComp<HeartrateComponent>(uid, out var heartrate))
+        if (!TryComp<PerfusionComponent>(uid, out var heartrate))
             return null;
 
-        if (!TryComp<BrainDamageComponent>(uid, out var brainDamage))
-            return null;
-
-        if (!TryComp<LungDamageComponent>(uid, out var lungDamage))
-            return null;
-
-        var brainHealth = 1f - ((float)brainDamage.Damage / (float)brainDamage.MaxDamage);
-        var heartHealth = 1f - ((float)heartrate.Damage / (float)heartrate.MaxDamage);
-        var lungHealth = 1f - ((float)lungDamage.Damage / (float)lungDamage.MaxDamage);
-        var (upper, lower) = _heart.BloodPressure((uid, heartrate));
+        var (upper, lower) = _perfusion.BloodPressure((uid, heartrate));
 
         var hasNonMedical = false;
         var reagents = withWounds ? SampleReagents(uid, out hasNonMedical) : null;
 
         return new WoundableHealthAnalyzerData()
             {
-                BrainHealth = brainHealth,
-                HeartHealth = heartHealth,
+                BrainHealth = 1, // TODO: brainHealth,
                 BloodPressure = (upper, lower),
-                HeartRate = _heart.HeartRate((uid, heartrate)),
-                Etco2 = _heart.Etco2((uid, heartrate)),
-                RespiratoryRate = _heart.RespiratoryRate((uid, heartrate)),
-                Spo2 = _heart.Spo2((uid, heartrate)).Float(),
-                LungHealth = lungHealth,
-                AnyVitalCritical = _shockThresholds.IsCritical(uid) || _brainDamage.IsCritical(uid) || _heart.IsCritical(uid),
+                HeartRate = _perfusion.HeartRate((uid, heartrate)),
+                Etco2 = _perfusion.Etco2((uid, heartrate)),
+                RespiratoryRate = _perfusion.RespiratoryRate((uid, heartrate)),
+                Spo2 = _perfusion.Spo2((uid, heartrate)).Float(),
+                AnyVitalCritical = _shockThresholds.IsCritical(uid), // TODO: || _brainDamage.IsCritical(uid) || _perfusion.IsCritical(uid),
                 Etco2Name = heartrate.Etco2Name,
                 Etco2GasName = heartrate.Etco2GasName,
                 Spo2Name = heartrate.Spo2Name,

@@ -70,7 +70,7 @@ public sealed class CprSystem : EntitySystem
             }
         }
 
-        args.Repeat = TryComp<HeartrateComponent>(ent, out var heartrate) && !heartrate.Running;
+        args.Repeat = TryComp<PerfusionComponent>(ent, out var perfusion) && perfusion.BaseCardiacOutput < 1;
     }
 
     private void OnGetVerbs(Entity<CprTargetComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -78,7 +78,7 @@ public sealed class CprSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || ent.Owner == args.User)
             return;
 
-        if (!TryComp<HeartrateComponent>(ent, out var heartrate) || heartrate.Running)
+        if (!TryComp<PerfusionComponent>(ent, out var perfusion) || perfusion.BaseCardiacOutput >= 1)
             return;
 
         var @event = args;
@@ -94,7 +94,7 @@ public sealed class CprSystem : EntitySystem
 
     private void OnExamined(Entity<CprTargetComponent> ent, ref ExaminedEvent args)
     {
-        if (!TryComp<HeartrateComponent>(ent, out var heartrate) || heartrate.Running)
+        if (!TryComp<PerfusionComponent>(ent, out var perfusion) || perfusion.BaseCardiacOutput >= 1)
             return;
 
         if (_mobState.IsDead(ent))

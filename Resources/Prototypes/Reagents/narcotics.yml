@@ -255,7 +255,8 @@
       statusEffects:
       - statusEffect: StatusEffectHeartStrainNicotine
       effects:
-      - !type:ModifyLungDamage
+      - !type:ModifyOrganDamage
+        category: Lungs
         amount: 0.25
 
 # TODO: Replace these nonstandardized effects with generic brain damage

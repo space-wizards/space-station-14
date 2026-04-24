@@ -151,23 +151,12 @@
 
 - type: entity
   abstract: true
-  id: BaseMobHeartrate
+  id: BaseMobPerfusion
   components:
-  - type: Heartrate
-    maxDamage: 100
-    damage: 0
-    strainDamageThresholds:
-      0.25: [0.2, 0.1]
-      0.5: [0.3, 0.1]
-      0.75: [0.4, 0.1]
-      1: [0.5, 2]
+  - type: Perfusion
     respiratoryRateCoefficient: -3
     respiratoryRateConstant: 1.333
     respiratoryRateNormalBreath: 5
-    compensationCoefficient: 0.7
-    compensationConstant: 1
-    compensationStrainCoefficient: 1.42
-    compensationStrainConstant: -1.42
     bloodPressureDeviation: 5
     systolicBase: 120
     diastolicBase: 80
@@ -180,7 +169,8 @@
     etco2GasName: reagent-name-carbon-dioxide
     spo2Name: spo2-oxygen
     spo2GasName: reagent-name-oxygen
-    heartStoppedEffect: StatusEffectHeartStopped
+    # TODO: heartstop
+    # heartStoppedEffect: StatusEffectHeartStopped
   - type: HeartDefibrillatable
   - type: PainMetabolicRate
     quadraticFactor: 0.00005
@@ -210,43 +200,11 @@
     wound: WoundFracture
     woundProbability: 0.03
   - type: IVTarget
-  - type: HeartDamageOnDamage
-    thresholds:
-    - damageTypes: [Slash, Blunt, Piercing]
-      minimumTotalDamage: 200
-      conversionFactor: 0.6
-    - damageTypes: [Heat, Cold, Caustic, Shock]
-      minimumTotalDamage: 200
-      conversionFactor: 0.6
 
 - type: entity
   abstract: true
   id: BaseMobBrain
   components:
-  - type: BrainDamage
-    maxDamage: 100
-    damage: 0
-    maxOxygen: 10
-    oxygen: 10
-    vascularToneCurve:
-      !type:LogisticCurve
-      l: 1.1
-      k: -7.5
-      x0: 3
-  - type: BrainDamageOxygenation
-    oxygenationDamageThresholds:
-      0.10: [1.0, [100, 0.75]]
-      0.30: [0.7, [ 90, 0.75]]
-      0.60: [0.6, [ 60, 0.75]]
-      0.70: [0.4, [ 40, 0.75]]
-      0.85: [0.3, [ 20, 0.75]]
-    oxygenDepletionThresholds:
-      0.30: [0.6, 1]
-    oxygenRegeneration: 1
-    maxPassivelyHealableDamage: 30
-    damageHealing: 1
-    damageStageSize: 10
-    damageStageMaximumHealing: 8
   - type: BrainDamageThresholds
     damageStateThresholds:
       70: Critical
@@ -256,15 +214,8 @@
     damageEffectThresholds:
       30: StatusEffectSevereBrainDamage
       70: StatusEffectCriticalBrainDamage
-    damageAlertThresholds:
-      30: SevereBrainDamage
-      70: CriticalBrainDamage
-      100: BrainDead
-    damageAlertCategory: BrainDamage
     oxygenEffectThresholds:
       0: StatusEffectBrainNoOxygen
-    oxygenAlert: BrainOxygen
-    oxygenAlertCategory: BrainOxygen
     aliveDamageIcons:
     - HealthIconNormal7
     - HealthIconNormal6
@@ -282,19 +233,12 @@
     - HealthIconCritical2
     - HealthIconCritical1
     deadIcon: HealthIconBrainDead
-  - type: BrainDamageOnDamage
-    thresholds:
-    - damageTypes: [Slash, Blunt, Piercing]
-      minimumTotalDamage: 200
-      conversionFactor: 0.1
-    - damageTypes: [Heat, Cold, Caustic, Shock]
-      minimumTotalDamage: 200
-      conversionFactor: 0.01
-  - type: BrainGaspThresholds
-    messageThresholds:
-      70: DefaultBraingasp
-    oxygenThresholds:
-      0: DefaultBrainslump
+  # TODO: kill?
+  # - type: BrainGaspThresholds
+  #   messageThresholds:
+  #     70: DefaultBraingasp
+  #   oxygenThresholds:
+  #     0: DefaultBrainslump
 
 - type: entity
   abstract: true
@@ -320,23 +264,3 @@
 - type: entity
   abstract: true
   id: BaseMobLungDamage
-  components:
-  - type: LungDamage
-    damage: 0
-    maxDamage: 100
-    asphyxiationDamage: Asphyxiation
-    asphyxiationThreshold: 100
-  - type: LungDamageOnInhaledAirTemperature
-    heatCoefficient: 0.005
-    heatConstant: -1.375
-    coldCoefficient: -0.01
-    coldConstant: 2
-  - type: LungDamageAlerts
-    alertThresholds:
-      15: MinorLungDamage
-      40: SevereLungDamage
-      60: CriticalLungDamage
-    alertCategory: LungDamage
-  - type: PassiveLungDamage
-    damage: -0.05
-    damageCap: 30

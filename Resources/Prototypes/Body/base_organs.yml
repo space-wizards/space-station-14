@@ -235,7 +235,9 @@
       - RFoot
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseBrain
   id: OrganBaseBrain
   name: brain
   abstract: true
@@ -323,7 +325,9 @@
     - state: ears
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseLungs
   id: OrganBaseLungs
   name: lungs
   abstract: true
@@ -347,7 +351,9 @@
     heldPrefix: lungs
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseHeart
   id: OrganBaseHeart
   name: heart
   abstract: true

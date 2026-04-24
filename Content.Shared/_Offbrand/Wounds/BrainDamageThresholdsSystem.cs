@@ -1,15 +1,12 @@
-using System.Linq;
-using Content.Shared.Alert;
+using Content.Shared._Offbrand.Organs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.StatusEffectNew;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Offbrand.Wounds;
 
 public sealed partial class BrainDamageThresholdsSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
@@ -17,8 +14,6 @@ public sealed partial class BrainDamageThresholdsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BrainDamageThresholdsComponent, AfterBrainDamageChanged>(OnAfterBrainDamageChanged);
-        SubscribeLocalEvent<BrainDamageThresholdsComponent, AfterBrainOxygenChanged>(OnAfterBrainOxygenChanged);
         SubscribeLocalEvent<BrainDamageThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
         SubscribeLocalEvent<BrainDamageThresholdsComponent, ComponentShutdown>(OnShutdown);
     }
@@ -32,12 +27,25 @@ public sealed partial class BrainDamageThresholdsSystem : EntitySystem
             _statusEffects.TryRemoveStatusEffect(ent, oEffect);
     }
 
-    private void UpdateState(Entity<BrainDamageThresholdsComponent> ent)
+    public void UpdateState(Entity<BrainDamageThresholdsComponent?> ent, Entity<DamageableOrganComponent, OxygenatableOrganComponent>? organ)
     {
-        var brain = Comp<BrainDamageComponent>(ent);
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
 
-        var damageState = ent.Comp.DamageStateThresholds.HighestMatch(brain.Damage) ?? MobState.Alive;
-        var oxygenState = ent.Comp.OxygenStateThresholds.LowestMatch(brain.Oxygen) ?? MobState.Alive;
+        if (organ is { } brain)
+        {
+            ent.Comp.DisplayDamage = brain.Comp1.Damage;
+            ent.Comp.DisplayMaxDamage = brain.Comp1.MaxDamage;
+            ent.Comp.DisplayOxygen = brain.Comp2.Oxygen;
+            Dirty(ent);
+        }
+
+        var damageState = organ?.Comp1.Damage is { } damage
+            ? ent.Comp.DamageStateThresholds.HighestMatch(damage) ?? MobState.Alive
+            : MobState.Dead;
+        var oxygenState = organ?.Comp2.Oxygen is { } oxygen
+            ? ent.Comp.OxygenStateThresholds.LowestMatch(oxygen) ?? MobState.Alive
+            : MobState.Dead;
 
         var state = ThresholdHelpers.Max(damageState, oxygenState);
 
@@ -49,14 +57,14 @@ public sealed partial class BrainDamageThresholdsSystem : EntitySystem
         _mobState.UpdateMobState(ent);
     }
 
-    private void OnAfterBrainDamageChanged(Entity<BrainDamageThresholdsComponent> ent, ref AfterBrainDamageChanged args)
+    public void OnAfterBrainDamageChanged(Entity<BrainDamageThresholdsComponent?> ent, Entity<DamageableOrganComponent, OxygenatableOrganComponent> organ)
     {
-        var brain = Comp<BrainDamageComponent>(ent);
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
 
-        UpdateState(ent);
-        UpdateAlert((ent.Owner, ent.Comp, brain));
+        UpdateState((ent, ent.Comp), organ);
 
-        var damageEffect = ent.Comp.DamageEffectThresholds.HighestMatch(brain.Damage);
+        var damageEffect = ent.Comp.DamageEffectThresholds.HighestMatch(organ.Comp1.Damage);
         if (damageEffect == ent.Comp.CurrentDamageEffect)
             return;
 
@@ -73,14 +81,14 @@ public sealed partial class BrainDamageThresholdsSystem : EntitySystem
         RaiseLocalEvent(ent, ref overlays, true);
     }
 
-    private void OnAfterBrainOxygenChanged(Entity<BrainDamageThresholdsComponent> ent, ref AfterBrainOxygenChanged args)
+    public void OnAfterBrainOxygenChanged(Entity<BrainDamageThresholdsComponent?> ent, Entity<DamageableOrganComponent, OxygenatableOrganComponent> organ)
     {
-        var brain = Comp<BrainDamageComponent>(ent);
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
 
-        UpdateState(ent);
-        UpdateOxygenAlert((ent.Owner, ent.Comp, brain));
+        UpdateState((ent, ent.Comp), organ);
 
-        var oxygenEffect = ent.Comp.OxygenEffectThresholds.LowestMatch(brain.Oxygen);
+        var oxygenEffect = ent.Comp.OxygenEffectThresholds.LowestMatch(organ.Comp2.Oxygen);
         if (oxygenEffect == ent.Comp.CurrentOxygenEffect)
             return;
 
@@ -95,37 +103,6 @@ public sealed partial class BrainDamageThresholdsSystem : EntitySystem
 
         var overlays = new PotentiallyUpdateDamageOverlayEvent(ent);
         RaiseLocalEvent(ent, ref overlays, true);
-    }
-
-    private void UpdateAlert(Entity<BrainDamageThresholdsComponent, BrainDamageComponent> ent)
-    {
-        var targetEffect = ent.Comp1.DamageAlertThresholds.HighestMatch(ent.Comp2.Damage);
-        if (targetEffect == ent.Comp1.CurrentDamageAlertThresholdState)
-            return;
-
-        ent.Comp1.CurrentDamageAlertThresholdState = targetEffect;
-        Dirty(ent);
-
-        if (targetEffect is { } effect)
-        {
-            _alerts.ShowAlert(ent.Owner, effect);
-        }
-        else
-        {
-            _alerts.ClearAlertCategory(ent.Owner, ent.Comp1.DamageAlertCategory);
-        }
-    }
-
-    private void UpdateOxygenAlert(Entity<BrainDamageThresholdsComponent, BrainDamageComponent> ent)
-    {
-        if (ent.Comp2.Oxygen == ent.Comp2.MaxOxygen)
-        {
-            _alerts.ClearAlertCategory(ent.Owner, ent.Comp1.OxygenAlertCategory);
-            return;
-        }
-
-        var oxygen = ent.Comp2.Oxygen;
-        _alerts.ShowAlert(ent.Owner, ent.Comp1.OxygenAlert, severity: (short)oxygen.Int());
     }
 
     private void OnUpdateMobState(Entity<BrainDamageThresholdsComponent> ent, ref UpdateMobStateEvent args)

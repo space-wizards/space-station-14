@@ -258,7 +258,7 @@
         Slash: 5 # Reduce?
   - type: Wagging
   # Begin Offbrand Additions
-  - type: Heartrate
+  - type: Perfusion
     etco2Name: etco2-ammonia
     etco2GasName: reagent-name-ammonia
     spo2Name: spo2-nitrogen

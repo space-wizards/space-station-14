@@ -62,30 +62,12 @@ public sealed partial class BrainDamageThresholdsComponent : Component
     [DataField(required: true)]
     public ProtoId<HealthIconPrototype> DeadIcon;
 
-    /// <summary>
-    /// The alert to display depending on the amount of brain damage. Highest key is selected.
-    /// </summary>
-    [DataField(required: true)]
-    public SortedDictionary<FixedPoint2, ProtoId<AlertPrototype>> DamageAlertThresholds;
-
-    /// <summary>
-    /// The alert category of the alerts.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<AlertCategoryPrototype> DamageAlertCategory;
-
-    /// <summary>
-    /// The alert used to display oxygen level.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<AlertPrototype> OxygenAlert;
-
-    /// <summary>
-    /// The alert category of the oxygen alerts.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<AlertCategoryPrototype> OxygenAlertCategory;
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 DisplayOxygen;
 
     [DataField, AutoNetworkedField]
-    public ProtoId<AlertPrototype>? CurrentDamageAlertThresholdState;
+    public FixedPoint2 DisplayDamage;
+
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 DisplayMaxDamage;
 }

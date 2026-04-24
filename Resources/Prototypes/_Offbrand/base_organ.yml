@@ -1,0 +1,98 @@
+- type: entity
+  abstract: true
+  id: OffbrandOrganBaseHeart
+  components:
+  - type: DamageableOrgan
+    maxDamage: 100
+    damage: 0
+  - type: OffbrandHeartOrgan
+    compensationCoefficient: 0.7
+    compensationConstant: 1
+    compensationStrainCoefficient: 1.42
+    compensationStrainConstant: -1.42
+    strainDamageThresholds:
+      0.25: [0.2, 0.1]
+      0.5: [0.3, 0.1]
+      0.75: [0.4, 0.1]
+      1: [0.5, 2]
+  - type: OrganDamageOnDamage
+    thresholds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumTotalDamage: 200
+      conversionFactor: 0.6
+    - damageTypes: [Heat, Cold, Caustic, Shock]
+      minimumTotalDamage: 200
+      conversionFactor: 0.6
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganBaseBrain
+  components:
+  - type: OffbrandBrainOrgan
+    vascularToneCurve:
+      !type:LogisticCurve
+      l: 1.1
+      k: -7.5
+      x0: 3
+  - type: DamageableOrgan
+    maxDamage: 100
+    damage: 0
+  - type: OxygenatableOrgan
+    maxOxygen: 10
+    oxygen: 10
+  - type: OxygenatableDamageableOrgan
+    oxygenationDamageThresholds:
+      0.10: [1.0, [100, 0.75]]
+      0.30: [0.7, [ 90, 0.75]]
+      0.60: [0.6, [ 60, 0.75]]
+      0.70: [0.4, [ 40, 0.75]]
+      0.85: [0.3, [ 20, 0.75]]
+    oxygenDepletionThresholds:
+      0.30: [0.6, 1]
+    oxygenRegeneration: 1
+    maxPassivelyHealableDamage: 30
+    damageHealing: 1
+    damageStageSize: 10
+    damageStageMaximumHealing: 8    
+  - type: OrganDamageOnDamage
+    thresholds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumTotalDamage: 200
+      conversionFactor: 0.1
+    - damageTypes: [Heat, Cold, Caustic, Shock]
+      minimumTotalDamage: 200
+      conversionFactor: 0.01
+  - type: DamageAlertsOrgan
+    alertThresholds:
+      30: SevereBrainDamage
+      70: CriticalBrainDamage
+      100: BrainDead
+    alertCategory: BrainDamage
+  - type: OxygenAlertsOrgan
+    alert: BrainOxygen
+    alertCategory: BrainOxygen
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganBaseLungs
+  components:
+  - type: DamageableOrgan
+    maxDamage: 100
+    damage: 0
+  - type: OffbrandLungOrgan
+    asphyxiationDamage: Asphyxiation
+    asphyxiationThreshold: 100
+  - type: DamageOnInhaledAirOrgan
+    heatCoefficient: 0.005
+    heatConstant: -1.375
+    coldCoefficient: -0.01
+    coldConstant: 2
+  - type: DamageAlertsOrgan
+    alertThresholds:
+      15: MinorLungDamage
+      40: SevereLungDamage
+      60: CriticalLungDamage
+    alertCategory: LungDamage
+  - type: PassiveOrganDamage
+    damage: -0.05
+    damageCap: 30

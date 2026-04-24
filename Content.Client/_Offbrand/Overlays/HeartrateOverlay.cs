@@ -18,7 +18,7 @@ public sealed class HeartrateOverlay : Overlay
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    private readonly HeartSystem _heart;
+    private readonly PerfusionSystem _perfusion;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
     private readonly StatusIconSystem _statusIcon;
@@ -42,16 +42,16 @@ public sealed class HeartrateOverlay : Overlay
         _transform = _entityManager.System<SharedTransformSystem>();
         _sprite = _entityManager.System<SpriteSystem>();
         _statusIcon = _entityManager.System<StatusIconSystem>();
-        _heart = _entityManager.System<HeartSystem>();
+        _perfusion = _entityManager.System<PerfusionSystem>();
     }
 
-    private SpriteSpecifier GetIcon(Entity<HeartrateComponent> ent)
+    private SpriteSpecifier GetIcon(Entity<PerfusionComponent> ent)
     {
         if (!ent.Comp.Running)
             return HudStopped;
 
         var max = 4;
-        var severity = Math.Min((int)Math.Round(max * _heart.Strain(ent)), max);
+        var severity = Math.Min((int)Math.Round(max * ent.Comp.Strain), max);
         return Severities[severity];
     }
 
@@ -66,7 +66,7 @@ public sealed class HeartrateOverlay : Overlay
 
         _prototype.TryIndex(StatusIcon, out var statusIcon);
 
-        var query = _entityManager.AllEntityQueryEnumerator<MetaDataComponent, TransformComponent, HeartrateComponent, SpriteComponent>();
+        var query = _entityManager.AllEntityQueryEnumerator<MetaDataComponent, TransformComponent, PerfusionComponent, SpriteComponent>();
         while (query.MoveNext(out var uid,
             out var metadata,
             out var xform,

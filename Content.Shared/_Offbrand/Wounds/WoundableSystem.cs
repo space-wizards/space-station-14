@@ -141,7 +141,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         {
             var existing = ent.Comp2.Damage.DamageDict.GetValueOrDefault(type, FixedPoint2.Zero);
             var delta = ent.Comp1.MaximumDamage.TryGetValue(type, out var data)
-                ? ComputeDelta(existing, existing + damage, data)
+                ? ComputeDelta(existing, damage, data)
                 : FixedPoint2.Zero;
 
             var incoming = new DamageSpecifier() { DamageDict = new() { { type, damage - delta } } };

@@ -172,7 +172,7 @@
   - MobAtmosStandard
   - MobFlammable
   - BaseSpeciesMob
-  - BaseMobHeartrate # Offbrand
+  - BaseMobPerfusion # Offbrand
   - BaseMobBrain # Offbrand
   - BaseMobCryostasis # Offbrand
   - BaseMobLungDamage # Offbrand

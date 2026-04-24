@@ -203,12 +203,14 @@
         - !type:TemperatureCondition
           max: 213.0
       effects:
-      - !type:ModifyHeartDamage
+      - !type:ModifyOrganDamage
+        category: Heart
         amount: -0.3
         conditions:
         - !type:TemperatureCondition
           max: 213.0
-      - !type:ModifyLungDamage
+      - !type:ModifyOrganDamage
+        category: Lungs
         amount: -0.3
         conditions:
         - !type:TemperatureCondition
@@ -1399,12 +1401,14 @@
     Bloodstream:
       effects:
       # Begin Offbrand Additions
-      - !type:ModifyBrainDamage
+      - !type:ModifyOrganDamage
+        category: Brain
         amount: -0.5
         conditions:
         - !type:TemperatureCondition
           max: 150.0
-      - !type:ModifyBrainOxygen
+      - !type:ModifyOrganOxygen
+        category: Brain
         amount: 0.5
         conditions:
         - !type:TemperatureCondition

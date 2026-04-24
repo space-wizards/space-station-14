@@ -153,31 +153,7 @@ public sealed partial class ZombieSystem
         // Begin Offbrand
         if (RemComp<WoundableComponent>(target))
         {
-            RemComp<HeartrateComponent>(target);
-            RemComp<HeartDefibrillatableComponent>(target);
-            RemComp<HeartStopOnHighStrainComponent>(target);
-            RemComp<PainComponent>(target);
-            RemComp<PainMetabolicRateComponent>(target);
-            RemComp<HeartrateAlertsComponent>(target);
-            RemComp<ShockThresholdsComponent>(target);
-            RemComp<ShockAlertsComponent>(target);
-            RemComp<BrainDamageComponent>(target);
-            RemComp<BrainDamageOxygenationComponent>(target);
-            RemComp<BrainDamageThresholdsComponent>(target);
-            RemComp<BrainDamageOnDamageComponent>(target);
-            RemComp<HeartDamageOnDamageComponent>(target);
-            RemComp<CprTargetComponent>(target);
-            RemComp<Content.Server.Construction.Components.ConstructionComponent>(target);
-            RemComp<CryostasisFactorComponent>(target);
-            RemComp<UniqueWoundOnDamageComponent>(target);
-            RemComp<IntrinsicPainComponent>(target);
-            RemComp<LungDamageComponent>(target);
-            RemComp<LungDamageOnInhaledAirTemperatureComponent>(target);
-            RemComp<LungDamageAlertsComponent>(target);
-
-            var entProto = _protoManager.Index(AddOnWoundableZombified);
-            EntityManager.RemoveComponents(target, entProto.Components);
-            EntityManager.AddComponents(target, entProto.Components);
+            throw new InvalidOperationException("Just don't use zombies with Offmed.");
         }
         // End Offbrand
 

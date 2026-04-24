@@ -274,7 +274,7 @@
     - state: lungs
 
 - type: entity
-  parent: [ OrganBaseStomach, OrganDionaInternal, OrganDionaMetabolizer ]
+  parent: [ OrganBaseStomach, OrganBaseHeart, OrganDionaInternal, OrganDionaMetabolizer ]
   id: OrganDionaStomach
   components:
   - type: Metabolizer

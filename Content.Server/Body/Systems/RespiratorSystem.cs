@@ -92,7 +92,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float)respirator.BodyAdjustedUpdateInterval.TotalSeconds, respirator); // Offbrand
 
-            if (!_mobState.IsIncapacitated(uid) || HasComp<HeartrateComponent>(uid)) // Offbrand - simplemobs get crit behaviour, heartmobs get hyperventilation
+            if (!_mobState.IsIncapacitated(uid) || HasComp<PerfusionComponent>(uid)) // Offbrand - simplemobs get crit behaviour, heartmobs get hyperventilation
             {
                 switch (respirator.Status)
                 {
@@ -153,12 +153,12 @@ public sealed class RespiratorSystem : EntitySystem
             return;
 
         // Begin Offbrand
-        var breathEv = new Content.Shared._Offbrand.Wounds.BeforeBreathEvent(entity.Comp.AdjustedBreathVolume); // Offbrand - modify breath volume
+        var breathEv = new Content.Shared._Offbrand.Organs.BeforeBreathEvent(entity.Comp.AdjustedBreathVolume); // Offbrand - modify breath volume
         RaiseLocalEvent(entity, ref breathEv);
 
         var gas = ev.Gas.RemoveVolume(breathEv.BreathVolume);
 
-        var beforeEv = new Content.Shared._Offbrand.Wounds.BeforeInhaledGasEvent(gas);
+        var beforeEv = new Content.Shared._Offbrand.Organs.BeforeInhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref beforeEv);
         // End Offbrand
 

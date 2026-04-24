@@ -17,7 +17,6 @@ namespace Content.Server._Offbrand.MMI;
 
 public sealed class MMIExtractorSystem : EntitySystem
 {
-    [Dependency] private readonly BrainDamageSystem _brainDamage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
@@ -165,8 +164,5 @@ public sealed class MMIExtractorSystem : EntitySystem
 
         if (!_slots.TryInsert(mmi, insertionComp.BrainSlotId, ent, null))
             return;
-
-        if (evt.Args.Target is { } target)
-            _brainDamage.KillBrain(target);
     }
 }

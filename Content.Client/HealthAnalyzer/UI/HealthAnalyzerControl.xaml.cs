@@ -225,11 +225,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"));
             BrainHealthButton.Visible = true;
 
-            HeartHealthText.Visible = true;
-            HeartHealthLabel.Visible = true;
-            HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"));
-            HeartHealthButton.Visible = true;
-
             HeartRateText.Visible = true;
             HeartRateLabel.Visible = true;
             HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate));
@@ -240,11 +235,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             BloodPressureLabel.Visible = true;
             BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic));
             BloodPressureButton.Visible = true;
-
-            LungHealthText.Visible = true;
-            LungHealthLabel.Visible = true;
-            LungHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-lung-health-value", ("value", $"{woundable.LungHealth * 100:F1}"));
-            LungHealthButton.Visible = true;
 
             SpO2Text.Visible = true;
             SpO2Text.Text = Loc.GetString("health-analyzer-window-entity-spo2-text", ("spo2", woundable.Spo2Name));
@@ -272,18 +262,12 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             BrainHealthLabel.Visible = false;
             BloodPressureLabel.Visible = false;
             HeartRateLabel.Visible = false;
-            HeartHealthLabel.Visible = false;
-            LungHealthLabel.Visible = false;
             BrainHealthText.Visible = false;
             BloodPressureText.Visible = false;
             HeartRateText.Visible = false;
-            HeartHealthText.Visible = false;
-            LungHealthText.Visible = false;
             BrainHealthButton.Visible = false;
             BloodPressureButton.Visible = false;
             HeartRateButton.Visible = false;
-            HeartHealthButton.Visible = false;
-            LungHealthButton.Visible = false;
             SpO2Text.Visible = false;
             SpO2Label.Visible = false;
             SpO2Button.Visible = false;

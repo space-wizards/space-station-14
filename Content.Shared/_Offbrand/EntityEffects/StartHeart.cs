@@ -1,4 +1,5 @@
 using Content.Shared._Offbrand.Wounds;
+using Content.Shared.Body;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
@@ -12,12 +13,13 @@ public sealed partial class StartHeart : EntityEffectBase<StartHeart>
     }
 }
 
-public sealed class StartHeartEntityEffectSystem : EntityEffectSystem<HeartrateComponent, StartHeart>
+public sealed class StartHeartEntityEffectSystem : EntityEffectSystem<BodyComponent, StartHeart>
 {
-    [Dependency] private readonly HeartSystem _heart = default!;
+    // [Dependency] private readonly HeartSystem _heart = default!;
 
-    protected override void Effect(Entity<HeartrateComponent> ent, ref EntityEffectEvent<StartHeart> args)
+    protected override void Effect(Entity<BodyComponent> ent, ref EntityEffectEvent<StartHeart> args)
     {
-        _heart.TryRestartHeart(ent.AsNullable());
+        throw new NotImplementedException("TODO"); // TODO
+        // _heart.TryRestartHeart(ent.AsNullable());
     }
 }

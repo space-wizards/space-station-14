@@ -124,10 +124,12 @@
         doAfter: 1
     - to: HeartTreatmentSuture
       conditions: &heart-damage-conditions
-      - !type:HeartDamage
+      - !type:OrganDamage
+        category: Heart
         min: 1
       completed:
-      - !type:ChangeHeartDamage
+      - !type:ChangeOrganDamage
+        category: Heart
         amount: -10
       steps:
       - material: Suture
@@ -136,7 +138,8 @@
     - to: HeartTreatmentMedicatedSuture
       conditions: *heart-damage-conditions
       completed:
-      - !type:ChangeHeartDamage
+      - !type:ChangeOrganDamage
+        category: Heart
         amount: -20
       steps:
       - material: MedicatedSuture
@@ -169,10 +172,12 @@
         doAfter: 1
     - to: LungTreatmentSuture
       conditions: &lung-damage-conditions
-      - !type:LungDamage
+      - !type:OrganDamage
+        category: Lung
         min: 1
       completed:
-      - !type:ChangeLungDamage
+      - !type:ChangeOrganDamage
+        category: Lung
         amount: -10
       steps:
       - material: Suture
@@ -181,7 +186,8 @@
     - to: LungTreatmentMedicatedSuture
       conditions: *lung-damage-conditions
       completed:
-      - !type:ChangeLungDamage
+      - !type:ChangeOrganDamage
+        category: Lungs
         amount: -20
       steps:
       - material: MedicatedSuture

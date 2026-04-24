@@ -335,7 +335,8 @@
           types:
             Asphyxiation: 5
             Bloodloss: 5
-      - !type:ModifyLungDamage # Offbrand
+      - !type:ModifyOrganDamage # Offbrand
+        category: Lungs
         amount: 2
 
 - type: reagent
@@ -503,12 +504,14 @@
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 15
-      - !type:ModifyHeartDamage
+      - !type:ModifyOrganDamage
+        category: Heart
         amount: 2
         conditions:
         - !type:MobStateCondition
           mobstate: Critical
-      - !type:ModifyLungDamage
+      - !type:ModifyOrganDamage
+        category: Lungs
         amount: 2
         conditions:
         - !type:MobStateCondition
@@ -522,24 +525,28 @@
           mobstate: Critical
       - !type:Zombify
         conditions:
-        - !type:BrainDamageCondition
+        - !type:OrganDamageCondition
+          category: Brain
           min: 70
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 15
-      - !type:ModifyBrainDamage
+      - !type:ModifyOrganDamage
+        category: Brain
         amount: 0.5
         conditions:
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 15
-      - !type:ModifyHeartDamage
+      - !type:ModifyOrganDamage
+        category: Heart
         amount: 0.2
         conditions:
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 15
-      - !type:ModifyLungDamage
+      - !type:ModifyOrganDamage
+        category: Lungs
         amount: 0.2
         conditions:
         - !type:MetaboliteThresholdCondition
@@ -576,7 +583,8 @@
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 30
-      - !type:ModifyBrainDamage
+      - !type:ModifyOrganDamage
+        category: Brain
         amount: 0.25
         conditions:
         - !type:MetaboliteThresholdCondition
@@ -605,7 +613,8 @@
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 45
-      - !type:ModifyBrainDamage
+      - !type:ModifyOrganDamage
+        category: Brain
         amount: 0.5
         conditions:
         - !type:MetaboliteThresholdCondition
@@ -624,7 +633,8 @@
         - !type:MetaboliteThresholdCondition
           reagent: Romerol
           min: 60
-      - !type:ModifyBrainDamage
+      - !type:ModifyOrganDamage
+        category: Brain
         amount: 5
         conditions:
         - !type:MetaboliteThresholdCondition

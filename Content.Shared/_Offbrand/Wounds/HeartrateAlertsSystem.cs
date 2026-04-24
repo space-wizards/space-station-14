@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Organs;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 
@@ -6,7 +7,7 @@ namespace Content.Shared._Offbrand.Wounds;
 public sealed class HeartrateAlertsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly HeartSystem _heart = default!;
+    [Dependency] private readonly PerfusionSystem _perfusion = default!;
 
     public override void Initialize()
     {
@@ -21,14 +22,14 @@ public sealed class HeartrateAlertsSystem : EntitySystem
 
     private void UpdateAlert(Entity<HeartrateAlertsComponent> ent)
     {
-        var heartrate = Comp<HeartrateComponent>(ent);
-        if (heartrate.Running)
+        var perfusion = Comp<PerfusionComponent>(ent);
+        if (ent.Comp.Beating)
         {
             var range = _alerts.GetSeverityRange(ent.Comp.StrainAlert);
             var min = _alerts.GetMinSeverity(ent.Comp.StrainAlert);
             var max = _alerts.GetMaxSeverity(ent.Comp.StrainAlert);
 
-            var severity = Math.Min(min + (short)Math.Round(range * _heart.Strain((ent.Owner, heartrate))), max);
+            var severity = Math.Min(min + (short)Math.Round(range * perfusion.Strain), max);
             _alerts.ShowAlert(ent.Owner, ent.Comp.StrainAlert, (short)severity);
         }
         else
@@ -54,11 +55,15 @@ public sealed class HeartrateAlertsSystem : EntitySystem
 
     private void OnHeartStopped(Entity<HeartrateAlertsComponent> ent, ref HeartStoppedEvent args)
     {
+        ent.Comp.Beating = false;
+        Dirty(ent);
         UpdateAlert(ent);
     }
 
     private void OnHeartStarted(Entity<HeartrateAlertsComponent> ent, ref HeartStartedEvent args)
     {
+        ent.Comp.Beating = true;
+        Dirty(ent);
         UpdateAlert(ent);
     }
 }
