@@ -30,6 +30,7 @@
     solution: food
     utensil: Spoon
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Spillable
     solution: food

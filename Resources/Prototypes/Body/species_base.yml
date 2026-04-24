@@ -25,14 +25,9 @@
         color: "#FF0000"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
-  - type: GenericVisualizer
-    visuals:
-      enum.CreamPiedVisuals.Creamed:
-        clownedon:
-          True: { visible: true }
-          False: { visible: false }
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
+  - type: JobStatus
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
@@ -83,7 +78,6 @@
     - TemporaryBlindness
     - Pacified
     - Flashed
-    - RadiationProtection
     - Adrenaline
   - type: Identity
   - type: IdExaminable
@@ -125,6 +119,9 @@
     factions:
     - NanoTrasen
   - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_human
   - type: ParcelWrapOverride
     parcelPrototype: WrappedParcelHumanoid
     wrapDelay: 5
@@ -153,6 +150,8 @@
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
+  - type: RandomPrice
+    maxRandomPrice: 20000
   - type: Tag
     tags:
     - CanPilot
@@ -181,12 +180,12 @@
   - type: PassiveDamage
     allowedStates:
     - Alive
-    damageCap: 20
     damage:
       types:
         Heat: -0.07
-      groups:
-        Brute: -0.07
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
   - type: Fingerprint
   - type: Blindable
   - type: Temperature

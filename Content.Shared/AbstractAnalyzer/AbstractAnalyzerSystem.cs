@@ -60,10 +60,11 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
             if (component.MaxScanRange is { } maxScanRange && !_transformSystem.InRange(targetCoordinates, transform.Coordinates, maxScanRange))
             {
                 //Range too far, disable updates
-                StopAnalyzingEntity((uid, component), target);
+                PauseAnalyzingEntity((uid, component), target);
                 continue;
             }
 
+            component.IsAnalyzerActive = true;
             UpdateScannedUser(uid, target, true);
         }
     }
@@ -168,6 +169,20 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
         _toggle.TryDeactivate(analyzer.Owner);
 
         UpdateScannedUser(analyzer, target, false);
+    }
+
+    /// <summary>
+    /// If the scanner is active, sends one last update and sets it to inactive.
+    /// </summary>
+    /// <param name="analyzer">The analyzer that's receiving the updates</param>
+    /// <param name="target">The entity to analyze</param>
+    private void PauseAnalyzingEntity(Entity<TAnalyzerComponent> analyzer, EntityUid target)
+    {
+        if (!analyzer.Comp.IsAnalyzerActive)
+            return;
+
+        UpdateScannedUser(analyzer, target, false);
+        analyzer.Comp.IsAnalyzerActive = false;
     }
 
     /// <summary>

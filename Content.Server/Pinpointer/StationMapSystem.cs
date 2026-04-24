@@ -22,9 +22,11 @@ public sealed class StationMapSystem : EntitySystem
         SubscribeLocalEvent<StationMapComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StationMapUserComponent, EntParentChangedMessage>(OnUserParentChanged);
 
-        SubscribeLocalEvent<NukeopsStationMapComponent, NukeopsTargetStationSelectedEvent>(OnNukeopsStationSelected);
+        SubscribeLocalEvent<NukeopsStationMapComponent, ChooseStationMapEvent>(OnNukeOpsStationMap);
+        SubscribeLocalEvent<NukeopsTargetStationSelectedEvent>(OnNukeopsStationSelected);
 
-        Subs.BuiEvents<StationMapComponent>(StationMapUiKey.Key, subs =>
+        Subs.BuiEvents<StationMapComponent>(StationMapUiKey.Key,
+            subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnStationMapOpened);
             subs.Event<BoundUIClosedEvent>(OnStationMapClosed);
@@ -36,18 +38,13 @@ public sealed class StationMapSystem : EntitySystem
         if (!ent.Comp.InitializeWithStation)
             return;
 
-        // If we ever find a need to make more exceptions like this, just turn this into an event.
-        if (HasComp<NukeopsStationMapComponent>(ent))
+        var ev = new ChooseStationMapEvent();
+        RaiseLocalEvent(ent, ref ev);
+        if (ev.Handled)
         {
-            foreach (var rule in _gameTicker.GetActiveGameRules())
-            {
-                if (TryComp<NukeopsRuleComponent>(rule, out var nukeopsRule) && nukeopsRule.TargetStation != null)
-                {
-                    ent.Comp.TargetGrid = _station.GetLargestGrid((nukeopsRule.TargetStation.Value, null));
-                    Dirty(ent);
-                    return;
-                }
-            }
+            ent.Comp.TargetGrid = ev.TargetGrid;
+            Dirty(ent);
+            return;
         }
 
         var station = _station.GetStationInMap(_xform.GetMapId(ent.Owner));
@@ -80,18 +77,50 @@ public sealed class StationMapSystem : EntitySystem
         comp.Map = uid;
     }
 
-    private void OnNukeopsStationSelected(Entity<NukeopsStationMapComponent> ent, ref NukeopsTargetStationSelectedEvent args)
+    private void OnNukeOpsStationMap(Entity<NukeopsStationMapComponent> entity, ref ChooseStationMapEvent args)
     {
-        if (args.TargetStation == null)
+        // If we have this component, we don't want a fallback map!
+        args.Handle();
+
+        foreach (var rule in _gameTicker.GetActiveGameRules<NukeopsRuleComponent>())
+        {
+            if (rule.Comp.TargetStation == null)
+                continue;
+
+            args.TargetGrid = _station.GetLargestGrid((rule.Comp.TargetStation.Value, null));
+            return;
+        }
+    }
+
+    private void OnNukeopsStationSelected(ref NukeopsTargetStationSelectedEvent args)
+    {
+        if (args.TargetStation == null || !TryComp<RuleGridsComponent>(args.RuleEntity, out var ruleGrids))
             return;
 
-        if (!TryComp<StationMapComponent>(ent, out var stationMap) || !TryComp<RuleGridsComponent>(args.RuleEntity, out var ruleGrids))
-            return;
+        var mapquery = EntityQueryEnumerator<NukeopsStationMapComponent, StationMapComponent>();
+        while (mapquery.MoveNext(out var uid, out _, out var map))
+        {
+            if (Transform(uid).MapID != ruleGrids.Map)
+                continue;
 
-        if (Transform(ent).MapID != ruleGrids.Map)
-            return;
+            map.TargetGrid = _station.GetLargestGrid((args.TargetStation.Value, null));
+            Dirty(uid, map);
+        }
+    }
+}
 
-        stationMap.TargetGrid = _station.GetLargestGrid((args.TargetStation.Value, null));
-        Dirty(ent);
+/// <summary>
+/// Selects an alternative target for our station map!
+/// If handled, this will not get the map of the current station.
+/// </summary>
+[ByRefEvent]
+public record struct ChooseStationMapEvent
+{
+    public EntityUid? TargetGrid;
+    public bool Handled { get; private set; }
+
+    public void Handle()
+    {
+        Handled = true;
     }
 }

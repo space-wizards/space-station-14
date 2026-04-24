@@ -8,7 +8,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -20,6 +19,7 @@ using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.EntityEffects.Effects.Damage;
+using Content.Shared.Metabolism;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -43,7 +43,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
+    private static readonly ProtoId<MetabolismStagePrototype> RespirationStage = new("Respiration");
 
     public override void Initialize()
     {
@@ -204,7 +204,7 @@ public sealed class RespiratorSystem : EntitySystem
     /// <returns>Returns true only if the air is not toxic, and it wouldn't suffocate.</returns>
     public bool CanMetabolizeInhaledAir(Entity<RespiratorComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
         // Get the gas at our location but don't actually remove it from the gas mixture.
@@ -277,7 +277,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (!Resolve(lung, ref lung.Comp))
             return 0;
 
-        if (lung.Comp.MetabolismGroups == null)
+        if (lung.Comp.Stages == null)
             return 0;
 
         float saturation = 0;
@@ -287,7 +287,7 @@ public sealed class RespiratorSystem : EntitySystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            if (!reagent.Metabolisms.TryGetValue(GasId, out var entry))
+            if (!reagent.Metabolisms.Metabolisms.TryGetValue(RespirationStage, out var entry))
                 continue;
 
             foreach (var effect in entry.Effects)

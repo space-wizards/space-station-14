@@ -58,8 +58,9 @@
     maxFillLevels: 6
     fillBaseName: beaker
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -158,8 +159,9 @@
     maxFillLevels: 6
     fillBaseName: beaker
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: StaticPrice
     price: 30
   - type: DnaSubstanceTrace
@@ -652,6 +654,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

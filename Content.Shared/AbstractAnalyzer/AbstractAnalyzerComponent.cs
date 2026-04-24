@@ -31,6 +31,12 @@ public abstract partial class AbstractAnalyzerComponent : Component
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// If the last state of the health analyzer was active (e.g. they are in range of the patient).
+    /// </summary>
+    [DataField]
+    public bool IsAnalyzerActive = false;
+
+    /// <summary>
     /// How long it takes to scan someone.
     /// </summary>
     [DataField]
