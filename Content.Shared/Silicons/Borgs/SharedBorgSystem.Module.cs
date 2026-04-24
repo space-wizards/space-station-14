@@ -322,8 +322,7 @@ public abstract partial class SharedBorgSystem
         }
     }
 
-    private void OnCheckBlacklistRelay(Entity<BorgModuleWhitelistComponent> ent,
-        ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
+    private void OnCheckBlacklistRelay(Entity<BorgModuleWhitelistComponent> ent, ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
         if (args.Args.Cancelled)
             return;
@@ -332,6 +331,46 @@ public abstract partial class SharedBorgSystem
         {
             args.Args.Cancelled = true;
             args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
+        }
+    }
+
+    //TODO: Replace this with a relayed event based system once there's a QueueRemove
+    //or something similar implemented that defers entity removal from containers to the following tick
+    //this cannot be implemented as a relayed event because the act of removing a module
+    //from a chassis modifies the relay's foreach loop collection to be modified, thus throwing an error
+
+    /// This function removes all modules who are now invalidated by the removal of removedModule
+    private void ValidateWhitelists(Entity<BorgChassisComponent> chassis, EntityUid removedModule)
+    {
+        var toRemove = new List<EntityUid>();
+        foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
+        {
+            if (containedModuleUid == removedModule ||
+                !TryComp<BorgModuleWhitelistComponent>(containedModuleUid, out var whitelist) ||
+                whitelist.ModuleWhitelist == null)
+                continue;
+
+            var keep = false;
+
+            foreach (var checkAgainstModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
+            {
+                if (checkAgainstModuleUid == containedModuleUid ||
+                    checkAgainstModuleUid == removedModule)
+                    continue;
+
+                if (_whitelist.IsWhitelistPass(whitelist.ModuleWhitelist, checkAgainstModuleUid))
+                {
+                    keep = true;
+                    break;
+                }
+            }
+            if (!keep)
+                toRemove.Add(containedModuleUid);
+        }
+
+        foreach (var moduleUid in toRemove)
+        {
+            _container.Remove(moduleUid, chassis.Comp.ModuleContainer);
         }
     }
 

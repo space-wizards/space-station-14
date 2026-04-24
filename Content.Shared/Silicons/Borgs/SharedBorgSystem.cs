@@ -184,38 +184,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
-        //TODO: Replace this with a relayed event based system once there's a QueueRemove
-        //or something similar implemented that defers entity removal from containers to the following tick
-        //this cannot be implemented as a relayed event because the act of removing a module
-        //from a chassis modifies the relay's foreach loop collection to be modified, thus throwing an error
-        var toRemove = new List<EntityUid>();
-        foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-        {
-            if (containedModuleUid == args.Entity ||
-                !TryComp<BorgModuleWhitelistComponent>(containedModuleUid, out var whitelist) ||
-                whitelist.ModuleWhitelist == null)
-                continue;
-
-            var keep = false;
-
-            foreach (var checkAgainstModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-            {
-                if (checkAgainstModuleUid == containedModuleUid ||
-                    checkAgainstModuleUid == args.Entity)
-                    continue;
-
-                if (_whitelist.IsWhitelistPass(whitelist.ModuleWhitelist, checkAgainstModuleUid))
-                {
-                    keep = true;
-                    break;
-                }
-            }
-            if (!keep)
-                toRemove.Add(containedModuleUid);
-        }
-
-        foreach (var moduleUid in toRemove)
-            _container.Remove(moduleUid, chassis.Comp.ModuleContainer);
+        ValidateWhitelists(chassis, args.Entity);
 
         if (args.Container != chassis.Comp.BrainContainer)
             return;
