@@ -33,15 +33,12 @@ public sealed class MetabolizerSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly Content.Shared.StatusEffectNew.StatusEffectsSystem _statusEffects = default!; // Offbrand
 
-    private EntityQuery<OrganComponent> _organQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery = default!;
+    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _organQuery = GetEntityQuery<OrganComponent>();
-        _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MetabolizerComponent, BodyRelayedEvent<ApplyMetabolicMultiplierEvent>>(OnApplyMetabolicMultiplier);

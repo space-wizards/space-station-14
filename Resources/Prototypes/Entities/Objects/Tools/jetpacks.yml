@@ -47,7 +47,7 @@
     slots:
     - Back
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       volume: 5
       temperature: 293.15
@@ -102,7 +102,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 13 minutes of thrust
       volume: 5
@@ -137,7 +137,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 13 minutes of thrust
       volume: 5
@@ -177,7 +177,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 13 minutes of thrust
       volume: 5
@@ -205,7 +205,8 @@
         - suitStorage
         - Belt
     - type: GasTank
-      outputPressure: 42.6
+      overpressure: 1519.875 # Poorly manufactured, they also lose pressure quickly so this makes exploding them easier, at the cost of the explosion being tiny.
+      releasePressure: 42.6
       air:
         volume: 1.5
 
@@ -217,7 +218,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 4 minutes of thrust
       volume: 1.5
@@ -249,7 +250,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 4 minutes of thrust
       volume: 1.5
@@ -284,7 +285,7 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    releasePressure: 42.6
     air:
       # 13 minutes of thrust
       volume: 5
@@ -301,7 +302,7 @@
   suffix: Infinite
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       volume: 5
       temperature: 293.15
