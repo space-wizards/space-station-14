@@ -44,6 +44,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<InitialInfectedRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<ZombieRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<CburnRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
     }
 
     private void OnGetBriefing(Entity<InitialInfectedRoleComponent> role, ref GetBriefingEvent args)
@@ -225,4 +226,18 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         }
         return healthy;
     }
+
+    /// <summary>
+    ///  This sends the join message for CBURN agents. 
+    /// </summary>
+    /// <remarks>
+    ///  This should maybe be in a CBURN system, but CBURNs are pretty much just a subordinate of this game mode...
+    /// </remarks
+    private void OnAfterAntagEntSelected(Entity<CburnRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
+        _antag.SendBriefing(args.Session,
+            Loc.GetString("cburn-welcome"),
+            Color.Orange, null);
+    }
+
 }
