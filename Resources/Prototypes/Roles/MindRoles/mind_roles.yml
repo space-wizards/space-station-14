@@ -365,3 +365,5 @@
   - type: MindRole
     roleType: Neutral
     jobPrototype: CBURN
+  - type: RoleBriefing
+    briefing: cburn-briefing

@@ -46,8 +46,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
         // These two events are more for the CBURN rule, but it is after all only a subsidary of this rule...
         SubscribeLocalEvent<CburnRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
-        SubscribeLocalEvent<CburnRoleComponent, GetBriefingEvent>(OnGetBriefing);
-
     }
 
     private void OnGetBriefing(Entity<InitialInfectedRoleComponent> role, ref GetBriefingEvent args)
@@ -241,11 +239,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         _antag.SendBriefing(args.Session,
             Loc.GetString("cburn-welcome"),
             Color.Orange, null);
-    }
-
-    private void OnGetBriefing(Entity<CburnRoleComponent> role, ref GetBriefingEvent args)
-    {
-        args.Append(Loc.GetString("cburn-briefing"));
     }
     #endregion
 }
