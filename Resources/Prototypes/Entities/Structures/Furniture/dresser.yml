@@ -46,6 +46,7 @@
   - type: Tag
     tags:
     - Wooden
+    - BookHuntDresser
   - type: Anchorable
   - type: Rotatable
   - type: Construction

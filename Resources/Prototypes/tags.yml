@@ -93,6 +93,15 @@
   id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
 
 - type: Tag
+  id: BookHuntBookshelf # Used to stick a banned book in a random dresser for the librarian's book hunt
+
+- type: Tag
+  id: BookHuntDresser # Used to stick a banned book in a random dresser for the librarian's book hunt
+
+- type: Tag
+  id: BookHuntSuitStorage # Used to stick a banned book in a random suit storage for the librarian's book hunt 
+
+- type: Tag
   id: BorgArm # ConstructionGraphs for various bots
 
 - type: Tag

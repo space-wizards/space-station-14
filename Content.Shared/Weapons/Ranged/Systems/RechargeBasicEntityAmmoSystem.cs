@@ -35,7 +35,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
             if (recharge.NextCharge > _timing.CurTime)
                 continue;
 
-            if (_gun.UpdateBasicEntityAmmoCount((uid, ammo), ammo.Count.Value + 1))
+            if (_gun.UpdateBasicEntityAmmoCount((uid, ammo), recharge.RestoreAll && ammo.Capacity is not null ? ammo.Capacity.Value : ammo.Count.Value + 1))
             {
                 // We don't predict this because occasionally on client it may not play.
                 // PlayPredicted will still be predicted on the client.

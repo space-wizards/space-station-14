@@ -94,3 +94,75 @@
       Male: Cerberus
       Female: Cerberus
       Unsexed: Cerberus
+
+- type: entity
+  name: Bael
+  parent: BaseMob
+  id: MobCatBaelFamiliar
+  description: Ethereal and immortal, this kitty slips through space and the cracks in doors, learning all the secrets of man. What more could a cat owner ask for?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat
+    color: "#793a80dd"
+  - type: PointLight
+    color: "#793a80dd"
+    radius: 1.1
+  - type: Physics
+  - type: StandingState
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - Impassable
+        layer:
+        - None
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: GhostRole
+    makeSentient: true
+    allowMovement: true
+    allowSpeech: true
+    name: ghost-role-information-bael-name
+    description: ghost-role-information-bael-description
+    rules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: default
+    reregister: true
+  - type: GhostTakeoverAvailable
+  - type: MindContainer
+  - type: MindExaminable
+  - type: Familiar
+  - type: MovementAlwaysTouching
+  - type: ProtectedFromStepTriggers
+  - type: InteractionPopup
+    successChance: 0.0 # being immortal and untouchable does come with downsides
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-shadow
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: male
+      proper: true
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: Speech
+    speechSounds: Cat

@@ -164,6 +164,9 @@ ghost-role-information-remilia-description = Follow and obey the chaplain. Eat f
 ghost-role-information-cerberus-name = Cerberus, Evil Familiar
 ghost-role-information-cerberus-description = Obey your master. Spread chaos.
 
+ghost-role-information-bael-name = Bael, Immortal Familiar
+ghost-role-information-bael-description = Obey your master. Use your powers of speech and general intangibility to keep your master informed on what they want to know.
+
 ghost-role-information-ert-leader-name = ERT Leader
 ghost-role-information-ert-leader-description = Lead a team of specialists to resolve the station's issues.
 

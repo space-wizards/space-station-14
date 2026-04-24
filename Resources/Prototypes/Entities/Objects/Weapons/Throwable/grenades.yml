@@ -466,3 +466,74 @@
         volume: 12
   - type: StaticPrice
     price: 50
+
+# Test
+
+- type: entity
+  parent: [ FragileGrenadeBase, TimerGrenadeBase ]
+  id: GravityTestGrenade
+  name: gravity test grenade
+  description: Tests those gravity shaders.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
+  - type: SingularityDistortion
+    intensity: 50
+    falloffPower: 1.5
+  - type: TimerTrigger
+    delay: 3
+    beepInterval: 0.46
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      params:
+        volume: 5
+  - type: AnchorOnTrigger
+    keysIn:
+    - timer
+    removeOnTrigger: true
+  - type: TwoStageTrigger
+    keysIn:
+    - timer
+    triggerDelay: 10.45
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+      - type: SingularityDistortion
+        intensity: -50
+        falloffPower: 1.5
+      - type: PointLight
+        enabled: true
+        color: "#ffaa44"
+        energy: 8
+        radius: 6
+        softness: 1
+        offset: "0, 0"
+      - type: EmitSoundOnTrigger
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
+          params:
+            volume: 5
+        positional: true
+        keysIn:
+        - stageTwo
+      - type: DeleteOnTrigger
+        keysIn:
+        - stageTwo
+  - type: StaticPrice
+    price: 1000

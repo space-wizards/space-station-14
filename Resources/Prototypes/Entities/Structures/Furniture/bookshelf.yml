@@ -48,6 +48,7 @@
     tags:
     - Structure
     - Wooden
+    - BookHuntBookshelf
   - type: Transform
     anchored: true
     noRot: true

@@ -1,4 +1,4 @@
-﻿# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
+# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
 # so this is mostly for stuff that should be equally illegal but doesn't need its own unique contraband tier added
 - type: entity
   id: BaseHighlyIllegalContraband
@@ -207,6 +207,14 @@
   components:
   - type: Contraband
     allowedJobs: [ Janitor ]
+
+- type: entity
+  id: BaseLibrarianContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ Librarian ]
 
 # for ~objective items
 - type: entity
