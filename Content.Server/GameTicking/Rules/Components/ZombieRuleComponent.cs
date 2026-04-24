@@ -30,7 +30,7 @@ public sealed partial class ZombieRuleComponent : Component
     /// The CBURN squad game rule that is sppawned when `ZombieShuttleCallPercentage` is reached.
     /// </summary>
     [DataField]
-    public EntProtoId CburnGameRule = "CburnSquad";
+    public EntProtoId CburnGameRule = "CBURNSquad";
 
     /// <summary>
     /// Tracks wether a CBURN squad has been called.

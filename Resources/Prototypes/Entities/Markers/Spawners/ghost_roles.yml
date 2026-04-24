@@ -360,3 +360,26 @@
     - state: green
     - sprite: Clothing/Head/Hats/wizardhat.rsi
       state: icon
+
+- type: entity
+  categories: [ Spawner ]
+  # todo: branch this out of the Antag system (this is not an antagonist!!!!)
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostCBURN
+  name: ghost role spawn point
+  suffix: CBURN
+  components:
+  - type: GhostRole
+    name: ghost-role-information-cburn-agent-name
+    description: ghost-role-information-cburn-agent-description
+    rules: ghost-role-component-default-rules
+    # TODO: Mind Role for CBURN agents
+    mindRoles:
+     - MindRoleCBURN
+    job: CBURN
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: bio

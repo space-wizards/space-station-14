@@ -355,3 +355,13 @@
   - type: ChangelingRole
   - type: RoleBriefing
     briefing: changeling-briefing
+
+# CBURN
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleCBURN
+  name: CBURN Agent
+  components:
+  - type: MindRole
+    roleType: Neutral
+    jobPrototype: CBURN

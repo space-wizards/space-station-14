@@ -22,7 +22,7 @@
 - files: ["Shuttles/AdminSpawn/ERT-Small-Base.yml"]
   authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
 
-- files: ["Shuttles/AdminSpawn/ERT-Small-CBURN.yml"]
+- files: ["Shuttles/cburn_small_.yml"]
   authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
 
 - files: ["Shuttles/AdminSpawn/ERT-Small-Deathsquad.yml"]

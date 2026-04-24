@@ -1,0 +1,15 @@
+- type: entity
+  categories: [ Spawner ]
+  # todo: branch this out of the Antag system (this is not an antagonist!!!!)
+  parent: MarkerBase
+  id: SpawnPointCBURN
+  name: ghost role spawn point
+  suffix: CBURN
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: bio
