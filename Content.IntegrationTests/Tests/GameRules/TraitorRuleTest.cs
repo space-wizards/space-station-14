@@ -62,7 +62,7 @@ public sealed class TraitorRuleTest : GameTest
             Assert.That(gameRuleEnt.TryGetComponent<AntagRandomObjectivesComponent>(out var randomObjectives, compFact),
             $"Game rule entity {TraitorGameRuleProtoId} does not have an AntagRandomObjectivesComponent!");
 
-            minPlayers = gameRule.MinPlayers;
+            minPlayers = gameRule.MinPlayers ?? minPlayers;
             maxDifficulty = randomObjectives.MaxDifficulty;
         });
 

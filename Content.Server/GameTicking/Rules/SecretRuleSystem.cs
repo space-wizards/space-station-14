@@ -1,17 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -73,41 +72,30 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
     private bool TryPickPreset(ProtoId<WeightedRandomPrototype> weights, [NotNullWhen(true)] out GamePresetPrototype? preset)
     {
-        var options = _prototypeManager.Index(weights).Weights.ShallowClone();
+        var options = _prototypeManager.Index(weights).Weights;
         var players = GameTicker.ReadyPlayerCount();
 
-        GamePresetPrototype? selectedPreset = null;
-        var sum = options.Values.Sum();
-        while (options.Count > 0)
+        var validOptions = new Dictionary<ProtoId<GamePresetPrototype>, float>(options.Count);
+        foreach (var (presetId, weight) in options)
         {
-            var accumulated = 0f;
-            var rand = _random.NextFloat(sum);
-            foreach (var (key, weight) in options)
-            {
-                accumulated += weight;
-                if (accumulated < rand)
-                    continue;
+            if (!_prototypeManager.Resolve<GamePresetPrototype>(presetId, out var presetProto))
+                continue;
 
-                if (!_prototypeManager.TryIndex(key, out selectedPreset))
-                    Log.Error($"Invalid preset {selectedPreset} in secret rule weights: {weights}");
-
-                options.Remove(key);
-                sum -= weight;
-                break;
-            }
-
-            if (CanPick(selectedPreset, players))
-            {
-                preset = selectedPreset;
-                return true;
-            }
-
-            if (selectedPreset != null)
-                Log.Info($"Excluding {selectedPreset.ID} from secret preset selection.");
+            if (CanPick(presetProto, players))
+                validOptions.Add(presetId, weight);
         }
 
-        preset = null;
-        return false;
+        _adminLogger.Add(LogType.EventRan, LogImpact.High, $"After all checks {nameof(SecretRuleSystem)} will pick from: {string.Join('|', validOptions.Select(x => $"{x.Key}: {x.Value}"))}");
+
+        if (validOptions.Count == 0)
+        {
+            preset = null;
+            return false;
+        }
+
+        var selectedId = _random.Pick(validOptions);
+
+        return _prototypeManager.Resolve(selectedId, out preset);
     }
 
     public bool CanPickAny()
@@ -163,6 +151,9 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
             }
 
             if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
+                return false;
+
+            if (ruleComp.MaxPlayers < players && ruleComp.CancelPresetOnTooManyPlayers)
                 return false;
         }
 
