@@ -15,10 +15,10 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingUniqueIdentityConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-        SubscribeLocalEvent<ChangelingDevouredEntityEvent>(OnChangelingDevoured);
+        SubscribeLocalEvent<ChangelingDevouredEvent>(OnChangelingDevoured);
     }
 
-    private void OnChangelingDevoured(ref ChangelingDevouredEntityEvent args)
+    private void OnChangelingDevoured(ref ChangelingDevouredEvent args)
     {
         if (!args.Unique)
             return;
