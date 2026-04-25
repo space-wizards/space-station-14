@@ -90,6 +90,9 @@ public sealed partial class TriggerSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
+        if (Terminating(ent))
+            return false; // Stop trying to resurrect a dead horse.
+
         if (HasComp<ActiveTimerTriggerComponent>(ent))
             return false; // already activated
 
