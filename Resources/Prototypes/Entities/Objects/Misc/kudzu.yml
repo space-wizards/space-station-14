@@ -19,9 +19,9 @@
       affectAirborne: true
 
 - type: entity
+  parent: [ BaseKudzu, SolutionFood ]
   id: Kudzu
   name: kudzu
-  parent: BaseKudzu
   description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
   components:
     - type: MeleeSound
@@ -95,12 +95,11 @@
     - type: FlavorProfile
       flavors:
       - fiber
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 0.1
+    - type: Solution
+      solution:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.1
     - type: Tag
       tags:
       - Ruminant
@@ -169,9 +168,9 @@
       - MobLuminousPerson
 
 - type: entity
+  parent: [BaseKudzu, SolutionFood]
   id: FleshKudzu
   name: tendons
-  parent: BaseKudzu
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
   placement:
     mode: SnapgridCenter
@@ -252,14 +251,13 @@
       ignoreWhitelist:
         tags:
         - Flesh
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          reagents:
-          - ReagentId: Razorium
-            Quantity: 2
-          - ReagentId: Protein
-            Quantity: 1
+    - type: Solution
+      solution:
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 1
     - type: AutoEmote # Meat Kudzu used to have respirator, but couldn't breathe so all it would do is gasp.
       emotes:
       - MeatGasp
