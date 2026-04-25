@@ -110,7 +110,7 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         {
             var layer = new PrototypeLayerData();
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
+            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
 
             var key = equippedPrefix + ent.Comp.EquippedFillBaseName + ent.Comp.EquippedMaxFillLevels;
 
