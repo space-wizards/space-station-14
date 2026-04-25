@@ -19,12 +19,13 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
         foreach (var identity in entity.Comp.ConsumedIdentities)
         {
-            ChangelingNetworkedIdentityData netData = new();
-
-            netData.Identity = GetNetEntity(identity.Identity);
-            netData.Original = GetNetEntity(identity.Original);
-            netData.Starting = identity.Starting;
-            netData.OriginalJob = identity.OriginalJob;
+            ChangelingNetworkedIdentityData netData = new()
+            {
+                Identity = GetNetEntity(identity.Identity),
+                Original = GetNetEntity(identity.Original),
+                Starting = identity.Starting,
+                OriginalJob = identity.OriginalJob,
+            };
 
             sentIdentities.Add(netData);
         }

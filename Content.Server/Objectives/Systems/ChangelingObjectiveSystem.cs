@@ -43,6 +43,6 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
         if (comp.UniqueIdentities >= target)
             return 1f;
 
-        return (float) comp.UniqueIdentities / (float) target;
+        return (float)comp.UniqueIdentities / (float)target;
     }
 }

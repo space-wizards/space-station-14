@@ -171,17 +171,16 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var unique = !_changelingIdentitySystem.TryGetDataFromOriginal(ent.Owner, target, out _);
 
         // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
-        var becomesIdentity = !HasDevoured(ent.Owner, target);
+        var becomesIdentity = !HasIdentity(ent.Owner, target);
 
         var ev = new ChangelingDevouredEntityEvent(ent.Owner, target, becomesIdentity, unique);
-        RaiseLocalEvent(ent, ref ev);
-        RaiseLocalEvent(ref ev); // We broadcast the event to allow relevant objectives to update.
+        RaiseLocalEvent(ent, ref ev, true); // We broadcast the event to allow relevant objectives to update.
     }
 
     /// <summary>
-    /// Has the given victim been devoured by the given changeling before?
+    /// Whether the given changeling has a valid identity of the given entity.
     /// </summary>
-    public bool HasDevoured(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
+    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
     {
         if (!Resolve(changeling, ref changeling.Comp, false))
             return false;

@@ -207,9 +207,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return null;
 
         // We see if we already have a identity slot for this entity.
-        TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity);
-
-        if (newIdentity == null)
+        if (!TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity))
         {
             newIdentity = CreateIdentityData(clone.Value, target);
             ent.Comp.ConsumedIdentities.Add(newIdentity);

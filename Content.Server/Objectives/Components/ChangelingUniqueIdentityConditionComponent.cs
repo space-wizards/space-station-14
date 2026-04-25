@@ -10,8 +10,8 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class ChangelingUniqueIdentityConditionComponent : Component
 {
     /// <summary>
-    /// Whether the target must be dead
+    /// The amount of identities that have been already devoured.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int UniqueIdentities;
 }

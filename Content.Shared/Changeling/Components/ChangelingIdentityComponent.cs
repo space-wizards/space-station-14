@@ -58,6 +58,9 @@ public sealed class ChangelingIdentityComponentState : ComponentState
     }
 }
 
+/// <summary>
+/// Stores data related to an identity a changeling has devoured.
+/// </summary>
 [DataDefinition]
 public sealed partial class ChangelingIdentityData
 {
@@ -70,6 +73,7 @@ public sealed partial class ChangelingIdentityData
 
     /// <summary>
     /// The original entity that was devoured to obtain this identity.
+    /// Set to null if the entity is ever deleted.
     /// </summary>
     [DataField]
     public EntityUid? Original;
@@ -94,6 +98,10 @@ public sealed partial class ChangelingIdentityData
     public bool Starting = false;
 }
 
+/// <summary>
+/// A net-serializable version of <see cref="ChangelingIdentityData"/> used for networking purposes.
+/// It needs to be like this because EntityUid cannot be networked, so we convert it to NetEntity and send it over to the client using this class.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ChangelingNetworkedIdentityData
 {

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Robust.Client.GameObjects;
@@ -24,20 +23,22 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
         ent.Comp.ConsumedIdentities = new List<ChangelingIdentityData>();
 
-        foreach (var identities in state.ConsumedIdentities)
+        foreach (var identity in state.ConsumedIdentities)
         {
-            ChangelingIdentityData data = new();
+            ChangelingIdentityData data = new()
+            {
+                Identity = EnsureEntity<ChangelingStoredIdentityComponent>(identity.Identity, ent),
+                Original = EnsureEntity<ChangelingDevouredComponent>(identity.Original, ent),
+                OriginalMind = null, // Don't network the mind!
+                OriginalJob = identity.OriginalJob,
+                Starting = identity.Starting,
 
-            data.Identity = GetEntity(identities.Identity);
-            data.Original = GetEntity(identities.Original);
-            data.OriginalMind = null; // Don't network the mind!
-            data.OriginalJob = identities.OriginalJob;
-            data.Starting = identities.Starting;
+            };
 
             ent.Comp.ConsumedIdentities.Add(data);
         }
 
-        ent.Comp.CurrentIdentity = GetEntity(state.CurrentIdentity);
+        ent.Comp.CurrentIdentity = EnsureEntity<ChangelingStoredIdentityComponent>(state.CurrentIdentity, ent);
 
         ent.Comp.IdentityCloningSettings = state.IdentityCloningSettings;
 
