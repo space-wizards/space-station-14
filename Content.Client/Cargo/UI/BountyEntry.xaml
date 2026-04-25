@@ -14,7 +14,7 @@
                     <RichTextLabel Name="StatusLabel"/>
                 </BoxContainer>
                 <Control MinWidth="10"/>
-                <BoxContainer Orientation="Vertical" MinWidth="200">
+                <BoxContainer Orientation="Vertical" MinWidth="200" HorizontalAlignment="Right">
                     <BoxContainer Orientation="Horizontal" >
                         <Button Name="PrintButton"
                                 Text="{Loc 'bounty-console-label-button-text'}"

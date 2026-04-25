@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Message;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
@@ -49,9 +50,9 @@ public sealed partial class BountyEntry : BoxContainer
         SkipButton.OnPressed += _ => OnSkipButtonPressed?.Invoke();
         ClaimButton.OnPressed += _ => OnClaimButtonPressed?.Invoke();
 
-        var states = new List<CargoBountyStatusPrototype>(_prototype.EnumeratePrototypes<CargoBountyStatusPrototype>());
-        states.Sort((a, b) => a.Index.CompareTo(b.Index));
-        foreach (var status in states)
+
+        var allStates = _prototype.EnumeratePrototypes<CargoBountyStatusPrototype>().OrderBy(s => s.Index);
+        foreach (var status in allStates)
         {
             BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)), status.Index);
         }
