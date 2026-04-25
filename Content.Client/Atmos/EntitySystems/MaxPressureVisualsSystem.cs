@@ -46,10 +46,10 @@ public sealed class MaxPressureVisualsSystem : EntitySystem
         if (args.Sprite is not { } sprite)
             return;
 
-        if (!args.AppearanceData.TryGetValue(GasIntegrity.Integrity, out var obj) || obj is not int integrity)
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.Integrity, out var obj) || obj is not float integrity)
             return;
 
-        if (!args.AppearanceData.TryGetValue(GasIntegrity.MaxIntegrity, out obj) || obj is not int maxIntegrity)
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.MaxIntegrity, out obj) || obj is not float maxIntegrity)
             return;
 
         // We don't want visuals at max integrity, so we return if we're at max.
