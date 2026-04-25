@@ -2,6 +2,7 @@
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
+using Content.Shared.Fluids;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -19,6 +20,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
     [Dependency] private readonly SharedEnsnareableSystem _snare = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {
@@ -66,6 +68,8 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
             PredictedQueueDel(deleted);
         }
 
-        // TODO: Should probably spawn a puddle of acid. But solutions are frozen due to an upcoming refactor.
+        if (ent.Comp.SpillSolution != null)
+            _puddle.TrySpillAt(args.Performer, ent.Comp.SpillSolution, out _, false);
+
     }
 }

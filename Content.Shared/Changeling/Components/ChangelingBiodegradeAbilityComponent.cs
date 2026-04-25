@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -36,6 +37,12 @@ public sealed partial class ChangelingBiodegradeAbilityComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ActivatedSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+
+    /// <summary>
+    /// The reagents to spill at the location of the entity when this action is used.
+    /// </summary>
+    [DataField]
+    public Solution? SpillSolution = new([new("SulfuricAcid", 30)]);
 }
 
 /// <summary>
