@@ -1,5 +1,6 @@
 ﻿using Content.Server.Power.Components;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Robust.Shared.Prototypes;
@@ -39,18 +40,25 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         if (battery.LastCharge < entity.Comp.Charge)
             return;
 
-        var spawns = new List<EntProtoId>();
-
-        if (entity.Comp.Proto != null)
-            spawns.Add(entity.Comp.Proto.Value);
+        if (entity.Comp.Proto == null)
+            SpawnFromEntityTable(entity, entity.Comp.Table);
         else
-            spawns.AddRange(_entityTable.GetSpawns(entity.Comp.Table));
+            SpawnFromProto(entity, entity.Comp.Proto.Value);
 
+        _battery.ChangeCharge((entity, battery), -entity.Comp.Charge);
+    }
+
+    private void SpawnFromEntityTable(EntityUid entity, EntityTableSelector? table)
+    {
+        var spawns = _entityTable.GetSpawns(table);
         foreach (var spawn in spawns)
         {
             Spawn(spawn, Transform(entity).Coordinates);
         }
+    }
 
-        _battery.ChangeCharge((entity, battery), -entity.Comp.Charge);
+    private void SpawnFromProto(EntityUid entity, EntProtoId proto)
+    {
+        Spawn(proto, Transform(entity).Coordinates);
     }
 }
