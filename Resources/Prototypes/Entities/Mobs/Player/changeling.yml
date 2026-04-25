@@ -42,7 +42,6 @@
     action: ActionChangelingVoiceMimic
     isInnate: true
     changeIDName: false
-    # these fields are set to false as to not mess with a changeling's ability to disguise. Otherwise, newbie lings would have their status ousted as soon as they spoke with this purchase (Unknown yells, "Hello I am not a changeling")
-    active: false
+    # this is set to false as to not mess with a changeling's ability to disguise. 
     accentHide: false
     titleText: changeling-voice-mimic-window-title
