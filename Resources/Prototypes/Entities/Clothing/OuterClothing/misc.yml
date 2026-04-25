@@ -146,6 +146,8 @@
     sprite: Clothing/OuterClothing/Misc/cultrobes.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/cultrobes.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodCulthood
 
 - type: entity
   parent: ClothingOuterBase
