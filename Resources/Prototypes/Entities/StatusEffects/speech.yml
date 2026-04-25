@@ -42,6 +42,14 @@
   components:
   - type: OwOAccent
 
+# Causes you to shout everything.
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectAllCaps
+  name: allcapsaccent
+  components:
+  - type: AllCapsAccent
+
 # Causes you to tark rike a dog. Woof!
 - type: entity
   parent: SpeechStatusEffectBase

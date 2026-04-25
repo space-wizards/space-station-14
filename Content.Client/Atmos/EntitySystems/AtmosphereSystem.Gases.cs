@@ -37,6 +37,20 @@ public sealed partial class AtmosphereSystem
         return NumericsHelpers.HorizontalAdd(tmp) > epsilon;
     }
 
+    public override float GetMass(GasMixture mix)
+    {
+        return GetMass(mix.Moles);
+    }
+
+    public override float GetMass(float[] moles)
+    {
+        var tmp = new float[moles.Length];
+        NumericsHelpers.Multiply(moles, GasMolarMasses, tmp);
+
+        // Conversion of grams to kilograms.
+        return NumericsHelpers.HorizontalAdd(tmp) * Atmospherics.gToKg;
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override float GetHeatCapacityCalculation(float[] moles, bool space)
     {
@@ -51,7 +65,7 @@ public sealed partial class AtmosphereSystem
         // though this isnt the hottest code path so it should be fine
         // the gc can eat a little as a treat
         var tmp = new float[moles.Length];
-        NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
+        NumericsHelpers.Multiply(moles, GasMolarHeatCapacities, tmp);
         // Adjust heat capacity by speedup, because this is primarily what
         // determines how quickly gases heat up/cool.
         return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
