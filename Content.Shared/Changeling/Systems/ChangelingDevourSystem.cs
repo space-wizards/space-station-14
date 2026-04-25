@@ -173,8 +173,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
         // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
         var becomesIdentity = !HasIdentity(ent.Owner, target);
 
-        var ev = new ChangelingDevouredEntityEvent(ent.Owner, target, becomesIdentity, unique);
+        var ev = new ChangelingDevouredEvent(ent.Owner, target, becomesIdentity, unique);
         RaiseLocalEvent(ent, ref ev, true); // We broadcast the event to allow relevant objectives to update.
+
+        var devouredEv = new ChangelingGotDevouredEvent(ent.Owner, target, becomesIdentity, unique);
+        RaiseLocalEvent(target, ref devouredEv); // Don't broadcast this one, all neccessary data is in the previous event already. Just use that one if a broadcast is needed.
     }
 
     /// <summary>
