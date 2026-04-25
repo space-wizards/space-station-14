@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, SolutionDart]
   id: Dart
   name: dart
   description: Light throwing dart for playing darts. Don't get in the eye!
@@ -44,10 +44,6 @@
   - type: Item
     size: Tiny
     sprite: Objects/Fun/Darts/dart_red.rsi
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 2
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution
@@ -88,6 +84,16 @@
   - type: BalloonPopper
 
 - type: entity
+  parent: Solution
+  id: SolutionDart
+  categories: [ HideSpawnMenu ] # Not abstract so weapons with multiple solutions can exist
+  components:
+  - type: Solution
+    id: melee
+    solution:
+      maxVol: 2
+
+- type: entity
   parent: Dart
   id: DartBlue
   components:
@@ -119,10 +125,9 @@
   id: HypoDart
   suffix: HypoDart
   components:
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 10
+  - type: Solution
+    solution:
+      maxVol: 10
   - type: SolutionInjectOnEmbed
     transferAmount: 10
     blockSlots: NONE
