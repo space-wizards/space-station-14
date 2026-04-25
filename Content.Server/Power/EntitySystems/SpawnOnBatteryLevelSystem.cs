@@ -34,10 +34,7 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         if (args.Delta < 0)
             return;
 
-        if (!TryComp<BatteryComponent>(entity, out var battery))
-            return;
-
-        if (battery.LastCharge < entity.Comp.Charge)
+        if (args.CurrentCharge < entity.Comp.Charge)
             return;
 
         if (entity.Comp.Proto == null)
@@ -45,7 +42,7 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         else
             SpawnFromProto(entity, entity.Comp.Proto.Value);
 
-        _battery.ChangeCharge((entity, battery), -entity.Comp.Charge);
+        _battery.ChangeCharge(entity.Owner, -entity.Comp.Charge);
     }
 
     private void SpawnFromEntityTable(EntityUid entity, EntityTableSelector? table)
