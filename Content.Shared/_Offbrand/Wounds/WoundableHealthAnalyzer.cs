@@ -127,7 +127,7 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
 
         return new WoundableHealthAnalyzerData()
             {
-                BrainHealth = brainDamageThresholds.DisplayDamage.Float() / brainDamageThresholds.DisplayMaxDamage.Float(),
+                BrainHealth = 1f - (brainDamageThresholds.DisplayDamage.Float() / brainDamageThresholds.DisplayMaxDamage.Float()),
                 BloodPressure = (upper, lower),
                 HeartRate = _perfusion.HeartRate((uid, heartrate)),
                 Etco2 = _perfusion.Etco2((uid, heartrate)),

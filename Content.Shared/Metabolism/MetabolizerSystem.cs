@@ -88,7 +88,7 @@ public sealed class MetabolizerSystem : EntitySystem
         RaiseLocalEvent(uid, ref applyEv);
     }
 
-    private bool LookupSolution(
+    public bool LookupSolution( // Offbrand - we need this public
         Entity<MetabolizerComponent, OrganComponent?, SolutionManagerComponent?> ent,
         MetabolismSolutionEntry solutionData,
         bool lookupTransfer,

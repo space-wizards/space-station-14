@@ -15,6 +15,7 @@ public sealed class OffbrandBrainOrganSystem : EntitySystem
         SubscribeLocalEvent<OffbrandBrainOrganComponent, BodyRelayedEvent<BaseVascularToneEvent>>(OnBaseVascularTone);
         SubscribeLocalEvent<OffbrandBrainOrganComponent, OrganDamageChangedEvent>(OnOrganDamageChanged);
         SubscribeLocalEvent<OffbrandBrainOrganComponent, OrganOxygenChangedEvent>(OnOrganOxygenChanged);
+        SubscribeLocalEvent<OffbrandBrainOrganComponent, OrganGotInsertedEvent>(OnGotInserted);
     }
 
     private void OnOrganOxygenChanged(Entity<OffbrandBrainOrganComponent> ent, ref OrganOxygenChangedEvent args)
@@ -36,5 +37,14 @@ public sealed class OffbrandBrainOrganSystem : EntitySystem
         {
             Tone = ent.Comp.VascularToneCurve.Clamped(damage.Damage.Float() / damage.MaxDamage.Float()),
         };
+    }
+
+    private void OnGotInserted(Entity<OffbrandBrainOrganComponent> ent, ref OrganGotInsertedEvent args)
+    {
+        var damageable = Comp<DamageableOrganComponent>(ent);
+        var oxygenatable = Comp<OxygenatableOrganComponent>(ent);
+
+        _thresholds.OnAfterBrainDamageChanged(args.Target, (ent, damageable, oxygenatable));
+        _thresholds.OnAfterBrainOxygenChanged(args.Target, (ent, damageable, oxygenatable));
     }
 }

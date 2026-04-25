@@ -18,12 +18,12 @@ public sealed class SolutionAppearanceRelaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionAppearanceRelayComponent, SolutionContainerChangedEvent>(OnSolutionContainerChanged);
+        SubscribeLocalEvent<SolutionAppearanceRelayComponent, SolutionChangedEvent>(OnSolutionContainerChanged);
         SubscribeLocalEvent<SolutionAppearanceRelayComponent, EntGotInsertedIntoContainerMessage>(OnEntGotInsertedIntoContainer);
         SubscribeLocalEvent<SolutionAppearanceRelayComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
     }
 
-    private void OnSolutionContainerChanged(Entity<SolutionAppearanceRelayComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnSolutionContainerChanged(Entity<SolutionAppearanceRelayComponent> ent, ref SolutionChangedEvent args)
     {
         UpdateAppearance(ent);
     }
@@ -50,13 +50,10 @@ public sealed class SolutionAppearanceRelaySystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.Solution, out var solutionEntity, out _))
             return;
 
-        if (!TryComp<ContainedSolutionComponent>(solutionEntity, out var containedSolution))
-            return;
-
         if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value.Comp, containedSolution));
+        _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value));
         _appearance.SetData(container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, true);
     }
 }

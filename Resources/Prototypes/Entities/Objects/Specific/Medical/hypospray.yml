@@ -244,6 +244,7 @@
     emptySpriteName: medipen_empty
   - type: Solution
     solution:
+      maxVol: 35 # Offbrand
       reagents:
       - ReagentId: Epinephrine
         Quantity: 12
@@ -644,7 +645,7 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: morphen_empty
-  - type: SolutionContainerManager
+  - type: Solution
     solution:
       maxVol: 30
       reagents:

@@ -4,10 +4,10 @@
   name: iv bag
   description: Used to hold blood or other fluids to administer intravenously to a patient.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
+  - type: Solution
+    id: beaker
+    solution:
+      maxVol: 400
   - type: Sprite
     sprite: _Offbrand/iv_bag.rsi
     layers:
@@ -215,13 +215,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ammonia-blood
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: AmmoniaBlood
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: AmmoniaBlood
+        Quantity: 400
 
 - type: entity
   parent: IVBag
@@ -230,13 +228,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-blood
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: Blood
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 400
 
 - type: entity
   parent: IVBag
@@ -245,13 +241,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-hemocyanin-blood
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: CopperBlood
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 400
 
 - type: entity
   parent: IVBag
@@ -260,13 +254,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-insect-blood
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: InsectBlood
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 400
 
 - type: entity
   parent: IVBag
@@ -275,13 +267,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-sap
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: Sap
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sap
+        Quantity: 400
 
 - type: entity
   parent: IVBag
@@ -290,13 +280,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-slime
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 400
-        reagents:
-        - ReagentId: Slime
-          Quantity: 400
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 400
 
 - type: entityTable
   id: BloodBagFill
