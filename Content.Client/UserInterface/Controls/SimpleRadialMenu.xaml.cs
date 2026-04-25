@@ -32,7 +32,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         _attachMenuToEntity = owner;
     }
 
-    public void SetButtons(IEnumerable<RadialMenuOptionBase> models, SimpleRadialMenuSettings? settings = null)
+    public void SetButtons(List<RadialMenuOptionBase> models, SimpleRadialMenuSettings? settings = null)
     {
         ClearExistingChildrenRadialButtons();
 
@@ -47,7 +47,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
     }
 
     private void Fill(
-        IEnumerable<RadialMenuOptionBase> models,
+        List<RadialMenuOptionBase> models,
         SpriteSystem sprites,
         ICollection<Control> rootControlChildren,
         SimpleRadialMenuSettings settings
@@ -62,6 +62,8 @@ public sealed partial class SimpleRadialMenu : RadialMenu
             Visible = true
         };
         rootControlChildren.Add(rootContainer);
+
+        models.Sort(RadialMenuOptionBase.ByTooltipComparerDefault);
 
         foreach (var model in models)
         {
@@ -94,6 +96,9 @@ public sealed partial class SimpleRadialMenu : RadialMenu
             ReserveSpaceForHiddenChildren = false,
             Visible = false
         };
+
+        model.Nested.Sort(RadialMenuOptionBase.ByTooltipComparerDefault);
+
         foreach (var nested in model.Nested)
         {
             if (nested is RadialMenuNestedLayerOption nestedMenuModel)
@@ -316,6 +321,8 @@ public sealed record RadialMenuEntityPrototypeIconSpecifier(EntProtoId ProtoId) 
 /// <summary> Container for common options for radial menu button. </summary>
 public abstract class RadialMenuOptionBase
 {
+    public static IComparer<RadialMenuOptionBase> ByTooltipComparerDefault = new ByTooltipComparer();
+
     /// <summary> Tooltip to be displayed when button is hovered. </summary>
     public string? ToolTip { get; init; }
 
@@ -334,6 +341,29 @@ public abstract class RadialMenuOptionBase
     /// Specifier that describes icon to be used for radial menu button.
     /// </summary>
     public RadialMenuIconSpecifier? IconSpecifier { get; set; }
+
+    /// <summary>
+    /// Comparer for sorting options in alphabetical order to keep order of options
+    /// in radial menu consistent, as main goal of radial menu is easy to remember
+    /// and fast to act control, which requires muscle memory and gets ruined by any reorder.
+    /// Reorder can be provided by inconsistency in behavior prototypes enumeration.
+    /// </summary>
+    private sealed class ByTooltipComparer : IComparer<RadialMenuOptionBase>
+    {
+        public int Compare(RadialMenuOptionBase? x, RadialMenuOptionBase? y)
+        {
+            if (ReferenceEquals(x, y))
+                return 0;
+
+            if (y?.ToolTip is null)
+                return 1;
+
+            if (x?.ToolTip is null)
+                return -1;
+
+            return string.Compare(x.ToolTip, y.ToolTip, StringComparison.Ordinal);
+        }
+    }
 }
 
 /// <summary> Base type for model of radial menu button with some action on button pressed. </summary>
@@ -352,13 +382,13 @@ public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data) : Rad
 /// </summary>
 /// <param name="nested">List of button models for next layer of menu.</param>
 /// <param name="containerRadius">Radius for radial menu buttons of next layer.</param>
-public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
+public sealed class RadialMenuNestedLayerOption(List<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
 {
     /// <summary> Radius for radial menu buttons of next layer. </summary>
     public float? ContainerRadius { get; } = containerRadius;
 
     /// <summary> List of button models for next layer of menu. </summary>
-    public IReadOnlyCollection<RadialMenuOptionBase> Nested { get; } = nested;
+    public List<RadialMenuOptionBase> Nested { get; } = nested;
 }
 
 /// <summary>
