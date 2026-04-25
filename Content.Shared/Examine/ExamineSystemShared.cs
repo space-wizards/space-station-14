@@ -268,7 +268,7 @@ namespace Content.Shared.Examine
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(metadata.EntityDescription))
             {
-                message.AddText(metadata.EntityDescription);
+                message.PushMarkup(metadata.EntityDescription);
                 hasDescription = true;
             }
 
