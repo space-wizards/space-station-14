@@ -49,7 +49,7 @@ public sealed partial class VoiceMaskComponent : Component
     ///     If user's voice is getting changed when they speak.
     /// </summary>
     [DataField]
-    public bool Active = true;
+    public bool Active = false;
 
     /// <summary>
     ///     If user's accent is getting hidden when they speak.

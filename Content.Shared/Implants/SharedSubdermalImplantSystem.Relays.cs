@@ -17,7 +17,7 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, TransformSpeakerNameEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, TransformSpeechEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SeeIdentityAttemptEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, VoiceMaskTurnedOnEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, VoiceMaskToggledEvent>(RelayToImplantEvent);
 
         // Ref relays, for when you need to write to the event!
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
@@ -59,7 +59,7 @@ public abstract partial class SharedSubdermalImplantSystem
             RaiseLocalEvent(implant, relayEv);
         }
 
-        args = relayEv.Event;
+        args = relayEv.Args;
     }
 }
 
@@ -68,13 +68,13 @@ public abstract partial class SharedSubdermalImplantSystem
 /// </summary>
 public sealed class ImplantRelayEvent<T> where T : notnull
 {
-    public T Event;
+    public T Args;
 
     public readonly EntityUid ImplantedEntity;
 
     public ImplantRelayEvent(T ev, EntityUid implantedEntity)
     {
-        Event = ev;
+        Args = ev;
         ImplantedEntity = implantedEntity;
     }
 }
