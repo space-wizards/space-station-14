@@ -166,7 +166,7 @@
     heatDamage:
       types:
         Heat: 0.1 # bones don't burn easily.
-        Brute: 0.5 #oof ouch oof my bones are micro-fracturing!!!
+        Blunt: 0.5 #oof ouch oof my bones are micro-fracturing!!!
   - type: FlashImmunity
     showInExamine: false
   - type: Instrument
