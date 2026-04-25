@@ -22,7 +22,7 @@ public sealed class AnchorOnlyOnStationSystem : EntitySystem
         var allGrids = args.NewGrids.ToList();
 
         var query = AllEntityQuery<AnchorOnlyOnStationComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out _, out var entXform))
+        while (query.MoveNext(out var ent, out var anchorOnlyOnStationComp, out var entXform))
         {
             if (entXform.GridUid == null)
                 continue;
@@ -30,7 +30,7 @@ public sealed class AnchorOnlyOnStationSystem : EntitySystem
             if (!allGrids.Contains(entXform.GridUid.Value))
                 continue;
 
-            if (_stationSystem.IsOnStation(ent))
+            if (_stationSystem.IsOnStation(ent, anchorOnlyOnStationComp.OnlyCountLargestGrid))
                 continue;
 
             _transform.Unanchor(ent);
