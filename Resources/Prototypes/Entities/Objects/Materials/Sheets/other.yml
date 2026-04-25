@@ -8,26 +8,6 @@
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
-    size: Normal
-  - type: Tag
-    tags:
-    - Sheet
-    - ConstructionMaterial
-  - type: Damageable
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: SolutionContainerManager
-    solutions:
-      paper:
-        canReact: false
 
 - type: entity
   parent: SheetOtherBase
