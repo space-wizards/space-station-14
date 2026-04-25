@@ -155,7 +155,9 @@ public sealed class OxygenatableOrganSystem : EntitySystem
             DamageableOrganComponent> ent)
     {
         var oxygenation = ent.Comp1.Body is { } body
-            ? _perfusion.Spo2(body)
+            ? TryComp<PerfusionComponent>(body, out var perfusion)
+                ? _perfusion.Spo2((body, perfusion))
+                : 1
             : FixedPoint2.Zero;
 
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);

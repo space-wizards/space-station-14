@@ -117,6 +117,9 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
         if (!TryComp<PerfusionComponent>(uid, out var heartrate))
             return null;
 
+        if (!TryComp<BrainDamageThresholdsComponent>(uid, out var brainDamageThresholds))
+            return null;
+
         var (upper, lower) = _perfusion.BloodPressure((uid, heartrate));
 
         var hasNonMedical = false;
@@ -124,13 +127,13 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
 
         return new WoundableHealthAnalyzerData()
             {
-                BrainHealth = 1, // TODO: brainHealth,
+                BrainHealth = brainDamageThresholds.DisplayDamage.Float() / brainDamageThresholds.DisplayMaxDamage.Float(),
                 BloodPressure = (upper, lower),
                 HeartRate = _perfusion.HeartRate((uid, heartrate)),
                 Etco2 = _perfusion.Etco2((uid, heartrate)),
                 RespiratoryRate = _perfusion.RespiratoryRate((uid, heartrate)),
                 Spo2 = _perfusion.Spo2((uid, heartrate)).Float(),
-                AnyVitalCritical = _shockThresholds.IsCritical(uid), // TODO: || _brainDamage.IsCritical(uid) || _perfusion.IsCritical(uid),
+                AnyVitalCritical = _shockThresholds.IsCritical(uid) || brainDamageThresholds.DisplayDamage == 0, // TODO: || _perfusion.IsCritical(uid),
                 Etco2Name = heartrate.Etco2Name,
                 Etco2GasName = heartrate.Etco2GasName,
                 Spo2Name = heartrate.Spo2Name,

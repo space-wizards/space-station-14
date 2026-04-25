@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Offbrand.Wounds;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(BrainDamageThresholdsSystem))]
+[Access(typeof(BrainDamageThresholdsSystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class BrainDamageThresholdsComponent : Component
 {
     /// <summary>

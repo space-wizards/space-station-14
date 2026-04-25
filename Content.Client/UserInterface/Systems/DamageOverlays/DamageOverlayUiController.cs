@@ -102,7 +102,6 @@ public sealed class DamageOverlayUiController : UIController
     {
         if (!EntityManager.TryGetComponent<PainComponent>(entity, out var pain) ||
             !EntityManager.TryGetComponent<ShockThresholdsComponent>(entity, out var shockThresholds) ||
-            // !EntityManager.TryGetComponent<BrainDamageComponent>(entity, out var brainDamage) || // TODO: elegance
             !EntityManager.TryGetComponent<BrainDamageThresholdsComponent>(entity, out var brainThresholds) ||
             !EntityManager.TryGetComponent<PerfusionComponent>(entity, out var perfusion))
             return;
@@ -115,7 +114,7 @@ public sealed class DamageOverlayUiController : UIController
         {
             case MobState.Alive or MobState.Critical:
             {
-                // _overlay.CritLevel = FixedPoint2.Clamp(brainDamage.Damage / maxBrain, 0, 1).Float(); // TODO: elegance
+                _overlay.CritLevel = FixedPoint2.Clamp(brainThresholds.DisplayDamage / maxBrain, 0, 1).Float();
                 _overlay.PainLevel = FixedPoint2.Clamp(_pain.GetShock((entity, pain)) / maxShock, 0, 1).Float();
                 _overlay.OxygenLevel = FixedPoint2.Clamp(1 - _perfusion.Spo2((entity, perfusion)), 0, 1).Float();
                 _overlay.DeadLevel = 0;
