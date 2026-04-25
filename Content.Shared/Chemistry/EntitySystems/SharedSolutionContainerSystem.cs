@@ -98,7 +98,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
-        SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerInit);
+        SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
@@ -106,7 +106,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
     {
-        args.State = new SolutionComponentState(ent.Comp.Solution);
+        args.State = new SolutionComponentState(ent.Comp.Id, ent.Comp.Solution);
     }
 
     private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
@@ -115,6 +115,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         ent.Comp.Solution = cast.Solution.Clone();
+        ent.Comp.Id = cast.Id;
 
         // Always raise the event on the client so that we can update UIs accordingly.
         var changedEv = new SolutionChangedEvent(ent);
@@ -1085,7 +1086,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// We want all our solutions spawned before MapInit.
     /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
     /// </remarks>
-    private void OnManagerInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
+    private void OnManagerStartup(Entity<SolutionManagerComponent> entity, ref ComponentStartup args)
     {
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
         foreach (var solution in entity.Comp.SolutionEnts)
@@ -1102,6 +1103,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
+        if (Timing.ApplyingState)
+            return;
+
         // Container networking boilerplate
         if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
@@ -1113,12 +1117,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         contained.Container = entity.Owner;
 
         // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
-        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
+        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
             Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
     {
+        if (Timing.ApplyingState)
+            return;
+
         // Container networking jank
         if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
@@ -1186,6 +1193,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         solution.Comp.Id = name;
         ContainerSystem.Insert(solution.Owner, container, force: true);
         EntityManager.InitializeAndStartEntity(solution);
+        FlagPredicted(solution.Owner);
         return solution;
     }
 
@@ -1197,6 +1205,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var solution = SpawnSolutionUninitialized(proto);
         ContainerSystem.Insert(solution.Owner, container, force: true);
         EntityManager.InitializeAndStartEntity(solution);
+        FlagPredicted(solution.Owner);
         return solution;
     }
 
