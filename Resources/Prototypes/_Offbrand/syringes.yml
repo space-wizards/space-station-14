@@ -5,13 +5,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-paracetamol
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Paracetamol
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Paracetamol
+        Quantity: 15
 
 - type: entity
   suffix: tramadol
@@ -20,13 +18,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-tramadol
-  - type: SolutionContainerManager
+  - type: Solution
     solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Tramadol
-            Quantity: 15
+      reagents:
+      - ReagentId: Tramadol
+        Quantity: 15
 
 - type: entity
   suffix: oxycodone
@@ -35,10 +31,8 @@
   components:
   - type: Label
     currentLabel: reagent-name-oxycodone
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Oxycodone
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Oxycodone
+        Quantity: 15

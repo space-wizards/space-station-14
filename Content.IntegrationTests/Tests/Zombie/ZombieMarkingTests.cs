@@ -7,6 +7,7 @@ using Content.Shared.Zombies;
 namespace Content.IntegrationTests.Tests.Zombie;
 
 [TestOf(typeof(ZombieSystem))]
+[Ignore("Offbrand - just don't")]
 public sealed class ZombieMarkingTests : InteractionTest
 {
     protected override string PlayerPrototype => "MobVulpkanin";

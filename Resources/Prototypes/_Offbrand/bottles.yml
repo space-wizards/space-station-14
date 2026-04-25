@@ -5,13 +5,11 @@
   components:
   - type: Label
     currentLabel: tramadol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Tramadol
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tramadol
+        Quantity: 30
 
 - type: entity
   id: ChemistryBottleParacetamol
@@ -20,10 +18,8 @@
   components:
   - type: Label
     currentLabel: paracetamol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Paracetamol
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Paracetamol
+        Quantity: 30
