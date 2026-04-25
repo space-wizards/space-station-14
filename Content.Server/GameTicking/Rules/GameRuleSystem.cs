@@ -19,8 +19,8 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly MapSystem _map = default!;
 
-    protected EntityQuery<GameRuleComponent> GameRuleQuery;
-    protected EntityQuery<T> CompQuery;
+    [Dependency] protected readonly EntityQuery<GameRuleComponent> GameRuleQuery = default!;
+    [Dependency] protected readonly EntityQuery<T> RuleQuery = default!;
 
     public override void Initialize()
     {
@@ -30,9 +30,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
-
-        GameRuleQuery = GetEntityQuery<GameRuleComponent>();
-        CompQuery = GetEntityQuery<T>();
     }
 
     private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)

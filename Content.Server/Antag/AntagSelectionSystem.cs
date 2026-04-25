@@ -142,7 +142,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Proto.Resolve(proto, out var def))
             return;
 
-        if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
+        if (!Exists(rule) || !RuleQuery.TryComp(rule, out var select))
             return;
 
         // This likely means player was banned or lacks playtime.

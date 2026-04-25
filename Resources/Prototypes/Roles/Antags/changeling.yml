@@ -20,7 +20,6 @@
   - type: ActionGrant
     actions:
     - ActionChangelingStore
-  # TODO: Make it so the changeling gamerule changeling can inherit from the changeling store preset somehow
   - type: Store
     name: store-preset-name-changeling
     categories:
@@ -29,10 +28,5 @@
     - ChangelingDNA
     balance:
       ChangelingDNA: 50
-  - type: UserInterface
-    interfaces:
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
-        requireInputValidation: false
   mindRoles:
   - MindRoleChangeling

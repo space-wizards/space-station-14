@@ -16,13 +16,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// This is typically set to true at the start of antag assignment for a game rule.
     /// Note that this can be true even before all antags have been assigned.
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public bool AssignmentHandled;
 
     /// <summary>
     /// Has the antagonists been preselected but yet to be fully assigned?
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public bool PreSelectionsComplete;
 
     /// <summary>

@@ -16,7 +16,7 @@ public sealed partial class GameTicker
 {
     public const float PresetFailedCooldownIncrease = 30f;
 
-    public const string DummyGameRule = "DummyNonAntag";
+    public static readonly EntProtoId DummyGameRule = "DummyNonAntag";
 
     /// <summary>
     /// The selected preset that will be used at the start of the next round.

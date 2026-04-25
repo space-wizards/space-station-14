@@ -183,14 +183,14 @@ public sealed class AllGamePresetsStartTest : GameTest
             foreach (var comp in antag.Components)
             {
                 Assert.That(entMan.HasComponent(ent, comp.Value.Component.GetType()),
-                    $"entity {entMan.ToPrettyString(ent)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
+                    $"Entity {entMan.ToPrettyString(ent)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
             }
 
             // Make sure all mind components were added
             foreach (var comp in antag.MindComponents)
             {
                 Assert.That(entMan.HasComponent(mindEnt, comp.Value.Component.GetType()),
-                    $"mind {entMan.ToPrettyString(mindEnt)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
+                    $"Mind {entMan.ToPrettyString(mindEnt)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
             }
 
             if (antag.MindRoles != null)

@@ -182,7 +182,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public IEnumerable<(EntityUid, SessionData, string)> GetAntagIdentifiers(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             yield break;
 
         foreach (var (_, minds) in ent.Comp.AssignedMinds)
@@ -209,7 +209,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public IEnumerable<(EntityUid, string)> GetAntagIdentities(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             yield break;
 
         foreach (var (_, minds) in ent.Comp.AssignedMinds)
@@ -227,7 +227,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public IEnumerable<Entity<MindComponent>> GetAntagMinds(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             yield break;
 
         foreach (var (_, minds) in ent.Comp.AssignedMinds)
@@ -248,7 +248,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public IEnumerable<EntityUid> GetAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             yield break;
 
         var minds = GetAntagMinds(ent);
@@ -268,7 +268,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public int GetAliveAntagCount(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             return 0;
 
         var numbah = 0;
@@ -290,7 +290,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public bool AnyAliveAntags(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         return GetAliveAntags(ent).Any();
@@ -302,7 +302,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public bool AllAntagsAlive(Entity<AntagSelectionComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!RuleQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         return GetAliveAntagCount(ent) == ent.Comp.AssignedMinds.Count;
