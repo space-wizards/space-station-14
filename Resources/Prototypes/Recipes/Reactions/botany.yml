@@ -53,3 +53,17 @@
       amount: 4
   products:
     PlantBGone: 5
+    
+- type: reaction
+  id: PestKillerBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    PestKiller:
+      amount: 5
+  products:
+    Ethanol: 2
+    Mercury: 1.5
+    Chlorine: 1.5
+    
