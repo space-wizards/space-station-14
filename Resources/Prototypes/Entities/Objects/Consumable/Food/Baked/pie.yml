@@ -500,17 +500,17 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: red
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 1.5
-        - ReagentId: Amatoxin
-          Quantity: 0.75
-        - ReagentId: Vitamin
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
+      - ReagentId: Amatoxin
+        Quantity: 1.25
   - type: Tag
     tags:
     - Pie
