@@ -18,5 +18,6 @@
   parent: BaseVerySmallStack
   id: ConveyorBeltStack
   name: stack-conveyor-belt
-  # icon: might want to add a sprite in the future
+  icon: { sprite: /Textures/Structures/conveyor.rsi, state: conveyor_loose }
   spawn: ConveyorBeltAssembly
+  maxCount: 3

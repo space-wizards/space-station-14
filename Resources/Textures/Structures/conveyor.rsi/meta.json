@@ -11,6 +11,12 @@
       "name": "conveyor_loose"
     },
     {
+      "name": "conveyor_loose_2"
+    },
+    {
+      "name": "conveyor_loose_3"
+    },
+    {
       "name": "conveyor_started",
       "directions": 4,
       "delays": [
