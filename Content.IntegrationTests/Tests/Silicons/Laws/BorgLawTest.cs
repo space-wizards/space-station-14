@@ -14,16 +14,22 @@ using Content.Shared.Wires;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Silicons.Laws;
 
 [TestFixture]
 public sealed class BorgLawTest : InteractionTest
 {
+    private static readonly EntProtoId HumanMobProto = "MobHuman";
+    private static readonly EntProtoId EmagProto = "Emag";
+
     private static readonly string[] BrainEntities = GameDataScrounger.EntitiesWithComponent("BorgBrain");
     private static readonly string[] ChassisEntities = GameDataScrounger.EntitiesWithComponent("BorgChassis");
 
     [Test]
+    [TestOf(typeof(SharedSiliconLawSystem))]
+    [Description("Test every combination of brain and chassis and if the silicon laws behave as expected.")]
     public async Task TestBorgBrainLawsOnChassis(
         [ValueSource(nameof(BrainEntities))] string brainProto,
         [ValueSource(nameof(ChassisEntities))] string chassisProto
@@ -112,6 +118,8 @@ public sealed class BorgLawTest : InteractionTest
     }
 
     [Test]
+    [TestOf(typeof(EmagSystem))]
+    [Description("Ensures that chassis without a mind can NOT be emagged.")]
     public async Task TestEmagChassisNoBrain(
         [ValueSource(nameof(ChassisEntities))] string chassisProto
     )
@@ -130,8 +138,8 @@ public sealed class BorgLawTest : InteractionTest
         await server.WaitPost(() =>
         {
             chassis = entManager.SpawnEntity(chassisProto, MapCoordinates.Nullspace);
-            user = entManager.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
-            emag = entManager.SpawnEntity("Emag", MapCoordinates.Nullspace);
+            user = entManager.SpawnEntity(HumanMobProto, MapCoordinates.Nullspace);
+            emag = entManager.SpawnEntity(EmagProto, MapCoordinates.Nullspace);
         });
 
         await server.WaitAssertion(() =>
@@ -172,6 +180,8 @@ public sealed class BorgLawTest : InteractionTest
     }
 
     [Test]
+    [TestOf(typeof(EmagSystem))]
+    [Description("Ensures that chassis with a mind can be emagged.")]
     public async Task TestEmagChassisWithBrain(
         [ValueSource(nameof(BrainEntities))] string brainProto,
         [ValueSource(nameof(ChassisEntities))] string chassisProto
@@ -198,8 +208,8 @@ public sealed class BorgLawTest : InteractionTest
         {
             chassis = entManager.SpawnEntity(chassisProto, MapCoordinates.Nullspace);
             brain = entManager.SpawnEntity(brainProto, MapCoordinates.Nullspace);
-            user = entManager.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
-            emag = entManager.SpawnEntity("Emag", MapCoordinates.Nullspace);
+            user = entManager.SpawnEntity(HumanMobProto, MapCoordinates.Nullspace);
+            emag = entManager.SpawnEntity(EmagProto, MapCoordinates.Nullspace);
             isIonStormed = entManager.HasComponent<StartIonStormedComponent>(brain);
         });
 
@@ -298,6 +308,8 @@ public sealed class BorgLawTest : InteractionTest
     }
 
     [Test]
+    [TestOf(typeof(EmagSystem))]
+    [Description("Ensures that silicon brains can be emagged.")]
     public async Task TestEmagBrainDirectly(
         [ValueSource(nameof(BrainEntities))] string brainProto
     )
@@ -318,8 +330,8 @@ public sealed class BorgLawTest : InteractionTest
         await server.WaitPost(() =>
         {
             brain = entManager.SpawnEntity(brainProto, MapCoordinates.Nullspace);
-            user = entManager.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
-            emag = entManager.SpawnEntity("Emag", MapCoordinates.Nullspace);
+            user = entManager.SpawnEntity(HumanMobProto, MapCoordinates.Nullspace);
+            emag = entManager.SpawnEntity(EmagProto, MapCoordinates.Nullspace);
             isIonStormed = entManager.HasComponent<StartIonStormedComponent>(brain);
         });
 
