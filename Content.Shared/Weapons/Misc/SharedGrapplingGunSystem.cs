@@ -214,8 +214,13 @@ public abstract class SharedGrapplingGunSystem : VirtualController
         if (!Timing.IsFirstTimePredicted || grapple.Comp.Projectile is not { } projectile)
             return;
 
-        if(isBreak)
-            _audio.PlayPredicted(grapple.Comp.BreakSound, grapple.Owner, user);
+        if (isBreak)
+        {
+            if (user != null)
+                _audio.PlayPredicted(grapple.Comp.BreakSound, grapple.Owner, user);
+            else if (_netManager.IsServer) // This feels... hacky.
+                _audio.PlayPvs(grapple.Comp.BreakSound, grapple.Owner);
+        }
 
         _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
