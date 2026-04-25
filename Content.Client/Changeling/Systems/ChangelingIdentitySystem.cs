@@ -32,7 +32,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 OriginalMind = null, // Don't network the mind!
                 OriginalJob = identity.OriginalJob,
                 Starting = identity.Starting,
-
+                OriginalName = identity.OriginalName,
             };
 
             ent.Comp.ConsumedIdentities.Add(data);

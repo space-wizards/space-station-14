@@ -25,6 +25,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 Original = GetNetEntity(identity.Original),
                 Starting = identity.Starting,
                 OriginalJob = identity.OriginalJob,
+                OriginalName = identity.Original != null ? Name(identity.Original.Value) : string.Empty,
             };
 
             sentIdentities.Add(netData);

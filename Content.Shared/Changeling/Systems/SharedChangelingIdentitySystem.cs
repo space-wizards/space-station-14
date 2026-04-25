@@ -69,7 +69,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        var clone = CloneToPausedMap(ent, ent.Owner);
+        CloneToPausedMap(ent, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
@@ -209,11 +209,11 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         // We see if we already have a identity slot for this entity.
         if (!TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity))
         {
-            newIdentity = CreateIdentityData(clone.Value, target);
+            newIdentity = new ChangelingIdentityData();
             ent.Comp.ConsumedIdentities.Add(newIdentity);
         }
 
-        newIdentity.Identity = clone;
+        UpdateIdentityData(newIdentity, clone.Value, target);
 
         HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
@@ -321,19 +321,30 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     public ChangelingIdentityData CreateIdentityData(EntityUid identity, EntityUid original)
     {
         ChangelingIdentityData identityData = new ChangelingIdentityData();
-        identityData.Identity = identity;
-        identityData.Original = original;
+        UpdateIdentityData(identityData, identity, original);
+
+        return identityData;
+    }
+
+    /// <summary>
+    /// Updates an existing identity data with information from a new identity and original entity.
+    /// </summary>
+    /// <param name="data">The existing data.</param>
+    /// <param name="identity">The changeling identity to use.</param>
+    /// <param name="original">The original entity of the identity.</param>
+    public void UpdateIdentityData(ChangelingIdentityData data, EntityUid identity, EntityUid original)
+    {
+        data.Identity = identity;
+        data.Original = original;
 
         var foundMind = _mind.TryGetMind(original, out var mindId, out _);
-        identityData.OriginalMind = mindId;
+        data.OriginalMind = mindId;
 
         if (foundMind)
         {
             _job.MindTryGetJobId(mindId, out var jobId);
-            identityData.OriginalJob = jobId;
+            data.OriginalJob = jobId;
         }
-
-        return identityData;
     }
 
     /// <summary>

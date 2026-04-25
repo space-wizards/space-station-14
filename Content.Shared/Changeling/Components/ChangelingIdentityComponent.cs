@@ -92,10 +92,25 @@ public sealed partial class ChangelingIdentityData
     public ProtoId<JobPrototype>? OriginalJob;
 
     /// <summary>
+    /// Name of the original entity at the time of being devoured.
+    /// </summary>
+    [DataField]
+    public string? OriginalName;
+
+    /// <summary>
     /// Whether this is the identity the entity started with.
     /// </summary>
     [DataField]
     public bool Starting = false;
+
+    /// <summary>
+    /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
+    /// shown to players.
+    /// </summary>
+    public override string ToString()
+    {
+        return $"{OriginalName ?? "Unnamed"} ({OriginalJob ?? "Unknown"}) - {Original}";
+    }
 }
 
 /// <summary>
@@ -113,6 +128,9 @@ public sealed partial class ChangelingNetworkedIdentityData
 
     [DataField]
     public ProtoId<JobPrototype>? OriginalJob;
+
+    [DataField]
+    public string? OriginalName;
 
     [DataField]
     public bool Starting;
