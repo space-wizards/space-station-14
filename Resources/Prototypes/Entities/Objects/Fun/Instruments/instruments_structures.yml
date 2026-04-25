@@ -170,8 +170,8 @@
     allowProgramChange: true
 
 - type: entity
-  id: BigDrumsInstrument
   parent: BasePlaceableInstrumentRotatable
+  id: BigDrumsInstrument
   name: drum kit
   description: Ba dum tss!
   components:
