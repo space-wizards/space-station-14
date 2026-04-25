@@ -27,8 +27,8 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
         {
             ChangelingIdentityData data = new()
             {
-                Identity = EnsureEntity<ChangelingStoredIdentityComponent>(identity.Identity, ent),
-                Original = EnsureEntity<ChangelingDevouredComponent>(identity.Original, ent),
+                Identity = EnsureEntity<ChangelingIdentityComponent>(identity.Identity, ent),
+                Original = EnsureEntity<ChangelingIdentityComponent>(identity.Original, ent),
                 OriginalMind = null, // Don't network the mind!
                 OriginalJob = identity.OriginalJob,
                 Starting = identity.Starting,
