@@ -31,8 +31,8 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 Original = EnsureEntity<ChangelingIdentityComponent>(identity.Original, ent),
                 OriginalMind = null, // Don't network the mind!
                 OriginalJob = identity.OriginalJob,
-                Starting = identity.Starting,
                 OriginalName = identity.OriginalName,
+                Starting = identity.Starting,
             };
 
             ent.Comp.ConsumedIdentities.Add(data);

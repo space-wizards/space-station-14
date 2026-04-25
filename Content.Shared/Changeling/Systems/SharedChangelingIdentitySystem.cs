@@ -96,7 +96,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
                 continue;
 
-            RemoveOriginalReference((ling,  identityComp), ent);
+            RemoveOriginalReference((ling, identityComp), ent);
         }
     }
 
@@ -207,6 +207,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return null;
 
         // We see if we already have a identity slot for this entity.
+        // This can happen if we devoured them before, but then dropped their stored identity.
         if (!TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity))
         {
             newIdentity = new ChangelingIdentityData();
@@ -336,6 +337,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         data.Identity = identity;
         data.Original = original;
+        data.OriginalName = Name(identity);
 
         var foundMind = _mind.TryGetMind(original, out var mindId, out _);
         data.OriginalMind = mindId;

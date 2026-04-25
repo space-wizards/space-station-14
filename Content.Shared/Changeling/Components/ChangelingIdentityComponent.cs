@@ -95,7 +95,7 @@ public sealed partial class ChangelingIdentityData
     /// Name of the original entity at the time of being devoured.
     /// </summary>
     [DataField]
-    public string? OriginalName;
+    public string OriginalName = "Unnamed";
 
     /// <summary>
     /// Whether this is the identity the entity started with.
@@ -109,7 +109,7 @@ public sealed partial class ChangelingIdentityData
     /// </summary>
     public override string ToString()
     {
-        return $"{OriginalName ?? "Unnamed"} ({OriginalJob ?? "Unknown"}) - {Original}";
+        return $"{OriginalName} ({OriginalJob ?? "Unknown"}) - {Original}";
     }
 }
 
@@ -130,7 +130,7 @@ public sealed partial class ChangelingNetworkedIdentityData
     public ProtoId<JobPrototype>? OriginalJob;
 
     [DataField]
-    public string? OriginalName;
+    public string OriginalName = "";
 
     [DataField]
     public bool Starting;
