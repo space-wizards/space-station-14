@@ -23,7 +23,7 @@ public sealed partial class SolutionComponent : Component
     /// The name of this solution. This value should *never* change once the solution is initialized.
     /// </summary>
     [DataField]
-    [Access(typeof(SharedSolutionContainerSystem))]
+    [Access(typeof(SharedSolutionContainerSystem), Other = AccessPermissions.None)]
     public string Id = DefaultSolutionId;
 
     /// <summary>
