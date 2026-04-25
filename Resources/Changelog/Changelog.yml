@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PicklOH
-  changes:
-  - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
-      damage.
-    type: Tweak
-  id: 9155
-  time: '2025-10-24T19:26:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40820
 - author: Centronias
   changes:
   - message: Solution reactions which create items scale their resulting products
@@ -4049,3 +4041,31 @@
   id: 9666
   time: '2026-04-24T17:31:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43699
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now boil snails alive in the microwave.
+    type: Add
+  - message: Blood volume has been doubled.
+    type: Tweak
+  - message: Many chef recipes have been changed so the final result better matches
+      the ingredients put in. This means overall the nutritional value of the chef's
+      meals have increased.
+    type: Tweak
+  - message: Many chef recipes have had their ingredients changed
+    type: Tweak
+  - message: Most slicable foods now give a lot more slices.
+    type: Tweak
+  - message: Reagent container sizes have been standardized, at a base of 30 units
+      per inventory square. Most containers can now hold more than they did before.
+    type: Tweak
+  - message: Chemical jugs and bar jugs are now Large (2x4) items.
+    type: Tweak
+  - message: Buckets now hold 360u and are 3x4 items.
+    type: Tweak
+  - message: Nukie medical duffel bag now comes with a bicaridine jug, a mixed puncturase
+      & tranexamic acid jug, a mixed dermaline & pyrazine jug, and a mixed saline
+      & dexalin plus jug.
+    type: Tweak
+  id: 9667
+  time: '2026-04-25T02:15:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43412

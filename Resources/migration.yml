@@ -828,5 +828,9 @@ CrateVendingMachineRestockChangFilled: VendingMachineRestockChang
 CrateVendingMachineRestockDiscountDansFilled: VendingMachineRestockDiscountDans
 CrateVendingMachineRestockDonutFilled: VendingMachineRestockDonut
 
+# 2026-03-28
+# The great solutions YAML nuke
+FoodMeatSnail: MobSnail
+
 # 2026-04-24
 ClothingHeadHatHoodCulthood: null
