@@ -19,7 +19,7 @@
   - type: Label
     currentLabel: reagent-name-tramadol
   - type: Solution
-    solutions:
+    solution:
       reagents:
       - ReagentId: Tramadol
         Quantity: 15
