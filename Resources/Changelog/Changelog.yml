@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Solution reactions which create items scale their resulting products
-      with the reactants, instead of eating extra reactants.
-    type: Fix
-  id: 9156
-  time: '2025-10-25T00:29:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41091
-- author: Princess-Cheeseballs
-  changes:
-  - message: Eating stacks of items no longer consumes the whole stack in one bite.
-    type: Fix
-  id: 9157
-  time: '2025-10-26T01:09:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41092
 - author: TheGrimbeeper
   changes:
   - message: Artifact instantly teleporting themselves fixed.
@@ -4069,3 +4054,19 @@
   id: 9667
   time: '2026-04-25T02:15:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43412
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now late join as Traitor
+    type: Tweak
+  - message: Late join antag odds have been lowered to a fixed 50%
+    type: Tweak
+  id: 9668
+  time: '2026-04-25T09:35:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43191
+- author: AffleWaffle
+  changes:
+  - message: Fixed Pen Energy dagger not showing it's damage upon activation
+    type: Fix
+  id: 9669
+  time: '2026-04-25T09:51:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43720
