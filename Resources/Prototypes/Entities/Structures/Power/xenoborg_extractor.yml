@@ -118,10 +118,9 @@
     maxCharge: 900000 # 900KJ
     netsync: false
   - type: ExaminableBattery
-  - type: SpawnOnBatteryLevel
+  - type: SpawnOnBatteryFull
     table: !type:NestedSelector
       tableId: XenoborgExtractorCrystals
-    charge: 900000 # 4MJ
 
 - type: entityTable
   id: XenoborgExtractorCrystals
