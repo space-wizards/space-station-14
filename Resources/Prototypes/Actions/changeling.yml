@@ -44,6 +44,22 @@
     event: !type:ChangelingTransformActionEvent
 
 - type: entity
+  parent: BaseMentalAction
+  id: ActionChangelingStasis
+  name: "[color=red]Enter Stasis[/color]"
+  description: Enter a regenerative stasis, faking death and allowing to regenerate all damage.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "stasis_enter" }
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" }
+    useDelay: 2
+    priority: 1
+    checkCanInteract: false # You can heal even if you are killed
+    checkConsciousness: false
+  - type: InstantAction
+    event: !type:ChangelingStasisActionEvent
+
+- type: entity
   parent: ActionIntrinsicStore
   id: ActionChangelingStore
   name: DNA Store
