@@ -66,7 +66,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         base.Initialize();
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
+        SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         SubscribeLocalEvent<PuddleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -110,25 +110,25 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         _standoutReagents = [.. _prototypeManager.EnumeratePrototypes<ReagentPrototype>().Where(x => x.Standsout).Select(x => x.ID)];
     }
 
-    private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionChangedEvent args)
     {
         // The changes are already networked as part of the same game state.
         if (_timing.ApplyingState)
             return;
 
-        if (args.SolutionId != entity.Comp.SolutionName)
+        if (args.Solution.Comp.Id != entity.Comp.SolutionName)
             return;
 
-        if (args.Solution.Volume <= 0)
+        if (args.Solution.Comp.Solution.Volume <= 0)
         {
             _deletionQueue.Add(entity);
             return;
         }
 
         _deletionQueue.Remove(entity);
-        UpdateSlip((entity, entity.Comp), args.Solution);
-        UpdateSlow(entity, args.Solution);
-        UpdateEvaporation(entity, args.Solution);
+        UpdateSlip((entity, entity.Comp), args.Solution.Comp.Solution);
+        UpdateSlow(entity, args.Solution.Comp.Solution);
+        UpdateEvaporation(entity, args.Solution.Comp.Solution);
         UpdateAppearance((entity, entity.Comp));
     }
 
