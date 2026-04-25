@@ -50,7 +50,7 @@ public sealed class BorgMindRoleTest : InteractionTest
     private static readonly EntProtoId PositronicBrainProto = "PositronicBrain";
     private static readonly EntProtoId PositronicBrainIonStormedProto = "PositronicBrainIonStormed";
     private static readonly EntProtoId BorgChassisGenericProto = "BorgChassisGeneric";
-    private static readonly EntProtoId BorgChassisGenericProviderProto = "BorgChassisGenericProvider";
+    private const string BorgChassisGenericProviderProto = "BorgChassisGenericProvider"; //YAML linter doesn't like TestPrototypes
     private static readonly EntProtoId SyndicateAssaultBorgChassisDerelictProto = "SyndicateAssaultBorgChassisDerelict";
 
     [Test]
