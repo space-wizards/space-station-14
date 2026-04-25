@@ -585,6 +585,13 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
+
+            if (TryComp(uid, out AppearanceComponent? appearance)
+                && TryComp(uid, out ItemSlotVisualsComponent? _))
+            {
+                _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, slot.HasItem, appearance);
+            }
+
             return true;
         }
 
