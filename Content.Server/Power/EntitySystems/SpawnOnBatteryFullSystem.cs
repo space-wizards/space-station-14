@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class SpawnOnBatteryLevelSystem : EntitySystem
+public sealed class SpawnOnBatteryFullSystem : EntitySystem
 {
     [Dependency] private readonly BatterySystem _battery = null!;
     [Dependency] private readonly EntityTableSystem _entityTable =  null!;
@@ -16,25 +16,12 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpawnOnBatteryLevelComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SpawnOnBatteryLevelComponent, ChargeChangedEvent>(OnBatteryChargeChange);
+        SubscribeLocalEvent<SpawnOnBatteryFullComponent, BatteryStateChangedEvent >(OnBatteryStateChange);
     }
 
-    private void OnComponentInit(Entity<SpawnOnBatteryLevelComponent> entity, ref ComponentInit args)
+    private void OnBatteryStateChange(Entity<SpawnOnBatteryFullComponent> entity, ref BatteryStateChangedEvent args)
     {
-        if (entity.Comp.Charge != 0f || !TryComp<BatteryComponent>(entity, out var battery))
-            return;
-
-        entity.Comp.Charge = battery.MaxCharge;
-    }
-
-    private void OnBatteryChargeChange(Entity<SpawnOnBatteryLevelComponent> entity, ref ChargeChangedEvent args)
-    {
-        // only cares about battery charging, not discharging
-        if (args.Delta < 0)
-            return;
-
-        if (args.CurrentCharge < entity.Comp.Charge)
+        if (args.NewState != BatteryState.Full)
             return;
 
         if (entity.Comp.Proto == null)
@@ -42,7 +29,7 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         else
             SpawnFromProto(entity, entity.Comp.Proto.Value);
 
-        _battery.ChangeCharge(entity.Owner, -entity.Comp.Charge);
+        _battery.UseAllCharge(entity.Owner);
     }
 
     private void SpawnFromEntityTable(EntityUid entity, EntityTableSelector? table)

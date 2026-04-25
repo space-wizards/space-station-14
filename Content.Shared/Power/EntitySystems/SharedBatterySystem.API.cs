@@ -45,6 +45,18 @@ public abstract partial class SharedBatterySystem
     }
 
     /// <summary>
+    /// Removes all charge from the battery
+    /// </summary>
+    /// <returns>The actually changed amount.</returns>
+    public float UseAllCharge(Entity<BatteryComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return 0;
+
+        return ChangeCharge(ent, ent.Comp.LastCharge);
+    }
+
+    /// <summary>
     /// Removes the given amount of charge from the battery
     /// and resets the self-recharge cooldown if it exists.
     /// </summary>
