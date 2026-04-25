@@ -83,7 +83,7 @@
   - type: Construction
     graph: ConveyorGraph
     node: item
-  - type: StaticPrice
+  - type: StackPrice
     price: 40
   - type: Stack
     stackType: ConveyorBeltStack
