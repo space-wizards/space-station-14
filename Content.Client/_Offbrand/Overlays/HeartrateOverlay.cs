@@ -47,7 +47,7 @@ public sealed class HeartrateOverlay : Overlay
 
     private SpriteSpecifier GetIcon(Entity<PerfusionComponent> ent)
     {
-        if (!ent.Comp.Running)
+        if (ent.Comp.BaseCardiacOutput is null)
             return HudStopped;
 
         var max = 4;

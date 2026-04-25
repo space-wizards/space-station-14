@@ -86,15 +86,15 @@ public sealed class PerfusionSystem : EntitySystem
     }
 
     [Access(typeof(PerfusionSystem), typeof(PerfusionComponent))]
-    public (float Base, float Actual) CardiacOutput(Entity<PerfusionComponent> ent)
+    public (float? Base, float Actual) CardiacOutput(Entity<PerfusionComponent> ent)
     {
         var baseEv = new BaseCardiacOutputEvent(0f);
         RaiseLocalEvent(ent, ref baseEv);
 
-        var modifiedEv = new ModifiedCardiacOutputEvent(baseEv.Output);
+        var modifiedEv = new ModifiedCardiacOutputEvent(baseEv.Output ?? 0f);
         RaiseLocalEvent(ent, ref modifiedEv);
 
-        return (Math.Max(baseEv.Output, ent.Comp.MinimumCardiacOutput), Math.Max(modifiedEv.Output, ent.Comp.MinimumCardiacOutput));
+        return (baseEv.Output, Math.Max(modifiedEv.Output, ent.Comp.MinimumCardiacOutput));
     }
 
     [Access(typeof(PerfusionSystem), typeof(PerfusionComponent))]
@@ -165,7 +165,7 @@ public sealed class PerfusionSystem : EntitySystem
 
     public int HeartRate(Entity<PerfusionComponent> ent)
     {
-        if (!ent.Comp.Running)
+        if (ent.Comp.BaseCardiacOutput is null)
             return 0;
 
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);

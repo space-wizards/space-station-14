@@ -11,7 +11,7 @@ public sealed partial class PerfusionComponent : Component
     public float Perfusion = 1f;
 
     [DataField, AutoNetworkedField]
-    public float BaseCardiacOutput = 1f;
+    public float? BaseCardiacOutput = 1f;
 
     [DataField, AutoNetworkedField]
     public float Strain = 0f;
@@ -219,7 +219,7 @@ public record struct ModifiedLungFunctionEvent(float Function);
 /// Raised on an entity to determine the base cardiac output
 /// </summary>
 [ByRefEvent]
-public record struct BaseCardiacOutputEvent(float Output);
+public record struct BaseCardiacOutputEvent(float? Output);
 
 /// <summary>
 /// Raised on an entity to determine modifiers to the cardiac output

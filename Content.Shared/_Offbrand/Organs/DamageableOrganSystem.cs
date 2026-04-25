@@ -40,16 +40,16 @@ public sealed class DamageableOrganSystem : EntitySystem
         if (!Resolve(organ, ref organ.Comp))
             return FixedPoint2.Zero;
 
+        var oldDamage = organ.Comp.Damage;
         organ.Comp.Damage = FixedPoint2.Clamp(organ.Comp.Damage + amount, FixedPoint2.Zero, organ.Comp.MaxDamage);
         Dirty(organ);
-        var delta = organ.Comp.Damage - amount;
-        if (delta != FixedPoint2.Zero)
+        if (oldDamage != organ.Comp.Damage)
         {
             var evt = new OrganDamageChangedEvent((organ, organ.Comp));
             RaiseLocalEvent(organ, ref evt);
         }
 
-        return delta;
+        return organ.Comp.Damage - oldDamage;
     }
 
     public override void Update(float frameTime)

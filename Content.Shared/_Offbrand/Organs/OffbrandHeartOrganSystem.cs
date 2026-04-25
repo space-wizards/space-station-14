@@ -101,7 +101,7 @@ public sealed class OffbrandHeartOrganSystem : EntitySystem
 
         args.Args = args.Args with
         {
-            Output = !ent.Comp.Beating ? 0f : 1f - (damage.Damage.Float() / damage.MaxDamage.Float()),
+            Output = !ent.Comp.Beating ? null : 1f - (damage.Damage.Float() / damage.MaxDamage.Float()),
         };
     }
 
@@ -116,8 +116,8 @@ public sealed class OffbrandHeartOrganSystem : EntitySystem
         var targetCompensation = ent.Comp.CompensationCoefficient * invert + ent.Comp.CompensationConstant;
         var healthFactor = !ent.Comp.Running ? 0f : 1f - (damage.Damage.Float() / damage.MaxDamage.Float());
 
-        ent.Comp.Compensation = Math.Max(targetCompensation * healthFactor, 1f);
-        args.Args = args.Args with { Compensation = ent.Comp.Compensation, Strain = Strain(ent) };
+        ent.Comp.Compensation = Math.Max(targetCompensation, 1f);
+        args.Args = args.Args with { Compensation = ent.Comp.Compensation * healthFactor, Strain = Strain(ent) };
 
         Dirty(ent);
     }

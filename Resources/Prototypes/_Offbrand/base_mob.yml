@@ -176,9 +176,6 @@
     quadraticFactor: 0.00005
     linearFactor: -0.0025
     constantFactor: 0
-  - type: HeartStopOnHighStrain
-    chance: 0.05
-    threshold: 0.75
   - type: HeartrateAlerts
     strainAlert: HeartRate
     stoppedAlert: HeartStopped

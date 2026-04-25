@@ -23,6 +23,9 @@
     - damageTypes: [Heat, Cold, Caustic, Shock]
       minimumTotalDamage: 200
       conversionFactor: 0.6
+  - type: HeartStopOnHighStrain
+    chance: 0.05
+    threshold: 0.75
 
 - type: entity
   abstract: true
