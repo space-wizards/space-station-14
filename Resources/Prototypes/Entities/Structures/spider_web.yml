@@ -95,7 +95,7 @@
 
 - type: entity
   id: SpiderWebClown
-  parent: SpiderWebBase
+  parent: [SolutionFood, SolutionVeryTiny, SpiderWebBase]
   name: clown spider web
   description: It's stringy and slippy.
   components:
@@ -127,9 +127,12 @@
       - sweet
   - type: Edible
     delay: 2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Sugar
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 2.5
+      - ReagentId: Honk
+        Quantity: 2.5
+      - ReagentId: SpaceLube
+        Quantity: 2.5
