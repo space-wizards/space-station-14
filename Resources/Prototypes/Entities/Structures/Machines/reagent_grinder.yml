@@ -3,7 +3,6 @@
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
-  suffix: grinder/juicer
   components:
   - type: ReagentGrinder
   - type: ActivatableUI
@@ -39,7 +38,10 @@
     - map: [ "grinder" ]
       state: "grinder_empty"
   - type: ApcPowerReceiver
-    powerLoad: 300
+    powerLoad: 0
+  - type: PowerState
+    idlePowerDraw: 0
+    workingPowerDraw: 750 # medium power blender
   - type: ItemSlots
     slots:
       beakerSlot:
@@ -56,15 +58,31 @@
       machine_parts: !type:Container
 
 - type: entity
-  parent: Recycler #too different so different parent
+  id: KitchenReagentGrinderBeaker
+  parent: KitchenReagentGrinder
+  suffix: beaker
+  components:
+  - type: ContainerFill
+    containers:
+      beakerSlot:
+      - Beaker
+
+- type: entity
+  id: KitchenReagentGrinderBeakerLarge
+  parent: KitchenReagentGrinder
+  suffix: large beaker
+  components:
+  - type: ContainerFill
+    containers:
+      beakerSlot:
+      - LargeBeaker
+
+- type: entity
+  parent: [SolutionToolGinormous, Recycler] #too different so different parent
   id: ReagentGrinderIndustrial
   name: industrial reagent grinder
   description: An industrial reagent grinder.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      output:
-        maxVol: 400 #*slaps roof of machine* This baby can fit so much omnizine in it
   - type: MaterialReclaimer
     whitelist:
       components:
@@ -75,7 +93,7 @@
     efficiency: 0.9
     reclaimMaterials: false # Materials have ExtractableComponent, which is whitelisted, so we have to avoid infinite recycling loops
     onlyReclaimDrainable: false
-    solutionContainerId: output
+    solutionContainerId: solution
   - type: Sprite
     sprite: Structures/Machines/recycling.rsi
     layers:
@@ -100,6 +118,6 @@
     - machine_parts
     - machine_board
   - type: DrainableSolution
-    solution: output
+    solution: solution
   - type: ExaminableSolution
-    solution: output
+    solution: solution
