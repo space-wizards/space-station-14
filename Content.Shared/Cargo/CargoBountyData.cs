@@ -23,12 +23,10 @@ public readonly partial record struct CargoBountyData
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public string ClaimedBy { get; init; } = string.Empty;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField(required: true)]
+    [DataField]
     public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = string.Empty;
 
     [DataField]

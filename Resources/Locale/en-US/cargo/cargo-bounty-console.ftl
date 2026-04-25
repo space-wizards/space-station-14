@@ -28,9 +28,9 @@ bounty-console-status = {$status ->
         *[other] {$status}
     }
 bounty-console-status-tooltip = {$status ->
-    [OnShuttle] This bounty is on the shuttle, ready to be delivered to the trade station
-    [Waiting] This bounty is waiting to be fulfilled
-    [Undelivered] This bounty has not yet been sent out for fulfilment
+    [OnShuttle] This bounty is on the shuttle, ready to be delivered to the trade station.
+    [Waiting] This bounty is waiting to be fulfilled.
+    [Undelivered] This bounty has not yet been sent out for fulfilment.
     *[other] {$status}
     }
 bounty-console-id-label = ID#{$id}
