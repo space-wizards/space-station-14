@@ -104,6 +104,21 @@ namespace Content.Shared.Atmos
         public const float OxygenMolesGasMiner = MolesCellGasMiner * OxygenStandard;
         public const float NitrogenMolesGasMiner = MolesCellGasMiner * NitrogenStandard;
 
+        /// <summary>
+        /// Converts Grams to Kilograms.
+        /// </summary>
+        public const float gToKg = 0.001f;
+
+        /// <summary>
+        /// Convert kPa to Kg/m^2
+        /// </summary>
+        public const float kPaToKg_m2 = 0.00980665f;
+
+        /// <summary>
+        /// Convert Kg/m^2 to kPa
+        /// </summary>
+        public const float Kg_m2TokPa = 101.9716212978f;
+
         #endregion
 
         /// <summary>
@@ -219,7 +234,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
         /// </summary>
-        public const float FireHydrogenEnergyReleased = 284e4f;
+        public const float FireHydrogenEnergyReleased = 284e3f;
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;

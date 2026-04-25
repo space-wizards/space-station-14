@@ -9,8 +9,9 @@
   - type: Item
     sprite: Objects/Materials/parts.rsi
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
