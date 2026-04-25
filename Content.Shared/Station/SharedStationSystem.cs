@@ -184,28 +184,18 @@ public abstract partial class SharedStationSystem : EntitySystem
     /// the ATS or a escape pod, it will return false</param>
     public bool IsOnStation(EntityUid entity, bool onlyCountLargestGrid = true)
     {
-        var allStationsLargestGrids = new List<EntityUid>();
-        var allStationsGrids = new List<EntityUid>();
+        var entityParent = Comp<TransformComponent>(entity).ParentUid;
 
         var query = EntityQueryEnumerator<StationDataComponent>();
         while (query.MoveNext(out var uid, out var stationDataComp))
         {
-            var largestGrid = GetLargestGrid(uid);
-            if (largestGrid != null)
-                allStationsLargestGrids.Add(largestGrid.Value);
+            if (onlyCountLargestGrid && GetLargestGrid(uid) == entityParent)
+                return true;
 
-            allStationsGrids.AddRange(stationDataComp.Grids);
+            if (!onlyCountLargestGrid && stationDataComp.Grids.Contains(entityParent))
+                return true;
         }
 
-        var entityParent = Comp<TransformComponent>(entity).ParentUid;
-
-        if (onlyCountLargestGrid)
-        {
-            return allStationsLargestGrids
-                .Contains(entityParent);
-        }
-
-        return allStationsGrids
-            .Contains(entityParent);
+        return false;
     }
 }
