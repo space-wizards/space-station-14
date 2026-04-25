@@ -15,18 +15,10 @@ public sealed class XAEShuffleSystem : BaseXAESystem<XAEShuffleComponent>
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private EntityQuery<MobStateComponent> _mobState;
+    [Dependency] private readonly EntityQuery<MobStateComponent> _mobState = default!;
 
     /// <summary> Pre-allocated and re-used collection.</summary>
     private readonly HashSet<EntityUid> _entities= new();
-
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _mobState = GetEntityQuery<MobStateComponent>();
-    }
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEShuffleComponent> ent, ref XenoArtifactNodeActivatedEvent args)
