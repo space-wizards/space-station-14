@@ -173,11 +173,11 @@
     - to: LungTreatmentSuture
       conditions: &lung-damage-conditions
       - !type:OrganDamage
-        category: Lung
+        category: Lungs
         min: 1
       completed:
       - !type:ChangeOrganDamage
-        category: Lung
+        category: Lungs
         amount: -10
       steps:
       - material: Suture
