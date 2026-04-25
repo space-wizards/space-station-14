@@ -15,15 +15,13 @@ public sealed partial class IngestionSystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private EntityQuery<UtensilComponent> _utensilsQuery;
+    [Dependency] private readonly EntityQuery<UtensilComponent> _utensilsQuery = default!;
 
     public void InitializeUtensils()
     {
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ToolOpenableSystem) });
 
         SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
-
-        _utensilsQuery = GetEntityQuery<UtensilComponent>();
     }
 
     /// <summary>
@@ -65,11 +63,7 @@ public sealed partial class IngestionSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        // TODO: Once we have predicted randomness delete this for something sane...
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(entity).Id, GetNetEntity(userUid).Id);
-        var rand = new System.Random(seed);
-
-        if (!rand.Prob(entity.Comp.BreakChance))
+        if (!SharedRandomExtensions.PredictedProb(_timing, entity.Comp.BreakChance, GetNetEntity(entity), GetNetEntity(userUid)))
             return;
 
         _audio.PlayPredicted(entity.Comp.BreakSound, userUid, userUid, AudioParams.Default.WithVolume(-2f));

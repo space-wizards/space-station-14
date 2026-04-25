@@ -21,6 +21,7 @@ using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -41,6 +42,11 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly INetManager _net = default!;
+
+    [Dependency] private readonly EntityQuery<StepTriggerComponent> _stepTriggerQuery = default!;
+    [Dependency] private readonly EntityQuery<ReactiveComponent> _reactiveQuery = default!;
+    [Dependency] private readonly EntityQuery<EvaporationComponent> _evaporationQuery = default!;
 
     private ProtoId<ReagentPrototype>[] _standoutReagents = [];
 
@@ -55,10 +61,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = [];
 
-    private EntityQuery<StepTriggerComponent> _stepTriggerQuery;
-    private EntityQuery<ReactiveComponent> _reactiveQuery;
-    private EntityQuery<EvaporationComponent> _evaporationQuery;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -72,10 +74,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-
-        _stepTriggerQuery = GetEntityQuery<StepTriggerComponent>();
-        _reactiveQuery = GetEntityQuery<ReactiveComponent>();
-        _evaporationQuery = GetEntityQuery<EvaporationComponent>();
 
         CacheStandsout();
         InitializeSpillable();
@@ -114,6 +112,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.SolutionId != entity.Comp.SolutionName)
             return;
 

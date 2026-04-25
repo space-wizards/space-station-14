@@ -63,7 +63,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
         if (!isCorrectSlot)
             return;
 
-        entity.Comp.Wearer = args.Equipee;
+        entity.Comp.Wearer = args.EquipTarget;
         Dirty(entity);
 
         // Attempt to setup control link, if Pilot and Wearer are both present.

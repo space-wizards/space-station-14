@@ -1,6 +1,6 @@
 ﻿- type: entity
   save: false
-  parent: [ BaseSimpleMob, MobCombat ]
+  parent: [ BaseSimpleMob, BaseMobAnimal, MobCombat ]
   id: BaseMobArgocyte
   suffix: AI
   description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
@@ -38,8 +38,6 @@
     damage:
       types:
         Slash: 5
-  - type: Body
-    prototype: Animal
   - type: Flammable
     fireSpread: true
     canResistFire: true

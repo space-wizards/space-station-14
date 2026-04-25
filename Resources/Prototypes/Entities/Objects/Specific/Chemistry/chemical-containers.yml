@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAll ]
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsAll ]
   id: Jug
   name: jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
@@ -18,12 +18,6 @@
     inHandsMaxFillLevels: 5
   - type: ExaminableSolution
     exactVolume: true # Chemistry item
-  - type: Openable
-    sound:
-      collection: bottleOpenSounds
-    closeable: true
-    closeSound:
-      collection: bottleCloseSounds
   - type: StaticPrice
     price: 60
   - type: Tag
@@ -478,4 +472,124 @@
       drink:
         reagents:
         - ReagentId: WeldingFuel
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: bicaridine
+  id: JugBicaridine
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-bicaridine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: puncturase
+  id: JugPuncturase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-puncturase
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dermaline
+  id: JugDermaline
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dermaline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dylovene
+  id: JugDylovene
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dylovene
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Dylovene
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: tranexamic acid
+  id: JugTranexamicAcid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-tranexamic-acid
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: TranexamicAcid
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: hyronalin
+  id: JugHyronalin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-hyronalin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Hyronalin
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: saline
+  id: JugSaline
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Saline
+          Quantity: 200
+
+- type: entity
+  parent: Jug
+  suffix: dexalin plus
+  id: JugDexalinPlus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin-plus
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: DexalinPlus
           Quantity: 200
