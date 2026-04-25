@@ -187,14 +187,14 @@ public abstract partial class SharedStationSystem : EntitySystem
         var allStationsLargestGrids = new List<EntityUid>();
         var allStationsGrids = new List<EntityUid>();
 
-        foreach (var stationEntity in GetStations())
+        var query = EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out var stationDataComp))
         {
-            var largestGrid = GetLargestGrid(stationEntity);
+            var largestGrid = GetLargestGrid(uid);
             if (largestGrid != null)
                 allStationsLargestGrids.Add(largestGrid.Value);
 
-            var stationGrids = Comp<StationDataComponent>(stationEntity).Grids;
-            allStationsGrids.AddRange(stationGrids);
+            allStationsGrids.AddRange(stationDataComp.Grids);
         }
 
         var entityParent = Comp<TransformComponent>(entity).ParentUid;
