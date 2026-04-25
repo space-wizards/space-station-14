@@ -29,7 +29,7 @@ public sealed class SpawnOnBatteryFullSystem : EntitySystem
         else
             SpawnFromProto(entity, entity.Comp.Proto.Value);
 
-        _battery.UseAllCharge(entity.Owner);
+        _battery.SetCharge(entity.Owner, 0);
     }
 
     private void SpawnFromEntityTable(EntityUid entity, EntityTableSelector? table)
