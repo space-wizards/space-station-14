@@ -33,7 +33,7 @@ public sealed class AnchorOnlyOnStationSystem : EntitySystem
             if (_stationSystem.IsOnStation(ent, anchorOnlyOnStationComp.OnlyCountLargestGrid))
                 continue;
 
-            _transform.Unanchor(ent);
+            _transform.Unanchor(ent, entXform);
         }
     }
 }
