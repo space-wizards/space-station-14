@@ -675,8 +675,8 @@
       reagents:
       - ReagentId: Vitamin
         Quantity: 3
-      - ReagentId: Calcium
-        Quantity: 7 # Pulled out of my ass. Feel free to redo these reagents
+      - ReagentId: Carbon
+        Quantity: 7
   - type: Item
     heldPrefix: bones
 
