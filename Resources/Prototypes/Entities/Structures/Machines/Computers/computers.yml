@@ -682,12 +682,9 @@
     color: "#3c5eb5"
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
-<<<<<<< tot-hack-beacon
   - type: BeaconHackable
-=======
   - type: Injurable
     damageContainer: StructuralInorganic
->>>>>>> master
 
 - type: entity
   abstract: true
