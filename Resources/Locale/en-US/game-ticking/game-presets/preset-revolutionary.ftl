@@ -68,3 +68,18 @@ rev-deconverted-text =
 
     You are no longer a revolutionary, so be nice.
 rev-deconverted-confirm = Confirm
+
+# New Rev Endscreen
+rev-major = [color=#5e9cff]Revolution major victory![/color]
+rev-minor = [color=#5e9cff]Revolution minor victory![/color]
+rev-draw = [color=yellow]Neutral outcome![/color]
+rev-crew-minor = [color=green]Crew minor victory![/color]
+rev-crew-major = [color=green]Crew major victory![/color]
+all-revs-failed = [color=crimson]All revolutionaries were killed or deconverted![/color]
+
+rev-crew-percentage = [color={$color}]{$percentage}% of the crew were converted to the revolution.[/color]
+rev-command-percentage = [color={$color}]{$percentage}% of Command were converted to the revolution.[/color]
+rev-loyal-command = [color={$color}]{$count} loyal Command members escaped to CentComm alive and unrestrained.[/color]
+rev-loyal-command-singular = [color={$color}]One loyal Command member escaped to CentComm alive and unrestrained.[/color]
+headrev-escapes = [color={$color}]{$count} Head Revolutionaries escaped to CentComm alive and unrestrained.[/color]
+headrev-escapes-singular = [color={$color}]One Head Revolutionary escaped to CentComm alive and unrestrained.[/color]
