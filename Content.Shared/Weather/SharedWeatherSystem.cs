@@ -22,19 +22,11 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] private readonly SharedRoofSystem _roof = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
-    private EntityQuery<BlockWeatherComponent> _blockQuery;
-    private EntityQuery<WeatherStatusEffectComponent> _weatherQuery;
+    [Dependency] private readonly EntityQuery<BlockWeatherComponent> _blockQuery = default!;
+    [Dependency] private readonly EntityQuery<WeatherStatusEffectComponent> _weatherQuery = default!;
 
     public static readonly TimeSpan StartupTime = TimeSpan.FromSeconds(15);
     public static readonly TimeSpan ShutdownTime = TimeSpan.FromSeconds(15);
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _blockQuery = GetEntityQuery<BlockWeatherComponent>();
-        _weatherQuery = GetEntityQuery<WeatherStatusEffectComponent>();
-    }
 
     public bool CanWeatherAffect(Entity<MapGridComponent?, RoofComponent?> ent, TileRef tileRef)
     {

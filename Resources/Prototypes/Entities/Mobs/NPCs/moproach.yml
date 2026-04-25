@@ -40,16 +40,9 @@
     preserve:
       - Water
     quantity: 10
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      absorbed:
-        maxVol: 50
-      food:
-        reagents:
-        - ReagentId: Slime
-          Quantity: 5
-  - type: DrainableSolution
-    solution: drainBuffer
+    - SolutionMopNormal
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot

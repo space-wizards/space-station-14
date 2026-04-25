@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
         {
             base.Initialize();
             SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
         public void OnStartup(Entity<DeleteOnSolutionEmptyComponent> entity, ref ComponentStartup args)
@@ -20,19 +20,23 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
             CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
+        public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionChangedEvent args)
         {
-            CheckSolutions(entity);
+            var solution = args.Solution.Comp.Solution;
+            if (args.Solution.Comp.Id != entity.Comp.Solution)
+                return;
+
+            if (solution.Volume <= 0)
+                QueueDel(entity);
         }
 
         public void CheckSolutions(Entity<DeleteOnSolutionEmptyComponent> entity)
         {
-            if (!TryComp(entity, out SolutionContainerManagerComponent? solutions))
+            if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
                 return;
 
-            if (_solutionContainerSystem.TryGetSolution((entity.Owner, solutions), entity.Comp.Solution, out _, out var solution))
-                if (solution.Volume <= 0)
-                    QueueDel(entity);
+            if (solution.Volume <= 0)
+                QueueDel(entity);
         }
     }
 }
