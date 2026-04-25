@@ -16,7 +16,7 @@ public sealed class SpawnOnBatteryFullSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpawnOnBatteryFullComponent, BatteryStateChangedEvent >(OnBatteryStateChange);
+        SubscribeLocalEvent<SpawnOnBatteryFullComponent, BatteryStateChangedEvent>(OnBatteryStateChange);
     }
 
     private void OnBatteryStateChange(Entity<SpawnOnBatteryFullComponent> entity, ref BatteryStateChangedEvent args)
