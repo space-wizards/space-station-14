@@ -46,16 +46,20 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         base.Initialize();
         // These events should fire in the order Innate -> Implant -> Inventory
         // Transform speaker name events
-        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameInventory, after: [typeof(SharedSubdermalImplantSystem)]);
-        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant, before: [typeof(InventorySystem)]);
-        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnInnateTransformSpeakerName, before: [typeof(SharedSubdermalImplantSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameInventory);
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant);
+        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnInnateTransformSpeakerName);
         // See identity attempt events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<SeeIdentityAttemptEvent>>(OnSeeIdentityAttemptEvent);
-        SubscribeLocalEvent<VoiceMaskComponent, SeeIdentityAttemptEvent>(OnInnateSeeIdentityAttemptEvent, before: [typeof(SharedSubdermalImplantSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, SeeIdentityAttemptEvent>(OnInnateSeeIdentityAttemptEvent);
         // Transform speech events
-        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)], after: [typeof(SharedSubdermalImplantSystem)]);
-        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(InventorySystem), typeof(AccentSystem)]);
-        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(SharedSubdermalImplantSystem), typeof(AccentSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
+        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(AccentSystem)]);
+        // Voice mask transform things
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<VoiceMaskTurnedOnEvent>>(OnVoiceMaskTurnedOnInventoryEvent);
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskTurnedOnEvent>>(OnVoiceMaskTurnedOnImplantEvent);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskTurnedOnEvent>(OnVoiceMaskTurnedOnEvent);
         // Other events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRemovedEvent>(OnImplantRemovedEventEvent);
@@ -75,9 +79,46 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         if (!ent.Comp.IsInnate)
             return;
         
+        if (ent.Comp.Active)
+        {
+            MaskTurnedOn(ent.Owner, ent.Owner);
+        }
+
         _actions.AddAction(ent, ent.Comp.Action);
         _uiSystem.SetUi((ent, null), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
         _identity.QueueIdentityUpdate(ent.Owner);
+    }
+
+    private void MaskTurnedOn(EntityUid mask, EntityUid owner)
+    {
+        var ev = new VoiceMaskTurnedOnEvent(mask, owner);
+        RaiseLocalEvent(owner, ev);
+    }
+    private void OnVoiceMaskTurnedOnInventoryEvent(Entity<VoiceMaskComponent> ent, ref InventoryRelayedEvent<VoiceMaskTurnedOnEvent> args)
+    {
+        OnVoiceMaskTurnedOnEvent(ent, ref args.Args);
+    }
+
+    private void OnVoiceMaskTurnedOnImplantEvent(Entity<VoiceMaskComponent> ent, ref ImplantRelayEvent<VoiceMaskTurnedOnEvent> args)
+    {
+        OnVoiceMaskTurnedOnEvent(ent, ref args.Event);
+    }
+
+    /// <summary>
+    ///  Toggles this mask off it it isn't the mask turned on
+    /// </summary>
+    private void OnVoiceMaskTurnedOnEvent(Entity<VoiceMaskComponent> ent, ref VoiceMaskTurnedOnEvent args)
+    {
+        // we don't want the entity turned on to be turned off, and there isn't any work to do if it already inactive
+        if (ent.Owner == args.Mask || !ent.Comp.Active)
+            return;
+        
+        // turn it off
+        ent.Comp.Active = false;
+
+        // update the
+        UpdateUI(ent);
+        _identity.QueueIdentityUpdate(args.Source);
     }
 
     /// <summary>
@@ -137,6 +178,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnImplantImplantedEvent(Entity<VoiceMaskComponent> entity, ref ImplantImplantedEvent ev)
     {
+        if (entity.Comp.Active)
+        {
+            var nev = new VoiceMaskTurnedOnEvent(entity.Owner, ev.Implanted);
+            RaiseLocalEvent(ev.Implanted, nev);
+        }
         _identity.QueueIdentityUpdate(ev.Implanted);
     }
 
@@ -193,7 +239,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-toggle"), entity, args.Actor);
         entity.Comp.Active = !entity.Comp.Active;
-
+        if (entity.Comp.Active)
+        {
+            MaskTurnedOn(entity.Owner, args.Actor);
+        }
         // Update identity because of possible name override
         _identity.QueueIdentityUpdate(args.Actor);
 
@@ -213,7 +262,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_lock.IsLocked(uid))
             return;
-            
+        // to make sure you can't have two active voice masks at once
+        if (component.Active)
+        {
+            MaskTurnedOn(args.Wearer, uid);
+        }
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
@@ -254,3 +307,4 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     }
     #endregion
 }
+
