@@ -33,14 +33,14 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingDevouredEntityEvent>(OnDevouredEntity);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingDevouredEvent>(OnDevouredEntity);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
         SubscribeLocalEvent<ChangelingDevouredComponent, MobStateChangedEvent>(OnDevouredMobState);
     }
 
-    private void OnDevouredEntity(Entity<ChangelingIdentityComponent> ent, ref ChangelingDevouredEntityEvent args)
+    private void OnDevouredEntity(Entity<ChangelingIdentityComponent> ent, ref ChangelingDevouredEvent args)
     {
         // We're not supposed to be given an identity.
         if (!args.ObtainedIdentity)
