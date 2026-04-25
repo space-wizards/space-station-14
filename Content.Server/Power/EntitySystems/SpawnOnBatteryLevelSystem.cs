@@ -39,7 +39,13 @@ public sealed class SpawnOnBatteryLevelSystem : EntitySystem
         if (battery.LastCharge < entity.Comp.Charge)
             return;
 
-        var spawns = entity.Comp.Proto == null ? _entityTable.GetSpawns(entity.Comp.Table) : new List<EntProtoId>{entity.Comp.Proto.Value};
+        var spawns = new List<EntProtoId>();
+
+        if (entity.Comp.Proto != null)
+            spawns.Add(entity.Comp.Proto.Value);
+        else
+            spawns.AddRange(_entityTable.GetSpawns(entity.Comp.Table));
+
         foreach (var spawn in spawns)
         {
             Spawn(spawn, Transform(entity).Coordinates);
