@@ -1,8 +1,7 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialCardboard, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
-  id: DrinkCartonBaseFull
-  suffix: Full
+  parent: [ DrinkBaseMaterialCardboard, SolutionNormal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable, DrinkBaseEmptyTrash ]
+  id: DrinkCartonBase
   components:
   - type: Openable
     sound:
@@ -10,36 +9,53 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: Item
-    size: Normal
 
 - type: entity
   abstract: true
-  parent: DrinkCartonBaseFull
-  id: DrinkCartonSmallBaseFull
+  parent: DrinkCartonBase
+  id: DrinkCartonBaseFull
+  suffix: Full
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
+  - type: Tag
+    tags: []
+
+- type: entity
+  abstract: true
+  parent: [SolutionSmall, DrinkCartonBase ]
+  id: DrinkCartonSmallBase
+  components:
   - type: Item
     size: Small
 
 - type: entity
   abstract: true
-  parent: DrinkCartonBaseFull
-  id: DrinkCartonBaseXtraLargeFull
+  parent: DrinkCartonSmallBase
+  id: DrinkCartonSmallBaseFull
+  suffix: Full
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  abstract: true
+  parent: [SolutionLarge, DrinkCartonBase ]
+  id: DrinkCartonBaseLarge
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,3
+  - type: Tag
+    tags:
+    - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
+    - Trash
+
+- type: entity
+  abstract: true
+  parent: DrinkCartonBaseLarge
+  id: DrinkCartonBaseLargeFull
+  suffix: Full
+  components:
   - type: Tag
     tags:
     - DrinkBottle # Need this to fit in the soda dispenser, probably needs a better name
@@ -47,49 +63,70 @@
 # Small carton
 
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkCartonSmallBaseFull]
-  id: DrinkJuiceLimeCarton
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonSmallBase]
+  id: DrinkCartonLime
   name: lime juice
   description: Sweet-sour goodness.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceLime
-          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
 - type: entity
-  parent: DrinkCartonSmallBaseFull
-  id: DrinkJuiceOrangeCarton
+  parent: DrinkCartonLime
+  id: DrinkJuiceLimeCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 60
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  parent: DrinkCartonSmallBase
+  id: DrinkCartonOrange
   name: orange juice
   description: Full of vitamins and deliciousness!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
-  parent: DrinkCartonSmallBaseFull
-  id: DrinkJuiceTomatoCarton
+  parent: DrinkCartonOrange
+  id: DrinkJuiceOrangeCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceOrange
+        Quantity: 60
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  parent: DrinkCartonSmallBase
+  id: DrinkCartonTomato
   name: tomato juice
   description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
+
+- type: entity
+  parent: DrinkCartonTomato
+  id: DrinkJuiceTomatoCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 60
+  - type: Tag
+    tags: []
 
 - type: entity
   parent: DrinkCartonSmallBaseFull
@@ -97,29 +134,35 @@
   name: coconut water
   description: It's the inside of the coconut that counts.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: CoconutWater
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CoconutWater
+        Quantity: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coconutwater.rsi
 
 - type: entity
-  parent: DrinkCartonSmallBaseFull
-  id: DrinkCreamCarton
+  parent: DrinkCartonSmallBase
+  id: DrinkCartonCream
   name: milk cream
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Cream
-          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: DrinkCartonCream
+  id: DrinkCreamCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cream
+        Quantity: 60
+  - type: Tag
+    tags: [ ]
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonSmallBaseFull]
@@ -127,12 +170,11 @@
   name: lemon juice
   description: First it's sour, then it's still sour.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceLemon
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceLemon
+        Quantity: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
@@ -142,113 +184,128 @@
   name: pineapple juice
   description: Tastes like a tropical vacation far from space.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuicePineapple
-          Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pineapplejuice.rsi
 
-# Large carton
+# Normal sized cartons
 
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull] # Looks like a plastic jug, fight me
-  id: DrinkMilkCarton
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBase] # Looks like a plastic jug, fight me
+  id: DrinkCartonMilk
   name: milk
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Milk
-          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
 
 - type: entity
-  parent: DrinkCartonBaseFull
-  id: DrinkSoyMilkCarton
+  parent: DrinkCartonMilk
+  id: DrinkMilkCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 120
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  parent: DrinkCartonBase
+  id: DrinkCartonSoyMilk
   name: soy milk
   description: White and nutritious soy goodness!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: MilkSoy
-          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull]
-  id: DrinkOatMilkCarton
+  parent: DrinkCartonSoyMilk
+  id: DrinkSoyMilkCarton
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MilkSoy
+        Quantity: 120
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBase]
+  id: DrinkCartonOatMilk
   name: oat milk
   description: It's oat milk. Tan and nutritious goodness!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: MilkOat
-          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
 
-# Xtra large
+- type: entity
+  parent: DrinkCartonOatMilk
+  id: DrinkOatMilkCarton
+  name: oat milk
+  suffix: Full
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MilkOat
+        Quantity: 120
+  - type: Tag
+    tags: [ ]
+
+# Large cartons
 
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseXtraLargeFull]
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseLargeFull]
   id: DrinkJuiceLimeCartonXL
   name: lime juice XL
   description: Sweet-sour goodness.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: JuiceLime
-          Quantity: 150
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 240
   - type: Label
     currentLabel: reagent-name-juice-lime
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
 - type: entity
-  parent: DrinkCartonBaseXtraLargeFull
+  parent: DrinkCartonBaseLargeFull
   id: DrinkJuiceOrangeCartonXL
   name: orange juice XL
   description: Full of vitamins and deliciousness!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 150
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceOrange
+        Quantity: 240
   - type: Label
     currentLabel: reagent-name-juice-orange
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
-  parent: DrinkCartonBaseXtraLargeFull
+  parent: DrinkCartonBaseLargeFull
   id: DrinkCreamCartonXL
   name: milk cream XL
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Cream
-          Quantity: 150
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cream
+        Quantity: 240
   - type: Label
     currentLabel: reagent-name-cream
   - type: Sprite
