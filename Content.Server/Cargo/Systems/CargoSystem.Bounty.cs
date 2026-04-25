@@ -126,7 +126,7 @@ public sealed partial class CargoSystem
                 continue;
             var targetStatus = args.Status;
             var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
-            bountyDbComp.Bounties[i] = bounty with { Status = status! };
+            bountyDbComp.Bounties[i] = bounty with { Status = status!.ID, StatusIndex = status!.Index };
         }
 
         _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
@@ -153,7 +153,7 @@ public sealed partial class CargoSystem
             {
                 name = Loc.GetString("bounty-console-claimed-by-unknown");
             }
-            bountyDbComp.Bounties[i] = bounty with { ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name};
+            bountyDbComp.Bounties[i] = bounty with { ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name };
         }
 
         _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
@@ -464,7 +464,10 @@ public sealed partial class CargoSystem
 
         var pool = filteredBounties.Count == 0 ? allBounties : filteredBounties;
         var bounty = _random.Pick(pool);
-        return TryAddBounty(uid, bounty, component);
+        var defaultStatus = GetDefaultBountyStatus();
+        if (defaultStatus == null)
+            return false;
+        return TryAddBounty(uid, bounty, defaultStatus, component);
     }
 
     [PublicAPI]
@@ -474,11 +477,13 @@ public sealed partial class CargoSystem
         {
             return false;
         }
-
-        return TryAddBounty(uid, bounty, component);
+        var defaultStatus = GetDefaultBountyStatus();
+        if (defaultStatus == null)
+            return false;
+        return TryAddBounty(uid, bounty, defaultStatus, component);
     }
 
-    public bool TryAddBounty(EntityUid uid, CargoBountyPrototype bounty, StationCargoBountyDatabaseComponent? component = null)
+    public bool TryAddBounty(EntityUid uid, CargoBountyPrototype bounty, CargoBountyStatusPrototype bountyStatus, StationCargoBountyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -487,18 +492,27 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
-        var newBounty = new CargoBountyData(bounty, randomVal);
+        var newBounty = new CargoBountyData(bounty, bountyStatus, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))
         {
             Log.Error("Failed to add bounty {ID} because another one with the same ID already existed!", newBounty.Id);
             return false;
         }
-        component.Bounties.Add(new CargoBountyData(bounty, randomVal));
+        component.Bounties.Add(newBounty);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
         return true;
     }
+
+    private CargoBountyStatusPrototype? GetDefaultBountyStatus()
+    {
+        var allStates = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>()
+            .OrderBy(s => s.Index)
+            .FirstOrDefault();
+        return allStates;
+    }
+
 
     [PublicAPI]
     public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent,

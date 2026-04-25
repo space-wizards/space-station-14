@@ -9,12 +9,9 @@ namespace Content.Shared.Cargo.Prototypes;
 public sealed partial class CargoBountyStatusPrototype : IPrototype
 {
     /// <inheritdoc/>
-    /// Default Values
-    /// If you change the YAML this must change as well
-    /// These will be the status a bounty starts on
     [IdDataField]
-    public string ID { get; private set; } = "Undelivered";
+    public string ID { get; private set; } = default!;
 
-    [DataField]
-    public int Index = 0;
+    [DataField(required: true)]
+    public int Index = default;
 }
