@@ -18,7 +18,6 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     private List<(string, string)> _verbs = new();
 
     private string? _verb;
-    
     public VoiceMaskNameChangeWindow()
     {
         RobustXamlLoader.Load(this);
