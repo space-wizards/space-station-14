@@ -33,5 +33,5 @@ public sealed partial class SolutionManagerComponent : Component
     /// A list of solution entities to spawn when this component starts up.
     /// </summary>
     [DataField("solutions", readOnly: true)]
-    public List<EntProtoId> SolutionEnts = new ();
+    public EntProtoId[]? SolutionEnts;
 }

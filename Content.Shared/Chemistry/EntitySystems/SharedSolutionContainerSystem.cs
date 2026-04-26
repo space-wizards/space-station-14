@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -98,7 +99,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
-        SubscribeLocalEvent<SolutionManagerComponent, ComponentStartup>(OnManagerStartup);
+        SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerInit);
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
@@ -326,24 +327,24 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out List<EntProtoId>? fill)
+    private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out EntProtoId[]? fill)
     {
         fill = null;
         if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp))
             return false;
 
         fill = entity.Comp.SolutionEnts;
-        return true;
+        return fill != null;
     }
 
-    private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out List<EntProtoId>? fill)
+    private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out EntProtoId[]? fill)
     {
         fill = null;
         if (!entProto.TryGetComponent<SolutionManagerComponent>(out var manager, Factory))
             return false;
 
         fill = manager.SolutionEnts;
-        return true;
+        return fill != null;
     }
 
     protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent> soln)
@@ -1082,17 +1083,24 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
-    /// <remarks>
-    /// We want all our solutions spawned before MapInit.
-    /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
-    /// </remarks>
-    private void OnManagerStartup(Entity<SolutionManagerComponent> entity, ref ComponentStartup args)
+    private void OnManagerInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
+    {
+        InitializeManager(entity);
+    }
+
+    private void InitializeManager(Entity<SolutionManagerComponent> entity)
     {
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
+
+        if (entity.Comp.SolutionEnts == null)
+            return;
+
         foreach (var solution in entity.Comp.SolutionEnts)
         {
             CreateSolution(solution, container);
         }
+
+        entity.Comp.SolutionEnts = null;
     }
 
     private void OnManagerShutdown(Entity<SolutionManagerComponent> entity, ref ComponentShutdown args)
@@ -1145,7 +1153,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <returns>Returns true if the solution already existed, and false if it had to create a new solution.</returns>
     /// <remarks>
     /// Only run this after the entity is already initialized.
-    /// If you're running this when your entity is created, it is recommended to run on <see cref="MapInitEvent"/>
+    /// If you're running this when your entity is created, it is HIGHLY recommended to run on <see cref="MapInitEvent"/>
     /// Deviance from these instructions may prevent your game from building. YOU HAVE BEEN WARNED.
     /// </remarks>
     public bool EnsureSolution(
@@ -1153,6 +1161,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         string name,
         out Entity<SolutionComponent> solutionEntity)
     {
+        // Do NOT ever EnsureSolution during anything other than MapInit!!!
+        DebugTools.Assert(LifeStage(entity) == EntityLifeStage.MapInitialized);
         if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
             solutionEntity = (entity.Owner, comp);
@@ -1161,14 +1171,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // Ensure we have a SolutionManagerComponent
         // EnsureComp should ensure a container and fill that container with default spawns!
-        if (entity.Comp == null)
-            EnsureComp<SolutionManagerComponent>(entity, out entity.Comp);
-
-        // Check the cache first, even if the component didn't exist before, creating one may have spawned and cached solutions!
-        if (entity.Comp.Solutions.TryGetValue(name, out var solution))
+        if (entity.Comp != null || EnsureComp<SolutionManagerComponent>(entity, out entity.Comp))
         {
-            solutionEntity = solution;
-            return true;
+            // Component ensuring this solution initialized before our SolutionManager, so we run the initialization method now.
+            if (entity.Comp.SolutionEnts != null)
+                InitializeManager((entity, entity.Comp));
+
+            // Check the cache first, even if the component didn't exist before, creating one may have spawned and cached solutions!
+            if (entity.Comp.Solutions.TryGetValue(name, out var solution))
+            {
+                solutionEntity = solution;
+                return true;
+            }
         }
 
         // Create a default entity if one doesn't already exist!
