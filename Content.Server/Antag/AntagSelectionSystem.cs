@@ -129,6 +129,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             AssignPreSelectedSessions((uid, component));
         else if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
             AssignAntags((uid, component));
+        
+        var playerCount = GetActivePlayerCount();
+        SpawnGhostRoles((uid, component), playerCount);
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
