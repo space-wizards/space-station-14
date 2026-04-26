@@ -57,17 +57,18 @@ public sealed class CprSystem : EntitySystem
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
         var rand = new System.Random(seed);
 
-        if (rand.Prob(ent.Comp.WoundProbability) && TryComp<WoundableComponent>(ent, out var woundable))
+        if (rand.Prob(ent.Comp.WoundProbability) && TryComp<WoundableBodyComponent>(ent, out var woundable))
         {
-            if (_woundable.TryWound((ent, woundable), ent.Comp.Wound, unique: true))
-            {
-                _popup.PopupClient(
-                    Loc.GetString(ent.Comp.WoundPopup, ("target", Identity.Entity(ent, EntityManager))),
-                    ent.Owner,
-                    args.User,
-                    PopupType.MediumCaution
-                );
-            }
+            throw new NotImplementedException($"TODO make this organ-aware...");
+            // if (_woundable.TryWound((ent, woundable), ent.Comp.Wound, unique: true))
+            // {
+            //     _popup.PopupClient(
+            //         Loc.GetString(ent.Comp.WoundPopup, ("target", Identity.Entity(ent, EntityManager))),
+            //         ent.Owner,
+            //         args.User,
+            //         PopupType.MediumCaution
+            //     );
+            // }
         }
 
         args.Repeat = TryComp<PerfusionComponent>(ent, out var perfusion) && perfusion.BaseCardiacOutput < 1;

@@ -151,7 +151,7 @@ public sealed partial class ZombieSystem
         RemComp<SentienceTargetComponent>(target);
 
         // Begin Offbrand
-        if (RemComp<WoundableComponent>(target))
+        if (RemComp<WoundableBodyComponent>(target))
         {
             throw new InvalidOperationException("Just don't use zombies with Offmed.");
         }

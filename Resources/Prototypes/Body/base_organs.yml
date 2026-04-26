@@ -23,7 +23,9 @@
   - type: Organ
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableLarge # Offbrand
   id: OrganBaseTorso
   name: torso
   abstract: true
@@ -48,7 +50,9 @@
       - Special
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableMedium # Offbrand
   id: OrganBaseHead
   name: head
   abstract: true
@@ -75,7 +79,9 @@
       - HeadTop
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableMedium # Offbrand
   id: OrganBaseArmLeft
   name: left arm
   abstract: true
@@ -94,7 +100,9 @@
       - LArm
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableMedium # Offbrand
   id: OrganBaseArmRight
   name: right arm
   abstract: true
@@ -113,7 +121,9 @@
       - RArm
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableSmall # Offbrand
   id: OrganBaseHandLeft
   name: left hand
   abstract: true
@@ -136,7 +146,9 @@
       - LHand
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableSmall # Offbrand
   id: OrganBaseHandRight
   name: right hand
   abstract: true
@@ -159,7 +171,9 @@
       - RHand
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableMedium # Offbrand
   id: OrganBaseLegLeft
   name: left leg
   abstract: true
@@ -178,7 +192,9 @@
       - LLeg
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableMedium # Offbrand
   id: OrganBaseLegRight
   name: right leg
   abstract: true
@@ -197,7 +213,9 @@
       - RLeg
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableSmall # Offbrand
   id: OrganBaseFootLeft
   name: left foot
   abstract: true
@@ -216,7 +234,9 @@
       - LFoot
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganWoundableSmall # Offbrand
   id: OrganBaseFootRight
   name: right foot
   abstract: true

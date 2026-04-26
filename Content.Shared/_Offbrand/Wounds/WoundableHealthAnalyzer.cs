@@ -111,7 +111,7 @@ public abstract class SharedWoundableHealthAnalyzerSystem : EntitySystem
 
     public WoundableHealthAnalyzerData? TakeSample(EntityUid uid, bool withWounds = true)
     {
-        if (!HasComp<WoundableComponent>(uid))
+        if (!HasComp<WoundableBodyComponent>(uid))
             return null;
 
         if (!TryComp<PerfusionComponent>(uid, out var heartrate))

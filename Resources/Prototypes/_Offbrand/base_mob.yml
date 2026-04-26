@@ -3,7 +3,7 @@
   id: BaseMobWoundable
   components:
   - type: StatusEffectContainer
-  - type: Woundable
+  - type: WoundableBody
     damageContainer: Biological
     maximumDamage:
       Blunt: [200, 10]
@@ -114,7 +114,7 @@
   id: BaseMobPain
   components:
   - type: StatusEffectContainer
-  - type: Woundable
+  - type: WoundableBody
   - type: HealthExaminable
     examinableTypes:
     - Asphyxiation

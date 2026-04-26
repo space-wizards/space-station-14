@@ -28,7 +28,7 @@ public sealed partial class UniqueWoundOnDamageSystem : OffbrandDamageSystem
         var rand = new System.Random(seed);
 
         var damageable = Comp<DamageableComponent>(ent);
-        var woundable = Comp<WoundableComponent>(ent);
+        var woundable = Comp<WoundableBodyComponent>(ent);
 
         foreach (var wound in ent.Comp.Wounds)
         {
@@ -42,7 +42,8 @@ public sealed partial class UniqueWoundOnDamageSystem : OffbrandDamageSystem
             if (!rand.Prob(probability))
                 continue;
 
-            _woundable.TryWound((ent.Owner, woundable), wound.WoundPrototype, wound.WoundDamages, unique: true);
+            throw new NotImplementedException($"TODO make this organ-aware...");
+            // _woundable.TryWound((ent.Owner, woundable), wound.WoundPrototype, wound.WoundDamages, unique: true);
         }
     }
 }

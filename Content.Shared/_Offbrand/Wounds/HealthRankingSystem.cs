@@ -16,7 +16,7 @@ public sealed partial class HealthRankingSystem : EntitySystem
 
     public float? RankHealth(EntityUid entity, MobState targetMobState)
     {
-        if (!HasComp<WoundableComponent>(entity))
+        if (!HasComp<WoundableBodyComponent>(entity))
             return null;
 
         if (targetMobState == MobState.Invalid)

@@ -35,6 +35,13 @@ public sealed partial class BodySystem
         SubscribeLocalEvent<BodyComponent, HeartBeatEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, TargetDefibrillatedEvent>(RefRelayBodyEvent);
         SubscribeLocalEvent<BodyComponent, BaseVascularToneEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, WoundableOrganWeightsEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, WoundGetDamageEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, GetWoundsWithSpaceEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, GetPainEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, HealWoundsEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, GetBleedLevelEvent>(RefRelayBodyEvent);
+        SubscribeLocalEvent<BodyComponent, ClampWoundsEvent>(RefRelayBodyEvent);
         // End Offbrand
     }
 

@@ -16,11 +16,11 @@ public sealed partial class ClampWounds : EntityEffectBase<ClampWounds>
     }
 }
 
-public sealed class ClampWoundsEntityEffectSystem : EntityEffectSystem<WoundableComponent, ClampWounds>
+public sealed class ClampWoundsEntityEffectSystem : EntityEffectSystem<WoundableBodyComponent, ClampWounds>
 {
     [Dependency] private readonly WoundableSystem _woundable = default!;
 
-    protected override void Effect(Entity<WoundableComponent> ent, ref EntityEffectEvent<ClampWounds> args)
+    protected override void Effect(Entity<WoundableBodyComponent> ent, ref EntityEffectEvent<ClampWounds> args)
     {
         _woundable.ClampWounds(ent, args.Effect.Chance);
     }

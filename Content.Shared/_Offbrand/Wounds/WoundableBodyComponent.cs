@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Offbrand.Wounds;
 
 [RegisterComponent, AutoGenerateComponentState]
-public sealed partial class WoundableComponent : Component
+public sealed partial class WoundableBodyComponent : Component
 {
     /// <summary>
     /// The maximum damages that can be acquired, and the factor that downcurves additional damage

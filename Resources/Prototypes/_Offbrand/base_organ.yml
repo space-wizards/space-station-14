@@ -99,3 +99,27 @@
   - type: PassiveOrganDamage
     damage: -0.05
     damageCap: 30
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganWoundableLarge
+  components:
+  - type: StatusEffectContainer
+  - type: WoundableOrgan
+    weight: 150
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganWoundableMedium
+  components:
+  - type: StatusEffectContainer
+  - type: WoundableOrgan
+    weight: 50
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganWoundableSmall
+  components:
+  - type: StatusEffectContainer
+  - type: WoundableOrgan
+    weight: 25

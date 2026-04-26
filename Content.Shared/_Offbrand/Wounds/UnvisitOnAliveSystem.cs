@@ -11,10 +11,10 @@ public sealed class UnvisitOnAliveSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WoundableComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<WoundableBodyComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnMobStateChanged(Entity<WoundableComponent> ent, ref MobStateChangedEvent args)
+    private void OnMobStateChanged(Entity<WoundableBodyComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Alive)
             return;

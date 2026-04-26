@@ -20,7 +20,7 @@ public sealed class WoundRegenerationSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var enumerator = EntityQueryEnumerator<WoundRegenerationComponent, WoundableComponent>();
+        var enumerator = EntityQueryEnumerator<WoundRegenerationComponent, WoundableBodyComponent>();
         while (enumerator.MoveNext(out var uid, out var regeneration, out var woundable))
         {
             if (regeneration.LastUpdate is not { } last || last + regeneration.AdjustedUpdateInterval >= _timing.CurTime)
@@ -44,7 +44,7 @@ public sealed class WoundRegenerationSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void DoUpdate(Entity<WoundRegenerationComponent, WoundableComponent> ent)
+    private void DoUpdate(Entity<WoundRegenerationComponent, WoundableBodyComponent> ent)
     {
         _woundable.HealWounds((ent, ent), ent.Comp1.Damage, true, true);
     }

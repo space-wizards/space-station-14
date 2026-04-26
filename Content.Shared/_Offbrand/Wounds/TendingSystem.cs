@@ -1,3 +1,4 @@
+using Content.Shared.Body;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -50,29 +51,33 @@ public sealed class TendingSystem : EntitySystem
             args.Handled = true;
     }
 
-    private Entity<TendableWoundComponent, WoundComponent>? GetWoundToTend(Entity<TendingComponent> ent, Entity<WoundableComponent?> target)
+    private Entity<TendableWoundComponent, WoundComponent>? GetWoundToTend(Entity<TendingComponent> ent, Entity<WoundableBodyComponent?> target)
     {
-        if (!_statusEffects.TryEffectsWithComp<TendableWoundComponent>(target, out var effects))
-        {
+        if (!TryComp<BodyComponent>(target, out var body))
             return null;
-        }
 
-        foreach (var wound in effects)
+        foreach (var organ in body.Organs?.ContainedEntities ?? [])
         {
-            if (wound.Comp1.Tended)
+            if (!_statusEffects.TryEffectsWithComp<TendableWoundComponent>(organ, out var effects))
                 continue;
 
-            if (!_entityWhitelist.CheckBoth(wound, ent.Comp.WoundBlacklist, ent.Comp.WoundWhitelist))
-                continue;
+            foreach (var wound in effects)
+            {
+                if (wound.Comp1.Tended)
+                    continue;
 
-            return (wound.Owner, wound.Comp1, Comp<WoundComponent>(wound));
+                if (!_entityWhitelist.CheckBoth(wound, ent.Comp.WoundBlacklist, ent.Comp.WoundWhitelist))
+                    continue;
+
+                return (wound.Owner, wound.Comp1, Comp<WoundComponent>(wound));
+            }
         }
 
         return null;
 
     }
 
-    private bool TryTend(Entity<TendingComponent> ent, Entity<WoundableComponent?> target, EntityUid user, bool isRepeat = false)
+    private bool TryTend(Entity<TendingComponent> ent, Entity<WoundableBodyComponent?> target, EntityUid user, bool isRepeat = false)
     {
         if (!Resolve(target, ref target.Comp, false))
             return false;

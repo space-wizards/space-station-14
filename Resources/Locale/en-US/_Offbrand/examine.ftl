@@ -23,7 +23,7 @@ wound-count-modifier =
         [7] many { $wound }
         [8] many { $wound }
        *[other] a ton of { $wound }
-    }.
+    } on { POSS-ADJ($target) } { $organ }.
 
 -wound-plural-modifier-s = { $count ->
     [one]{""}

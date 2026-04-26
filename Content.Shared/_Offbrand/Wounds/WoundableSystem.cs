@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Shared._Offbrand.Organs;
 using Content.Shared.Body.Systems;
+using Content.Shared.Body;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -24,15 +26,16 @@ public sealed class WoundableSystem : OffbrandDamageSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly WoundableOrganSystem _woundableOrgan = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WoundableComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<WoundableComponent, DamageDealtEvent>(OnDamageDealt);
-        SubscribeLocalEvent<WoundableComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined, before: [typeof(SharedBloodstreamSystem)]);
-        SubscribeLocalEvent<WoundableComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WoundableBodyComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<WoundableBodyComponent, DamageDealtEvent>(OnDamageDealt);
+        SubscribeLocalEvent<WoundableBodyComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined, before: [typeof(SharedBloodstreamSystem)]);
+        SubscribeLocalEvent<WoundableBodyComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<WoundComponent, StatusEffectRelayedEvent<WoundGetDamageEvent>>(OnWoundGetDamage);
         SubscribeLocalEvent<WoundComponent, StatusEffectRelayedEvent<GetWoundsWithSpaceEvent>>(OnGetWoundsWithSpace);
@@ -44,7 +47,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         SubscribeLocalEvent<ClampableWoundComponent, StatusEffectRelayedEvent<ClampWoundsEvent>>(OnClampWounds);
     }
 
-    private void OnShutdown(Entity<WoundableComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<WoundableBodyComponent> ent, ref ComponentShutdown args)
     {
         if (!_statusEffects.TryEffectsWithComp<WoundComponent>(ent, out var wounds))
             return;
@@ -68,59 +71,65 @@ public sealed class WoundableSystem : OffbrandDamageSystem
 
     private static readonly LocId WoundCountModifier = "wound-count-modifier";
 
-    private void OnHealthBeingExamined(Entity<WoundableComponent> ent, ref HealthBeingExaminedEvent args)
+    private void OnHealthBeingExamined(Entity<WoundableBodyComponent> ent, ref HealthBeingExaminedEvent args)
     {
-        if (!_statusEffects.TryEffectsWithComp<WoundDescriptionComponent>(ent, out var wounds))
+        if (!TryComp<BodyComponent>(ent, out var body))
             return;
 
-        if (!args.Message.IsEmpty)
+        foreach (var organ in body.Organs?.ContainedEntities ?? [])
         {
-            args.Message.PushNewline();
-        }
-
-        var counts = new Dictionary<(LocId, LocId?, LocId?), int>();
-
-        foreach (var describable in wounds)
-        {
-            var wound = Comp<WoundComponent>(describable);
-            var damage = wound.Damage.GetTotal();
-
-            if (describable.Comp1.Descriptions.HighestMatch(damage) is not { } message)
+            if (!_statusEffects.TryEffectsWithComp<WoundDescriptionComponent>(organ, out var wounds))
                 continue;
 
-            var text = message;
-            LocId? bleedingMessage = null;
-            LocId? tendedMessage = null;
-
-            if (TryComp<BleedingWoundComponent>(describable, out var bleeding) && BleedLevel((describable.Owner, bleeding)) > 0f)
-                bleedingMessage = describable.Comp1.BleedingModifier;
-
-            if (TryComp<TendableWoundComponent>(describable, out var tendable) && tendable.Tended)
-                tendedMessage = describable.Comp1.TendedModifier;
-
-            var triple = (text, bleedingMessage, tendedMessage);
-
-            if (counts.TryGetValue(triple, out var count))
-                counts[triple] = count + 1;
-            else
-                counts[triple] = 1;
-        }
-
-        var first = true;
-        foreach (var (triple, count) in counts.OrderBy(it => it.Key.Item1))
-        {
-            if (!first)
+            if (!args.Message.IsEmpty)
+            {
                 args.Message.PushNewline();
-            else
-                first = false;
+            }
 
-            var text = Loc.GetString(triple.Item1, ("count", count));
-            if (triple.Item2 is { } bleedingMessage)
-                text = Loc.GetString(bleedingMessage, ("wound", text));
-            if (triple.Item3 is { } tendedMessage)
-                text = Loc.GetString(tendedMessage, ("wound", text));
+            var counts = new Dictionary<(LocId, LocId?, LocId?), int>();
 
-            args.Message.AddMarkupOrThrow(Loc.GetString(WoundCountModifier, ("wound", text), ("count", count), ("target", Identity.Entity(ent, EntityManager))));
+            foreach (var describable in wounds)
+            {
+                var wound = Comp<WoundComponent>(describable);
+                var damage = wound.Damage.GetTotal();
+
+                if (describable.Comp1.Descriptions.HighestMatch(damage) is not { } message)
+                    continue;
+
+                var text = message;
+                LocId? bleedingMessage = null;
+                LocId? tendedMessage = null;
+
+                if (TryComp<BleedingWoundComponent>(describable, out var bleeding) && BleedLevel((describable.Owner, bleeding)) > 0f)
+                    bleedingMessage = describable.Comp1.BleedingModifier;
+
+                if (TryComp<TendableWoundComponent>(describable, out var tendable) && tendable.Tended)
+                    tendedMessage = describable.Comp1.TendedModifier;
+
+                var triple = (text, bleedingMessage, tendedMessage);
+
+                if (counts.TryGetValue(triple, out var count))
+                    counts[triple] = count + 1;
+                else
+                    counts[triple] = 1;
+            }
+
+            var first = true;
+            foreach (var (triple, count) in counts.OrderBy(it => it.Key.Item1))
+            {
+                if (!first)
+                    args.Message.PushNewline();
+                else
+                    first = false;
+
+                var text = Loc.GetString(triple.Item1, ("count", count));
+                if (triple.Item2 is { } bleedingMessage)
+                    text = Loc.GetString(bleedingMessage, ("wound", text));
+                if (triple.Item3 is { } tendedMessage)
+                    text = Loc.GetString(tendedMessage, ("wound", text));
+
+                args.Message.AddMarkupOrThrow(Loc.GetString(WoundCountModifier, ("wound", text), ("count", count), ("target", Identity.Entity(ent, EntityManager)), ("organ", organ)));
+            }
         }
     }
 
@@ -135,8 +144,14 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         RefreshWounds(args.Target, false, null);
     }
 
-    private void OnDamaged(Entity<WoundableComponent, DamageableComponent> ent, DamageSpecifier overall)
+    private void OnDamaged(Entity<WoundableBodyComponent, DamageableComponent> ent, DamageSpecifier overall)
     {
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+
+        var organs = _woundableOrgan.GetWoundableOrgans(ent);
+        var target = SharedRandomExtensions.Pick(organs, rand);
+
         foreach (var (type, damage) in overall.DamageDict)
         {
             var existing = ent.Comp2.Damage.DamageDict.GetValueOrDefault(type, FixedPoint2.Zero);
@@ -147,7 +162,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
             var incoming = new DamageSpecifier() { DamageDict = new() { { type, damage - delta } } };
 
             var evt = new GetWoundsWithSpaceEvent(new(), incoming);
-            RaiseLocalEvent(ent, ref evt);
+            RaiseLocalEvent(target, ref evt);
 
             if (evt.Wounds.Count > 0)
             {
@@ -158,11 +173,11 @@ public sealed class WoundableSystem : OffbrandDamageSystem
             if (DecideOnWoundType(incoming) is not { } woundToSpawn)
                 continue;
 
-            TryWound(ent, woundToSpawn, damage: new(incoming), refresh: false);
+            TryWound(ent, target, woundToSpawn, damage: new(incoming), refresh: false);
         }
     }
 
-    private void OnMapInit(Entity<WoundableComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<WoundableBodyComponent> ent, ref MapInitEvent args)
     {
         var damageable = Comp<DamageableComponent>(ent);
         if (damageable.Damage.AnyPositive())
@@ -175,13 +190,13 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         Dirty(ent);
     }
 
-    public bool TryWound(Entity<WoundableComponent> ent, EntProtoId woundToSpawn, DamageSpecifier? damage = null, bool unique = false, bool refresh = true)
+    public bool TryWound(Entity<WoundableBodyComponent> ent, EntityUid target, EntProtoId woundToSpawn, DamageSpecifier? damage = null, bool unique = false, bool refresh = true)
     {
-        if (unique && _statusEffects.HasStatusEffect(ent, woundToSpawn))
+        if (unique && _statusEffects.HasStatusEffect(target, woundToSpawn))
             return false;
 
         PredictedTrySpawnInContainer(woundToSpawn,
-            ent,
+            target,
             StatusEffectContainerComponent.ContainerId,
             out var wound);
 
@@ -203,7 +218,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         return true;
     }
 
-    public void HealWounds(Entity<WoundableComponent> ent, DamageSpecifier incoming, bool passive, bool refresh)
+    public void HealWounds(Entity<WoundableBodyComponent> ent, DamageSpecifier incoming, bool passive, bool refresh)
     {
         var evt = new HealWoundsEvent(incoming, passive);
         RaiseLocalEvent(ent, ref evt);
@@ -247,7 +262,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         return FixedPoint2.Max((incoming + current) - modifier.Base, FixedPoint2.Zero);
     }
 
-    private void OnDamageDealt(Entity<WoundableComponent> ent, ref DamageDealtEvent args)
+    private void OnDamageDealt(Entity<WoundableBodyComponent> ent, ref DamageDealtEvent args)
     {
         if (_timing.ApplyingState || !TryComp<DamageableComponent>(ent, out var damageable))
             return;
@@ -261,7 +276,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         RefreshWounds((ent, ent, null), args.InterruptsDoAfters, args.Origin);
     }
 
-    private void RefreshWounds(Entity<WoundableComponent?, DamageableComponent?> ent, bool interruptsDoAfters, EntityUid? origin)
+    private void RefreshWounds(Entity<WoundableBodyComponent?, DamageableComponent?> ent, bool interruptsDoAfters, EntityUid? origin)
     {
         if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return;
@@ -356,7 +371,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         return bleedAddition * ratio;
     }
 
-    public void ClampWounds(Entity<WoundableComponent> ent, float probability)
+    public void ClampWounds(Entity<WoundableBodyComponent> ent, float probability)
     {
         var evt = new ClampWoundsEvent(probability);
         RaiseLocalEvent(ent, ref evt);
@@ -443,7 +458,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         Dirty(ent);
     }
 
-    public void TendWound(Entity<WoundableComponent?> woundable, Entity<TendableWoundComponent> ent, DamageSpecifier? specifier)
+    public void TendWound(Entity<WoundableBodyComponent?> woundable, Entity<TendableWoundComponent> ent, DamageSpecifier? specifier)
     {
         var wound = Comp<WoundComponent>(ent);
 
