@@ -17,10 +17,9 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
 
-    private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery;
-    private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<StackComponent> _stackQuery;
+    [Dependency] private readonly EntityQuery<RadiationBlockingContainerComponent> _blockerQuery = default!;
+    [Dependency] private readonly EntityQuery<RadiationGridResistanceComponent> _resistanceQuery = default!;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private float _accumulator;
     private List<SourceData> _sources = new();
@@ -30,11 +29,6 @@ public sealed partial class RadiationSystem : SharedRadiationSystem
         base.Initialize();
         SubscribeCvars();
         InitRadBlocking();
-
-        _blockerQuery = GetEntityQuery<RadiationBlockingContainerComponent>();
-        _resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _stackQuery = GetEntityQuery<StackComponent>();
     }
 
     public override void Update(float frameTime)
