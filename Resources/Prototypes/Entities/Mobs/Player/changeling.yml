@@ -1,5 +1,5 @@
 - type: entity
-  parent: MobHuman
+  parent: [ MobHuman, StorePresetChangeling ]
   id: MobLing
   name: Urist McLing
   suffix: Non-Antag
@@ -9,4 +9,28 @@
   - type: ChangelingTransform
   - type: ActionGrant
     actions:
-    - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+    - ActionChangelingStore
+  - type: Store
+    balance:
+      ChangelingDNA: 50
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingFleshClothingAbilityStoreDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ChangelingFleshClothingAbility
+    clothingPrototypes:
+      shoes: ChangelingFleshClothingFeet
+      jumpsuit: ChangelingFleshClothingInner
+      outerClothing: ChangelingFleshClothingOuter
+      gloves: ChangelingFleshClothingGloves
+      neck: ChangelingFleshClothingNeck
+      mask: ChangelingFleshClothingMask
+      eyes: ChangelingFleshClothingEyes
+      ears: ChangelingFleshClothingEars
+      head: ChangelingFleshClothingHead
+      suitstorage: ChangelingFleshClothingSuitStorage
+      #id: TODO: chameleon PDA that is not a functional PDA
+      belt: ChangelingFleshClothingBelt
+      back: ChangelingFleshClothingBack
+

@@ -3,7 +3,7 @@
          xmlns:system="clr-namespace:System;assembly=System.Runtime"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          Margin="0 0 0 8">
-    <PanelContainer StyleClasses="AngleRect" ModulateSelfOverride="#2b2b31"/>
+    <PanelContainer StyleClasses="BackgroundPanel" ModulateSelfOverride="#2b2b31"/>
     <BoxContainer Orientation="Vertical" SetHeight="60">
         <Control HorizontalExpand="True" SetHeight="27">
             <PanelContainer>
@@ -21,7 +21,7 @@
                     HorizontalAlignment="Right" Margin="8 6 6 6" SetHeight="19" SetWidth="52" Access="Public">
                 <Button.StyleClasses>
                     <system:String>ButtonSmall</system:String>
-                    <system:String>ButtonColorRed</system:String>
+                    <system:String>negative</system:String>
                 </Button.StyleClasses>
             </controls:ConfirmButton>
         </BoxContainer>

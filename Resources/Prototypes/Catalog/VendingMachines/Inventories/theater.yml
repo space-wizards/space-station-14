@@ -40,6 +40,7 @@
     ClothingUniformJumpsuitDameDane: 2
     ClothingShoesDameDane: 2
     ClothingOuterDameDane: 2
+    ClothingHeadHatMitreClown: 1
     ClothingOuterClownPriest: 1
     ClothingMaskSadMime: 1
     ClothingMaskScaredMime: 1
@@ -62,6 +63,7 @@
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
     ClothingOuterDogi: 1
+    ClothingOuterSuitCarp: 1
     ClothingMaskBlushingClown: 1
     ClothingMaskBlushingMime: 1
     ClothingHeadHatCowboyBountyHunter: 1

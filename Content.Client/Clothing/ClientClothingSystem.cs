@@ -223,7 +223,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     {
         base.OnGotEquipped(uid, component, args);
 
-        RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
+        RenderEquipment(args.EquipTarget, uid, args.Slot, clothingComponent: component);
     }
 
     private void RenderEquipment(EntityUid equipee, EntityUid equipment, string slot,
@@ -271,7 +271,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         // Select displacement maps
         var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
 
-        var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
+        var equipeeSex = CompOrNull<HumanoidProfileComponent>(equipee)?.Sex;
         if (equipeeSex != null)
         {
             switch (equipeeSex)

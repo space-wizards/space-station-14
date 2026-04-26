@@ -209,7 +209,7 @@ public abstract class SharedWieldableSystem : EntitySystem
     private void OnBlockerEquipped(Entity<WieldingBlockerComponent> ent, ref GotEquippedEvent args)
     {
         if (ent.Comp.BlockEquipped)
-            UnwieldAll(args.Equipee, force: true);
+            UnwieldAll(args.EquipTarget, force: true);
     }
 
     private void OnBlockerEquippedHand(Entity<WieldingBlockerComponent> ent, ref GotEquippedHandEvent args)
@@ -259,7 +259,7 @@ public abstract class SharedWieldableSystem : EntitySystem
             return false;
         }
 
-        if (_hands.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
+        if (_hands.CountFreeableHands((user, hands), except: uid) < component.FreeHandsRequired)
         {
             if (!quiet)
             {

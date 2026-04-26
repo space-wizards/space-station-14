@@ -8,6 +8,7 @@ construction-graph-tag-clown-bike-horn = bike horn
 construction-graph-tag-clowne-horn = broken bike horn
 construction-graph-tag-happy-honk-meal = happy honk meal
 construction-graph-tag-woeful-cluwne-meal = woeful cluwne meal
+construction-graph-tag-boxhug = a box of hugs
 
 # mime
 construction-graph-tag-suspenders = suspenders
@@ -72,6 +73,8 @@ construction-graph-tag-apron = an apron
 construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
+construction-graph-tag-paper = office paper
+construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky
@@ -151,3 +154,6 @@ construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
 
 # clothing
 construction-graph-tag-backpack = backpack
+
+# chemistry
+construction-graph-tag-centrifuge-compatible = centrifugable container

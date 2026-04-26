@@ -1,11 +1,11 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles.Components;
 using Content.Shared.Survivor.Components;
 using Content.Shared.Tag;
@@ -16,13 +16,13 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 {
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private readonly TransformSystem _xform = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 
@@ -38,7 +38,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
-        var allAliveHumanMinds = _mind.GetAliveHumans();
+        var allAliveHumanMinds = _target.GetAliveHumans();
 
         foreach (var humanMind in allAliveHumanMinds)
         {
@@ -106,6 +106,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
         args.AddLine(Loc.GetString("survivor-round-end-dead-count", ("deadCount", deadSurvivors)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", aliveMarooned)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-on-shuttle-count", ("aliveCount", aliveOnShuttle)));
+        args.AddLine("");
 
         // Player manifest at EOR shows who's a survivor so no need for extra info here.
     }

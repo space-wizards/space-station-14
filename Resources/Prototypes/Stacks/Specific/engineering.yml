@@ -1,0 +1,36 @@
+# they're uninflated by default so they're tiny
+- type: stack
+  parent: BaseSmallStack
+  id: InflatableWall
+  name: stack-inflatable-wall
+  icon: { sprite: "/Textures/Objects/Misc/inflatable_wall.rsi", state: item_wall }
+  spawn: InflatableWallStack1
+
+- type: stack
+  id: InflatableDoor
+  name: stack-inflatable-door
+  icon: { sprite: "/Textures/Objects/Misc/inflatable_door.rsi", state: item_door }
+  spawn: InflatableDoorStack1
+  maxCount: 4 # Maybe increased to 5 to reuse the base?
+
+# Cables
+- type: stack
+  parent: BaseMediumStack
+  id: Cable
+  name: stack-lv-cable
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coil-30 }
+  spawn: CableApcStack1
+
+- type: stack
+  parent: BaseMediumStack
+  id: CableMV
+  name: stack-mv-cable
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilmv-30 }
+  spawn: CableMVStack1
+
+- type: stack
+  parent: BaseMediumStack
+  id: CableHV
+  name: stack-hv-cable
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilhv-30 }
+  spawn: CableHVStack1
