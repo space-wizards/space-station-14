@@ -204,9 +204,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.EventTarget is { Valid: true } eventTarget && !Exists(eventTarget))
             return true;
 
-        if (args.Used is { } @using && !Exists(@using))
-            return true;
-
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
@@ -218,14 +215,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 return true;
 
             // Whether the distance between the effective movement entity and the target(if any) has changed too much.
-            if (args.Target is { } target)
+            if (args.Target is { } target && Transform(target).Coordinates.TryDistance(EntityManager, movementXform.Coordinates, out var distance))
             {
-                var targetXform = Transform(target);
-                if (targetXform.Coordinates.TryDistance(EntityManager, movementXform.Coordinates, out var distance))
-                {
-                    if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
-                        return true;
-                }
+                if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
+                    return true;
             }
         }
 
