@@ -14,11 +14,18 @@ namespace Content.Server.Administration.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, LocalizationManager.DefaultCulture, out var timeSpan))
-                _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, checkCooldown: false);
+            bool cantRecall = false;
 
-            else if (args.Length == 1)
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (args.Length >= 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, LocalizationManager.DefaultCulture, out var timeSpan))
+            {
+                if (args.Length >= 2 && !bool.TryParse(args[1], out cantRecall))
+                    return;
+            
+                _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, checkCooldown: false, cantRecall: cantRecall);
+            }
+
+            else if (args.Length >= 1)
                 shell.WriteLine(Loc.GetString("shell-timespan-minutes-must-be-correct"));
 
             else
