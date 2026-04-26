@@ -28,12 +28,6 @@
         whitelist:
           tags:
           - CaptainSabre
-  - type: ItemMapper
-    mapLayers:
-      fill-1:
-        whitelist:
-          tags:
-          - CaptainSabre
   - type: ItemSlotVisuals
     maxFillLevels: 1
     fillBaseName: fill-
