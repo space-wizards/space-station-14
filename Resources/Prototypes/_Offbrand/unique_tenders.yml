@@ -15,7 +15,7 @@
         variation: 0.125
     whitelist:
       components:
-      - Woundable
+      - WoundableBody
     conditionFailed: persistent-tender-already-applied
     selfUserCompleted: persistent-tender-reflexive-user-completed
     selfOtherCompleted: persistent-tender-reflexive-other-completed
