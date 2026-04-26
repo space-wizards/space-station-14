@@ -1,5 +1,3 @@
-using System.Buffers;
-using System.Runtime.InteropServices;
 using Content.Server.Speech;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -32,6 +30,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+
     /// <summary>
     ///  The name of the client-side type that represents the user interface window.
     ///  Used for innate voice masks, which need to be able to create their own UIs.
@@ -44,22 +43,27 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         // These events should fire in the order Innate -> Implant -> Inventory
         // Transform speaker name events
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameInventory);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant);
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerNameEvent>(OnInnateTransformSpeakerName);
+
         // See identity attempt events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<SeeIdentityAttemptEvent>>(OnSeeIdentityAttemptEvent);
         SubscribeLocalEvent<VoiceMaskComponent, SeeIdentityAttemptEvent>(OnInnateSeeIdentityAttemptEvent);
+
         // Transform speech events
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeechEvent>>(OnTransformSpeechInventory, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(AccentSystem)]);
+
         // Voice mask transform things
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<VoiceMaskToggledEvent>>((ett, ref ev) => OnVoiceMaskToggledEvent(ett, ref ev.Args));
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskToggledEvent>>((ett, ref ev) => OnVoiceMaskToggledEvent(ett, ref ev.Args));
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggledEvent>(OnVoiceMaskToggledEvent);
+
         // Other events
         SubscribeLocalEvent<VoiceMaskComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRemovedEvent>(OnImplantRemovedEventEvent);
@@ -71,6 +75,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
+
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
     }
 
@@ -87,12 +92,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         _identity.QueueIdentityUpdate(ent.Owner);
     }
 
-    private void MaskToggled(EntityUid mask, EntityUid owner, bool active)
-    {
-        var ev = new VoiceMaskToggledEvent(mask, owner, active);
-        RaiseLocalEvent(owner, ev);
-    }
-
     /// <summary>
     ///  Toggles this mask off it it isn't the mask turned on
     /// </summary>
@@ -104,7 +103,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // we don't want the entity turned on to be turned off, and there isn't any work to do if it already inactive
         if (ent.Owner == args.Mask || !ent.Comp.Active)
             return;
-        
+
         // turn it off
         ent.Comp.Active = false;
 
@@ -156,7 +155,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active || !entity.Comp.IsInnate)
             return;
-        
+
         args.NameOverride = GetCurrentVoiceName(entity);
     }
 
@@ -227,7 +226,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-toggle"), entity, args.Actor);
         entity.Comp.Active = !entity.Comp.Active;
-        MaskToggled(entity.Owner, args.Actor, entity.Comp.Active);
+
+        var ev = new VoiceMaskToggledEvent(entity.Owner, args.Actor, entity.Comp.Active);
+        RaiseLocalEvent(entity.Owner, ev);
 
         // Update identity because of possible name override
         _identity.QueueIdentityUpdate(args.Actor);
@@ -248,7 +249,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_lock.IsLocked(uid))
             return;
-        
+
         component.Active = false;
         _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
