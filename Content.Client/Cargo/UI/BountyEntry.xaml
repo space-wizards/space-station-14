@@ -10,10 +10,9 @@
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <RichTextLabel Name="RewardLabel"/>
                     <RichTextLabel Name="ManifestLabel"/>
-                    <RichTextLabel Name="ClaimedBylabel"/>
                     <RichTextLabel Name="StatusLabel"/>
+                    <RichTextLabel Name="ClaimedBylabel"/>
                 </BoxContainer>
-                <Control MinWidth="10"/>
                 <BoxContainer Orientation="Vertical" MinWidth="200" HorizontalAlignment="Right">
                     <BoxContainer Orientation="Horizontal" >
                         <Button Name="PrintButton"
