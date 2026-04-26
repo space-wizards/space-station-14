@@ -228,6 +228,7 @@
   - type: AntagObjectives
     objectives:
     - ChangelingSurviveObjective
+    - ChangelingUniqueIdentityObjective
 
 - type: entity
   id: Revolutionary
