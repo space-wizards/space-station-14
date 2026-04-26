@@ -1,11 +1,11 @@
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
+using Content.Client.Pointing;
 using Content.Client.Verbs.UI;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Pointing;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.Player;
@@ -24,6 +24,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private readonly PointingSystem _pointing = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
@@ -243,7 +244,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            RaiseNetworkEvent(new PointingAttemptEvent(GetNetEntity(item.Value)));
+            _pointing.TryPointAtEntity(GetNetEntity(item.Value));
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
