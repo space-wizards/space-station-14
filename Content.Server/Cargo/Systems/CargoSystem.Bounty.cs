@@ -464,10 +464,7 @@ public sealed partial class CargoSystem
 
         var pool = filteredBounties.Count == 0 ? allBounties : filteredBounties;
         var bounty = _random.Pick(pool);
-        var defaultStatus = GetDefaultBountyStatus();
-        if (defaultStatus == null)
-            return false;
-        return TryAddBounty(uid, bounty, defaultStatus, component);
+        return TryAddBounty(uid, bounty, component);
     }
 
     [PublicAPI]
@@ -477,13 +474,10 @@ public sealed partial class CargoSystem
         {
             return false;
         }
-        var defaultStatus = GetDefaultBountyStatus();
-        if (defaultStatus == null)
-            return false;
-        return TryAddBounty(uid, bounty, defaultStatus, component);
+        return TryAddBounty(uid, bounty, component);
     }
 
-    public bool TryAddBounty(EntityUid uid, CargoBountyPrototype bounty, CargoBountyStatusPrototype bountyStatus, StationCargoBountyDatabaseComponent? component = null)
+    public bool TryAddBounty(EntityUid uid, CargoBountyPrototype bounty, StationCargoBountyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -492,7 +486,10 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
-        var newBounty = new CargoBountyData(bounty, bountyStatus, randomVal);
+        var defaultStatus = GetDefaultBountyStatus();
+        if (defaultStatus == null)
+            return false;
+        var newBounty = new CargoBountyData(bounty, defaultStatus, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))
         {
