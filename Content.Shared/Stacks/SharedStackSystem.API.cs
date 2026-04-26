@@ -28,9 +28,7 @@ public abstract partial class SharedStackSystem
         var stackId = _prototype.Index(stackEnt.Comp.StackTypeId);
         var entityUid = PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
 
-        if (TryComp<StackComponent>(entityUid, out var stackComponent))
-            SetCount((entityUid, stackComponent), 1);
-
+        SetCount(entityUid, 1);
         return entityUid;
     }
 
