@@ -141,7 +141,11 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         if (ent.Comp.Damage.Empty)
             return;
 
-        RefreshWounds(args.Target, false, null);
+        if (!TryComp<OrganComponent>(args.Target, out var organ))
+            return;
+
+        if (organ.Body is { } body)
+            RefreshWounds(body, false, null);
     }
 
     private void OnDamaged(Entity<WoundableBodyComponent, DamageableComponent> ent, DamageSpecifier overall)
@@ -170,7 +174,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
                 continue;
             }
 
-            if (DecideOnWoundType(incoming) is not { } woundToSpawn)
+            if (DecideOnWoundType(ent, incoming) is not { } woundToSpawn)
                 continue;
 
             TryWound(ent, target, woundToSpawn, damage: new(incoming), refresh: false);
@@ -477,109 +481,12 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         Dirty(ent);
     }
 
-    private static readonly EntProtoId WoundCutMassive = "WoundCutMassive";
-    private static readonly EntProtoId WoundCutSevere = "WoundCutSevere";
-    private static readonly EntProtoId WoundCutModerate = "WoundCutModerate";
-    private static readonly EntProtoId WoundCutSmall = "WoundCutSmall";
-
-    private static readonly EntProtoId WoundPunctureMassive = "WoundPunctureMassive";
-    private static readonly EntProtoId WoundPunctureSevere = "WoundPunctureSevere";
-    private static readonly EntProtoId WoundPunctureModerate = "WoundPunctureModerate";
-    private static readonly EntProtoId WoundPunctureSmall = "WoundPunctureSmall";
-
-    private static readonly EntProtoId WoundHeatCarbonized = "WoundHeatCarbonized";
-    private static readonly EntProtoId WoundHeatSevere = "WoundHeatSevere";
-    private static readonly EntProtoId WoundHeatModerate = "WoundHeatModerate";
-    private static readonly EntProtoId WoundHeatSmall = "WoundHeatSmall";
-
-    private static readonly EntProtoId WoundColdPetrified = "WoundColdPetrified";
-    private static readonly EntProtoId WoundColdSevere = "WoundColdSevere";
-    private static readonly EntProtoId WoundColdModerate = "WoundColdModerate";
-    private static readonly EntProtoId WoundColdSmall = "WoundColdSmall";
-
-    private static readonly EntProtoId WoundCausticSloughing = "WoundCausticSloughing";
-    private static readonly EntProtoId WoundCausticSevere = "WoundCausticSevere";
-    private static readonly EntProtoId WoundCausticModerate = "WoundCausticModerate";
-    private static readonly EntProtoId WoundCausticSmall = "WoundCausticSmall";
-
-    private static readonly EntProtoId WoundShockExploded = "WoundShockExploded";
-    private static readonly EntProtoId WoundShockSevere = "WoundShockSevere";
-    private static readonly EntProtoId WoundShockModerate = "WoundShockModerate";
-    private static readonly EntProtoId WoundShockSmall = "WoundShockSmall";
-
-    private static readonly EntProtoId WoundBruise = "WoundBruise";
-
-    private static readonly ProtoId<DamageTypePrototype> Blunt = "Blunt";
-    private static readonly ProtoId<DamageTypePrototype> Slash = "Slash";
-    private static readonly ProtoId<DamageTypePrototype> Piercing = "Piercing";
-    private static readonly ProtoId<DamageTypePrototype> Heat = "Heat";
-    private static readonly ProtoId<DamageTypePrototype> Cold = "Cold";
-    private static readonly ProtoId<DamageTypePrototype> Caustic = "Caustic";
-    private static readonly ProtoId<DamageTypePrototype> Shock = "Shock";
-
-    private static EntProtoId? DecideOnWoundType(DamageSpecifier damage)
+    private EntProtoId? DecideOnWoundType(Entity<WoundableBodyComponent> body, DamageSpecifier damage)
     {
         var pair = damage.DamageDict.MaxBy(kvp => kvp.Value);
+        if (!body.Comp.PotentialWounds.TryGetValue(pair.Key, out var thresholds))
+            return null;
 
-        if (pair.Key == Blunt)
-        {
-            return WoundBruise;
-        }
-        else if (pair.Key == Slash)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundCutMassive,
-                >= 20d => WoundCutSevere,
-                >= 10d => WoundCutModerate,
-                _ => WoundCutSmall,
-            };
-        }
-        else if (pair.Key == Piercing)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundPunctureMassive,
-                >= 20d => WoundPunctureSevere,
-                >= 10d => WoundPunctureModerate,
-                _ => WoundPunctureSmall,
-            };
-        }
-        else if (pair.Key == Heat)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundHeatCarbonized,
-                >= 20d => WoundHeatSevere,
-                >= 10d => WoundHeatModerate,
-                _ => WoundHeatSmall,
-            };
-        }
-        else if (pair.Key == Cold)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundColdPetrified,
-                >= 20d => WoundColdSevere,
-                >= 10d => WoundColdModerate,
-                _ => WoundColdSmall,
-            };
-        }
-        else if (pair.Key == Caustic)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundCausticSloughing,
-                >= 20d => WoundCausticSevere,
-                >= 10d => WoundCausticModerate,
-                _ => WoundCausticSmall,
-            };
-        }
-        else if (pair.Key == Shock)
-        {
-            return pair.Value.Double() switch {
-                >= 30d => WoundShockExploded,
-                >= 20d => WoundShockSevere,
-                >= 10d => WoundShockModerate,
-                _ => WoundShockSmall,
-            };
-        }
-
-        return null;
+        return thresholds.HighestMatch(pair.Value);
     }
 }

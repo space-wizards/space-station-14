@@ -35,6 +35,6 @@ public sealed class OffbrandLungOrganSystem : EntitySystem
 
         var airSupply = Math.Clamp(1f - (asphyxiationAmount.Float() / ent.Comp.AsphyxiationThreshold.Float()), 0, 1);
 
-        args.Args = args.Args with { Function = args.Args.Function * health * airSupply };
+        args.Args = args.Args with { Function = health * airSupply };
     }
 }

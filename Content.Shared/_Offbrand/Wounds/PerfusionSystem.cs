@@ -121,7 +121,7 @@ public sealed class PerfusionSystem : EntitySystem
     [Access(typeof(PerfusionSystem), typeof(PerfusionComponent))]
     public float ComputeLungFunction(Entity<PerfusionComponent> ent)
     {
-        var baseEv = new BaseLungFunctionEvent(1f);
+        var baseEv = new BaseLungFunctionEvent(0f);
         RaiseLocalEvent(ent, ref baseEv);
 
         var modifiedEv = new ModifiedLungFunctionEvent(baseEv.Function);

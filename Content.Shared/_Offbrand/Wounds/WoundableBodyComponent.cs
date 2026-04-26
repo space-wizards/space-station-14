@@ -21,6 +21,12 @@ public sealed partial class WoundableBodyComponent : Component
     [DataField, AutoNetworkedField]
     // ReSharper disable once InconsistentNaming - This is wrong but fixing it is potentially annoying for downstreams.
     public ProtoId<DamageContainerPrototype>? DamageContainer;
+
+    /// <summary>
+    /// The map of damage types and ranges to wound entities.
+    /// </summary>
+    [DataField(required: true)]
+    public Dictionary<ProtoId<DamageTypePrototype>, SortedDictionary<FixedPoint2, EntProtoId<WoundComponent>>> PotentialWounds;
 }
 
 /// <summary>

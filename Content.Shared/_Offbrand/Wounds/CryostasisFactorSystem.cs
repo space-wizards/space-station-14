@@ -5,7 +5,7 @@ using Content.Shared.Metabolism;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature;
 
-namespace Content.Server._Offbrand.Wounds;
+namespace Content.Shared._Offbrand.Wounds;
 
 public sealed class CryostasisFactorSystem : EntitySystem
 {
