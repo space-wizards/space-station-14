@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93, eject sprites made by SirWarock on Github using sprites from the same source",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,12 @@
     },
     {
       "name": "emagged"
+    },
+    {
+      "name": "eject-tubes"
+    },
+    {
+      "name": "eject-bulbs"
     },
     {
       "name": "inhand-left",

@@ -1,4 +1,3 @@
-using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
@@ -30,14 +29,20 @@ public sealed partial class LightReplacerComponent : Component
     public Container InsertedBulbs = default!;
 
     /// <summary>
+    /// This string defines what kind of tube will be inserted into light fixtures.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string ActiveLightTube = "fluorescent light tube";
+
+    /// <summary>
+    /// This string defines what kind of bulb will be inserted into light fixtures.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string ActiveLightBulb = "incandescent light bulb";
+
+    /// <summary>
     /// The default starting bulbs
     /// </summary>
     [DataField]
-    public List<EntitySpawnEntry> Contents = [];
-
-    /// <summary>
-    /// This is used for predition, since FirstOrDefault() doesn't properly save the content order.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> ContentOrder = [];
+    public List<EntitySpawnEntry> StartingContent = [];
 }
