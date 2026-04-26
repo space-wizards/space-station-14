@@ -5,17 +5,19 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
+
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -52,6 +54,8 @@ public sealed partial class GameTicker
             string.Empty,
             $"listgamerules - {localizedHelp}",
             ListGameRuleCommand);
+
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
     }
 
     private void ShutdownGameRules()
@@ -234,6 +238,22 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
+    /// Returns true if a game rule that passes the whitelist and blacklist has been added.
+    /// </summary>
+    /// <param name="ruleWhitelist">whitelist for the game rules</param>
+    /// <param name="ruleBlacklist">blacklist for the game rules</param>
+    public bool IsGameRuleAdded(EntityWhitelist? ruleWhitelist, EntityWhitelist? ruleBlacklist = null)
+    {
+        foreach (var ruleEntity in GetAddedGameRules())
+        {
+            if (_whitelist.CheckBoth(ruleEntity, ruleBlacklist, ruleWhitelist))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     ///     Returns true if a game rule with the given component is active..
     /// </summary>
     public bool IsGameRuleActive<T>()
@@ -265,6 +285,22 @@ public sealed partial class GameTicker
         return false;
     }
 
+    /// <summary>
+    /// Returns true if a game rule that passes the whitelist and blacklist is active.
+    /// </summary>
+    /// <param name="ruleWhitelist">whitelist for the game rules</param>
+    /// <param name="ruleBlacklist">blacklist for the game rules</param>
+    public bool IsGameRuleActive(EntityWhitelist? ruleWhitelist, EntityWhitelist? ruleBlacklist = null)
+    {
+        foreach (var ruleEntity in GetActiveGameRules())
+        {
+            if (_whitelist.CheckBoth(ruleEntity, ruleBlacklist, ruleWhitelist))
+                return true;
+        }
+
+        return false;
+    }
+
     public void ClearGameRules()
     {
         foreach (var rule in GetAddedGameRules())
@@ -274,7 +310,7 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
-    /// Gets all the gamerule entities which are currently active.
+    /// Gets all the gamerule entities that have been added.
     /// </summary>
     public IEnumerable<EntityUid> GetAddedGameRules()
     {
@@ -287,6 +323,20 @@ public sealed partial class GameTicker
     }
 
     /// <summary>
+    /// Gets all the gamerule entities with {T} component that have been added.
+    /// </summary>
+    public IEnumerable<Entity<T>> GetAddedGameRules<T>() where T : Component
+    {
+        var query = EntityQueryEnumerator<T, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var ruleData))
+        {
+            if (IsGameRuleAdded(uid, ruleData))
+                yield return (uid, comp);
+        }
+    }
+
+
+    /// <summary>
     /// Gets all the gamerule entities which are currently active.
     /// </summary>
     public IEnumerable<EntityUid> GetActiveGameRules()
@@ -295,6 +345,18 @@ public sealed partial class GameTicker
         while (query.MoveNext(out var uid, out _, out _))
         {
             yield return uid;
+        }
+    }
+
+    /// <summary>
+    /// Gets all the gamerule entities with {T} component that are currently active.
+    /// </summary>
+    public IEnumerable<Entity<T>> GetActiveGameRules<T>() where T : Component
+    {
+        var query = EntityQueryEnumerator<T, ActiveGameRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp, out _, out _))
+        {
+            yield return (uid, comp);
         }
     }
 
@@ -322,6 +384,37 @@ public sealed partial class GameTicker
                 continue;
 
             StartGameRule(uid, rule);
+        }
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent args)
+    {
+        if (args.Forced || args.Cancelled)
+            return;
+
+        var query = EntityQueryEnumerator<GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            var name = ToPrettyString(uid);
+
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            if (gameRule.CancelPresetOnTooFewPlayers)
+            {
+                _chatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                    ("readyPlayersCount", args.Players.Length),
+                    ("minimumPlayers", minPlayers),
+                    ("presetName", name)));
+                args.Cancel();
+                //TODO remove this once announcements are logged
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
+            }
+            else
+            {
+                EndGameRule(uid, gameRule);
+            }
         }
     }
 

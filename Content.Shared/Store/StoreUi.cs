@@ -37,9 +37,10 @@ public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessa
 }
 
 [Serializable, NetSerializable]
-public sealed class StoreBuyListingMessage(ProtoId<ListingPrototype> listing) : BoundUserInterfaceMessage
+public sealed class StoreBuyListingMessage(ProtoId<ListingPrototype> listing, NetEntity? soundSource) : BoundUserInterfaceMessage
 {
     public ProtoId<ListingPrototype> Listing = listing;
+    public NetEntity? SoundSource = soundSource;
 }
 
 [Serializable, NetSerializable]

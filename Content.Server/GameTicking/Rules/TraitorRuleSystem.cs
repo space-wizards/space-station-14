@@ -18,6 +18,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Codewords;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -148,32 +149,22 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private (Note[]?, string) RequestUplink(EntityUid traitor, FixedPoint2 startingBalance, string briefing)
     {
         var pda = _uplink.FindUplinkTarget(traitor);
-        Note[]? code = null;
 
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
-        var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, true);
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, out var code, pda, giveDiscounts: true, bindToPda: false);
 
-        if (pda is not null && uplinked)
+        if (code != null && uplinked == AddUplinkResult.Pda)
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");
-            // Codes are only generated if the uplink is a PDA
-            var ev = new GenerateUplinkCodeEvent();
-            RaiseLocalEvent(pda.Value, ref ev);
 
-            if (ev.Code is { } generatedCode)
-            {
-                code = generatedCode;
-
-                // If giveUplink is false the uplink code part is omitted
-                briefing = string.Format("{0}\n{1}",
-                    briefing,
-                    Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
-                return (code, briefing);
-            }
-
-            Log.Error($"MakeTraitor {ToPrettyString(traitor)} failed to generate an uplink code on {ToPrettyString(pda)}.");
+            // If giveUplink is false the uplink code part is omitted
+            briefing = string.Format("{0}\n{1}",
+                briefing,
+                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+            return (code, briefing);
         }
-        else if (pda is null && uplinked)
+
+        if (uplinked == AddUplinkResult.Implant)
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is implant");
             briefing += "\n" + Loc.GetString("traitor-role-uplink-implant-short");
@@ -182,6 +173,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             Log.Error($"MakeTraitor failed on {ToPrettyString(traitor)} - No uplink could be added");
         }
+
 
         return (null, briefing);
     }

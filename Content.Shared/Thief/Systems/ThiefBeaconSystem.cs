@@ -57,6 +57,15 @@ public sealed class ThiefBeaconSystem : EntitySystem
     {
         if (args.IsFolded)
             ClearCoordinate(beacon, args.User);
+
+        if (!args.IsFolded) // Set the beacon's coordinates automatically when its unfolded
+        {
+            if (args.User == null)
+                return;
+            var mind = _mind.GetMind(args.User.Value);
+            if (mind != null)
+                SetCoordinate(beacon, mind.Value, args.User);
+        }
     }
 
     private void OnExamined(Entity<ThiefBeaconComponent> beacon, ref ExaminedEvent args)

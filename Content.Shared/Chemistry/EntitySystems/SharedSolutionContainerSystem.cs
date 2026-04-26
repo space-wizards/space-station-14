@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
@@ -10,17 +8,16 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Localizations;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
 
@@ -28,9 +25,14 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 /// <summary>
 /// The event raised whenever a solution entity is modified.
+/// This event is raised on the owner of the solution.
+/// If the changed solution is contained in a <see cref="SolutionManagerComponent"/>, it will be raised on the owner of that component.
 /// </summary>
 /// <remarks>
 /// Raised after chemcial reactions and <see cref="SolutionOverflowEvent"/> are handled.
+/// This is always raised on the client when handling the component state so that we can update UIs accordingly.
+/// You might need an IGameTiming.ApplyingState guard to prevent mispredicts if the changes from your subscription are
+/// networked with the same game state.
 /// </remarks>
 /// <param name="Solution">The solution entity that has been modified.</param>
 [ByRefEvent]
@@ -64,62 +66,90 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
+    public static readonly EntProtoId DefaultSolution = "Solution";
+
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly INetManager Net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
     [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
     [Dependency] protected readonly OpenableSystem Openable = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
+
+    [Dependency] protected readonly EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
+    [Dependency] protected readonly EntityQuery<SolutionComponent> SolutionQuery = default!;
+    [Dependency] protected readonly EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         InitializeRelays();
+        InitializeContainerManager();
 
+        SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
+        SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<SolutionComponent, ComponentStartup>(OnSolutionStartup);
+        SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
-        SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(OnContainerManagerInit);
+
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
-        SubscribeLocalEvent<SolutionContainerManagerComponent, MapInitEvent>(OnMapInit);
 
-        if (NetManager.IsServer)
-        {
-            SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentShutdown>(OnContainerManagerShutdown);
-            SubscribeLocalEvent<ContainedSolutionComponent, ComponentShutdown>(OnContainedSolutionShutdown);
-        }
+        SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerInit);
+        SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
+        SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
+        SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
     }
 
+    private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new SolutionComponentState(ent.Comp.Solution);
+    }
+
+    private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SolutionComponentState cast)
+            return;
+
+        ent.Comp.Solution = cast.Solution.Clone();
+
+        // Always raise the event on the client so that we can update UIs accordingly.
+        var changedEv = new SolutionChangedEvent(ent);
+        RaiseLocalEvent(ent, ref changedEv);
+
+        if (!ContainedQuery.TryComp(ent, out var contained) || !SolutionManagerQuery.TryComp(contained.Container, out var manager))
+            return;
+
+        manager.Solutions[ent.Comp.Id] = ent;
+    }
 
     /// <summary>
     /// Attempts to resolve a solution associated with an entity.
     /// </summary>
-    /// <param name="container">The entity that holdes the container the solution entity is in.</param>
+    /// <param name="entity">The entity that holdes the container the solution entity is in.</param>
     /// <param name="name">The name of the solution entities container.</param>
-    /// <param name="entity">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
+    /// <param name="solutionEnt">A reference to a solution entity to load the associated solution entity into. Will be unchanged if not null.</param>
     /// <param name="solution">Returns the solution state of the solution entity.</param>
     /// <returns>Whether the solution was successfully resolved.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity, [NotNullWhen(true)] out Solution? solution)
+    public bool ResolveSolution(Entity<SolutionManagerComponent?> entity, string name, [NotNullWhen(true)] ref Entity<SolutionComponent>? solutionEnt, [NotNullWhen(true)] out Solution? solution)
     {
-        if (!ResolveSolution(container, name, ref entity))
+        if (!ResolveSolution(entity, name, ref solutionEnt))
         {
             solution = null;
             return false;
         }
 
-        solution = entity.Value.Comp.Solution;
+        solution = solutionEnt.Value.Comp.Solution;
         return true;
     }
 
-    /// <inheritdoc cref="ResolveSolution"/>
+    /// <inheritdoc cref="ResolveSolution(Entity{SolutionManagerComponent?}, string, ref Entity{SolutionComponent}?, out Solution?)"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool ResolveSolution(Entity<SolutionContainerManagerComponent?> container, string? name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
+    public bool ResolveSolution(Entity<SolutionManagerComponent?> container, string name, [NotNullWhen(true)] ref Entity<SolutionComponent>? entity)
     {
         if (entity is not null)
         {
@@ -135,170 +165,216 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// Attempts to fetch a solution entity associated with an entity.
     /// </summary>
     /// <remarks>
-    /// If the solution entity will be frequently accessed please use the equivalent <see cref="ResolveSolution"/> method and cache the result.
+    /// If the solution entity will be frequently accessed please use the equivalent
+    /// <see cref="ResolveSolution(Entity{SolutionManagerComponent?}, string, ref Entity{SolutionComponent}?, out Solution?)"/>
+    /// method and cache the result.
     /// </remarks>
-    /// <param name="container">The entity the solution entity should be associated with.</param>
+    /// <param name="entity">The entity the solution entity should be associated with.</param>
     /// <param name="name">The name of the solution entity to fetch.</param>
-    /// <param name="entity">Returns the solution entity that was fetched.</param>
+    /// <param name="solutionEnt">Returns the solution entity that was fetched.</param>
     /// <param name="solution">Returns the solution state of the solution entity that was fetched.</param>
     /// /// <param name="errorOnMissing">Should we print an error if the solution specified by name is missing</param>
     /// <returns></returns>
     public bool TryGetSolution(
-        Entity<SolutionContainerManagerComponent?> container,
-        string? name,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        Entity<SolutionManagerComponent?> entity,
+        string name,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEnt,
         [NotNullWhen(true)] out Solution? solution,
         bool errorOnMissing = false)
     {
-        if (!TryGetSolution(container, name, out entity, errorOnMissing: errorOnMissing))
+        if (!TryGetSolution(entity, name, out solutionEnt, errorOnMissing: errorOnMissing))
         {
             solution = null;
             return false;
         }
 
-        solution = entity.Value.Comp.Solution;
+        solution = solutionEnt.Value.Comp.Solution;
         return true;
     }
 
-    /// <inheritdoc cref="TryGetSolution"/>
+    /// <inheritdoc cref="TryGetSolution(Entity{SolutionManagerComponent?},string,out Entity{SolutionComponent}?, out Solution?, bool)"/>
     public bool TryGetSolution(
-        Entity<SolutionContainerManagerComponent?> container,
-        string? name,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
+        Entity<SolutionManagerComponent?> entity,
+        string name,
+        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEnt,
         bool errorOnMissing = false)
     {
         // use connected container instead of entity from arguments, if it exists.
-        var ev = new GetConnectedContainerEvent();
-        RaiseLocalEvent(container, ref ev);
-        if (ev.ContainerEntity.HasValue)
-            container = ev.ContainerEntity.Value;
+        solutionEnt = null;
 
-        EntityUid uid;
-        if (name is null)
-            uid = container;
-        else if (
-            ContainerSystem.TryGetContainer(container, $"solution@{name}", out var solutionContainer) &&
-            solutionContainer is ContainerSlot solutionSlot &&
-            solutionSlot.ContainedEntity is { } containedSolution
-        )
+        var ev = new GetConnectedContainerEvent();
+        RaiseLocalEvent(entity, ref ev);
+        if (ev.ContainerEntity.HasValue)
+            entity = ev.ContainerEntity.Value;
+
+        if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
+        {
+            solutionEnt = (entity.Owner, comp);
+            return true;
+        }
+
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp, errorOnMissing))
+            return false;
+
+        if (entity.Comp.Solutions.TryGetValue(name, out var solution))
         {
             var attemptEv = new SolutionAccessAttemptEvent(name);
-            RaiseLocalEvent(container, ref attemptEv);
+            RaiseLocalEvent(entity, ref attemptEv);
 
             if (attemptEv.Cancelled)
-            {
-                entity = null;
                 return false;
-            }
 
-            uid = containedSolution;
-        }
-        else
-        {
-            entity = null;
-            if (!errorOnMissing)
-                return false;
-            Log.Error($"{ToPrettyString(container)} does not have a solution with ID: {name}");
-            return false;
+            solutionEnt = solution;
+            return true;
         }
 
-        if (!TryComp(uid, out SolutionComponent? comp))
-        {
-            entity = null;
-            if (!errorOnMissing)
-                return false;
-            Log.Error($"{ToPrettyString(container)} does not have a solution with ID: {name}");
-            return false;
-        }
+        if (errorOnMissing)
+            Log.Error($"{ToPrettyString(entity)} does not have a solution with ID: {name}");
 
-        entity = (uid, comp);
-        return true;
+        return false;
     }
 
     /// <summary>
     /// Version of TryGetSolution that doesn't take or return an entity.
-    /// Used for prototypes and with old code parity.
-    public bool TryGetSolution(SolutionContainerManagerComponent container,
+    /// Used for prototypes.
+    /// </summary>
+    public bool TryGetSolution(EntProtoId entProtoId,
         string name,
         [NotNullWhen(true)] out Solution? solution,
         bool errorOnMissing = false)
     {
         solution = null;
-        if (container.Solutions != null)
-            return container.Solutions.TryGetValue(name, out solution);
-        if (!errorOnMissing)
+
+        if (!PrototypeManager.Resolve(entProtoId, out var proto))
             return false;
-        Log.Error($"{container} does not have a solution with ID: {name}");
+
+        return TryGetSolution(proto, name, out solution, errorOnMissing);
+    }
+
+    public bool TryGetSolution(EntityPrototype entProto,
+        string name,
+        [NotNullWhen(true)] out Solution? solution,
+        bool errorOnMissing = false)
+    {
+        solution = null;
+
+        if (!TryGetSolutionFill(entProto, out var solutions))
+            return false;
+
+        foreach (var protoId in solutions)
+        {
+            if (!PrototypeManager.Resolve(protoId, out var proto))
+                continue;
+
+            if (!proto.TryGetComponent<SolutionComponent>(out var sol, Factory))
+            {
+                Log.Error($"Entity prototype {proto}, tried to spawn in a solution container in prototype {entProto.ID}, but had no {nameof(SolutionComponent)}");
+                continue;
+            }
+
+            if (sol.Id != name)
+                continue;
+
+            solution = sol.Solution;
+            return true;
+        }
+
+        if (errorOnMissing)
+            Log.Error($"{entProto.ID} does not have a solution with ID: {name}");
+
         return false;
     }
 
-    public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionContainerManagerComponent?> container, bool includeSelf = true)
+    public IEnumerable<(string? Name, Entity<SolutionComponent> Solution)> EnumerateSolutions(Entity<SolutionManagerComponent?> entity, bool includeSelf = true)
     {
-        if (includeSelf && TryComp(container, out SolutionComponent? solutionComp))
-            yield return (null, (container.Owner, solutionComp));
+        if (includeSelf && SolutionQuery.TryComp(entity, out var solutionComp))
+            yield return (solutionComp.Id, (entity.Owner, solutionComp));
 
-        if (!Resolve(container, ref container.Comp, logMissing: false))
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp, logMissing: false))
             yield break;
 
-        foreach (var name in container.Comp.Containers)
+        foreach (var (id, solution) in entity.Comp.Solutions)
         {
-            var attemptEv = new SolutionAccessAttemptEvent(name);
-            RaiseLocalEvent(container, ref attemptEv);
+            var attemptEv = new SolutionAccessAttemptEvent(id);
+            RaiseLocalEvent(entity, ref attemptEv);
 
             if (attemptEv.Cancelled)
                 continue;
 
-            if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
-                yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
+            yield return (id, solution);
         }
     }
 
-    public IEnumerable<(string Name, Solution Solution)> EnumerateSolutions(SolutionContainerManagerComponent container)
+    public IEnumerable<(string Id, Solution Solution)> EnumerateSolutions(EntityPrototype entProto)
     {
-        if (container.Solutions is not { Count: > 0 } solutions)
+        if (!TryGetSolutionFill(entProto, out var solutions))
             yield break;
 
-        foreach (var (name, solution) in solutions)
+        foreach (var protoId in solutions)
         {
-            yield return (name, solution);
+            if (!PrototypeManager.Resolve(protoId, out var proto))
+                continue;
+
+            if (!proto.TryGetComponent<SolutionComponent>(out var sol, Factory))
+            {
+                Log.Error($"Entity prototype {proto}, tried to spawn in a solution container in prototype {entProto.ID}, but had no {nameof(SolutionComponent)}");
+                continue;
+            }
+
+            yield return (sol.Id, sol.Solution);
         }
     }
 
+    private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out List<EntProtoId>? fill)
+    {
+        fill = null;
+        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp))
+            return false;
 
-    protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent, ContainedSolutionComponent> soln)
+        fill = entity.Comp.SolutionEnts;
+        return true;
+    }
+
+    private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out List<EntProtoId>? fill)
+    {
+        fill = null;
+        if (!entProto.TryGetComponent<SolutionManagerComponent>(out var manager, Factory))
+            return false;
+
+        fill = manager.SolutionEnts;
+        return true;
+    }
+
+    protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent> soln)
     {
         var (uid, appearanceComponent) = container;
         if (!HasComp<SolutionContainerVisualsComponent>(uid) || !Resolve(uid, ref appearanceComponent, logMissing: false))
             return;
 
-        var (_, comp, relation) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
         AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, relation.ContainerName, appearanceComponent);
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.SolutionName, soln.Comp.Id, appearanceComponent);
 
         if (solution.GetPrimaryReagentId() is { } reagent)
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
 
 
-    public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
+    public FixedPoint2 GetTotalPrototypeQuantity(Entity<SolutionManagerComponent?> owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
-        if (Exists(owner)
-            && TryComp(owner, out SolutionContainerManagerComponent? managerComponent))
+        if (Exists(owner))
         {
-            foreach (var (_, soln) in EnumerateSolutions((owner, managerComponent)))
+            foreach (var (_, solution) in EnumerateSolutions(owner))
             {
-                var solution = soln.Comp.Solution;
-                reagentQuantity += solution.GetTotalPrototypeQuantity(reagentId);
+                reagentQuantity += solution.Comp.Solution.GetTotalPrototypeQuantity(reagentId);
             }
         }
 
         return reagentQuantity;
     }
-
 
     /// <summary>
     /// Dirties a solution entity that has been modified and prompts updates to chemical reactions and overflow state.
@@ -307,46 +383,37 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <remarks>
     /// 90% of this system is ensuring that this proc is invoked whenever a solution entity is changed. The other 10% <i>is</i> this proc.
     /// </remarks>
-    /// <param name="soln"></param>
+    /// <param name="solution"></param>
     /// <param name="needsReactionsProcessing"></param>
     /// <param name="mixerComponent"></param>
-    public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
+    public void UpdateChemicals(Entity<SolutionComponent> solution, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
     {
-        Dirty(soln);
-
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         // Process reactions
-        if (needsReactionsProcessing && solution.CanReact)
-            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+        if (needsReactionsProcessing && solution.Comp.Solution.CanReact)
+            ChemicalReactionSystem.FullyReactSolution(solution, mixerComponent);
 
-        var overflow = solution.Volume - solution.MaxVolume;
+        var overflow = solution.Comp.Solution.Volume - solution.Comp.Solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
         {
-            var overflowEv = new SolutionOverflowEvent(soln, overflow);
-            RaiseLocalEvent(uid, ref overflowEv);
+            var overflowEv = new SolutionOverflowEvent(solution, overflow);
+            RaiseLocalEvent(solution, ref overflowEv);
         }
 
-        UpdateAppearance((uid, comp, null));
+        var owner = GetSolutionOwner(solution);
 
-        var changedEv = new SolutionChangedEvent(soln);
-        RaiseLocalEvent(uid, ref changedEv);
-    }
+        var changedEv = new SolutionChangedEvent(solution);
+        RaiseLocalEvent(owner, ref changedEv);
+        Dirty(solution);
 
-    public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
-    {
-        var (uid, comp, appearanceComponent) = soln;
-        var solution = comp.Solution;
-
-        if (!Exists(uid) || !Resolve(uid, ref appearanceComponent, false))
+        if (Timing.ApplyingState)
             return;
 
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
+        UpdateAppearance(owner, solution);
+    }
 
-        if (solution.GetPrimaryReagentId() is { } reagent)
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+    public EntityUid GetSolutionOwner(Entity<SolutionComponent> entity)
+    {
+        return ContainedQuery.CompOrNull(entity)?.Container ?? entity.Owner;
     }
 
     /// <summary>
@@ -431,6 +498,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         solution.MaxVolume = capacity;
+        UpdateChemicals(soln);
+    }
+
+    /// <summary>
+    /// Sets whether or not the given solution entity can react and dirties it.
+    /// </summary>
+    public void SetCanReact(Entity<SolutionComponent> soln, bool canReact)
+    {
+        soln.Comp.Solution.CanReact = canReact;
         UpdateChemicals(soln);
     }
 
@@ -797,27 +873,16 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         entity.Comp.Solution.ValidateSolution();
     }
 
-    private void OnSolutionStartup(Entity<SolutionComponent> entity, ref ComponentStartup args)
+    private void OnSolutionInit(Entity<SolutionComponent> entity, ref MapInitEvent args)
     {
         UpdateChemicals(entity);
     }
 
     private void OnSolutionShutdown(Entity<SolutionComponent> entity, ref ComponentShutdown args)
     {
-        RemoveAllSolution(entity);
-    }
-
-    private void OnContainerManagerInit(Entity<SolutionContainerManagerComponent> entity, ref ComponentInit args)
-    {
-        if (entity.Comp.Containers is not { Count: > 0 } containers)
-            return;
-
-        var containerManager = EnsureComp<ContainerManagerComponent>(entity);
-        foreach (var name in containers)
-        {
-            // The actual solution entity should be directly held within the corresponding slot.
-            ContainerSystem.EnsureContainer<ContainerSlot>(entity.Owner, $"solution@{name}", containerManager);
-        }
+        // If we are contained within another entity, update that entity. Otherwise, don't update if we're being deleted.
+        if (ContainedQuery.HasComp(entity) || !Terminating(entity))
+            RemoveAllSolution(entity);
     }
 
     /// <summary>
@@ -1016,211 +1081,132 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
-    private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
+    /// <remarks>
+    /// We want all our solutions spawned before MapInit.
+    /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
+    /// </remarks>
+    private void OnManagerInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
     {
-        EnsureAllSolutions(entity);
+        var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
+        foreach (var solution in entity.Comp.SolutionEnts)
+        {
+            CreateSolution(solution, container);
+        }
     }
 
-    private void OnContainerManagerShutdown(Entity<SolutionContainerManagerComponent> entity, ref ComponentShutdown args)
+    private void OnManagerShutdown(Entity<SolutionManagerComponent> entity, ref ComponentShutdown args)
     {
-        foreach (var name in entity.Comp.Containers)
-        {
-            if (ContainerSystem.TryGetContainer(entity, $"solution@{name}", out var solutionContainer))
-                ContainerSystem.ShutdownContainer(solutionContainer);
-        }
-        entity.Comp.Containers.Clear();
-    }
-
-    private void OnContainedSolutionShutdown(Entity<ContainedSolutionComponent> entity, ref ComponentShutdown args)
-    {
-        if (TryComp(entity.Comp.Container, out SolutionContainerManagerComponent? container))
-        {
-            container.Containers.Remove(entity.Comp.ContainerName);
-            Dirty(entity.Comp.Container, container);
-        }
-
-        if (ContainerSystem.TryGetContainer(entity, $"solution@{entity.Comp.ContainerName}", out var solutionContainer))
+        if (ContainerSystem.TryGetContainer(entity, entity.Comp.Container, out var solutionContainer))
             ContainerSystem.ShutdownContainer(solutionContainer);
+    }
+
+    private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
+    {
+        // Container networking boilerplate
+        if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
+            return;
+
+        // Don't add a solution entity with the same id as this entity's solution if it exists!
+        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id, $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
+
+        EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
+        contained.Container = entity.Owner;
+
+        // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
+        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
+            Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
+    }
+
+    private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        // Container networking jank
+        if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
+            return;
+
+        RemComp<ContainedSolutionComponent>(args.Entity);
+        entity.Comp.Solutions.Remove(solution.Id);
     }
 
     #endregion Event Handlers
 
+    /// <summary>
+    /// A method which ensures a solution with a given ID exists.
+    /// </summary>
+    /// <param name="entity">Entity we're trying to attach a new solution to.</param>
+    /// <param name="name">Name of the new solution.</param>
+    /// <param name="solutionEntity">Solution entity found or created.</param>
+    /// <returns>Returns true if the solution already existed, and false if it had to create a new solution.</returns>
+    /// <remarks>
+    /// Only run this after the entity is already initialized.
+    /// If you're running this when your entity is created, it is recommended to run on <see cref="MapInitEvent"/>
+    /// Deviance from these instructions may prevent your game from building. YOU HAVE BEEN WARNED.
+    /// </remarks>
     public bool EnsureSolution(
-        Entity<MetaDataComponent?> entity,
+        Entity<SolutionManagerComponent?> entity,
         string name,
-        [NotNullWhen(true)] out Solution? solution,
-        FixedPoint2 maxVol = default)
+        out Entity<SolutionComponent> solutionEntity)
     {
-        return EnsureSolution(entity, name, maxVol, null, out _, out solution);
-    }
-
-    public bool EnsureSolution(
-        Entity<MetaDataComponent?> entity,
-        string name,
-        out bool existed,
-        [NotNullWhen(true)] out Solution? solution,
-        FixedPoint2 maxVol = default)
-    {
-        return EnsureSolution(entity, name, maxVol, null, out existed, out solution);
-    }
-
-    public bool EnsureSolution(
-        Entity<MetaDataComponent?> entity,
-        string name,
-        FixedPoint2 maxVol,
-        Solution? prototype,
-        out bool existed,
-        [NotNullWhen(true)] out Solution? solution)
-    {
-        solution = null;
-        existed = false;
-
-        var (uid, meta) = entity;
-        if (!Resolve(uid, ref meta))
-            throw new InvalidOperationException("Attempted to ensure solution on invalid entity.");
-        var manager = EnsureComp<SolutionContainerManagerComponent>(uid);
-        if (meta.EntityLifeStage >= EntityLifeStage.MapInitialized)
+        if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
-            EnsureSolutionEntity((uid, manager), name, out existed,
-                out var solEnt, maxVol, prototype);
-            solution = solEnt!.Value.Comp.Solution;
+            solutionEntity = (entity.Owner, comp);
             return true;
         }
-        solution = EnsureSolutionPrototype((uid, manager), name, maxVol, prototype, out existed);
-        return true;
-    }
 
-    public void EnsureAllSolutions(Entity<SolutionContainerManagerComponent> entity)
-    {
-        if (NetManager.IsClient)
-            return;
+        // Ensure we have a SolutionManagerComponent
+        // EnsureComp should ensure a container and fill that container with default spawns!
+        if (entity.Comp == null)
+            EnsureComp<SolutionManagerComponent>(entity, out entity.Comp);
 
-        if (entity.Comp.Solutions is not { } prototypes)
-            return;
-
-        foreach (var (name, prototype) in prototypes)
+        // Check the cache first, even if the component didn't exist before, creating one may have spawned and cached solutions!
+        if (entity.Comp.Solutions.TryGetValue(name, out var solution))
         {
-            EnsureSolutionEntity((entity.Owner, entity.Comp), name, out _, out _, prototype.MaxVolume, prototype);
+            solutionEntity = solution;
+            return true;
         }
 
-        entity.Comp.Solutions = null;
-        Dirty(entity);
+        // Create a default entity if one doesn't already exist!
+        solutionEntity = CreateDefaultSolution((entity, entity.Comp), name);
+        return false;
     }
 
-    public bool EnsureSolutionEntity(
-        Entity<SolutionContainerManagerComponent?> entity,
+    /// <remarks>This is private since you should really be specifying a solution prototype to create.</remarks>
+    private Entity<SolutionComponent> CreateDefaultSolution(
+        Entity<SolutionManagerComponent> entity,
+        string name)
+    {
+        var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
+        return CreateDefaultSolution(name, container);
+    }
+
+    private Entity<SolutionComponent> CreateDefaultSolution(
         string name,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
-        FixedPoint2 maxVol = default) =>
-        EnsureSolutionEntity(entity, name, out _, out solutionEntity, maxVol);
-
-    public bool EnsureSolutionEntity(
-        Entity<SolutionContainerManagerComponent?> entity,
-        string name,
-        out bool existed,
-        [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
-        FixedPoint2 maxVol = default,
-        Solution? prototype = null
-        )
+        Container container)
     {
-        existed = true;
-        solutionEntity = null;
-
-        var (uid, container) = entity;
-
-        var solutionSlot = ContainerSystem.EnsureContainer<ContainerSlot>(uid, $"solution@{name}", out existed);
-        if (!Resolve(uid, ref container, logMissing: false))
-        {
-            existed = false;
-            container = AddComp<SolutionContainerManagerComponent>(uid);
-            container.Containers.Add(name);
-            if (NetManager.IsClient)
-                return false;
-        }
-        else if (!existed)
-        {
-            container.Containers.Add(name);
-            Dirty(uid, container);
-        }
-
-        var needsInit = false;
-        SolutionComponent solutionComp;
-        if (solutionSlot.ContainedEntity is not { } solutionId)
-        {
-            if (NetManager.IsClient)
-                return false;
-            prototype ??= new() { MaxVolume = maxVol };
-            prototype.Name = name;
-            (solutionId, solutionComp, _) = SpawnSolutionUninitialized(solutionSlot, name, maxVol, prototype);
-            existed = false;
-            needsInit = true;
-            Dirty(uid, container);
-        }
-        else
-        {
-            solutionComp = Comp<SolutionComponent>(solutionId);
-            DebugTools.Assert(TryComp(solutionId, out ContainedSolutionComponent? relation) && relation.Container == uid && relation.ContainerName == name);
-            DebugTools.Assert(solutionComp.Solution.Name == name);
-
-            var solution = solutionComp.Solution;
-            solution.MaxVolume = FixedPoint2.Max(solution.MaxVolume, maxVol);
-
-            // Depending on MapInitEvent order some systems can ensure solution empty solutions and conflict with the prototype solutions.
-            // We want the reagents from the prototype to exist even if something else already created the solution.
-            if (prototype is { Volume.Value: > 0 })
-                solution.AddSolution(prototype, PrototypeManager);
-
-            Dirty(solutionId, solutionComp);
-        }
-
-        if (needsInit)
-            EntityManager.InitializeAndStartEntity(solutionId, Transform(solutionId).MapID);
-        solutionEntity = (solutionId, solutionComp);
-        return true;
-    }
-
-    private Solution EnsureSolutionPrototype(Entity<SolutionContainerManagerComponent?> entity, string name, FixedPoint2 maxVol, Solution? prototype, out bool existed)
-    {
-        existed = true;
-
-        var (uid, container) = entity;
-        if (!Resolve(uid, ref container, logMissing: false))
-        {
-            container = AddComp<SolutionContainerManagerComponent>(uid);
-            existed = false;
-        }
-
-        if (container.Solutions is null)
-            container.Solutions = new(SolutionContainerManagerComponent.DefaultCapacity);
-
-        if (!container.Solutions.TryGetValue(name, out var solution))
-        {
-            solution = prototype ?? new() { Name = name, MaxVolume = maxVol };
-            container.Solutions.Add(name, solution);
-            existed = false;
-        }
-        else
-            solution.MaxVolume = FixedPoint2.Max(solution.MaxVolume, maxVol);
-
-        Dirty(uid, container);
+        var solution = SpawnSolutionUninitialized(DefaultSolution);
+        solution.Comp.Id = name;
+        ContainerSystem.Insert(solution.Owner, container, force: true);
+        EntityManager.InitializeAndStartEntity(solution);
         return solution;
     }
 
-    private Entity<SolutionComponent, ContainedSolutionComponent> SpawnSolutionUninitialized(ContainerSlot container, string name, FixedPoint2 maxVol, Solution prototype)
+    public Entity<SolutionComponent> CreateSolution(
+        EntProtoId proto,
+        Container container)
     {
-        var coords = new EntityCoordinates(container.Owner, Vector2.Zero);
-        var uid = EntityManager.CreateEntityUninitialized(null, coords, null);
+        // TODO: Replace this with an engine bound method when e#6192 is merged.
+        var solution = SpawnSolutionUninitialized(proto);
+        ContainerSystem.Insert(solution.Owner, container, force: true);
+        EntityManager.InitializeAndStartEntity(solution);
+        return solution;
+    }
 
-        var solution = new SolutionComponent() { Solution = prototype };
-        AddComp(uid, solution);
+    private Entity<SolutionComponent> SpawnSolutionUninitialized(EntProtoId solution)
+    {
+        var uid = EntityManager.CreateEntityUninitialized(solution);
 
-        var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
-        AddComp(uid, relation);
-
-        MetaDataSys.SetEntityName(uid, $"solution - {name}", raiseEvents: false);
-        ContainerSystem.Insert(uid, container, force: true);
-
-        return (uid, solution, relation);
+        // If you pass in a ProtoId without a SolutionComponent that's your own damn fault!
+        var comp = SolutionQuery.Comp(uid);
+        return (uid, comp);
     }
 
     public void AdjustDissolvedReagent(
