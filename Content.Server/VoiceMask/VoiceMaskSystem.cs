@@ -60,8 +60,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(AccentSystem)]);
 
         // Voice mask transform things
-        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<VoiceMaskToggledEvent>>((ett, ref ev) => OnVoiceMaskToggledEvent(ett, ref ev.Args));
-        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskToggledEvent>>((ett, ref ev) => OnVoiceMaskToggledEvent(ett, ref ev.Args));
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<VoiceMaskToggledEvent>>((ent, ref ev) => OnVoiceMaskToggledEvent(ent, ref ev.Args));
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<VoiceMaskToggledEvent>>((ent, ref ev) => OnVoiceMaskToggledEvent(ent, ref ev.Args));
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggledEvent>(OnVoiceMaskToggledEvent);
 
         // Other events
