@@ -4,7 +4,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
 using Content.Shared.Item;
-using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
@@ -28,15 +27,8 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (component.FillBaseName == null)
             return;
 
-        //if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component))
-        //    return;
-
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
             return;
-
-        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.MaxFillLevels + 1);
-
-        //if (closestFillSprite > 0)
 
         if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component)
             && contains)
@@ -64,13 +56,6 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (!TryComp<ItemComponent>(uid, out var item))
             return;
 
-        //if (!AppearanceSystem.TryGetData<int>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
-        //    return;
-
-        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, component.InHandsMaxFillLevels + 1);
-
-        //if (closestFillSprite > 0)
-
         if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
             && contains)
         {
@@ -96,14 +81,6 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
 
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
-
-        //if (!AppearanceSystem.TryGetData<int>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance))
-        //    return;
-
-
-        //var closestFillSprite = ContentHelpers.RoundToLevels(contains, 1, ent.Comp.EquippedMaxFillLevels + 1);
-
-        //if (closestFillSprite > 0)
 
         if (AppearanceSystem.TryGetData<bool>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
             && contains)

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlot;
@@ -78,6 +79,18 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
             }
+
+            if (TryComp(uid, out AppearanceComponent? _)
+                && TryComp(uid, out ItemSlotVisualsComponent? _))
+            {
+                UpdateAppearance(uid, itemSlots);
+            }
+        }
+
+        private void UpdateAppearance(EntityUid uid, ItemSlotsComponent itemSlots)
+        {
+            var contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
+            _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, contains);
         }
 
         /// <summary>
@@ -267,13 +280,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-                if (TryComp(uid, out AppearanceComponent? appearance) && TryComp(uid, out ItemSlotVisualsComponent? _))
-                {
-                    Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
-                    _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, slot.HasItem, appearance);
-                }
-                else
-                    Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
+                Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
 
                 if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
@@ -307,6 +314,13 @@ namespace Content.Shared.Containers.ItemSlots
                 _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+
+            if (TryComp(uid, out AppearanceComponent? _)
+                && TryComp(uid, out ItemSlotVisualsComponent? _)
+                && TryComp(uid, out ItemSlotsComponent? itemSlots))
+            {
+                UpdateAppearance(uid, itemSlots);
+            }
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
@@ -586,10 +600,11 @@ namespace Content.Shared.Containers.ItemSlots
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
 
-            if (TryComp(uid, out AppearanceComponent? appearance)
-                && TryComp(uid, out ItemSlotVisualsComponent? _))
+            if (TryComp(uid, out AppearanceComponent? _)
+                && TryComp(uid, out ItemSlotVisualsComponent? _)
+                && TryComp(uid, out ItemSlotsComponent? itemSlots))
             {
-                _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, slot.HasItem, appearance);
+                UpdateAppearance(uid, itemSlots);
             }
 
             return true;
@@ -919,6 +934,13 @@ namespace Content.Shared.Containers.ItemSlots
                     var slot = new ItemSlot(serverSlot);
                     slot.Local = false;
                     AddItemSlot(uid, serverKey, slot);
+                }
+
+                if (TryComp(uid, out AppearanceComponent? _)
+                    && TryComp(uid, out ItemSlotVisualsComponent? _)
+                    && TryComp(uid, out ItemSlotsComponent? itemSlots))
+                {
+                    UpdateAppearance(uid, itemSlots);
                 }
             }
         }
