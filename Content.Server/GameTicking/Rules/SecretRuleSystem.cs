@@ -47,7 +47,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
         foreach (var rule in preset.Rules)
         {
-            if (GameTicker.IgnoredRules.Contains(rule))
+            if (GameTicker.IsIgnored(rule))
                 continue;
 
             EntityUid ruleEnt;

@@ -163,7 +163,7 @@ public sealed class EventManagerSystem : EntitySystem
 
         foreach (var eventid in selectedEvents)
         {
-            if (GameTicker.IgnoredRules.Contains(eventid))
+            if (GameTicker.IsIgnored(eventid))
                 continue;
 
             if (!_prototype.Resolve(eventid, out var eventproto))
