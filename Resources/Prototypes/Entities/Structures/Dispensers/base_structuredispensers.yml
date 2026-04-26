@@ -63,7 +63,6 @@
     - 0,0,15,11
   - type: ReagentDispenser
     beakerSlot:
-      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
       whitelist:
         components:
         - FitsInDispenser
