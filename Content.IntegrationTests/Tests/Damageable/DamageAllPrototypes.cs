@@ -28,16 +28,25 @@ public sealed class DamageAllPrototypesTest : GameTest
 
         var entity = await SpawnAtPosition(damageable, coordinates);
         var damageSys = Server.System<DamageableSystem>();
+        var canBeDamaged = false;
 
         foreach (var type in Server.ProtoMan.EnumeratePrototypes<DamageTypePrototype>())
         {
             if (!damageSys.CanBeDamagedBy(entity, type))
                 continue;
 
-            var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
-            damageSys.ChangeDamage(entity, damage, ignoreResistances: true);
-            Assert.That(damageSys.GetTotalDamage(entity) == FixedPoint2.Epsilon);
-            damageSys.ClearAllDamage(entity);
+            canBeDamaged = true;
+
+            await Server.WaitPost(() =>
+            {
+                var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
+                damageSys.ChangeDamage(entity, damage, ignoreResistances: true);
+                Assert.That(damageSys.GetTotalDamage(entity) == FixedPoint2.Epsilon);
+                damageSys.ClearAllDamage(entity);
+            });
         }
+
+        // Ensure that this entity can actually be damaged.
+        Assert.That(canBeDamaged);
     }
 }
