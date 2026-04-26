@@ -1,6 +1,6 @@
 - type: reaction
   id: Ammonia
-  minTemp: 370
+  minTemp: 370 # prevents electrolyzed ammonia from recombining.
   reactants:
     Hydrogen:
       amount: 3
@@ -9,9 +9,8 @@
   products:
     Ammonia: 4
   effects:
-    - !type:AdjustSolutionThermalEnergy # The Haber Process, which this reaction models consumes energy. This also allows us to properly electrolyze hot ammonia, as it cools down every step until the split is done.
-      delta: -92.28 # actual amount, works surprisingly well.
-
+    - !type:AdjustSolutionThermalEnergy # remove heat to stop reaction on repeated recombination during electrolysis
+      delta: -92.28 # actual energy requirement of reaction, works surprisingly well.
 
 - type: reaction
   id: AmmoniaBreakdown
