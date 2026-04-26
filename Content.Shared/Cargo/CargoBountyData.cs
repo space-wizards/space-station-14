@@ -29,14 +29,10 @@ public readonly partial record struct CargoBountyData
     [DataField]
     public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = string.Empty;
 
-    [DataField]
-    public int StatusIndex { get; init; } = 0;
-
     public CargoBountyData(CargoBountyPrototype bounty, CargoBountyStatusPrototype bountyStatus, int uniqueIdentifier)
     {
         Bounty = bounty.ID;
         Id = $"{bounty.IdPrefix}{uniqueIdentifier:D3}";
         Status = bountyStatus.ID;
-        StatusIndex = bountyStatus.Index;
     }
 }

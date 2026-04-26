@@ -56,12 +56,14 @@ public sealed partial class BountyEntry : BoxContainer
         {
             BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)), status.Index);
         }
-        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bounty.StatusIndex));
-        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bounty.Status));
+        if (!_prototype.Resolve<CargoBountyStatusPrototype>(bounty.Status, out var bountyStatusPrototype))
+            return;
+        BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusPrototype.Index));
+        BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatusPrototype.ID));
 
         var claimedByText = string.IsNullOrEmpty(bounty.ClaimedBy) ? Loc.GetString("bounty-console-claimed-by-none") : bounty.ClaimedBy;
         ClaimedBylabel.SetMarkup(Loc.GetString("bounty-console-claimed-by", ("claimant", claimedByText)));
-        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bounty.Status)));
+        StatusLabel.SetMarkup(Loc.GetString("bounty-console-status-label", ("status", bountyStatusPrototype.ID)));
     }
 
     private void UpdateSkipButton(float deltaSeconds)

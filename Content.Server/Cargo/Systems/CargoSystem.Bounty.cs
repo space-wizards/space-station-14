@@ -126,7 +126,7 @@ public sealed partial class CargoSystem
                 continue;
             var targetStatus = args.Status;
             var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
-            bountyDbComp.Bounties[i] = bounty with { Status = status!.ID, StatusIndex = status!.Index };
+            bountyDbComp.Bounties[i] = bounty with { Status = status!.ID };
         }
 
         _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));

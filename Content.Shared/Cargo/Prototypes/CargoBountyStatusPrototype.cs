@@ -14,4 +14,5 @@ public sealed partial class CargoBountyStatusPrototype : IPrototype
 
     [DataField(required: true)]
     public int Index = default;
+
 }
