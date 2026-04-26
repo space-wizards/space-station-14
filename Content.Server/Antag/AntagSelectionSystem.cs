@@ -131,11 +131,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
         }
 
+        // If pre-selections haven't completed, then we need to select and assign antags.
         var players = GetActivePlayers().ToArray();
 
         if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
             AssignAntags((uid, component), players);
 
+        // Any antags not spawned we make ghost roles for!
         SpawnGhostRoles((uid, component), players.Length);
     }
 
