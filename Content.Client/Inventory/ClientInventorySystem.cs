@@ -5,6 +5,7 @@ using Content.Client.Verbs.UI;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Pointing;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.Player;
@@ -235,6 +236,14 @@ namespace Content.Client.Inventory
                 return;
 
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+        }
+
+        public void UIInventoryPointAt(string slot, EntityUid uid)
+        {
+            if (!TryGetSlotEntity(uid, slot, out var item))
+                return;
+
+            RaiseNetworkEvent(new PointingAttemptEvent(GetNetEntity(item.Value)));
         }
 
         protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)

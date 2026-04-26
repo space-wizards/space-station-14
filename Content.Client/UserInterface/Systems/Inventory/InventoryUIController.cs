@@ -303,6 +303,10 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         {
             _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
         }
+        else if (args.Function == ContentKeyFunctions.Point)
+        {
+            _inventorySystem.UIInventoryPointAt(slot, _playerUid.Value);
+        }
         else
         {
             return;
