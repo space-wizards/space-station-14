@@ -1,8 +1,10 @@
 using Content.Server.Power.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Placeable;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -12,6 +14,8 @@ namespace Content.Server.Temperature.Systems;
 public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
 {
     [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+
 
     public override void Initialize()
     {
@@ -34,14 +38,19 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
         {
             if (!power.Powered)
                 continue;
-
             // don't divide by total entities since it's a big grill
             // excess would just be wasted in the air but that's not worth simulating
             // if you want a heater thermomachine just use that...
             var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
+                //raise temperature of temperature component
                 _temperature.ChangeHeat(ent, energy);
+                //use energy to heat anything contained.
+                foreach (var solution in _solutionContainer.EnumerateSolutions(ent))
+                {
+                    _solutionContainer.AddThermalEnergy(solution.Solution, energy);
+                }
             }
         }
     }
@@ -50,7 +59,9 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     /// <see cref="ApcPowerReceiverComponent"/> doesn't exist on the client, so we need
     /// this server-only override to handle setting the network load.
     /// </remarks>
-    protected override void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
+    protected override void ChangeSetting(Entity<EntityHeaterComponent> ent,
+        EntityHeaterSetting setting,
+        EntityUid? user = null)
     {
         base.ChangeSetting(ent, setting, user);
 

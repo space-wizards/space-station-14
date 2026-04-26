@@ -5,7 +5,6 @@
   description: A microwave? No, a real man cooks steaks on a grill!
   components:
   - type: Sprite
-    # TODO: draw a sprite
     sprite: Structures/Machines/electric_grill.rsi
     drawdepth: SmallObjects
     snapCardinals: true
@@ -26,6 +25,7 @@
     whitelist:
       components:
       - Temperature
+      - Solution
   - type: PlaceableSurface
   - type: Machine
     board: ElectricGrillMachineCircuitboard
