@@ -21,7 +21,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     public Color SkinColor { get; set; } = Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     [DataField]
-    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings { get; set; } = new();
+    public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings
+    {
+        get;
+        set;
+    } = new();
 
     public HumanoidCharacterAppearance(
         Color eyeColor,
@@ -36,7 +40,6 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     public HumanoidCharacterAppearance(HumanoidCharacterAppearance other) :
         this(other.EyeColor, other.SkinColor, new(other.Markings))
     {
-
     }
 
     public HumanoidCharacterAppearance WithEyeColor(Color newColor)
@@ -49,7 +52,8 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         return new(EyeColor, newColor, Markings);
     }
 
-    public HumanoidCharacterAppearance WithMarkings(Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings)
+    public HumanoidCharacterAppearance WithMarkings(
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings)
     {
         return new(EyeColor, SkinColor, newMarkings);
     }
@@ -87,26 +91,101 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        var speciesPrototype = protoMan.Index<SpeciesPrototype>(species);
 
-        // TODO: Add random markings
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> compiledMarkings =
+            new();
+        //build a color pallet for all parts.
+        var colours = Enumerable.Range(0, 255)
+            .Select(e => new Color(random.NextByte(), random.NextByte(), random.NextByte()))
+            .ToArray();
+        //most likely list of simple physical traits.
+        HumanoidVisualLayers[] layerFilter =
+        [
+        HumanoidVisualLayers.Hair,
+        HumanoidVisualLayers.Tail,
+        HumanoidVisualLayers.FacialHair,
+        HumanoidVisualLayers.Fire,
+        HumanoidVisualLayers.Snout,
+        ];
+
+        //build organ for organ
+        foreach (var organ in markingManager.GetOrgans(species))
+        {
+            //get the marking data for that organ
+            if (!markingManager.TryGetMarkingData(organ.Value, out var organMarkingData))
+                continue;
+            //extract the group based on the organ
+            var group = protoMan.Index<MarkingsGroupPrototype>(organMarkingData.Value.Group.Id);
+            // setup an empty dictionary of layers
+            compiledMarkings[organ.Key] = new();
+            //layer for layer.
+            foreach (var layer in organMarkingData.Value.Layers)
+            {
+                //only randomize physical traits.
+                if(!layerFilter.Contains(layer))
+                    continue;
+                //get all markings for that layer, sex, group and flatten to markings.
+                var markings =
+                    markingManager.MarkingsByLayerAndGroupAndSex(layer, organMarkingData.Value.Group, sex)
+                        .Select(e => e.Value.AsMarking())
+                        .ToArray();
+                //skip if no matches
+                if(markings.Length==0)
+                    continue;
+                //check restrictions for the layer
+                int limitOfMarking;
+                if (!group.Limits.TryGetValue(layer, out var limits))
+                {
+                    limitOfMarking = markings.Length;
+                }
+                else
+                {
+                    limitOfMarking = limits.Limit;
+                    //blatant skip chance unless required.
+                    if (!limits.Required && limitOfMarking==1 && random.NextDouble() < 0.5)
+                             continue;
+                }
+
+                //pick random feature list within limit
+                compiledMarkings[organ.Key][layer] = Enumerable.Range(0,limitOfMarking==1?1:random.Next(limitOfMarking))
+                    .Select(e =>
+                    {
+                       // return random.Pick(markings);
+                              var baseMarking = random.Pick(markings);
+                              for (var i = 0; i < baseMarking.MarkingColors.Count&&i<colours.Length; i++)
+                              {
+                               baseMarking= baseMarking.WithColorAt(i, colours[i]);
+                              }
+                              return baseMarking;
+                              //    return baseMarking.WithColor(color);
+                    })
+                    .ToList();
+            }
+        }
 
         var newEyeColor = random.Pick(_realisticEyeColors);
 
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
+        var skinType = speciesPrototype.SkinColoration;
         var strategy = protoMan.Index(skinType).Strategy;
 
         var newSkinColor = strategy.InputType switch
         {
             SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
-            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
+            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1),
+                random.NextFloat(1),
+                random.NextFloat(1),
+                1)),
             _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
+
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
+
         return EnsureValid(
-            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
+            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, compiledMarkings),
             species,
             sex);
     }
@@ -116,7 +195,9 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         return new(color.RByte, color.GByte, color.BByte);
     }
 
-    public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, ProtoId<SpeciesPrototype> species, Sex sex)
+    public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance,
+        ProtoId<SpeciesPrototype> species,
+        Sex sex)
     {
         var eyeColor = ClampColor(appearance.EyeColor);
 
@@ -151,7 +232,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                 markingManager.EnsureValidColors(actualMarkings);
                 markingManager.EnsureValidGroupAndSex(actualMarkings, organData.Value.Group, sex);
                 markingManager.EnsureValidLayers(actualMarkings, organData.Value.Layers);
-                markingManager.EnsureValidLimits(actualMarkings, organData.Value.Group, organData.Value.Layers, skinColor, eyeColor);
+                markingManager.EnsureValidLimits(actualMarkings,
+                    organData.Value.Group,
+                    organData.Value.Layers,
+                    skinColor,
+                    eyeColor);
 
                 validatedMarkings[organ] = actualMarkings;
             }
@@ -165,8 +250,10 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
 
     public bool Equals(HumanoidCharacterAppearance? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (ReferenceEquals(null, other))
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
         return EyeColor.Equals(other.EyeColor) &&
                SkinColor.Equals(other.SkinColor) &&
                MarkingManager.MarkingsAreEqual(Markings, other.Markings);
