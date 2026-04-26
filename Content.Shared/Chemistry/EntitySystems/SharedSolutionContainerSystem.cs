@@ -1126,7 +1126,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
         if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
-            Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
+            DebugTools.Assert($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
