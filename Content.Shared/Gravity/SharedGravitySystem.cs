@@ -53,7 +53,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
 
     /// <summary>
-    /// If the entity can be weightless and are weightless, return true, otherwise return false
+    /// If the entity can be weightless and is weightless, return true, otherwise return false
     /// </summary>
     public bool IsWeightless(Entity<GravityAffectedComponent?> entity)
     {
