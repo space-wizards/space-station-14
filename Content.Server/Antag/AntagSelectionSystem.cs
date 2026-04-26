@@ -163,7 +163,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         args.TookRole = true;
 
         // Move ghosts that were watching the raffle on the spawner over to the freshly spawned antag.
-        _follower.TransferFollowers(ent, uid.Value);
+        _follower.TransferFollowers(ent.Owner, uid.Value);
 
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
