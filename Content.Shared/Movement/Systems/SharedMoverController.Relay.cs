@@ -32,8 +32,7 @@ public abstract partial class SharedMoverController
                 SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
 
             // Relay can-move state to the active mover target, not just the source
-            var relayEvent = new CanMoveUpdatedEvent(args.CanMove);
-            RaiseLocalEvent(ent.Comp.RelayEntity, ref relayEvent);
+            RaiseLocalEvent(ent.Comp.RelayEntity, ref args);
         }
 
         if (!args.CanMove && MoverQuery.TryComp(ent.Owner, out var sourceMover))
@@ -89,7 +88,7 @@ public abstract partial class SharedMoverController
     ///     Returns the entity whose movement should be treated as the effective movement source for <paramref name="uid"/>.
     ///     If the entity is relaying movement to another entity, returns that relay target, otherwise returns the entity itself.
     /// </summary>
-    public EntityUid GetEffectiveMover(EntityUid uid)
+    public EntityUid GetEffectiveMover(Entity<RelayInputMoverComponent?> mover)
     {
         if (TryComp<RelayInputMoverComponent>(uid, out var relay)
             && relay.RelayEntity.IsValid()
