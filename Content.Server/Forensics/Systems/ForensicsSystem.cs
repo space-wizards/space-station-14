@@ -47,11 +47,11 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
-            SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+            SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         }
 
-        private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
+        private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionChangedEvent ev)
         {
             var soln = GetSolutionsDNA(ev.Solution);
             if (soln.Count > 0)
@@ -152,12 +152,9 @@ namespace Content.Server.Forensics
         public List<string> GetSolutionsDNA(EntityUid uid)
         {
             List<string> list = new();
-            if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(uid))
             {
-                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
-                {
-                    list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
-                }
+                list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
             }
             return list;
         }

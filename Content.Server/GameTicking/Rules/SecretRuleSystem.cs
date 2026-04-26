@@ -153,19 +153,6 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         if (selected == null)
             return false;
 
-        foreach (var ruleId in selected.Rules)
-        {
-            if (!_prototypeManager.TryIndex(ruleId, out EntityPrototype? rule)
-                || !rule.TryGetComponent(_ruleCompName, out GameRuleComponent? ruleComp))
-            {
-                Log.Error($"Encountered invalid rule {ruleId} in preset {selected.ID}");
-                return false;
-            }
-
-            if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
-                return false;
-        }
-
-        return true;
+        return players >= GameTicker.GetMinimumPlayerCount(selected);
     }
 }
