@@ -129,7 +129,10 @@ public abstract partial class SharedMoverController
             return;
 
         if (RelayQuery.TryComp(entity.Comp.Source, out var relay) && relay.LifeStage <= ComponentLifeStage.Running)
+        {
             RemComp(entity.Comp.Source, relay);
+            RaiseEffectiveMoverChanged(entity.Comp.Source, entity.Owner, entity.Comp.Source);
+        }
     }
 
     protected virtual void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent) { }
