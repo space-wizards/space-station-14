@@ -2,7 +2,7 @@
   # Moth People
 
   <Box>
-    <GuideEntityEmbed Entity="MobMoth" Caption=""/>
+    <GuideEntityEmbed Entity="AppearanceMoth" Caption=""/>
   </Box>
 
   They can eat cotton, fabrics and clothing, but virtually none of the food that others would consider "edible". They prefer a somewhat lower temperature range than humans.

@@ -303,6 +303,7 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 healthOverride = component.Health;
             }
+            component.Seed.Unique = false;
             var packetSeed = component.Seed;
             var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
@@ -428,6 +429,7 @@ public sealed class PlantHolderSystem : EntitySystem
             && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
         {
             Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+            EnsureUniqueSeed(uid, component);
             component.Seed.TurnIntoKudzu = false;
             component.Health = 0;
         }

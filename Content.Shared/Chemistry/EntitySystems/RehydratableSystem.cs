@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -16,18 +17,23 @@ public sealed class RehydratableSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, SolutionChangedEvent>(OnSolutionChange);
     }
 
-    private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionChangedEvent args)
     {
-        var quantity = _solutions.GetTotalPrototypeQuantity(ent, ent.Comp.CatalystPrototype);
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} was hydrated, now contains a solution of: {SharedSolutionContainerSystem.ToPrettyString(args.Solution)}.");
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
+        var quantity = _solutions.GetTotalPrototypeQuantity(ent.Owner, ent.Comp.CatalystPrototype);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} was hydrated, now contains a solution of: {SharedSolutionContainerSystem.ToPrettyString(args.Solution.Comp.Solution)}.");
         if (quantity != FixedPoint2.Zero && quantity >= ent.Comp.CatalystMinimum)
         {
             Expand(ent);

@@ -57,9 +57,9 @@ public abstract partial class SharedToolSystem
         Dirty(entity, entity.Comp);
     }
 
-    public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
+    public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionManagerComponent? solutionContainer = null)
     {
-        if (!Resolve(uid, ref welder, ref solutionContainer))
+        if (!Resolve(uid, ref welder))
             return default;
 
         if (!SolutionContainerSystem.TryGetSolution(
@@ -209,7 +209,8 @@ public abstract partial class SharedToolSystem
 
     private void UpdateWelders()
     {
-        var query = EntityQueryEnumerator<WelderComponent, SolutionContainerManagerComponent>();
+        // TODO: Same as the other EntityQueryEnumerators...
+        var query = EntityQueryEnumerator<WelderComponent, SolutionManagerComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
         {
