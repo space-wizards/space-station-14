@@ -54,6 +54,11 @@ public sealed partial class PointingSystem : SharedPointingSystem
         args.Verbs.Add(verb);
     }
 
+    public void TryPointAtEntity(NetEntity target)
+    {
+        RaiseNetworkEvent(new PointingAttemptEvent(target));
+    }
+
     private void OnArrowStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
