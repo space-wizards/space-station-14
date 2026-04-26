@@ -126,12 +126,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // Antags haven't been selected so we need to select them! Only if we select when the game rule starts though!
         if (component.PreSelectionsComplete)
+        {
             AssignPreSelectedSessions((uid, component));
-        else if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
-            AssignAntags((uid, component));
-        
-        var playerCount = GetActivePlayerCount();
-        SpawnGhostRoles((uid, component), playerCount);
+            return;
+        }
+
+        var players = GetActivePlayers().ToArray();
+
+        if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
+            AssignAntags((uid, component), players);
+
+        SpawnGhostRoles((uid, component), players.Length);
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
