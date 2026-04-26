@@ -199,7 +199,6 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                 continue;
 
             RefreshJointRelay(entity);
-            //Ungrapple((projectileComp.Weapon.Value, gunComp), true);
         }
     }
 
@@ -348,12 +347,14 @@ public abstract class SharedGrapplingGunSystem : VirtualController
                     if (jointComp.Relay != null)
                     {
                         _physics.WakeBody(jointComp.Relay.Value);
-                        attachedToGrid = !_gravity.IsWeightless(jointComp.Relay.Value) &&
+                        attachedToGrid = Transform(jointComp.Relay.Value).Anchored ||
+                                         !_gravity.IsWeightless(jointComp.Relay.Value) &&
                                          !_gravity.IsWeightlessStatusFromGrid(jointComp.Relay.Value);
                     }
                     else
                     {
-                        attachedToGrid = !_gravity.IsWeightless(joint.BodyAUid) &&
+                        attachedToGrid = Transform(joint.BodyAUid).Anchored ||
+                                         !_gravity.IsWeightless(joint.BodyAUid) &&
                                          !_gravity.IsWeightlessStatusFromGrid(joint.BodyAUid);
                     }
                 }
