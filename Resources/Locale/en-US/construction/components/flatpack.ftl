@@ -3,7 +3,6 @@ flatpack-examine = { $qualityNeeded ->
     [NO-TOOL] You can unpack this with your [color=yellow]bare hands[/color].
    *[qualityNeeded] Use a tool capable of [color=yellow]{ $qualityNeeded }[/color] to unpack this.
 }
-flatpack-examine = Use a [color=yellow]multitool[/color] to unpack this.
 flatpack-entity-name = {$name} flatpack
 flatpack-entity-description = A flatpack used for constructing {INDEFINITE($name)} {$name}.
 
