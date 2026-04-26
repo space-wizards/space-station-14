@@ -5,6 +5,7 @@ roles-antag-changeling-objective = A intelligent predator that assumes the ident
 # devour
 changeling-devour-attempt-failed-cannot-devour = We cannot devour this!
 changeling-devour-attempt-failed-already-devoured = We already consumed this body!
+changeling-devour-attempt-failed-devoured-recently = This body is too mangled to devour!
 changeling-devour-attempt-failed-not-dead = This body yet lives! We cannot consume it alive!
 changeling-devour-attempt-failed-rotting = This corpse has only rotted biomass.
 changeling-devour-attempt-failed-protected = This victim's biomass is protected by armor!
@@ -30,6 +31,9 @@ changeling-transform-bui-drop-identity-menu = Drop a devoured identity from your
 changeling-transform-bui-drop-identity-entity = Drop {$entity}
 changeling-transform-bui-drop-identity-entity-popup = You dropped {$entity} from your memory.
 changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your current identity.
+
+# voice mimicry
+changeling-voice-mimic-window-title = Voice Mimicry
 
 # other
 changeling-paused-map-name = Changeling identity storage map
