@@ -157,7 +157,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
     /// <param name="flatpack">The flatpack to unpack</param>
     /// <param name="user">The entity which is unpacking the flatpack; used for logging and player interaction feedback</param>
     /// <param name="used">The entity being used to unpack, usually a tool</param>
-    /// <param name="unpacked">The entity which is created by a successful unpacking. May be client-side-predicted</param>
+    /// <param name="unpacked">The entity which is created by a successful unpacking. May be client-side-predicted.</param>
     /// <returns>
     /// Whether or not interaction with the flatpack occurred. Note that a true return <b>does not</b> imply
     /// <paramref name="unpacked"/> is not null. In the case that the correct tool is used to on the flatpack but there
