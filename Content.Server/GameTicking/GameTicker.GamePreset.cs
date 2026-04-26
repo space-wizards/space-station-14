@@ -18,6 +18,8 @@ public sealed partial class GameTicker
 
     public static readonly EntProtoId DummyGameRule = "DummyNonAntag";
 
+    [ViewVariables] public string[] IgnoredPresets = [];
+
     /// <summary>
     /// The selected preset that will be used at the start of the next round.
     /// </summary>
@@ -203,10 +205,9 @@ public sealed partial class GameTicker
             return false;
 
         CurrentPreset = Preset;
-        var ignored = _cfg.GetCVar(CCVars.GameTickerIgnoredPresets).Split(",");
         foreach (var rule in Preset.Rules)
         {
-            if (!ignored.Contains(rule))
+            if (!IgnoredPresets.Contains(rule))
                 AddGameRule(rule);
         }
 
