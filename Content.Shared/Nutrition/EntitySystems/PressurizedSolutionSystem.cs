@@ -26,6 +26,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -62,10 +63,11 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         // Check each reagent in the solution
         foreach (var reagent in solution.Contents)
         {
-            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) && reagentProto != null)
+            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) &&
+                reagentProto != null)
             {
                 // What portion of the solution is this reagent?
-                var proportion = (float) (reagent.Quantity / solution.Volume);
+                var proportion = (float)(reagent.Quantity / solution.Volume);
                 totalFizzability += reagentProto.Fizziness * proportion;
             }
         }
@@ -117,7 +119,10 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     /// <summary>
     /// Helper method. Performs a <see cref="SprayCheck"/>. If it passes, calls <see cref="TrySpray"/>. If it fails, <see cref="AddFizziness"/>.
     /// </summary>
-    private void SprayOrAddFizziness(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0, float fizzinessToAdd = 0, EntityUid? user = null)
+    private void SprayOrAddFizziness(Entity<PressurizedSolutionComponent> entity,
+        float chanceMod = 0,
+        float fizzinessToAdd = 0,
+        EntityUid? user = null)
     {
         if (SprayCheck(entity, chanceMod))
             TrySpray((entity, entity.Comp), user);
@@ -168,27 +173,25 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         if (!CanSpray(entity))
             return false;
 
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var interactions))
-            return false;
-
         // If the container is openable, open it
         _openable.SetOpen(entity, true);
 
-        // Get the spray solution from the container
-        var solution = _solutionContainer.SplitSolution(soln.Value, interactions.Volume);
-
         // Spray the solution onto the ground and anyone nearby
         var coordinates = Transform(entity).Coordinates;
-        _puddle.TrySplashSpillAt(entity.Owner, coordinates, out _, out _, sound: false);
-
+        //make puddle by splashing all contents in the solution
+        if (!_puddle.TrySplashSpillAt(entity.Owner, coordinates, out _, out _, sound: false))
+            //no puddle (either client side or no solution spillable/solution) and we skip the rest.
+            return false;
         var drinkName = Identity.Entity(entity, EntityManager);
-
         if (target != null)
         {
             var victimName = Identity.Entity(target.Value, EntityManager);
-
-            var selfMessage = Loc.GetString(entity.Comp.SprayHolderMessageSelf, ("victim", victimName), ("drink", drinkName));
-            var othersMessage = Loc.GetString(entity.Comp.SprayHolderMessageOthers, ("victim", victimName), ("drink", drinkName));
+            var selfMessage = Loc.GetString(entity.Comp.SprayHolderMessageSelf,
+                ("victim", victimName),
+                ("drink", drinkName));
+            var othersMessage = Loc.GetString(entity.Comp.SprayHolderMessageOthers,
+                ("victim", victimName),
+                ("drink", drinkName));
             _popup.PopupPredicted(selfMessage, othersMessage, target.Value, target.Value);
         }
         else
@@ -200,8 +203,8 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
         _audio.PlayPredicted(entity.Comp.SpraySound, entity, target);
 
-        // We just used all our fizziness, so clear it
-        TryClearFizziness(entity);
+        // We just used all our fizziness, so clear from local system
+        TryClearFizziness(entity.Owner);
 
         return true;
     }
@@ -220,7 +223,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
             return 0;
 
         var currentDuration = entity.Comp.FizzySettleTime - _timing.CurTime;
-        return Easings.InOutCubic((float) Math.Min(currentDuration / entity.Comp.FizzinessMaxDuration, 1));
+        return Easings.InOutCubic((float)Math.Min(currentDuration / entity.Comp.FizzinessMaxDuration, 1));
     }
 
     /// <summary>
