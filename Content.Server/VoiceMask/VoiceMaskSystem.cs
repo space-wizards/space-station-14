@@ -100,6 +100,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // we only toggle when the other mask turns on
         if (!args.Active)
             return;
+        
         // we don't want the entity turned on to be turned off, and there isn't any work to do if it already inactive
         if (ent.Owner == args.Mask || !ent.Comp.Active)
             return;
