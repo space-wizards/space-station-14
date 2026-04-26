@@ -17,7 +17,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-
     [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
@@ -204,13 +203,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.EventTarget is { Valid: true } eventTarget && !Exists(eventTarget))
             return true;
 
-        if (!TryComp(args.User, out TransformComponent? userXform))
-            return true;
-
-        TransformComponent? targetXform = null;
-        if (args.Target is { } target && !TryComp(target, out targetXform))
-            return true;
-
         if (args.Used is { } @using && !Exists(@using))
             return true;
 
@@ -218,20 +210,21 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
             var movementEntity = doAfter.MovementEntity;
-
-            if (!TryComp(movementEntity, out TransformComponent? movementXform))
-                return true;
+            var movementXform = Transform(movementEntity);
 
             // Whether the effective movement entity has moved too much from its original position.
             if (!_transform.InRange(movementXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
                 return true;
 
             // Whether the distance between the effective movement entity and the target(if any) has changed too much.
-            if (targetXform != null &&
-                targetXform.Coordinates.TryDistance(EntityManager, movementXform.Coordinates, out var distance))
+            if (args.Target is { } target)
             {
-                if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
-                    return true;
+                var targetXform = Transform(target);
+                if (targetXform.Coordinates.TryDistance(EntityManager, movementXform.Coordinates, out var distance))
+                {
+                    if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
+                        return true;
+                }
             }
         }
 
@@ -280,7 +273,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
             return true;
-
 
         return false;
     }

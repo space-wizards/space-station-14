@@ -26,17 +26,8 @@ public abstract partial class SharedMoverController
 
     private void OnRelayCanMoveUpdated(Entity<RelayInputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
-        if (MoverQuery.TryComp(ent.Comp.RelayEntity, out var inputMoverComponent))
-        {
-            if (!args.CanMove)
-                SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
-
-            // Relay can-move state to the active mover target, not just the source
-            RaiseLocalEvent(ent.Comp.RelayEntity, ref args);
-        }
-
-        if (!args.CanMove && MoverQuery.TryComp(ent.Owner, out var sourceMover))
-            SetMoveInput((ent.Owner, sourceMover), MoveButtons.None);
+        // Relay can-move state to the active mover target, not just the source
+        RaiseLocalEvent(ent.Comp.RelayEntity, ref args);
     }
 
     /// <summary>
@@ -52,11 +43,11 @@ public abstract partial class SharedMoverController
         }
 
         var component = EnsureComp<RelayInputMoverComponent>(uid);
-        var oldEffectiveMover = GetEffectiveMover(uid);
+        var oldEffectiveMover = GetEffectiveMover((uid, component));
         if (component.RelayEntity == relayEntity)
             return;
 
-        if (TryComp(component.RelayEntity, out MovementRelayTargetComponent? oldTarget))
+        if (RelayTargetQuery.TryComp(component.RelayEntity, out var oldTarget))
         {
             oldTarget.Source = EntityUid.Invalid;
             RemComp(component.RelayEntity, oldTarget);
@@ -64,9 +55,9 @@ public abstract partial class SharedMoverController
         }
 
         var targetComp = EnsureComp<MovementRelayTargetComponent>(relayEntity);
-        if (TryComp(targetComp.Source, out RelayInputMoverComponent? oldRelay))
+        if (RelayQuery.TryComp(targetComp.Source, out var oldRelay))
         {
-            var oldRelayEffectiveMover = GetEffectiveMover(targetComp.Source);
+            var oldRelayEffectiveMover = GetEffectiveMover((targetComp.Source, oldRelay));
             oldRelay.RelayEntity = EntityUid.Invalid;
             RemComp(targetComp.Source, oldRelay);
             PhysicsSystem.UpdateIsPredicted(targetComp.Source);
@@ -85,19 +76,19 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
-    ///     Returns the entity whose movement should be treated as the effective movement source for <paramref name="uid"/>.
+    ///     Returns the entity whose movement should be treated as the effective movement source for <paramref name="mover"/>.
     ///     If the entity is relaying movement to another entity, returns that relay target, otherwise returns the entity itself.
     /// </summary>
     public EntityUid GetEffectiveMover(Entity<RelayInputMoverComponent?> mover)
     {
-        if (TryComp<RelayInputMoverComponent>(uid, out var relay)
-            && relay.RelayEntity.IsValid()
-            && Exists(relay.RelayEntity))
+        if (RelayQuery.Resolve(mover.Owner, ref mover.Comp, false)
+            && mover.Comp.RelayEntity.IsValid()
+            && Exists(mover.Comp.RelayEntity))
         {
-            return relay.RelayEntity;
+            return mover.Comp.RelayEntity;
         }
 
-        return uid;
+        return mover.Owner;
     }
 
     private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ref ComponentShutdown args)
