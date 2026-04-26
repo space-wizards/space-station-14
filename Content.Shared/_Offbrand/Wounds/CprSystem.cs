@@ -17,7 +17,7 @@ public sealed class CprSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly WoundableSystem _woundable = default!;
+    // [Dependency] private readonly WoundableSystem _woundable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
