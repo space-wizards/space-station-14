@@ -12,6 +12,7 @@ public abstract partial class SharedMoverController
         SubscribeLocalEvent<MovementRelayTargetComponent, AfterAutoHandleStateEvent>(OnAfterRelayTargetState);
         SubscribeLocalEvent<RelayInputMoverComponent, AfterAutoHandleStateEvent>(OnAfterRelayState);
         SubscribeLocalEvent<RelayInputMoverComponent, CanMoveUpdatedEvent>(OnRelayCanMoveUpdated);
+        SubscribeLocalEvent<InputMoverComponent, CanMoveUpdatedEvent>(OnInputMoverCanMoveUpdated);
     }
 
     private void OnAfterRelayTargetState(Entity<MovementRelayTargetComponent> entity, ref AfterAutoHandleStateEvent args)
@@ -28,6 +29,12 @@ public abstract partial class SharedMoverController
     {
         // Relay can-move state to the active mover target, not just the source
         RaiseLocalEvent(ent.Comp.RelayEntity, ref args);
+    }
+
+    protected virtual void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
+    {
+        if (!args.CanMove)
+            SetMoveInput(ent, MoveButtons.None);
     }
 
     /// <summary>

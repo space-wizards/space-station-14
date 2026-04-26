@@ -40,7 +40,6 @@ public sealed class MoverController : SharedMoverController
 
         SubscribeLocalEvent<ActiveInputMoverComponent, EntityPausedEvent>(OnEntityPaused);
         SubscribeLocalEvent<InputMoverComponent, EntityUnpausedEvent>(OnEntityUnpaused);
-        SubscribeLocalEvent<InputMoverComponent, CanMoveUpdatedEvent>(OnCanMoveUpdated);
 
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
         SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
@@ -65,8 +64,10 @@ public sealed class MoverController : SharedMoverController
         UpdateMoverStatus((ent, ent.Comp));
     }
 
-    private void OnCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
+    protected override void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
+        base.OnInputMoverCanMoveUpdated(ent, ref args);
+
         if (!args.CanMove)
         {
             // Remove from active mover query when entity cannot move
