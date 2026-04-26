@@ -1,5 +1,6 @@
 - type: reaction
   id: Ammonia
+  minTemp: 370
   reactants:
     Hydrogen:
       amount: 3
@@ -7,6 +8,22 @@
       amount: 1
   products:
     Ammonia: 4
+  effects:
+    - !type:AdjustSolutionThermalEnergy # The Haber Process, which this reaction models consumes energy. This also allows us to properly electrolyze hot ammonia, as it cools down every step until the split is done.
+      delta: -92.28 # actual amount, works surprisingly well.
+
+
+- type: reaction
+  id: AmmoniaBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Ammonia:
+      amount: 4
+  products:
+    Hydrogen: 3
+    Nitrogen: 1
 
 - type: reaction
   id: CelluloseBreakdown
