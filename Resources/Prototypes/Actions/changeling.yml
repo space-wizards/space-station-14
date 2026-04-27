@@ -82,6 +82,7 @@
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionChangelingStingDna
   name: Dna Sting
   description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA or objective progress.
@@ -90,7 +91,7 @@
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
     itemIconStyle: BigAction
     priority: 1
-    useDelay: 90 # TODO: Chemical cost
+    useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
     raiseOnUser: true
   - type: TargetAction
   - type: EntityTargetAction
