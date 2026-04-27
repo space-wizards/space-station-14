@@ -84,8 +84,8 @@
 - type: entity
   parent: BaseAction
   id: ActionChangelingStingDna
-  name: Dna Sting
-  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA or objective progress.
+  name: Extract DNA
+  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
   components:
   - type: Action
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
