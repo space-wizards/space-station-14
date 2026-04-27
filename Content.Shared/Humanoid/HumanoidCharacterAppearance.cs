@@ -96,12 +96,29 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
 
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> compiledMarkings =
             new();
-        //build a color pallet for all parts.
-        var colours = Enumerable.Range(0, 255)
-            .Select(e => new Color(random.NextByte(), random.NextByte(), random.NextByte()))
+
+        var skinType = speciesPrototype.SkinColoration;
+        var strategy = protoMan.Index(skinType).Strategy;
+        //hair colors can go pretty wild
+        var hairColour = new Color(random.NextFloat(1),
+            random.NextFloat(1),
+            random.NextFloat(1),
+            1);
+
+        //build a color pallet for all organic parts, which should be a skin color
+        var organicColors = Enumerable.Range(0, 255)
+            .Select(e => strategy.InputType switch
+            {
+                SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
+                SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1),
+                    random.NextFloat(1),
+                    random.NextFloat(1),
+                    1)),
+                _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
+            })
             .ToArray();
         //most likely list of simple physical traits.
-        HumanoidVisualLayers[] layerFilter =
+        HumanoidVisualLayers[] organicLayerFilter =
         [
         HumanoidVisualLayers.Hair,
         HumanoidVisualLayers.Tail,
@@ -110,8 +127,10 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         HumanoidVisualLayers.Snout,
         ];
 
-        //build organ for organ
-        foreach (var organ in markingManager.GetOrgans(species))
+        //build organ for organ (in random order)
+        var organList = markingManager.GetOrgans(species).ToList();
+        random.Shuffle(organList);
+        foreach (var organ in organList)
         {
             //get the marking data for that organ
             if (!markingManager.TryGetMarkingData(organ.Value, out var organMarkingData))
@@ -120,11 +139,13 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var group = protoMan.Index<MarkingsGroupPrototype>(organMarkingData.Value.Group.Id);
             // setup an empty dictionary of layers
             compiledMarkings[organ.Key] = new();
-            //layer for layer.
-            foreach (var layer in organMarkingData.Value.Layers)
+            //layer for layer (in random order)
+            var layers = organMarkingData.Value.Layers.ToList();
+            random.Shuffle(layers);
+            foreach (var layer in layers)
             {
                 //only randomize physical traits.
-                if(!layerFilter.Contains(layer))
+                if(!organicLayerFilter.Contains(layer))
                     continue;
                 //get all markings for that layer, sex, group and flatten to markings.
                 var markings =
@@ -138,7 +159,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                 int limitOfMarking;
                 if (!group.Limits.TryGetValue(layer, out var limits))
                 {
+                    //make up to as many marking as we have options
                     limitOfMarking = markings.Length;
+                    //flip coin to see if we skip.
+                    if(limitOfMarking==1 && random.NextDouble() < 0.5)
+                        continue;
                 }
                 else
                 {
@@ -154,9 +179,13 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                     {
                        // return random.Pick(markings);
                               var baseMarking = random.Pick(markings);
-                              for (var i = 0; i < baseMarking.MarkingColors.Count&&i<colours.Length; i++)
+                              if (layer is HumanoidVisualLayers.Hair or HumanoidVisualLayers.FacialHair)
                               {
-                               baseMarking= baseMarking.WithColorAt(i, colours[i]);
+                                  return baseMarking.WithColor(hairColour);
+                              }
+                              for (var i = 0; i < baseMarking.MarkingColors.Count&&i<organicColors.Length; i++)
+                              {
+                               baseMarking= baseMarking.WithColorAt(i, organicColors[i]);
                               }
                               return baseMarking;
                               //    return baseMarking.WithColor(color);
@@ -167,8 +196,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
 
         var newEyeColor = random.Pick(_realisticEyeColors);
 
-        var skinType = speciesPrototype.SkinColoration;
-        var strategy = protoMan.Index(skinType).Strategy;
+
 
         var newSkinColor = strategy.InputType switch
         {
