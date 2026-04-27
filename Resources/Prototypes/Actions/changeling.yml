@@ -48,3 +48,17 @@
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingVoiceMimic
+  name: Voice Mimicry
+  description: Model your vocal cords to imitate the voice of someone else.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: mimicry
+  - type: InstantAction
+    event: !type:VoiceMaskSetNameEvent
