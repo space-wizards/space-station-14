@@ -47,6 +47,9 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
         foreach (var rule in preset.Rules)
         {
+            if (GameTicker.IsIgnored(rule))
+                continue;
+
             EntityUid ruleEnt;
 
             // if we're pre-round (i.e. will only be added)

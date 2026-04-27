@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: psykana
-  changes:
-  - message: Toggle internals now uses jetpack only if there's no proper gas tank
-      equipped
-    type: Tweak
-  id: 9159
-  time: '2025-10-26T15:48:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35068
-- author: Huaqas
-  changes:
-  - message: Added a bottle of crazy space lube to the toy box!
-    type: Add
-  id: 9160
-  time: '2025-10-26T18:37:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36292
 - author: ThatGuyUSA
   changes:
   - message: .50 uranium pellets use their intended sprite.
@@ -4070,3 +4055,17 @@
   id: 9670
   time: '2026-04-26T17:13:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43675
+- author: ketufaispikinut
+  changes:
+  - message: Ghost roles now work again.
+    type: Fix
+  id: 9671
+  time: '2026-04-27T02:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43735
+- author: Samuka
+  changes:
+  - message: The mothership core explodes when destroyed once again!
+    type: Fix
+  id: 9672
+  time: '2026-04-27T03:21:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43768
