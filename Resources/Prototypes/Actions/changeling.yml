@@ -84,7 +84,7 @@
 - type: entity
   id: ActionChangelingStingDna
   name: Dna Sting
-  description: Sneakily absorb the identity of unsuspecting victims.
+  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA or objective progress.
   components:
   - type: Action
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
