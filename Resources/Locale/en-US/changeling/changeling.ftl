@@ -26,8 +26,8 @@ changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap
 changeling-transform-bui-select-entity = {$entity}
 changeling-transform-bui-drop-identity-menu = Drop a devoured identity from your memory.
 changeling-transform-bui-drop-identity-entity = Drop {$entity}
-changeling-transform-bui-drop-identity-entity-popup = You dropped {$entity} from your memory.
-changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your current identity.
+changeling-transform-bui-drop-identity-entity-popup = We dropped {$entity} from our memory.
+changeling-transform-bui-drop-identity-cannot-drop = We cannot drop our current identity.
 
 # voice mimicry
 changeling-voice-mimic-window-title = Voice Mimicry
