@@ -13,7 +13,6 @@ namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingAbilitySystem : EntitySystem
 {
-
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
@@ -40,7 +39,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
             _stun.TryAddParalyzeDuration(puller, ent.Comp.PullerStunDuration);
         }
 
-        List<EntityUid> toDelete = new List<EntityUid>();
+        var toDelete = new List<EntityUid>();
 
         _cuffable.TryGetAllCuffs(args.Performer, out var cuffs);
         foreach (var cuff in cuffs.ToList())
@@ -52,10 +51,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         toDelete.AddRange(_snare.ForceFreeAll(args.Performer));
 
         args.Handled = true;
-
-        // How can you be ensnared/cuffed and have nothing detected??
-        if (toDelete.Count == 0)
-            return;
 
         var selfPopup = Loc.TryGetString(ent.Comp.ActivatedPopupSelf, out var self, ("user", Identity.Entity(args.Performer, EntityManager)), ("cuffs", toDelete.First())) ? self : null;
         var othersPopup = Loc.TryGetString(ent.Comp.ActivatedPopup, out var others, ("user", Identity.Entity(args.Performer, EntityManager)), ("cuffs", toDelete.First())) ? others : null;
@@ -70,6 +65,5 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
         if (ent.Comp.SpillSolution != null)
             _puddle.TrySpillAt(args.Performer, ent.Comp.SpillSolution, out _, false);
-
     }
 }
