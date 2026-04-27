@@ -24,15 +24,15 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (args.Sprite == null)
             return;
 
-        if (component.FillBaseName == null)
-            return;
-
         if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
             return;
 
         if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component)
             && contains)
         {
+            if (component.FillBaseName == null)
+                return;
+
             SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
             var stateName = component.FillBaseName + component.MaxFillLevels;
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
