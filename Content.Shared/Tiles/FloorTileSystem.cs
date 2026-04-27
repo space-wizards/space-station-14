@@ -38,7 +38,10 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+
     private static readonly Vector2 CheckRange = new(1f, 1f);
+
 
     /// <summary>
     ///     A recycled hashset used to check for walls when trying to place tiles on turfs.
@@ -68,9 +71,6 @@ public sealed class FloorTileSystem : EntitySystem
         if (locationMap.MapId == MapId.Nullspace)
             return;
 
-        var physicQuery = GetEntityQuery<PhysicsComponent>();
-        var transformQuery = GetEntityQuery<TransformComponent>();
-
         var map = _transform.ToMapCoordinates(location);
 
         // Disallow placement close to grids.
@@ -97,7 +97,7 @@ public sealed class FloorTileSystem : EntitySystem
             return;
         }
 
-        var userPos = _transform.ToMapCoordinates(transformQuery.GetComponent(args.User).Coordinates).Position;
+        var userPos = _transform.ToMapCoordinates(Transform(args.User).Coordinates).Position;
         var dir = userPos - map.Position;
         var canAccessCenter = false;
         if (dir.LengthSquared() > 0.01)
@@ -115,7 +115,7 @@ public sealed class FloorTileSystem : EntitySystem
             _lookup.GetEntitiesInTile(tileRef.Value, _turfCheck);
             foreach (var ent in _turfCheck)
             {
-                if (physicQuery.TryGetComponent(ent, out var phys) &&
+                if (_physicsQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
                     phys.Hard &&
                     (phys.CollisionLayer & (int)CollisionGroup.Impassable) != 0)

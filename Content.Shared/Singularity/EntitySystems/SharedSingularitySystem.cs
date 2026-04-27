@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.Events;
 using Robust.Shared.Containers;
@@ -19,6 +20,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedRadiationSystem _radiation = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
@@ -138,10 +140,7 @@ public abstract class SharedSingularitySystem : EntitySystem
             _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
         }
 
-        if (TryComp<RadiationSourceComponent>(uid, out var radiationSource))
-        {
-            UpdateRadiation(uid, singularity, radiationSource);
-        }
+        UpdateRadiation(uid, singularity);
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
@@ -165,12 +164,12 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// </summary>
     /// <param name="uid">The uid of the singularity to update the radiation of.</param>
     /// <param name="singularity">The state of the singularity to update the radiation of.</param>
-    /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
-    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
+    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
+        if(!Resolve(uid, ref singularity, logMissing: false))
             return;
-        rads.Intensity = singularity.Level * singularity.RadsPerLevel;
+
+        _radiation.SetIntensity(uid, singularity.Level * singularity.RadsPerLevel);
     }
 
 #endregion Getters/Setters

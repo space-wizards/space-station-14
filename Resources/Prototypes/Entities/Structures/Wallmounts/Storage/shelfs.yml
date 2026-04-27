@@ -8,6 +8,8 @@
     drawdepth: WallMountedItems
     state: base
   - type: Damageable
+    damageModifierSet: Wood
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Storage
     grid:
@@ -103,6 +105,8 @@
     sprite: Structures/Storage/Shelfs/metal.rsi
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -141,6 +145,8 @@
     sprite: Structures/Storage/Shelfs/glass.rsi
   - type: Damageable
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities

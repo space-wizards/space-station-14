@@ -3,6 +3,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
@@ -40,8 +41,10 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
-    private EntityQuery<SuitSensorComponent> _sensorQuery;
+    [Dependency] private readonly EntityQuery<SuitSensorComponent> _sensorQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -57,8 +60,6 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
-
-        _sensorQuery = GetEntityQuery<SuitSensorComponent>();
     }
 
     /// <summary>
@@ -375,9 +376,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
         // get mob total damage
-        var totalDamage = 0;
-        if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
-            totalDamage = damageable.TotalDamage.Int();
+        var totalDamage = _damageable.GetTotalDamage(sensor.User.Value).Int();
 
         // Get mob total damage crit threshold
         int? totalDamageThreshold = null;
@@ -401,18 +400,17 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 status.TotalDamage = totalDamage;
                 status.TotalDamageThreshold = totalDamageThreshold;
                 EntityCoordinates coordinates;
-                var xformQuery = GetEntityQuery<TransformComponent>();
 
                 if (transform.GridUid != null)
                 {
                     coordinates = new EntityCoordinates(transform.GridUid.Value,
-                        Vector2.Transform(_transform.GetWorldPosition(transform, xformQuery),
-                            _transform.GetInvWorldMatrix(xformQuery.GetComponent(transform.GridUid.Value), xformQuery)));
+                        Vector2.Transform(_transform.GetWorldPosition(transform),
+                            _transform.GetInvWorldMatrix(transform.GridUid.Value)));
                 }
                 else if (transform.MapUid != null)
                 {
                     coordinates = new EntityCoordinates(transform.MapUid.Value,
-                        _transform.GetWorldPosition(transform, xformQuery));
+                        _transform.GetWorldPosition(transform));
                 }
                 else
                 {

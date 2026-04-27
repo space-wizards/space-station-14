@@ -62,12 +62,12 @@
         layer:
           - Opaque
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: LivingLight
+  - type: Injurable
+    damageContainer: Inorganic
   - type: PassiveDamage
     allowedStates:
     - Alive
-    damageCap: 20
     damage:
       types:
         Heat: -0.2
