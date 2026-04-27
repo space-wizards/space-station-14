@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: PicklOH
-  changes:
-  - message: Space Dragon and Carp are more heat resistant. Carp no longer take fire
-      damage.
-    type: Tweak
-  id: 9155
-  time: '2025-10-24T19:26:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40820
-- author: Centronias
-  changes:
-  - message: Solution reactions which create items scale their resulting products
-      with the reactants, instead of eating extra reactants.
-    type: Fix
-  id: 9156
-  time: '2025-10-25T00:29:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41091
-- author: Princess-Cheeseballs
-  changes:
-  - message: Eating stacks of items no longer consumes the whole stack in one bite.
-    type: Fix
-  id: 9157
-  time: '2025-10-26T01:09:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41092
-- author: TheGrimbeeper
-  changes:
-  - message: Artifact instantly teleporting themselves fixed.
-    type: Fix
-  id: 9158
-  time: '2025-10-26T10:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41049
-- author: psykana
-  changes:
-  - message: Toggle internals now uses jetpack only if there's no proper gas tank
-      equipped
-    type: Tweak
-  id: 9159
-  time: '2025-10-26T15:48:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35068
-- author: Huaqas
-  changes:
-  - message: Added a bottle of crazy space lube to the toy box!
-    type: Add
-  id: 9160
-  time: '2025-10-26T18:37:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36292
-- author: ThatGuyUSA
-  changes:
-  - message: .50 uranium pellets use their intended sprite.
-    type: Fix
-  id: 9161
-  time: '2025-10-26T18:50:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41068
 - author: ArtisticRoomba
   changes:
   - message: Examine text for whether an object is currently taking Delta-Pressure
@@ -4049,3 +3997,75 @@
   id: 9666
   time: '2026-04-24T17:31:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43699
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now boil snails alive in the microwave.
+    type: Add
+  - message: Blood volume has been doubled.
+    type: Tweak
+  - message: Many chef recipes have been changed so the final result better matches
+      the ingredients put in. This means overall the nutritional value of the chef's
+      meals have increased.
+    type: Tweak
+  - message: Many chef recipes have had their ingredients changed
+    type: Tweak
+  - message: Most slicable foods now give a lot more slices.
+    type: Tweak
+  - message: Reagent container sizes have been standardized, at a base of 30 units
+      per inventory square. Most containers can now hold more than they did before.
+    type: Tweak
+  - message: Chemical jugs and bar jugs are now Large (2x4) items.
+    type: Tweak
+  - message: Buckets now hold 360u and are 3x4 items.
+    type: Tweak
+  - message: Nukie medical duffel bag now comes with a bicaridine jug, a mixed puncturase
+      & tranexamic acid jug, a mixed dermaline & pyrazine jug, and a mixed saline
+      & dexalin plus jug.
+    type: Tweak
+  id: 9667
+  time: '2026-04-25T02:15:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43412
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can now late join as Traitor
+    type: Tweak
+  - message: Late join antag odds have been lowered to a fixed 50%
+    type: Tweak
+  id: 9668
+  time: '2026-04-25T09:35:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43191
+- author: AffleWaffle
+  changes:
+  - message: Fixed Pen Energy dagger not showing it's damage upon activation
+    type: Fix
+  id: 9669
+  time: '2026-04-25T09:51:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43720
+- author: ketufaispikinut
+  changes:
+  - message: The voice mask and identity implant now start disabled.
+    type: Tweak
+  id: 9670
+  time: '2026-04-26T17:13:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43675
+- author: ketufaispikinut
+  changes:
+  - message: Ghost roles now work again.
+    type: Fix
+  id: 9671
+  time: '2026-04-27T02:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43735
+- author: Samuka
+  changes:
+  - message: The mothership core explodes when destroyed once again!
+    type: Fix
+  id: 9672
+  time: '2026-04-27T03:21:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43768
+- author: ScarKy0
+  changes:
+  - message: Entity examine text will no longer have an extra line after the description.
+    type: Fix
+  id: 9673
+  time: '2026-04-27T15:53:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43722
