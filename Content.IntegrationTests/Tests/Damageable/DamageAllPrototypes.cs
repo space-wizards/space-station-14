@@ -28,9 +28,8 @@ public sealed class DamageAllPrototypesTest : GameTest
     public async Task TestDamageableComponents(string damageable)
     {
         var map = await Pair.CreateTestMap();
-        var coordinates = new EntityCoordinates(map.CGridUid, Vector2.Zero);
 
-        var entity = await SpawnAtPosition(damageable, coordinates);
+        var entity = await SpawnAtPosition(damageable, map.GridCoords);
         var canBeDamaged = false;
 
         foreach (var type in SProtoMan.EnumeratePrototypes<DamageTypePrototype>())
