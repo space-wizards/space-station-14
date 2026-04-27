@@ -30,6 +30,11 @@ public sealed class DamageAllPrototypesTest : GameTest
         var map = await Pair.CreateTestMap();
 
         var entity = await SpawnAtPosition(damageable, map.GridCoords);
+
+        // Intentionally cannot take damage, ignore it.
+        if (SEntMan.HasComponent<GodmodeComponent>(entity))
+            return;
+
         var canBeDamaged = false;
 
         foreach (var type in SProtoMan.EnumeratePrototypes<DamageTypePrototype>())
