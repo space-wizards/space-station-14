@@ -29,7 +29,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStoreSystem _store = default!;
@@ -175,7 +175,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var willGrantDna = WillDevourGrantDna(ent.Owner, target);
 
         // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
-        var becomesIdentity = !HasIdentity(ent.Owner, target);
+        var becomesIdentity = !_changelingIdentity.HasIdentity(ent.Owner, target);
 
         var ev = new ChangelingDevouredEvent(ent.Owner, target, becomesIdentity, uniqueIdentity, willGrantDna);
         RaiseLocalEvent(ent, ref ev, true); // We broadcast the event to allow relevant objectives to update.
@@ -188,17 +188,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
         // Grants the DNA reward associated with a successful unique devour.
         if (willGrantDna && TryComp<StoreComponent>(ent, out var store))
             _store.TryAddCurrency(ent.Comp.DevourDnaReward, ent.Owner, store);
-    }
-
-    /// <summary>
-    /// Whether the given changeling has a valid identity of the given entity.
-    /// </summary>
-    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
-    {
-        if (!Resolve(changeling, ref changeling.Comp, false))
-            return false;
-
-        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
     }
 
     /// <summary>
@@ -247,7 +236,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (!HasIdentity(changeling.Owner, victim) && !_changelingIdentitySystem.HasFreeDisguiseSlot(changeling.Owner))
+        if (!_changelingIdentity.HasIdentity(changeling.Owner, victim) && !_changelingIdentity.HasFreeDisguiseSlot(changeling.Owner))
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-no-space"), changeling.Owner, changeling.Owner, PopupType.Medium);
@@ -263,8 +252,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
     /// <param name="target">The Targeted entity</param>
     /// <param name="ent">Changelings Devour Component</param>
     /// <returns>Is the target Protected from the attack</returns>
-    private bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent> ent)
+    public bool IsTargetProtected(EntityUid target, Entity<ChangelingDevourComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         var ev = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
 
         RaiseLocalEvent(target, ev);
@@ -291,7 +283,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return !_changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out _);
+        return !_changelingIdentity.TryGetDataFromOriginal(ent, devoured, out _);
     }
 
     /// <summary>
@@ -306,7 +298,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
 
         // This target was never devoured, so obviously it can grant us DNA.
-        if (!_changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out var data))
+        if (!_changelingIdentity.TryGetDataFromOriginal(ent, devoured, out var data))
             return true;
 
         // If the entity was Devoured, it means it already granted DNA, so we return False.

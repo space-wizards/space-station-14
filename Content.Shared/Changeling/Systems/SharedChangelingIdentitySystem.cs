@@ -320,6 +320,17 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Whether the given changeling has a valid identity of the given entity.
+    /// </summary>
+    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
+    {
+        if (!Resolve(changeling, ref changeling.Comp, false))
+            return false;
+
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
+    }
+
+    /// <summary>
     /// Create a paused map for storing devoured identities as a clone of the player.
     /// </summary>
     private void EnsurePausedMap()

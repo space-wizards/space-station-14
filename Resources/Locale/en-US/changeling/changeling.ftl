@@ -41,5 +41,8 @@ changeling-flesh-clothing-alert-desc = Whether clothing transformation is enable
 changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$restraint}!
 changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 
+# stings
+changeling-sting-success = You silently sting {CAPITALIZE(THE($target))}!
+
 # other
 changeling-paused-map-name = Changeling identity storage map
