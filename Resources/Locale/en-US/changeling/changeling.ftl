@@ -37,8 +37,8 @@ changeling-flesh-clothing-alert-name = Flesh Clothing Ability
 changeling-flesh-clothing-alert-desc = Whether clothing transformation is enabled. Click to toggle.
 
 # biodegrade
-changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$cuffs}!
-changeling-biodegrade-used-popup-self = We vomit acid over our {$cuffs}!
+changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$restraint}!
+changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 
 # other
 changeling-paused-map-name = Changeling identity storage map

@@ -6,7 +6,7 @@
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 10 # TODO: Balance this once we have DNA from devour. It's currently cheap for testing purposes.
+    ChangelingDNA: 25
   categories:
   - ChangelingAbilities
   conditions:
@@ -20,7 +20,7 @@
   description: changeling-catalog-flesh-clothing-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
-    ChangelingDNA: 10 # TODO: Reasonable prices once we get DNA per devour. It's low for the sake of testing.
+    ChangelingDNA: 10
   categories:
   - ChangelingAbilities
   conditions:
@@ -34,7 +34,7 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-    ChangelingDNA: 10 # TODO: Balance this once we have DNA from devour. It's currently cheap for testing purposes.
+    ChangelingDNA: 10
   categories:
   - ChangelingAbilities
   conditions:
