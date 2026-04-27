@@ -46,6 +46,16 @@
     solution: tank
   - type: StaticPrice
     price: 500
+  - type: Construction
+    graph: Barrel
+    node: barrel
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
 
 - type: entity
   parent: BaseBarrelChem
