@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Artifact instantly teleporting themselves fixed.
-    type: Fix
-  id: 9158
-  time: '2025-10-26T10:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41049
 - author: psykana
   changes:
   - message: Toggle internals now uses jetpack only if there's no proper gas tank
@@ -4070,3 +4063,10 @@
   id: 9669
   time: '2026-04-25T09:51:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43720
+- author: ketufaispikinut
+  changes:
+  - message: The voice mask and identity implant now start disabled.
+    type: Tweak
+  id: 9670
+  time: '2026-04-26T17:13:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43675

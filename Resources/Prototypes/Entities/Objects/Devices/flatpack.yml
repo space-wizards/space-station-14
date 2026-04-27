@@ -52,6 +52,26 @@
 
 - type: entity
   parent: BaseFlatpack
+  id: AmeControllerFlatpack
+  name: AME controller flatpack
+  description: A flatpack used for constructing the terminal that controls the antimatter engine.
+  components:
+  - type: Sprite
+    layers:
+    - state: ame-part
+    - state: overlay
+      color: "#EFB341"
+  - type: Flatpack
+    entity: AmeController
+  - type: StaticPrice
+    price: 1000
+  - type: GuideHelp
+    guides:
+    - AME
+    - Power
+
+- type: entity
+  parent: BaseFlatpack
   id: AmePartFlatpack
   name: AME flatpack
   description: A flatpack used for constructing an antimatter engine reactor.
