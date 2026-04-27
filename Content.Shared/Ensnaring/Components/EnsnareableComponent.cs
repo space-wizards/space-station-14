@@ -26,7 +26,7 @@ public sealed partial class EnsnareableComponent : Component
     /// <summary>
     /// The container where the <see cref="EnsnaringComponent"/> entity will be stored
     /// </summary>
-    public Container Container = default!;
+    public Container? Container = default!;
 
     [DataField]
     public string? Sprite;
