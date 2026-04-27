@@ -76,7 +76,7 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingOuterStorageBase, TemperatureProtectionMinimal]
+  parent: [ ClothingOuterStorageEdible, TemperatureProtectionMinimal]
   id: ClothingOuterJacketBase
 
 - type: entity
