@@ -149,6 +149,7 @@ public sealed class LightReplacerSystem : EntitySystem
             replacer.Comp.ActiveLightTube = args.LightName;
         else
             replacer.Comp.ActiveLightBulb = args.LightName;
+        Dirty(replacer);
     }
 
     /// <summary>
