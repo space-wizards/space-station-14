@@ -1,4 +1,3 @@
-using System.IO;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -30,9 +29,10 @@ public sealed class MappingSystem : EntitySystem
     ///     map id -> next autosave timespan & original filename.
     /// </summary>
     /// <returns></returns>
-    private Dictionary<EntityUid, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
+    private Dictionary<EntityUid, (TimeSpan next, ResPath fileName)> _currentlyAutosaving = new();
 
     private bool _autosaveEnabled;
+    private ResPath? _path;
 
     public override void Initialize()
     {
@@ -44,6 +44,19 @@ public sealed class MappingSystem : EntitySystem
             ToggleAutosaveCommand);
 
         Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
+        Subs.CVar(_cfg, CCVars.AutosaveDirectory, SetAutoSavePath, true);
+    }
+
+    private void SetAutoSavePath(string value)
+    {
+        if (!ResPath.IsValidPath(value))
+        {
+            Log.Error($"Invalid path: {value}");
+            _path = null;
+            return;
+        }
+
+        _path = new ResPath(value).ToRootedPath();
     }
 
     private void SetAutosaveEnabled(bool b)
@@ -57,7 +70,7 @@ public sealed class MappingSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_autosaveEnabled)
+        if (!_autosaveEnabled || _path == null)
             return;
 
         foreach (var (uid, (time, name))in _currentlyAutosaving)
@@ -73,10 +86,10 @@ public sealed class MappingSystem : EntitySystem
             }
 
             _currentlyAutosaving[uid] = (CalculateNextTime(), name);
-            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/');
-            _resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
+            var saveDir = _path.Value / name;
+            _resMan.UserData.CreateDir(saveDir);
 
-            var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml"));
+            var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
             Log.Info($"Autosaving map {name} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
 
             if (HasComp<MapComponent>(uid))
@@ -98,18 +111,18 @@ public sealed class MappingSystem : EntitySystem
 
     #region Public API
 
-    public void ToggleAutosave(MapId map, string? path = null)
+    public void ToggleAutosave(MapId map, string? name = null)
     {
         if (_map.TryGetMap(map, out var uid))
-            ToggleAutosave(uid.Value, path);
+            ToggleAutosave(uid.Value, name);
     }
 
-    public void ToggleAutosave(EntityUid uid, string? path=null)
+    public void ToggleAutosave(EntityUid uid, string? name = null)
     {
         if (!_autosaveEnabled)
             return;
 
-        if (_currentlyAutosaving.Remove(uid) || path == null)
+        if (_currentlyAutosaving.Remove(uid) || name == null)
             return;
 
         if (LifeStage(uid) >= EntityLifeStage.MapInitialized)
@@ -124,8 +137,14 @@ public sealed class MappingSystem : EntitySystem
             return;
         }
 
-        _currentlyAutosaving[uid] = (CalculateNextTime(), Path.GetFileName(path));
-        Log.Info($"Started autosaving map {path} ({uid}). Next save in {ReadableTimeLeft(uid)} seconds.");
+        if (!ResPath.IsValidFilename(name))
+        {
+            Log.Error($"Not a valid filename: {name}");
+            return;
+        }
+
+        _currentlyAutosaving[uid] = (CalculateNextTime(), new ResPath(name));
+        Log.Info($"Started autosaving map {name} ({uid}). Next save in {ReadableTimeLeft(uid)} seconds.");
     }
 
     #endregion
