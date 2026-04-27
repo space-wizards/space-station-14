@@ -21,7 +21,6 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
 
@@ -74,8 +73,8 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(InventorySlotsComponent component, DidUnequipEvent args)
         {
-            UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalEntity)
+            UpdateSlot(args.EquipTarget, component, args.Slot);
+            if (args.EquipTarget != _playerManager.LocalEntity)
                 return;
             var update = new SlotSpriteUpdate(null, args.SlotGroup, args.Slot, false);
             OnSpriteUpdate?.Invoke(update);
@@ -83,8 +82,8 @@ namespace Content.Client.Inventory
 
         private void OnDidEquip(InventorySlotsComponent component, DidEquipEvent args)
         {
-            UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalEntity)
+            UpdateSlot(args.EquipTarget, component, args.Slot);
+            if (args.EquipTarget != _playerManager.LocalEntity)
                 return;
             var update = new SlotSpriteUpdate(args.Equipment, args.SlotGroup, args.Slot,
                 HasComp<StorageComponent>(args.Equipment));

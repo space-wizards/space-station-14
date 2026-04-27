@@ -1,5 +1,5 @@
 - type: entity
-  parent: Window
+  parent: ReinforcedWindow
   id: XenoResinWindow
   name: resin window
   description: Transparent and hardened, yet slightly sticky to the touch. Slightly stronger than a normal reinforced window.
@@ -9,16 +9,6 @@
     sprite: Structures/Windows/xeno_resin.rsi
   - type: Icon
     sprite: Structures/Windows/xeno_resin.rsi
-  - type: Repairable
-    fuelCost: 10
-    doAfterDelay: 2
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: RGlass
-  - type: RCDDeconstructable
-    cost: 6
-    delay: 6
-    fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
     - trigger:
@@ -46,10 +36,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: xwindow
-  - type: Construction
-    graph: Window
-    node: reinforcedWindow
-  - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]
     damageDivisor: 4

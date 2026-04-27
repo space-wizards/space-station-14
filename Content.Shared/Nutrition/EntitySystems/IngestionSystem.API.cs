@@ -2,7 +2,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
@@ -140,25 +140,35 @@ public sealed partial class IngestionSystem
 
     #region EdibleComponent
 
-    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid user)
+    public void SpawnTrash(Entity<EdibleComponent> entity, EntityUid? user = null)
     {
         if (entity.Comp.Trash.Count == 0)
             return;
 
         var position = _transform.GetMapCoordinates(entity);
         var trashes = entity.Comp.Trash;
-        var tryPickup = _hands.IsHolding(user, entity, out _);
+        var pickup = user != null && _hands.IsHolding(user.Value, entity, out _);
 
         foreach (var trash in trashes)
         {
             var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
 
             // If the user is holding the item
-            if (tryPickup)
-            {
-                // Put the trash in the user's hand
-                _hands.TryPickupAnyHand(user, spawnedTrash);
-            }
+            if (!pickup)
+                continue;
+
+            // Put the trash in the user's hand
+            // I am 100% confident we don't need this check but rider gets made at me if it's not here.
+            if (user != null)
+                _hands.TryPickupAnyHand(user.Value, spawnedTrash);
+        }
+    }
+
+    public void AddTrash(Entity<EdibleComponent> entity, List<EntProtoId> newTrash)
+    {
+        foreach (var trash in newTrash)
+        {
+            entity.Comp.Trash.Add(trash);
         }
     }
 
@@ -210,14 +220,14 @@ public sealed partial class IngestionSystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
                     if (effect is SatiateHunger hunger)
                     {
-                        total += hunger.NutritionFactor * quantity.Quantity.Float();
+                        total += hunger.Factor * quantity.Quantity.Float();
                     }
                 }
             }
@@ -261,14 +271,14 @@ public sealed partial class IngestionSystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
                     if (effect is SatiateThirst thirst)
                     {
-                        total += thirst.HydrationFactor * quantity.Quantity.Float();
+                        total += thirst.Factor * quantity.Quantity.Float();
                     }
                 }
             }
@@ -288,7 +298,7 @@ public sealed partial class IngestionSystem
     /// <param name="user">The entity trying to make the ingestion happening, not necessarily the one eating</param>
     /// <param name="solution">Solution we're returning</param>
     /// <param name="time">The time it takes us to eat this entity</param>
-    public bool CanAccessSolution(Entity<SolutionContainerManagerComponent?> ingested,
+    public bool CanAccessSolution(EntityUid ingested,
         EntityUid user,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution,
         out TimeSpan? time)
@@ -296,19 +306,20 @@ public sealed partial class IngestionSystem
         solution = null;
         time = null;
 
-        if (!Resolve(ingested, ref ingested.Comp))
-        {
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
-            return false;
-        }
-
+        // TODO: Relay this event to solutions using solution relay
         var ev = new EdibleEvent(user);
         RaiseLocalEvent(ingested, ref ev);
 
         solution = ev.Solution;
         time = ev.Time;
 
-        return !ev.Cancelled && solution != null;
+        if (solution == null)
+        {
+            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
+            return false;
+        }
+
+        return !ev.Cancelled;
     }
 
     /// <summary>

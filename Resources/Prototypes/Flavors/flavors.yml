@@ -1350,6 +1350,11 @@
   description: flavor-complex-dog-food
 
 - type: flavor
+  id: cannedtuna
+  flavorType: Complex
+  description: flavor-complex-canned-tuna
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
@@ -1483,6 +1488,11 @@
   id: artifactglue
   flavorType: Complex
   description: flavor-complex-artifact-glue
+
+- type: flavor
+  id: alkaline
+  flavorType: Base
+  description: flavor-base-alkaline
 
 - type: flavor
   id: motivating
