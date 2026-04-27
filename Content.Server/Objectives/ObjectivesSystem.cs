@@ -15,6 +15,7 @@ using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
+using Content.Shared.Cuffs;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
@@ -31,6 +32,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
 
     private IEnumerable<string>? _objectives;
@@ -265,12 +267,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
         if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
         {
-            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
+            originalEntityInCustody = _cuffable.IsCuffed(originalEntity.Value)
                    && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
         }
 
-        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
-               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
+        return originalEntityInCustody || mind.OwnedEntity.HasValue && _cuffable.IsCuffed(mind.OwnedEntity.Value)
+                                                                    && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value);
     }
 
     /// <summary>
