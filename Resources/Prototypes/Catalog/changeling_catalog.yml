@@ -2,9 +2,8 @@
 
 - type: listing
   id: ChangelingArmBlade
-  name: changeling-arm-blade-name
-  description: changeling-arm-blade-desc
-  productAction: ActionRetractableItemArmBlade
+  name: changeling-catalog-arm-blade-name
+  description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
     ChangelingDNA: 25
@@ -13,3 +12,32 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  productAction: ActionRetractableItemArmBlade
+
+- type: listing
+  id: ChangelingFleshClothing
+  name: changeling-catalog-flesh-clothing-name
+  description: changeling-catalog-flesh-clothing-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingFleshClothingAbilityStoreDummy
+
+- type: listing
+  id: ChangelingVoiceMimic
+  name: changeling-catalog-voice-mimic-name
+  description: changeling-catalog-voice-mimic-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
+  cost:
+    ChangelingDNA: 10 # TODO: Balance this once we have DNA from devour. It's currently cheap for testing purposes.
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingVoiceMimicDummy

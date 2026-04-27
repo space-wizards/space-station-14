@@ -42,8 +42,9 @@
   - type: PlaceableSurface
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
       - trigger:

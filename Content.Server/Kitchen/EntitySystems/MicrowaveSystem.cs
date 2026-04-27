@@ -75,7 +75,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MicrowaveComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
         SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
         SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });

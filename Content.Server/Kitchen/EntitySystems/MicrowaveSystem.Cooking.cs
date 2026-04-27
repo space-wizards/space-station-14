@@ -191,10 +191,7 @@ public sealed partial class MicrowaveSystem
             if (TryComp<TemperatureComponent>(entity, out var tempComp))
                 _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
-            if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
-                continue;
-
-            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
             {
                 var solution = soln.Comp.Solution;
                 if (solution.Temperature > component.TemperatureUpperThreshold)

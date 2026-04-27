@@ -15,7 +15,7 @@ public sealed partial class MicrowaveSystem
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     // TODO: I'm not sure why this is here...?
-    private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionChangedEvent args)
     {
         UpdateUserInterfaceState(ent);
     }
