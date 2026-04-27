@@ -38,7 +38,7 @@ public sealed class GhostRoleTest : GameTest
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent)), TestOf(typeof(GhostRoleSystem))]
     [TestCaseSource(nameof(_gameRules))]
     [Description("Ensures all GameRule entities with ghost roles can properly spawn those roles and they can be taken.")]
-    public async Task TestAntagGameRulesMakeGhostRoles(string ruleId)
+    public async Task TestGhostRoles(string ruleId)
     {
         await Server.WaitIdleAsync();
 
