@@ -126,9 +126,19 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // Antags haven't been selected so we need to select them! Only if we select when the game rule starts though!
         if (component.PreSelectionsComplete)
+        {
             AssignPreSelectedSessions((uid, component));
-        else if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
-            AssignAntags((uid, component));
+            return;
+        }
+
+        // If pre-selections haven't completed, then we need to select and assign antags.
+        var players = GetActivePlayers().ToArray();
+
+        if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
+            AssignAntags((uid, component), players);
+
+        // Any antags not spawned we make ghost roles for!
+        SpawnGhostRoles((uid, component), players.Length);
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
@@ -767,9 +777,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
         // Ensure that we have a mind for our entity!
-        if (player.GetMind() is not { } mind
-            || !TryComp<MindComponent>(mind, out var mindComp)
-            || mindComp.OwnedEntity != antag)
+        if (player.GetMind() is not { } mind)
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
