@@ -1,5 +1,7 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -15,24 +17,25 @@ namespace Content.IntegrationTests.Tests.Damageable;
 [TestOf(typeof(DamageableSystem))]
 public sealed class DamageAllPrototypesTest : GameTest
 {
+    [SidedDependency(Side.Server)] private readonly DamageableSystem _damageableSystem = default!;
+
     private static string[] _damageables = GameDataScrounger.EntitiesWithComponent("Damageable");
 
     [Test]
     [TestOf(typeof(DamageableSystem))]
     [TestCaseSource(nameof(_damageables))]
-    [Description("Ensures all Entity Prototpes with damageable can be damaged.")]
+    [Description("Ensures all Entity Prototypes with damageable can be damaged.")]
     public async Task TestDamageableComponents(string damageable)
     {
         var map = await Pair.CreateTestMap();
         var coordinates = new EntityCoordinates(map.CGridUid, Vector2.Zero);
 
         var entity = await SpawnAtPosition(damageable, coordinates);
-        var damageSys = Server.System<DamageableSystem>();
         var canBeDamaged = false;
 
-        foreach (var type in Server.ProtoMan.EnumeratePrototypes<DamageTypePrototype>())
+        foreach (var type in SProtoMan.EnumeratePrototypes<DamageTypePrototype>())
         {
-            if (!damageSys.CanBeDamagedBy(entity, type))
+            if (!_damageableSystem.CanBeDamagedBy(entity, type))
                 continue;
 
             canBeDamaged = true;
@@ -40,10 +43,10 @@ public sealed class DamageAllPrototypesTest : GameTest
             await Server.WaitPost(() =>
             {
                 var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
-                var previousDamage = damageSys.GetTotalDamage(entity);
-                damageSys.ChangeDamage(entity, damage, ignoreResistances: true);
-                Assert.That(damageSys.GetTotalDamage(entity) == FixedPoint2.Epsilon + previousDamage);
-                damageSys.ClearAllDamage(entity);
+                var previousDamage = _damageableSystem.GetTotalDamage(entity);
+                _damageableSystem.ChangeDamage(entity, damage, ignoreResistances: true);
+                Assert.That(_damageableSystem.GetTotalDamage(entity) == FixedPoint2.Epsilon + previousDamage);
+                _damageableSystem.ClearAllDamage(entity);
             });
         }
 
