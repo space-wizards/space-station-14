@@ -80,6 +80,10 @@ stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
 }
+stack-conveyor-belt = {$amount ->
+    [1] conveyor belt
+    *[other] conveyor belts
+}
 
 # best materials
 stack-ground-tobacco = ground tobacco
@@ -262,4 +266,3 @@ stack-plasma-marble-floor = plasmarble floor
 stack-uranium-marble-floor = uranium marble floor
 stack-astro-ironsand-floor = astro-ironsand floor
 stack-astro-ironsand-floor-borderless = borderless astro-ironsand floor
-stack-conveyor-belt = conveyor belt

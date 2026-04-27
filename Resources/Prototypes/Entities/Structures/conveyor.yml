@@ -84,8 +84,7 @@
     - state: conveyor_loose
       map: [ "base" ]
   - type: Item
-    shape:
-    - 0,0,1,1
+    size: Normal
   - type: Construction
     graph: ConveyorGraph
     node: item
@@ -96,6 +95,8 @@
     count: 1
     baseLayer: base
     layerStates:
+    - conveyor_loose # 0-item state
     - conveyor_loose
     - conveyor_loose_2
     - conveyor_loose_3
+  - type: Appearance
