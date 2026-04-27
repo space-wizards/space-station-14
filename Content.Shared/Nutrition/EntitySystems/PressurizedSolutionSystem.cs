@@ -43,7 +43,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     /// </summary>
     private bool SprayCheck(Entity<PressurizedSolutionComponent> entity, float chanceMod = 0)
     {
-        return Fizziness((entity, entity.Comp)) + chanceMod > entity.Comp.SprayFizzinessThresholdRoll;
+        return GetFizziness((entity, entity.Comp)) + chanceMod > entity.Comp.SprayFizzinessThresholdRoll;
     }
 
     /// <summary>
@@ -63,8 +63,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         // Check each reagent in the solution
         foreach (var reagent in solution.Contents)
         {
-            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) &&
-                reagentProto != null)
+            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto))
             {
                 // What portion of the solution is this reagent?
                 var proportion = (float)(reagent.Quantity / solution.Volume);
@@ -212,7 +211,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     /// <summary>
     /// What is the current fizziness level of the solution, from 0 to 1?
     /// </summary>
-    public double Fizziness(Entity<PressurizedSolutionComponent?> entity)
+    public double GetFizziness(Entity<PressurizedSolutionComponent?> entity)
     {
         // No component means no fizz
         if (!Resolve(entity, ref entity.Comp, false))
