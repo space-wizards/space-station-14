@@ -88,7 +88,6 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
             var layer = new PrototypeLayerData();
 
             var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-
             var key = equippedPrefix + ent.Comp.EquippedFillBaseName + ent.Comp.EquippedMaxFillLevels;
 
             if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
