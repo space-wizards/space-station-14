@@ -88,7 +88,8 @@
   description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_off" }
+    iconOn: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_on" }
     itemIconStyle: BigAction
     priority: 1
     useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
