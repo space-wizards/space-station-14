@@ -47,6 +47,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalIan
@@ -142,6 +143,11 @@
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - StationPet
+    - VimPilot
   - type: Grammar
     attributes:
       proper: true
@@ -173,6 +179,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
@@ -193,6 +200,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
@@ -220,6 +228,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
@@ -237,6 +246,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
 
 - type: entity
@@ -292,6 +302,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
@@ -367,6 +378,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMcGriff
@@ -461,6 +473,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
@@ -489,6 +502,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMorty
@@ -555,6 +569,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
 
 - type: entity
@@ -577,6 +592,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
 
 - type: entity
@@ -605,6 +621,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalRenault
@@ -654,6 +671,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - Hamster
     - VimPilot
     - ChefPilot
@@ -739,6 +757,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - VimPilot
     - DoorBumpOpener
     - FootstepSound
@@ -765,6 +784,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - DoorBumpOpener
     - FootstepSound
   - type: GhostRole
@@ -811,6 +831,7 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
+    - StationPet
     - VimPilot
   - type: DamageStateVisuals
     states:
@@ -882,6 +903,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - StationPet
     - DoorBumpOpener
     - VimPilot
     - AnomalyHost
@@ -911,6 +933,7 @@
     tags:
     - VimPilot
     - CannotSuicide
+    - StationPet
   - type: Grammar
     attributes:
       proper: true
@@ -925,6 +948,11 @@
   id: MobPollyParrot
   description: An expert in quantum cracker theory
   components:
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - StationPet
+    - VimPilot
   - type: Vocalizer
     maxVocalizeInterval: 240 # polly is chattier
   - type: RadioVocalizer

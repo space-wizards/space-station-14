@@ -1,13 +1,13 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Creatures.TheCreature;
 
 /// <summary>Shared constants for the creature upgrade system.</summary>
 public static class CreatureUpgradeData
 {
-    public const int MaxRank = CreatureUpgradePrototype.MaxRank;
-
     /// <summary>Canonical display order for the upgrade UI. Matches creature_upgrades.yml.</summary>
-    public static readonly IReadOnlyList<string> UpgradeOrder = new[]
-    {
+    public static readonly IReadOnlyList<ProtoId<CreatureUpgradePrototype>> UpgradeOrder =
+    [
         "CreatureUpgradePredator",
         "CreatureUpgradeQuickness",
         "CreatureUpgradeShadow",
@@ -15,5 +15,5 @@ public static class CreatureUpgradeData
         "CreatureUpgradeRavenous",
         "CreatureUpgradePry",
         "CreatureUpgradeIronhide",
-    };
+    ];
 }

@@ -1363,6 +1363,9 @@
   id: StationMapElectronics # ConstructionGraph: StationMap
 
 - type: Tag
+  id: StationPet # Named unique station pets. Used by the Creature antag's drain-pet-blood objective.
+
+- type: Tag
   id: Steak # CargoBounty: BountySteak
 
 - type: Tag

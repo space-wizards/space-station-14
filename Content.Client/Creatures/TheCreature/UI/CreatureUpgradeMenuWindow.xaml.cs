@@ -30,7 +30,7 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
     private static readonly Color NextBg   = new(0.659f, 0.545f, 0.369f, 0.08f);
     private static readonly Color LockedBg = Color.FromHex("#232430");
 
-    private static readonly string[] Numerals = { "I", "II", "III" };
+    private static readonly string[] Numerals = { "I", "II", "III" }; // must have MaxRank entries
 
     private readonly BloodVialControl _bloodVial;
     private readonly IPrototypeManager _protoMan;
@@ -57,7 +57,10 @@ public sealed partial class CreatureUpgradeMenuWindow : FancyWindow
             foreach (var upgradeId in CreatureUpgradeData.UpgradeOrder)
             {
                 if (!_protoMan.TryIndex<CreatureUpgradePrototype>(upgradeId, out var proto))
+                {
+                    Logger.Warning($"[CreatureUpgradeMenu] Missing upgrade prototype: {upgradeId}");
                     continue;
+                }
                 var row = BuildUpgradeRow(proto);
                 UpgradeRowContainer.AddChild(row.Root);
                 _rows.Add(row);

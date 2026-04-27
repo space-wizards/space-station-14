@@ -1,0 +1,46 @@
+- type: entity
+  parent: BaseObjective
+  id: CreatureSurviveObjective
+  name: Survive.
+  description: Stay alive until the round ends.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+      state: enforcer
+    issuer: objective-issuer-creature
+    difficulty: 1.0
+    unique: true
+  - type: SurviveCondition
+
+- type: entity
+  parent: BaseObjective
+  id: CreatureBloodObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+      state: harvester
+    issuer: objective-issuer-creature
+    difficulty: 1.5
+    unique: true
+  - type: NumberObjective
+    min: 1000
+    max: 2000
+    title: objective-creature-blood-title
+  - type: CreatureBloodCondition
+
+- type: entity
+  parent: BaseObjective
+  id: CreaturePetBloodObjective
+  name: Hunt the station's pets.
+  description: Find and kill all named pets aboard the station.
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Pets/corgi.rsi
+      state: ian
+    issuer: objective-issuer-creature
+    difficulty: 2.0
+    unique: true
+  - type: DrainStationPetsCondition
