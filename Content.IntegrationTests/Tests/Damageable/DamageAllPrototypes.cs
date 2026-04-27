@@ -40,8 +40,9 @@ public sealed class DamageAllPrototypesTest : GameTest
             await Server.WaitPost(() =>
             {
                 var damage = new DamageSpecifier(type, FixedPoint2.Epsilon);
+                var previousDamage = damageSys.GetTotalDamage(entity);
                 damageSys.ChangeDamage(entity, damage, ignoreResistances: true);
-                Assert.That(damageSys.GetTotalDamage(entity) == FixedPoint2.Epsilon);
+                Assert.That(damageSys.GetTotalDamage(entity) == FixedPoint2.Epsilon + previousDamage);
                 damageSys.ClearAllDamage(entity);
             });
         }
