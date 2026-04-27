@@ -1,22 +1,24 @@
-using System.Linq;
-using System.Text;
 using Content.Server.GameTicking;
-using Content.Server.Objectives.Commands;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.CCVar;
-using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
-using Content.Shared.Prototypes;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using System.Linq;
+using System.Text;
+using Content.Server.Antag;
+using Content.Server.Antag.Components;
+using Content.Server.Objectives.Commands;
+using Content.Shared.CCVar;
+using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
@@ -27,11 +29,9 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
-
 
     private IEnumerable<string>? _objectives;
 
@@ -62,19 +62,14 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
-        var query = EntityQueryEnumerator<GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var gameRule))
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent, AntagSelectionComponent>();
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
+            if (comp.AgentName is not { } agent)
                 continue;
 
-            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
-            RaiseLocalEvent(uid, ref info);
-            if (info.Minds.Count == 0)
-                continue;
+            var minds = _antag.GetAntagIdentities((uid, comp));
 
-            // first group the gamerules by their agents, for example 2 different dragons
-            var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
                 summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
 
@@ -87,11 +82,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             if (summary.ContainsKey(prepend.Text))
             {
                 // same prepended text (usually empty) so combine them
-                summary[prepend.Text].AddRange(info.Minds);
+                summary[prepend.Text].AddRange(minds);
             }
             else
             {
-                summary[prepend.Text] = info.Minds;
+                summary[prepend.Text] = minds.ToList();
             }
         }
 
@@ -104,7 +99,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
-                totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
+                totalInCustody += minds.Count(pair => IsInCustody(pair.Item1));
             }
 
             var result = new StringBuilder();
@@ -260,7 +255,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     /// <summary>
     /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
     /// </summary>
-    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    public bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind))
             return false;
@@ -270,12 +265,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
         if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
         {
-            originalEntityInCustody = _cuffable.IsCuffed(originalEntity.Value)
+            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
                    && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
         }
 
-        return originalEntityInCustody || mind.OwnedEntity.HasValue && _cuffable.IsCuffed(mind.OwnedEntity.Value)
-               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value);
+        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
+               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
     }
 
     /// <summary>

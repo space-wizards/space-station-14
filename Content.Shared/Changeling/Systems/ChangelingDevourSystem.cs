@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
@@ -10,13 +11,10 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -30,10 +28,8 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
     {
@@ -64,8 +60,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     private void OnDevourAction(Entity<ChangelingDevourComponent> ent, ref ChangelingDevourActionEvent args)
     {
         if (args.Handled
-            || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target)
-            || !HasComp<ChangelingIdentityComponent>(ent))
+            || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target))
             return;
 
         args.Handled = true;
@@ -172,31 +167,39 @@ public sealed class ChangelingDevourSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(target):player}'s identity");
 
-        if (_inventorySystem.TryGetSlotEntity(target, "jumpsuit", out var item)
-            && TryComp<ButcherableComponent>(item, out var butcherable))
-            RipClothing(target, (item.Value, butcherable));
+        // If this entity has never been devoured before, it counts as unique.
+        var unique = !_changelingIdentitySystem.TryGetDataFromOriginal(ent.Owner, target, out _);
 
-        if (!TryComp<ChangelingIdentityComponent>(ent.Owner, out var identityStorage))
-            return;
+        // Even if not unique, target is supposed to give us an identity if it is not currently in our identity list.
+        var becomesIdentity = !HasIdentity(ent.Owner, target);
 
-        _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target);
+        var ev = new ChangelingDevouredEvent(ent.Owner, target, becomesIdentity, unique);
+        RaiseLocalEvent(ent, ref ev, true); // We broadcast the event to allow relevant objectives to update.
 
-        // We add a reference to ourselves to prevent repeated identity gain.
-        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
-        targetDevoured.DevouredBy.Add(ent.Owner);
-        Dirty(target, targetDevoured);
-        Dirty(ent);
+        var devouredEv = new ChangelingGotDevouredEvent(ent.Owner, target, becomesIdentity, unique);
+        RaiseLocalEvent(target, ref devouredEv); // Don't broadcast this one, all neccessary data is in the previous event already. Just use that one if a broadcast is needed.
     }
 
     /// <summary>
-    /// Has the given victim been devoured by the given changeling before?
+    /// Whether the given changeling has a valid identity of the given entity.
     /// </summary>
-    public bool HasDevoured(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
+    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
     {
         if (!Resolve(changeling, ref changeling.Comp, false))
             return false;
 
-        return changeling.Comp.ConsumedIdentities.ContainsValue(devoured);
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
+    }
+
+    /// <summary>
+    /// Has this entity been devoured by a changeling already before getting revived?
+    /// </summary>
+    public bool WasDevouredRecently(Entity<ChangelingDevouredComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        return entity.Comp.Recent;
     }
 
     /// <summary>
@@ -217,10 +220,10 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (HasDevoured(changeling.Owner, victim))
+        if (WasDevouredRecently(victim))
         {
             if (showPopup)
-                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), changeling.Owner, changeling.Owner, PopupType.Medium);
+                _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
             return false;
         }
 
@@ -271,17 +274,17 @@ public sealed class ChangelingDevourSystem : EntitySystem
         return false;
     }
 
-    // TODO: This should just be an API method in the butcher system
-    private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
+    /// <summary>
+    /// Checks whether this changeling has devoured the target entity at any point before.
+    /// </summary>
+    /// <param name="ent">The changeling.</param>
+    /// <param name="devoured">The target entity.</param>
+    /// <returns>True if target was previously devoured, False otherwise.</returns>
+    public bool IsUniqueDevour(Entity<ChangelingIdentityComponent?> ent, EntityUid devoured)
     {
-        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
 
-        foreach (var proto in spawnEntities)
-        {
-            // TODO: once predictedRandom is in, make this a Coordinate offset of 0.25f from the victims position
-            PredictedSpawnNextToOrDrop(proto, victim);
-        }
-
-        PredictedQueueDel(item.Owner);
+        return _changelingIdentitySystem.TryGetDataFromOriginal(ent, devoured, out _);
     }
 }

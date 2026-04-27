@@ -18,8 +18,8 @@ public sealed partial class BodySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
-    private EntityQuery<BodyComponent> _bodyQuery;
-    private EntityQuery<OrganComponent> _organQuery;
+    [Dependency] private readonly EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery = default!;
 
     public override void Initialize()
     {
@@ -32,9 +32,6 @@ public sealed partial class BodySystem : EntitySystem
 
         SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyEntInserted);
         SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyEntRemoved);
-
-        _bodyQuery = GetEntityQuery<BodyComponent>();
-        _organQuery = GetEntityQuery<OrganComponent>();
 
         InitializeRelay();
     }
