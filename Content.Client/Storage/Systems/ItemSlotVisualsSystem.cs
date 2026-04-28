@@ -91,6 +91,7 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
             var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
             var key = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
+            // Same check as the one in StorageContainerVisualsSystem.
             if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
                 return;
 
