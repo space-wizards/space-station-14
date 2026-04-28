@@ -33,6 +33,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 OriginalJob = identity.OriginalJob,
                 OriginalName = identity.OriginalName,
                 Starting = identity.Starting,
+                GrantedDna = identity.GrantedDna,
             };
 
             ent.Comp.ConsumedIdentities.Add(data);
@@ -41,6 +42,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
         ent.Comp.CurrentIdentity = EnsureEntity<ChangelingStoredIdentityComponent>(state.CurrentIdentity, ent);
 
         ent.Comp.IdentityCloningSettings = state.IdentityCloningSettings;
+        ent.Comp.MaxStoredDisguises = state.MaxStoredDisguises;
 
         UpdateUi(ent);
     }

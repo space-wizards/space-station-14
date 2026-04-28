@@ -37,23 +37,21 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
-        SubscribeLocalEvent<ChangelingDevouredComponent, MobStateChangedEvent>(OnDevouredMobState);
+        SubscribeLocalEvent<RecentlyDevouredComponent, MobStateChangedEvent>(OnRecentlyDevouredMobState);
     }
 
     private void OnDevouredEntity(Entity<ChangelingIdentityComponent> ent, ref ChangelingDevouredEvent args)
     {
-        // We're not supposed to be given an identity.
-        if (!args.ObtainedIdentity)
-            return;
+        if (args.ObtainedIdentity)
+        {
+            CloneToPausedMap(ent, args.Devoured);
+            AddDevouredReference(ent, args.Devoured);
+        }
 
-        CloneToPausedMap(ent, args.Devoured);
-
-        // We add a reference to ourselves to prevent repeated identity gain.
-        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(args.Devoured);
-        targetDevoured.DevouredBy.Add(ent.Owner);
-        targetDevoured.Recent = true;
-        Dirty(args.Devoured, targetDevoured);
-        Dirty(ent);
+        if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
+        {
+            data.GrantedDna = true;
+        }
     }
 
     private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
@@ -75,6 +73,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return;
 
         data.Starting = true;
+        data.GrantedDna = true; // I have no idea how you're supposed to ever get DNA from yourself, but just in case.
 
         ent.Comp.CurrentIdentity = data.Identity;
     }
@@ -100,14 +99,13 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         }
     }
 
-    private void OnDevouredMobState(Entity<ChangelingDevouredComponent> ent, ref MobStateChangedEvent args)
+    private void OnRecentlyDevouredMobState(Entity<RecentlyDevouredComponent> ent, ref MobStateChangedEvent args)
     {
-        // Once we are revived the body is no longer "recent".
+        // Once we are revived the body is no longer recently devoured.
         if (args.NewMobState != MobState.Alive)
             return;
 
-        ent.Comp.Recent = false;
-        Dirty(ent);
+        RemCompDeferred<RecentlyDevouredComponent>(ent);
     }
 
     private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
@@ -223,6 +221,17 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Marks that the changeling has successfully devoured the target.
+    /// </summary>
+    public void AddDevouredReference(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    {
+        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
+        targetDevoured.DevouredBy.Add(ent.Owner);
+
+        Dirty(target, targetDevoured);
+    }
+
+    /// <summary>
     /// Drop a stored identity from the changeling's storage.
     /// </summary>
     public void DropStoredIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity)
@@ -300,6 +309,17 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether the changeling has space to store another disguise.
+    /// </summary>
+    public bool HasFreeDisguiseSlot(Entity<ChangelingIdentityComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.ConsumedIdentities.Count(data => data.Identity != null) < ent.Comp.MaxStoredDisguises;
+    }
+
+    /// <summary>
     /// Create a paused map for storing devoured identities as a clone of the player.
     /// </summary>
     private void EnsurePausedMap()
@@ -337,10 +357,10 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         data.Identity = identity;
         data.Original = original;
-        data.OriginalName = Name(identity);
+        data.OriginalName = Name(original);
 
         var foundMind = _mind.TryGetMind(original, out var mindId, out _);
-        data.OriginalMind = mindId;
+        data.OriginalMind = foundMind ? mindId : null;
 
         if (foundMind)
         {
