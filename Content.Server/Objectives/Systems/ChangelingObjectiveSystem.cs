@@ -14,7 +14,11 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangelingUniqueIdentityConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<ChangelingUniqueIdentityConditionComponent, ObjectiveGetProgressEvent>(OnGetUniqueIdentitiesProgress);
+
+        SubscribeLocalEvent<ChangelingDevourMostConditionComponent, ObjectiveGetProgressEvent>(OnGetMostIdentitiesProgress);
+        SubscribeLocalEvent<ChangelingDevourMostConditionComponent, ObjectiveAssignedEvent>(OnMostIdentitiesAssigned);
+
         SubscribeLocalEvent<ChangelingDevouredEvent>(OnChangelingDevoured);
     }
 
@@ -23,18 +27,41 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
         if (!args.Unique)
             return;
 
-        if (!_mind.TryGetObjectiveComp<ChangelingUniqueIdentityConditionComponent>(args.Changeling, out var obj))
-            return;
+        if (_mind.TryGetObjectiveComp<ChangelingUniqueIdentityConditionComponent>(args.Changeling, out var uniqueIdentityObj))
+            uniqueIdentityObj.UniqueIdentities++;
 
-        obj.UniqueIdentities++;
+        if (_mind.TryGetObjectiveComp<ChangelingDevourMostConditionComponent>(args.Changeling, out var devourMostObj))
+            devourMostObj.UniqueIdentities++;
     }
 
-    private void OnGetProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
+    private void OnGetUniqueIdentitiesProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(ent.Comp, _number.GetTarget(ent));
+        args.Progress = GetUniqueIdentitiesProgress(ent.Comp, _number.GetTarget(ent));
     }
 
-    private float GetProgress(ChangelingUniqueIdentityConditionComponent comp, int target)
+    private void OnGetMostIdentitiesProgress(Entity<ChangelingDevourMostConditionComponent> ent, ref ObjectiveGetProgressEvent args)
+    {
+        args.Progress = GetMostIdentitiesProgress(ent);
+    }
+
+    private void OnMostIdentitiesAssigned(Entity<ChangelingDevourMostConditionComponent> ent, ref ObjectiveAssignedEvent args)
+    {
+        var query = AllEntityQuery<ChangelingDevourMostConditionComponent>();
+
+        // Need at least 1 more changeling with this objective.
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (uid != ent.Owner)
+            {
+                args.Cancelled = false;
+                return;
+            }
+        }
+
+        args.Cancelled = true;
+    }
+
+    private float GetUniqueIdentitiesProgress(ChangelingUniqueIdentityConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
@@ -44,5 +71,28 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
             return 1f;
 
         return (float)comp.UniqueIdentities / (float)target;
+    }
+
+    private float GetMostIdentitiesProgress(Entity<ChangelingDevourMostConditionComponent> ent)
+    {
+        var query = AllEntityQuery<ChangelingDevourMostConditionComponent>();
+
+        int highest = 0;
+
+        while (query.MoveNext(out var uid, out var devourMostComp))
+        {
+            if (uid == ent.Owner)
+                continue;
+
+            if (devourMostComp.UniqueIdentities > highest)
+                highest = devourMostComp.UniqueIdentities;
+        }
+
+        // No equal check. Only one can win.
+        if (ent.Comp.UniqueIdentities > highest)
+            return 1f;
+
+        // highest+1 because we aim to be 1 above the highest.
+        return (float)ent.Comp.UniqueIdentities / (float)(highest+1);
     }
 }
