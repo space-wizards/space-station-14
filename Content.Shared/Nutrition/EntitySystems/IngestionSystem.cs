@@ -146,9 +146,6 @@ public sealed partial class IngestionSystem : EntitySystem
             _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution, out _);
 
         UpdateAppearance(entity);
-
-        if (TryComp(entity, out RefillableSolutionComponent? refillComp))
-            refillComp.Solution = entity.Comp.Solution;
     }
 
     #region Appearance System
