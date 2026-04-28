@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
@@ -39,11 +38,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
         {
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(entity.Owner))
-            {
-                var solution = soln.Comp.Solution;
-                _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
-            }
+            var solution = Comp<SolutionComponent>(entity).Solution;
+            _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
 
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((args.OtherFixture.CollisionLayer & (int)CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
@@ -52,7 +48,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        public void Start(Entity<VaporComponent> vapor,
+        public void Start(Entity<VaporComponent?> vapor,
             TransformComponent vaporXform,
             Vector2 dir,
             float speed,
@@ -60,6 +56,9 @@ namespace Content.Server.Chemistry.EntitySystems
             float aliveTime,
             EntityUid? user = null)
         {
+            if (!Resolve(vapor, ref vapor.Comp))
+                return;
+
             vapor.Comp.Active = true;
             var despawn = EnsureComp<TimedDespawnComponent>(vapor);
             despawn.Lifetime = aliveTime;
@@ -76,23 +75,6 @@ namespace Content.Server.Chemistry.EntitySystems
                 var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
-        }
-
-        internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
-        {
-            if (solution.Volume == 0)
-            {
-                return false;
-            }
-
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner,
-                    VaporComponent.SolutionName,
-                    out var vaporSolution))
-            {
-                return false;
-            }
-
-            return _solutionContainerSystem.TryAddSolution(vaporSolution.Value, solution);
         }
 
         public override void Update(float frameTime)

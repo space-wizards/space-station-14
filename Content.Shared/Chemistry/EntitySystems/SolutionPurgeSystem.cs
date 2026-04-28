@@ -27,7 +27,6 @@ public sealed class SolutionPurgeSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // TODO: SolutionPurgeComponent on Solution Entities!
         var query = EntityQueryEnumerator<SolutionPurgeComponent, SolutionComponent>();
         while (query.MoveNext(out var uid, out var purge, out var solution))
         {

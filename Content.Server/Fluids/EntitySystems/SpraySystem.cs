@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Gravity;
 using Content.Server.Popups;
@@ -15,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
 using Robust.Server.Containers;
@@ -170,15 +170,14 @@ public sealed class SpraySystem : SharedSpraySystem
             }
 
             // Add the solution to the vapor and actually send the thing
-            var vaporComponent = Comp<VaporComponent>(vapor);
-            var ent = (vapor, vaporComponent);
-            _vapor.TryAddSolution(ent, newSolution);
+            if (TryComp<SolutionComponent>(vapor, out var solComp))
+                _solutionContainer.TryAddSolution((vapor, solComp), newSolution);
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
             var time = diffLength / entity.Comp.SprayVelocity;
 
-            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
+            _vapor.Start(vapor, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
             var thingGettingPushed = entity.Owner;
             if (_container.TryGetOuterContainer(entity, sprayerXform, out var container))
