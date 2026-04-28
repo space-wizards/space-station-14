@@ -62,14 +62,16 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, AntagSelectionComponent>();
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (comp.AgentName is not { } agent)
+            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
+            RaiseLocalEvent(uid, ref info);
+            if (info.Minds.Count == 0)
                 continue;
 
-            var minds = _antag.GetAntagIdentities((uid, comp));
-
+            // first group the gamerules by their agents, for example 2 different dragons
+            var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
                 summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
 
@@ -82,11 +84,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             if (summary.ContainsKey(prepend.Text))
             {
                 // same prepended text (usually empty) so combine them
-                summary[prepend.Text].AddRange(minds);
+                summary[prepend.Text].AddRange(info.Minds);
             }
             else
             {
-                summary[prepend.Text] = minds.ToList();
+                summary[prepend.Text] = info.Minds.ToList();
             }
         }
 
@@ -96,6 +98,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // first get the total number of players that were in these game rules combined
             var total = 0;
             var totalInCustody = 0;
+            var agentName = Loc.GetString(agent);
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
@@ -103,10 +106,10 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             }
 
             var result = new StringBuilder();
-            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
-            if (agent == Loc.GetString("traitor-round-end-agent-name"))
+            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agentName)));
+            if (agentName == Loc.GetString("traitor-round-end-agent-name"))
             {
-                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
+                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agentName)));
             }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
