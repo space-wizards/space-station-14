@@ -42,6 +42,7 @@
       - Chest
       - Tail
       - Overlay
+      - TailOverlay
       - UndergarmentTop
       - UndergarmentBottom
       - Special
@@ -333,17 +334,26 @@
   - type: Lung
   - type: Metabolizer
     stages: [ Respiration ]
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      Lung:
-        maxVol: 100.0
-        canReact: false
+    - SolutionLungGas
   - type: Sprite
     layers:
     - state: lung-l
     - state: lung-r
   - type: Item
     heldPrefix: lungs
+
+- type: entity
+  parent: Solution
+  id: SolutionLungGas # TODO: Metabolize directly from gasses :(
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: Lung
+    solution:
+      maxVol: 100.0
+      canReact: false
 
 - type: entity
   parent: OrganBase
@@ -371,10 +381,9 @@
   - type: Organ
     category: Stomach
   - type: Stomach
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50
+    - SolutionStomach
   - type: Metabolizer
     maxReagents: 3
     stages: [ Digestion ]
@@ -383,6 +392,16 @@
     - state: stomach
   - type: Item
     heldPrefix: stomach
+
+- type: entity
+  parent: Solution
+  id: SolutionStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: stomach
+    solution:
+      maxVol: 150 # 1.25 liters which is average for a human
 
 - type: entity
   parent: OrganBase

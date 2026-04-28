@@ -8,22 +8,6 @@ namespace Content.Shared.Chemistry.EntitySystems;
 #region Events
 
 /// <summary>
-/// This event alerts system that the solution was changed
-/// </summary>
-[ByRefEvent]
-public record struct SolutionContainerChangedEvent
-{
-    public readonly Solution Solution;
-    public readonly string SolutionId;
-
-    public SolutionContainerChangedEvent(Solution solution, string solutionId)
-    {
-        SolutionId = solutionId;
-        Solution = solution;
-    }
-}
-
-/// <summary>
 /// An event raised when more reagents are added to a (managed) solution than it can hold.
 /// </summary>
 [ByRefEvent]
@@ -46,13 +30,11 @@ public record struct SolutionContainerOverflowEvent(EntityUid SolutionEnt, Solut
 /// </summary>
 /// <typeparam name="TEvent"></typeparam>
 /// <param name="Event">The event that is being relayed.</param>
-/// <param name="ContainerEnt">The container entity that the event is being relayed to.</param>
-/// <param name="Name">The name of the solution entity that the event is being relayed from.</param>
+/// <param name="Solution">The container entity that the event is being relayed to.</param>
 [ByRefEvent]
-public record struct SolutionRelayEvent<TEvent>(TEvent Event, EntityUid ContainerEnt, string Name)
+public record struct SolutionRelayEvent<TEvent>(TEvent Event, Entity<SolutionComponent> Solution)
 {
-    public readonly EntityUid ContainerEnt = ContainerEnt;
-    public readonly string Name = Name;
+    public readonly Entity<SolutionComponent> Solution = Solution;
     public TEvent Event = Event;
 }
 
@@ -77,23 +59,11 @@ public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
     {
-        SubscribeLocalEvent<ContainedSolutionComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<ContainedSolutionComponent, SolutionOverflowEvent>(OnSolutionOverflow);
         SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionRefEvent);
     }
 
     #region Event Handlers
-
-    protected virtual void OnSolutionChanged(Entity<ContainedSolutionComponent> entity, ref SolutionChangedEvent args)
-    {
-        var (solutionId, solutionComp) = args.Solution;
-        var solution = solutionComp.Solution;
-
-        UpdateAppearance(entity.Comp.Container, (solutionId, solutionComp, entity.Comp));
-
-        var relayEvent = new SolutionContainerChangedEvent(solution, entity.Comp.ContainerName);
-        RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
-    }
 
     protected virtual void OnSolutionOverflow(Entity<ContainedSolutionComponent> entity, ref SolutionOverflowEvent args)
     {
@@ -112,18 +82,20 @@ public abstract partial class SharedSolutionContainerSystem
 
     private void RelaySolutionValEvent<TEvent>(EntityUid uid, ContainedSolutionComponent comp, TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, uid, comp.ContainerName);
+        var solution = Comp<SolutionComponent>(uid);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, (uid, solution));
         RaiseLocalEvent(comp.Container, ref relayEvent);
     }
 
     private void RelaySolutionRefEvent<TEvent>(Entity<ContainedSolutionComponent> entity, ref TEvent @event)
     {
-        var relayEvent = new SolutionRelayEvent<TEvent>(@event, entity.Owner, entity.Comp.ContainerName);
+        var solution = Comp<SolutionComponent>(entity);
+        var relayEvent = new SolutionRelayEvent<TEvent>(@event, (entity, solution));
         RaiseLocalEvent(entity.Comp.Container, ref relayEvent);
         @event = relayEvent.Event;
     }
 
-    private void RelaySolutionContainerEvent<TEvent>(EntityUid uid, SolutionContainerManagerComponent comp, TEvent @event)
+    private void RelaySolutionContainerEvent<TEvent>(EntityUid uid, SolutionManagerComponent comp, TEvent @event)
     {
         foreach (var (name, soln) in EnumerateSolutions((uid, comp)))
         {
@@ -132,7 +104,7 @@ public abstract partial class SharedSolutionContainerSystem
         }
     }
 
-    private void RelaySolutionContainerEvent<TEvent>(Entity<SolutionContainerManagerComponent> entity, ref TEvent @event)
+    private void RelaySolutionContainerEvent<TEvent>(Entity<SolutionManagerComponent> entity, ref TEvent @event)
     {
         foreach (var (name, soln) in EnumerateSolutions((entity.Owner, entity.Comp)))
         {

@@ -1,3 +1,4 @@
+using Content.Shared.Emp;
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -23,14 +24,19 @@ public sealed class BarSignSystem : EntitySystem
         {
             subs.Event<SetBarSignMessage>(OnSetBarSignMessage);
         });
+
+        SubscribeLocalEvent<BarSignComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<BarSignComponent, BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
     }
 
     private void OnMapInit(Entity<BarSignComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.Current != null)
+        BarSignPrototype? newPrototype;
+        if (ent.Comp.Current is null)
+            newPrototype = _random.Pick(GetAllBarSigns(_prototypeManager));
+        else if (!_prototypeManager.Resolve(ent.Comp.Current, out newPrototype))
             return;
 
-        var newPrototype = _random.Pick(GetAllBarSigns(_prototypeManager));
         SetBarSign(ent, newPrototype);
     }
 
@@ -52,12 +58,28 @@ public sealed class BarSignSystem : EntitySystem
         SetBarSign(ent, signPrototype);
     }
 
+    private void OnEmpPulse(Entity<BarSignComponent> ent, ref EmpPulseEvent args)
+    {
+        if (!_prototypeManager.Resolve(ent.Comp.Emped, out var empedPrototype))
+            return;
+
+        SetBarSign(ent, empedPrototype);
+        args.Affected = true;
+        args.Disabled = true;
+    }
+
+    private void OnBoundUIAttempt(Entity<BarSignComponent> ent, ref BoundUserInterfaceMessageAttempt args)
+    {
+        if (HasComp<EmpDisabledComponent>(ent))
+            args.Cancel();
+    }
+
     /// <summary>
     /// Set the sprite, name and description of the bar sign to a given <see cref="BarSignPrototype"/>.
     /// </summary>
     public void SetBarSign(Entity<BarSignComponent> ent, BarSignPrototype newPrototype)
     {
-        if (ent.Comp.Current == newPrototype.ID)
+        if (HasComp<EmpDisabledComponent>(ent))
             return;
 
         var meta = MetaData(ent);
