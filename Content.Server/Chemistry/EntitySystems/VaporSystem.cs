@@ -15,6 +15,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 using System.Numerics;
+using Content.Shared.Vapor;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -22,11 +23,12 @@ namespace Content.Server.Chemistry.EntitySystems
     internal sealed class VaporSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly ReactiveSystem _reactive = default!;
+        [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly ReactiveSystem _reactive = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         public override void Initialize()
@@ -75,6 +77,22 @@ namespace Content.Server.Chemistry.EntitySystems
                 var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
+        }
+
+        internal bool TryAddSolution(Entity<SolutionComponent?> vapor, Entity<SolutionComponent> solution, FixedPoint2 split)
+        {
+            if (solution.Comp.Solution.Volume <= 0 || split <= 0 || !Resolve(vapor, ref vapor.Comp))
+                return false;
+
+            var newSolution = _solutionContainer.SplitSolution(solution, split);
+
+            if (TryComp<AppearanceComponent>(vapor, out var appearance))
+            {
+                _appearance.SetData(vapor, VaporVisuals.Color, newSolution.GetColor(_protoManager).WithAlpha(1f), appearance);
+                _appearance.SetData(vapor, VaporVisuals.State, true, appearance);
+            }
+
+            return _solutionContainer.TryAddSolution((vapor, vapor.Comp), newSolution);
         }
 
         public override void Update(float frameTime)
@@ -129,7 +147,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         if (reaction > reagentQuantity.Quantity)
                             reaction = reagentQuantity.Quantity;
 
-                        _solutionContainerSystem.RemoveReagent((uid, solution), reagentQuantity.Reagent, reaction);
+                        _solutionContainer.RemoveReagent((uid, solution), reagentQuantity.Reagent, reaction);
                     }
 
                     // Delete the vapor entity if it has no contents

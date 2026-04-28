@@ -151,10 +151,6 @@ public sealed class SpraySystem : SharedSpraySystem
                 target = sprayerMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
 
             var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
-            var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
-
-            if (newSolution.Volume <= FixedPoint2.Zero)
-                break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
             var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
@@ -163,15 +159,7 @@ public sealed class SpraySystem : SharedSpraySystem
 
             _transform.SetWorldRotation(vaporXform, rotation);
 
-            if (TryComp(vapor, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(vapor, VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f), appearance);
-                _appearance.SetData(vapor, VaporVisuals.State, true, appearance);
-            }
-
-            // Add the solution to the vapor and actually send the thing
-            if (TryComp<SolutionComponent>(vapor, out var solComp))
-                _solutionContainer.TryAddSolution((vapor, solComp), newSolution);
+            _vapor.TryAddSolution(vapor, soln.Value, adjustedSolutionAmount);
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
