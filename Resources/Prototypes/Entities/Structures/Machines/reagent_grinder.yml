@@ -5,6 +5,7 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   components:
   - type: ReagentGrinder
+    storageMaxEntities: 9
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
