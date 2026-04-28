@@ -96,11 +96,6 @@
   Commands:
   - listplayers
 
-- Flags: FUN
-  Commands:
-  - tippy
-  - tip
-
 - Flags: SERVER
   Commands:
   - delete
@@ -136,6 +131,7 @@
   - fuck
   - replay_recording_start
   - replay_recording_stop
+  - transfer_test
 
 - Flags: QUERY
   Commands:

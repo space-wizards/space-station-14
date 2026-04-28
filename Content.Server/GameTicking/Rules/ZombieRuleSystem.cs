@@ -18,6 +18,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Globalization;
+using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -76,7 +77,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         else
             args.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-        var antags = _antag.GetAntagIdentifiers(uid);
+        var antags = _antag.GetAntagIdentifiers(uid).ToList();
         args.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", antags.Count)));
         foreach (var (_, data, entName) in antags)
         {
@@ -106,6 +107,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 ("name", meta.EntityName),
                 ("username", username)));
         }
+        args.AddLine("");
     }
 
     /// <summary>
@@ -123,7 +125,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             {
                 _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
             }
-            _roundEnd.RequestRoundEnd(null, false);
+            _roundEnd.RequestRoundEnd(checkCooldown: false);
         }
 
         // we include dead for this count because we don't want to end the round
@@ -165,7 +167,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         var players = GetHealthyHumans(includeOffStation);
         var zombieCount = 0;
-        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, ZombieComponent, MobStateComponent>();
+        var query = EntityQueryEnumerator<HumanoidProfileComponent, ZombieComponent, MobStateComponent>();
         while (query.MoveNext(out _, out _, out _, out var mob))
         {
             if (!includeDead && mob.CurrentState == MobState.Dead)
@@ -195,7 +197,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             }
         }
 
-        var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent, TransformComponent>();
+        var players = AllEntityQuery<HumanoidProfileComponent, ActorComponent, MobStateComponent, TransformComponent>();
         var zombers = GetEntityQuery<ZombieComponent>();
         while (players.MoveNext(out var uid, out _, out _, out var mob, out var xform))
         {

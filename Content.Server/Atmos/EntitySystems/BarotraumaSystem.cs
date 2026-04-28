@@ -3,7 +3,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -63,17 +64,17 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnPressureProtectionEquipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotEquippedEvent args)
         {
-            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            if (TryComp<BarotraumaComponent>(args.EquipTarget, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
             {
-                UpdateCachedResistances(args.Equipee, barotrauma);
+                UpdateCachedResistances(args.EquipTarget, barotrauma);
             }
         }
 
         private void OnPressureProtectionUnequipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotUnequippedEvent args)
         {
-            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            if (TryComp<BarotraumaComponent>(args.EquipTarget, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
             {
-                UpdateCachedResistances(args.Equipee, barotrauma);
+                UpdateCachedResistances(args.EquipTarget, barotrauma);
             }
         }
 
@@ -210,9 +211,10 @@ namespace Content.Server.Atmos.EntitySystems
             while (enumerator.MoveNext(out var uid, out var barotrauma, out var damageable))
             {
                 var totalDamage = FixedPoint2.Zero;
+                var damageSpecifier = _damageableSystem.GetAllDamage((uid, damageable));
                 foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
                 {
-                    if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
+                    if (!damageSpecifier.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
                         continue;
                     totalDamage += damage;
                 }

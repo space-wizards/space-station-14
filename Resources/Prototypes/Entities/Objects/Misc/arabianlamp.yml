@@ -1,6 +1,6 @@
 - type: entity
   name: lamp
-  parent: BaseItem
+  parent: [SolutionToolWelderIndsutrial, BaseItem]
   id: ArabianLamp
   description: Why the heck won't this piece of junk open!?
   components:
@@ -13,9 +13,10 @@
     breakOnAccessBreaker: false
   - type: EntityStorage
     capacity: 1 # Its smol.
-  # - type: StorageFill
-    # contents:
-      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+  # - type: EntityTableContainerFill
+    # containers:
+      # entity_storage:
+        # id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -90,13 +91,6 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
-  - type: SolutionContainerManager
-    solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 25
-        maxVol: 25
   - type: SolutionTransfer
     transferAmount: 5
     canChangeTransferAmount: false
@@ -113,7 +107,7 @@
     heldOnly: true
     exactVolume: true
   - type: SolutionRegeneration
-    solution: Welder
+    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

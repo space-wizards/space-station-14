@@ -35,13 +35,13 @@
     - type: InteractionOutline
     - type: Sprite
     - type: Appearance
-    - type: ThrusterVisuals
     - type: ApcPowerReceiver
       powerLoad: 1500
     - type: ExtensionCableReceiver
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Electronic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
       - trigger:
@@ -101,6 +101,21 @@
       shader: unshaded
       visible: false
       offset: 0, 1
+
+- type: entity
+  parent: Thruster
+  id: ThrusterXenoborg
+  components:
+  # temporary solution until thruster rework
+  - type: Thruster
+    canToggle: false # no turning it off by just clicking it
+  - type: Anchorable
+    flags:
+    - Anchorable # no unwrenching it
+  - type: Rotatable
+    rotateWhileAnchored: false # no rotating it backwards so it doesn't face space
+  - type: Sprite
+    sprite: Structures/Shuttles/xenoborg_thruster.rsi
 
 - type: entity
   id: ThrusterLarge
@@ -259,8 +274,9 @@
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: StaticPrice
     price: 2000
 
@@ -328,8 +344,9 @@
       sprite: Structures/Shuttles/old_thruster.rsi
       state: base
     - type: Damageable
-      damageContainer: Inorganic
       damageModifierSet: Electronic
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:

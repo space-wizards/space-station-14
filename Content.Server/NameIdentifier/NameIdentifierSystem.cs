@@ -7,10 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NameIdentifier;
 
-/// <summary>
-///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`
-/// </summary>
-public sealed class NameIdentifierSystem : EntitySystem
+public sealed class NameIdentifierSystem : SharedNameIdentifierSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -28,7 +25,6 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<NameIdentifierComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReloadPrototypes);
 
@@ -120,24 +116,6 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         Dirty(ent);
         _nameModifier.RefreshNameModifiers(ent.Owner);
-    }
-
-    private void OnRefreshNameModifiers(Entity<NameIdentifierComponent> ent, ref RefreshNameModifiersEvent args)
-    {
-        if (ent.Comp.Group is null)
-            return;
-
-        // Don't apply the modifier if the component is being removed
-        if (ent.Comp.LifeStage > ComponentLifeStage.Running)
-            return;
-
-        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
-            return;
-
-        var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
-        // We apply the modifier with a low priority to keep it near the base name
-        // "Beep (Si-4562) the zombie" instead of "Beep the zombie (Si-4562)"
-        args.AddModifier(format, -10, ("identifier", ent.Comp.FullIdentifier));
     }
 
     private void InitialSetupPrototypes()

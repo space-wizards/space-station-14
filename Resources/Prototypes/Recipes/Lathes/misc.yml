@@ -8,7 +8,7 @@
   completetime: 2
   materials:
     Steel: 50
-    Glass: 50
+    Glass: 200
 
 # Recipes
 
@@ -120,7 +120,7 @@
   result: AirTank
   completetime: 4
   materials:
-    Steel: 300
+    Steel: 400
 
 - type: latheRecipe
   id: DoubleEmergencyOxygenTank

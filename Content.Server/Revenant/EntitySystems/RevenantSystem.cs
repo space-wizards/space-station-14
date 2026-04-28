@@ -1,9 +1,10 @@
 using System.Numerics;
 using Content.Server.Actions;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Store.Systems;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
@@ -27,8 +28,8 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -189,6 +190,23 @@ public sealed partial class RevenantSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Cools the area around the revenant.
+    /// The more essence they have, the colder it gets, up to a certain point.
+    /// </summary>
+    /// <param name="ent">The revenant entity.</param>
+    private void ChillArea(Entity<RevenantComponent> ent)
+    {
+        var effectiveEssence = Math.Clamp(ent.Comp.Essence.Int(), 0, ent.Comp.ChillUpperBound.Float());
+        // Parabolic curve based on essence, more essence = more delta q, flattening as upper bound is reached
+        var dQ =
+            200 / ent.Comp.ChillScaling.Float() * MathF.Pow(effectiveEssence - ent.Comp.ChillUpperBound.Float(), 2) -
+            ent.Comp.ChillScaling.Float();
+
+        if (_atmosphere.GetContainingMixture(ent.Owner, true, true) is { } air)
+            _atmosphere.AddHeat(air, dQ);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -206,6 +224,8 @@ public sealed partial class RevenantSystem : EntitySystem
             {
                 ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
             }
+
+            ChillArea((uid, rev));
         }
     }
 }
