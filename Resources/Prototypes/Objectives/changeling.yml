@@ -41,7 +41,7 @@
 - type: entity
   parent: BaseChangelingObjective
   id: ChangelingDevourMostObjective
-  name: Devour the most unique humanoids out of all changelings.
+  name: Devour more unique humanoids than other changelings.
   description: This is our hunting ground and we must prove as such.
   components:
   - type: Objective
