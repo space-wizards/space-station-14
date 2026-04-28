@@ -173,6 +173,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
             return;
         }
+        ent.Comp.CurrentTransformSound = null;
 
         if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
