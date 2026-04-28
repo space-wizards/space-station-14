@@ -40,13 +40,11 @@ public sealed class GhostRoleTest : GameTest
     [Description("Ensures all GameRule entities with ghost roles can properly spawn those roles and they can be taken.")]
     public async Task TestGhostRolesAssignment(string ruleId)
     {
-        await Server.WaitIdleAsync();
-
         AntagSelectionComponent antag = null;
         await Server.WaitAssertion(() =>
         {
             var rule = SProtoMan.Index<EntityPrototype>(ruleId);
-            Assert.That(rule.TryGetComponent(out antag));
+            Assert.That(rule.TryGetComponent(out antag, SEntMan.ComponentFactory));
         });
 
         var gameRule = EntityUid.Invalid;
