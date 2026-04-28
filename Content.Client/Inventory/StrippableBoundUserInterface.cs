@@ -7,6 +7,7 @@ using Content.Client.Strip;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
