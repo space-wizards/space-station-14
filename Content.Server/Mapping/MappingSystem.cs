@@ -1,9 +1,6 @@
 using System.IO;
-using Content.Server.Administration;
-using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
@@ -18,7 +15,6 @@ namespace Content.Server.Mapping;
 /// </summary>
 public sealed class MappingSystem : EntitySystem
 {
-    [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -30,18 +26,7 @@ public sealed class MappingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _conHost.RegisterCommand("toggleautosave",
-            "Toggles autosaving for a map.",
-            "autosave <map> <path if enabling>",
-            ToggleAutosaveCommand);
-
-        Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
-    }
-
-    public void SetAutosaveEnabled(bool b)
-    {
-        _autosaveEnabled = b;
+        Subs.CVar(_cfg, CCVars.AutosaveEnabled, b => _autosaveEnabled = b, true);
     }
 
     public override void Update(float frameTime)
@@ -53,9 +38,9 @@ public sealed class MappingSystem : EntitySystem
 
         // Maps are paused while in mapping, so we have to use AllEntityQuery to get them.
 		var query = AllEntityQuery<AutoSaveComponent>();
-		while (query.MoveNext(out var uid, out var auto))
+		while (query.MoveNext(out var uid, out var autoSave))
 		{
-			if (_timing.RealTime <= auto.NextSaveTime)
+			if (_timing.RealTime <= autoSave.NextSaveTime)
 				continue;
 
             if (LifeStage(uid) >= EntityLifeStage.MapInitialized) // Saving post-init maps or grids has a high chance of throwing errors.
@@ -72,13 +57,13 @@ public sealed class MappingSystem : EntitySystem
 				continue;
 			}
 
-			auto.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
+			autoSave.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-			var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), auto.FileName).Replace(Path.DirectorySeparatorChar, '/'));
+			var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), autoSave.FileName).Replace(Path.DirectorySeparatorChar, '/'));
             _resMan.UserData.CreateDir(saveDir.ToRootedPath());
 
             var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
-            Log.Info($"Autosaving map {auto.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
+            Log.Info($"Autosaving map {autoSave.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft((uid, autoSave))} seconds.");
 
 			if (HasComp<MapComponent>(uid))
 				_loader.TrySaveMap(uid, path);
@@ -87,12 +72,9 @@ public sealed class MappingSystem : EntitySystem
 		}
 	}
 
-    private double ReadableTimeLeft(EntityUid uid)
+    private double ReadableTimeLeft(Entity<AutoSaveComponent> ent)
     {
-		if (!TryComp<AutoSaveComponent>(uid, out var comp))
-			return 0;
-
-		return Math.Round(comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
+		return Math.Round(ent.Comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
 	}
 
     #region Public API
@@ -127,36 +109,7 @@ public sealed class MappingSystem : EntitySystem
 		comp.FileName = Path.GetFileName(path);
 		comp.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-        Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft(uid)} seconds.");
-    }
-
-    #endregion
-
-    #region Commands
-
-    [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    private void ToggleAutosaveCommand(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length != 1 && args.Length != 2)
-        {
-            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
-            return;
-        }
-
-        if (!int.TryParse(args[0], out var intMapId))
-        {
-            shell.WriteError(Loc.GetString("cmd-mapping-failure-integer", ("arg", args[0])));
-            return;
-        }
-
-        string? path = null;
-        if (args.Length == 2)
-        {
-            path = args[1];
-        }
-
-        var mapId = new MapId(intMapId);
-        ToggleAutosave(mapId, path);
+        Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft((uid, comp))} seconds.");
     }
 
     #endregion
