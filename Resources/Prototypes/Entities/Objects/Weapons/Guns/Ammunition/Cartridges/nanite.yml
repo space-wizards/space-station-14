@@ -18,9 +18,5 @@
         base: ""
         base1: ""
         base2: ""
-  - type: EmitSoundOnLand
-    sound: null
-  - type: Appearance
-  #  - type: SpentAmmoVisuals
   - type: StaticPrice
     price: 20
