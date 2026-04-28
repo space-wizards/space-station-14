@@ -14,19 +14,13 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// The ID for the pipe node.
     /// </summary>
     [DataField]
-    public string Outlet = "pipe";
+    public string OutletId = "pipe";
 
     /// <summary>
     /// The ID for the solution.
     /// </summary>
     [DataField]
-    public string SolutionId = "tank";
-
-    /// <summary>
-    /// The solution that gases are condensed from.
-    /// </summary>
-    [ViewVariables]
-    public Entity<SolutionComponent>? Solution = null;
+    public string ContainerSlotId = "containerSlot";
 
     /// <summary>
     /// For a vaporizer, how many U of reagents are given per each mole of gas.

@@ -479,3 +479,96 @@
     guides:
     - GasCondensing
 
+- type: entity
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  id: BaseLiquidVaporizer
+  name: vaporizer
+  description: Vaporizes liquids into gases. Careful of hot overflow!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/condenser.rsi
+    snapCardinals: true
+    granularLayersRendering: true
+    layers:
+    - state: off
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: pipe
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      renderingStrategy: Default
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: trans
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: on }
+          False: { state: off }
+  - type: PipeColorVisuals
+  - type: Rotatable
+  - type: GasCondenser
+  - type: AtmosPipeColor
+  - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: Structures/Piping/Atmospherics/condenser.rsi
+        Secondary: Structures/Piping/Atmospherics/condenser_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/condenser_alt2.rsi
+  - type: AtmosDevice
+  - type: PipeRestrictOverlap
+  - type: ApcPowerReceiver
+    powerLoad: 10000
+ # - type: Machine
+ #   board: CondenserMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: ItemSlots
+    slots:
+      containerSlot:
+        #name: solution-component-slot-name-default
+        startingItem: Beaker
+        whitelist:
+          components:
+          - Solution
+  - type: Transform
+    noRot: false
+  - type: PowerSwitch
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
+  - type: LiquidVaporizer
+  - type: GuideHelp
+    guides:
+    - GasCondensing # replace with guide to vaporize
+
+
