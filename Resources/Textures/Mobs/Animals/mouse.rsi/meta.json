@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from goonstation commit https://github.com/goonstation/goonstation/commit/0ac5892610d834e6e6768bd03b8a29e71f4288ea, helmet, splat and inhand sprites created by Huaqas (GitHub)",
+    "copyright": "Taken from goonstation commit https://github.com/goonstation/goonstation/commit/0ac5892610d834e6e6768bd03b8a29e71f4288ea, mouse-3, helmet, splat and inhand sprites created by Huaqas (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -15,6 +15,9 @@
         },
         {
             "name": "icon-2"
+        },
+        {
+            "name": "icon-3"
         },
         {
             "name": "mouse-0",
@@ -161,6 +164,54 @@
             ]
         },
         {
+            "name": "mouse-3",
+            "directions": 4,
+            "delays": [
+                [
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4
+                ],
+                [
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "mouse-moving-3",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
             "name": "dead-0"
         },
         {
@@ -168,6 +219,9 @@
         },
         {
             "name": "dead-2"
+        },
+        {
+            "name": "dead-3"
         },
         {
             "name": "splat-0"
@@ -179,6 +233,9 @@
             "name": "splat-2"
         },
         {
+            "name": "splat-3"
+        },
+        {
             "name": "0-equipped-HELMET",
             "directions": 4
         },
@@ -188,6 +245,10 @@
         },
         {
             "name": "2-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "3-equipped-HELMET",
             "directions": 4
         },
         {
@@ -203,6 +264,10 @@
             "directions": 4
         },
         {
+            "name": "3-inhand-left",
+            "directions": 4
+        },
+        {
             "name": "0-inhand-right",
             "directions": 4
         },
@@ -212,6 +277,10 @@
         },
         {
             "name": "2-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "3-inhand-right",
             "directions": 4
         }
     ]

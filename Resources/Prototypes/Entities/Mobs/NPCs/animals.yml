@@ -1998,14 +1998,33 @@
   parent: MobMouse
   id: MobMouseCancer
   components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mouse-3
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mouse-moving-3
+    noMovementLayers:
+      movement:
+        state: mouse-3
+  - type: Clothing
+    equippedPrefix: 2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mouse-3
+      Critical:
+        Base: dead-3
+      Dead:
+        Base: splat-3
   - type: GhostRole
     name: ghost-role-information-cancer-mouse-name
     description: ghost-role-information-cancer-mouse-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgent
-  - type: Sprite
-    color: LightGreen
   - type: PointLight
     color: LightGreen
     radius: 5
