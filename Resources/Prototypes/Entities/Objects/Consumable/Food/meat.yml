@@ -609,12 +609,11 @@
       - Meat
     - type: SolutionContainerManager
       solutions:
-        food:
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 10
-          - ReagentId: Protein
-            Quantity: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
     - type: FoodSequenceElement
       entries:
         Taco: SnakeTaco
