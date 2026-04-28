@@ -845,8 +845,9 @@
           radius: 0.2
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Diona
+  - type: Injurable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
       - trigger:
@@ -909,10 +910,10 @@
         maxRange: 2
       spawns:
       - ReagentSlimeSpawner
-  - type: SolutionContainerManager
-    solutions:
-      anomaly:
-        maxVol: 1500
+  - type: Solution
+    id: anomaly
+    solution:
+      maxVol: 1550 # Doesn't really matter since it's an anom anyways
   - type: PuddleCreateAnomaly
     solution: anomaly
   - type: InjectionAnomaly
