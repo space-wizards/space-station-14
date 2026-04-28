@@ -3,18 +3,14 @@ using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
-using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using System.Numerics;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
 using Robust.Server.Containers;
@@ -24,7 +20,6 @@ namespace Content.Server.Fluids.EntitySystems;
 
 public sealed class SpraySystem : SharedSpraySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -32,7 +27,6 @@ public sealed class SpraySystem : SharedSpraySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly VaporSystem _vapor = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
