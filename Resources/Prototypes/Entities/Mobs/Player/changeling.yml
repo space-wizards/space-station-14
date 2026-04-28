@@ -34,3 +34,14 @@
       belt: ChangelingFleshClothingBelt
       back: ChangelingFleshClothingBack
 
+- type: entity # dummy prototype for the store listing
+  id: ChangelingVoiceMimicDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type:  VoiceMask
+    action: ActionChangelingVoiceMimic
+    isInnate: true
+    changeIDName: false
+    # this is set to false as to not mess with a changeling's ability to disguise. 
+    accentHide: false
+    titleText: changeling-voice-mimic-window-title

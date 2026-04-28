@@ -74,11 +74,11 @@ public sealed class MappingSystem : EntitySystem
 
 			auto.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-			var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), auto.FileName).Replace(Path.DirectorySeparatorChar, '/');
-			_resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
+			var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), auto.FileName).Replace(Path.DirectorySeparatorChar, '/'));
+            _resMan.UserData.CreateDir(saveDir.ToRootedPath());
 
-			var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml"));
-			Log.Info($"Autosaving map {auto.FileName} ({ToPrettyString(uid)}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
+            var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
+            Log.Info($"Autosaving map {auto.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
 
 			if (HasComp<MapComponent>(uid))
 				_loader.TrySaveMap(uid, path);

@@ -421,7 +421,7 @@ public abstract partial class SharedAtmosphereSystem
         if (deltaP <= 0)
             return null;
 
-        return ReleaseGasAt(mixture, (float)GetFlowVolume(mixture, deltaP, area, dt), deltaP);
+        return ReleaseGasAt(mixture, (float)GetFlowVolume(mixture, deltaP, area, dt), mixture.Pressure);
     }
 
     /// <summary>

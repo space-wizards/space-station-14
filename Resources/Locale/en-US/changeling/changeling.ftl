@@ -8,6 +8,7 @@ changeling-devour-attempt-failed-already-devoured = We already consumed this bod
 changeling-devour-attempt-failed-not-dead = This body yet lives! We cannot consume it alive!
 changeling-devour-attempt-failed-rotting = This corpse has only rotted biomass.
 changeling-devour-attempt-failed-protected = This victim's biomass is protected by armor!
+changeling-devour-attempt-failed-no-space = We have exceeded the maximum number of disguises!
 
 changeling-devour-begin-windup-self = Our uncanny mouth reveals itself with otherworldly hunger.
 changeling-devour-begin-windup-others = { CAPITALIZE(POSS-ADJ($user)) } uncanny mouth reveals itself with otherworldly hunger.
@@ -19,10 +20,6 @@ changeling-devour-consume-complete-others = { CAPITALIZE(POSS-ADJ($user)) } unca
 # transformation
 changeling-transform-attempt-self = Our bones snap, muscles tear, one flesh becomes another.
 changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } bones snap, muscles tear, body shifts into another.
-changeling-flesh-clothing-removed-popop = {CAPITALIZE(THE($item))} falls apart into fleshy remains!
-changeling-flesh-clothing-examine-wearer = [color=crimson]This item is a camouflaged part of your body. It will disappear if you unequip it![/color]
-changeling-flesh-clothing-alert-name = Flesh Clothing Ability
-changeling-flesh-clothing-alert-desc = Whether clothing transformation is enabled. Click to toggle.
 
 # transformation BUI
 changeling-transform-bui-select-entity = {$entity}
@@ -30,6 +27,19 @@ changeling-transform-bui-drop-identity-menu = Drop a devoured identity from your
 changeling-transform-bui-drop-identity-entity = Drop {$entity}
 changeling-transform-bui-drop-identity-entity-popup = You dropped {$entity} from your memory.
 changeling-transform-bui-drop-identity-cannot-drop = You cannot drop your current identity.
+
+# voice mimicry
+changeling-voice-mimic-window-title = Voice Mimicry
+
+# flesh clothing
+changeling-flesh-clothing-removed-popop = {CAPITALIZE(THE($item))} falls apart into fleshy remains!
+changeling-flesh-clothing-examine-wearer = [color=crimson]This item is a camouflaged part of your body. It will disappear if you unequip it![/color]
+changeling-flesh-clothing-alert-name = Flesh Clothing Ability
+changeling-flesh-clothing-alert-desc = Whether clothing transformation is enabled. Click to toggle.
+
+# biodegrade
+changeling-biodegrade-used-popup = {CAPITALIZE(THE($user))} vomits acid over {POSS-ADJ($user)} {$restraint}!
+changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 
 # other
 changeling-paused-map-name = Changeling identity storage map
