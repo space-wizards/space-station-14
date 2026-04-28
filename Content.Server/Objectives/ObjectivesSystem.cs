@@ -12,7 +12,6 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Antag;
-using Content.Server.Antag.Components;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
 using Content.Shared.Prototypes;
@@ -98,7 +97,6 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // first get the total number of players that were in these game rules combined
             var total = 0;
             var totalInCustody = 0;
-            var agentName = Loc.GetString(agent);
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
@@ -106,10 +104,10 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             }
 
             var result = new StringBuilder();
-            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agentName)));
-            if (agentName == Loc.GetString("traitor-round-end-agent-name"))
+            result.AppendLine(Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent)));
+            if (agent == Loc.GetString("traitor-round-end-agent-name"))
             {
-                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agentName)));
+                result.AppendLine(Loc.GetString("objectives-round-end-result-in-custody", ("count", total), ("custody", totalInCustody), ("agent", agent)));
             }
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
