@@ -483,9 +483,6 @@
         Quantity: 10
   - type: SliceableFood
     slice: FoodPieAmanitaSlice
-  - type: Tag
-    tags:
-    - Pie
 
 - type: entity
   name: slice of amanita pie
@@ -511,10 +508,6 @@
         Quantity: 1
       - ReagentId: Amatoxin
         Quantity: 1.25
-  - type: Tag
-    tags:
-    - Pie
-    - Slice
 # Tastes like pie, mushrooms.
 
 - type: entity
@@ -532,9 +525,6 @@
     - state: plump
   - type: SliceableFood
     slice: FoodPiePlumpSlice
-  - type: Tag
-    tags:
-    - Pie
 
 - type: entity
   name: slice of plump pie
@@ -549,10 +539,6 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: purple
-  - type: Tag
-    tags:
-    - Pie
-    - Slice
 # Tastes like pie, mushrooms.
 
 # Tart
