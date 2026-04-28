@@ -168,6 +168,8 @@
     enabled: false
     radius: 1.5
     color: lightblue
+  - type: Welder
+    fuelReagent: Plasma
   - type: RequiresEyeProtection
     statusEffectTime: 5 # less harmful; sunglasses can block it
 
