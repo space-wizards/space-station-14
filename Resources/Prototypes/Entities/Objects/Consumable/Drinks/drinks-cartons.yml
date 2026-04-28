@@ -265,6 +265,22 @@
 
 - type: entity
   parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseLargeFull]
+  id: DrinkJuiceLemonCartonXL
+  name: lemon juice
+  description: First it's sour, then it's still sour.
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceLemon
+        Quantity: 240
+  - type: Label
+    currentLabel: reagent-name-juice-lemon
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+
+- type: entity
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseLargeFull]
   id: DrinkJuiceLimeCartonXL
   name: lime juice XL
   description: Sweet-sour goodness.

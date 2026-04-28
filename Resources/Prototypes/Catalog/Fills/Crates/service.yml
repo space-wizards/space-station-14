@@ -267,19 +267,22 @@
   parent: CrateFreezer
   id: CrateServiceSodaDispenser
   name: soda dispenser refill crate
-  description: Contains refills for soda dispensers.
+  description: Contains one full refill for a soda dispenser.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
+        - id: DrinkCoconutWaterJug
         - id: DrinkCoffeeJug
         - id: DrinkColaBottleFull
         - id: DrinkCreamCartonXL
         - id: DrinkDrGibbJug
         - id: DrinkEnergyDrinkJug
         - id: DrinkGreenTeaJug
+        - id: DrinkGrenadineBottleFull
         - id: DrinkIceJug
+        - id: DrinkJuiceLemonCartonXL
         - id: DrinkJuiceLimeCartonXL
         - id: DrinkJuiceOrangeCartonXL
         - id: DrinkLemonLimeJug
@@ -296,19 +299,22 @@
   parent: CrateFreezer
   id: CrateServiceBoozeDispenser
   name: booze dispenser refill crate
-  description: Contains refills for booze dispensers.
+  description: Contains one full refill for a booze dispenser.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
+        - id: DrinkAbsintheBottleFull
         - id: DrinkAleBottleFullGrowler
         - id: DrinkBeerGrowler
+        - id: DrinkBlueCuracaoBottleFull
         - id: DrinkCoffeeLiqueurBottleFull
         - id: DrinkCognacBottleFull
         - id: DrinkGinBottleFull
-        - id: DrinkMeadJug
+        - id: DrinkMelonLiquorBottleFull
         - id: DrinkRumBottleFull
+        - id: DrinkSakeBottleFull
         - id: DrinkTequilaBottleFull
         - id: DrinkVermouthBottleFull
         - id: DrinkVodkaBottleFull
