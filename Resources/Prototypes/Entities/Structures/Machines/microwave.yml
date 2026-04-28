@@ -5,7 +5,7 @@
   description: It's magic.
   components:
   - type: Microwave
-    capacity: 10
+    capacity: 12
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -158,7 +158,7 @@
   - type: Microwave
     cookTimeMultiplier: 0.5
     baseHeatMultiplier: 200
-    capacity: 10
+    capacity: 12
     canMicrowaveIdsSafely: false
     explosionChance: 0.3
   - type: Sprite

@@ -10,11 +10,6 @@ microwave-component-suicide-message = You cook your head!
 microwave-component-interact-full = It's full.
 microwave-component-interact-item-too-big = { CAPITALIZE(THE($item)) } is too big to fit in the microwave!
 
-## Bound UI
-
-microwave-bound-user-interface-instant-button = INSTANT
-microwave-bound-user-interface-cook-time-label = COOK TIME: {$time}
-
 ## UI
 
 microwave-menu-title = Microwave
@@ -24,3 +19,6 @@ microwave-menu-eject-all-tooltip = This vaporizes all reagents, but ejects any s
 microwave-menu-instant-button = INSTANT
 microwave-menu-footer-flavor-left = Do not insert any electronic, metallic or living objects.
 microwave-menu-footer-flavor-right = v1.5
+microwave-menu-ingredients = INGREDIENTS
+microwave-menu-cook-time = COOK TIME
+microwave-menu-time-selection = TIME SELECTION
