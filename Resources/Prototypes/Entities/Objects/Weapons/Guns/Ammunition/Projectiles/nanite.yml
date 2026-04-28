@@ -6,7 +6,7 @@
     lifetime: 0.4
   - type: Sprite
     drawdepth: BelowMobs
-    offset: -0.35, 0
+    offset: -.25, 0
     layers:
      - shader: unshaded
        map: ["enum.EffectLayers.Unshaded"]
