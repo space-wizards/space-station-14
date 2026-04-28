@@ -1,0 +1,29 @@
+# Abilities
+
+- type: listing
+  id: ChangelingArmBlade
+  name: changeling-catalog-arm-blade-name
+  description: changeling-catalog-arm-blade-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 25
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionRetractableItemArmBlade
+
+- type: listing
+  id: ChangelingFleshClothing
+  name: changeling-catalog-flesh-clothing-name
+  description: changeling-catalog-flesh-clothing-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingFleshClothingAbilityStoreDummy

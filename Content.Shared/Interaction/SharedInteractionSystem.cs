@@ -75,16 +75,16 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-        private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
-        private EntityQuery<FixturesComponent> _fixtureQuery;
-        private EntityQuery<ItemComponent> _itemQuery;
-        private EntityQuery<PhysicsComponent> _physicsQuery;
-        private EntityQuery<HandsComponent> _handsQuery;
-        private EntityQuery<InteractionRelayComponent> _relayQuery;
-        private EntityQuery<CombatModeComponent> _combatQuery;
-        private EntityQuery<WallMountComponent> _wallMountQuery;
-        private EntityQuery<UseDelayComponent> _delayQuery;
-        private EntityQuery<ActivatableUIComponent> _uiQuery;
+        [Dependency] private readonly EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery = default!;
+        [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery = default!;
+        [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery = default!;
+        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
+        [Dependency] private readonly EntityQuery<InteractionRelayComponent> _relayQuery = default!;
+        [Dependency] private readonly EntityQuery<CombatModeComponent> _combatQuery = default!;
+        [Dependency] private readonly EntityQuery<WallMountComponent> _wallMountQuery = default!;
+        [Dependency] private readonly EntityQuery<UseDelayComponent> _delayQuery = default!;
+        [Dependency] private readonly EntityQuery<ActivatableUIComponent> _uiQuery = default!;
 
         /// <summary>
         /// The collision mask used by default for
@@ -103,17 +103,6 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
-            _ignoreUiRangeQuery = GetEntityQuery<IgnoreUIRangeComponent>();
-            _fixtureQuery = GetEntityQuery<FixturesComponent>();
-            _itemQuery = GetEntityQuery<ItemComponent>();
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
-            _handsQuery = GetEntityQuery<HandsComponent>();
-            _relayQuery = GetEntityQuery<InteractionRelayComponent>();
-            _combatQuery = GetEntityQuery<CombatModeComponent>();
-            _wallMountQuery = GetEntityQuery<WallMountComponent>();
-            _delayQuery = GetEntityQuery<UseDelayComponent>();
-            _uiQuery = GetEntityQuery<ActivatableUIComponent>();
-
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
 
             // TODO make this a broadcast event subscription again when engine has updated.
@@ -233,6 +222,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
         {
+            if (_gameTiming.ApplyingState)
+                return; // The changes are already networked with the same gamestate as the container event.
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
@@ -241,6 +233,9 @@ namespace Content.Shared.Interaction
 
         private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
         {
+            if (_gameTiming.ApplyingState)
+                return; // The changes are already networked with the same gamestate as the container event.
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
@@ -249,6 +244,11 @@ namespace Content.Shared.Interaction
 
         private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
         {
+            if (_gameTiming.ApplyingState)
+                return; // The changes are already networked with the same gamestate as the container event.
+            // Other than the two cases above this is not a container event, but adding and removing hands is networked similarly
+            // and removing hands causes items to be dropped.
+
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
             else
@@ -512,12 +512,16 @@ namespace Content.Shared.Interaction
             }
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(target));
+
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
+            var userMessage = new UserInteractHandEvent(user, target);
+            RaiseLocalEvent(user, userMessage, true);
+
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
             DoContactInteraction(user, target, message);
-            if (message.Handled)
+            if (message.Handled || userMessage.Handled)
                 return;
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(target));
@@ -1050,10 +1054,14 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
+
+            var userInteractUsingEvent = new UserInteractUsingEvent(user, used, target, clickLocation);
+            RaiseLocalEvent(user, userInteractUsingEvent, true);
+
             DoContactInteraction(user, used, interactUsingEvent);
             DoContactInteraction(user, target, interactUsingEvent);
             // Contact interactions are currently only used for forensics, so we don't raise used -> target
-            if (interactUsingEvent.Handled)
+            if (interactUsingEvent.Handled || userInteractUsingEvent.Handled)
                 return true;
 
             if (InteractDoAfter(user, used, target, clickLocation, canReach: true, checkDeletion: false))
@@ -1465,6 +1473,18 @@ namespace Content.Shared.Interaction
             return ev.Handled;
         }
 
+        /// <summary>
+        /// Get a list of entities which are currently considered to be interacting with the specified target entity.
+        /// Note: the result set is cleared on call.
+        /// </summary>
+        public void GetEntitiesInteractingWithTarget(EntityUid target, HashSet<EntityUid> result)
+        {
+            result.Clear();
+
+            var ev = new GetInteractingEntitiesEvent(target, result);
+            RaiseLocalEvent(target, ref ev, true);
+        }
+
         [Obsolete("Use ActionBlockerSystem")]
         public bool SupportsComplexInteractions(EntityUid user)
         {
@@ -1541,5 +1561,15 @@ namespace Content.Shared.Interaction
 
         public bool Handled;
         public bool InRange = false;
+    }
+
+    /// <summary>
+    /// Raised to allow systems to provide entities which are interacting with the target entity.
+    /// </summary>
+    [ByRefEvent]
+    public record struct GetInteractingEntitiesEvent(EntityUid Target, HashSet<EntityUid> InteractingEntities)
+    {
+        public readonly EntityUid Target = Target;
+        public HashSet<EntityUid> InteractingEntities = InteractingEntities;
     }
 }
