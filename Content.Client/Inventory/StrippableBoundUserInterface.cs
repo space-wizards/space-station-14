@@ -4,14 +4,12 @@ using Content.Client.Administration.Managers;
 using Content.Client.Examine;
 using Content.Client.Hands.Systems;
 using Content.Client.Strip;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
-using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -46,6 +44,7 @@ namespace Content.Client.Inventory
         private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
+        private readonly SharedEnsnareableSystem _snare;
         private readonly ContrabandSystem _contraband;
 
         // Is the BUI in admin view? If in admin view, has custom UI elements to help admins see things
@@ -93,6 +92,7 @@ namespace Content.Client.Inventory
             _cuffable = EntMan.System<SharedCuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
             _contraband = EntMan.System<ContrabandSystem>();
+            _snare = EntMan.System<SharedEnsnareableSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
 
@@ -173,7 +173,7 @@ namespace Content.Client.Inventory
             }
 
             // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
-            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && snare.IsEnsnared)
+            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && _snare.IsEnsnared((Owner, snare)))
             {
                 var button = new Button()
                 {
