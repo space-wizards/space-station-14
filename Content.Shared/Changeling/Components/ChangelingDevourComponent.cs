@@ -133,7 +133,7 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public Dictionary<string, FixedPoint2> DevourDnaReward = new()
     {
-        { "ChangelingDNA", 10 }
+        { "ChangelingDNA", 2 }
     };
 
     public override bool SendOnlyToOwner => true;
