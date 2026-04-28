@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(EntityUid))]
     public sealed class EntityTest : GameTest
     {
-        private static readonly ProtoId<EntityCategoryPrototype> SpawnerCategory = "Spawner";
+        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
 
         public override PoolSettings PoolSettings => new()
         {
@@ -255,7 +255,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
-                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory))
+                .Where(p => p.Categories.All(x => !IgnoredCategories.Contains(x.ID)))
                 .Select(p => p.ID)
                 .ToList();
 
@@ -385,9 +385,6 @@ namespace Content.IntegrationTests.Tests
                 "StationData", // errors when removed mid-round
                 "StationJobs",
                 "Actor", // We aren't testing actor components, those need their player session set.
-                "BlobFloorPlanBuilder", // Implodes if unconfigured.
-                "DebrisFeaturePlacerController", // Above.
-                "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
             };

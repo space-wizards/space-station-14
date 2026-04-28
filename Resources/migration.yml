@@ -828,7 +828,16 @@ CrateVendingMachineRestockChangFilled: VendingMachineRestockChang
 CrateVendingMachineRestockDiscountDansFilled: VendingMachineRestockDiscountDans
 CrateVendingMachineRestockDonutFilled: VendingMachineRestockDonut
 
-# 2026-03-15
+# 2026-03-28
+# The great solutions YAML nuke
+FoodMeatSnail: MobSnail
+
+# 2026-04-25
+CratePartsT3: null
+CratePartsT3T4: null
+CratePartsT4: null
+
+# 2026-04-26
 CrateChemistryVials: null
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
