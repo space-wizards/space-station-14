@@ -776,8 +776,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
-        // Ensure that we have a mind for our entity!
-        if (player.GetMind() is not { } mind)
+        // Ensure that we have a mind for our entity, and that it isn't already attached to a different entity!
+        if (player.GetMind() is not { } mind ||
+            !TryComp<MindComponent>(mind, out var mindComp)
+            || mindComp.OwnedEntity != antag)
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
