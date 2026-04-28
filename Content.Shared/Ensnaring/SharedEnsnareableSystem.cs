@@ -1,5 +1,5 @@
+using System.Linq;
 using Content.Shared.Alert;
-using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -61,7 +61,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, EnsnareableComponent component, ref AfterAutoHandleStateEvent args)
     {
-        RaiseLocalEvent(uid, new EnsnaredChangedEvent(component.IsEnsnared));
+        RaiseLocalEvent(uid, new EnsnaredChangedEvent(IsEnsnared(uid)));
     }
 
     private void OnDoAfter(EntityUid uid, EnsnareableComponent component, DoAfterEvent args)
@@ -72,7 +72,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         if (args.Handled || !TryComp<EnsnaringComponent>(args.Args.Used, out var ensnaring))
             return;
 
-        if (args.Cancelled || !Container.Remove(args.Args.Used.Value, component.Container))
+        if (args.Cancelled || component.Container == null || !Container.Remove(args.Args.Used.Value, component.Container))
         {
             if (args.User == args.Target)
                 Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, args.User, PopupType.MediumCaution);
@@ -82,11 +82,10 @@ public abstract class SharedEnsnareableSystem : EntitySystem
             return;
         }
 
-        component.IsEnsnared = component.Container.ContainedEntities.Count > 0;
+        _hands.PickupOrDrop(args.Args.User, args.Args.Used.Value);
+
         Dirty(uid, component);
         ensnaring.Ensnared = null;
-
-        _hands.PickupOrDrop(args.Args.User, args.Args.Used.Value);
 
         if (args.User == args.Target)
             Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, args.User, PopupType.Medium);
@@ -107,7 +106,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         _speedModifier.RefreshMovementSpeedModifiers(uid);
 
-        var ev = new EnsnaredChangedEvent(component.IsEnsnared);
+        var ev = new EnsnaredChangedEvent(IsEnsnared(uid));
         RaiseLocalEvent(uid, ev);
     }
 
@@ -118,7 +117,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         _speedModifier.RefreshMovementSpeedModifiers(uid);
 
-        var ev = new EnsnaredChangedEvent(component.IsEnsnared);
+        var ev = new EnsnaredChangedEvent(IsEnsnared(uid));
         RaiseLocalEvent(uid, ev);
     }
 
@@ -129,13 +128,13 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, EnsnareableComponent component, AppearanceComponent? appearance = null)
     {
-        Appearance.SetData(uid, EnsnareableVisuals.IsEnsnared, component.IsEnsnared, appearance);
+        Appearance.SetData(uid, EnsnareableVisuals.IsEnsnared, IsEnsnared(uid), appearance);
     }
 
     private void MovementSpeedModify(EntityUid uid, EnsnareableComponent component,
         RefreshMovementSpeedModifiersEvent args)
     {
-        if (!component.IsEnsnared)
+        if (!IsEnsnared(uid))
             return;
 
         args.ModifySpeed(component.WalkSpeed, component.SprintSpeed);
@@ -176,6 +175,9 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
     {
+        if (component.Container == null)
+            return;
+
         foreach (var entity in component.Container.ContainedEntities)
         {
             if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
@@ -188,7 +190,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
     private void OnRemoveEnsnareAlert(Entity<EnsnareableComponent> ent, ref RemoveEnsnareAlertEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || ent.Comp.Container == null)
             return;
 
         foreach (var ensnare in ent.Comp.Container.ContainedEntities)
@@ -209,8 +211,8 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnared))
             return;
 
-        if (ensnared.IsEnsnared)
-            ForceFree(uid, component);
+        if (IsEnsnared((component.Ensnared.Value, ensnared)))
+            ForceFree((uid, component));
     }
 
     private void AttemptStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggerAttemptEvent args)
@@ -243,7 +245,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     public bool TryEnsnare(EntityUid target, EntityUid ensnare, EnsnaringComponent component)
     {
         //Don't do anything if they don't have the ensnareable component.
-        if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
+        if (!TryComp<EnsnareableComponent>(target, out var ensnareable) || ensnareable.Container == null)
             return false;
 
         var numEnsnares = ensnareable.Container.ContainedEntities.Count;
@@ -261,7 +263,6 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         }
 
         component.Ensnared = target;
-        ensnareable.IsEnsnared = true;
         Dirty(target, ensnareable);
 
         UpdateAlert(target, ensnareable);
@@ -273,24 +274,64 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     /// <summary>
     /// Used to force free someone for things like if the <see cref="EnsnaringComponent"/> is removed
     /// </summary>
-    public void ForceFree(EntityUid ensnare, EnsnaringComponent component)
+    public void ForceFree(Entity<EnsnaringComponent?> entity)
     {
-        if (component.Ensnared == null)
+        if (!Resolve(entity, ref entity.Comp, false))
             return;
 
-        if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnareable))
+        if (!TryComp<EnsnareableComponent>(entity.Comp.Ensnared, out var ensnareable) || ensnareable.Container == null)
             return;
 
-        var target = component.Ensnared.Value;
+        var target = entity.Comp.Ensnared.Value;
 
-        Container.Remove(ensnare, ensnareable.Container, force: true);
-        ensnareable.IsEnsnared = ensnareable.Container.ContainedEntities.Count > 0;
-        Dirty(component.Ensnared.Value, ensnareable);
-        component.Ensnared = null;
+        Container.Remove(entity.Owner, ensnareable.Container, force: true);
+
+        Dirty(entity.Comp.Ensnared.Value, ensnareable);
+        entity.Comp.Ensnared = null;
 
         UpdateAlert(target, ensnareable);
-        var ev = new EnsnareRemoveEvent(component.WalkSpeed, component.SprintSpeed);
-        RaiseLocalEvent(ensnare, ev);
+        var ev = new EnsnareRemoveEvent(entity.Comp.WalkSpeed, entity.Comp.SprintSpeed);
+        RaiseLocalEvent(target, ev);
+    }
+
+    /// <summary>
+    /// Removes all ensnares from an entity.
+    /// </summary>
+    /// <param name="entity">The entity to remove snares from.</param>
+    /// <returns>The list of removed snares.</returns>
+    public List<EntityUid> ForceFreeAll(Entity<EnsnareableComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return new List<EntityUid>();
+
+        if (entity.Comp.Container == null)
+            return new List<EntityUid>();
+
+        List<EntityUid> snares = new();
+
+        foreach (var snare in entity.Comp.Container.ContainedEntities.ToList())
+        {
+            ForceFree(snare);
+            snares.Add(snare);
+        }
+
+        return snares;
+    }
+
+    /// <summary>
+    /// Checks whether an entity is currently being ensnared.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    /// <returns>True if ensnared, otherwise False.</returns>
+    public bool IsEnsnared(Entity<EnsnareableComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        if (entity.Comp.Container == null)
+            return false;
+
+        return entity.Comp.Container.ContainedEntities.Count > 0;
     }
 
     /// <summary>
@@ -299,7 +340,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     /// <param name="target">The entity that has been affected by a snare</param>
     public void UpdateAlert(EntityUid target, EnsnareableComponent component)
     {
-        if (!component.IsEnsnared)
+        if (!IsEnsnared(target))
             _alerts.ClearAlert(target, component.EnsnaredAlert);
         else
             _alerts.ShowAlert(target, component.EnsnaredAlert);
