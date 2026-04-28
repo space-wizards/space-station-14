@@ -6,3 +6,6 @@ changeling-catalog-flesh-clothing-desc = Your body's surface will adapt to mirro
 
 changeling-catalog-voice-mimic-name = Voice Mimicry
 changeling-catalog-voice-mimic-desc = Change your vocal coords at will to imitate existing (and imaginary) crew members. Perfect for luring in prey.
+
+changeling-catalog-biodegrade-name = Biodegrade
+changeling-catalog-biodegrade-desc = You learn to utilize acid glands within your body to vomit acid over constraints, setting yourself free.

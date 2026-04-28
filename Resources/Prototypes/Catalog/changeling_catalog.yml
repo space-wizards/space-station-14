@@ -34,10 +34,25 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-    ChangelingDNA: 10 # TODO: Balance this once we have DNA from devour. It's currently cheap for testing purposes.
+    ChangelingDNA: 10
   categories:
   - ChangelingAbilities
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
   productComponents: ChangelingVoiceMimicDummy
+
+- type: listing
+  id: ChangelingBiodegrade
+  name: changeling-catalog-biodegrade-name
+  description: changeling-catalog-biodegrade-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingBiodegrade
