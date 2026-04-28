@@ -210,9 +210,10 @@ public abstract partial class SharedToolSystem
     private void UpdateWelders()
     {
         // TODO: Same as the other EntityQueryEnumerators...
-        var query = EntityQueryEnumerator<WelderComponent, SolutionManagerComponent>();
+        // TODO: ActiveWelderComponent
+        var query = EntityQueryEnumerator<WelderComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
+        while (query.MoveNext(out var uid, out var welder))
         {
             if (curTime < welder.NextUpdate)
                 continue;
@@ -223,7 +224,8 @@ public abstract partial class SharedToolSystem
             if (!welder.Enabled)
                 continue;
 
-            if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
+            // TODO: Relations
+            if (!SolutionContainerSystem.TryGetSolution(uid, welder.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
             SolutionContainerSystem.RemoveReagent(solutionComp.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderUpdateTimer.TotalSeconds);

@@ -101,8 +101,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Enumerate over all VaporComponents
             // TODO: Vapor should just use SolutionComponent and not be capable of having multiple solutions.
-            var query = EntityQueryEnumerator<VaporComponent, SolutionManagerComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
+            var query = EntityQueryEnumerator<VaporComponent, SolutionComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var vaporComp, out var solution, out var xform))
             {
                 // Return early if we're not active
                 if (!vaporComp.Active)
@@ -118,46 +118,42 @@ namespace Content.Server.Chemistry.EntitySystems
                     if (vaporComp.PreviousTileRef != null && tile == vaporComp.PreviousTileRef)
                         continue;
 
-                    // Enumerate over all the reagents in the vapor entity solution
-                    foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
+                    // Iterate over the reagents in the solution
+                    // Reason: Each reagent in our solution may have a unique TileReaction
+                    // In this instance, we check individually for each reagent's TileReaction
+                    // This is not doing chemical reactions!
+                    var contents = solution.Solution;
+                    foreach (var reagentQuantity in contents.Contents.ToArray())
                     {
-                        // Iterate over the reagents in the solution
-                        // Reason: Each reagent in our solution may have a unique TileReaction
-                        // In this instance, we check individually for each reagent's TileReaction
-                        // This is not doing chemical reactions!
-                        var contents = soln.Comp.Solution;
-                        foreach (var reagentQuantity in contents.Contents.ToArray())
-                        {
-                            // Check if the reagent is empty
-                            if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                                continue;
+                        // Check if the reagent is empty
+                        if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                            continue;
 
-                            var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+                        var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
-                            // Limit the reaction amount to a minimum value to ensure no floating point funnies.
-                            // Ex: A solution with a low percentage transfer amount will slowly approach 0.01... and never get deleted
-                            var clampedAmount = Math.Max(
-                                (float)reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
-                                vaporComp.MinimumTransferAmount);
+                        // Limit the reaction amount to a minimum value to ensure no floating point funnies.
+                        // Ex: A solution with a low percentage transfer amount will slowly approach 0.01... and never get deleted
+                        var clampedAmount = Math.Max(
+                            (float)reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
+                            vaporComp.MinimumTransferAmount);
 
-                            // Preform the reagent's TileReaction
-                            var reaction =
-                                reagent.ReactionTile(tile,
-                                    clampedAmount,
-                                    EntityManager,
-                                    reagentQuantity.Reagent.Data);
+                        // Preform the reagent's TileReaction
+                        var reaction =
+                            reagent.ReactionTile(tile,
+                                clampedAmount,
+                                EntityManager,
+                                reagentQuantity.Reagent.Data);
 
-                            if (reaction > reagentQuantity.Quantity)
-                                reaction = reagentQuantity.Quantity;
+                        if (reaction > reagentQuantity.Quantity)
+                            reaction = reagentQuantity.Quantity;
 
-                            _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
-                        }
-
-                        // Delete the vapor entity if it has no contents
-                        if (contents.Volume == 0)
-                            QueueDel(uid);
-
+                        _solutionContainerSystem.RemoveReagent((uid, solution), reagentQuantity.Reagent, reaction);
                     }
+
+                    // Delete the vapor entity if it has no contents
+                    if (contents.Volume == 0)
+                        QueueDel(uid);
+
 
                     // Set the previous tile reference to the current tile
                     vaporComp.PreviousTileRef = tile;
