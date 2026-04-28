@@ -607,8 +607,8 @@
       tags:
       - Cooked
       - Meat
-    - type: SolutionContainerManager
-      solutions:
+    - type: Solution
+      solution:
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
