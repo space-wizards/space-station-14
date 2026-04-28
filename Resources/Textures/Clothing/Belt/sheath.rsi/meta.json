@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/555fa0ed9f380509156d94131bd8a3f1c1fee1cf , edited by Skarletto (github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/555fa0ed9f380509156d94131bd8a3f1c1fee1cf , edited by Skarletto (github), Regular Inhands & Inhand/Equipped Fill Visuals by Prole0 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,11 +12,11 @@
         "directions": 4
     },
     {
-        "name": "equipped-belt-fill-1",
+        "name": "equipped-belt-fill",
         "directions": 4
     },
     {
-        "name": "fill-1"
+        "name": "fill"
     },
     {
         "name": "icon"
@@ -26,7 +26,7 @@
         "directions": 4
     },
     {
-        "name": "inhand-left-fill-1",
+        "name": "inhand-left-fill",
         "directions": 4
     },
     {
@@ -34,7 +34,7 @@
         "directions": 4
     },
     {
-        "name": "inhand-right-fill-1",
+        "name": "inhand-right-fill",
         "directions": 4
     }
   ]

@@ -8,6 +8,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
 
+// TODO: Make this work with multiple Visual Layers, see comment block below the summary in ItemSlotVisualsComponent for info.
 public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComponent>
 {
     [Dependency] private readonly ItemSystem _itemSystem = default!;
@@ -34,8 +35,7 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
                 return;
 
             SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
-            var stateName = component.FillBaseName + component.MaxFillLevels;
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, component.FillBaseName);
         }
         else
         {
@@ -63,7 +63,8 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
 
             var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
 
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + component.InHandsMaxFillLevels;
+            // No need to add fillLevels if it'll just fit one item.
+            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName;
 
             layer.State = key;
 
@@ -88,7 +89,7 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
             var layer = new PrototypeLayerData();
 
             var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + ent.Comp.EquippedMaxFillLevels;
+            var key = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
             if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
                 return;

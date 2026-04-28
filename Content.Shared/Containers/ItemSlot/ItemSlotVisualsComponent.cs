@@ -1,24 +1,24 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Chemistry.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Containers.ItemSlot;
 
+/// <summary>
+///     The same concept as <see cref="SolutionContainerVisualsComponent"/> but it now handles fill visuals as a binary
+///     due to item slots allowing only one item per slot.
+/// </summary>
+
+// Only thing needed here is making it work with multiple visual layers so it can function with multiple slots &
+// fully remove the need for ItemMapper for ItemSlots. That and it would make inhand/wielded/equipped gun visuals
+// for inserting a magazine possible.
 [RegisterComponent]
 public sealed partial class ItemSlotVisualsComponent : Component
 {
     [DataField]
-    public int MaxFillLevels;
-
-    [DataField]
     public string? FillBaseName;
 
     [DataField]
-    public int InHandsMaxFillLevels;
-
-    [DataField]
     public string? InHandsFillBaseName;
-
-    [DataField]
-    public int EquippedMaxFillLevels;
 
     [DataField]
     public string? EquippedFillBaseName;
