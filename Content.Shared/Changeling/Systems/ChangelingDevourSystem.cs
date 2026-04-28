@@ -9,6 +9,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.Husking.Components;
+using Content.Shared.Husking.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
@@ -33,6 +35,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedStoreSystem _store = default!;
+    [Dependency] private readonly HuskingSystem _husk = default!;
 
     public override void Initialize()
     {
@@ -183,6 +186,8 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var devouredEv = new ChangelingGotDevouredEvent(ent.Owner, target, becomesIdentity, uniqueIdentity, willGrantDna);
         RaiseLocalEvent(target, ref devouredEv); // Don't broadcast this one, all neccessary data is in the previous event already. Just use that one if a broadcast is needed.
 
+        _husk.TryHusk(args.Target.Value);
+
         EnsureComp<RecentlyDevouredComponent>(target);
 
         // Grants the DNA reward associated with a successful unique devour.
@@ -219,7 +224,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<RecentlyDevouredComponent>(victim))
+        if (HasComp<RecentlyDevouredComponent>(victim) || HasComp<HuskedComponent>(victim))
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-devoured-recently"), changeling.Owner, changeling.Owner, PopupType.Medium);
