@@ -186,7 +186,8 @@ public sealed class ChangelingDevourSystem : EntitySystem
         var devouredEv = new ChangelingGotDevouredEvent(ent.Owner, target, becomesIdentity, uniqueIdentity, willGrantDna);
         RaiseLocalEvent(target, ref devouredEv); // Don't broadcast this one, all neccessary data is in the previous event already. Just use that one if a broadcast is needed.
 
-        _husk.TryHusk(args.Target.Value);
+        if (ent.Comp.Husk)
+            _husk.TryHusk(args.Target.Value);
 
         EnsureComp<RecentlyDevouredComponent>(target);
 
