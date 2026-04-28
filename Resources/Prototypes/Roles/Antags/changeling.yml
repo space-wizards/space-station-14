@@ -29,6 +29,6 @@
     currencyWhitelist:
     - ChangelingDNA
     balance:
-      ChangelingDNA: 12
+      ChangelingDNA: 60
   mindRoles:
   - MindRoleChangeling
