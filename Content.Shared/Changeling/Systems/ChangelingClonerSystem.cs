@@ -209,14 +209,14 @@ public sealed class ChangelingClonerSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(target))
             return; // cloning only works for humanoids at the moment
 
-        if (!_prototype.Resolve(ent.Comp.Settings, out var settings))
-            return;
-
         _adminLogger.Add(LogType.Identity,
             $"{user} is using {ent.Owner} to draw DNA from {target}.");
 
         // Make a copy of the target on a paused map, so that we can apply their components later.
-        ent.Comp.ClonedBackup = _changelingIdentity.CloneToPausedMap(settings, target);
+        ent.Comp.ClonedBackup = _changelingIdentity.CloneToPausedMap(ent.Comp.Settings, target);
+        if (ent.Comp.ClonedBackup == null)
+            return;
+
         ent.Comp.State = ChangelingClonerState.Filled;
         _appearance.SetData(ent.Owner, ChangelingClonerVisuals.State, ChangelingClonerState.Filled);
         Dirty(ent);

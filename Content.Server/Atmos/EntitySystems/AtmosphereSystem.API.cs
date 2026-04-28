@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Diagnostics;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
@@ -6,6 +7,7 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -287,6 +289,95 @@ public partial class AtmosphereSystem
     public override void AdjustTileMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool excite = false)
     {
         GetTileMixture(entity, excite)?.AdjustMoles(gas, mols);
+    }
+
+    /// <summary>
+    /// Retrieves the pressures of all gas mixtures
+    /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
+    /// provided <paramref name="pressures"/> span.
+    /// </summary>
+    /// <param name="tiles">The tiles span to find the pressures of.</param>
+    /// <param name="pressures">The span to store the pressures to - this should be the same length
+    /// as the tile array.</param>
+    /// <exception cref="ArgumentException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for <see cref="TileAtmosphere"/> or <see cref="GasMixture"/>s that are null,
+    /// this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(tiles.Length, pressures.Length);
+
+        var len = tiles.Length;
+        var arr1 = ArrayPool<GasMixture?>.Shared.Rent(len);
+
+        try
+        {
+            var mixtSpan = arr1.AsSpan(0, len);
+            for (var i = 0; i < tiles.Length; i++)
+            {
+                mixtSpan[i] = tiles[i]?.Air;
+            }
+
+            GetBulkGasMixturePressures(mixtSpan, pressures);
+        }
+        finally
+        {
+            ArrayPool<GasMixture?>.Shared.Return(arr1);
+        }
+    }
+
+    /// <summary>
+    /// Gets the pressures of a <see cref="Span{T}"/> of <see cref="GasMixture"/>s.
+    /// </summary>
+    /// <param name="mixtures">The <see cref="GasMixture"/> to get the pressures of.</param>
+    /// <param name="pressures">The <see cref="Span{T}"/> to store the pressures to - this should be the same length
+    /// as the mixtures array.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for GasMixtures that are null, this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkGasMixturePressures(Span<GasMixture?> mixtures, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(mixtures.Length, pressures.Length);
+
+        var len = mixtures.Length;
+
+        var arr1 = ArrayPool<float>.Shared.Rent(len);
+        var arr2 = ArrayPool<float>.Shared.Rent(len);
+        var arr3 = ArrayPool<float>.Shared.Rent(len);
+        try
+        {
+            var mixtVol = arr1.AsSpan(0, len);
+            var mixtTemp = arr2.AsSpan(0, len);
+            var mixtMoles = arr3.AsSpan(0, len);
+
+            for (var i = 0; i < len; i++)
+            {
+                if (mixtures[i] is not { } mixture)
+                {
+                    // To prevent any NaN/Div/0 errors, we just bite the bullet
+                    // and set everything to the lowest possible value.
+                    mixtVol[i] = 1;
+                    mixtTemp[i] = 1;
+                    mixtMoles[i] = float.Epsilon;
+                    continue;
+                }
+
+                mixtVol[i] = mixture.Volume;
+                mixtTemp[i] = mixture.Temperature;
+                mixtMoles[i] = mixture.TotalMoles;
+            }
+
+            // TODO NumericsHelpers need a method that substitutes NaNs with zeros. AVX-512 has one iirc but for 256/128 we need to do some masking bs
+            NumericsHelpers.Multiply(mixtMoles, Atmospherics.R);
+            NumericsHelpers.Multiply(mixtMoles, mixtTemp);
+            NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
+        }
+        finally
+        {
+            ArrayPool<float>.Shared.Return(arr1);
+            ArrayPool<float>.Shared.Return(arr2);
+            ArrayPool<float>.Shared.Return(arr3);
+        }
     }
 
     /// <summary>
@@ -713,6 +804,26 @@ public partial class AtmosphereSystem
         Debug.Assert(contains == grid.Comp.DeltaPressureEntities.Contains(ent));
 
         return contains;
+    }
+
+    /// <summary>
+    /// Applies an exponential moving average to a value, given a new value, an old value, and a time delta.
+    /// </summary>
+    /// <param name="newValue">The new value to factor into the average.</param>
+    /// <param name="oldValue">The old value to factor into the average.</param>
+    /// <param name="deltaTime">The time delta to factor into the average.</param>
+    /// <param name="tau">The time constant to use for the average.
+    /// Higher values will make the average change more slowly,
+    /// while lower values will make it change more quickly.</param>
+    /// <returns>The result of the exponential moving average.</returns>
+    [PublicAPI]
+    public static float ExponentialMovingAverage(float newValue,
+        float oldValue,
+        float deltaTime,
+        float tau = 0.5f)
+    {
+        var a = deltaTime / tau;
+        return a * newValue + (1 - a) * oldValue;
     }
 
     [ByRefEvent]

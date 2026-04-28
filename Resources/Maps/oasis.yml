@@ -153624,7 +153624,7 @@ entities:
       content: >-
         To:    Mom
 
-        From:  Elian Voss, 
+        From:  Elian Voss,
                      Power Systems Maintenance Tech – Oasis Station
         Subject: Before I Go Under
 
@@ -156986,13 +156986,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 22.5,4.5
       parent: 2
-    - type: Timer
   - uid: 2585
     components:
     - type: Transform
       pos: 22.5,9.5
       parent: 2
-    - type: Timer
   - uid: 2586
     components:
     - type: Transform
@@ -157547,7 +157545,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -29.5,39.5
       parent: 2
-    - type: Timer
   - uid: 9180
     components:
     - type: Transform

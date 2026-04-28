@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -12,9 +14,9 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class AddTests
+public sealed class AddTests : GameTest
 {
-    public static PoolSettings LogTestSettings = new()
+    public override PoolSettings PoolSettings => new()
     {
         AdminLogsEnabled = true,
         DummyTicker = false,
@@ -24,7 +26,7 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var pair = Pair;
         var server = pair.Server;
         var sEntities = server.ResolveDependency<IEntityManager>();
 
@@ -33,7 +35,7 @@ public sealed class AddTests
         var guid = Guid.NewGuid();
 
         await pair.CreateTestMap();
-        var coordinates = pair.TestMap.GridCoords;
+        var coordinates = pair.TestMap!.GridCoords;
         await server.WaitPost(() =>
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
@@ -62,14 +64,12 @@ public sealed class AddTests
 
             return false;
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var pair = Pair;
         var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
@@ -127,15 +127,13 @@ public sealed class AddTests
 
             json.Dispose();
         }
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var pair = Pair;
         var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -158,14 +156,12 @@ public sealed class AddTests
             var messages = await sAdminLogSystem.CurrentRoundLogs();
             return messages.Count >= amount;
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var pair = Pair;
         var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
@@ -195,20 +191,91 @@ public sealed class AddTests
             Assert.That(logs.First().Players, Does.Contain(playerGuid));
             return true;
         });
-        await pair.CleanReturnAsync();
     }
+
+    [Test]
+    public async Task DuplicatePlayerDoesNotThrowTest()
+    {
+        var pair = Pair;
+        var server = pair.Server;
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.Sessions.Single();
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
+        });
+
+        await PoolManager.WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    [Test]
+    public async Task DuplicatePlayerIdDoesNotThrowTest()
+    {
+        var pair = Pair;
+        var server = pair.Server;
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.Sessions.Single();
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
+        });
+
+        await PoolManager.WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+    }
+}
+
+public sealed class PreRoundAddTests : GameTest
+{
+    public override PoolSettings PoolSettings => new PoolSettings
+    {
+        Dirty = true,
+        InLobby = true,
+        AdminLogsEnabled = true
+    };
 
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        var setting = new PoolSettings
-        {
-            Dirty = true,
-            InLobby = true,
-            AdminLogsEnabled = true
-        };
-
-        await using var pair = await PoolManager.GetServerClient(setting);
+        var pair = Pair;
         var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
@@ -262,81 +329,6 @@ public sealed class AddTests
 
             json.Dispose();
         }
-        await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task DuplicatePlayerDoesNotThrowTest()
-    {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pair.Server;
-
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-
-        var guid = Guid.NewGuid();
-
-        await server.WaitPost(() =>
-        {
-            var player = sPlayers.Sessions.Single();
-
-            sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
-        });
-
-        await PoolManager.WaitUntil(server, async () =>
-        {
-            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
-
-            if (logs.Count == 0)
-            {
-                return false;
-            }
-
-            return true;
-        });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
-    }
-
-    [Test]
-    public async Task DuplicatePlayerIdDoesNotThrowTest()
-    {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pair.Server;
-
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-
-        var guid = Guid.NewGuid();
-
-        await server.WaitPost(() =>
-        {
-            var player = sPlayers.Sessions.Single();
-
-            sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
-        });
-
-        await PoolManager.WaitUntil(server, async () =>
-        {
-            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
-
-            if (logs.Count == 0)
-            {
-                return false;
-            }
-
-            return true;
-        });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
-    }
 }

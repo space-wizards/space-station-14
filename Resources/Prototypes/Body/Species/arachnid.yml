@@ -36,6 +36,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceArachnid
+  categories: [ HideSpawnMenu ]
   name: arachnid appearance
   components:
   - type: Inventory
@@ -111,7 +112,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: CopperBlood
-        Quantity: 300
+        Quantity: 600
   - type: MeleeWeapon
     animation: WeaponArcBite
     soundHit:
@@ -137,6 +138,10 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_arachnid
 
 - type: entity
   parent: OrganBase

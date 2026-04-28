@@ -22,8 +22,8 @@ public sealed class FactionClothingSystem : EntitySystem
 
     private void OnEquipped(Entity<FactionClothingComponent> ent, ref GotEquippedEvent args)
     {
-        TryComp<NpcFactionMemberComponent>(args.Equipee, out var factionComp);
-        var faction = (args.Equipee, factionComp);
+        TryComp<NpcFactionMemberComponent>(args.EquipTarget, out var factionComp);
+        var faction = (args.EquipTarget, factionComp);
         ent.Comp.AlreadyMember = _faction.IsMember(faction, ent.Comp.Faction);
 
         _faction.AddFaction(faction, ent.Comp.Faction);
@@ -37,6 +37,6 @@ public sealed class FactionClothingSystem : EntitySystem
             return;
         }
 
-        _faction.RemoveFaction(args.Equipee, ent.Comp.Faction);
+        _faction.RemoveFaction(args.EquipTarget, ent.Comp.Faction);
     }
 }

@@ -71,8 +71,9 @@
       powerLoad: 2500
     - type: ExtensionCableReceiver
     - type: Damageable
-      damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Repairable
       fuelCost: 10
       doAfterDelay: 5

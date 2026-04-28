@@ -42,20 +42,17 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
+    [Dependency] private readonly EntityQuery<ClimbableComponent> _climbableQuery = default!;
+    [Dependency] private readonly EntityQuery<FixturesComponent> _fixturesQuery = default!;
+    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
+
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private EntityQuery<ClimbableComponent> _climbableQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _climbableQuery = GetEntityQuery<ClimbableComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ClimbingComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);

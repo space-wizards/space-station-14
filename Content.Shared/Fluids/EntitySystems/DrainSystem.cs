@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -23,6 +22,7 @@ namespace Content.Shared.Fluids.EntitySystems;
 
 /// <summary>
 /// Handles the draining of solutions from containers into drains.
+/// TODO: This system is very bad, and needs to be rewritten.
 /// </summary>
 public sealed class DrainSystem : EntitySystem
 {
@@ -130,9 +130,9 @@ public sealed class DrainSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
+        var query = EntityQueryEnumerator<DrainComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var drain, out var manager))
+        while (query.MoveNext(out var uid, out var drain))
         {
             if (curTime < drain.NextUpdate)
                 continue;
@@ -141,7 +141,7 @@ public sealed class DrainSystem : EntitySystem
             Dirty(uid, drain);
 
             // Best to do this one every second rather than once every tick...
-            if (!_solutionContainerSystem.ResolveSolution((uid, manager), DrainComponent.SolutionName, ref drain.Solution, out var drainSolution))
+            if (!_solutionContainerSystem.ResolveSolution(uid, DrainComponent.SolutionName, ref drain.Solution, out var drainSolution))
                 continue;
 
             if (drainSolution.Volume <= 0 && !drain.AutoDrain)
@@ -201,12 +201,9 @@ public sealed class DrainSystem : EntitySystem
 
     private void OnExamined(Entity<DrainComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerManagerComponent>(ent) ||
-            !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
-        {
+        if (!args.IsInDetailsRange
+            || !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
             return;
-        }
 
         var text = drainSolution.AvailableVolume != 0
             ? Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume))

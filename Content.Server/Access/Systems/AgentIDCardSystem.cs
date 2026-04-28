@@ -1,22 +1,22 @@
-using Content.Server.Access.Components;
-using Content.Server.Popups;
-using Content.Shared.UserInterface;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
-using Content.Shared.Interaction;
-using Content.Shared.StatusIcon;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Components;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
-using Content.Server.VoiceMask;
+using Content.Server.Popups;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.PDA;
+using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
+using Content.Shared.UserInterface;
 using Content.Shared.VoiceMask;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
 {
@@ -80,7 +80,8 @@ namespace Content.Server.Access.Systems
             if (!proto.TryGetComponent<PdaComponent>(out var comp, EntityManager.ComponentFactory))
                 return;
 
-            _chameleon.SetSelectedPrototype(ent, comp.IdCard);
+            if (TryComp<ChameleonClothingComponent>(ent, out var chameleonComp) && chameleonComp.CanBeSetByController)
+                _chameleon.SetSelectedPrototype(ent, comp.IdCard, component: chameleonComp);
         }
 
         private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)

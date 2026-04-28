@@ -62,8 +62,9 @@
         layer:
           - Opaque
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: LivingLight
+  - type: Injurable
+    damageContainer: Inorganic
   - type: PassiveDamage
     allowedStates:
     - Alive

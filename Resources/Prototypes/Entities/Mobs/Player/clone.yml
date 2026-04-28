@@ -9,12 +9,17 @@
   id: Body
   components:
   # general
+  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
   - Grammar # Pronouns
   - HumanoidProfile # Age, Sex, Gender
+  - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
+  - RandomPrice
+  - TemperatureDamage
+  - TemperatureSpeed
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
@@ -57,6 +62,7 @@
   - SpanishAccent
   - StutteringAccent
   eventComponents:
+  - Puller
   - Vocal # voice sounds
 
 # for job-specific traits etc.
@@ -78,15 +84,19 @@
   - Revolutionary
   - NukeOperative
 
-# a full clone with all traits and items, but no antag roles
 - type: cloningSettings
-  id: BaseClone
-  parent: [Body, Special]
+  abstract: true
+  id: BaseEquipmentBlacklist
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
     - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
     - VirtualItem
+
+# a full clone with all traits and items, but no antag roles
+- type: cloningSettings
+  id: BaseClone
+  parent: [Body, Special, BaseEquipmentBlacklist]
 
 # for cloning pods
 - type: cloningSettings
@@ -107,7 +117,7 @@
 # changeling identity copying
 - type: cloningSettings
   id: ChangelingCloningSettings
-  parent: Body
+  parent: [Body, BaseEquipmentBlacklist]
   components:
   # These are already part of the base species prototype that is spawned for the clone,
   # that means we only need to copy them over when switching between species.
@@ -128,9 +138,10 @@
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
-  copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
+  raiseEntityRenamedEvent: false
+
 
 # spawner
 - type: entity

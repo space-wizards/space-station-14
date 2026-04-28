@@ -41,13 +41,15 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        var comp = EnsureComp<SericultureComponent>(args.CloneUid);
-        comp.PopupText = ent.Comp.PopupText;
-        comp.ProductionLength = ent.Comp.ProductionLength;
-        comp.HungerCost = ent.Comp.HungerCost;
-        comp.EntityProduced = ent.Comp.EntityProduced;
-        comp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
-        Dirty(args.CloneUid, comp);
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<SericultureComponent>();
+        cloneComp.PopupText = ent.Comp.PopupText;
+        cloneComp.EntityProduced = ent.Comp.EntityProduced;
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.ProductionLength = ent.Comp.ProductionLength;
+        cloneComp.HungerCost = ent.Comp.HungerCost;
+        cloneComp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     /// <summary>

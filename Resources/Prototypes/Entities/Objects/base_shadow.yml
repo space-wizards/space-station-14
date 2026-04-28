@@ -20,4 +20,5 @@
       types:
         Heat: 10
   - type: Damageable
+  - type: Injurable
     damageContainer: ShadowHaze

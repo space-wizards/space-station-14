@@ -39,8 +39,9 @@
       powerLoad: 1500
     - type: ExtensionCableReceiver
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Electronic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
       - trigger:
@@ -273,8 +274,9 @@
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: StaticPrice
     price: 2000
 
@@ -342,8 +344,9 @@
       sprite: Structures/Shuttles/old_thruster.rsi
       state: base
     - type: Damageable
-      damageContainer: Inorganic
       damageModifierSet: Electronic
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:

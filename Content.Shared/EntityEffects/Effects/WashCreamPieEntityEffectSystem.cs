@@ -15,7 +15,7 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
 
     protected override void Effect(Entity<CreamPiedComponent> entity, ref EntityEffectEvent<WashCreamPie> args)
     {
-        _creamPie.SetCreamPied(entity, entity.Comp, false);
+        _creamPie.SetCreamPied((entity, entity.Comp), false);
     }
 }
 

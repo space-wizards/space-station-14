@@ -80,6 +80,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
@@ -178,6 +179,7 @@
     messages: WindowMessages
   - type: Repairable
   - type: Damageable
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: DamageVisuals
     thresholds: [8, 16, 25]

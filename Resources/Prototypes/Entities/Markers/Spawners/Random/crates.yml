@@ -184,37 +184,42 @@
     - state: red
     - sprite: Structures/Storage/Crates/engineering.rsi
       state: icon
-  - type: RandomSpawner
-    rarePrototypes:
-    - CrateEngineeringSingularityGenerator
-    - CrateEngineeringTeslaGenerator
-    - CrateEngineeringTeslaGroundingRod
-    - CrateEngineeringParticleAccelerator
-    - CrateRCD
-    - CrateEngineeringGear
-    rareChance: 0.2
-    prototypes:
-    - CrateEngineering
-    - CrateElectrical
-    - CrateEngineeringElectricalSupplies
-    - CrateRCDAmmo
-    - CrateEngineeringCableLV
-    - CrateEngineeringCableMV
-    - CrateEngineeringCableHV
-    - CrateEngineeringCableBulk
-    - CrateEngineeringSingularityContainment
-    - CrateEngineeringSingularityCollector
-    - CrateEngineeringTeslaCoil
-    - CrateEngineeringSingularityEmitter
-    - CrateEngineeringGyroscope
-    - CrateEngineeringThruster
-    - CrateEngineeringToolbox
-    - CrateEngineeringShuttle
-    - CrateEngineeringSolar
-    - CrateEngineeringJetpack
-    - CrateEmergencyRadiation
-    - CrateRadiation
-    chance: 0.9
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 8
+        prob: 0.9
+        children:
+        - id: CrateEngineering
+        - id: CrateElectrical
+        - id: CrateEngineeringElectricalSupplies
+        - id: CrateRCDAmmo
+        - id: CrateEngineeringCableLV
+        - id: CrateEngineeringCableMV
+        - id: CrateEngineeringCableHV
+        - id: CrateEngineeringCableBulk
+        - id: CrateEngineeringSingularityContainment
+        - id: CrateEngineeringSingularityCollector
+        - id: CrateEngineeringTeslaCoil
+        - id: CrateEngineeringSingularityEmitter
+        - id: CrateEngineeringGyroscope
+        - id: CrateEngineeringThruster
+        - id: CrateEngineeringToolbox
+        - id: CrateEngineeringShuttle
+        - id: CrateEngineeringSolar
+        - id: CrateEngineeringJetpack
+        - id: CrateEmergencyRadiation
+        - id: CrateRadiation
+      - !type:GroupSelector
+        weight: 2
+        children:
+        - id: CrateEngineeringSingularityGenerator
+        - id: CrateEngineeringTeslaGenerator
+        - id: CrateEngineeringTeslaGroundingRod
+        - id: CrateEngineeringParticleAccelerator
+        - id: CrateRCD
+        - id: CrateEngineeringGear
     offset: 0.0
 
 - type: entity
@@ -227,26 +232,30 @@
     - state: red
     - sprite: Structures/Storage/Crates/sec_gear.rsi
       state: icon
-  - type: RandomSpawner
-    rarePrototypes: #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
-    - CrateArmoryShotgun
-    - CrateArmorySMG
-    - CrateSecurityRiot
-    - CrateSecurityNonlethal
-    rareChance: 0.1
-    prototypes:
-    - CrateWeaponSecure
-    - CrateArmoryLaser
-    - CrateArmoryPistols
-    - CrateTrainingBombs
-    - CrateTrackingImplants
-    - CrateSecurityTrackingMindshieldImplants
-    - CrateSecurityHelmet
-    - CrateSecurityArmor
-    - CrateRestraints
-    - CrateEmergencyExplosive
-    - CrateSecurityBiosuit
-    chance: 0.9
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 9
+        prob: 0.9
+        children:
+        - id: CrateWeaponSecure
+        - id: CrateArmoryLaser
+        - id: CrateArmoryPistols
+        - id: CrateTrainingBombs
+        - id: CrateTrackingImplants
+        - id: CrateSecurityTrackingMindshieldImplants
+        - id: CrateSecurityHelmet
+        - id: CrateSecurityArmor
+        - id: CrateRestraints
+        - id: CrateEmergencyExplosive
+        - id: CrateSecurityBiosuit
+      - !type:GroupSelector #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it
+        children:
+        - id: CrateArmoryShotgun
+        - id: CrateArmorySMG
+        - id: CrateSecurityRiot
+        - id: CrateSecurityNonlethal
     offset: 0.0
 
 - type: entityTable

@@ -21,6 +21,24 @@
       collection: gib # Placeholder
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingBiodegrade
+  name: Biodegrade
+  description: Vomit acid over your restraints, setting yourself free.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Short cooldown but chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: biodegrade
+  - type: InstantAction
+    event: !type:ChangelingBiodegradeActionEvent
+  - type: ChangelingBiodegradeAbility
+
+- type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own.
@@ -48,3 +66,17 @@
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingVoiceMimic
+  name: Voice Mimicry
+  description: Model your vocal cords to imitate the voice of someone else.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: mimicry
+  - type: InstantAction
+    event: !type:VoiceMaskSetNameEvent

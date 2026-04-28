@@ -27,11 +27,6 @@ public abstract partial class Node
     /// </summary>
     [ViewVariables] public EntityUid Owner { get; private set; } = default!;
 
-    public void SetNodeGroupId(NodeGroupID newId)
-    {
-        NodeGroupID = newId;
-    }
-
     /// <summary>
     ///     If this node should be considered for connection by other nodes.
     /// </summary>

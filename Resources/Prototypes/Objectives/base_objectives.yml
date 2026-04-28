@@ -119,3 +119,13 @@
   id: BaseFreeObjective
   components:
   - type: FreeObjective
+
+# requires the player to perform some action a certain number of times
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseCounterObjective
+  description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
+  components:
+  - type: CounterCondition
+  - type: NumberObjective # min and max to be set in the inheritor

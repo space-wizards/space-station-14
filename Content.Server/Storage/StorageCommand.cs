@@ -52,7 +52,7 @@ public sealed class StorageCommand : ToolshedCommand
         return null;
     }
 
-    [CommandImplementation("query")]
+    [CommandImplementation("contents")]
     public IEnumerable<EntityUid> StorageQuery([PipedArgument] IEnumerable<EntityUid> storageEnts, bool recursive) =>
         storageEnts.SelectMany(x => StorageQueryRecursiveBase(x, recursive));
 

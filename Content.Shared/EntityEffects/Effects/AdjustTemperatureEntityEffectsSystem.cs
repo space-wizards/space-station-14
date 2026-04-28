@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -27,4 +28,10 @@ public sealed partial class AdjustTemperature : EntityEffectBase<AdjustTemperatu
     /// </summary>
     [DataField]
     public float Amount;
+
+    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("entity-effect-guidebook-adjust-temperature",
+            ("chance", Probability),
+            ("deltasign", MathF.Sign(Amount)),
+            ("amount", Amount));
 }

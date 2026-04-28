@@ -9,6 +9,22 @@
   - !type:OverallPlaytimeRequirement
     time: 1h
 
+- type: antagSpecifier
+  abstract: true
+  parent: RestrictedAntag
+  id: BaseTraitor
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: Traitor
+  prefRoles:
+  - Traitor
+  blacklist:
+    components:
+    - AntagImmune
+  mindRoles:
+  - MindRoleTraitor
+
 - type: antag
   id: TraitorSleeper
   name: roles-antag-syndicate-agent-sleeper-name
@@ -19,6 +35,23 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 1h
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorSleeper
+  prefRoles:
+  - TraitorSleeper
+  mindRoles:
+  - MindRoleTraitorSleeper
+
+- type: antagSpecifier
+  parent: BaseTraitor
+  id: TraitorReinforcement
+  prefRoles:
+  - Traitor
+  - GenericTeamAntagonist # Matters for Antag bans.
+  mindRoles:
+  - MindRoleTraitorReinforcement
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -52,30 +85,53 @@
 
 - type: startingGear
   id: SyndicateReinforcementMedic
-  parent: SyndicateOperativeClothing
   equipment:
-    pocket1: WeaponPistolViper
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesColorRed
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatSurgcapPurple
+    id: VisitorPDA
+    belt: ClothingBeltMedicalFilled
+    back: ClothingBackpackDuffelMedical
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesHudMedical
+    pocket1: HandheldHealthAnalyzer
+    pocket2: PillCanisterBicaridine
   inhand:
     - MedkitCombatFilled
-
+  storage:
+    back:
+    - Defibrillator
+    - CigPackSyndicate
+    - UniformScrubsColorPurple
+    - ChemistryBottleToxin
+    - WeaponPistolViper
+    - Syringe
+    - Syringe
+    
 - type: startingGear
   id: SyndicateReinforcementSpy
-  parent: SyndicateOperativeClothing
   equipment:
-    id: AgentIDCard
-    mask: ClothingMaskGasVoiceChameleon
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpack
+    shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesColorBlack
     pocket1: WeaponPistolViper
-
+    pocket2: VoiceMaskImplanter
+  inhand:
+    - ClothingBackpackChameleonFillAgent
 - type: startingGear
   id: SyndicateReinforcementThief
   parent: SyndicateOperativeClothing
   equipment:
     pocket1: WeaponPistolViper
+    pocket2: MagazinePistolHighCapacity
   inhand:
     - ToolboxSyndicateFilled
   storage:
     back:
     - SyndicateJawsOfLife
+    - CameraBug
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

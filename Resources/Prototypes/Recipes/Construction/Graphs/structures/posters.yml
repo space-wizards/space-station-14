@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: PosterGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tornPoster
+      steps:
+      - tool: Brushing
+        doAfter: 2
+      completed:
+      - !type:PlaySound
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+
+  - node: tornPoster
+    entity: PosterBroken
+    edges:
+    - to: removed
+      steps:
+      - tool: Brushing
+        doAfter: 2
+
+  - node: removed
+    actions:
+    - !type:DestroyEntity {}
