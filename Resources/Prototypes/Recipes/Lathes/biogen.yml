@@ -274,7 +274,7 @@
 - type: latheRecipe
   id: BioGenCompostAmmonia
   resultReagents:
-    Ammonia: 5 # 15 biomass give 3 eznutrient which contain 3 ammonia, but also 2 other components. between 3 and 9 units, going for 5 ammonia sounds the most reasonable.
+    Ammonia: 15 # 15 biomass give 10 eznutrient which contain 3 ammonia, but also 2 other components. between 10 and 30 units, going for 15 ammonia sounds the most reasonable. (total nutrient for plants is 15 vs 20 ignoring the slight health boost)
   categories:
   - Chemicals
   icon:
