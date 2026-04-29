@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
@@ -183,7 +184,9 @@ public sealed class AllGamePresetsStartTest : GameTest
             var ent = mindComp.CurrentEntity!.Value;
 
             // We don't necessarily know if an antag should spawn on the station, but we know they shouldn't spawn in nullspace.
-            Assert.That(SEntMan.GetComponent<TransformComponent>(ent).MapUid, Is.Not.Null);
+            var xform = SEntMan.GetComponent<TransformComponent>(ent);
+            Assert.That(xform.MapUid, Is.Not.Null);
+            Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
 
             // Make sure all components were added
             foreach (var comp in antag.Components)

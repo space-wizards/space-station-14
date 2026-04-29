@@ -10,6 +10,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Antag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -76,8 +77,12 @@ public sealed class GhostRoleTest : GameTest
             var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
             while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
             {
+                // Ensure the ghost role spawner spawned correctly!
                 Assert.That(spawner.Rule, Is.EqualTo(gameRule));
                 Assert.That(spawner.Definition, Is.Not.Null);
+                Assert.That(xform.MapUid, Is.Not.Null);
+                Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+
                 var value = rules[spawner.Definition.Value];
                 rules[spawner.Definition.Value] = value - 1;
 
