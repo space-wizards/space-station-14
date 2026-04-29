@@ -433,6 +433,20 @@
       Glass: 1
 
 - type: entity
+  id: LiquidVaporizerMachineCircuitBoard
+  parent: BaseMachineCircuitboard
+  name: vaporizer machine board
+  description: A machine printed circuit board for a vaporizer.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: BaseLiquidVaporizer
+    stackRequirements:
+      Manipulator: 1
+      Glass: 1
+
+- type: entity
   id: PortableScrubberMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: portable scrubber machine board

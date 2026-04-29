@@ -523,9 +523,9 @@
   - type: AtmosDevice
   - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
-    powerLoad: 10000
- # - type: Machine
- #   board: CondenserMachineCircuitBoard
+    powerLoad: 500
+  - type: Machine
+    board: LiquidVaporizerMachineCircuitBoard
   - type: WiresPanel
   - type: WiresVisuals
   - type: Destructible

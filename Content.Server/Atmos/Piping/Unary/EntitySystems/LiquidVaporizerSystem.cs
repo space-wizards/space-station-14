@@ -68,7 +68,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             return;
 
         //get how many Watt Seconds (Joules) of energy we get from load
-        var energyInJoules = receiver.Load * args.dt;
+        var energyInJoules = receiver.PowerReceived * args.dt;
         //heat up solution
         _sharedSolution.AddThermalEnergy(new(container.Value, solutionComponent), energyInJoules);
         //calculate how much of our solution will boil away based on temperature
@@ -141,11 +141,12 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         //reset temperature when empty.
         if (solution.Volume <= FixedPoint2.Epsilon)
             solution.Temperature = Atmospherics.T20C;
-
+        if (vaporizedLiquidsToThermalEnergy.Count == 0)
+            return;
         //machine will spill a mix of anything it cannot evaporate.
         //make new puddle
-        /*
-              var spillEntityId = this.Spawn("PuddleTemporary", entity.Owner.ToCoordinates());
+
+              var spillEntityId = this.Spawn("Puddle", entity.Owner.ToCoordinates());
               //get the solution component of our puddle (how does this even fail?)
               if (!TryComp(spillEntityId, out SolutionComponent? spillSolutionComponent))
                   return;
@@ -153,12 +154,14 @@ public sealed class LiquidVaporizerSystem : EntitySystem
               //feed liquids to solutions
               foreach (var liquid in vaporizedLiquidsToThermalEnergy)
               {
-                  spillSolutionComponent.Solution.Contents.Add(liquid.Key);
+                  spillSolutionComponent.Solution.AddReagent(liquid.Key);
               }
 
               var spillEntity = new Entity<SolutionComponent>(spillEntityId, spillSolutionComponent);
               //sum all energy in our remaining liquids and feed to solution (which will also update itself)
-              _sharedSolution.AddThermalEnergy(spillEntity, vaporizedLiquidsToThermalEnergy.Sum(e => e.Value));
-              */
+              spillSolutionComponent.Solution.Temperature =
+                  spillSolutionComponent.Solution.GetHeatCapacity(_prototypeManager) *
+                  vaporizedLiquidsToThermalEnergy.Sum(e => e.Value);
+              _sharedSolution.UpdateChemicals(new(container.Value, solutionComponent));
     }
 }

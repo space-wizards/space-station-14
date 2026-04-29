@@ -30,5 +30,5 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// 400u / 1871.71051 moles per canister
     /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ReagentToMolesMultiplier = 4.679276275f;
+    public float ReagentToMolesMultiplier = 4.68f;
 }
