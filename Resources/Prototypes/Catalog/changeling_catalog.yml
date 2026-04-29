@@ -6,9 +6,9 @@
   description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 25
+    ChangelingDNA: 30
   categories:
-  - ChangelingAbilities
+  - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -20,9 +20,9 @@
   description: changeling-catalog-flesh-clothing-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 20
   categories:
-  - ChangelingAbilities
+  - ChangelingStoreStealth
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -34,9 +34,9 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 20
   categories:
-  - ChangelingAbilities
+  - ChangelingStoreUtility
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -49,9 +49,9 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
   applyToMob: true
   cost:
-    ChangelingDNA: 10
+    ChangelingDNA: 20
   categories:
-  - ChangelingAbilities
+  - ChangelingStoreUtility
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
