@@ -61,7 +61,7 @@ public sealed class GhostRoleTest : GameTest
             {
                 var specifier = SProtoMan.Index(selector.Proto);
                 var count = selector.GetTargetAntagCount(_random, 1);
-                // We should always spawn at leastone antag if we add a GameRule
+                // We should always spawn at least one antag if we add a GameRule
                 Assert.That(count, Is.GreaterThan(0));
 
                 if (specifier.SpawnerPrototype == null)
