@@ -62,7 +62,7 @@ public sealed class GhostRoleTest : GameTest
                 var specifier = SProtoMan.Index(selector.Proto);
                 var count = selector.GetTargetAntagCount(_random, 1);
                 // We should always spawn at leastone antag if we add a GameRule
-                Assert.That(count > 0);
+                Assert.That(count, Is.GreaterThan(0));
 
                 if (specifier.SpawnerPrototype == null)
                     continue;
@@ -78,9 +78,9 @@ public sealed class GhostRoleTest : GameTest
             while (roleEnumerator.MoveNext(out var spawner, out var role))
             {
                 Assert.That(spawner.Rule, Is.EqualTo(gameRule));
-                Assert.That(spawner.Definition.HasValue);
-                var value = rules[spawner.Definition!.Value];
-                rules[spawner.Definition!.Value] = value - 1;
+                Assert.That(spawner.Definition, Is.Not.Null);
+                var value = rules[spawner.Definition.Value];
+                rules[spawner.Definition.Value] = value - 1;
 
                 // Take the ghost role and ensure we take it!
                 Assert.That(_ghostRole.Takeover(ServerSession, role.Identifier));
@@ -97,7 +97,7 @@ public sealed class GhostRoleTest : GameTest
         {
             // End all rules
             _ticker.ClearGameRules();
-            Assert.That(!_ticker.GetAddedGameRules().Any());
+            Assert.That(_ticker.GetAddedGameRules(), Is.Empty);
         });
     }
 }
