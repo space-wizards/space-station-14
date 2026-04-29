@@ -1,3 +1,5 @@
+using Content.Shared.DisplacementMap;
+
 namespace Content.Client.Atmos.Components;
 
 /// <summary>
@@ -39,4 +41,10 @@ public sealed partial class FireVisualsComponent : Component
     ///     the burning entity as entities don't support having multiple point-lights.
     /// </summary>
     public EntityUid? LightEntity;
+
+    /// <summary>
+    /// If set, applies a displacement map to the fire visuals effect.
+    /// </summary>
+    [DataField]
+    public DisplacementData? Displacement;
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -116,6 +117,12 @@ public sealed partial class DamageVisualsComponent : Component
     ///     DamageVisualizerSprite for more information.
     /// </summary>
     [DataField("damageOverlay")] public  DamageVisualizerSprite? DamageOverlay;
+
+    /// <summary>
+    /// If set, applies a displacement map to the damage visuals.
+    /// </summary>
+    [DataField]
+    public DisplacementData? Displacement;
 
     public readonly List<Enum> TargetLayerMapKeys = new();
     public bool Disabled = false;

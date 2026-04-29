@@ -1,4 +1,5 @@
 using Content.Client.Atmos.Components;
+using Content.Client.DisplacementMap;
 using Content.Shared.Atmos;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
@@ -12,6 +13,7 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
     [Dependency] private readonly PointLightSystem _lights = default!;
+    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -82,6 +84,9 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.AlternateState);
         else
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.NormalState);
+
+        if (component.Displacement != null)
+            _displacement.TryAddDisplacement(component.Displacement, (uid, sprite), index, FireVisualLayers.Fire, out _);
 
         component.LightEntity ??= Spawn(null, new EntityCoordinates(uid, default));
         var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);

@@ -1,3 +1,4 @@
+using Content.Client.DisplacementMap;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Humanoid;
@@ -8,6 +9,8 @@ namespace Content.Client.Anomaly.Effects;
 public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
+    [Dependency] private readonly EntityQuery<InnerBodyAnomalyVisualsComponent> _visualsQuery = default!;
 
     public override void Initialize()
     {
@@ -37,6 +40,11 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         _sprite.LayerSetVisible((ent.Owner, sprite), index, true);
         sprite.LayerSetShader(index, "unshaded");
+
+        if (_visualsQuery.TryGetComponent(ent, out var visuals) && visuals.Displacement != null)
+        {
+            _displacement.TryAddDisplacement(visuals.Displacement, (ent.Owner, sprite), index, ent.Comp.LayerMap, out _);
+        }
     }
 
     private void OnCompShutdown(Entity<InnerBodyAnomalyComponent> ent, ref ComponentShutdown args)
@@ -46,5 +54,10 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         var index = _sprite.LayerMapGet((ent.Owner, sprite), ent.Comp.LayerMap);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, false);
+
+        if (_visualsQuery.TryGetComponent(ent, out var visuals) && visuals.Displacement != null)
+        {
+            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap);
+        }
     }
 }

@@ -1,8 +1,10 @@
 using System.Linq;
+using Content.Client.DisplacementMap;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -30,6 +32,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -276,7 +279,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                             sprite,
                             $"{layer}_{group}_{damageVisComp.Thresholds[1]}",
                             $"{layer}{group}",
-                            index);
+                            index,
+                            displacement: damageVisComp.Displacement);
                     }
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
@@ -290,7 +294,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                         damageVisComp.DamageOverlay,
                         $"{layer}_{damageVisComp.Thresholds[1]}",
                         $"{layer}trackDamage",
-                        index);
+                        index,
+                        displacement: damageVisComp.Displacement);
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
             }
@@ -307,7 +312,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     AddDamageLayerToSprite((entity, spriteComponent),
                         sprite,
                         $"DamageOverlay_{group}_{damageVisComp.Thresholds[1]}",
-                        $"DamageOverlay{group}");
+                        $"DamageOverlay{group}",
+                        displacement: damageVisComp.Displacement);
                     damageVisComp.TopMostLayerKey = $"DamageOverlay{group}";
                 }
             }
@@ -316,7 +322,8 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 AddDamageLayerToSprite((entity, spriteComponent),
                     damageVisComp.DamageOverlay,
                     $"DamageOverlay_{damageVisComp.Thresholds[1]}",
-                    "DamageOverlay");
+                    "DamageOverlay",
+                    displacement: damageVisComp.Displacement);
                 damageVisComp.TopMostLayerKey = $"DamageOverlay";
             }
         }
@@ -325,12 +332,16 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     /// <summary>
     ///     Adds a damage tracking layer to a given sprite component.
     /// </summary>
-    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null)
+    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null, DisplacementData? displacement = null)
     {
+        if (!Resolve(spriteEnt, ref spriteEnt.Comp))
+            return;
+
         var newLayer = SpriteSystem.AddLayer(
             spriteEnt,
             new SpriteSpecifier.Rsi(
-                new(sprite.Sprite), state
+                new(sprite.Sprite),
+                state
             ),
             index
         );
@@ -338,6 +349,11 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (sprite.Color != null)
             SpriteSystem.LayerSetColor(spriteEnt, newLayer, Color.FromHex(sprite.Color));
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
+
+        if (displacement != null)
+        {
+            _displacement.TryAddDisplacement(displacement, (spriteEnt.Owner, spriteEnt.Comp), newLayer, mapKey, out _);
+        }
     }
 
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)

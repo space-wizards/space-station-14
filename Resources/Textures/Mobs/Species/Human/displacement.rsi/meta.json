@@ -13,6 +13,14 @@
         {
             "name": "jumpsuit-female",
             "directions": 4
+        },
+        {
+            "name": "dwarfism",
+            "directions": 1
+        },
+        {
+            "name": "dwarfism_hands",
+            "directions": 1
         }
     ]
 }

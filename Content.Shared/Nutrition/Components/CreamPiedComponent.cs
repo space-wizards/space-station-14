@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -26,6 +27,12 @@ public sealed partial class CreamPiedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public SpriteSpecifier? Sprite;
+
+    /// <summary>
+    /// If set, applies a displacement map to the pie sprite.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DisplacementData? Displacement;
 }
 
 /// <summary>

@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -35,6 +36,12 @@ public sealed partial class VisualOrganComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public OrganProfileData Profile = new();
+
+    /// <summary>
+    /// Displacement maps applied to the organ's visualization.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DisplacementData? Displacement;
 }
 
 /// <summary>
