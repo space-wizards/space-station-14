@@ -73,8 +73,8 @@ public sealed class GhostRoleTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent>();
-            while (roleEnumerator.MoveNext(out var spawner, out var role))
+            var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
+            while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
             {
                 Assert.That(spawner.Rule, Is.EqualTo(gameRule));
                 Assert.That(spawner.Definition, Is.Not.Null);
@@ -83,6 +83,12 @@ public sealed class GhostRoleTest : GameTest
 
                 // Take the ghost role and ensure we take it!
                 Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier));
+                Assert.That(ServerSession.AttachedEntity, Is.Not.Null);
+
+                // Ensure we spawned in the correct location
+                var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
+                Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
+                Assert.That(sessionXform.Coordinates, Is.EqualTo(xform.Coordinates));
             }
 
             // Ensure all ghost roles spawned and were assigned!!!
