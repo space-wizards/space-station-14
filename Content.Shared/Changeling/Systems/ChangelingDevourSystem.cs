@@ -214,7 +214,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (!_mobState.IsDead(victim) && checkDead)
+        if (checkDead && !_mobState.IsDead(victim))
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
@@ -228,7 +228,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (IsTargetProtected(victim, changeling) && checkProtected)
+        if (checkProtected && IsTargetProtected(victim, changeling))
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
