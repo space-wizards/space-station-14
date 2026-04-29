@@ -87,13 +87,18 @@ public sealed class GhostRoleTest : GameTest
                 rules[spawner.Definition.Value] = value - 1;
 
                 // Take the ghost role and ensure we take it!
-                Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier));
+                Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
                 Assert.That(ServerSession.AttachedEntity, Is.Not.Null);
 
                 // Ensure we spawned in the correct location
                 var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
                 Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
-                Assert.That(sessionXform.Coordinates, Is.EqualTo(xform.Coordinates));
+
+                // We break it up like this cause otherwise it'll sometimes randomly fail
+                // TODO: Engine IEquatable for EntityCoordinates
+                Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
+                Assert.That(sessionXform.Coordinates.X, Is.EqualTo(xform.Coordinates.X));
+                Assert.That(sessionXform.Coordinates.Y, Is.EqualTo(xform.Coordinates.Y));
             }
 
             // Ensure all ghost roles spawned and were assigned!!!
