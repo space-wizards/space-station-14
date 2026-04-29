@@ -23,6 +23,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private readonly ChangelingDevourSystem _changelingDevour = default!;
 
     public override void Initialize()
     {
@@ -76,27 +77,11 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (args.Target == ent.Owner)
             return; // Can't sting yourself.
 
-        if (_changelingIdentity.HasIdentity(ent.AsNullable(), args.Target))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-devour-attempt-failed-already-devoured"), ent.Owner, ent.Owner, PopupType.Medium);
+        if (!_changelingDevour.CanDevour(ent.Owner, args.Target, false, false))
             return;
-        }
 
-        if (HasComp<RottingComponent>(args.Target))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), ent.Owner, ent.Owner, PopupType.Medium);
-            return;
-        }
-
-        if (!_changelingIdentity.HasFreeDisguiseSlot(ent.AsNullable()))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-devour-attempt-failed-no-space"), ent.Owner, ent.Owner, PopupType.Medium);
-            return;
-        }
-
-        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), ent.Owner, ent.Owner, PopupType.Medium);
-        _changelingIdentity.CloneToPausedMap(ent, args.Target);
-        _changelingIdentity.AddDevouredReference(ent, args.Target);
+        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Target, ent.Owner, PopupType.Medium);
+        _changelingIdentity.GrantIdentity(ent, args.Target);
 
         args.Handled = true;
     }

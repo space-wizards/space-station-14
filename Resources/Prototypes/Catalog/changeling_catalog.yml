@@ -56,3 +56,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingBiodegrade
+
+- type: listing
+  id: ChangelingStingDna
+  name: changeling-catalog-sting-dna-name
+  description: changeling-catalog-sting-dna-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingDna

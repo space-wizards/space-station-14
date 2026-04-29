@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
@@ -193,7 +192,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
     /// <summary>
     /// Can the given changeling devour the given victim?
     /// </summary>
-    public bool CanDevour(Entity<ChangelingDevourComponent?> changeling, EntityUid victim, bool showPopup = true)
+    public bool CanDevour(Entity<ChangelingDevourComponent?> changeling, EntityUid victim, bool checkDead = true, bool checkProtected = true, bool showPopup = true)
     {
         if (!Resolve(changeling, ref changeling.Comp))
             return false;
@@ -215,7 +214,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (!_mobState.IsDead(victim))
+        if (!_mobState.IsDead(victim) && checkDead)
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-not-dead"), changeling.Owner, changeling.Owner, PopupType.Medium);
@@ -229,7 +228,7 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        if (IsTargetProtected(victim, changeling!))
+        if (IsTargetProtected(victim, changeling) && checkProtected)
         {
             if (showPopup)
                 _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), changeling.Owner, changeling.Owner, PopupType.Medium);
