@@ -30,7 +30,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingBiodegradeAbilityComponent, ChangelingBiodegradeActionEvent>(OnBiodegradeAction);
-        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingStingDnaEvent>(OnDnaSting);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingStingDnaEvent>(OnStingDna);
     }
 
     private void OnBiodegradeAction(Entity<ChangelingBiodegradeAbilityComponent> ent, ref ChangelingBiodegradeActionEvent args)
@@ -72,7 +72,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
             _puddle.TrySpillAt(args.Performer, ent.Comp.SpillSolution, out _, false);
     }
 
-    private void OnDnaSting(Entity<ChangelingIdentityComponent> ent, ref ChangelingStingDnaEvent args)
+    private void OnStingDna(Entity<ChangelingIdentityComponent> ent, ref ChangelingStingDnaEvent args)
     {
         if (args.Target == ent.Owner)
             return; // Can't sting yourself.
