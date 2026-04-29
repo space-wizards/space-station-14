@@ -56,7 +56,7 @@ public sealed class GhostRoleTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            foreach (var selector in antag!.Antags)
+            foreach (var selector in antag.Antags)
             {
                 var specifier = SProtoMan.Index(selector.Proto);
                 var count = selector.GetTargetAntagCount(_random, 1);
@@ -82,7 +82,7 @@ public sealed class GhostRoleTest : GameTest
                 rules[spawner.Definition.Value] = value - 1;
 
                 // Take the ghost role and ensure we take it!
-                Assert.That(_ghostRole.Takeover(ServerSession, role.Identifier));
+                Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier));
             }
 
             // Ensure all ghost roles spawned and were assigned!!!
