@@ -569,6 +569,6 @@
   - type: LiquidVaporizer
   - type: GuideHelp
     guides:
-    - GasCondensing # replace with guide to vaporize
+    - LiquidVaporisation # replace with guide to vaporize
 
 
