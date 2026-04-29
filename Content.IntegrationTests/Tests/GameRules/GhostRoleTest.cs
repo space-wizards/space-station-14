@@ -11,6 +11,7 @@ using Content.Shared.Antag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -97,8 +98,10 @@ public sealed class GhostRoleTest : GameTest
                 // We break it up like this cause otherwise it'll sometimes randomly fail
                 // TODO: Engine IEquatable for EntityCoordinates
                 Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
-                Assert.That(sessionXform.Coordinates.X, Is.EqualTo(xform.Coordinates.X));
-                Assert.That(sessionXform.Coordinates.Y, Is.EqualTo(xform.Coordinates.Y));
+
+                // I will not get heisentest due to floating point errors
+                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X), Is.True);
+                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y), Is.True);
             }
 
             // Ensure all ghost roles spawned and were assigned!!!
