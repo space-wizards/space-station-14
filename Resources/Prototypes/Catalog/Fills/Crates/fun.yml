@@ -480,3 +480,4 @@
           - id: DrinkTequilaBottleFull
         - id: ClothingHeadHatHardhatYellow
         - id: ClothingNeckMantleQM # TODO: replace this with a similar-looking but more generic item at some point; explicitly QM clothing should really only be given to the QM
+        - id: Spear # because Rain World
