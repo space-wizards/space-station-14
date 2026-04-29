@@ -14,6 +14,8 @@ public sealed class DamageContactsSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    [Dependency] private readonly EntityQuery<DamageContactsComponent> _damageQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -45,13 +47,12 @@ public sealed class DamageContactsSystem : EntitySystem
         if (!TryComp<PhysicsComponent>(otherUid, out var body))
             return;
 
-        var damageQuery = GetEntityQuery<DamageContactsComponent>();
         foreach (var ent in _physics.GetContactingEntities(otherUid, body))
         {
             if (ent == uid)
                 continue;
 
-            if (damageQuery.HasComponent(ent))
+            if (_damageQuery.HasComponent(ent))
                 return;
         }
 
