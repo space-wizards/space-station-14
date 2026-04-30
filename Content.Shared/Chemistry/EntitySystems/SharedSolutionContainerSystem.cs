@@ -41,15 +41,12 @@ public readonly partial record struct SolutionChangedEvent(Entity<SolutionCompon
 /// <summary>
 /// The event raised whenever a solution entity is filled past its capacity.
 /// </summary>
-/// <param name="Solution">The solution entity that has been overfilled.</param>
-/// <param name="Overflow">The amount by which the solution entity has been overfilled.</param>
+/// <param name="Overflow">The solution that has overflowed and was removed.</param>
 [ByRefEvent]
-public partial record struct SolutionOverflowEvent(Entity<SolutionComponent> Solution, FixedPoint2 Overflow)
+public partial record struct SolutionOverflowEvent(Solution Overflow)
 {
-    /// <summary>The solution entity that has been overfilled.</summary>
-    public readonly Entity<SolutionComponent> Solution = Solution;
     /// <summary>The amount by which the solution entity has been overfilled.</summary>
-    public readonly FixedPoint2 Overflow = Overflow;
+    public readonly Solution Overflow = Overflow;
     /// <summary>Whether any of the event handlers for this event have handled overflow behaviour.</summary>
     public bool Handled = false;
 }
@@ -395,7 +392,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var overflow = solution.Comp.Solution.Volume - solution.Comp.Solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
         {
-            var overflowEv = new SolutionOverflowEvent(solution, overflow);
+            var split = solution.Comp.Solution.SplitSolution(overflow);
+            var overflowEv = new SolutionOverflowEvent(split);
             RaiseLocalEvent(solution, ref overflowEv);
         }
 
