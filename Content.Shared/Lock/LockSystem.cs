@@ -477,6 +477,10 @@ public sealed class LockSystem : EntitySystem
             return;
 
         args.Cancel();
+
+        if (args.Silent)
+            return;
+
         if (lockComp.Locked && component.Popup != null)
         {
             _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);

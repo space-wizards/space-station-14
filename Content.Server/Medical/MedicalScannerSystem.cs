@@ -10,7 +10,7 @@ using Content.Server.Cloning.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;

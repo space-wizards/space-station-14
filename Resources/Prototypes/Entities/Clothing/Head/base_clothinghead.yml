@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [SolutionFood, SolutionToolSmall, Clothing]
   id: ClothingHeadBase
   components:
   - type: Clothing
@@ -13,13 +13,11 @@
     storedRotation: -90
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 15
   - type: Tag
     tags:
     - ClothMade
@@ -61,7 +59,7 @@
     equippedPrefix: off
   - type: Item
     heldPrefix: off
-    size: Normal
+    size: Normal # I'm not updating the solution because these probably shouldn't be edible...
   - type: ToggleableVisuals
     spriteLayer: light
   - type: ItemTogglePointLight
@@ -243,10 +241,10 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
 
 - type: entity

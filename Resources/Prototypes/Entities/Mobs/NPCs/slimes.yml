@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ BaseMobSlimes, SimpleMobBase, MobCombat ]
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -50,10 +50,12 @@
         Asphyxiation: -1.0
     maxSaturation: 15
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Slime
   - type: Bloodstream
-    bloodReagent: Slime
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 150
     bloodlossDamage:
       types:
         Bloodloss:
@@ -86,9 +88,6 @@
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
-  - type: Body
-    prototype: Slimes
-    requiredLegs: 1
   - type: MeleeWeapon
     altDisarm: false
     soundHit:

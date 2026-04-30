@@ -23,22 +23,11 @@ namespace Content.Shared.ActionBlocker
     {
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
-        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
+        [Dependency] private readonly EntityQuery<ComplexInteractionComponent> _complexInteractionQuery = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
-
-            SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
-        }
-
-        private void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
-        {
-            UpdateCanMove(uid, component);
-        }
-
+        // These two methods should probably both live in SharedMoverController
+        // but they're called in a million places and I'm not doing that
+        // refactor right now.
         public bool CanMove(EntityUid uid, InputMoverComponent? component = null)
         {
             return Resolve(uid, ref component, false) && component.CanMove;

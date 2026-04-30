@@ -123,7 +123,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!TryComp<AirlockComponent>(uid, out var airlock))
             return;
 
-        if (IsBolted(uid) || !airlock.Powered)
+        if (!airlock.Powered)
             return;
 
         if (door.State != DoorState.Closed)
@@ -329,6 +329,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
+        if (Paused(uid))
+            return false;
+
         var ev = new BeforeDoorOpenedEvent() { User = user };
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
@@ -368,7 +371,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
-            SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
+            SetBoltsDown((uid, doorBoltComponent), true, user, true);
     }
 
     /// <summary>
@@ -434,6 +437,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
         if (door.State is DoorState.Welded or DoorState.Closed)
+            return false;
+
+        if (Paused(uid))
             return false;
 
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck, partial);
