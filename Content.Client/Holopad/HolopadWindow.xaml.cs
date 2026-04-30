@@ -173,9 +173,9 @@ public sealed partial class HolopadWindow : FancyWindow
         var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.LightGray, "Default", 11);
         var holoapdId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId.Item3, Color.LightGray, "Default", 11);
 
-        CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
-        HolopadIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(holoapdId));
-        LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
+        CallerIdText.SetMessage(FormattedMessage.FromMarkupPermissive(callerId));
+        HolopadIdText.SetMessage(FormattedMessage.FromMarkupPermissive(holoapdId));
+        LockOutIdText.SetMessage(FormattedMessage.FromMarkupPermissive(callerId));
 
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();

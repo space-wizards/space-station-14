@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DisposalUnitBase, SeatBase ]
+  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase]
   id: BaseToilet
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
@@ -30,11 +30,11 @@
   - type: Strap
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: DisposalUnit
     blacklist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
       - Plunger
       - SolutionTransfer
       - EntityStorage
@@ -48,6 +48,7 @@
     containers:
       stash: !type:ContainerSlot {}
       disposals: !type:Container
+      solutions: !type:Container
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -83,12 +84,9 @@
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+    - SolutionDrainNormal
   - type: SolutionRegeneration
     solution: tank
     generated:
@@ -134,17 +132,13 @@
   id: ToiletDirtyWater
   suffix: Dirty Water
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
-        reagents:
-        - ReagentId: Water
-          Quantity: 180
-        - ReagentId: GastroToxin
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 180
+      - ReagentId: GastroToxin
+        Quantity: 20
 
 - type: entity
   parent: ToiletEmpty
@@ -213,16 +207,12 @@
   components:
   - type: StealTarget
     stealGroup: ToiletGoldenDirtyWater
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
-        reagents:
-        - ReagentId: Water
-          Quantity: 160
-        - ReagentId: Gold
-          Quantity: 20
-        - ReagentId: GastroToxin
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 160
+      - ReagentId: Gold
+        Quantity: 20
+      - ReagentId: GastroToxin
+        Quantity: 20

@@ -3,15 +3,14 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Containers;
 using Content.Server.StationRecords.Systems;
-using Content.Shared.Access.Components;
-using static Content.Shared.Access.Components.IdCardConsoleComponent;
-using Content.Shared.Access.Systems;
 using Content.Shared.Access;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Roles;
@@ -19,15 +18,18 @@ using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
 public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly StationRecordsSystem _record = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -133,7 +135,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         string newFullName,
         string newJobTitle,
         List<ProtoId<AccessLevelPrototype>> newAccessList,
-        ProtoId<JobPrototype> newJobProto,
+        ProtoId<JobPrototype>? newJobProto,
         EntityUid player,
         IdCardConsoleComponent? component = null)
     {
@@ -143,10 +145,20 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component, out var privilegedId))
             return;
 
+        // Limit name and job title lengths
+        var maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+        var maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+
+        if (newFullName.Length > maxNameLength)
+            newFullName = newFullName[..maxNameLength];
+
+        if (newJobTitle.Length > maxIdJobLength)
+            newJobTitle = newJobTitle[..maxIdJobLength];
+
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (_prototype.Resolve(newJobProto, out var job)
+        if (_prototype.TryIndex(newJobProto, out var job)
             && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);

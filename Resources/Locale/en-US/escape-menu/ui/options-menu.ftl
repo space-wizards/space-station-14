@@ -49,7 +49,7 @@ ui-options-misc-label = Misc
 ui-options-interface-label = Interface
 
 
-ui-options-auto-fill-highlights = Auto-fill the highlights with the character's information
+ui-options-auto-fill-highlights = Automatically set the highlights list based on your character's name and job
 ui-options-highlights-color = Highlights color:
 ui-options-highlights-color-example = This is highlighted text.
 ui-options-show-held-item = Show held item next to cursor
@@ -107,6 +107,9 @@ ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
 
 ## Controls menu
+
+ui-options-hold-to-attack-melee = Hold to attack (melee)
+ui-options-hold-to-attack-ranged = Hold to attack (ranged)
 
 ui-options-binds-reset-all = Reset ALL keybinds
 ui-options-binds-explanation = Click to change binding, right-click to clear
