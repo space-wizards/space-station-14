@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
-// TODO: Slam: This system is partially Shared, and as such I am not adding it to BaseAccentSystem at this time. It should be possible to integrate it when all accents are moved to Shared.
+// TODO: Slam: This system is partially Shared, and as such I am not adding it to RelayAccentSystem at this time. It should be possible to integrate it when all accents are moved to Shared.
 public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
     [Dependency] private readonly Shared.StatusEffect.StatusEffectsSystem _statusEffects = default!;
