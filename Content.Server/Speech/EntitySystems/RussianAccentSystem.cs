@@ -8,6 +8,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class RussianAccentSystem : RelayAccentSystem<RussianAccentComponent>
 {
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+
     public override string Accentuate(string message, Entity<RussianAccentComponent>? _)
     {
         var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "russian"));

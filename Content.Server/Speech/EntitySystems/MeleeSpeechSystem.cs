@@ -13,6 +13,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();

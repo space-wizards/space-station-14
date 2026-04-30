@@ -12,7 +12,6 @@ public sealed class ParrotAccentSystem : RelayAccentSystem<ParrotAccentComponent
 
     [Dependency] private readonly IRobustRandom _random = default!;
 
-
     public override string Accentuate(string message, Entity<ParrotAccentComponent>? entity)
     {
         // TODO: Make this accent possible to apply without an entity with the component.
