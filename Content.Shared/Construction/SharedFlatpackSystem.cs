@@ -14,6 +14,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -35,6 +36,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] protected readonly MachinePartSystem MachinePart = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
+    [Dependency] private readonly EntityQuery<MapGridComponent> _mapGridQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -65,13 +67,13 @@ public abstract class SharedFlatpackSystem : EntitySystem
     private void OnGetInteractionVerbs(Entity<FlatpackComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         // Interaction is only allowed for tool-required unpacks.
-        if (ent.Comp.QualityNeeded is not { } qualityNeeded||
+        if (ent.Comp.QualityNeeded is not { } qualityNeeded ||
             !args.CanAccess || !args.CanInteract || !args.CanComplexInteract ||
             !PrototypeManager.Resolve(qualityNeeded, out var quality))
             return;
 
         var user = args.User;
-        var disabled = args.Using is not {} used || !_tool.HasQuality(used, qualityNeeded);
+        var disabled = args.Using is not { } used || !_tool.HasQuality(used, qualityNeeded);
         args.Verbs.Add(new InteractionVerb
         {
             Text = Loc.GetString("flatpack-unpack-verb-text"),
@@ -127,12 +129,10 @@ public abstract class SharedFlatpackSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (ent.Comp.QualityNeeded is { } qualityNeeded)
+        if (ent.Comp.QualityNeeded is { } qualityNeeded &&
+            PrototypeManager.Resolve(qualityNeeded, out var quality))
         {
-            if (PrototypeManager.Resolve(qualityNeeded, out var quality))
-            {
-                args.PushMarkup(Loc.GetString("flatpack-examine", ("toolNeeded", Loc.GetString(quality.ToolName))));
-            }
+            args.PushMarkup(Loc.GetString("flatpack-examine", ("toolNeeded", Loc.GetString(quality.ToolName))));
         }
         else
         {
@@ -150,7 +150,11 @@ public abstract class SharedFlatpackSystem : EntitySystem
 
         var meta = MetaData(ent);
         _metaData.SetEntityName(ent, Loc.GetString("flatpack-entity-name", ("name", machinePrototype.Name)), meta);
-        _metaData.SetEntityDescription(ent, Loc.GetString("flatpack-entity-description", ("name", machinePrototype.Name)), meta);
+        _metaData.SetEntityDescription(
+            ent,
+            Loc.GetString("flatpack-entity-description", ("name", machinePrototype.Name)),
+            meta
+        );
 
         Dirty(ent, meta);
         Appearance.SetData(ent, FlatpackVisuals.Machine, MetaData(board).EntityPrototype?.ID ?? string.Empty);
@@ -214,11 +218,15 @@ public abstract class SharedFlatpackSystem : EntitySystem
     )
     {
         if (_container.IsEntityInContainer(flatpack))
+        {
             return null;
+        }
 
         var xform = Transform(flatpack);
-        if (xform.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
+        if (xform.GridUid is not { } grid || !_mapGridQuery.TryComp(grid, out var gridComp))
+        {
             return null;
+        }
 
         if (!PrototypeManager.Resolve(flatpack.Comp.Entity, out var proto) ||
             !proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
@@ -235,12 +243,31 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return null;
         }
 
-        var spawned = PredictedSpawnAttachedTo(flatpack.Comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-        if (user is { } u)
+        var coords = _map.GridTileToLocal(grid, gridComp, buildPos);
+        var spawned = Unpack(flatpack, coords, user, playAudio);
+
+        return spawned;
+    }
+
+    /// <summary>
+    /// Spawns the <paramref name="flatpack"/>'s <see cref="FlatpackComponent.Entity"/> at <paramref name="coords"/>,
+    /// deletes the flatpack, and plays unpacking audio for the <paramref name="user"/>.
+    /// </summary>
+    private EntityUid Unpack(
+        Entity<FlatpackComponent> flatpack,
+        EntityCoordinates coords,
+        EntityUid? user,
+        bool playAudio = true
+    )
+    {
+        var spawned = PredictedSpawnAttachedTo(flatpack.Comp.Entity, coords);
+        if (user != null)
         {
-            _adminLogger.Add(LogType.Construction,
+            _adminLogger.Add(
+                LogType.Construction,
                 LogImpact.Low,
-                $"{u:player} unpacked {spawned:entity} at {xform.Coordinates} from {flatpack:entity}");
+                $"{user} unpacked {spawned} at {coords} from {flatpack}"
+            );
         }
 
         PredictedQueueDel(flatpack);
