@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
-using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
