@@ -1,6 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿<FancyWindow xmlns="https://spacestation14.io"
                Title="{Loc 'war-declarator-ui-header'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="440">
         <TextEdit Name="MessageEdit"
@@ -20,4 +18,4 @@
                    Access="Public"/>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

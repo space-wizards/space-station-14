@@ -1,6 +1,5 @@
 <cartridges:NewsReaderUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                                xmlns="https://spacestation14.io"
                                Margin="1 0 2 0"
@@ -26,12 +25,12 @@
             Text="{Loc 'news-read-ui-next-text'}"
             ToolTip="{Loc 'news-read-ui-next-tooltip'}"/>
     </BoxContainer>
-    <controls:StripeBack Name="ArticleNameContainer">
+    <StripeBack Name="ArticleNameContainer">
         <PanelContainer>
             <Label Name="PageNum" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0"/>
             <Label Name="PageName" Align="Center"/>
         </PanelContainer>
-    </controls:StripeBack>
+    </StripeBack>
     <PanelContainer VerticalExpand="True">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#80808005" />

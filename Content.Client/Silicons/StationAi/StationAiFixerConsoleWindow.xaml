@@ -1,6 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       Title="{Loc 'station-ai-fixer-console-window'}"
                       Resizable="False">
@@ -54,7 +52,7 @@
                               Orientation="Vertical"
                               ReservesSpace="False">
 
-                    <controls:StripeBack VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 5">
+                    <StripeBack VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 5">
                     <PanelContainer VerticalExpand="True" HorizontalExpand="True">
                         <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical">
                             <Control VerticalExpand="True"/>
@@ -71,7 +69,7 @@
                             <Control VerticalExpand="True"/>
                         </BoxContainer>
                     </PanelContainer>
-                    </controls:StripeBack>
+                    </StripeBack>
                 </BoxContainer>
 
                 <!-- Action progress screen -->
@@ -112,13 +110,13 @@
                               ReservesSpace="False"
                               Visible="False">
 
-                    <controls:StripeBack>
+                    <StripeBack>
                         <PanelContainer>
                             <Label Text="{Loc 'Controls'}"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"/>
                         </PanelContainer>
-                    </controls:StripeBack>
+                    </StripeBack>
 
                     <!-- Eject button -->
                     <Button Name="EjectButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
@@ -169,4 +167,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

@@ -1,8 +1,6 @@
 <Control xmlns="https://spacestation14.io"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:parallax="clr-namespace:Content.Client.Parallax"
-         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+         xmlns:parallax="clr-namespace:Content.Client.Parallax">
     <parallax:ParallaxControl SpeedX="20"/>
     <Control HorizontalAlignment="Center" VerticalAlignment="Center">
         <PanelContainer StyleClasses="BackgroundPanel" />
@@ -13,7 +11,7 @@
                 <Button Name="ExitButton" Text="{Loc 'connecting-exit'}"
                         HorizontalAlignment="Right" HorizontalExpand="True" />
             </BoxContainer>
-            <controls:HighDivider />
+            <HighDivider />
             <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4 4 4 0">
                 <Control VerticalExpand="True" Margin="0 0 0 8">
                     <BoxContainer Orientation="Vertical" Name="ConnectingStatus">
@@ -70,11 +68,11 @@
     <!-- Bottom window for tips -->
     <PanelContainer Name="LoginTips" StyleClasses="BackgroundPanel" Margin="0 10" MaxWidth="600" VerticalExpand="True" VerticalAlignment="Bottom">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <controls:StripeBack>
+            <StripeBack>
                 <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Name="LoginTipTitle" Text="Tip" StyleClasses="LabelHeading" Align="Center"/>
                 </BoxContainer>
-            </controls:StripeBack>
+            </StripeBack>
             <BoxContainer Orientation="Vertical" Margin="5 5 5 5" >
                 <RichTextLabel Name="LoginTip" VerticalExpand="True" />
             </BoxContainer>

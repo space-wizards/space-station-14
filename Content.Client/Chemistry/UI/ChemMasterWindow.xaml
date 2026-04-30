@@ -1,6 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+<FancyWindow xmlns="https://spacestation14.io"
                 xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 MinSize="620 670"
                 Title="{Loc 'chem-master-bound-user-interface-title'}">
@@ -133,4 +131,4 @@
             </PanelContainer>
         </BoxContainer>
     </TabContainer>
-</controls:FancyWindow>
+</FancyWindow>

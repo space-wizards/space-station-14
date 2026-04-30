@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       Title="{Loc 'nav-beacon-window-title'}"
                       MinSize="250 230"
                       SetSize="320 230">
@@ -14,4 +13,4 @@
         <Button Name="ApplyButton" Text="{Loc 'nav-beacon-button-apply'}" HorizontalAlignment="Right"/>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

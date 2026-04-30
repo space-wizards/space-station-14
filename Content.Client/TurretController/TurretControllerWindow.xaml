@@ -1,7 +1,6 @@
 <ui:TurretControllerWindow xmlns="https://spacestation14.io"
                         xmlns:ui="clr-namespace:Content.Client.TurretController"
                         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                         xmlns:access="clr-namespace:Content.Client.Access.UI"
                         SetWidth="550"
                         Resizable="False"
@@ -78,11 +77,11 @@
                             </PanelContainer>
 
                             <BoxContainer Orientation="Horizontal" Margin="10 10 10 10">
-                                <controls:MonotoneButton Name="SafeButton" Text="{Loc 'turret-controls-window-safe'}"
+                                <MonotoneButton Name="SafeButton" Text="{Loc 'turret-controls-window-safe'}"
                                                    StyleClasses="OpenRight" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
-                                <controls:MonotoneButton Name="StunButton" Text="{Loc 'turret-controls-window-stun'}"
+                                <MonotoneButton Name="StunButton" Text="{Loc 'turret-controls-window-stun'}"
                                                    StyleClasses="OpenBoth" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
-                                <controls:MonotoneButton Name="LethalButton" Text="{Loc 'turret-controls-window-lethal'}"
+                                <MonotoneButton Name="LethalButton" Text="{Loc 'turret-controls-window-lethal'}"
                                                    StyleClasses="OpenLeft" Pressed="False" ToggleMode="True" HorizontalExpand="True"/>
                             </BoxContainer>
 

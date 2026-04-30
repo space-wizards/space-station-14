@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                       Title="{Loc 'criminal-records-console-window-title'}"
                       MinSize="695 440">
     <BoxContainer Orientation="Vertical">
@@ -138,4 +137,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

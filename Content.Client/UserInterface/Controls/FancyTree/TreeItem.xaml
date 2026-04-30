@@ -1,5 +1,4 @@
-<controls:TreeItem xmlns="https://spacestation14.io"
-                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls.FancyTree">
+<TreeItem xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
         <ContainerButton Name="Button" Access="Public">
             <BoxContainer Orientation="Horizontal">
@@ -10,5 +9,5 @@
         </ContainerButton>
         <BoxContainer Name="Body" Access="Public" Orientation="Vertical" Visible="False"/>
     </BoxContainer>
-    <controls:TreeLine/>
-</controls:TreeItem>
+    <TreeLine/>
+</TreeItem>

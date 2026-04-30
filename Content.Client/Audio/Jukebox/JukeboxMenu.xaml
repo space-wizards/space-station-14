@@ -1,4 +1,4 @@
-<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                 SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
         <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
@@ -15,4 +15,4 @@
             <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
-</ui:FancyWindow>
+</FancyWindow>

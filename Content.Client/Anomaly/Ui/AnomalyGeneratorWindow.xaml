@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                 Title="{Loc 'anomaly-generator-ui-title'}"
 
                 Resizable="False">
@@ -59,4 +58,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

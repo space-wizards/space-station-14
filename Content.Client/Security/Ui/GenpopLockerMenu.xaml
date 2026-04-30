@@ -1,6 +1,5 @@
-<controls:FancyWindow
+<FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MinSize="400 230"
     SetSize="450 260">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="10 5 10 10">
@@ -19,6 +18,6 @@
             <Button Name="DoneButton" Text="{Loc 'genpop-locket-ui-button-done'}" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>
 
 

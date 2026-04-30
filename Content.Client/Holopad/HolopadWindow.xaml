@@ -1,5 +1,4 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+<FancyWindow xmlns="https://spacestation14.io"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Resizable="False"
                MaxSize="400 800"
@@ -8,11 +7,11 @@
 
         <BoxContainer Name="ControlsLockOutContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False" Visible="False">
             <!-- Header text -->
-            <controls:StripeBack>
+            <StripeBack>
                 <PanelContainer>
                     <RichTextLabel Name="EmergencyBroadcastText" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 10 10 10" ReservesSpace="False"/>
                 </PanelContainer>
-            </controls:StripeBack>
+            </StripeBack>
             
             <Label Text="{Loc 'holopad-window-controls-locked-out'}" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
             <RichTextLabel Name="LockOutIdText" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
@@ -49,14 +48,14 @@
             <!-- Call placement controls (either this or the active call controls will be active) -->
             <BoxContainer Name="CallPlacementControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
 
-                <controls:StripeBack>
+                <StripeBack>
                     <PanelContainer>
                         <BoxContainer Orientation="Vertical">
                             <RichTextLabel Name="SubtitleText" HorizontalAlignment="Center" Margin="0 5 0 0"/>
                             <RichTextLabel Name="OptionsText" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                         </BoxContainer>
                     </PanelContainer>
-                </controls:StripeBack>
+                </StripeBack>
 
                 <!-- Request the station AI or activate the holopad projector (only one of these should be active at a time) -->
                 <BoxContainer Name="RequestStationAiContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
@@ -115,4 +114,4 @@
         </BoxContainer>
     </BoxContainer>
 
-</controls:FancyWindow>
+</FancyWindow>

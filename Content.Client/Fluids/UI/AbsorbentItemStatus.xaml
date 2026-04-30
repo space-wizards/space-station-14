@@ -1,4 +1,3 @@
-﻿<controls:SplitBar xmlns="https://spacestation14.io"
-                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<SplitBar xmlns="https://spacestation14.io"
                    Name="Bar">
-</controls:SplitBar>
+</SplitBar>

@@ -1,7 +1,6 @@
-﻿<controls:FancyWindow
+﻿<FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MinSize="540 390"
     SetSize="995 600">
 
@@ -102,11 +101,11 @@
                       SizeFlagsStretchRatio="2">
 
                       <!-- Title -->
-                      <controls:StripeBack>
+                      <StripeBack>
                           <Label Text="{Loc 'cargo-console-menu-requests-label'}"
                               HorizontalAlignment="Center"
                               Margin="4"/>
-                      </controls:StripeBack>
+                      </StripeBack>
 
                       <PanelContainer VerticalExpand="True"
                           Margin="0 -4 0 0">
@@ -137,11 +136,11 @@
                       VerticalExpand="True">
 
                       <!-- Title -->
-                      <controls:StripeBack>
+                      <StripeBack>
                           <Label Text="{Loc 'cargo-console-menu-orders-label'}"
                               HorizontalAlignment="Center"
                               Margin="4"/>
-                      </controls:StripeBack>
+                      </StripeBack>
 
                       <PanelContainer VerticalExpand="True"
                           Margin="0 -4 0 0">
@@ -223,4 +222,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

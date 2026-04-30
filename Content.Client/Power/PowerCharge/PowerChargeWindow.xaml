@@ -1,6 +1,5 @@
-<controls:FancyWindow
+<FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MinSize="320 180"
     Resizable="False">
     <BoxContainer
@@ -85,4 +84,4 @@
                 OverrideDirection="South" />
         </PanelContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

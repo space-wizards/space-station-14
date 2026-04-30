@@ -1,6 +1,5 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
+<FancyWindow xmlns="https://spacestation14.io"
             xmlns:ui="clr-namespace:Content.Client.Kitchen.UI"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc grinder-menu-title}" MinSize="768 256">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="8" MinWidth="100">
@@ -15,4 +14,4 @@
 
         <ui:LabelledContentBox Name="BeakerContentBox" LabelText="{Loc grinder-menu-beaker-content-box-label}" ButtonText="{Loc grinder-menu-beaker-content-box-button}" VerticalExpand="True" HorizontalExpand="True" Margin="8" SizeFlagsStretchRatio="2"/>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>

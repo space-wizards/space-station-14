@@ -1,5 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<FancyWindow xmlns="https://spacestation14.io"
                      Title="{Loc 'robotics-console-window-title'}"
                      MinSize="600 450">
     <BoxContainer Orientation="Vertical">
@@ -28,13 +27,13 @@
                 </PanelContainer>
                 <!-- TODO: button to open camera window for this borg -->
             </BoxContainer>
-            <controls:StripeBack>
+            <StripeBack>
                 <BoxContainer Name="DangerZone" Margin="5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center" Visible="False">
                     <Button Name="DisableButton" Text="{Loc 'robotics-console-disable'}" StyleClasses="OpenRight"/>
                     <Button Name="DestroyButton" Text="{Loc 'robotics-console-destroy'}" StyleClasses="OpenLeft"/>
                 </BoxContainer>
                 <Label Name="LockedMessage" Text="{Loc 'robotics-console-locked-message'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </controls:StripeBack>
+            </StripeBack>
         </BoxContainer>
     </BoxContainer>
-</controls:FancyWindow>
+</FancyWindow>
