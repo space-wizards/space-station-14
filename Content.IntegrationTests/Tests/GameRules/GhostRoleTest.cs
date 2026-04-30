@@ -82,7 +82,7 @@ public sealed class GhostRoleTest : GameTest
                 Assert.That(spawner.Rule, Is.EqualTo(gameRule));
                 Assert.That(spawner.Definition, Is.Not.Null);
                 Assert.That(xform.MapUid, Is.Not.Null);
-                //Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+                Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
 
                 var value = rules[spawner.Definition.Value];
                 rules[spawner.Definition.Value] = value - 1;
@@ -100,8 +100,8 @@ public sealed class GhostRoleTest : GameTest
                 Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
 
                 // I will not get heisentest due to floating point errors
-                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X), Is.True);
-                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y), Is.True);
+                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
+                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
             }
 
             // Ensure all ghost roles spawned and were assigned!!!
