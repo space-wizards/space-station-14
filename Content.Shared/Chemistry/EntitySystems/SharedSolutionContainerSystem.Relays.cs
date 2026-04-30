@@ -40,7 +40,6 @@ public abstract partial class SharedSolutionContainerSystem
 {
     protected void InitializeRelays()
     {
-        SubscribeLocalEvent<ContainedSolutionComponent, SolutionOverflowEvent>(RelaySolutionRefEvent);
         SubscribeLocalEvent<ContainedSolutionComponent, ReactionAttemptEvent>(RelaySolutionRefEvent);
     }
 
