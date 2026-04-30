@@ -78,7 +78,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         {
             Text = Loc.GetString("flatpack-unpack-verb-text"),
             Icon = quality.Icon,
-            Act = () => Unpack(ent, user),
+            Act = () => TryUnpack(ent, user, out _),
             Disabled = disabled,
             Message = disabled
                 ? (string?)Loc.GetString(
@@ -100,7 +100,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         args.Verbs.Add(new ActivationVerb
         {
             Text = Loc.GetString("flatpack-unpack-verb-text"),
-            Act = () => Unpack(ent, user),
+            Act = () => TryUnpack(ent, user, out _),
         });
     }
 
@@ -111,7 +111,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             !_tool.HasQuality(args.Used, qualityNeeded))
             return;
 
-        Unpack(ent, args.User);
+        TryUnpack(ent, args.User, out _);
         args.Handled = true;
     }
 
@@ -120,7 +120,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         if (args.Handled || !args.Complex || ent.Comp.QualityNeeded != null)
             return;
 
-        Unpack(ent, args.User);
+        TryUnpack(ent, args.User, out _);
         args.Handled = true;
     }
 
@@ -206,32 +206,33 @@ public abstract class SharedFlatpackSystem : EntitySystem
     /// <param name="flatpack">The flatpack to unpack</param>
     /// <param name="user">The entity which is unpacking the flatpack; used for logging and player interaction feedback</param>
     /// <param name="playAudio">If true, will play <see cref="FlatpackComponent.UnpackSound"/> on successful unpacking</param>
-    /// <returns>
-    /// The entity which is created by a successful unpacking. May be client-side-predicted. Returns null in the case
-    /// that unpacking failed.
-    /// </returns>
+    /// <param name="unpacked">The unpacked contents, may be client-side predicted. <c>null</c> if unpacking was unsuccessful.</param>
+    /// <returns>True if unpacking succeeded, false otherwise.</returns>
     [PublicAPI]
-    public EntityUid? Unpack(
+    public bool TryUnpack(
         Entity<FlatpackComponent> flatpack,
         EntityUid? user,
+        [NotNullWhen(true)] out EntityUid? unpacked,
         bool playAudio = true
     )
     {
+        unpacked = null;
+
         if (_container.IsEntityInContainer(flatpack))
         {
-            return null;
+            return false;
         }
 
         var xform = Transform(flatpack);
         if (xform.GridUid is not { } grid || !_mapGridQuery.TryComp(grid, out var gridComp))
         {
-            return null;
+            return false;
         }
 
         if (!PrototypeManager.Resolve(flatpack.Comp.Entity, out var proto) ||
             !proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
         {
-            return null;
+            return false;
         }
 
         var (layer, mask) = SharedPhysicsSystem.GetHardCollision(fixture);
@@ -240,13 +241,12 @@ public abstract class SharedFlatpackSystem : EntitySystem
         if (!_anchorable.TileFree((grid, gridComp), buildPos, layer, mask))
         {
             _popup.PopupPredicted(Loc.GetString("flatpack-unpack-no-room"), flatpack, user);
-            return null;
+            return false;
         }
 
         var coords = _map.GridTileToLocal(grid, gridComp, buildPos);
-        var spawned = Unpack(flatpack, coords, user, playAudio);
-
-        return spawned;
+        unpacked = Unpack(flatpack, coords, user, playAudio);
+        return true;
     }
 
     /// <summary>
