@@ -1,10 +1,11 @@
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SouthernAccentSystem : BaseAccentSystem<SouthernAccentComponent>
+public sealed class SouthernAccentSystem : RelayAccentSystem<SouthernAccentComponent>
 {
     private static readonly Regex RegexLowerIng = new(@"ing\b");
     private static readonly Regex RegexUpperIng = new(@"ING\b");

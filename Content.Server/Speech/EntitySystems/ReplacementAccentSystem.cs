@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.Prototypes;
 using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -13,7 +14,7 @@ namespace Content.Server.Speech.EntitySystems;
 /// <summary>
 /// Replaces text in messages, either with full replacements or word replacements.
 /// </summary>
-public sealed class ReplacementAccentSystem : BaseAccentSystem<ReplacementAccentComponent>
+public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccentComponent>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

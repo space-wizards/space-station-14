@@ -1,10 +1,11 @@
 using System.Text;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MonkeyAccentSystem : BaseAccentSystem<MonkeyAccentComponent>
+public sealed class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 

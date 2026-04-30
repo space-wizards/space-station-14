@@ -1,10 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed partial class SkeletonAccentSystem : BaseAccentSystem<SkeletonAccentComponent>
+public sealed partial class SkeletonAccentSystem : RelayAccentSystem<SkeletonAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;

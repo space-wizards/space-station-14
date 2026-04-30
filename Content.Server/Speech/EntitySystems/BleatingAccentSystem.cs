@@ -1,9 +1,10 @@
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BleatingAccentSystem : BaseAccentSystem<BleatingAccentComponent>
+public sealed class BleatingAccentSystem : RelayAccentSystem<BleatingAccentComponent>
 {
     private static readonly Regex BleatRegex = new("([mbdlpwhrkcnytfo])([aiu])", RegexOptions.IgnoreCase);
 

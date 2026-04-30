@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class ScrambledAccentSystem : BaseAccentSystem<ScrambledAccentComponent>
+    public sealed class ScrambledAccentSystem : RelayAccentSystem<ScrambledAccentComponent>
     {
         private static readonly Regex RegexLoneI = new(@"(?<=\ )i(?=[\ \.\?]|$)");
 

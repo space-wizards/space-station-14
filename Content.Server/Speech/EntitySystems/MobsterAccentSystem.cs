@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MobsterAccentSystem : BaseAccentSystem<MobsterAccentComponent>
+public sealed class MobsterAccentSystem : RelayAccentSystem<MobsterAccentComponent>
 {
     private static readonly Regex RegexIng = new(@"(?<=\w\w)(in)g(?!\w)", RegexOptions.IgnoreCase);
     private static readonly Regex RegexLowerOr = new(@"(?<=\w)o[Rr](?=\w)");

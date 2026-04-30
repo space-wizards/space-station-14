@@ -1,9 +1,10 @@
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class OwOAccentSystem : BaseAccentSystem<OwOAccentComponent>
+    public sealed class OwOAccentSystem : RelayAccentSystem<OwOAccentComponent>
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

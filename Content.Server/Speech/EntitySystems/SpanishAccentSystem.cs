@@ -1,9 +1,10 @@
 using System.Text;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SpanishAccentSystem : BaseAccentSystem<SpanishAccentComponent>
+public sealed class SpanishAccentSystem : RelayAccentSystem<SpanishAccentComponent>
 {
     public override string Accentuate(string message, Entity<SpanishAccentComponent>? _)
     {

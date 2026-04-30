@@ -4,11 +4,12 @@ using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MumbleAccentSystem : BaseAccentSystem<MumbleAccentComponent>
+public sealed class MumbleAccentSystem : RelayAccentSystem<MumbleAccentComponent>
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;

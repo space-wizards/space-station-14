@@ -1,8 +1,9 @@
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BackwardsAccentSystem : BaseAccentSystem<BackwardsAccentComponent>
+public sealed class BackwardsAccentSystem : RelayAccentSystem<BackwardsAccentComponent>
 {
     public override string Accentuate(string message, Entity<BackwardsAccentComponent>? _)
     {

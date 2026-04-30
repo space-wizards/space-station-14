@@ -2,10 +2,11 @@ using System.Linq;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
 using System.Text.RegularExpressions;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class PirateAccentSystem : BaseAccentSystem<PirateAccentComponent>
+public sealed class PirateAccentSystem : RelayAccentSystem<PirateAccentComponent>
 {
     private static readonly Regex FirstWordAllCapsRegex = new(@"^(\S+)");
 

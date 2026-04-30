@@ -1,12 +1,13 @@
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
 /// <summary>
 /// System that gives the speaker a faux-French accent.
 /// </summary>
-public sealed class FrenchAccentSystem : BaseAccentSystem<FrenchAccentComponent>
+public sealed class FrenchAccentSystem : RelayAccentSystem<FrenchAccentComponent>
 {
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 

@@ -1,9 +1,10 @@
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SlowAccentSystem : BaseAccentSystem<SlowAccentComponent>
+public sealed class SlowAccentSystem : RelayAccentSystem<SlowAccentComponent>
 {
     /// <summary>
     /// Matches whitespace characters or commas (with or without a space after them).
