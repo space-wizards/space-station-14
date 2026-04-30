@@ -35,9 +35,9 @@ public abstract partial class SharedStoreSystem : EntitySystem
         SubscribeLocalEvent<RemoteStoreComponent, GetStoreEvent>(OnGetStore);
         SubscribeLocalEvent<RemoteStoreComponent, ImplantRelayEvent<GetStoreEvent>>((x, ref y) =>
         {
-            var ev = y.Event;
+            var ev = y.Args;
             OnGetStore(x, ref ev);
-            y.Event = ev;
+            y.Args = ev;
         });
         SubscribeLocalEvent<RemoteStoreComponent, ImplantRelayEvent<CurrencyInsertAttemptEvent>>(OnImplantInsertAttempt);
         SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
@@ -56,7 +56,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
 
     private void OnImplantInsertAttempt(Entity<RemoteStoreComponent> implant, ref ImplantRelayEvent<CurrencyInsertAttemptEvent> args)
     {
-        var ev = args.Event;
+        var ev = args.Args;
 
         // Only allow insertion if the person implanted is doing the action.
         if (ev.User == ev.Target)
@@ -64,7 +64,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
         else
             ev.Cancel();
 
-        args.Event = ev;
+        args.Args = ev;
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)

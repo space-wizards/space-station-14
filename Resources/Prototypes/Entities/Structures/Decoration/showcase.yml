@@ -7,8 +7,9 @@
   components:
     - type: Anchorable
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
         - trigger:

@@ -33,12 +33,12 @@ public interface IGasMaxPressureHolder : IGasMixtureHolder
     ///     An overpressure is defined as pressure exceeding <see cref="Overpressure"/>
     ///     This determines the maximum value
     /// </summary>
-    int MaxIntegrity { get; set; }
+    float MaxIntegrity { get; set; }
 
     /// <summary>
     ///     How many over-pressures until this gas tank detonates.
     ///     An overpressure is defined as pressure exceeding <see cref="Overpressure"/>
     ///     This determines the current value
     /// </summary>
-    int Integrity { get; set; }
+    float Integrity { get; set; }
 }

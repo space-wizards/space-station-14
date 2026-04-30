@@ -29,7 +29,8 @@ public sealed class SolutionTransferSystem : EntitySystem
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
     /// </summary>
-    public static readonly FixedPoint2[] DefaultTransferAmounts = new FixedPoint2[] { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
+    /// TODO: Turn this into a prototype just like with injectors.
+    public static readonly FixedPoint2[] DefaultTransferAmounts = new FixedPoint2[] { 1, 5, 10, 15, 30, 60, 120, 240, 480, 960 };
 
     public override void Initialize()
     {

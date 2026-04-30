@@ -12,15 +12,15 @@
     size: Normal
   - type: Sprite
     sprite: Objects/Consumable/Food/breakfast.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 60
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 40
-        - ReagentId: Vitamin
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 45
+      - ReagentId: Protein
+        Quantity: 15
+      - ReagentId: Vitamin
+        Quantity: 15
 
 # Breakfasts
 

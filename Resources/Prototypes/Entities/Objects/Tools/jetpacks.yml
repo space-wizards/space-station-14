@@ -241,11 +241,6 @@
     sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/security.rsi
-  - type: GasTank
-    maxIntegrity: 5 # You may ask why this microbalance? The answer is: Sec jetpacks sprite is based off regular jetpacks, and I'm too lazy to make their sprite data different.
-    integrity: 5
-  - type: MaxPressureVisuals
-    steps: 5
 
 #Filled security
 - type: entity

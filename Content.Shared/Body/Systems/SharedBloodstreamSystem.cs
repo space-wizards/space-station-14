@@ -110,10 +110,25 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<BloodstreamComponent> entity, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.AdjustedUpdateInterval;
-        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.NextUpdate));
+        entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.AdjustedUpdateInterval;
+        DirtyField(entity, entity.Comp, nameof(BloodstreamComponent.NextUpdate));
+
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.BloodSolutionName, out var bloodSolution);
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.BloodTemporarySolutionName, out var tempSolution);
+        SolutionContainer.EnsureSolution(entity.Owner, entity.Comp.MetabolitesSolutionName, out var metabolitesSolution);
+
+        bloodSolution.Comp.Solution.MaxVolume = entity.Comp.BloodReferenceSolution.Volume * entity.Comp.MaxVolumeModifier;
+        metabolitesSolution.Comp.Solution.MaxVolume = bloodSolution.Comp.Solution.MaxVolume;
+        tempSolution.Comp.Solution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
+        entity.Comp.BloodReferenceSolution.SetReagentData(GetEntityBloodData((entity, entity.Comp)));
+
+        // Fill blood solution with BLOOD
+        // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
+        var solution = entity.Comp.BloodReferenceSolution.Clone();
+        solution.ScaleTo(entity.Comp.BloodReferenceSolution.Volume - bloodSolution.Comp.Solution.Volume);
+        bloodSolution.Comp.Solution.AddSolution(solution, PrototypeManager);
     }
 
     // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
@@ -157,8 +172,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
-        if (args.Name != ent.Comp.BloodSolutionName
-            && args.Name != ent.Comp.BloodTemporarySolutionName)
+        if (args.Solution.Comp.Id != ent.Comp.BloodSolutionName
+            && args.Solution.Comp.Id != ent.Comp.BloodTemporarySolutionName)
         {
             return;
         }

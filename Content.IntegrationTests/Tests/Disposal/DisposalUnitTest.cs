@@ -85,6 +85,7 @@ namespace Content.IntegrationTests.Tests.Disposal
       0: Alive
       200: Dead
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Physics
     bodyType: KinematicController

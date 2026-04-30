@@ -35,6 +35,7 @@ public sealed partial class MindTests : GameTest
   components:
   - type: MindContainer
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Body
     prototype: Human

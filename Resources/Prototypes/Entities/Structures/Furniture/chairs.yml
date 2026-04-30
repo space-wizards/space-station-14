@@ -28,8 +28,9 @@
     buckleOffset: "0,-0.05"
   - type: Pullable
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -413,8 +414,9 @@
     graph: Seat
     node: stoolCard
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

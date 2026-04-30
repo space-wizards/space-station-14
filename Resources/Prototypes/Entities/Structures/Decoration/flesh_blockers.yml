@@ -29,6 +29,7 @@
           ajar: ""
           open: ""
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:

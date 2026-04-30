@@ -13,7 +13,6 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfileRuleComponent>
 {
     [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
 
@@ -34,18 +33,18 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
             : HumanoidCharacterProfile.RandomWithSpecies();
 
 
-        if (profile?.Species is not { } speciesId || !_proto.Resolve(speciesId, out var species))
+        if (profile?.Species is not { } speciesId || !Proto.Resolve(speciesId, out var species))
         {
-            species = _proto.Index<SpeciesPrototype>(HumanoidCharacterProfile.DefaultSpecies);
+            species = Proto.Index(HumanoidCharacterProfile.DefaultSpecies);
         }
 
         if (ent.Comp.SpeciesOverride != null
             && (ent.Comp.SpeciesOverrideBlacklist?.Contains(new ProtoId<SpeciesPrototype>(species.ID)) ?? false))
         {
-            species = _proto.Index(ent.Comp.SpeciesOverride.Value);
+            species = Proto.Index(ent.Comp.SpeciesOverride.Value);
         }
 
-        args.Entity = Spawn(species.Prototype);
+        args.Entity = Spawn(species.Prototype, args.Coords);
         if (profile?.WithSpecies(species.ID) is { } humanoidProfile)
         {
             _visualBody.ApplyProfileTo(args.Entity.Value, humanoidProfile);

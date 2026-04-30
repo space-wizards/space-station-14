@@ -18,8 +18,9 @@
           bounds: "-0.35,-0.4,0.35,0.4"
         density: 100
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -72,8 +73,9 @@
     sprite: Objects/Decoration/mines.rsi
     state: support
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -153,8 +155,9 @@
     sprite: Objects/Decoration/mines.rsi
     state: support_wall
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures

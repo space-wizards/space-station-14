@@ -52,6 +52,7 @@
           shader: unshaded
     - type: Damageable
       damageModifierSet: Wood
+    - type: Injurable
     - type: Destructible
       thresholds:
       - trigger:

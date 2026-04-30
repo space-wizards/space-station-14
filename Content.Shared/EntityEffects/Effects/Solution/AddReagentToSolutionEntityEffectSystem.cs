@@ -11,11 +11,11 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 /// Quantity is modified by scale.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionContainerManagerComponent, AddReagentToSolution>
+public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionManagerComponent, AddReagentToSolution>
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionContainerManagerComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
+    protected override void Effect(Entity<SolutionManagerComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
     {
         var solution = args.Effect.Solution;
         var reagent = args.Effect.Reagent;
@@ -40,7 +40,7 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     ///     Solution we're looking for
     /// </summary>
     [DataField(required: true)]
-    public string? Solution = "reagents";
+    public string Solution = "reagents";
 
     ///<summary>
     ///     A modifier for how much reagent we're creating.

@@ -37,6 +37,8 @@
           mask:
           - MobMask
     - type: Damageable
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
         - trigger: # Excess damage, don't spawn entities
