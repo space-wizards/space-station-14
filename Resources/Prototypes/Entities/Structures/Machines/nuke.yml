@@ -66,7 +66,7 @@
     radius: 4
     energy: 2.0
     color: "#FF4020"
-    mask: /Textures/Effects/LightMasks/double_cone.png
+    lightMask: ConeDouble
   - type: RotatingLight
     speed: 120
   - type: NavMapBeacon
