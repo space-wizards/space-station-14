@@ -23,6 +23,12 @@
             "name": "mag-1"
         },
         {
+            "name": "uranium"
+        },
+        {
+            "name": "tranquilizer"
+        },
+        {
             "name": "inhand-left-mag",
             "directions": 4
         },

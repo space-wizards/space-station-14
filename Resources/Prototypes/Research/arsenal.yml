@@ -60,6 +60,7 @@
   recipeUnlocks:
   - MagazineShotgunBeanbag
   - BoxShellTranquilizer
+  - MagazineShotgunTranquilizer
   - BoxBeanbag
   - WeaponDisabler
 
@@ -83,6 +84,7 @@
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
   - BoxShotgunUranium
+  - MagazineShotgunUranium
 
 - type: technology
   id: AdvancedRiotControl
