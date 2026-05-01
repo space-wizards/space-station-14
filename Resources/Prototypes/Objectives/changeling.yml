@@ -37,3 +37,17 @@
     title: objective-unique-identity-name
     description: objective-unique-identity-description
   - type: ChangelingUniqueIdentityCondition
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingDevourMostObjective
+  name: Devour more unique humanoids than other changelings.
+  description: This is our hunting ground and we must prove as such.
+  components:
+  - type: Objective
+    unique: false # We compare against other objectives. Can't do that if there is only one.
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingDevourMostCondition
