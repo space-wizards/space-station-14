@@ -34,9 +34,9 @@ public sealed class SmokeOnTriggerSystem : EntitySystem
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
 
-        if (!_smoke.SpawnSmoke(target, ent.Comp.SmokePrototype, out var smoke, out var smokeComp))
+        if (!_smoke.TrySpawnSmoke(target, ent.Comp.SmokePrototype, out var smoke))
             return;
-        _smoke.StartSmoke(smoke.Value, ent.Comp.Solution, (float)ent.Comp.Duration.TotalSeconds, ent.Comp.SpreadAmount, smokeComp);
+        _smoke.StartSmoke(smoke.Value, ent.Comp.Solution, (float)ent.Comp.Duration.TotalSeconds, ent.Comp.SpreadAmount, smoke.Value.Comp);
 
         args.Handled = true;
     }

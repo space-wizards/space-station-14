@@ -262,13 +262,13 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         var smokeLifetime = innerSolution.Solution.Volume.Float() * entity.Comp.VolumeToLifeTimeFactor;
         var spread = (innerSolution.Solution.Volume / 5f).Int();
         //create smoke component
-        if (!_smokeSystem.SpawnSmoke(entity.Owner, entity.Comp.SmokePrototype, out var smoke, out var smokeComp))
+        if (!_smokeSystem.TrySpawnSmoke(entity.Owner, entity.Comp.SmokePrototype, out var smoke))
             return;
         //start smoke with our contents
         _smokeSystem.StartSmoke(smoke.Value,
             innerSolution.Solution.SplitSolution(innerSolution.Solution.Volume),
             smokeLifetime,
             spread,
-            smokeComp);
+            smoke.Value.Comp);
     }
 }
