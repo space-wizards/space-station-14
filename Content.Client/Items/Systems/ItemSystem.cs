@@ -59,7 +59,7 @@ public sealed class ItemSystem : SharedItemSystem
         if (!item.InhandVisuals.TryGetValue(args.Location, out var layers))
         {
             // get defaults
-            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
+            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers) && !TryGetDefaultVisuals(uid, item, "inhands", out layers))
                 return;
         }
 

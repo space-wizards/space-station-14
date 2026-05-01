@@ -9,11 +9,7 @@
     "states": [
 
         {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
+            "name": "inhands",
             "directions": 4
         },
         {
