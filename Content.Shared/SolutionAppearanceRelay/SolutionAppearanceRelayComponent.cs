@@ -1,4 +1,6 @@
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SolutionAppearanceRelay;
@@ -13,7 +15,7 @@ public sealed partial class SolutionAppearanceRelayComponent : Component
     /// The ID of solution on this entity to relay appearance to other entities.
     /// </summary>
     [DataField(required: true)]
-    public string Solution;
+    public ProtoId<ReagentPrototype> Solution;
 
     /// <summary>
     /// Whitelist for entities that the solution appearance will be relayed to.
