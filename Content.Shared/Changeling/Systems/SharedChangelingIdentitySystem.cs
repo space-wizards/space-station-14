@@ -44,8 +44,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            CloneToPausedMap(ent, args.Devoured);
-            AddDevouredReference(ent, args.Devoured);
+            GrantIdentity(ent, args.Devoured);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -67,7 +66,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        CloneToPausedMap(ent, ent.Owner);
+        GrantIdentity(ent, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
@@ -197,7 +196,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
@@ -213,6 +212,7 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
+        AddDevouredReference(ent, target);
 
         HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
@@ -317,6 +317,17 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
             return false;
 
         return ent.Comp.ConsumedIdentities.Count(data => data.Identity != null) < ent.Comp.MaxStoredDisguises;
+    }
+
+    /// <summary>
+    /// Whether the given changeling has a valid identity of the given entity.
+    /// </summary>
+    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
+    {
+        if (!Resolve(changeling, ref changeling.Comp, false))
+            return false;
+
+        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
     }
 
     /// <summary>

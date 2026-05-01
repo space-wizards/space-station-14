@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Content.Shared.Actions;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
@@ -20,12 +22,15 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private readonly ChangelingDevourSystem _changelingDevour = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingBiodegradeAbilityComponent, ChangelingBiodegradeActionEvent>(OnBiodegradeAction);
+        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingStingDnaEvent>(OnStingDna);
     }
 
     private void OnBiodegradeAction(Entity<ChangelingBiodegradeAbilityComponent> ent, ref ChangelingBiodegradeActionEvent args)
@@ -66,4 +71,23 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (ent.Comp.SpillSolution != null)
             _puddle.TrySpillAt(args.Performer, ent.Comp.SpillSolution, out _, false);
     }
+
+    private void OnStingDna(Entity<ChangelingIdentityComponent> ent, ref ChangelingStingDnaEvent args)
+    {
+        if (args.Target == ent.Owner)
+            return; // Can't sting yourself.
+
+        if (!_changelingDevour.CanDevour(ent.Owner, args.Target, checkDead: false, checkProtected: false))
+            return;
+
+        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Target, ent.Owner, PopupType.Medium);
+        _changelingIdentity.GrantIdentity(ent, args.Target);
+
+        args.Handled = true;
+    }
 }
+
+/// <summary>
+/// Action event for the Dna sting ability. Used to grand the changeling an identity without devouring somebody.
+/// </summary>
+public sealed partial class ChangelingStingDnaEvent : EntityTargetActionEvent;

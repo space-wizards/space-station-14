@@ -41,15 +41,12 @@ public readonly partial record struct SolutionChangedEvent(Entity<SolutionCompon
 /// <summary>
 /// The event raised whenever a solution entity is filled past its capacity.
 /// </summary>
-/// <param name="Solution">The solution entity that has been overfilled.</param>
-/// <param name="Overflow">The amount by which the solution entity has been overfilled.</param>
+/// <param name="Overflow">The solution that has overflowed and was removed.</param>
 [ByRefEvent]
-public partial record struct SolutionOverflowEvent(Entity<SolutionComponent> Solution, FixedPoint2 Overflow)
+public partial record struct SolutionOverflowEvent(Solution Overflow)
 {
-    /// <summary>The solution entity that has been overfilled.</summary>
-    public readonly Entity<SolutionComponent> Solution = Solution;
     /// <summary>The amount by which the solution entity has been overfilled.</summary>
-    public readonly FixedPoint2 Overflow = Overflow;
+    public readonly Solution Overflow = Overflow;
     /// <summary>Whether any of the event handlers for this event have handled overflow behaviour.</summary>
     public bool Handled = false;
 }
@@ -257,6 +254,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         bool errorOnMissing = false)
     {
         solution = null;
+        if (entProto.TryGetComponent<SolutionComponent>(out var sol, Factory) && sol.Id == name)
+        {
+            solution = sol.Solution;
+            return true;
+        }
 
         if (!TryGetSolutionFill(entProto, out var solutions))
             return false;
@@ -266,7 +268,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (!PrototypeManager.Resolve(protoId, out var proto))
                 continue;
 
-            if (!proto.TryGetComponent<SolutionComponent>(out var sol, Factory))
+            if (!proto.TryGetComponent(out sol, Factory))
             {
                 Log.Error($"Entity prototype {proto}, tried to spawn in a solution container in prototype {entProto.ID}, but had no {nameof(SolutionComponent)}");
                 continue;
@@ -323,16 +325,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
             yield return (sol.Id, sol.Solution);
         }
-    }
-
-    private bool TryGetSolutionFill(Entity<SolutionManagerComponent?> entity, [NotNullWhen(true)] out List<EntProtoId>? fill)
-    {
-        fill = null;
-        if (!SolutionManagerQuery.Resolve(entity, ref entity.Comp))
-            return false;
-
-        fill = entity.Comp.SolutionEnts;
-        return true;
     }
 
     private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out List<EntProtoId>? fill)
@@ -395,7 +387,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var overflow = solution.Comp.Solution.Volume - solution.Comp.Solution.MaxVolume;
         if (overflow > FixedPoint2.Zero)
         {
-            var overflowEv = new SolutionOverflowEvent(solution, overflow);
+            var split = solution.Comp.Solution.SplitSolution(overflow);
+            var overflowEv = new SolutionOverflowEvent(split);
             RaiseLocalEvent(solution, ref overflowEv);
         }
 
@@ -663,21 +656,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <summary>
     ///     Adds a solution to the container, if it can fully fit.
     /// </summary>
-    /// <param name="targetUid">entity holding targetSolution</param>
-    /// <param name="targetSolution">entity holding targetSolution</param>
+    /// <param name="solution">Solution we are adding to</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
-    public bool TryAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
+    public bool TryAddSolution(Entity<SolutionComponent> solution, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
         if (toAdd.Volume == FixedPoint2.Zero)
             return true;
-        if (toAdd.Volume > solution.AvailableVolume)
+
+        if (toAdd.Volume > solution.Comp.Solution.AvailableVolume)
             return false;
 
-        ForceAddSolution(soln, toAdd);
+        ForceAddSolution((solution, solution.Comp), toAdd);
         return true;
     }
 
