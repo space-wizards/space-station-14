@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Atmos;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -42,6 +42,12 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// </summary>
     [DataField]
     public bool NeedBoiling = false;
+
+    /// <summary>
+    /// how strong is the output. not perfect and might slighty overpressure if a large solution is cooked off.
+    /// </summary>
+    [DataField]
+    public float MaxPipeOutputPressure = Atmospherics.MaxOutputPressure*0.5f;
 
     /// <summary>
     /// when should boiling stop based on evaporated mass.

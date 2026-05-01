@@ -51,7 +51,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
             return;
         //check for power component
-        if(!TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
+        if (!TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
             return;
         //skip if item slot is empty
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.ContainerSlotId);
@@ -63,10 +63,11 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         //skip if container has no solution
         if (!TryComp(container, out SolutionComponent? solutionComponent))
             return;
-        //skip if solution is empty.
-        if (solutionComponent.Solution.Volume <= FixedPoint2.Epsilon)
+        //skip if solution is empty or pipe pressure to high
+        if (solutionComponent.Solution.Volume <= FixedPoint2.Epsilon ||
+            outlet.Air.Pressure >= entity.Comp.MaxPipeOutputPressure)
         {
-            //turn off while empty.
+            //turn off for now
             entity.Comp.NeedBoiling = false;
             receiver.Load = 0;
             return;
@@ -80,12 +81,14 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             //delay until we powered
             return;
         }
+
         //check for power
         if (!_power.IsPowered(entity, receiver))
         {
             //skip if now power.
             return;
         }
+
         //we dont want to overheat our solution.
         if (entity.Comp.NeedBoiling)
         {
@@ -130,6 +133,8 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             var maxEvaporationMass = excessEnergy / LatentHeatForVaporization;
             //cap to maximum quantity in solution
             var evaporationMass = FixedPoint2.Min(maxEvaporationMass.Value, part.Quantity);
+            //cap to ideal evaporation rate
+            evaporationMass = FixedPoint2.Min(evaporationMass, entity.Comp.DesiredEvaporationRate-evaporationMass-evaporatedSum);
             //skip if nothing evaporated. comes into effect if latent heat gets added.
             if (evaporationMass <= 0)
                 continue;
@@ -146,9 +151,12 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                 break;
             //if we still are above boiling point when reaching the end of our parts list, we don't need to put more heat into the solution.
             evaporatedSum += evaporationMass;
+            if (evaporatedSum >= entity.Comp.DesiredEvaporationRate)
+                break;
         }
+
         //ensure a smooth boiling rate.
-        entity.Comp.NeedBoiling = evaporatedSum<=entity.Comp.DesiredEvaporationRate;
+        entity.Comp.NeedBoiling = evaporatedSum <= entity.Comp.DesiredEvaporationRate;
 
         //iterate over all available gasses.
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
@@ -184,8 +192,9 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         {
             innerSolution.Solution.AddReagent(liquid);
         }
+
         //feed energy.
-        _sharedSolution.AddThermalEnergy(new(entity, innerSolution),vaporizedLiquidsToThermalEnergy.Sum(e=>e.Value));
+        _sharedSolution.AddThermalEnergy(new(entity, innerSolution), vaporizedLiquidsToThermalEnergy.Sum(e => e.Value));
         //check for limit on pressure in internal solution
         if (innerSolution.Solution.Volume < entity.Comp.PressureVolumeLimit)
             return;
@@ -196,6 +205,10 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         if (!_smokeSystem.SpawnSmoke(entity.Owner, entity.Comp.SmokePrototype, out var smoke, out var smokeComp))
             return;
         //start smoke with our contents
-        _smokeSystem.StartSmoke(smoke.Value,innerSolution.Solution.SplitSolution(innerSolution.Solution.Volume),smokeLifetime,spread,smokeComp);
+        _smokeSystem.StartSmoke(smoke.Value,
+            innerSolution.Solution.SplitSolution(innerSolution.Solution.Volume),
+            smokeLifetime,
+            spread,
+            smokeComp);
     }
 }
