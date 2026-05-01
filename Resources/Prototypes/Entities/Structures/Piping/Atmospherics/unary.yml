@@ -483,10 +483,14 @@
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseLiquidVaporizer
   name: vaporizer
-  description: Vaporizes liquids into gases. Careful of hot overflow!
+  description: Vaporizes liquids into gases. Mind excess smoke!
   placement:
     mode: SnapgridCenter
   components:
+  - type: Solution
+    id: overflow
+    solution:
+      maxVol: 10000 # should never hit this, since no container can hold this much.
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/condenser.rsi
     snapCardinals: true
@@ -542,8 +546,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-      - !type:SpillBehavior
-        solution: tank
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

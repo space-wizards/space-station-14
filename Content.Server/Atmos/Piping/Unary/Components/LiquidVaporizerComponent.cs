@@ -1,5 +1,7 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Piping.Unary.Components;
 
@@ -21,6 +23,44 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// </summary>
     [DataField]
     public string ContainerSlotId = "containerSlot";
+
+    /// <summary>
+    /// Load while running
+    /// </summary>
+    [DataField]
+    public int PowerLoad = 500;
+
+    /// <summary>
+    /// Smoke entity to spawn.
+    /// Defaults to smoke but you can use foam if you want.
+    /// </summary>
+    [DataField]
+    public EntProtoId SmokePrototype = "Smoke";
+
+    /// <summary>
+    /// Load while running
+    /// </summary>
+    [DataField]
+    public bool NeedBoiling = false;
+
+    /// <summary>
+    /// when should boiling stop based on evaporated mass.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 DesiredEvaporationRate = 10;
+
+
+    /// <summary>
+    /// how much volume will be held back before the internal solution is turned into smoke (in a single step)
+    /// </summary>
+    [DataField]
+    public FixedPoint2 PressureVolumeLimit = 10;
+
+    /// <summary>
+    /// how long smoke will live per unit of reagent smoked up.
+    /// </summary>
+    [DataField]
+    public float VolumeToLifeTimeFactor = 0.25f;
 
     /// <summary>
     /// For a vaporizer, how many U of reagents are given per each mole of gas.

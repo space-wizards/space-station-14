@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
@@ -29,6 +30,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _sharedSolution = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly SmokeSystem _smokeSystem = default!;
 
     public override void Initialize()
     {
@@ -45,32 +47,54 @@ public sealed class LiquidVaporizerSystem : EntitySystem
 
     private void OnVaporizerUpdated(Entity<LiquidVaporizerComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
+        //check for pipe component
+        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
+            return;
+        //check for power component
+        if(!TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
+            return;
         //skip if item slot is empty
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.ContainerSlotId);
         if (container == null)
+        {
             return;
+        }
+
         //skip if container has no solution
         if (!TryComp(container, out SolutionComponent? solutionComponent))
             return;
         //skip if solution is empty.
         if (solutionComponent.Solution.Volume <= FixedPoint2.Epsilon)
+        {
+            //turn off while empty.
+            entity.Comp.NeedBoiling = false;
+            receiver.Load = 0;
             return;
+        }
+
         var solution = solutionComponent.Solution;
+        //turn on, once valid
+        if (receiver.Load == 0)
+        {
+            receiver.Load = entity.Comp.PowerLoad;
+            //delay until we powered
+            return;
+        }
         //check for power
-        if (!(TryComp<ApcPowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver)))
+        if (!_power.IsPowered(entity, receiver))
         {
             //skip if now power.
             return;
         }
+        //we dont want to overheat our solution.
+        if (entity.Comp.NeedBoiling)
+        {
+            //get how many Watt Seconds (Joules) of energy we get from load
+            var energyInJoules = receiver.PowerReceived * args.dt;
+            //heat up solution
+            _sharedSolution.AddThermalEnergy(new(container.Value, solutionComponent), energyInJoules);
+        }
 
-        //check for pipe component
-        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
-            return;
-
-        //get how many Watt Seconds (Joules) of energy we get from load
-        var energyInJoules = receiver.PowerReceived * args.dt;
-        //heat up solution
-        _sharedSolution.AddThermalEnergy(new(container.Value, solutionComponent), energyInJoules);
         //calculate how much of our solution will boil away based on temperature
         //create ordered lookup
         var parts = solution.Contents
@@ -85,6 +109,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             .ToList();
         //boil away each reagent from lowest to highest boiling temperature.
         Dictionary<ReagentQuantity, float> vaporizedLiquidsToThermalEnergy = [];
+        FixedPoint2 evaporatedSum = 0;
         foreach (var part in parts)
         {
             var boilingPoint = part.Prototype.BoilingPoint;
@@ -93,7 +118,12 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                 continue;
             //skip if we cannot boil it
             if (solution.Temperature <= boilingPoint)
-                continue;
+            {
+                //start boiling since its necessary.
+                entity.Comp.NeedBoiling = true;
+                break;
+            }
+
             //energy above heat capacity by using heat capacity and temperature difference
             var excessEnergy = solution.GetHeatCapacity(_prototypeManager) * (solution.Temperature - boilingPoint);
             //how much of the chemical we would evaporate.
@@ -114,8 +144,11 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             //stop early if solution is no longer hot enough for boiling.
             if (solution.Temperature <= boilingPoint)
                 break;
+            //if we still are above boiling point when reaching the end of our parts list, we don't need to put more heat into the solution.
+            evaporatedSum += evaporationMass;
         }
-
+        //ensure a smooth boiling rate.
+        entity.Comp.NeedBoiling = evaporatedSum<=entity.Comp.DesiredEvaporationRate;
 
         //iterate over all available gasses.
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
@@ -143,25 +176,26 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             solution.Temperature = Atmospherics.T20C;
         if (vaporizedLiquidsToThermalEnergy.Count == 0)
             return;
-        //machine will spill a mix of anything it cannot evaporate.
-        //make new puddle
-
-              var spillEntityId = this.Spawn("Puddle", entity.Owner.ToCoordinates());
-              //get the solution component of our puddle (how does this even fail?)
-              if (!TryComp(spillEntityId, out SolutionComponent? spillSolutionComponent))
-                  return;
-
-              //feed liquids to solutions
-              foreach (var liquid in vaporizedLiquidsToThermalEnergy)
-              {
-                  spillSolutionComponent.Solution.AddReagent(liquid.Key);
-              }
-
-              var spillEntity = new Entity<SolutionComponent>(spillEntityId, spillSolutionComponent);
-              //sum all energy in our remaining liquids and feed to solution (which will also update itself)
-              spillSolutionComponent.Solution.Temperature =
-                  spillSolutionComponent.Solution.GetHeatCapacity(_prototypeManager) *
-                  vaporizedLiquidsToThermalEnergy.Sum(e => e.Value);
-              _sharedSolution.UpdateChemicals(new(container.Value, solutionComponent));
+        //machine will release cloud of a mix of anything it cannot put into atmospherics, but first we store stuff.
+        if (!TryComp(entity, out SolutionComponent? innerSolution))
+            return;
+        //store all vaporized liquids in solution
+        foreach (var liquid in vaporizedLiquidsToThermalEnergy.Keys)
+        {
+            innerSolution.Solution.AddReagent(liquid);
+        }
+        //feed energy.
+        _sharedSolution.AddThermalEnergy(new(entity, innerSolution),vaporizedLiquidsToThermalEnergy.Sum(e=>e.Value));
+        //check for limit on pressure in internal solution
+        if (innerSolution.Solution.Volume < entity.Comp.PressureVolumeLimit)
+            return;
+        //calculate smoke parameters.
+        var smokeLifetime = innerSolution.Solution.Volume.Float() * entity.Comp.VolumeToLifeTimeFactor;
+        var spread = (innerSolution.Solution.Volume / 5f).Int();
+        //create smoke component
+        if (!_smokeSystem.SpawnSmoke(entity.Owner, entity.Comp.SmokePrototype, out var smoke, out var smokeComp))
+            return;
+        //start smoke with our contents
+        _smokeSystem.StartSmoke(smoke.Value,innerSolution.Solution.SplitSolution(innerSolution.Solution.Volume),smokeLifetime,spread,smokeComp);
     }
 }
