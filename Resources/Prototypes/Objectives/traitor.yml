@@ -413,3 +413,21 @@
   - type: ObjectiveLimit
     # There is only one trade station so there should never be more than one of these objectives.
     limit: 1
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseCounterObjective]
+  id: MailFraudObjective
+  description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
+  components:
+  - type: Objective
+    difficulty: 0.5
+    icon:
+      sprite: Objects/Specific/Cargo/mail_bag.rsi
+      state: icon
+  - type: MailFraudCondition
+  - type: NumberObjective
+    min: 8
+    max: 12
+    title: objective-condition-mail-fraud-title
+  - type: ObjectiveLimit
+    limit: 1
