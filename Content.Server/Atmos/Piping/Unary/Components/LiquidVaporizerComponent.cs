@@ -13,7 +13,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components;
 public sealed partial class LiquidVaporizerComponent : Component
 {
 
-
     /// <summary>
     /// The ID for the pipe node.
     /// </summary>
@@ -21,60 +20,59 @@ public sealed partial class LiquidVaporizerComponent : Component
     public string OutletId = "pipe";
 
     /// <summary>
-    /// The ID for the solution.
+    /// The ID of the slot for the container.
     /// </summary>
     [DataField]
     public string ContainerSlotId = "containerSlot";
 
     /// <summary>
-    /// Load while running
+    /// Load while running the device
     /// </summary>
     [DataField]
     public int PowerLoad = 500;
 
     /// <summary>
     /// Smoke entity to spawn.
-    /// Defaults to smoke but you can use foam if you want.
     /// </summary>
     [DataField]
     public EntProtoId SmokePrototype = "Smoke";
 
     /// <summary>
-    /// Load while running
+    /// Flag to see if it needs running
     /// </summary>
     [DataField]
     public bool NeedBoiling = false;
 
     /// <summary>
-    /// how strong is the output. not perfect and might slighty overpressure if a large solution is cooked off.
+    /// How much pressure can be in the outlet pipe, before the component stops.
     /// </summary>
     [DataField]
     public float MaxPipeOutputPressure = Atmospherics.MaxOutputPressure*0.5f;
 
     /// <summary>
-    /// when should boiling stop based on evaporated mass.
+    /// When should boiling stop based on evaporated mass per cycle.
     /// </summary>
     [DataField]
     public FixedPoint2 DesiredEvaporationRate = 10;
 
 
     /// <summary>
-    /// how much volume will be held back before the internal solution is turned into smoke (in a single step)
+    /// How much volume of non-atmospheric vapors, the device will hold, before releasing them as smoke.
     /// </summary>
     [DataField]
     public FixedPoint2 PressureVolumeLimit = 10;
 
     /// <summary>
-    /// how long smoke will live per unit of reagent smoked up.
+    /// How long smoke will live per unit of reagent smoked up.
     /// </summary>
     [DataField]
     public float VolumeToLifeTimeFactor = 0.25f;
 
     /// <summary>
-    /// how long smoke will live per unit of reagent smoked up.
+    /// The maximum temperature that this device can heat solutions up.
     /// </summary>
     [DataField]
-    public FixedPoint2 MaxTemperature = 800;
+    public FixedPoint2 MaxTemperature = 773.15;
 
     /// <summary>
     /// For a vaporizer, how many U of reagents are given per each mole of gas.
@@ -83,6 +81,6 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// Derived from a standard of 500u per canister:
     /// 400u / 1871.71051 moles per canister
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float ReagentToMolesMultiplier = 4.68f;
 }

@@ -19,6 +19,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -40,10 +41,10 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LiquidVaporizerComponent, AtmosDeviceUpdateEvent>(OnVaporizerUpdated);
-        SubscribeLocalEvent<LiquidVaporizerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
+        SubscribeLocalEvent<LiquidVaporizerComponent, AnchorStateChangedEvent>(OnAnchorChangedEvent);
     }
 
-    private void OnAnchorStateChanged(EntityUid entity,
+    private void OnAnchorChangedEvent(EntityUid entity,
         LiquidVaporizerComponent component,
         AnchorStateChangedEvent args)
     {
@@ -51,75 +52,36 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         {
             _appearanceSystem.SetData(entity,
                 VaporizerVisuals.Working,
-                args.Anchored && component.NeedBoiling,
+                false,
                 appearanceComponent);
         }
     }
 
+
     /// <summary>
     /// Each Reagent would need a Latent Heat (J/Unit) to properly calculate evaporation rate.
-    /// While the Range of Latent heat values across chemicals ranges widely. we just take something between gasses and liquids
+    /// for now is just a good value to allow 1u of water evaporation per tick.
     /// </summary>
-    private const float LatentHeatForVaporization = 15000;
+    private const float LatentHeatForVaporization = 300;
+
 
     private void OnVaporizerUpdated(Entity<LiquidVaporizerComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
+        //validate and check for work.
         TryComp<AppearanceComponent>(entity, out var appearanceComponent);
-        //check for power component
-        if (!TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
-        {
-            if (appearanceComponent != null)
-            {
-                _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
-                    false,
-                    appearanceComponent);
-            }
-
-            return;
-        }
-
-        //check for pipe component
-        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
-        {
-            if (appearanceComponent != null)
-            {
-                _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
-                    false,
-                    appearanceComponent);
-            }
-
-            return;
-        }
-
-        //skip if item slot is empty
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.ContainerSlotId);
-        if (container == null)
+        if (!TryComp<ApcPowerReceiverComponent>(entity, out var receiver) //check for power component
+            || !_nodeContainer.TryGetNode(entity.Owner,
+                entity.Comp.OutletId,
+                out PipeNode? outlet) //check for pipe component
+            || container == null //skip if item slot is empty
+            || !TryComp(container, out SolutionComponent? solutionComponent) //skip if container has no solution
+            || solutionComponent.Solution.Volume == FixedPoint2.Zero //skip if solution is empty
+            || outlet.Air.Pressure >= entity.Comp.MaxPipeOutputPressure //skip if pressure to high
+           )
         {
-            if (appearanceComponent != null)
-            {
-                _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
-                    false,
-                    appearanceComponent);
-            }
-
-            return;
-        }
-
-        //skip if container has no solution
-        if (!TryComp(container, out SolutionComponent? solutionComponent))
-            return;
-        //skip if solution is empty or pipe pressure to high
-        if (solutionComponent.Solution.Volume <= FixedPoint2.Epsilon ||
-            outlet.Air.Pressure >= entity.Comp.MaxPipeOutputPressure||
-            solutionComponent.Solution.Temperature>=entity.Comp.MaxTemperature
-         )
-        {
-            //turn off for now
             entity.Comp.NeedBoiling = false;
-            receiver.Load = 0;
+            receiver?.Load = 0;
             if (appearanceComponent != null)
             {
                 _appearanceSystem.SetData(entity,
@@ -132,11 +94,10 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         }
 
         var solution = solutionComponent.Solution;
-        //turn on, once valid
+        //wake up from off
         if (receiver.Load == 0)
         {
             receiver.Load = entity.Comp.PowerLoad;
-            //delay until we powered
             if (appearanceComponent != null)
             {
                 _appearanceSystem.SetData(entity,
@@ -145,6 +106,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                     appearanceComponent);
             }
 
+            //delay until we powered
             return;
         }
 
@@ -163,8 +125,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             return;
         }
 
-
-        //we dont want to overheat our solution.
+        //check if we are overheating the solution
         if (entity.Comp.NeedBoiling)
         {
             //get how many Watt Seconds (Joules) of energy we get from load
@@ -173,9 +134,10 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             _sharedSolution.AddThermalEnergy(new(container.Value, solutionComponent), energyInJoules);
         }
 
-
+        //set correct working layer.
         if (appearanceComponent != null)
         {
+            //update only once.
             if (_appearanceSystem.TryGetData(entity,
                     VaporizerVisuals.Working,
                     out var workingState,
@@ -187,7 +149,6 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                     appearanceComponent);
             }
         }
-
 
         //calculate how much of our solution will boil away based on temperature
         //create ordered lookup
@@ -201,9 +162,12 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                 })
             .OrderBy(x => x.Prototype.BoilingPoint ?? 0)
             .ToList();
+
         //boil away each reagent from lowest to highest boiling temperature.
         Dictionary<ReagentQuantity, float> vaporizedLiquidsToThermalEnergy = [];
+
         FixedPoint2 evaporatedSum = 0;
+
         foreach (var part in parts)
         {
             var boilingPoint = part.Prototype.BoilingPoint;
@@ -219,14 +183,17 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             }
 
             //energy above heat capacity by using heat capacity and temperature difference
-            var excessEnergy = solution.GetHeatCapacity(_prototypeManager) * (solution.Temperature - boilingPoint);
+            var excessEnergy = part.Prototype.SpecificHeat * (solution.Temperature - boilingPoint);
             //how much of the chemical we would evaporate.
             var maxEvaporationMass = excessEnergy / LatentHeatForVaporization;
+
+
+          //  var maxEvaporationMass = (solution.Temperature - boilingPoint) * 0.15f;
             //cap to maximum quantity in solution
             var evaporationMass = FixedPoint2.Min(maxEvaporationMass.Value, part.Quantity);
             //cap to ideal evaporation rate
-            evaporationMass = FixedPoint2.Min(evaporationMass,
-                entity.Comp.DesiredEvaporationRate - evaporationMass - evaporatedSum);
+            evaporationMass = FixedPoint2.Min(evaporationMass, entity.Comp.DesiredEvaporationRate - evaporatedSum);
+            //    entity.Comp.DesiredEvaporationRate - evaporationMass - evaporatedSum);
             //skip if nothing evaporated. comes into effect if latent heat gets added.
             if (evaporationMass <= 0)
                 continue;
@@ -247,8 +214,9 @@ public sealed class LiquidVaporizerSystem : EntitySystem
                 break;
         }
 
-        //ensure a smooth boiling rate.
-        entity.Comp.NeedBoiling = evaporatedSum <= entity.Comp.DesiredEvaporationRate;
+        //ensure a smooth boiling rate and not hit temperature limit
+        entity.Comp.NeedBoiling = evaporatedSum <= entity.Comp.DesiredEvaporationRate &&
+                                  solutionComponent.Solution.Temperature <= entity.Comp.MaxTemperature;
 
         //iterate over all available gasses.
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
