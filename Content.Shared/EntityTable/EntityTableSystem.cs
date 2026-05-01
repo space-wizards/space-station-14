@@ -11,12 +11,6 @@ public sealed class EntityTableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, System.Random? rand = null, EntityTableContext? ctx = null)
-    {
-        // convenient
-        return GetSpawns(entTableProto.Table, rand, ctx);
-    }
-
     public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, System.Random? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
@@ -25,11 +19,6 @@ public sealed class EntityTableSystem : EntitySystem
         rand ??= _random.GetRandom();
         ctx ??= new EntityTableContext();
         return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
-    }
-
-    public IEnumerable<(EntProtoId spawn, double)> ListSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
-    {
-        return ListSpawns(entTableProto.Table, ctx);
     }
 
     /// <summary>
@@ -44,12 +33,6 @@ public sealed class EntityTableSystem : EntitySystem
 
         ctx ??= new EntityTableContext();
         return table.ListSpawns(EntityManager, _prototypeManager, ctx);
-    }
-
-    /// <inheritdoc cref="AverageSpawns(EntityTableSelector?,EntityTableContext?)"/>
-    public IEnumerable<(EntProtoId spawn, double)> AverageSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
-    {
-        return AverageSpawns(entTableProto.Table, ctx);
     }
 
     /// <summary>
