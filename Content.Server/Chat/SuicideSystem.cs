@@ -10,7 +10,6 @@ using Content.Shared.Item;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
@@ -18,16 +17,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat;
 
-public sealed class SuicideSystem : EntitySystem
+public sealed class SuicideSystem : SharedSuicideSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
@@ -48,7 +44,7 @@ public sealed class SuicideSystem : EntitySystem
     public bool Suicide(EntityUid victim)
     {
         // Can't suicide if we're already dead
-        if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
+        if (!TryComp<MobStateComponent>(victim, out var mobState) || MobStateSystem.IsDead(victim, mobState))
             return false;
 
         _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} is attempting to suicide");
@@ -64,7 +60,7 @@ public sealed class SuicideSystem : EntitySystem
 
         // Suicide is considered a fail if the user wasn't able to ghost
         // Suiciding with the CannotSuicide tag will ghost the player but not kill the body
-        if (!suicideGhostEvent.Handled || _tagSystem.HasTag(victim, CannotSuicideTag))
+        if (!suicideGhostEvent.Handled || TagSystem.HasTag(victim, CannotSuicideTag))
             return false;
 
         // TODO: fix this
@@ -102,7 +98,7 @@ public sealed class SuicideSystem : EntitySystem
 
         // CannotSuicide tag will allow the user to ghost, but also return to their mind
         // This is kind of weird, not sure what it applies to?
-        if (_tagSystem.HasTag(victim, CannotSuicideTag))
+        if (TagSystem.HasTag(victim, CannotSuicideTag))
             args.CanReturnToBody = true;
 
         if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
@@ -114,7 +110,7 @@ public sealed class SuicideSystem : EntitySystem
     /// </summary>
     private void OnEnvironmentalSuicide(Entity<MobStateComponent> victim, ref SuicideEvent args)
     {
-        if (args.Handled || _mobState.IsCritical(victim))
+        if (args.Handled || MobStateSystem.IsCritical(victim))
             return;
 
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
@@ -164,13 +160,13 @@ public sealed class SuicideSystem : EntitySystem
 
         if (args.DamageSpecifier != null)
         {
-            _suicide.ApplyLethalDamage(victim, args.DamageSpecifier);
+            ApplyLethalDamage(victim, args.DamageSpecifier);
             args.Handled = true;
             return;
         }
 
         args.DamageType ??= "Bloodloss";
-        _suicide.ApplyLethalDamage(victim, args.DamageType);
+        ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
     }
 }

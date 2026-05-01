@@ -1,5 +1,7 @@
-﻿using Content.Client.FeedbackPopup;
+using Content.Client.FeedbackPopup;
 using Content.Client.Gameplay;
+using Content.Client.Ghost;
+using Content.Client.Options;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
@@ -28,7 +30,10 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly FeedbackPopupUIController _feedback = null!;
 
+    [UISystemDependency] private readonly GhostSystem _ghostSystem = default!;
+
     private Options.UI.EscapeMenu? _escapeWindow;
+    private AbandonCharacterWindow? _abandonWindow;
 
     private MenuButton? EscapeButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EscapeButton;
 
@@ -56,6 +61,11 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     private void ActivateButton() => EscapeButton!.SetClickPressed(true);
     private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
 
+    private void UpdateAbandonButtonState()
+    {
+        _escapeWindow?.AbandonButton.Disabled = _ghostSystem.IsGhost;
+    }
+
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_escapeWindow == null);
@@ -65,6 +75,18 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
 
+        UpdateAbandonButtonState();
+        _ghostSystem.PlayerAttached += _ => UpdateAbandonButtonState();
+        _ghostSystem.PlayerDetached += UpdateAbandonButtonState;
+
+        _escapeWindow.AbandonButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+            if (_abandonWindow is not { IsOpen: true })
+                _abandonWindow = UIManager.CreateWindow<AbandonCharacterWindow>();
+            _abandonWindow?.OpenCentered();
+        };
+        
         _escapeWindow.FeedbackButton.OnPressed += _ =>
         {
             CloseEscapeWindow();

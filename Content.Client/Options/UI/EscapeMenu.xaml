@@ -16,7 +16,8 @@
         <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
         <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
+        <Button Access="Public" Name="AbandonButton" Text="{Loc 'ui-escape-abandon'}" />
         <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
-        <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" StyleClasses="ButtonColorRed" />
+        <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" StyleClasses="negative" />
     </BoxContainer>
 </ui1:EscapeMenu>
