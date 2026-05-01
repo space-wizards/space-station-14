@@ -12,12 +12,6 @@ namespace Content.Shared.SolutionAppearanceRelay;
 public sealed partial class SolutionAppearanceRelayComponent : Component
 {
     /// <summary>
-    /// The ID of solution on this entity to relay appearance to other entities.
-    /// </summary>
-    [DataField(required: true)]
-    public ProtoId<ReagentPrototype> Solution;
-
-    /// <summary>
     /// Whitelist for entities that the solution appearance will be relayed to.
     /// </summary>
     [DataField]

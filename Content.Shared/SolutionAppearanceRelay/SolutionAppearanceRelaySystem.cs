@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Whitelist;
@@ -46,10 +47,13 @@ public sealed class SolutionAppearanceRelaySystem : EntitySystem
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
             return;
 
-        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.Solution, out var solutionEntity, out _))
+        if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
+        if (!TryComp<SolutionComponent>(ent.Owner, out var solutionComp))
+            return;
+
+        if (!_solutionContainer.TryGetSolution(ent.Owner, solutionComp.Id, out var solutionEntity, out _))
             return;
 
         _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value.Comp));
