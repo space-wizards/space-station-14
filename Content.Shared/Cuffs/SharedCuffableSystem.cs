@@ -572,8 +572,11 @@ namespace Content.Shared.Cuffs
         /// /// <param name="target">The entity to be checked</param>
         /// <param name="requireFullyCuffed">when true, return false if the target is only partially cuffed (for things with more than 2 hands)</param>
         /// <returns></returns>
-        public bool IsCuffed(Entity<CuffableComponent> target, bool requireFullyCuffed = true)
+        public bool IsCuffed(Entity<CuffableComponent?> target, bool requireFullyCuffed = true)
         {
+            if (!Resolve(target, ref target.Comp, false))
+                return false;
+
             if (!TryComp<HandsComponent>(target, out var hands))
                 return false;
 
