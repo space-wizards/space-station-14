@@ -337,6 +337,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Updates the appearance of the <see cref="container" /> with data about the <see cref="soln" />.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="container" /> does not necessarily have to be the solution container of <see cref="soln" />.
+    /// </remarks>
     public void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent> soln)
     {
         var (uid, appearanceComponent) = container;
