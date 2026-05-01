@@ -1109,14 +1109,16 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         // Don't add a solution entity with the same id as this entity's solution if it exists!
-        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id, $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
+        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id,
+            $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
 
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
         contained.Container = entity.Owner;
 
         // Throw if we already have a solution with the same ID.
-        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
-            DebugTools.Assert($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
+        DebugTools.Assert(!entity.Comp.Solutions.TryGetValue(solution.Id, out var existing) || existing.Owner == args.Entity,
+            $"Solution {ToPrettyString(entity)}, tried to add a solution {ToPrettyString(args.Entity)} with a duplicate id: {solution.Id} to {ToPrettyString(existing)}");
+        entity.Comp.Solutions[solution.Id] = (args.Entity, solution);
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
