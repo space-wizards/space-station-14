@@ -33,13 +33,11 @@ public abstract class SharedMindShieldSystem : EntitySystem
 
     private void OnQueryMindShieldVisuals(Entity<MindShieldComponent> a, ref QueryMindShieldVisualsEvent k)
     {
-        Log.Log(LogLevel.Info, "dope");
         k.IsVisible = true;
     }
 
     public bool IsMindshielded(EntityUid entity)
     {
-        Log.Log(LogLevel.Info, "ms check");
         var ev = new QueryMindShieldStatusEvent();
         RaiseLocalEvent(entity, ref ev);
         return ev.IsMindshielded;
@@ -50,6 +48,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
 /// <summary>
 /// Raised in order to query wether an entity is mindshielded
 /// </summary>
+[ByRefEvent]
 public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
@@ -61,6 +60,7 @@ public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRela
 /// <summary>
 /// Raised in order to query wether an entity is visually mindshielded. Should be raised CLIENT-SIDE only
 /// </summary>
+[ByRefEvent]
 public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;

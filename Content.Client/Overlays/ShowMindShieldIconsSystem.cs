@@ -25,7 +25,7 @@ public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShiel
             return;
         
         var ev = new QueryMindShieldVisualsEvent();
-        RaiseLocalEvent(entt.Owner, ev, true);
+        RaiseLocalEvent(entt.Owner, ref ev, true);
         if (ev.IsVisible && _prototype.Resolve(ev.MindShieldStatusIcon, out var statusIconPrototype))
             evnt.StatusIcons.Add(statusIconPrototype);
     }
