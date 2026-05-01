@@ -1116,16 +1116,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         contained.Container = entity.Owner;
 
         // Throw if we already have a solution with the same ID.
-        DebugTools.Assert(!entity.Comp.Solutions.TryGetValue(solution.Id, out var existing) || existing.Owner == args.Entity,
-            $"Solution {ToPrettyString(entity)}, tried to add a solution {ToPrettyString(args.Entity)} with a duplicate id: {solution.Id} to {ToPrettyString(existing)}");
+        // We only check on server as we actually want the server to bulldoze any client entities being cached when they come in.
+        // Applying state, and first time predicted checks will cause mispredicts until the solution updates
+        DebugTools.Assert(Net.IsClient || !entity.Comp.Solutions.TryGetValue(solution.Id, out var existing) || existing.Owner == args.Entity,
+            $"Solution {ToPrettyString(entity)}, tried to add a solution {ToPrettyString(args.Entity)} with a duplicate id: {solution.Id} {ToPrettyString(existing)}");
         entity.Comp.Solutions[solution.Id] = (args.Entity, solution);
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
     {
-        if (Timing.ApplyingState)
-            return;
-
         // Container networking jank
         if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
