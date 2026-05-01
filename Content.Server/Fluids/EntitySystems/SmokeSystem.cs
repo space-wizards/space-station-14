@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Shared.EntityEffects.Effects;
@@ -23,6 +24,9 @@ using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.EntityEffects.Effects.Solution;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
+using Content.Shared.Coordinates.Helpers;
+using Robust.Shared.Map;
+using Content.Shared.Maps;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -44,6 +48,11 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SpreaderSystem _spreader = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+
 
     private EntityQuery<SmokeComponent> _smokeQuery;
     private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
@@ -206,6 +215,46 @@ public sealed class SmokeSystem : EntitySystem
     {
         if (args.Solution.Comp.Id == SmokeComponent.SolutionName)
             OnReactionAttempt(entity, ref args.Event);
+    }
+
+
+
+    /// <summary>
+    /// create a smoke entity on location of an target entity.
+    /// </summary>
+    /// <param name="target">the entity on which the smoke shoudl be spawned</param>
+    /// <param name="smokePrototype">the smoke entity to be spawned must have smoke component</param>
+    /// <param name="smoke">the created smoke entity</param>
+    /// <param name="smokeComp">the smoke compoentn in the spawned entity.</param>
+    /// <returns>true if smoke could be spawned successfully.</returns>
+    public bool SpawnSmoke(EntityUid? target, EntProtoId smokePrototype, [NotNullWhen(true)] out EntityUid? smoke,[NotNullWhen(true)] out SmokeComponent? smokeComp)
+    {
+        smoke = null;
+        smokeComp = null;
+        if (target == null)
+            return false;
+        var xform = Transform(target.Value);
+        var mapCoords = _transform.GetMapCoordinates(target.Value, xform);
+        if (!_mapMan.TryFindGridAt(mapCoords, out var gridUid, out var gridComp) ||
+            !_map.TryGetTileRef(gridUid, gridComp, xform.Coordinates, out var tileRef) ||
+            tileRef.Tile.IsEmpty)
+        {
+            return false;
+        }
+
+        if (_spreader.RequiresFloorToSpread(smokePrototype.ToString()) && _turf.IsSpace(tileRef))
+            return false;
+
+        var coords = _map.MapToGrid(gridUid, mapCoords);
+        smoke = Spawn(smokePrototype, coords.SnapToGrid());
+        if (!TryComp<SmokeComponent>(smoke, out smokeComp))
+        {
+            Log.Error($"Smoke prototype {smokePrototype} was missing SmokeComponent");
+            Del(smoke);
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
