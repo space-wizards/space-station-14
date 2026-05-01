@@ -20,10 +20,10 @@ public sealed class SolutionSystemTests : GameTest
 - type: entity
   id: SolutionTarget
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 50
+  - type: Solution
+    id: beaker
+    solution:
+      maxVol: 50
 
 - type: reagent
   id: TestReagentA

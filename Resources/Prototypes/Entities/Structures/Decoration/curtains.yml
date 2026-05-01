@@ -35,8 +35,9 @@
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
