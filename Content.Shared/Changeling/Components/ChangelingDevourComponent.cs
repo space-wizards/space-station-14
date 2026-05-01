@@ -77,6 +77,13 @@ public sealed partial class ChangelingDevourComponent : Component
     public TimeSpan DevourConsumeTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
+    /// Whether the target should get husked after devouring.
+    /// The husking is reverted after being brought back to alive state.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Husk = true;
+
+    /// <summary>
     /// The currently active devour sound in the world.
     /// </summary>
     [DataField]
@@ -104,9 +111,9 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 20},
-            { "Piercing", 20 },
-            { "Blunt", 10 },
+            { "Slash", 25},
+            { "Caustic", 50 },
+            { "Cellular", 100 }, // Total 200 damage. We don't care about stacking because you cannot devour the same body several times in one go.
         },
     };
 
