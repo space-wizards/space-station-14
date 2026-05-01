@@ -1,3 +1,4 @@
+using Content.Shared.Mindshield;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
@@ -14,25 +15,18 @@ public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShiel
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-        SubscribeLocalEvent<FakeMindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEventFake);
-    }
-    // TODO: Probably need to get this OFF of client since this can be read by bad actors rather easily
-    //  ...imagine cheating in a game about silly paper dolls
-    private void OnGetStatusIconsEventFake(EntityUid uid, FakeMindShieldComponent component, ref GetStatusIconsEvent ev)
-    {
-        if(!IsActive)
-            return;
-        if (component.IsEnabled && _prototype.Resolve(component.MindShieldStatusIcon, out var fakeStatusIconPrototype))
-            ev.StatusIcons.Add(fakeStatusIconPrototype);
+        SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, MindShieldComponent component, ref GetStatusIconsEvent ev)
+    private void OnGetStatusIconsEvent(Entity<StatusIconComponent> entt, ref GetStatusIconsEvent evnt)
     {
+        // Is active checks for our ability to display status icons
         if (!IsActive)
             return;
-
-        if (_prototype.Resolve(component.MindShieldStatusIcon, out var iconPrototype))
-            ev.StatusIcons.Add(iconPrototype);
+        
+        var ev = new QueryMindShieldVisualsEvent();
+        RaiseLocalEvent(entt.Owner, ev, true);
+        if (ev.IsVisible && _prototype.Resolve(ev.MindShieldStatusIcon, out var statusIconPrototype))
+            evnt.StatusIcons.Add(statusIconPrototype);
     }
 }
