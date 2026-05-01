@@ -16,6 +16,12 @@ public sealed partial class GasMinerComponent : Component
     public GasMinerState MinerState = GasMinerState.Disabled;
 
     /// <summary>
+    /// If the miner needs to be anchored to work.
+    /// </summary>
+    [DataField]
+    public bool NeedsToBeAnchored = true;
+
+    /// <summary>
     ///      If the number of moles in the external environment exceeds this number, no gas will be mined.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
