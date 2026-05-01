@@ -61,7 +61,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
 
         if (!CanBeAssigned(uid, mindId, mind, comp))
         {
-            Log.Warning($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
+            Log.Debug($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
             return null;
         }
 
@@ -70,7 +70,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (ev.Cancelled)
         {
             Del(uid);
-            Log.Warning($"Could not assign objective {proto}, deleted it");
+            Log.Debug($"Could not assign objective {proto}, deleted it");
             return null;
         }
 

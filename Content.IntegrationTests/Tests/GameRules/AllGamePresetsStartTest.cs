@@ -6,11 +6,13 @@ using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
+using Content.Server.Preferences.Managers;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Antag;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
+using Content.Shared.Preferences;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
@@ -122,11 +124,12 @@ public sealed class AllGamePresetsStartTest : GameTest
         });
 
         var i = 0;
+        var prefMan = server.ResolveDependency<IServerPreferencesManager>();
         foreach (var (antag, amount) in rules)
         {
             for (var count = 0; count < amount; count++)
             {
-                await Pair.SetAntagPreference(antag.PrefRoles.FirstOrDefault(), true, players[i++].UserId);
+                await SetAntagPreferenceForCompatibleProfile(antag, players[i++]);
                 Assert.That(i < min, $"Tried to assign more antags than there were players");
             }
         }
@@ -206,6 +209,18 @@ public sealed class AllGamePresetsStartTest : GameTest
                     }
                 });
             }
+        }
+
+        async Task SetAntagPreferenceForCompatibleProfile(AntagSpecifierPrototype antag, ICommonSession session)
+        {
+            // Keep this "ideal circumstances" test from randomly selecting species blacklisted by an antag.
+            var prefs = prefMan.GetPreferences(session.UserId);
+            Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
+            var profile = (HumanoidCharacterProfile) prefs.Characters[0];
+            var newProfile = profile.WithSpecies(HumanoidCharacterProfile.DefaultSpecies);
+
+            await server.WaitPost(() => prefMan.SetProfile(session.UserId, 0, newProfile).Wait());
+            await Pair.SetAntagPreference(antag.PrefRoles.FirstOrDefault(), true, session.UserId);
         }
     }
 }
