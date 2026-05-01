@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
+﻿using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.Administration.UI.CustomControls
 {
@@ -13,7 +11,9 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             if (WindowType == null)
                 return;
-            _window = (DefaultWindow) IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance(WindowType);
+
+            if (_window is not { IsOpen: true })
+                _window = (DefaultWindow) IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance(WindowType);
             _window?.OpenCentered();
         }
     }
