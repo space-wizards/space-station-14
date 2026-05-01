@@ -1,0 +1,20 @@
+﻿{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Taken from Devour by EmoGarbage404 (github), modified by ScarKy0 (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "eat"
+        },
+        {
+            "name": "eat-on"
+        },
+        {
+            "name": "spit"
+        }
+    ]
+}
