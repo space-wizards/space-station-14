@@ -194,4 +194,9 @@ public sealed class DecalPlacementSystem : EntitySystem
         else
             _inputSystem.SetEntityContextActive();
     }
+
+    public bool GetCurrentSnap()
+    {
+        return _snap;
+    }
 }
