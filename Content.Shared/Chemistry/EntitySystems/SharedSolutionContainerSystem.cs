@@ -1104,9 +1104,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionAdded(Entity<SolutionManagerComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
-        if (Timing.ApplyingState)
-            return;
-
         // Container networking boilerplate
         if (args.Container.ID != entity.Comp.Container || !SolutionQuery.TryComp(args.Entity, out var solution))
             return;
@@ -1117,7 +1114,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
         contained.Container = entity.Owner;
 
-        // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
+        // Throw if we already have a solution with the same ID.
         if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)))
             DebugTools.Assert($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
     }
