@@ -5,66 +5,60 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Actions;
 
 [TestFixture]
+[TestOf(typeof(SharedActionsSystem))]
 public sealed class ActionPvsDetachTest : GameTest
 {
+    private static readonly EntProtoId TestMob = "MobHuman";
+
     [SidedDependency(Side.Server)] private readonly SharedActionsSystem _sActionsSys = null!;
     [SidedDependency(Side.Client)] private readonly SharedActionsSystem _cActionsSys = null!;
+    [SidedDependency(Side.Server)] private readonly VisibilitySystem _sVisibilitySys = null!;
 
     [Test]
     public async Task TestActionDetach()
     {
-        var pair = Pair;
-        var (server, client) = (Server, Client);
-        var sys = _sActionsSys;
-        var cSys = _cActionsSys;
-
         // Spawn mob that has some actions
-        EntityUid ent = default;
-        var map = await pair.CreateTestMap();
-        await server.WaitPost(() => ent = server.EntMan.SpawnAtPosition("MobHuman", map.GridCoords));
-        await pair.RunTicksSync(5);
-        var cEnt = pair.ToClientUid(ent);
+        var map = await Pair.CreateTestMap();
+        var ent = await SpawnAtPosition(TestMob, map.GridCoords);
+        await RunTicksSync(5);
+        var cEnt = ToClientUid(ent);
 
         // Verify that both the client & server agree on the number of actions
-        var initActions = sys.GetActions(ent).Count();
-        Assert.That(initActions, Is.GreaterThan(0));
-        Assert.That(initActions, Is.EqualTo(cSys.GetActions(cEnt).Count()));
+        var initActionsCount = _sActionsSys.GetActions(ent).Count();
+        Assert.That(initActionsCount, Is.GreaterThan(0));
+        Assert.That(initActionsCount, Is.EqualTo(_cActionsSys.GetActions(cEnt).Count()));
 
         // PVS-detach action entities
         // We do this by just giving them the ghost layer
-        var visSys = server.System<VisibilitySystem>();
-        server.Post(() =>
+        await Server.WaitPost(() =>
         {
-            var enumerator = server.Transform(ent).ChildEnumerator;
+            var enumerator = Server.Transform(ent).ChildEnumerator;
             while (enumerator.MoveNext(out var child))
             {
-                visSys.AddLayer(child, (int) VisibilityFlags.Ghost);
+                _sVisibilitySys.AddLayer(child, (int)VisibilityFlags.Ghost);
             }
         });
-        await pair.RunTicksSync(5);
 
         // Client's actions have left been detached / are out of view, but action comp state has not changed
-        Assert.That(sys.GetActions(ent).Count(), Is.EqualTo(initActions));
-        Assert.That(cSys.GetActions(cEnt).Count(), Is.EqualTo(initActions));
+        Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
+        Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
 
         // Re-enter PVS view
-        server.Post(() =>
+        await Server.WaitPost(() =>
         {
-            var enumerator = server.Transform(ent).ChildEnumerator;
+            var enumerator = Server.Transform(ent).ChildEnumerator;
             while (enumerator.MoveNext(out var child))
             {
-                visSys.RemoveLayer(child, (int) VisibilityFlags.Ghost);
+                _sVisibilitySys.RemoveLayer(child, (int)VisibilityFlags.Ghost);
             }
         });
-        await pair.RunTicksSync(5);
-        Assert.That(sys.GetActions(ent).Count(), Is.EqualTo(initActions));
-        Assert.That(cSys.GetActions(cEnt).Count(), Is.EqualTo(initActions));
 
-        await server.WaitPost(() => server.EntMan.DeleteEntity(map.MapUid));
+        Assert.That(_sActionsSys.GetActions(ent).Count(), Is.EqualTo(initActionsCount));
+        Assert.That(_cActionsSys.GetActions(cEnt).Count(), Is.EqualTo(initActionsCount));
     }
 }
