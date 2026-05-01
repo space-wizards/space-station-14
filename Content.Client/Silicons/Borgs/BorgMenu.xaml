@@ -31,6 +31,7 @@
                 <Label Name="NameIdentifierLabel" Margin="10 0 0 0"/>
             </BoxContainer>
             <Control MinHeight="10"/>
+            <RichTextLabel Name="ChassisProviderWarning" HorizontalAlignment="Center" Access="Public"></RichTextLabel>
             <Button HorizontalExpand="True" Name="BrainButton" ToggleMode="False" Margin="0" MinHeight="40" StyleClasses="OpenLeft">
                 <SpriteView Name="BrainView" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Button>

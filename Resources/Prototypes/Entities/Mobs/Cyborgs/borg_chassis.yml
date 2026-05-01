@@ -81,6 +81,7 @@
   - type: BorgSwitchableType
     selectedBorgType: service
 
+
 - type: entity
   id: BorgChassisSyndicateAssault
   parent: BaseBorgChassisSyndicate

@@ -5,7 +5,6 @@ using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 
@@ -22,21 +21,21 @@ public sealed class IonStormSystem : EntitySystem
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
+    public void IonStormTarget(Entity<SiliconLawProviderComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
-        var lawBound = ent.Comp1;
         var target = ent.Comp2;
+
         if (!_robustRandom.Prob(target.Chance))
             return;
 
-        var laws = _siliconLaw.GetLaws(ent, lawBound);
+        var laws = _siliconLaw.GetProviderLaws(ent.Owner);
         if (laws.Laws.Count == 0)
             return;
 
         // try to swap it out with a random lawset
         if (_robustRandom.Prob(target.RandomLawsetChance))
         {
-            var lawsets = _proto.Index<WeightedRandomPrototype>(target.RandomLawsets);
+            var lawsets = _proto.Index(target.RandomLawsets);
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
@@ -88,7 +87,8 @@ public sealed class IonStormSystem : EntitySystem
         }
         else
         {
-            laws.Laws.Insert(0, new SiliconLaw
+            laws.Laws.Insert(0,
+                new SiliconLaw
             {
                 LawString = newLaw,
                 Order = -1,
@@ -118,8 +118,6 @@ public sealed class IonStormSystem : EntitySystem
         if (adminlog)
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
-        // laws unique to this silicon, dont use station laws anymore
-        EnsureComp<SiliconLawProviderComponent>(ent);
         var ev = new IonStormLawsEvent(laws);
         RaiseLocalEvent(ent, ref ev);
     }
