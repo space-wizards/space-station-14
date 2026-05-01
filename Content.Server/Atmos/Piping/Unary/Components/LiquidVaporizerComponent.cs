@@ -12,6 +12,8 @@ namespace Content.Server.Atmos.Piping.Unary.Components;
 [Access(typeof(LiquidVaporizerSystem))]
 public sealed partial class LiquidVaporizerComponent : Component
 {
+
+
     /// <summary>
     /// The ID for the pipe node.
     /// </summary>
@@ -67,6 +69,12 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// </summary>
     [DataField]
     public float VolumeToLifeTimeFactor = 0.25f;
+
+    /// <summary>
+    /// how long smoke will live per unit of reagent smoked up.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 MaxTemperature = 800;
 
     /// <summary>
     /// For a vaporizer, how many U of reagents are given per each mole of gas.

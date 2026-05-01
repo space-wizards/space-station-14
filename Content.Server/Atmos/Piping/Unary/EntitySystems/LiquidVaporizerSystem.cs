@@ -18,6 +18,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Temperature.HeatContainer;
+using Content.Shared.Atmos.Piping.Unary.Visuals;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -31,12 +32,28 @@ public sealed class LiquidVaporizerSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _sharedSolution = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SmokeSystem _smokeSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LiquidVaporizerComponent, AtmosDeviceUpdateEvent>(OnVaporizerUpdated);
+        SubscribeLocalEvent<LiquidVaporizerComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
+    }
+
+    private void OnAnchorStateChanged(EntityUid entity,
+        LiquidVaporizerComponent component,
+        AnchorStateChangedEvent args)
+    {
+        if (TryComp<AppearanceComponent>(entity, out var appearanceComponent))
+        {
+            _appearanceSystem.SetData(entity,
+                VaporizerVisuals.Working,
+                args.Anchored && component.NeedBoiling,
+                appearanceComponent);
+        }
     }
 
     /// <summary>
@@ -47,16 +64,47 @@ public sealed class LiquidVaporizerSystem : EntitySystem
 
     private void OnVaporizerUpdated(Entity<LiquidVaporizerComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        //check for pipe component
-        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
-            return;
+        TryComp<AppearanceComponent>(entity, out var appearanceComponent);
         //check for power component
         if (!TryComp<ApcPowerReceiverComponent>(entity, out var receiver))
+        {
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
             return;
+        }
+
+        //check for pipe component
+        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.OutletId, out PipeNode? outlet))
+        {
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
+            return;
+        }
+
         //skip if item slot is empty
         var container = _itemSlotsSystem.GetItemOrNull(entity.Owner, entity.Comp.ContainerSlotId);
         if (container == null)
         {
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
             return;
         }
 
@@ -65,11 +113,21 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             return;
         //skip if solution is empty or pipe pressure to high
         if (solutionComponent.Solution.Volume <= FixedPoint2.Epsilon ||
-            outlet.Air.Pressure >= entity.Comp.MaxPipeOutputPressure)
+            outlet.Air.Pressure >= entity.Comp.MaxPipeOutputPressure||
+            solutionComponent.Solution.Temperature>=entity.Comp.MaxTemperature
+         )
         {
             //turn off for now
             entity.Comp.NeedBoiling = false;
             receiver.Load = 0;
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
             return;
         }
 
@@ -79,6 +137,14 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         {
             receiver.Load = entity.Comp.PowerLoad;
             //delay until we powered
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
             return;
         }
 
@@ -86,8 +152,17 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         if (!_power.IsPowered(entity, receiver))
         {
             //skip if now power.
+            if (appearanceComponent != null)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    false,
+                    appearanceComponent);
+            }
+
             return;
         }
+
 
         //we dont want to overheat our solution.
         if (entity.Comp.NeedBoiling)
@@ -97,6 +172,22 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             //heat up solution
             _sharedSolution.AddThermalEnergy(new(container.Value, solutionComponent), energyInJoules);
         }
+
+
+        if (appearanceComponent != null)
+        {
+            if (_appearanceSystem.TryGetData(entity,
+                    VaporizerVisuals.Working,
+                    out var workingState,
+                    appearanceComponent) && (bool)workingState != entity.Comp.NeedBoiling)
+            {
+                _appearanceSystem.SetData(entity,
+                    VaporizerVisuals.Working,
+                    entity.Comp.NeedBoiling,
+                    appearanceComponent);
+            }
+        }
+
 
         //calculate how much of our solution will boil away based on temperature
         //create ordered lookup
@@ -134,7 +225,8 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             //cap to maximum quantity in solution
             var evaporationMass = FixedPoint2.Min(maxEvaporationMass.Value, part.Quantity);
             //cap to ideal evaporation rate
-            evaporationMass = FixedPoint2.Min(evaporationMass, entity.Comp.DesiredEvaporationRate-evaporationMass-evaporatedSum);
+            evaporationMass = FixedPoint2.Min(evaporationMass,
+                entity.Comp.DesiredEvaporationRate - evaporationMass - evaporatedSum);
             //skip if nothing evaporated. comes into effect if latent heat gets added.
             if (evaporationMass <= 0)
                 continue;

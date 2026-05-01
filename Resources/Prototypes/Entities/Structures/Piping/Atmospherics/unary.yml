@@ -492,21 +492,19 @@
     solution:
       maxVol: 10000 # should never hit this, since no container can hold this much.
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/condenser.rsi
+    sprite: Structures/Piping/Atmospherics/vaporizer.rsi
     snapCardinals: true
     granularLayersRendering: true
     layers:
     - state: off
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: working
+      map: [ "enum.GasVaporizerVisualLayers.Working" ]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: pipe
       map: [ "enum.PipeVisualLayers.Pipe" ]
       renderingStrategy: Default
-    - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
-    - state: trans
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -514,16 +512,23 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { state: on }
           False: { state: off }
+      enum.VaporizerVisuals.Working:
+        enum.GasVaporizerVisualLayers.Working:
+          True:
+            state: working
+            visible: true
+          False:
+            state: working
+            visible: false
   - type: PipeColorVisuals
   - type: Rotatable
-  - type: GasCondenser
   - type: AtmosPipeColor
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        Primary: Structures/Piping/Atmospherics/condenser.rsi
-        Secondary: Structures/Piping/Atmospherics/condenser_alt1.rsi
-        Tertiary: Structures/Piping/Atmospherics/condenser_alt2.rsi
+        Primary: Structures/Piping/Atmospherics/vaporizer.rsi
+        Secondary: Structures/Piping/Atmospherics/vaporizer_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/vaporizer_alt2.rsi
   - type: AtmosDevice
   - type: PipeRestrictOverlap
   - type: ApcPowerReceiver
