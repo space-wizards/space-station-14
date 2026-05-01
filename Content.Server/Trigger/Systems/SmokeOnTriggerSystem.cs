@@ -17,7 +17,6 @@ namespace Content.Server.Trigger.Systems;
 public sealed class SmokeOnTriggerSystem : EntitySystem
 {
 
-    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SmokeSystem _smoke = default!;
 
     public override void Initialize()
