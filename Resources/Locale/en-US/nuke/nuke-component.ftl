@@ -46,5 +46,6 @@ nuke-codes-fax-paper-name = nuclear authentication codes
 nuke-slot-component-slot-name-disk = Disk
 
 ## Examine
+nuke-examine-remaining-time = [mono][head=3][color=yellow] SECONDS UNTIL DETONATION:[/color][/head] [head=1][color=white]{$time}[/color][/head][/mono]
 nuke-examine-armed = Hey uh, why's that [color=red]red light[/color] blinking?
 nuke-examine-exploding = Yeah... I think it's too late buddy.

@@ -663,14 +663,20 @@ public sealed class NukeSystem : EntitySystem
         _appearance.SetData(uid, NukeVisuals.State, state);
     }
 
-    private void OnExaminedEvent(EntityUid uid, NukeComponent component, ExaminedEvent args)
+    private void OnExaminedEvent(Entity<NukeComponent> ent, ref ExaminedEvent args)
     {
-        if (component.PlayedAlertSound)
+        if (ent.Comp.PlayedAlertSound)
             args.PushMarkup(Loc.GetString("nuke-examine-exploding"));
-        else if (component.Status == NukeStatus.ARMED)
-            args.PushMarkup(Loc.GetString("nuke-examine-armed"));
+        else if (ent.Comp.Status == NukeStatus.ARMED)
+        {
+            using (args.PushGroup(nameof(NukeSystem)))
+            {
+                args.PushMarkup(Loc.GetString("nuke-examine-armed"));
+                args.PushMarkup(Loc.GetString("nuke-examine-remaining-time", ("time", (int) ent.Comp.RemainingTime)));
+            }
+        }
 
-        if (Transform(uid).Anchored)
+        if (Transform(ent).Anchored)
             args.PushMarkup(Loc.GetString("examinable-anchored"));
         else
             args.PushMarkup(Loc.GetString("examinable-unanchored"));
