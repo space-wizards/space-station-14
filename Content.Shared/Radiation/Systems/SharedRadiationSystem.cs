@@ -17,11 +17,5 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         entity.Comp.Intensity = intensity;
-        UpdateSource((entity, entity.Comp));
     }
-
-    /// <summary>
-    /// Updates the radiation source cache. Does nothing on client, see server!
-    /// </summary>
-    protected virtual void UpdateSource(Entity<RadiationSourceComponent> entity) { }
 }
