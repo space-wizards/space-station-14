@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
@@ -10,13 +11,23 @@ using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
+    /// <summary>
+    /// Designated game rule that spawns a fake antagonist to discourage metagaming.
+    /// </summary>
+    public static readonly EntProtoId DummyGameRule = "DummyNonAntag";
+
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
+
+    /// <summary>
+    /// List of ignored game rules, these rules won't be spawned by normal means.
+    /// This list is populated by <see cref="CCVars.GameTickerIgnoredPresets"/>
+    /// </summary>
+    [ViewVariables] private string[] _ignoredRules = [];
 
     [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
 
@@ -55,6 +66,8 @@ public sealed partial class GameTicker
             string.Empty,
             $"listgamerules - {localizedHelp}",
             ListGameRuleCommand);
+
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
     }
 
     private void ShutdownGameRules()
@@ -96,6 +109,29 @@ public sealed partial class GameTicker
         }
 
         return ruleEntity;
+    }
+
+    /// <summary>
+    /// Tries to add a gamerule to the current round, but ignores any <see cref="_ignoredRules"/>
+    /// </summary>
+    /// <param name="gameRule">Game rule entity that we are trying to spawn</param>
+    /// <returns>The entityUid of the spawned game rule, if it wasn't ignored.</returns>
+    public EntityUid? AddFilteredGameRule(EntProtoId gameRule)
+    {
+        if (IsIgnored(gameRule))
+            return null;
+
+        return AddGameRule(gameRule);
+    }
+
+    /// <summary>
+    /// Checks if this GameRule should be ignored before a spawning attempt.
+    /// </summary>
+    /// <param name="gameRule">GameRule we are trying to validate</param>
+    /// <returns>True if the gamerule should be ignored and not spawned.</returns>
+    public bool IsIgnored(EntProtoId gameRule)
+    {
+        return _ignoredRules.Contains(gameRule);
     }
 
     /// <summary>
@@ -383,6 +419,37 @@ public sealed partial class GameTicker
                 continue;
 
             StartGameRule(uid, rule);
+        }
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent args)
+    {
+        if (args.Forced || args.Cancelled)
+            return;
+
+        var query = EntityQueryEnumerator<GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            var name = ToPrettyString(uid);
+
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            if (gameRule.CancelPresetOnTooFewPlayers)
+            {
+                _chatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                    ("readyPlayersCount", args.Players.Length),
+                    ("minimumPlayers", minPlayers),
+                    ("presetName", name)));
+                args.Cancel();
+                //TODO remove this once announcements are logged
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
+            }
+            else
+            {
+                EndGameRule(uid, gameRule);
+            }
         }
     }
 

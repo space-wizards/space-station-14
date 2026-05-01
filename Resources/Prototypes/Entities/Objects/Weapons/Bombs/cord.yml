@@ -28,16 +28,13 @@
       - ExCable
     overTile: true
   - type: Appearance
-  - type: Extractable
-    grindableSolutionName: excable
-  - type: SolutionContainerManager
-    solutions:
-      mvcable:
-        reagents:
-        - ReagentId: Thermite
-          Quantity: 3
-        - ReagentId: Charcoal
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Thermite
+        Quantity: 3
+      - ReagentId: Charcoal
+        Quantity: 2
   - type: Damageable
   - type: Injurable
     damageContainer: StructuralInorganic
