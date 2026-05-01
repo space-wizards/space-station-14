@@ -1,4 +1,6 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Speech.Components;
 
-[RegisterComponent]
-public sealed partial class SlurredAccentComponent : Component;
+[RegisterComponent, NetworkedComponent]
+public sealed partial class SlurredAccentComponent : BaseAccentComponent;

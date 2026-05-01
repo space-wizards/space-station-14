@@ -37,9 +37,12 @@ public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccen
         _proto.PrototypesReloaded -= OnPrototypesReloaded;
     }
 
-    protected override void OnAccent(Entity<ReplacementAccentComponent> ent, ref AccentGetEvent args)
+    public override string Accentuate(string message, Entity<ReplacementAccentComponent>? ent)
     {
-        args.Message = ApplyReplacements(args.Message, ent.Comp.Accent);
+        if (ent == null)
+            return message;
+
+        return ApplyReplacements(message, ent.Value.Comp.Accent);
     }
 
     /// <summary>
@@ -103,7 +106,6 @@ public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccen
                 maskMessage = maskMessage.Remove(match.Index, match.Length).Insert(match.Index, mask);
             }
         }
-
         return message;
     }
 
@@ -114,7 +116,6 @@ public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccen
             replacements = GenerateCachedReplacements(prototype);
             _cachedReplacements.Add(prototype.ID, replacements);
         }
-
         return replacements;
     }
 

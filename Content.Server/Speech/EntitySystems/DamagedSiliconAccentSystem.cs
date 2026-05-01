@@ -4,17 +4,14 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Inventory;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
-using Content.Shared.Speech;
-using Content.Shared.StatusEffectNew;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-//TODO: Slam: This system requires running the events after other systems, but Initialize has to run as well. Can probably be solved, but I'm leaving this to later.
-public sealed class DamagedSiliconAccentSystem : EntitySystem
+public sealed class DamagedSiliconAccentSystem : RelayAccentSystem<DamagedSiliconAccentComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
@@ -22,40 +19,22 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
-    [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
+    protected override Type[]? AccentAfter => [typeof(ReplacementAccentSystem)];
+    protected override Type[]? RelayAccentAfter => [typeof(ReplacementAccentSystem)];
 
-    public override void Initialize()
+    public override string Accentuate(string message, Entity<DamagedSiliconAccentComponent>? ent)
     {
-        base.Initialize();
+        if (ent == null)
+            return message;
 
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, AccentGetEvent>(OnAccent, after: [typeof(ReplacementAccentSystem)]);
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, after: [typeof(ReplacementAccentSystem)]);
-        SubscribeLocalEvent<DamagedSiliconAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
-        {
-            var accentGetEvent = ev.Args;
-            OnAccent((e, c), ref accentGetEvent);
-        },
-            after: [typeof(ReplacementAccentSystem)]);
-    }
+        var uid = ent.Value.Owner;
 
-    private void OnInventoryRelayAccent(Entity<DamagedSiliconAccentComponent> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
-    {
-        if (!_relayAccentsQuery.HasComponent(ent))
-            return;
-
-        OnAccent(ent, ref args.Args);
-    }
-
-    private void OnAccent(Entity<DamagedSiliconAccentComponent> ent, ref AccentGetEvent args)
-    {
-        var uid = ent.Owner;
-
-        if (ent.Comp.EnableChargeCorruption)
+        if (ent.Value.Comp.EnableChargeCorruption)
         {
             var currentChargeLevel = 0.0f;
-            if (ent.Comp.OverrideChargeLevel.HasValue)
+            if (ent.Value.Comp.OverrideChargeLevel.HasValue)
             {
-                currentChargeLevel = ent.Comp.OverrideChargeLevel.Value;
+                currentChargeLevel = ent.Value.Comp.OverrideChargeLevel.Value;
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
@@ -63,23 +42,25 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
-            args.Message = CorruptPower(args.Message, currentChargeLevel, ent.Comp);
+            message = CorruptPower(message, currentChargeLevel, ent.Value.Comp);
         }
 
-        if (ent.Comp.EnableDamageCorruption)
+        if (ent.Value.Comp.EnableDamageCorruption)
         {
             var damage = FixedPoint2.Zero;
-            if (ent.Comp.OverrideTotalDamage.HasValue)
+            if (ent.Value.Comp.OverrideTotalDamage.HasValue)
             {
-                damage = ent.Comp.OverrideTotalDamage.Value;
+                damage = ent.Value.Comp.OverrideTotalDamage.Value;
             }
             else if (TryComp<DamageableComponent>(uid, out var damageable))
             {
                 damage = _damageable.GetTotalDamage((uid, damageable));
             }
             // Corrupt due to damage (drop, repeat, replace with symbols)
-            args.Message = CorruptDamage(args.Message, damage, ent);
+            message = CorruptDamage(message, damage, ent.Value);
         }
+
+        return message;
     }
 
     public string CorruptPower(string message, float chargeLevel, DamagedSiliconAccentComponent comp)

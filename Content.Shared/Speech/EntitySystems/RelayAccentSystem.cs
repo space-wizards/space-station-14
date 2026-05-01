@@ -7,25 +7,45 @@ namespace Content.Shared.Speech.EntitySystems;
 /// <summary>
 /// Base system for accents that should apply both directly and when relayed through other entities.
 /// </summary>
-public abstract class RelayAccentSystem<T> : EntitySystem where T : Component
+public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentComponent
 {
-    [Dependency] private readonly EntityQuery<RelayAccentsComponent> _relayAccentsQuery = default!;
+    /// <summary>
+    /// Systems this accent should run before for direct speech accenting.
+    /// </summary>
+    protected virtual Type[]? AccentBefore => null;
+
+    /// <summary>
+    /// Systems this accent should run after for direct speech accenting.
+    /// </summary>
+    protected virtual Type[]? AccentAfter => null;
+
+    /// <summary>
+    /// Systems this accent should run before for relayed speech accenting.
+    /// </summary>
+    protected virtual Type[]? RelayAccentBefore => AccentBefore;
+
+    /// <summary>
+    /// Systems this accent should run after for relayed speech accenting.
+    /// </summary>
+    protected virtual Type[]? RelayAccentAfter => AccentAfter;
 
     /// <inheritdoc />
     public override void Initialize()
     {
-        SubscribeLocalEvent<T, AccentGetEvent>(OnAccent);
-        SubscribeLocalEvent<T, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent);
+        SubscribeLocalEvent<T, AccentGetEvent>(OnAccent, before: AccentBefore, after: AccentAfter);
+        SubscribeLocalEvent<T, InventoryRelayedEvent<AccentGetEvent>>(OnInventoryRelayAccent, before: RelayAccentBefore, after: RelayAccentAfter);
         SubscribeLocalEvent<T, StatusEffectRelayedEvent<AccentGetEvent>>((e, c, ev) =>
         {
             var accentGetEvent = ev.Args;
             OnAccent((e, c), ref accentGetEvent);
-        });
+        },
+        before: RelayAccentBefore,
+        after: RelayAccentAfter);
     }
 
     protected virtual void OnInventoryRelayAccent(Entity<T> ent, ref InventoryRelayedEvent<AccentGetEvent> args)
     {
-        if (!_relayAccentsQuery.HasComponent(ent))
+        if (!ent.Comp.RelayAccent)
             return;
 
         OnAccent(ent, ref args.Args);
@@ -38,7 +58,7 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : Component
 
     /// <summary>
     /// Applies the accent transformation to the provided message.
-    /// </summary>///
+    /// </summary>
     public virtual string Accentuate(string message, Entity<T>? ent)
     {
         return message;

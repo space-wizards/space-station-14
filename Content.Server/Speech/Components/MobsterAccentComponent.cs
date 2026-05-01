@@ -1,11 +1,13 @@
-﻿namespace Content.Server.Speech.Components;
+﻿using Content.Shared.Speech.Components;
+
+namespace Content.Server.Speech.Components;
 
 /// <summary>
 ///     Nyehh, my gabagool, see?
 ///     Etc etc.
 /// </summary>
 [RegisterComponent]
-public sealed partial class MobsterAccentComponent : Component
+public sealed partial class MobsterAccentComponent : BaseAccentComponent
 {
     /// <summary>
     ///     Do you make all the rules?

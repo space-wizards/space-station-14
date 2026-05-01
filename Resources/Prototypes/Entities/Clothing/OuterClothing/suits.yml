@@ -288,8 +288,8 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: RelayAccents
   - type: BarkAccent
+    relayAccent: true
 
 - type: entity
   parent: ClothingOuterBase
