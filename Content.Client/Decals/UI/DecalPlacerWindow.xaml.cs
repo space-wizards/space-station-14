@@ -97,8 +97,12 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         };
         SwitchCopy.OnPressed += args =>
         {
-            _decalPlacementSystem.SetActive(false);
-            _decalCopySystem.SetActive(true);
+            _decalPlacementSystem.SetActive(!args.Button.Pressed);
+            _decalCopySystem.SetActive(args.Button.Pressed);
+        };
+        _decalCopySystem.UpdateClientCopyButtonAction += () =>
+        {
+            SwitchCopy.Pressed = false;
         };
         EnableAuto.OnToggled += args =>
         {

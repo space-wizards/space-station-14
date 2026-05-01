@@ -17,6 +17,8 @@ public sealed class DecalCopySystem : EntitySystem
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
     public Action<Color> UpdateClientColorAction = default!;
+    public Action UpdateClientCopyButtonAction = default!;
+
     private bool _isActive = false;
 
     public override void Initialize()
@@ -114,7 +116,10 @@ public sealed class DecalCopySystem : EntitySystem
         if (_isActive)
             _inputManager.Contexts.SetActiveContext("editor");
         else
+        {
+            UpdateClientCopyButtonAction.Invoke();
             _inputSystem.SetEntityContextActive();
+        }
     }
 
     private void SwitchOverlay(bool isActive)
