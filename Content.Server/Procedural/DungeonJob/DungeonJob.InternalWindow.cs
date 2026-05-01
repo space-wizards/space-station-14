@@ -1,9 +1,7 @@
-using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -19,7 +17,6 @@ public sealed partial class DungeonJob
         var minDistance = 4;
         var maxDistance = 6;
         var tileDef = _tileDefManager[gen.Tile];
-        var contents = _prototype.Index(gen.Contents);
 
         foreach (var room in dungeon.Rooms)
         {
@@ -83,7 +80,7 @@ public sealed partial class DungeonJob
                     var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     _maps.SetTile(_gridUid, _grid, tile, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
-                    _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
+                    _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(gen.Contents, random));
                 }
 
                 if (validTiles.Count > 0)

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
 using Robust.Shared.Map;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -16,7 +15,6 @@ public sealed partial class DungeonJob
     {
         var setTiles = new List<(Vector2i, Tile)>();
         var tileDef = _tileDefManager[gen.Tile];
-        var contents = _prototype.Index(gen.Contents);
 
         foreach (var room in dungeon.Rooms)
         {
@@ -40,7 +38,7 @@ public sealed partial class DungeonJob
 
                 _entManager.SpawnEntitiesAttachedTo(
                     _maps.GridTileToLocal(_gridUid, _grid, entrance),
-                    _entTable.GetSpawns(contents, random));
+                    _entTable.GetSpawns(gen.Contents, random));
 
                 await SuspendDungeon();
 

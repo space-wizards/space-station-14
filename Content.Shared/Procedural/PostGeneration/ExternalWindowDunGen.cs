@@ -1,6 +1,5 @@
-using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Maps;
-using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.PostGeneration;
@@ -14,5 +13,5 @@ public sealed partial class ExternalWindowDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField(required: true)]
-    public ProtoId<EntityTablePrototype> Contents;
+    public EntityTableSelector Contents = default!;
 }

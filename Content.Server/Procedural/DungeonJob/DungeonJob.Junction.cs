@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -15,7 +13,6 @@ public sealed partial class DungeonJob
     private async Task PostGen(JunctionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         var tileDef = _tileDefManager[gen.Tile];
-        var contents = _prototype.Index(gen.Contents);
 
         // N-wide junctions
         foreach (var tile in dungeon.CorridorTiles)
@@ -116,7 +113,7 @@ public sealed partial class DungeonJob
                         _maps.SetTile(_gridUid, _grid, weh, _tile.GetVariantTile((ContentTileDefinition) tileDef, random));
 
                         var coords = _maps.GridTileToLocal(_gridUid, _grid, weh);
-                        _entManager.SpawnEntitiesAttachedTo(coords, _entTable.GetSpawns(contents, random));
+                        _entManager.SpawnEntitiesAttachedTo(coords, _entTable.GetSpawns(gen.Contents, random));
                     }
 
                     break;

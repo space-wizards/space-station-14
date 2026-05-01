@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 
@@ -18,7 +17,6 @@ public sealed partial class DungeonJob
         var tiles = new List<(Vector2i Index, Tile)>();
         var tileDef = _tileDefManager[gen.Tile];
         var spawnPositions = new ValueList<Vector2i>(dungeon.Rooms.Count);
-        var contents = _prototype.Index(gen.Contents);
 
         foreach (var room in dungeon.Rooms)
         {
@@ -45,7 +43,7 @@ public sealed partial class DungeonJob
 
         foreach (var entrance in spawnPositions)
         {
-            _entManager.SpawnEntitiesAttachedTo(_maps.GridTileToLocal(_gridUid, _grid, entrance), _entTable.GetSpawns(contents, random));
+            _entManager.SpawnEntitiesAttachedTo(_maps.GridTileToLocal(_gridUid, _grid, entrance), _entTable.GetSpawns(gen.Contents, random));
         }
     }
 }

@@ -1,13 +1,10 @@
 using System.Threading.Tasks;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
-using Content.Shared.Storage;
 using Robust.Shared.Collections;
-using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -24,7 +21,6 @@ public sealed partial class DungeonJob
         var availableRooms = new ValueList<DungeonRoom>();
         availableRooms.AddRange(dungeon.Rooms);
         var availableTiles = new ValueList<Vector2i>(dungeon.AllTiles);
-        var contents = _prototype.Index(gen.Contents);
 
         var count = random.Next(gen.MinCount, gen.MaxCount + 1);
         var npcs = _entManager.System<NPCSystem>();
@@ -41,7 +37,7 @@ public sealed partial class DungeonJob
                     continue;
                 }
 
-                var entities = _entTable.GetSpawns(contents, random);
+                var entities = _entTable.GetSpawns(gen.Contents, random);
 
                 foreach (var ent in entities)
                 {

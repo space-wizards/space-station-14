@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -113,13 +111,12 @@ public sealed partial class DungeonJob
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);
-        var contents = _prototype.Index(gen.Contents);
 
         foreach (var tile in tiles)
         {
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile.Item1);
 
-            _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(contents, random));
+            _entManager.SpawnEntitiesAttachedTo(gridPos, _entTable.GetSpawns(gen.Contents, random));
             await SuspendDungeon();
 
             if (!ValidateResume())
