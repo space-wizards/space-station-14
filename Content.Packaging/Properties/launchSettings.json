@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Content.Packaging": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Content.Server": {
+      "commandName": "Project",
+      "commandLineArgs": "--cvar server.rules_file=StandardRuleset"
+    }
+  }
+}
