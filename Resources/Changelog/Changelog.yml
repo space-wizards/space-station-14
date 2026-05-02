@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: scrivoy
-  changes:
-  - message: Fuel dispensers now explode when ignited with a welding tool, similar
-      to fuel tanks.
-    type: Tweak
-  id: 9166
-  time: '2025-10-27T23:09:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36251
-- author: TheGrimbeeper
-  changes:
-  - message: Artifact phasing fixed.
-    type: Fix
-  id: 9167
-  time: '2025-10-28T07:21:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41160
-- author: emberwinters
-  changes:
-  - message: Diphenhydramine now respects its maximum drowsiness
-    type: Fix
-  id: 9168
-  time: '2025-10-28T17:14:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41169
-- author: kosticia
-  changes:
-  - message: Kira special drink has been renamed to the citrus bikeshed.
-    type: Tweak
-  id: 9169
-  time: '2025-10-28T19:58:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41167
 - author: SirWarock
   changes:
   - message: Certain low-capacity weapons, like Mosin, Shotguns and Handguns will
@@ -4071,3 +4042,44 @@
   id: 9677
   time: '2026-04-30T02:14:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43810
+- author: riccardi48
+  changes:
+  - message: Added missing localization to cargo sale console.
+    type: Fix
+  id: 9678
+  time: '2026-05-01T14:58:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43831
+- author: Princess-Cheeseballs
+  changes:
+  - message: Solutions now overflow again.
+    type: Fix
+  - message: Udders now have milk again.
+    type: Fix
+  - message: Mice are now the correct size.
+    type: Fix
+  - message: Pill solutions no longer react again.
+    type: Fix
+  id: 9679
+  time: '2026-05-01T19:13:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43823
+- author: Princess-Cheeseballs
+  changes:
+  - message: Grindable entities as sources of reagents show up in the chemistry guidebook
+      again.
+    type: Fix
+  id: 9680
+  time: '2026-05-01T20:14:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43743
+- author: Princess-Cheeseballs
+  changes:
+  - message: Spray effects work again.
+    type: Fix
+  - message: Items that purge solutions now work again.
+    type: Fix
+  - message: Items that regenerate solutions now work again.
+    type: Fix
+  - message: Welders now properly drain fuel.
+    type: Fix
+  id: 9681
+  time: '2026-05-01T21:35:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43789
