@@ -24,7 +24,7 @@ public sealed class GhostRoleTest : GameTest
     [SidedDependency(Side.Server)] private readonly GameTicker _ticker = default!;
     [SidedDependency(Side.Server)] private readonly GhostRoleSystem _ghostRole = default!;
 
-    private static string[] _gameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
+    private static string[] _antagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
 
     public override PoolSettings PoolSettings => new()
     {
@@ -34,12 +34,11 @@ public sealed class GhostRoleTest : GameTest
         Map = PoolManager.TestStation
     };
 
-    // Tests that all game modes can start given ideal circumstances.
     [Test]
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent)), TestOf(typeof(GhostRoleSystem))]
-    [TestCaseSource(nameof(_gameRules))]
-    [Description("Ensures all GameRule entities with ghost roles can properly spawn those roles and they can be taken.")]
-    public async Task TestGhostRolesAssignment(string ruleId)
+    [TestCaseSource(nameof(_antagGameRules))]
+    [Description("Ensures all GameRule entities with AntagSelectionComponent can properly spawn those roles and they can be taken.")]
+    public async Task TestAntagGhostRoles(string ruleId)
     {
         AntagSelectionComponent antag = null;
         await Server.WaitAssertion(() =>
