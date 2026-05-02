@@ -117,7 +117,7 @@ public sealed class DecalCopySystem : EntitySystem
             _inputManager.Contexts.SetActiveContext("editor");
         else
         {
-            UpdateClientCopyButtonAction.Invoke();
+            UpdateClientCopyButtonAction?.Invoke();
             _inputSystem.SetEntityContextActive();
         }
     }

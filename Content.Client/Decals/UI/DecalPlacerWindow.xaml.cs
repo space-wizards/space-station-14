@@ -102,7 +102,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         };
         _decalCopySystem.UpdateClientCopyButtonAction += () =>
         {
-            SwitchCopy.Pressed = false;
+            SwitchCopy?.Pressed = false;
         };
         EnableAuto.OnToggled += args =>
         {
