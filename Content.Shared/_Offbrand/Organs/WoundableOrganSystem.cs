@@ -10,7 +10,8 @@ public sealed class WoundableOrganSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<WoundableOrganWeightsEvent>>(OnGetWeights);
-        SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<WoundGetDamageEvent>>(UnwrapRelay);
+        SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<WoundGetDamageEvent>>(OnGetWoundDamages);
+        SubscribeLocalEvent<WoundableOrganComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<GetWoundsWithSpaceEvent>>(UnwrapRelay);
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<GetPainEvent>>(UnwrapRelay);
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<HealWoundsEvent>>(UnwrapRelay);
@@ -36,4 +37,32 @@ public sealed class WoundableOrganSystem : EntitySystem
         RaiseLocalEvent(ent, ref evt);
         args.Args = evt;
     }
+
+    private void OnGetWoundDamages(Entity<WoundableOrganComponent> ent, ref BodyRelayedEvent<WoundGetDamageEvent> args)
+    {
+        var evt = new WoundGetDamageEvent(new());
+        RaiseLocalEvent(ent, ref evt);
+
+        ent.Comp.Damage = evt.Accumulator;
+        Dirty(ent);
+
+        var notif = new WoundableOrganDamageChanged(ent.Comp.Damage);
+        RaiseLocalEvent(ent, ref notif);
+
+        foreach (var entry in evt.Accumulator.DamageDict)
+        {
+            if (!args.Args.Accumulator.DamageDict.TryAdd(entry.Key, entry.Value))
+            {
+                args.Args.Accumulator.DamageDict[entry.Key] += entry.Value;
+            }
+        }
+    }
+
+
+    private void OnAfterAutoHandleState(Entity<WoundableOrganComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        var notif = new WoundableOrganDamageChanged(ent.Comp.Damage);
+        RaiseLocalEvent(ent, ref notif);
+    }
+
 }

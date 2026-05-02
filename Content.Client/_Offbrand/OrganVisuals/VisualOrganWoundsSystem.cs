@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Organs;
 using Content.Shared._Offbrand.OrganVisuals;
 using Content.Shared.Body;
 using Robust.Client.GameObjects;
@@ -12,6 +13,7 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
     private static readonly ProtoId<ShaderPrototype> Shader = "Masked";
 
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -19,6 +21,7 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
 
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotInsertedEvent>(OnOrganGotInserted);
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotRemovedEvent>(OnOrganGotRemoved);
+        SubscribeLocalEvent<VisualOrganWoundsComponent, WoundableOrganDamageChanged>(OnWoundableOrganDamageChanged);
     }
 
     private void OnOrganGotInserted(Entity<VisualOrganWoundsComponent> ent, ref OrganGotInsertedEvent args)
@@ -91,13 +94,38 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
         if (!Resolve(target, ref target.Comp))
             return;
 
+        if (!TryComp<WoundableOrganComponent>(ent, out var woundable))
+            return;
+
         var visualOrgan = Comp<VisualOrganComponent>(ent);
 
         foreach (var group in ent.Comp.DamageGroups)
         {
             var overlayLayerKey = $"{visualOrgan.Layer}-{group.DamageGroup}-layer";
 
-            _sprite.LayerSetRsi(target, overlayLayerKey, group.OverlayPath, new RSI.StateId($"{group.DamageGroup}10"));
+            woundable.Damage.TryGetDamageInGroup(_prototype.Index(group.DamageGroup), out var total);
+            var thresholdIndex = ent.Comp.Thresholds.BinarySearch(total);
+
+            if (thresholdIndex < -1)
+                thresholdIndex = ~thresholdIndex;
+
+            if (thresholdIndex == -1)
+            {
+                _sprite.LayerSetVisible(target, overlayLayerKey, false);
+            }
+            else
+            {
+                _sprite.LayerSetRsi(target, overlayLayerKey, group.OverlayPath, new RSI.StateId($"{group.DamageGroup}{thresholdIndex}"));
+                _sprite.LayerSetVisible(target, overlayLayerKey, true);
+            }
         }
+    }
+
+    private void OnWoundableOrganDamageChanged(Entity<VisualOrganWoundsComponent> ent, ref WoundableOrganDamageChanged args)
+    {
+        if (Comp<OrganComponent>(ent).Body is not { } body)
+            return;
+
+        UpdateOverlay(ent, body);
     }
 }

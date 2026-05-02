@@ -5,51 +5,51 @@
     "size": {"x": 32, "y": 32},
     "states": [
         {
-            "name": "Brute10",
+            "name": "Brute0",
             "directions": 4
         },
         {
-            "name": "Brute20",
+            "name": "Brute1",
             "directions": 4
         },
         {
-            "name": "Brute30",
+            "name": "Brute2",
             "directions": 4
         },
         {
-            "name": "Brute50",
+            "name": "Brute3",
             "directions": 4
         },
         {
-            "name": "Brute70",
+            "name": "Brute4",
             "directions": 4
         },
         {
-            "name": "Brute100",
+            "name": "Brute5",
             "directions": 4
         },
         {
-            "name": "Burn10",
+            "name": "Burn0",
             "directions": 4
         },
         {
-            "name": "Burn20",
+            "name": "Burn1",
             "directions": 4
         },
         {
-            "name": "Burn30",
+            "name": "Burn2",
             "directions": 4
         },
         {
-            "name": "Burn50",
+            "name": "Burn3",
             "directions": 4
         },
         {
-            "name": "Burn70",
+            "name": "Burn4",
             "directions": 4
         },
         {
-            "name": "Burn100",
+            "name": "Burn5",
             "directions": 4
         }
     ]

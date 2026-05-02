@@ -107,6 +107,8 @@
   - type: StatusEffectContainer
   - type: WoundableOrgan
     weight: 150
+  - type: VisualOrganWounds
+    thresholds: [ 10, 20, 30, 50, 70, 100 ]
 
 - type: entity
   abstract: true
@@ -115,6 +117,8 @@
   - type: StatusEffectContainer
   - type: WoundableOrgan
     weight: 50
+  - type: VisualOrganWounds
+    thresholds: [ 5, 10, 15, 25, 35, 50 ]
 
 - type: entity
   abstract: true
@@ -123,6 +127,8 @@
   - type: StatusEffectContainer
   - type: WoundableOrgan
     weight: 25
+  - type: VisualOrganWounds
+    thresholds: [ 3, 6, 9, 15, 21, 30 ]
 
 - type: entity
   abstract: true
