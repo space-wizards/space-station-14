@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Whitelist;
-using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -17,7 +16,6 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
     [Dependency] private readonly IEntityManager _entManager = default!;
     private EntityLookupSystem _lookup = default!;
     private PathfindingSystem _pathfinding = default!;
-    private ContainerSystem _container = default!;
     private EntityWhitelistSystem _entityWhitelist = default!;
 
     /// <summary>
@@ -73,7 +71,6 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
         base.Initialize(sysManager);
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
-        _container = sysManager.GetEntitySystem<ContainerSystem>();
         _entityWhitelist = sysManager.GetEntitySystem<EntityWhitelistSystem>();
     }
 
@@ -90,12 +87,9 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
 
         var mobState = _entManager.GetEntityQuery<MobStateComponent>();
 
-        foreach (var mob in _lookup.GetEntitiesInRange(owner, mobRange))
+        foreach (var mob in _lookup.GetEntitiesInRange(owner, mobRange, LookupFlags.Uncontained & ~LookupFlags.Sensors))
         {
             if (mob == owner)
-                continue;
-
-            if (_container.IsEntityInContainer(mob))
                 continue;
 
             if (!mobState.TryGetComponent(mob, out var state))
