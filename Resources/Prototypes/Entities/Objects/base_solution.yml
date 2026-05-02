@@ -23,7 +23,7 @@
   components:
   - type: Solution
     id: beaker
-  - type: SolutionAppearanceRelay
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true
@@ -56,7 +56,7 @@
   components:
   - type: Solution
     id: drink
-  - type: SolutionAppearanceRelay
+  - type: SolutionAppearance
 
 - type: entity
   abstract: true

@@ -1,13 +1,12 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 
-namespace Content.Shared.SolutionAppearanceRelay;
+namespace Content.Shared.SolutionAppearance;
 
-public sealed class SolutionAppearanceRelaySystem : EntitySystem
+public sealed class SolutionAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -18,22 +17,22 @@ public sealed class SolutionAppearanceRelaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SolutionAppearanceRelayComponent, SolutionChangedEvent>(OnSolutionContainerChanged);
-        SubscribeLocalEvent<SolutionAppearanceRelayComponent, EntGotInsertedIntoContainerMessage>(OnEntGotInsertedIntoContainer);
-        SubscribeLocalEvent<SolutionAppearanceRelayComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+        SubscribeLocalEvent<SolutionAppearanceComponent, SolutionChangedEvent>(OnSolutionContainerChanged);
+        SubscribeLocalEvent<SolutionAppearanceComponent, EntGotInsertedIntoContainerMessage>(OnEntGotInsertedIntoContainer);
+        SubscribeLocalEvent<SolutionAppearanceComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
     }
 
-    private void OnSolutionContainerChanged(Entity<SolutionAppearanceRelayComponent> ent, ref SolutionChangedEvent args)
+    private void OnSolutionContainerChanged(Entity<SolutionAppearanceComponent> ent, ref SolutionChangedEvent args)
     {
         UpdateAppearance(ent);
     }
 
-    private void OnEntGotInsertedIntoContainer(Entity<SolutionAppearanceRelayComponent> ent, ref EntGotInsertedIntoContainerMessage args)
+    private void OnEntGotInsertedIntoContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         UpdateAppearance(ent);
     }
 
-    private void OnEntGotRemovedFromContainer(Entity<SolutionAppearanceRelayComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    private void OnEntGotRemovedFromContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         if (!_entityWhitelist.CheckBoth(args.Container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
@@ -42,7 +41,7 @@ public sealed class SolutionAppearanceRelaySystem : EntitySystem
         _appearance.SetData(args.Container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, false);
     }
 
-    private void UpdateAppearance(Entity<SolutionAppearanceRelayComponent> ent)
+    private void UpdateAppearance(Entity<SolutionAppearanceComponent> ent)
     {
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
             return;
