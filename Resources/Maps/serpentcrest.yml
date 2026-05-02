@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 275.0.0
+  engineVersion: 276.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/05/2026 20:43:11
+  time: 05/02/2026 03:52:30
   entityCount: 29124
 maps:
 - 1
@@ -12758,12 +12758,6 @@ entities:
       parent: 2
 - proto: AirlockMaintSalvageLocked
   entities:
-  - uid: 2621
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 33.5,-47.5
-      parent: 2
   - uid: 22639
     components:
     - type: Transform
@@ -13213,6 +13207,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -39.5,-46.5
+      parent: 2
+  - uid: 2621
+    components:
+    - type: Transform
+      pos: 33.5,-47.5
       parent: 2
   - uid: 2969
     components:
@@ -164896,6 +164895,10 @@ entities:
         path: /Audio/Effects/closetclose.ogg
       openSound: !type:SoundPathSpecifier
         path: /Audio/Effects/closetopen.ogg
+      whitelist:
+        components:
+        - MobState
+        - Item
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
