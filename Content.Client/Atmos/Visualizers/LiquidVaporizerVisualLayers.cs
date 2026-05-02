@@ -1,6 +1,6 @@
 namespace Content.Client.Atmos.Visualizers;
 
-public enum GasVaporizerVisualLayers :byte
+public enum LiquidVaporizerVisualLayers :byte
 {
     Working,
 }

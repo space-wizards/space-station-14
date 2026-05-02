@@ -51,7 +51,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         if (TryComp<AppearanceComponent>(entity, out var appearanceComponent))
         {
             _appearanceSystem.SetData(entity,
-                VaporizerVisuals.Working,
+                LiquidVaporizerVisuals.Working,
                 false,
                 appearanceComponent);
         }
@@ -85,7 +85,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             if (appearanceComponent != null)
             {
                 _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
+                    LiquidVaporizerVisuals.Working,
                     false,
                     appearanceComponent);
             }
@@ -101,7 +101,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             if (appearanceComponent != null)
             {
                 _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
+                    LiquidVaporizerVisuals.Working,
                     false,
                     appearanceComponent);
             }
@@ -117,7 +117,7 @@ public sealed class LiquidVaporizerSystem : EntitySystem
             if (appearanceComponent != null)
             {
                 _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
+                    LiquidVaporizerVisuals.Working,
                     false,
                     appearanceComponent);
             }
@@ -139,12 +139,12 @@ public sealed class LiquidVaporizerSystem : EntitySystem
         {
             //update only once.
             if (_appearanceSystem.TryGetData(entity,
-                    VaporizerVisuals.Working,
+                    LiquidVaporizerVisuals.Working,
                     out var workingState,
                     appearanceComponent) && (bool)workingState != entity.Comp.NeedBoiling)
             {
                 _appearanceSystem.SetData(entity,
-                    VaporizerVisuals.Working,
+                    LiquidVaporizerVisuals.Working,
                     entity.Comp.NeedBoiling,
                     appearanceComponent);
             }

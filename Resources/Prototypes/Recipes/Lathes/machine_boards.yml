@@ -141,7 +141,7 @@
   result: CondenserMachineCircuitBoard
 
 - type: latheRecipe
-  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  parent: [ BaseGoldCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
   id: LiquidVaporizerMachineCircuitBoard
   result: LiquidVaporizerMachineCircuitBoard
 
