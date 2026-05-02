@@ -63,10 +63,9 @@
   - type: MeleeChemicalInjector
     solution: melee
     transferAmount: 2
-  - type: SolutionRegeneration
-    solution: melee
-    duration: 1
-    generated:
-      reagents:
-      - ReagentId: Romerol
-        Quantity: 5
+  # - type: SolutionRegeneration
+  #   duration: 1
+  #   generated:
+  #     reagents:
+  #     - ReagentId: Romerol
+  #       Quantity: 5
