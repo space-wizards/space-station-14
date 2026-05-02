@@ -37,6 +37,9 @@
   parent: ClothingNeckBase
   id: ClothingScarfBase
   components:
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5
   - type: Tag
     tags:
     - Scarf
