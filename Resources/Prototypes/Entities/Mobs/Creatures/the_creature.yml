@@ -88,7 +88,7 @@
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
-    range: 1.8  # slightly beyond max drag stretch (1.5 interaction + 0.15 joint slack = 1.65)
+    range: 1.8
     damage:
       types:
         Slash: 10
