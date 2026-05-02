@@ -1,0 +1,4 @@
+- type: shader
+  id: Masked
+  kind: source
+  path: "/Textures/_Offbrand/mask.swsl"

@@ -26,6 +26,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableLarge # Offbrand
+  - OffbrandOrganWoundableTorso # Offbrand
   id: OrganBaseTorso
   name: torso
   abstract: true
@@ -53,6 +54,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableMedium # Offbrand
+  - OffbrandOrganWoundableHead # Offbrand
   id: OrganBaseHead
   name: head
   abstract: true
@@ -82,6 +84,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableMedium # Offbrand
+  - OffbrandOrganWoundableArmLeft # Offbrand
   id: OrganBaseArmLeft
   name: left arm
   abstract: true
@@ -103,6 +106,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableMedium # Offbrand
+  - OffbrandOrganWoundableArmRight # Offbrand
   id: OrganBaseArmRight
   name: right arm
   abstract: true
@@ -124,6 +128,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableSmall # Offbrand
+  - OffbrandOrganWoundableHandLeft
   id: OrganBaseHandLeft
   name: left hand
   abstract: true
@@ -149,6 +154,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableSmall # Offbrand
+  - OffbrandOrganWoundableHandRight
   id: OrganBaseHandRight
   name: right hand
   abstract: true
@@ -174,6 +180,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableMedium # Offbrand
+  - OffbrandOrganWoundableLegLeft
   id: OrganBaseLegLeft
   name: left leg
   abstract: true
@@ -195,6 +202,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableMedium # Offbrand
+  - OffbrandOrganWoundableLegRight
   id: OrganBaseLegRight
   name: right leg
   abstract: true
@@ -216,6 +224,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableSmall # Offbrand
+  - OffbrandOrganWoundableFootLeft
   id: OrganBaseFootLeft
   name: left foot
   abstract: true
@@ -237,6 +246,7 @@
   parent:
   - OrganBase
   - OffbrandOrganWoundableSmall # Offbrand
+  - OffbrandOrganWoundableFootRight
   id: OrganBaseFootRight
   name: right foot
   abstract: true

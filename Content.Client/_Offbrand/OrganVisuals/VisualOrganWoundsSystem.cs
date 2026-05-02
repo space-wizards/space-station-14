@@ -1,0 +1,103 @@
+using Content.Shared._Offbrand.OrganVisuals;
+using Content.Shared.Body;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+
+namespace Content.Client._Offbrand.OrganVisuals;
+
+public sealed class VisualOrganWoundsSystem : EntitySystem
+{
+    private static readonly ProtoId<ShaderPrototype> Shader = "Masked";
+
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotInsertedEvent>(OnOrganGotInserted);
+        SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotRemovedEvent>(OnOrganGotRemoved);
+    }
+
+    private void OnOrganGotInserted(Entity<VisualOrganWoundsComponent> ent, ref OrganGotInsertedEvent args)
+    {
+        SetupLayers(ent, args.Target);
+        UpdateOverlay(ent, args.Target);
+    }
+
+    private void OnOrganGotRemoved(Entity<VisualOrganWoundsComponent> ent, ref OrganGotRemovedEvent args)
+    {
+        RemoveLayers(ent, args.Target);
+    }
+
+    private void SetupLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
+    {
+        if (!Resolve(target, ref target.Comp))
+            return;
+        var targetSprite = new Entity<SpriteComponent>(target, target.Comp);
+
+        var visualOrgan = Comp<VisualOrganComponent>(ent);
+        var organLayer = visualOrgan.Layer;
+        var baseIndex = _sprite.LayerMapGet(target, organLayer);
+        var layerIndex = baseIndex;
+
+        foreach (var group in ent.Comp.DamageGroups)
+        {
+            layerIndex++;
+
+            var maskLayerKey = $"{organLayer}-{group.DamageGroup}-mask";
+            var overlayLayerKey = $"{organLayer}-{group.DamageGroup}-layer";
+
+            _sprite.AddBlankLayer(targetSprite, layerIndex);
+            _sprite.LayerMapSet(target, overlayLayerKey, layerIndex);
+            if (group.Color is { } color)
+                _sprite.LayerSetColor(target, overlayLayerKey, color);
+            target.Comp.LayerSetShader(overlayLayerKey, Shader);
+
+            var maskLayerIdx = _sprite.AddLayer(target, new SpriteSpecifier.Rsi(ent.Comp.MaskPath, organLayer.ToString()));
+            _sprite.LayerMapSet(target, maskLayerKey, maskLayerIdx);
+            var ok = _sprite.TryGetLayer(target, maskLayerIdx, out var maskLayer, true);
+            DebugTools.Assert(ok);
+
+            maskLayer!.CopyToShaderParameters = new SpriteComponent.CopyToShaderParameters(overlayLayerKey)
+            {
+                ParameterTexture = "uMask",
+                ParameterUV = "uMaskUV",
+            };
+        }
+    }
+
+    private void RemoveLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
+    {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
+        var visualOrgan = Comp<VisualOrganComponent>(ent);
+
+        foreach (var group in ent.Comp.DamageGroups)
+        {
+            var maskLayerKey = $"{visualOrgan.Layer}-{group.DamageGroup}-mask";
+            var overlayLayerKey = $"{visualOrgan.Layer}-{group.DamageGroup}-layer";
+
+            _sprite.RemoveLayer(target, maskLayerKey);
+            _sprite.RemoveLayer(target, overlayLayerKey);
+        }
+    }
+
+    private void UpdateOverlay(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
+    {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
+        var visualOrgan = Comp<VisualOrganComponent>(ent);
+
+        foreach (var group in ent.Comp.DamageGroups)
+        {
+            var overlayLayerKey = $"{visualOrgan.Layer}-{group.DamageGroup}-layer";
+
+            _sprite.LayerSetRsi(target, overlayLayerKey, group.OverlayPath, new RSI.StateId($"{group.DamageGroup}10"));
+        }
+    }
+}

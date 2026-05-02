@@ -1,0 +1,48 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi and modified by DrSmugleaf and Janet Blackquill <uhhadd@gmail.com>",
+    "size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "Head",
+            "directions": 4
+        },
+        {
+            "name": "LArm",
+            "directions": 4
+        },
+        {
+            "name": "LFoot",
+            "directions": 4
+        },
+        {
+            "name": "LHand",
+            "directions": 4
+        },
+        {
+            "name": "LLeg",
+            "directions": 4
+        },
+        {
+            "name": "RArm",
+            "directions": 4
+        },
+        {
+            "name": "RFoot",
+            "directions": 4
+        },
+        {
+            "name": "RHand",
+            "directions": 4
+        },
+        {
+            "name": "RLeg",
+            "directions": 4
+        },
+        {
+            "name": "Chest",
+            "directions": 4
+        }
+    ]
+}

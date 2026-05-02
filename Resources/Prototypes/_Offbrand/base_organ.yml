@@ -123,3 +123,66 @@
   - type: StatusEffectContainer
   - type: WoundableOrgan
     weight: 25
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganWoundableVisuals
+  components:
+  - type: VisualOrganWounds
+    maskPath: /Textures/_Offbrand/damage_masks.rsi
+    damageGroups:
+    - damageGroup: Brute
+      overlayPath: /Textures/_Offbrand/damage_overlays.rsi
+      color: "#FF0000"
+    - damageGroup: Burn
+      overlayPath: /Textures/_Offbrand/damage_overlays.rsi
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableHead
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableArmLeft
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableFootLeft
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableHandLeft
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableLegLeft
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableArmRight
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableFootRight
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableHandRight
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableLegRight
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundableVisuals
+  id: OffbrandOrganWoundableTorso

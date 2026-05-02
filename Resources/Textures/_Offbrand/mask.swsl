@@ -1,0 +1,14 @@
+uniform sampler2D uMask;
+uniform highp vec4 uMaskUV;
+
+varying highp vec2 vMaskUV;
+
+void vertex()
+{
+    vMaskUV = mix(uMaskUV.xy, uMaskUV.zw, tCoord2);
+}
+
+void fragment()
+{
+    COLOR.rgba = zTexture(UV) * texture2D(uMask, vMaskUV);
+}

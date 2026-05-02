@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by Ubaser.",
+    "size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "Brute10",
+            "directions": 4
+        },
+        {
+            "name": "Brute20",
+            "directions": 4
+        },
+        {
+            "name": "Brute30",
+            "directions": 4
+        },
+        {
+            "name": "Brute50",
+            "directions": 4
+        },
+        {
+            "name": "Brute70",
+            "directions": 4
+        },
+        {
+            "name": "Brute100",
+            "directions": 4
+        },
+        {
+            "name": "Burn10",
+            "directions": 4
+        },
+        {
+            "name": "Burn20",
+            "directions": 4
+        },
+        {
+            "name": "Burn30",
+            "directions": 4
+        },
+        {
+            "name": "Burn50",
+            "directions": 4
+        },
+        {
+            "name": "Burn70",
+            "directions": 4
+        },
+        {
+            "name": "Burn100",
+            "directions": 4
+        }
+    ]
+}
