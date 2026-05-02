@@ -33,7 +33,7 @@ public sealed partial class WoundableBodyComponent : Component
 /// Raised on an entity to determine how much of its damage comes from wounds
 /// </summary>
 [ByRefEvent]
-public record struct WoundGetDamageEvent(DamageSpecifier Accumulator);
+public record struct WoundGetDamageEvent(DamageSpecifier Accumulator, DamageSpecifier? Tended);
 
 /// <summary>
 /// Raised when the values for a damage overlay may have changed

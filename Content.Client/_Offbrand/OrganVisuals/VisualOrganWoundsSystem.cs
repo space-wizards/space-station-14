@@ -70,6 +70,12 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
                 ParameterUV = "uMaskUV",
             };
         }
+
+        var bandageLayerKey = $"{organLayer}-bandages";
+        layerIndex++;
+
+        _sprite.AddBlankLayer(targetSprite, layerIndex);
+        _sprite.LayerMapSet(target, bandageLayerKey, layerIndex);
     }
 
     private void RemoveLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
@@ -87,6 +93,9 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
             _sprite.RemoveLayer(target, maskLayerKey);
             _sprite.RemoveLayer(target, overlayLayerKey);
         }
+
+        var bandageLayerKey = $"{visualOrgan.Layer}-bandages";
+        _sprite.RemoveLayer(target, bandageLayerKey);
     }
 
     private void UpdateOverlay(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
@@ -118,6 +127,22 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
                 _sprite.LayerSetRsi(target, overlayLayerKey, group.OverlayPath, new RSI.StateId($"{group.DamageGroup}{thresholdIndex}"));
                 _sprite.LayerSetVisible(target, overlayLayerKey, true);
             }
+        }
+
+        var bandageLayerKey = $"{visualOrgan.Layer}-bandages";
+        var bandageThresholdIndex = ent.Comp.BandageThresholds.BinarySearch(woundable.TendedDamage.GetTotal());
+
+        if (bandageThresholdIndex < -1)
+            bandageThresholdIndex = ~bandageThresholdIndex;
+
+        if (bandageThresholdIndex == -1)
+        {
+            _sprite.LayerSetVisible(target, bandageLayerKey, false);
+        }
+        else
+        {
+            _sprite.LayerSetRsi(target, bandageLayerKey, ent.Comp.BandagesPath, new RSI.StateId($"{visualOrgan.Layer}{bandageThresholdIndex}"));
+            _sprite.LayerSetVisible(target, bandageLayerKey, true);
         }
     }
 

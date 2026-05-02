@@ -285,7 +285,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
         if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        var evt = new WoundGetDamageEvent(new());
+        var evt = new WoundGetDamageEvent(new(), null);
         RaiseLocalEvent(ent, ref evt);
 
         var dict = ent.Comp2.Damage.DamageDict;
@@ -404,6 +404,7 @@ public sealed class WoundableSystem : OffbrandDamageSystem
     private void OnWoundGetDamage(Entity<WoundComponent> ent, ref StatusEffectRelayedEvent<WoundGetDamageEvent> args)
     {
         var accumulator = args.Args.Accumulator;
+        var tended = CompOrNull<TendableWoundComponent>(ent)?.Tended ?? false;
 
         foreach (var (type, value) in ent.Comp.Damage.DamageDict)
         {
@@ -411,6 +412,14 @@ public sealed class WoundableSystem : OffbrandDamageSystem
                 accumulator.DamageDict[type] = existing + value;
             else
                 accumulator.DamageDict[type] = value;
+
+            if (tended && args.Args.Tended is { } tendedDamage)
+            {
+                if (tendedDamage.DamageDict.TryGetValue(type, out existing))
+                    tendedDamage.DamageDict[type] = existing + value;
+                else
+                    tendedDamage.DamageDict[type] = value;
+            }
         }
     }
 

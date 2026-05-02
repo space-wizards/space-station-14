@@ -1,0 +1,131 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/Baystation12/Baystation12/blob/31d7b93af89905737d2ace0fe18713c826b1a6f6/icons/mob/bandage.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "Head0",
+            "directions": 4
+        },
+        {
+            "name": "Head1",
+            "directions": 4
+        },
+        {
+            "name": "Head2",
+            "directions": 4
+        },
+        {
+            "name": "Chest0",
+            "directions": 4
+        },
+        {
+            "name": "Chest1",
+            "directions": 4
+        },
+        {
+            "name": "Chest2",
+            "directions": 4
+        },
+        {
+            "name": "LArm0",
+            "directions": 4
+        },
+        {
+            "name": "LArm1",
+            "directions": 4
+        },
+        {
+            "name": "LArm2",
+            "directions": 4
+        },
+        {
+            "name": "LHand0",
+            "directions": 4
+        },
+        {
+            "name": "LHand1",
+            "directions": 4
+        },
+        {
+            "name": "LHand2",
+            "directions": 4
+        },
+        {
+            "name": "RArm0",
+            "directions": 4
+        },
+        {
+            "name": "RArm1",
+            "directions": 4
+        },
+        {
+            "name": "RArm2",
+            "directions": 4
+        },
+        {
+            "name": "RHand0",
+            "directions": 4
+        },
+        {
+            "name": "RHand1",
+            "directions": 4
+        },
+        {
+            "name": "RHand2",
+            "directions": 4
+        },
+        {
+            "name": "LLeg0",
+            "directions": 4
+        },
+        {
+            "name": "LLeg1",
+            "directions": 4
+        },
+        {
+            "name": "LLeg2",
+            "directions": 4
+        },
+        {
+            "name": "LFoot0",
+            "directions": 4
+        },
+        {
+            "name": "LFoot1",
+            "directions": 4
+        },
+        {
+            "name": "LFoot2",
+            "directions": 4
+        },
+        {
+            "name": "RLeg0",
+            "directions": 4
+        },
+        {
+            "name": "RLeg1",
+            "directions": 4
+        },
+        {
+            "name": "RLeg2",
+            "directions": 4
+        },
+        {
+            "name": "RFoot0",
+            "directions": 4
+        },
+        {
+            "name": "RFoot1",
+            "directions": 4
+        },
+        {
+            "name": "RFoot2",
+            "directions": 4
+        }
+    ]
+}

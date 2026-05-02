@@ -4,6 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared._Offbrand.Organs;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(WoundableOrganSystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class WoundableOrganComponent : Component
 {
     /// <summary>
@@ -17,6 +18,12 @@ public sealed partial class WoundableOrganComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public DamageSpecifier Damage = new();
+
+    /// <summary>
+    /// The total damages accumulated on this organ from tended wounds.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier TendedDamage = new();
 }
 
 /// <summary>
@@ -29,4 +36,4 @@ public readonly record struct WoundableOrganWeightsEvent(Dictionary<Entity<Wound
 /// Raised on an organ when its wound damage changes
 /// </summary>
 [ByRefEvent]
-public readonly record struct WoundableOrganDamageChanged(DamageSpecifier NewDamage);
+public readonly record struct WoundableOrganDamageChanged;

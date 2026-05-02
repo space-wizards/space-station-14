@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
@@ -14,10 +13,16 @@ public sealed partial class VisualOrganWoundsComponent : Component
     public ResPath MaskPath;
 
     [DataField(required: true)]
+    public ResPath BandagesPath;
+
+    [DataField(required: true)]
     public List<VisualOrganWoundsDamageGroup> DamageGroups;
 
     [DataField(required: true)]
     public List<FixedPoint2> Thresholds;
+
+    [DataField(required: true)]
+    public List<FixedPoint2> BandageThresholds;
 }
 
 [DataDefinition]

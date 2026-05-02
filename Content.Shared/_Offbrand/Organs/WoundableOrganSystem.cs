@@ -40,13 +40,14 @@ public sealed class WoundableOrganSystem : EntitySystem
 
     private void OnGetWoundDamages(Entity<WoundableOrganComponent> ent, ref BodyRelayedEvent<WoundGetDamageEvent> args)
     {
-        var evt = new WoundGetDamageEvent(new());
+        var evt = new WoundGetDamageEvent(new(), new());
         RaiseLocalEvent(ent, ref evt);
 
         ent.Comp.Damage = evt.Accumulator;
+        ent.Comp.TendedDamage = evt.Tended!;
         Dirty(ent);
 
-        var notif = new WoundableOrganDamageChanged(ent.Comp.Damage);
+        var notif = new WoundableOrganDamageChanged();
         RaiseLocalEvent(ent, ref notif);
 
         foreach (var entry in evt.Accumulator.DamageDict)
@@ -61,7 +62,7 @@ public sealed class WoundableOrganSystem : EntitySystem
 
     private void OnAfterAutoHandleState(Entity<WoundableOrganComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        var notif = new WoundableOrganDamageChanged(ent.Comp.Damage);
+        var notif = new WoundableOrganDamageChanged();
         RaiseLocalEvent(ent, ref notif);
     }
 

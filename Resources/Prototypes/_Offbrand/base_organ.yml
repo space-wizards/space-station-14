@@ -109,6 +109,7 @@
     weight: 150
   - type: VisualOrganWounds
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
+    bandageThresholds: [ 10, 50, 100 ]
 
 - type: entity
   abstract: true
@@ -119,6 +120,7 @@
     weight: 50
   - type: VisualOrganWounds
     thresholds: [ 5, 10, 15, 25, 35, 50 ]
+    bandageThresholds: [ 10, 25, 50 ]
 
 - type: entity
   abstract: true
@@ -129,6 +131,7 @@
     weight: 25
   - type: VisualOrganWounds
     thresholds: [ 3, 6, 9, 15, 21, 30 ]
+    bandageThresholds: [ 3, 15, 30 ]
 
 - type: entity
   abstract: true
@@ -136,6 +139,7 @@
   components:
   - type: VisualOrganWounds
     maskPath: /Textures/_Offbrand/damage_masks.rsi
+    bandagesPath: /Textures/_Offbrand/bandage_overlay.rsi
     damageGroups:
     - damageGroup: Brute
       overlayPath: /Textures/_Offbrand/damage_overlays.rsi
