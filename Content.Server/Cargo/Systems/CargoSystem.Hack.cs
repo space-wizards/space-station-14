@@ -13,33 +13,28 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly SharedChatSystem _chat = default!;
 
+    public bool Hacked = false;
+
     private void InitializeHack()
     {
         SubscribeLocalEvent<CargoPalletComponent, StructureHackedEvent>(OnPalletHack);
         SubscribeLocalEvent<CargoPalletComponent, AttemptHackStructureEvent>(OnAttemptHack);
         SubscribeLocalEvent<CargoPalletComponent, BeaconRemovedEvent>(OnPalletBeaconRemoved);
+        SubscribeLocalEvent<CargoPalletComponent, HackUpdateEvent>(UpdateHack);
+        SubscribeLocalEvent<CargoPalletComponent, StructureHackCompletedEvent>(OnPalletHackSuccess);
     }
 
-    private void UpdateHack(float frameTime)
+
+    private void UpdateHack(Entity<CargoPalletComponent> ent, ref HackUpdateEvent args)
     {
-        var query = EntityQueryEnumerator<ActiveHackingBeaconComponent, StickyComponent>();
-        while (query.MoveNext(out _, out var hack, out var sticky))
-        {
-            if (sticky.StuckTo == null || !TryComp<CargoPalletComponent>(sticky.StuckTo, out var pallet))
-                continue;
+        var gridUid = Transform(ent).GridUid;
+        if (!TryComp<TradeStationComponent>(gridUid, out var station))
+            return;
 
-            var gridUid = Transform(sticky.StuckTo.Value).GridUid;
-            if (!TryComp<TradeStationComponent>(gridUid, out var station))
-                continue;
+        args.NextUpdate = _timing.CurTime + station.HackCompletionTime;
 
-            if (_timing.CurTime - hack.TimePlanted >= station.HackCompletionTime && !hack.HackCompleted)
-            {
-                hack.HackCompleted = true;
-                var ev = new StructureHackCompletedEvent();
-                RaiseLocalEvent(sticky.StuckTo.Value, ev);
-                OnPalletHackSuccess((sticky.StuckTo.Value, pallet));
-            }
-        }
+        if (_timing.CurTime - args.Beacon.Comp.TimePlanted >= station.HackCompletionTime)
+            args.CompleteHack = true;
     }
 
     /// <summary>
@@ -58,13 +53,14 @@ public sealed partial class CargoSystem
         return false;
     }
 
-    private void OnPalletHackSuccess(Entity<CargoPalletComponent> ent)
+    private void OnPalletHackSuccess(Entity<CargoPalletComponent> ent, ref StructureHackCompletedEvent args)
     {
         // mark ATS as fully hacked
         var gridUid = Transform(ent).GridUid;
         if (!TryComp<TradeStationComponent>(gridUid, out var station))
             return;
         station.HackCompleted = true;
+        Hacked = true;
         Dirty(gridUid.Value, station);
 
         var ev = new HijackBeaconSuccessEvent(station.Fine);
@@ -103,7 +99,7 @@ public sealed partial class CargoSystem
     {
         if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
             return;
-        if (IsTradeStationBeingHacked()) // already being hacked at the moment or has already been.
+        if (IsTradeStationBeingHacked() || Hacked) // already being hacked at the moment or has already been.
             args.Cancel();
     }
 

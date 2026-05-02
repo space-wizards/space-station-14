@@ -72,6 +72,5 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateConsole();
         UpdateTelepad(frameTime);
         UpdateBounty();
-        UpdateHack(frameTime);
     }
 }

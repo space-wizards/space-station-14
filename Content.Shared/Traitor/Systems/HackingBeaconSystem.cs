@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Sticky;
+using Content.Shared.Sticky.Components;
 using Content.Shared.Traitor.Components;
 using Robust.Shared.Timing;
 
@@ -21,15 +22,44 @@ public sealed partial class HackingBeaconSystem : EntitySystem
         SubscribeLocalEvent<ActiveHackingBeaconComponent, ExaminedEvent>(OnExamine);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<ActiveHackingBeaconComponent, StickyComponent>();
+        while (query.MoveNext(out var uid, out var hack, out var sticky))
+        {
+            if (hack.HackCompleted || sticky.StuckTo == null || hack.NextUpdate > _timing.CurTime)
+                continue;
+
+            var ev = new HackUpdateEvent();
+            ev.Beacon = (uid, hack);
+            RaiseLocalEvent(sticky.StuckTo.Value, ev);
+
+            hack.NextUpdate = ev.NextUpdate;
+            if (ev.CompleteHack)
+            {
+                var completeEv = new StructureHackCompletedEvent();
+                RaiseLocalEvent(sticky.StuckTo.Value, completeEv);
+                hack.HackCompleted = true;
+            }
+        }
+    }
+
     private void OnAttemptStick(Entity<HackingBeaconComponent> ent, ref AttemptEntityStickEvent args)
     {
-        if (TryComp<BeaconHackableComponent>(args.Target, out var comp) && comp.Hacked)
+        if (!TryComp<BeaconHackableComponent>(args.Target, out var comp))
+            return;
+
+        if (comp.Hacked && !comp.Repeatable)
         {
             _popup.PopupPredictedCursor(Loc.GetString("hacking-beacon-already-hacked"), ent);
             args.Cancelled = true;
+            return;
         }
 
         var ev = new AttemptHackStructureEvent();
+        ev.Repeat = comp.Hacked;
         RaiseLocalEvent(args.Target, ev);
 
         if (ev.Cancelled)

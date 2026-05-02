@@ -19,4 +19,10 @@ public sealed partial class ActiveHackingBeaconComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool HackCompleted = false;
+
+    /// <summary>
+    /// When should HackUpdatedEvent be called next?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 }
