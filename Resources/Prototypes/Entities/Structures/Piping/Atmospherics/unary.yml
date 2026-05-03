@@ -562,9 +562,7 @@
         pipeDirection: South
   - type: ItemSlots
     slots:
-      containerSlot:
-        #name: solution-component-slot-name-default
-        startingItem: Beaker
+      loadedContainerSlot:
         whitelist:
           components:
           - Solution

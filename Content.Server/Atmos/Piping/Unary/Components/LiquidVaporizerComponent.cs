@@ -23,7 +23,7 @@ public sealed partial class LiquidVaporizerComponent : Component
     /// The ID of the slot for the container.
     /// </summary>
     [DataField]
-    public string ContainerSlotId = "containerSlot";
+    public string ContainerSlotId = "loadedContainerSlot";
 
     /// <summary>
     /// Load while running the device
