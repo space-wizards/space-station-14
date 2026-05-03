@@ -1,10 +1,11 @@
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SolutionAppearance;
 
 /// <summary>
-/// Relays the visuals of a solution on this entity to the containing entity.
+/// Relays the visuals of a solution to the containing entity. Using <see cref="SolutionItemSlotAppearanceSystem" />
 /// </summary>
 [RegisterComponent]
 public sealed partial class SolutionAppearanceComponent : Component

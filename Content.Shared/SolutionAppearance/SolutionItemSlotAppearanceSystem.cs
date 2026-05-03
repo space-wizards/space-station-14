@@ -6,7 +6,11 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.SolutionAppearance;
 
-public sealed class SolutionAppearanceSystem : EntitySystem
+/// <summary>
+/// Visual system for devices with <see cref="SolutionItemSlotAppearanceComponent" /> and <see cref="SolutionContainerVisualsComponent" />
+/// Allows the visuals of device to be set using Solution within inserted item. Solution needs to have <see cref="SolutionAppearanceComponent" />.
+/// </summary>
+public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -37,6 +41,9 @@ public sealed class SolutionAppearanceSystem : EntitySystem
         if (!_entityWhitelist.CheckBoth(args.Container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
+        if (!IsValidSolutionContainer(args.Container.Owner, args.Container.ID))
+            return;
+
         _appearance.SetData(args.Container.Owner, SolutionContainerVisuals.FillFraction, 0);
         _appearance.SetData(args.Container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, false);
     }
@@ -44,6 +51,9 @@ public sealed class SolutionAppearanceSystem : EntitySystem
     private void UpdateAppearance(Entity<SolutionAppearanceComponent> ent)
     {
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
+            return;
+
+        if (!IsValidSolutionContainer(container.Owner, container.ID))
             return;
 
         if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
@@ -57,5 +67,15 @@ public sealed class SolutionAppearanceSystem : EntitySystem
 
         _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value.Comp));
         _appearance.SetData(container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, true);
+
+        return;
+    }
+
+    private bool IsValidSolutionContainer(EntityUid owner, string containerId)
+    {
+        if (!TryComp<SolutionItemSlotAppearanceComponent>(owner, out var appearance))
+            return false;
+
+        return appearance.ContainerID == containerId;
     }
 }

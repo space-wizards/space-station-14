@@ -42,6 +42,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: beakerSlot
+  - type: SolutionItemSlotAppearance
+    containerID: "beakerSlot"
   - type: ApcPowerReceiver
     powerLoad: 0
   - type: PowerState
