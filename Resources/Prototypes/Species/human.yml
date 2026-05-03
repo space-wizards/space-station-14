@@ -1,7 +1,0 @@
-- type: species
-  id: Human
-  name: species-name-human
-  roundStart: true
-  prototype: MobHuman
-  dollPrototype: AppearanceHuman
-  skinColoration: HumanToned

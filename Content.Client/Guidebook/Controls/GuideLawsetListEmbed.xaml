@@ -1,5 +1,0 @@
-<Control xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Vertical"
-                Name="GroupContainer">
-    </BoxContainer>
-</Control>

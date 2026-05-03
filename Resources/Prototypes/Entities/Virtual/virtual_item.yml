@@ -1,9 +1,0 @@
-﻿# This item is stored in the hand slot while it is blocked, to represent what is blocking that hand.
-- type: entity
-  id: VirtualItem
-  name: VIRTUAL ITEM YOU SHOULD NOT SEE THIS
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Item
-    size: Ginormous # no storage insertion visuals
-  - type: VirtualItem

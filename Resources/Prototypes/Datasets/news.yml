@@ -1,5 +1,0 @@
-﻿- type: localizedDataset
-  id: News
-  values:
-    prefix: news-dataset-
-    count: 62

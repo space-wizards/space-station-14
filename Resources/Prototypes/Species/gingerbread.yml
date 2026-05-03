@@ -1,8 +1,0 @@
-- type: species
-  id: Gingerbread
-  name: species-name-gingerbread
-  roundStart: false
-  prototype: MobGingerbread
-  dollPrototype: AppearanceGingerbread
-  skinColoration: HumanToned
-  defaultSkinTone: "#9a7c5a"

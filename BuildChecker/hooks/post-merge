@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Just call post-checkout since it does the same thing.
-gitroot=$(git rev-parse --git-path hooks)
-bash "$gitroot/post-checkout"

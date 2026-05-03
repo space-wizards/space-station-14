@@ -1,6 +1,0 @@
-# "funny" placeholders of extremely minor/non-crimes for wanted reason dialog
-- type: localizedDataset
-  id: CriminalRecordsWantedReasonPlaceholders
-  values:
-    prefix: placeholders-criminal-records-wanted-reason-
-    count: 20

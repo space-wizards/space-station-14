@@ -1,1 +1,0 @@
-guide-help-verb = Help

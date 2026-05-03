@@ -1,3 +1,0 @@
-Note:
-PNG, JPEG and WebP is supported. Please prefer a lossy WebP compression since lobby art is big.
-You also need to put a prototype in Resources/Prototypes/lobbyscreens.yml

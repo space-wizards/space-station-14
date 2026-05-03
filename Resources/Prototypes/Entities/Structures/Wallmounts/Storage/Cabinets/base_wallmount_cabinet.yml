@@ -1,9 +1,0 @@
-- type: entity
-  parent: [BaseWallmountMetallic, BaseItemCabinet]
-  id: BaseWallmountCabinet
-  abstract: true
-
-- type: entity
-  parent: [BaseWallmountGlass, BaseItemCabinetGlass]
-  id: BaseWallmountCabinetGlass
-  abstract: true

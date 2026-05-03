@@ -1,3 +1,0 @@
-<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical">
-    <BoxContainer Name="Items" Margin="4" Orientation="Vertical" />
-</BoxContainer>
