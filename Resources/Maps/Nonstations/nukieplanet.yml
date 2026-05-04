@@ -4,8 +4,8 @@ meta:
   engineVersion: 275.2.0
   forkId: ""
   forkVersion: ""
-  time: 04/28/2026 02:14:35
-  entityCount: 2554
+  time: 05/04/2026 15:36:45
+  entityCount: 2555
 maps:
 - 1295
 grids:
@@ -12613,10 +12613,15 @@ entities:
       parent: 104
 - proto: RedspaceBeaker
   entities:
+  - uid: 2031
+    components:
+    - type: Transform
+      pos: 3.627159,-11.4994755
+      parent: 104
   - uid: 2095
     components:
     - type: Transform
-      pos: 3.4195971,-11.4994755
+      pos: 3.2989883,-11.4994755
       parent: 104
 - proto: ReinforcedPlasmaWindow
   entities:
