@@ -95,18 +95,18 @@
     onlyReclaimDrainable: false
     solutionContainerId: solution
   - type: Sprite
-    sprite: Structures/Machines/recycling.rsi
+    sprite: Structures/Machines/industrial_reagent_grinder.rsi
     layers:
-      - state: grinder-b0
+      - state: industrial-reagent-grinder-off
   - type: Machine
     board: ReagentGrinderIndustrialMachineCircuitboard
   - type: GenericVisualizer
     visuals:
       enum.ConveyorVisuals.State:
         enum.ConveyorState.Off:
-          Forward: { state: grinder-b1 }
-          Reverse: { state: grinder-b1 }
-          Off: { state: grinder-b0 }
+          Forward: { state: industrial-reagent-grinder-on }
+          Reverse: { state: industrial-reagent-grinder-on }
+          Off: { state: industrial-reagent-grinder-off }
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
