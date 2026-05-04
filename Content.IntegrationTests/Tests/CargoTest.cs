@@ -45,20 +45,28 @@ public sealed class CargoTest : GameTest
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    if (Ignored.Contains(proto.ID))
+                    if (proto.Abstract || Ignored.Contains(proto.ID))
                         continue;
 
-                    List<EntityUid> entList = new();
-                    double price = 0;
-                    foreach (var product in proto.SpawnList)
+                    var entList = new List<EntityUid>();
+                    try
                     {
-                        var ent = entManager.SpawnEntity(product, testMap.MapCoords);
-                        entList.Add(ent);
-                        price += pricing.GetPrice(ent);
-                        entManager.DeleteEntity(ent);
-                    }
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                        double price = 0;
+                        foreach (var product in proto.SpawnList)
+                        {
+                            var ent = entManager.SpawnEntity(product, testMap.MapCoords);
+                            entList.Add(ent);
+                            price += pricing.GetPrice(ent);
+                        }
 
+                        Assert.That(price, Is.AtMost(proto.Cost),
+                            $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell price is {price}!");
+                    }
+                    finally
+                    {
+                        foreach (var ent in entList)
+                            entManager.DeleteEntity(ent);
+                    }
                 }
             });
         });
@@ -89,11 +97,14 @@ public sealed class CargoTest : GameTest
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
 
+                    if (proto.Abstract)
+                        continue;
+
                     var crateEnt = entManager.SpawnEntity(crate.Entity, new MapCoordinates(Vector2.Zero, mapId));
 
                     foreach (var product in proto.SpawnList)
                     {
-                        var ent = entManager.SpawnEntity(proto.SpawnList.First(), new MapCoordinates(Vector2.Zero, mapId));
+                        var ent = entManager.SpawnEntity(product, new MapCoordinates(Vector2.Zero, mapId));
                         var container1 = container.GetContainer(crateEnt, crate.ContainerId);
                         container.Insert(ent, container1, force: true);
                     }
@@ -101,7 +112,9 @@ public sealed class CargoTest : GameTest
                     foreach (var bounty in bounties)
                     {
                         if (cargo.IsBountyComplete(crateEnt, bounty))
-                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward),
+                                $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} " +
+                                $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                     }
 
                     entManager.DeleteEntity(crateEnt);

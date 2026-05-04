@@ -48,7 +48,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _name = Loc.GetString(nameLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
+                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -72,7 +72,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _description = Loc.GetString(descLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
+                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
                 {
                     _description = prototype.Description;
                 }
@@ -91,7 +91,7 @@ namespace Content.Shared.Cargo.Prototypes
         ///     The entity prototype ID of the product.
         /// </summary>
         [DataField]
-        public EntProtoId Product { get; private set; } = string.Empty;
+        public EntProtoId? Product { get; private set; }
 
         /// <summary>
         ///     List of entity prototypes to spawn. If not set, falls back to <see cref="Product"/>.
@@ -102,7 +102,18 @@ namespace Content.Shared.Cargo.Prototypes
         /// <summary>
         ///     Resolved list of entities to spawn. Always use this instead of <see cref="Product"/> directly.
         /// </summary>
-        public List<EntProtoId> SpawnList => Products ?? new List<EntProtoId> { Product };
+        public List<EntProtoId> SpawnList
+        {
+            get
+            {
+                if (Products != null)
+                    return Products;
+                if (Product != null)
+                    return new List<EntProtoId> { Product.Value };
+                throw new InvalidOperationException($"CargoProductPrototype {ID} has neither Product nor Products defined.");
+            }
+        }
+
 
         /// <summary>
         /// The prototype of the container to be spawned
