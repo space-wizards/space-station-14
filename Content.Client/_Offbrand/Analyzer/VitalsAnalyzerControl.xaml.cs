@@ -14,9 +14,9 @@ public sealed partial class VitalsAnalyzerControl : BoxContainer
     public void Update(VitalsData data)
     {
         SpO2Label.Text = Loc.GetString(data.Spo2Name);
-        SpO2Value.Text = Loc.GetString("offbrand-vitals-spo2-value", ("value", $"{data.Spo2 * 100:F1}"));
+        SpO2Value.Text = Loc.GetString("offbrand-vitals-spo2-value", ("value", $"{data.Spo2 * 100:F0}"));
 
-        BrainActivityValue.Text = Loc.GetString("offbrand-vitals-brain-activity-value", ("value", $"{data.BrainHealth * 100:F1}"));
+        BrainActivityValue.Text = Loc.GetString("offbrand-vitals-brain-activity-value", ("value", $"{data.BrainHealth * 100:F0}"));
 
         RespiratoryRateValue.Text = Loc.GetString("offbrand-vitals-respiratory-rate-value", ("value", data.RespiratoryRate));
 

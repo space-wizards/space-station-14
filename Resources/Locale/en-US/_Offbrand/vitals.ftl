@@ -15,20 +15,19 @@ offbrand-vitals-spo2-value = {$value}%
 offbrand-vitals-brain-activity = Brain Activity
 offbrand-vitals-brain-activity-value = {$value}%
 
+-offbrand-unit = [color=darkgray][font size=12][bold]{$unit}[/bold][/font][/color]
+
 offbrand-vitals-air = Air
 offbrand-vitals-respiratory-rate = Respiratory Rate
-offbrand-vitals-respiratory-rate-value = {$value}
-offbrand-vitals-respiratory-rate-unit = breaths/minute
-offbrand-vitals-etco2-value = {$value}
-offbrand-vitals-etco2-unit = mmHg
+offbrand-vitals-respiratory-rate-value = [color=white]{$value}[/color]{-offbrand-unit(unit: " breaths/minute")}
+offbrand-vitals-etco2-value = [color=white]{$value}[/color]{-offbrand-unit(unit: "mmHg")}
 
 offbrand-vitals-blood = Blood
 offbrand-vitals-blood-pressure = Blood Pressure
-offbrand-vitals-blood-pressure-value = {$systolic}[color=darkgray]/[/color]{$diastolic}
+offbrand-vitals-blood-pressure-value = [color=white]{$systolic}[/color][color=darkgray]/[/color][color=white]{$diastolic}[/color]
 offbrand-vitals-blood-volume = Blood Volume
-offbrand-vitals-blood-volume-value = {$value}[color=darkgray]%[/color]
+offbrand-vitals-blood-volume-value = [color=white]{$value}[/color][color=darkgray]%[/color]
 
 offbrand-vitals-heart = Heart
 offbrand-vitals-heart-rate = Heartrate
-offbrand-vitals-heart-rate-value = {$value}
-offbrand-vitals-heart-rate-unit = bpm
+offbrand-vitals-heart-rate-value = [color=white]{$value}[/color]{-offbrand-unit(unit: "bpm")}

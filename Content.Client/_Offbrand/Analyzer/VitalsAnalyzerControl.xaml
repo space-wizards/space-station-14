@@ -1,4 +1,4 @@
-<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical">
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" SeparationOverride="10">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <Label Name="SpO2Label" StyleClasses="field-label-large" />
@@ -14,17 +14,11 @@
         <BoxContainer Orientation="Horizontal">
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-respiratory-rate'}" />
-                <BoxContainer Orientation="Horizontal">
-                    <Label Name="RespiratoryRateValue" StyleClasses="field-value" />
-                    <Label Text="{Loc 'offbrand-vitals-respiratory-rate-unit'}" StyleClasses="field-unit" />
-                </BoxContainer>
+                <RichTextLabel Name="RespiratoryRateValue" StyleClasses="field-value" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <Label Name="EtCO2Label" StyleClasses="field-label" />
-                <BoxContainer Orientation="Horizontal">
-                    <Label Name="EtCO2Value" StyleClasses="field-value" />
-                    <Label Text="{Loc 'offbrand-vitals-etco2-unit'}" StyleClasses="field-unit" />
-                </BoxContainer>
+                <RichTextLabel Name="EtCO2Value" StyleClasses="field-value" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
@@ -45,10 +39,7 @@
         <Label StyleClasses="field-heart" Text="{Loc 'offbrand-vitals-heart'}" />
         <BoxContainer Orientation="Vertical">
             <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-heart-rate'}" />
-            <BoxContainer Orientation="Horizontal">
-                <RichTextLabel Name="HeartRateValue" StyleClasses="field-value" />
-                <Label Text="{Loc 'offbrand-vitals-heart-rate-unit'}" StyleClasses="field-unit" />
-            </BoxContainer>
+            <RichTextLabel Name="HeartRateValue" StyleClasses="field-value" />
         </BoxContainer>
     </BoxContainer>
 </BoxContainer>

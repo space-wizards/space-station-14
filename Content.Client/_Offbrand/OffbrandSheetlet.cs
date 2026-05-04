@@ -12,7 +12,6 @@ public sealed class OffbrandSheetlet : Sheetlet<PalettedStylesheet>
     public const string ClassFieldValue = "field-value";
     public const string ClassFieldLabelLarge = "field-label-large";
     public const string ClassFieldValueLarge = "field-value-large";
-    public const string ClassFieldUnit = "field-unit";
     public const string ClassFieldAir = "field-air";
     public const string ClassFieldBlood = "field-blood";
     public const string ClassFieldHeart = "field-heart";
@@ -33,10 +32,6 @@ public sealed class OffbrandSheetlet : Sheetlet<PalettedStylesheet>
             E()
                 .Class(ClassFieldValue)
                 .Font(sheet.BaseFont.GetFont(16, FontKind.Bold)),
-            E()
-                .Class(ClassFieldUnit)
-                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold))
-                .FontColor(Color.DarkGray),
             E()
                 .Class(ClassFieldAir)
                 .FontColor(Color.FromHex("#44f0d3")),
