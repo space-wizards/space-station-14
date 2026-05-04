@@ -96,6 +96,8 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
     {
-        _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
+        // We don't need to update the mind if the mind is being fully detached!
+        if (args.TransferEntity != null)
+            _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
     }
 }

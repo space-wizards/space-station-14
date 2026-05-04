@@ -1,9 +1,9 @@
 - type: entity
+  abstract: true
+  parent: [UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase]
   id: BaseTowel
   name: base towel
-  abstract: true
   description: If you want to survive out here, you gotta know where your towel is.
-  parent: [ UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase ]
   components:
   - type: Sprite
     sprite: Clothing/Multiple/towel.rsi
@@ -21,15 +21,9 @@
     spillWhenThrown: false
   - type: Absorbent
     pickupAmount: 15
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 30
-      absorbed:
-        maxVol: 30
+    - SolutionMopSmall
   - type: UseDelay
     delay: 1
   - type: Fiber

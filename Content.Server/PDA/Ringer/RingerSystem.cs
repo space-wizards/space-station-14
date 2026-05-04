@@ -1,10 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Store.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
-using Content.Shared.Store.Components;
+using Content.Shared.Store;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 

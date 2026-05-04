@@ -23,7 +23,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     /// </summary>
     private void OnEquipped(Entity<EnergyKatanaComponent> ent, ref GotEquippedEvent args)
     {
-        _ninja.BindKatana(args.Equipee, ent);
+        _ninja.BindKatana(args.EquipTarget, ent);
     }
 
     private void OnCheckDash(Entity<EnergyKatanaComponent> ent, ref CheckDashEvent args)

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase ]
+  parent: [ DrinkBaseMaterialPlastic, SolutionSmall, DrinkBase ]
   id: SprayBottleBase
   components:
   - type: Edible
@@ -20,10 +20,6 @@
     state: cleaner
   - type: Item
     sprite: Objects/Specific/Janitorial/spray_bottle.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
   - type: UseDelay
   - type: Spray
     solution: drink
@@ -53,7 +49,7 @@
     inHandsMaxFillLevels: 4
 
 - type: entity
-  parent: SprayBottle
+  parent: [SolutionNormal, SprayBottle]
   id: MegaSprayBottle
   name: mega spray bottle
   suffix: Empty
@@ -66,13 +62,11 @@
     - state: cleaner_large-fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
+  - type: Item
+    size: Normal
   - type: SolutionContainerVisuals
     maxFillLevels: 7
     fillBaseName: cleaner_large-fill-
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 250
   - type: Spray
     transferAmount: 15
     sprayedPrototype: BigVapor
@@ -90,13 +84,11 @@
   - type: Tag
     tags:
     - Spray
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Water
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 60
 
 - type: entity
   parent: SprayBottle
@@ -104,13 +96,11 @@
   suffix: Space Cleaner
   description: BLAM!-brand non-foaming space cleaner!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 60
   - type: Label
     currentLabel: space cleaner
   - type: Tag
@@ -123,49 +113,42 @@
   suffix: Space Cleaner
   description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 250
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 250
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 120
   - type: Label
     currentLabel: space cleaner
 
 - type: entity
-  parent: SprayBottle
+  parent: [SolutionNormal, SprayBottle]
   id: BorgSprayBottle
   name: internal spray jet
   suffix: Filled
   description: A pressurized vessel for spraying reagents, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 200
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 200
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 120
 
 - type: entity
-  parent: MegaSprayBottle
+  parent: [SolutionLarge, MegaSprayBottle]
   id: BorgMegaSprayBottle
   name: adv. internal spray jet
   suffix: Filled
   description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. This one is capable of creating space cleaner from moisture in the air.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 250
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 250
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 240
   - type: SolutionTransfer
     canSend: false # No giving away infinite space cleaner!
   - type: SolutionRegeneration
-    solution: drink
     generated:
       reagents:
       - ReagentId: SpaceCleaner
@@ -173,14 +156,11 @@
 
 # Vapor
 - type: entity
+  parent: [SolutionSmall, SolutionVapor]
   id: Vapor
   categories: [ HideSpawnMenu ]
   name: "vapor"
   components:
-  - type: SolutionContainerManager
-    solutions:
-      vapor:
-        maxVol: 50
   - type: Vapor
     active: true
     transferAmountPercentage: 0.5

@@ -130,7 +130,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// We don't connect it with attack range, because different weapons have different sprites,
     /// and this value should be adjusted manually for every weapon ideally
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float AnimationOffset = 1f;
 
     // Sounds

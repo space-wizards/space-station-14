@@ -19,9 +19,6 @@ public sealed partial class DamageableSystem
 
     /// <summary>
     ///     Directly sets the damage in a damageable component.
-    ///     This method keeps the damage types supported by the DamageContainerPrototype in the component.
-    ///     If a type is given in <paramref name="damage"/>, but not supported then it will not be set.
-    ///     If a type is supported but not given in <paramref name="damage"/> then it will be set to 0.
     /// </summary>
     /// <remarks>
     ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
@@ -40,8 +37,7 @@ public sealed partial class DamageableSystem
 
         foreach (var (type, amount) in damage.DamageDict)
         {
-            if (SupportsType(ent.Comp.DamageContainerID, type))
-                ent.Comp.Damage.DamageDict[type] = amount;
+            ent.Comp.Damage.DamageDict[type] = amount;
         }
 
         OnEntityDamageChanged((ent, ent.Comp));
@@ -108,7 +104,7 @@ public sealed partial class DamageableSystem
     ///     stored damage data. Division of group damage into types is managed by <see cref="DamageSpecifier"/>.
     /// </remarks>
     /// <returns>
-    ///     The actual amount of damage taken, as a DamageSpecifier.
+    ///     The actual amount of damage dealt, as a DamageSpecifier.
     /// </returns>
     public DamageSpecifier ChangeDamage(
         Entity<DamageableComponent?> ent,
@@ -155,28 +151,10 @@ public sealed partial class DamageableSystem
         if (!ignoreGlobalModifiers)
             damage = ApplyUniversalAllModifiers(damage);
 
+        var evt = new DamageDealtEvent(damage, origin, interruptsDoAfters);
+        RaiseLocalEvent(ent, ref evt);
 
-        damageDone.DamageDict.EnsureCapacity(damage.DamageDict.Count);
-
-        var dict = ent.Comp.Damage.DamageDict;
-        foreach (var (type, value) in damage.DamageDict)
-        {
-            if (!SupportsType(ent.Comp.DamageContainerID, type))
-                continue;
-
-            var oldValue = dict.GetValueOrDefault(type);
-            var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + value);
-            if (newValue == oldValue)
-                continue;
-
-            dict[type] = newValue;
-            damageDone.DamageDict[type] = newValue - oldValue;
-        }
-
-        if (!damageDone.Empty)
-            OnEntityDamageChanged((ent, ent.Comp), damageDone, interruptsDoAfters, origin);
-
-        return damageDone;
+        return damage;
     }
 
     /// <summary>
@@ -469,11 +447,11 @@ public sealed partial class DamageableSystem
     /// Returns whether the entity can be damaged by the given type of damage
     /// </summary>
     [Obsolete("Do not rely on the ability to determine if an entity will be able to be damaged by something")]
-    public bool CanBeDamagedBy(Entity<DamageableComponent?> ent, ProtoId<DamageTypePrototype> type)
+    public bool CanBeDamagedBy(Entity<InjurableComponent?> ent, ProtoId<DamageTypePrototype> type)
     {
-        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+        if (!_injurableQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return SupportsType(ent.Comp.DamageContainerID, type);
+        return SupportsType(ent.Comp.DamageContainer, type);
     }
 }

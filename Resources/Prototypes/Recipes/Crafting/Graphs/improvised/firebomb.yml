@@ -37,7 +37,7 @@
         solution: drink
         reagent:
           ReagentId: WeldingFuel
-        quantity: 30
+        quantity: 60
       steps:
       - tool: Screwing
         doAfter: 1

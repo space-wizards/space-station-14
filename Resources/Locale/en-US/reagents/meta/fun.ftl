@@ -10,8 +10,8 @@ reagent-desc-buzzochloric-bees = Liquid bees. Oh god it's LIQUID BEES NO-
 reagent-name-ground-bee = ground Bee
 reagent-desc-ground-bee = Bee grounds. Gross.
 
-reagent-name-saxoite = saxoite
-reagent-desc-saxoite = Smells like jazz.
+reagent-name-brass = brass
+reagent-desc-brass = Smells like clockwork.
 
 reagent-name-licoxide = licoxide
 reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.

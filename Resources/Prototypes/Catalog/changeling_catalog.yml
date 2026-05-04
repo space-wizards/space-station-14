@@ -2,14 +2,71 @@
 
 - type: listing
   id: ChangelingArmBlade
-  name: changeling-arm-blade-name
-  description: changeling-arm-blade-desc
-  productAction: ActionRetractableItemArmBlade
+  name: changeling-catalog-arm-blade-name
+  description: changeling-catalog-arm-blade-desc
   applyToMob: true
   cost:
-    ChangelingDNA: 25
+    ChangelingDNA: 30
   categories:
-  - ChangelingAbilities
+  - ChangelingStoreCombat
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  productAction: ActionRetractableItemArmBlade
+
+- type: listing
+  id: ChangelingFleshClothing
+  name: changeling-catalog-flesh-clothing-name
+  description: changeling-catalog-flesh-clothing-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: flesh_clothing }
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingFleshClothingAbilityStoreDummy
+
+- type: listing
+  id: ChangelingVoiceMimic
+  name: changeling-catalog-voice-mimic-name
+  description: changeling-catalog-voice-mimic-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingVoiceMimicDummy
+
+- type: listing
+  id: ChangelingBiodegrade
+  name: changeling-catalog-biodegrade-name
+  description: changeling-catalog-biodegrade-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingBiodegrade
+
+- type: listing
+  id: ChangelingStingDna
+  name: changeling-catalog-sting-dna-name
+  description: changeling-catalog-sting-dna-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingDna

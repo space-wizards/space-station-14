@@ -53,7 +53,7 @@
   abbreviation: gas-tritium-abbreviation
   molarHeatCapacity: 10
   heatCapacityRatio: 1.3
-  molarMass: 6
+  molarMass: 3
   gasOverlaySprite:
     sprite: /Textures/Effects/atmospherics.rsi
     state: tritium

@@ -22,7 +22,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
-        SetSelectedPrototype(uid, component.Default, true, component);
+        SetSelectedPrototype(uid, component.Default, true, component: component);
     }
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
@@ -39,10 +39,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UI.SetUiState(uid, ChameleonUiKey.Key, state);
     }
 
-    /// <summary>
-    ///     Change chameleon items name, description and sprite to mimic other entity prototype.
-    /// </summary>
-    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false, bool validate = true,
         ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -56,8 +53,10 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         // make sure that it is valid change
         if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-        if (!IsValidTarget(proto, component.Slot, component.RequireTag))
+
+        if (validate && !IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
+
         component.Default = protoId;
 
         UpdateIdentityBlocker(uid, component, proto);

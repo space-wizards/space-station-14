@@ -308,11 +308,16 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 internal static class SkinColorationUtils
 {
     /// <summary>
-    /// An empirically determined epsilon to account for floating-point drift during RGB -> HSL/HSV -> RGB conversions.
-    /// Based on high-iteration testing (50M+ samples) which showed a max drift of ~4.9E-6 for HSL.
-    /// A value of 1E-5f provides a robust safety margin.
+    /// A value derived by dividing 1 by 361, rounding down.
+    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
     /// </summary>
-    public const float Epsilon = 1e-5f; // 0.00001
+    public const float EpsilonHue = 0.00277f;
+
+    /// <summary>
+    /// A value derived by dividing 1 by 256.
+    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
+    /// </summary>
+    public const float Epsilon = 0.00390625f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).
@@ -324,8 +329,8 @@ internal static class SkinColorationUtils
     public static bool IsHueInRange(float hue, float minHue, float maxHue)
     {
         if (minHue > maxHue) // Wraps around 1.0 (e.g., reds)
-            return hue >= minHue - Epsilon || hue <= maxHue + Epsilon;
-        return hue >= minHue - Epsilon && hue <= maxHue + Epsilon;
+            return hue >= minHue - EpsilonHue || hue <= maxHue + EpsilonHue;
+        return hue >= minHue - EpsilonHue && hue <= maxHue + EpsilonHue;
     }
 
     /// <summary>

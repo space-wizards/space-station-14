@@ -21,10 +21,10 @@ public sealed class SolutionRoundingTest : GameTest
 - type: entity
   id: SolutionRoundingTestContainer
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 100
+  - type: Solution
+    id: beaker
+    solution:
+      maxVol: 100
 
 # This is the Chloral Hydrate recipe fyi.
 - type: reagent

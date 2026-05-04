@@ -50,7 +50,7 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<EmitterComponent, DestructionAttemptEvent>(OnDestructionAttempted);
+            SubscribeLocalEvent<EmitterComponent, DestructionEventArgs>(OnDestruction);
             SubscribeLocalEvent<EmitterComponent, MachineDeconstructedEvent>(OnDeconstructed); // you shouldn't be able to deconstruct locked emitters but out of scope to fix
             SubscribeLocalEvent<EmitterComponent, LockToggledEvent>(OnLockToggled);
         }
@@ -297,11 +297,9 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private void OnDestructionAttempted(Entity<EmitterComponent> ent, ref DestructionAttemptEvent args)
+        private void OnDestruction(Entity<EmitterComponent> ent, ref DestructionEventArgs args)
         {
-            // warn engineering their containment engine needs IMMEDIATE repairs
-            // this doesn't change much for natural loosing through emitter destruction given any meteor warning serves the same purpose
-            // can also be used to scare engineering though given it broadcasts its location you need a renamed station beacon to really scare them
+            // Engineering needs to know if an emitter is destroyed so they can replace it before the engine looses.
             AlertRadio(ent, ent.Comp.LocDestroyed);
         }
 

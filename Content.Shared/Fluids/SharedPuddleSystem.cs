@@ -44,6 +44,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly INetManager _net = default!;
 
+    [Dependency] private readonly EntityQuery<StepTriggerComponent> _stepTriggerQuery = default!;
+    [Dependency] private readonly EntityQuery<ReactiveComponent> _reactiveQuery = default!;
+    [Dependency] private readonly EntityQuery<EvaporationComponent> _evaporationQuery = default!;
+
     private ProtoId<ReagentPrototype>[] _standoutReagents = [];
 
     /// <summary>
@@ -57,16 +61,12 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = [];
 
-    private EntityQuery<StepTriggerComponent> _stepTriggerQuery;
-    private EntityQuery<ReactiveComponent> _reactiveQuery;
-    private EntityQuery<EvaporationComponent> _evaporationQuery;
-
     public override void Initialize()
     {
         base.Initialize();
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
+        SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         SubscribeLocalEvent<PuddleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
@@ -74,10 +74,6 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-
-        _stepTriggerQuery = GetEntityQuery<StepTriggerComponent>();
-        _reactiveQuery = GetEntityQuery<ReactiveComponent>();
-        _evaporationQuery = GetEntityQuery<EvaporationComponent>();
 
         CacheStandsout();
         InitializeSpillable();
@@ -114,25 +110,25 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         _standoutReagents = [.. _prototypeManager.EnumeratePrototypes<ReagentPrototype>().Where(x => x.Standsout).Select(x => x.ID)];
     }
 
-    private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionChangedEvent args)
     {
         // The changes are already networked as part of the same game state.
         if (_timing.ApplyingState)
             return;
 
-        if (args.SolutionId != entity.Comp.SolutionName)
+        if (args.Solution.Comp.Id != entity.Comp.SolutionName)
             return;
 
-        if (args.Solution.Volume <= 0)
+        if (args.Solution.Comp.Solution.Volume <= 0)
         {
             _deletionQueue.Add(entity);
             return;
         }
 
         _deletionQueue.Remove(entity);
-        UpdateSlip((entity, entity.Comp), args.Solution);
-        UpdateSlow(entity, args.Solution);
-        UpdateEvaporation(entity, args.Solution);
+        UpdateSlip((entity, entity.Comp), args.Solution.Comp.Solution);
+        UpdateSlow(entity, args.Solution.Comp.Solution);
+        UpdateEvaporation(entity, args.Solution.Comp.Solution);
         UpdateAppearance((entity, entity.Comp));
     }
 

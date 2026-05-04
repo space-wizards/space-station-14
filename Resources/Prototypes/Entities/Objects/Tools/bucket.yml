@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsFill ]
+  parent: [ SolutionLarge, DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsFill ]
   id: Bucket
   name: bucket
   description: It's a boring old bucket.
@@ -9,20 +9,21 @@
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,3
+  - type: Solution
+    solution:
+      maxVol: 360 # 3 litres
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD
     quickEquip: false
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 250
   - type: SolutionTransfer
-    transferAmount: 100
-    maxTransferAmount: 100
-    minTransferAmount: 10
+    transferAmount: 120
+    maxTransferAmount: 360
+    minTransferAmount: 60
   - type: SpillWhenWorn
     solution: drink
   - type: SolutionContainerVisuals
@@ -36,12 +37,11 @@
       Plastic: 50
 
 - type: entity
-  parent: Bucket
+  parent: [SolutionHuge, Bucket]
   id: BorgBucket
   name: internal tank
   description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 500
+  - type: SolutionTransfer
+    transferAmount: 240
+    maxTransferAmount: 480

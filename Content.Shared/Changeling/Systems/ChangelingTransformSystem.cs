@@ -70,7 +70,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<UserInterfaceComponent>(ent, out var userInterfaceComp))
             return;
 
-        if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
+        if (!HasComp<ChangelingIdentityComponent>(ent))
             return;
 
         if (!_ui.IsUiOpen((ent, userInterfaceComp), ChangelingTransformUiKey.Key, args.Performer))
@@ -93,7 +93,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't transform into ourselves
 
-        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+        if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
         TransformInto(ent.AsNullable(), targetIdentity.Value);
@@ -111,7 +111,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (identity.CurrentIdentity == targetIdentity)
             return; // don't drop our current identity
 
-        if (!identity.ConsumedIdentities.ContainsKey(targetIdentity.Value))
+        if (!_changelingIdentity.TryGetDataFromIdentity((ent.Owner, identity), targetIdentity.Value, out _))
             return; // this identity does not belong to this player
 
         _popup.PopupClient(Loc.GetString("changeling-transform-bui-drop-identity-entity-popup", ("entity", targetIdentity.Value)), ent.Owner, PopupType.Large);
@@ -156,8 +156,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             ent,
             target: targetIdentity)
         {
-            BreakOnMove = true,
-            BreakOnWeightlessMove = true,
             DuplicateCondition = DuplicateConditions.None,
             RequireCanInteract = false,
             DistanceThreshold = null,
@@ -168,10 +166,14 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         ref ChangelingTransformDoAfterEvent args)
     {
         args.Handled = true;
-        ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
 
         if (args.Cancelled)
+        {
+            // Only stop the sound if we finish transforming successfully.
+            ent.Comp.CurrentTransformSound = _audio.Stop(ent.Comp.CurrentTransformSound);
             return;
+        }
+        ent.Comp.CurrentTransformSound = null;
 
         if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
