@@ -649,9 +649,8 @@ namespace Content.Server.Cargo.Systems
         }
 
         /// <summary>
-        /// Get the total cost of an order's basket
+        /// Check if all products in a basket are avalible on a ordering console
         /// </summary>
-
         public bool IsInAvalibleProducts(Entity<CargoOrderConsoleComponent> ent, List<CargoOrderItemData> basket)
         {
             var availableProducts = GetAvailableProducts(ent);

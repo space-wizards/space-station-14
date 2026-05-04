@@ -121,7 +121,7 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityNonlethalThrowables
+  id: SecurityStinger
   icon:
     sprite: Objects/Weapons/Grenades/stingergrenade.rsi
     state: icon
@@ -132,7 +132,7 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityNonlethalThrowables
+  id: SecurityTearGas
   icon:
     sprite: Objects/Weapons/Grenades/tear_gas.rsi
     state: icon
@@ -143,7 +143,7 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityNonlethalThrowables
+  id: SecurityBola
   icon:
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
