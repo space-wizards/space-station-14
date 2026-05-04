@@ -58,6 +58,7 @@
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
   - type: RecyclerVisuals
+  - type: DirectionalArrowIndicator
 
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer

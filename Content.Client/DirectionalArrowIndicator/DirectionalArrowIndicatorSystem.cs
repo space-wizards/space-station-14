@@ -7,7 +7,7 @@ namespace Content.Client.DirectionalArrowIndicator;
 
 public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 {
-    private static readonly EntProtoId ExamineArrow = "TurnstileArrow";
+    private static readonly EntProtoId ExamineArrow = "DirectionalArrowIndicator";
 
     public override void Initialize()
     {
