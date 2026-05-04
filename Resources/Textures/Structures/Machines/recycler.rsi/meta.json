@@ -12,6 +12,10 @@
             "directions": 4
         },
         {
+            "name": "recycler-o0bld",
+            "directions": 4
+        },
+        {
             "name": "recycler-o1",
             "directions": 4,
             "delays": [
