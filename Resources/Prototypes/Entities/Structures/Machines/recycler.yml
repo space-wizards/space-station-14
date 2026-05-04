@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Recycler
   parent: BaseMachinePowered
   name: recycler
