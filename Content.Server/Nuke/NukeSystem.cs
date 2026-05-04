@@ -671,8 +671,8 @@ public sealed class NukeSystem : EntitySystem
         {
             using (args.PushGroup(nameof(NukeSystem)))
             {
-                args.PushMarkup(Loc.GetString("nuke-examine-remaining-time", ("time", (int) ent.Comp.RemainingTime)));
                 args.PushMarkup(Loc.GetString("nuke-examine-armed"));
+                args.PushMarkup(Loc.GetString("nuke-examine-remaining-time", ("time", (int) ent.Comp.RemainingTime)));
             }
         }
 
