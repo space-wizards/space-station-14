@@ -48,6 +48,12 @@ public sealed class CargoTest : GameTest
                     if (proto.Abstract || Ignored.Contains(proto.ID))
                         continue;
 
+                    if (proto.SpawnList.Count == 0)
+                    {
+                        Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
+                        continue;
+                    }
+
                     var entList = new List<EntityUid>();
                     try
                     {
@@ -83,7 +89,8 @@ public sealed class CargoTest : GameTest
         var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
-        ContainerSystem container = default!;
+        var container = entManager.System<ContainerSystem>();
+;
 
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
@@ -93,31 +100,39 @@ public sealed class CargoTest : GameTest
 
             Assert.Multiple(() =>
             {
-                var crate = protoManager.EnumeratePrototypes<CargoCratePrototype>().First();
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-
                     if (proto.Abstract)
                         continue;
 
+                    if (proto.Container == null)
+                        continue;
+
+                    if (!protoManager.TryIndex<CargoCratePrototype>(proto.Container, out var crate))
+                        continue;
+
                     var crateEnt = entManager.SpawnEntity(crate.Entity, new MapCoordinates(Vector2.Zero, mapId));
-
-                    foreach (var product in proto.SpawnList)
+                    try
                     {
-                        var ent = entManager.SpawnEntity(product, new MapCoordinates(Vector2.Zero, mapId));
-                        var container1 = container.GetContainer(crateEnt, crate.ContainerId);
-                        container.Insert(ent, container1, force: true);
-                    }
+                        foreach (var product in proto.SpawnList)
+                        {
+                            var ent = entManager.SpawnEntity(product, new MapCoordinates(Vector2.Zero, mapId));
+                            var container1 = container.GetContainer(crateEnt, crate.ContainerId);
+                            container.Insert(ent, container1, force: true);
+                        }
 
-                    foreach (var bounty in bounties)
+                        foreach (var bounty in bounties)
+                        {
+                            if (cargo.IsBountyComplete(crateEnt, bounty))
+                                Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward),
+                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} " +
+                                    $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                        }
+                    }
+                    finally
                     {
-                        if (cargo.IsBountyComplete(crateEnt, bounty))
-                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward),
-                                $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} " +
-                                $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                        entManager.DeleteEntity(crateEnt);
                     }
-
-                    entManager.DeleteEntity(crateEnt);
                 }
             });
 
