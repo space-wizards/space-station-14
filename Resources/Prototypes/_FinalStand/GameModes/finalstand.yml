@@ -1,0 +1,10 @@
+- type: gamePreset
+  id: FinalStand
+  alias:
+    - finalstand
+  name: Final Stand
+  description: Wave-based co-op survival. Defend the Central Command Console at all costs.
+  showInVote: false
+  supportedMaps: FinalStandMapPool
+  rules:
+    - WaveSurvival

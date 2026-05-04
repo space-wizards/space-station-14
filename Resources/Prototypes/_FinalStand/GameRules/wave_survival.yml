@@ -1,0 +1,30 @@
+- type: entity
+  id: WaveSurvival
+  parent: BaseGameRule
+  components:
+  - type: WaveGameRule
+    prepDuration: 15
+    maxCombatDuration: 1800
+    spawnInterval: 2
+    enemyConfigs:
+    # Waves 1-4: basic xeno swarm
+    - fromWave: 1
+      toWave: 4
+      enemyPool:
+      - MobXeno
+      - MobXenoRunner
+    # Waves 5-9: heavier xenos + space spiders
+    # NOTE: verify SimpleHostile faction is hostile to NanoTrasen before relying on MobSpiderSpace
+    - fromWave: 5
+      toWave: 9
+      enemyPool:
+      - MobXenoDrone
+      - MobXenoPraetorian
+      - MobSpiderSpace
+    # Waves 10+: humanoid soldiers + heavy xenos (toWave omitted = no upper bound)
+    - fromWave: 10
+      enemyPool:
+      - MobXenoPraetorian
+      - MobSyndicateFootsoldier
+      - MobFleshJared
+      - MobHivebotRanged

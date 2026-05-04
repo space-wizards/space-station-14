@@ -1,0 +1,12 @@
+- type: entity
+  id: WaveEnemySpawner
+  name: Wave Enemy Spawner
+  description: Marks a location where wave enemies spawn.
+  parent: MarkerBase
+  components:
+  - type: WaveEnemySpawner
+  - type: Sprite
+    drawdepth: Overdoors
+    sprite: Markers/cross.rsi
+    layers:
+    - state: red

@@ -1,0 +1,32 @@
+- type: entity
+  id: FinalStandCCC
+  name: Central Command Console
+  description: The heart of the station. Defend it at all costs.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: FinalStandCCC
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - state: comm
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
