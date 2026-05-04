@@ -159,7 +159,6 @@
     dest: cargo-gift-dest-supp
     gifts:
       EmergencyOxygen: 6
-      EmergencyOxygen: 6
       EmergencyNitrogen: 6
       EmergencyEVA: 6
       EmergencyGasMask: 6
