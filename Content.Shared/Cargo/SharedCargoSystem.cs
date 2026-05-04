@@ -6,13 +6,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Cargo;
 
 public abstract class SharedCargoSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
-
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -220,6 +221,145 @@ public abstract class SharedCargoSystem : EntitySystem
 
         Dirty(ent);
     }
+    public int GetBasketCost(List<CargoOrderItemData> basket)
+    {
+        return basket.Sum(item =>
+        {
+            var proto = _protoMan.Index<CargoProductPrototype>(item.Product);
+            return proto.Cost * item.Quantity;
+        });
+    }
+
+    public int GetContainersCost(List<CargoOrderContainerData> containers)
+    {
+        return containers.Sum(container => container.Cost);
+    }
+    public int GetBasketTotalCost(List<CargoOrderItemData> basket)
+    {
+        var cost = GetBasketCost(basket);
+        var containers = PackBasketIntoContainers(ref basket);
+        cost += GetContainersCost(containers);
+        return cost;
+    }
+    public List<CargoOrderContainerData> PackBasketIntoContainers(ref List<CargoOrderItemData> basket)
+    {
+        var containers = new List<CargoOrderContainerData>();
+
+        for (int j = 0; j < basket.Count(); j++)
+        {
+            var item = basket[j];
+            if (!ShouldOrderItem(item))
+                continue;
+
+            if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var productProto))
+                continue;
+
+            if (!item.WithContainer || productProto.Container == null)
+            {
+                for (int i = 0; i < item.Quantity - item.NumOrdered; i++)
+                {
+                    containers.Add(new CargoOrderContainerData("", "", item));
+                }
+                continue;
+            }
+
+            if (!_protoMan.TryIndex<CargoCratePrototype>(productProto.Container, out var crate))
+                continue;
+
+            PackItemIntoCrates(ref item, crate, containers);
+            basket[j] = item;
+        }
+        return containers;
+    }
+
+    private bool ShouldOrderItem(CargoOrderItemData item)
+    {
+        return item.ToBeOrdered && item.NumOrdered < item.Quantity;
+    }
+
+    private void PackItemIntoCrates(
+        ref CargoOrderItemData item,
+        CargoCratePrototype crate,
+        List<CargoOrderContainerData> containers)
+    {
+        var remaining = GetItemEntityCount(item) * (item.Quantity - item.NumOrdered);
+
+        // Try to fit into an existing container with space
+        foreach (var container in containers)
+        {
+            if (remaining <= 0)
+                break;
+
+            if (!CanFitInContainer(container, item, crate))
+                continue;
+
+            var fitting = Math.Min(remaining, container.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
+            container.Products.Add(item with { Quantity = fitting });
+            remaining -= fitting * GetItemEntityCount(item);
+        }
+
+        // Overflow into new containers
+        while (remaining > 0)
+        {
+            var batch = Math.Min(remaining, crate.MaxItems) / GetItemEntityCount(item);
+            var container = new CargoOrderContainerData(
+                crate.Entity,
+                crate.ContainerId,
+                crateRequired: crate.Required,
+                maxItems: crate.MaxItems,
+                cost: crate.Cost);
+            container.Products.Add(item with { Quantity = batch });
+            containers.Add(container);
+            remaining -= batch * GetItemEntityCount(item);
+        }
+        var parcel = (ProtoId<CargoCratePrototype>)"WrappedParcel";
+        foreach (var container in containers)
+        {
+            if (ShouldWrapAsParcel(container)
+                && _protoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
+            {
+                container.Container = parcelProto.Entity;
+                container.ContainerID = parcelProto.ContainerId;
+                container.Cost = parcelProto.Cost;
+                container.MaxItems = parcelProto.MaxItems;
+            }
+        }
+    }
+
+    private bool CanFitInContainer(
+        CargoOrderContainerData container,
+        CargoOrderItemData item,
+        CargoCratePrototype crate)
+    {
+        if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+            return false;
+        return container.Container != ""
+            && (EntProtoId)container.Container == crate.Entity
+            && GetContainerItemCount(container) <= container.MaxItems - item.Quantity * GetItemEntityCount(item)
+            && container.CrateRequired == crate.Required;
+    }
+
+    public int GetContainerItemCount(CargoOrderContainerData container)
+    {
+        return container.Products.Sum(item => item.Quantity * GetItemEntityCount(item));
+    }
+
+    public int GetItemEntityCount(CargoOrderItemData item)
+    {
+        if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+        {
+            return 1;
+        }
+        return proto.SpawnList.Count();
+    }
+
+    private bool ShouldWrapAsParcel(CargoOrderContainerData container)
+    {
+        return !container.IsSingleProduct
+            && GetContainerItemCount(container) == 1
+            && !container.CrateRequired;
+    }
+
 }
 
 [NetSerializable, Serializable]

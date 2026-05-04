@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.UI
@@ -68,10 +69,14 @@ namespace Content.Client.Cargo.UI
                     ("color", accountProto.Color),
                     ("name", Loc.GetString(accountProto.Name)),
                     ("code", Loc.GetString(accountProto.Code)));
+
+                Stride.AddChild(new PanelContainer { PanelOverride = new StyleBoxFlat { BackgroundColor = accountProto.Color, ContentMarginBottomOverride = 2 } });
             }
 
-            TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-orders"));
-            TabContainer.SetTabTitle(1, Loc.GetString("cargo-console-menu-tab-title-funds"));
+            TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-market"));
+            TabContainer.SetTabTitle(1, Loc.GetString("cargo-console-menu-tab-title-orders"));
+            TabContainer.SetTabTitle(2, Loc.GetString("cargo-console-menu-tab-title-funds"));
+
 
             ActionOptions.OnItemSelected += idx =>
             {
@@ -172,6 +177,194 @@ namespace Content.Client.Cargo.UI
             }
         }
 
+        public void PopulateOrders(IEnumerable<CargoOrderData> orders)
+        {
+            if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
+                return;
+
+            Orders.RemoveAllChildren();
+
+            foreach (var order in orders)
+            {
+                var requester = !string.IsNullOrEmpty(order.Requester) ?
+                    order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
+                var account = _protoManager.Index(order.Account);
+                var description = !string.IsNullOrEmpty(order.Reason) ?
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-reason",
+                                ("orderReason", order.Reason))
+                        :
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-reason",
+                                ("orderReason", Loc.GetString("cargo-console-menu-order-row-alerts-reason-absent")));
+                description += "\n";
+                description += Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderRequester", requester),
+                                ("accountColor", account.Color),
+                                ("account", Loc.GetString(account.Code)));
+                var row = new CargoOrderRow
+                {
+                    Order = order,
+
+                    Title =
+                    {
+                        Text = Loc.GetString(
+                            "cargo-console-menu-order-row-title",
+                            ("orderID", order.OrderId)),
+                    },
+
+                    Stride =
+                    {
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = account.Color,
+                            ContentMarginBottomOverride = 2,
+                        },
+                    },
+
+                    StrideStride =
+                    {
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = account.Color,
+                            ContentMarginBottomOverride = 2,
+                        },
+                    },
+
+                    Description =
+                    {
+                        Text = description
+                    },
+
+                    BasketTotal =
+                    {
+                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetBasketTotalCost(order.Basket).ToString())),
+                    },
+
+                    ContainerCost =
+                    {
+                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket)).ToString())),
+                    },
+                };
+                foreach (var item in order.Basket)
+                {
+                    if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
+                        continue;
+
+                    var rowrow = new CargoOrderRowRow
+                    {
+                        Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
+                        ProductName = { Text = prototype.Name },
+                        Amount = { Text = $"x{item.Quantity}" },
+                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
+                    };
+                    row.Products.AddChild(rowrow);
+                }
+
+
+                row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(order); };
+
+                // TODO: Disable based on access.
+                row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
+                row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
+                Orders.AddChild(row);
+            }
+        }
+
+        public void PopulateOrderHistory(IEnumerable<CargoOrderData> orderHistory)
+        {
+            if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
+                return;
+
+            OrderHistory.RemoveAllChildren();
+
+            foreach (var order in orderHistory.Reverse())
+            {
+                var requester = !string.IsNullOrEmpty(order.Requester) ?
+                    order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
+                var account = _protoManager.Index(order.Account);
+                var description = !string.IsNullOrEmpty(order.Reason) ?
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-reason",
+                                ("orderReason", order.Reason))
+                        :
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-reason",
+                                ("orderReason", Loc.GetString("cargo-console-menu-order-row-alerts-reason-absent")));
+                description += "\n";
+                description += Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderRequester", requester),
+                                ("accountColor", account.Color),
+                                ("account", Loc.GetString(account.Code)));
+                var row = new CargoOrderHistoryRow
+                {
+                    Order = order,
+
+                    Title =
+                    {
+                        Text = Loc.GetString(
+                            "cargo-console-menu-order-row-title",
+                            ("orderID", order.OrderId)),
+                    },
+
+                    Stride =
+                    {
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = account.Color,
+                            ContentMarginBottomOverride = 2,
+                        },
+                    },
+
+                    StrideStride =
+                    {
+                        PanelOverride = new StyleBoxFlat
+                        {
+                            BackgroundColor = account.Color,
+                            ContentMarginBottomOverride = 2,
+                        },
+                    },
+
+                    Description =
+                    {
+                        Text = description
+                    },
+
+                    BasketTotal =
+                    {
+                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetBasketTotalCost(order.Basket).ToString())),
+                    },
+
+                    ContainerCost =
+                    {
+                        Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket)).ToString())),
+                    },
+                };
+                foreach (var item in order.Basket)
+                {
+                    if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
+                        continue;
+
+                    var rowrow = new CargoOrderRowRow
+                    {
+                        Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
+                        ProductName = { Text = prototype.Name },
+                        Amount = { Text = $"x{item.Quantity}" },
+                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
+                    };
+                    row.Products.AddChild(rowrow);
+                }
+
+                // TODO: Disable based on access.
+                OrderHistory.AddChild(row);
+            }
+        }
+
+
+
+
         /// <summary>
         ///     Populates the list of products that will actually be shown, using the current filters.
         /// </summary>
@@ -202,77 +395,47 @@ namespace Content.Client.Cargo.UI
         /// <summary>
         ///     Populates the list of orders and requests.
         /// </summary>
-        public void PopulateOrders(IEnumerable<CargoOrderData> orders)
+        public void PopulateBasket(List<CargoOrderItemData> basket)
         {
             if (!_orderConsoleQuery.TryComp(_owner, out var orderConsole))
                 return;
 
-            Requests.RemoveAllChildren();
+            Basket.RemoveAllChildren();
 
-            foreach (var order in orders)
+            foreach (var item in basket)
             {
-                if (order.Approved || !_protoManager.Resolve(order.Product, out var productProto))
+                if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
                     continue;
-
-                var product = _protoManager.Index<EntityPrototype>(productProto.Product);
-                var productName = productProto.Name;
-                var requester = !string.IsNullOrEmpty(order.Requester) ?
-                    order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
-                var account = _protoManager.Index(order.Account);
-
-                var row = new CargoOrderRow
+                var row = new CargoBasketRow
                 {
-                    Order = order,
-
-                    Title =
-                    {
-                        Text = Loc.GetString(
-                            "cargo-console-menu-order-row-title",
-                            ("productName", productName),
-                            ("orderAmount", order.OrderQuantity),
-                            ("orderPrice", productProto.Cost)),
-                    },
-
-                    Stride =
-                    {
-                        PanelOverride = new StyleBoxFlat
-                        {
-                            BackgroundColor = account.Color,
-                            ContentMarginBottomOverride = 2,
-                        },
-                    },
-
-                    Icon = { Texture = _spriteSystem.Frame0(product) },
-
-                    ProductName =
-                    {
-                        Text = Loc.GetString(
-                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                            ("orderRequester", requester),
-                            ("accountColor", account.Color),
-                            ("account", Loc.GetString(account.Code)))
-                    },
-
-                    Description =
-                    {
-                        Text = !string.IsNullOrEmpty(order.Reason) ?
-                            Loc.GetString(
-                                "cargo-console-menu-order-row-product-description",
-                                ("orderReason", order.Reason))
-                        :
-                            Loc.GetString(
-                                "cargo-console-menu-order-row-product-description",
-                                ("orderReason", Loc.GetString("cargo-console-menu-order-row-alerts-reason-absent")))
-                    }
+                    Product = prototype,
+                    ProductName = { Text = prototype.Name },
+                    Amount = { Value = item.Quantity },
+                    PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
+                    Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                 };
 
-                row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(order); };
-
-                // TODO: Disable based on access.
-                row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
-                row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
-                Requests.AddChild(row);
+                row.Amount.ValueChanged += (_) =>
+                {
+                    item.Quantity = row.Amount.Value;
+                    row.PointCost.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString()));
+                    var containers = _cargoSystem.PackBasketIntoContainers(ref basket);
+                    BasketTotal.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (_cargoSystem.GetBasketCost(basket) + _cargoSystem.GetContainersCost(containers)).ToString()));
+                    ContainerCost.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(containers).ToString()));
+                };
+                row.Remove.OnPressed += (_) =>
+                {
+                    basket.Remove(item);
+                    row.Orphan();
+                    var containers = _cargoSystem.PackBasketIntoContainers(ref basket);
+                    BasketTotal.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (_cargoSystem.GetBasketCost(basket) + _cargoSystem.GetContainersCost(containers)).ToString()));
+                    ContainerCost.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(containers).ToString()));
+                };
+                Basket.AddChild(row);
             }
+            ContainerCost.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref basket)).ToString()));
+            BasketTotal.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetBasketTotalCost(basket).ToString()));
+
         }
 
         public void PopulateAccountActions()
@@ -322,8 +485,6 @@ namespace Content.Client.Cargo.UI
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
-
-            RightPart.Visible = orderConsole.Mode != CargoOrderConsoleMode.PrintSlip;
         }
     }
 }

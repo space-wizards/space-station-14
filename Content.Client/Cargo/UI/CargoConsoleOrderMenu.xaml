@@ -23,18 +23,6 @@
             <Label Name="PointCost"
                    Access="Public" />
 
-            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}"
-                   StyleClasses="LabelKeyText" />
-
-            <LineEdit Name="Requester"
-                      Access="Public" />
-
-            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}"
-                   StyleClasses="LabelKeyText" />
-
-            <LineEdit Name="Reason"
-                      Access="Public" />
-
             <Label Text="{Loc 'cargo-console-order-menu-amount-label'}"
                    StyleClasses="LabelKeyText" />
 

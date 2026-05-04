@@ -74,26 +74,7 @@
                         Access="Public"
                         HorizontalExpand="True"
                         VerticalExpand="True"
-                        StyleClasses="LabelSubText"/>
-            </BoxContainer>
-        </BoxContainer>
-
-        <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" />
-            <!-- Buttons -->
-            <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
-            <BoxContainer Margin="6">
-                <Button Name="Approve"
-                        Access="Public"
-                        Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
-                        StyleClasses="OpenRight"
-                        HorizontalExpand="True"/>
-
-                <Button Name="Cancel"
-                        Access="Public"
-                        Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
-                        StyleClasses="OpenLeft"
-                        HorizontalExpand="True" />
+                        StyleClasses="LabelSubText" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

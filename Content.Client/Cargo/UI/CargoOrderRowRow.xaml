@@ -1,0 +1,36 @@
+<BoxContainer xmlns="https://spacestation14.io"
+    HorizontalExpand="True">
+    <PanelContainer HorizontalExpand="True">
+        <!-- Icon & Name -->
+        <BoxContainer Orientation="Horizontal"
+                        HorizontalExpand="True"
+                        Margin="4 0">
+
+            <TextureRect Name="Icon"
+                            Access="Public"
+                            MinSize="32 32"
+                            RectClipContent="True" />
+
+            <Label Name="Amount"
+                Access="Public"
+                MinWidth="35" />
+            <Control MinWidth="5" />
+            <Label Name="ProductName"
+                Access="Public"
+                HorizontalExpand="True"
+                ClipText="True" />
+
+            <Control MinWidth="10" />
+        </BoxContainer>
+    </PanelContainer>
+    <BoxContainer Orientation="Horizontal"
+        HorizontalAlignment="Right"
+        MinWidth="60">
+        <Control HorizontalExpand="True" />
+        <Label Name="PointCost"
+            Access="Public"
+            HorizontalAlignment="Right"
+            Align="Right" />
+        <Control MinWidth="15" />
+    </BoxContainer>
+</BoxContainer>

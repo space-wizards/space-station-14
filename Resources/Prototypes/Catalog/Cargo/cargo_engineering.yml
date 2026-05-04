@@ -3,8 +3,9 @@
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coillv-30
-  product: CrateEngineeringCableLV
-  cost: 300
+  product: CableApcStack
+  container: CrateElectrical
+  cost: 100
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -13,8 +14,9 @@
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilmv-30
-  product: CrateEngineeringCableMV
-  cost: 300
+  product: CableMVStack
+  container: CrateElectrical
+  cost: 100
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -23,8 +25,9 @@
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilhv-30
-  product: CrateEngineeringCableHV
-  cost: 300
+  product: CableHVStack
+  container: CrateElectrical
+  cost: 100
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -33,18 +36,9 @@
   icon:
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
     state: icon
-  product: CrateEngineeringFoamGrenade
-  cost: 2500
-  category: cargoproduct-category-name-engineering
-  group: market
-
-- type: cargoProduct
-  id: EngineeringCableBulk
-  icon:
-    sprite: Objects/Tools/cable-coils.rsi
-    state: coilall-30
-  product: CrateEngineeringCableBulk
-  cost: 600
+  product: MetalFoamGrenade
+  container: CrateEngineeringSecure
+  cost: 500
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -63,8 +57,9 @@
   icon:
     sprite: Objects/Devices/station_beacon.rsi
     state: icon
-  product: CrateEngineeringStationBeaconBundle
-  cost: 500
+  product: StationBeaconPart
+  container: CratePlastic
+  cost: 100
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -73,8 +68,9 @@
   icon:
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     state: icon
-  product: CrateEngineeringJetpack
-  cost: 1000
+  product: JetpackBlue
+  container: CrateSteel
+  cost: 500
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -83,8 +79,9 @@
   icon:
     sprite: Objects/Tanks/Jetpacks/mini.rsi
     state: icon
-  product: CrateEngineeringMiniJetpack
-  cost: 750
+  product: JetpackMini
+  container: CrateSteel
+  cost: 325
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -101,10 +98,13 @@
 - type: cargoProduct
   id: EvaKit
   icon:
-    sprite: Clothing/Head/Helmets/eva.rsi
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
     state: icon
-  product: CrateEvaKit
-  cost: 5000
+  products:
+  - ClothingOuterHardsuitEVA
+  - ClothingHeadHelmetEVA
+  container: CrateCommandSecure
+  cost: 2500
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -113,8 +113,9 @@
   icon:
     sprite: Objects/Tools/rcd.rsi
     state: ammo
-  product: CrateRCDAmmo
-  cost: 2500
+  product: RCDAmmo
+  container: CrateEngineering
+  cost: 800
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -123,7 +124,8 @@
   icon:
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  product: CrateRCD
+  product: RCD
+  container: CrateEngineeringSecure
   cost: 800
   category: cargoproduct-category-name-engineering
   group: market
@@ -133,8 +135,9 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
     state: base
-  product: CrateParticleDecelerators
-  cost: 15000
+  product: WeaponParticleDecelerator
+  container: CrateEngineeringSecure
+  cost: 5000
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -143,7 +146,8 @@
   icon:
     sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
     state: sheaterOff
-  product: CrateEngineeringSpaceHeater
+  product: SpaceHeaterFlatpack
+  container: CrateEngineering
   cost: 350
   category: cargoproduct-category-name-engineering
   group: market

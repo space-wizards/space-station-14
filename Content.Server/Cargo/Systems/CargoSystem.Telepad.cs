@@ -42,12 +42,13 @@ public sealed partial class CargoSystem
 
             // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
             if (!TryGetLinkedConsole((uid, tele), out var console) ||
-                console.Value.Owner != args.OrderConsole.Owner)
+                console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder)
                 continue;
-
-            for (var i = 0; i < args.Order.OrderQuantity; i++)
+            var containers = PackOrderIntoContainers(args.Order);
+            tele.CurrentOrders.Add(args.Order);
+            for (var i = 0; i < containers.Count; i++)
             {
-                tele.CurrentOrders.Add(args.Order);
+                tele.CurrentContainers.Add(containers[i]);
             }
             tele.Accumulator = tele.Delay;
             args.Handled = true;
@@ -98,21 +99,22 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
+            if (comp.CurrentContainers.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
-            var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
+            comp.CurrentOrders.RemoveAll(order => order.Basket.Count(item => item.NumOrdered == item.Quantity) == 0);
+            var currentContainer = comp.CurrentContainers.First();
+            if (FulfillOrder(currentContainer, xform.Coordinates, comp.PrinterOutput))
             {
                 _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentOrders.Remove(currentOrder);
+                comp.CurrentContainers.Remove(currentContainer);
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
@@ -148,7 +150,7 @@ public sealed partial class CargoSystem
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), console.Value.Comp.Account, order, db);
+            order.Assigned = false;
         }
     }
 

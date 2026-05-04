@@ -3,7 +3,8 @@
   icon:
     sprite: Structures/Shuttles/thruster.rsi
     state: base
-  product: CrateEngineeringThruster
+  product: ThrusterFlatpack
+  container: CrateEngineering
   cost: 1500
   category: cargoproduct-category-name-shuttle
   group: market
@@ -13,7 +14,8 @@
   icon:
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
-  product: CrateEngineeringGyroscope
+  product: GyroscopeFlatpack
+  container: CrateEngineering
   cost: 4000
   category: cargoproduct-category-name-shuttle
   group: market

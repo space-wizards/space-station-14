@@ -16,7 +16,7 @@ namespace Content.Client.Cargo.UI
             IoCManager.InjectDependencies(this);
 
             Amount.SetButtons(new List<int> { -3, -2, -1 }, new List<int> { 1, 2, 3 });
-            Amount.IsValid = n => n > 0;
+            Amount.IsValid = n => n > 0 && n <= 100;
         }
     }
 }

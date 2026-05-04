@@ -33,7 +33,10 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
     state: icon
-  product: CrateScienceBiosuit
+  products:
+  - ClothingOuterBioScientist
+  - ClothingHeadHatHoodBioScientist
+  container: CrateScienceSecure
   cost: 800
   category: cargoproduct-category-name-science
   group: market

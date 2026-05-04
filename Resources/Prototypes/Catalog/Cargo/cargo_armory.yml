@@ -33,7 +33,8 @@
   icon:
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
-  product: CrateTrackingImplants
+  product: TrackingImplanter
+  container: CrateWeaponSecure
   cost: 1000
   category: cargoproduct-category-name-armory
   group: market
