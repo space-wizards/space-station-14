@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -12,6 +13,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 public sealed partial class GunSystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly VaporSystem _vapor = default!;
 
     protected override void InitializeSolution()
     {
@@ -61,25 +63,10 @@ public sealed partial class GunSystem
     {
         var (shot, shootable) = base.GetSolutionShot(ent, position);
 
-        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var solution, out _))
+        if (!_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionId, out var solution))
             return (shot, shootable);
 
-        var newSolution = _solutionContainer.SplitSolution(solution.Value, ent.Comp.FireCost);
-
-        if (newSolution.Volume <= FixedPoint2.Zero)
-            return (shot, shootable);
-
-        if (TryComp<AppearanceComponent>(shot, out var appearance))
-        {
-            Appearance.SetData(shot, VaporVisuals.Color, newSolution.GetColor(ProtoManager).WithAlpha(1f), appearance);
-            Appearance.SetData(shot, VaporVisuals.State, true, appearance);
-        }
-
-        // Add the solution to the vapor and actually send the thing
-        if (_solutionContainer.TryGetSolution(shot, VaporComponent.SolutionName, out var vaporSolution, out _))
-        {
-            _solutionContainer.TryAddSolution(vaporSolution.Value, newSolution);
-        }
+        _vapor.TryAddSolution(shot, solution.Value, ent.Comp.FireCost);
         return (shot, shootable);
     }
 }
