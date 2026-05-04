@@ -54,8 +54,8 @@ public sealed class CargoTest : GameTest
                     {
                         var ent = entManager.SpawnEntity(product, testMap.MapCoords);
                         entList.Add(ent);
-                        entManager.DeleteEntity(ent);
                         price += pricing.GetPrice(ent);
+                        entManager.DeleteEntity(ent);
                     }
                     Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
 
@@ -94,7 +94,7 @@ public sealed class CargoTest : GameTest
                     foreach (var product in proto.SpawnList)
                     {
                         var ent = entManager.SpawnEntity(proto.SpawnList.First(), new MapCoordinates(Vector2.Zero, mapId));
-                        container.TryGetContainer(crateEnt, crate.ContainerId, out var container1);
+                        var container1 = container.GetContainer(crateEnt, crate.ContainerId);
                         container.Insert(ent, container1, force: true);
                     }
 
