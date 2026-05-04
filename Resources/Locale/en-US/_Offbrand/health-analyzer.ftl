@@ -25,13 +25,6 @@ wound-retracted = [color=red]Patient has retracted skin.[/color]
 wound-ribcage-open = [color=red]Patient has open ribcage.[/color]
 wound-arterial-bleeding = [color=red]Patient has arterial bleeding.[/color]
 
-etco2-carbon-dioxide = EtCO2
-etco2-ammonia = EtNH3
-etco2-nitrous-oxide = EtN2O
-
-spo2-oxygen = SpO2
-spo2-nitrogen = SpN2
-
 health-analyzer-window-no-patient-damages = Patient has no injuries.
 
 health-analyzer-status-tooltip =

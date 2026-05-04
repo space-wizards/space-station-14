@@ -1,4 +1,3 @@
-using Content.Shared._Offbrand.Wounds; // Offbrand
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner;
@@ -29,11 +28,10 @@ public struct HealthAnalyzerUiState
     public bool? ScanMode;
     public bool? Bleeding;
     public bool? Unrevivable;
-    public WoundableHealthAnalyzerData? WoundableData; // Offbrand
 
     public HealthAnalyzerUiState() {}
 
-    public HealthAnalyzerUiState(NetEntity? targetEntity, float temperature, float bloodLevel, bool? scanMode, bool? bleeding, bool? unrevivable, WoundableHealthAnalyzerData? woundableData) // Offbrand
+    public HealthAnalyzerUiState(NetEntity? targetEntity, float temperature, float bloodLevel, bool? scanMode, bool? bleeding, bool? unrevivable)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;
@@ -41,6 +39,5 @@ public struct HealthAnalyzerUiState
         ScanMode = scanMode;
         Bleeding = bleeding;
         Unrevivable = unrevivable;
-        WoundableData = woundableData; // Offbrand
     }
 }

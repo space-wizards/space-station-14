@@ -1,0 +1,33 @@
+- type: entity
+  parent: BaseItem
+  id: HandheldVitalsMonitor
+  name: vitals monitor
+  description: A hand-held scanner capable reading the subject's core vitals.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/healthanalyzer.rsi
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+  - type: Item
+    heldPrefix: analyzer
+    storedRotation: -90
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.HealthAnalyzerUiKey.Key:
+        type: VitalsAnalyzerBoundUserInterface
+  - type: Analyzer
+  - type: VitalsAnalyzer
+  - type: HandheldAnalyzer
+    endScanSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+    uiKey: enum.HealthAnalyzerUiKey.Key
+  - type: Tag
+    tags:
+    - DiscreteHealthAnalyzer
+  - type: GuideHelp
+    guides:
+    - OffbrandBody # Offbrand

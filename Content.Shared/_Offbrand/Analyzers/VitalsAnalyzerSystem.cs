@@ -1,27 +1,41 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared._Offbrand.Wounds;
-using Content.Shared.Atmos;
-using Content.Shared.Body.Components;
 using Content.Shared.Body;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Metabolism;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._Offbrand.Wounds;
+namespace Content.Shared._Offbrand.Analyzers;
 
-public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyzerSystem
+public sealed class VitalsAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly PerfusionSystem _perfusion = default!;
     [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
 
+    private const string MedicineGroup = "Medicine";
     private static readonly ProtoId<MetabolismStagePrototype> MetabolitesStage = "Metabolites";
 
-    public override Dictionary<ProtoId<ReagentPrototype>, (FixedPoint2 InBloodstream, FixedPoint2 Metabolites)>? SampleReagents(EntityUid uid, out bool hasNonMedical)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<VitalsAnalyzerComponent, AnalyzerUpdatedEvent>(OnAnalyzerUpdated);
+    }
+
+    private void OnAnalyzerUpdated(Entity<VitalsAnalyzerComponent> ent, ref AnalyzerUpdatedEvent args)
+    {
+        ent.Comp.Data = TakeSample(args.Target);
+        Dirty(ent);
+    }
+
+    private Dictionary<ProtoId<ReagentPrototype>, (FixedPoint2 InBloodstream, FixedPoint2 Metabolites)>? SampleReagents(EntityUid uid, out bool hasNonMedical)
     {
         hasNonMedical = false;
         if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
@@ -78,30 +92,37 @@ public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyze
             }
         }
 
-        _body.TryGetOrgansWithComponent<LungComponent>(uid, out var lungs);
-        foreach (var lung in lungs)
-        {
-            foreach (var gasId in Enum.GetValues<Gas>())
-            {
-                var idx = (int) gasId;
-                var moles = lung.Comp.Air[idx];
-                if (moles <= 0)
-                    continue;
-
-                if (_atmosphere.GasReagents[idx] is not { } reagent)
-                    continue;
-
-                var amount = FixedPoint2.New(moles * Atmospherics.BreathMolesToReagentMultiplier);
-                if (amount <= 0)
-                    continue;
-
-                if (!ret.ContainsKey(reagent))
-                    ret[reagent] = (0, 0);
-
-                ret[reagent] = (ret[reagent].InBloodstream + amount, ret[reagent].Metabolites);
-            }
-        }
-
         return ret;
+    }
+
+    public VitalsData? TakeSample(EntityUid uid, bool withWounds = true)
+    {
+        if (!TryComp<PerfusionComponent>(uid, out var heartrate))
+            return null;
+
+        if (!TryComp<BrainDamageThresholdsComponent>(uid, out var brainDamageThresholds))
+            return null;
+
+        var (upper, lower) = _perfusion.BloodPressure((uid, heartrate));
+
+        var hasNonMedical = false;
+        var reagents = withWounds ? SampleReagents(uid, out hasNonMedical) : null;
+
+        return new VitalsData()
+            {
+                BrainHealth = 1f - brainDamageThresholds.DisplayDamage.Float() / brainDamageThresholds.DisplayMaxDamage.Float(),
+                BloodPressure = (upper, lower),
+                HeartRate = _perfusion.HeartRate((uid, heartrate)),
+                Etco2 = _perfusion.Etco2((uid, heartrate)),
+                RespiratoryRate = _perfusion.RespiratoryRate((uid, heartrate)),
+                Spo2 = _perfusion.Spo2((uid, heartrate)).Float(),
+                Etco2Name = heartrate.Etco2Name,
+                Etco2GasName = heartrate.Etco2GasName,
+                Spo2Name = heartrate.Spo2Name,
+                Spo2GasName = heartrate.Spo2GasName,
+                Reagents = reagents,
+                NonMedicalReagents = hasNonMedical,
+                BloodLevel = _bloodstream.GetBloodLevel(uid),
+            };
     }
 }

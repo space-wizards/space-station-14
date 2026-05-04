@@ -89,7 +89,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 if (existingSensor.Coordinates != null && sensor.Coordinates == null)
                     continue;
 
-                if (existingSensor.WoundableData != null && sensor.WoundableData == null) // Offbrand
+                if (existingSensor.VitalsData != null && sensor.VitalsData == null) // Offbrand
                     continue;
             }
 
@@ -232,14 +232,15 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "alive");
 
             // Begin Offbrand Additions
-            if (sensor.WoundableData?.AnyVitalCritical == true)
-            {
-                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
-            }
-            else if (sensor.WoundableData is { } woundableSummary)
-            {
-                specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), $"health{(byte)woundableSummary.Ranking}");
-            }
+            // TODO Offbrand: Rankme
+            // if (sensor.VitalsData?.AnyVitalCritical == true)
+            // {
+            //     specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
+            // }
+            // else if (sensor.VitalsData is { } woundableSummary)
+            // {
+            //     specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), $"health{(byte)woundableSummary.Ranking}");
+            // }
             // End Offbrand Additions
 
             if (!sensor.IsAlive)
@@ -325,7 +326,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 SeparationOverride = 8,
             };
 
-            if (sensor.WoundableData is { } woundable)
+            if (sensor.VitalsData is { } woundable)
             {
                 vitalsContainer.AddChild(new RichTextLabel() { Text = Loc.GetString("offbrand-crew-monitoring-heart-rate", ("rate", woundable.HeartRate)) });
                 var (systolic, diastolic) = woundable.BloodPressure;

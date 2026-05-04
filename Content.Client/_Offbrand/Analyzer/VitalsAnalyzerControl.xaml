@@ -1,0 +1,54 @@
+<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical">
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label Name="SpO2Label" StyleClasses="field-label-large" />
+            <Label Name="SpO2Value" StyleClasses="field-value-large" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label StyleClasses="field-label-large" Text="{Loc 'offbrand-vitals-brain-activity'}" />
+            <Label Name="BrainActivityValue" StyleClasses="field-value-large" />
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <Label StyleClasses="field-air" Text="{Loc 'offbrand-vitals-air'}" />
+        <BoxContainer Orientation="Horizontal">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-respiratory-rate'}" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="RespiratoryRateValue" StyleClasses="field-value" />
+                    <Label Text="{Loc 'offbrand-vitals-respiratory-rate-unit'}" StyleClasses="field-unit" />
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Name="EtCO2Label" StyleClasses="field-label" />
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="EtCO2Value" StyleClasses="field-value" />
+                    <Label Text="{Loc 'offbrand-vitals-etco2-unit'}" StyleClasses="field-unit" />
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <Label StyleClasses="field-blood" Text="{Loc 'offbrand-vitals-blood'}" />
+        <BoxContainer Orientation="Horizontal">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-blood-pressure'}" />
+                <RichTextLabel Name="BloodPressureValue" StyleClasses="field-value" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-blood-volume'}" />
+                <RichTextLabel Name="BloodVolumeValue" StyleClasses="field-value" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Orientation="Vertical">
+        <Label StyleClasses="field-heart" Text="{Loc 'offbrand-vitals-heart'}" />
+        <BoxContainer Orientation="Vertical">
+            <Label StyleClasses="field-label" Text="{Loc 'offbrand-vitals-heart-rate'}" />
+            <BoxContainer Orientation="Horizontal">
+                <RichTextLabel Name="HeartRateValue" StyleClasses="field-value" />
+                <Label Text="{Loc 'offbrand-vitals-heart-rate-unit'}" StyleClasses="field-unit" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</BoxContainer>

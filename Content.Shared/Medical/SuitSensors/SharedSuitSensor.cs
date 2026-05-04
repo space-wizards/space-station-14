@@ -1,7 +1,7 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Content.Shared._Offbrand.Wounds; // Offbrand
+using Content.Shared._Offbrand.Analyzers; // Offbrand
 
 namespace Content.Shared.Medical.SuitSensor;
 
@@ -30,7 +30,7 @@ public sealed class SuitSensorStatus
     // public int? TotalDamage;
     // public int? TotalDamageThreshold;
     // public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / (float) TotalDamageThreshold;
-    public WoundableHealthAnalyzerData? WoundableData;
+    public VitalsData? VitalsData;
     // End Offbrand Changes
     public NetCoordinates? Coordinates;
 }

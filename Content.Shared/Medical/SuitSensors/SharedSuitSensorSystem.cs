@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared._Offbrand.Analyzers; // Offbrand
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
@@ -23,9 +24,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.FixedPoint; // Offbrand
-using Content.Shared._Offbrand.Wounds; // Offbrand
-
 
 namespace Content.Shared.Medical.SuitSensors;
 
@@ -36,7 +34,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     // [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!; Offbrand - we don't need that
-    [Dependency] private readonly SharedWoundableHealthAnalyzerSystem _woundableHealthAnalyzer = default!; // Offbrand - we do need that
+    [Dependency] private readonly VitalsAnalyzerSystem _vitalsAnalyzer = default!; // Offbrand - we do need that
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -401,7 +399,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 // status.IsAlive = isAlive;
                 // status.TotalDamage = totalDamage;
                 // status.TotalDamageThreshold = totalDamageThreshold;
-                status.WoundableData = _woundableHealthAnalyzer.TakeSample(sensor.User.Value, withWounds: false);
+                status.VitalsData = _vitalsAnalyzer.TakeSample(sensor.User.Value, withWounds: false);
                 goto case SuitSensorMode.SensorBinary;
                 // End Offbrand Changes
             case SuitSensorMode.SensorCords:
@@ -457,7 +455,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         //     payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
         // if (status.TotalDamageThreshold != null)
         //     payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, status.TotalDamageThreshold);
-        if (status.WoundableData is { } woundable)
+        if (status.VitalsData is { } woundable)
             payload.Add(SuitSensorConstants.NET_WOUNDABLE_DATA, woundable);
         // End Offbrand Changes
         if (status.Coordinates != null)
@@ -490,7 +488,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         // Begin Offbrand Changes
         // payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
         // payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
-        payload.TryGetValue(SuitSensorConstants.NET_WOUNDABLE_DATA, out WoundableHealthAnalyzerData? woundableData);
+        payload.TryGetValue(SuitSensorConstants.NET_WOUNDABLE_DATA, out VitalsData? woundableData);
         // End Offbrand Changes
         payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
@@ -500,7 +498,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             // Begin Offbrand Changes
             // TotalDamage = totalDamage,
             // TotalDamageThreshold = totalDamageThreshold,
-            WoundableData = woundableData,
+            VitalsData = woundableData,
             // End Offbrand Changes
             Coordinates = coords,
         };
