@@ -14,6 +14,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Server.Containers;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -74,6 +75,7 @@ public sealed class CargoTest : GameTest
         var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
+        ContainerSystem container = default!;
 
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
@@ -83,17 +85,26 @@ public sealed class CargoTest : GameTest
 
             Assert.Multiple(() =>
             {
+                var crate = protoManager.EnumeratePrototypes<CargoCratePrototype>().First();
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    var ent = entManager.SpawnEntity(proto.SpawnList.First(), new MapCoordinates(Vector2.Zero, mapId));
+
+                    var crateEnt = entManager.SpawnEntity(crate.Entity, new MapCoordinates(Vector2.Zero, mapId));
+
+                    foreach (var product in proto.SpawnList)
+                    {
+                        var ent = entManager.SpawnEntity(proto.SpawnList.First(), new MapCoordinates(Vector2.Zero, mapId));
+                        container.TryGetContainer(crateEnt, crate.ContainerId, out var container1);
+                        container.Insert(ent, container1, force: true);
+                    }
 
                     foreach (var bounty in bounties)
                     {
-                        if (cargo.IsBountyComplete(ent, bounty))
+                        if (cargo.IsBountyComplete(crateEnt, bounty))
                             Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                     }
 
-                    entManager.DeleteEntity(ent);
+                    entManager.DeleteEntity(crateEnt);
                 }
             });
 
