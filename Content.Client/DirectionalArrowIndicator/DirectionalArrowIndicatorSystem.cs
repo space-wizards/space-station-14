@@ -38,7 +38,7 @@ public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 
         Transform(spawnedEnt).LocalRotation = rotation;
 
-        if (TryComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn))
+        if (EnsureComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn))
         {
             timedDespawn.Lifetime = lifetime;
         }
