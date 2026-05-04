@@ -1,7 +1,7 @@
 
 using System.Numerics;
 
-namespace Content.Shared.DirectionalArrowIndicator;
+namespace Content.Client.DirectionalArrowIndicator;
 
 [RegisterComponent]
 public sealed partial class DirectionalArrowIndicatorComponent : Component

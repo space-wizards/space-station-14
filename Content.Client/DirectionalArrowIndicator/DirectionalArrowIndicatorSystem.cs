@@ -1,4 +1,3 @@
-using Content.Shared.DirectionalArrowIndicator;
 using Content.Shared.Examine;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
