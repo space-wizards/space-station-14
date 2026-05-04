@@ -1,4 +1,3 @@
-
 using System.Numerics;
 
 namespace Content.Client.DirectionalArrowIndicator;
