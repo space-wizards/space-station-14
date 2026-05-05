@@ -1,4 +1,5 @@
 using Content.Client.Atmos.EntitySystems;
+using Content.Client.Graphics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -25,7 +26,8 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
     private readonly SharedTransformSystem _xformSys;
     private EntityQuery<GasTileOverlayComponent> _overlayQuery;
 
-    private IRenderTexture? _temperatureTarget;
+    private readonly OverlayResourceCache<CachedResources> _resources = new();
+    private List<Entity<MapGridComponent>> _grids = new();
 
     // Cache used to transform ThermalByte into Color for overlay
     private readonly Color[] _colorCache = new Color[256];
@@ -152,10 +154,11 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        if (_temperatureTarget?.Texture.Size != target.Size)
+        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
+        if (res.TemperatureTarget is null || res.TemperatureTarget.Texture.Size != target.Size)
         {
-            _temperatureTarget?.Dispose();
-            _temperatureTarget = _clyde.CreateRenderTarget(
+            res.TemperatureTarget?.Dispose();
+            res.TemperatureTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileDangerousTemperatureOverlay));
@@ -167,16 +170,13 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         var mapId = args.MapId;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        var anyGasDrawn = false;
-        List<Entity<MapGridComponent>> grids = new();
-
-        drawHandle.RenderInRenderTarget(_temperatureTarget,
+        drawHandle.RenderInRenderTarget(res.TemperatureTarget,
             () =>
             {
-                grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
+                _grids.Clear();
+                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _grids);
 
-                foreach (var grid in grids)
+                foreach (var grid in _grids)
                 {
                     if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
@@ -211,8 +211,6 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
                             if (gasColor.A <= 0f)
                                 continue;
 
-                            anyGasDrawn = true;
-
                             drawHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + gridTileCenterVec, gridTileSizeVec),
                                 gasColor
@@ -225,29 +223,31 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
 
         drawHandle.SetTransform(Matrix3x2.Identity);
 
-        if (!anyGasDrawn)
-        {
-            _temperatureTarget?.Dispose();
-            _temperatureTarget = null;
-            return false;
-        }
-
         return true;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_temperatureTarget is null)
-            return;
+        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
 
-        args.WorldHandle.DrawTextureRect(_temperatureTarget.Texture, args.WorldBounds);
+        if (res.TemperatureTarget != null)
+            args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()
     {
-        _temperatureTarget?.Dispose();
-        _temperatureTarget = null;
+        _resources.Dispose();
         base.DisposeBehavior();
+    }
+
+    private sealed class CachedResources : IDisposable
+    {
+        public IRenderTexture? TemperatureTarget;
+
+        public void Dispose()
+        {
+            TemperatureTarget?.Dispose();
+        }
     }
 }

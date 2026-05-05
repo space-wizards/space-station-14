@@ -35,14 +35,12 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
-
     private const string MeleeLungeKey = "melee-lunge";
 
     public override void Initialize()
     {
         base.Initialize();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
         UpdatesOutsidePrediction = true;
     }
@@ -177,32 +175,24 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
     {
         // Only run on first prediction to avoid the potential raycast entities changing.
-        if (!_xformQuery.TryGetComponent(user, out var userXform) ||
+        if (!TryComp(user, out TransformComponent? userXform) ||
             !Timing.IsFirstTimePredicted)
         {
             return;
         }
 
-        // Resolve attacker and use its transform for ray origin and ignore.
-        var attacker = user;
-        var getAttackerEv = new GetMeleeAttackerEntityEvent();
-        RaiseLocalEvent(user, ref getAttackerEv);
-        if (getAttackerEv.Handled && getAttackerEv.Attacker != null)
-            attacker = getAttackerEv.Attacker.Value;
-
         var targetMap = TransformSystem.ToMapCoordinates(coordinates);
-        var attackerXform = _xformQuery.TryGetComponent(attacker, out var aXform) ? aXform : userXform;
 
-        if (targetMap.MapId != attackerXform.MapID)
+        if (targetMap.MapId != userXform.MapID)
             return;
 
-        var attackerPos = TransformSystem.GetWorldPosition(attackerXform);
-        var direction = targetMap.Position - attackerPos;
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var direction = targetMap.Position - userPos;
         var distance = MathF.Min(component.Range, direction.Length());
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = GetNetEntityList(ArcRayCast(attackerPos, direction.ToWorldAngle(), component.Angle, distance, attackerXform.MapID, attacker).ToList());
+        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
         RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
     }
 

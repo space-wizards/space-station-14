@@ -67,6 +67,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] private   readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private   readonly DamageExamineSystem _damageExamine = default!;
 
+    [Dependency] private readonly EntityQuery<DamageableComponent> _damageQuery = default!;
+
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
     /// <summary>
@@ -408,13 +410,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 break;
         }
 
-        // Resolve effective melee attacker.
-        var attacker = user;
-        var getAttackerEv = new GetMeleeAttackerEntityEvent();
-        RaiseLocalEvent(user, ref getAttackerEv);
-        if (getAttackerEv.Handled && getAttackerEv.Attacker != null)
-            attacker = getAttackerEv.Attacker.Value;
-
         // Windup time checked elsewhere.
         var fireRate = TimeSpan.FromSeconds(1f / GetAttackRate(weaponUid, user, weapon));
         var swings = 0;
@@ -459,17 +454,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             switch (attack)
             {
                 case LightAttackEvent light:
-                    DoLightAttack(attacker, light, weaponUid, weapon, session);
+                    DoLightAttack(user, light, weaponUid, weapon, session);
                     animation = weapon.Animation;
                     break;
                 case DisarmAttackEvent disarm:
-                    if (!DoDisarm(attacker, disarm, weaponUid, weapon, session))
+                    if (!DoDisarm(user, disarm, weaponUid, weapon, session))
                         return false;
 
                     animation = weapon.Animation;
                     break;
                 case HeavyAttackEvent heavy:
-                    if (!DoHeavyAttack(attacker, heavy, weaponUid, weapon, session))
+                    if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
                         return false;
 
                     animation = weapon.WideAnimation;
@@ -478,7 +473,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     throw new NotImplementedException();
             }
 
-            DoLungeAnimation(attacker, weaponUid, weapon.Angle, TransformSystem.ToMapCoordinates(GetCoordinates(attack.Coordinates)), weapon.Range, animation);
+            DoLungeAnimation(user, weaponUid, weapon.Angle, TransformSystem.ToMapCoordinates(GetCoordinates(attack.Coordinates)), weapon.Range, animation);
         }
 
         var attackEv = new MeleeAttackEvent(weaponUid);
@@ -581,7 +576,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         _meleeSound.PlayHitSound(target.Value, user, GetHighestDamageSound(modifiedDamage, _protoManager), hitEvent.HitSoundOverride, component);
 
-        if (damageResult.GetTotal() > FixedPoint2.Zero)
+        if (damageResult.GetTotal() > FixedPoint2.Zero && !TerminatingOrDeleted(target.Value))
         {
             DoDamageEffect(targets, user, targetXform);
         }
@@ -600,7 +595,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (targetMap.MapId != userXform.MapID)
             return false;
 
-        // Use the resolved attacker for positional calculations if available
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length());
@@ -641,7 +635,15 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Validate client
         for (var i = entities.Count - 1; i >= 0; i--)
         {
-            if (ArcRaySuccessful(entities[i],
+            var entity = entities[i];
+
+            if (TerminatingOrDeleted(entity))
+            {
+                entities.RemoveAt(i);
+                continue;
+            }
+
+            if (!ArcRaySuccessful(entity,
                     userPos,
                     direction.ToWorldAngle(),
                     component.Angle,
@@ -650,20 +652,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     user,
                     session))
             {
-                continue;
+                // Bad input
+                entities.RemoveAt(i);
             }
-
-            // Bad input
-            entities.RemoveAt(i);
         }
 
         var targets = new List<EntityUid>();
-        var damageQuery = GetEntityQuery<DamageableComponent>();
-
         foreach (var entity in entities)
         {
             if (entity == user ||
-                !damageQuery.HasComponent(entity))
+                !_damageQuery.HasComponent(entity))
                 continue;
 
             targets.Add(entity);
@@ -736,6 +734,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                         $"{ToPrettyString(user):actor} melee attacked (heavy) {ToPrettyString(entity):subject} using {ToPrettyString(meleeUid):tool} and dealt {damageResult.GetTotal():damage} damage");
                 }
             }
+
+            if (TerminatingOrDeleted(entity))
+                targets.RemoveAt(i);
         }
 
         if (entities.Count != 0)
@@ -744,9 +745,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             _meleeSound.PlayHitSound(target, user, GetHighestDamageSound(appliedDamage, _protoManager), hitEvent.HitSoundOverride, component);
         }
 
-        if (appliedDamage.GetTotal() > FixedPoint2.Zero && TryComp(targets[0], out TransformComponent? targetXform))
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero && targets.Count > 0)
         {
-            DoDamageEffect(targets, user, targetXform);
+            DoDamageEffect(targets, user, Transform(targets[0]));
         }
 
         return true;
