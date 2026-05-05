@@ -22,7 +22,7 @@ public sealed partial class FakeMindShieldComponent : Component
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
 
     /// <summary>
-    /// This tag should be placed on the fake mindshield action so there is a way to easily identify it.
+    /// This tag should be placed on the fake mindshield action so there is a way to easily identify which action goes with which fake mindshield. Of course, this implies that no two similar fake mindshields should be on the same entity at the same time.
     /// </summary>
     [DataField]
     public ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
@@ -32,4 +32,10 @@ public sealed partial class FakeMindShieldComponent : Component
     /// </summary>
     [DataField]
     public int VisualPriority = 1;
+
+    /// <summary>
+    /// Makes it so chameleon implants affect this fake mindshield. Is off by default on changeling fake mindshields, for instance.
+    /// </summary>
+    [DataField]
+    public bool ChameleonControllable = true;
 }

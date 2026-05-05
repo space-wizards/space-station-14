@@ -70,3 +70,18 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingDna
+
+- type: listing
+  id: ChangelingFakeMindshield
+  name: changeling-catalog-voice-mindshield-name
+  description: changeling-catalog-voice-mindshield-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingFakeMindshieldDummy
+  productAction: ActionChangelingFakeMindshieldToggle

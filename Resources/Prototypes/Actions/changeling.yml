@@ -102,3 +102,21 @@
       - MobState
       - HumanoidProfile
     event: !type:ChangelingStingDnaEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingFakeMindshieldToggle
+  name: '[color=green]Toggle Fake Mindshield[/color]'
+  description: Turn fake mindshield wave production on/off
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
+    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
+    itemIconStyle: NoItem
+    useDelay: 1
+    raiseOnUser: true
+  - type: InstantAction
+    event: !type:FakeMindShieldToggleEvent
+  - type: Tag
+    tags:
+    - FakeMindShieldChangeling

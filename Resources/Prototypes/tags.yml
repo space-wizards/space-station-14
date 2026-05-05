@@ -556,6 +556,9 @@
 - type: Tag
   id: FakeMindShieldImplant # Used by FakeMindShieldSystem to toggle the tagged action when a chameleon outfit is selected.
 
+- type: Tag # Also used by FakeMindShieldSystem, but only for changelings
+  id: FakeMindShieldChangeling
+
 - type: Tag
   id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk.
 

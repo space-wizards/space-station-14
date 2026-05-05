@@ -52,6 +52,9 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
     private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
     {
+        if (!component.ChameleonControllable)
+            return;
+
         if (component.IsEnabled == args.ChameleonOutfit.HasMindShield)
             return;
 

@@ -45,3 +45,12 @@
     # this is set to false as to not mess with a changeling's ability to disguise.
     accentHide: false
     titleText: changeling-voice-mimic-window-title
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingFakeMindshieldDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: FakeMindShield
+    fakeMindShieldImplantTag: FakeMindShieldChangeling
+    chameleonControllable: false
+    visualPriority: 90 # very close to real mindshield, altough this is of no importance right now
