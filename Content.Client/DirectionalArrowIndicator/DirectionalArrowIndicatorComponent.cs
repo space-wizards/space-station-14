@@ -1,4 +1,5 @@
 
+using Robust.Shared.Prototypes;
 using System.Numerics;
 
 namespace Content.Client.DirectionalArrowIndicator;
@@ -21,4 +22,7 @@ public sealed partial class ArrowSpawnData
 
     [DataField]
     public Angle Rotation = Angle.Zero;
+
+    [DataField]
+    public EntProtoId ArrowType = "DirectionalArrowIndicator";
 }

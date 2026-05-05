@@ -62,7 +62,6 @@
     arrows:
     - offset: 0, -1.35
     - offset: 0, 0
-    lifetime: 3
 
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer

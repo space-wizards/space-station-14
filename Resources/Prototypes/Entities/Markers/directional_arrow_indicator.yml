@@ -6,7 +6,7 @@
     color: "#FFFFFFBB"
     layers:
     - state: arrow
-      offset: 0, 0.78125
+      offset: 0, 0
   - type: Tag
     tags:
     - HideContextMenu

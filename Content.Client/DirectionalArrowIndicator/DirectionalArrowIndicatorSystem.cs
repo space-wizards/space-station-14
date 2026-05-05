@@ -2,12 +2,13 @@ using Content.Shared.Examine;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
+using System.Numerics;
 
 namespace Content.Client.DirectionalArrowIndicator;
 
 public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 {
-    private static readonly EntProtoId ExamineArrow = "DirectionalArrowIndicator";
+    private const float Edge_offset = 0.78125f;
 
     public override void Initialize()
     {
@@ -21,25 +22,18 @@ public sealed class DirectionalArrowIndicatorSystem : EntitySystem
         var lifetime = ent.Comp.Lifetime;
 
         if (arrows.Count == 0)
-        {
-            SpawnArrow(new EntityCoordinates(ent, 0, 0), lifetime, Angle.Zero);
-            return;
-        }
+            arrows.Add(new ArrowSpawnData());
+
         foreach (var arrowData in ent.Comp.Arrows)
         {
-            SpawnArrow(new EntityCoordinates(ent, arrowData.Offset), lifetime, arrowData.Rotation);
-        }
-    }
+            var spawnedEnt = Spawn(arrowData.ArrowType, new EntityCoordinates(ent, arrowData.Offset.X, arrowData.Offset.Y + Edge_offset));
 
-    private void SpawnArrow(EntityCoordinates coords, float lifetime, Angle rotation)
-    {
-        var spawnedEnt = Spawn(ExamineArrow, coords);
+            Transform(spawnedEnt).LocalRotation = arrowData.Rotation;
 
-        Transform(spawnedEnt).LocalRotation = rotation;
-
-        if (EnsureComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn))
-        {
-            timedDespawn.Lifetime = lifetime;
+            if (EnsureComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn))
+            {
+                timedDespawn.Lifetime = lifetime;
+            }
         }
     }
 }
