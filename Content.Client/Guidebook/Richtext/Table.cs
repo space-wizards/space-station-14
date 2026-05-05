@@ -8,7 +8,7 @@ namespace Content.Client.Guidebook.Richtext;
 [UsedImplicitly]
 public sealed class Table : TableContainer, IDocumentTag
 {
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("guidebook.table");
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {

@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface.Controls
 {
     public abstract class SlotControl : Control, IEntityControl
     {
-        private readonly ISawmill _sawmill = default!;
+        private readonly ISawmill _sawmill = Logger.GetSawmill("slot.control");
 
         public static int DefaultButtonSize = 64;
 

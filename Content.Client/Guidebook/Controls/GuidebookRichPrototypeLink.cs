@@ -15,7 +15,7 @@ namespace Content.Client.Guidebook.Controls;
 /// </summary>
 public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
 {
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("guidebook.rich.prototype.link");
 
     private bool _linkActive = false;
     private FormattedMessage? _message;

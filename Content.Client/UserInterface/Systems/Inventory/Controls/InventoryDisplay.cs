@@ -7,8 +7,6 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
 public sealed class InventoryDisplay : LayoutContainer
 {
-    private readonly ISawmill _sawmill = default!;
-
     private int Columns = 0;
     private int Rows = 0;
     private const int MarginThickness = 10;
@@ -17,6 +15,7 @@ public sealed class InventoryDisplay : LayoutContainer
     private readonly Control resizer;
 
     private readonly Dictionary<string, (SlotControl, Vector2i)> _buttons = new();
+    private readonly ISawmill _sawmill = Logger.GetSawmill("inventory.display");
 
     public InventoryDisplay()
     {

@@ -12,7 +12,7 @@ namespace Content.Client.Guidebook.RichText;
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTagHandler
 {
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("text.link.tag");
 
     public static Color LinkColor => Color.CornflowerBlue;
 

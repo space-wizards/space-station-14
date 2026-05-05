@@ -33,7 +33,7 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly ContentReplayPlaybackManager _replayMan = default!;
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("replay");
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
