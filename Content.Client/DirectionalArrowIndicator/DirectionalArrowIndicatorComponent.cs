@@ -45,5 +45,5 @@ public sealed partial class ArrowSpawnData
     /// Prototype ID of the arrow entity to spawn.
     /// </summary>
     [DataField]
-    public EntProtoId ArrowType = "DirectionalArrowIndicator";
+    public EntProtoId ArrowType = "RedDirectionalArrowIndicator";
 }
