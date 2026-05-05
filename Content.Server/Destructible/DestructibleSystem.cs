@@ -192,15 +192,25 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <param name="entity">The entity, component tuple to target.</param>
     /// <param name="threshold">The threshold to add.</param>
     /// <param name="index">The index at which to insert the threshold.</param>
-    public void AddThreshold(Entity<DestructibleComponent?> entity, DamageThreshold threshold, int? index = null)
+    public void AddThreshold(Entity<DestructibleComponent?> entity, DamageThreshold threshold, Index? index)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             entity.Comp = AddComp<DestructibleComponent>(entity.Owner);
 
-        if(index is not null)
-            entity.Comp.Thresholds.Insert(Math.Clamp(index.Value, 0, entity.Comp.Thresholds.Count), threshold);
+        if (index is not null)
+        {
+            var threshCount = entity.Comp.Thresholds.Count;
+            var threshIndex = index.Value.GetOffset(threshCount);
+
+            if (threshCount > threshIndex || threshIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index {threshIndex} out of threshold list bounds.");
+
+            entity.Comp.Thresholds.Insert(threshIndex, threshold);
+        }
         else
+        {
             entity.Comp.Thresholds.Add(threshold);
+        }
     }
 
     /// <summary>
