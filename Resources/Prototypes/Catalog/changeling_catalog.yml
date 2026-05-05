@@ -75,7 +75,7 @@
   id: ChangelingFakeMindshield
   name: changeling-catalog-voice-mindshield-name
   description: changeling-catalog-voice-mindshield-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mindshield_on}
   cost:
     ChangelingDNA: 10
   categories:

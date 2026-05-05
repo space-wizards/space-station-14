@@ -110,8 +110,8 @@
   description: Turn fake mindshield wave production on/off
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
-    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
+    icon: { sprite: Interface/Actions/changeling2.rsi, state: mindshield_off }
+    iconOn: { sprite: Interface/Actions/changeling2.rsi, state: mindshield_on }
     itemIconStyle: NoItem
     useDelay: 1
     raiseOnUser: true
