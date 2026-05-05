@@ -4,7 +4,8 @@ using System.Numerics;
 namespace Content.Client.DirectionalArrowIndicator;
 
 /// <summary>
-/// Component that manages directional arrow indicators that spawn clientside on examine.
+/// Component that manages directional arrow indicators that spawn clientside when an entity is examined.
+/// Handled by <see cref="DirectionalArrowIndicatorSystem"/>
 /// </summary>
 [RegisterComponent]
 public sealed partial class DirectionalArrowIndicatorComponent : Component

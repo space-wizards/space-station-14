@@ -4,6 +4,10 @@ using Robust.Shared.Spawners;
 
 namespace Content.Client.DirectionalArrowIndicator;
 
+/// <summary>
+/// System responsible for handling <see cref="DirectionalArrowIndicatorComponent"/>s,
+/// spawning directional arrow indicators clientside when an entity is examined.
+/// </summary>
 public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 {
     private const float Edge_offset = 0.78125f; // Used for moving arrow to the edge of the tile by default.
