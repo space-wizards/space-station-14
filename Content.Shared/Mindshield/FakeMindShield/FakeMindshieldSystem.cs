@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Implants;
+using Content.Shared.Inventory;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -14,14 +15,31 @@ public sealed class FakeMindShieldSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
-    private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
+        // Other events
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
+
+        // Toggle events
+        SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
+        // Visuals events
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
+    }
+
+    private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldVisualsEvent args)
+    {
+        args.IsVisible |= ent.Comp.IsEnabled;
+        // Apply the visuals. We check the priority so that things like fake mindshields always get overwritten by real mindshields
+        if (ent.Comp.VisualPriority > args.Priority && ent.Comp.IsEnabled)
+        {
+            args.Priority = ent.Comp.VisualPriority;
+            args.MindShieldStatusIcon = ent.Comp.MindShieldStatusIcon;
+        }
     }
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
@@ -46,7 +64,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
         foreach (var action in actionsComp.Actions)
         {
-            if (!_tag.HasTag(action, FakeMindShieldImplantTag))
+            if (!_tag.HasTag(action, component.FakeMindShieldImplantTag))
                 continue;
 
             if (!TryComp<ActionComponent>(action, out var actionComp))
@@ -76,4 +94,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
     }
 }
 
-public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent;
+public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots => SlotFlags.All;
+}

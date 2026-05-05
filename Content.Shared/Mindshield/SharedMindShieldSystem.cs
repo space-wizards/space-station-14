@@ -18,15 +18,14 @@ public abstract class SharedMindShieldSystem : EntitySystem
         base.Initialize();
 
         // Mind shield events
+        // Status
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
         SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>((_, ref k) => k.IsMindshielded = true);
-        
+        // Visuals
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryMindShieldVisuals);
-        // Fake mind shield events
-        
 
         // TODO
     }
@@ -34,6 +33,12 @@ public abstract class SharedMindShieldSystem : EntitySystem
     private void OnQueryMindShieldVisuals(Entity<MindShieldComponent> a, ref QueryMindShieldVisualsEvent k)
     {
         k.IsVisible = true;
+        // Apply the visuals. We check the priority so that things like fake mindshields always get overwritten by real mindshields
+        if (a.Comp.VisualPriority > k.Priority)
+        {
+            k.Priority = a.Comp.VisualPriority;
+            k.MindShieldStatusIcon = a.Comp.MindShieldStatusIcon;
+        }
     }
 
     public bool IsMindshielded(EntityUid entity)

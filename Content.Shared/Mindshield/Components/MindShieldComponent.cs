@@ -13,4 +13,10 @@ public sealed partial class MindShieldComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+
+    /// <summary>
+    /// This mindshield will only overwrite the mindshield visual of mindshields with lower priority
+    /// </summary>
+    [DataField]
+    public int VisualPriority = 100;
 }
