@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield.FakeMindshield;
 
-public sealed class FakeMindShieldSystem : EntitySystem
+public sealed class FakeMindshieldSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -19,19 +19,19 @@ public sealed class FakeMindShieldSystem : EntitySystem
     {
         base.Initialize();
         // Other events
-        SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
+        SubscribeLocalEvent<FakeMindshieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
 
         // Toggle events
-        SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
+        SubscribeLocalEvent<FakeMindshieldComponent, FakeMindshieldToggleEvent>(OnToggleMindshield);
+        SubscribeLocalEvent<FakeMindshieldComponent, InventoryRelayedEvent<FakeMindshieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
+        SubscribeLocalEvent<FakeMindshieldComponent, ImplantRelayEvent<FakeMindshieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
         // Visuals events
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindshieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
+        SubscribeLocalEvent<FakeMindshieldComponent, ImplantRelayEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindshieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindshieldComponent, InventoryRelayedEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindshieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindshieldComponent, QueryMindshieldVisualsEvent>(OnQueryFakeMindshieldVisuals);
     }
 
-    private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindshieldVisualsEvent args)
+    private void OnQueryFakeMindshieldVisuals(Entity<FakeMindshieldComponent> ent, ref QueryMindshieldVisualsEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
         // Apply the visuals. We check the priority so that this fake mindshield should almost always get overwritten by a real mindshield.
@@ -42,7 +42,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
         }
     }
 
-    private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
+    private void OnToggleMindshield(EntityUid uid, FakeMindshieldComponent comp, FakeMindshieldToggleEvent args)
     {
         if (args.ActionTag != comp.ActionTag)
             return;
@@ -52,7 +52,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
         Dirty(uid, comp);
     }
 
-    private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
+    private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindshieldComponent component, ChameleonControllerOutfitSelectedEvent args)
     {
         if (!component.ChameleonControllable)
             return;
@@ -99,9 +99,9 @@ public sealed class FakeMindShieldSystem : EntitySystem
     }
 }
 
-public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
+public sealed partial class FakeMindshieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
     [DataField]
-    public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
+    public ProtoId<TagPrototype> ActionTag = "FakeMindshieldImplant";
 }
