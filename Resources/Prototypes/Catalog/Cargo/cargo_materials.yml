@@ -100,7 +100,7 @@
     state: plasma_3
   product: SheetPlasma
   container: CratePlasma
-  cost: 500
+  cost: 1400
   category: cargoproduct-category-name-materials
   group: market
 

@@ -83,7 +83,7 @@
     state: radiation
   product: ClothingOuterSuitRad
   container: CrateRadiation
-  cost: 300
+  cost: 450
   category: cargoproduct-category-name-emergency
   group: market
 

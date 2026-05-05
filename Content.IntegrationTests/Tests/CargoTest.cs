@@ -98,9 +98,6 @@ public sealed class CargoTest : GameTest
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    if (proto.Abstract)
-                        continue;
-
                     if (proto.SpawnList.Count == 0)
                     {
                         Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
