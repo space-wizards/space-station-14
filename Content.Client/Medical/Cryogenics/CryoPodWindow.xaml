@@ -3,7 +3,8 @@
                xmlns:health="clr-namespace:Content.Client.HealthAnalyzer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:cryogenics="clr-namespace:Content.Client.Medical.Cryogenics"
-               MinSize="250 300"
+               xmlns:vitals="clr-namespace:Content.Client._Offbrand.Analyzer"
+               MinSize="650 300"
                Resizable="False">
 
     <Label Name="LoadingPlaceHolder"
@@ -217,9 +218,11 @@
         </BoxContainer>
         <BoxContainer Name="HealthSection"
                       VerticalExpand="True"
+                      HorizontalExpand="True"
                       Orientation="Vertical">
 
             <health:HealthAnalyzerControl Name="HealthAnalyzer"/>
+            <vitals:VitalsAnalyzerControl Name="VitalsAnalyzer" HorizontalExpand="True"/>
 
             <!-- This label is used to deal with a stray hline at the end of the health analyzer UI -->
             <Label Name="NoDamageText"

@@ -4,6 +4,7 @@ using Content.Server.Medical.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared._Offbrand.Analyzers; // Offbrand
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Systems;
@@ -19,6 +20,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly VitalsAnalyzerSystem _vitalsAnalyzer = default!;
 
     public override void Initialize()
     {
@@ -58,11 +60,12 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
         health.ScanMode = true;
         var hasDamage = patient is null ? false : _damageable.GetTotalDamage(patient.Value) > 0;
+        var vitals = patient is null ? null : _vitalsAnalyzer.TakeSample(patient.Value); // Offbrand
 
         UI.ServerSendUiMessage(
             entity.Owner,
             CryoPodUiKey.Key,
-            new CryoPodUserMessage(gasMix, health, beakerCapacity, beaker, injecting, hasDamage)
+            new CryoPodUserMessage(gasMix, health, beakerCapacity, beaker, injecting, hasDamage, vitals) // Offbrand
         );
     }
 
