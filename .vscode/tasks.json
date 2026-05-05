@@ -5,13 +5,9 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet",
-            "type": "shell",
-            "args": [
-                "build",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
-            ],
+            "type": "dotnet",
+            "task": "build",
+            "icon": { "id": "build","color": "terminal.ansiBlue" },
             "group": {
                 "kind": "build",
                 "isDefault": true
