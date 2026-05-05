@@ -504,8 +504,27 @@ namespace Content.Server.Cargo.Systems
         /// </summary>
         private bool FulfillOrder(CargoOrderContainerData container, EntityCoordinates spawn, string? paperProto)
         {
+            if (!SpawnContainer(container, spawn, out var containerEntity))
+                return false;
 
-            EntityUid containerEntity;
+            var printed = Spawn(paperProto, spawn);
+            if (TryComp<PaperComponent>(printed, out var paper))
+            {
+                _metaSystem.SetEntityName(printed, container.LabelName);
+
+                _paperSystem.SetContent((printed, paper), container.LabelMessage);
+
+                if (TryComp<PaperLabelComponent>(containerEntity, out var label))
+                    _slots.TryInsert(containerEntity, label.LabelSlot, printed, null);
+            }
+            return true;
+        }
+        /// <summary>
+        /// Spawns a CargoOrderContainerData container with all its contents.
+        /// </summary>
+        public bool SpawnContainer(CargoOrderContainerData container, EntityCoordinates spawn, out EntityUid containerEntity)
+        {
+            containerEntity = EntityUid.Invalid;
 
             if (container.IsSingleProduct || container.Container == "")
             {
@@ -518,6 +537,9 @@ namespace Content.Server.Cargo.Systems
             {
                 containerEntity = Spawn(container.Container, spawn);
             }
+
+            if (!containerEntity.IsValid())
+                return false;
 
             _transformSystem.Unanchor(containerEntity, Transform(containerEntity));
 
@@ -542,17 +564,6 @@ namespace Content.Server.Cargo.Systems
                         item.NumOrdered++;
                     }
                 }
-            }
-
-            var printed = Spawn(paperProto, spawn);
-            if (TryComp<PaperComponent>(printed, out var paper))
-            {
-                _metaSystem.SetEntityName(printed, container.LabelName);
-
-                _paperSystem.SetContent((printed, paper), container.LabelMessage);
-
-                if (TryComp<PaperLabelComponent>(containerEntity, out var label))
-                    _slots.TryInsert(containerEntity, label.LabelSlot, printed, null);
             }
             return true;
         }

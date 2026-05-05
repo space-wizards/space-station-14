@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Server.Containers;
+using Content.Shared.Cargo;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -34,10 +35,10 @@ public sealed class CargoTest : GameTest
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
-
         var entManager = server.ResolveDependency<IEntityManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+        var cargo = entManager.System<CargoSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -45,7 +46,7 @@ public sealed class CargoTest : GameTest
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    if (proto.Abstract || Ignored.Contains(proto.ID))
+                    if (Ignored.Contains(proto.ID))
                         continue;
 
                     if (proto.SpawnList.Count == 0)
@@ -53,26 +54,19 @@ public sealed class CargoTest : GameTest
                         Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
                         continue;
                     }
-
-                    var entList = new List<EntityUid>();
-                    try
+                    List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 1)];
+                    var containers = cargo.PackBasketIntoContainers(ref basket);
+                    if (containers.Count() != 1)
                     {
-                        double price = 0;
-                        foreach (var product in proto.SpawnList)
-                        {
-                            var ent = entManager.SpawnEntity(product, testMap.MapCoords);
-                            entList.Add(ent);
-                            price += pricing.GetPrice(ent);
-                        }
-
-                        Assert.That(price, Is.AtMost(proto.Cost),
-                            $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell price is {price}!");
+                        Assert.Fail($"CargoProductPrototype {proto.ID} spawns packs into multiple containers.");
+                        continue;
                     }
-                    finally
-                    {
-                        foreach (var ent in entList)
-                            entManager.DeleteEntity(ent);
-                    }
+                    if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity))
+                        Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+                    var price = pricing.GetPrice(containerEntity);
+                    Assert.That(price, Is.AtMost(cargo.GetBasketTotalCost(basket)),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {cargo.GetBasketTotalCost(basket)} but sell price is {price}!");
+                    entManager.DeleteEntity(containerEntity);
                 }
             });
         });
@@ -105,34 +99,32 @@ public sealed class CargoTest : GameTest
                     if (proto.Abstract)
                         continue;
 
-                    if (proto.Container == null)
-                        continue;
-
-                    if (!protoManager.TryIndex<CargoCratePrototype>(proto.Container, out var crate))
-                        continue;
-
-                    var crateEnt = entManager.SpawnEntity(crate.Entity, new MapCoordinates(Vector2.Zero, mapId));
-                    try
+                    if (proto.SpawnList.Count == 0)
                     {
-                        foreach (var product in proto.SpawnList)
-                        {
-                            var ent = entManager.SpawnEntity(product, new MapCoordinates(Vector2.Zero, mapId));
-                            var container1 = container.GetContainer(crateEnt, crate.ContainerId);
-                            container.Insert(ent, container1, force: true);
-                        }
+                        Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
+                        continue;
+                    }
 
-                        foreach (var bounty in bounties)
-                        {
-                            if (cargo.IsBountyComplete(crateEnt, bounty))
-                                Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward),
-                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} " +
+                    List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 10)];
+                    var containers = cargo.PackBasketIntoContainers(ref basket);
+                    if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity))
+                        Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+
+                    foreach (var bounty in bounties)
+                    {
+                        if (cargo.IsBountyComplete(containerEntity, bounty))
+                            for (int i = basket.First().Quantity; i > 0; i--)
+                            {
+                                basket = [new CargoOrderItemData(proto.ID, i)];
+                                containers = cargo.PackBasketIntoContainers(ref basket);
+                                if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out containerEntity))
+                                    Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+                                Assert.That(cargo.GetBasketTotalCost(basket), Is.GreaterThanOrEqualTo(bounty.Reward),
+                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {cargo.GetBasketTotalCost(basket)} when buying {i}" +
                                     $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
-                        }
+                            }
                     }
-                    finally
-                    {
-                        entManager.DeleteEntity(crateEnt);
-                    }
+                    entManager.DeleteEntity(containerEntity);
                 }
             });
 
