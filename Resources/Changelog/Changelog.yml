@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Hitlinemoss
   changes:
-  - message: Department heads are now legally able to approve the use of their departmentally-restricted
-      items without requiring Captain/HoS oversight.
-    type: Tweak
-  id: 9171
-  time: '2025-10-29T05:50:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40565
-- author: Hitlinemoss
-  changes:
   - message: Antagonist flavor text has been adjusted.
     type: Tweak
   id: 9172
@@ -4082,3 +4074,11 @@
   id: 9682
   time: '2026-05-04T02:30:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43809
+- author: Centronias
+  changes:
+  - message: PKA mods now apply their effects immediately upon inserting, instead
+      of requiring somebody to wield them to update with the mods' effects.
+    type: Fix
+  id: 9683
+  time: '2026-05-05T17:33:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43856
