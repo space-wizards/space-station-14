@@ -96,7 +96,7 @@ public sealed partial class BorgTypePrototype : IPrototype
     /// RSI containing the main borg body sprites
     /// </summary>
     [DataField]
-    public string SpriteBodyRsi { get; set; } = "robot";
+    public string SpriteBodyRsi { get; set; } = "Mobs/Silicon/Chassis/robot.rsi";
 
     /// <summary>
     /// The sprite state for the main borg body.
