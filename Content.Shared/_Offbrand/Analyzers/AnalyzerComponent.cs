@@ -31,4 +31,4 @@ public sealed partial class AnalyzerComponent : Component
 public readonly record struct AnalyzerUpdatedEvent(EntityUid Target);
 
 [ByRefEvent]
-public readonly record struct AfterAnalyzerUpdatedEvent(EntityUid Target);
+public readonly record struct AfterAnalyzerUpdatedEvent;

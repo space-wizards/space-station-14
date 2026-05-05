@@ -37,10 +37,14 @@ public sealed class AnalyzerSystem : EntitySystem
 
     private void TryUpdate(Entity<AnalyzerComponent, TransformComponent?> analyzer)
     {
+        var after = new AfterAnalyzerUpdatedEvent();
+
         if (analyzer.Comp1.Target is not { } target || !analyzer.Comp1.ShouldUpdate)
         {
             analyzer.Comp1.IsUpdating = false;
             Dirty(analyzer, analyzer.Comp1);
+
+            RaiseLocalEvent(analyzer, ref after);
             return;
         }
 
@@ -48,12 +52,13 @@ public sealed class AnalyzerSystem : EntitySystem
         Dirty(analyzer, analyzer.Comp1);
 
         if (!analyzer.Comp1.IsUpdating)
+        {
+            RaiseLocalEvent(analyzer, ref after);
             return;
+        }
 
         var evt = new AnalyzerUpdatedEvent(target);
         RaiseLocalEvent(analyzer, ref evt);
-
-        var after = new AfterAnalyzerUpdatedEvent(target);
         RaiseLocalEvent(analyzer, ref after);
     }
 

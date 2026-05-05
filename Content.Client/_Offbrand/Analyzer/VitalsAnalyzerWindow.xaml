@@ -1,0 +1,11 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client._Offbrand.Analyzer"
+    MaxHeight="525"
+    MinWidth="400">
+
+    <ui:VitalsAnalyzerControl
+        Name="VitalsAnalyzer" Access="Public"
+        Margin="16" />
+</controls:FancyWindow>
