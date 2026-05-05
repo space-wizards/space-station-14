@@ -33,6 +33,7 @@ public sealed class ReplayMainScreen : State
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly ContentReplayPlaybackManager _replayMan = default!;
+    private readonly ISawmill _sawmill = default!;
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;
@@ -263,7 +264,7 @@ public sealed class ReplayMainScreen : State
         }
         catch (Exception ex)
         {
-            Logger.Error($"Failed to load replay info. Exception: {ex}");
+            _sawmill.Error($"Failed to load replay info. Exception: {ex}");
             SelectReplay(null);
             return;
         }
