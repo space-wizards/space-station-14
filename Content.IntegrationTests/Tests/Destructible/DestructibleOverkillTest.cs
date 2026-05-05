@@ -1,6 +1,9 @@
+using System.Linq;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -21,6 +24,8 @@ public sealed class DestructibleOverkillTest
         var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
         var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
+        var baseEntityCount = sEntityManager.EntityCount;;
+
         EntityUid sDestructibleEntity = default;
         TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
@@ -35,18 +40,13 @@ public sealed class DestructibleOverkillTest
 
         await server.WaitAssertion(() =>
         {
-            var coordinates = sEntityManager.GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
             var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>(TestBruteDamageGroupId);
             DamageSpecifier bruteDamage = new(bruteDamageGroup, 200);
 
-#pragma warning disable NUnit2045 // Interdependent assertions.
             Assert.DoesNotThrow(() =>
             {
                 sEntityManager.System<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
             });
-
-            Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
-#pragma warning restore NUnit2045
 
             var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
 
@@ -56,27 +56,17 @@ public sealed class DestructibleOverkillTest
                 Assert.That(threshold.Behaviors, Has.Count.EqualTo(1));
             });
 
-            var entitiesInRange = sEntityManager.System<EntityLookupSystem>().GetEntitiesInRange(coordinates, 3, LookupFlags.All | LookupFlags.Approximate);
-            var found = false;
+            var doActsBehavior = (DoActsBehavior)threshold.Behaviors.Single(b => b is DoActsBehavior);
 
-            foreach (var entity in entitiesInRange)
+            Assert.Multiple(() =>
             {
-                if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
-                {
-                    continue;
-                }
-
-                if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype?.Name != SpawnedEntityId)
-                {
-                    continue;
-                }
-
-                found = true;
-                break;
-            }
-
-            Assert.That(found, Is.False, $"Overkill destructible test did not destroy cleanly; found spawned entity.");
+                Assert.That(doActsBehavior.HasAct(ThresholdActs.Destruction));
+            });
         });
+
+        await server.WaitRunTicks(1);   // Wait for predicted delete
+        Assert.That(sEntityManager.EntityCount, Is.EqualTo(baseEntityCount), $"Overkill destructible test did not destroy cleanly.");
+
         await pair.CleanReturnAsync();
     }
 }
