@@ -216,6 +216,120 @@
       offset: 0, 1
 
 - type: entity
+  id: ThrusterWallmount
+  parent: [BaseWallmount, BaseThruster ]
+  name: wallmount thruster
+  description: What is this? A thruster for ants?
+  components:
+  - type: Thruster
+    thrust: 25 #1/4th regular thruster strength
+  - type: WallMount
+    arc: 360
+    direction: 180
+  - type: Sprite
+    sprite: Structures/Shuttles/wallmount_thruster.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
+    offset: 0, 0.125 #4 pixels
+  - type: ApcPowerReceiver
+    powerLoad: 500 #1/3 the power load of a normal thruster
+  - type: Rotatable
+  - type: Construction
+    graph: WallmountThrusterGraph
+    node: WallmountThrusterNode
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
+- type: entity
+  id: BaseThrusterWallmountFrame
+  parent: BaseWallmount
+  categories: [ HideSpawnMenu ]
+  name: wallmount thruster frame
+  description: A wallmount thruster frame for construction.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Rotatable
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Shuttles/wallmount_thruster.rsi
+    layers:
+    - state: frame
+    offset: 0, 0.125 #4 pixels
+  - type: Construction
+    graph: WallmountThrusterGraph
+    node: WallmountThrusterFrameNode
+  - type: WallMount
+    arc: 360
+    direction: 180
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
+- type: entity
+  id: MechanisedThrusterWallmountFrame
+  parent: BaseThrusterWallmountFrame
+  categories: [ HideSpawnMenu ]
+  name: wallmount thruster frame
+  description: A wallmount thruster frame for construction.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Shuttles/wallmount_thruster.rsi
+    layers:
+    - state: frame_mechanised
+    offset: 0, 0.125 #4 pixels
+  - type: Construction
+    graph: WallmountThrusterGraph
+    node: WallmountThrusterMechanismNode
+
+- type: entity
+  id: WiredThrusterWallmountFrame
+  parent: BaseThrusterWallmountFrame
+  categories: [ HideSpawnMenu ]
+  name: wallmount thruster frame
+  description: A wallmount thruster frame for construction.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Shuttles/wallmount_thruster.rsi
+    layers:
+    - state: frame_wired
+    offset: 0, 0.125 #4 pixels
+  - type: Construction
+    graph: WallmountThrusterGraph
+    node: WallmountThrusterWiredNode
+
+- type: entity
   id: Gyroscope
   parent: [ BaseThruster, ConstructibleMachine ]
   name: gyroscope
@@ -316,6 +430,72 @@
       map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
       shader: unshaded
       visible: false
+
+- type: entity
+  id: GyroscopeFloor
+  parent: [ BaseThruster, ConstructibleMachine ]
+  name: subfloor gyroscope
+  description: Slightly increases the shuttle's potential angular rotation. Can be hidden under floor tiles.
+  components:
+  - type: Thruster
+    thrusterType: Angular
+    requireSpace: false
+    thrust: 200 #1/10th the strength of a normal gyroscope, because normal gyroscopes are very strong
+    machinePartThrust: Manipulator
+  - type: Sprite
+    sprite: Structures/Shuttles/floor_gyroscope.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn
+      map: [ "enum.ThrusterVisualLayers.Thrusting" ]
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+  - type: ApcPowerReceiver
+    powerLoad: 500 #1/3 the power load of a regular gyroscope
+  - type: Machine
+    board: GyroscopeFloorMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+  - type: Damageable
+    damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: SubFloorHide
+  - type: CollideOnAnchor
+  - type: Transform
+    anchored: false
+  - type: BlockAnchorOn
+    blacklist:
+      components:
+      - Thruster
+  - type: Visibility
+    layer: 1
 
 - type: entity
   id: RustedThruster

@@ -857,6 +857,19 @@
       Glass: 2
 
 - type: entity
+  id: GyroscopeFloorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: subfloor gyroscope machine board
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: GyroscopeFloor
+    stackRequirements:
+      Manipulator: 1
+      Glass: 1
+
+- type: entity
   id: PortableGeneratorSuperPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator machine board

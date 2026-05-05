@@ -80,6 +80,11 @@
   id: FireAlarmElectronics
   result: FireAlarmElectronics
 
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: ThrusterWallmountCircuitboard
+  result: ThrusterWallmountCircuitboard
+
 # Mechs
 - type: latheRecipe
   parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory ]

@@ -126,6 +126,7 @@ construction-graph-tag-brig-timer-electronics = brig timer electronics
 construction-graph-tag-wallmount-generator-circuit-board = wallmount generator circuit board
 construction-graph-tag-wallmount-apu-circuit-board = wallmount APU circuit board
 construction-graph-tag-wallmount-substation-circuit-board = wallmount substation circuit board
+construction-graph-tag-wallmount-thruster-electronics = wallmount thruster electronics
 construction-graph-tag-surveillance-camera-monitor-board = surveillance camera monitor board
 construction-graph-tag-television-board = television board
 construction-graph-tag-freezer-electronics = freezer electronics
