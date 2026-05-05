@@ -1,14 +1,12 @@
 using Content.Shared.Examine;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
-using System.Numerics;
 
 namespace Content.Client.DirectionalArrowIndicator;
 
 public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 {
-    private const float Edge_offset = 0.78125f;
+    private const float Edge_offset = 0.78125f; // Used for moving arrow to the edge of the tile by default.
 
     public override void Initialize()
     {
