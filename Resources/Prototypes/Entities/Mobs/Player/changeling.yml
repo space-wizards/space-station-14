@@ -51,6 +51,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: FakeMindShield
-    fakeMindShieldImplantTag: FakeMindShieldChangeling
+    actionTag: FakeMindShieldChangeling
     chameleonControllable: false
     visualPriority: 90 # very close to real mindshield, altough this is of no importance right now

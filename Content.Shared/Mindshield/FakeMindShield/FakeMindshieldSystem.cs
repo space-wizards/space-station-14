@@ -44,6 +44,8 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
     {
+        if (args.ActionTag != comp.ActionTag)
+            return;
         comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
@@ -67,7 +69,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
 
         foreach (var action in actionsComp.Actions)
         {
-            if (!_tag.HasTag(action, component.FakeMindShieldImplantTag))
+            if (!_tag.HasTag(action, component.ActionTag))
                 continue;
 
             if (!TryComp<ActionComponent>(action, out var actionComp))
@@ -100,4 +102,6 @@ public sealed class FakeMindShieldSystem : EntitySystem
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
+    [DataField]
+    public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 }

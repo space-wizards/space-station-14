@@ -117,6 +117,7 @@
     raiseOnUser: true
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
+      actionTag: FakeMindShieldChangeling
   - type: Tag
     tags:
     - FakeMindShieldChangeling

@@ -25,7 +25,7 @@ public sealed partial class FakeMindShieldComponent : Component
     /// This tag should be placed on the fake mindshield action so there is a way to easily identify which action goes with which fake mindshield. Of course, this implies that no two similar fake mindshields should be on the same entity at the same time.
     /// </summary>
     [DataField]
-    public ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
+    public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 
     /// <summary>
     /// This fake mindshield will only overwrite the mindshield visual of mindshields-and-such with lower priority
