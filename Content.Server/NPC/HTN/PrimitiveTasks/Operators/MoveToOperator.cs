@@ -85,12 +85,6 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
             return (false, null);
 
-        if (!_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var ownerGrid) ||
-            !_entManager.TryGetComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates), out var targetGrid))
-        {
-            return (false, null);
-        }
-
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
         if (xform.Coordinates.TryDistance(_entManager, targetCoordinates, out var distance) && distance <= range)
@@ -108,6 +102,13 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             {
                 {NPCBlackboard.OwnerCoordinates, targetCoordinates}
             });
+        }
+
+        // Grid check only needed when we're about to pathfind.
+        if (!_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out _) ||
+            !_entManager.TryGetComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates), out _))
+        {
+            return (false, null);
         }
 
         var path = await _pathfind.GetPath(

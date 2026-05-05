@@ -4,8 +4,8 @@ meta:
   engineVersion: 275.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/04/2026 03:15:22
-  entityCount: 2205
+  time: 05/05/2026 01:24:34
+  entityCount: 2207
 maps:
 - 1
 grids:
@@ -770,7 +770,7 @@ entities:
       pos: -16.5,-8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2392.5808
+      secondsUntilStateChange: -2442.681
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -851,7 +851,7 @@ entities:
       pos: 0.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5361.878
+      secondsUntilStateChange: -5411.978
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13188,12 +13188,47 @@ entities:
   - uid: 104
     components:
     - type: Transform
-      pos: -15.5,0.5
+      pos: -25.5,1.5
       parent: 2
   - uid: 2196
     components:
     - type: Transform
-      pos: -15.5,1.5
+      pos: -25.5,0.5
+      parent: 2
+  - uid: 2201
+    components:
+    - type: Transform
+      pos: -25.5,1.5
+      parent: 2
+  - uid: 2202
+    components:
+    - type: Transform
+      pos: 0.5,26.5
+      parent: 2
+  - uid: 2203
+    components:
+    - type: Transform
+      pos: 1.5,26.5
+      parent: 2
+  - uid: 2204
+    components:
+    - type: Transform
+      pos: 26.5,1.5
+      parent: 2
+  - uid: 2205
+    components:
+    - type: Transform
+      pos: 26.5,0.5
+      parent: 2
+  - uid: 2206
+    components:
+    - type: Transform
+      pos: 0.5,-24.5
+      parent: 2
+  - uid: 2207
+    components:
+    - type: Transform
+      pos: 1.5,-24.5
       parent: 2
 - proto: WeaponLightMachineGunL6
   entities:

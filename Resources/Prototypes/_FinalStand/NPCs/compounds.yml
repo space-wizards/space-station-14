@@ -1,0 +1,71 @@
+# utility query used by the FinalStandCCCBeeline service to keep Targetlocked on the CCC.
+# no LOS check — OrderedTargetCon scores 1 for the ordered target, 0 for everything else.
+- type: utilityQuery
+  id: FinalStandOrderedTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:OrderedTargetCon
+      curve: !type:BoolCurve
+
+# Move-and-attack compound for the CCC beeline.
+# pathfindInPlanning: false so plan creation never fails due to pathfinder node limits or
+# cross-room distance — steering handles actual navigation at runtime with NavSmash/NavPry.
+- type: htnCompound
+  id: FinalStandCCCBeeline
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: TaskFinished
+            pathfindInPlanning: false
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          services:
+            - !type:UtilityService
+              id: MeleeService
+              proto: FinalStandOrderedTargets
+              key: Target
+
+# HTN compound for all Final Stand wave enemies.
+# state priority: ranged combat → melee combat → beeline to CCC → idle.
+# melee-only enemies skip the ranged branches naturally.
+- type: htnCompound
+  id: FinalStandEnemyCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: InnateRangedCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetCCCTargetOperator
+        - !type:HTNCompoundTask
+          task: FinalStandCCCBeeline
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

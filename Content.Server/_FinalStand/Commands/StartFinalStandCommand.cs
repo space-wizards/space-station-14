@@ -1,4 +1,3 @@
-using Content.Server._FinalStand.GameTicking.Rules;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
@@ -15,7 +14,6 @@ public sealed class StartFinalStandCommand : LocalizedEntityCommands
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly WaveGameRuleSystem _waveRule = default!;
 
     public override string Command => "startfinalstand";
 

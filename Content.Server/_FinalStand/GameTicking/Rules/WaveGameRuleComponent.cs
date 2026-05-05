@@ -11,11 +11,8 @@ public enum WavePhase : byte
 [DataDefinition]
 public sealed partial class WaveEnemyConfig
 {
-    /// <summary>This config activates starting at this wave number (inclusive).</summary>
     [DataField]
     public int FromWave = 1;
-
-    /// <summary>This config deactivates after this wave number (inclusive). Null = no upper bound.</summary>
     [DataField]
     public int? ToWave = null;
 
@@ -26,7 +23,7 @@ public sealed partial class WaveEnemyConfig
 [RegisterComponent, Access(typeof(WaveGameRuleSystem))]
 public sealed partial class WaveGameRuleComponent : Component
 {
-    // ── YAML-configurable ────────────────────────────────────────────────────
+    // adjustable timers
 
     [DataField]
     public TimeSpan PrepDuration = TimeSpan.FromSeconds(600);
@@ -37,17 +34,13 @@ public sealed partial class WaveGameRuleComponent : Component
     [DataField]
     public TimeSpan SpawnInterval = TimeSpan.FromSeconds(2);
 
-    /// <summary>
-    /// Wave director: ordered by FromWave ascending.
-    /// The last entry whose FromWave ≤ current wave number (and ToWave is null or ≥ current wave) wins.
-    /// </summary>
     [DataField]
     public List<WaveEnemyConfig> EnemyConfigs = new()
     {
         new WaveEnemyConfig { FromWave = 1, EnemyPool = new List<EntProtoId> { "MobXeno" } },
     };
 
-    // ── Runtime state (not serialized) ──────────────────────────────────────
+    // ── Runtime state
 
     public int WaveNumber = 1;
     public WavePhase Phase = WavePhase.Prep;
@@ -58,12 +51,8 @@ public sealed partial class WaveGameRuleComponent : Component
     public int WavesCompleted = 0;
     public int TotalEnemiesKilled = 0;
 
-    /// <summary>Live enemies spawned this wave. Cleaned up on death AND on entity deletion.</summary>
     public readonly HashSet<EntityUid> AliveEnemies = new();
-
-    /// <summary>Cached list of WaveEnemySpawner entity UIDs populated at combat-phase start.</summary>
     public readonly List<EntityUid> SpawnerEntities = new();
-
-    /// <summary>Throttles the combat heartbeat log to once every 5 seconds.</summary>
+    public EntityUid CCCEntity = EntityUid.Invalid;
     public TimeSpan NextHeartbeatTime = TimeSpan.Zero;
 }

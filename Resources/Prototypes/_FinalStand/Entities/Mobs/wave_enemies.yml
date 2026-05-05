@@ -1,0 +1,71 @@
+- type: entity
+  id: FSMobXeno
+  parent: MobXeno
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobXenoRunner
+  parent: MobXenoRunner
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobXenoDrone
+  parent: MobXenoDrone
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobXenoPraetorian
+  parent: MobXenoPraetorian
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobSpiderSpace
+  parent: MobSpiderSpace
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobFleshJared
+  parent: MobFleshJared
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobHivebotRanged
+  parent: MobHivebotRanged
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+
+- type: entity
+  id: FSMobSyndicateFootsoldier
+  parent: MobSyndicateFootsoldier
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound

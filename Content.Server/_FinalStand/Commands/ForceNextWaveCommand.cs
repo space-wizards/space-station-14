@@ -5,6 +5,8 @@ using Robust.Shared.Console;
 
 namespace Content.Server._FinalStand.Commands;
 
+// Fallback timer too long sometimes, use during testing, waves and stuff.
+
 [AdminCommand(AdminFlags.Round)]
 public sealed class ForceNextWaveCommand : LocalizedEntityCommands
 {

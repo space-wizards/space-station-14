@@ -15,6 +15,9 @@
     sprite: Structures/Machines/computers.rsi
     layers:
     - state: comm
+  - type: MobState
+    allowedStates:
+    - Alive
   - type: NpcFactionMember
     factions:
     - NanoTrasen

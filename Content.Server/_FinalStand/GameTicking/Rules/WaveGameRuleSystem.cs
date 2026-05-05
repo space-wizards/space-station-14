@@ -1,10 +1,14 @@
 using Content.Server._FinalStand.Spawners;
+using Content.Server._FinalStand.Station;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.NPC.Systems;
+using Content.Server.NPC;
+using Content.Server.NPC.HTN;
+using Content.Shared._FinalStand.WaveHud;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -12,8 +16,6 @@ namespace Content.Server._FinalStand.GameTicking.Rules;
 
 public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComponent>
 {
-    [Dependency] private readonly NPCSystem _npc = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -97,6 +99,16 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         if (comp.SpawnerEntities.Count == 0)
             Log.Warning($"[WaveGameRule] No WaveEnemySpawner entities found! Wave {comp.WaveNumber} will be empty.");
 
+        comp.CCCEntity = EntityUid.Invalid;
+        var cq = EntityQueryEnumerator<FinalStandCCCComponent>();
+        if (cq.MoveNext(out var cccUid, out _))
+            comp.CCCEntity = cccUid;
+
+        if (!comp.CCCEntity.IsValid())
+            Log.Warning("[WaveGameRule] No FinalStandCCC entity found — enemies will not beeline to objective.");
+
+        RaiseNetworkEvent(new WaveCounterUpdateEvent(comp.WaveNumber), Filter.Broadcast());
+
         comp.EnemyTotalThisWave = 5 * comp.WaveNumber;
         comp.EnemiesSpawnedThisWave = 0;
         comp.AliveEnemies.Clear();
@@ -142,8 +154,13 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
             var proto = RobustRandom.Pick(pool);
             var enemy = Spawn(proto, xform.Coordinates);
             EnsureComp<WaveSpawnedTagComponent>(enemy);
-            _npc.SetBlackboard(enemy, "VisionRadius", 1000f);
-            _npc.SetBlackboard(enemy, "AggroVisionRadius", 1000f);
+            if (TryComp<HTNComponent>(enemy, out var htn))
+            {
+                htn.Blackboard.SetValue("VisionRadius", 1000f);
+                htn.Blackboard.SetValue("AggroVisionRadius", 1000f);
+                if (comp.CCCEntity.IsValid())
+                    htn.Blackboard.SetValue(NPCBlackboard.CurrentOrderedTarget, comp.CCCEntity);
+            }
             comp.AliveEnemies.Add(enemy);
             comp.EnemiesSpawnedThisWave++;
             Log.Info($"[WaveGameRule] Spawned {proto} ({comp.EnemiesSpawnedThisWave}/{comp.EnemyTotalThisWave}) " +
@@ -156,7 +173,7 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         CheckWaveComplete(uid, comp);
     }
 
-    private List<EntProtoId> GetDirectorPool(WaveGameRuleComponent comp)
+    private static List<EntProtoId> GetDirectorPool(WaveGameRuleComponent comp)
     {
         WaveEnemyConfig? match = null;
         foreach (var config in comp.EnemyConfigs)
