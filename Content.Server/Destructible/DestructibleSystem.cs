@@ -199,12 +199,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
         if (index is not null)
         {
-            var threshCount = entity.Comp.Thresholds.Count;
-            var threshIndex = index.Value.GetOffset(threshCount);
-
-            if (threshCount > threshIndex || threshIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index {threshIndex} out of threshold list bounds.");
-
+            var threshIndex = index.Value.GetOffset(entity.Comp.Thresholds.Count);
             entity.Comp.Thresholds.Insert(threshIndex, threshold);
         }
         else
