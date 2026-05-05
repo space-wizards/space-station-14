@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Mindshield.Components;
 
 /// <summary>
-/// If a player has a Mindshield they will get this component to prevent conversion.
+/// This component, on a clothing item, on an implant or on an entity, prevents "mind control". This means that you won't be convertable to the revolution, for instance.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class MindShieldComponent : Component

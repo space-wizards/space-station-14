@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mindshield.Components;
 
+/// <summary>
+/// A toggleable fake mindshield that only produces mindshield visuals, but does not protect against anything.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FakeMindShieldComponent : Component
 {
