@@ -34,7 +34,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
     private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldVisualsEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
-        // Apply the visuals. We check the priority so that things like fake mindshields always get overwritten by real mindshields
+        // Apply the visuals. We check the priority so that this fake mindshield should almost always get overwritten by a real mindshield.
         if (ent.Comp.VisualPriority > args.Priority && ent.Comp.IsEnabled)
         {
             args.Priority = ent.Comp.VisualPriority;

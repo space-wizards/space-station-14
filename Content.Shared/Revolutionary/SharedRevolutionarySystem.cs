@@ -6,6 +6,7 @@ using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
+using Content.Shared.Implants;
 
 namespace Content.Shared.Revolutionary;
 
@@ -17,8 +18,7 @@ public abstract class SharedRevolutionarySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
+        SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
         SubscribeLocalEvent<RevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
         SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentGetStateAttemptEvent>(OnRevCompGetStateAttempt);
         SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(DirtyRevComps);
@@ -29,13 +29,12 @@ public abstract class SharedRevolutionarySystem : EntitySystem
     /// <summary>
     /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
     /// </summary>
-    private void MindShieldImplanted(EntityUid uid, MindShieldComponent comp, MapInitEvent init)
+    private void MindShieldImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent args)
     {
+        // Entity that was implanted
+        var uid = args.Implanted;
         if (HasComp<HeadRevolutionaryComponent>(uid))
-        {
-            RemCompDeferred<MindShieldComponent>(uid);
             return;
-        }
 
         if (HasComp<RevolutionaryComponent>(uid))
         {

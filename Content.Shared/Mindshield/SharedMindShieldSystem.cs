@@ -41,6 +41,12 @@ public abstract class SharedMindShieldSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Used to know if an entity is mindshielded - this means that the entity has protection from mind control (such as from revolutionary flashes).
+    /// </summary>
+    /// <param name="entity">The entity to check the mindshield status of.</param>
+    /// <returns>True if a mindshield-granting device is found & is active, false otherwise.</returns>
+    /// <remarks>You should never look for a mindshield component and instead use this function.</remarks>
     public bool IsMindshielded(EntityUid entity)
     {
         var ev = new QueryMindShieldStatusEvent();
