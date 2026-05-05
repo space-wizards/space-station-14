@@ -1,5 +1,3 @@
-
-using Robust.Shared.Prototypes;
 using System.Numerics;
 
 namespace Content.Client.DirectionalArrowIndicator;
