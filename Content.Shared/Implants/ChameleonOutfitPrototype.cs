@@ -52,7 +52,7 @@ public sealed partial class ChameleonOutfitPrototype : IPrototype
     public List<ProtoId<DepartmentPrototype>>? Departments;
 
     [DataField]
-    public bool HasMindShield;
+    public bool HasMindshield;
 
     /// <summary>
     /// Custom equipment for this specific chameleon outfit. If your making a new outfit that's just for the controller

@@ -43,8 +43,8 @@
     - MacroBombImplant
     - DeathAcidifierImplant
     - DeathRattleImplant
-    - MindShieldImplant
-    - FakeMindShieldImplant
+    - MindshieldImplant
+    - FakeMindshieldImplant
     - RadioImplant
     - ChameleonControllerImplant
     - VoiceMaskImplant
@@ -300,22 +300,22 @@
     implant: DeathAcidifierImplant
 
 - type: entity
-  id: FakeMindShieldImplanter
+  id: FakeMindshieldImplanter
   name: fake mindshield implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
-    implant: FakeMindShieldImplant
+    implant: FakeMindshieldImplant
 
 # Security and Command implanters
 
 - type: entity
-  id: MindShieldImplanter
+  id: MindshieldImplanter
   name: mindshield implanter
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
-    implant: MindShieldImplant
+    implant: MindshieldImplant
 
 # Centcomm implanters
 

@@ -6,4 +6,4 @@ namespace Content.Shared.Overlays;
 ///     This component allows you to see mindshield icons above mobs.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ShowMindShieldIconsComponent : Component { }
+public sealed partial class ShowMindshieldIconsComponent : Component { }

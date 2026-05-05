@@ -116,8 +116,8 @@
     useDelay: 1
     raiseOnUser: true
   - type: InstantAction
-    event: !type:FakeMindShieldToggleEvent
-      actionTag: FakeMindShieldChangeling
+    event: !type:FakeMindshieldToggleEvent
+      actionTag: FakeMindshieldChangeling
   - type: Tag
     tags:
-    - FakeMindShieldChangeling
+    - FakeMindshieldChangeling

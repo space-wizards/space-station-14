@@ -21,7 +21,7 @@
   - Cryogenics
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
+    implants: [ MindshieldImplant ]
 
 - type: startingGear
   id: SecurityCadetGear
@@ -41,7 +41,7 @@
 - type: chameleonOutfit
   id: SecurityCadetChameleonOutfit
   job: SecurityCadet
-  hasMindShield: true
+  hasMindshield: true
   equipment:
     head: ClothingHeadHelmetBasic
     eyes: ClothingEyesHudSecurity

@@ -49,14 +49,14 @@
 
 - type: entity
   parent: CrateMedical
-  id: CrateMindShieldImplants
-  name: MindShield implant crate
-  description: Crate filled with 3 MindShield implants.
+  id: CrateMindshieldImplants
+  name: Mindshield implant crate
+  description: Crate filled with 3 Mindshield implants.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-        id: MindShieldImplanter
+        id: MindshieldImplanter
         amount: 3
 
 - type: entity

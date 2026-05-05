@@ -1579,7 +1579,7 @@
   name: uplink-fake-mindshield-name
   description: uplink-fake-mindshield-desc
   icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
-  productEntity: FakeMindShieldImplanter
+  productEntity: FakeMindshieldImplanter
   discountDownTo:
     Telecrystal: 2
   cost:

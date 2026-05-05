@@ -54,7 +54,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    [Dependency] private readonly MindShieldSystem _mindShieldSystem = default!;
+    [Dependency] private readonly MindshieldSystem _mindShieldSystem = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";

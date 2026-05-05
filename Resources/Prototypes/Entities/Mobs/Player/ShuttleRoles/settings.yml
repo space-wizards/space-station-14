@@ -3,11 +3,11 @@
 ### Visitors with Visitor ID
 
 # Command
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidMindshielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorHead
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   components:
     - type: GhostRole
       name: ghost-role-information-command-name
@@ -94,11 +94,11 @@
       roleLoadout: [ RoleSurvivalStandard ]
 
 # Security
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidMindshielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorSecurity
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   components:
     - type: GhostRole
       name: ghost-role-information-security-name
@@ -556,11 +556,11 @@
 # making changes to these should be done with care to avoid unbalancing challenging scenarios.
 
 # Command
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidMindshielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCaptain
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -581,7 +581,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimChiefEngineer
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -602,7 +602,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCMO
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -623,7 +623,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfPersonnel
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -644,7 +644,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfSecurity
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -665,7 +665,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimResearchDirector
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -686,7 +686,7 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimQuartermaster
-  parent: EventHumanoidMindShielded
+  parent: EventHumanoidMindshielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -706,7 +706,7 @@
       nameFormat: name-format-standard
 
 # Security
-# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+# Following use EventHumanoidMindshielded since they are heads and probably should have mindshields
 
 # Cargo
 

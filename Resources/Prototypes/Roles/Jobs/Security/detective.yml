@@ -19,7 +19,7 @@
   - External
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant ]
+    implants: [ MindshieldImplant ]
 
 - type: startingGear
   id: DetectiveGear
@@ -37,7 +37,7 @@
 - type: chameleonOutfit
   id: DetectiveChameleonOutfit
   job: Detective
-  hasMindShield: true
+  hasMindshield: true
   equipment:
     head: ClothingHeadHatFedoraBrown
     mask: ClothingMaskGasSecurity

@@ -386,7 +386,7 @@
 
 - type: entity
   parent: BaseAction
-  id: FakeMindShieldToggleAction
+  id: FakeMindshieldToggleAction
   name: '[color=green]Toggle Fake Mindshield[/color]'
   description: Turn the Fake Mindshield implant's transmission on/off
   components:
@@ -397,10 +397,10 @@
     useDelay: 1
     raiseOnUser: true
   - type: InstantAction
-    event: !type:FakeMindShieldToggleEvent
+    event: !type:FakeMindshieldToggleEvent
   - type: Tag
     tags:
-    - FakeMindShieldImplant
+    - FakeMindshieldImplant
 
 - type: entity
   parent: BaseToggleAction

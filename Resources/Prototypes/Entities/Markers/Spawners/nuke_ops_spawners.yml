@@ -41,7 +41,7 @@
     - id: RadioJammer
     - id: BorgModuleMartyr
     - id: ScramImplant
-    - id: FakeMindShieldImplanter
+    - id: FakeMindshieldImplanter
       amount: !type:RangeNumberSelector
         range: 1, 3
     - id: EmpImplanter

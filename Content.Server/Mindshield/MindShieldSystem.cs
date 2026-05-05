@@ -12,4 +12,4 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Mindshield;
 
-public sealed class MindShieldSystem : SharedMindShieldSystem;
+public sealed class MindshieldSystem : SharedMindshieldSystem;

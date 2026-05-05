@@ -30,7 +30,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    [Dependency] private readonly MindShieldSystem _mindShieldSystem = default!;
+    [Dependency] private readonly MindshieldSystem _mindShieldSystem = default!;
 
     private void InitializeUi()
     {

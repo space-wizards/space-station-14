@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield;
 
-public abstract class SharedMindShieldSystem : EntitySystem
+public abstract class SharedMindshieldSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -19,25 +19,25 @@ public abstract class SharedMindShieldSystem : EntitySystem
 
         // Mind shield events
         // Status
-        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
-        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
-        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>((_, ref k) => k.IsMindshielded = true);
+        SubscribeLocalEvent<MindshieldComponent, ImplantRelayEvent<QueryMindshieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
+        SubscribeLocalEvent<MindshieldComponent, InventoryRelayedEvent<QueryMindshieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
+        SubscribeLocalEvent<MindshieldComponent, QueryMindshieldStatusEvent>((_, ref k) => k.IsMindshielded = true);
         // Visuals
-        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryMindShieldVisuals);
+        SubscribeLocalEvent<MindshieldComponent, ImplantRelayEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryMindshieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<MindshieldComponent, InventoryRelayedEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryMindshieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<MindshieldComponent, QueryMindshieldVisualsEvent>(OnQueryMindshieldVisuals);
 
         // TODO
     }
 
-    private void OnQueryMindShieldVisuals(Entity<MindShieldComponent> a, ref QueryMindShieldVisualsEvent k)
+    private void OnQueryMindshieldVisuals(Entity<MindshieldComponent> a, ref QueryMindshieldVisualsEvent k)
     {
         k.IsVisible = true;
         // Apply the visuals. We check the priority so that things like fake mindshields always get overwritten by real mindshields
         if (a.Comp.VisualPriority > k.Priority)
         {
             k.Priority = a.Comp.VisualPriority;
-            k.MindShieldStatusIcon = a.Comp.MindShieldStatusIcon;
+            k.MindshieldStatusIcon = a.Comp.MindshieldStatusIcon;
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
     /// <remarks>You should never look for a mindshield component and instead use this function.</remarks>
     public bool IsMindshielded(EntityUid entity)
     {
-        var ev = new QueryMindShieldStatusEvent();
+        var ev = new QueryMindshieldStatusEvent();
         RaiseLocalEvent(entity, ref ev);
         return ev.IsMindshielded;
     }
@@ -57,10 +57,13 @@ public abstract class SharedMindShieldSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised in order to query wether an entity is mindshielded
+/// Raised in order to query wether an entity is mindshielded. A mindshield-affecting item/device/component should modify the IsMindshielded flag.
 /// </summary>
+/// <remarks>
+/// Note that this does not make the mindshield icon visible on the security HUD.
+/// </remarks>
 [ByRefEvent]
-public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class QueryMindshieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
     /// <summary>
@@ -69,10 +72,14 @@ public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRela
     public bool IsMindshielded = false;
 }
 /// <summary>
-/// Raised in order to query wether an entity is visually mindshielded. Should be raised CLIENT-SIDE only
+/// Raised in order to query wether an entity is visually mindshielded. Should be raised CLIENT-SIDE only.
+/// If IsVisible is true, this means that a mindshield icon will be visible on the security HUD.
 /// </summary>
+/// <remarks>
+/// This DOES NOT affect actual mindshielding - that is, conversion protection.
+/// </remarks>
 [ByRefEvent]
-public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class QueryMindshieldVisualsEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
 
@@ -84,10 +91,10 @@ public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRel
     /// <summary>
     /// The mindshield icon to be displayed
     /// </summary>
-    public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+    public ProtoId<SecurityIconPrototype> MindshieldStatusIcon = "MindshieldIcon";
 
     /// <summary>
-    /// Priority int used to keep trace of MindShieldStatusIcon overwritting.
+    /// Priority int used to keep trace of MindshieldStatusIcon overwritting.
     /// </summary>
     public int Priority = 0;
 }

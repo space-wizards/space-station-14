@@ -13,7 +13,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: ShowJobIcons
-  - type: ShowMindShieldIcons
+  - type: ShowMindshieldIcons
   - type: ShowCriminalRecordIcons
   - type: ShowContrabandDetails
 

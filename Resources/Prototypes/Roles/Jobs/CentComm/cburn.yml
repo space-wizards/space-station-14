@@ -13,7 +13,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   id: CBURNGear
@@ -41,7 +41,7 @@
 - type: chameleonOutfit
   id: CBURNChameleonOutfit
   job: CBURN
-  hasMindShield: true
+  hasMindshield: true
   equipment:
     head: ClothingHeadHelmetCBURN
     neck: ClothingNeckScarfStripedBrown

@@ -43884,7 +43884,7 @@ entities:
     - type: Transform
       pos: 15.114939,30.81574
       parent: 1668
-- proto: MindShieldImplanter
+- proto: MindshieldImplanter
   entities:
   - uid: 2478
     components:
