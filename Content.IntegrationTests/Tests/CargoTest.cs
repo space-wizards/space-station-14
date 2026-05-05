@@ -36,12 +36,14 @@ public sealed class CargoTest : GameTest
 
         var testMap = await pair.CreateTestMap();
         var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
         var cargo = entManager.System<CargoSystem>();
 
         await server.WaitAssertion(() =>
         {
+            var mapId = testMap.MapId;
             Assert.Multiple(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
@@ -69,6 +71,7 @@ public sealed class CargoTest : GameTest
                     entManager.DeleteEntity(containerEntity);
                 }
             });
+            mapSystem.DeleteMap(mapId);
         });
     }
     [Test]
@@ -84,7 +87,6 @@ public sealed class CargoTest : GameTest
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
         var container = entManager.System<ContainerSystem>();
-;
 
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 
@@ -113,16 +115,21 @@ public sealed class CargoTest : GameTest
                     foreach (var bounty in bounties)
                     {
                         if (cargo.IsBountyComplete(containerEntity, bounty))
-                            for (int i = basket.First().Quantity; i > 0; i--)
+                        {
+                            basket.First().Quantity = bounty.Entries.First().Amount;
+                            basket.First().NumOrdered = 0;
+                            containers = cargo.PackBasketIntoContainers(ref basket);
+                            if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity1))
+                                Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+                            var cost = cargo.GetBasketCost(basket) + cargo.GetContainersCost(containers);
+                            if (cargo.IsBountyComplete(containerEntity1, bounty))
                             {
-                                basket = [new CargoOrderItemData(proto.ID, i)];
-                                containers = cargo.PackBasketIntoContainers(ref basket);
-                                if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out containerEntity))
-                                    Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
-                                Assert.That(cargo.GetBasketTotalCost(basket), Is.GreaterThanOrEqualTo(bounty.Reward),
-                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {cargo.GetBasketTotalCost(basket)} when buying {i}" +
+                                Assert.That(cost, Is.GreaterThanOrEqualTo(bounty.Reward),
+                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {cost} when buying {basket.First().Quantity} " +
                                     $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                             }
+                            entManager.DeleteEntity(containerEntity1);
+                        }
                     }
                     entManager.DeleteEntity(containerEntity);
                 }
