@@ -430,6 +430,10 @@ namespace Content.Server.Cargo.Systems
             return RelevantOrders(station, account, false).Count;
         }
 
+        /// <summary>
+        /// Updates all of the cargo-related consoles for a particular station.
+        /// This should be called whenever orders change.
+        /// </summary>
         private void UpdateOrders(EntityUid dbUid)
         {
             // Order added so all consoles need updating.
@@ -494,10 +498,6 @@ namespace Content.Server.Cargo.Systems
             return true;
         }
 
-        /// <summary>
-        /// Updates all of the cargo-related consoles for a particular station.
-        /// This should be called whenever orders change.
-        /// </summary>
         private static int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
             // We need an arbitrary unique ID to identify orders, since they may
