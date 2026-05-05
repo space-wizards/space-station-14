@@ -10,7 +10,7 @@ namespace Content.Client.DirectionalArrowIndicator;
 /// </summary>
 public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 {
-    private const float Edge_offset = 0.78125f; // Used for moving arrow to the edge of the tile by default.
+    private const float EdgeOffset = 0.78125f; // Used for moving arrow to the edge of the tile by default.
 
     public override void Initialize()
     {
@@ -28,14 +28,12 @@ public sealed class DirectionalArrowIndicatorSystem : EntitySystem
 
         foreach (var arrowData in ent.Comp.Arrows)
         {
-            var spawnedEnt = Spawn(arrowData.ArrowType, new EntityCoordinates(ent, arrowData.Offset.X, arrowData.Offset.Y + Edge_offset));
+            var spawnedEnt = Spawn(arrowData.ArrowType, new EntityCoordinates(ent, arrowData.Offset.X, arrowData.Offset.Y + EdgeOffset));
 
             Transform(spawnedEnt).LocalRotation = arrowData.Rotation;
 
-            if (EnsureComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn))
-            {
-                timedDespawn.Lifetime = lifetime;
-            }
+            EnsureComp<TimedDespawnComponent>(spawnedEnt, out var timedDespawn);
+            timedDespawn.Lifetime = lifetime;
         }
     }
 }
