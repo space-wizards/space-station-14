@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -103,7 +104,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     private void OnSolutionGetState(Entity<SolutionComponent> ent, ref ComponentGetState args)
     {
-        args.State = new SolutionComponentState(ent.Comp.Solution);
+        args.State = new SolutionComponentState(ent.Comp.Id, ent.Comp.Solution);
     }
 
     private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
@@ -112,6 +113,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         ent.Comp.Solution = cast.Solution.Clone();
+        ent.Comp.Id = cast.Id;
 
         // Always raise the event on the client so that we can update UIs accordingly.
         var changedEv = new SolutionChangedEvent(ent);
@@ -327,14 +329,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
-    private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out List<EntProtoId>? fill)
+    private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out EntProtoId[]? fill)
     {
         fill = null;
         if (!entProto.TryGetComponent<SolutionManagerComponent>(out var manager, Factory))
             return false;
 
         fill = manager.SolutionEnts;
-        return true;
+        return fill != null;
     }
 
     protected void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent> soln)
@@ -1071,17 +1073,24 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
-    /// <remarks>
-    /// We want all our solutions spawned before MapInit.
-    /// They should only ever be attached to this entity so spawning them before MapInit should be fine.
-    /// </remarks>
     private void OnManagerInit(Entity<SolutionManagerComponent> entity, ref MapInitEvent args)
     {
+        InitializeManager(entity);
+    }
+
+    private void InitializeManager(Entity<SolutionManagerComponent> entity)
+    {
         var container = ContainerSystem.EnsureContainer<Container>(entity.Owner, entity.Comp.Container);
+
+        if (entity.Comp.SolutionEnts == null)
+            return;
+
         foreach (var solution in entity.Comp.SolutionEnts)
         {
             CreateSolution(solution, container);
         }
+
+        entity.Comp.SolutionEnts = null;
     }
 
     private void OnManagerShutdown(Entity<SolutionManagerComponent> entity, ref ComponentShutdown args)
@@ -1097,14 +1106,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
 
         // Don't add a solution entity with the same id as this entity's solution if it exists!
-        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id, $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
+        DebugTools.Assert(!TryComp<SolutionComponent>(entity, out var sol) || sol.Id != solution.Id,
+            $"Tried to add a solution {MetaData(args.Entity).EntityPrototype} {solution.Id} to {ToPrettyString(entity)} but it itself was a solution with a matching id!");
 
         EnsureComp<ContainedSolutionComponent>(args.Entity, out var contained);
         contained.Container = entity.Owner;
 
-        // Throw if we already have a solution with the same ID. Only throw on server to avoid prediction causing issues.
-        if (!entity.Comp.Solutions.TryAdd(solution.Id, (args.Entity, solution)) && Net.IsServer)
-            Log.Error($"Solution {ToPrettyString(entity)}, tried to add a solution with a duplicate id: {solution.Id}");
+        // Throw if we already have a solution with the same ID.
+        // We only check on server as we actually want the server to bulldoze any client entities being cached when they come in.
+        // Applying state, and first time predicted checks will cause mispredicts until the solution updates
+        DebugTools.Assert(!entity.Comp.Solutions.TryGetValue(solution.Id, out var existing) || existing.Owner == args.Entity || Net.IsClient,
+            $"Solution {ToPrettyString(entity)}, tried to add a solution {ToPrettyString(args.Entity)} with a duplicate id: {solution.Id} {ToPrettyString(existing)}");
+        entity.Comp.Solutions[solution.Id] = (args.Entity, solution);
     }
 
     private void OnSolutionRemoved(Entity<SolutionManagerComponent> entity, ref EntRemovedFromContainerMessage args)
@@ -1128,14 +1141,17 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <returns>Returns true if the solution already existed, and false if it had to create a new solution.</returns>
     /// <remarks>
     /// Only run this after the entity is already initialized.
-    /// If you're running this when your entity is created, it is recommended to run on <see cref="MapInitEvent"/>
+    /// If you're running this when your entity is created, it is HIGHLY recommended to run on <see cref="MapInitEvent"/>
     /// Deviance from these instructions may prevent your game from building. YOU HAVE BEEN WARNED.
     /// </remarks>
+    [Obsolete("Solution string matching will be removed in the future in favor of relations and enumerators.")]
     public bool EnsureSolution(
         Entity<SolutionManagerComponent?> entity,
         string name,
         out Entity<SolutionComponent> solutionEntity)
     {
+        // Do NOT ever EnsureSolution during anything other than MapInit!!!
+        DebugTools.Assert(LifeStage(entity) == EntityLifeStage.MapInitialized);
         if (SolutionQuery.TryComp(entity, out var comp) && comp.Id == name)
         {
             solutionEntity = (entity.Owner, comp);
@@ -1144,14 +1160,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         // Ensure we have a SolutionManagerComponent
         // EnsureComp should ensure a container and fill that container with default spawns!
-        if (entity.Comp == null)
-            EnsureComp<SolutionManagerComponent>(entity, out entity.Comp);
-
-        // Check the cache first, even if the component didn't exist before, creating one may have spawned and cached solutions!
-        if (entity.Comp.Solutions.TryGetValue(name, out var solution))
+        if (entity.Comp != null || EnsureComp<SolutionManagerComponent>(entity, out entity.Comp))
         {
-            solutionEntity = solution;
-            return true;
+            // Component ensuring this solution initialized before our SolutionManager, so we run the initialization method now.
+            if (entity.Comp.SolutionEnts != null)
+                InitializeManager((entity, entity.Comp));
+
+            // Check the cache first, even if the component didn't exist before, creating one may have spawned and cached solutions!
+            if (entity.Comp.Solutions.TryGetValue(name, out var solution))
+            {
+                solutionEntity = solution;
+                return true;
+            }
         }
 
         // Create a default entity if one doesn't already exist!
@@ -1176,6 +1196,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         solution.Comp.Id = name;
         ContainerSystem.Insert(solution.Owner, container, force: true);
         EntityManager.InitializeAndStartEntity(solution);
+        FlagPredicted(solution.Owner);
         return solution;
     }
 
@@ -1187,6 +1208,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var solution = SpawnSolutionUninitialized(proto);
         ContainerSystem.Insert(solution.Owner, container, force: true);
         EntityManager.InitializeAndStartEntity(solution);
+        FlagPredicted(solution.Owner);
         return solution;
     }
 
