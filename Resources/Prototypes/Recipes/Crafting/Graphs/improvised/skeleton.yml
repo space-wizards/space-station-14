@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: Skeleton
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: skele
+      steps:
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 30
+        doAfter: 2
+      - material: Bones
+        amount: 26
+        doAfter: 2
+  - node: skele
+    entity: MobSkeletonCrafted
+

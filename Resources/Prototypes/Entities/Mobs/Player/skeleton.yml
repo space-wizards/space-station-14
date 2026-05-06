@@ -52,3 +52,22 @@
   - type: Loadout
     prototypes: [LimitedPassengerGear]
   - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonCrafted
+  name: skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-crafted-skeleton-name
+    description: ghost-role-information-crafted-skeleton-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: RandomHumanoidAppearance
+  - type: Construction
+    graph: Skeleton
+    node: skele
