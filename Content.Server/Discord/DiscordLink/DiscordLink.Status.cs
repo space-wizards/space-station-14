@@ -13,7 +13,7 @@ namespace Content.Server.Discord.DiscordLink;
 public sealed partial class DiscordLink
 {
     /// <summary>
-    /// The current list of statutes, the key being their identifier when first created using <see cref="GetOrCreateStatusRef"/>.
+    /// The current list of statutes, the key being their identifier when first created using <see cref="GetOrCreateStatusRef"/>.<br/>
     /// The value being the status itself. Items in this dictionary are guaranteed to be valid.
     /// </summary>
     [ViewVariables]
@@ -22,7 +22,7 @@ public sealed partial class DiscordLink
     /// A number used to index into <see cref="_statuses"/>. This number is incremented every time the status changes.
     /// </summary>
     /// <remarks>
-    /// While it is called an index, it does not actually represent a direct index into the <see cref="_statuses"/> dictionary.
+    /// While it is called an index, it does not actually represent a direct index into the <see cref="_statuses"/> dictionary.<br/>
     /// The actual status is determined by taking the remainder of this number and the count of statutes to ensure that there is never an invalid index.
     /// </remarks>
     [ViewVariables]
@@ -215,7 +215,7 @@ public sealed partial class DiscordLink
 }
 
 /// <summary>
-/// Represents an active status for the Discord integration.
+/// Represents an active status for the Discord integration.<br/>
 /// This is used by <see cref="DiscordLink.UpdateStatus"/>
 /// </summary>
 /// <remarks>
