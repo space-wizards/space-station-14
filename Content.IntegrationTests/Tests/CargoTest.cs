@@ -14,6 +14,8 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -22,8 +24,6 @@ public sealed class CargoTest : GameTest
 {
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling")
     ];
 
     [Test]
@@ -35,6 +35,8 @@ public sealed class CargoTest : GameTest
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
+        var tableSystem = entManager.System<EntityTableSystem>();
+        var compFact = server.ResolveDependency<IComponentFactory>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
 
@@ -46,9 +48,30 @@ public sealed class CargoTest : GameTest
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
+                    var entProto = protoManager.Index<EntityPrototype>(proto.Product);
+                    double price = 0;
+                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, compFact))
+                    {
+                        var averageSpawns = tableSystem.AverageSpawns(fill.Containers.First().Value);
+                        // Randomness will lead no non interger expected values, if all the expected values are intergers then we skip
+                        // Compares against epsilon incase of any floating point stuff
+                        if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
+                        {
+                            foreach (var item in averageSpawns)
+                            {
+                                var ent2 = entManager.SpawnEntity(item.spawn, testMap.MapCoords);
+                                price += pricing.GetPrice(ent2) * item.Item2;
+                                entManager.DeleteEntity(ent2);
+                            }
+                            // Price of container is not included right now
+                            Assert.That(price, Is.AtMost(proto.Cost),
+                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!");
+                            continue;
+                        }
+                    }
 
                     var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
-                    var price = pricing.GetPrice(ent);
+                    price += pricing.GetPrice(ent);
 
                     Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
                     entManager.DeleteEntity(ent);
