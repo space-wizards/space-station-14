@@ -26,16 +26,15 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
         var sEntities = server.ResolveDependency<IEntityManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
-        await pair.CreateTestMap();
-        var coordinates = pair.TestMap!.GridCoords;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
         await server.WaitPost(() =>
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
@@ -69,8 +68,7 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -81,7 +79,7 @@ public sealed class AddTests : GameTest
 
         var guid = Guid.NewGuid();
 
-        var testMap = await pair.CreateTestMap();
+        var testMap = await Pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -133,13 +131,12 @@ public sealed class AddTests : GameTest
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var testMap = await pair.CreateTestMap();
+        var testMap = await Pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -161,8 +158,7 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
@@ -196,8 +192,7 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
@@ -230,8 +225,7 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
@@ -275,8 +269,7 @@ public sealed class PreRoundAddTests : GameTest
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var server = Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
