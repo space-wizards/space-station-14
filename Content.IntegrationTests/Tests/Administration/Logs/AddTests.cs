@@ -26,8 +26,6 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        var sEntities = Server.ResolveDependency<IEntityManager>();
-
         var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
@@ -36,7 +34,7 @@ public sealed class AddTests : GameTest
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = SEntMan.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
         });
@@ -68,7 +66,6 @@ public sealed class AddTests : GameTest
     public async Task AddAndGetUnformattedLog()
     {
         var sDatabase = Server.ResolveDependency<IServerDbManager>();
-        var sEntities = Server.ResolveDependency<IEntityManager>();
         var sSystems = Server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
@@ -80,7 +77,7 @@ public sealed class AddTests : GameTest
         var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = SEntMan.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
         });
@@ -128,14 +125,13 @@ public sealed class AddTests : GameTest
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        var sEntities = Server.ResolveDependency<IEntityManager>();
         var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var testMap = await Pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = sEntities.SpawnEntity(null, coordinates);
+            var entity = SEntMan.SpawnEntity(null, coordinates);
 
             for (var i = 0; i < amount; i++)
             {
