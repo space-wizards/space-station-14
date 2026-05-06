@@ -28,7 +28,7 @@
   - Cryogenics
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant ]
+    implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
@@ -47,7 +47,7 @@
 - type: chameleonOutfit
   id: ChiefEngineerChameleonOutfit
   job: ChiefEngineer
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretEngineering
     mask: ClothingMaskBreath

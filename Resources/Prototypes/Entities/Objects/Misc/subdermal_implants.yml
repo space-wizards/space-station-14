@@ -378,27 +378,27 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: FakeMindshieldImplant
+  id: FakeMindShieldImplant
   name: fake mindshield implant
   description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
-    implantAction: FakeMindshieldToggleAction
-  - type: FakeMindshield # TODO: put the component on the implant and use implant relay events for the status icon
+    implantAction: FakeMindShieldToggleAction
+  - type: FakeMindShield # TODO: put the component on the implant and use implant relay events for the status icon
 
 # Sec and Command implants
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: MindshieldImplant
+  id: MindShieldImplant
   name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-   - type: MindshieldImplant
-   - type: Mindshield
+   - type: MindShieldImplant
+   - type: MindShield
 
 # Centcomm implants
 

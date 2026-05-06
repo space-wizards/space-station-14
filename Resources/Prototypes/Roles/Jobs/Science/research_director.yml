@@ -23,7 +23,7 @@
   - Cryogenics
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant ]
+    implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
@@ -40,7 +40,7 @@
 - type: chameleonOutfit
   id: ResearchDirectorChameleonOutfit
   job: ResearchDirector
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretRND
     eyes: ClothingEyesGlasses

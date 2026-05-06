@@ -75290,7 +75290,7 @@ entities:
     - type: Transform
       pos: -4.5,-47.5
       parent: 2
-- proto: CrateMindshieldImplants
+- proto: CrateMindShieldImplants
   entities:
   - uid: 5960
     components:
@@ -132915,7 +132915,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -36.512184,-24.471539
       parent: 2
-- proto: MindshieldImplanter
+- proto: MindShieldImplanter
   entities:
   - uid: 5961
     components:

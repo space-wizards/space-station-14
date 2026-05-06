@@ -13,7 +13,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   id: CentcommGear
@@ -34,7 +34,7 @@
 - type: chameleonOutfit
   id: CentralCommandOfficialOutfit
   job: CentralCommandOfficial
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     neck: ClothingNeckScarfStripedCentcom
     mask: ClothingMaskGasCentcom

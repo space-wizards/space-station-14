@@ -14,7 +14,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTLeaderGearEVA
@@ -91,7 +91,7 @@
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
   job: ERTLeader
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTLeader
     neck: ClothingNeckBronzeheart
@@ -115,7 +115,7 @@
     components:
     - type: BibleUser #Lets them heal with bibles
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTChaplainGearEVA
@@ -165,7 +165,7 @@
 - type: chameleonOutfit
   id: ERTChaplainChameleonOutfit
   job: ERTChaplain
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTChaplain
     mask: ClothingMaskGasERT
@@ -188,7 +188,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTEngineerGearEVA
@@ -260,7 +260,7 @@
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
   job: ERTEngineer
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTEngineer
     neck: ClothingNeckEngineermedal
@@ -281,7 +281,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTSecurityGearEVA
@@ -446,7 +446,7 @@
 - type: chameleonOutfit
   id: ERTSecurityChameleonOutfit
   job: ERTSecurity
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTSecurity
     neck: ClothingNeckSecuritymedal
@@ -467,7 +467,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTMedicalGearEVA
@@ -545,7 +545,7 @@
 - type: chameleonOutfit
   id: ERTMedicalChameleonOutfit
   job: ERTMedical
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTMedical
     neck: ClothingNeckStethoscope
@@ -566,7 +566,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   parent: ERTJanitorGearEVA
@@ -618,7 +618,7 @@
 - type: chameleonOutfit
   id: ERTJanitorChameleonOutfit
   job: ERTJanitor
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitERTJanitor
     neck: ClothingNeckScarfStripedPurple

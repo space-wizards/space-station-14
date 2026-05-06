@@ -24,14 +24,14 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MindshieldImplantComponent, ImplantImplantedEvent>(MindshieldImplanted);
+        SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
 
     }
 
     /// <summary>
     /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
     /// </summary>
-    private void MindshieldImplanted(Entity<MindshieldImplantComponent> ent, ref ImplantImplantedEvent args)
+    private void MindShieldImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent args)
     {
         // Entity that was implanted
         var uid = args.Implanted;

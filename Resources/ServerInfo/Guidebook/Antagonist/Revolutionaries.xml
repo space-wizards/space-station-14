@@ -43,7 +43,7 @@
   Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already, [bold]however they can be removed using an implant extractor, obtainable from the Medical department's MedFab.[/bold]
 
   <Box>
-    <GuideEntityEmbed Entity="MindshieldImplanter"/>
+    <GuideEntityEmbed Entity="MindShieldImplanter"/>
   </Box>
 
   ## Revolutionary

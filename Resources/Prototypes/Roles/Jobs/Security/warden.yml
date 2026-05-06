@@ -26,7 +26,7 @@
   - GenpopLeave
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant ]
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: WardenGear
@@ -43,7 +43,7 @@
 - type: chameleonOutfit
   id: WardenChameleonOutfit
   job: Warden
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatWarden
     mask: ClothingMaskGasSecurity

@@ -71,7 +71,7 @@
   components:
   - BibleUser
   - CommandStaff
-  - Mindshield
+  - MindShield
   - MimePowers
   - SpaceNinja
   - Thieving

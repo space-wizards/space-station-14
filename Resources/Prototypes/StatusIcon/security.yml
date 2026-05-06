@@ -56,14 +56,14 @@
     state: hud_wanted
 
 - type: securityIcon
-  id: MindshieldIcon
+  id: MindShieldIcon
   priority: 2
   locationPreference: Right
   layer: Mod
   isShaded: true
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Mindshield
+    state: MindShield
 
 - type: securityIcon
   id: CrewBorderIcon

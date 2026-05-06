@@ -3,7 +3,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mindshield;
-using Content.Shared.Mindshield.FakeMindshield;
+using Content.Shared.Mindshield.FakeMindShield;
 using Content.Shared.Mobs;
 using Content.Shared.Store;
 using Content.Shared.VoiceMask;
@@ -20,9 +20,9 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, TransformSpeechEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SeeIdentityAttemptEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, VoiceMaskToggledEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, FakeMindshieldToggleEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, QueryMindshieldStatusEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, QueryMindshieldVisualsEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, FakeMindShieldToggleEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldStatusEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldVisualsEvent>(RelayToImplantEvent);
         // Ref relays, for when you need to write to the event!
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetStoreEvent>(RefRelayToImplantEvent);

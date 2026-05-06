@@ -1,5 +1,5 @@
 using Content.Shared.Mindshield;
 
-namespace Content.Client.Mindshield;
+namespace Content.Client.MindShield;
 
-public sealed class MindshieldSystem : SharedMindshieldSystem;
+public sealed class MindShieldSystem : SharedMindShieldSystem;

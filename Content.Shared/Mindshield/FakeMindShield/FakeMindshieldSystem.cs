@@ -7,7 +7,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Mindshield.FakeMindshield;
+namespace Content.Shared.Mindshield.FakeMindShield;
 
 public sealed class FakeMindShieldSystem : EntitySystem
 {
@@ -26,19 +26,19 @@ public sealed class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
         // Visuals events
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindshieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindshieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
     }
 
-    private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindshieldVisualsEvent args)
+    private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldVisualsEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
         // Apply the visuals. We check the priority so that this fake mindshield should almost always get overwritten by a real mindshield.
         if (ent.Comp.VisualPriority > args.Priority && ent.Comp.IsEnabled)
         {
             args.Priority = ent.Comp.VisualPriority;
-            args.MindshieldStatusIcon = ent.Comp.MindshieldStatusIcon;
+            args.MindShieldStatusIcon = ent.Comp.MindShieldStatusIcon;
         }
     }
 
@@ -57,7 +57,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
         if (!component.ChameleonControllable)
             return;
 
-        if (component.IsEnabled == args.ChameleonOutfit.HasMindshield)
+        if (component.IsEnabled == args.ChameleonOutfit.HasMindShield)
             return;
 
         // This assumes there is only one fake mindshield action per entity (This is currently enforced)
@@ -80,8 +80,8 @@ public sealed class FakeMindShieldSystem : EntitySystem
             if (_actions.IsCooldownActive(actionComp, _timing.CurTime))
                 continue;
 
-            component.IsEnabled = args.ChameleonOutfit.HasMindshield;
-            _actions.SetToggled(action, args.ChameleonOutfit.HasMindshield);
+            component.IsEnabled = args.ChameleonOutfit.HasMindShield;
+            _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
             Dirty(uid, component);
 
             if (actionComp.UseDelay != null)
@@ -93,7 +93,7 @@ public sealed class FakeMindShieldSystem : EntitySystem
         // If they don't have the action for some reason, still set it correctly.
         if (!actionFound)
         {
-            component.IsEnabled = args.ChameleonOutfit.HasMindshield;
+            component.IsEnabled = args.ChameleonOutfit.HasMindShield;
             Dirty(uid, component);
         }
     }

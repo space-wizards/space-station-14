@@ -54,7 +54,7 @@
   - GenpopLeave
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant ]
+    implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
@@ -75,7 +75,7 @@
 - type: chameleonOutfit
   id: HeadOfPersonnelChameleonOutfit
   job: HeadOfPersonnel
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHatHopcap
     eyes: ClothingEyesHudCommand

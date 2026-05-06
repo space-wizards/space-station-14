@@ -8,7 +8,7 @@
   content:
   - ClothingBackpackChameleonFillAgent
   - ChameleonProjector
-  - FakeMindshieldImplanter
+  - FakeMindShieldImplanter
 
 - type: thiefBackpackSet
   id: ToolsSet

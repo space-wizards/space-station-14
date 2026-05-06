@@ -46927,7 +46927,7 @@ entities:
     - type: Transform
       pos: -11.5,-64.5
       parent: 2
-- proto: CrateMindshieldImplants
+- proto: CrateMindShieldImplants
   entities:
   - uid: 6628
     components:

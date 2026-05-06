@@ -13,7 +13,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindshieldImplant, DeathRattleImplantCentcomm ]
+    implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
   id: DeathSquadGear
@@ -48,7 +48,7 @@
 - type: chameleonOutfit
   id: DeathSquadChameleonOutfit
   job: DeathSquad
-  hasMindshield: true
+  hasMindShield: true
   equipment:
     head: ClothingHeadHelmetHardsuitDeathsquad
     neck: ClothingNeckBronzeheart

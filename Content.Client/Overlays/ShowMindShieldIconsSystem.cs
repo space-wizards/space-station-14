@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowMindshieldIconsSystem : EquipmentHudSystem<ShowMindshieldIconsComponent>
+public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -23,10 +23,10 @@ public sealed class ShowMindshieldIconsSystem : EquipmentHudSystem<ShowMindshiel
         // Is active checks for our ability to display status icons
         if (!IsActive)
             return;
-
-        var ev = new QueryMindshieldVisualsEvent();
+        
+        var ev = new QueryMindShieldVisualsEvent();
         RaiseLocalEvent(entt.Owner, ref ev, true);
-        if (ev.IsVisible && _prototype.Resolve(ev.MindshieldStatusIcon, out var statusIconPrototype))
+        if (ev.IsVisible && _prototype.Resolve(ev.MindShieldStatusIcon, out var statusIconPrototype))
             evnt.StatusIcons.Add(statusIconPrototype);
     }
 }

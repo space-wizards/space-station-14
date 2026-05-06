@@ -109,11 +109,11 @@
   group: market
 
 - type: cargoProduct
-  id: MedicalMindshieldImplants
+  id: MedicalMindShieldImplants
   icon:
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
-  product: CrateMindshieldImplants
+  product: CrateMindShieldImplants
   cost: 3000
   category: cargoproduct-category-name-medical
   group: market
