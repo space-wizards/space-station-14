@@ -1,4 +1,5 @@
-using Content.Shared.Chasm;
+using Content.Shared.Chasm.Components;
+using Content.Shared.Chasm.Events;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -19,14 +20,14 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmFallingComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<ChasmFallingComponent, ComponentRemove>(OnComponentRemove);
+        SubscribeLocalEvent<ChasmFallingComponent, ComponentStartup>(OnComponentInit);
+        SubscribeLocalEvent<ChasmFallingComponent, ChasmFallEffectsEvent>(OnComponentRemove);
     }
 
-    private void OnComponentInit(EntityUid uid, ChasmFallingComponent component, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, ChasmFallingComponent component, ComponentStartup args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite) ||
-            TerminatingOrDeleted(uid))
+        if (!TryComp<SpriteComponent>(uid, out var sprite)
+            || TerminatingOrDeleted(uid))
         {
             return;
         }
@@ -42,7 +43,7 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
         _anim.Play((uid, player), GetFallingAnimation(component), _chasmFallAnimationKey);
     }
 
-    private void OnComponentRemove(EntityUid uid, ChasmFallingComponent component, ComponentRemove args)
+    private void OnComponentRemove(EntityUid uid, ChasmFallingComponent component, ref ChasmFallEffectsEvent args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
