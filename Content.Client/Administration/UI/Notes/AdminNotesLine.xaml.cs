@@ -14,9 +14,7 @@ namespace Content.Client.Administration.UI.Notes;
 [GenerateTypedNameReferences]
 public sealed partial class AdminNotesLine : BoxContainer
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
     private readonly SpriteSystem _sprites;
-    private ISawmill _sawmill;
 
     private const string AdminNotesTextureBase = "/Textures/Interface/AdminNotes/";
     private static readonly Dictionary<NoteSeverity, string> SeverityIcons = new()
@@ -35,7 +33,6 @@ public sealed partial class AdminNotesLine : BoxContainer
     public AdminNotesLine(SpriteSystem sprites, SharedAdminNote note)
     {
         RobustXamlLoader.Load(this);
-        _sawmill = _logManager.GetSawmill("admin.note");
         _sprites = sprites;
 
         Note = note;
@@ -64,7 +61,7 @@ public sealed partial class AdminNotesLine : BoxContainer
         if (iconPath is null)
         {
             SeverityRect.Visible = false;
-            _sawmill.Warning($"Could not find an icon for note ID {Note.Id}");
+            Log.Warning($"Could not find an icon for note ID {Note.Id}");
         }
         else
         {

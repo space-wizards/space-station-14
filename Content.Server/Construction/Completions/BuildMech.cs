@@ -17,7 +17,6 @@ namespace Content.Server.Construction.Completions;
 [UsedImplicitly, DataDefinition]
 public sealed partial class BuildMech : IGraphAction
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
 
     [DataField("mechPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechPrototype = string.Empty;
@@ -29,7 +28,7 @@ public sealed partial class BuildMech : IGraphAction
     // TODO use or generalize ConstructionSystem.ChangeEntity();
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        _sawmill = _logManager.GetSawmill("graphAction");
+        _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("graphaction");
 
         if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
         {
