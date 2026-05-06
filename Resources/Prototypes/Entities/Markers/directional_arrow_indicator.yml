@@ -1,26 +1,37 @@
 - type: entity
   id: RedDirectionalArrowIndicator
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Markers/directional_arrow_indicator.rsi
     color: "#FFFFFFBB"
     layers:
     - state: red_arrow
-      offset: 0, 0
   - type: Tag
     tags:
     - HideContextMenu
- 
+
 - type: entity
   id: BlueDirectionalArrowIndicator
   categories: [ HideSpawnMenu ]
   components:
-    - type: Sprite
-      sprite: Markers/directional_arrow_indicator.rsi
-      color: "#FFFFFFBB"
-      layers:
-        - state: blue_arrow
-          offset: 0, 0
-    - type: Tag
-      tags:
-        - HideContextMenu
+  - type: Sprite
+    sprite: Markers/directional_arrow_indicator.rsi
+    color: "#FFFFFFBB"
+    layers:
+    - state: blue_arrow
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: RedDirectionPointer
+  name: red direction pointer
+  description: Holographic arrow that points the way
+  components:
+  - type: Sprite
+    sprite: Markers/directional_arrow_indicator.rsi
+    color: "#FFFFFFBB"
+    layers:
+    - state: red_arrow
+  - type: Clickable
