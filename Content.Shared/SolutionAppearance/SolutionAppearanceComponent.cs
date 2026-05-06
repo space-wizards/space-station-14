@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SolutionAppearance;
 
 /// <summary>
-/// Used to Relay the visuals of a solution to the containing entity. Using <see cref="SolutionItemSlotAppearanceSystem" />
+/// Used to relay the visuals of a solution to the containing entity. Using <see cref="SolutionItemSlotAppearanceSystem" />
 /// </summary>
 [RegisterComponent]
 public sealed partial class SolutionAppearanceComponent : Component

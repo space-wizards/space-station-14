@@ -44,7 +44,7 @@ public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
         if (!IsValidSolutionContainer(args.Container.Owner, args.Container.ID))
             return;
 
-        _appearance.SetData(args.Container.Owner, SolutionContainerVisuals.FillFraction, 0);
+        _appearance.SetData(args.Container.Owner, SolutionContainerVisuals.FillFraction, 0f);
         _appearance.SetData(args.Container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, false);
     }
 
@@ -67,8 +67,6 @@ public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
 
         _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value.Comp));
         _appearance.SetData(container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, true);
-
-        return;
     }
 
     private bool IsValidSolutionContainer(EntityUid owner, string containerId)
