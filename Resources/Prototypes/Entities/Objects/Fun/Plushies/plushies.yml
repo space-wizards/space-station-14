@@ -4,6 +4,31 @@
 
 - type: entity
   abstract: true
+  id: BaseSoundMaker
+  description: Produces sound in response to various common events.
+  components:
+  - type: EmitSoundOnTrigger # Override on children with the proper sound.
+    keysIn: &keyIn [ BaseSoundMaker ]
+  - type: TriggerOnActivate
+    keyOut: &keyOut BaseSoundMaker
+  - type: TriggerOnCollide
+    keyOut: *keyOut
+  - type: TriggerOnLand
+    keyOut: *keyOut
+
+- type: entity
+  abstract: true
+  parent: BaseSoundMaker
+  id: BaseSoundMakerDelay
+  components:
+  - type: UseDelay
+  - type: UseDelayTriggerCondition
+    keys: *keyIn
+  - type: UseDelayOnTrigger
+    keysIn: *keyIn
+
+- type: entity
+  abstract: true
   parent: [SolutionFood, SolutionSmall, BaseItem, BaseStash]
   id: BasePlushie
   components:
