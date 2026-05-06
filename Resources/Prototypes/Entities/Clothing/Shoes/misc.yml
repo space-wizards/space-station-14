@@ -136,8 +136,8 @@
   - type: ToggleClothing
     action: ActionToggleSpeedBoots
   - type: ClothingSpeedModifier
-    walkModifier: 1.5
-    sprintModifier: 1.5
+    walkModifier: 1.2
+    sprintModifier: 1.2
     standing: true
   - type: Appearance
   - type: GenericVisualizer
@@ -149,7 +149,7 @@
   - type: StaticPrice
     price: 500
   - type: PowerCellDraw
-    drawRate: 4
+    drawRate: 15
   - type: ToggleCellDraw
   - type: ItemSlots
     slots:
