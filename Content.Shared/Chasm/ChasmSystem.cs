@@ -33,10 +33,9 @@ public sealed class ChasmSystem : EntitySystem
 
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<ChasmFallingComponent, EntityTerminatingEvent>(OnFallingDelete);
-        SubscribeLocalEvent<ChasmFallingComponent, InteractHandEvent>(BeforeHandInteract);
+        SubscribeLocalEvent<ChasmFallingComponent, InteractHandEvent>(OnBeforeInteract);
 
         SubscribeLocalEvent<ChasmContainerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
-
         SubscribeLocalEvent<ChasmContainerComponent, ChasmFallEffectsEvent>(OnContainerFall);
         SubscribeLocalEvent<ChasmDeleteComponent, ChasmFallEffectsEvent>(OnDeleteFall);
     }
@@ -129,7 +128,7 @@ public sealed class ChasmSystem : EntitySystem
             chasm.FallingEntities.Remove(ent.Owner);
     }
 
-    private void BeforeHandInteract(EntityUid uid, ChasmFallingComponent component, ref InteractHandEvent args)
+    private void OnBeforeInteract(EntityUid uid, ChasmFallingComponent component, ref InteractHandEvent args)
     {
         args.Handled = true; // You can't hand interact with already falling entities
     }

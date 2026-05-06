@@ -21,7 +21,7 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChasmFallingComponent, ComponentStartup>(OnComponentInit);
-        SubscribeLocalEvent<ChasmFallingComponent, ChasmFallEffectsEvent>(OnComponentRemove);
+        SubscribeLocalEvent<ChasmFallingComponent, BeforeChasmFallEvent>(OnBeforeFall);
     }
 
     private void OnComponentInit(EntityUid uid, ChasmFallingComponent component, ComponentStartup args)
@@ -43,7 +43,7 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
         _anim.Play((uid, player), GetFallingAnimation(component), _chasmFallAnimationKey);
     }
 
-    private void OnComponentRemove(EntityUid uid, ChasmFallingComponent component, ref ChasmFallEffectsEvent args)
+    private void OnBeforeFall(EntityUid uid, ChasmFallingComponent component, ref BeforeChasmFallEvent args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
