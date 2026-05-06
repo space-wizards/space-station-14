@@ -26,23 +26,22 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        var server = Pair.Server;
-        var sEntities = server.ResolveDependency<IEntityManager>();
+        var sEntities = Server.ResolveDependency<IEntityManager>();
 
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = sAdminLogSystem.CurrentRoundJson(new LogFilter
             {
@@ -68,20 +67,18 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        var server = Pair.Server;
+        var sDatabase = Server.ResolveDependency<IServerDbManager>();
+        var sEntities = Server.ResolveDependency<IEntityManager>();
+        var sSystems = Server.ResolveDependency<IEntitySystemManager>();
 
-        var sDatabase = server.ResolveDependency<IServerDbManager>();
-        var sEntities = server.ResolveDependency<IEntityManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
 
         var testMap = await Pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
 
@@ -90,7 +87,7 @@ public sealed class AddTests : GameTest
 
         SharedAdminLog log = default;
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -131,14 +128,12 @@ public sealed class AddTests : GameTest
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        var server = Pair.Server;
-
-        var sEntities = server.ResolveDependency<IEntityManager>();
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sEntities = Server.ResolveDependency<IEntityManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var testMap = await Pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var entity = sEntities.SpawnEntity(null, coordinates);
 
@@ -148,7 +143,7 @@ public sealed class AddTests : GameTest
             }
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var messages = await sAdminLogSystem.CurrentRoundLogs();
             return messages.Count >= amount;
@@ -158,14 +153,12 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        var server = Pair.Server;
+        var sPlayers = Server.ResolveDependency<IPlayerManager>();
 
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var player = sPlayers.Sessions.First();
             playerGuid = player.UserId;
@@ -176,7 +169,7 @@ public sealed class AddTests : GameTest
             });
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs();
             if (logs.Count == 0)
@@ -192,21 +185,19 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        var server = Pair.Server;
-
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sPlayers = Server.ResolveDependency<IPlayerManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -225,22 +216,20 @@ public sealed class AddTests : GameTest
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        var server = Pair.Server;
+        var sPlayers = Server.ResolveDependency<IPlayerManager>();
 
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
         });
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -269,29 +258,27 @@ public sealed class PreRoundAddTests : GameTest
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        var server = Pair.Server;
+        var sDatabase = Server.ResolveDependency<IServerDbManager>();
+        var sSystems = Server.ResolveDependency<IEntitySystemManager>();
 
-        var sDatabase = server.ResolveDependency<IServerDbManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
+        var sAdminLogSystem = Server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             sAdminLogSystem.Add(LogType.Unknown, $"test log: {guid}");
         });
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             sGamerTicker.StartRound(true);
         });
 
         SharedAdminLog log = default;
 
-        await PoolManager.WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(Server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
