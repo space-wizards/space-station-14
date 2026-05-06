@@ -121,6 +121,7 @@ public abstract partial class SharedBorgSystem
 
         UninstallModule((chassis, chassisComp), module.AsNullable());
 
+        // Default modules should not be dropped so let's remove them.
         if (TryComp<BorgModuleComponent>(module, out var moduleComp) && moduleComp.DefaultModule)
         {
             QueueDel(module);
