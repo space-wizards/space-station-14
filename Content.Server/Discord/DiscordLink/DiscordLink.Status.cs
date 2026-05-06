@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Content.Shared.CCVar;
+using JetBrains.Annotations;
 using NetCord;
 using NetCord.Gateway;
 using Robust.Shared.Timing;
@@ -48,6 +49,9 @@ public sealed partial class DiscordLink
     /// <summary>
     /// The next time a presence update is allowed.
     /// </summary>
+    /// <remarks>
+    /// Even if this is hit, it doesn't have to mean that the status will actually update.
+    /// </remarks>
     [ViewVariables]
     private TimeSpan _nextUpdate = TimeSpan.MinValue;
 
@@ -69,12 +73,16 @@ public sealed partial class DiscordLink
             if (!_statusEnabled || !IsConnected)
                 return;
 
-            // Ensure we aren't setting a status while the link is being disabled or similar.
-            using var waitGuardAsync = await _statusLock.WaitGuardAsync();
-
             // Rate limit check
             if (_gameTiming.RealTime < _nextUpdate)
                 return;
+
+            _nextUpdate = _gameTiming.RealTime + RateLimit;
+
+            // Ensure we aren't setting a status while the link is being disabled or similar.
+            using var waitGuardAsync = await _statusLock.WaitGuardAsync();
+            if (!_statusEnabled)
+                return; // as per above, we do one last check if the status is enabled.
 
             var statuses = GetAllActiveStatuses();
             if (statuses.Count == 0)
@@ -100,10 +108,8 @@ public sealed partial class DiscordLink
                 activity.WithState(status.Message);
             }
 
-            props = props.AddActivities([activity]);
+            props = props.AddActivities(activity);
             await _client!.UpdatePresenceAsync(props);
-
-            _nextUpdate = _gameTiming.RealTime + RateLimit;
 
             if (status.Dirty) // Was this a dirty?
             {
@@ -128,6 +134,7 @@ public sealed partial class DiscordLink
     /// <summary>
     /// Returns all active status messages.
     /// </summary>
+    [PublicAPI]
     public List<StatusRef> GetAllActiveStatuses()
     {
         return _statuses.Values.ToList();
@@ -136,6 +143,7 @@ public sealed partial class DiscordLink
     /// <summary>
     /// Gets a status ref by id and adds it if it doesn't exist yet.
     /// </summary>
+    [PublicAPI]
     public StatusRef GetOrCreateStatusRef([ForbidLiteral] string id)
     {
         return _statuses.GetOrAdd(id, _ => new StatusRef(id));
@@ -144,6 +152,7 @@ public sealed partial class DiscordLink
     /// <summary>
     /// Gets a status ref by id. Returns null if there isn't one.
     /// </summary>
+    [PublicAPI]
     public StatusRef? GetOrNullStatusRef([ForbidLiteral] string id)
     {
         if (_statuses.TryGetValue(id, out var @ref))
@@ -155,16 +164,16 @@ public sealed partial class DiscordLink
     /// <summary>
     /// Drops a status ref by id.
     /// </summary>
+    [PublicAPI]
     public void DropStatus([ForbidLiteral] string id)
     {
         var @ref = GetOrNullStatusRef(id);
-        if (@ref != null)
-            @ref.Invalidate();
+        @ref?.Invalidate();
 
         _statuses.TryRemove(id, out _);
 
         // If this was our last status, we need to empty our presence.
-        if (_statuses.Count == 0)
+        if (_statuses.IsEmpty)
             ClearStatus();
     }
 
