@@ -89,7 +89,7 @@
 - type: entity
   parent: BaseFloorChasmEntity
   id: FloorChasmEntityContainer
-  suffix: Basalt, Container
+  suffix: DO NOT MAP, Basalt, Container
   categories: [ DoNotMap ] # Only for admin use
   components:
   - type: ContainerContainer
