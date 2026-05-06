@@ -80,15 +80,57 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite # TODO: add sprite for maintenance panel open
+  - type: Sprite
     sprite: Structures/Power/substation.rsi
     snapCardinals: true
     layers:
     - state: substation
     - state: screen
       shader: unshaded
-    - state: full
+    - map: ["charge"]
+      state: charge0
       shader: unshaded
+    - map: ["input"]
+      state: input
+      shader: unshaded
+      visible: false
+    - map: ["output"]
+      state: output
+      shader: unshaded
+      visible: false
+    - map: ["charging"]
+      state: stable
+      shader: unshaded
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: open
+  - type: Appearance
+  - type: PowerNetworkBatteryVisuals
+    numChargeLevels: 5
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerNetworkBatteryVisuals.LastChargeLevel:
+        charge:
+          0: { state: "charge0" }
+          1: { state: "charge1" }
+          2: { state: "charge2" }
+          3: { state: "charge3" }
+          4: { state: "charge4" }
+      enum.PowerNetworkBatteryVisuals.LastChargeState:
+        charging:
+          Discharging: { state: "discharging" }
+          Still: { state: "stable" }
+          Charging: { state: "charging" }
+      enum.PowerNetworkBatteryVisuals.LastChargeCapabilities:
+        input:
+          Neither: { visible: false }
+          CanCharge: { visible: true }
+          CanDischarge: { visible: false }
+          Both: { visible: true }
+        output:
+          Neither: { visible: false }
+          CanCharge: { visible: false }
+          CanDischarge: { visible: true }
+          Both: { visible: true }
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -99,7 +141,7 @@
     castShadows: false
   - type: PowerMonitoringDevice
     sprite: Structures/Power/substation.rsi
-    state: substation_static
+    state: static
   - type: Destructible
     thresholds:
     - trigger:
@@ -135,6 +177,7 @@
     intensitySlope: 2
     totalIntensity: 200
   - type: WiresPanel
+  - type: WiresVisuals
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: AmbientSound
@@ -182,17 +225,61 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/wall_substation.rsi
     layers:
-    - state: substation_wall
-    - state: screen_wall
+    - state: frame
+    - state: screen
       shader: unshaded
+    - map: ["charge"]
+      state: charge0
+      shader: unshaded
+    - map: ["input"]
+      state: input
+      shader: unshaded
+      visible: false
+    - map: ["output"]
+      state: output
+      shader: unshaded
+      visible: false
+    - map: ["charging"]
+      state: stable
+      shader: unshaded
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: open
+  - type: Appearance
+  - type: PowerNetworkBatteryVisuals
+    numChargeLevels: 5
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerNetworkBatteryVisuals.LastChargeLevel:
+        charge:
+          0: { state: "charge0" }
+          1: { state: "charge1" }
+          2: { state: "charge2" }
+          3: { state: "charge3" }
+          4: { state: "charge4" }
+      enum.PowerNetworkBatteryVisuals.LastChargeState:
+        charging:
+          Discharging: { state: "discharging" }
+          Still: { state: "stable" }
+          Charging: { state: "charging" }
+      enum.PowerNetworkBatteryVisuals.LastChargeCapabilities:
+        input:
+          Neither: { visible: false }
+          CanCharge: { visible: true }
+          CanDischarge: { visible: false }
+          Both: { visible: true }
+        output:
+          Neither: { visible: false }
+          CanCharge: { visible: false }
+          CanDischarge: { visible: true }
+          Both: { visible: true }
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
   - type: PowerMonitoringDevice
-    sprite: Structures/Power/substation.rsi
-    state: substation_wall_static
+    sprite: Structures/Power/wall_substation.rsi
+    state: static
   - type: Destructible
     thresholds:
     - trigger:
@@ -220,6 +307,8 @@
     intensitySlope: 2
     totalIntensity: 100
   - type: WallMount
+  - type: WiresPanel
+  - type: WiresVisuals
 
 # Substations in use
 
@@ -278,9 +367,9 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/wall_substation.rsi
     layers:
-    - state: substation_wall
+    - state: frame
   - type: Construction
     graph: WallmountSubstation
     node: frame

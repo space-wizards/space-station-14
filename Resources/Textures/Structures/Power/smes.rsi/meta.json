@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and modified by Swept, advanced-smes, advanced-smes-static, advanced-smes-open modified from smes, smes-open, and static by august-sun (GitHub)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9c7d509354ee030300f63c701da63c17928c3b3b and modified by Swept, advanced-smes, advanced-smes-static, advanced-smes-open modified from smes, smes-open, and static by august-sun (GitHub), all edited by whatston3 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -26,61 +26,37 @@
       "name": "smes-open"
     },
     {
-      "name": "smes-oc0"
+      "name": "smes-input"
     },
     {
-      "name": "smes-oc1",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
+      "name": "smes-output"
     },
     {
-      "name": "smes-oc2",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
+      "name": "smes-charging"
     },
     {
-      "name": "smes-og1",
-      "delays": [
-        [
-          1,
-          1
-        ]
-      ]
+      "name": "smes-stable"
     },
     {
-      "name": "smes-og2"
+      "name": "smes-discharging"
     },
     {
-      "name": "smes-og3"
+      "name": "smes-charge1"
     },
     {
-      "name": "smes-og4"
+      "name": "smes-charge2"
     },
     {
-      "name": "smes-og5"
+      "name": "smes-charge3"
     },
     {
-      "name": "smes-op0"
+      "name": "smes-charge4"
     },
     {
-      "name": "smes-op1",
-      "delays": [
-        [
-          1,
-          1
-        ]
-      ]
+      "name": "smes-charge5"
     },
     {
-      "name": "smes-op2"
+      "name": "smes-charge6"
     }
   ]
 }

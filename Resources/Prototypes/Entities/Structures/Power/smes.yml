@@ -18,19 +18,55 @@
       snapCardinals: true
       layers:
         - state: smes
-        - map: ["enum.SmesVisualLayers.Charge"]
-          state: "smes-og1" # -og0 does not exist
+        - map: ["charge"]
+          state: "smes-charge1"
           shader: unshaded
           visible: false
-        - map: ["enum.SmesVisualLayers.Input"]
-          state: "smes-oc0"
+        - map: ["input"]
+          state: "smes-input"
           shader: unshaded
-        - map: ["enum.SmesVisualLayers.Output"]
-          state: "smes-op1"
+          visible: false
+        - map: ["output"]
+          state: "smes-output"
+          shader: unshaded
+          visible: false
+        - map: ["charging"]
+          state: "smes-stable"
           shader: unshaded
         - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
           state: smes-open
-    - type: Smes
+    - type: PowerNetworkBatteryVisuals
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerNetworkBatteryVisuals.LastChargeLevel:
+          charge:
+            0: { visible: false }
+            1: { state: "smes-charge1", visible: true }
+            2: { state: "smes-charge2", visible: true }
+            3: { state: "smes-charge3", visible: true }
+            4: { state: "smes-charge4", visible: true }
+            5: { state: "smes-charge5", visible: true }
+            6: { state: "smes-charge6", visible: true }
+        enum.PowerNetworkBatteryVisuals.LastChargeState:
+          charging:
+            Discharging: { state: "smes-discharging" }
+            Still: { state: "smes-stable" }
+            Charging: { state: "smes-charging" }
+        enum.PowerNetworkBatteryVisuals.LastChargeCapabilities:
+          input:
+            Neither: { visible: false }
+            CanCharge: { visible: true }
+            CanDischarge: { visible: false }
+            Both: { visible: true }
+          output:
+            Neither: { visible: false }
+            CanCharge: { visible: false }
+            CanDischarge: { visible: true }
+            Both: { visible: true }
+        enum.WiresVisuals.MaintenancePanelState:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: false }
+            False: { visible: true }
     - type: Appearance
     - type: Battery
       # Very important:
@@ -148,15 +184,20 @@
     snapCardinals: true
     layers:
     - state: advancedsmes
-    - map: [ "enum.SmesVisualLayers.Charge" ]
-      state: "smes-og1" # -og0 does not exist
+    - map: ["charge"]
+      state: "smes-charge1"
       shader: unshaded
       visible: false
-    - map: [ "enum.SmesVisualLayers.Input" ]
-      state: "smes-oc0"
+    - map: ["input"]
+      state: "smes-input"
       shader: unshaded
-    - map: [ "enum.SmesVisualLayers.Output" ]
-      state: "smes-op1"
+      visible: false
+    - map: ["output"]
+      state: "smes-output"
+      shader: unshaded
+      visible: false
+    - map: ["charging"]
+      state: "smes-stable"
       shader: unshaded
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
       state: advancedsmes-open
