@@ -33,12 +33,8 @@ public sealed class StartFinalStandCommand : LocalizedEntityCommands
 
         _cfg.SetCVar(CCVars.GameLobbyEnabled, true);
         _cfg.SetCVar(CCVars.GameMap, "FinalStandMap");
-
-        // Go lobby so preset can be set, immediately start the round if possible.
-        // currently we have to manually do startround again though, might have to look at this later
-        _ticker.RestartRound();
         _ticker.SetGamePreset(preset, true);
-        _ticker.StartRound(force: true);
+        _ticker.RestartRound();
 
         shell.WriteLine("Final Stand round starting on FinalStandMap.");
     }

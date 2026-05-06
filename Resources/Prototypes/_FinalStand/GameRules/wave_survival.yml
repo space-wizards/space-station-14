@@ -6,11 +6,16 @@
     prepDuration: 15
     maxCombatDuration: 1800
     spawnInterval: 2
+    waveStartSound: !type:SoundPathSpecifier
+      path: /Audio/_FinalStand/WaveEvents/wave_start.ogg
+    waveEndSound: !type:SoundPathSpecifier
+      path: /Audio/_FinalStand/WaveEvents/wave_end.ogg
     enemyConfigs:
     # Waves 1-4: basic xeno swarm
     - fromWave: 1
       toWave: 4
       enemyPool:
+      - FSMobXenoDrone
       - FSMobXeno
       - FSMobXenoRunner
     # Waves 5-9: heavier xenos + space spiders

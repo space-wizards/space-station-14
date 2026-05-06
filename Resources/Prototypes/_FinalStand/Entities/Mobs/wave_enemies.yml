@@ -1,3 +1,6 @@
+# Shared prying config for all wave enemies.
+# pryPowered: can open powered airlocks, force: bypass bolted doors,
+# speedModifier: 8.0 = ~0.6s pry so BreakOnMove rarely cancels it.
 - type: entity
   id: FSMobXeno
   parent: MobXeno
@@ -6,6 +9,21 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 235
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
 
 - type: entity
   id: FSMobXenoRunner
@@ -15,6 +33,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobXenoDrone
@@ -24,6 +46,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobXenoPraetorian
@@ -33,6 +59,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobSpiderSpace
@@ -42,6 +72,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobFleshJared
@@ -51,6 +85,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobHivebotRanged
@@ -60,6 +98,10 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
 
 - type: entity
   id: FSMobSyndicateFootsoldier
@@ -69,3 +111,7 @@
   - type: HTN
     rootTask:
       task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0

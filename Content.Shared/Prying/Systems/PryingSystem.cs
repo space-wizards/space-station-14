@@ -81,7 +81,7 @@ public sealed class PryingSystem : EntitySystem
     /// <summary>
     /// Attempt to pry an entity.
     /// </summary>
-    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool)
+    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool, bool breakOnMove = true, bool breakOnDamage = true, bool requireCanInteract = true, float? distanceThreshold = 1.5f)
     {
         id = null;
 
@@ -101,7 +101,7 @@ public sealed class PryingSystem : EntitySystem
             return true;
         }
 
-        StartPry(target, user, tool, comp.SpeedModifier, out id);
+        StartPry(target, user, tool, comp.SpeedModifier, out id, breakOnMove, breakOnDamage, requireCanInteract, distanceThreshold);
 
         return true;
     }
@@ -150,16 +150,19 @@ public sealed class PryingSystem : EntitySystem
         return !canev.Cancelled;
     }
 
-    private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
+    private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id, bool breakOnMove = true, bool breakOnDamage = true, bool requireCanInteract = true, float? distanceThreshold = 1.5f)
     {
         var modEv = new GetPryTimeModifierEvent(user);
 
         RaiseLocalEvent(target, ref modEv);
         var doAfterArgs = new DoAfterArgs(EntityManager, user, modEv.BaseTime * modEv.PryTimeModifier / toolModifier, new DoorPryDoAfterEvent(), target, target, tool)
         {
-            BreakOnDamage = true,
-            BreakOnMove = true,
+            BreakOnDamage = breakOnDamage,
+            BreakOnMove = breakOnMove,
             NeedHand = tool != user,
+            RequireCanInteract = requireCanInteract,
+            DistanceThreshold = distanceThreshold,
+            BreakOnDropItem = tool != user,
         };
 
         if (tool != user && tool != null)

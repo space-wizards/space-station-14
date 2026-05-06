@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._FinalStand.GameTicking.Rules;
@@ -39,6 +40,12 @@ public sealed partial class WaveGameRuleComponent : Component
     {
         new WaveEnemyConfig { FromWave = 1, EnemyPool = new List<EntProtoId> { "MobXeno" } },
     };
+
+    [DataField]
+    public SoundSpecifier? WaveStartSound = new SoundPathSpecifier("/Audio/_FinalStand/WaveEvents/wave_start.ogg");
+
+    [DataField]
+    public SoundSpecifier? WaveEndSound = new SoundPathSpecifier("/Audio/_FinalStand/WaveEvents/wave_end.ogg");
 
     // ── Runtime state
 

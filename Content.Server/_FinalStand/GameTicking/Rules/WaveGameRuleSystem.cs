@@ -7,6 +7,7 @@ using Content.Server.NPC.HTN;
 using Content.Shared._FinalStand.WaveHud;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -16,6 +17,8 @@ namespace Content.Server._FinalStand.GameTicking.Rules;
 
 public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComponent>
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -85,6 +88,10 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         comp.Phase = WavePhase.Prep;
         comp.PhaseEndTime = Timing.CurTime + comp.PrepDuration;
         Log.Info($"[WaveGameRule] Prep phase started. Wave {comp.WaveNumber} begins in {comp.PrepDuration.TotalSeconds}s.");
+        RaiseNetworkEvent(new WaveCounterUpdateEvent(comp.WavesCompleted), Filter.Broadcast());
+        Log.Info($"[WaveGameRule] WaveEndSound is {(comp.WaveEndSound == null ? "NULL" : comp.WaveEndSound.ToString())}");
+        if (comp.WavesCompleted > 0 && comp.WaveEndSound != null)
+            _audio.PlayGlobal(comp.WaveEndSound, Filter.Broadcast(), true);
     }
 
     private void StartCombatPhase(EntityUid uid, WaveGameRuleComponent comp)
@@ -107,8 +114,6 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         if (!comp.CCCEntity.IsValid())
             Log.Warning("[WaveGameRule] No FinalStandCCC entity found — enemies will not beeline to objective.");
 
-        RaiseNetworkEvent(new WaveCounterUpdateEvent(comp.WaveNumber), Filter.Broadcast());
-
         comp.EnemyTotalThisWave = 5 * comp.WaveNumber;
         comp.EnemiesSpawnedThisWave = 0;
         comp.AliveEnemies.Clear();
@@ -118,6 +123,11 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         var pool = GetDirectorPool(comp);
         Log.Info($"[WaveGameRule] Wave {comp.WaveNumber} started. Spawning {comp.EnemyTotalThisWave} enemies " +
                  $"at {comp.SpawnerEntities.Count} spawners. Director pool: {pool.Count} type(s).");
+
+        RaiseNetworkEvent(new WaveCounterUpdateEvent(comp.WaveNumber), Filter.Broadcast());
+        Log.Info($"[WaveGameRule] WaveStartSound is {(comp.WaveStartSound == null ? "NULL" : comp.WaveStartSound.ToString())}");
+        if (comp.WaveStartSound != null)
+            _audio.PlayGlobal(comp.WaveStartSound, Filter.Broadcast(), true);
     }
 
     private void EndCombatPhase(EntityUid uid, WaveGameRuleComponent comp)
@@ -158,6 +168,8 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
             {
                 htn.Blackboard.SetValue("VisionRadius", 1000f);
                 htn.Blackboard.SetValue("AggroVisionRadius", 1000f);
+                htn.Blackboard.SetValue(NPCBlackboard.NavSmash, true);
+                htn.Blackboard.SetValue(NPCBlackboard.NavPry, true);
                 if (comp.CCCEntity.IsValid())
                     htn.Blackboard.SetValue(NPCBlackboard.CurrentOrderedTarget, comp.CCCEntity);
             }
