@@ -322,8 +322,16 @@ public sealed class StatusRef
         Dirty = true;
     }
 
+    /// <summary>
+    /// Marks this status ref as dropped.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when the status is already dropped.</exception>
+    [Access(typeof(DiscordLink), Other = AccessPermissions.None, Self = AccessPermissions.ReadWriteExecute)]
     public void Invalidate()
     {
+        if (!IsValid)
+            throw new InvalidOperationException("StatusRef has already been dropped");
+
         IsValid = false;
     }
 }
