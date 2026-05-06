@@ -183,6 +183,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
+        ValidateWhitelists(chassis, args.Entity);
+
         if (args.Container != chassis.Comp.BrainContainer)
             return;
 
