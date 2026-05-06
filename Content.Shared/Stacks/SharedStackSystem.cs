@@ -8,15 +8,16 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks;
 
 // Partial for general system code and event handlers.
 /// <summary>
 /// System for handling entities which represent a stack of identical items, usually materials.
+/// This is a good example for learning how to code in an ECS manner.
 /// </summary>
 [UsedImplicitly]
 public abstract partial class SharedStackSystem : EntitySystem
@@ -49,7 +50,9 @@ public abstract partial class SharedStackSystem : EntitySystem
         SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
 
         _vvm.GetTypeHandler<StackComponent>()
-            .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
+            .AddPath(nameof(StackComponent.Count),
+                (_, comp) => comp.Count,
+                (uid, value, comp) => SetCount((uid, comp), value));
     }
 
     public override void Shutdown()
@@ -220,16 +223,77 @@ public abstract partial class SharedStackSystem : EntitySystem
         }
     }
 
-    /// <remarks>
-    ///     OnStackAlternativeInteract() was moved to shared in order to faciliate prediction of stack splitting verbs.
-    ///     However, prediction of interacitons with spawned entities is non-functional (or so i'm told)
-    ///     So, UserSplit() and Split() should remain on the server for the time being.
-    ///     This empty virtual method allows for UserSplit() to be called on the server from the client.
-    ///     When prediction is improved, those two methods should be moved to shared, in order to predict the splitting itself (not just the verbs)
-    /// </remarks>
-    protected virtual void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
+    protected void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
     {
+        if (!Resolve(user.Owner, ref user.Comp, false))
+            return;
 
+        if (amount <= 0)
+        {
+            Popup.PopupClient(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
+            return;
+        }
+
+        if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
+            return;
+
+        Hands.PickupOrDrop(user.Owner, split);
+
+        Popup.PopupClient(Loc.GetString("comp-stack-split"), user.Owner);
+    }
+
+    /// <summary>
+    /// Spawns a new entity and moves an amount to it from the stack.
+    /// Moves nothing if amount is greater than ent's stack count.
+    /// </summary>
+    /// <param name="ent">Entity to split in a new stack.</param>
+    /// <param name="amount">How much to move to the new entity.</param>
+    /// <param name="spawnPosition">Where to spawn the new stack</param>
+    /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
+    [PublicAPI]
+    public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null;
+
+        // Try to remove the amount of things we want to split from the original stack...
+        if (!TryUse(ent, amount))
+            return null;
+
+        if (!_prototype.Resolve(ent.Comp.StackTypeId, out var stackType))
+            return null;
+
+        // Set the output parameter in the event instance to the newly split stack.
+        var newEntity = PredictedSpawnAtPosition(stackType.Spawn, spawnPosition);
+
+        // There should always be a StackComponent
+        var stackComp = Comp<StackComponent>(newEntity);
+
+        SetCount((newEntity, stackComp), amount);
+        stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
+        Dirty(newEntity, stackComp);
+
+        var ev = new StackSplitEvent(newEntity);
+        RaiseLocalEvent(ent, ref ev);
+
+        return newEntity;
+    }
+
+    /// <summary>
+    /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+    /// </summary>
+    /// <returns>The list of stack counts per entity.</returns>
+    private List<int> CalculateSpawns(int maxCountPerStack, int amount)
+    {
+        var amounts = new List<int>();
+        while (amount > 0)
+        {
+            var countAmount = Math.Min(maxCountPerStack, amount);
+            amount -= countAmount;
+            amounts.Add(countAmount);
+        }
+
+        return amounts;
     }
 }
 
