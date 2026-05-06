@@ -1,43 +1,32 @@
 # A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
-  parent: DrinkBase
+  parent: [SolutionTiny, DrinkBase]
   id: DrinkBaseCup
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 20
+  - type: Item
+    size: Tiny
   - type: FitsInDispenser
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
-  - type: Tag
-    tags:
-    - DrinkCup
   - type: StaticPrice
     price: 10
 
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup ] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
+  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, DrinkVisualsFill ]
   id: DrinkBaseMug
   name: mug
   description: A mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
-    layers:
-      - state: icon-0
-      - state: icon-3
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
-    fillBaseName: icon-
+    inHandsFillBaseName: null
 
 ## Misc Cups
 
@@ -53,18 +42,16 @@
     price: 125
 
 - type: entity
-  parent: DrinkBaseMug
+  parent: DrinkBaseMug # a teacup is basically a mug
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
   components:
+  - type: Solution
+    solution:
+      maxVol: 17 # About 5 imperial fluid ounces which is the english measurement for a teacup. Also I think fucked up volume sizes are funny. HAHAHAHAHAHAHA
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-4
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 4
 
@@ -74,55 +61,38 @@
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
   components:
+  - type: Item
+    size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
-    layers:
-    - state: icon # todo add "icon_empty" state to match DrinkVisualsFillOverlay
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerVisuals
-    fillBaseName: fill # todo rename to "fill-" to match DrinkVisualsFillOverlay
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
+  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 5 # One sip at a time. No rushing at the water cooler
-  - type: Item
-    size: Tiny
+  - type: Solution
+    solution:
+      maxVol: 10 # Miserably small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: icon-
+    inHandsFillBaseName: null
   - type: Tag
     tags:
     - Trash
-    - DrinkCup
     - WhitelistChameleon
-  - type: Appearance
-  - type: TrashOnSolutionEmpty
-    solution: drink
   - type: Clothing
     slots:
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
+  - type: SpillWhenWorn
+    solution: drink
 
 # Mugs
 - type: entity
@@ -233,23 +203,19 @@
   suffix: Full
   description: A heated drink consisting melted chocolate and heated milk.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: HotCocoa
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: HotCocoa
+        Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -260,23 +226,19 @@
   suffix: Full
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Coffee
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Coffee
+        Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -287,22 +249,22 @@
   suffix: Full
   description: A nice, strong and tasty beverage while you are reading.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: CafeLatte
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CafeLatte
+        Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    state: icon-vend
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
     layers:
-      - state: icon_empty
-      - state: fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Appearance
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: fill-
     changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -312,12 +274,11 @@
   id: DrinkTeacup
   name: tea
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Tea
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tea
+        Quantity: 17
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-tea
@@ -329,12 +290,11 @@
   id: DrinkGreenTea
   name: green tea
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: GreenTea
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GreenTea
+        Quantity: 17
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-green-tea
@@ -343,21 +303,21 @@
 
 # TODO this needs fill levels
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkBaseCup]
+  parent: [DrinkBaseMaterialPlastic, SolutionSmall, DrinkBaseCup]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceGrape
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceGrape
+        Quantity: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
+    size: Small
   - type: TrashOnSolutionEmpty
     solution: drink
 

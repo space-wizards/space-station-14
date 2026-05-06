@@ -65,6 +65,12 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
             if (_whitelist.IsWhitelistFail(ent.Comp.SpawnerWhitelist, uid))
                 continue;
 
+            if (TryComp<AntagGridSpawnPointComponent>(uid, out var comp))
+            {
+                if (args.Antag == null || !comp.Whitelist.Contains(args.Antag))
+                    continue;
+            }
+
             args.Coordinates.Add(_transform.GetMapCoordinates(xform));
         }
     }

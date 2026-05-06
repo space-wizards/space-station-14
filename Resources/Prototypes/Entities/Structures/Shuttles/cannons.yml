@@ -16,8 +16,9 @@
     availableModes:
       - SemiAuto
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -92,7 +93,7 @@
           tags:
             - PowerCell
             - PowerCellSmall
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedLightLaser
     fireCost: 50
 
@@ -148,7 +149,7 @@
         whitelist:
           tags:
             - PowerCage
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedShuttleLaser
     fireCost: 150
 
@@ -281,8 +282,9 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

@@ -26,7 +26,7 @@ public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<Rounds
         var spawns = EntitySpawnCollection.GetSpawns(component.Rules, _random);
         foreach (var rule in spawns)
         {
-            GameTicker.AddGameRule(rule);
+            GameTicker.AddFilteredGameRule(rule);
         }
     }
 
