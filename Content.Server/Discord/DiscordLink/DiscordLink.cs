@@ -65,12 +65,7 @@ public sealed partial class DiscordLink : IPostInjectInit
     /// <summary>
     /// If the bot is currently connected to Discord.
     /// </summary>
-    public bool IsConnected => _client != null && _isConnectedGateway;
-
-    /// <summary>
-    /// Bool that indicates if we received a connected event. I couldn't find a "connected" property on the client itself.
-    /// </summary>
-    private bool _isConnectedGateway = false;
+    public bool IsConnected => _client is { Status: WebSocketStatus.Ready };
 
     #region Events
 
@@ -145,15 +140,8 @@ public sealed partial class DiscordLink : IPostInjectInit
             return default;
         };
 
-        _client.Connect += () =>
-        {
-            _isConnectedGateway = true;
-            return default;
-        };
-
         _client.Disconnect += args =>
         {
-            _isConnectedGateway = false;
             _sawmillLog.Error($"We got disconnected! Possibly an authentication failure? Reconnect: {args.Reconnect}");
             return default;
         };
@@ -163,7 +151,6 @@ public sealed partial class DiscordLink : IPostInjectInit
             try
             {
                 await _client.StartAsync();
-                _sawmill.Info("Connected to Discord.");
             }
             catch (Exception e)
             {
@@ -178,7 +165,6 @@ public sealed partial class DiscordLink : IPostInjectInit
         {
             _sawmill.Info("Disconnecting from Discord.");
 
-            // Unsubscribe from the events.
             _client.MessageCreate -= OnCommandReceivedInternal;
             _client.MessageCreate -= OnMessageReceivedInternal;
 
