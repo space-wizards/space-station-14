@@ -53,7 +53,7 @@ public sealed class CargoTest : GameTest
                     if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, compFact))
                     {
                         var averageSpawns = tableSystem.AverageSpawns(fill.Containers.First().Value);
-                        // Randomness will lead no non interger expected values, if all the expected values are intergers then we skip
+                        // Randomness will lead to non interger expected values, if all the expected values are intergers then we skip
                         // Compares against epsilon incase of any floating point stuff
                         if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
                         {
