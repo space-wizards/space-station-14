@@ -37,7 +37,7 @@ public sealed class AddTests : GameTest
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = SEntMan.SpawnEntity(null, coordinates);
+            var entity = SSpawnAtPosition(null, coordinates);
 
             _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
         });
@@ -74,7 +74,7 @@ public sealed class AddTests : GameTest
         var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = SEntMan.SpawnEntity(null, coordinates);
+            var entity = SSpawnAtPosition(null, coordinates);
 
             _sAdminLogManager.Add(LogType.Unknown, $"{entity} test log: {guid}");
         });
@@ -126,7 +126,7 @@ public sealed class AddTests : GameTest
         var coordinates = testMap.GridCoords;
         await Server.WaitPost(() =>
         {
-            var entity = SEntMan.SpawnEntity(null, coordinates);
+            var entity = SSpawnAtPosition(null, coordinates);
 
             for (var i = 0; i < amount; i++)
             {
