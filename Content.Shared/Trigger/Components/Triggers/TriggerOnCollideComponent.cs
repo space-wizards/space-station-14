@@ -10,11 +10,10 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnCollideComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// Trigger only when this fixture collides.
-    /// If null, trigger when this entity collides.
+    /// The fixture with which to collide.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? FixtureID;
+    [DataField(required: true), AutoNetworkedField]
+    public string FixtureID = string.Empty;
 
     /// <summary>
     /// Doesn't trigger if the other colliding fixture is nonhard.
@@ -26,5 +25,5 @@ public sealed partial class TriggerOnCollideComponent : BaseTriggerOnXComponent
     /// If not null, limits the amount of times this component can trigger.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int? MaxTriggers;
+    public int? MaxTriggers = null;
 }

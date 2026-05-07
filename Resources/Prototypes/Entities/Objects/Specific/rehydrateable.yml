@@ -203,43 +203,24 @@
     possibleSpawns:
     - MobAbomination
 
-# It inherits FoodComponent from PlushieCarp, but is de-facto inedible
-# PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
+  parent: [BaseToyCarp, RehydratableItem, BaseSyndicateContraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-  - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        density: 5
-        mask:
-        - ItemMask
-      rehydrate: # needed to react to fire extinguishers
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        hard: false
-        layer:
-        - LowImpassable
   # pet fish before rehydrating and he will be nice to you
   - type: FactionException
   - type: PettableFriend
     successString: petting-success-dehydrated-carp
     failureString: petting-failure-dehydrated-carp
-  - type: EmitSoundOnUse
-    handle: false # have to make it inedible because this causes petting and chewing trigger together
+  - type: TriggerOnUse
+    handled: false # Event shared by petting
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
-  - type: Tag # overwriting PlushieCarp tags to remove ClothMade and Payload
-    tags:
-    - PlushieCarp
 
 - type: entity
   parent: MonkeyCube

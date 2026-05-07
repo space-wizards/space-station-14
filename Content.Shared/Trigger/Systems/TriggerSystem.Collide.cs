@@ -18,25 +18,21 @@ public sealed partial class TriggerSystem
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        // Only trigger with a specific fixture
-        if (ent.Comp.FixtureID != null && ent.Comp.FixtureID != args.OurFixtureId)
-            return;
-
-        // Ignore non-hard fixtures
-        if (ent.Comp.IgnoreOtherNonHard && !args.OtherFixture.Hard)
-            return;
-
-        // Decrement remaining triggers
-        if (ent.Comp.MaxTriggers != null)
+        if (
+            args.OurFixtureId == ent.Comp.FixtureID
+            && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard)
+            && (ent.Comp.MaxTriggers == null || ent.Comp.MaxTriggers > 0)
+        )
         {
-            ent.Comp.MaxTriggers--;
-            if (ent.Comp.MaxTriggers <= 0)
-                RemCompDeferred<TriggerOnCollideComponent>(ent);
-            else
+            if (ent.Comp.MaxTriggers != null)
+            {
+                ent.Comp.MaxTriggers--;
                 Dirty(ent);
+                if (ent.Comp.MaxTriggers <= 0)
+                    RemCompDeferred<TriggerOnCollideComponent>(ent);
+            }
+            Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
         }
-
-        Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
     }
 
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
