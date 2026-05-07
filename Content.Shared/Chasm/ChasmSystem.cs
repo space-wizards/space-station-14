@@ -46,23 +46,29 @@ public sealed class ChasmSystem : EntitySystem
         var query = EntityQueryEnumerator<ChasmFallingComponent>();
         while (query.MoveNext(out var uid, out var chasm))
         {
-            if (_timing.CurTime < chasm.NextDeletionTime)
+            if (_timing.CurTime < chasm.NextEffectsTime)
                 continue;
 
             EndFalling((uid, chasm));
         }
     }
 
+    /// <summary>
+    /// Forces the <see cref="tripper"/> to start falling into a <see cref="chasm"/>.
+    /// </summary>
+    /// <param name="chasm">The target chasm entity that the tripper is falling into.</param>
+    /// <param name="tripper">The entity that is falling into a chasm.</param>
+    /// <param name="playSound">Controls if the chasm should play the falling sound.</param>
     [PublicAPI]
     public void StartFalling(Entity<ChasmComponent> chasm, EntityUid tripper, bool playSound = true)
     {
         var falling = AddComp<ChasmFallingComponent>(tripper);
 
-        falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
+        falling.NextEffectsTime = _timing.CurTime + falling.EffectsTime;
         falling.FallChasm = chasm;
         chasm.Comp.FallingEntities.Add(tripper);
 
-        DirtyFields(tripper, falling, null, nameof(ChasmFallingComponent.NextDeletionTime), nameof(ChasmFallingComponent.FallChasm));
+        DirtyFields(tripper, falling, null, nameof(ChasmFallingComponent.NextEffectsTime), nameof(ChasmFallingComponent.FallChasm));
         DirtyField(chasm, chasm.Comp, nameof(ChasmComponent.FallingEntities));
 
         _blocker.UpdateCanMove(tripper);
@@ -74,6 +80,10 @@ public sealed class ChasmSystem : EntitySystem
             _audio.PlayPredicted(chasm.Comp.FallingSound, chasm, tripper);
     }
 
+    /// <summary>
+    /// Immedieatly ends the falling of an entity into a chasm.
+    /// </summary>
+    /// <param name="tripper">The currently falling entity.</param>
     [PublicAPI]
     public void EndFalling(Entity<ChasmFallingComponent?> tripper)
     {

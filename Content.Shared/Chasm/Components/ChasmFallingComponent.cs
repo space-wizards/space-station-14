@@ -17,14 +17,14 @@ public sealed partial class ChasmFallingComponent : Component
     public TimeSpan AnimationTime = TimeSpan.FromSeconds(1.5f);
 
     /// <summary>
-    ///     Time it should take in seconds for the entity to actually delete
+    ///     Time it should take in seconds for the entity to actually apply some effects
     /// </summary>
     [DataField]
-    public TimeSpan DeletionTime = TimeSpan.FromSeconds(1.8f);
+    public TimeSpan EffectsTime = TimeSpan.FromSeconds(1.8f);
 
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextDeletionTime = TimeSpan.Zero;
+    public TimeSpan NextEffectsTime = TimeSpan.Zero;
 
     /// <summary>
     /// Chasm this entity is currently falling into.
