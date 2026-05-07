@@ -19,39 +19,39 @@
       layers:
         - state: smes
         - map: ["charge"]
-          state: "smes-charge1"
+          state: "charge1"
           shader: unshaded
           visible: false
         - map: ["input"]
-          state: "smes-input"
+          state: "input"
           shader: unshaded
           visible: false
         - map: ["output"]
-          state: "smes-output"
+          state: "output"
           shader: unshaded
           visible: false
         - map: ["charging"]
-          state: "smes-stable"
+          state: "stable"
           shader: unshaded
         - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-          state: smes-open
+          state: open
     - type: PowerNetworkBatteryVisuals
     - type: GenericVisualizer
       visuals:
         enum.PowerNetworkBatteryVisuals.LastChargeLevel:
           charge:
             0: { visible: false }
-            1: { state: "smes-charge1", visible: true }
-            2: { state: "smes-charge2", visible: true }
-            3: { state: "smes-charge3", visible: true }
-            4: { state: "smes-charge4", visible: true }
-            5: { state: "smes-charge5", visible: true }
-            6: { state: "smes-charge6", visible: true }
+            1: { state: "charge1", visible: true }
+            2: { state: "charge2", visible: true }
+            3: { state: "charge3", visible: true }
+            4: { state: "charge4", visible: true }
+            5: { state: "charge5", visible: true }
+            6: { state: "charge6", visible: true }
         enum.PowerNetworkBatteryVisuals.LastChargeState:
           charging:
-            Discharging: { state: "smes-discharging" }
-            Still: { state: "smes-stable" }
-            Charging: { state: "smes-charging" }
+            Discharging: { state: "discharging" }
+            Still: { state: "stable" }
+            Charging: { state: "charging" }
         enum.PowerNetworkBatteryVisuals.LastChargeCapabilities:
           input:
             Neither: { visible: false }
@@ -181,22 +181,22 @@
     layers:
     - state: advancedsmes
     - map: ["charge"]
-      state: "smes-charge1"
+      state: "charge1"
       shader: unshaded
       visible: false
     - map: ["input"]
-      state: "smes-input"
+      state: "input"
       shader: unshaded
       visible: false
     - map: ["output"]
-      state: "smes-output"
+      state: "output"
       shader: unshaded
       visible: false
     - map: ["charging"]
-      state: "smes-stable"
+      state: "stable"
       shader: unshaded
     - map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      state: advancedsmes-open
+      state: open
   - type: Machine
     board: SMESAdvancedMachineCircuitboard
   - type: Battery
