@@ -43,7 +43,6 @@ public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
     private void OnMapInit(Entity<PowerNetworkBatteryVisualsComponent> ent, ref MapInitEvent args)
     {
         InitializeChargeState(ent);
-        UpdateChargeCapabilities(ent);
     }
 
     /// <summary>
