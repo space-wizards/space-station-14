@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kontakt
-  changes:
-  - message: Wires will once again break randomly at roundstart.
-    type: Fix
-  id: 9173
-  time: '2025-10-30T02:30:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41191
 - author: SnappingOpossum
   changes:
   - message: Energy shotgun and energy magnum can now be used by pacifists in their
@@ -4083,3 +4076,10 @@
   id: 9684
   time: '2026-05-06T09:59:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43829
+- author: HoofedEar
+  changes:
+  - message: Wall mounted station maps now properly display their power state
+    type: Tweak
+  id: 9685
+  time: '2026-05-07T16:01:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43877
