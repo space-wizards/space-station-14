@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
 
-public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState>, IOnStateExited<LobbyState>
+public sealed partial class LobbyUIController : UIController, IOnStateEntered<LobbyState>, IOnStateExited<LobbyState>
 {
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -54,6 +54,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         _prototypeManager.PrototypesReloaded += OnProtoReload;
         _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
         _requirements.Updated += OnRequirementsUpdated;
+        InitializeFinalStandWallet();
 
         _configurationManager.OnValueChanged(CCVars.FlavorText, args =>
         {
@@ -122,6 +123,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     private void PreferencesDataLoaded()
     {
         PreviewPanel?.SetLoaded(true);
+        UpdateFSPerkPoints();
 
         if (_stateManager.CurrentState is not LobbyState)
             return;
@@ -133,6 +135,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     {
         PreviewPanel?.SetLoaded(_preferencesManager.ServerDataLoaded);
         ReloadCharacterSetup();
+        UpdateFSPerkPoints();
     }
 
     public void OnStateExited(LobbyState state)

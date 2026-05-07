@@ -30,4 +30,9 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         Summary.Text = value;
     }
+
+    public void SetPerkPointsText(int perkPoints)
+    {
+        PerkPointsLabel.Text = $"Perk Points: {perkPoints:N0}";
+    }
 }

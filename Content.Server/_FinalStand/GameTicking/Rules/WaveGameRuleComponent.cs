@@ -42,6 +42,15 @@ public sealed partial class WaveGameRuleComponent : Component
     };
 
     [DataField]
+    public int KillReward = 100;
+
+    [DataField]
+    public int WaveSurvivalBonus = 500;
+
+    [DataField]
+    public int BossWavePerkReward = 50;
+
+    [DataField]
     public SoundSpecifier? WaveStartSound = new SoundPathSpecifier("/Audio/_FinalStand/WaveEvents/wave_start.ogg");
 
     [DataField]

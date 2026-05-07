@@ -1,3 +1,4 @@
+using Content.Server._FinalStand.Economy;
 using Content.Server._FinalStand.Spawners;
 using Content.Server._FinalStand.Station;
 using Content.Server.GameTicking;
@@ -18,12 +19,13 @@ namespace Content.Server._FinalStand.GameTicking.Rules;
 public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComponent>
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly FSPlayerWalletSystem _wallet = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-        // mainly just a guard again admin deleting mobs. if they don't get the mobstatechanged event, they won't be counted as dead and the wave won't end.
+        SubscribeLocalEvent<WaveSpawnedTagComponent, MobStateChangedEvent>(OnWaveEnemyMobStateChanged);
+        // guard against admin-deleting mobs without triggering MobStateChangedEvent
         SubscribeLocalEvent<WaveSpawnedTagComponent, ComponentShutdown>(OnWaveEnemyShutdown);
     }
 
@@ -76,6 +78,7 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
     {
         base.AppendRoundEndText(uid, comp, gameRule, ref args);
+        _wallet.SaveAll();
         args.AddLine(Loc.GetString("final-stand-round-end",
             ("wave", comp.WavesCompleted),
             ("killed", comp.TotalEnemiesKilled)));
@@ -133,9 +136,21 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
     private void EndCombatPhase(EntityUid uid, WaveGameRuleComponent comp)
     {
         Log.Info($"[WaveGameRule] Wave {comp.WaveNumber} complete. Moving to prep for wave {comp.WaveNumber + 1}.");
+        _wallet.DistributeCredits(comp.WaveSurvivalBonus);
+        if (IsBossWave(comp.WaveNumber))
+        {
+            Log.Info($"[WaveGameRule] Wave {comp.WaveNumber} is a BOSS WAVE — distributing {comp.BossWavePerkReward} perk points");
+            _wallet.DistributePerkPoints(comp.BossWavePerkReward);
+        }
         comp.WavesCompleted++;
         comp.WaveNumber++;
         StartPrepPhase(uid, comp);
+    }
+
+    private static bool IsBossWave(int wave)
+    {
+        if (wave <= 20) return wave % 10 == 0;
+        return (wave - 20) % 5 == 0;
     }
 
     private void CheckWaveComplete(EntityUid uid, WaveGameRuleComponent comp)
@@ -201,7 +216,7 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
 
     // event handlerss
 
-    private void OnMobStateChanged(MobStateChangedEvent args)
+    private void OnWaveEnemyMobStateChanged(Entity<WaveSpawnedTagComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Dead || args.OldMobState == MobState.Dead)
             return;
@@ -211,11 +226,12 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
                 continue;
-            if (!comp.AliveEnemies.Remove(args.Target))
+            if (!comp.AliveEnemies.Remove(ent.Owner))
                 continue;
 
             comp.TotalEnemiesKilled++;
-            Log.Info($"[WaveGameRule] Enemy {args.Target} died. {comp.AliveEnemies.Count} alive, " +
+            _wallet.DistributeCredits(comp.KillReward);
+            Log.Info($"[WaveGameRule] Enemy {ent.Owner} died. {comp.AliveEnemies.Count} alive, " +
                      $"{comp.EnemyTotalThisWave - comp.EnemiesSpawnedThisWave} not yet spawned (wave {comp.WaveNumber}).");
             CheckWaveComplete(uid, comp);
             break;
