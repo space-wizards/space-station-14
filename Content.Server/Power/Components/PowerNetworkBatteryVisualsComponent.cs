@@ -1,6 +1,6 @@
 using Content.Shared.Power;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Power.Components;
+using Content.Server.Power.EntitySystems;
 
 namespace Content.Server.Power.Components;
 
