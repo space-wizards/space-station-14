@@ -63,8 +63,8 @@
       powerLoad: 50
     - type: Battery
       netsync: false
-      maxCharge: 30000
-      startingCharge: 30000
+      maxCharge: 15000
+      startingCharge: 15000
     - type: ExaminableBattery
     - type: ApcPowerReceiverBattery
       idleLoad: 50
