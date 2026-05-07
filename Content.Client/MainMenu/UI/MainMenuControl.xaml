@@ -13,50 +13,58 @@
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   HorizontalExpand="True"
-                  VerticalExpand="True"
-                  StyleIdentifier="mainMenuVBox"
-                  SeparationOverride="3">
-        <TextureRect Name="Logo"
-                     Stretch="KeepCentered" />
-        <GridContainer Columns="2">
-            <Label Text="{Loc 'main-menu-username-label'}" />
-            <LineEdit Name="UsernameBox"
-                      Access="Public"
-                      PlaceHolder="{Loc 'main-menu-username-text'}"
-                      HorizontalExpand="True" />
-            <Label Text="{Loc 'main-menu-address-label'}" />
-            <LineEdit Name="AddressBox"
-                      Access="Public"
-                      Text="localhost"
-                      PlaceHolder="server address:port"
-                      HorizontalExpand="True" />
-        </GridContainer>
-        <Button Name="DirectConnectButton"
-                Access="Public"
-                Text="{Loc 'main-menu-direct-connect-button'}"
-                TextAlign="Center"
-                StyleClasses="OpenLeft"
-                StyleIdentifier="mainMenu" />
-        <clog:ChangelogButton
-            Name="ChangelogButton"
-            StyleIdentifier="mainMenu"
-            StyleClasses="OpenBoth"
-            Access="Public" />
-        <Button Name="OptionsButton"
-                Access="Public"
-                Text="{Loc 'main-menu-options-button'}"
-                TextAlign="Center"
-                StyleClasses="OpenBoth"
-                StyleIdentifier="mainMenu" />
-        <Button Name="QuitButton"
-                Access="Public"
-                Text="{Loc 'main-menu-quit-button'}"
-                TextAlign="Center"
-                StyleIdentifier="mainMenu">
-            <Control.StyleClasses>
-                <system:String>negative</system:String>
-                <system:String>OpenRight</system:String>
-            </Control.StyleClasses>
-        </Button>
+                  VerticalExpand="True">
+        <PanelContainer StyleClasses="BackgroundPanel">
+            <BoxContainer Orientation="Vertical"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          StyleIdentifier="mainMenuVBox"
+                          Margin="4 16">
+                <TextureRect Name="Logo"
+                             Stretch="KeepCentered" />
+                <GridContainer Columns="2" Margin="0 4">
+                    <Label Text="{Loc 'main-menu-username-label'}" />
+                    <LineEdit Name="UsernameBox"
+                              Access="Public"
+                              PlaceHolder="{Loc 'main-menu-username-text'}"
+                              HorizontalExpand="True" />
+                    <Label Text="{Loc 'main-menu-address-label'}" />
+                    <LineEdit Name="AddressBox"
+                              Access="Public"
+                              Text="localhost"
+                              PlaceHolder="server address:port"
+                              HorizontalExpand="True" />
+                </GridContainer>
+                <Button Name="DirectConnectButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-direct-connect-button'}"
+                        TextAlign="Center"
+                        StyleClasses="OpenLeft"
+                        StyleIdentifier="mainMenu" />
+                <clog:ChangelogButton
+                    Name="ChangelogButton"
+                    StyleIdentifier="mainMenu"
+                    StyleClasses="OpenBoth"
+                    Access="Public" />
+                <Button Name="OptionsButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-options-button'}"
+                        TextAlign="Center"
+                        StyleClasses="OpenBoth"
+                        StyleIdentifier="mainMenu" />
+                <Button Name="QuitButton"
+                        Access="Public"
+                        Text="{Loc 'main-menu-quit-button'}"
+                        TextAlign="Center"
+                        StyleIdentifier="mainMenu">
+                    <Control.StyleClasses>
+                        <system:String>negative</system:String>
+                        <system:String>OpenRight</system:String>
+                    </Control.StyleClasses>
+                </Button>
+            </BoxContainer>
+        </PanelContainer>
     </BoxContainer>
 </Control>
