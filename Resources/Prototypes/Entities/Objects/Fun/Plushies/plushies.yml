@@ -706,7 +706,7 @@
   abstract: true
   parent: BaseSoundTriggerDelay
   id: BaseToyCarp
-  description: Shared components between the plushie and dehydrated carp.
+  description: Shared components between the plushie and dehydrated carps.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/carp.rsi

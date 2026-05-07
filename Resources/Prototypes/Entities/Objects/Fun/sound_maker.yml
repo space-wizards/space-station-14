@@ -440,6 +440,8 @@
       collection: Skub
   - type: EmitSoundOnLand
     sound: *SoundSkub
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: MeleeWeapon
     soundHit: *SoundSkub
     damage:
