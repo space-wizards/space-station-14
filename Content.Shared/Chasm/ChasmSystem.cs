@@ -83,8 +83,6 @@ public sealed class ChasmSystem : EntitySystem
         var resetVisualsEv = new ResetChasmVisualsEvent();
         RaiseLocalEvent(tripper.Owner, ref resetVisualsEv);
 
-        RemCompDeferred(tripper.Owner, tripper.Comp);
-
         if (!TryComp(tripper.Comp.FallChasm, out ChasmComponent? chasmComp))
             return;
 
@@ -96,6 +94,9 @@ public sealed class ChasmSystem : EntitySystem
 
         var ev = new ChasmFallEffectsEvent(tripper.Owner);
         RaiseLocalEvent(tripper.Comp.FallChasm.Value, ref ev);
+
+        RemComp(tripper.Owner, tripper.Comp);
+        _blocker.UpdateCanMove(tripper);
     }
 
     private void OnStepTriggered(Entity<ChasmComponent> ent, ref StepTriggeredOffEvent args)

@@ -31,16 +31,4 @@ public sealed partial class ChasmFallingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? FallChasm;
-
-    /// <summary>
-    ///     Original scale of the object so it can be restored if the component is removed in the middle of the animation
-    /// </summary>
-    [ViewVariables]
-    public Vector2 OriginalScale = Vector2.Zero;
-
-    /// <summary>
-    ///     Scale that the animation should bring entities to.
-    /// </summary>
-    [ViewVariables]
-    public Vector2 AnimationScale = new Vector2(0.01f, 0.01f);
 }
