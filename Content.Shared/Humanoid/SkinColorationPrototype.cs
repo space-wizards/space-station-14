@@ -218,10 +218,10 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
         if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsv.X, minHue, maxHue))
             return false;
 
-        if (Saturation is (var minSat, var maxSat) && (hsv.Y < minSat + SkinColorationUtils.Epsilon || hsv.Y > maxSat - SkinColorationUtils.Epsilon))
+        if (Saturation is (var minSat, var maxSat) && (hsv.Y < minSat - SkinColorationUtils.Epsilon || hsv.Y > maxSat + SkinColorationUtils.Epsilon))
             return false;
 
-        if (Value is (var minVal, var maxVal) && (hsv.Z < minVal + SkinColorationUtils.Epsilon || hsv.Z > maxVal - SkinColorationUtils.Epsilon))
+        if (Value is (var minVal, var maxVal) && (hsv.Z < minVal - SkinColorationUtils.Epsilon || hsv.Z > maxVal + SkinColorationUtils.Epsilon))
             return false;
 
         return true;
@@ -277,10 +277,10 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
         if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsl.X, minHue, maxHue))
             return false;
 
-        if (Saturation is (var minSat, var maxSat) && (hsl.Y < minSat + SkinColorationUtils.Epsilon || hsl.Y > maxSat - SkinColorationUtils.Epsilon))
+        if (Saturation is (var minSat, var maxSat) && (hsl.Y < minSat - SkinColorationUtils.Epsilon || hsl.Y > maxSat + SkinColorationUtils.Epsilon))
             return false;
 
-        if (Lightness is (var minLight, var maxLight) && (hsl.Z < minLight + SkinColorationUtils.Epsilon || hsl.Z > maxLight - SkinColorationUtils.Epsilon))
+        if (Lightness is (var minLight, var maxLight) && (hsl.Z < minLight - SkinColorationUtils.Epsilon || hsl.Z > maxLight + SkinColorationUtils.Epsilon))
             return false;
 
         return true;
@@ -339,11 +339,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
             return false;
 
         // If a range is found, check if the saturation is within the provided ranges.
-        if (hsv.Y < range.Saturation.Item1 + SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Item2 - SkinColorationUtils.Epsilon)
+        if (hsv.Y < range.Saturation.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Item2 + SkinColorationUtils.Epsilon)
             return false;
 
         // Check if the value is within provided ranges.
-        if (hsv.Z < range.Value.Item1 + SkinColorationUtils.Epsilon || hsv.Y > range.Value.Item2 - SkinColorationUtils.Epsilon)
+        if (hsv.Z < range.Value.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Value.Item2 + SkinColorationUtils.Epsilon)
             return false;
 
         return true;
