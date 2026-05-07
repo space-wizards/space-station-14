@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Light.Components;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Weather;
@@ -7,6 +8,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -15,6 +17,7 @@ namespace Content.Client.Weather;
 
 public sealed class WeatherSystem : SharedWeatherSystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
@@ -24,10 +27,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
     [Dependency] private readonly EntityQuery<RoofComponent> _roofQuery = default!;
 
+    private float _ambienceGain;
+
     public override void Initialize()
     {
         base.Initialize();
 
+        Subs.CVar(_cfg, CCVars.AmbienceVolume, value => _ambienceGain = value, true);
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
@@ -129,6 +135,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
             var alpha = GetWeatherPercent((uid, status));
             alpha *= SharedAudioSystem.VolumeToGain(weather.Sound.Params.Volume);
+            alpha *= _ambienceGain;
             _audio.SetGain(weather.Stream, alpha, audio);
             audio.Occlusion = occlusion;
         }
