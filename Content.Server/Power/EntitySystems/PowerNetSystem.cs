@@ -323,7 +323,6 @@ namespace Content.Server.Power.EntitySystems
 
         private bool IsPoweredCalculate(ApcPowerReceiverComponent comp)
         {
-            // Devices that actually don't consume power should set NeedsPower: false instead.
             return !comp.PowerDisabled
                    && (!comp.NeedsPower
                        || (comp.Load > 0
