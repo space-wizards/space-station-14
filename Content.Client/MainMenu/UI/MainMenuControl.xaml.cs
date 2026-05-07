@@ -19,6 +19,22 @@ public sealed partial class MainMenuControl : Control
     public const string StyleIdentifierMainMenu = "mainMenu";
     public const string StyleIdentifierMainMenuVBox = "mainMenuVBox";
 
+    private static readonly ProtoId<ParallaxPrototype>[] Parallaxes =
+    [
+        "Wizard",
+        "TrainStation",
+        "PlasmaStation",
+        "AmberStation",
+        "FastSpace",
+        "AspidParallax",
+        "OriginStation",
+        "Default",
+        "Sky",
+        "KettleStation",
+        "BagelStation",
+        "ExoStation",
+    ];
+
     public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
     {
         IoCManager.InjectDependencies(this);
@@ -33,23 +49,7 @@ public sealed partial class MainMenuControl : Control
 
         // I don't just enumerate them all as there's some hideous parallaxes, and it's easier
         // to update an allowlist than to randomly get an ugly one to fix a blocklist.
-        ProtoId<ParallaxPrototype>[] availableParallaxes =
-        [
-            "Wizard",
-            "TrainStation",
-            "PlasmaStation",
-            "AmberStation",
-            "FastSpace",
-            "AspidParallax",
-            "OriginStation",
-            "Default",
-            "Sky",
-            "KettleStation",
-            "BagelStation",
-            "ExoStation",
-        ];
-
-        BackgroundParallax.ParallaxPrototype = _random.Pick(availableParallaxes).Id;
+        BackgroundParallax.ParallaxPrototype = _random.Pick(Parallaxes).Id;
 
         var logoTexture = resCache.GetResource<TextureResource>("/Textures/Logo/logo.png");
         Logo.Texture = logoTexture;
