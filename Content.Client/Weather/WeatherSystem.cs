@@ -33,13 +33,18 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         base.Initialize();
 
-        Subs.CVar(_cfg, CCVars.AmbienceVolume, value => _ambienceGain = value, true);
+        Subs.CVar(_cfg, CCVars.AmbienceVolume, SetAmbienceGain, true);
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
     private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
     {
         ent.Comp.Stream = _audio.Stop(ent.Comp.Stream);
+    }
+
+    public void SetAmbienceGain(float value)
+    {
+        _ambienceGain = value;
     }
 
     public override void Update(float frameTime)

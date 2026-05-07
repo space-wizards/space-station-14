@@ -114,7 +114,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             _playingCount.Remove(sound.Path);
     }
 
-    private void SetAmbienceGain(float value)
+    public void SetAmbienceGain(float value)
     {
         _ambienceVolume = SharedAudioSystem.GainToVolume(value);
 
