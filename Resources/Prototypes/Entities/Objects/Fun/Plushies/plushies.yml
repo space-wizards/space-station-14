@@ -14,6 +14,8 @@
       collection: ToySqueak
       params:
         volume: -4
+  - type: EmitSoundOnLand
+    sound: *BasePlushieSound
   - type: UseDelay
     delay: 3.0
   - type: MeleeWeapon
@@ -168,6 +170,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieHampterSound
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieHampterSound
   - type: Edible
     useSound: *PlushieHampterSound
   - type: MeleeWeapon
@@ -284,6 +288,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieArachnidSound
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieArachnidSound
   - type: Edible
     useSound: *PlushieArachnidSound
   - type: MeleeWeapon
@@ -313,6 +319,8 @@
       path: /Audio/Items/Toys/weh.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieLizardSound
   - type: Edible
     useSound: *PlushieLizardSound
     transferAmount: 10
@@ -369,6 +377,8 @@
       path: /Audio/Items/Toys/arf.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieExperimentSound
   - type: Edible
     useSound: *PlushieExperimentSound
   - type: MeleeWeapon
@@ -443,6 +453,8 @@
       path: /Audio/Items/Toys/muffled_weh.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieSpaceLizardSound
   - type: Edible
     useSound: *PlushieSpaceLizardSound
   - type: MeleeWeapon
@@ -475,6 +487,8 @@
       path: /Audio/Items/Toys/hew.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieLizardInversedSound
   - type: Edible
     useSound: *PlushieLizardInversedSound
   - type: MeleeWeapon
@@ -519,6 +533,8 @@
       path: /Audio/Items/Toys/toy_rustle.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieDionaSound
   - type: MeleeWeapon
     soundHit: *PlushieDionaSound
   - type: Edible
@@ -582,6 +598,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieSharkSound
       path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieSharkSound
   - type: MeleeWeapon
     wideAnimationRotation: 90
     soundHit: *PlushieSharkSound
@@ -700,6 +718,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieCarpSound
       path: /Audio/Effects/bite.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieCarpSound
   - type: MeleeWeapon
     attackRate: 0.333
     wideAnimationRotation: 90
@@ -813,6 +833,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieSlimeSound
       path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieSlimeSound
   - type: MeleeWeapon
     soundHit: *PlushieSlimeSound
   - type: Edible
@@ -840,6 +862,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieSnakeSound
       path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieSnakeSound
   - type: Edible
     useSound: *PlushieSnakeSound
   - type: MeleeWeapon
@@ -868,6 +892,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieMouseSound
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieMouseSound
   - type: Edible
     useSound: *PlushieMouseSound
   - type: MeleeWeapon
@@ -896,6 +922,8 @@
       path: /Audio/Voice/Vox/shriek1.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieVoxSound
   - type: Edible
     useSound: *PlushieVoxSound
   - type: MeleeWeapon
@@ -951,6 +979,8 @@
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
       params:
         volume: -8
+  - type: EmitSoundOnLand
+    sound: *PlushieXenoSound
   - type: Edible
     useSound: *PlushieXenoSound
   - type: MeleeWeapon
@@ -1000,6 +1030,8 @@
       path: /Audio/Voice/Human/malescream_1.ogg
       params:
         volume: -8
+  - type: EmitSoundOnLand
+    sound: *PlushieHuman
   - type: Edible
     useSound: *PlushieHuman
   - type: MeleeWeapon
@@ -1025,6 +1057,8 @@
   - type: EmitSoundOnTrigger
     sound: &PlushieMothSound
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieMothSound
   - type: MeleeWeapon
     soundHit: *PlushieMothSound
   - type: Edible
@@ -1052,6 +1086,8 @@
       path: /Audio/Voice/Vulpkanin/howl.ogg
       params:
         volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieVulpSound
   - type: Edible
     useSound:
       path: /Audio/Voice/Vulpkanin/vulp_scream4.ogg
@@ -1095,6 +1131,8 @@
   - type: EmitSoundOnTrigger
     sound: &SoundIan
       path: /Audio/Items/Toys/ian.ogg
+  - type: EmitSoundOnLand
+    sound: *SoundIan
   - type: MeleeWeapon
     soundHit: *SoundIan
   - type: Edible

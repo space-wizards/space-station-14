@@ -14,8 +14,8 @@
     keyOut: *keyOut
   - type: TriggerOnCollide # Override on children with the used fixture.
     keyOut: *keyOut
-  - type: TriggerOnLand
-    keyOut: *keyOut
+#  - type: TriggerOnLand # Doesn't work with predicted sound trigger
+#    keyOut: *keyOut
 
 - type: entity
   abstract: true
