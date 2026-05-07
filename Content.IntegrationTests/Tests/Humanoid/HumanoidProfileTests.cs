@@ -96,12 +96,12 @@ public sealed class HumanoidProfileTests : GameTest
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
 
-            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge));
-            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge));
-            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True);
-            Assert.That(humanoidComponent.Species, Is.EqualTo(species));
+            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge), $"Expected age is above the maximum age limit! Current: {humanoidComponent.Age} Max: {proto.MaxAge}");
+            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge), $"Expected age is below the minimum age limit! Current: {humanoidComponent.Age} Min: {proto.MinAge}");
+            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
+            Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
             var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
-            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor), Is.True);
+            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor), Is.True, $"Failed to verify the skin color from strategy {strategy}");
 
             AssertValidProfile((body, humanoidComponent), profile);
         });
@@ -122,16 +122,16 @@ public sealed class HumanoidProfileTests : GameTest
     {
         _bodySystem.TryGetOrgansWithComponent<VisualOrganComponent>(body.Owner, out var organs);
 
-        foreach (var (_, visualOrgan) in organs)
+        foreach (var (uid, visualOrgan) in organs)
         {
-            Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex));
-            Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor));
-            Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor));
+            Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex), $"Organ {uid} has invalid sex appearance! Expected: {profile.Sex} Current: {visualOrgan.Profile.Sex}");
+            Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor), $"Organ {uid} has invalid eye color! Expected: {profile.Appearance.EyeColor} Current: {visualOrgan.Profile.EyeColor}");
+            Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor), $"Organ {uid} has invalid skin color! Expected: {profile.Appearance.SkinColor} Current: {visualOrgan.Profile.SkinColor}");
         }
 
         _bodySystem.TryGetOrgansWithComponent<VisualOrganMarkingsComponent>(body.Owner, out var markings);
 
-        foreach (var (_, markingOrgan) in markings)
+        foreach (var (uid, markingOrgan) in markings)
         {
             // Needed to avoid access restrictions
             var data = markingOrgan.MarkingData;
@@ -143,9 +143,9 @@ public sealed class HumanoidProfileTests : GameTest
             {
                 var markingProto = Server.ProtoMan.Index(marking.MarkingId);
 
-                Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count));
-                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True);
-                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True);
+                Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingProto.Sprites.Count}");
+                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True, $"Marking {markingProto.ID} cannot be applied to group {data.Group.Id} with sex {profile.Sex}");
+                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True, $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)
                     freeMarkings.Add(marking);
 
@@ -172,7 +172,7 @@ public sealed class HumanoidProfileTests : GameTest
                     Is.EqualTo(MarkingColoring.GetMarkingLayerColors(markingProto, profile.Appearance.SkinColor, profile.Appearance.EyeColor, markingOrgan.AppliedMarkings)));
 
                 if (markingProto.SexRestriction != null)
-                    Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex));
+                    Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex), $"Marking {markingProto.ID} has invalid sex restriction! Expected: {profile.Sex} Current: {markingProto.SexRestriction}");
             }
         }
     }
