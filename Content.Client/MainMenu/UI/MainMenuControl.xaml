@@ -48,6 +48,7 @@
                 Access="Public"
                 Text="{Loc 'main-menu-quit-button'}"
                 TextAlign="Center"
+                StyleClasses="negative"
                 StyleIdentifier="mainMenu" />
     </BoxContainer>
 </Control>
