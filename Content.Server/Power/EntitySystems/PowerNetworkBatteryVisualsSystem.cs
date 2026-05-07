@@ -123,7 +123,7 @@ public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
     private void InitializeChargeState(Entity<PowerNetworkBatteryVisualsComponent> ent)
     {
         var newLevel = CalcChargeLevel(ent);
-        ent.Comp.LastChargeLevel = CalcChargeLevel(ent);
+        ent.Comp.LastChargeLevel = newLevel;
         _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeLevel, newLevel);
 
         TryComp<PowerNetworkBatteryComponent>(ent, out var powerNetworkBattery);
