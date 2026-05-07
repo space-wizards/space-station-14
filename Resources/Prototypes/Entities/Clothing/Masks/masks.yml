@@ -485,6 +485,7 @@
 # Animals
 
 - type: entity
+  abstract: true
   parent: ClothingMaskBase
   id: ClothingMaskAnimalBase
   components:
