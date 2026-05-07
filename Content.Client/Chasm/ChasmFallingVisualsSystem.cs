@@ -20,41 +20,37 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmFallingComponent, ComponentStartup>(OnComponentInit);
-        SubscribeLocalEvent<ChasmFallingComponent, BeforeChasmFallEvent>(OnBeforeFall);
+        SubscribeLocalEvent<ChasmFallingComponent, StartChasmFallingEvent>(OnStartFalling);
+        SubscribeLocalEvent<ChasmFallingComponent, ResetChasmVisualsEvent>(OnResetVisuals);
     }
 
-    private void OnComponentInit(EntityUid uid, ChasmFallingComponent component, ComponentStartup args)
+    private void OnStartFalling(Entity<ChasmFallingComponent> ent, ref StartChasmFallingEvent args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite)
-            || TerminatingOrDeleted(uid))
-        {
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
-        }
 
-        component.OriginalScale = sprite.Scale;
+        ent.Comp.OriginalScale = sprite.Scale;
 
-        if (!TryComp<AnimationPlayerComponent>(uid, out var player))
+        var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent.Owner);
+
+        if (_anim.HasRunningAnimation(animationPlayer, _chasmFallAnimationKey))
+            return;
+
+        _anim.Play((ent.Owner, animationPlayer), GetFallingAnimation(ent.Comp), _chasmFallAnimationKey);
+    }
+
+    private void OnResetVisuals(Entity<ChasmFallingComponent> ent, ref ResetChasmVisualsEvent args)
+    {
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
+            return;
+
+        _sprite.SetScale((ent.Owner, sprite), ent.Comp.OriginalScale);
+
+        if (!TryComp<AnimationPlayerComponent>(ent.Owner, out var player))
             return;
 
         if (_anim.HasRunningAnimation(player, _chasmFallAnimationKey))
-            return;
-
-        _anim.Play((uid, player), GetFallingAnimation(component), _chasmFallAnimationKey);
-    }
-
-    private void OnBeforeFall(EntityUid uid, ChasmFallingComponent component, ref BeforeChasmFallEvent args)
-    {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-
-        _sprite.SetScale((uid, sprite), component.OriginalScale);
-
-        if (!TryComp<AnimationPlayerComponent>(uid, out var player))
-            return;
-
-        if (_anim.HasRunningAnimation(player, _chasmFallAnimationKey))
-            _anim.Stop((uid, player), _chasmFallAnimationKey);
+            _anim.Stop((ent.Owner, player), _chasmFallAnimationKey);
     }
 
     private Animation GetFallingAnimation(ChasmFallingComponent component)

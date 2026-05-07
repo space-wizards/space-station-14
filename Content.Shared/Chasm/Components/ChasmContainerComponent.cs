@@ -13,10 +13,4 @@ public sealed partial class ChasmContainerComponent : Component
     /// </summary>
     [DataField(required:true)]
     public string ContainerId;
-
-    /// <summary>
-    /// If true, stuns the mobs that fall inside, so they can't do anything themselves.
-    /// </summary>
-    [DataField]
-    public bool DoStun = true;
 }

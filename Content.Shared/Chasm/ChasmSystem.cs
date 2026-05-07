@@ -4,8 +4,8 @@ using Content.Shared.Chasm.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Misc;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -35,7 +35,6 @@ public sealed class ChasmSystem : EntitySystem
         SubscribeLocalEvent<ChasmFallingComponent, EntityTerminatingEvent>(OnFallingDelete);
         SubscribeLocalEvent<ChasmFallingComponent, InteractHandEvent>(OnBeforeInteract);
 
-        SubscribeLocalEvent<ChasmContainerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
         SubscribeLocalEvent<ChasmContainerComponent, ChasmFallEffectsEvent>(OnContainerFall);
         SubscribeLocalEvent<ChasmDeleteComponent, ChasmFallEffectsEvent>(OnDeleteFall);
     }
@@ -54,34 +53,36 @@ public sealed class ChasmSystem : EntitySystem
         }
     }
 
-    private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredOffEvent args)
-    {
-        // already doomed
-        if (HasComp<ChasmFallingComponent>(args.Tripper))
-            return;
-
-        StartFalling(uid, component, args.Tripper);
-    }
-
-    public void StartFalling(EntityUid chasm, ChasmComponent component, EntityUid tripper, bool playSound = true)
+    [PublicAPI]
+    public void StartFalling(Entity<ChasmComponent> chasm, EntityUid tripper, bool playSound = true)
     {
         var falling = AddComp<ChasmFallingComponent>(tripper);
 
         falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
         falling.FallChasm = chasm;
-        component.FallingEntities.Add(tripper);
+        chasm.Comp.FallingEntities.Add(tripper);
 
         DirtyFields(tripper, falling, null, nameof(ChasmFallingComponent.NextDeletionTime), nameof(ChasmFallingComponent.FallChasm));
-        DirtyField(chasm, component, nameof(ChasmComponent.FallingEntities));
+        DirtyField(chasm, chasm.Comp, nameof(ChasmComponent.FallingEntities));
 
         _blocker.UpdateCanMove(tripper);
 
+        var ev = new StartChasmFallingEvent(chasm);
+        RaiseLocalEvent(tripper, ref ev);
+
         if (playSound)
-            _audio.PlayPredicted(component.FallingSound, chasm, tripper);
+            _audio.PlayPredicted(chasm.Comp.FallingSound, chasm, tripper);
     }
 
-    public void EndFalling(Entity<ChasmFallingComponent> tripper)
+    [PublicAPI]
+    public void EndFalling(Entity<ChasmFallingComponent?> tripper)
     {
+        if (!Resolve(tripper.Owner, ref tripper.Comp))
+            return;
+
+        var resetVisualsEv = new ResetChasmVisualsEvent();
+        RaiseLocalEvent(tripper.Owner, ref resetVisualsEv);
+
         RemCompDeferred(tripper.Owner, tripper.Comp);
 
         if (!TryComp(tripper.Comp.FallChasm, out ChasmComponent? chasmComp))
@@ -97,7 +98,16 @@ public sealed class ChasmSystem : EntitySystem
         RaiseLocalEvent(tripper.Comp.FallChasm.Value, ref ev);
     }
 
-    private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
+    private void OnStepTriggered(Entity<ChasmComponent> ent, ref StepTriggeredOffEvent args)
+    {
+        // already doomed
+        if (HasComp<ChasmFallingComponent>(args.Tripper))
+            return;
+
+        StartFalling(ent, args.Tripper);
+    }
+
+    private void OnStepTriggerAttempt(Entity<ChasmComponent> ent, ref StepTriggerAttemptEvent args)
     {
         if (_grapple.IsEntityHooked(args.Tripper))
         {
@@ -112,12 +122,17 @@ public sealed class ChasmSystem : EntitySystem
     {
         foreach (var uid in ent.Comp.FallingEntities)
         {
-            if (!TerminatingOrDeleted(uid) && Exists(uid))
-                RemComp<ChasmFallingComponent>(uid);
+            if (TerminatingOrDeleted(uid) || !Exists(uid))
+                continue;
+
+            var resetVisualsEv = new ResetChasmVisualsEvent();
+            RaiseLocalEvent(uid, ref resetVisualsEv);
+
+            RemCompDeferred<ChasmFallingComponent>(uid);
         }
     }
 
-    private void OnUpdateCanMove(EntityUid uid, ChasmFallingComponent component, UpdateCanMoveEvent args)
+    private void OnUpdateCanMove(Entity<ChasmFallingComponent> ent, ref UpdateCanMoveEvent args)
     {
         args.Cancel();
     }
@@ -130,7 +145,7 @@ public sealed class ChasmSystem : EntitySystem
 
     private void OnBeforeInteract(EntityUid uid, ChasmFallingComponent component, ref InteractHandEvent args)
     {
-        args.Handled = true; // You can't hand interact with already falling entities
+        args.Handled = true; // Falling entities are considered out of reach
     }
 
     private void OnDeleteFall(Entity<ChasmDeleteComponent> ent, ref ChasmFallEffectsEvent args)
@@ -144,14 +159,5 @@ public sealed class ChasmSystem : EntitySystem
             return;
 
         _container.Insert(args.Entity, container);
-
-        if (ent.Comp.DoStun)
-            EnsureComp<StunnedComponent>(args.Entity);
-    }
-
-    private void OnRemovedFromContainer(Entity<ChasmContainerComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (ent.Comp.DoStun)
-            RemComp<StunnedComponent>(args.Entity);
     }
 }
