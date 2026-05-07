@@ -63,10 +63,6 @@
             CanCharge: { visible: false }
             CanDischarge: { visible: true }
             Both: { visible: true }
-        enum.WiresVisuals.MaintenancePanelState:
-          enum.WiresVisualLayers.MaintenancePanel:
-            True: { visible: false }
-            False: { visible: true }
     - type: Appearance
     - type: Battery
       # Very important:
