@@ -1,11 +1,11 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by SeaWyrm (Aearo-Deepwater on GitHib) for SS14",
   "size": {
     "x": 32,
     "y": 32
   },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Created by SeaWyrm (Aearo-Deepwater on GitHib) for SS14",
   "states": [
     {
       "name": "DamageOverlay_5",
