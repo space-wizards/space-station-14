@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.Prototypes;
@@ -50,8 +51,9 @@ public interface ISkinColorationStrategy
 
     /// <summary>
     /// Returns whether or not the provided <see cref="Color" /> is within bounds of this strategy
+    /// Outs a reason if the verification fails.
     /// </summary>
-    bool VerifySkinColor(Color color);
+    bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason);
 
     /// <summary>
     /// Returns the closest skin color that this strategy would provide to the given <see cref="Color" />
@@ -63,7 +65,7 @@ public interface ISkinColorationStrategy
     /// </summary>
     Color EnsureVerified(Color color)
     {
-        if (VerifySkinColor(color))
+        if (VerifySkinColor(color, out _))
         {
             return color;
         }
@@ -100,8 +102,10 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Unary;
 
-    public bool VerifySkinColor(Color color)
+    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
     {
+        reason = null;
+
         var colorValues = Color.ToHsv(color);
 
         var hue = Math.Round(colorValues.X * 360f);
@@ -111,6 +115,7 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         // is 25 <= hue <= 45
         if (hue < 25f || hue > 45f)
         {
+            reason = $"Hue {hue} is outside of expected ranges 25 and 45.";
             return false;
         }
 
@@ -119,6 +124,7 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
         // where saturation increases to 100 and value decreases to 20
         if (sat < 20f || val < 20f)
         {
+            reason = "Saturation or value are below expected number of 20.";
             return false;
         }
 
@@ -211,18 +217,29 @@ public sealed partial class ClampedHsvColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
-    public bool VerifySkinColor(Color color)
+    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
     {
+        reason = null;
+
         var hsv = Color.ToHsv(color);
 
         if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsv.X, minHue, maxHue))
+        {
+            reason = $"Hue {Hue} is outside of range of min {minHue} max {maxHue}";
             return false;
+        }
 
         if (Saturation is (var minSat, var maxSat) && (hsv.Y < minSat - SkinColorationUtils.Epsilon || hsv.Y > maxSat + SkinColorationUtils.Epsilon))
+        {
+            reason = $"Saturation {Saturation} is outside of range of min {minSat} max {maxSat}";
             return false;
+        }
 
         if (Value is (var minVal, var maxVal) && (hsv.Z < minVal - SkinColorationUtils.Epsilon || hsv.Z > maxVal + SkinColorationUtils.Epsilon))
+        {
+            reason = $"Value {Value} is outside of range of min {minVal} max {maxVal}";
             return false;
+        }
 
         return true;
     }
@@ -270,18 +287,29 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
-    public bool VerifySkinColor(Color color)
+    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
     {
+        reason = null;
+
         var hsl = Color.ToHsl(color);
 
         if (Hue is (var minHue, var maxHue) && !SkinColorationUtils.IsHueInRange(hsl.X, minHue, maxHue))
+        {
+            reason = $"Hue {Hue} is outside of range of min {minHue} max {maxHue}";
             return false;
+        }
 
         if (Saturation is (var minSat, var maxSat) && (hsl.Y < minSat - SkinColorationUtils.Epsilon || hsl.Y > maxSat + SkinColorationUtils.Epsilon))
+        {
+            reason = $"Saturation {Saturation} is outside of range of min {minSat} max {maxSat}";
             return false;
+        }
 
         if (Lightness is (var minLight, var maxLight) && (hsl.Z < minLight - SkinColorationUtils.Epsilon || hsl.Z > maxLight + SkinColorationUtils.Epsilon))
+        {
+            reason = $"Lightness {Lightness} is outside of range of min {minLight} max {maxLight}";
             return false;
+        }
 
         return true;
     }
@@ -320,12 +348,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     [DataField(required: true)]
     public List<HueNodeClampedHsvColorationNode> Nodes = default!;
 
-    /// <inheritdoc/>
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
-    /// <inheritdoc/>
-    public bool VerifySkinColor(Color color)
+    public bool VerifySkinColor(Color color, [NotNullWhen(false)] out string? reason)
     {
+        reason = null;
         var hsv = Color.ToHsv(color);
 
         // Clamp the hue between the first and last node.
@@ -336,15 +363,24 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         // If no range was found, this color is invalid.
         if (range is null)
+        {
+            reason = "No valid range was found.";
             return false;
+        }
 
         // If a range is found, check if the saturation is within the provided ranges.
         if (hsv.Y < range.Saturation.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Item2 + SkinColorationUtils.Epsilon)
+        {
+            reason = $"Saturation {hsv.Y} is outside of range of min {range.Saturation.Item1} max {range.Saturation.Item2}";
             return false;
+        }
 
         // Check if the value is within provided ranges.
         if (hsv.Z < range.Value.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Value.Item2 + SkinColorationUtils.Epsilon)
+        {
+            reason = $"Value {hsv.Y} is outside of range of min {range.Value.Item1} max {range.Value.Item2}";
             return false;
+        }
 
         return true;
     }
