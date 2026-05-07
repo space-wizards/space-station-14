@@ -47,6 +47,7 @@
                 StyleIdentifier="mainMenu" />
         <clog:ChangelogButton
             Name="ChangelogButton"
+            StyleIdentifier="mainMenu"
             Access="Public" />
     </BoxContainer>
 </Control>
