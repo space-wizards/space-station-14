@@ -4,7 +4,6 @@
   components:
   - type: Sprite
     sprite: Markers/directional_arrow_indicator.rsi
-    color: "#FFFFFFBB"
     layers:
     - state: red_arrow
   - type: Tag
@@ -17,7 +16,6 @@
   components:
   - type: Sprite
     sprite: Markers/directional_arrow_indicator.rsi
-    color: "#FFFFFFBB"
     layers:
     - state: blue_arrow
   - type: Tag
