@@ -318,10 +318,12 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
     /// List of valid nodes in this coloration.
     /// </summary>
     [DataField(required: true)]
-    public List<HueNodeClampedHsvColorationNode> Nodes;
+    public List<HueNodeClampedHsvColorationNode> Nodes = default!;
 
+    /// <inheritdoc/>
     public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
 
+    /// <inheritdoc/>
     public bool VerifySkinColor(Color color)
     {
         var hsv = Color.ToHsv(color);
@@ -347,6 +349,7 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         return true;
     }
 
+    /// <inheritdoc/>
     public Color ClosestSkinColor(Color color)
     {
         var hsv = Color.ToHsv(color);
@@ -380,12 +383,11 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
 
         for (int i = 0; i < Nodes.Count; i++)
         {
-            // We get the currently iterated element. If for WHATEVER reason it doesn't exist, we fall back to the first element.
-            // There has to be at least one element here because we check the count above.
+            // We get the currently iterated element.
             var current = Nodes[i];
 
             // If there is no element after this one, we just loop back to the first element.
-            // Basically a node list of [0, 0.5] will fall back to node at 0 if the hue is ever higher.
+            // Basically a node list of [0, 0.5] will fall back to node at 0 if the hue is ever higher than 0.5
             var next = Nodes.ElementAtOrDefault(i + 1) ?? Nodes.First();
 
             // Is the hue within the range of the nodes we're considering?
