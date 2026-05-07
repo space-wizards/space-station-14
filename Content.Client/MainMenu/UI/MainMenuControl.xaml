@@ -1,6 +1,7 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:pllax="clr-namespace:Content.Client.Parallax"
-         xmlns:clog="clr-namespace:Content.Client.Changelog">
+         xmlns:clog="clr-namespace:Content.Client.Changelog"
+         xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <pllax:ParallaxControl
         ParallaxPrototype="TrainStation"
         SpeedX="5"
@@ -34,21 +35,28 @@
                 Access="Public"
                 Text="{Loc 'main-menu-direct-connect-button'}"
                 TextAlign="Center"
+                StyleClasses="OpenLeft"
                 StyleIdentifier="mainMenu" />
         <clog:ChangelogButton
             Name="ChangelogButton"
             StyleIdentifier="mainMenu"
+            StyleClasses="OpenBoth"
             Access="Public" />
         <Button Name="OptionsButton"
                 Access="Public"
                 Text="{Loc 'main-menu-options-button'}"
                 TextAlign="Center"
+                StyleClasses="OpenBoth"
                 StyleIdentifier="mainMenu" />
         <Button Name="QuitButton"
                 Access="Public"
                 Text="{Loc 'main-menu-quit-button'}"
                 TextAlign="Center"
-                StyleClasses="negative"
-                StyleIdentifier="mainMenu" />
+                StyleIdentifier="mainMenu">
+            <Control.StyleClasses>
+                <system:String>negative</system:String>
+                <system:String>OpenRight</system:String>
+            </Control.StyleClasses>
+        </Button>
     </BoxContainer>
 </Control>
