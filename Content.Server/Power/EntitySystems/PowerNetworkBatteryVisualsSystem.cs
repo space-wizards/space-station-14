@@ -32,17 +32,19 @@ public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit, after: [typeof(BatterySystem)]);
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanChargeChangedEvent>(OnBatteryCanChargeChanged);
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanDischargeChangedEvent>(OnBatteryCanDischargeChanged);
     }
 
     /// <summary>
     /// Handler for PowerNetworkBatteryCanDischargeChangedEvent, updates the charge capacity of the entity.
+    /// Note: BatterySystem's MapInit must run first to get a correct battery charge value.
     /// </summary>
     private void OnMapInit(Entity<PowerNetworkBatteryVisualsComponent> ent, ref MapInitEvent args)
     {
-        InitializeChargeState(ent);
+        UpdateChargeState(ent);
+        UpdateChargeCapabilities(ent);
     }
 
     /// <summary>
@@ -110,30 +112,6 @@ public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
             ent.Comp.LastChargeState = newChargeState;
             _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeState, newChargeState);
         }
-
-        ent.Comp.NextUpdateTime = _gameTiming.CurTime + ent.Comp.VisualsChangeDelay;
-    }
-
-    /// <summary>
-    /// Initializes the state (charge level, charge state, and charge capabilities) of the given entity.
-    /// Sends new appearance data regardless of the state of the component.
-    /// </summary>
-    /// <param name="ent">The entity to check, along with its visuals component.</param>
-    private void InitializeChargeState(Entity<PowerNetworkBatteryVisualsComponent> ent)
-    {
-        var newLevel = CalcChargeLevel(ent);
-        ent.Comp.LastChargeLevel = newLevel;
-        _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeLevel, newLevel);
-
-        TryComp<PowerNetworkBatteryComponent>(ent, out var powerNetworkBattery);
-
-        var newChargeState = CalcChargeState(ent, powerNetworkBattery);
-        ent.Comp.LastChargeState = newChargeState;
-        _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeState, newChargeState);
-
-        var chargeCapabilities = GetChargeCapabilities(ent, powerNetworkBattery);
-        ent.Comp.LastChargeCapabilities = chargeCapabilities;
-        _appearance.SetData(ent, PowerNetworkBatteryVisuals.LastChargeCapabilities, chargeCapabilities);
 
         ent.Comp.NextUpdateTime = _gameTiming.CurTime + ent.Comp.VisualsChangeDelay;
     }

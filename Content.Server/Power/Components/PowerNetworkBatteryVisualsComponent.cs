@@ -25,25 +25,28 @@ public sealed partial class PowerNetworkBatteryVisualsComponent : Component
 
     /// <summary>
     /// The last charge level of the battery.
+    /// The visuals for this entity should match an empty state for correct behaviour.
     /// </summary>
     [ViewVariables]
     public int LastChargeLevel = 0;
 
     /// <summary>
     /// Whether the battery is being charged/discharged/neither.
+    /// The initial visuals for this entity should match a stable charge for correct behaviour.
     /// </summary>
     [ViewVariables]
     public ChargeState LastChargeState = ChargeState.Still;
+
+    /// <summary>
+    /// Whether the battery can be charged and/or discharged.
+    /// The visuals for this entity should match a disconnected state for correct behaviour.
+    /// </summary>
+    [ViewVariables]
+    public PowerNetworkBatteryChargeCapabilities LastChargeCapabilities = PowerNetworkBatteryChargeCapabilities.Neither;
 
     /// <summary>
     /// The next time that the visuals should be updated.
     /// </summary>
     [ViewVariables, AutoPausedField]
     public TimeSpan NextUpdateTime;
-
-    /// <summary>
-    /// Whether the battery can be charged and/or discharged.
-    /// </summary>
-    [ViewVariables]
-    public PowerNetworkBatteryChargeCapabilities LastChargeCapabilities = PowerNetworkBatteryChargeCapabilities.Neither;
 }
