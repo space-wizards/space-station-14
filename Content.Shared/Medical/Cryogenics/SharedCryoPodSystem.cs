@@ -5,7 +5,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Systems;
@@ -57,8 +56,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private readonly EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
     [Dependency] private readonly EntityQuery<ItemSlotsComponent> _itemSlotsQuery = default!;
     [Dependency] private readonly EntityQuery<FitsInDispenserComponent> _dispenserQuery = default!;
-    [Dependency] private readonly EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery = default!;
-
 
     public override void Initialize()
     {
@@ -111,9 +108,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         var patient = entity.Comp.BodyContainer.ContainedEntity;
 
         if (patient == null
-            || !_solutionContainerQuery.TryComp(entity, out var podSolutionManager)
             || !_solutionContainer.TryGetSolution(
-                    (entity.Owner, podSolutionManager),
+                    entity.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _)
@@ -352,14 +348,12 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (beaker == null
             || !beaker.Value.Valid
             || !_dispenserQuery.TryComp(beaker, out var fitsInDispenserComponent)
-            || !_solutionContainerQuery.TryComp(beaker, out var beakerSolutionManager)
-            || !_solutionContainerQuery.TryComp(cryoPod, out var podSolutionManager)
             || !_solutionContainer.TryGetFitsInDispenser(
-                    (beaker.Value, fitsInDispenserComponent, beakerSolutionManager),
+                    (beaker.Value, fitsInDispenserComponent),
                     out var beakerSolution,
                     out _)
             || !_solutionContainer.TryGetSolution(
-                    (cryoPod.Owner, podSolutionManager),
+                    cryoPod.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectionSolutionComp,
                     out var injectionSolution))
@@ -377,9 +371,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
     public void ClearInjectionBuffer(Entity<CryoPodComponent> cryoPod)
     {
-        if (_solutionContainerQuery.TryComp(cryoPod, out var podSolutionManager)
-            && _solutionContainer.TryGetSolution(
-                    (cryoPod.Owner, podSolutionManager),
+        if (_solutionContainer.TryGetSolution(
+                    cryoPod.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _))
@@ -402,9 +395,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (beaker == null
             || !beaker.Value.Valid
             || !_dispenserQuery.TryComp(beaker, out var fitsInDispenserComponent)
-            || !_solutionContainerQuery.TryComp(beaker, out var solutionContainerManagerComponent)
             || !_solutionContainer.TryGetFitsInDispenser(
-                    (beaker.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
+                    (beaker.Value, fitsInDispenserComponent),
                     out var containerSolution,
                     out _))
             return (null, null);
@@ -419,9 +411,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
     protected List<ReagentQuantity>? GetInjectingReagents(Entity<CryoPodComponent> entity)
     {
-        if (!_solutionContainerQuery.TryComp(entity, out var solutionManager)
-            || !_solutionContainer.TryGetSolution(
-                    (entity.Owner, solutionManager),
+        if (!_solutionContainer.TryGetSolution(
+                    entity.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _))
