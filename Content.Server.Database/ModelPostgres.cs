@@ -21,6 +21,8 @@ namespace Content.Server.Database
             options.ConfigureWarnings(x =>
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+                // FINALSTAND: hand-written migrations lack Designer.cs; migration is correct.
+                x.Ignore(RelationalEventId.PendingModelChangesWarning);
 #if DEBUG
                 // for tests
                 x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);

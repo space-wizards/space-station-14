@@ -1,0 +1,117 @@
+# Shared prying config for all wave enemies.
+# pryPowered: can open powered airlocks, force: bypass bolted doors,
+# speedModifier: 8.0 = ~0.6s pry so BreakOnMove rarely cancels it.
+- type: entity
+  id: FSMobXeno
+  parent: MobXeno
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 235
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+- type: entity
+  id: FSMobXenoRunner
+  parent: MobXenoRunner
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobXenoDrone
+  parent: MobXenoDrone
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobXenoPraetorian
+  parent: MobXenoPraetorian
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobSpiderSpace
+  parent: MobSpiderSpace
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobFleshJared
+  parent: MobFleshJared
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobHivebotRanged
+  parent: MobHivebotRanged
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
+
+- type: entity
+  id: FSMobSyndicateFootsoldier
+  parent: MobSyndicateFootsoldier
+  suffix: FinalStand
+  components:
+  - type: HTN
+    rootTask:
+      task: FinalStandEnemyCompound
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 8.0
