@@ -138,4 +138,11 @@ public abstract partial class SharedGunSystem
         component.NextFire = minimum;
         Dirty(uid, component);
     }
+    private void OnUnequippedHand(Entity<GunComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        var gunComp = ent.Comp;
+        Log.Debug($"Dropped {ent} with component {gunComp}");
+        gunComp.CancellationHold = false;
+        Dirty(ent, gunComp);
+    }
 }

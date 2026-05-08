@@ -95,6 +95,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
+        SubscribeAllEvent<RequestGunCancelReleaseEvent>(OnCancelReleaseRequest);
         SubscribeLocalEvent<GunComponent, MeleeHitEvent>(OnGunMelee);
 
         // Ammo providers
@@ -114,6 +115,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
+        SubscribeLocalEvent<GunComponent, GotUnequippedHandEvent>(OnUnequippedHand);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -177,6 +179,30 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         StopShooting(userGun);
+    }
+
+    //For releasing the gun CancellationHold after the useKey is up
+    private void OnCancelReleaseRequest(RequestGunCancelReleaseEvent ev, EntitySessionEventArgs args)
+    {
+        var gunUid = GetEntity(ev.Gun);
+
+        if (args.SenderSession.AttachedEntity == null ||
+            !TryComp<GunComponent>(gunUid, out var gun) ||
+            !TryGetGun(args.SenderSession.AttachedEntity.Value, out var userGun))
+        {
+            return;
+        }
+
+        if (userGun != (gunUid, gun))
+            return;
+
+        //If it's already false then don't bother
+        if (!userGun.Comp.CancellationHold)
+            return;
+
+        //Otherwise set it to false and dirty the field
+        userGun.Comp.CancellationHold = false;
+        DirtyField(userGun.AsNullable(), nameof(GunComponent.CancellationHold));
     }
 
     public bool CanShoot(GunComponent component)
@@ -265,19 +291,25 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        // check if anything wants to prevent shooting
+        if (gun.Comp.CancellationHold == true)
+            return false;
+
+        // check if anything wants to prevent/cancel shooting (Pacification, Ninja Honor, Not being wielded, etc.)
         var prevention = new ShotAttemptedEvent
         {
             User = user,
             Used = gun
         };
         RaiseLocalEvent(gun, ref prevention);
-        if (prevention.Cancelled)
-            return false;
-
         RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
+        {
+            //set the gun CancellationHold, to stop repeat checks until the mouse is released.
+
+            gun.Comp.CancellationHold = true;
+            DirtyField(gun.AsNullable(), nameof(GunComponent.CancellationHold));
             return false;
+        }
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.

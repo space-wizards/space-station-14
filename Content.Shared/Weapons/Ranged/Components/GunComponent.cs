@@ -259,6 +259,12 @@ public sealed partial class GunComponent : Component
     public bool ClumsyProof = false;
 
     /// <summary>
+    /// If the gun has been cancelled recently (via pacification, ninja honor, not being weilded, etc.)
+    /// </summary>
+[DataField, AutoNetworkedField]
+    public bool CancellationHold = false;
+
+    /// <summary>
     /// Firing direction for an item not being held (e.g. shuttle cannons, thrown guns still firing).
     /// </summary>
     [DataField]

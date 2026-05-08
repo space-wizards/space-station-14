@@ -23,14 +23,12 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
 
 public abstract class SharedWieldableSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -87,16 +85,8 @@ public abstract class SharedWieldableSystem : EntitySystem
             !wieldable.Wielded)
         {
             args.Cancel();
-
-            var time = _timing.CurTime;
-            if (time > component.LastPopup + component.PopupCooldown &&
-                !HasComp<MeleeWeaponComponent>(uid) &&
-                !HasComp<MeleeRequiresWieldComponent>(uid))
-            {
-                component.LastPopup = time;
-                var message = Loc.GetString("wieldable-component-requires", ("item", uid));
-                _popup.PopupClient(message, args.Used, args.User);
-            }
+            var message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            _popup.PopupClient(message, args.Used, args.User);
         }
     }
 

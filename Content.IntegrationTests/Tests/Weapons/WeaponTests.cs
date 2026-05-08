@@ -50,11 +50,13 @@ public sealed class WeaponTests : InteractionTest
         Assert.That(damageSystem.GetTotalDamage(ToServer(urist)),
             Is.EqualTo(FixedPoint2.Zero),
             "Urist took damage when the weapon should not have fired!");
-
         await UseInHand();
 
         Assert.That(wieldComp.Wielded, Is.True, "Mosin failed to wield when interacted with!");
 
+        var gunComp = Comp<GunComponent>(mosinNet);
+        await Pair.RunSeconds(1f); // Give time for the cancelled shot (from not being wield-able) to be released from CancellationHold
+        Assert.That(gunComp.CancellationHold, Is.EqualTo(false), "Cancellation Hold was not released.");
         await AttemptShoot(urist);
         updatedAmmo = gunSystem.GetAmmoCount(mosinEnt);
 
