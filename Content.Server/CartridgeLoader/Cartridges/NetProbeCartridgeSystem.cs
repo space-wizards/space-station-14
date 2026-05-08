@@ -11,7 +11,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed partial class NetProbeCartridgeSystem : EntitySystem
 {
-    [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;

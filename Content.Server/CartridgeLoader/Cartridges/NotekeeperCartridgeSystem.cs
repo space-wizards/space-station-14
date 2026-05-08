@@ -7,7 +7,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed partial class NotekeeperCartridgeSystem : EntitySystem
 {
-    [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
