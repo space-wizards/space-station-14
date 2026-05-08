@@ -1,5 +1,7 @@
 - type: entity
   abstract: true
+  parent:
+  - OffbrandOrganChild
   id: OffbrandOrganBaseHeart
   components:
   - type: DamageableOrgan
@@ -29,6 +31,8 @@
 
 - type: entity
   abstract: true
+  parent:
+  - OffbrandOrganChild
   id: OffbrandOrganBaseBrain
   components:
   - type: OffbrandBrainOrgan
@@ -77,6 +81,8 @@
 
 - type: entity
   abstract: true
+  parent:
+  - OffbrandOrganChild
   id: OffbrandOrganBaseLungs
   components:
   - type: DamageableOrgan
@@ -149,50 +155,147 @@
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganParent
+  - OffbrandOrganChild
   id: OffbrandOrganWoundableHead
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
+  - OffbrandOrganParent
   id: OffbrandOrganWoundableArmLeft
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
   id: OffbrandOrganWoundableFootLeft
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
   id: OffbrandOrganWoundableHandLeft
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
+  - OffbrandOrganParent
   id: OffbrandOrganWoundableLegLeft
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
+  - OffbrandOrganParent
   id: OffbrandOrganWoundableArmRight
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
   id: OffbrandOrganWoundableFootRight
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
   id: OffbrandOrganWoundableHandRight
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganChild
+  - OffbrandOrganParent
   id: OffbrandOrganWoundableLegRight
 
 - type: entity
   abstract: true
-  parent: OffbrandOrganWoundableVisuals
+  parent:
+  - OffbrandOrganWoundableVisuals
+  - OffbrandOrganParent
   id: OffbrandOrganWoundableTorso
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganParent
+  components:
+  - type: ParentOrgan
+  - type: DetachableOrgan
+    detachedBody: OffbrandDetachedBody
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganChild
+  components:
+  - type: ChildOrgan
+  - type: DetachableOrgan
+    detachedBody: OffbrandDetachedBody
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseEyes
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseTongue
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseAppendix
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseEars
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseStomach
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseLiver
+
+- type: entity
+  abstract: true
+  parent:
+  - OffbrandOrganChild
+  id: OffbrandOrganBaseKidneys
+
+- type: entity
+  id: OffbrandDetachedBody
+  parent:
+  - BaseSpeciesLayers
+  save: false
+  components:
+  - type: Body
+  - type: VisualBody
+  - type: ContainerContainer
+  - type: Appearance
+  - type: HideableHumanoidLayers
+  - type: Item
+  - type: InteractionOutline

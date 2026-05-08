@@ -1,12 +1,14 @@
 using System.Numerics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes; // Offbrand
 
 namespace Content.Shared.Body;
 
 public sealed class InitialBodySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly Content.Shared._Offbrand.Skeletons.OrganRelationSystem _organRelation = default!; // Offbrand
 
     public override void Initialize()
     {
@@ -31,8 +33,9 @@ public sealed class InitialBodySystem : EntitySystem
 
         var xform = Transform(ent);
         var coords = new EntityCoordinates(ent, Vector2.Zero);
+        var spawned = new Dictionary<ProtoId<OrganCategoryPrototype>, EntityUid>(); // Offbrand
 
-        foreach (var proto in ent.Comp.Organs.Values)
+        foreach (var (part, proto) in ent.Comp.Organs) // Offbrand
         {
             // TODO: When e#6192 is merged replace this all with TrySpawnInContainer...
             var spawn = Spawn(proto, coords);
@@ -41,7 +44,29 @@ public sealed class InitialBodySystem : EntitySystem
             {
                 Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(InitialBodyComponent)} failed to insert an entity: {ToPrettyString(spawn)}.\n");
                 Del(spawn);
+                continue; // Offbrand
+            }
+
+            spawned[part] = spawn; // Offbrand
+        }
+
+        // Begin Offbrand
+        if (ent.Comp.Relationships is null)
+            return;
+
+        foreach (var (partId, parentUid) in spawned)
+        {
+            if (!ent.Comp.Relationships.TryGetValue(partId, out var children))
+                continue;
+
+            foreach (var childId in children)
+            {
+                if (!spawned.TryGetValue(childId, out var childUid))
+                    continue;
+
+                _organRelation.Relate(parentUid, childUid);
             }
         }
+        // End Offbrand
     }
 }

@@ -293,7 +293,9 @@
       Taco: Brain
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseEyes
   id: OrganBaseEyes
   name: eyes
   abstract: true
@@ -316,7 +318,9 @@
       - Eyes
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseTongue
   id: OrganBaseTongue
   name: tongue
   abstract: true
@@ -329,7 +333,9 @@
     - state: tongue
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseAppendix
   id: OrganBaseAppendix
   name: appendix
   abstract: true
@@ -342,7 +348,9 @@
     - state: appendix
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseEars
   id: OrganBaseEars
   name: ears
   abstract: true
@@ -408,7 +416,9 @@
     stages: [ Bloodstream ]
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseStomach
   id: OrganBaseStomach
   name: stomach
   abstract: true
@@ -440,7 +450,9 @@
       maxVol: 150 # 1.25 liters which is average for a human
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseLiver
   id: OrganBaseLiver
   name: liver
   abstract: true
@@ -458,7 +470,9 @@
     stages: [ Metabolites ]
 
 - type: entity
-  parent: OrganBase
+  parent:
+  - OrganBase
+  - OffbrandOrganBaseKidneys
   id: OrganBaseKidneys
   name: kidneys
   abstract: true

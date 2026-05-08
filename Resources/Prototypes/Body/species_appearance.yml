@@ -87,3 +87,13 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+  # Begin Offbrand
+  - type: InitialBody
+    relationships:
+      Torso: [Head, ArmLeft, ArmRight, LegLeft, LegRight, Appendix, Lungs, Heart, Stomach, Liver, Kidneys]
+      Head: [Brain, Eyes, Tongue, Ears]
+      ArmLeft: [HandLeft]
+      ArmRight: [HandRight]
+      LegLeft: [FootLeft]
+      LegRight: [FootRight]
+  # End Offbrand
