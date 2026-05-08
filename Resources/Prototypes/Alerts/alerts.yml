@@ -163,6 +163,15 @@
   description: alerts-handcuffed-desc
 
 - type: alert
+  id: Cocooned
+  clickEvent: !type:RemoveCocoonAlertEvent
+  icons:
+  - sprite: /Textures/Mobs/Effects/cocooned.rsi
+    state: cocooned
+  name: alerts-cocooned-name
+  description: alerts-cocooned-desc
+
+- type: alert
   id: Ensnared
   clickEvent: !type:RemoveEnsnareAlertEvent
   icons:
