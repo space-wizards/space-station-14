@@ -6,7 +6,7 @@
   components:
   - type: Action
     icon:
-      sprite: Interface/Actions/shadowkin_icons.rsi
+      sprite: _EE/Shadowkin/Interface/Actions/shadowkin_icons.rsi
       state: shadeskip
     useDelay: 60
   - type: InstantAction
@@ -20,7 +20,7 @@
   components:
   - type: Action
     icon:
-      sprite: Interface/Actions/shadowkin_icons.rsi
+      sprite: _EE/Shadowkin/Interface/Actions/shadowkin_icons.rsi
       state: darkswap
   - type: InstantAction
     event: !type:RecallShadowAnchorEvent

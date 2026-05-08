@@ -254,7 +254,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Shadowkin/organs.rsi
+    sprite: _EE/Shadowkin/Mobs/Species/organs.rsi
 
 - type: entity
   parent: OrganShadowkin
@@ -262,10 +262,10 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Shadowkin/parts.rsi
+    sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
   - type: VisualOrgan
     data:
-      sprite: Mobs/Species/Shadowkin/parts.rsi
+      sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
   - type: VisualOrganMarkings
     markingData:
       group: Shadowkin
@@ -334,7 +334,7 @@
     - state: eyes
   - type: VisualOrgan
     data:
-      sprite: Mobs/Species/Shadowkin/parts.rsi
+      sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
       state: eyes
 
 - type: entity

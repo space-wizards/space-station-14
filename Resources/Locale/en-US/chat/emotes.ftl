@@ -80,9 +80,3 @@ chat-emote-msg-whine = whines.
 chat-emote-msg-howl = howls.
 chat-emote-msg-growl = growls.
 chat-emote-msg-flap = flaps {POSS-ADJ($entity)} wings.
-
-# Shadowkin
-chat-emote-name-mars = Mars
-chat-emote-name-wurble = Wurble
-chat-emote-msg-mars = mars.
-chat-emote-msg-wurble = wurbles.

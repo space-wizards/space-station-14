@@ -6,7 +6,7 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/ears.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/ears.rsi
     state: shadowkin
 
 - type: marking
@@ -23,9 +23,9 @@
           !type:SimpleColoring
             color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/ears.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/ears.rsi
     state: shadowkin
-  - sprite: Mobs/Customization/Shadowkin/ears.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/ears.rsi
     state: shadowkin_stripes
 
 # Tails
@@ -36,7 +36,7 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/tails64x32.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/tails64x32.rsi
     state: shadowkin
 
 - type: marking
@@ -45,7 +45,7 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/tails64x32.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/tails64x32.rsi
     state: shadowkin_big
 
 - type: marking
@@ -54,7 +54,7 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/tails64x32.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/tails64x32.rsi
     state: shadowkin_big_fluff
 
 - type: marking
@@ -63,7 +63,7 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/tails32x32.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/tails32x32.rsi
     state: shadowkin_shorter
 
 - type: marking
@@ -72,5 +72,5 @@
   groupWhitelist: [ Shadowkin ]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Shadowkin/tails32x32.rsi
+  - sprite: _EE/Shadowkin/Mobs/Customization/tails32x32.rsi
     state: shadowkin_medium

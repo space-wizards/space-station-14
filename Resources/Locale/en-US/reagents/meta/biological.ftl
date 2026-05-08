@@ -19,9 +19,6 @@ reagent-desc-ammonia-blood = Nothing else in the entire galaxy smells quite so a
 reagent-name-sulfur-blood = sulfuric blood
 reagent-desc-sulfur-blood = Feels almost acidic.
 
-reagent-name-black-blood = black blood
-reagent-desc-black-blood = Thick, inky blood from a shadowkin.
-
 reagent-name-zombie-blood = zombie blood
 reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
 

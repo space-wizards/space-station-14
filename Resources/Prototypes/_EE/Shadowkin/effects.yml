@@ -12,7 +12,7 @@
     lifetime: 1.5
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/Effects/Shadowkin/shadeskip.ogg
+      path: /Audio/_EE/Shadowkin/Effects/shadeskip.ogg
 
 - type: entity
   id: ShadowkinShadow

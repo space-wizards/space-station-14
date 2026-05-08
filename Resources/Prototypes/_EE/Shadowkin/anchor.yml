@@ -4,7 +4,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    sprite: _EE/Shadowkin/Effects/shadowkin_anchor.rsi
     state: anchor_idle
     drawdepth: Effects
   - type: Transform
@@ -23,7 +23,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    sprite: _EE/Shadowkin/Effects/shadowkin_anchor.rsi
     state: anchor_spawn
     drawdepth: Effects
   - type: Transform
@@ -38,7 +38,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    sprite: _EE/Shadowkin/Effects/shadowkin_anchor.rsi
     state: recall_depart
     drawdepth: Effects
   - type: Transform
@@ -53,7 +53,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    sprite: _EE/Shadowkin/Effects/shadowkin_anchor.rsi
     layers:
     - state: anchor_flash_destroy
       shader: unshaded
@@ -74,7 +74,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    sprite: _EE/Shadowkin/Effects/shadowkin_anchor.rsi
     state: recall_arrive
     drawdepth: Effects
   - type: Transform
