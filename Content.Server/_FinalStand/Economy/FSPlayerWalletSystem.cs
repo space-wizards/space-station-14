@@ -89,18 +89,23 @@ public sealed class FSPlayerWalletSystem : EntitySystem
         }
     }
 
-    /// <summary>Gives every player with a wallet credits.</summary>
+    /// <summary>Gives every connected player credits, creating their wallet if needed.</summary>
     public void DistributeCredits(int amount)
     {
         var count = 0;
-        var query = EntityQueryEnumerator<FSPlayerWalletComponent>();
-        while (query.MoveNext(out var mindId, out var wallet))
+        var query = EntityQueryEnumerator<MindComponent>();
+        while (query.MoveNext(out var mindId, out var mind))
         {
+            if (mind.UserId == null)
+                continue;
+            if (!_playerManager.TryGetSessionById(mind.UserId.Value, out _))
+                continue;
+            var wallet = EnsureComp<FSPlayerWalletComponent>(mindId);
             wallet.Credits += amount;
             NotifyClient(mindId, wallet);
             count++;
         }
-        Log.Debug($"[FSWallet] DistributeCredits +{amount} → {count} player(s)");
+        Log.Info($"[FSWallet] DistributeCredits +{amount} → {count} player(s)");
     }
 
     /// <summary>Gives every player perk points and saves immediately.</summary>
@@ -121,6 +126,15 @@ public sealed class FSPlayerWalletSystem : EntitySystem
         Log.Info($"[FSWallet] DistributePerkPoints +{amount} → {count} player(s)");
     }
 
+    ///Gives a specific player credits by their mind entity.
+    public void GiveCredits(EntityUid mindId, int amount)
+    {
+        var wallet = EnsureComp<FSPlayerWalletComponent>(mindId);
+        wallet.Credits += amount;
+        NotifyClient(mindId, wallet);
+        Log.Debug($"[FSWallet] GiveCredits +{amount} → mind {mindId}");
+    }
+
     public bool TryDeductCredits(EntityUid mindId, int amount)
     {
         if (!TryComp<FSPlayerWalletComponent>(mindId, out var wallet) || wallet.Credits < amount)
@@ -130,7 +144,7 @@ public sealed class FSPlayerWalletSystem : EntitySystem
         return true;
     }
 
-    /// <summary>Flush all prestige to disk. Call at round end.</summary>
+    /// flush all prestige to disk. Call at round end.</summary>
     public void SaveAll()
     {
         var query = EntityQueryEnumerator<FSPlayerWalletComponent, MindComponent>();

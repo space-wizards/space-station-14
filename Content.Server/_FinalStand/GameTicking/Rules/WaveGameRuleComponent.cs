@@ -45,6 +45,9 @@ public sealed partial class WaveGameRuleComponent : Component
     public int KillReward = 100;
 
     [DataField]
+    public int TacKillBonus = 50;
+
+    [DataField]
     public int WaveSurvivalBonus = 500;
 
     [DataField]

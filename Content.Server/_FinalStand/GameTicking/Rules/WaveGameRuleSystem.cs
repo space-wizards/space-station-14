@@ -7,7 +7,9 @@ using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Shared._FinalStand.WaveHud;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
@@ -20,6 +22,8 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly FSPlayerWalletSystem _wallet = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
 
     public override void Initialize()
     {
@@ -230,12 +234,36 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
                 continue;
 
             comp.TotalEnemiesKilled++;
-            _wallet.DistributeCredits(comp.KillReward);
-            Log.Info($"[WaveGameRule] Enemy {ent.Owner} died. {comp.AliveEnemies.Count} alive, " +
+
+            var killCredits = TryComp<FSEnemyValueComponent>(ent.Owner, out var enemyVal)
+                ? enemyVal.KillCredits
+                : comp.KillReward;
+
+            // Award credits to the last-hit player only.
+            // If no player origin (environmental kill), no award — avoids free money from fall deaths.
+            if (args.Origin != null && _mind.TryGetMind(args.Origin.Value, out var mindId, out _))
+            {
+                _wallet.GiveCredits(mindId, killCredits);
+
+                // TODO(finalstand): update department ID to "TAC" once Security role is renamed
+                if (IsTacRole(mindId))
+                    _wallet.GiveCredits(mindId, comp.TacKillBonus);
+            }
+
+            Log.Info($"[WaveGameRule] Enemy {ent.Owner} died (origin={args.Origin}). " +
+                     $"{comp.AliveEnemies.Count} alive, " +
                      $"{comp.EnemyTotalThisWave - comp.EnemiesSpawnedThisWave} not yet spawned (wave {comp.WaveNumber}).");
             CheckWaveComplete(uid, comp);
             break;
         }
+    }
+
+    private bool IsTacRole(EntityUid mindId)
+    {
+        // TODO(finalstand): update department ID to "TAC" once Security role is renamed
+        return _jobs.MindTryGetJob(mindId, out var job)
+            && _jobs.TryGetPrimaryDepartment(job.ID, out var dept)
+            && dept.ID == "Security";
     }
 
     private void OnWaveEnemyShutdown(EntityUid uid, WaveSpawnedTagComponent comp, ComponentShutdown args)
