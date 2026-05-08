@@ -22,6 +22,7 @@ using Content.Client.Voting;
 using Content.Shared.Administration.Logs;
 using Content.Client.Lobby;
 using Content.Client.Players.RateLimiting;
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.FeedbackSystem;
@@ -55,6 +56,7 @@ namespace Content.Client.IoC
             collection.Register<GhostKickManager>();
             collection.Register<ExtendedDisconnectInformationManager>();
             collection.Register<JobRequirementsManager>();
+            collection.Register<IFontSelectionManager, FontSelectionManager>();
             collection.Register<DocumentParsingManager>();
             collection.Register<ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();

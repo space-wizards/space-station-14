@@ -1,3 +1,5 @@
+using Robust.Client.Graphics;
+
 namespace Content.Client.Stylesheets.Fonts;
 
 /// <summary>
@@ -51,6 +53,32 @@ public static class FontKindExtensions
         {
             FontKind.Regular => FontKind.Regular,
             _ => other,
+        };
+    }
+
+    /// <summary>
+    /// Get the <see cref="FontWeight"/> value corresponding to this <see cref="FontKind"/>.
+    /// </summary>
+    internal static FontWeight GetWeight(this FontKind kind)
+    {
+        return kind switch
+        {
+            FontKind.Regular or FontKind.Italic => FontWeight.Normal,
+            FontKind.Bold or FontKind.BoldItalic => FontWeight.Bold,
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
+        };
+    }
+
+    /// <summary>
+    /// Get the <see cref="FontSlant"/> value corresponding to this <see cref="FontKind"/>.
+    /// </summary>
+    internal static FontSlant GetSlant(this FontKind kind)
+    {
+        return kind switch
+        {
+            FontKind.Regular or FontKind.Bold => FontSlant.Normal,
+            FontKind.Italic or FontKind.BoldItalic => FontSlant.Italic,
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
         };
     }
 }

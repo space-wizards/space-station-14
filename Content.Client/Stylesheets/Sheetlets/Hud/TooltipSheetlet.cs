@@ -33,10 +33,10 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
                 .Panel(tooltipBox),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipTitle)
-                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 14, FontKind.Bold)),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipDesc)
-                .Font(sheet.BaseFont.GetFont(12)),
+                .Font(sheet.Fonts.GetFont(StandardFontType.Main, 12)),
 
             E<Tooltip>()
                 // ReSharper disable once AccessToStaticMemberViaDerivedType
@@ -54,11 +54,11 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
             E<PanelContainer>()
                 .Class("speechBox", "whisperBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Italic)),
             E<PanelContainer>()
                 .Class("speechBox", "emoteBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, sheet.Fonts.GetFont(StandardFontType.Main, 12, FontKind.Italic)),
         ];
     }
 }

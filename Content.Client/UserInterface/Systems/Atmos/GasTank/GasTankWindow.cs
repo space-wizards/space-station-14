@@ -90,6 +90,7 @@ public sealed class GasTankWindow
 
         LayoutContainer.SetAnchorPreset(topContainerWrap, LayoutContainer.LayoutPreset.Wide);
 
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         var font = _cache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
         _topLabel = new Label

@@ -1,28 +1,50 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Content.Client.Resources;
+using Content.Client.Stylesheets.Fonts;
 using Content.Shared.Access.Components;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 
 namespace Content.Client.Access;
 
 public sealed class AccessOverlay : Overlay
 {
-    private const string TextFontPath = "/Fonts/NotoSans/NotoSans-Regular.ttf";
     private const int TextFontSize = 12;
 
     private readonly IEntityManager _entityManager;
+    private readonly IFontSelectionManager _fontSelection;
     private readonly SharedTransformSystem _transformSystem;
-    private readonly Font _font;
+    private Font _font;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public AccessOverlay(IEntityManager entityManager, IResourceCache resourceCache, SharedTransformSystem transformSystem)
+    public AccessOverlay(IEntityManager entityManager, IFontSelectionManager fontSelection, SharedTransformSystem transformSystem)
     {
         _entityManager = entityManager;
         _transformSystem = transformSystem;
-        _font = resourceCache.GetFont(TextFontPath, TextFontSize);
+        _fontSelection = fontSelection;
+
+        UpdateFont();
+        _fontSelection.OnFontChanged += OnFontChanged;
+    }
+
+    protected override void DisposeBehavior()
+    {
+        base.DisposeBehavior();
+
+        _fontSelection.OnFontChanged -= OnFontChanged;
+    }
+
+    private void OnFontChanged(StandardFontType type)
+    {
+        if (type == StandardFontType.Main)
+            UpdateFont();
+    }
+
+    [MemberNotNull(nameof(_font))]
+    private void UpdateFont()
+    {
+        _font = _fontSelection.GetFont(StandardFontType.Main, TextFontSize);
     }
 
     protected override void Draw(in OverlayDrawArgs args)

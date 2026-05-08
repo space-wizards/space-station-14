@@ -361,6 +361,7 @@ cmd-options-help = Usage: options [tab]
 ## Accessibility menu
 
 ui-options-accessability-header-visuals = Visuals
+ui-options-accessability-header-interface = Interface
 ui-options-accessability-header-content = Content
 
 ui-options-enable-color-name = Add colors to character names
@@ -374,6 +375,14 @@ ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
 ui-options-speech-bubble-background-opacity = Speech bubble background opacity
 
 ui-options-censor-nudity = Censor character nudity
+
+ui-options-main-font = Main font
+ui-options-title-font = Title font
+ui-options-machine-title-font = Machine title font
+ui-options-monospace-font = Monospace font
+
+ui-options-font-selector-default = <default>
+ui-options-font-selector-preview-text = Preview Text
 
 ## Admin menu
 

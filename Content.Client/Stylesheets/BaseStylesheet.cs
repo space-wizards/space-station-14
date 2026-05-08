@@ -24,10 +24,15 @@ public abstract partial class BaseStylesheet
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
     /// </remarks>
-    protected BaseStylesheet(object config)
+    protected BaseStylesheet(object config, IDependencyCollection deps)
     {
-        IoCManager.InjectDependencies(this);
+        deps.InjectDependencies(this);
         _config = config;
         Stylesheet = default!;
+    }
+
+    [Obsolete("Pass in IDependencyCollection directly")]
+    protected BaseStylesheet(object config) : this(config, IoCManager.Resolve<IDependencyCollection>())
+    {
     }
 }

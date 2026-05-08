@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Client.Stylesheets.Fonts;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -15,6 +16,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
     public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();
@@ -28,14 +30,33 @@ public sealed class ExplosionDebugOverlay : Overlay
     public Matrix3x2 SpaceMatrix;
     public MapId Map;
 
-    private readonly Font _font;
+    private Font _font;
 
     public ExplosionDebugOverlay()
     {
         IoCManager.InjectDependencies(this);
 
-        var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
+        UpdateFont();
+        _fontSelection.OnFontChanged += OnFontChanged;
+    }
+
+    protected override void DisposeBehavior()
+    {
+        base.DisposeBehavior();
+
+        _fontSelection.OnFontChanged -= OnFontChanged;
+    }
+
+    private void OnFontChanged(StandardFontType type)
+    {
+        if (type == StandardFontType.Main)
+            UpdateFont();
+    }
+
+    [MemberNotNull(nameof(_font))]
+    private void UpdateFont()
+    {
+        _font = _fontSelection.GetFont(StandardFontType.Main, 8);
     }
 
     protected override void Draw(in OverlayDrawArgs args)

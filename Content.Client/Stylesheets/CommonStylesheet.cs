@@ -11,6 +11,12 @@ public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWin
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
     /// </remarks>
+    protected CommonStylesheet(object config, IDependencyCollection deps) : base(config, deps) { }
+
+    /// <remarks>
+    ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
+    /// </remarks>
+    [Obsolete("Pass in IDependencyCollection directly")]
     protected CommonStylesheet(object config) : base(config) { }
 
     ResPath ICheckboxConfig.CheckboxUncheckedPath => new("checkbox_unchecked.svg.96dpi.png");
