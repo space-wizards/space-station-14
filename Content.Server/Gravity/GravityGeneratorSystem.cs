@@ -1,6 +1,8 @@
-using Content.Server.Power.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Gravity;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Gravity;
 
@@ -8,6 +10,7 @@ public sealed class GravityGeneratorSystem : SharedGravityGeneratorSystem
 {
     [Dependency] private readonly GravitySystem _gravitySystem = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     public override void Initialize()
     {
@@ -16,6 +19,20 @@ public sealed class GravityGeneratorSystem : SharedGravityGeneratorSystem
         SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineActivatedEvent>(OnActivated);
         SubscribeLocalEvent<GravityGeneratorComponent, ChargedMachineDeactivatedEvent>(OnDeactivated);
+        SubscribeLocalEvent<PowerChargeComponent, ChangedMachineBeforeBreakageEvent>(OnBeforeBreak);
+
+    }
+
+    private void OnBeforeBreak(EntityUid uid, PowerChargeComponent component, ChangedMachineBeforeBreakageEvent _)
+    {
+        if (TryComp<ExplosiveComponent>(uid, out var explosiveComponent) && component.Charge > 0)
+        {
+            _explosion.TriggerExplosive(uid,
+                explosiveComponent,
+                false,
+                // min of half intensity to prevent very small explosions
+                explosiveComponent.TotalIntensity * (component.Charge / 2f + .5f));
+        }
     }
 
     public override void Update(float frameTime)

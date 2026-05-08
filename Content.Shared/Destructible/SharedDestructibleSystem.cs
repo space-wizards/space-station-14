@@ -27,9 +27,9 @@ public abstract class SharedDestructibleSystem : EntitySystem
     /// <summary>
     /// Force entity to break.
     /// </summary>
-    public void BreakEntity(EntityUid owner)
+    public void BreakEntity(EntityUid owner, EntityUid? user = null)
     {
-        var eventArgs = new BreakageEventArgs();
+        var eventArgs = new BreakageEventArgs { User = user };
         RaiseLocalEvent(owner, eventArgs);
     }
 }
@@ -55,5 +55,8 @@ public sealed class DestructionEventArgs : EntityEventArgs
 /// </summary>
 public sealed class BreakageEventArgs : EntityEventArgs
 {
-
+    /// <summary>
+    /// The entity that caused this breakage to trigger.
+    /// </summary>
+    public EntityUid? User;
 }

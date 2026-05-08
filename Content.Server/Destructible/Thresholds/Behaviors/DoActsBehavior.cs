@@ -21,7 +21,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         {
             if (HasAct(ThresholdActs.Breakage))
             {
-                system.BreakEntity(owner);
+                system.BreakEntity(owner, cause);
             }
 
             if (HasAct(ThresholdActs.Destruction))

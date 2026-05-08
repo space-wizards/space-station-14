@@ -2,14 +2,17 @@
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Repairable;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerChargeSystem : EntitySystem
+public sealed class PowerChargeSystem : SharedPowerChargeSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -24,9 +27,16 @@ public sealed class PowerChargeSystem : EntitySystem
         SubscribeLocalEvent<PowerChargeComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<PowerChargeComponent, AfterActivatableUIOpenEvent>(OnAfterUiOpened);
         SubscribeLocalEvent<PowerChargeComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
+        SubscribeLocalEvent<PowerChargeComponent, BreakageEventArgs>(OnBreak);
+        SubscribeLocalEvent<PowerChargeComponent, RepairedEvent>(OnRepaired);
 
         // This needs to be ui key agnostic
         SubscribeLocalEvent<PowerChargeComponent, SwitchChargingMachineMessage>(OnSwitchGenerator);
+    }
+
+    private void OnRepaired(EntityUid uid, PowerChargeComponent component, RepairedEvent _)
+    {
+        SetIntact(uid, component, true);
     }
 
     private void OnAnchorStateChange(EntityUid uid, PowerChargeComponent component, AnchorStateChangedEvent args)
@@ -39,12 +49,36 @@ public sealed class PowerChargeSystem : EntitySystem
         UpdateState(new Entity<PowerChargeComponent, ApcPowerReceiverComponent>(uid, component, powerReceiverComponent));
     }
 
+    private void OnBreak(EntityUid uid, PowerChargeComponent component, BreakageEventArgs args)
+    {
+        if (!component.Intact)
+            return;
+
+        if (args.User is not null)
+        {
+            _adminLogger.Add(LogType.Damaged,
+                LogImpact.High,
+                $"{ToPrettyString(args.User):player} has broken {ToPrettyString(uid):target}");
+        }
+
+        // SetIntact modifies the Power Charge Component
+        // Give subscribers a chance to do something with the information
+        //   before clearing the component
+        var eventArgs = new ChangedMachineBeforeBreakageEvent();
+        RaiseLocalEvent(uid, ref eventArgs);
+
+        SetIntact(uid, component, false);
+    }
+
     private void OnAfterUiOpened(EntityUid uid, PowerChargeComponent component, AfterActivatableUIOpenEvent args)
     {
         if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver))
             return;
 
-        UpdateUI((uid, component, apcPowerReceiver), component.ChargeRate);
+        // UpdateUI is unable to tell what state the machine is in
+        var chargeRate = component.SwitchedOn ? component.ChargeRate : -component.ChargeRate;
+
+        UpdateUI((uid, component, apcPowerReceiver), chargeRate);
     }
 
     private void OnSwitchGenerator(EntityUid uid, PowerChargeComponent component, SwitchChargingMachineMessage args)
@@ -91,6 +125,32 @@ public sealed class PowerChargeSystem : EntitySystem
         component.SwitchedOn = on;
         UpdatePowerState(component, powerReceiver);
         component.NeedUIUpdate = true;
+    }
+
+    private void SetIntact(EntityUid uid, PowerChargeComponent component, bool intact)
+    {
+        if (component.Intact == intact || !TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent))
+            return;
+
+        component.Intact = intact;
+
+        // Whenever going to a new state, the machine is cleared
+        component.Charge = 0;
+        component.Active = false;
+        SetSwitchedOn(uid, component, false, powerReceiverComponent);
+        component.NeedUIUpdate = true;
+
+        if (!intact)
+        {
+            var eventArgs = new ChargedMachineDeactivatedEvent();
+            RaiseLocalEvent(uid, ref eventArgs);
+
+            _uiSystem.CloseUi(uid, component.UiKey);
+        }
+
+        UpdateState(
+            new Entity<PowerChargeComponent, ApcPowerReceiverComponent>(uid, component, powerReceiverComponent));
+        Dirty(uid, component);
     }
 
     private static void UpdatePowerState(PowerChargeComponent component, ApcPowerReceiverComponent powerReceiver)
@@ -280,4 +340,10 @@ public sealed class PowerChargeSystem : EntitySystem
 }
 
 [ByRefEvent] public record struct ChargedMachineActivatedEvent;
+
 [ByRefEvent] public record struct ChargedMachineDeactivatedEvent;
+
+/// <summary>
+/// Fired before any changes are made to PowerChargeSystem due to Breakage
+/// </summary>
+[ByRefEvent] public record struct ChangedMachineBeforeBreakageEvent;
