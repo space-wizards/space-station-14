@@ -40,6 +40,7 @@
         acts: [ "Destruction" ]
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
   - type: StunVisuals
 
 - type: entity

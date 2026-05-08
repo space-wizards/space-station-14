@@ -243,6 +243,7 @@
     - Cyborgs
     - Robotics
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
