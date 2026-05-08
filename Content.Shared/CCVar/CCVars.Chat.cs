@@ -73,6 +73,12 @@ public sealed partial class CCVars
         CVarDef.Create("chat.highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat.");
 
     /// <summary>
+    /// A string containing a list of newline-separated words to be highlighted in the chat that are preserved between rounds and added to the existing list.
+    /// </summary>
+    public static readonly CVarDef<string> ChatPersistentHighlights =
+        CVarDef.Create("chat.persistent_highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat and persisted through rounds.");
+
+    /// <summary>
     /// An option to toggle the automatic filling of the highlights with the character's info, if available.
     /// </summary>
     public static readonly CVarDef<bool> ChatAutoFillHighlights =

@@ -46,6 +46,8 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
 
         _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; }, true);
 
+        _config.OnValueChanged(CCVars.ChatPersistentHighlights, (value) => { UpdateHighlights(_config.GetCVar(CCVars.ChatHighlights), true); }, true);
+
         // Load highlights if any were saved.
         var highlights = _config.GetCVar(CCVars.ChatHighlights);
 
@@ -76,20 +78,22 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         _characterInfo.RequestCharacterInfo();
     }
 
-    public void UpdateHighlights(string newHighlights, bool firstLoad = false)
+    public void UpdateHighlights(string newHighlights, bool forceLoad = false)
     {
         // Do nothing if the provided highlights are the same as the old ones and it is not the first time.
-        if (!firstLoad && _config.GetCVar(CCVars.ChatHighlights).Equals(newHighlights, StringComparison.CurrentCultureIgnoreCase))
+        if (!forceLoad && _config.GetCVar(CCVars.ChatHighlights).Equals(newHighlights, StringComparison.CurrentCultureIgnoreCase))
             return;
 
         _config.SetCVar(CCVars.ChatHighlights, newHighlights);
         _config.SaveToFile();
 
+        newHighlights += '\n' + _config.GetCVar(CCVars.ChatPersistentHighlights);
+
         _highlights.Clear();
 
         // We first subdivide the highlights based on newlines to prevent replacing
         // a valid "\n" tag and adding it to the final regex.
-        var splittedHighlights = newHighlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var splittedHighlights = newHighlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Distinct().ToArray();
 
         for (var i = 0; i < splittedHighlights.Length; i++)
         {
