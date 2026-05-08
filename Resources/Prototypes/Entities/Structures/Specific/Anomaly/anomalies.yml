@@ -874,6 +874,8 @@
   parent: BaseAnomaly
   suffix: Liquid
   components:
+  - type: ReagentColor
+    solution: anomaly
   - type: Sprite
     sprite: Structures/Specific/Anomalies/liquid_anom.rsi
     layers:
@@ -883,7 +885,7 @@
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: RandomSprite
-    selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
+    selected: # Initialized layer values. Color managed by ReagentColorSystem
       enum.AnomalyVisualLayers.Base:
         anom: "#ffffff"
       enum.AnomalyVisualLayers.Animated:
@@ -891,7 +893,6 @@
   - type: PointLight
     radius: 4.0
     energy: 3.5
-    color: "#bbbbbb"
   - type: BadFood
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
@@ -920,7 +921,6 @@
     superCriticalInjectRadius: 10
   - type: ReagentProducerAnomaly
     solution: anomaly
-    needRecolor: true
     dangerousChemicals:
     - UnstableMutagen
     - Mold
