@@ -61,7 +61,7 @@ public sealed partial class AdminNotesLine : BoxContainer
         if (iconPath is null)
         {
             SeverityRect.Visible = false;
-            Log.Warning($"Could not find an icon for note ID {Note.Id}");
+            IoCManager.Resolve<ILogManager>().GetSawmill("admin.notes").Warning($"Could not find an icon for note ID {Note.Id}");
         }
         else
         {
