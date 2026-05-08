@@ -32,11 +32,7 @@ public class GasReactionBenchmark
     private TileAtmosphere _testTile = default!;
     // Reaction instances
     private PlasmaFireReaction _plasmaFireReaction = default!;
-    private TritiumFireReaction _tritiumFireReaction = default!;
     private FrezonProductionReaction _frezonProductionReaction = default!;
-    private FrezonCoolantReaction _frezonCoolantReaction = default!;
-    private AmmoniaOxygenReaction _ammoniaOxygenReaction = default!;
-    private N2ODecompositionReaction _n2oDecompositionReaction = default!;
     private WaterVaporReaction _waterVaporReaction = default!;
     // Gas mixtures for each reaction type
     private GasMixture _plasmaFireMixture = default!;
@@ -65,11 +61,7 @@ public class GasReactionBenchmark
             _atmosphereSystem = entMan.System<AtmosphereSystem>();
 
             _plasmaFireReaction = new PlasmaFireReaction();
-            _tritiumFireReaction = new TritiumFireReaction();
             _frezonProductionReaction = new FrezonProductionReaction();
-            _frezonCoolantReaction = new FrezonCoolantReaction();
-            _ammoniaOxygenReaction = new AmmoniaOxygenReaction();
-            _n2oDecompositionReaction = new N2ODecompositionReaction();
             _waterVaporReaction = new WaterVaporReaction();
 
             SetupGasMixtures();
@@ -168,19 +160,6 @@ public class GasReactionBenchmark
     }
 
     [Benchmark]
-    public async Task TritiumFireReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_tritiumFireMixture);
-                _tritiumFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
-    }
-
-    [Benchmark]
     public async Task FrezonProductionReaction()
     {
         await _pair.Server.WaitPost(() =>
@@ -189,45 +168,6 @@ public class GasReactionBenchmark
             {
                 var mixture = CloneMixture(_frezonProductionMixture);
                 _frezonProductionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
-    }
-
-    [Benchmark]
-    public async Task FrezonCoolantReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_frezonCoolantMixture);
-                _frezonCoolantReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
-    }
-
-    [Benchmark]
-    public async Task AmmoniaOxygenReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_ammoniaOxygenMixture);
-                _ammoniaOxygenReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
-    }
-
-    [Benchmark]
-    public async Task N2ODecompositionReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_n2oDecompositionMixture);
-                _n2oDecompositionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
             }
         });
     }
