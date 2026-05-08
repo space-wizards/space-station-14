@@ -37,15 +37,14 @@
       types:
         Slash: 8
         Piercing: 10
-  - type: StaminaDamageOnCollide
-    damage: 45
   - type: StaminaDamageOnEmbed
-    damage: 10
+    damage: 40
 
 - type: entity
   parent: ThrowingStar
   id: ThrowingStarNinja
   name: ninja throwing star
+  suffix: Timed, 30s
   components:
   # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
   # also limits the crew's use

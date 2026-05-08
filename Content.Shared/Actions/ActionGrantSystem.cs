@@ -19,11 +19,15 @@ public sealed class ActionGrantSystem : EntitySystem
 
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
     {
-
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
             return;
 
         if (ent.Comp.ActiveIfWorn && (args.SlotFlags == null || args.SlotFlags == SlotFlags.POCKET))
+            return;
+
+        var ev = new CheckItemActionGrantAccessEvent(args.User);
+        RaiseLocalEvent(ent, ref ev);
+        if (ev.Cancelled)
             return;
 
         foreach (var action in grant.ActionEntities)
@@ -52,3 +56,9 @@ public sealed class ActionGrantSystem : EntitySystem
         }
     }
 }
+
+/// <summary>
+/// Raised on the wearer to see if they are allowed to get the event associated with the item.
+/// </summary>
+[ByRefEvent]
+public record struct CheckItemActionGrantAccessEvent(EntityUid User, bool Cancelled = false);

@@ -32,7 +32,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, ToggleClothingCheckEvent>(OnCloakCheck);
-        SubscribeLocalEvent<NinjaSuitComponent, CheckItemCreatorEvent>(OnStarCheck);
+        SubscribeLocalEvent<NinjaSuitComponent, CheckItemActionGrantAccessEvent>(OnItemActionGrantAccess);
         SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateStarAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
@@ -81,7 +81,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private void OnStarCheck(Entity<NinjaSuitComponent> ent, ref CheckItemCreatorEvent args)
+    private void OnItemActionGrantAccess(Entity<NinjaSuitComponent> ent, ref CheckItemActionGrantAccessEvent args)
     {
         if (!_ninja.IsNinja(args.User))
             args.Cancelled = true;

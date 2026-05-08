@@ -1,5 +1,6 @@
 using Content.Server.Speech.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Cuffs;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -10,37 +11,58 @@ public sealed class AddAccentClothingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<AddAccentClothingComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<AddAccentClothingComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<AddAccentClothingComponent, CuffsAppliedEvent>(OnCuffed);
+        SubscribeLocalEvent<AddAccentClothingComponent, CuffsRemovedEvent>(OnUncuffed);
     }
 
+    //  TODO: Turn this into a relay event.
+    private void OnGotEquipped(Entity<AddAccentClothingComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        AddAccent(ent, args.Wearer);
+    }
 
-//  TODO: Turn this into a relay event.
-    private void OnGotEquipped(EntityUid uid, AddAccentClothingComponent component, ref ClothingGotEquippedEvent args)
+    private void OnGotUnequipped(Entity<AddAccentClothingComponent> ent, ref ClothingGotUnequippedEvent args)
+    {
+        RemoveAccent(ent, args.Wearer);
+    }
+
+    private void OnCuffed(Entity<AddAccentClothingComponent> ent, ref CuffsAppliedEvent args)
+    {
+        AddAccent(ent, args.Target);
+    }
+
+    private void OnUncuffed(Entity<AddAccentClothingComponent> ent, ref CuffsRemovedEvent args)
+    {
+        RemoveAccent(ent, args.Target);
+    }
+
+    private void AddAccent(Entity<AddAccentClothingComponent> ent, EntityUid target)
     {
         // does the user already has this accent?
-        var componentType = Factory.GetRegistration(component.Accent).Type;
-        if (HasComp(args.Wearer, componentType))
+        var componentType = Factory.GetRegistration(ent.Comp.Accent).Type;
+        if (HasComp(target, componentType))
             return;
 
         // add accent to the user
         var accentComponent = (Component) Factory.GetComponent(componentType);
-        AddComp(args.Wearer, accentComponent);
+        AddComp(target, accentComponent);
 
         // snowflake case for replacement accent
         if (accentComponent is ReplacementAccentComponent rep)
-            rep.Accent = component.ReplacementPrototype!;
+            rep.Accent = ent.Comp.ReplacementPrototype!;
 
-        component.IsActive = true;
+        ent.Comp.IsActive = true;
     }
 
-    private void OnGotUnequipped(EntityUid uid, AddAccentClothingComponent component, ref ClothingGotUnequippedEvent args)
+    private void RemoveAccent(Entity<AddAccentClothingComponent> ent, EntityUid target)
     {
-        if (!component.IsActive)
+        if (!ent.Comp.IsActive)
             return;
 
         // try to remove accent
-        var componentType = Factory.GetRegistration(component.Accent).Type;
-        RemComp(args.Wearer, componentType);
+        var componentType = Factory.GetRegistration(ent.Comp.Accent).Type;
+        RemComp(target, componentType);
 
-        component.IsActive = false;
+        ent.Comp.IsActive = false;
     }
 }
