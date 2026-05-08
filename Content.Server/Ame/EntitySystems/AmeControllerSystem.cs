@@ -126,7 +126,10 @@ public sealed class AmeControllerSystem : EntitySystem
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
+        {
+            RaiseLocalEvent(new AmeExplodedEvent());
             group.ExplodeCores();
+        }
     }
 
     public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)

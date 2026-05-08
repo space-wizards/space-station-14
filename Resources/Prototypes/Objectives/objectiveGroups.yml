@@ -46,9 +46,11 @@
 #    RandomTraitorAliveObjective: 1 - Removed because the objective was boring and didn't progress the round.
     RandomTraitorProgressObjective: 1
 
+## objectives that involve sabotaging the station, like hacking consoles or destroying infrastructure
 - type: weightedRandom
-  id: TraitorObjectiveGroupSabotage
+  id: TraitorObjectiveGroupSabotage 
   weights:
+    OverloadAmeObjective: 1
     SupercritAnomaliesObjective: 1
 
 #misc objectives that don't fall other another category

@@ -32,6 +32,15 @@
   - type: ObjectiveLimit
     limit: 2 # there is usually only 1 of each steal objective, have 2 max for drama
 
+- type: entity
+  abstract: true #
+  parent: BaseTraitorObjective
+  id: BaseTraitorSabotageObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+  - type: ObjectiveLimit
+    limit: 1
 # state
 
 - type: entity
@@ -379,6 +388,25 @@
     owner: objective-condition-steal-station
 
 # sabotage
+- type: entity
+  parent: BaseTraitorSabotageObjective
+  id: OverloadAmeObjective
+  name: Overload the Antimatter Engine
+  description: The station's AME will explode violently if the injection amount is set to a higher value than twice the number of cores. Cause this explosion to happen, and make sure it happens before the emergency shuttle docks at the station.
+  components:
+  - type: Objective
+    icon:
+      sprite: Structures/Power/Generation/ame.rsi
+      state: control
+    unique: true
+  - type: OverloadAmeCondition
+  - type: EntityExistsRequirement
+    whitelist:
+      components:
+      - AmeController
+  - type: CodeCondition
+    failOnEvac: true
+ 
 - type: entity
   parent: BaseTraitorObjective
   id: SupercritAnomaliesObjective
