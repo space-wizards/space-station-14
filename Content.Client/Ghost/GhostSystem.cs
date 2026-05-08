@@ -1,4 +1,5 @@
 using Content.Client.Movement.Systems;
+using Content.Client.Silicons.StationAi;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using Robust.Client.Console;
@@ -16,6 +17,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
         [Dependency] private readonly SpriteSystem _sprite = default!;
+        [Dependency] private readonly StationAiSystem _stationAi = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -68,6 +70,7 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostAiOverlayActionEvent>(OnToggleGhostAiOverlay);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -128,13 +131,21 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
+        private void OnToggleGhostAiOverlay(EntityUid uid, GhostComponent component, ToggleGhostAiOverlayActionEvent args)
+        {
+            if (args.Handled)
+                return;
+            _stationAi.ToggleOverlay();
+            args.Handled = true;
+        }
+
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
-
+            _actions.RemoveAction(uid, component.ToggleGhostAiOverlayActionEntity);
             if (uid != _playerManager.LocalEntity)
                 return;
 
@@ -162,7 +173,8 @@ namespace Content.Client.Ghost
         private void OnGhostPlayerDetach(EntityUid uid, GhostComponent component, LocalPlayerDetachedEvent args)
         {
             GhostVisibility = false;
-            PlayerDetached?.Invoke();
+            _stationAi.DisableOverlay();
+            PlayerDetached?.Invoke(); 
         }
 
         private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
