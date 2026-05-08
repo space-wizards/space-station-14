@@ -21,15 +21,14 @@
 
                 <!-- Chat Highlights -->
                 <Label Text="{Loc 'ui-options-accessibility-header-highlights'}" StyleClasses="LabelKeyText"/>
-                <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
-                <ui:OptionColorSlider Name="HighlightsColorSlider"
-                                      Title="{Loc 'ui-options-highlights-color'}"
-                                      Example="{Loc 'ui-options-highlights-color-example'}"/>
-
                 <Label Text="{Loc 'ui-options-highlights-persistent'}"/>
                 <PanelContainer StyleClasses="BackgroundPanel">
                     <TextEdit Name="PersistentHighlightEdit" MinHeight="80" Margin="5 5"/>
                 </PanelContainer>
+                <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
+                <ui:OptionColorSlider Name="HighlightsColorSlider"
+                                      Title="{Loc 'ui-options-highlights-color'}"
+                                      Example="{Loc 'ui-options-highlights-color-example'}"/>
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
