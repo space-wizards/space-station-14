@@ -292,6 +292,23 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Adds heat to the tile mixture of a tile that an entity is on.
+    /// </summary>
+    /// <param name="entity">The entity that's on the tile to add heat to.</param>
+    /// <param name="dQ">The amount of heat to add, in joules.</param>
+    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.
+    /// You pretty much always want this if you're changing the temperature.</param>
+    [PublicAPI]
+    public void AddHeatTileMixture(Entity<TransformComponent?> entity, float dQ, bool excite = true)
+    {
+        var mixture = GetTileMixture(entity, excite);
+        if (mixture == null)
+            return;
+
+        AddHeat(mixture, dQ);
+    }
+
+    /// <summary>
     /// Retrieves the pressures of all gas mixtures
     /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
     /// provided <paramref name="pressures"/> span.
