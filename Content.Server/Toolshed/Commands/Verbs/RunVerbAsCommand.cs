@@ -3,12 +3,11 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Toolshed.Commands.Verbs;
 
-[ToolshedCommand, AdminCommand(AdminFlags.Moderator)]
+[ToolshedCommand(Name = "runverbas"), AdminCommand(AdminFlags.Moderator)]
 public sealed class RunVerbAsCommand : ToolshedCommand
 {
     private SharedVerbSystem? _verb;
