@@ -1,0 +1,23 @@
+<Document>
+  # Mice
+
+  <GhostRoleRulesEmbed Id="free-agent-mice"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobMouse"/>
+    <GuideEntityEmbed Entity="MobMouseCancer"/>
+  </Box>
+
+  Mice are small creatures that inhabit the station's walls, floors, and ventilation shafts.
+  They can fit through gaps and spaces inaccessible to humanoid crew members.
+
+  As a mouse you are [bold]very small[/bold], able to move under doors, through vents, and into areas the crew cannot easily reach.
+  You can speak, though interactions with the crew are limited by your size and nature.
+
+  You have [bold]no offensive capabilities[/bold] and cannot harm crew members.
+
+  ## Variants
+
+  - [bold]Mouse[/bold]: a standard station mouse.
+  - [bold]Cancer Mouse[/bold]: a mouse with an unusual green glow caused by prolonged radiation exposure. Emits mild [color=LightGreen]radiation[/color], which may affect nearby crew members.
+</Document>

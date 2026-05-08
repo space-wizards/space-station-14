@@ -1,0 +1,23 @@
+<Document>
+  # Bots
+
+  <GhostRoleRulesEmbed Id="free-agent-bots"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobHonkBot"/>
+    <GuideEntityEmbed Entity="MobJonkBot"/>
+  </Box>
+
+  Honkbots and Jonkbots are service robots that have gained sentience.
+  They are harmless by design, though their presence in sensitive areas of the station may disrupt normal operations.
+
+  As a bot you are [bold]immune to biological hazards[/bold] such as toxins and suffocation, as you do not breathe.
+  You do not eat or sleep, and you cannot be made into a revolutionary.
+
+  You have [bold]no objectives[/bold].
+
+  ## Variants
+
+  - [bold]Honkbot[/bold]: a standard service bot with a built-in bike horn. Harmless but loud.
+  - [bold]Jonkbot[/bold]: a Honkbot variant that produces broken cluwne horn sounds. [bold]Explodes[/bold] when destroyed.
+</Document>

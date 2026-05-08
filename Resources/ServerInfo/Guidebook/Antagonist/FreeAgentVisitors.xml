@@ -1,0 +1,23 @@
+<Document>
+  # Visitors
+
+  <GhostRoleRulesEmbed Id="free-agent-visitors"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="SyndieVisitorSpawner"/>
+    <GuideEntityEmbed Entity="VisitorBlackmarketeerSpawner"/>
+    <GuideEntityEmbed Entity="CossackSpawner"/>
+  </Box>
+
+  Visitors are humanoid Free Agents who arrive at the station by shuttle with their own equipment and backgrounds.
+  They have no duty to Nanotrasen and are not assigned any antagonist objectives.
+  What they do during the shift is largely their own choice.
+
+  Visitors are full humanoids with speech and the ability to interact with the station like any crew member.
+
+  ## Variants
+
+  - [bold]Syndicate Disaster Victim[/bold]: a Syndicate-aligned civilian who has arrived on the station. Armed with basic Syndicate gear and part of the Syndicate faction, but has no specific orders.
+  - [bold]Black Marketeer[/bold]: a visitor who arrived with goods to trade. Has no specific objectives beyond their own dealings.
+  - [bold]Cossack[/bold]: a visitor who arrived with EVA gear. Speaks with a distinct accent produced by several layered speech quirks.
+</Document>

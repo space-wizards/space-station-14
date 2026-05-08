@@ -1,0 +1,17 @@
+<Document>
+  # Sentient Artifact
+
+  <GhostRoleRulesEmbed Id="free-agent-artifact"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComplexXenoArtifactItem"/>
+  </Box>
+
+  A xenoarchaeological artifact has awakened and gained the ability to move independently.
+
+  Through an unknown alien mechanism, this object has gained sentience.
+  It has no natural weapons and no assigned objectives.
+
+  As a sentient artifact you can move freely and interact with your environment.
+  What you do during the shift is entirely your choice.
+</Document>

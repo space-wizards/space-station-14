@@ -1,0 +1,21 @@
+<Document>
+  # Rat King
+
+  <GhostRoleRulesEmbed Id="rat-king"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatKing" Scale="2.4"/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+  </Box>
+
+  Rat kings are abnormally large rodents capable of [color=yellow]raising huge rat armies[/color] by eating equally huge amounts of food.
+  - You have several abilities that come at the cost of your [bold]hunger.[/bold]
+  - One such ability is [color=yellow][italic]Raise Army[/italic][/color], which summons a [bold]Rat Servant[/bold]. You can [bold]command[/bold] your servants to stay in place, follow you, attack a target of your choice or attack indiscriminately.
+  - You can conjure a cloud of [color=#77b58e]ammonia[/color] using [color=purple][italic]Rat King's Domain[/italic][/color]. This purple gas is mildly poisonous to humans but heals rats.
+  - [color=#9daa98][italic]Rummage[/italic][/color] through a disposal unit by using the context menu. Use this to find [bold]scraps of food[/bold] to grow your army.
+  - Besides your abilities, [bold]you are stronger than most other animals.[/bold] You and your servants are capable of speech and you're both small enough to fit under airlocks and tables.
+  - [bold]Your underlings are still very fragile![/bold] Beware of spacings, explosions and the business end of a melee weapon.
+</Document>

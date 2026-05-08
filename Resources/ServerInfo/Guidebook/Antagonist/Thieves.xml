@@ -1,6 +1,8 @@
 <Document>
   # Thieves
 
+  <GhostRoleRulesEmbed Id="thieves"/>
+
   <Box>
     [color=#999999][italic]"Yoink! I'll be taking that! And that! Ooh, don't mind if I do!"[/italic][/color]
   </Box>

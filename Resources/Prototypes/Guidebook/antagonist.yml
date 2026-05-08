@@ -11,7 +11,7 @@
   - Wizard
   - Zombies
   - Xenoborgs
-  - MinorAntagonists
+  - SpaceDragon
 
 - type: guideEntry
   id: Traitors
@@ -34,9 +34,9 @@
   text: "/ServerInfo/Guidebook/Antagonist/Revolutionaries.xml"
 
 - type: guideEntry
-  id: MinorAntagonists
-  name: guide-entry-minor-antagonists
-  text: "/ServerInfo/Guidebook/Antagonist/MinorAntagonists.xml"
+  id: SpaceDragon
+  name: guide-entry-space-dragon
+  text: "/ServerInfo/Guidebook/Antagonist/SpaceDragon.xml"
 
 - type: guideEntry
   id: SpaceNinja

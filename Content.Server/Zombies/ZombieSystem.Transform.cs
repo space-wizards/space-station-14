@@ -312,6 +312,8 @@ public sealed partial class ZombieSystem
             //yet more hardcoding. Visit zombie.ftl for more information.
             var ghostRole = EnsureComp<GhostRoleComponent>(target);
             EnsureComp<GhostTakeoverAvailableComponent>(target);
+            // Override the ghost role information if the mob has been zombified
+            EnsureComp<GhostRoleConversionComponent>(target).GuideEntry = "Zombies";
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");

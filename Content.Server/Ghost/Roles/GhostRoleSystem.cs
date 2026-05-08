@@ -673,6 +673,8 @@ public sealed class GhostRoleSystem : EntitySystem
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
+                // Check if the ghost role has been converted - we need to show a different guidebook entry if so.
+                GuideEntry = CompOrNull<GhostRoleConversionComponent>(uid)?.GuideEntry ?? role.GuideEntry,
                 RolePrototypes = (jobs, antags),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,

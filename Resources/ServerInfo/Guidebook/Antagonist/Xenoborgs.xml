@@ -1,6 +1,8 @@
 <Document>
   # Xenoborgs
 
+  <GhostRoleRulesEmbed Id="xenoborgs"/>
+
   <Box>
     [color=#2288ff][italic]RESISTANCE IS FUTILE[/italic][/color]
   </Box>

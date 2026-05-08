@@ -1,0 +1,33 @@
+<Document>
+  # Death Squad
+  
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadHelmetHardsuitDeathsquad" Caption="Death Squad"/>
+  </Box>
+
+  The Death Squad is CentComm's last resort. They are deployed [bold]exclusively by admin discretion[/bold] in the most extreme circumstances — typically when a station is beyond saving or requires total purging. [color=red][bold]Do not ask to play Death Squad.[/bold][/color]
+
+  Death Squad agents answer [bold]only to CentComm[/bold]. They do not take orders from the [color=yellow]Captain[/color], [color=yellow]command staff[/color], or anyone else on station.
+
+  [color=red][bold]Unless otherwise directed, kill everything.[/bold][/color] Personnel, antagonists, and station animals are all valid targets. Death Squad does not take prisoners and does not negotiate.
+
+  [color=red]Players selected for Death Squad are held to the highest possible standard. Any rule violations result in an immediate ban.[/color]
+
+  ## Special Equipment
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPulseRifle" Caption="Pulse Rifle"/>
+    <GuideEntityEmbed Entity="WeaponPulsePistol" Caption="Pulse Pistol"/>
+    <GuideEntityEmbed Entity="WeaponRevolverMatebaAP" Caption="Mateba"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitDeathsquad" Caption="Death Squad Hardsuit"/>
+  </Box>
+
+  Death Squad equipment is [bold]far superior[/bold] to anything available to station crew or other antagonists.
+
+  - [color=cyan][bold]Pulse Rifle[/bold][/color]: Primary weapon. High damage, energy-based, extremely fast firing.
+  - [color=cyan][bold]Pulse Pistol[/bold][/color]: Sidearm carried as backup.
+  - [color=cyan][bold]Mateba[/bold][/color]: Premium revolver with AP rounds. Totally negates armored resistances.
+  - [color=cyan][bold]Death Squad Hardsuit[/bold][/color]: Top-tier armor. Conventional weapons will barely scratch it.
+
+  Their primary weakness is [color=yellow][bold]armor-piercing weapons[/bold][/color] Such as AP ammunition or throwing knives, which bypass hardsuit protection. [italic]Death Squad should always operate as a team — a lone agent is far more vulnerable than the group.[/italic]
+</Document>

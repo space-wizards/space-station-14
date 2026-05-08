@@ -1,0 +1,24 @@
+<Document>
+  # Snails
+
+  <GhostRoleRulesEmbed Id="free-agent-snails"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSnail"/>
+    <GuideEntityEmbed Entity="MobSnailSpeed"/>
+    <GuideEntityEmbed Entity="MobSnailMoth"/>
+  </Box>
+
+  Snails are small, durable molluscs that have made their way aboard the station.
+  They cannot speak but can emote.
+
+  As a snail you are [bold]tiny[/bold], able to fit into small spaces. You are [bold]harmless[/bold] and have no way to attack.
+
+  Be careful around [color=yellow]salt[/color]. Contact with salt or saline solutions will [bold]hurt you[/bold].
+
+  ## Variants
+
+  - [bold]Snail[/bold]: a standard snail.
+  - [bold]Speed Snail[/bold]: a snail with significantly increased movement speed.
+  - [bold]Snoth[/bold]: a snail and moth hybrid produced by genetics. Has a distinctive appearance and can fit into spaces suited to moth-sized creatures.
+</Document>

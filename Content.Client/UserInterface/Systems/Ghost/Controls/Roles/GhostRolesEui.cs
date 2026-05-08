@@ -29,7 +29,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     return;
                 }
 
-                _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
+                _windowRules = new GhostRoleRulesWindow(info.Rules, info.GuideEntry, _ =>
                 {
                     SendMessage(new RequestGhostRoleMessage(info.Identifier));
 

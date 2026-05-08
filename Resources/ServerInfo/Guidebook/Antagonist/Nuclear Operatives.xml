@@ -1,6 +1,8 @@
 <Document>
   # Nuclear Operatives
 
+  <GhostRoleRulesEmbed Id="nuclear-operatives"/>
+
   <Box>
     [color=#999999][italic]"OPERATIVES STANDBY. YOUR OBJECTIVES ARE SIMPLE.[/italic][/color]
   </Box>

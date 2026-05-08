@@ -1,0 +1,17 @@
+<Document>
+  # Mothroach
+
+  <GhostRoleRulesEmbed Id="free-agent-mothroach"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobMothroach"/>
+  </Box>
+
+  The mothroach is a small hybrid creature produced by combining moth and cockroach DNA in the genetics lab.
+  It is small, capable of speech, and completely harmless.
+
+  As a mothroach you are [bold]small[/bold] enough to fit into tight spaces and move through areas the crew cannot easily follow.
+  You can speak, allowing communication with crew members.
+
+  You have [bold]no offensive capabilities[/bold] and cannot harm anyone.
+</Document>

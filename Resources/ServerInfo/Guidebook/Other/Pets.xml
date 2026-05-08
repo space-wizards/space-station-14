@@ -1,0 +1,25 @@
+<Document>
+  # Station Pets
+
+  <GhostRoleRulesEmbed Id="pets"/>
+
+  <Box>
+    <GuideEntityEmbed Entity="MobHamsterHamlet"/>
+    <GuideEntityEmbed Entity="MobSlimesPet"/>
+    <GuideEntityEmbed Entity="MobMonkeyPunpun"/>
+    <GuideEntityEmbed Entity="MobKangarooWillow"/>
+  </Box>
+
+  Station pets are friendly ghost roles. You are not an antagonist and have no objectives beyond living your best life aboard the station.
+
+  As a pet you are expected to act in character for the type of animal you are. You can be interacted with by crew, picked up, carried around, and generally treated as a station mascot.
+
+  You have [bold]no assigned objectives[/bold] and are [bold]not expected to cause harm[/bold].
+
+  ## Station Pets
+
+  - [bold]Hamlet[/bold]: the station's resident hamster. Small, grumpy, and beloved.
+  - [bold]Smile[/bold]: a rainbow slime that has been through thousands of experiments and come out the other side sweet-natured.
+  - [bold]Pun Pun[/bold]: a monkey with unlimited access to alcohol. Works at the bar and has elevated status as pseudo-crew.
+  - [bold]Willow[/bold]: a boxing kangaroo. Feisty but friendly.
+</Document>

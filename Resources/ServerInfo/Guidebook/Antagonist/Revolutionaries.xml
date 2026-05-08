@@ -1,6 +1,8 @@
 <Document>
   # Revolutionaries
 
+  <GhostRoleRulesEmbed Id="revolutionaries"/>
+
   <Box>
     [color=#999999][italic]"Viva la revolución!!"[/italic][/color]
   </Box>

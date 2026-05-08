@@ -1,4 +1,5 @@
 using Content.Shared.Eui;
+using Content.Shared.Guidebook;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -17,6 +18,11 @@ namespace Content.Shared.Ghost.Roles
         /// A list of all antag and job prototype IDs of the ghost role and its mind role(s).
         /// </summary>
         public (List<ProtoId<JobPrototype>>?,List<ProtoId<AntagPrototype>>?)  RolePrototypes;
+
+        /// <summary>
+        /// If set, the ghost role rules window renders this guidebook entry inline instead of the raw rules text.
+        /// </summary>
+        public ProtoId<GuideEntryPrototype>? GuideEntry { get; set; }
 
         /// <inheritdoc cref="GhostRoleKind"/>
         public GhostRoleKind Kind { get; set; }

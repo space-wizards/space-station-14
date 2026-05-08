@@ -1,5 +1,6 @@
 using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
+using Content.Shared.Guidebook;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -104,5 +105,11 @@ public sealed partial class GhostRoleComponent : Component
     [DataField("job")]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
+
+    /// <summary>
+    /// If set, the ghost role rules window will render this guidebook entry inline instead of showing the raw rules text.
+    /// </summary>
+    [DataField]
+    public ProtoId<GuideEntryPrototype>? GuideEntry;
 }
 

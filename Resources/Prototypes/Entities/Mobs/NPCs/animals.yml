@@ -496,6 +496,7 @@
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
+    guideEntry: FreeAgentMothroach
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
   - type: Fixtures
@@ -1746,6 +1747,7 @@
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
+    guideEntry: FreeAgentMice
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
@@ -2004,6 +2006,7 @@
     name: ghost-role-information-cancer-mouse-name
     description: ghost-role-information-cancer-mouse-description
     rules: ghost-role-information-freeagent-rules
+    guideEntry: FreeAgentMice
     mindRoles:
     - MindRoleGhostRoleFreeAgent
   - type: Sprite
@@ -2606,6 +2609,7 @@
     name: ghost-role-information-giant-spider-name
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
+    guideEntry: AngryMobs
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     raffle:
