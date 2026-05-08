@@ -3,7 +3,7 @@
          xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-            <BoxContainer Orientation="Vertical" Margin="8 8 8 8">
+            <BoxContainer Orientation="Vertical" Margin="8">
                 <!-- Visuals -->
                 <Label Text="{Loc 'ui-options-accessibility-header-visuals'}" StyleClasses="LabelKeyText"/>
                 <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
