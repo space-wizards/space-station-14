@@ -8,7 +8,6 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
 
-// TODO: Make this work with multiple Visual Layers, see comment block below the summary in ItemSlotVisualsComponent for info.
 public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComponent>
 {
     [Dependency] private readonly ItemSystem _itemSystem = default!;
@@ -25,21 +24,22 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
         if (args.Sprite == null)
             return;
 
-        if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.FillLayer, out var fillLayer, false))
-            return;
-
-        if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, args.Component)
-            && contains)
+        foreach (var visual in component.SlotVisuals)
         {
-            if (component.FillBaseName == null)
-                return;
+            if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), visual.Layer, out var layerIndex, false))
+                continue;
 
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, component.FillBaseName);
-        }
-        else
-        {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, false);
+            var filled = AppearanceSystem.TryGetData(uid, visual.Layer, out bool hasItem, args.Component) && hasItem;
+
+            if (filled && !string.IsNullOrEmpty(visual.FillBaseName))
+            {
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, visual.FillBaseName);
+            }
+            else
+            {
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, false);
+            }
         }
 
         _itemSystem.VisualsChanged(uid);
@@ -47,24 +47,23 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
 
     private void OnGetHeldVisuals(EntityUid uid, ItemSlotVisualsComponent component, GetInhandVisualsEvent args)
     {
-        if (component.InHandsFillBaseName == null)
-            return;
-
-        if (!TryComp(uid, out AppearanceComponent? appearance))
-            return;
-
         if (!TryComp<ItemComponent>(uid, out var item))
             return;
 
-        if (AppearanceSystem.TryGetData<bool>(uid, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
-            && contains)
+        foreach (var visual in component.SlotVisuals)
         {
             var layer = new PrototypeLayerData();
 
+            if (string.IsNullOrEmpty(visual.InHandsFillBaseName))
+                continue;
+
+            if (!AppearanceSystem.TryGetData(uid, visual.Layer, out bool contains) || !contains)
+                continue;
+
             var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
 
-            // No need to add fillLevels if it'll just fit one item.
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName;
+            // No need for fillLevels if it'll just fit one item.
+            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + visual.InHandsFillBaseName;
 
             layer.State = key;
 
@@ -74,22 +73,21 @@ public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComp
 
     private void OnGetClothingVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
     {
-        if (ent.Comp.EquippedFillBaseName == null)
-            return;
-
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
-        if (AppearanceSystem.TryGetData<bool>(ent, ItemSlotVisualLayers.ContainsItem, out var contains, appearance)
-            && contains)
+        foreach (var visual in ent.Comp.SlotVisuals)
         {
             var layer = new PrototypeLayerData();
 
+            if (string.IsNullOrEmpty(visual.EquippedFillBaseName))
+                continue;
+
+            if (!AppearanceSystem.TryGetData(ent, visual.Layer, out bool contains) || !contains)
+                continue;
+
             var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + ent.Comp.EquippedFillBaseName;
+            var key = equippedPrefix + visual.EquippedFillBaseName;
 
             // Same check as the one in StorageContainerVisualsSystem.
             if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))

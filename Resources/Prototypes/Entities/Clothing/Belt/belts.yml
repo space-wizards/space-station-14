@@ -12,7 +12,6 @@
     - state: icon
     - state: fill
       map: [ "enum.ItemSlotVisualLayers.Fill" ]
-      visible: false
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
@@ -29,9 +28,11 @@
           tags:
           - CaptainSabre
   - type: ItemSlotVisuals
-    fillBaseName: fill
-    inHandsFillBaseName: -fill
-    equippedFillBaseName: -fill
+    slotVisuals:
+    - layer: fill
+      fillBaseName: fill
+      inHandsFillBaseName: -fill
+      equippedFillBaseName: -fill
   - type: Appearance
 
 - type: entity

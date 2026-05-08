@@ -1,19 +1,32 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization;
+using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Containers.ItemSlot;
 
 /// <summary>
-///     The same concept as <see cref="SolutionContainerVisualsComponent"/> but it now handles fill visuals as a binary
-///     due to item slots allowing only one item per slot.
+///     The same concept as <see cref="SolutionContainerVisualsComponent"/> but now handles fill visuals per slot.
 /// </summary>
-
-// Only thing needed here is making it work with multiple visual layers so it can function with multiple slots &
-// fully remove the need for ItemMapper for ItemSlots. That and it would make inhand/wielded/equipped gun visuals
-// for inserting a magazine possible.
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ItemSlotVisualsComponent : Component
 {
+    /// Like <see cref="ItemSlotsComponent"/> but for Visuals.
+    [DataField]
+    public List<ItemSlotVisuals> SlotVisuals = new();
+}
+
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class ItemSlotVisuals
+{
+    [DataField(required: true)]
+    public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
+
+    // Useful for specifying which Slot you want a Visual Layer for, not needed if the Item has one Slot.
+    [DataField]
+    public string? SlotName;
+
     [DataField]
     public string? FillBaseName;
 
@@ -22,14 +35,10 @@ public sealed partial class ItemSlotVisualsComponent : Component
 
     [DataField]
     public string? EquippedFillBaseName;
-
-    [DataField("layer")]
-    public ItemSlotVisualLayers FillLayer = ItemSlotVisualLayers.Fill;
 }
 
 [Serializable, NetSerializable]
 public enum ItemSlotVisualLayers : byte
 {
-    ContainsItem,
     Fill
 }

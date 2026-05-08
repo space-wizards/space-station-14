@@ -80,17 +80,31 @@ namespace Content.Shared.Containers.ItemSlots
                     _containers.Insert(item, slot.ContainerSlot);
             }
 
-            if (TryComp(uid, out AppearanceComponent? _)
-                && TryComp(uid, out ItemSlotVisualsComponent? _))
-            {
-                UpdateAppearance(uid, itemSlots);
-            }
+            UpdateAppearance(uid, itemSlots);
         }
 
+        /// For ItemSlotVisualsSystem & Component.
         private void UpdateAppearance(EntityUid uid, ItemSlotsComponent itemSlots)
         {
-            var contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
-            _appearance.SetData(uid, ItemSlotVisualLayers.ContainsItem, contains);
+            if (!TryComp<ItemSlotVisualsComponent>(uid, out var visuals) || !TryComp<AppearanceComponent>(uid, out _))
+                return;
+
+            foreach (var visual in visuals.SlotVisuals)
+            {
+                var contains = false;
+
+                // For the items that have one ItemSlot and the rest.
+                if (string.IsNullOrEmpty(visual.SlotName))
+                {
+                    contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
+                }
+                else if (itemSlots.Slots.TryGetValue(visual.SlotName, out var slot))
+                {
+                    contains = slot.HasItem;
+                }
+
+                _appearance.SetData(uid, visual.Layer, contains);
+            }
         }
 
         /// <summary>
@@ -315,9 +329,7 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            if (TryComp(uid, out AppearanceComponent? _)
-                && TryComp(uid, out ItemSlotVisualsComponent? _)
-                && TryComp(uid, out ItemSlotsComponent? itemSlots))
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
             {
                 UpdateAppearance(uid, itemSlots);
             }
@@ -600,9 +612,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
 
-            if (TryComp(uid, out AppearanceComponent? _)
-                && TryComp(uid, out ItemSlotVisualsComponent? _)
-                && TryComp(uid, out ItemSlotsComponent? itemSlots))
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
             {
                 UpdateAppearance(uid, itemSlots);
             }
@@ -936,9 +946,7 @@ namespace Content.Shared.Containers.ItemSlots
                     AddItemSlot(uid, serverKey, slot);
                 }
 
-                if (TryComp(uid, out AppearanceComponent? _)
-                    && TryComp(uid, out ItemSlotVisualsComponent? _)
-                    && TryComp(uid, out ItemSlotsComponent? itemSlots))
+                if (TryComp(uid, out ItemSlotsComponent? itemSlots))
                 {
                     UpdateAppearance(uid, itemSlots);
                 }
