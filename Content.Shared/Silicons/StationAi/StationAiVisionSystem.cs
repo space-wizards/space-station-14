@@ -82,6 +82,10 @@ public sealed class StationAiVisionSystem : EntitySystem
             if (!seed.Comp.Enabled)
                 continue;
 
+            // Check if camera is jammed
+            if (HasComp<AiCameraJammedComponent>(seed.Owner))
+                continue;
+
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
                 continue;
 
@@ -167,6 +171,10 @@ public sealed class StationAiVisionSystem : EntitySystem
         foreach (var seed in _seeds)
         {
             if (!seed.Comp.Enabled)
+                continue;
+
+            // Check if camera is jammed
+            if (HasComp<AiCameraJammedComponent>(seed.Owner))
                 continue;
 
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
