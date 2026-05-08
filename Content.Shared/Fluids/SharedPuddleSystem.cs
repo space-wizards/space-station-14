@@ -185,7 +185,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             ent.Comp.Solution = null;
     }
 
-    private void UpdateAppearance(Entity<PuddleComponent?, AppearanceComponent?> ent)
+    public void UpdateAppearance(Entity<PuddleComponent?, AppearanceComponent?> ent)
     {
         var (uid, puddle, appearance) = ent;
         if (!Resolve(ent, ref puddle, ref appearance))
@@ -225,7 +225,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         _appearance.SetData(ent, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-    private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
+    public void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)
     {
         if (!_stepTriggerQuery.TryComp(entity, out var comp))
             return;

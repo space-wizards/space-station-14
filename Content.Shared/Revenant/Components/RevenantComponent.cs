@@ -1,8 +1,11 @@
 using System.Numerics;
 using Content.Shared.Alert;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -199,6 +202,52 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
+    #endregion
+
+    #region Blood Corruption Ability
+    /// <summary>
+    /// The amount of essence that is needed to use the ability.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 BloodCorruptionCost = 60;
+
+    /// <summary>
+    /// The status effects applied after the ability
+    /// the first float corresponds to amount of time the entity is stunned.
+    /// the second corresponds to the amount of time the entity is made solid.
+    /// </summary>
+    [DataField]
+    public Vector2 BloodCorruptionDebuffs = new(3, 8);
+
+    /// <summary>
+    /// The radius around the user that this ability affects
+    /// </summary>
+    [DataField]
+    public float BloodCorruptionRadius = 3.5f;
+
+    /// <summary>
+    /// Reagents that will be "corrupted" on the ability usage.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<ReagentPrototype>> BloodCorruptionWhitelist;
+
+    /// <summary>
+    /// Reagent that will replace corrupted reagents
+    /// </summary>
+    [DataField]
+    public ProtoId<ReagentPrototype> BloodCorruptionReagent = "Ectoresin";
+
+    /// <summary>
+    /// LocId for the popup that will be shown when revenant attempts to interact without puddle
+    /// </summary>
+    [DataField]
+    public LocId BloodCorruptionPopup = "revenant-blood-corruption-not-a-puddle";
+
+    /// <summary>
+    /// Sound that will be played on corruption
+    /// </summary>
+    [DataField]
+    public SoundSpecifier BloodCorruptionSound = new SoundPathSpecifier("/Audio/Items/Artifact/artifact7.ogg");
     #endregion
 
     [DataField]

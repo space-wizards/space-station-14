@@ -51,3 +51,18 @@
     useDelay: 20
   - type: InstantAction
     event: !type:RevenantMalfunctionActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRevenantBloodCorruption
+  name: Blood corruption
+  description: Costs 60 Essence.
+  components:
+  - type: Action
+    icon: Interface/Actions/bloodCorruption.png
+    itemIconStyle: NoItem
+    useDelay: 20
+  - type: TargetAction
+    checkCanAccess: true
+  - type: WorldTargetAction
+    event: !type:RevenantBloodCorruptionActionEvent

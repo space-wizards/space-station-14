@@ -588,12 +588,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="container">Solution container from which we are removing reagent.</param>
     /// <param name="reagentQuantity">The reagent to remove.</param>
     /// <returns>The amount of reagent that was removed.</returns>
-    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity)
+    public FixedPoint2 RemoveReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, bool ignoreData = false)
     {
         var (uid, comp) = soln;
         var solution = comp.Solution;
 
-        var quant = solution.RemoveReagent(reagentQuantity);
+        var quant = solution.RemoveReagent(reagentQuantity, ignoreReagentData: ignoreData);
         if (quant <= FixedPoint2.Zero)
             return FixedPoint2.Zero;
 

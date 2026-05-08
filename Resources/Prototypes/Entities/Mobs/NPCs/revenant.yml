@@ -57,6 +57,16 @@
       - EmaggableMedibot
       # borg become killer
       - EmagSiliconLaw
+    bloodCorruptionWhitelist:
+    - Blood
+    - Slime
+    - InsectBlood
+    - Sap
+    - CopperBlood
+    - AmmoniaBlood
+    - SulfurBlood
+    - ZombieBlood # revenant ultimative buff during zombie
+    - Ichor # technicaly this is also blood
   - type: PointLight
     color: MediumPurple
     radius: 2

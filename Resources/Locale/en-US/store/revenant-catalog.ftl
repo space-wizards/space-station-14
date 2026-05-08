@@ -9,3 +9,6 @@ revenant-blight-desc = Infects all nearby organisms with an infectious disease t
 
 revenant-malfunction-name = Malfunction
 revenant-malfunction-desc = Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
+
+revenant-blood-corruption-name = Blood corruption
+revenant-blood-corruption-desc = Corrupts puddles with blood, makes them slippery.

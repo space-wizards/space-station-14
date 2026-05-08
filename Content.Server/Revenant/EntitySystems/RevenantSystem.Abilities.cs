@@ -31,6 +31,14 @@ using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Fluids.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Fluids;
+using Content.Shared.Body.Systems;
+using Robust.Shared.Audio.Systems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Server.Chemistry.Containers.EntitySystems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -46,6 +54,10 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    [Dependency] private readonly SharedSolutionContainerSystem _sln = default!;
 
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -59,6 +71,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantBloodCorruptionActionEvent>(OnBloodCorruptionAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -348,6 +361,54 @@ public sealed partial class RevenantSystem
                 continue;
 
             _emagSystem.TryEmagEffect(uid, uid, ent);
+        }
+    }
+
+    private void OnBloodCorruptionAction(Entity<RevenantComponent> ent, ref RevenantBloodCorruptionActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Dictionary<Entity<PuddleComponent>, List<ReagentQuantity>> corPuddles = [];
+        foreach (var puddleEnt in _lookup.GetEntitiesInRange(args.Target, ent.Comp.BloodCorruptionRadius))
+        {
+            if (TryComp<PuddleComponent>(puddleEnt, out var puddleTmp))
+            {
+                List<ReagentQuantity> reagents = [];
+                foreach (var reagent in ent.Comp.BloodCorruptionWhitelist)
+                {
+                    reagents.Add(new ReagentQuantity(reagent, _sln.GetTotalPrototypeQuantity(puddleEnt, reagent)));
+                }
+
+                corPuddles.Add((puddleEnt, puddleTmp), reagents);
+            }
+        }
+
+        if (corPuddles.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString(ent.Comp.BloodCorruptionPopup), ent, ent);
+            return;
+        }
+
+        if (!TryUseAbility(ent, ent, ent.Comp.BloodCorruptionCost, ent.Comp.BloodCorruptionDebuffs))
+            return;
+
+        args.Handled = true;
+        _audio.PlayPvs(ent.Comp.BloodCorruptionSound, ent);
+
+        foreach (var puddle in corPuddles)
+        {
+            if (puddle.Key.Comp.Solution is not { } corSln)
+                continue;
+
+            foreach (var corReagent in puddle.Value)
+            {
+                _sln.RemoveReagent(corSln, corReagent, true);
+                _sln.TryAddReagent(corSln, ent.Comp.BloodCorruptionReagent, corReagent.Quantity);
+            }
+
+            _puddle.UpdateAppearance(puddle.Key.Owner);
+            _puddle.UpdateSlip(puddle.Key, corSln.Comp.Solution);
         }
     }
 }

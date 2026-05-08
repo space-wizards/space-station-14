@@ -261,3 +261,29 @@
         damage:
           types:
             Cellular: 2
+
+- type: reagent
+  id: Ectoresin
+  name: reagent-name-ectoresin
+  group: Biological
+  desc: reagent-desc-ectoresin
+  flavor: slimy
+  color: "#351439"
+  recognizable: true
+  standsout: true
+  physicalDesc: reagent-physical-desc-viscous
+  slipData:
+    requiredSlipSpeed: 3.0
+  tileReactions:
+  - !type:SpillTileReaction
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+  footstepSound:
+    collection: FootstepSlime
+    params:
+      volume: 6
