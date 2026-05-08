@@ -1,9 +1,10 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Research.TechnologyDisk.Components;
+namespace Content.Shared.Research.TechnologyDisk.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class DiskConsoleComponent : Component
 {
     /// <summary>

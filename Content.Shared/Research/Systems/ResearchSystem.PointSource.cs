@@ -1,10 +1,8 @@
-using Content.Server.Power.EntitySystems;
-using Content.Server.Research.Components;
 using Content.Shared.Research.Components;
 
-namespace Content.Server.Research.Systems;
+namespace Content.Shared.Research.Systems;
 
-public sealed partial class ResearchSystem
+public partial class ResearchSystem
 {
     private void InitializeSource()
     {
@@ -19,6 +17,6 @@ public sealed partial class ResearchSystem
 
     public bool CanProduce(Entity<ResearchPointSourceComponent> source)
     {
-        return source.Comp.Active && this.IsPowered(source, EntityManager);
+        return source.Comp.Active && _power.IsPowered(source.Owner);
     }
 }

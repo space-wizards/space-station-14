@@ -1,17 +1,17 @@
 using System.Linq;
 using Content.Shared.Interaction;
-using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Research.Prototypes;
-using Content.Server.Research.Systems;
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Research.Disk
+namespace Content.Shared.Research.Disk
 {
     public sealed class ResearchDiskSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ResearchSystem _research = default!;
         public override void Initialize()
         {
@@ -20,27 +20,28 @@ namespace Content.Server.Research.Disk
             SubscribeLocalEvent<ResearchDiskComponent, MapInitEvent>(OnMapInit);
         }
 
-        private void OnAfterInteract(EntityUid uid, ResearchDiskComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<ResearchDiskComponent> ent, ref AfterInteractEvent args)
         {
             if (!args.CanReach)
                 return;
 
-            if (!TryComp<ResearchServerComponent>(args.Target, out var server))
+            if (!HasComp<ResearchServerComponent>(args.Target))
                 return;
 
-            _research.ModifyServerPoints(args.Target.Value, component.Points, server);
-            _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
-            QueueDel(uid);
+            _research.ModifyServerPoints(args.Target.Value, ent.Comp.Points);
+            _popupSystem.PopupClient(Loc.GetString("research-disk-inserted", ("points", ent.Comp.Points)), args.Target.Value, args.User);
+            PredictedQueueDel(ent);
             args.Handled = true;
         }
 
-        private void OnMapInit(EntityUid uid, ResearchDiskComponent component, MapInitEvent args)
+        private void OnMapInit(Entity<ResearchDiskComponent> ent, ref MapInitEvent args)
         {
-            if (!component.UnlockAllTech)
+            if (!ent.Comp.UnlockAllTech)
                 return;
 
-            component.Points = _prototype.EnumeratePrototypes<TechnologyPrototype>()
+            ent.Comp.Points = _prototype.EnumeratePrototypes<TechnologyPrototype>()
                 .Sum(tech => tech.Cost);
+            Dirty(ent);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Content.Client.Research.UI
     public sealed partial class ResearchClientServerSelectionMenu : DefaultWindow
     {
         private int _serverCount;
-        private string[] _serverNames = Array.Empty<string>();
-        private int[] _serverIds = Array.Empty<int>();
+        private string[] _serverNames = [];
+        private int[] _serverIds = [];
         private int _selectedServerId = -1;
 
         public event Action<int>? OnServerSelected;
