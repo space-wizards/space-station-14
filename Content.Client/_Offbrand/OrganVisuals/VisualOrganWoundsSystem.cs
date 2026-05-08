@@ -76,6 +76,8 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
 
         _sprite.AddBlankLayer(targetSprite, layerIndex);
         _sprite.LayerMapSet(target, bandageLayerKey, layerIndex);
+
+        ent.Comp.LayersInitialized = true;
     }
 
     private void RemoveLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
@@ -96,6 +98,8 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
 
         var bandageLayerKey = $"{visualOrgan.Layer}-bandages";
         _sprite.RemoveLayer(target, bandageLayerKey);
+
+        ent.Comp.LayersInitialized = false;
     }
 
     private void UpdateOverlay(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
@@ -105,6 +109,9 @@ public sealed class VisualOrganWoundsSystem : EntitySystem
 
         if (!TryComp<WoundableOrganComponent>(ent, out var woundable))
             return;
+
+        if (!ent.Comp.LayersInitialized)
+            SetupLayers(ent, target);
 
         var visualOrgan = Comp<VisualOrganComponent>(ent);
 

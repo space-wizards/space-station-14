@@ -9,6 +9,8 @@ namespace Content.Shared._Offbrand.OrganVisuals;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class VisualOrganWoundsComponent : Component
 {
+    public bool LayersInitialized;
+
     [DataField(required: true)]
     public ResPath MaskPath;
 

@@ -299,3 +299,4 @@
   - type: HideableHumanoidLayers
   - type: Item
   - type: InteractionOutline
+  - type: Clickable
