@@ -216,6 +216,7 @@
     - Janitor
     - Instruments
     - Equipment
+    - Hydroponics
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo
