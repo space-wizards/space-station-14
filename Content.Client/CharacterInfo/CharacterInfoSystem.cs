@@ -31,14 +31,10 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var entity = GetEntity(msg.NetEntity);
-
-        if (!entity.Valid)
-        {
+        if (!TryGetEntity(msg.NetEntity, out var entity))
             return;
-        }
 
-        var data = new CharacterData(entity, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity));
+        var data = new CharacterData(entity.Value, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity.Value));
 
         OnCharacterUpdate?.Invoke(data);
     }
