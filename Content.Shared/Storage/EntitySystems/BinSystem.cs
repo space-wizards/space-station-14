@@ -5,11 +5,13 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -23,6 +25,7 @@ public sealed class BinSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -70,7 +73,17 @@ public sealed class BinSystem : EntitySystem
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 
-        ent.Comp.Items.Add(args.Entity);
+        if (!ent.Comp.Shuffle || ent.Comp.Items.Count == 0)
+        {
+            ent.Comp.Items.Add(args.Entity);
+            return;
+        }
+
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+        // Next(..) is excl. the given number, but we want to also possibly insert as last item in the list, hence the +1.
+        ent.Comp.Items.Insert(rand.Next(ent.Comp.Items.Count + 1), args.Entity);
     }
 
     private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -165,7 +178,7 @@ public sealed class BinSystem : EntitySystem
         if (component.Items.Count == 0)
             return false;
 
-        if (toRemove == null || toRemove != component.Items.LastOrDefault())
+        if (toRemove == null)
             return false;
 
         if (!_container.Remove(toRemove.Value, component.ItemContainer))
