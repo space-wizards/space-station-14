@@ -1,0 +1,85 @@
+- type: entity
+  id: ShadowkinAnchor
+  name: shadow anchor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    state: anchor_idle
+    drawdepth: Effects
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 600
+  - type: ShadowkinAnchor
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: ShadowkinAnchorPlaceEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    state: anchor_spawn
+    drawdepth: Effects
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 0.6
+
+- type: entity
+  id: ShadowkinAnchorRecallDepartEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    state: recall_depart
+    drawdepth: Effects
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 0.4
+
+- type: entity
+  id: ShadowkinAnchorFlashDestroyEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    layers:
+    - state: anchor_flash_destroy
+      shader: unshaded
+    drawdepth: Effects
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#d9c4ff"
+  - type: TimedDespawn
+    lifetime: 0.55
+
+- type: entity
+  id: ShadowkinAnchorRecallArriveEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/Shadowkin/shadowkin_anchor.rsi
+    state: recall_arrive
+    drawdepth: Effects
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 0.4

@@ -145,3 +145,13 @@
   id: XenoborgPing
   files:
   - /Audio/Voice/Xenoborg/xenoborg_ping.ogg
+
+- type: soundCollection
+  id: Mars
+  files:
+  - /Audio/Voice/Shadowkin/mar.ogg
+
+- type: soundCollection
+  id: Wurble
+  files:
+  - /Audio/Voice/Shadowkin/wurble.ogg

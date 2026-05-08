@@ -1,0 +1,35 @@
+- type: entity
+  id: EffectFlashShadowkinShadeskip
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    radius: 5
+    energy: 3.5
+    color: "#7100bd"
+  - type: LightFade
+    duration: 0.6
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/Shadowkin/shadeskip.ogg
+
+- type: entity
+  id: ShadowkinShadow
+  name: shadow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+  - type: ShadowkinLightDampening
+    radius: 6
+    duration: 15
+    flickerStartDelay: 0.35
+    blackoutDuration: 10
+  - type: TimedDespawn
+    lifetime: 15
+  - type: Tag
+    tags:
+    - HideContextMenu

@@ -42,5 +42,9 @@
   name: metabolizer-type-moth
 
 - type: metabolizerType
+  id: Shadowkin
+  name: metabolizer-type-shadowkin
+
+- type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid

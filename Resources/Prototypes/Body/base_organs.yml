@@ -334,9 +334,6 @@
   - type: Lung
   - type: Metabolizer
     stages: [ Respiration ]
-  - type: SolutionManager
-    solutions:
-    - SolutionLungGas
   - type: Sprite
     layers:
     - state: lung-l

@@ -62,6 +62,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
+    private static readonly HashSet<string> BiomeEntityDefaultIgnoredComponents = new()
+    {
+        "SolutionRegeneration",
+    };
 
     private List<(Vector2i, Tile)> _tiles = new();
 
@@ -943,7 +947,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
             }
 
-            if (!EntityManager.IsDefault(ent))
+            if (!EntityManager.IsDefault(ent, BiomeEntityDefaultIgnoredComponents))
             {
                 modified.Add(tile);
                 continue;

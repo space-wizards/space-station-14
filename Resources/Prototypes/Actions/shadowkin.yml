@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseAction
+  id: ActionShadowkinPlaceAnchor
+  name: action-name-shadowkin-place-anchor
+  description: action-description-shadowkin-place-anchor
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/shadowkin_icons.rsi
+      state: shadeskip
+    useDelay: 60
+  - type: InstantAction
+    event: !type:PlaceShadowAnchorEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionShadowkinRecall
+  name: action-name-shadowkin-recall
+  description: action-description-shadowkin-recall
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/shadowkin_icons.rsi
+      state: darkswap
+  - type: InstantAction
+    event: !type:RecallShadowAnchorEvent

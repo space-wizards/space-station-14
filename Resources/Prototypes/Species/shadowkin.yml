@@ -1,0 +1,19 @@
+- type: species
+  id: Shadowkin
+  name: species-name-shadowkin
+  roundStart: true
+  prototype: MobShadowkin
+  defaultSkinTone: "#FFFFFF"
+  dollPrototype: AppearanceShadowkin
+  skinColoration: Hues
+  naming: First
+  sexes:
+    - Male
+    - Female
+  # Долгожители: молодыми считаются до 80, старыми после 175
+  minAge: 18
+  youngAge: 80
+  oldAge: 175
+  maxAge: 250
+  maleFirstNames: names_shadowkin
+  femaleFirstNames: names_shadowkin

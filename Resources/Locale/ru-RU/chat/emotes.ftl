@@ -77,3 +77,9 @@ chat-emote-msg-snarl = скалится.
 chat-emote-msg-whine = скулит.
 chat-emote-msg-howl = воет.
 chat-emote-msg-growl = рычит.
+
+# Shadowkin
+chat-emote-name-mars = Марс
+chat-emote-name-wurble = Вёрбл
+chat-emote-msg-mars = марсит.
+chat-emote-msg-wurble = вёрблит.
