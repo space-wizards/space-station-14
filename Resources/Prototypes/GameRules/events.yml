@@ -239,6 +239,7 @@
     - TerrorObjective
     - MassArrestObjective
     - NinjaSurviveObjective
+    - NinjaKillLimitObjective
   - type: AntagSelection
     agentName: ninja-round-end-agent-name
     antags:
