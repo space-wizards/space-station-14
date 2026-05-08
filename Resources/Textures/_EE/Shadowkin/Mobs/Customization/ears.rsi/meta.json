@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from S.P.L.U.R.T ears.dmi at commit https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/8b4abffbe538fbded19b44b989ebc6808748f31f",
+    "states": [
+        {
+            "name": "shadowkin",
+            "directions": 4
+        },
+        {
+            "name": "shadowkin_stripes",
+            "directions": 4
+        }
+    ]
+}

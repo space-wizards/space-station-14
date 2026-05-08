@@ -1,0 +1,11 @@
+- type: reagent
+  parent: Blood
+  id: BlackBlood
+  name: reagent-name-black-blood
+  group: Biological
+  desc: reagent-desc-black-blood
+  flavor: bitter
+  color: "#1c1624"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-inky
+  slippery: false
