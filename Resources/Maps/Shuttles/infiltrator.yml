@@ -3641,7 +3641,7 @@ entities:
     - type: Transform
       pos: 5.6633797,-17.565443
       parent: 1
-- proto: NuclearBombUnanchored
+- proto: NuclearBombSyndicateUnanchored
   entities:
   - uid: 503
     components:

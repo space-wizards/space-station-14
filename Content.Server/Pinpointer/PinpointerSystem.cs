@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Tag;
 
 namespace Content.Server.Pinpointer;
 
@@ -11,6 +12,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -50,14 +52,19 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         TogglePinpointer(ent.AsNullable());
 
-        if (!ent.Comp.CanRetarget)
-            LocateTarget(ent);
+        // We update the target entity in case a closer entity with the right constraints appears
+        UpdateTargetEntity(ent.AsNullable());
 
         args.Handled = true;
     }
 
+    /// <summary>
+    ///     Refreshes the entity target of all pinpointers when an FTL jump happens.
+    /// </summary>
     private void OnLocateTarget(ref FTLCompletedEvent ev)
     {
+        // This is necessary due to pinpointers only looking for entities within the current map.
+        // Otherwise, players will have to manually toggle their pinpointers off and on again every time they FTL jump to refresh them.
         // This feels kind of expensive, but it only happens once per hyperspace jump
 
         // todo: ideally, you would need to raise this event only on jumped entities
@@ -69,26 +76,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             if (pinpointer.CanRetarget)
                 continue;
 
-            LocateTarget((uid, pinpointer));
-        }
-    }
-
-    private void LocateTarget(Entity<PinpointerComponent> ent)
-    {
-        var component = ent.Comp;
-
-        // try to find target from whitelist
-        if (component.IsActive && component.Component != null)
-        {
-            if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
-            {
-                Log.Error($"Unable to find component registration for {component.Component} for pinpointer!");
-                DebugTools.Assert(false);
-                return;
-            }
-
-            var target = FindTargetFromComponent(ent.Owner, reg.Type);
-            SetTarget(ent.AsNullable(), target);
+            UpdateTargetEntity((uid,pinpointer));
         }
     }
 
@@ -105,31 +93,19 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         }
     }
 
-    /// <summary>
-    ///     Try to find the closest entity from whitelist on a current map
-    ///     Will return null if can't find anything
-    /// </summary>
-    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist)
+    protected override void UpdateTargetEntity(Entity<PinpointerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
-            return null;
+            return;
 
-        // sort all entities in distance increasing order
-        var mapId = ent.Comp.MapID;
-        var l = new SortedList<float, EntityUid>();
-        var worldPos = _transform.GetWorldPosition(ent.Comp);
+        var target = LocateTarget(ent, ent.Comp.Target);
 
-        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
-        {
-            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
-                continue;
+        if (ent.Comp.TargetEntity == target)
+            return;
 
-            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
-            l.TryAdd(dist, otherUid);
-        }
-
-        // return uid with a smallest distance
-        return l.Count > 0 ? l.First().Value : null;
+        ent.Comp.TargetEntity = target;
+        if (ent.Comp.IsActive)
+            UpdateDirectionToTarget(ent);
     }
 
     /// <summary>
@@ -145,10 +121,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         if (!pinpointer.IsActive)
             return;
 
-        var target = pinpointer.Target;
+        var target = pinpointer.TargetEntity;
         if (target == null || !Exists(target.Value))
         {
             SetDistance(ent, Distance.Unknown);
+            UpdateAppearance(ent);
             return;
         }
 
@@ -203,5 +180,140 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             return Distance.Medium;
         else
             return Distance.Far;
+    }
+
+    /// <summary>
+    ///     Try to find the closest entity from whitelist on a current map
+    ///     Will return null if can't find anything
+    /// </summary>
+    private EntityUid? FindTargetFromComponent(Entity<TransformComponent?> ent, Type whitelist, PinpointerTarget filter)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        // sort all entities in distance increasing order
+        var mapId = ent.Comp.MapID;
+        var l = new SortedList<float, EntityUid>();
+        var worldPos = _transform.GetWorldPosition(ent.Comp);
+
+        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
+        {
+            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
+                continue;
+
+            if (!PassesComparison(otherUid, filter))
+            {
+                continue;
+            }
+
+            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
+            l.TryAdd(dist, otherUid);
+        }
+
+        // return uid with the smallest distance
+        return l.Count > 0 ? l.First().Value : null;
+    }
+
+    /// <summary>
+    ///     Returns if entity passes the comparison with the PinpointerTarget
+    /// </summary>
+    private bool PassesComparison(EntityUid ent, PinpointerTarget comparison)
+    {
+        switch (comparison)
+        {
+            case PinpointerEntProtoIdTarget entProtoId:
+            {
+                return (Prototype(ent)?.ID! == entProtoId.Target);
+            }
+            case PinpointerTagTarget tag:
+            {
+                return _tag.HasTag(ent, tag.Target);
+            }
+            // no designated filter = auto pass
+            default:
+            {
+                return true;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Gets an EntityUid target from a PinpointerTarget, if the target exists. Entity is what is being
+    ///     used to calculate the closest entity with a given component, so Entity should almost always be
+    ///     the pinpointer.
+    /// </summary>
+    /// <remarks>
+    ///     Add a new case here if you are creating a new subclass of <see cref="PinpointerTarget"/>.
+    /// </remarks>
+    private EntityUid? LocateTarget(EntityUid entity, PinpointerTarget? target)
+    {
+        EntityUid? result = null;
+        if (target is null)
+        {
+            return result;
+        }
+
+        switch (target)
+        {
+            case PinpointerComponentTarget component:
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(component.Target, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {component.Target} for pinpointer!");
+                    DebugTools.Assert(false);
+                    break;
+                }
+
+                if (!_xformQuery.TryComp(entity, out var transform))
+                    break;
+
+                // There may be multiple entities with the specified component, so we want the closest one at the time of activation
+                result = FindTargetFromComponent((entity, transform), reg.Type, component);
+                break;
+            }
+            case PinpointerEntityUidTarget entityUid:
+            {
+                result = entityUid.Target;
+                break;
+            }
+            case PinpointerEntProtoIdTarget entProtoId:
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(entProtoId.Component, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {entProtoId.Component} for pinpointer!");
+                    DebugTools.Assert(false);
+                    break;
+                }
+
+                if (!_xformQuery.TryComp(entity, out var transform))
+                    break;
+
+                result = FindTargetFromComponent((entity, transform), reg.Type, entProtoId);
+                break;
+            }
+            case PinpointerTagTarget tag:
+            {
+                if (!EntityManager.ComponentFactory.TryGetRegistration(tag.Component, out var reg))
+                {
+                    Log.Error($"Unable to find component registration for {tag.Component} for pinpointer!");
+                    DebugTools.Assert(false);
+                    break;
+                }
+
+                if (!_xformQuery.TryComp(entity, out var transform))
+                    break;
+
+                result = FindTargetFromComponent((entity, transform), reg.Type, tag);
+                break;
+            }
+            default:
+            {
+                Log.Error("Invalid PinpointerTarget record");
+                DebugTools.Assert(false);
+                break;
+            }
+        }
+
+        return result;
     }
 }
