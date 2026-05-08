@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Options.UI;
 
@@ -173,6 +174,19 @@ public sealed partial class OptionsTabControlRow : Control
         where T : notnull
     {
         return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options));
+    }
+
+    /// <summary>
+    /// Add a TextEdit option, backed by a CVar.
+    /// </summary>
+    /// <param name="cVar">The CVar represented by the TextEdit.</param>
+    /// <param name="textEdit">The TextEdit control for the option.</param>
+    /// <returns>The option instance backing the added option.</returns>
+    public OptionStringCVar AddOptionString(
+        CVarDef<string> cVar,
+        TextEdit textEdit)
+    {
+        return AddOption(new OptionStringCVar(this, _cfg, cVar, textEdit));
     }
 
     /// <summary>
@@ -745,5 +759,46 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     private struct ItemEntry
     {
         public T Key;
+    }
+}
+
+/// <summary>
+///  Implementation of a CVar option that simply corresponds with a string <see cref="TextEdit"/>.
+/// </summary>
+public sealed class OptionStringCVar : BaseOptionCVar<string>
+{
+    private readonly TextEdit _textEdit;
+    protected override string Value
+    {
+        get => Rope.Collapse(_textEdit.TextRope);
+        set => _textEdit.TextRope = new Rope.Leaf(value);
+    }
+
+    /// <summary>
+    /// Creates a new instance of this type.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// It is generally more convenient to call overloads on <see cref="OptionsTabControlRow"/>
+    /// such as <see cref="OptionsTabControlRow.AddOptionString"/> instead of instantiating this type directly.
+    /// </para>
+    /// </remarks>
+    /// <param name="controller">The control row that owns this option.</param>
+    /// <param name="cfg">The configuration manager to get and set values from.</param>
+    /// <param name="cVar">The CVar that is being controlled by this option.</param>
+    /// <param name="textEdit">The UI TextEdit for the option.</param>
+    public OptionStringCVar(
+        OptionsTabControlRow controller,
+        IConfigurationManager cfg,
+        CVarDef<string> cVar,
+        TextEdit textEdit)
+        : base(controller, cfg, cVar)
+    {
+        _textEdit = textEdit;
+
+        textEdit.OnTextChanged += _ =>
+        {
+            ValueChanged();
+        };
     }
 }
