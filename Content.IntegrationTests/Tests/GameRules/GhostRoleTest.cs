@@ -18,11 +18,11 @@ using Robust.Shared.Random;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class GhostRoleTest : GameTest
+public sealed partial class GhostRoleTest : GameTest
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [SidedDependency(Side.Server)] private readonly GameTicker _ticker = default!;
-    [SidedDependency(Side.Server)] private readonly GhostRoleSystem _ghostRole = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [SidedDependency(Side.Server)] private GameTicker _ticker = default!;
+    [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
 
     private static string[] _antagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
 
