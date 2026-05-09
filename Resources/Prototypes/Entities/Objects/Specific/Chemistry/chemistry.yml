@@ -332,14 +332,14 @@
   name: Syndicate bluespace beaker
   parent: [SolutionLarge, BaseBeakerMetallic, BaseSyndicateContraband]
   description: An illegal reagent container that violates the laws of physics.
-  id: RedspaceBeaker
+  id: SyndicateBluespaceBeaker
   components:
   - type: Spillable
     solution: beaker
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beaker_redspace.rsi
+    sprite: Objects/Specific/Chemistry/beaker_syndicate_bluespace.rsi
     layers:
-      - state: beakerredspace
+      - state: beakersyndicatebluespace
 
 - type: entity
   name: dropper
