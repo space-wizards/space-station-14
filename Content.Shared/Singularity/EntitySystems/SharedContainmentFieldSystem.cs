@@ -11,12 +11,12 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// This handles the containment field for the singularity and tesla ball.
 /// </summary>
-public abstract class SharedContainmentFieldSystem : EntitySystem
+public abstract partial class SharedContainmentFieldSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
