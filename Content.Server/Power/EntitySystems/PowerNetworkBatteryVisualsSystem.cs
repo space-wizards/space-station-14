@@ -30,6 +30,8 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     {
         base.Initialize();
 
+        UpdatesAfter.Add(typeof(PowerNetSystem));
+
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit, after: [typeof(BatterySystem)]);
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanChargeChangedEvent>(OnBatteryCanChargeChanged);
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanDischargeChangedEvent>(OnBatteryCanDischargeChanged);
