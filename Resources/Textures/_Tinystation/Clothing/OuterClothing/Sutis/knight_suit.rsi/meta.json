@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Based from tgstation https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suit.dmi. Vox Sprite taken from https://github.com/ParadiseSS13/Paradise/blob/980bbb489d27baa168d30d044d573d017845015b/icons/mob/clothing/species/vox/suit.dmi modified by @areyouconfused(github). Tail sprites by Tiniest Shark (github)",
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Recolored from tgstation suit texture by Alikhan-Amandinov",
     "size": {
         "x": 32,
         "y": 32

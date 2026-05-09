@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Based from tgstation at commit https://github.com/tgstation/tgstation/pull/46166/commits/b4b1dde442978f9d85d534437a32e5f2fbc3e89e",
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Recolored from tgstation jumpsuit texture by Alikhan-Amandinov",
   "size": {
     "x": 32,
     "y": 32
