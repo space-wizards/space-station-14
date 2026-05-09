@@ -5,10 +5,10 @@ using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class ChangelingObjectiveSystem : EntitySystem
+public sealed partial class ChangelingObjectiveSystem : EntitySystem
 {
-    [Dependency] private readonly NumberObjectiveSystem _number = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private NumberObjectiveSystem _number = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -20,7 +20,10 @@ public sealed class ChangelingObjectiveSystem : EntitySystem
 
     private void OnChangelingDevoured(ref ChangelingDevouredEvent args)
     {
-        if (!args.Unique)
+        // We check if the devour granted us Dna.
+        // We do this because we could already have gotten the identity by other means before, such as the Dna sting.
+        // Dna grant basically ensures this is the first time valid devour has happened on a target.
+        if (!args.GrantedDna)
             return;
 
         if (!_mind.TryGetObjectiveComp<ChangelingUniqueIdentityConditionComponent>(args.Changeling, out var obj))
