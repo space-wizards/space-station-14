@@ -124,6 +124,6 @@ public sealed partial class CCVars
     /// <summary>
     /// The default state for showing admin overlays in the strip menu.
     /// </summary>
-    public static readonly CVarDef<bool> AdminStripMenuOverlay =
-        CVarDef.Create("ui.admin_strip_menu_overlay", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<bool> AdminStripMenuOverlayDefault =
+        CVarDef.Create("ui.admin_strip_menu_overlay_default", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

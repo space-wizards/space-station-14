@@ -415,4 +415,4 @@ ui-options-admin-overlay-ghost-fade-distance = Ghost overlay fade range from mou
 ui-options-admin-overlay-ghost-hide-distance = Ghost overlay hide range from mouse
 
 ui-options-admin-strip-overlay-title = Strip Overlay
-ui-options-admin-strip-overlay-setting = Show strip overlay
+ui-options-admin-strip-overlay-setting = Show strip overlay by default
