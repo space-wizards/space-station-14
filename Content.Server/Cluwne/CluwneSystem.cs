@@ -8,7 +8,7 @@ using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
@@ -19,19 +19,19 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cluwne;
 
-public sealed class CluwneSystem : EntitySystem
+public sealed partial class CluwneSystem : EntitySystem
 {
 
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly OutfitSystem _outfitSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private AutoEmoteSystem _autoEmote = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private OutfitSystem _outfitSystem = default!;
 
     public override void Initialize()
     {

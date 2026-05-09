@@ -4,7 +4,7 @@ using Content.Shared.Singularity.EntitySystems;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class ContainmentFieldSystem : SharedContainmentFieldSystem
+public sealed partial class ContainmentFieldSystem : SharedContainmentFieldSystem
 {
     public override void Initialize()
     {

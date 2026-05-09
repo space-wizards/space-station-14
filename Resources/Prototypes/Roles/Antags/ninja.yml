@@ -6,19 +6,47 @@
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
 
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: SpaceNinja
+  spawnerPrototype: SpawnPointGhostSpaceNinja
+  pickPlayer: false
+  startingGear: SpaceNinjaGear
+  roleLoadout:
+  - RoleSurvivalSpaceNinja
+  briefing:
+    text: ninja-role-greeting
+    color: Green
+    sound: /Audio/Misc/ninja_greeting.ogg
+  components:
+  - type: SpaceNinja
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: AutoImplant
+    implants:
+    - DeathAcidifierImplant
+  - type: RandomMetadata
+    nameSegments:
+    - NamesNinjaTitle
+    - NamesNinja
+    nameFormat: name-format-ninja
+  mindRoles:
+  - MindRoleNinja
+
 #Ninja Gear
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitNinja
-    back: ClothingBackpackSatchel
+    back: ClothingBackpackSatchelNinja
     mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
     eyes: ClothingEyesVisorNinja
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
-    id: AgentIDCard
+    id: NinjaPDA
     ears: ClothingHeadsetNinja
     pocket1: SpiderCharge
     pocket2: PinpointerStation
@@ -33,11 +61,15 @@
     - Wirecutter
     - Welder
     - Multitool
+    - EmergencyMedipen
+    - Flare
+    - FoodSnackNutribrick
+    - DrinkWaterBottleFull
 
 - type: chameleonOutfit
   id: NinjaChameleonOutfit
   name: roles-antag-space-ninja-name
+  icon: "JobIconNinja"
   startingGear: SpaceNinjaGear
   equipment:
-    id: PassengerPDA
     neck: ClothingNeckGoldmedal

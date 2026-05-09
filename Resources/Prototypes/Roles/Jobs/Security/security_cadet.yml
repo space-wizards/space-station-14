@@ -8,21 +8,17 @@
       time: 10h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 5h
+      time: 10h
       inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security
-  canBeAntag: false
   access:
   - Security
   - Brig
   - Maintenance
-  - Service
   - External
   - Cryogenics
-  - GenpopEnter
-  - GenpopLeave
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
