@@ -12,15 +12,15 @@ using Content.Shared.EntityTable;
 
 namespace Content.Server.StationEvents;
 
-public sealed class EventManagerSystem : EntitySystem
+public sealed partial class EventManagerSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Dependency] public readonly GameTicker GameTicker = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
+    [Dependency] public GameTicker GameTicker = default!;
+    [Dependency] private RoundEndSystem _roundEnd = default!;
 
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
@@ -71,16 +71,17 @@ public sealed class EventManagerSystem : EntitySystem
         GameTicker.AddGameRule(randomLimitedEvent);
     }
 
-    /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
-    public bool TryListLimitedEvents(
+    /// <summary>
+    /// Builds a list of all possible events and their probabilities.
+    /// </summary>
+    public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
         EntityTableSelector limitedEventsTable,
-        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
         TimeSpan? currentTime = null,
         int? playerCount = null)
     {
         var selectedEvents = _entityTable.ListSpawns(limitedEventsTable);
 
-        return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+        return ListLimitedEvents(selectedEvents, currentTime, playerCount);
     }
 
     /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
@@ -93,6 +94,49 @@ public sealed class EventManagerSystem : EntitySystem
         var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
         return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+    }
+
+    public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
+        IEnumerable<(EntProtoId, double)> selectedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
+    {
+        var limitedEvents = new List<(EntProtoId, double)>();
+
+        playerCount ??= _playerManager.PlayerCount;
+
+        // playerCount does a lock so we'll just keep the variable here
+        currentTime ??= GameTicker.RoundDuration();
+
+        var totalWeight = 0f;
+
+        foreach (var (eventId, prob) in selectedEvents)
+        {
+            if (!_prototype.Resolve(eventId, out var eventproto))
+                continue;
+
+            if (eventproto.Abstract)
+                continue;
+
+            if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
+                continue;
+
+            if (!CanRun(eventproto, stationEvent, playerCount.Value, currentTime.Value))
+                continue;
+
+            limitedEvents.Add((eventproto, prob * stationEvent.Weight));
+            totalWeight += stationEvent.Weight;
+        }
+
+        if (!limitedEvents.Any() || totalWeight <= 0)
+            yield break;
+
+        for (var i = 0; i < limitedEvents.Count; i++)
+        {
+            var eventWeight = limitedEvents[i];
+            eventWeight.Item2 /= totalWeight;
+            yield return eventWeight;
+        }
     }
 
     /// <summary>
@@ -119,6 +163,9 @@ public sealed class EventManagerSystem : EntitySystem
 
         foreach (var eventid in selectedEvents)
         {
+            if (GameTicker.IsIgnored(eventid))
+                continue;
+
             if (!_prototype.Resolve(eventid, out var eventproto))
             {
                 Log.Warning("An event ID has no prototype index!");
