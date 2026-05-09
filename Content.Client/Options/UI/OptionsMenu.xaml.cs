@@ -10,8 +10,8 @@ namespace Content.Client.Options.UI
     [GenerateTypedNameReferences]
     public sealed partial class OptionsMenu : DefaultWindow
     {
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         public OptionsMenu()
         {

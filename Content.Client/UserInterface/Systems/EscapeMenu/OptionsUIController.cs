@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
-public sealed class OptionsUIController : UIController
+public sealed partial class OptionsUIController : UIController
 {
     private OptionsMenu _optionsWindow = default!;
 
