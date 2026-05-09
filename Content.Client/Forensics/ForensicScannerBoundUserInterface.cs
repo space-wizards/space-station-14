@@ -1,10 +1,11 @@
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Forensics;
 
-public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
+public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private ForensicScannerMenu? _window;

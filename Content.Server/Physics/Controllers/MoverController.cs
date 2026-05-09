@@ -14,13 +14,13 @@ using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 
 namespace Content.Server.Physics.Controllers;
 
-public sealed class MoverController : SharedMoverController
+public sealed partial class MoverController : SharedMoverController
 {
     private static readonly Gauge ActiveMoverGauge = Metrics.CreateGauge(
         "physics_active_mover_count",
         "Amount of ActiveInputMovers being processed by MoverController");
 
-    [Dependency] private readonly ThrusterSystem _thruster = default!;
+    [Dependency] private ThrusterSystem _thruster = default!;
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 

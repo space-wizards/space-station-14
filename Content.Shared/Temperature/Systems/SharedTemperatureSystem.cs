@@ -11,12 +11,12 @@ namespace Content.Shared.Temperature.Systems;
 /// <summary>
 /// This handles predicting temperature based speedup.
 /// </summary>
-public abstract class SharedTemperatureSystem : EntitySystem
+public abstract partial class SharedTemperatureSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
 
-    [Dependency] protected readonly EntityQuery<TemperatureComponent> TemperatureQuery = default!;
+    [Dependency] protected EntityQuery<TemperatureComponent> TemperatureQuery = default!;
 
     /// <summary>
     /// Band-aid for unpredicted atmos. Delays the application for a short period so that laggy clients can get the replicated temperature.
