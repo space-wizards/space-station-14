@@ -1,20 +1,19 @@
-using Content.Shared.Atmos;
+namespace Content.Server.Atmos.Piping.Binary.Components;
 
-namespace Content.Server.Atmos.Piping.Binary.Components
+/// <summary>
+/// Defines a passive gate, which equalizes gas from
+/// inlet to outlet, but does not allow gas to flow from outlet to inlet.
+/// </summary>
+[RegisterComponent]
+public sealed partial class GasPassiveGateComponent : Component
 {
-    [RegisterComponent]
-    public sealed partial class GasPassiveGateComponent : Component
-    {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("inlet")]
-        public string InletName { get; set; } = "inlet";
+    [DataField("inlet")]
+    public string InletName = "inlet";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("outlet")]
-        public string OutletName { get; set; } = "outlet";
+    [DataField("outlet")]
+    public string OutletName = "outlet";
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("flowRate")]
-        public float FlowRate { get; set; } = 0;
-    }
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    public float FlowRate;
 }
