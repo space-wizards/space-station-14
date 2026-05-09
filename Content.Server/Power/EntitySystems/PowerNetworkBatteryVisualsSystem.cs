@@ -13,11 +13,11 @@ namespace Content.Server.Power.EntitySystems;
 /// A system to update the visuals for PowerNetworkBatteries (e.g. substations and SMESes)
 /// </summary>
 [UsedImplicitly]
-public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
+public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     /// <summary>
     /// The minimum power surplus/deficit required to consider a battery to be out of stable state.
@@ -29,8 +29,6 @@ public sealed class PowerNetworkBatteryVisualsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit, after: [typeof(BatterySystem)]);
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanChargeChangedEvent>(OnBatteryCanChargeChanged);
