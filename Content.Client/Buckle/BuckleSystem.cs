@@ -8,12 +8,12 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Buckle;
 
-internal sealed class BuckleSystem : SharedBuckleSystem
+internal sealed partial class BuckleSystem : SharedBuckleSystem
 {
-    [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private RotationVisualizerSystem _rotationVisualizerSystem = default!;
+    [Dependency] private IEyeManager _eye = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
