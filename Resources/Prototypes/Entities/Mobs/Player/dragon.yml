@@ -104,9 +104,7 @@
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
     - Electrocution
-    - TemporaryBlindness
     - Pacified
-    - RadiationProtection
     - Adrenaline
   - type: Temperature
   - type: TemperatureDamage
@@ -229,8 +227,8 @@
       amount: 1
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 12
+      types:
+        Piercing: 12
 
 - type: entity
   parent: BaseAction
@@ -285,3 +283,16 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+
+- type: entity
+  parent: Smoke
+  id: BloodSmoke
+  name: smoke
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Smoke
+    spreadAmount: 3
+    duration: 2
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke_white

@@ -17,12 +17,3 @@
   responseType: "General Feedback"
   responseLink: "https://forum.spacestation14.com/c/development/feedback/51"
   showRoundEnd: false
-
-- type: feedbackPopup
-  id: UplinkFeedback
-  popupOrigin: wizden_master
-  title: "[bold]Feedback on Traitor Uplink Changes[/bold]"
-  description: >-
-    If you have any feedback on the changes to the Traitor Uplink, feel free to leave them in this thread on the forums!
-  responseType: "Forum Thread"
-  responseLink: "https://forum.spacestation14.com/t/uplink-feedback/26178"

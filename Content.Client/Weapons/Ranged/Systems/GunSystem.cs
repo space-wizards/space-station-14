@@ -38,20 +38,20 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ClickableSystem _clickable = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly SpriteTreeSystem _spriteTree = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private AnimationPlayerSystem _animPlayer = default!;
+    [Dependency] private ClickableSystem _clickable = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedCameraRecoilSystem _recoil = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private SpriteTreeSystem _spriteTree = default!;
 
     public static readonly EntProtoId HitscanProto = "HitscanEffect";
     private GunTargetEntityComparer _comparer = default!;

@@ -11,7 +11,6 @@ public interface IItemslotUIContainer
     public bool TryAddButton(SlotControl control);
 }
 
-[Virtual]
 public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContainer where T : SlotControl
 {
     private readonly Dictionary<string, T> _buttons = new();

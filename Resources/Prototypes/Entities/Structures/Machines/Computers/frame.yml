@@ -25,8 +25,9 @@
   - type: Sprite
     drawdepth: Objects
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

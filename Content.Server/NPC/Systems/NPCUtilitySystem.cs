@@ -29,31 +29,37 @@ using Robust.Shared.Utility;
 using Content.Shared.Atmos.Components;
 using System.Linq;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Stealth;
+using Content.Shared.Stealth.Components;
 
 namespace Content.Server.NPC.Systems;
 
 /// <summary>
 /// Handles utility queries for NPCs.
 /// </summary>
-public sealed class NPCUtilitySystem : EntitySystem
+public sealed partial class NPCUtilitySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly IngestionSystem _ingestion = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly WeldableSystem _weldable = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
-    [Dependency] private readonly TurretTargetSettingsSystem _turretTargetSettings = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private MobThresholdSystem _thresholdSystem = default!;
+    [Dependency] private TurretTargetSettingsSystem _turretTargetSettings = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedStealthSystem _stealth = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -283,6 +289,15 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return Math.Clamp(distance / radius, 0f, 1f);
             }
+            case TargetIsVisibleCon:
+            {
+                if (!TryComp(targetUid, out StealthComponent? stealth))
+                    return 1f; // If there is no StealthComponent, we see it.
+
+                // Checking the visibility level
+                var visibility = _stealth.GetVisibility(targetUid, stealth);
+                return visibility >= 0.5f ? 1f : 0f; // Visibility threshold 0.5
+            }
             case TargetAmmoCon:
             {
                 if (!HasComp<GunComponent>(targetUid))
@@ -302,11 +317,13 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetHealthCon con:
             {
-                if (!TryComp(targetUid, out DamageableComponent? damage))
+                if (!TryComp(targetUid, out DamageableComponent? damage) || !TryComp(targetUid, out MobThresholdsComponent? threshold))
                     return 0f;
-                if (con.TargetState != MobState.Invalid && _thresholdSystem.TryGetPercentageForState(targetUid, con.TargetState, damage.TotalDamage, out var percentage))
+
+                var totalDamage = _damageable.GetTotalDamage((targetUid, damage));
+                if (con.TargetState != MobState.Invalid && _thresholdSystem.TryGetPercentageForState(targetUid, con.TargetState, totalDamage, out var percentage, threshold))
                     return Math.Clamp((float)(1 - percentage), 0f, 1f);
-                if (_thresholdSystem.TryGetIncapPercentage(targetUid, damage.TotalDamage, out var incapPercentage))
+                if (_thresholdSystem.TryGetIncapPercentage(targetUid, totalDamage, out var incapPercentage, threshold))
                     return Math.Clamp((float)(1 - incapPercentage), 0f, 1f);
                 return 0f;
             }
@@ -504,7 +521,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     {
         switch (filter)
         {
-            case ComponentFilter compFilter:
+            case Content.Server.NPC.Queries.Queries.ComponentFilter compFilter:
             {
                 _entityList.Clear();
 
