@@ -4,9 +4,9 @@ using Content.Shared.Chemistry.EntitySystems;
 namespace Content.Client.Chemistry.EntitySystems;
 
 /// <inheritdoc/>
-public sealed class ThermobathSystem : SharedThermobathSystem
+public sealed partial class ThermobathSystem : SharedThermobathSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
