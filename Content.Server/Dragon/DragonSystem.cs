@@ -37,8 +37,8 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SmokeSystem _smoke = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
