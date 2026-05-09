@@ -27,11 +27,11 @@
     - state: beaker
       map: [ "enum.ThermobathVisuals.HasBeaker" ]
     - state: lid_none
-      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsIdle" ]
+      map: [ "enum.ThermobathVisuals.HasBeakerAndIdle" ]
     - state: lid_cold
-      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsCooling" ]
+      map: [ "enum.ThermobathVisuals.HasBeakerAndCooling" ]
     - state: lid_hot
-      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsHeating" ]
+      map: [ "enum.ThermobathVisuals.HasBeakerAndHeating" ]
   - type: Thermobath
   - type: Thermoregulator
     heatingPower: 1200
@@ -74,15 +74,24 @@
         enum.ThermobathVisuals.IsCooling:
           True: { visible: true }
           False: { visible: false }
-      enum.ThermobathVisuals.IsIdle:
-        enum.ThermobathVisuals.IsIdle:
+      enum.ThermobathVisuals.DoesNotHaveBeaker:
+        enum.ThermobathVisuals.DoesNotHaveBeaker:
           True: { visible: true }
           False: { visible: false }
       enum.ThermobathVisuals.HasBeaker:
         enum.ThermobathVisuals.HasBeaker:
           True: { visible: true }
           False: { visible: false }
-      enum.ThermobathVisuals.DoesNotHaveBeaker:
-        enum.ThermobathVisuals.DoesNotHaveBeaker:
+      enum.ThermobathVisuals.HasBeakerAndIdle:
+        enum.ThermobathVisuals.HasBeakerAndIdle:
           True: { visible: true }
           False: { visible: false }
+      enum.ThermobathVisuals.HasBeakerAndCooling:
+        enum.ThermobathVisuals.HasBeakerAndCooling:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeakerAndHeating:
+        enum.ThermobathVisuals.HasBeakerAndHeating:
+          True: { visible: true }
+          False: { visible: false }
+

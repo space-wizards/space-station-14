@@ -73,7 +73,9 @@ public abstract partial class SharedThermobathSystem : EntitySystem
 
         _appearance.SetData(ent, ThermobathVisuals.IsHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
         _appearance.SetData(ent, ThermobathVisuals.IsCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Cooling);
-        _appearance.SetData(ent, ThermobathVisuals.IsIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Idle);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Idle && ent.Comp.HasBeaker);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating && ent.Comp.HasBeaker);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Cooling && ent.Comp.HasBeaker);
     }
 
     private void OnUiOpened(Entity<ThermobathComponent> ent, ref BoundUIOpenedEvent args)
@@ -101,6 +103,18 @@ public abstract partial class SharedThermobathSystem : EntitySystem
 
         _appearance.SetData(ent, ThermobathVisuals.HasBeaker, true);
         _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, false);
+        if (TryComp<ThermoregulatorComponent>(ent, out var comp))
+        {
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, comp.ActiveMode == ThermoregulatorActiveMode.Idle);
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, comp.ActiveMode == ThermoregulatorActiveMode.Heating);
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, comp.ActiveMode == ThermoregulatorActiveMode.Cooling);
+        }
+        else
+        {
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, true);
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
+            _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
+        }
     }
 
     private void OnEntRemovedFromContainer(Entity<ThermobathComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -114,6 +128,9 @@ public abstract partial class SharedThermobathSystem : EntitySystem
         UpdateUi(ent);
         _appearance.SetData(ent, ThermobathVisuals.HasBeaker, false);
         _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, true);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, false);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
     }
 
     private void OnPowerChanged(Entity<ThermobathComponent> ent, ref PowerChangedEvent args)
@@ -131,11 +148,16 @@ public abstract partial class SharedThermobathSystem : EntitySystem
         _appearance.SetData(ent, ThermobathVisuals.IsOn, args.Powered);
         _appearance.SetData(ent, ThermobathVisuals.IsOff, !args.Powered);
 
-        if (args.Powered)
+        if (args.Powered) // May need to set some of the HasBeakerAnd__ values when powered.
             return;
         _appearance.SetData(ent, ThermobathVisuals.IsHeating, false);
         _appearance.SetData(ent, ThermobathVisuals.IsCooling, false);
-        _appearance.SetData(ent, ThermobathVisuals.IsIdle, true);
+
+        if (!ent.Comp.HasBeaker)
+            return;
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndIdle, true);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndHeating, false);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeakerAndCooling, false);
     }
 
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
