@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class HandcuffedPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     [DataField]
     public bool ReactOnlyWhenFullyCuffed = true;
