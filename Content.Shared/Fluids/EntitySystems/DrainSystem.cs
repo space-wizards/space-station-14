@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -23,20 +22,21 @@ namespace Content.Shared.Fluids.EntitySystems;
 
 /// <summary>
 /// Handles the draining of solutions from containers into drains.
+/// TODO: This system is very bad, and needs to be rewritten.
 /// </summary>
-public sealed class DrainSystem : EntitySystem
+public sealed partial class DrainSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly HashSet<Entity<PuddleComponent>> _puddles = [];
 
@@ -130,9 +130,9 @@ public sealed class DrainSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrainComponent, SolutionContainerManagerComponent>();
+        var query = EntityQueryEnumerator<DrainComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var drain, out var manager))
+        while (query.MoveNext(out var uid, out var drain))
         {
             if (curTime < drain.NextUpdate)
                 continue;
@@ -141,7 +141,7 @@ public sealed class DrainSystem : EntitySystem
             Dirty(uid, drain);
 
             // Best to do this one every second rather than once every tick...
-            if (!_solutionContainerSystem.ResolveSolution((uid, manager), DrainComponent.SolutionName, ref drain.Solution, out var drainSolution))
+            if (!_solutionContainerSystem.ResolveSolution(uid, DrainComponent.SolutionName, ref drain.Solution, out var drainSolution))
                 continue;
 
             if (drainSolution.Volume <= 0 && !drain.AutoDrain)
@@ -201,12 +201,9 @@ public sealed class DrainSystem : EntitySystem
 
     private void OnExamined(Entity<DrainComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange ||
-            !HasComp<SolutionContainerManagerComponent>(ent) ||
-            !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
-        {
+        if (!args.IsInDetailsRange
+            || !_solutionContainerSystem.ResolveSolution(ent.Owner, DrainComponent.SolutionName, ref ent.Comp.Solution, out var drainSolution))
             return;
-        }
 
         var text = drainSolution.AvailableVolume != 0
             ? Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume))
