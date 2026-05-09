@@ -7,6 +7,7 @@ using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -15,13 +16,12 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// </summary>
 public abstract class SharedThermobathSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ThermoregulatorSystem _thermoregulator = default!;
-
-    private EntityQuery<SolutionContainerManagerComponent> _solutionManagerQuery;
 
     private const string BeakerSlotId = "beakerSlot";
     private const string SolutionId = "beaker";
@@ -45,12 +45,13 @@ public abstract class SharedThermobathSystem : EntitySystem
         {
             subs.Event<BoundUIOpenedEvent>(OnUiOpened);
         });
-
-        _solutionManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
     }
 
     private void OnThermoregulatorUpdated(Entity<ThermobathComponent> ent, ref ThermoregulatorUpdatedEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         // Skip if not powered
         if (!_power.IsPowered(ent.Owner))
             return;
@@ -121,6 +122,9 @@ public abstract class SharedThermobathSystem : EntitySystem
 
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         _thermoregulator.SetSetpoint(ent.Owner, args.Setpoint);
         UpdateUi(ent);
     }
@@ -147,7 +151,7 @@ public abstract class SharedThermobathSystem : EntitySystem
 
         foreach (var entity in beakerSlot.ContainedEntities)
         {
-            if (!_solutionContainer.TryGetSolution((entity, _solutionManagerQuery.GetComponent(entity)), SolutionId, out soln, out solution))
+            if (!_solutionContainer.TryGetSolution(entity, SolutionId, out soln, out solution))
                 continue;
 
             return true;

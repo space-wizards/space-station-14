@@ -58,6 +58,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, TimeSpan curTime)
     {
+
         var dt = ent.Comp.UpdateInterval.TotalSeconds;     // Time between updates
         var T = ent.Comp.Temperature;                        // Current temperature
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
@@ -147,7 +148,6 @@ public sealed class ThermoregulatorSystem : EntitySystem
             return;
 
         HeatContainerHelpers.ConductHeat(ref ent.Comp, ref otherHeatContainer, (float) ent.Comp.UpdateInterval.TotalSeconds,DefaultThermalConductivity);
-
     }
 
     /// <summary>
@@ -157,6 +157,9 @@ public sealed class ThermoregulatorSystem : EntitySystem
     [PublicAPI]
     public void SetSetpoint(Entity<ThermoregulatorComponent?> ent, float setpoint)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (!Resolve(ent, ref ent.Comp))
             return;
 
