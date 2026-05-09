@@ -8,7 +8,7 @@ namespace Content.Shared.Objectives.Systems;
 /// <summary>
 /// This filters for specific minds form
 /// </summary>
-public sealed class AliveAiTargetSystem : MindTargetSystem<StationAiCoreComponent, StationAiHolderComponent>
+public sealed partial class AliveAiTargetSystem : MindTargetSystem<StationAiCoreComponent, StationAiHolderComponent>
 {
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedStationAiSystem _ai = default!;
