@@ -6,9 +6,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 public sealed partial class UnPullOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 
     private EntityQuery<PullableComponent> _pullableQuery;
 

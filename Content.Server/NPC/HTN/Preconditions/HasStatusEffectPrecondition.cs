@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     [DataField(required: true)]
     public EntProtoId StatusEffect;

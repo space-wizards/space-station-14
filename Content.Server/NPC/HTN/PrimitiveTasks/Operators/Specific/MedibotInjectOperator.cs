@@ -5,9 +5,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly SharedChatSystem _chat = default!;
-    [Dependency] private readonly MedibotSystem _medibot = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private MedibotSystem _medibot = default!;
 
     /// <summary>
     /// Target entity to inject.

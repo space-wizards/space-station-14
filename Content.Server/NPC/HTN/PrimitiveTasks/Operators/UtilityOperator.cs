@@ -13,7 +13,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed partial class UtilityOperator : HTNOperator
 {
-    [Dependency] private readonly NPCUtilitySystem _npcUtilitySystem = default!;
+    [Dependency] private NPCUtilitySystem _npcUtilitySystem = default!;
 
     [DataField]
     public string Key = "Target";

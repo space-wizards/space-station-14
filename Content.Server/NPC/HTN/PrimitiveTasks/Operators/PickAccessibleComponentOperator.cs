@@ -10,9 +10,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed partial class PickAccessibleComponentOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly PathfindingSystem _pathfinding = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;

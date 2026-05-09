@@ -5,8 +5,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class DisposalInsertOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedDisposalUnitSystem _disposalSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedDisposalUnitSystem _disposalSystem = default!;
 
     /// <summary>
     /// Target entity to flush

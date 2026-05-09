@@ -4,8 +4,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 public sealed partial class ContainerOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private ContainerSystem _container = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
 

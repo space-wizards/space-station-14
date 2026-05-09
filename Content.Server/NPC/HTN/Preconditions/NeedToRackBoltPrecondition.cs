@@ -10,9 +10,9 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class NeedToRackBoltPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedGunSystem _gunSystem = default!;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {

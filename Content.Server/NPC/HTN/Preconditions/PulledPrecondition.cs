@@ -7,7 +7,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class PulledPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private PullingSystem _pulling = default!;
 
     [ViewVariables(VVAccess.ReadWrite)] [DataField("isPulled")]
     public bool IsPulled = true;

@@ -8,8 +8,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
 public sealed partial class AltInteractOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
 
     [DataField("targetKey")]

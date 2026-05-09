@@ -14,11 +14,11 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 /// </summary>
 public sealed partial class PickEntityNearMobOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PathfindingSystem _pathfinding = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
 
     /// <summary>
     /// Range to search for entities

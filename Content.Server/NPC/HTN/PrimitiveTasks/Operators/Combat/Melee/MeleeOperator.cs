@@ -12,8 +12,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 /// </summary>
 public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatModeSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
 
     /// <summary>
     /// When to shut the task down.

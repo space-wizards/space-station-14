@@ -8,8 +8,8 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class GunAmmoPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedGunSystem _gunSystem = default!;
 
     [DataField]
     public float MinPercent = 0f;

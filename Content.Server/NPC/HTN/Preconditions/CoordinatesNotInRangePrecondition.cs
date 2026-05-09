@@ -7,8 +7,8 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class CoordinatesNotInRangePrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     [DataField("targetKey", required: true)]
     public string TargetKey = default!;

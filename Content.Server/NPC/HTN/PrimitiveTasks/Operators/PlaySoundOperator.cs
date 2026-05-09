@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed partial class PlaySoundOperator : HTNOperator
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private AudioSystem _audio = default!;
 
     [DataField(required: true)]
     public SoundSpecifier? Sound;

@@ -7,7 +7,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class BuckledPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
 
     [ViewVariables(VVAccess.ReadWrite)] [DataField("isBuckled")]
     public bool IsBuckled = true;

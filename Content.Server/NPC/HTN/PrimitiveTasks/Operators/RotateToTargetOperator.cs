@@ -4,8 +4,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed partial class RotateToTargetOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private RotateToFaceSystem _rotate = default!;
 
     [DataField("targetKey")]
     public string TargetKey = "RotateTarget";

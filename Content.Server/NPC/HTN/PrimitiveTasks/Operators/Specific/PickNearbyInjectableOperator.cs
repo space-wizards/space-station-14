@@ -8,9 +8,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class PickNearbyInjectableOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly MedibotSystem _medibot = default!;
-    [Dependency] private readonly PathfindingSystem _pathfinding = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private MedibotSystem _medibot = default!;
+    [Dependency] private PathfindingSystem _pathfinding = default!;
 
     [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 

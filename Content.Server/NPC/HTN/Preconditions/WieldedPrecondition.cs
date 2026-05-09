@@ -11,9 +11,9 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class WieldedPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedWieldableSystem _wieldableSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedWieldableSystem _wieldableSystem = default!;
 
     /// <summary>
     /// The wield state to check for.

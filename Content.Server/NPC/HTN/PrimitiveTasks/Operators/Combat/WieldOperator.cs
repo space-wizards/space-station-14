@@ -9,9 +9,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 /// </summary>
 public sealed partial class WieldOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedWieldableSystem _wieldable = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedWieldableSystem _wieldable = default!;
 
     /// <summary>
     /// If true, tries to wield the item. If false, tries to unwield it.

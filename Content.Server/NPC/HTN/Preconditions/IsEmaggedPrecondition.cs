@@ -9,7 +9,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class IsEmaggedPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     /// <summary>
     /// The type of emagging to check for.

@@ -11,9 +11,9 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 /// </summary>
 public sealed partial class MeleeAttackOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatModeSystem = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
 
     /// <summary>
     /// Key that contains the target entity.

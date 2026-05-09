@@ -9,8 +9,8 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class InFriendlyContainerPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
 
     [DataField] public bool IsInFriendlyContainer = true;
 
