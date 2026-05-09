@@ -9,11 +9,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Rotting;
 
-public abstract class SharedRottingSystem : EntitySystem
+public abstract partial class SharedRottingSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public const int MaxStages = 3;
 
@@ -25,7 +25,6 @@ public abstract class SharedRottingSystem : EntitySystem
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnPerishableExamined);
 
-        SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RottingComponent, MobStateChangedEvent>(OnRottingMobStateChanged);
         SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RottingComponent, ExaminedEvent>(OnExamined);
@@ -61,14 +60,6 @@ public abstract class SharedRottingSystem : EntitySystem
         var isMob = HasComp<MobStateComponent>(perishable);
         var description = "perishable-" + stage + (!isMob ? "-nonmob" : string.Empty);
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
-    }
-
-    private void OnShutdown(Entity<RottingComponent> ent, ref ComponentShutdown args)
-    {
-        if (TryComp<PerishableComponent>(ent, out var perishable))
-        {
-            perishable.RotNextUpdate = TimeSpan.Zero;
-        }
     }
 
     private void OnRottingMobStateChanged(EntityUid uid, RottingComponent component, MobStateChangedEvent args)

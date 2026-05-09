@@ -8,7 +8,7 @@ namespace Content.Client.Mech.Ui.Equipment;
 [GenerateTypedNameReferences]
 public sealed partial class MechGrabberUiFragment : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     public event Action<EntityUid>? OnEjectAction;
 
