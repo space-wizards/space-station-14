@@ -1,6 +1,8 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Remotes.Components;
 
@@ -28,6 +30,24 @@ public sealed partial class DoorRemoteComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IncludeUserAccess;
+
+    /// <summary>
+    /// If false, allows the remote to bypass line of sight and interaction range.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequireInRangeUnoccluded = true;
+
+    /// <summary>
+    /// If false, allows the remote to work on anything with a Door component; even it doesn't have the TargetTag tag defined below.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RequireTagWhitelist = true;
+
+    /// <summary>
+    /// The tag to look for to allow usage of door remote.
+    /// </summary>
+    [DataField]
+    public ProtoId<TagPrototype> TargetTag = "DoorRemoteWhitelist";
 
     /// <summary>
     /// Client-side only field for checking if StatusControl requires update.

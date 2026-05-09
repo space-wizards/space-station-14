@@ -1,6 +1,4 @@
-using Content.Server.Body.Systems;
 using Content.Server.Stack;
-using Content.Shared.Body.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
@@ -12,12 +10,12 @@ using Robust.Shared.Random;
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
 /// <inheritdoc/>
-public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
+public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     // TODO: Move to shared once StackSystem spawning is in Shared and we have RandomPredicted
     public override void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
@@ -41,9 +39,6 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                     ContainerSystem.Insert((stack, null, null, null), crusher.OutputContainer);
                 }
             }
-
-            if (!TryComp<BodyComponent>(contained, out var body))
-                Del(contained);
 
             var gibs = _gibbing.Gib(contained);
             foreach (var gib in gibs)
