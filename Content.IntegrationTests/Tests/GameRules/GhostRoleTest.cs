@@ -38,7 +38,6 @@ public sealed partial class GhostRoleTest : GameTest
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent)), TestOf(typeof(GhostRoleSystem))]
     [TestCaseSource(nameof(_antagGameRules))]
     [Description("Ensures all GameRule entities with AntagSelectionComponent can properly spawn those roles and they can be taken.")]
-    [RunOnSide(Side.Server)]
     public async Task TestAntagGhostRoles(string ruleId)
     {
         AntagSelectionComponent antag = null;
