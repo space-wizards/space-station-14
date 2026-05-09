@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.AbstractAnalyzer;
 
-public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfterEvent> : EntitySystem
+public abstract partial class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfterEvent> : EntitySystem
     where TAnalyzerComponent : AbstractAnalyzerComponent
     where TAnalyzerDoAfterEvent : SimpleDoAfterEvent, new()
 {
