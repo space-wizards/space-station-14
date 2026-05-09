@@ -9,15 +9,16 @@ namespace Content.Shared.DoAfter;
 
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
-    [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+    [Dependency] private IDynamicTypeFactory _factory = default!;
 #if EXCEPTION_TOLERANCE
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IRuntimeLog _runtimeLog = default!;
 #endif
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] EntityQuery<HandsComponent> _handsQuery = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
@@ -26,8 +27,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         base.Update(frameTime);
 
         var time = GameTiming.CurTime;
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var handsQuery = GetEntityQuery<HandsComponent>();
 
         var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
         while (enumerator.MoveNext(out var uid, out var active, out var comp))
