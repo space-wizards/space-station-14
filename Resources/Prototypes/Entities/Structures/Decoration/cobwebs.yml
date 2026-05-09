@@ -18,8 +18,9 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -28,10 +29,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Construction
+    graph: CobwebsGraph
+    node: start
 
 - type: entity
-  id: Cobweb2
   parent: Cobweb1
+  id: Cobweb2
   components:
   - type: Sprite
     sprite: Structures/Decoration/cobweb.rsi

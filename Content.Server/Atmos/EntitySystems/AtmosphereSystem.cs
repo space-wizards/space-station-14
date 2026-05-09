@@ -27,20 +27,20 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly IParallelManager _parallel = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] public readonly PuddleSystem Puddle = default!;
-    [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private IParallelManager _parallel = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private GasTileOverlaySystem _gasTileOverlaySystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private TileSystem _tile = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] public PuddleSystem Puddle = default!;
+    [Dependency] private DamageableSystem _damage = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
