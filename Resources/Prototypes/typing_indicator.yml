@@ -85,6 +85,6 @@
 
 - type: typingindicator
   id: vulpkanin
-  typingstate: vulpkanin0
-  idlestate: vulpkanin3
+  typingState: vulpkanin0
+  idleState: vulpkanin3
   offset: 0, 0.125
