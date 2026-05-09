@@ -77,7 +77,7 @@ public sealed partial class ContrabandSystem : EntitySystem
         }
         else
         {
-            departmentExamineMessage = Loc.GetString(severity.ExamineText, ("color", severity.Color.ToHex()));
+            departmentExamineMessage = Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Item), ("color", severity.Color.ToHex()));
         }
 
         // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
