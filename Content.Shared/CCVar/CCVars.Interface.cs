@@ -120,4 +120,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> AdminOverlayStackMax =
         CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The default state for showing admin overlays in the strip menu.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminStripMenuOverlay =
+        CVarDef.Create("ui.admin_strip_menu_overlay", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
