@@ -17,8 +17,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
     [Dependency] private ILocalizationManager _loc = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
-    // Unicode U+201C Double quote.
-    private const char DoubleQuote = '“';
+    private string _chatSpeechDoubleQuoteBegin = default!;
 
     private static readonly Regex StartDoubleQuote = new("\"$");
     private static readonly Regex EndDoubleQuote = new("^\"|(?<=^@)\"");
@@ -56,6 +55,8 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         {
             UpdateHighlights(highlights, true);
         }
+
+        _chatSpeechDoubleQuoteBegin = _loc.GetString("chat-manager-speech-double-quote-begin");
     }
 
     public void OnSystemLoaded(CharacterInfoSystem system)
@@ -122,7 +123,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
             // Make sure the character's name is highlighted only when mentioned directly (eg. it's said by someone),
             // for example in 'Name Surname says, "..."' 'Name Surname' won't be highlighted.
             keyword = StartAtSign.Replace(keyword,
-                $"(?<=(?<=^.?OOC:.*:.*)|(?<=,.*{DoubleQuote}.*)|(?<=\\n.*))");
+                $"(?<=(?<=^.?OOC:.*:.*)|(?<=,.*{_chatSpeechDoubleQuoteBegin}.*)|(?<=\\n.*))");
 
             _highlights.Add(keyword);
         }
