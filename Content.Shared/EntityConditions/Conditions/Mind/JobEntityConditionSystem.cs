@@ -15,7 +15,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MindContainerJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, JobCondition>
 {
-    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private SharedJobSystem _job = default!;
 
     protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition> args)
     {
@@ -29,7 +29,7 @@ public sealed partial class MindContainerJobEntityConditionSystem : EntityCondit
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MindJobEntityConditionSystem : EntityConditionSystem<MindComponent, JobCondition>
 {
-    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private SharedJobSystem _job = default!;
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<JobCondition> args)
     {

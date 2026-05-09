@@ -6,7 +6,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 
 public sealed partial class AntagonistEntityConditionSystem : EntityConditionSystem<MindComponent, AntagonistCondition>
 {
-    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
+    [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<AntagonistCondition> args)
     {

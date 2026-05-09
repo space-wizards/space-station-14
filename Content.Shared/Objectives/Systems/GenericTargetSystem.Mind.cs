@@ -10,7 +10,7 @@ namespace Content.Shared.Objectives.Systems;
 /// </summary>
 public abstract partial class MindTargetSystem : GenericTargetSystem
 {
-    [Dependency] protected readonly SharedMindSystem Mind = default!;
+    [Dependency] protected SharedMindSystem Mind = default!;
 
     public HashSet<Entity<MindComponent>> GetMinds(EntityUid? exclude = null, params EntityCondition[] conditions)
     {

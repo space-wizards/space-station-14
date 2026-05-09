@@ -10,8 +10,8 @@ namespace Content.Shared.Objectives.Systems;
 /// </summary>
 public sealed class AliveAiTargetSystem : MindTargetSystem<StationAiCoreComponent, StationAiHolderComponent>
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedStationAiSystem _ai = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedStationAiSystem _ai = default!;
 
     protected override bool ValidateEntity(Entity<StationAiCoreComponent, StationAiHolderComponent> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind)
     {

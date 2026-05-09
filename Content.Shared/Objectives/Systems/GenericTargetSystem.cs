@@ -8,7 +8,7 @@ namespace Content.Shared.Objectives.Systems;
 /// </summary>
 public abstract partial class GenericTargetSystem : EntitySystem
 {
-    [Dependency] private readonly SharedEntityConditionsSystem _conditions = default!;
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
     protected bool ValidEntity(EntityUid uid, EntityUid? exclude = null, params EntityCondition[] conditions)
     {

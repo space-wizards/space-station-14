@@ -6,7 +6,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 
 public sealed partial class BodyWhitelistEntityConditionSystem : EntityConditionSystem<MindComponent, BodyWhitelistCondition>
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<BodyWhitelistCondition> args)
     {

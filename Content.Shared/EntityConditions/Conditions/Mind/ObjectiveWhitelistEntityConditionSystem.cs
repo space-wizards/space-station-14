@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions.Mind;
 /// </summary>
 public sealed partial class ObjectiveEntityConditionSystem : EntityConditionSystem<MindComponent, ObjectiveCondition>
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveCondition> args)
     {
