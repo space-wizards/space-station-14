@@ -7,10 +7,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
-public sealed class AirlockSystem : SharedAirlockSystem
+public sealed partial class AirlockSystem : SharedAirlockSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -60,6 +60,11 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
         if (!comp.AnimatePanel)
             return;
+
+        // For some reason the open panel sprite is used for both open and
+        // closed sprites. I really don't get it.
+        door.OpenSpriteStates.Add((WiresVisualLayers.MaintenancePanel, comp.OpenPanelSpriteState));
+        door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, comp.OpenPanelSpriteState));
 
         ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
         {
