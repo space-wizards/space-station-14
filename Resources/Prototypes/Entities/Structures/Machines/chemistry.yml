@@ -5,11 +5,33 @@
   description: A precision-controlled oil bath capable of both heating and cooling beakers.
   components:
   - type: Sprite
-    sprite: Structures/Machines/hotplate.rsi
+    sprite: Structures/Machines/thermobath.rsi
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
-    - state: icon
+    - state: base
+    - state: on
+      map: ["enum.ThermobathVisuals.IsOn"]
+      shader: unshaded
+    - state: off
+      map: ["enum.ThermobathVisuals.IsOff"]
+      shader: unshaded
+    - state: heating
+      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsHeating" ]
+      shader: unshaded
+    - state: cooling
+      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsCooling" ]
+      shader: unshaded
+    - state: open
+      map: [ "enum.ThermobathVisuals.NoBeaker" ]
+    - state: beaker
+      map: [ "enum.ThermobathVisuals.Beaker" ]
+    - state: lid_none
+      map: [ "enum.ThermobathVisuals.StillTemp" ]
+    - state: lid_cold
+      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsCooling" ]
+    - state: lid_hot
+      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsHeating" ]
   - type: Thermobath
   - type: Thermoregulator
     heatingPower: 1200

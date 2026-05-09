@@ -26,7 +26,16 @@
       "name": "beaker"
     },
     {
-      "name": "no_beaker"
+      "name": "open"
+    },
+    {
+      "name": "lid_none"
+    },
+    {
+      "name": "lid_hot"
+    },
+    {
+      "name": "lid_cold"
     }
   ]
 }
