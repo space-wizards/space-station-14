@@ -535,3 +535,12 @@
     accent-skeleton-words-7: accent-skeleton-words-replace-7
     accent-skeleton-words-8: accent-skeleton-words-replace-8
     accent-skeleton-words-9: accent-skeleton-words-replace-9
+
+- type: accent
+  id: knight
+  wordReplacements:
+    accent-knight-words-1: accent-knight-words-replace-1
+    accent-knight-words-2: accent-knight-words-replace-2
+    accent-knight-words-3: accent-knight-words-replace-3
+    accent-knight-words-4: accent-knight-words-replace-4
+    accent-knight-words-5: accent-knight-words-replace-5

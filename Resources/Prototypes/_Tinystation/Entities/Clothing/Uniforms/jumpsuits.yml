@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKnight
+  name: Knight uniform
+  description: Made for true knight (or Ash Walkers).
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Uniforms/Jumpsuit/holy_knight.rsi
+  - type: Clothing
+    sprite: _Tinystation/Clothing/Uniforms/Jumpsuit/holy_knight.rsi

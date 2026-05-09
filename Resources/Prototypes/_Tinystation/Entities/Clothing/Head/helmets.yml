@@ -1,0 +1,18 @@
+#Basic Helmet (Security Helmet)
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetKnight
+  name: helmet
+  description: Standard security gear. Protects the head from impacts.
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Head/Helmets/knight_helmet.rsi
+  - type: Clothing
+    sprite: _Tinystation/Clothing/Head/Helmets/knight_helmet.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD

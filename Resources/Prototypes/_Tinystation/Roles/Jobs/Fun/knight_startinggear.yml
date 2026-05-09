@@ -1,0 +1,15 @@
+# Knight Biker outfit
+- type: startingGear
+  id: KnightGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitKnight
+    back: ClothingBackpackDuffelKnight
+    head: ClothingHeadHelmetTemplar
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesFingerless
+    shoes: ClothingShoesBootsKnight
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
+  storage:
+    back:
+    - BoxSurvival

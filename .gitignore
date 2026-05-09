@@ -311,3 +311,17 @@ Resources/MapImages
 .direnv/
 
 /Resources/Prototypes/_Tiny-station
+# Added by code-review-graph
+.code-review-graph/
+
+# Personal AI coding assistant configs
+.claude/
+.cursorrules
+.kiro/
+.mcp.json
+.opencode.json
+opencode.json
+.windsurfrules
+AGENTS.md
+CLAUDE.md
+GEMINI.md

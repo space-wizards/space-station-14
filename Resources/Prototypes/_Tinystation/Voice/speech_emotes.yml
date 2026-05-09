@@ -1,0 +1,17 @@
+- type: emote
+  id: Pray
+  name: chat-emote-name-pray
+  category: Vocal
+  icon: Interface/Emotes/vocal.png
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  chatMessages: ["chat-emote-msg-pray"]
+  chatTriggers:
+    - pray
+    - prays
+    - praying
+    - prayed
+    - beseech
+    - beseeches

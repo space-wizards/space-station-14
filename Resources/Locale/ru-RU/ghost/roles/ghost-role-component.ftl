@@ -255,3 +255,6 @@ ghost-role-information-wizard-name = Волшебник
 ghost-role-information-wizard-desc = ТЫ ВОЛШЕБНИК! Покажи станции, из чего сделана твоя магия.
 ghost-role-information-emotional-support-scurret-name = Слизенёк эмоциональной поддержки
 ghost-role-information-emotional-support-scurret-description = Поддерживайте экипаж, будьте очаровательными, часто говорите "ва".
+
+ghost-role-information-knight-name = Рыцарь
+ghost-role-information-knight-description = Благородный воин, связанный честью и сталью. Святая вода восстанавливает ваши силы.

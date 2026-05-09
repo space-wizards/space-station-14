@@ -77,3 +77,5 @@ chat-emote-msg-snarl = скалится.
 chat-emote-msg-whine = скулит.
 chat-emote-msg-howl = воет.
 chat-emote-msg-growl = рычит.
+chat-emote-name-pray = Молиться
+chat-emote-msg-pray = безмолвно молится.

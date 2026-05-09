@@ -1,0 +1,16 @@
+# immune to everything except physical and heat damage; vulnerable to holy damage because they're undead, but not as vulnerable as a ghost or demon would be
+- type: damageModifierSet
+  id: Knight
+  coefficients:
+    Blunt: 1.1
+    Slash: 0.6
+    Piercing: 0.6
+    Cold: 0.0
+    Poison: 0.0
+    Radiation: 0.0
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+    Holy: 0.0
+  flatReductions:
+    Blunt: 5

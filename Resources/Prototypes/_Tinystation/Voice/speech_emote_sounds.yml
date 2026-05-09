@@ -1,0 +1,33 @@
+- type: emoteSounds
+  id: Knight
+  sounds:
+    Scream:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Laugh:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Gasp:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Cough:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Sneeze:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Sigh:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Crying:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Yawn:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Snore:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Weh:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Hew:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Honk:
+      path: /Audio/_Tinystation/Voice/Knight/knight_gasp.ogg
+    Pray:
+      path: /Audio/Effects/hallelujah.ogg
+  params:
+    variation: 0.125

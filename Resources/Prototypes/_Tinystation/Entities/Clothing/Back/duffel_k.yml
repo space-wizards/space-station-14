@@ -1,0 +1,20 @@
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelKnight
+  name: knight's duffel bag
+  description: A reinforced duffel bag for knightly expeditions.
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Back/Duffels/duffel_k.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,8,4
+  - type: ExplosionResistance
+    damageCoefficient: 0.0
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
