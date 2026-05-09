@@ -36,7 +36,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltQuiver
   name: quiver
-  description: Can hold up to 15 arrows, and fits snug around your waist.
+  description: Can hold up to 16 arrows, and fits snug around your waist.
   components:
   - type: Sprite
     sprite: Clothing/Belt/quiver.rsi
@@ -199,3 +199,14 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbingmed.rsi
+
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingBeltMilitaryWebbing ]
+  id: ClothingBeltMilitaryWebbingERT
+  name: ERT chest rig
+  description: A set of tactical webbing worn by Emergency Response Team operatives.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/militarywebbingert.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/militarywebbingert.rsi

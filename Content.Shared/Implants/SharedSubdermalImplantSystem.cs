@@ -9,10 +9,10 @@ namespace Content.Shared.Implants;
 
 public abstract partial class SharedSubdermalImplantSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -169,7 +169,14 @@ public abstract partial class SharedSubdermalImplantSystem : EntitySystem
 [ByRefEvent]
 public readonly record struct ImplantImplantedEvent
 {
+    /// <summary>
+    /// The implant itself
+    /// </summary>
     public readonly EntityUid Implant;
+
+    /// <summary>
+    /// The entity getting implanted
+    /// </summary>
     public readonly EntityUid Implanted;
 
     public ImplantImplantedEvent(EntityUid implant, EntityUid implanted)

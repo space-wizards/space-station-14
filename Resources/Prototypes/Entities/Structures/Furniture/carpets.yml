@@ -29,6 +29,7 @@
         layer:
         - DoorPassable
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -359,11 +360,13 @@
     sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
     state: chapel
   - type: Tag
-    tags: [ Carpet ]
+    tags:
+    - Carpet
   - type: Physics
     canCollide: false
   - type: Fixtures
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -403,8 +406,9 @@
   - type: Clickable
   - type: Fixtures
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
       - trigger:
