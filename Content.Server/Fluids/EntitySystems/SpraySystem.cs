@@ -18,18 +18,18 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class SpraySystem : SharedSpraySystem
+public sealed partial class SpraySystem : SharedSpraySystem
 {
-    [Dependency] private readonly GravitySystem _gravity = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly VaporSystem _vapor = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private GravitySystem _gravity = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private VaporSystem _vapor = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ContainerSystem _container = default!;
 
     private float _gridImpulseMultiplier;
 

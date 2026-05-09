@@ -22,17 +22,17 @@ namespace Content.Shared.IdentityManagement;
 /// <summary>
 /// Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public sealed class IdentitySystem : EntitySystem
+public sealed partial class IdentitySystem : EntitySystem
 {
-    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
-    [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private GrammarSystem _grammarSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private HumanoidProfileSystem _humanoidProfile = default!;
+    [Dependency] private SharedIdCardSystem _idCard = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";
