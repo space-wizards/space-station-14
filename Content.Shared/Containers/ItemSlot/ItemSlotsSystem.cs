@@ -26,13 +26,13 @@ namespace Content.Shared.Containers.ItemSlots
     /// </remarks>
     public sealed partial class ItemSlotsSystem : EntitySystem
     {
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containers = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedContainerSystem _containers = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
         public override void Initialize()
         {
@@ -813,7 +813,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!component.Slots.TryGetValue(args.SlotId, out var slot))
                 return;
 
-            if (args.TryEject && slot.HasItem)
+            if (args.TryEject && slot.HasItem && !slot.DisableEject)
                 TryEjectToHands(uid, slot, args.Actor, true);
             else if (args.TryInsert && !slot.HasItem)
                 TryInsertFromHand(uid, slot, args.Actor);

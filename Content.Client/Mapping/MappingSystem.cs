@@ -11,10 +11,10 @@ namespace Content.Client.Mapping;
 
 public sealed partial class MappingSystem : EntitySystem
 {
-    [Dependency] private readonly IPlacementManager _placementMan = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private IPlacementManager _placementMan = default!;
+    [Dependency] private ITileDefinitionManager _tileMan = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     public static readonly EntProtoId SpawnAction = "BaseMappingSpawnAction";
     public static readonly EntProtoId EraserAction = "ActionMappingEraser";
