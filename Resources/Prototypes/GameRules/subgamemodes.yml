@@ -16,57 +16,32 @@
     maxDifficulty: 2.5
   - type: AntagSelection
     agentName: thief-round-end-agent-name
-    selectionTime: IntraPlayerSpawn
-    definitions:
-    - prefRoles: [ Thief ]
-      max: 3
+    selectionTime: PrePlayerSpawn
+    lateJoinAdditional: true
+    antags:
+    - !type:LinearAntagCount
+      proto: Thief
       playerRatio: 20
-      lateJoinAdditional: true
-      allowNonHumans: true
-      multiAntagSetting: NotExclusive
-      startingGear: ThiefGear
-      components:
-      - type: Pacified
-      - type: Thieving
-        stripTimeReduction: 2
-        stealthy: true
-      mindRoles:
-      - MindRoleThief
-      briefing:
-        sound: "/Audio/Misc/thief_greeting.ogg"
+      range:
+        min: 1
+        max: 3
   - type: DynamicRuleCost
     cost: 75
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
 
 # Needs testing
 - type: entity
   parent: BaseWizardRule
   id: SubWizard
   components:
-  - type: AntagSelection
-    agentName: wizard-round-end-name
-    selectionTime: PrePlayerSpawn
-    definitions:
-    - prefRoles: [ Wizard ]
-      max: 1
-      playerRatio: 1
-      spawnerPrototype: SpawnPointGhostWizard
-      roleLoadout:
-      - RoleSurvivalExtended
-      briefing:
-        text: wizard-role-greeting
-        color: Turquoise
-        # TODO: Need Wizard Start sound
-        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
-      startingGear: WizardBlueGear
-      # TODO: WizardComp as needed
-      components:
-      - type: NpcFactionMember
-        factions:
-        - Wizard
-      - type: RandomMetadata
-        nameSegments:
-        - NamesWizardFirst
-        - NamesWizardLast
-        nameFormat: name-format-wizard
-      mindRoles:
-      - MindRoleWizard
+  - type: GameRule
+    cancelPresetOnTooFewPlayers: false
+
+- type: entity
+  parent: BaseXenoborgsRule
+  id: SubXenoborgs
+  components:
+  - type: GameRule
+    minPlayers: 30
+    cancelPresetOnTooFewPlayers: false

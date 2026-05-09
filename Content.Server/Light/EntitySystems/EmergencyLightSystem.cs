@@ -15,13 +15,13 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems;
 
-public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
+public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 {
-    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly PointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private AmbientSoundSystem _ambient = default!;
+    [Dependency] private BatterySystem _battery = default!;
+    [Dependency] private PointLightSystem _pointLight = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private StationSystem _station = default!;
 
     public override void Initialize()
     {
@@ -145,7 +145,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
         if (entity.Comp.State == EmergencyLightState.On)
         {
-            if (!_battery.TryUseCharge(entity.Owner, entity.Comp.Wattage * frameTime, battery))
+            if (!_battery.TryUseCharge((entity.Owner, battery), entity.Comp.Wattage * frameTime))
             {
                 SetState(entity.Owner, entity.Comp, EmergencyLightState.Empty);
                 TurnOff(entity);
@@ -153,8 +153,8 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         }
         else
         {
-            _battery.SetCharge(entity.Owner, battery.CurrentCharge + entity.Comp.ChargingWattage * frameTime * entity.Comp.ChargingEfficiency, battery);
-            if (_battery.IsFull(entity, battery))
+            _battery.ChangeCharge((entity.Owner, battery), entity.Comp.ChargingWattage * frameTime * entity.Comp.ChargingEfficiency);
+            if (_battery.IsFull((entity.Owner, battery)))
             {
                 if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
                 {

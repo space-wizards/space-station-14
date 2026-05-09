@@ -25,7 +25,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
-public sealed class StorageUIController : UIController, IOnSystemChanged<StorageSystem>
+public sealed partial class StorageUIController : UIController, IOnSystemChanged<StorageSystem>
 {
     /*
      * Things are a bit over the shop but essentially
@@ -36,10 +36,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
      * - StorageSystem handles any sim stuff around open windows.
      */
 
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly CloseRecentWindowUIController _closeRecentWindowUIController = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IInputManager _input = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private CloseRecentWindowUIController _closeRecentWindowUIController = default!;
     [UISystemDependency] private readonly StorageSystem _storage = default!;
     [UISystemDependency] private readonly UserInterfaceSystem _ui = default!;
 

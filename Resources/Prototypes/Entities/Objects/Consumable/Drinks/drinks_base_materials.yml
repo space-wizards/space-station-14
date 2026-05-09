@@ -8,8 +8,9 @@
   id: DrinkBaseMaterialGlass
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: FlimsyGlass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # Overkill threshold
@@ -84,6 +85,7 @@
   id: DrinkBaseMaterialPlastic
   components:
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
 #    damageModifierSet: FlimsyPlastic TODO
   - type: Destructible
@@ -138,7 +140,15 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a plastic break collection
+          params:
+            volume: -4
       - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PhysicalComposition
@@ -151,8 +161,9 @@
   id: DrinkBaseMaterialCardboard
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # Overkill threshold
@@ -190,8 +201,9 @@
   id: DrinkBaseMaterialMetal
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # Overkill threshold
@@ -259,8 +271,9 @@
   id: DrinkBaseMaterialGold
   components:
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # Overkill threshold

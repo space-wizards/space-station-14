@@ -32,7 +32,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitJacketMonkey
-  name: bartender's jacket monkey
+  name: bartender's monkey jacket
   description: A decent jacket, for a decent monkey.
   components:
   - type: Sprite
@@ -1204,13 +1204,6 @@
       - cobwebs
     ignoreReagents:
       - Fiber
-  - type: SolutionContainerManager
-    solutions: # 24 (3 (fiber count of web) * 8 (to craft)) + 6 (magical crafting bonus)
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 30
   - type: Construction
     graph: WebObjects
     node: jumpsuit

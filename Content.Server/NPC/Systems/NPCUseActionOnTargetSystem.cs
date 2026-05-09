@@ -6,9 +6,9 @@ using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Systems;
 
-public sealed class NpcUseActionOnTargetSystem : EntitySystem
+public sealed partial class NpcUseActionOnTargetSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -6,10 +6,10 @@ using Robust.Shared.Configuration;
 
 namespace Content.Shared.Shuttles.Systems;
 
-public abstract class SharedEmergencyShuttleSystem : EntitySystem
+public abstract partial class SharedEmergencyShuttleSystem : EntitySystem
 {
-    [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected IConfigurationManager ConfigManager = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
 
     private bool _emergencyEarlyLaunchAllowed;
 
@@ -29,6 +29,8 @@ public abstract class SharedEmergencyShuttleSystem : EntitySystem
             return;
 
         args.Cancel();
-        Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
+
+        if (!args.Silent)
+            Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
     }
 }

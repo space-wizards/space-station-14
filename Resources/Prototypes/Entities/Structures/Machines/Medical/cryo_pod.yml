@@ -54,8 +54,9 @@
     boardName: wires-board-name-cryopod
     layoutId: CryoPod
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -87,16 +88,14 @@
         whitelist:
           components:
             - FitsInDispenser
-  - type: HealthAnalyzer
-    scanDelay: 0
   - type: UserInterface
     interfaces:
-      enum.HealthAnalyzerUiKey.Key:
-        type: HealthAnalyzerBoundUserInterface
+      enum.CryoPodUiKey.Key:
+        type: CryoPodBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
-    key: enum.HealthAnalyzerUiKey.Key
+    key: enum.CryoPodUiKey.Key
     requiresComplex: false
   - type: ActivatableUIRequiresPower
   - type: PointLight
@@ -107,15 +106,26 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
+  - type: SolutionManager
+    solutions:
+    - SolutionCryoBuffer
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck
     vaultable: false
-  - type: ContainerTemperatureDamageThresholds
+  - type: ContainerTemperature
     coldDamageThreshold: 10
   - type: GuideHelp
     guides:
     - Cryogenics
+
+- type: entity
+  parent: SolutionSmall
+  id: SolutionCryoBuffer
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: injectionBuffer
 
 - type: entity
   parent: BaseMachine
