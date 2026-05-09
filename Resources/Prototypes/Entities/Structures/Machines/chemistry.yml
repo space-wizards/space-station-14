@@ -17,10 +17,10 @@
       map: ["enum.ThermobathVisuals.IsOff"]
       shader: unshaded
     - state: heating
-      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsHeating" ]
+      map: [ "enum.ThermobathVisuals.IsHeating" ]
       shader: unshaded
     - state: cooling
-      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsCooling" ]
+      map: [ "enum.ThermobathVisuals.IsCooling" ]
       shader: unshaded
     - state: open
       map: [ "enum.ThermobathVisuals.DoesNotHaveBeaker" ]
