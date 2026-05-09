@@ -1,6 +1,7 @@
 using Content.Server.Radiation.Components;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
+using Content.Shared.Radiation.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -8,18 +9,17 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed partial class RadiationSystem : EntitySystem
+public sealed partial class RadiationSystem : SharedRadiationSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
 
-    private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery;
-    private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<StackComponent> _stackQuery;
+    [Dependency] private EntityQuery<RadiationBlockingContainerComponent> _blockerQuery = default!;
+    [Dependency] private EntityQuery<RadiationGridResistanceComponent> _resistanceQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private float _accumulator;
     private List<SourceData> _sources = new();
@@ -29,11 +29,6 @@ public sealed partial class RadiationSystem : EntitySystem
         base.Initialize();
         SubscribeCvars();
         InitRadBlocking();
-
-        _blockerQuery = GetEntityQuery<RadiationBlockingContainerComponent>();
-        _resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _stackQuery = GetEntityQuery<StackComponent>();
     }
 
     public override void Update(float frameTime)
