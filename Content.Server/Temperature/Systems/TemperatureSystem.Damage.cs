@@ -19,10 +19,10 @@ namespace Content.Server.Temperature.Systems;
 /// </summary>
 public sealed partial class TemperatureSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     private EntityQuery<TemperatureDamageComponent> _tempDamageQuery;
     private EntityQuery<ContainerTemperatureComponent> _containerTemperatureQuery;
