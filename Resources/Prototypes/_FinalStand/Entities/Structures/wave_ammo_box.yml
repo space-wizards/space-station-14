@@ -1,0 +1,42 @@
+- type: entity
+  id: WaveAmmoBox
+  name: Ammo Resupply Box
+  description: Interact to refill your magazines once per wave.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WaveAmmoBox
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Sprite
+    sprite: _FinalStand/Objects/wave_ammo_box.rsi
+    state: base-big
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

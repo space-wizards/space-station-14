@@ -140,6 +140,8 @@ public sealed partial class WaveGameRuleSystem : GameRuleSystem<WaveGameRuleComp
     private void EndCombatPhase(EntityUid uid, WaveGameRuleComponent comp)
     {
         Log.Info($"[WaveGameRule] Wave {comp.WaveNumber} complete. Moving to prep for wave {comp.WaveNumber + 1}.");
+        var ended = new WaveEndedEvent(comp.WaveNumber);
+        RaiseLocalEvent(ref ended);
         _wallet.DistributeCredits(comp.WaveSurvivalBonus);
         if (IsBossWave(comp.WaveNumber))
         {
