@@ -19,7 +19,7 @@
     slots:
     - neck
   - type: StaticPrice
-    price: 100
+    price: 12
   - type: Tag
     tags:
     - Bedsheet

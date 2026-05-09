@@ -21,8 +21,9 @@
     - type: DeviceNetworkRequiresPower
     - type: InteractionOutline
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: StructuralMetallicStrong
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: RCDDeconstructable
       cost: 4
       delay: 6
@@ -132,6 +133,7 @@
       price: 150
     - type: AccessReader
       access: [ [ "Engineering" ] ]
+      examinationText: access-reader-examination-functionality-restricted
     - type: PryUnpowered
       pryModifier: 0.5
     - type: PointLight

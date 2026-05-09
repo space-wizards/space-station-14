@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Tesla.EntitySystems;
@@ -9,11 +10,11 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// The component allows lightning to strike this target. And determining the behavior of the target when struck by lightning.
 /// </summary>
-public sealed class LightningTargetSystem : EntitySystem
+public sealed partial class LightningTargetSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -26,7 +27,7 @@ public sealed class LightningTargetSystem : EntitySystem
     {
         DamageSpecifier damage = new();
         damage.DamageDict.Add("Structural", uid.Comp.DamageFromLightning);
-        _damageable.TryChangeDamage(uid, damage, true);
+        _damageable.ChangeDamage(uid.Owner, damage, true);
 
         if (uid.Comp.LightningExplode)
         {

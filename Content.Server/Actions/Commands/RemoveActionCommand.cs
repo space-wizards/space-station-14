@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Actions.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class RemoveActionCommand : LocalizedEntityCommands
+public sealed partial class RemoveActionCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     public override string Command => "rmaction";
 
@@ -17,7 +17,7 @@ public sealed class RemoveActionCommand : LocalizedEntityCommands
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-rmaction-invalid-args")));
+            shell.WriteError(Loc.GetString("cmd-rmaction-invalid-args"));
             return;
         }
 

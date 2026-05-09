@@ -40,7 +40,8 @@ public ref struct LogStringHandler
             format = argument[0] == '@' ? argument[1..] : argument;
         }
 
-        if (Values.TryAdd(Logger.ConvertName(format), value)
+        format = Logger.ConvertName(format);
+        if (Values.TryAdd(format, value)
             || Values[format] is T val && val.Equals(value) )
         {
             return;
@@ -50,8 +51,8 @@ public ref struct LogStringHandler
         var i = 2;
         format = $"{originalFormat}_{i}";
 
-        while (!Values.TryAdd(Logger.ConvertName(format), value)
-               || Values[format] is T val2 && val2.Equals(value))
+        while (!(Values.TryAdd(format, value)
+                 || Values[format] is T val2 && val2.Equals(value)))
         {
             format = $"{originalFormat}_{i}";
             i++;

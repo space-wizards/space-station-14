@@ -6,16 +6,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles;
 
-public sealed class RoleSystem : SharedRoleSystem
+public sealed partial class RoleSystem : SharedRoleSystem
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public string? MindGetBriefing(EntityUid? mindId)
     {
         if (mindId == null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -23,7 +23,7 @@ public sealed class RoleSystem : SharedRoleSystem
 
         if (mindComp is null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -49,7 +49,7 @@ public sealed class RoleSystem : SharedRoleSystem
         if (!Player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!_proto.TryIndex(mind.RoleType, out var proto))
+        if (!_proto.Resolve(mind.RoleType, out var proto))
             return;
 
         var roleText = Loc.GetString(proto.Name);

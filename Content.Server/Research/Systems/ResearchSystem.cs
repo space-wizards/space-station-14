@@ -15,15 +15,13 @@ namespace Content.Server.Research.Systems
     [UsedImplicitly]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLog = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
-
-        private static readonly HashSet<Entity<ResearchServerComponent>> ClientLookup = new();
+        [Dependency] private IAdminLogManager _adminLog = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private AccessReaderSystem _accessReader = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private RadioSystem _radio = default!;
 
         public override void Initialize()
         {
@@ -49,7 +47,7 @@ namespace Content.Server.Research.Systems
             serverUid = null;
             serverComponent = null;
 
-            var query = GetServers(client).ToList();
+            var query = GetServers(client);
             foreach (var (uid, server) in query)
             {
                 if (server.Id != id)
@@ -67,15 +65,7 @@ namespace Content.Server.Research.Systems
         /// <returns></returns>
         public string[] GetServerNames(EntityUid client)
         {
-            var allServers = GetServers(client).ToArray();
-            var list = new string[allServers.Length];
-
-            for (var i = 0; i < allServers.Length; i++)
-            {
-                list[i] = allServers[i].Comp.ServerName;
-            }
-
-            return list;
+            return GetServers(client).Select(x => x.Comp.ServerName).ToArray();
         }
 
         /// <summary>
@@ -84,27 +74,18 @@ namespace Content.Server.Research.Systems
         /// <returns></returns>
         public int[] GetServerIds(EntityUid client)
         {
-            var allServers = GetServers(client).ToArray();
-            var list = new int[allServers.Length];
-
-            for (var i = 0; i < allServers.Length; i++)
-            {
-                list[i] = allServers[i].Comp.Id;
-            }
-
-            return list;
+            return GetServers(client).Select(x => x.Comp.Id).ToArray();
         }
 
         public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
         {
-            ClientLookup.Clear();
-
             var clientXform = Transform(client);
             if (clientXform.GridUid is not { } grid)
-                return ClientLookup;
+                return [];
 
-            _lookup.GetGridEntities(grid, ClientLookup);
-            return ClientLookup;
+            var set = new HashSet<Entity<ResearchServerComponent>>();
+            _lookup.GetGridEntities(grid, set);
+            return set;
         }
 
         public override void Update(float frameTime)

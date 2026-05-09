@@ -50,6 +50,34 @@
         - !type:HTNCompoundTask
           task: PickupMeleeCompound
 
+    # Wield melee weapon
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+        - !type:WieldedPrecondition
+          wielded: false
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:WieldOperator
+
+    # Activate toggleable weapons
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+        - !type:ItemTogglePrecondition
+          activated: false
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UseItemInHandOperator
+
     # Melee combat (unarmed or otherwise)
     - tasks:
         - !type:HTNCompoundTask
@@ -178,3 +206,13 @@
               id: MeleeService
               proto: OrderedTargets
               key: Target
+
+- type: htnCompound
+  id: DoNotEscapeCompound
+  branches:
+  - preconditions:
+    - !type:InFriendlyContainerPrecondition
+      isInFriendlyContainer: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:NoOperator

@@ -1,7 +1,7 @@
 - type: entity
   id: ReinforcedUraniumWindow
   name: reinforced uranium window
-  parent: WindowRCDResistant
+  parent: [BaseDeltaPressureReinforcedPlasma, WindowRCDResistant]
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -9,8 +9,9 @@
   - type: Icon
     sprite: Structures/Windows/reinforced_uranium_window.rsi
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -48,11 +49,6 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
-  - type: DeltaPressure
-    minPressure: 150000
-    minPressureDelta: 100000
-    scalingType: Linear
-    scalingPower: 0.0001
   - type: StaticPrice
     price: 215
   - type: RadiationBlocker
@@ -60,7 +56,7 @@
 
 - type: entity
   id: UraniumReinforcedWindowDirectional
-  parent: WindowDirectionalRCDResistant
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, WindowDirectionalRCDResistant]
   name: directional reinforced uranium window
   description: Don't smudge up the glass down there.
   placement:
@@ -111,10 +107,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DeltaPressure
-    minPressure: 37500
-    minPressureDelta: 25000
-    scalingType: Threshold
   - type: StaticPrice
     price: 110
   - type: RadiationBlocker

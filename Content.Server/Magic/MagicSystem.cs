@@ -9,12 +9,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Magic;
 
-public sealed class MagicSystem : SharedMagicSystem
+public sealed partial class MagicSystem : SharedMagicSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 

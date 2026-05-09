@@ -1,0 +1,17 @@
+- type: localizedDataset
+  id: SpaceVillainVerbsFight
+  values:
+    prefix: arcade-villain-verbs-fight-
+    count: 10
+
+- type: localizedDataset
+  id: SpaceVillainNamesEnemyFirst
+  values:
+    prefix: arcade-villain-names-enemy-first-
+    count: 11
+
+- type: localizedDataset
+  id: SpaceVillainNamesEnemyLast
+  values:
+    prefix: arcade-villain-names-enemy-last-
+    count: 15

@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reaction
 {
-    public sealed class ChemicalReactionSystem : EntitySystem
+    public sealed partial class ChemicalReactionSystem : EntitySystem
     {
         /// <summary>
         /// Foam reaction protoId.
@@ -26,11 +26,12 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         private const int MaxReactionIterations = 20;
 
-        [Dependency] private readonly INetManager _netMan = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private INetManager _netMan = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -205,27 +206,12 @@ namespace Content.Shared.Chemistry.Reaction
 
         private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
         {
-            var args = new EntityEffectReagentArgs(soln, EntityManager, null, soln.Comp.Solution, unitReactions, reagent, null, 1f);
-
             var posFound = _transformSystem.TryGetMapOrGridCoordinates(soln, out var gridPos);
 
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
                 $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
 
-            foreach (var effect in reaction.Effects)
-            {
-                if (!effect.ShouldApply(args))
-                    continue;
-
-                if (effect.ShouldLog)
-                {
-                    var entity = args.TargetEntity;
-                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
-                }
-
-                effect.Effect(args);
-            }
+            _entityEffects.ApplyEffects(soln, reaction.Effects, unitReactions);
 
             // Someday, some brave soul will thread through an optional actor
             // argument in from every call of OnReaction up, all just to pass

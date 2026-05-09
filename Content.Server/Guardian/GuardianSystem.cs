@@ -1,9 +1,9 @@
-using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Gibbing;
 using Content.Shared.Guardian;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -23,17 +23,17 @@ namespace Content.Server.Guardian
     /// <summary>
     /// A guardian has a host it's attached to that it fights for. A fighting spirit.
     /// </summary>
-    public sealed class GuardianSystem : EntitySystem
+    public sealed partial class GuardianSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private DamageableSystem _damageSystem = default!;
+        [Dependency] private SharedActionsSystem _actionSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private GibbingSystem _gibbing = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -130,7 +130,7 @@ namespace Content.Server.Guardian
 
             // Ensure held items are dropped before deleting guardian.
             if (HasComp<HandsComponent>(guardian))
-                _bodySystem.GibBody(component.HostedGuardian.Value);
+                _gibbing.Gib(component.HostedGuardian.Value);
 
             QueueDel(guardian);
             QueueDel(component.ActionEntity);
@@ -285,8 +285,8 @@ namespace Content.Server.Guardian
             if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
                 return;
 
-            _damageSystem.TryChangeDamage(
-                component.Host,
+            _damageSystem.ChangeDamage(
+                component.Host.Value,
                 args.DamageDelta * component.DamageShare,
                 origin: args.Origin,
                 ignoreResistances: true,
