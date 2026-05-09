@@ -29,23 +29,23 @@ using Robust.Shared.Timing;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class PointingSystem : SharedPointingSystem
+    internal sealed partial class PointingSystem : SharedPointingSystem
     {
-        [Dependency] private readonly IConfigurationManager _config = default!;
-        [Dependency] private readonly IReplayRecordingManager _replay = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly SharedMindSystem _minds = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private IConfigurationManager _config = default!;
+        [Dependency] private IReplayRecordingManager _replay = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private SharedMindSystem _minds = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private SharedMapSystem _map = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private ExamineSystemShared _examine = default!;
 
         private TimeSpan _pointDelay = TimeSpan.FromSeconds(0.5f);
 

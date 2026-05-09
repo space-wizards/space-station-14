@@ -27,12 +27,12 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
