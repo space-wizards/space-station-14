@@ -72,8 +72,8 @@ public abstract class SharedThermobathSystem : EntitySystem
         UpdateUi(ent);
 
         _appearance.SetData(ent, ThermobathVisuals.IsHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
-        _appearance.SetData(ent, ThermobathVisuals.IsCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
-        _appearance.SetData(ent, ThermobathVisuals.IsIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
+        _appearance.SetData(ent, ThermobathVisuals.IsCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Cooling);
+        _appearance.SetData(ent, ThermobathVisuals.IsIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Idle);
     }
 
     private void OnUiOpened(Entity<ThermobathComponent> ent, ref BoundUIOpenedEvent args)
@@ -130,6 +130,12 @@ public abstract class SharedThermobathSystem : EntitySystem
         UpdateUi(ent);
         _appearance.SetData(ent, ThermobathVisuals.IsOn, args.Powered);
         _appearance.SetData(ent, ThermobathVisuals.IsOff, !args.Powered);
+
+        if (args.Powered)
+            return;
+        _appearance.SetData(ent, ThermobathVisuals.IsHeating, false);
+        _appearance.SetData(ent, ThermobathVisuals.IsCooling, false);
+        _appearance.SetData(ent, ThermobathVisuals.IsIdle, true);
     }
 
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
