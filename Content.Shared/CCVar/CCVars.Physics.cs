@@ -10,18 +10,18 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> RelativeMovement =
         CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
+    public static readonly CVarDef<float> MinFriction =
+        CVarDef.Create("physics.min_friction", 0.0f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+    public static readonly CVarDef<float> AirFriction =
+        CVarDef.Create("physics.air_friction", 0.2f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+    public static readonly CVarDef<float> OffgridFriction =
+        CVarDef.Create("physics.offgrid_friction", 0.05f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
     public static readonly CVarDef<float> TileFrictionModifier =
-        CVarDef.Create("physics.tile_friction", 40.0f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("physics.tile_friction", 8.0f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
     public static readonly CVarDef<float> StopSpeed =
         CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
-
-    /// <summary>
-    ///     Whether mobs can push objects like lockers.
-    /// </summary>
-    /// <remarks>
-    ///     Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
-    /// </remarks>
-    public static readonly CVarDef<bool> MobPushing =
-        CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED | CVar.SERVER);
 }

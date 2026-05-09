@@ -3,39 +3,33 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Melee;
 
-
-public sealed class MeleeSpreadCommand : IConsoleCommand
+public sealed partial class MeleeSpreadCommand : LocalizedEntityCommands
 {
-    public string Command => "showmeleespread";
-    public string Description => "Shows the current weapon's range and arc for debugging";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private MeleeWeaponSystem _meleeSystem = default!;
+    [Dependency] private SharedCombatModeSystem _combatSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+
+    public override string Command => "showmeleespread";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var collection = IoCManager.Instance;
-
-        if (collection == null)
+        if (_overlay.RemoveOverlay<MeleeArcOverlay>())
             return;
 
-        var overlayManager = collection.Resolve<IOverlayManager>();
-
-        if (overlayManager.RemoveOverlay<MeleeArcOverlay>())
-        {
-            return;
-        }
-
-        var sysManager = collection.Resolve<IEntitySystemManager>();
-
-        overlayManager.AddOverlay(new MeleeArcOverlay(
-            collection.Resolve<IEntityManager>(),
-            collection.Resolve<IEyeManager>(),
-            collection.Resolve<IInputManager>(),
-            collection.Resolve<IPlayerManager>(),
-            sysManager.GetEntitySystem<MeleeWeaponSystem>(),
-            sysManager.GetEntitySystem<SharedCombatModeSystem>(),
-            sysManager.GetEntitySystem<SharedTransformSystem>()));
+        _overlay.AddOverlay(new MeleeArcOverlay(
+            EntityManager,
+            _eyeManager,
+            _inputManager,
+            _playerManager,
+            _meleeSystem,
+            _combatSystem,
+            _transformSystem));
     }
 }

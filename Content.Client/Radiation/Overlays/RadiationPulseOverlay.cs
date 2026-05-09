@@ -11,11 +11,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Radiation.Overlays
 {
-    public sealed class RadiationPulseOverlay : Overlay
+    public sealed partial class RadiationPulseOverlay : Overlay
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        private static readonly ProtoId<ShaderPrototype> RadiationShader = "Radiation";
+
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
         private TransformSystem? _transform;
 
         private const float MaxDist = 15.0f;
@@ -29,7 +31,7 @@ namespace Content.Client.Radiation.Overlays
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
+            _baseShader = _prototypeManager.Index(RadiationShader).Instance().Duplicate();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -59,7 +61,7 @@ namespace Content.Client.Radiation.Overlays
                 shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
                 var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
-                shd?.SetParameter("life", (float) life);
+                shd?.SetParameter("life", (float)life);
 
                 // There's probably a very good reason not to do this.
                 // Oh well!

@@ -37,10 +37,20 @@
         machine_board: !type:Container
         machine_parts: !type:Container
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
       - trigger:
           !type:DamageTrigger
           damage: 100
@@ -92,10 +102,20 @@
         - machine_board
         - machine_parts
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
       - trigger:
           !type:DamageTrigger
           damage: 100
@@ -132,6 +152,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: InteractionOutline
     - type: Transform
       anchored: true
       noRot: true
@@ -141,10 +162,17 @@
       graph: Machine
       node: destroyedMachineFrame
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
       - trigger:
           !type:DamageTrigger
           damage: 100

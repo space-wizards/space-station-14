@@ -6,6 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedEnsnareableSystem))]
 public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
@@ -37,6 +38,12 @@ public sealed partial class EnsnaringComponent : Component
     /// </summary>
     [DataField]
     public float StaminaDamage = 55f;
+
+    /// <summary>
+    /// How many times can the ensnare be applied to the same target?
+    /// </summary>
+    [DataField]
+    public float MaxEnsnares = 1;
 
     /// <summary>
     /// Should this ensnare someone when thrown?

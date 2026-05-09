@@ -1,21 +1,21 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Content.Server.Store.Systems;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.Server.PDA.Ringer;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class StoreTests
+public sealed class StoreTests : GameTest
 {
 
     [TestPrototypes]
@@ -31,10 +31,23 @@ public sealed class StoreTests
     - idcard
   - type: Pda
 ";
+
     [Test]
+    [Ignore("""
+        This currently causes the client to crash, failing the test.
+        When this is fixed, this test should be removed and StoreDiscountAndRefund
+        should just use the default pair config.
+    """)]
+    public async Task StoreDiscountAndRefundWithClient()
+    {
+        await StoreDiscountAndRefund();
+    }
+
+    [Test]
+    [PairConfig(nameof(PsDisconnected))]
     public async Task StoreDiscountAndRefund()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -56,6 +69,7 @@ public sealed class StoreTests
         EntityUid pda = default;
 
         var uplinkSystem = entManager.System<UplinkSystem>();
+        var ringerSystem = entManager.System<RingerSystem>();
 
         var listingPrototypes = prototypeManager.EnumeratePrototypes<ListingPrototype>()
                                                 .ToArray();
@@ -64,6 +78,7 @@ public sealed class StoreTests
         await server.WaitAssertion(() =>
         {
             var invSystem = entManager.System<InventorySystem>();
+            var mindSystem = entManager.System<SharedMindSystem>();
 
             human = entManager.SpawnEntity("HumanUniformDummy", coordinates);
             uniform = entManager.SpawnEntity("UniformDummy", coordinates);
@@ -72,11 +87,17 @@ public sealed class StoreTests
             Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
             Assert.That(invSystem.TryEquip(human, pda, "id"));
 
-            FixedPoint2 originalBalance = 20;
-            uplinkSystem.AddUplink(human, originalBalance, null, true);
+            var mind = mindSystem.CreateMind(null);
+            mindSystem.TransferTo(mind, human, mind: mind);
 
-            var storeComponent = entManager.GetComponent<StoreComponent>(pda);
-            var discountComponent = entManager.GetComponent<StoreDiscountComponent>(pda);
+            FixedPoint2 originalBalance = 20;
+            uplinkSystem.AddUplink(human, originalBalance, out var notes, pda, true);
+
+            Assert.That(notes != null);
+            ringerSystem.TryMatchRingtoneToStore(notes, out var storeEnt);
+            Assert.That(storeEnt.HasValue);
+            var storeComponent = entManager.GetComponent<StoreComponent>(storeEnt.Value);
+            var discountComponent = entManager.GetComponent<StoreDiscountComponent>(storeEnt.Value);
             Assert.That(
                 discountComponent.Discounts,
                 Has.Exactly(6).Items,
@@ -97,6 +118,12 @@ public sealed class StoreTests
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
 
+            // The storeComponent returns discounted items with conditions randomly, so we remove these to sanitize the data.
+            foreach (var discountedItem in discountedListingItems)
+            {
+                discountedItem.Conditions = null;
+            }
+
             // Refund action requests re-generation of listing items so we will be re-acquiring items from component a lot of times.
             var itemIds = discountedListingItems.Select(x => x.ID);
             foreach (var itemId in itemIds)
@@ -116,8 +143,8 @@ public sealed class StoreTests
                     Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), "Expected discounted cost to be lower then prototype cost.");
 
 
-                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID){Actor = human};
-                    server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, buyMsg);
+                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID, null){Actor = human};
+                    server.EntMan.EventBus.RaiseLocalEvent(storeEnt.Value, buyMsg);
 
                     var newBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(newBalance.Value, Is.EqualTo((originalBalance - plainDiscountedCost).Value), "Expected to have balance reduced by discounted cost");
@@ -130,10 +157,13 @@ public sealed class StoreTests
                     Assert.That(costAfterBuy.Value, Is.EqualTo(prototypeCost.Value), "Expected cost after discount refund to be equal to prototype cost.");
 
                     var refundMsg = new StoreRequestRefundMessage { Actor = human };
-                    server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, refundMsg);
+                    server.EntMan.EventBus.RaiseLocalEvent(storeEnt.Value, refundMsg);
 
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+
+                    // The storeComponent can give a discounted item a condition at random, so we remove it to sanitize the data.
+                    discountedListingItem.Conditions = null;
 
                     var afterRefundBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(afterRefundBalance.Value, Is.EqualTo(originalBalance.Value), "Expected refund to return all discounted cost value.");
@@ -154,7 +184,5 @@ public sealed class StoreTests
             }
 
         });
-
-        await pair.CleanReturnAsync();
     }
 }

@@ -181,3 +181,28 @@
     sprite: Structures/Wallmounts/barsign.rsi
     state: spacebucks
   description: barsign-prototype-description-spacebucks
+
+- type: barSign
+  id: Maltroach
+  name: barsign-prototype-name-maltroach
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maltroach
+  description: barsign-prototype-description-maltroach
+
+- type: barSign
+  id: WhiskeyEchoes
+  name: barsign-prototype-name-whiskeyechoes
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: whiskeyechoes
+  description: barsign-prototype-description-whiskeyechoes
+
+- type: barSign
+  id: EmpBarSign
+  name: barsign-prototype-name-empbarsign
+  hidden: true
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: empbarsign 
+  description: barsign-prototype-description-empbarsign

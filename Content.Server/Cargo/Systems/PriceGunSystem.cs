@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Server.Salvage.JobBoard;
 using Content.Shared.Cargo.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Timing;
@@ -7,13 +8,14 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Cargo.Systems;
 
-public sealed class PriceGunSystem : SharedPriceGunSystem
+public sealed partial class PriceGunSystem : SharedPriceGunSystem
 {
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly PricingSystem _pricingSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly CargoSystem _bountySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private PricingSystem _pricingSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private CargoSystem _bountySystem = default!;
+    [Dependency] private SalvageJobBoardSystem _salvageJobBoard = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     protected override bool GetPriceOrBounty(Entity<PriceGunComponent> entity, EntityUid target, EntityUid user)
     {
@@ -23,6 +25,10 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
         if (_bountySystem.IsBountyComplete(target, out _))
         {
             _popupSystem.PopupEntity(Loc.GetString("price-gun-bounty-complete"), user, user);
+        }
+        else if (_salvageJobBoard.FulfillsSalvageJob(target, null, out _))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("price-gun-salvjob-complete"), user, user);
         }
         else // Otherwise appraise the price
         {

@@ -67,3 +67,13 @@
   cost: 5200
   category: cargoproduct-category-name-armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryRifle
+  icon:
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    state: icon
+  product: CrateArmoryRifle
+  cost: 8000
+  category: cargoproduct-category-name-armory
+  group: market

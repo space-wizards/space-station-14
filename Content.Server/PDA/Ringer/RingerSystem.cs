@@ -1,253 +1,300 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Content.Server.Store.Components;
-using Content.Server.Store.Systems;
+using Content.Shared.GameTicking;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
-using Content.Shared.Popups;
 using Content.Shared.Store;
-using Content.Shared.Store.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Server.Audio;
 
-namespace Content.Server.PDA.Ringer
+namespace Content.Server.PDA.Ringer;
+
+/// <summary>
+/// Handles the server-side logic for <see cref="SharedRingerSystem"/>.
+/// </summary>
+public sealed partial class RingerSystem : SharedRingerSystem
 {
-    public sealed class RingerSystem : SharedRingerSystem
+    [Dependency] private IRobustRandom _random = default!;
+
+    public static Note[] AllowedNotes =
     {
-        [Dependency] private readonly PdaSystem _pda = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
+        Note.C,
+        Note.D,
+        Note.E,
+        Note.F,
+        Note.G,
+        Note.A,
+        Note.B
+    };
 
-        private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
+    /// <summary>
+    /// Stores the serialized version of any ringtone that can be excluded from new ringtone generations.
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<int> ReservedSerializedRingtones = new();
 
-        public override void Initialize()
-        {
-            base.Initialize();
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<RingerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
 
-            // General Event Subscriptions
-            SubscribeLocalEvent<RingerComponent, MapInitEvent>(RandomizeRingtone);
-            SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(RandomizeUplinkCode);
-            // RingerBoundUserInterface Subscriptions
-            SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
-            SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
-            SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
-            SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
+        SubscribeLocalEvent<RingerAccessUplinkComponent, GenerateUplinkCodeEvent>(OnGenerateUplinkCode);
 
-            SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
-        }
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupReserved);
 
-        //Event Functions
-
-        private void OnCurrencyInsert(EntityUid uid, RingerComponent ringer, CurrencyInsertAttemptEvent args)
-        {
-            if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
-            {
-                args.Cancel();
-                return;
-            }
-
-            // if the store can be locked, it must be unlocked first before inserting currency. Stops traitor checking.
-            if (!uplink.Unlocked)
-                args.Cancel();
-        }
-
-        private void RingerPlayRingtone(EntityUid uid, RingerComponent ringer, RingerPlayRingtoneMessage args)
-        {
-            EnsureComp<ActiveRingerComponent>(uid);
-
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
-
-            UpdateRingerUserInterface(uid, ringer, true);
-        }
-
-        public void RingerPlayRingtone(Entity<RingerComponent?> ent)
-        {
-            if (!Resolve(ent, ref ent.Comp))
-                return;
-
-            EnsureComp<ActiveRingerComponent>(ent);
-
-            _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
-
-            UpdateRingerUserInterface(ent, ent.Comp, true);
-        }
-
-        private void UpdateRingerUserInterfaceDriver(EntityUid uid, RingerComponent ringer, RingerRequestUpdateInterfaceMessage args)
-        {
-            UpdateRingerUserInterface(uid, ringer, HasComp<ActiveRingerComponent>(uid));
-        }
-
-        private void OnSetRingtone(EntityUid uid, RingerComponent ringer, RingerSetRingtoneMessage args)
-        {
-            if (!TryComp(args.Actor, out ActorComponent? actorComp))
-                return;
-
-            ref var lastSetAt = ref CollectionsMarshal.GetValueRefOrAddDefault(_lastSetRingtoneAt, actorComp.PlayerSession.UserId, out var exists);
-
-            // Delay on the client is 0.333, 0.25 is still enough and gives some leeway in case of small time differences
-            if (exists && lastSetAt > _gameTiming.CurTime - TimeSpan.FromMilliseconds(250))
-                return;
-
-            lastSetAt = _gameTiming.CurTime;
-
-            // Client sent us an updated ringtone so set it to that.
-            if (args.Ringtone.Length != RingtoneLength)
-                return;
-
-            var ev = new BeforeRingtoneSetEvent(args.Ringtone);
-            RaiseLocalEvent(uid, ref ev);
-            if (ev.Handled)
-                return;
-
-            UpdateRingerRingtone(uid, ringer, args.Ringtone);
-        }
-
-        private void OnSetUplinkRingtone(EntityUid uid, RingerUplinkComponent uplink, ref BeforeRingtoneSetEvent args)
-        {
-            if (uplink.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(uid))
-            {
-                uplink.Unlocked = !uplink.Unlocked;
-                if (TryComp<PdaComponent>(uid, out var pda))
-                    _pda.UpdatePdaUi(uid, pda);
-
-                // can't keep store open after locking it
-                if (!uplink.Unlocked)
-                    _ui.CloseUi(uid, StoreUiKey.Key);
-
-                // no saving the code to prevent meta click set on sus guys pda -> wewlad
-                args.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Locks the uplink and closes the window, if its open
-        /// </summary>
-        /// <remarks>
-        /// Will not update the PDA ui so you must do that yourself if needed
-        /// </remarks>
-        public void LockUplink(EntityUid uid, RingerUplinkComponent? uplink)
-        {
-            if (!Resolve(uid, ref uplink, true))
-                return;
-
-            uplink.Unlocked = false;
-            _ui.CloseUi(uid, StoreUiKey.Key);
-        }
-
-        public void RandomizeRingtone(EntityUid uid, RingerComponent ringer, MapInitEvent args)
-        {
-            UpdateRingerRingtone(uid, ringer, GenerateRingtone());
-        }
-
-        public void RandomizeUplinkCode(EntityUid uid, RingerUplinkComponent uplink, ComponentInit args)
-        {
-            uplink.Code = GenerateRingtone();
-        }
-
-        //Non Event Functions
-
-        private Note[] GenerateRingtone()
-        {
-            // Default to using C pentatonic so it at least sounds not terrible.
-            return GenerateRingtone(new[]
-            {
-                Note.C,
-                Note.D,
-                Note.E,
-                Note.G,
-                Note.A
-            });
-        }
-
-        private Note[] GenerateRingtone(Note[] notes)
-        {
-            var ringtone = new Note[RingtoneLength];
-
-            for (var i = 0; i < RingtoneLength; i++)
-            {
-                ringtone[i] = _random.Pick(notes);
-            }
-
-            return ringtone;
-        }
-
-        private bool UpdateRingerRingtone(EntityUid uid, RingerComponent ringer, Note[] ringtone)
-        {
-            // Assume validation has already happened.
-            ringer.Ringtone = ringtone;
-            UpdateRingerUserInterface(uid, ringer, HasComp<ActiveRingerComponent>(uid));
-
-            return true;
-        }
-
-        private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer, bool isPlaying)
-        {
-            _ui.SetUiState(uid, RingerUiKey.Key, new RingerUpdateState(isPlaying, ringer.Ringtone));
-        }
-
-        public bool ToggleRingerUI(EntityUid uid, EntityUid actor)
-        {
-            _ui.TryToggleUi(uid, RingerUiKey.Key, actor);
-            return true;
-        }
-
-        public override void Update(float frameTime) //Responsible for actually playing the ringtone
-        {
-            var remove = new RemQueue<EntityUid>();
-
-            var pdaQuery = EntityQueryEnumerator<RingerComponent, ActiveRingerComponent>();
-            while (pdaQuery.MoveNext(out var uid, out var ringer, out var _))
-            {
-                ringer.TimeElapsed += frameTime;
-
-                if (ringer.TimeElapsed < NoteDelay)
-                    continue;
-
-                ringer.TimeElapsed -= NoteDelay;
-                var ringerXform = Transform(uid);
-
-                _audio.PlayEntity(
-                    GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid, ringerXform), ringer.Range),
-                    uid,
-                    true,
-                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
-                );
-
-                ringer.NoteCount++;
-
-                if (ringer.NoteCount > RingtoneLength - 1)
-                {
-                    remove.Add(uid);
-                    UpdateRingerUserInterface(uid, ringer, false);
-                    ringer.TimeElapsed = 0;
-                    ringer.NoteCount = 0;
-                    break;
-                }
-            }
-
-            foreach (var ent in remove)
-            {
-                RemComp<ActiveRingerComponent>(ent);
-            }
-        }
-
-        private static string GetSound(Note note)
-        {
-            return new ResPath("/Audio/Effects/RingtoneNotes/" + note.ToString().ToLower()) + ".ogg";
-        }
+        InitialSetup();
     }
 
-    [ByRefEvent]
-    public record struct BeforeRingtoneSetEvent(Note[] Ringtone, bool Handled = false);
+    /// <summary>
+    /// Randomizes a ringtone for <see cref="RingerComponent"/> on <see cref="MapInitEvent"/>.
+    /// </summary>
+    private void OnMapInit(Entity<RingerComponent> ent, ref MapInitEvent args)
+    {
+        var ringtone = GenerateRingtone();
+
+        ringtone ??= new Note[RingtoneLength] { Note.A, Note.A, Note.A, Note.A, Note.A, Note.A }; // Fallback
+
+        UpdateRingerRingtone(ent, ringtone);
+    }
+
+    /// <summary>
+    /// Handles the <see cref="CurrencyInsertAttemptEvent"/> for <see cref="RingerUplinkComponent"/>.
+    /// </summary>
+    private void OnCurrencyInsert(Entity<RingerComponent> ent, ref CurrencyInsertAttemptEvent args)
+    {
+        // TODO: Store isn't predicted, can't move it to shared
+        if (!TryComp<RingerUplinkComponent>(ent, out var uplink))
+        {
+            args.Cancel();
+            return;
+        }
+
+        // if the store can be locked, it must be unlocked first before inserting currency. Stops traitor checking.
+        if (!uplink.Unlocked)
+            args.Cancel();
+    }
+
+    /// <summary>
+    /// Handles the <see cref="GenerateUplinkCodeEvent"/> for generating an uplink code.
+    /// </summary>
+    private void OnGenerateUplinkCode(Entity<RingerAccessUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
+    {
+        var code = GenerateRingtone(true, true);
+
+        // Set the code on the component
+        ent.Comp.Code = code;
+        // Return the code via the event
+        ev.Code = code;
+    }
+
+    private void InitialSetup()
+    {
+        ReservedSerializedRingtones.Clear();
+    }
+
+    /// <inheritdoc/>
+    public override bool TryToggleUplink(Entity<RingerUplinkComponent?> entity, Note[] ringtone, EntityUid? user = null)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        // On the server, we always check if the code matches
+        if (!TryMatchRingtoneToStore(ringtone, out var store, entity))
+            return false;
+
+        // If the store is not this entity, we make sure to properly set the remote store.
+        if (store != entity.Owner)
+            Store.SetRemoteStore(entity.Owner, store);
+
+        return ToggleUplinkInternal((entity, entity.Comp));
+    }
+
+    /// <summary>
+    /// Generates a random ringtone using the C major scale.
+    /// </summary>
+    /// <param name="excludeReserved">Exclude any ringtone registered to ReservedSerializedRingtones.</param>
+    /// <param name="reserveRingtone">Add the generated ringtone to ReservedSerializedRingtones. Requires ExcludeReserved to be true.</param>
+    /// <returns>An array of Notes representing the ringtone.</returns>
+    /// <remarks>The logic for this is on the Server so that we don't get a different result on the Client every time.</remarks>
+    private Note[]? GenerateRingtone(bool excludeReserved = false, bool reserveRingtone = false)
+    {
+        // Default to using C major so it at least sounds not terrible.
+        return GenerateRingtone(AllowedNotes, excludeReserved, reserveRingtone);
+    }
+
+    /// <summary>
+    /// Generates a random ringtone using the specified notes.
+    /// </summary>
+    /// <param name="notes">The notes to choose from when generating the ringtone.</param>
+    /// <param name="excludeReserved">Exclude any ringtone registered to ReservedSerializedRingtones.</param>
+    /// <param name="reserveRingtone">Add the generated ringtone to ReservedSerializedRingtones. Requires ExcludeReserved to be true.</param>
+    /// <returns>An array of Notes representing the ringtone.</returns>
+    /// <remarks>The logic for this is on the Server so that we don't get a different result on the Client every time.</remarks>
+    private Note[]? GenerateRingtone(Note[] notes, bool excludeReserved = false, bool reserveRingtone = false)
+    {
+        var excludedRingtones = excludeReserved ? ReservedSerializedRingtones.ToArray() : null;
+
+        var maxPow = Math.Pow(notes.Length, RingtoneLength);
+        if (maxPow > int.MaxValue)
+        {
+            return null;
+        }
+
+        var generatedRingtone = NextIntInRangeButExclude(0, Convert.ToInt32(maxPow) - 1, excludedRingtones);
+
+        if (!TryDeserializeRingtone(notes, generatedRingtone, out var ringtone))
+            return null;
+
+        if (excludeReserved && reserveRingtone)
+            ReservedSerializedRingtones.Add(generatedRingtone);
+
+        return ringtone;
+    }
+
+    /// <summary>
+    /// Serialize a ringtone, representing it as an Int32.
+    /// </summary>
+    /// <param name="allowedNotes">The array of notes used to generate the ringtone.</param>
+    /// <param name="ringtone">The ringtone which needs to be serialized.</param>
+    /// <param name="serializedRingtone">The ringtone in a serialized format.</param>
+    /// <returns>Whether the ringtone could be serialized or not.</returns>
+    private bool TrySerializeRingtone(Note[] allowedNotes, Note[] ringtone, [NotNullWhen(true)] out int? serializedRingtone)
+    {
+        var noteLength = allowedNotes.Length;
+
+        // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
+        // If using 12 possible notes, you can have a ringtone sequence of 7 notes safely without overshooting.
+        var maxPow = Math.Pow(noteLength, ringtone.Length);
+        if (maxPow > int.MaxValue)
+        {
+            serializedRingtone = null;
+            return false;
+        }
+
+        var serializationValue = 0;
+
+        for (var i = 0; i < ringtone.Length; i++)
+        {
+            var pow = Math.Pow(noteLength, i);
+            var index = Array.IndexOf(allowedNotes, ringtone[i]);
+            if (index == -1)
+            {
+                serializedRingtone = null;
+                return false;
+            }
+
+            serializationValue += Convert.ToInt32(pow) * index;
+        }
+
+        serializedRingtone = serializationValue;
+        return true;
+    }
+
+    /// <summary>
+    /// Deserialize a serialized ringtone into a Note array.
+    /// </summary>
+    /// <param name="allowedNotes">The array of notes used to generate the ringtone.</param>
+    /// <param name="serializedRingtone">The ringtone in a serialized format.</param>
+    /// <param name="ringtone">The ringtone resulting from the deserialization.</param>
+    /// <returns>Whether the ringtone could be deserialized or not.</returns>
+    private bool TryDeserializeRingtone(Note[] allowedNotes, int serializedRingtone, [NotNullWhen(true)] out Note[]? ringtone)
+    {
+        var noteLength = allowedNotes.Length;
+        ringtone = new Note[RingtoneLength];
+
+        // The serialization stores as an Int32, and therefore using Pow risks overshooting the max value, so we check for if that's a risk.
+        // If using 12 possible notes, you can have a ringtone sequence of 7 notes safely without overshooting.
+        var maxPow = Math.Pow(noteLength, RingtoneLength);
+        if (maxPow > int.MaxValue)
+        {
+            ringtone = null;
+            return false;
+        }
+
+        for (var i = 0; i < RingtoneLength; i++)
+        {
+            var pow = Math.Pow(noteLength, RingtoneLength - 1 - i);
+            var powInt = Convert.ToInt32(pow);
+            var val = serializedRingtone / powInt;
+            if (!AllowedNotes.TryGetValue(val, out var note))
+            {
+                ringtone = null;
+                return false;
+            }
+
+            ringtone[RingtoneLength - 1 - i] = note;
+            serializedRingtone -= val * powInt;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get the store entity that has the matching ringer access.
+    /// </summary>
+    /// <param name="notes">Notes from the ringer.</param>
+    /// <param name="store">The store entity, if there is one.</param>
+    /// <param name="ringer">The entity providing the code.</param>
+    public bool TryMatchRingtoneToStore(Note[] notes, [NotNullWhen(true)] out EntityUid? store, EntityUid? ringer = null)
+    {
+        var query = EntityQueryEnumerator<RingerAccessUplinkComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Code != null && notes.SequenceEqual(comp.Code))
+            {
+                if (comp.BoundEntity != null && comp.BoundEntity != ringer)
+                    break;
+
+                store = uid;
+                return true;
+            }
+        }
+
+        store = null;
+        return false;
+    }
+
+    private void CleanupReserved(RoundRestartCleanupEvent ev)
+    {
+        ReservedSerializedRingtones.Clear();
+    }
+
+    private int NextIntInRangeButExclude(int start, int end, int[]? excludes)
+    {
+        excludes ??= new int[0];
+        Array.Sort(excludes);
+        var rangeLength = end - start - excludes.Length;
+        var randomInt = _random.Next(rangeLength) + start;
+
+        for (var i = 0; i < excludes.Length; i++)
+        {
+            if (excludes[i] > randomInt)
+            {
+                return randomInt;
+            }
+
+            randomInt++;
+        }
+
+        return randomInt;
+    }
+
+    public void SetBoundUplinkEntity(Entity<RingerAccessUplinkComponent> entity, EntityUid? targetEntity)
+    {
+        entity.Comp.BoundEntity = targetEntity;
+    }
+}
+
+/// <summary>
+/// Event raised to generate a new uplink code for a PDA.
+/// </summary>
+[ByRefEvent]
+public record struct GenerateUplinkCodeEvent
+{
+    /// <summary>
+    /// The generated uplink code (filled in by the event handler).
+    /// </summary>
+    public Note[]? Code;
 }

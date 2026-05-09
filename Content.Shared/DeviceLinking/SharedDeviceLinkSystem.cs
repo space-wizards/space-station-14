@@ -1,19 +1,24 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
 
-public abstract class SharedDeviceLinkSystem : EntitySystem
+public abstract partial class SharedDeviceLinkSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -79,10 +84,9 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSourceRemoved(Entity<DeviceLinkSourceComponent> source, ref ComponentRemove args)
     {
-        var query = GetEntityQuery<DeviceLinkSinkComponent>();
         foreach (var sinkUid in source.Comp.LinkedPorts.Keys)
         {
-            if (query.TryGetComponent(sinkUid, out var sink))
+            if (_deviceLinkSinkQuery.TryGetComponent(sinkUid, out var sink))
                 RemoveSinkFromSourceInternal(source, sinkUid, source, sink);
             else
                 Log.Error($"Device source {ToPrettyString(source)} links to invalid entity: {ToPrettyString(sinkUid)}");
@@ -140,6 +144,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
     }
 
+    public ProtoId<SourcePortPrototype>[] GetSourcePortIds(Entity<DeviceLinkSourceComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
+    }
+
     /// <summary>
     /// Retrieves the available ports from a source
     /// </summary>
@@ -156,6 +165,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
 
         return sourcePorts;
+    }
+
+    public ProtoId<SinkPortPrototype>[] GetSinkPortIds(Entity<DeviceLinkSinkComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
     }
 
     /// <summary>
@@ -199,6 +213,17 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
             return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
 
         return links;
+    }
+
+    /// <summary>
+    /// Gets the entities linked to a specific source port.
+    /// </summary>
+    public HashSet<EntityUid> GetLinkedSinks(Entity<DeviceLinkSourceComponent?> source, ProtoId<SourcePortPrototype> port)
+    {
+        if (!Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
+            return new HashSet<EntityUid>(); // not a source or not linked
+
+        return new HashSet<EntityUid>(linked); // clone to prevent modifying the original
     }
 
     /// <summary>
@@ -525,4 +550,30 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         // NOOP on client for the moment.
     }
     #endregion
+
+    /// <summary>
+    /// Gets how many times a <see cref="DeviceLinkSinkComponent"/> has been invoked recently.
+    /// </summary>
+    /// <remarks>
+    /// The return value of this function goes up by one every time a sink is invoked, and goes down by one every tick.
+    /// </remarks>
+    public int GetEffectiveInvokeCounter(DeviceLinkSinkComponent sink)
+    {
+        // Shouldn't be possible but just to be safe.
+        var curTick = _gameTiming.CurTick;
+        if (curTick < sink.InvokeCounterTick)
+            return 0;
+
+        var tickDelta = curTick.Value - sink.InvokeCounterTick.Value;
+        if (tickDelta >= sink.InvokeCounter)
+            return 0;
+
+        return Math.Max(0, sink.InvokeCounter - (int)tickDelta);
+    }
+
+    protected void SetInvokeCounter(DeviceLinkSinkComponent sink, int value)
+    {
+        sink.InvokeCounterTick = _gameTiming.CurTick;
+        sink.InvokeCounter = value;
+    }
 }

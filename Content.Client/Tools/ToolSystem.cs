@@ -7,8 +7,10 @@ using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Client.Tools
 {
-    public sealed class ToolSystem : SharedToolSystem
+    public sealed partial class ToolSystem : SharedToolSystem
     {
+        [Dependency] private SpriteSystem _sprite = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,7 +38,7 @@ namespace Content.Client.Tools
             {
                 var current = multiple.Entries[multiple.CurrentEntry];
                 if (current.Sprite != null)
-                    sprite.LayerSetSprite(0, current.Sprite);
+                    _sprite.LayerSetSprite((uid, sprite), 0, current.Sprite);
             }
         }
     }

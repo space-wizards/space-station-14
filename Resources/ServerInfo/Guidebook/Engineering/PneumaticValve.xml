@@ -1,0 +1,43 @@
+﻿<Document>
+  # Pneumatic Valve
+  The pneumatic valve is a bidirectional valve controlled via a pressure input.
+  <Box>
+    <GuideEntityEmbed Entity="PressureControlledValve"/>
+  </Box>
+
+  The pneumatic valve has 3 connections: input, output, and control.
+  The "input" side will be the input/output connection with the highest pressure, and can switch sides, making the valve bidirectional.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Control" Rotation="90"/>
+    <GuideEntityEmbed Entity="PressureControlledValve" Caption=""/>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+
+  The valve will [color=green]open[/color] when the pressure on the output side is lower than the pressure on the control side by [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color].
+
+  The valve will [color=red]close[/color] when the pressure of the output side reaches the pressure of the control side within [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color].
+
+  For example, a pneumatic valve with a control pressure of 500 kPa will open when the output pressure is 500 kPa - [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color] or lower, and it will close when the output pressure is 500 kPa - [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color] or higher.
+
+  The valve's control pressure is determined by a pipenet connection, and as such can be adjusted on the fly by a [textlink="pump" link="Pumps"] or another source of pressure control.
+
+  ## Differences to Pumps
+
+  The pneumatic valve is different from a [textlink="pump" link="Pumps"] which moves gas via work.
+  The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a [textlink="pump" link="Pumps"] can.
+
+  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure [textlink="pump" link="Pumps"] set to 500 kPa.
+  However, the [textlink="pump" link="Pumps"] will be able to maintain the pressure in the volume more accurately.
+
+  The pneumatic valve can be used in a variety of applications, for example:
+  - To automatically vent gasses in a burn chamber based on control input
+  - The filling of a volume quickly, based on a customizable control pressure
+
+</Document>

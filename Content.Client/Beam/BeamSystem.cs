@@ -5,8 +5,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Beam;
 
-public sealed class BeamSystem : SharedBeamSystem
+public sealed partial class BeamSystem : SharedBeamSystem
 {
+    [Dependency] private SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,11 +23,11 @@ public sealed class BeamSystem : SharedBeamSystem
 
         if (TryComp<SpriteComponent>(beam, out var sprites))
         {
-            sprites.Rotation = args.UserAngle;
+            _sprite.SetRotation((beam, sprites), args.UserAngle);
 
             if (args.BodyState != null)
             {
-                sprites.LayerSetState(0, args.BodyState);
+                _sprite.LayerSetRsiState((beam, sprites), 0, args.BodyState);
                 sprites.LayerSetShader(0, args.Shader);
             }
         }

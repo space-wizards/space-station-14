@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -17,7 +18,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class CargoTest
+public sealed class CargoTest : GameTest
 {
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
@@ -28,7 +29,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -54,19 +55,17 @@ public sealed class CargoTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
     [Test]
     public async Task NoCargoBountyArbitrageTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var cargo = entManager.System<CargoSystem>();
 
@@ -92,66 +91,45 @@ public sealed class CargoTest
                 }
             });
 
-            mapManager.DeleteMap(mapId);
+            mapSystem.DeleteMap(mapId);
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
-        var testMap = await pair.CreateTestMap();
-
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var protoManager = server.ProtoMan;
+        var compFact = server.ResolveDependency<IComponentFactory>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
-            var grid = mapManager.CreateGridEntity(mapId);
-            var coord = new EntityCoordinates(grid.Owner, 0, 0);
-
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
-                .Select(p => p.ID)
+                .Where(p => p.Components.ContainsKey("StaticPrice"))
                 .ToList();
 
             foreach (var proto in protoIds)
             {
-                var ent = entManager.SpawnEntity(proto, coord);
+                // Sanity check
+                Assert.That(proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, compFact), Is.True);
 
-                if (entManager.TryGetComponent<StackPriceComponent>(ent, out var stackpricecomp)
-                    && stackpricecomp.Price > 0)
+                if (proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, compFact) && stackPriceComp.Price > 0)
                 {
-                    if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
-                    {
-                        Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                            $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
-                    }
+                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
+                        $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
 
-                if (entManager.HasComponent<StackComponent>(ent))
+                if (proto.HasComponent<StackComponent>(compFact))
                 {
-                    if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
-                    {
-                        Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                            $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
-                    }
+                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
+                        $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
                 }
-
-                entManager.DeleteEntity(ent);
             }
-            mapManager.DeleteMap(mapId);
         });
-
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -161,12 +139,13 @@ public sealed class CargoTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = server.System<SharedMapSystem>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var componentFactory = server.ResolveDependency<IComponentFactory>();
@@ -223,20 +202,16 @@ public sealed class CargoTest
 
                 entManager.DeleteEntity(ent);
             }
-            mapManager.DeleteMap(mapId);
+            mapSystem.DeleteMap(mapId);
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [TestPrototypes]
     private const string StackProto = @"
-- type: entity
-  id: A
-
 - type: stack
   id: StackProto
-  spawn: A
+  name: stack-steel
+  spawn: StackEnt
 
 - type: entity
   id: StackEnt
@@ -251,7 +226,7 @@ public sealed class CargoTest
     [Test]
     public async Task StackPrice()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var entManager = server.ResolveDependency<IEntityManager>();
 
@@ -263,7 +238,24 @@ public sealed class CargoTest
             var price = priceSystem.GetPrice(ent);
             Assert.That(price, Is.EqualTo(100.0));
         });
+    }
 
-        await pair.CleanReturnAsync();
+    [Test]
+    public async Task MobPrice()
+    {
+        var pair = Pair;
+
+        var componentFactory = pair.Server.ResolveDependency<IComponentFactory>();
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                foreach (var (proto, comp) in pair.GetPrototypesWithComponent<MobPriceComponent>())
+                {
+                    Assert.That(proto.TryGetComponent<MobStateComponent>(out _, componentFactory), $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!");
+                }
+            });
+        });
     }
 }

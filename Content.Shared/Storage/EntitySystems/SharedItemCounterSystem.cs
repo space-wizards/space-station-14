@@ -6,9 +6,9 @@ using Robust.Shared.Containers;
 namespace Content.Shared.Storage.EntitySystems
 {
     [UsedImplicitly]
-    public abstract class SharedItemCounterSystem : EntitySystem
+    public abstract partial class SharedItemCounterSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -21,7 +21,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void CounterEntityInserted(EntityUid uid, ItemCounterComponent itemCounter,
             EntInsertedIntoContainerMessage args)
         {
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+            if (!TryComp(uid, out AppearanceComponent? appearanceComponent))
                 return;
 
             var count = GetCount(args, itemCounter);
@@ -37,7 +37,7 @@ namespace Content.Shared.Storage.EntitySystems
         private void CounterEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
             EntRemovedFromContainerMessage args)
         {
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+            if (!TryComp(uid, out AppearanceComponent? appearanceComponent))
                 return;
 
             var count = GetCount(args, itemCounter);

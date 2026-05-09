@@ -1,0 +1,75 @@
+﻿<Document>
+  # Generators
+  Generators are devices that produce power for the station. They vary in size and power output, and each has its own unique quirks and requirements.
+
+  Engineers are intended to setup low-tier generators like Solar Arrays and the AME at the start of the shift, to give enough time to setup higher-tier generators like the Singularity Engine for sustained power for the rest of the shift.
+
+  <Box>
+    <GuideEntityEmbed Entity="SingularityGenerator" Caption=""/>
+    <GuideEntityEmbed Entity="TeslaGenerator" Caption=""/>
+  </Box>
+  <Box>
+    ## Singularity and Tesla Engine
+  </Box>
+  <Box>
+    [color=#999999][italic]Devices capable of infinite energy — and destructive potential[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="AmeController" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+  <Box>
+    ## Antimatter Engine
+  </Box>
+  <Box>
+    [color=#999999][italic]Short-term support generator for the station[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="TegCirculator" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="TegCenter" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="TegCirculator" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    ## Thermo-electric Generator
+  </Box>
+  <Box>
+    [color=#999999][italic]Advanced atmospherics generator that harnesses the energy of gasses[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="SolarPanel" Caption=""/>
+    <GuideEntityEmbed Entity="SolarPanel" Caption=""/>
+    <GuideEntityEmbed Entity="SolarPanel" Caption=""/>
+  </Box>
+  <Box>
+    ## Solar Panels
+  </Box>
+  <Box>
+    [color=#999999][italic]Low-maintenance passive power source[italic][/color]
+  </Box>
+
+
+  <Box>
+    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="" />
+    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="" />
+    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="" />
+  </Box>
+  <Box>
+    ## Portable Generators
+  </Box>
+  <Box>
+    [color=#999999][italic]Portable generators for crew use and emergency power[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GeneratorRTG" Caption="" />
+  </Box>
+  <Box>
+    ## Radioisotope Thermoelectric Generator
+  </Box>
+  <Box>
+    [color=#999999][italic]Zero-maintenance passive power source[italic][/color]
+  </Box>
+</Document>

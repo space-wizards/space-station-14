@@ -1,50 +1,33 @@
-﻿using Robust.Client.GameObjects;
-using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
+using Robust.Client.UserInterface;
+using Content.Shared.Atmos.Components;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
 {
-    public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private GasAnalyzerWindow? _window;
+
+    public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        [ViewVariables]
-        private GasAnalyzerWindow? _window;
+    }
 
-        public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+    protected override void Open()
+    {
+        base.Open();
 
-        protected override void Open()
-        {
-            base.Open();
+        _window = this.CreateWindowCenteredLeft<GasAnalyzerWindow>();
+        _window.OnClose += Close;
+    }
 
-            _window = new GasAnalyzerWindow();
-            _window.OnClose += OnClose;
-            _window.OpenCenteredLeft();
-        }
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        if (_window == null)
+            return;
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            if (_window == null)
-                return;
-            if (message is not GasAnalyzerUserMessage cast)
-                return;
-            _window.Populate(cast);
-        }
+        if (message is not GasAnalyzerUserMessage cast)
+            return;
 
-        /// <summary>
-        /// Closes UI and tells the server to disable the analyzer
-        /// </summary>
-        private void OnClose()
-        {
-            SendMessage(new GasAnalyzerDisableMessage());
-            Close();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-                _window?.Dispose();
-        }
+        _window.Populate(cast);
     }
 }

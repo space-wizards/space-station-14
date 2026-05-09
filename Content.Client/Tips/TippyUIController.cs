@@ -17,11 +17,12 @@ using static Content.Client.Tips.TippyUI;
 
 namespace Content.Client.Tips;
 
-public sealed class TippyUIController : UIController
+public sealed partial class TippyUIController : UIController
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceCache _resCache = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
+    [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
     public const float Padding = 50;
     public static Angle WaddleRotation = Angle.FromDegrees(10);
@@ -93,16 +94,17 @@ public sealed class TippyUIController : UIController
             return new Vector2(screenSize.X - offset * (tippy.DesiredSize.X + Padding), (screenSize.Y - tippy.DesiredSize.Y) / 2);
         }
 
-        var numSteps = (int) Math.Ceiling(slideTime / waddle);
-        var curStep = (int) Math.Floor(numSteps * offset);
+        var numSteps = (int)Math.Ceiling(slideTime / waddle);
+        var curStep = (int)Math.Floor(numSteps * offset);
         var stepSize = (tippy.DesiredSize.X + Padding) / numSteps;
 
         if (curStep != _previousStep)
         {
             _previousStep = curStep;
-            sprite.Rotation = sprite.Rotation > 0
-                ? -WaddleRotation
-                : WaddleRotation;
+            _sprite.SetRotation((_entity, sprite),
+                sprite.Rotation > 0
+                    ? -WaddleRotation
+                    : WaddleRotation);
 
             if (EntityManager.TryGetComponent(_entity, out FootstepModifierComponent? step) && step.FootstepSoundCollection != null)
             {
@@ -125,18 +127,16 @@ public sealed class TippyUIController : UIController
                 if (!_queuedMessages.TryDequeue(out var next))
                     return;
 
-                if (next.Proto != null)
-                {
-                    _entity = EntityManager.SpawnEntity(next.Proto, MapCoordinates.Nullspace);
-                    tippy.ModifyLayers = false;
-                }
-                else
-                {
-                    _entity = EntityManager.SpawnEntity(_cfg.GetCVar(CCVars.TippyEntity), MapCoordinates.Nullspace);
-                    tippy.ModifyLayers = true;
-                }
+                _entity = next.Proto is null
+                    ? EntityManager.SpawnEntity(_cfg.GetCVar(CCVars.TippyEntity), MapCoordinates.Nullspace)
+                    : EntityManager.SpawnEntity(next.Proto, MapCoordinates.Nullspace);
+
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
+                // Only modify layers if they have all of the required ones.
+                tippy.ModifyLayers = _sprite.TryGetLayer(_entity, "revealing", out _, false) &&
+                                     _sprite.TryGetLayer(_entity, "speaking", out _, false) &&
+                                     _sprite.TryGetLayer(_entity, "hiding", out _, false);
                 if (!EntityManager.HasComponent<PaperVisualsComponent>(_entity))
                 {
                     var paper = EntityManager.AddComponent<PaperVisualsComponent>(_entity);
@@ -150,11 +150,11 @@ public sealed class TippyUIController : UIController
                 var scale = sprite.Scale;
                 if (tippy.ModifyLayers)
                 {
-                    sprite.Scale = Vector2.One;
+                    _sprite.SetScale((_entity, sprite), Vector2.One);
                 }
                 else
                 {
-                    sprite.Scale = new Vector2(3, 3);
+                    _sprite.SetScale((_entity, sprite), new Vector2(3, 3));
                 }
                 tippy.Entity.SetEntity(_entity);
                 tippy.Entity.Scale = scale;
@@ -165,31 +165,31 @@ public sealed class TippyUIController : UIController
                 _previousStep = 0;
                 if (tippy.ModifyLayers)
                 {
-                    sprite.LayerSetAnimationTime("revealing", 0);
-                    sprite.LayerSetVisible("revealing", true);
-                    sprite.LayerSetVisible("speaking", false);
-                    sprite.LayerSetVisible("hiding", false);
+                    _sprite.LayerSetAnimationTime((_entity, sprite), "revealing", 0);
+                    _sprite.LayerSetVisible((_entity, sprite), "revealing", true);
+                    _sprite.LayerSetVisible((_entity, sprite), "speaking", false);
+                    _sprite.LayerSetVisible((_entity, sprite), "hiding", false);
                 }
-                sprite.Rotation = 0;
+                _sprite.SetRotation((_entity, sprite), 0);
                 tippy.Label.SetMarkupPermissive(_currentMessage.Msg);
                 tippy.Label.Visible = false;
                 tippy.LabelPanel.Visible = false;
                 tippy.Visible = true;
-                sprite.Visible = true;
+                _sprite.SetVisible((_entity, sprite), true);
                 break;
 
             case TippyState.Revealing:
                 tippy.State = TippyState.Speaking;
                 if (!EntityManager.TryGetComponent(_entity, out sprite))
                     return;
-                sprite.Rotation = 0;
+                _sprite.SetRotation((_entity, sprite), 0);
                 _previousStep = 0;
                 if (tippy.ModifyLayers)
                 {
-                    sprite.LayerSetAnimationTime("speaking", 0);
-                    sprite.LayerSetVisible("revealing", false);
-                    sprite.LayerSetVisible("speaking", true);
-                    sprite.LayerSetVisible("hiding", false);
+                    _sprite.LayerSetAnimationTime((_entity, sprite), "speaking", 0);
+                    _sprite.LayerSetVisible((_entity, sprite), "revealing", false);
+                    _sprite.LayerSetVisible((_entity, sprite), "speaking", true);
+                    _sprite.LayerSetVisible((_entity, sprite), "hiding", false);
                 }
                 tippy.Label.Visible = true;
                 tippy.LabelPanel.Visible = true;
@@ -206,10 +206,10 @@ public sealed class TippyUIController : UIController
                     return;
                 if (tippy.ModifyLayers)
                 {
-                    sprite.LayerSetAnimationTime("hiding", 0);
-                    sprite.LayerSetVisible("revealing", false);
-                    sprite.LayerSetVisible("speaking", false);
-                    sprite.LayerSetVisible("hiding", true);
+                    _sprite.LayerSetAnimationTime((_entity, sprite), "hiding", 0);
+                    _sprite.LayerSetVisible((_entity, sprite), "revealing", false);
+                    _sprite.LayerSetVisible((_entity, sprite), "speaking", false);
+                    _sprite.LayerSetVisible((_entity, sprite), "hiding", true);
                 }
                 tippy.LabelPanel.Visible = false;
                 if (_currentMessage != null)

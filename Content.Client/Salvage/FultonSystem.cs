@@ -1,21 +1,20 @@
 using System.Numerics;
 using Content.Shared.Salvage.Fulton;
-using Robust.Shared.Spawners;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Animations;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Salvage;
 
-public sealed class FultonSystem : SharedFultonSystem
+public sealed partial class FultonSystem : SharedFultonSystem
 {
-    [Dependency] private readonly ISerializationManager _serManager = default!;
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
+    [Dependency] private ISerializationManager _serManager = default!;
+    [Dependency] private AnimationPlayerSystem _player = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private static readonly TimeSpan AnimationDuration = TimeSpan.FromSeconds(0.4);
 
@@ -82,8 +81,8 @@ public sealed class FultonSystem : SharedFultonSystem
         }
 
         sprite.NoRotation = true;
-        var effectLayer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/fulton_balloon.rsi"), "fulton_balloon"));
-        sprite.LayerSetOffset(effectLayer, EffectOffset + new Vector2(0f, 0.5f));
+        var effectLayer = _sprite.AddLayer((animationEnt, sprite), new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/fulton_balloon.rsi"), "fulton_balloon"));
+        _sprite.LayerSetOffset((animationEnt, sprite), effectLayer, EffectOffset + new Vector2(0f, 0.5f));
 
         var despawn = AddComp<TimedDespawnComponent>(animationEnt);
         despawn.Lifetime = 1.5f;

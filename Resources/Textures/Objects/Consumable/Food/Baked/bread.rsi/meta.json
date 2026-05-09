@@ -1,158 +1,180 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by potato1234x at https://github.com/tgstation/tgstation/commit/0631fe5bde73a68b4c12bdfa633c30b2cee442d5. Crostini created by Github user deathride58, baguette taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955, cotton made by mlexf (discord 1143460554963427380). Cotton baguette and crostini variants by JuneSzalkowska",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "alpha"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation and modified by potato1234x at https://github.com/tgstation/tgstation/commit/0631fe5bde73a68b4c12bdfa633c30b2cee442d5. Crostini created by Github user deathride58, baguette taken from tgstation at commit https://github.com/tgstation/tgstation/commit/7ffd61b6fa6a6183daa8900f9a490f46f7a81955, cotton made by mlexf (discord 1143460554963427380). Cotton baguette and crostini variants by JuneSzalkowska. Batard by SurrealShibe (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "alpha2"
-    },
-    {
-      "name": "alpha-filling"
-    },
-    {
-      "name": "alpha-filling2"
-    },
-    {
-      "name": "alpha-slice"
-    },
-    {
-      "name": "alpha-slice2"
-    },
-    {
-      "name": "alpha-slice-filling"
-    },
-    {
-      "name": "alpha-slice2-filling"
-    },
-    {
-      "name": "baguette"
-    },
-    {
-      "name": "baguette-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "baguette-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "baguette-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "baguette-cotton"
-    },
-    {
-      "name": "baguette-cotton-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "baguette-cotton-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "baguette-cotton-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "banana"
-    },
-    {
-      "name": "banana-slice"
-    },
-    {
-      "name": "buttered-toast"
-    },
-    {
-      "name": "cornbread"
-    },
-    {
-      "name": "cornbread-slice"
-    },
-    {
-      "name": "creamcheese"
-    },
-    {
-      "name": "creamcheese-slice"
-    },
-    {
-      "name": "crostini"
-    },
-    {
-      "name": "crostini-cotton"
-    },
-    {
-      "name": "cotton"
-    },
-    {
-      "name": "cotton-slice"
-    },
-    {
-      "name": "french-toast"
-    },
-    {
-      "name": "garlic-slice"
-    },
-    {
-      "name": "jelly-toast"
-    },
-    {
-      "name": "meat"
-    },
-    {
-      "name": "meat-slice"
-    },
-    {
-      "name": "mimana"
-    },
-    {
-      "name": "mimana-slice"
-    },
-    {
-      "name": "moldy-slice"
-    },
-    {
-      "name": "plain"
-    },
-    {
-      "name": "plain-slice"
-    },
-    {
-      "name": "plate"
-    },
-    {
-      "name": "sausage"
-    },
-    {
-      "name": "sausage-slice"
-    },
-    {
-      "name": "spidermeat"
-    },
-    {
-      "name": "spidermeat-slice"
-    },
-    {
-      "name": "tofu"
-    },
-    {
-      "name": "tofu-slice"
-    },
-    {
-      "name": "two-slice"
-    },
-    {
-      "name": "xenomeat"
-    },
-    {
-      "name": "xenomeat-slice"
-    }
-  ]
+    "states": [
+        {
+            "name": "alpha"
+        },
+        {
+            "name": "alpha2"
+        },
+        {
+            "name": "alpha-filling"
+        },
+        {
+            "name": "alpha-filling2"
+        },
+        {
+            "name": "alpha-slice"
+        },
+        {
+            "name": "alpha-slice2"
+        },
+        {
+            "name": "alpha-slice-filling"
+        },
+        {
+            "name": "alpha-slice2-filling"
+        },
+        {
+            "name": "baguette"
+        },
+        {
+            "name": "baguette-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "baguette-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "baguette-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "baguette-cotton"
+        },
+        {
+            "name": "baguette-cotton-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "baguette-cotton-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "baguette-cotton-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "banana"
+        },
+        {
+            "name": "banana-slice"
+        },
+        {
+            "name": "buttered-toast"
+        },
+        {
+            "name": "cornbread"
+        },
+        {
+            "name": "cornbread-slice"
+        },
+        {
+            "name": "creamcheese"
+        },
+        {
+            "name": "creamcheese-slice"
+        },
+        {
+            "name": "crostini"
+        },
+        {
+            "name": "crostini-cotton"
+        },
+        {
+            "name": "cotton"
+        },
+        {
+            "name": "cotton-slice"
+        },
+        {
+            "name": "french-toast"
+        },
+        {
+            "name": "garlic-slice"
+        },
+        {
+            "name": "jelly-toast"
+        },
+        {
+            "name": "meat"
+        },
+        {
+            "name": "meat-slice"
+        },
+        {
+            "name": "mimana"
+        },
+        {
+            "name": "mimana-slice"
+        },
+        {
+            "name": "moldy-slice"
+        },
+        {
+            "name": "plain"
+        },
+        {
+            "name": "plain-slice"
+        },
+        {
+            "name": "plate"
+        },
+        {
+            "name": "sausage"
+        },
+        {
+            "name": "sausage-slice"
+        },
+        {
+            "name": "spidermeat"
+        },
+        {
+            "name": "spidermeat-slice"
+        },
+        {
+            "name": "tofu"
+        },
+        {
+            "name": "tofu-slice"
+        },
+        {
+            "name": "two-slice"
+        },
+        {
+            "name": "xenomeat"
+        },
+        {
+            "name": "xenomeat-slice"
+        },
+        {
+            "name": "batard"
+        },
+        {
+            "name": "batard-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "batard-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "batard-cotton"
+        },
+        {
+            "name": "batard-cotton-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "batard-cotton-inhand-right",
+            "directions": 4
+        }
+    ]
 }

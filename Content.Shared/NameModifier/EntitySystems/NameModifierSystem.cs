@@ -5,9 +5,9 @@ using Content.Shared.NameModifier.Components;
 namespace Content.Shared.NameModifier.EntitySystems;
 
 /// <inheritdoc cref="NameModifierComponent"/>
-public sealed class NameModifierSystem : EntitySystem
+public sealed partial class NameModifierSystem : EntitySystem
 {
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -30,6 +30,18 @@ public sealed class NameModifierSystem : EntitySystem
         // Set the base name to the new name
         entity.Comp.BaseName = name;
         Dirty(entity);
+    }
+
+    /// <summary>
+    /// Returns the base name of the entity, without any modifiers applied.
+    /// If the entity doesn't have a <see cref="NameModifierComponent"/>,
+    /// this returns the entity's metadata name.
+    /// </summary>
+    public string GetBaseName(Entity<NameModifierComponent?> entity)
+    {
+        if (Resolve(entity, ref entity.Comp, logMissing: false))
+            return entity.Comp.BaseName;
+        return Name(entity);
     }
 
     /// <summary>

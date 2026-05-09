@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "electrified",
+      "name": "electrified_ai",
       "delays": [
         [
           0.2,

@@ -12,6 +12,6 @@ public sealed class ClusterGrenadeVisualizerSystem : VisualizerSystem<ClusterGre
             return;
 
         if (AppearanceSystem.TryGetData<int>(uid, ClusterGrenadeVisuals.GrenadesCounter, out var grenadesCounter, args.Component))
-            args.Sprite.LayerSetState(0, $"{comp.State}-{grenadesCounter}");
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, $"{comp.State}-{grenadesCounter}");
     }
 }

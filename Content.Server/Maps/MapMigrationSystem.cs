@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown;
@@ -16,10 +15,12 @@ namespace Content.Server.Maps;
 /// <summary>
 ///     Performs basic map migration operations by listening for engine <see cref="MapLoaderSystem"/> events.
 /// </summary>
-public sealed class MapMigrationSystem : EntitySystem
+public sealed partial class MapMigrationSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IResourceManager _resMan = default!;
+#if DEBUG
+    [Dependency] private IPrototypeManager _protoMan = default!;
+#endif
+    [Dependency] private IResourceManager _resMan = default!;
 
     private const string MigrationFile = "/migration.yml";
 
@@ -33,7 +34,7 @@ public sealed class MapMigrationSystem : EntitySystem
             return;
 
         // Verify that all of the entries map to valid entity prototypes.
-        foreach (var node in mappings.Values)
+        foreach (var node in mappings.Children.Values)
         {
             var newId = ((ValueDataNode) node).Value;
             if (!string.IsNullOrEmpty(newId) && newId != "null")
@@ -66,13 +67,13 @@ public sealed class MapMigrationSystem : EntitySystem
 
         foreach (var (key, value) in mappings)
         {
-            if (key is not ValueDataNode keyNode || value is not ValueDataNode valueNode)
+            if (value is not ValueDataNode valueNode)
                 continue;
 
             if (string.IsNullOrWhiteSpace(valueNode.Value) || valueNode.Value == "null")
-                ev.DeletedPrototypes.Add(keyNode.Value);
+                ev.DeletedPrototypes.Add(key);
             else
-                ev.RenamedPrototypes.Add(keyNode.Value, valueNode.Value);
+                ev.RenamedPrototypes.Add(key, valueNode.Value);
         }
     }
 }

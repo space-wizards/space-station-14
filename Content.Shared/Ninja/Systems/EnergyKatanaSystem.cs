@@ -6,9 +6,9 @@ namespace Content.Shared.Ninja.Systems;
 /// <summary>
 /// System for katana binding and dash events. Recalling is handled by the suit.
 /// </summary>
-public sealed class EnergyKatanaSystem : EntitySystem
+public sealed partial class EnergyKatanaSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] private SharedSpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {
@@ -23,11 +23,12 @@ public sealed class EnergyKatanaSystem : EntitySystem
     /// </summary>
     private void OnEquipped(Entity<EnergyKatanaComponent> ent, ref GotEquippedEvent args)
     {
-        _ninja.BindKatana(args.Equipee, ent);
+        _ninja.BindKatana(args.EquipTarget, ent);
     }
 
     private void OnCheckDash(Entity<EnergyKatanaComponent> ent, ref CheckDashEvent args)
     {
+        // Just use a whitelist fam
         if (!_ninja.IsNinja(args.User))
             args.Cancelled = true;
     }

@@ -68,8 +68,9 @@
   - type: Machine
     board: PortableScrubberMachineCircuitBoard
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:
@@ -95,6 +96,9 @@
                 max: 2
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - PortableScrubber
 
 - type: entity
   id: SpaceHeater
@@ -156,8 +160,9 @@
     temperatureTolerance: 0.2
     atmospheric: true
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:
@@ -180,6 +185,9 @@
                 max: 3
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - Thermomachines
 
 - type: entity
   parent: SpaceHeater

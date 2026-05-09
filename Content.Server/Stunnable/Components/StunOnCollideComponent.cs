@@ -1,32 +1,66 @@
-namespace Content.Server.Stunnable.Components
+using Content.Server.Stunnable.Systems;
+
+namespace Content.Server.Stunnable.Components;
+
+/// <summary>
+/// Adds stun when it collides with an entity
+/// </summary>
+[RegisterComponent, Access(typeof(StunOnCollideSystem))]
+public sealed partial class StunOnCollideComponent : Component
 {
+    // TODO: Can probably predict this.
+
     /// <summary>
-    /// Adds stun when it collides with an entity
+    /// How long we are stunned for
     /// </summary>
-    [RegisterComponent, Access(typeof(StunOnCollideSystem))]
-    public sealed partial class StunOnCollideComponent : Component
-    {
-        // TODO: Can probably predict this.
+    [DataField]
+    public TimeSpan StunAmount;
 
-        // See stunsystem for what these do
-        [DataField("stunAmount")]
-        public int StunAmount;
+    /// <summary>
+    /// How long we are knocked down for
+    /// </summary>
+    [DataField]
+    public TimeSpan KnockdownAmount;
 
-        [DataField("knockdownAmount")]
-        public int KnockdownAmount;
+    /// <summary>
+    /// How long we are slowed down for
+    /// </summary>
+    [DataField]
+    public TimeSpan SlowdownAmount;
 
-        [DataField("slowdownAmount")]
-        public int SlowdownAmount;
+    /// <summary>
+    /// Multiplier for a mob's walking speed
+    /// </summary>
+    [DataField]
+    public float WalkSpeedModifier = 1f;
 
-        [DataField("walkSpeedMultiplier")]
-        public float WalkSpeedMultiplier = 1f;
+    /// <summary>
+    /// Multiplier for a mob's sprinting speed
+    /// </summary>
+    [DataField]
+    public float SprintSpeedModifier = 1f;
 
-        [DataField("runSpeedMultiplier")]
-        public float RunSpeedMultiplier = 1f;
+    /// <summary>
+    /// Refresh Stun or Slowdown on hit
+    /// </summary>
+    [DataField]
+    public bool Refresh = true;
 
-        /// <summary>
-        /// Fixture we track for the collision.
-        /// </summary>
-        [DataField("fixture")] public string FixtureID = "projectile";
-    }
+    /// <summary>
+    /// Should the entity try and stand automatically after being knocked down?
+    /// </summary>
+    [DataField]
+    public bool AutoStand = true;
+
+    /// <summary>
+    /// Should the entity drop their items upon first being knocked down?
+    /// </summary>
+    [DataField]
+    public bool Drop = true;
+
+    /// <summary>
+    /// Fixture we track for the collision.
+    /// </summary>
+    [DataField("fixture")] public string FixtureID = "projectile";
 }
+

@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Movement.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Movement.Pulling.Components;
@@ -22,7 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Movement.Systems;
 
-public sealed class PullController : VirtualController
+public sealed partial class PullController : VirtualController
 {
     /*
      * This code is awful. If you try to tweak this without refactoring it I'm gonna revert it.
@@ -54,11 +55,11 @@ public sealed class PullController : VirtualController
     // How much you must move for the puller movement check to actually hit.
     private const float MinimumMovementDistance = 0.005f;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     If distance between puller and pulled entity lower that this threshold,
@@ -84,7 +85,7 @@ public sealed class PullController : VirtualController
     {
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(OnRequestMovePulledObject))
-            .Register<PullingSystem>();
+            .Register<PullController>();
 
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _pullableQuery = GetEntityQuery<PullableComponent>();
@@ -122,6 +123,12 @@ public sealed class PullController : VirtualController
 
         var pulled = pullerComp.Pulling;
 
+        // See update statement; this thing overwrites so many systems, DOESN'T EVEN LERP PROPERLY.
+        // We had a throwing version but it occasionally had issues.
+        // We really need the throwing version back.
+        if (TryComp(pulled, out ConveyedComponent? conveyed) && conveyed.Conveying)
+            return false;
+
         if (!_pullableQuery.TryComp(pulled, out var pullable))
             return false;
 
@@ -132,9 +139,9 @@ public sealed class PullController : VirtualController
 
         // Cap the distance
         var range = 2f;
-        var fromUserCoords = coords.WithEntityId(player, EntityManager);
+        var fromUserCoords = _transformSystem.WithEntityId(coords, player);
         var userCoords = new EntityCoordinates(player, Vector2.Zero);
-        
+
         if (!_transformSystem.InRange(coords, userCoords, range))
         {
             var direction = fromUserCoords.Position - userCoords.Position;
@@ -150,7 +157,7 @@ public sealed class PullController : VirtualController
             }
 
             fromUserCoords = new EntityCoordinates(player, direction.Normalized() * (range - 0.01f));
-            coords = fromUserCoords.WithEntityId(coords.EntityId);
+            coords = _transformSystem.WithEntityId(fromUserCoords, coords.EntityId);
         }
 
         var moving = EnsureComp<PullMovingComponent>(pulled!.Value);
@@ -241,7 +248,7 @@ public sealed class PullController : VirtualController
             var pullerXform = _xformQuery.Get(puller);
             var pullerPosition = TransformSystem.GetMapCoordinates(pullerXform);
 
-            var movingTo = mover.MovingTo.ToMap(EntityManager, TransformSystem);
+            var movingTo = TransformSystem.ToMapCoordinates(mover.MovingTo);
 
             if (movingTo.MapId != pullerPosition.MapId)
             {
@@ -252,6 +259,13 @@ public sealed class PullController : VirtualController
             if (!TryComp<PhysicsComponent>(pullableEnt, out var physics) ||
                 physics.BodyType == BodyType.Static ||
                 movingTo.MapId != pullableXform.MapID)
+            {
+                RemCompDeferred<PullMovingComponent>(pullableEnt);
+                continue;
+            }
+
+            // TODO: This whole thing is slop and really needs to be throwing again
+            if (TryComp(pullableEnt, out ConveyedComponent? conveyed) && conveyed.Conveying)
             {
                 RemCompDeferred<PullMovingComponent>(pullableEnt);
                 continue;

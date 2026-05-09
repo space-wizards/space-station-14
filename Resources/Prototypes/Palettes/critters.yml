@@ -41,3 +41,18 @@
     HornA: "#d4c8bf"
     hornB: "#eec7ab"
     hornC: "#ad9584"
+
+- type: palette
+  id: ScurretColors
+  name: ScurretColors
+  colors:
+    Normal: "#ffffff" # Sluggy
+    Innocent: "#f6f439" # Monky
+    Angry: "#dc5864" # Hunty
+    Perceptive: "#222222" # Watchy
+    Eldritch: "#dc5864"
+    Fat: "#fefcab"
+    Violent: "#ab3430"
+    Speedy: "#679cfe"
+    Mutated: "#7824a0"
+    Damned: "#98e652"

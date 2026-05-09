@@ -1,12 +1,9 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.Syntax;
-using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
 using Robust.Shared.Prototypes;
 
@@ -38,18 +35,21 @@ public sealed class SolutionCommand : ToolshedCommand
     public SolutionRef AdjReagent(
             [PipedArgument] SolutionRef input,
             ProtoId<ReagentPrototype> proto,
-            FixedPoint2 amount
+            float amount
         )
     {
         _solutionContainer ??= GetSys<SharedSolutionContainerSystem>();
 
-        if (amount > 0)
+        // Convert float to FixedPoint2
+        var amountFixed = FixedPoint2.New(amount);
+
+        if (amountFixed > 0)
         {
-            _solutionContainer.TryAddReagent(input.Solution, proto, amount, out _);
+            _solutionContainer.TryAddReagent(input.Solution, proto, amountFixed, out _);
         }
-        else if (amount < 0)
+        else if (amountFixed < 0)
         {
-            _solutionContainer.RemoveReagent(input.Solution, proto, -amount);
+            _solutionContainer.RemoveReagent(input.Solution, proto, -amountFixed);
         }
 
         return input;
@@ -59,7 +59,7 @@ public sealed class SolutionCommand : ToolshedCommand
     public IEnumerable<SolutionRef> AdjReagent(
             [PipedArgument] IEnumerable<SolutionRef> input,
             ProtoId<ReagentPrototype> name,
-            FixedPoint2 amount
+            float amount
         )
         => input.Select(x => AdjReagent(x, name, amount));
 }

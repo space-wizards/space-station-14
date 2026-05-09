@@ -9,8 +9,8 @@ namespace Content.Shared.Access.Systems
     [UsedImplicitly]
     public abstract partial class SharedAccessOverriderSystem : EntitySystem
     {
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly ILogManager _log = default!;
+        [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private ILogManager _log = default!;
 
         public const string Sawmill = "accessoverrider";
         protected ISawmill _sawmill = default!;
@@ -45,3 +45,6 @@ namespace Content.Shared.Access.Systems
         }
     }
 }
+
+[ByRefEvent]
+public record struct OnAccessOverriderAccessUpdatedEvent(EntityUid UserUid, bool Handled = false);

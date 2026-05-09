@@ -53,4 +53,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> ServerLobbyRightPanelWidth =
         CVarDef.Create("server.lobby_right_panel_width", 650, CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    ///     Forces clients to display version watermark, as if HudVersionWatermark was true
+    /// </summary>
+    public static readonly CVarDef<bool> ForceClientHudVersionWatermark =
+        CVarDef.Create("server.force_client_hud_version_watermark", false, CVar.REPLICATED | CVar.SERVER);
 }

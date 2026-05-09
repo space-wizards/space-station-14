@@ -3,8 +3,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.EntitySystems;
 
-public sealed class PillSystem : EntitySystem
+public sealed partial class PillSystem : EntitySystem
 {
+    [Dependency] private SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -16,9 +18,9 @@ public sealed class PillSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (!sprite.TryGetLayer(0, out var layer))
+        if (!_sprite.TryGetLayer((uid, sprite), 0, out var layer, false))
             return;
 
-        layer.SetState($"pill{component.PillType + 1}");
+        _sprite.LayerSetRsiState(layer, $"pill{component.PillType + 1}");
     }
 }

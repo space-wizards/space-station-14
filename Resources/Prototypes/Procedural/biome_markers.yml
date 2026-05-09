@@ -22,6 +22,36 @@
   minGroupSize: 3
   maxGroupSize: 3
 
+- type: biomeMarkerLayer
+  id: Cows
+  prototype: MobCow
+  minGroupSize: 1
+  maxGroupSize: 2
+
+- type: biomeMarkerLayer
+  id: Chickens
+  prototype: MobChicken
+  minGroupSize: 1
+  maxGroupSize: 2
+
+- type: biomeMarkerLayer
+  id: Pigs
+  prototype: MobPig
+  minGroupSize: 1
+  maxGroupSize: 2
+
+- type: biomeMarkerLayer
+  id: Foxes
+  prototype: MobFox
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: Goats
+  prototype: MobGoat
+  minGroupSize: 1
+  maxGroupSize: 1
+
 # TODO: Needs to be more robust
 - type: biomeMarkerLayer
   id: Xenos

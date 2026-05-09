@@ -14,9 +14,13 @@ permissions-eui-edit-admin-window-title-edit-placeholder = Custom title, leave b
 permissions-eui-edit-admin-window-no-rank-button = No rank
 permissions-eui-edit-admin-rank-window-name-edit-placeholder = Rank name
 permissions-eui-edit-admin-title-control-text = none
+permissions-eui-edit-admin-window-suspended = Suspended?
 permissions-eui-edit-no-rank-text = none
 permissions-eui-edit-title-button = Edit
 permissions-eui-edit-admin-rank-button = Edit
 permissions-eui-edit-admin-rank-window-title = Edit Admin Rank
 permissions-eui-edit-admin-window-save-button = Save
 permissions-eui-edit-admin-window-remove-flag-button = Remove
+
+cmd-permissions-desc = Opens the admin permissions panel.
+cmd-permissions-help = Usage: permissions

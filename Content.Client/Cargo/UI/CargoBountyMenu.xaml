@@ -11,15 +11,28 @@
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
             </PanelContainer.PanelOverride>
-            <ScrollContainer HScrollEnabled="False"
-                             HorizontalExpand="True"
-                             VerticalExpand="True">
-                <BoxContainer Name="BountyEntriesContainer"
-                              Orientation="Vertical"
-                              VerticalExpand="True"
-                              HorizontalExpand="True">
-                </BoxContainer>
-            </ScrollContainer>
+            <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True">
+                <ScrollContainer HScrollEnabled="False"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
+                    <BoxContainer Name="BountyEntriesContainer"
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True" />
+                </ScrollContainer>
+                <ScrollContainer HScrollEnabled="False"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
+                    <Label Name="NoHistoryLabel"
+                           Text="{Loc 'bounty-console-history-empty-label'}"
+                           Visible="False"
+                           Align="Center" />
+                    <BoxContainer Name="BountyHistoryContainer"
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True" />
+                </ScrollContainer>
+            </TabContainer>
         </PanelContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">

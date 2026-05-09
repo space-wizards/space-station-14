@@ -1,14 +1,15 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-internal sealed class UpgradeActionCommand : IConsoleCommand
+internal sealed partial class UpgradeActionCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     public string Command => "upgradeaction";
     public string Description => Loc.GetString("upgradeaction-command-description");

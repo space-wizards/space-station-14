@@ -1,12 +1,5 @@
-- type: dataset
+- type: localizedDataset
   id: TraitorCorporations
   values:
-  - "CyberSun Industries"
-  - "Gorlex Marauders"
-  - "MI13"
-  - "Tiger Cooperative"
-  - "S.E.L.F."
-  - "Animal Rights Consortium"
-  - "Donk Corporation"
-  - "Waffle Corporation"
-  - "Interdyne Pharmaceutics"
+    prefix: traitor-corporations-dataset-
+    count: 9

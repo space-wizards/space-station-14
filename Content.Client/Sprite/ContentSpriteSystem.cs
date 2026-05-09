@@ -3,12 +3,12 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Administration.Managers;
-using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Exceptions;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -17,13 +17,14 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Sprite;
 
-public sealed class ContentSpriteSystem : EntitySystem
+public sealed partial class ContentSpriteSystem : EntitySystem
 {
-    [Dependency] private readonly IClientAdminManager _adminManager = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IResourceManager _resManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    [Dependency] private IClientAdminManager _adminManager = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IResourceManager _resManager = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private IRuntimeLog _runtimeLog = default!;
 
     private ContentSpriteControl _control = new();
 
@@ -42,12 +43,12 @@ public sealed class ContentSpriteSystem : EntitySystem
     {
         base.Shutdown();
 
-        foreach (var queued in _control._queuedTextures)
+        foreach (var queued in _control.QueuedTextures)
         {
             queued.Tcs.SetCanceled();
         }
 
-        _control._queuedTextures.Clear();
+        _control.QueuedTextures.Clear();
 
         _ui.RootControl.RemoveChild(_control);
     }
@@ -103,7 +104,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         var texture = _clyde.CreateRenderTarget(new Vector2i(size.X, size.Y), new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "export");
         var tcs = new TaskCompletionSource(cancelToken);
 
-        _control._queuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
+        _control.QueuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
 
         await tcs.Task;
     }
@@ -113,13 +114,21 @@ public sealed class ContentSpriteSystem : EntitySystem
         if (!_adminManager.IsAdmin())
             return;
 
+        var target = ev.Target;
         Verb verb = new()
         {
             Text = Loc.GetString("export-entity-verb-get-data-text"),
             Category = VerbCategory.Debug,
-            Act = () =>
+            Act = async () =>
             {
-                Export(ev.Target);
+                try
+                {
+                    await Export(target);
+                }
+                catch (Exception e)
+                {
+                    _runtimeLog.LogException(e, $"{nameof(ContentSpriteSystem)}.{nameof(Export)}");
+                }
             },
         };
 
@@ -130,18 +139,18 @@ public sealed class ContentSpriteSystem : EntitySystem
     /// This is horrible. I asked PJB if there's an easy way to render straight to a texture outside of the render loop
     /// and she also mentioned this as a bad possibility.
     /// </summary>
-    private sealed class ContentSpriteControl : Control
+    private sealed partial class ContentSpriteControl : Control
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly ILogManager _logMan = default!;
-        [Dependency] private readonly IResourceManager _resManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private ILogManager _logMan = default!;
+        [Dependency] private IResourceManager _resManager = default!;
 
         internal Queue<(
             IRenderTexture Texture,
             Direction Direction,
             EntityUid Entity,
             bool IncludeId,
-            TaskCompletionSource Tcs)> _queuedTextures = new();
+            TaskCompletionSource Tcs)> QueuedTextures = new();
 
         private ISawmill _sawmill;
 
@@ -155,7 +164,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         {
             base.Draw(handle);
 
-            while (_queuedTextures.TryDequeue(out var queued))
+            while (QueuedTextures.TryDequeue(out var queued))
             {
                 if (queued.Tcs.Task.IsCanceled)
                     continue;

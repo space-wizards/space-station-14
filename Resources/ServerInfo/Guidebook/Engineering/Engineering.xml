@@ -1,29 +1,31 @@
 <Document>
-# Engineering
-[color=#f39f27]Engineering[/color] is a combination of construction work, repair work, maintaining a death machine that happens to produce power, and making sure the station contains breathable air.
+  # Engineering
+  [color=#f39f27]Engineering[/color] is a combination of [textlink="construction" link="Construction"] work, [textlink="repair" link="ExpandingRepairingStation"] work, maintaining a death machine that happens to produce [textlink="power" link="Power"], and making sure the station contains [textlink="breathable air" link="Atmospherics"].
 
-## Personnel
-[color=#f39f27]Engineering[/color]'s staff is made up of Technical Assistants, Station Engineers and Atmospheric Technicians. Engineering is run by the Chief Engineer.
+  ## Personnel
+  [color=#f39f27]Engineering[/color]'s staff is made up of Technical Assistants, Station Engineers and Atmospheric Technicians.
+  Engineering is run by the Chief Engineer.
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineEngineer" Caption="Engineer"/>
     <GuideEntityEmbed Entity="ToyFigurineAtmosTech" Caption="Atmosian"/>
     <GuideEntityEmbed Entity="ToyFigurineChiefEngineer" Caption="CE"/>
   </Box>
-  
-## Tools
+
+  ## Tools
   <Box>
     <GuideEntityEmbed Entity="Wrench"/>
     <GuideEntityEmbed Entity="Crowbar"/>
     <GuideEntityEmbed Entity="Screwdriver"/>
     <GuideEntityEmbed Entity="Wirecutter"/>
   </Box>
-    <Box>
+  <Box>
     <GuideEntityEmbed Entity="Welder"/>
     <GuideEntityEmbed Entity="Multitool"/>
     <GuideEntityEmbed Entity="NetworkConfigurator"/>
   </Box>
-Your core toolset is a small variety of tools. If you're an engineer, then you should have a belt on your waist containing one of each; if not, you can likely find them in maintenance shafts and in tool storage within assorted toolboxes and vending machines.
+  Your core toolset is a small variety of tools.
+  If you're an engineer, then you should have a belt on your waist containing one of each; if not, you can likely find them in maintenance shafts and in tool storage within assorted toolboxes and vending machines.
 
-Most tasks will have explainers for how to perform them on examination; for example, if you're constructing a wall, it'll tell you the next step if you look at it a bit closer.
+  Most tasks will have explainers for how to perform them on examination; for example, if you're [textlink="constructing" link="Construction"] a wall, it'll tell you the next step if you look at it a bit closer.
 </Document>

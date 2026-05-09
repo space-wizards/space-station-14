@@ -7,10 +7,10 @@ namespace Content.Shared.Random.Rules;
 /// Every single condition needs to be true for this to be selected.
 /// e.g. "choose maintenance audio if 90% of tiles nearby are maintenance tiles"
 /// </summary>
-[Prototype("rules")]
+[Prototype]
 public sealed partial class RulesPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; private set; } = string.Empty;
 
     [DataField("rules", required: true)]
     public List<RulesRule> Rules = new();

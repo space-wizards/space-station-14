@@ -8,4 +8,7 @@
     FoodSnackChowMein: 3
     FoodSnackDanDanNoodles: 3
     PairedChopsticks: 3
+  contrabandInventory:
+    FoodBakedDumplings: 2
+    FoodSoupMiso: 2
 # rice?

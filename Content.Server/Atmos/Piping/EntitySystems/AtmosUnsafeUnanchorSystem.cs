@@ -7,17 +7,18 @@ using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;
+using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class AtmosUnsafeUnanchorSystem : EntitySystem
+    public sealed partial class AtmosUnsafeUnanchorSystem : EntitySystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-        [Dependency] private readonly NodeGroupSystem _group = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private AtmosphereSystem _atmosphere = default!;
+        [Dependency] private NodeGroupSystem _group = default!;
+        [Dependency] private PopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -28,7 +29,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
         {
-            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled || !TryComp(uid, out NodeContainerComponent? nodes))
                 return;
 
             if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
@@ -77,7 +78,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         /// </summary>
         public void LeakGas(EntityUid uid, bool removeFromPipe = true)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!TryComp(uid, out NodeContainerComponent? nodes))
                 return;
 
             if (_atmosphere.GetContainingMixture(uid, true, true) is not { } environment)

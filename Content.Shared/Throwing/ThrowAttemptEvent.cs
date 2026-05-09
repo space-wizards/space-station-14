@@ -25,4 +25,13 @@
     /// Raised when we try to pushback an entity from throwing
     /// </summary>
     public sealed class ThrowPushbackAttemptEvent : CancellableEntityEventArgs {}
+
+    /// <summary>
+    /// Raised on an entity that is being pushed from a thrown entity
+    /// </summary>
+    [ByRefEvent]
+    public record struct ThrowerImpulseEvent()
+    {
+        public bool Push;
+    };
 }

@@ -1,24 +1,23 @@
 ﻿using System.Collections.Immutable;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.EntityList
 {
-    [Prototype("entityList")]
+    [Prototype]
     public sealed partial class EntityListPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public ImmutableList<string> EntityIds { get; private set; } = ImmutableList<string>.Empty;
+        [DataField]
+        public ImmutableList<EntProtoId> Entities { get; private set; } = ImmutableList<EntProtoId>.Empty;
 
-        public IEnumerable<EntityPrototype> Entities(IPrototypeManager? prototypeManager = null)
+        public IEnumerable<EntityPrototype> GetEntities(IPrototypeManager? prototypeManager = null)
         {
             prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
-            foreach (var entityId in EntityIds)
+            foreach (var entityId in Entities)
             {
                 yield return prototypeManager.Index<EntityPrototype>(entityId);
             }

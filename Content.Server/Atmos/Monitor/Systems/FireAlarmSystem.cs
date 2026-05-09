@@ -1,29 +1,24 @@
-using Content.Server.AlertLevel;
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Systems;
-using Content.Shared.AlertLevel;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.CCVar;
-using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed class FireAlarmSystem : EntitySystem
+public sealed partial class FireAlarmSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
-    [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private AtmosDeviceNetworkSystem _atmosDevNet = default!;
+    [Dependency] private AtmosAlarmableSystem _atmosAlarmable = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
 
     public override void Initialize()
     {
@@ -77,11 +72,18 @@ public sealed class FireAlarmSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
     {
-        if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
-        {
-            // Remove the atmos alarmable component permanently from this device.
-            _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
-            RemCompDeferred<AtmosAlarmableComponent>(uid);
-        }
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (!TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
+            return;
+
+        // Remove the atmos alarmable component permanently from this device.
+        _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
+        RemCompDeferred<AtmosAlarmableComponent>(uid);
+        args.Handled = true;
     }
 }

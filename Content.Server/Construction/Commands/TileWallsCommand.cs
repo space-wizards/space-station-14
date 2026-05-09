@@ -6,25 +6,24 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class TileWallsCommand : IConsoleCommand
+public sealed partial class TileWallsCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private ITileDefinitionManager _tileDefManager = default!;
 
     // ReSharper disable once StringLiteralTypo
     public string Command => "tilewalls";
     public string Description => "Puts an underplating tile below every wall on a grid.";
     public string Help => $"Usage: {Command} <gridId> | {Command}";
 
-    [ValidatePrototypeId<ContentTileDefinition>]
-    public const string TilePrototypeId = "Plating";
-
-    [ValidatePrototypeId<TagPrototype>]
-    public const string WallTag = "Wall";
+    public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
+    public static readonly ProtoId<TagPrototype> WallTag = "Wall";
+    public static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -81,6 +80,11 @@ public sealed class TileWallsCommand : IConsoleCommand
             }
 
             if (!tagSystem.HasTag(child, WallTag))
+            {
+                continue;
+            }
+
+            if (tagSystem.HasTag(child, DiagonalTag))
             {
                 continue;
             }

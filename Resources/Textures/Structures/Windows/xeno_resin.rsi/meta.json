@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by obscenelytinyshark.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "xwindow0",
+            "directions": 4
+        },
+        {
+            "name": "xwindow1",
+            "directions": 4
+        },
+        {
+            "name": "xwindow2",
+            "directions": 4
+        },
+        {
+            "name": "xwindow3",
+            "directions": 4
+        },
+        {
+            "name": "xwindow4",
+            "directions": 4
+        },
+        {
+            "name": "xwindow5",
+            "directions": 4
+        },
+        {
+            "name": "xwindow6",
+            "directions": 4
+        },
+        {
+            "name": "xwindow7",
+            "directions": 4
+        }
+    ]
+}

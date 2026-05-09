@@ -10,11 +10,11 @@ namespace Content.Client.Administration.Systems
     /// <summary>
     ///     Client-side admin verb system. These usually open some sort of UIs.
     /// </summary>
-    sealed class AdminVerbSystem : EntitySystem
+    sealed partial class AdminVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
-        [Dependency] private readonly ISharedAdminManager _admin = default!;
+        [Dependency] private IClientConGroupController _clientConGroupController = default!;
+        [Dependency] private IClientConsoleHost _clientConsoleHost = default!;
+        [Dependency] private ISharedAdminManager _admin = default!;
 
         public override void Initialize()
         {
@@ -32,7 +32,7 @@ namespace Content.Client.Administration.Systems
                 var verb = new VvVerb()
                 {
                     Text = Loc.GetString("view-variables"),
-                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
                     Act = () => _clientConsoleHost.ExecuteCommand($"vv {GetNetEntity(args.Target)}"),
                     ClientExclusive = true // opening VV window is client-side. Don't ask server to run this verb.
                 };

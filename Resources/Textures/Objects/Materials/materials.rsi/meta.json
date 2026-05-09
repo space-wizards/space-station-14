@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh, wood sprite modified by MisterMecky, wood_2 and wood_3 made by MisterMecky based on wood sprite, cardboard sprites made by MisterMecky, bananium, bananium_1 and peel made by brainfood1183 (github) for ss14. Pyrotton sprites are drawn by Ubaser, using the cotton material sprites as a base. Bananium, cardboard, corgihide, cloth, cotton, pyrotton, bones and durathread inhands by mubururu_ (github).",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh, wood sprite modified by MisterMecky, wood_2 and wood_3 made by MisterMecky based on wood sprite, cardboard sprites made by MisterMecky, bananium, bananium_1 and peel made by brainfood1183 (github) for ss14. Pyrotton sprites are drawn by Ubaser, using the cotton material sprites as a base. Bananium, cardboard, corgihide, cloth, cotton, pyrotton, bones and durathread inhands by mubururu_ (github). Bananium peel's on-head sprite by FlipBrooke, based on the bananaium peel sprite.",
   "size": {
     "x": 32,
     "y": 32
@@ -192,6 +192,14 @@
     },
     {
       "name": "peel"
+    },
+    {
+        "name": "peel-equipped-HELMET",
+        "directions": 4
+    },
+    {
+        "name": "peel-equipped-HELMET-hamster",
+        "directions": 4
     },
     {
       "name": "phoron_gem_spent"

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/PestoVerde322/tgstation/blob/37460afeeb24f84e591d538e40bb04e60aef9cf8/icons/obj/syringe.dmi",
+  "copyright": "Taken from tgstation at commit https://github.com/PestoVerde322/tgstation/blob/37460afeeb24f84e591d538e40bb04e60aef9cf8/icons/obj/syringe.dmi, in-hand sprites by SeamLesss (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,14 @@
     },
     {
       "name": "implanter0"
+    },
+    {
+      "name": "implanter-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "implanter-inhand-right",
+      "directions": 4
     },
     {
       "name": "implanter1"

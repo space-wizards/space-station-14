@@ -1,15 +1,26 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Glue;
 
-[RegisterComponent]
-[Access(typeof(SharedGlueSystem))]
+/// <summary>
+/// This component gets attached to an item that has been glued.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(GlueSystem))]
 public sealed partial class GluedComponent : Component
 {
-
-    [DataField("until", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The TimeSpan this effect expires at.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan Until;
 
-    [DataField("duration", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The duration this effect will last. Determined by the quantity of the reagent that is applied.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField]
     public TimeSpan Duration;
 }

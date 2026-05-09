@@ -5,11 +5,11 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
 
-public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
+public sealed partial class RotationVisualizerSystem : SharedRotationVisualsSystem
 {
 
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
 
     public override void Initialize()
     {
@@ -24,7 +24,7 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
             return;
 
         if (!_appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component))
-            return;
+            state = RotationState.Vertical;
 
         switch (state)
         {
@@ -52,7 +52,7 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         // Stop the current rotate animation and then start a new one
         if (_animation.HasRunningAnimation(animationComp, animationKey))
         {
-            _animation.Stop(animationComp, animationKey);
+            _animation.Stop((uid, animationComp), animationKey);
         }
 
         var animation = new Animation

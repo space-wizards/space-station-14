@@ -29,10 +29,17 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -98,7 +105,9 @@
     containers:
       fuelSlot: !type:ContainerSlot
   - type: GuideHelp
-    guides: [ AME, Power ]
+    guides:
+    - AME
+    - Power
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false
@@ -153,10 +162,17 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -201,7 +217,9 @@
     graph: AmeShielding
     node: ameShielding
   - type: GuideHelp
-    guides: [ AME, Power ]
+    guides:
+    - AME
+    - Power
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false

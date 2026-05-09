@@ -3,7 +3,6 @@ using Content.Shared.CCVar;
 using Content.Shared.GridPreloader.Prototypes;
 using Content.Shared.GridPreloader.Systems;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -13,16 +12,17 @@ using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
+using Robust.Shared.EntitySerialization.Systems;
 
 namespace Content.Server.GridPreloader;
-public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
+public sealed partial class GridPreloaderSystem : SharedGridPreloaderSystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly MetaDataSystem _meta = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// Whether the preloading CVar is set or not.
@@ -72,23 +72,13 @@ public sealed class GridPreloaderSystem : SharedGridPreloaderSystem
         {
             for (var i = 0; i < proto.Copies; i++)
             {
-                var options = new MapLoadOptions
+                if (!_mapLoader.TryLoadGrid(mapId, proto.Path, out var grid))
                 {
-                    LoadMap = false,
-                };
-
-                if (!_mapLoader.TryLoad(mapId, proto.Path.ToString(), out var roots, options))
+                    Log.Error($"Failed to preload grid prototype {proto.ID}");
                     continue;
+                }
 
-                // only supports loading maps with one grid.
-                if (roots.Count != 1)
-                    continue;
-
-                var gridUid = roots[0];
-
-                // gets grid + also confirms that the root we loaded is actually a grid
-                if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
-                    continue;
+                var (gridUid, mapGrid) = grid.Value;
 
                 if (!TryComp<PhysicsComponent>(gridUid, out var physics))
                     continue;

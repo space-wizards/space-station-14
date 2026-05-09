@@ -6,11 +6,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Placement;
 
-public sealed class PlacementLoggerSystem : EntitySystem
+public sealed partial class PlacementLoggerSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -32,13 +32,13 @@ public sealed class PlacementLoggerSystem : EntitySystem
         };
 
         if (actorEntity != null)
-            _adminLogger.Add(logType, LogImpact.High,
+            _adminLogger.Add(logType, LogImpact.Medium,
                 $"{ToPrettyString(actorEntity.Value):actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
         else if (actor != null)
-            _adminLogger.Add(logType, LogImpact.High,
+            _adminLogger.Add(logType, LogImpact.Medium,
                 $"{actor:actor} used placement system to {ev.PlacementEventAction.ToString().ToLower()} {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
         else
-            _adminLogger.Add(logType, LogImpact.High,
+            _adminLogger.Add(logType, LogImpact.Medium,
                 $"Placement system {ev.PlacementEventAction.ToString().ToLower()}ed {ToPrettyString(ev.EditedEntity):subject} at {ev.Coordinates}");
     }
 
@@ -48,13 +48,13 @@ public sealed class PlacementLoggerSystem : EntitySystem
         var actorEntity = actor?.AttachedEntity;
 
         if (actorEntity != null)
-            _adminLogger.Add(LogType.Tile, LogImpact.High,
+            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
                 $"{ToPrettyString(actorEntity.Value):actor} used placement system to set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
         else if (actor != null)
-            _adminLogger.Add(LogType.Tile, LogImpact.High,
+            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
                 $"{actor} used placement system to set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
         else
-            _adminLogger.Add(LogType.Tile, LogImpact.High,
+            _adminLogger.Add(LogType.Tile, LogImpact.Medium,
                 $"Placement system set tile {_tileDefinitionManager[ev.TileType].Name} at {ev.Coordinates}");
     }
 }
