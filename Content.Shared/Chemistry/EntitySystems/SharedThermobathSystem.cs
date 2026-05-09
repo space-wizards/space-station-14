@@ -14,15 +14,15 @@ namespace Content.Shared.Chemistry.EntitySystems;
 /// <summary>
 /// The system for UI and heat transfer logic for a device that can heat or cool beakers.
 /// </summary>
-public abstract class SharedThermobathSystem : EntitySystem
+public abstract partial class SharedThermobathSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly ThermoregulatorSystem _thermoregulator = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private ThermoregulatorSystem _thermoregulator = default!;
 
     private const string BeakerSlotId = "beakerSlot";
     private const string SolutionId = "beaker";
