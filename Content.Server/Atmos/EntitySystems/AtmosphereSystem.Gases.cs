@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private IPrototypeManager _protoMan = default!;
 
         private GasReactionPrototype[] _gasReactions = [];
 

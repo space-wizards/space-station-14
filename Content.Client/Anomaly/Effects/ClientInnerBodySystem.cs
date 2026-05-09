@@ -5,9 +5,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Anomaly.Effects;
 
-public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
+public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
