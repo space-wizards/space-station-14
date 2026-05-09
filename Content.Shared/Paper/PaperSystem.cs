@@ -154,7 +154,7 @@ public sealed partial class PaperSystem : EntitySystem
                 {
                     // Send a message only to the player which interacted with the pen.
                     // This will update the UI, enabling edit mode only for that player.
-                    var toolNetEnt = EntityManager.GetNetEntity(args.Used);
+                    var toolNetEnt = GetNetEntity(args.Used);
                     _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
                 }
             }
@@ -202,7 +202,7 @@ public sealed partial class PaperSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        if (args.Text.Length <= entity.Comp.ContentSize && IsEditable(entity, EntityManager.GetEntity(args.EditToolEntity)))
+        if (args.Text.Length <= entity.Comp.ContentSize && IsEditable(entity, GetEntity(args.EditToolEntity)))
         {
             SetContent(entity, args.Text);
 
@@ -224,7 +224,7 @@ public sealed partial class PaperSystem : EntitySystem
         {
             // This block can be hit if the user somehow managed to input more than the maximum content size
             // or if the paper was stamped after they started editing it with a normal, stamp-respecting pen.
-            var user = EntityManager.GetEntity(args.User);
+            var user = GetEntity(args.User);
             var writeFailedMessage = Loc.GetString("paper-component-action-write-failed");
             _popupSystem.PopupEntity(writeFailedMessage, entity, user);
         }
