@@ -768,9 +768,11 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 public sealed class OptionStringCVar : BaseOptionCVar<string>
 {
     private readonly TextEdit _textEdit;
+    private string _textString;
+
     protected override string Value
     {
-        get => Rope.Collapse(_textEdit.TextRope);
+        get => _textString;
         set => _textEdit.TextRope = new Rope.Leaf(value);
     }
 
@@ -795,10 +797,12 @@ public sealed class OptionStringCVar : BaseOptionCVar<string>
         : base(controller, cfg, cVar)
     {
         _textEdit = textEdit;
+        _textString = Rope.Collapse(_textEdit.TextRope);
 
         textEdit.OnTextChanged += _ =>
         {
             ValueChanged();
+            _textString = Rope.Collapse(_textEdit.TextRope);
         };
     }
 }
