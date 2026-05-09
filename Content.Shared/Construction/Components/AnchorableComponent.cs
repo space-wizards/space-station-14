@@ -40,16 +40,22 @@ namespace Content.Shared.Construction.Components
         public EntityUid Tool { get; }
 
         /// <summary>
+        /// This is shown to the player after the entity fails to anchor or unanchor as a popup
+        /// </summary>
+        public string? FailMessage;
+
+        /// <summary>
         ///     Extra delay to add to the do_after.
         ///     Add to this, don't replace it.
         ///     Output parameter.
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, string? failMessage = null)
         {
             User = user;
             Tool = tool;
+            FailMessage = failMessage;
         }
     }
 
