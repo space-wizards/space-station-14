@@ -8,9 +8,9 @@ namespace Content.Shared.Temperature.Systems;
 
 /// <inheritdoc cref="ThermoregulatorComponent"/>
 // ReSharper disable InconsistentNaming
-public sealed class ThermoregulatorSystem : EntitySystem
+public sealed partial class ThermoregulatorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public const float DefaultThermalConductivity = 2f;
 
