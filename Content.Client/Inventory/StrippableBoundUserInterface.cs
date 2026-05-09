@@ -35,13 +35,13 @@ using static Robust.Client.UserInterface.Control;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class StrippableBoundUserInterface : BoundUserInterface
+    public sealed partial class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly IClientAdminManager _admin = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly IConfigurationManager _cvar = default!;
+        [Dependency] private IPlayerManager _player = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
+        [Dependency] private IClientAdminManager _admin = default!;
+        [Dependency] private IPrototypeManager _proto = default!;
+        [Dependency] private IConfigurationManager _cvar = default!;
 
         private readonly ExamineSystem _examine;
         private readonly HandsSystem _hands;

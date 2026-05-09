@@ -24,14 +24,14 @@ using System.Runtime.CompilerServices;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
-        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
+        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
+        [Robust.Shared.IoC.Dependency] private IPlayerManager _playerManager = default!;
+        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private IParallelManager _parMan = default!;
+        [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
 
         /// <summary>
         /// Per-tick cache of sessions.
