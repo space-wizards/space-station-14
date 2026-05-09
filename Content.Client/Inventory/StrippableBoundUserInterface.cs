@@ -196,6 +196,7 @@ namespace Content.Client.Inventory
                     Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button"),
                     ToggleMode = true,
                     Pressed = _isAdminView,
+                    ToolTip = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button-tooltip")
                 };
 
                 adminButton.OnToggled += args =>
