@@ -10,7 +10,7 @@ using Content.Shared.Implants;
 
 namespace Content.Shared.Revolutionary;
 
-public abstract class SharedRevolutionarySystem : EntitySystem
+public abstract partial class SharedRevolutionarySystem : EntitySystem
 {
     public override void Initialize()
     {
