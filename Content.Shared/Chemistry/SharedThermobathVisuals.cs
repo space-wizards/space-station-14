@@ -9,7 +9,9 @@ public enum ThermobathVisuals
     IsOff,
     IsHeating,
     IsCooling,
-    IsIdle,
-    HasBeaker,
     DoesNotHaveBeaker,
+    HasBeaker,
+    HasBeakerAndIdle,
+    HasBeakerAndCooling,
+    HasBeakerAndHeating,
 }
