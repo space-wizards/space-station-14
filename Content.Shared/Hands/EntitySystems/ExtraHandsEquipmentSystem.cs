@@ -3,9 +3,9 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Hands.EntitySystems;
 
-public sealed class ExtraHandsEquipmentSystem : EntitySystem
+public sealed partial class ExtraHandsEquipmentSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
