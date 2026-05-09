@@ -12,18 +12,18 @@ using Robust.Shared.Random;
 namespace Content.Server.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed class GasTankSystem : SharedGasTankSystem
+public sealed partial class GasTankSystem : SharedGasTankSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
-    private const float MinimumSoundValvePressure = 10.0f;
+    private const float MinimumSoundValvePressure = 21.3f; // Arbitrary number
 
-    private const float ReleaseArea = 0.0001f; // About 1cm^2
+    private const float ReleaseArea = 0.0005f; // About 5cm^2
 
     // A vector bias for throwing our gas tanks in radians. Averages about -43 degrees since the sprite is at a 45-degree angle.
     private static readonly Vector2 ThrowVector = new (-1.0f, -0.5f);
@@ -106,7 +106,7 @@ public sealed class GasTankSystem : SharedGasTankSystem
             _atmosphereSystem.Merge(environment, removed);
 
         // If we wouldn't produce a sound, don't throw or play a sound.
-        if (deltaP < MinimumSoundValvePressure)
+        if (removed.Pressure < MinimumSoundValvePressure)
             return;
 
         Audio.PlayPvs(entity.Comp.ReleaseSound, entity);
@@ -139,12 +139,6 @@ public sealed class GasTankSystem : SharedGasTankSystem
     public GasMixture RemoveAir(Entity<GasTankComponent> gasTank, float amount)
     {
         return gasTank.Comp.Air.Remove(amount);
-    }
-
-    public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
-    {
-        _atmosphereSystem.Merge(ent.Comp.Air, giver);
-        CheckStatus(ent);
     }
 
     protected override void SafetyMeasures(Entity<GasTankComponent> entity)

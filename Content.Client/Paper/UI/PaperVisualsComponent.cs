@@ -3,58 +3,61 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Paper.UI;
 
+/// <summary>
+/// Adjusts the UI styling of paper.
+/// </summary>
 [RegisterComponent]
 public sealed partial class PaperVisualsComponent : Component
 {
     /// <summary>
     ///     The path to the image which will be used as a background for the paper itself
     /// </summary>
-    [DataField("backgroundImagePath")]
+    [DataField]
     public string? BackgroundImagePath;
 
     /// <summary>
     ///     An optional patch to configure tiling stretching of the background. Used to set
     ///     the PatchMargin in a <code>StyleBoxTexture</code>
     /// </summary>
-    [DataField("backgroundPatchMargin")]
-    public Box2 BackgroundPatchMargin = default;
+    [DataField]
+    public Box2 BackgroundPatchMargin;
 
     /// <summary>
     ///     Modulate the background image by this color. Can be used to add colorful
     ///     variants of images, without having to create new textures.
     /// </summary>
-    [DataField("backgroundModulate")]
+    [DataField]
     public Color BackgroundModulate = Color.White;
 
     /// <summary>
     ///     Should the background image tile, or be streched? Sets <code>StyleBoxTexture.StrechMode</code>
     /// </summary>
-    [DataField("backgroundImageTile")]
-    public bool BackgroundImageTile = false;
+    [DataField]
+    public bool BackgroundImageTile;
 
     /// <summary>
     ///     An additional scale to apply to the background image
     /// </summary>
-    [DataField("backgroundScale")]
+    [DataField]
     public Vector2 BackgroundScale = Vector2.One;
 
     /// <summary>
     ///     A path to an image which will be used as a header on the paper
     /// </summary>
-    [DataField("headerImagePath")]
+    [DataField]
     public string? HeaderImagePath;
 
     /// <summary>
     ///     Modulate the header image by this color
     /// </summary>
-    [DataField("headerImageModulate")]
+    [DataField]
     public Color HeaderImageModulate = Color.White;
 
     /// <summary>
     ///     Any additional margin to add around the header
     /// </summary>
-    [DataField("headerMargin")]
-    public Box2 HeaderMargin = default;
+    [DataField]
+    public Box2 HeaderMargin;
 
     /// <summary>
     /// A path to an image which will be used as a footer on the paper
@@ -72,7 +75,7 @@ public sealed partial class PaperVisualsComponent : Component
     /// Any additional margin to add around the footer
     /// </summary>
     [DataField]
-    public Box2 FooterMargin = default;
+    public Box2 FooterMargin;
 
     /// <summary>
     ///     Path to an image to use as the background to the "content" of the paper
@@ -80,33 +83,33 @@ public sealed partial class PaperVisualsComponent : Component
     ///     image will be tiled vertically with the property that the bottom of the
     ///     written text will line up with the bottom of this image.
     /// </summary>
-    [DataField("contentImagePath")]
+    [DataField]
     public string? ContentImagePath;
 
     /// <summary>
     ///     Modulate the content image by this color
     /// </summary>
-    [DataField("contentImageModulate")]
+    [DataField]
     public Color ContentImageModulate = Color.White;
 
     /// <summary>
     ///     An additional margin around the content (including header)
     /// </summary>
-    [DataField("contentMargin")]
-    public Box2 ContentMargin = default;
+    [DataField]
+    public Box2 ContentMargin;
 
     /// <summary>
     ///     The number of lines that the content image represents. The
     ///     content image will be vertically tiled after this many lines
     ///     of text.
     /// </summary>
-    [DataField("contentImageNumLines")]
+    [DataField]
     public int ContentImageNumLines = 1;
 
     /// <summary>
     ///     Modulate the style's font by this color
     /// </summary>
-    [DataField("fontAccentColor")]
+    [DataField]
     public Color FontAccentColor = new Color(223, 223, 213);
 
     /// <summary>
@@ -115,6 +118,6 @@ public sealed partial class PaperVisualsComponent : Component
     ///     can be unlimited by specifying a value of zero.
     ///     This will be scaled according to UI scale.
     /// </summary>
-    [DataField("maxWritableArea")]
-    public Vector2? MaxWritableArea = null;
+    [DataField]
+    public Vector2? MaxWritableArea;
 }
