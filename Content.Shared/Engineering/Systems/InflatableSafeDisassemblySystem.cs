@@ -8,10 +8,10 @@ namespace Content.Shared.Engineering.Systems;
 /// <summary>
 /// Implements <see cref="InflatableSafeDisassemblyComponent"/>
 /// </summary>
-public sealed class InflatableSafeDisassemblySystem : EntitySystem
+public sealed partial class InflatableSafeDisassemblySystem : EntitySystem
 {
-    [Dependency] private readonly DisassembleOnAltVerbSystem _disassembleOnAltVerbSystem = null!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = null!;
+    [Dependency] private DisassembleOnAltVerbSystem _disassembleOnAltVerbSystem = null!;
+    [Dependency] private SharedPopupSystem _popupSystem = null!;
 
     public override void Initialize()
     {

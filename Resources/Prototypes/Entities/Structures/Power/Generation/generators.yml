@@ -45,8 +45,9 @@
     supplyRampTolerance: 500
   - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
@@ -101,7 +102,7 @@
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
     castShadows: false
     netsync: false
@@ -209,6 +210,24 @@
   - type: GuideHelp
     guides:
     - ShuttleCraft
+
+- type: entity
+  parent: BaseGeneratorWallmount
+  id: GeneratorWallmountAPULV
+  name: shuttle LV APU
+  description: An advanced auxiliary power unit for a shuttle.
+  components:
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: PowerSupplier
+    voltage: Apc
+    supplyRate: 20000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
 
 # RTG - no fuel requirement
 

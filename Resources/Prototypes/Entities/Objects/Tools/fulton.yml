@@ -76,6 +76,7 @@
     sprite: Objects/Tools/fulton.rsi
     state: extraction_pack
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

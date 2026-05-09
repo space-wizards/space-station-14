@@ -10,10 +10,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
-public sealed class CrayonSystem : SharedCrayonSystem
+public sealed partial class CrayonSystem : SharedCrayonSystem
 {
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private SharedChargesSystem _charges = default!;
+    [Dependency] private EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -34,7 +34,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             _crayon = crayon;
             _charges = charges;
             _capacity = entityManage.GetComponent<LimitedChargesComponent>(_crayon.Owner).MaxCharges;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 

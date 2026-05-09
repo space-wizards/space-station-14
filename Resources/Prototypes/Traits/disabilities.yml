@@ -83,16 +83,20 @@
   name: trait-painnumbness-name
   description: trait-painnumbness-desc
   category: Disabilities
-  components:
-  - type: PainNumbness
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - TraitStatusEffectPainNumbness
 
 - type: trait
   id: Hemophilia
   name: trait-hemophilia-name
   description: trait-hemophilia-desc
   category: Disabilities
-  components:
-  - type: Hemophilia
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - TraitStatusEffectHemophilia
 
 - type: trait
   id: ImpairedMobility

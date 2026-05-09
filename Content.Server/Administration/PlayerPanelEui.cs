@@ -14,15 +14,15 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Administration;
 
-public sealed class PlayerPanelEui : BaseEui
+public sealed partial class PlayerPanelEui : BaseEui
 {
-    [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IAdminNotesManager _notesMan = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private IAdminManager _admins = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IAdminNotesManager _notesMan = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
 
     private readonly LocatedPlayerData _targetPlayer;
     private int? _notes;
@@ -186,11 +186,8 @@ public sealed class PlayerPanelEui : BaseEui
         {
             _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId);
             // This won't get associated ip or hwid bans but they were not placed on this account anyways
-            _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null, null)).Count;
-            // Unfortunately role bans for departments and stuff are issued individually. This means that a single role ban can have many individual role bans internally
-            // The only way to distinguish whether a role ban is the same is to compare the ban time.
-            // This is horrible and I would love to just erase the database and start from scratch instead but that's what I can do for now.
-            _roleBans = (await _db.GetServerRoleBansAsync(null, _targetPlayer.UserId, null, null)).DistinctBy(rb => rb.BanTime).Count();
+            _bans = (await _db.GetBansAsync(null, _targetPlayer.UserId, null, null)).Count;
+            _roleBans = (await _db.GetBansAsync(null, _targetPlayer.UserId, null, null, type: BanType.Role)).Count();
         }
         else
         {

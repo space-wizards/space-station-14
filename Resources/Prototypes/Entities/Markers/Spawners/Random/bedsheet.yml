@@ -3,29 +3,34 @@
   id: BedsheetSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Misc/bedsheets.rsi
-          state: random_bedsheet
-    - type: RandomSpawner
-      rarePrototypes:
-        - BedsheetIan
-        - BedsheetCosmos
-      rareChance: 0.03
-      prototypes:
-        - BedsheetBlue
-        - BedsheetYellow
-        - BedsheetOrange
-        - BedsheetGreen
-        - BedsheetNT
-        - BedsheetRed
-        - BedsheetUSA
-        - BedsheetBrown
-        - BedsheetBlack
-        - BedsheetPurple
-        - BedsheetGrey
-        - BedsheetWhite
-        - BedsheetRainbow
-      chance: 0.97
-      offset: 0
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/bedsheets.rsi
+      state: random_bedsheet
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 97
+        prob: 0.97
+        children:
+        - id: BedsheetBlue
+        - id: BedsheetYellow
+        - id: BedsheetOrange
+        - id: BedsheetGreen
+        - id: BedsheetNT
+        - id: BedsheetRed
+        - id: BedsheetUSA
+        - id: BedsheetBrown
+        - id: BedsheetBlack
+        - id: BedsheetPurple
+        - id: BedsheetGrey
+        - id: BedsheetWhite
+        - id: BedsheetRainbow
+      - !type:GroupSelector
+        weight: 3
+        children:
+        - id: BedsheetIan
+        - id: BedsheetCosmos
+    offset: 0

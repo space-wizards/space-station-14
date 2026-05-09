@@ -10,7 +10,7 @@ namespace Content.Shared.EntityConditions.Conditions.Tags;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSystem<TagComponent, AllTagsCondition>
 {
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<AllTagsCondition> args)
     {
@@ -38,6 +38,6 @@ public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondit
 
         var names = ContentLocalizationManager.FormatList(tagList);
 
-        return Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
+        return Loc.GetString("entity-condition-guidebook-has-tag", ("tag", names), ("invert", Inverted));
     }
 }
