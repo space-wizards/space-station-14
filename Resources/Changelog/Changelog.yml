@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SnappingOpossum
-  changes:
-  - message: Energy shotgun and energy magnum can now be used by pacifists in their
-      disabling modes.
-    type: Tweak
-  id: 9174
-  time: '2025-10-30T19:30:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41029
 - author: rumaks-xyz
   changes:
   - message: Changed the recipe for licoxide to require lithium instead of lead.
@@ -4083,3 +4075,11 @@
   id: 9685
   time: '2026-05-07T16:01:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43877
+- author: mokiros
+  changes:
+  - message: You can now examine if an item covers your eyes, mouth, or entire face
+      (like gas masks, sunglasses, etc.)
+    type: Add
+  id: 9686
+  time: '2026-05-07T21:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42145

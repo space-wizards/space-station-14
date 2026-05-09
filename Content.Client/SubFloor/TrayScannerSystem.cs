@@ -18,20 +18,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.SubFloor;
 
-public sealed class TrayScannerSystem : SharedTrayScannerSystem
+public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly TrayScanRevealSystem _trayScanReveal = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
-    [Dependency] private readonly EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TrayScanRevealSystem _trayScanReveal = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private EntityQuery<TrayScannerComponent> _trayScannerQuery = default!;
+    [Dependency] private EntityQuery<SubFloorHideComponent> _subFloorHideQuery = default!;
 
     private const string TRayAnimationKey = "trays";
     private const double AnimationLength = 0.3;
