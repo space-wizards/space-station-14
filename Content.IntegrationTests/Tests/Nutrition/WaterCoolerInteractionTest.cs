@@ -55,7 +55,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount - 1), "Number of cups in cooler bin did not decrease by one");
 
             // Make sure the cup isn't somehow still in the cooler too
-            Assert.That(container, Does.Not.Contain(cup));
+            Assert.That(!container.Contains(cup.Value), "Cup was not removed from cooler");
         });
 
         // Alt-interact with the water cooler while holding the cup to put it back
