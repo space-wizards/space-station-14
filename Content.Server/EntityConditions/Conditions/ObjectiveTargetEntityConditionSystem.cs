@@ -13,8 +13,8 @@ namespace Content.Server.EntityConditions.Conditions;
 /// </summary>
 public sealed partial class ObjectiveTargetEntityConditionSystem : EntityConditionSystem<MindComponent, ObjectiveTargetCondition>
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly EntityQuery<TargetObjectiveComponent> _targetQuery = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private EntityQuery<TargetObjectiveComponent> _targetQuery;
 
     protected override void Condition(Entity<MindComponent> entity, ref EntityConditionEvent<ObjectiveTargetCondition> args)
     {

@@ -131,7 +131,7 @@ public partial interface IMindPool
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class MindPool<T> : IMindPool where T : MindTargetSystem
 {
-    [Dependency] protected T TargetSystem = default!;
+    protected T TargetSystem = default!;
 
     public void FindMinds(HashSet<Entity<MindComponent>> minds, IDependencyCollection dependency, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
