@@ -3,8 +3,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage.Components;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Nutrition;
@@ -47,8 +45,6 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
 
         var cup = HandSys.GetActiveItem((SPlayer, Hands));
 
-        Assert.That(cup != null);
-
         Assert.Multiple(() =>
         {
             // Make sure the player is now holding a cup
@@ -59,7 +55,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount - 1), "Number of cups in cooler bin did not decrease by one");
 
             // Make sure the cup isn't somehow still in the cooler too
-            Assert.That(!container.Contains(cup.Value));
+            Assert.That(container, Does.Not.Contain(cup));
         });
 
         // Alt-interact with the water cooler while holding the cup to put it back
