@@ -23,15 +23,15 @@
       map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsCooling" ]
       shader: unshaded
     - state: open
-      map: [ "enum.ThermobathVisuals.NoBeaker" ]
+      map: [ "enum.ThermobathVisuals.DoesNotHaveBeaker" ]
     - state: beaker
-      map: [ "enum.ThermobathVisuals.Beaker" ]
+      map: [ "enum.ThermobathVisuals.HasBeaker" ]
     - state: lid_none
-      map: [ "enum.ThermobathVisuals.StillTemp" ]
+      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsIdle" ]
     - state: lid_cold
-      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsCooling" ]
+      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsCooling" ]
     - state: lid_hot
-      map: [ "enum.ThermobathVisuals.IsOn", "enum.ThermobathVisuals.IsHeating" ]
+      map: [ "enum.ThermobathVisuals.HasBeaker", "enum.ThermobathVisuals.IsHeating" ]
   - type: Thermobath
   - type: Thermoregulator
     heatingPower: 1200
@@ -56,3 +56,33 @@
   - type: Machine
     board: ThermobathMachineCircuitboard
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ThermobathVisuals.IsOn:
+        enum.ThermobathVisuals.IsOn:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsOff:
+        enum.ThermobathVisuals.IsOff:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsHeating:
+        enum.ThermobathVisuals.IsHeating:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsCooling:
+        enum.ThermobathVisuals.IsCooling:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsIdle:
+        enum.ThermobathVisuals.IsIdle:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeaker:
+        enum.ThermobathVisuals.HasBeaker:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.DoesNotHaveBeaker:
+        enum.ThermobathVisuals.DoesNotHaveBeaker:
+          True: { visible: true }
+          False: { visible: false }

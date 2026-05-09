@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.HeatContainer;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Containers;
@@ -19,6 +19,7 @@ public abstract class SharedThermobathSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ThermoregulatorSystem _thermoregulator = default!;
@@ -69,6 +70,10 @@ public abstract class SharedThermobathSystem : EntitySystem
 
         // Update the UI regardless since our temperature has changed
         UpdateUi(ent);
+
+        _appearance.SetData(ent, ThermobathVisuals.IsHeating, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
+        _appearance.SetData(ent, ThermobathVisuals.IsCooling, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
+        _appearance.SetData(ent, ThermobathVisuals.IsIdle, args.Thermoregulator.ActiveMode == ThermoregulatorActiveMode.Heating);
     }
 
     private void OnUiOpened(Entity<ThermobathComponent> ent, ref BoundUIOpenedEvent args)
@@ -93,6 +98,9 @@ public abstract class SharedThermobathSystem : EntitySystem
         ent.Comp.SolutionTemperature = solution.Temperature;
         DirtyFields(ent.AsNullable(), null, nameof(ThermobathComponent.SolutionTemperature), nameof(ThermobathComponent.HasBeaker));
         UpdateUi(ent);
+
+        _appearance.SetData(ent, ThermobathVisuals.HasBeaker, true);
+        _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, false);
     }
 
     private void OnEntRemovedFromContainer(Entity<ThermobathComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -104,6 +112,8 @@ public abstract class SharedThermobathSystem : EntitySystem
         ent.Comp.SolutionTemperature = null;
         DirtyFields(ent.AsNullable(), null, nameof(ThermobathComponent.SolutionTemperature), nameof(ThermobathComponent.HasBeaker));
         UpdateUi(ent);
+        _appearance.SetData(ent, ThermobathVisuals.HasBeaker, false);
+        _appearance.SetData(ent, ThermobathVisuals.DoesNotHaveBeaker, true);
     }
 
     private void OnPowerChanged(Entity<ThermobathComponent> ent, ref PowerChangedEvent args)
@@ -118,6 +128,8 @@ public abstract class SharedThermobathSystem : EntitySystem
         // Would be handled by OnPowerChanged but currently it's raised from the server
         _thermoregulator.SetEnabled(ent.Owner, args.Powered);
         UpdateUi(ent);
+        _appearance.SetData(ent, ThermobathVisuals.IsOn, args.Powered);
+        _appearance.SetData(ent, ThermobathVisuals.IsOff, !args.Powered);
     }
 
     private void OnSetpointChangeMessage(Entity<ThermobathComponent> ent, ref ThermobathSetpointChangedMessage args)
