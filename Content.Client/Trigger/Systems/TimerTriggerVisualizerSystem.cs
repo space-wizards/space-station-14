@@ -12,7 +12,7 @@ namespace Content.Client.Trigger.Systems;
 public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
 {
     [Dependency] private SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private ItemSystem _itemSystem = default!;
 
     public override void Initialize()
     {
