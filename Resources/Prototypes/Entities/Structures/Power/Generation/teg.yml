@@ -63,7 +63,7 @@
     - type: AtmosDevice
     - type: TegGenerator
       thermalEfficiency: 0.1
-      powerFactor: 1.75
+      powerFactor: 2
 
     - type: DeviceNetwork
       deviceNetId: AtmosDevices

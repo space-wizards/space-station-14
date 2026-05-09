@@ -1,19 +1,15 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
-using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using System.Numerics;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
@@ -22,20 +18,18 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class SpraySystem : SharedSpraySystem
+public sealed partial class SpraySystem : SharedSpraySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly GravitySystem _gravity = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly VaporSystem _vapor = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private GravitySystem _gravity = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private VaporSystem _vapor = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ContainerSystem _container = default!;
 
     private float _gridImpulseMultiplier;
 
@@ -151,10 +145,6 @@ public sealed class SpraySystem : SharedSpraySystem
                 target = sprayerMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
 
             var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
-            var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
-
-            if (newSolution.Volume <= FixedPoint2.Zero)
-                break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
             var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
@@ -163,22 +153,13 @@ public sealed class SpraySystem : SharedSpraySystem
 
             _transform.SetWorldRotation(vaporXform, rotation);
 
-            if (TryComp(vapor, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(vapor, VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f), appearance);
-                _appearance.SetData(vapor, VaporVisuals.State, true, appearance);
-            }
-
-            // Add the solution to the vapor and actually send the thing
-            var vaporComponent = Comp<VaporComponent>(vapor);
-            var ent = (vapor, vaporComponent);
-            _vapor.TryAddSolution(ent, newSolution);
+            _vapor.TryAddSolution(vapor, soln.Value, adjustedSolutionAmount);
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
             var time = diffLength / entity.Comp.SprayVelocity;
 
-            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
+            _vapor.Start(vapor, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
             var thingGettingPushed = entity.Owner;
             if (_container.TryGetOuterContainer(entity, sprayerXform, out var container))

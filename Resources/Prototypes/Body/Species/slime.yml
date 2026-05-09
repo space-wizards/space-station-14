@@ -46,6 +46,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSlimePerson
+  categories: [ HideSpawnMenu ]
   name: SlimePerson appearance
   components:
   - type: Inventory
@@ -116,12 +117,12 @@
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:
     - Alive
-    damageCap: 65
     damage:
       types:
         Heat: -0.14
-      groups:
-        Brute: -0.14
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -133,7 +134,7 @@
     bloodReferenceSolution: # TODO Color slime blood based on their slime color or smth
       reagents:
       - ReagentId: Slime
-        Quantity: 300
+        Quantity: 600
   - type: Barotrauma
     damage:
       types:
@@ -254,10 +255,9 @@
   id: OrganSlimePersonCore
   name: sentient slime core
   components:
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      stomach:
-        maxVol: 50.0
+    - SolutionStomach
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6

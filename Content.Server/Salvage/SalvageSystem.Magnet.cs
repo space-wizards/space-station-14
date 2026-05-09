@@ -9,12 +9,13 @@ using Content.Shared.Salvage.Magnet;
 using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+    [Dependency] private IRuntimeLog _runtimeLog = default!;
 
     private static readonly ProtoId<RadioChannelPrototype> MagnetChannel = "Supply";
 
