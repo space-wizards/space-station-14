@@ -307,7 +307,7 @@ namespace Content.Client.Paper.UI
             FillInputText();
         }
 
-        protected void FillInputText()
+        private void FillInputText()
         {
             Input.TextRope = Rope.Leaf.Empty;
             Input.CursorPosition = new TextEdit.CursorPos();
