@@ -1,8 +1,8 @@
 # Mop Bucket
 - type: entity
-  name: mop bucket
+  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled]
   id: MopBucket
-  parent: [BaseStructureDynamic, StructureWheeled]
+  name: mop bucket
   description: Holds water and the tears of the janitor.
   components:
   - type: Clickable
@@ -16,23 +16,16 @@
       visible: false
     drawdepth: Objects
   - type: InteractionOutline
-  - type: SolutionContainerManager
-    solutions:
-      bucket:
-        maxVol: 600
   - type: Spillable
-    solution: bucket
+    solution: tank
     spillDelay: 3.0
     spillWhenThrown: false
   - type: DrainableSolution
-    solution: bucket
+    solution: tank
   - type: RefillableSolution
-    solution: bucket
+    solution: tank
   - type: ExaminableSolution
-    solution: bucket
-  - type: Tag
-    tags:
-      - Wringer
+    solution: tank
   - type: ItemMapper
     mapLayers:
       mopbucket_shark_blue:
@@ -51,6 +44,14 @@
         whitelist:
           tags:
             - PlushieCarp
+      mopbucket_magicarpplush:
+        whitelist:
+          tags:
+          - PlushieCarpMagi
+      mopbucket_holocarpplush:
+        whitelist:
+          tags:
+          - PlushieCarpHolo
     sprite: Objects/Specific/Janitorial/janitorial.rsi
   - type: Transform
     noRot: true
@@ -65,14 +66,19 @@
             - PlushieSharkPink
             - PlushieSharkGrey
             - PlushieCarp
+            - PlushieCarpHolo
+            - PlushieCarpMagi
           components:
             - Rehydratable
         priority: 3 # Higher than drinking priority
   - type: ReactiveContainer
-    solution: bucket
+    solution: tank
     container: item_slot
-  - type: Drink
-    solution: bucket
+  - type: Edible
+    edible: Drink
+    solution: tank
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -86,6 +92,7 @@
     guides:
     - Janitorial
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -112,18 +119,16 @@
   parent: MopBucket
   suffix: full
   components:
-    - type: Sprite
-      layers:
-        - state: mopbucket
-        - state: mopbucket_water-3
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-    - type: SolutionContainerManager
-      solutions:
-        bucket:
-          maxVol: 600
-          reagents:
-            - ReagentId: Water
-              Quantity: 600
+  - type: Sprite
+    layers:
+      - state: mopbucket
+      - state: mopbucket_water-3
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Water
+        Quantity: 960
 
 - type: entity
   parent: BaseWrappedCube
@@ -139,9 +144,9 @@
 
 # Janicart
 - type: entity
-  name: janitorial trolley
+  parent: [SolutionGinormous, SolutionTank, BaseStructureDynamic, StructureWheeled]
   id: JanitorialTrolley
-  parent: [BaseStructureDynamic, StructureWheeled]
+  name: janitorial trolley
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite
@@ -177,6 +182,7 @@
           whitelist:
             tags:
               - Plunger
+              - GoldenPlunger
           priority: 8
         wetfloorsign_slot4:
           name: janitorial-trolley-slot-component-slot-name-sign
@@ -240,28 +246,24 @@
           mask:
           - MobMask
     - type: Spillable
-      solution: bucket
+      solution: tank
       spillDelay: 3.0
       spillWhenThrown: false
-    - type: SolutionContainerManager
-      solutions:
-        bucket:
-          maxVol: 800
-          reagents:
-            - ReagentId: Water
-              Quantity: 600 # 3 quarters full at roundstart to make it more appealing
+    - type: Solution
+      solution:
+        reagents:
+        - ReagentId: Water
+          Quantity: 960
     - type: DrainableSolution
-      solution: bucket
+      solution: tank
     - type: RefillableSolution
-      solution: bucket
+      solution: tank
     - type: ExaminableSolution
-      solution: bucket
-    - type: Tag
-      tags:
-        - Wringer
+      solution: tank
     - type: Damageable
-      damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
         - trigger:
@@ -286,6 +288,10 @@
           whitelist:
             tags:
               - Plunger
+        cart_goldenplunger:
+          whitelist:
+            tags:
+            - GoldenPlunger
         cart_mop:
           whitelist:
             tags:
@@ -297,7 +303,11 @@
         cart_garbage:
           whitelist:
             tags:
-              - TrashBag
+            - TrashBag
+        cart_garbage_blue:
+          whitelist:
+            tags:
+            - TrashBagBlue
         cart_replacer:
           whitelist:
             components:
@@ -339,8 +349,11 @@
       interfaces:
         enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
-    - type: Drink
-      solution: bucket
+    - type: Edible
+      edible: Drink
+      solution: tank
+      destroyOnEmpty: false
+      utensil: Spoon
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -349,6 +362,7 @@
         trashbag_slot: !type:ContainerSlot {}
         bucket_slot: !type:ContainerSlot {}
         plunger_slot: !type:ContainerSlot {}
+        goldenplunger_slot: !type:ContainerSlot {}
         wetfloorsign_slot4: !type:ContainerSlot {}
         wetfloorsign_slot3: !type:ContainerSlot {}
         wetfloorsign_slot2: !type:ContainerSlot {}

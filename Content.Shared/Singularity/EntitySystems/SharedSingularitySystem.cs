@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.Events;
 using Robust.Shared.Containers;
@@ -12,14 +13,15 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// The entity system primarily responsible for managing <see cref="SingularityComponent"/>s.
 /// </summary>
-public abstract class SharedSingularitySystem : EntitySystem
+public abstract partial class SharedSingularitySystem : EntitySystem
 {
 #region Dependencies
-    [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
+    [Dependency] private SharedAppearanceSystem _visualizer = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedEventHorizonSystem _horizons = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedRadiationSystem _radiation = default!;
+    [Dependency] protected IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -45,10 +47,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
-        SubscribeLocalEvent<AppearanceComponent, SingularityLevelChangedEvent>(UpdateAppearance);
-        SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
-        SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
-        SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
@@ -121,8 +119,28 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="singularity">The state of the singularity which's level has changed.</param>
     public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity))
+        if (!Resolve(uid, ref singularity))
             return;
+
+        if (TryComp<EventHorizonComponent>(uid, out var eventHorizon))
+        {
+            _horizons.SetRadius(uid, EventHorizonRadius(singularity), false, eventHorizon);
+            _horizons.SetCanBreachContainment(uid, CanBreachContainment(singularity), false, eventHorizon);
+            _horizons.UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
+        }
+
+        if (TryComp<PhysicsComponent>(uid, out var body))
+        {
+            if (singularity.Level <= 1 && oldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
+                _physics.SetLinearVelocity(uid, Vector2.Zero, body: body); // No idea how stopping the singularities movement keeps it from getting stuck though.
+        }
+
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
+            _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
+        }
+
+        UpdateRadiation(uid, singularity);
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
@@ -146,12 +164,12 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// </summary>
     /// <param name="uid">The uid of the singularity to update the radiation of.</param>
     /// <param name="singularity">The state of the singularity to update the radiation of.</param>
-    /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
-    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
+    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null)
     {
-        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
+        if(!Resolve(uid, ref singularity, logMissing: false))
             return;
-        rads.Intensity = singularity.Level * singularity.RadsPerLevel;
+
+        _radiation.SetIntensity(uid, singularity.Level * singularity.RadsPerLevel);
     }
 
 #endregion Getters/Setters
@@ -274,21 +292,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         UpdateSingularityLevel(uid, comp);
     }
 
-    // TODO: Figure out which systems should have control of which coupling.
-    /// <summary>
-    /// Syncs the radius of an event horizon associated with a singularity that just changed levels.
-    /// </summary>
-    /// <param name="uid">The entity that the event horizon and singularity are attached to.</param>
-    /// <param name="comp">The event horizon associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateEventHorizon(EntityUid uid, EventHorizonComponent comp, SingularityLevelChangedEvent args)
-    {
-        var singulo = args.Singularity;
-        _horizons.SetRadius(uid, EventHorizonRadius(singulo), false, comp);
-        _horizons.SetCanBreachContainment(uid, CanBreachContainment(singulo), false, comp);
-        _horizons.UpdateEventHorizonFixture(uid, eventHorizon: comp);
-    }
-
     /// <summary>
     /// Updates the distortion shader associated with a singularity when the singuarity changes levels.
     /// </summary>
@@ -344,40 +347,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         var factor = DistortionContainerScaling - 1;
         comp.FalloffPower = absFalloffPower > 1 ? comp.FalloffPower * MathF.Pow(absFalloffPower, factor) : comp.FalloffPower;
         comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
-    }
-
-    /// <summary>
-    /// Updates the state of the physics body associated with a singularity when the singualrity changes levels.
-    /// </summary>
-    /// <param name="uid">The entity that the physics body and singularity are attached to.</param>
-    /// <param name="comp">The physics body associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
-    {
-        if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
-            _physics.SetLinearVelocity(uid, Vector2.Zero, body: comp); // No idea how stopping the singularities movement keeps it from getting stuck though.
-    }
-
-    /// <summary>
-    /// Updates the appearance of a singularity when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The appearance associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateAppearance(EntityUid uid, AppearanceComponent comp, SingularityLevelChangedEvent args)
-    {
-        _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, args.NewValue, comp);
-    }
-
-    /// <summary>
-    /// Updates the amount of radiation a singularity emits when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The radiation source associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateRadiation(EntityUid uid, RadiationSourceComponent comp, SingularityLevelChangedEvent args)
-    {
-        UpdateRadiation(uid, args.Singularity, comp);
     }
 
 #endregion EventHandlers

@@ -1,30 +1,21 @@
-using Content.Server.Administration.Managers;
-using Content.Shared.Administration;
 using Content.Shared.Explosion;
-using Content.Shared.Ghost;
 using Content.Shared.Hands;
-using Content.Shared.Lock;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-
 namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem : SharedStorageSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, BeforeExplodeEvent>(OnExploded);
-
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
 

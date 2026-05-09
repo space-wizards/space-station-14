@@ -1,57 +1,46 @@
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Overlays;
-using Robust.Client.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Client.Commands;
 
-public sealed class ShowHealthBarsCommand : LocalizedCommands
+public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public override string Command => "showhealthbars";
-
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = _playerManager.LocalSession;
+        var player = shell.Player;
         if (player == null)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-not-player"));
+            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
         }
 
-        var playerEntity = player?.AttachedEntity;
-        if (!playerEntity.HasValue)
+        if (player.AttachedEntity is not { } playerEntity)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error-no-entity"));
+            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
             return;
         }
 
-        if (!_entityManager.HasComponent<ShowHealthBarsComponent>(playerEntity))
+        if (!EntityManager.HasComponent<ShowHealthBarsComponent>(playerEntity))
         {
             var showHealthBarsComponent = new ShowHealthBarsComponent
             {
                 DamageContainers = args.Select(arg => new ProtoId<DamageContainerPrototype>(arg)).ToList(),
                 HealthStatusIcon = null,
-                NetSyncEnabled = false
+                NetSyncEnabled = false,
             };
 
-            _entityManager.AddComponent(playerEntity.Value, showHealthBarsComponent, true);
+            EntityManager.AddComponent(playerEntity, showHealthBarsComponent, true);
 
-            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify-enabled", ("args", string.Join(", ", args))));
+            shell.WriteLine(Loc.GetString("cmd-showhealthbars-notify-enabled", ("args", string.Join(", ", args))));
             return;
         }
-        else
-        {
-            _entityManager.RemoveComponentDeferred<ShowHealthBarsComponent>(playerEntity.Value);
-            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify-disabled"));
-        }
 
-        return;
+        EntityManager.RemoveComponentDeferred<ShowHealthBarsComponent>(playerEntity);
+        shell.WriteLine(Loc.GetString("cmd-showhealthbars-notify-disabled"));
     }
 }

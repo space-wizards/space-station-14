@@ -1,39 +1,42 @@
-# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
+﻿# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_snack.yml
 # Base
 
 - type: entity
-  parent: FoodInjectableBase
+  parent: [SolutionVeryTiny, FoodInjectableBase]
   id: FoodFrozenBase
   abstract: true
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20 # For sprinkles or something? Idk.
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
 
 # Ice-cream
 
 - type: entity
-  name: ice-cream sandwich
   parent: FoodFrozenBase
   id: FoodFrozenSandwich
+  name: ice-cream sandwich
   description: Portable ice-cream in its own packaging.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: sandwich
 
 - type: entity
-  name: strawberry ice-cream sandwich
   parent: FoodFrozenBase
   id: FoodFrozenSandwichStrawberry
+  name: strawberry ice-cream sandwich
   description: Portable ice-cream in its own packaging of the strawberry variety.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: sandwich-strawberry
 
@@ -56,22 +59,22 @@
     state: spacefreezy
 
 - type: entity
-  name: cornuto
   parent: FoodFrozenBase
   id: FoodFrozenCornuto
+  name: cornuto
   description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
+  - type: Item
+    storedRotation: -45
   - type: Sprite
     state: cornuto
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Theobromine
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Theobromine
+        Quantity: 1
 
 # Popsicle
 
@@ -87,8 +90,8 @@
     - state: popsicle-base
     - state: popsicle
       color: orange
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -107,8 +110,8 @@
     - state: popsicle-base
     - state: popsicle
       color: red
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -125,18 +128,16 @@
     layers:
     - state: stick
     - state: jumbo
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Theobromine
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Theobromine
+        Quantity: 1
 
 # Snowcone
 
@@ -156,20 +157,18 @@
         - state: cone
         - state: alpha-filling
     #      color: foo
-    - type: Food
-      trash: 
+    - type: Edible
+      trash:
       - FoodFrozenSnowconeTrash
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 20 # For sprinkles or something? Idk.
-          reagents:
-            - ReagentId: Ice
-              Quantity: 8
-            - ReagentId: Water
-              Quantity: 2
-            - ReagentId: Sugar
-              Quantity: 2
+    - type: Solution
+      solution:
+        reagents:
+          - ReagentId: Ice
+            Quantity: 8
+          - ReagentId: Water
+            Quantity: 2
+          - ReagentId: Sugar
+            Quantity: 2
 
 - type: entity
   name: flavorless snowcone
@@ -177,13 +176,11 @@
   id: FoodFrozenSnowcone
   description: It's just shaved ice. Still fun to chew on.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-          - ReagentId: Ice
-            Quantity: 8
+  - type: Solution
+    solution:
+      reagents:
+        - ReagentId: Ice
+          Quantity: 8
 
 - type: entity
   name: berry snowcone
@@ -195,8 +192,8 @@
     layers:
     - state: cone
     - state: berry
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -212,8 +209,8 @@
     layers:
     - state: cone
     - state: fruitsalad
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -229,8 +226,8 @@
     layers:
     - state: cone
     - state: clown
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -243,8 +240,8 @@
     layers:
     - state: cone
     - state: mime
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -257,18 +254,20 @@
     layers:
     - state: cone
     - state: rainbow
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 # Trash
 
 - type: entity
-  name: paper cone
   parent: BaseItem
   id: FoodFrozenSnowconeTrash
+  name: paper cone
   description: A crumpled paper cone used for an icy treat. Worthless.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
     state: cone-trash

@@ -16,15 +16,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.NetworkConfigurator.Systems;
 
-public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
+public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private IInputManager _inputManager = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string Action = "ActionClearNetworkLinkOverlays";
+    private static readonly EntProtoId Action = "ActionClearNetworkLinkOverlays";
 
     public override void Initialize()
     {
@@ -113,7 +112,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             _configurator = configurator;
             _keyBindingName = keyBindingName;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 
@@ -137,15 +136,14 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     }
 }
 
-public sealed class ClearAllNetworkLinkOverlays : IConsoleCommand
+public sealed partial class ClearAllNetworkLinkOverlays : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private NetworkConfiguratorSystem _network = default!;
 
-    public string Command => "clearnetworklinkoverlays";
-    public string Description => "Clear all network link overlays.";
-    public string Help => Command;
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "clearnetworklinkoverlays";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _e.System<NetworkConfiguratorSystem>().ClearAllOverlays();
+        _network.ClearAllOverlays();
     }
 }

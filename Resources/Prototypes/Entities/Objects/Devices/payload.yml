@@ -9,6 +9,7 @@
     tags:
     - Payload
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -36,12 +37,6 @@
   - type: ExplodeOnTrigger
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 25
-      behaviors:
-      - !type:ExplodeBehavior
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -100,3 +95,4 @@
     - type: EmitSoundOnTrigger
       sound:
         path: "/Audio/Effects/flash_bang.ogg"
+      positional: true

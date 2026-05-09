@@ -26,18 +26,26 @@
 - type: entity
   parent: BaseKeyedInstrument
   id: SuperSynthesizerInstrument
+  suffix: Admin
   name: super synthesizer
   description: Blasting the ghetto with Touhou MIDIs since 2020.
   components:
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
-    respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
   - type: Item
     heldPrefix: super
+
+- type: entity
+  parent: SuperSynthesizerInstrument
+  id: SuperSynthesizerNoLimitInstrument
+  suffix: NoLimits Admin
+  components:
+  - type: Instrument
+    respectMidiLimits: false
 
 - type: entity
   parent: BaseKeyedInstrument

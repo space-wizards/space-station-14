@@ -1,7 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
-using Content.Shared.Body.Components;
-using Content.Shared.Damage;
+using Content.Shared.Body;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
@@ -13,18 +13,18 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit
 {
-    public sealed class DisposableSystem : EntitySystem
+    public sealed partial class DisposableSystem : EntitySystem
     {
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
-        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedMapSystem _maps = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+        [Dependency] private ThrowingSystem _throwing = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private DisposalUnitSystem _disposalUnitSystem = default!;
+        [Dependency] private DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SharedMapSystem _maps = default!;
+        [Dependency] private SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private SharedTransformSystem _xformSystem = default!;
 
         private EntityQuery<DisposalTubeComponent> _disposalTubeQuery;
         private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
@@ -43,6 +43,8 @@ namespace Content.Server.Disposal.Unit
             _xformQuery = GetEntityQuery<TransformComponent>();
 
             SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<DisposalHolderComponent, ContainerIsInsertingAttemptEvent>(CanInsert);
+            SubscribeLocalEvent<DisposalHolderComponent, EntInsertedIntoContainerMessage>(OnInsert);
         }
 
         private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
@@ -50,34 +52,16 @@ namespace Content.Server.Disposal.Unit
             holder.Container = _containerSystem.EnsureContainer<Container>(uid, nameof(DisposalHolderComponent));
         }
 
-        public bool TryInsert(EntityUid uid, EntityUid toInsert, DisposalHolderComponent? holder = null)
+        private void CanInsert(Entity<DisposalHolderComponent> ent, ref ContainerIsInsertingAttemptEvent args)
         {
-            if (!Resolve(uid, ref holder))
-                return false;
-            if (!CanInsert(uid, toInsert, holder))
-                return false;
-
-            if (!_containerSystem.Insert(toInsert, holder.Container))
-                return false;
-
-            if (_physicsQuery.TryGetComponent(toInsert, out var physBody))
-                _physicsSystem.SetCanCollide(toInsert, false, body: physBody);
-
-            return true;
+            if (!HasComp<ItemComponent>(args.EntityUid) && !HasComp<BodyComponent>(args.EntityUid))
+                args.Cancel();
         }
 
-        private bool CanInsert(EntityUid uid, EntityUid toInsert, DisposalHolderComponent? holder = null)
+        private void OnInsert(Entity<DisposalHolderComponent> ent, ref EntInsertedIntoContainerMessage args)
         {
-            if (!Resolve(uid, ref holder))
-                return false;
-
-            if (!_containerSystem.CanInsert(toInsert, holder.Container))
-            {
-                return false;
-            }
-
-            return HasComp<ItemComponent>(toInsert) ||
-                   HasComp<BodyComponent>(toInsert);
+            if (_physicsQuery.TryGetComponent(args.Entity, out var physBody))
+                _physicsSystem.SetCanCollide(args.Entity, false, body: physBody);
         }
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
@@ -156,7 +140,7 @@ namespace Content.Server.Disposal.Unit
                 holder.Air.Clear();
             }
 
-            EntityManager.DeleteEntity(uid);
+            Del(uid);
         }
 
         // Note: This function will cause an ExitDisposals on any failure that does not make an ExitDisposals impossible.
@@ -243,7 +227,7 @@ namespace Content.Server.Disposal.Unit
                 holder.TimeLeft -= time;
                 frameTime -= time;
 
-                if (!EntityManager.EntityExists(holder.CurrentTube))
+                if (!Exists(holder.CurrentTube))
                 {
                     ExitDisposals(uid, holder);
                     break;
@@ -268,7 +252,7 @@ namespace Content.Server.Disposal.Unit
 
                 // Find next tube
                 var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);
-                if (!EntityManager.EntityExists(nextTube))
+                if (!Exists(nextTube))
                 {
                     ExitDisposals(uid, holder);
                     break;

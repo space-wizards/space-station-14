@@ -16,8 +16,8 @@ namespace Content.Client.Decals.UI;
 [GenerateTypedNameReferences]
 public sealed partial class DecalPlacerWindow : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IEntityManager _e = default!;
 
     private readonly DecalPlacementSystem _decalPlacementSystem;
     private readonly SpriteSystem _sprite;
@@ -157,15 +157,12 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
             {
                 var panelContainer = new PanelContainer
                 {
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = StyleNano.ButtonColorDefault
-                    },
                     Children =
                     {
                         button
                     }
                 };
+                panelContainer.SetOnlyStyleClass(StyleClass.PanelLight);
                 Grid.AddChild(panelContainer);
             }
             else

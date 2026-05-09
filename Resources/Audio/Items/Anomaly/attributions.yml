@@ -1,0 +1,114 @@
+﻿- files: ["flesh_crit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Mashup by GonTar Quantumcross of malescream_1.ogg, malescream_2.ogg, femalescream_4.ogg, femalescream_5.ogg, alien_claw_flesh_2.ogg, alien_claw_flesh_3.ogg"
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
+  # additional source for alien claw sounds:
+  # source: "https://gitlab.com/cmdevs/colonial-warfare/-/tree/dev/sound/weapons"
+
+- files: ["shadow_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar and Quantumcross of sourced sound effect and anomaly_scary.ogg"
+  source: https://pixabay.com/sound-effects/psychedelic-144822/
+  # Additional sources:
+  # source: https://pixabay.com/sound-effects/boom-geomorphism-cinematic-trailer-sound-effects-123876/
+
+- files: ["tech_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by Gontar"
+  source: https://freesound.org/people/wtermini/sounds/546450/
+  # Additional sources:
+  # source: https://freesound.org/people/unfa/sounds/124547/
+  # source: https://pixabay.com/sound-effects/elemental-magic-spell-cast-d-228349/
+
+- files: ["present_crit.ogg"]
+  license: "CC0-1.0"
+  copyright: "richwise (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/richwise/sounds/414374/
+
+- files: ["pyro_crit.ogg"]
+  license: "Custom"
+  copyright: "Multiple sounds, edited and layered by GonTar"
+  source: https://freesound.org/people/Robinhood76/sounds/612277/
+  # additional sources:
+  # source: https://freesound.org/people/Fission9/sounds/474850/
+  # source: https://pixabay.com/sound-effects/rubber-stretch-sound-effect-201310/ (Pixabay license)
+  # source: https://pixabay.com/sound-effects/fx-collection-of-flame-sword-swoosh-sound-design-elements-275902/ (Pixabay license)
+
+- files: ["grav_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
+  # additional sources:
+  # source: https://pixabay.com/sound-effects/horror-metallic-screeches-183236/
+  # source: https://pixabay.com/sound-effects/dark-textures-sfx-001-322559/
+  # source: https://pixabay.com/sound-effects/dark-textures-sfx-014-322578/
+  # source: https://freesound.org/people/BlenderDiplom/sounds/201094/
+  # source: https://pixabay.com/sound-effects/metal-creaking-36742/
+  # source: https://pixabay.com/sound-effects/metal-container-rumble-325675/
+  # source: https://pixabay.com/sound-effects/metal-hit-10-193281/
+  # source: https://pixabay.com/sound-effects/closing-metal-container-for-garbage-303735/
+
+
+- files: ["electricity_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: https://pixabay.com/sound-effects/sliding-discharge-160kv-71800/
+  # additional sources:
+  # source: https://pixabay.com/sound-effects/elemental-magic-spell-impact-outgoing-228342/
+  # source: https://pixabay.com/sound-effects/elemental-magic-spell-cast-d-228349/
+  # source: https://pixabay.com/sound-effects/electric-shock-short-circuit-1-204989/
+  # source: https://pixabay.com/sound-effects/electric-impact-37128/
+
+- files: ["bluespace_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: https://pixabay.com/sound-effects/boom-geomorphism-cinematic-trailer-sound-effects-123876/
+  # additional sources:
+  # source: https://pixabay.com/sound-effects/riser-hit-sfx-001-289802/
+  # source: https://pixabay.com/sound-effects/pulse3d-106110/
+  # source: https://freesound.org/people/Soapuel/sounds/489442/
+
+- files: ["ice_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: https://pixabay.com/sound-effects/ice-1-104148/
+  # additional sources:
+  # source: https://pixabay.com/sound-effects/ice-3-85025/
+  # source: https://pixabay.com/sound-effects/ice-4-104135/
+  # source: https://pixabay.com/sound-effects/ice-6-104141/
+  # source: https://pixabay.com/sound-effects/deep-bass-drone-31424/
+  # source: https://pixabay.com/sound-effects/cinematic-deep-tremor-6740/
+  # source: https://pixabay.com/sound-effects/cinematic-impact-boom-3-326123/
+  # source: https://pixabay.com/sound-effects/dark-textures-sfx-007-322567/
+  # source: https://pixabay.com/sound-effects/atmosphere-deep-amp-booming-256197/
+
+- files: ["fluid_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: https://freesound.org/people/unfa/sounds/504930/
+  # additional sources:
+  # source: https://freesound.org/people/DJT4NN3R/sounds/484158/
+  # source: https://freesound.org/people/klankbeeld/sounds/325537/
+  # source: https://github.com/ParadiseSS13/Paradise
+  # source: https://pixabay.com/sound-effects/water-flowing-2-327662/
+
+- files: ["flora_crit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Clusman, hereforthebass, eyesplice, Clearwavsound (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/Clusman/sounds/543508/
+  # additional sources:
+  # source: https://freesound.org/people/hereforthebass/sounds/733255/
+  # source: https://freesound.org/people/eyesplice/sounds/717773/
+  # source: https://freesound.org/people/Clearwavsound/sounds/541032/
+  # source: https://freesound.org/people/Stickinthemud/sounds/44162/
+
+- files: ["rock_crit.ogg"]
+  license: Custom
+  copyright: "Mashup by GonTar"
+  source: https://pixabay.com/sound-effects/cinematic-deep-rumble-6418/
+  # additional sources:
+  # source: https://pixabay.com/sound-effects/lowrumblesnd-77876/
+  # source: https://pixabay.com/sound-effects/077381-scraping-stone-83768/
+  # source: https://pixabay.com/sound-effects/stone-slide-sound-effects-322794/
+  # source: https://pixabay.com/sound-effects/falling-pebbles-rocks-and-boulders-168593/
+  # source: https://pixabay.com/sound-effects/small-rock-break-194553/

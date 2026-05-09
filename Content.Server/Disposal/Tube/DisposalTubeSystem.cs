@@ -19,18 +19,18 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Tube
 {
-    public sealed class DisposalTubeSystem : SharedDisposalTubeSystem
+    public sealed partial class DisposalTubeSystem : SharedDisposalTubeSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly PopupSystem _popups = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly DisposableSystem _disposableSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private PopupSystem _popups = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private DisposableSystem _disposableSystem = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosSystem = default!;
+        [Dependency] private TransformSystem _transform = default!;
+        [Dependency] private SharedMapSystem _map = default!;
 
         public override void Initialize()
         {
@@ -102,7 +102,7 @@ namespace Content.Server.Disposal.Tube
         /// <param name="msg">A user interface message from the client.</param>
         private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
         {
-            if (!EntityManager.EntityExists(msg.Actor))
+            if (!Exists(msg.Actor))
                 return;
 
             if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
@@ -428,7 +428,7 @@ namespace Content.Server.Disposal.Tube
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())
             {
-                _disposableSystem.TryInsert(holder, entity, holderComponent);
+                _containerSystem.Insert(entity, holderComponent.Container);
             }
 
             _atmosSystem.Merge(holderComponent.Air, from.Air);

@@ -9,12 +9,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems;
 
-public sealed class PresetIdCardSystem : EntitySystem
+public sealed partial class PresetIdCardSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IdCardSystem _cardSystem = default!;
-    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IdCardSystem _cardSystem = default!;
+    [Dependency] private SharedAccessSystem _accessSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
 
     public override void Initialize()
     {
@@ -82,7 +82,7 @@ public sealed class PresetIdCardSystem : EntitySystem
         _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
         _cardSystem.TryChangeJobDepartment(uid, job);
 
-        if (_prototypeManager.TryIndex(job.Icon, out var jobIcon))
+        if (_prototypeManager.Resolve(job.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(uid, jobIcon);
     }
 }

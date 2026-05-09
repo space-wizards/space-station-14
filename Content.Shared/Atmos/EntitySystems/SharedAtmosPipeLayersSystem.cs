@@ -20,11 +20,11 @@ namespace Content.Shared.Atmos.EntitySystems;
 /// </summary>
 public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -52,7 +52,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
             return;
 
-        if (!_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
+        if (!_protoManager.Resolve(ent.Comp.Tool, out var toolProto))
             return;
 
         var user = args.User;
@@ -119,14 +119,16 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
             return;
 
+        if (!TryComp<ToolComponent>(args.Used, out var tool) || !_tool.HasQuality(args.Used, ent.Comp.Tool, tool))
+            return;
+
         if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
         {
-            _popup.PopupPredicted(Loc.GetString("atmos-pipe-layers-component-cannot-adjust-pipes"), ent, args.User);
+            _popup.PopupClient(Loc.GetString("atmos-pipe-layers-component-cannot-adjust-pipes"), ent, args.User);
             return;
         }
 
-        if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, ent.Comp.Tool, tool))
-            _tool.UseTool(args.Used, args.User, ent, ent.Comp.Delay, tool.Qualities, new TrySetNextPipeLayerCompletedEvent());
+        _tool.UseTool(args.Used, args.User, ent, ent.Comp.Delay, tool.Qualities, new TrySetNextPipeLayerCompletedEvent());
     }
 
     private void OnUseInHandEvent(Entity<AtmosPipeLayersComponent> ent, ref UseInHandEvent args)
@@ -136,12 +138,12 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (!TryGetHeldTool(args.User, ent.Comp.Tool, out var tool))
         {
-            if (_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
+            if (_protoManager.Resolve(ent.Comp.Tool, out var toolProto))
             {
                 var toolName = Loc.GetString(toolProto.ToolName).ToLower();
                 var message = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
 
-                _popup.PopupPredicted(message, ent, args.User);
+                _popup.PopupClient(message, ent, args.User);
             }
 
             return;
@@ -217,7 +219,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var layerName = GetPipeLayerName(ent.Comp.CurrentPipeLayer);
             var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
 
-            _popup.PopupPredicted(message, ent, user);
+            _popup.PopupClient(message, ent, user);
         }
     }
 

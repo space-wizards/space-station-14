@@ -109,3 +109,19 @@
   - type: ConditionalSpawner
     prototypes:
     - MobXenoSpitter
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobXenoLonePraetorian
+  name: Xeno Spawner
+  suffix: Lone Praetorian, Exo Station
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/praetorian.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoLonePraetorianNoGhost

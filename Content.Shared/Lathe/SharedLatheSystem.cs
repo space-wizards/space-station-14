@@ -15,13 +15,14 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
-public abstract class SharedLatheSystem : EntitySystem
+public abstract partial class SharedLatheSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
+    public const int MaxItemsPerRequest = 10_000;
 
     public override void Initialize()
     {
@@ -85,6 +86,8 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
         if (!HasRecipe(uid, recipe, component))
+            return false;
+        if (amount <= 0)
             return false;
 
         foreach (var (material, needed) in recipe.Materials)

@@ -1,7 +1,7 @@
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -17,13 +17,13 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// System for handling the different inheritors of <see cref="BaseSolutionInjectOnEventComponent"/>.
 /// Subscribes to relevent events and performs solution injections when they are raised.
 /// </summary>
-public sealed class SolutionInjectOnCollideSystem : EntitySystem
+public sealed partial class SolutionInjectOnCollideSystem : EntitySystem
 {
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype> HardsuitTag = "Hardsuit";
 
@@ -148,7 +148,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
             // Take our portion of the adjusted solution for this target
             var individualInjection = solutionToInject.SplitSolution(volumePerBloodstream);
             // Inject our portion into the target's bloodstream
-            if (_bloodstream.TryAddToChemicals(targetBloodstream.Owner, individualInjection, targetBloodstream.Comp))
+            if (_bloodstream.TryAddToBloodstream(targetBloodstream.AsNullable(), individualInjection))
                 anySuccess = true;
         }
 

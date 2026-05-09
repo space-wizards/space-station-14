@@ -27,18 +27,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
 
-public abstract class SharedWieldableSystem : EntitySystem
+public abstract partial class SharedWieldableSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
@@ -112,7 +112,7 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (_hands.EnumerateHands(args.User).Count() > 2)
+        if (_hands.GetHandCount(args.User) > 2)
             return;
 
         TryUnwield(uid, component, args.User);
@@ -168,7 +168,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_hands.IsHolding(args.User, uid, out _, args.Hands))
+        if (!_hands.IsHolding((args.User, args.Hands), uid, out _))
             return;
 
         // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
@@ -209,7 +209,7 @@ public abstract class SharedWieldableSystem : EntitySystem
     private void OnBlockerEquipped(Entity<WieldingBlockerComponent> ent, ref GotEquippedEvent args)
     {
         if (ent.Comp.BlockEquipped)
-            UnwieldAll(args.Equipee, force: true);
+            UnwieldAll(args.EquipTarget, force: true);
     }
 
     private void OnBlockerEquippedHand(Entity<WieldingBlockerComponent> ent, ref GotEquippedHandEvent args)
@@ -252,14 +252,14 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         // Is it.. actually in one of their hands?
-        if (!_hands.IsHolding(user, uid, out _, hands))
+        if (!_hands.IsHolding((user, hands), uid, out _))
         {
             if (!quiet)
                 _popup.PopupClient(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
             return false;
         }
 
-        if (_hands.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
+        if (_hands.CountFreeableHands((user, hands), except: uid) < component.FreeHandsRequired)
         {
             if (!quiet)
             {
@@ -314,7 +314,8 @@ public abstract class SharedWieldableSystem : EntitySystem
         var virtuals = new ValueList<EntityUid>();
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+            // don't show a popup when dropping items because it will overlap with the popup for wielding
+            if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true, silent: true))
             {
                 virtuals.Add(virtualItem.Value);
                 continue;
@@ -373,7 +374,7 @@ public abstract class SharedWieldableSystem : EntitySystem
     /// <param name="force">If this is true we will bypass UnwieldAttemptEvent.</param>
     public void UnwieldAll(Entity<HandsComponent?> wielder, bool force = false)
     {
-        foreach (var held in _hands.EnumerateHeld(wielder.Owner, wielder.Comp))
+        foreach (var held in _hands.EnumerateHeld(wielder))
         {
             if (TryComp<WieldableComponent>(held, out var wieldable))
                 TryUnwield(held, wieldable, wielder, force);

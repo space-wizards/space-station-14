@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Body.Part;
 using Content.Shared.Destructible;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -17,11 +16,11 @@ namespace Content.Server.Tools.Innate;
 ///     Spawns a list unremovable tools in hands if possible. Used for drones,
 ///     borgs, or maybe even stuff like changeling armblades!
 /// </summary>
-public sealed class InnateToolSystem : EntitySystem
+public sealed partial class InnateToolSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> InnateDontDeleteTag = "InnateDontDelete";
 
@@ -90,9 +89,9 @@ public sealed class InnateToolSystem : EntitySystem
 
             if (TryComp<HandsComponent>(uid, out var hands))
             {
-                foreach (var hand in hands.Hands)
+                foreach (var hand in hands.Hands.Keys)
                 {
-                    _sharedHandsSystem.TryDrop(uid, hand.Value, checkActionBlocker: false, handsComp: hands);
+                    _sharedHandsSystem.TryDrop((uid, hands), hand, checkActionBlocker: false);
                 }
             }
         }

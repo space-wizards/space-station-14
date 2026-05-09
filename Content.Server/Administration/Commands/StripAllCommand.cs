@@ -7,10 +7,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StripAllCommand : LocalizedEntityCommands
+public sealed partial class StripAllCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
 
     public override string Command => "stripall";
 
@@ -42,13 +42,12 @@ public sealed class StripAllCommand : LocalizedEntityCommands
 
         if (EntityManager.TryGetComponent<HandsComponent>(targetEntity, out var hands))
         {
-            foreach (var hand in _handsSystem.EnumerateHands(targetEntity.Value, hands))
+            foreach (var hand in _handsSystem.EnumerateHands((targetEntity.Value, hands)))
             {
-                _handsSystem.TryDrop(targetEntity.Value,
+                _handsSystem.TryDrop((targetEntity.Value, hands),
                     hand,
                     checkActionBlocker: false,
-                    doDropInteraction: false,
-                    handsComp: hands);
+                    doDropInteraction: false);
             }
         }
     }

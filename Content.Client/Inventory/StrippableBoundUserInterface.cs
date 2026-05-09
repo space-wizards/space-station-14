@@ -1,13 +1,14 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Examine;
+using Content.Client.Hands.Systems;
 using Content.Client.Strip;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -28,15 +29,17 @@ using static Robust.Client.UserInterface.Control;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class StrippableBoundUserInterface : BoundUserInterface
+    public sealed partial class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private IPlayerManager _player = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
 
         private readonly ExamineSystem _examine;
+        private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
+        private readonly SharedEnsnareableSystem _snare;
 
         [ViewVariables]
         private const int ButtonSeparation = 4;
@@ -65,9 +68,11 @@ namespace Content.Client.Inventory
         public StrippableBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             _examine = EntMan.System<ExamineSystem>();
+            _hands = EntMan.System<HandsSystem>();
             _inv = EntMan.System<InventorySystem>();
             _cuffable = EntMan.System<SharedCuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
+            _snare = EntMan.System<SharedEnsnareableSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
@@ -120,38 +125,38 @@ namespace Content.Client.Inventory
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Right)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
 
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Middle)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
 
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Left)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
             }
 
             // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
-            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && snare.IsEnsnared)
+            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && _snare.IsEnsnared((Owner, snare)))
             {
                 var button = new Button()
                 {
                     Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"),
-                    StyleClasses = { StyleBase.ButtonOpenRight }
+                    StyleClasses = { StyleClass.ButtonOpenRight }
                 };
 
                 button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
@@ -172,25 +177,26 @@ namespace Content.Client.Inventory
             // +27 vertically from the window header
             var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
             var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
-            if (snare?.IsEnsnared == true)
+            if (_snare.IsEnsnared(Owner))
                 verticalMenuSize += 20;
             _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
         }
 
-        private void AddHandButton(Hand hand)
+        private void AddHandButton(Entity<HandsComponent> ent, string handId, Hand hand)
         {
-            var button = new HandButton(hand.Name, hand.Location);
+            var button = new HandButton(handId, hand.Location);
 
             button.Pressed += SlotPressed;
 
-            if (EntMan.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
+            var heldEntity = _hands.GetHeldItem(ent.AsNullable(), handId);
+            if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
             {
                 button.Blocked = true;
-                if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
+                if (_cuffable.TryGetAllCuffs(Owner, out var cuffs) && cuffs.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
-            UpdateEntityIcon(button, hand.HeldEntity);
+            UpdateEntityIcon(button, heldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
             LayoutContainer.SetPosition(button, new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
             _handCount++;

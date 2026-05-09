@@ -30,7 +30,7 @@ public sealed partial class DungeonJob
         SharedPathfindingSystem.GridCast(startTile, position, tile =>
         {
             if (!_maps.TryGetTileRef(_gridUid, _grid, tile, out var tileRef) ||
-                tileRef.Tile.IsSpace(_tileDefManager))
+                _turf.IsSpace(tileRef.Tile))
             {
                 return true;
             }
