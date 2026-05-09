@@ -7,13 +7,13 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Disposal.Unit;
 
-public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
+public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AnimationPlayerSystem _animationSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private const string AnimationKey = "disposal_unit_animation";
 

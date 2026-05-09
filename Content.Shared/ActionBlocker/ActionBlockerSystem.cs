@@ -19,18 +19,11 @@ namespace Content.Shared.ActionBlocker
     /// Utility methods to check if a specific entity is allowed to perform an action.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ActionBlockerSystem : EntitySystem
+    public sealed partial class ActionBlockerSystem : EntitySystem
     {
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
-        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
-        }
+        [Dependency] private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery = default!;
 
         // These two methods should probably both live in SharedMoverController
         // but they're called in a million places and I'm not doing that

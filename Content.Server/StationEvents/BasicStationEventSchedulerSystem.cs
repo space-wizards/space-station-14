@@ -20,10 +20,10 @@ namespace Content.Server.StationEvents
     ///     game presets use.
     /// </summary>
     [UsedImplicitly]
-    public sealed class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>
+    public sealed partial class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly EventManagerSystem _event = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private EventManagerSystem _event = default!;
 
         protected override void Started(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleStartedEvent args)

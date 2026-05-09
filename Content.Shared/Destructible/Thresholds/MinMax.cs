@@ -26,4 +26,9 @@ public partial struct MinMax
     {
         return random.Next(Min, Max + 1);
     }
+
+    public static implicit operator MinMax((int Min, int Max) tuple)
+    {
+        return new MinMax(tuple.Min, tuple.Max);
+    }
 }
