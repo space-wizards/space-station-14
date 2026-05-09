@@ -7,7 +7,7 @@ namespace Content.Server.Wires;
 /// </summary>
 public sealed partial class CutWireOnMapInitSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
