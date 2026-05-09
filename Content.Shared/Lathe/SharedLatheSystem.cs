@@ -23,6 +23,7 @@ using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -32,27 +33,27 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
-public abstract class SharedLatheSystem : EntitySystem
+public abstract partial class SharedLatheSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
-    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UISys = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected IPrototypeManager Proto = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private ReagentSpeedSystem _reagentSpeed = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] protected SharedUserInterfaceSystem UISys = default!;
 
-    [Dependency] protected readonly EntityQuery<LatheComponent> LatheQuery = default!;
-    [Dependency] protected readonly EntityQuery<LatheProducingComponent> ProducingQuery = default!;
+    [Dependency] protected EntityQuery<LatheComponent> LatheQuery = default!;
+    [Dependency] protected EntityQuery<LatheProducingComponent> ProducingQuery = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
     public const int MaxItemsPerRequest = 10_000;
@@ -62,6 +63,8 @@ public abstract class SharedLatheSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
+        SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
 
         SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<LatheComponent, ExaminedEvent>(OnExamined);
@@ -86,6 +89,11 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<LatheProducingComponent, ComponentShutdown>(OnProductionShutdown);
 
         BuildInverseRecipeDictionary();
+    }
+
+    private void OnGetState(Entity<LatheComponent> entity, ref ComponentGetState args)
+    {
+        args.State = new LatheComponentState(entity.Comp.Recipes, entity.Comp.Queue, entity.Comp.CurrentRecipe);
     }
 
     public override void Update(float frameTime)
@@ -271,7 +279,7 @@ public abstract class SharedLatheSystem : EntitySystem
         else
             entity.Comp.Queue.AddLast(new LatheRecipeBatch(recipe.ID, 0, quantity));
 
-        DirtyField(entity, nameof(LatheComponent.Queue));
+        Dirty(entity);
         return true;
     }
 
@@ -442,7 +450,7 @@ public abstract class SharedLatheSystem : EntitySystem
     public void UpdateRecipies(Entity<LatheComponent> entity)
     {
         entity.Comp.Recipes = GetAvailableRecipes(entity);
-        DirtyField(entity.AsNullable(), nameof(LatheComponent.Recipes));
+        Dirty(entity.AsNullable());
     }
 
     /// <summary>
@@ -657,7 +665,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
         RefundBatch(entity, batch);
         entity.Comp.Queue.Remove(node);
-        DirtyField(entity.AsNullable(), nameof(LatheComponent.Queue));
+        Dirty(entity.AsNullable());
         UpdateUI(entity);
     }
 
@@ -709,7 +717,7 @@ public abstract class SharedLatheSystem : EntitySystem
             entity.Comp.Queue.AddBefore(newRelativeNode, node);
         }
 
-        DirtyField(entity.AsNullable(), nameof(LatheComponent.Queue));
+        Dirty(entity.AsNullable());
         UpdateUI(entity);
     }
 

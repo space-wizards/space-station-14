@@ -13,11 +13,11 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Lathe;
 
 [UsedImplicitly]
-public sealed class LatheSystem : SharedLatheSystem
+public sealed partial class LatheSystem : SharedLatheSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private RadioSystem _radio = default!;
 
     /// <summary>
     /// Per-tick cache

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
@@ -8,8 +7,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe.Components;
 
+// TODO: FIELD DELTAS!!! There is a bug with field deltas where they will override full dirties so we cannot use deltas here easily.
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true, true)]
 public sealed partial class LatheComponent : Component
 {
     /// <summary>
@@ -30,7 +29,7 @@ public sealed partial class LatheComponent : Component
     /// <summary>
     /// All of the recipies this lathe currently has.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
     /// <summary>
@@ -40,7 +39,7 @@ public sealed partial class LatheComponent : Component
     /// This is a LinkedList to allow for constant time insertion/deletion (vs a List), and more efficient
     /// moves (vs a Queue).
     /// </remarks>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public LinkedList<LatheRecipeBatch> Queue = new();
 
     /// <summary>
@@ -75,7 +74,7 @@ public sealed partial class LatheComponent : Component
     /// <summary>
     /// The recipe the lathe is currently producing
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public ProtoId<LatheRecipePrototype>? CurrentRecipe;
 
     #region MachineUpgrading
@@ -88,9 +87,20 @@ public sealed partial class LatheComponent : Component
     /// <summary>
     /// A modifier that changes how much of a material is needed to print a recipe
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float MaterialUseMultiplier = 1;
     #endregion
+}
+
+/// <remarks>
+/// We manually network the component state as it raises one less event and therefore is better performance wise.
+/// </remarks>
+[Serializable, NetSerializable]
+public sealed class LatheComponentState(List<ProtoId<LatheRecipePrototype>> recipes, LinkedList<LatheRecipeBatch> queue, ProtoId<LatheRecipePrototype>? recipe) : ComponentState
+{
+    public List<ProtoId<LatheRecipePrototype>> Recipes = recipes;
+    public LinkedList<LatheRecipeBatch>  Queue = queue;
+    public ProtoId<LatheRecipePrototype>? Recipe = recipe;
 }
 
 public sealed class LatheGetRecipesEvent : EntityEventArgs
