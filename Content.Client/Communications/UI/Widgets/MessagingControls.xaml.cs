@@ -12,9 +12,9 @@ namespace Content.Client.Communications.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class MessagingControls : TabContainer
 {
-    [Dependency] private readonly ILocalizationManager _loc = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     // Entity temporarily created to display a screen preview
     private EntityUid _broadcastDisplayEntity = EntityUid.Invalid;

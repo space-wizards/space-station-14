@@ -7,7 +7,7 @@ namespace Content.Client.Communications.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class AlertLevelControls : BoxContainer
 {
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
     private bool _alertLevelSelectable;
     private string _currentAlertLevel = string.Empty;
 

@@ -10,8 +10,7 @@ namespace Content.Client.Communications.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleControls : Control
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private bool _canCall;
     private bool _countdownStarted;
