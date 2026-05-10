@@ -3,9 +3,9 @@ using Content.Shared.Disposal.Mailing;
 
 namespace Content.Client.Disposal.Mailing;
 
-public sealed class MailingUnitSystem : SharedMailingUnitSystem
+public sealed partial class MailingUnitSystem : SharedMailingUnitSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {

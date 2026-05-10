@@ -10,9 +10,9 @@ namespace Content.Server.Disposal.Holder;
 /// <inheritdoc/>
 public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void TransferAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
