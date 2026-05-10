@@ -16,15 +16,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
-public sealed class InstrumentBoundUserInterface : BoundUserInterface
+public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 {
     private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
 
-    [Dependency] private readonly IMidiManager _midiManager = default!;
-    [Dependency] private readonly IFileDialogManager _dialogs = default!;
-    [Dependency] private readonly IResourceManager _resManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IMidiManager _midiManager = default!;
+    [Dependency] private IFileDialogManager _dialogs = default!;
+    [Dependency] private IResourceManager _resManager = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private readonly InstrumentSystem _instruments;
 

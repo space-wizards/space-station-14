@@ -25,8 +25,9 @@
     sprite: Structures/stairs.rsi
     state: stairs_steel
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

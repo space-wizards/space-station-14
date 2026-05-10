@@ -59,6 +59,9 @@
       limit: 1
       required: true
       default: [ VoxTail ]
+    enum.HumanoidVisualLayers.TailOverlay:
+      limit: 1
+      required: false
     enum.HumanoidVisualLayers.UndergarmentTop:
       limit: 1
       required: false
@@ -71,6 +74,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVox
+  categories: [ HideSpawnMenu ]
   name: vox appearance
   components:
   - type: Inventory
@@ -157,7 +161,7 @@
   - AppearanceVox
   - BaseSpeciesMobOrganic
   id: MobVox
-  name: Uristititi McVox
+  name: Urist McVox
   components:
   - type: Damageable
     damageModifierSet: Vox
@@ -167,6 +171,10 @@
     allowedEmotes: ['Click', 'Chitter']
   - type: TypingIndicator
     proto: vox
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_vox
   - type: Vocal
     sounds:
       Male: UnisexVox
@@ -179,6 +187,28 @@
       amount: 5
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          FoodMeatChickenFriedVox:
+            min: 3
+            max: 5
+      - !type:BurnBodyBehavior
+        popupMessage: bodyburn-vox-text-others
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
     - trigger:
         !type:DamageTypeTrigger
         damageType: Radiation
@@ -199,13 +229,13 @@
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
     allowedStates:
     - Alive
-    damageCap: 20
     damage:
       types:
         Heat: -0.07
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
         Poison: -0.2 # needs to be less than the PendingZombieComponent does or they never become zombies by the disease.
-      groups:
-        Brute: -0.07
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -217,7 +247,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: AmmoniaBlood
-        Quantity: 300
+        Quantity: 600
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -226,6 +256,7 @@
     damage:
       types:
         Slash: 5 # Reduce?
+  - type: Wagging
 
 - type: entity
   parent: OrganBase
@@ -283,6 +314,12 @@
     dependentHidingLayers:
       enum.HumanoidVisualLayers.Snout:
       - enum.HumanoidVisualLayers.SnoutCover
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hair
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganVoxExternal ]

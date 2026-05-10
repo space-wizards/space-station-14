@@ -21,3 +21,19 @@
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: heart-on
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingUniqueIdentityObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: NumberObjective
+    min: 3
+    max: 4
+    title: objective-unique-identity-name
+    description: objective-unique-identity-description
+  - type: ChangelingUniqueIdentityCondition
