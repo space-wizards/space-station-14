@@ -14,7 +14,7 @@ using Content.Shared.Stunnable;
 
 namespace Content.Server.Revolutionary;
 
-public sealed class RevolutionarySystem : SharedRevolutionarySystem
+public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
 {
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStunSystem _sharedStun = default!;
