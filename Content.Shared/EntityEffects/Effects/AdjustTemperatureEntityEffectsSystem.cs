@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSystem<TemperatureComponent, AdjustTemperature>
 {
-    [Dependency] private readonly SharedTemperatureSystem _temperature = default!;
+    [Dependency] private SharedTemperatureSystem _temperature = default!;
     protected override void Effect(Entity<TemperatureComponent> entity, ref EntityEffectEvent<AdjustTemperature> args)
     {
         var amount = args.Effect.Amount * args.Scale;

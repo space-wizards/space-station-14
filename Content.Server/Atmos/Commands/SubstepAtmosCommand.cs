@@ -10,9 +10,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class SubstepAtmosCommand : LocalizedEntityCommands
+public sealed partial class SubstepAtmosCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
     public override string Command => "substepatmos";
 
