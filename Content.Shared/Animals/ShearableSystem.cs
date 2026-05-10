@@ -59,7 +59,7 @@ public sealed class SharedShearableSystem : EntitySystem
     public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, [NotNullWhen(true)] out Entity<SolutionComponent>? shearingSolutionEnt, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
-        shearedProduct = _proto.Index(ent.Comp.ShearedProductID);
+        shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
         shearingSolutionEnt = null;
         shearingSolutionToRemove = null;
         feedbackPopupString = null;
@@ -240,7 +240,7 @@ public sealed class SharedShearableSystem : EntitySystem
             var yoffs = rand.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
             var pos = center.Offset(new Vector2(xoffs, yoffs));
 
-            PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
+            PredictedSpawnAtPosition(ent.Comp.ShearedProductId, pos);
         }
 
         // Success message.
@@ -336,7 +336,6 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="sol">a SolutionContainerChangedEvent object passed by the OnSolutionChange event.</param>
     private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution sol)
     {
-
         // The minimum solution required to spawn one product.
         var minimumSol = 100 / ent.Comp.ProductsPerSolution;
 
@@ -362,10 +361,14 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
     private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         // Only interested in wool solution, ignore the rest.
         if (args.SolutionId != ent.Comp.TargetSolutionName)
             return;
 
-        UpdateShearingLayer(ent, args.Solution);
+        //UpdateShearingLayer(ent, args.Solution);
     }
 }

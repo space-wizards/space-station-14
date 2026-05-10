@@ -28,10 +28,10 @@ public sealed partial class ShearableComponent : Component
     ///     An ID of an entity that will be spawned upon the creature being sheared.
     /// </summary>
     /// <example>
-    ///     shearedProductID: MaterialCotton1
+    ///     shearedProductId: MaterialCotton1
     /// </example>
-    [DataField]
-    public EntProtoId ShearedProductID;
+    [DataField (required: true)]
+    public EntProtoId ShearedProductId = "MaterialCotton1";
 
     /// <summary>
     ///     How many products will be spawned per solution.
@@ -119,14 +119,6 @@ public sealed partial class ShearableComponent : Component
     [DataField]
     public SpriteSpecifier ShearingIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png"));
 
-    /// <summary>
-    ///     This is used for handling the shearable layer.
-    ///     A special sprite layer that changes based on the mob's life state.
-    ///     But can also be toggled by the shearable solution dropping blow a certain amount.
-    ///     Typically, when Shearable is True, the shearable layer will be visible.
-    /// </summary>
-    [DataField]
-    public bool Shearable;
 }
 
 /// <summary>

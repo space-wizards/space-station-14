@@ -436,7 +436,7 @@
         Base: space_sheep_dead
   - type: Shearable
     targetSolutionName: wool
-    shearedProductID: MaterialDurathread1
+    shearedProductId: MaterialDurathread1
     productsPerSolution: 0.2
     toolQuality: Shearing
     shearableMarkupText: space-sheep-shearable-examine-markup
