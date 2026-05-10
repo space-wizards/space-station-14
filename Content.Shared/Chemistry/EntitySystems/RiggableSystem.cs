@@ -13,12 +13,12 @@ namespace Content.Shared.Power.EntitySystems;
 /// <summary>
 ///  Handles sabotaged/rigged objects
 /// </summary>
-public sealed class RiggableSystem : EntitySystem
+public sealed partial class RiggableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private SharedExplosionSystem _explosionSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private ItemToggleSystem _itemToggle = default!;
 
     public override void Initialize()
     {
