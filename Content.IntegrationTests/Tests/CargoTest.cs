@@ -16,6 +16,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Server.Containers;
 using Content.Shared.Cargo;
+using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -24,8 +26,6 @@ public sealed class CargoTest : GameTest
 {
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling")
     ];
 
     [Test]
@@ -35,15 +35,16 @@ public sealed class CargoTest : GameTest
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
+
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapSystem = server.System<SharedMapSystem>();
+        var tableSystem = entManager.System<EntityTableSystem>();
+        var compFact = server.ResolveDependency<IComponentFactory>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
         var cargo = entManager.System<CargoSystem>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
             Assert.Multiple(() =>
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
@@ -57,6 +58,29 @@ public sealed class CargoTest : GameTest
                         continue;
                     }
                     List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 1)];
+                    var entProto = protoManager.Index<EntityPrototype>(proto.SpawnList.First());
+                    double price = 0;
+                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, compFact))
+                    {
+                        var averageSpawns = tableSystem.AverageSpawns(fill.Containers.First().Value);
+                        // Randomness will lead to non interger expected values, if all the expected values are intergers then we skip
+                        // Compares against epsilon incase of any floating point stuff
+                        // Edge case of expected value being integers while still random
+                        // This might be, crate spawns 2 items from list of 2, each would have ev of 1
+                        if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
+                        {
+                            foreach (var item in averageSpawns)
+                            {
+                                var ent = entManager.SpawnEntity(item.spawn, testMap.MapCoords);
+                                price += pricing.GetPrice(ent) * item.Item2;
+                                entManager.DeleteEntity(ent);
+                            }
+                            // Price of container is not included right now
+                            Assert.That(price, Is.AtMost(cargo.GetBasketTotalCost(basket)),
+                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {cargo.GetBasketTotalCost(basket)} but mean sell price is {price}!");
+                            continue;
+                        }
+                    }
                     var containers = cargo.PackBasketIntoContainers(ref basket);
                     if (containers.Count() != 1)
                     {
@@ -65,13 +89,12 @@ public sealed class CargoTest : GameTest
                     }
                     if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity))
                         Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
-                    var price = pricing.GetPrice(containerEntity);
+                    price += pricing.GetPrice(containerEntity);
                     Assert.That(price, Is.AtMost(cargo.GetBasketTotalCost(basket)),
                         $"Found arbitrage on {proto.ID} cargo product! Cost is {cargo.GetBasketTotalCost(basket)} but sell price is {price}!");
                     entManager.DeleteEntity(containerEntity);
                 }
             });
-            mapSystem.DeleteMap(mapId);
         });
     }
     [Test]
