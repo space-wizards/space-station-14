@@ -19,6 +19,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     back: ClothingBackpack
+    head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
     id: PassengerPDA
