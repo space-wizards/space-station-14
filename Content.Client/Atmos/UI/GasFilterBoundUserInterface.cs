@@ -11,9 +11,9 @@ namespace Content.Client.Atmos.UI;
 /// Initializes a <see cref="GasFilterWindow"/> and updates it from the entity's <see cref="GasFilterComponent"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed class GasFilterBoundUserInterface : BoundUserInterface
+public sealed partial class GasFilterBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     [ViewVariables]
     private GasFilterWindow? _window;

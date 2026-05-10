@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.Piping.Trinary.EntitySystems;
 
-public sealed class GasMixerSystem : SharedGasMixerSystem
+public sealed partial class GasMixerSystem : SharedGasMixerSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
