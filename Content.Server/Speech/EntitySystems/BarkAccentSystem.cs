@@ -4,9 +4,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BarkAccentSystem : RelayAccentSystem<BarkAccentComponent>
+public sealed partial class BarkAccentSystem : RelayAccentSystem<BarkAccentComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private static readonly IReadOnlyList<string> Barks = new List<string>{
             " Woof!", " WOOF", " wof-wof"

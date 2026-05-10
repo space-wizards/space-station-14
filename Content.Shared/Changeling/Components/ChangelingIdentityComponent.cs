@@ -113,6 +113,12 @@ public sealed partial class ChangelingIdentityData
     public bool Starting = false;
 
     /// <summary>
+    /// Whether this identity has granted DNA after devour.
+    /// </summary>
+    [DataField]
+    public bool GrantedDna = false;
+
+    /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
@@ -143,4 +149,7 @@ public sealed partial class ChangelingNetworkedIdentityData
 
     [DataField]
     public bool Starting;
+
+    [DataField]
+    public bool GrantedDna;
 }

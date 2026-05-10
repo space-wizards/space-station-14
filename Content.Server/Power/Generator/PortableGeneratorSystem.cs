@@ -18,16 +18,17 @@ namespace Content.Server.Power.Generator;
 /// Implements logic for portable generators (the PACMAN). Primarily UI & power switching behavior.
 /// </summary>
 /// <seealso cref="PortableGeneratorComponent"/>
-public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
+public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly GeneratorSystem _generator = default!;
-    [Dependency] private readonly VoltageTogglerSystem _voltageToggler = default!;
-    [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private GeneratorSystem _generator = default!;
+    [Dependency] private PowerSwitchableSystem _switchable = default!;
+    [Dependency] private VoltageTogglerSystem _voltageToggler = default!;
+    [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
 
     public override void Initialize()
     {
