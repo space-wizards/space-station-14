@@ -16,9 +16,9 @@ public sealed partial class KudzuSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private DamageableSystem _damageable = default!;
 
-    [Dependency] private readonly EntityQuery<AppearanceComponent> _appearanceQuery = default!;
-    [Dependency] private readonly EntityQuery<KudzuComponent> _kudzuQuery = default!;
-    [Dependency] private readonly EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+    [Dependency] private EntityQuery<KudzuComponent> _kudzuQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
 
     private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 

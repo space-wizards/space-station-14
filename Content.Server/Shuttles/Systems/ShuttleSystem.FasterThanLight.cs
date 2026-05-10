@@ -32,10 +32,10 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
-    [Dependency] private readonly EntityQuery<BodyComponent> _bodyQuery = default!;
-    [Dependency] private readonly EntityQuery<FTLSmashImmuneComponent> _immuneQuery = default!;
-    [Dependency] private readonly EntityQuery<MapGridComponent> _mapGridQuery = default!;
-    [Dependency] private readonly EntityQuery<MapComponent> _mapQuery = default!;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private EntityQuery<FTLSmashImmuneComponent> _immuneQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
+    [Dependency] private EntityQuery<MapComponent> _mapQuery = default!;
 
     private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
     {

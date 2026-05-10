@@ -22,9 +22,9 @@ public sealed partial class MoverController : SharedMoverController
 
     [Dependency] private ThrusterSystem _thruster = default!;
 
-    [Dependency] private readonly EntityQuery<ActiveInputMoverComponent> _activeQuery = default!;
-    [Dependency] private readonly EntityQuery<DroneConsoleComponent> _droneQuery = default!;
-    [Dependency] private readonly EntityQuery<ShuttleComponent> _shuttleQuery = default!;
+    [Dependency] private EntityQuery<ActiveInputMoverComponent> _activeQuery = default!;
+    [Dependency] private EntityQuery<DroneConsoleComponent> _droneQuery = default!;
+    [Dependency] private EntityQuery<ShuttleComponent> _shuttleQuery = default!;
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 

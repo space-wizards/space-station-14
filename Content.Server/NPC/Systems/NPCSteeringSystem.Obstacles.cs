@@ -34,9 +34,9 @@ public sealed partial class NPCSteeringSystem
      * Also need to make sure it picks nearest obstacle path so it starts smashing in front of it.
      */
 
-    [Dependency] private readonly EntityQuery<DoorComponent> _doorQuery = default!;
-    [Dependency] private readonly EntityQuery<ClimbableComponent> _climbableQuery = default!;
-    [Dependency] private readonly EntityQuery<DestructibleComponent> _destructibleQuery = default!;
+    [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
+    [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
 
     private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly)
     {

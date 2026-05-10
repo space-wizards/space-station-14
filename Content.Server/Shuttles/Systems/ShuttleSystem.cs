@@ -64,9 +64,9 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private TurfSystem _turf = default!;
 
-    [Dependency] private readonly EntityQuery<BuckleComponent> _buckleQuery = default!;
-    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<BuckleComponent> _buckleQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {

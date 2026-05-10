@@ -32,8 +32,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
 
-        [Robust.Shared.IoC.Dependency] private readonly EntityQuery<MapGridComponent> _mapGridQuery = default!;
-        [Robust.Shared.IoC.Dependency] private readonly EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery = default!;
+        [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
+        [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery = default!;
 
         /// <summary>
         /// Per-tick cache of sessions.

@@ -42,10 +42,10 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] public PuddleSystem Puddle = default!;
     [Dependency] private DamageableSystem _damage = default!;
 
-    [Dependency] private readonly EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
-    [Dependency] private readonly EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
-    [Dependency] private readonly EntityQuery<AirtightComponent> _airtightQuery = default!;
-    [Dependency] private readonly EntityQuery<FirelockComponent> _firelockQuery = default!;
+    [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
+    [Dependency] private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;

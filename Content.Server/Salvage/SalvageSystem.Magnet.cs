@@ -16,8 +16,8 @@ public sealed partial class SalvageSystem
 {
     [Dependency] private IRuntimeLog _runtimeLog = default!;
 
-    [Dependency] private readonly EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery = default!;
-    [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
 
     private static readonly ProtoId<RadioChannelPrototype> MagnetChannel = "Supply";
 

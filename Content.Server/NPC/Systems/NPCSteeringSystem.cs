@@ -68,11 +68,11 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedCombatModeSystem _combat = default!;
 
-    [Dependency] private readonly EntityQuery<FixturesComponent> _fixturesQuery = default!;
-    [Dependency] private readonly EntityQuery<MovementSpeedModifierComponent> _modifierQuery = default!;
-    [Dependency] private readonly EntityQuery<NpcFactionMemberComponent> _factionQuery = default!;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+    [Dependency] private EntityQuery<MovementSpeedModifierComponent> _modifierQuery = default!;
+    [Dependency] private EntityQuery<NpcFactionMemberComponent> _factionQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entSetPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>());

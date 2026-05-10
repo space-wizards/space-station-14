@@ -28,9 +28,9 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
 
-        [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
-        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-        [Dependency] private readonly EntityQuery<DockingComponent> _dockingQuery = default!;
+        [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private EntityQuery<DockingComponent> _dockingQuery = default!;
 
         private const string DockingJoint = "docking";
 

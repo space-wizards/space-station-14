@@ -14,11 +14,11 @@ public sealed partial class NPCCombatSystem
     [Dependency] private SharedCombatModeSystem _combat = default!;
     [Dependency] private RotateToFaceSystem _rotate = default!;
 
-    [Dependency] private readonly EntityQuery<CombatModeComponent> _combatQuery = default!;
-    [Dependency] private readonly EntityQuery<NPCSteeringComponent> _steeringQuery = default!;
-    [Dependency] private readonly EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery = default!;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private EntityQuery<CombatModeComponent> _combatQuery = default!;
+    [Dependency] private EntityQuery<NPCSteeringComponent> _steeringQuery = default!;
+    [Dependency] private EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;

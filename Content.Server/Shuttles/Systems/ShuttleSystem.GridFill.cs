@@ -14,7 +14,7 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleSystem
 {
-    [Dependency] private readonly EntityQuery<DockingComponent> _dockingQuery = default!;
+    [Dependency] private EntityQuery<DockingComponent> _dockingQuery = default!;
 
     private void InitializeGridFills()
     {

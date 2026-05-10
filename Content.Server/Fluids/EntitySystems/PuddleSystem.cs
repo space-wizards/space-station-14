@@ -37,8 +37,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private TurfSystem _turf = default!;
 
-    [Dependency] private readonly EntityQuery<PuddleComponent> _puddleQuery = default!;
-    [Dependency] private readonly EntityQuery<EvaporationSparkleComponent> _evaporationSparklesQuery = default!;
+    [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
+    [Dependency] private EntityQuery<EvaporationSparkleComponent> _evaporationSparklesQuery = default!;
 
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own

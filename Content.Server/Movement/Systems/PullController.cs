@@ -59,9 +59,9 @@ public sealed partial class PullController : VirtualController
     [Dependency] private SharedGravitySystem _gravity = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-    [Dependency] private readonly EntityQuery<PullableComponent> _pullableQuery = default!;
-    [Dependency] private readonly EntityQuery<PullerComponent> _pullerQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<PullableComponent> _pullableQuery = default!;
+    [Dependency] private EntityQuery<PullerComponent> _pullerQuery = default!;
 
     /// <summary>
     ///     If distance between puller and pulled entity lower that this threshold,

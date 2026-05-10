@@ -19,9 +19,9 @@ public sealed partial class NPCJukeSystem : EntitySystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    [Dependency] private readonly EntityQuery<NPCMeleeCombatComponent> _npcMeleeQuery = default!;
-    [Dependency] private readonly EntityQuery<NPCRangedCombatComponent> _npcRangedQuery = default!;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<NPCMeleeCombatComponent> _npcMeleeQuery = default!;
+    [Dependency] private EntityQuery<NPCRangedCombatComponent> _npcRangedQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {

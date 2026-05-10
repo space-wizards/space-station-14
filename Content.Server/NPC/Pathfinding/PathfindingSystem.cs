@@ -53,12 +53,12 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private SharedPhysicsSystem _physics = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
 
-        [Dependency] private readonly EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
-        [Dependency] private readonly EntityQuery<DestructibleComponent> _destructibleQuery = default!;
-        [Dependency] private readonly EntityQuery<DoorComponent> _doorQuery = default!;
-        [Dependency] private readonly EntityQuery<ClimbableComponent> _climbableQuery = default!;
-        [Dependency] private readonly EntityQuery<FixturesComponent> _fixturesQuery = default!;
-        [Dependency] private readonly EntityQuery<MapGridComponent> _mapGridQuery = default!;
+        [Dependency] private EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
+        [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
+        [Dependency] private EntityQuery<DoorComponent> _doorQuery = default!;
+        [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
+        [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+        [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 

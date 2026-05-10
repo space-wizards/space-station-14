@@ -51,8 +51,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private IGameTiming _timing = default!;
 
-        [Dependency] private readonly EntityQuery<InventoryComponent> _inventoryQuery = default!;
-        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private EntityQuery<InventoryComponent> _inventoryQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly TimeSpan UpdateTime = TimeSpan.FromSeconds(1);
 

@@ -68,8 +68,8 @@ namespace Content.Server.Ghost
         [Dependency] private NameModifierSystem _nameMod = default!;
         [Dependency] private GhostSpriteStateSystem _ghostState = default!;
 
-        [Dependency] private readonly EntityQuery<GhostComponent> _ghostQuery = default!;
-        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
         private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";

@@ -64,9 +64,9 @@ public sealed partial class ArrivalsSystem : EntitySystem
     [Dependency] private StationSystem _station = default!;
     [Dependency] private AntagSelectionSystem _antag = default!;
 
-    [Dependency] private readonly EntityQuery<PendingClockInComponent> _pendingQuery = default!;
-    [Dependency] private readonly EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery = default!;
-    [Dependency] private readonly EntityQuery<MobStateComponent> _mobQuery = default!;
+    [Dependency] private EntityQuery<PendingClockInComponent> _pendingQuery = default!;
+    [Dependency] private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobQuery = default!;
 
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.

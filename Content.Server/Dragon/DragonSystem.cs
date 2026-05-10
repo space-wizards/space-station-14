@@ -19,7 +19,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Dragon;
 
-public sealed class DragonSystem : EntitySystem
+public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private CarpRiftsConditionSystem _carpRifts = default!;
     [Dependency] private SharedMindSystem _mind = default!;
@@ -35,7 +35,7 @@ public sealed class DragonSystem : EntitySystem
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SmokeSystem _smoke = default!;
 
-    [Dependency] private readonly EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
+    [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.

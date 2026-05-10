@@ -44,8 +44,8 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    [Dependency] private readonly EntityQuery<SmokeComponent> _smokeQuery = default!;
-    [Dependency] private readonly EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
+    [Dependency] private EntityQuery<SmokeComponent> _smokeQuery = default!;
+    [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

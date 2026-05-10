@@ -14,8 +14,8 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-        [Dependency] private readonly EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+        [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> DefaultSpaceWindSounds = "SpaceWind";
 

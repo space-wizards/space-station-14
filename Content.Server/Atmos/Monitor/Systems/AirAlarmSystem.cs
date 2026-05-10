@@ -45,7 +45,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     #region Device Network API
 

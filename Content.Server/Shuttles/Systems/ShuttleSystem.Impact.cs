@@ -24,8 +24,8 @@ namespace Content.Server.Shuttles.Systems;
 // shuttle impact damage ported from Goobstation (AGPLv3) with agreement of all coders involved
 public sealed partial class ShuttleSystem
 {
-    [Dependency] private readonly EntityQuery<DamageableComponent> _damageableQuery = default!;
-    [Dependency] private readonly EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
 
     private bool _enabled;
     private float _minimumImpactInertia;

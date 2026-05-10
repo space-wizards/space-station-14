@@ -25,9 +25,9 @@ public sealed partial class SpreaderSystem : EntitySystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private TurfSystem _turf = default!;
 
-    [Dependency] private readonly EntityQuery<EdgeSpreaderComponent> _edgeSpreaderQuery = default!;
-    [Dependency] private readonly EntityQuery<AirtightComponent> _airtightQuery = default!;
-    [Dependency] private readonly EntityQuery<DockingComponent> _dockingQuery = default!;
+    [Dependency] private EntityQuery<EdgeSpreaderComponent> _edgeSpreaderQuery = default!;
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<DockingComponent> _dockingQuery = default!;
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
