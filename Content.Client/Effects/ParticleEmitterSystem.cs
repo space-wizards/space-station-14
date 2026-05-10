@@ -7,12 +7,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Effects;
 
-public sealed class ParticleEmitterSystem : EntitySystem
+public sealed partial class ParticleEmitterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Update(float frameTime)
     {

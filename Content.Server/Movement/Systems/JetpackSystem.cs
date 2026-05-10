@@ -35,9 +35,6 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
             active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.UsageCooldown);
             var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
-            if (usedAir == null)
-                continue;
-
             var usedEnoughAir =
                 MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
 
