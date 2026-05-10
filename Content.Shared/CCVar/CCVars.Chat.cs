@@ -67,16 +67,16 @@ public sealed partial class CCVars
             "A message broadcast to each player that joins the lobby.");
 
     /// <summary>
-    /// A string containing a list of newline-separated words to be highlighted in the chat.
-    /// </summary>
-    public static readonly CVarDef<string> ChatHighlights =
-        CVarDef.Create("chat.highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat.");
-
-    /// <summary>
     /// A string containing a list of newline-separated words to be highlighted in the chat that are preserved between rounds and added to the existing list.
     /// </summary>
     public static readonly CVarDef<string> ChatPersistentHighlights =
-        CVarDef.Create("chat.persistent_highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat and persisted through rounds.");
+        CVarDef.Create("chat.persistent_highlights", "", CVar.CLIENTONLY, "A list of newline-separated words to be highlighted in the chat and persisted through rounds.");
+
+    /// <summary>
+    /// An option to enable persistent chat highlights saved per-server.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatPerServerHighlights =
+        CVarDef.Create("chat.per_server_highlights", false, CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat and persisted through rounds.");
 
     /// <summary>
     /// An option to toggle the automatic filling of the highlights with the character's info, if available.

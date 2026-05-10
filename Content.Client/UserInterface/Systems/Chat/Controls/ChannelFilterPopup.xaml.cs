@@ -42,9 +42,8 @@ public sealed partial class ChannelFilterPopup : Popup
         // Add a placeholder text to the highlights TextEdit.
         HighlightEdit.Placeholder = new Rope.Leaf(Loc.GetString("hud-chatbox-highlights-placeholder"));
 
-        // Load highlights if any were saved.
-        var cfg = IoCManager.Resolve<IConfigurationManager>();
-        string highlights = cfg.GetCVar(CCVars.ChatHighlights);
+        // Load highlights from the ChatUIController
+        var highlights = UserInterfaceManager.GetUIController<ChatUIController>().CurrentHighlightString;
 
         if (!string.IsNullOrEmpty(highlights))
         {

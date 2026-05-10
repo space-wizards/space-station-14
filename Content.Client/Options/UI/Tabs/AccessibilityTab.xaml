@@ -25,6 +25,7 @@
                 <PanelContainer StyleClasses="BackgroundPanel">
                     <TextEdit Name="PersistentHighlightEdit" MinHeight="80" Margin="5 5"/>
                 </PanelContainer>
+                <CheckBox Name="PerServerHighlightsCheckBox" Text="{Loc 'ui-options-per-server-highlights'}" />
                 <CheckBox Name="AutoFillHighlightsCheckBox" Text="{Loc 'ui-options-auto-fill-highlights'}" />
                 <ui:OptionColorSlider Name="HighlightsColorSlider"
                                       Title="{Loc 'ui-options-highlights-color'}"
