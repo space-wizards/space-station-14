@@ -315,6 +315,7 @@ internal static class SkinColorationUtils
 
     /// <summary>
     /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
+    /// The precision of the result is approximately 1/180.
     /// </summary>
     public const float Epsilon = 0.0056f;
 
