@@ -8,9 +8,9 @@ namespace Content.Shared.Disposal.SignalRouter;
 /// This handles the emission of signals when entities in disposals
 /// pass through a disposal tube with a <see cref="DisposalSignallerComponent"/>.
 /// </summary>
-public sealed class DisposalSignallerSystem : EntitySystem
+public sealed partial class DisposalSignallerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDeviceLinkSystem _link = default!;
+    [Dependency] private SharedDeviceLinkSystem _link = default!;
 
     public override void Initialize()
     {

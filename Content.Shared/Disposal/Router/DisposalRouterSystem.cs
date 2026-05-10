@@ -14,9 +14,9 @@ namespace Content.Shared.Disposal.Router;
 /// </summary>
 public sealed partial class DisposalRouterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
-    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
+    [Dependency] private DisposalTubeSystem _disposalTube = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {

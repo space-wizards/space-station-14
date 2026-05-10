@@ -13,9 +13,9 @@ namespace Content.Shared.Disposal.Tube;
 /// </summary>
 public sealed partial class DisposalTubeSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     public override void Initialize()
     {

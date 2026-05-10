@@ -11,9 +11,9 @@ namespace Content.Shared.Disposal.Unit;
 /// the disposals system. These entities should all have a temporary
 /// <see cref="BeingDisposedComponent"/>.
 /// </summary>
-public abstract class SharedBeingDisposedSystem : EntitySystem
+public abstract partial class SharedBeingDisposedSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
+    [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
 
     public override void Initialize()
     {

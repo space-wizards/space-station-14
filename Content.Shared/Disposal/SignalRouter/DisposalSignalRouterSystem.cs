@@ -9,10 +9,10 @@ namespace Content.Shared.Disposal.SignalRouter;
 /// <summary>
 /// Handles signal-based routing for entities in the disposal system.
 /// </summary>
-public sealed class DisposalSignalRouterSystem : EntitySystem
+public sealed partial class DisposalSignalRouterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DisposalTubeSystem _disposalTube = default!;
 
     public override void Initialize()
     {

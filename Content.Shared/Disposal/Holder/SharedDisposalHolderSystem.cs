@@ -23,19 +23,19 @@ namespace Content.Shared.Disposal.Holder;
 /// </summary>
 public abstract partial class SharedDisposalHolderSystem : EntitySystem
 {
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedDisposalUnitSystem _disposalUnit = default!;
-    [Dependency] private readonly DisposalTubeSystem _disposalTube = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedDisposalUnitSystem _disposalUnit = default!;
+    [Dependency] private DisposalTubeSystem _disposalTube = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private TileSystem _tile = default!;
 
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;

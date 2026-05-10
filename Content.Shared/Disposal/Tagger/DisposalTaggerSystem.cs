@@ -12,8 +12,8 @@ namespace Content.Shared.Disposal.Tagger;
 /// </summary>
 public sealed partial class DisposalTaggerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDisposalHolderSystem _disposalHolder = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
