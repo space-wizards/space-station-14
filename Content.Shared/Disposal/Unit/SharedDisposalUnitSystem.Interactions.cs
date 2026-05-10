@@ -1,4 +1,4 @@
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Disposal.Components;
@@ -157,7 +157,7 @@ public abstract partial class SharedDisposalUnitSystem
             return;
         }
 
-        if (_whitelist.IsBlacklistPass(ent.Comp.Blacklist, args.EntityUid) ||
+        if (_whitelist.IsWhitelistPass(ent.Comp.Blacklist, args.EntityUid) ||
             _whitelist.IsWhitelistFail(ent.Comp.Whitelist, args.EntityUid))
         {
             args.Cancel();

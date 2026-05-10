@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Tube;
 
@@ -19,4 +20,13 @@ public sealed partial class DisposalTubeComponent : Component
     /// </remarks>
     [DataField]
     public Direction[] Exits = { Direction.South };
+}
+
+/// <summary>
+/// Visual state for tagging items detectable by T-ray scanners
+/// </summary>
+[Serializable, NetSerializable]
+public enum DisposalTubeVisuals
+{
+    VisualState
 }

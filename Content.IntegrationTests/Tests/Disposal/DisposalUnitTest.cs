@@ -1,6 +1,7 @@
 #nullable enable annotations
 using System.Linq;
 using System.Numerics;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
