@@ -35,7 +35,10 @@ public sealed class BeaconRemovedEvent : EntityEventArgs;
 /// </summary>
 public sealed class AttemptHackStructureEvent : CancellableEntityEventArgs
 {
-    public bool Repeat = false; // if this isn't the first time we've hacked a repeatably hackable structure
+    /// <summary>
+    /// Is this the first time we've hacked a repeatable structure?
+    /// </summary>
+    public bool Repeat = false;
 };
 
 /// <summary>
@@ -43,7 +46,18 @@ public sealed class AttemptHackStructureEvent : CancellableEntityEventArgs
 /// </summary>
 public sealed class HackUpdateEvent : EntityEventArgs
 {
-    public TimeSpan NextUpdate; // when will we call this next?
-    public Entity<ActiveHackingBeaconComponent> Beacon; // the hacking beacon calling this event
-    public bool CompleteHack = false; // should we raise StructureHackCompletedEvent? this will stop the entity from receiving further update events.
+    /// <summary>
+    /// When will this event next be called?
+    /// </summary>
+    public TimeSpan NextUpdate;
+
+    /// <summary>
+    /// The hacking beacon calling this event.
+    /// </summary>
+    public Entity<ActiveHackingBeaconComponent> Beacon;
+
+    /// <summary>
+    /// Should we raise <see cref="StructureHackCompletedEvent"/>? This will stop the entity from receiving further update events and will complete an objective with <see cref="SabotageConditionComponent"/> and requireConfirmation set to true.
+    /// </summary>
+    public bool CompleteHack = false;
 };

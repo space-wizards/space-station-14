@@ -66,6 +66,7 @@
   id: BaseCargoPalletAts
   components:
   - type: BeaconHackable
+    repeatable: false
 
 - type: entity
   id: CargoPalletSell

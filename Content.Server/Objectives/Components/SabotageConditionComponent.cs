@@ -16,13 +16,13 @@ public sealed partial class SabotageConditionComponent : Component
     public EntityWhitelist Whitelist;
 
     /// <summary>
-    /// Blacklist for entities that will not count for this objective. Takes priority over the whitelist.s
+    /// Blacklist for entities that will not count for this objective. Takes priority over the whitelist.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
 
     /// <summary>
-    /// Are there more criteria to success than just "stick the beacon on"?
+    /// If false, the condition is fulfilled immediately upon starting the hack. If true, another system will have to raise <see cref="StructureHackCompletedEvent"/> for the condition to be considered completed.
     /// </summary>
     [DataField]
     public bool RequireConfirmation = false;

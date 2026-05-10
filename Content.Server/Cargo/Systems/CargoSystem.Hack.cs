@@ -13,8 +13,6 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly SharedChatSystem _chat = default!;
 
-    public bool Hacked = false;
-
     private void InitializeHack()
     {
         SubscribeLocalEvent<CargoPalletComponent, StructureHackedEvent>(OnPalletHack);
@@ -60,7 +58,6 @@ public sealed partial class CargoSystem
         if (!TryComp<TradeStationComponent>(gridUid, out var station))
             return;
         station.HackCompleted = true;
-        Hacked = true;
         Dirty(gridUid.Value, station);
 
         var ev = new HijackBeaconSuccessEvent(station.Fine);
@@ -99,7 +96,7 @@ public sealed partial class CargoSystem
     {
         if (!TryComp<TradeStationComponent>(Transform(ent).GridUid, out var station))
             return;
-        if (IsTradeStationBeingHacked() || Hacked) // already being hacked at the moment or has already been.
+        if (IsTradeStationBeingHacked()) // already being hacked at the moment or has already been.
             args.Cancel();
     }
 

@@ -18,5 +18,5 @@ public sealed partial class BeaconHackableComponent : Component
     /// Can this be hacked multiple times?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Repeatable = false;
+    public bool Repeatable = true;
 }

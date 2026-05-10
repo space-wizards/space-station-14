@@ -206,7 +206,6 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public int PurchaseAmount;
 
-
     /// <summary>
     /// Used to delay purchase of some items.
     /// </summary>

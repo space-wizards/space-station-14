@@ -683,6 +683,7 @@
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
   - type: BeaconHackable
+    repeatable: false
   - type: Injurable
     damageContainer: StructuralInorganic
 
@@ -698,7 +699,6 @@
     sound: /Audio/Announcements/war.ogg
   - type: BeaconHackable
     hacked: true # can't hack it if it's already hacked. or something like that. what this does in practice is just make it you can't plant a beacon on the antag comms consoles
-    repeatable: false
 
 - type: entity
   parent: ComputerCommsAntagonist
