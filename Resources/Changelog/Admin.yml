@@ -1716,5 +1716,13 @@ Entries:
   id: 209
   time: '2026-04-19T17:47:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43098
+- author: IProduceWidgets
+  changes:
+  - message: The `delaystart` command now accepts negative values, allowing to speed
+      up the start of the round.
+    type: Tweak
+  id: 210
+  time: '2026-05-09T19:27:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38270
 Name: Admin
 Order: 3
