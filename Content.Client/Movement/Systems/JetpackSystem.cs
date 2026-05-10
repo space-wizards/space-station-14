@@ -6,9 +6,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed class JetpackSystem : SharedJetpackSystem
+public sealed partial class JetpackSystem : SharedJetpackSystem
 {
-    [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {

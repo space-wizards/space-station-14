@@ -4,10 +4,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class ShuffleParticlesAnomalySystem : EntitySystem
+public sealed partial class ShuffleParticlesAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private AnomalySystem _anomaly = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

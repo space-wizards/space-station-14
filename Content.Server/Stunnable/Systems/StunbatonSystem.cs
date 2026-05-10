@@ -14,12 +14,12 @@ using Content.Shared.Stunnable;
 
 namespace Content.Server.Stunnable.Systems
 {
-    public sealed class StunbatonSystem : SharedStunbatonSystem
+    public sealed partial class StunbatonSystem : SharedStunbatonSystem
     {
-        [Dependency] private readonly RiggableSystem _riggableSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly SharedBatterySystem _battery = default!;
-        [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+        [Dependency] private RiggableSystem _riggableSystem = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedBatterySystem _battery = default!;
+        [Dependency] private ItemToggleSystem _itemToggle = default!;
 
         public override void Initialize()
         {
