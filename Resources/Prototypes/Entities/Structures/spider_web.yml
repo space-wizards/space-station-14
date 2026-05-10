@@ -23,6 +23,7 @@
   - type: Physics
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
   - type: Temperature
   - type: TemperatureDamage
     heatDamage:

@@ -23,7 +23,13 @@ public sealed class UpdateCanMoveEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-/// Event raised directed on an entity when their value of <see cref="InputMoverComponent.CanMove"/> is updated.
+/// Event raised on an entity when their value of <see cref="InputMoverComponent.CanMove"/> is updated.
 /// </summary>
 [ByRefEvent]
 public readonly record struct CanMoveUpdatedEvent(bool CanMove);
+
+/// <summary>
+/// Raised on a source entity when its effective movement entity changes.
+/// </summary>
+[ByRefEvent]
+public readonly record struct EffectiveMoverChangedEvent(EntityUid OldMover, EntityUid NewMover);

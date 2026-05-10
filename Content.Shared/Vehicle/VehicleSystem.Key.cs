@@ -28,14 +28,22 @@ public sealed partial class VehicleSystem
     {
         if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
-        RefreshCanRun(ent.Owner);
+
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
+            return;
+
+        RefreshCanRun((ent.Owner, vehicle));
     }
 
     private void OnGenericKeyedEntRemoved(Entity<GenericKeyedVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
             return;
-        RefreshCanRun(ent.Owner);
+
+        if (!_vehicleQuery.TryComp(ent, out var vehicle))
+            return;
+
+        RefreshCanRun((ent.Owner, vehicle));
     }
 
     private void OnGenericKeyedCanRun(Entity<GenericKeyedVehicleComponent> ent, ref VehicleCanRunEvent args)
@@ -45,7 +53,7 @@ public sealed partial class VehicleSystem
 
         if (!_container.TryGetContainer(ent.Owner, ent.Comp.ContainerId, out var container))
         {
-            args.CanRun = false;
+            args = args with { CanRun = false };
             return;
         }
 
@@ -60,6 +68,6 @@ public sealed partial class VehicleSystem
         }
 
         if (!hasKey)
-            args.CanRun = false;
+            args = args with { CanRun = false };
     }
 }

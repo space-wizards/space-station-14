@@ -9,12 +9,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.CardboardBox;
 
-public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
+public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedStealthSystem _stealth = default!;
-    [Dependency] private readonly VehicleSystem _vehicle = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private VehicleSystem _vehicle = default!;
 
     public override void Initialize()
     {
