@@ -38,83 +38,68 @@ public sealed partial class GhostRoleTest : GameTest
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent)), TestOf(typeof(GhostRoleSystem))]
     [TestCaseSource(nameof(_antagGameRules))]
     [Description("Ensures all GameRule entities with AntagSelectionComponent can properly spawn those roles and they can be taken.")]
-    public async Task TestAntagGhostRoles(string ruleId)
+    [RunOnSide(Side.Server)]
+    public void TestAntagGhostRoles(string ruleId)
     {
         AntagSelectionComponent antag = null;
-        await Server.WaitAssertion(() =>
-        {
-            var rule = SProtoMan.Index<EntityPrototype>(ruleId);
-            Assert.That(rule.TryGetComponent(out antag, SEntMan.ComponentFactory));
-        });
+        var rule = SProtoMan.Index<EntityPrototype>(ruleId);
+        Assert.That(rule.TryGetComponent(out antag, SEntMan.ComponentFactory));
 
-        var gameRule = EntityUid.Invalid;
-        await Server.WaitAssertion(() =>
-        {
-            _ticker.StartGameRule(ruleId, out gameRule);
-        });
+        _ticker.StartGameRule(ruleId, out var gameRule);
 
         Dictionary<ProtoId<AntagSpecifierPrototype>, int> rules = [];
 
-        await Server.WaitAssertion(() =>
+        foreach (var selector in antag.Antags)
         {
-            foreach (var selector in antag.Antags)
-            {
-                var specifier = SProtoMan.Index(selector.Proto);
-                var count = selector.GetTargetAntagCount(_random, 1);
-                // We should always spawn at least one antag if we add a GameRule
-                Assert.That(count, Is.GreaterThan(0));
+            var specifier = SProtoMan.Index(selector.Proto);
+            var count = selector.GetTargetAntagCount(_random, 1);
+            // We should always spawn at least one antag if we add a GameRule
+            Assert.That(count, Is.GreaterThan(0));
 
-                if (specifier.SpawnerPrototype == null)
-                    continue;
+            if (specifier.SpawnerPrototype == null)
+                continue;
 
-                var value = rules.GetValueOrDefault(specifier);
-                rules[selector.Proto] = value + count;
-            }
-        });
+            var value = rules.GetValueOrDefault(specifier);
+            rules[selector.Proto] = value + count;
+        }
 
-        await Server.WaitAssertion(() =>
+        var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
+        while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
         {
-            var roleEnumerator = SEntMan.EntityQueryEnumerator<GhostRoleAntagSpawnerComponent, GhostRoleComponent, TransformComponent>();
-            while (roleEnumerator.MoveNext(out var spawner, out var role, out var xform))
-            {
-                // Ensure the ghost role spawner spawned correctly!
-                Assert.That(spawner.Rule, Is.EqualTo(gameRule));
-                Assert.That(spawner.Definition, Is.Not.Null);
-                Assert.That(xform.MapUid, Is.Not.Null);
-                Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+            // Ensure the ghost role spawner spawned correctly!
+            Assert.That(spawner.Rule, Is.EqualTo(gameRule));
+            Assert.That(spawner.Definition, Is.Not.Null);
+            Assert.That(xform.MapUid, Is.Not.Null);
+            Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
 
-                var value = rules[spawner.Definition.Value];
-                rules[spawner.Definition.Value] = value - 1;
+            var value = rules[spawner.Definition.Value];
+            rules[spawner.Definition.Value] = value - 1;
 
-                // Take the ghost role and ensure we take it!
-                Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
-                Assert.That(ServerSession.AttachedEntity, Is.Not.Null);
+            // Take the ghost role and ensure we take it!
+            Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
+            Assert.That(ServerSession.AttachedEntity, Is.Not.Null);
 
-                // Ensure we spawned in the correct location
-                var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
-                Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
+            // Ensure we spawned in the correct location
+            var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
+            Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
 
-                // We break it up like this cause otherwise it'll sometimes randomly fail
-                // TODO: Engine IEquatable for EntityCoordinates
-                Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
+            // We break it up like this cause otherwise it'll sometimes randomly fail
+            // TODO: Engine IEquatable for EntityCoordinates
+            Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
 
-                // I will not get heisentest due to floating point errors
-                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
-                Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
-            }
+            // I will not get heisentest due to floating point errors
+            Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
+            Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
+        }
 
-            // Ensure all ghost roles spawned and were assigned!!!
-            foreach (var (_, count) in rules)
-            {
-                Assert.That(count, Is.EqualTo(0));
-            }
-        });
-
-        await Server.WaitAssertion(() =>
+        // Ensure all ghost roles spawned and were assigned!!!
+        foreach (var (_, count) in rules)
         {
-            // End all rules
-            _ticker.ClearGameRules();
-            Assert.That(_ticker.GetAddedGameRules(), Is.Empty);
-        });
+            Assert.That(count, Is.EqualTo(0));
+        }
+
+        // End all rules
+        _ticker.ClearGameRules();
+        Assert.That(_ticker.GetAddedGameRules(), Is.Empty);
     }
 }
