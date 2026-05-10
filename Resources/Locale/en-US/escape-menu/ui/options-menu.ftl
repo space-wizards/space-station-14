@@ -324,6 +324,9 @@ ui-options-function-text-complete-prev = Complete previous
 
 ## Network menu
 
+ui-options-net-warning = Warning: All settings in this tab are UNSAFE and can potentially break your game.
+                         Use them only if you know what they do/mean.
+
 ui-options-net-predict = Client-side prediction
 
 ui-options-net-interp-ratio = State buffer size
@@ -357,6 +360,11 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
 ## Toggle window console command
 cmd-options-desc = Opens options menu, optionally with a specific tab selected.
 cmd-options-help = Usage: options [tab]
+
+## Toggle advanced settings command
+cmd-advancedsettings-desc = Toggles visibility of the Networking tab in the options menu. It has some unsafe settings that are useful for debugging.
+cmd-advancedsettings-help = Usage: {$command}
+cmd-advancedsettings-log = Toggled Networking tab visibility to { $value }.
 
 ## Accessibility menu
 
