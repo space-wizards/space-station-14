@@ -29,7 +29,7 @@ public sealed partial class GameTicker
     /// </summary>
     [ViewVariables] private string[] _ignoredRules = [];
 
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private EntityWhitelistSystem _whitelist = null!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
