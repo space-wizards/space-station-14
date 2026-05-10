@@ -7,9 +7,9 @@ using Content.Shared.Wires;
 
 namespace Content.Client.Power;
 
-public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequiresPowerSystem
+public sealed partial class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequiresPowerSystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     protected override void OnActivate(Entity<ActivatableUIRequiresPowerComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
@@ -18,7 +18,9 @@ public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequir
             return;
         }
 
-        _popup.PopupClient(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent.Owner)), args.User, args.User);
+        if (!args.Silent)
+            _popup.PopupClient(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent.Owner)), args.User, args.User);
+
         args.Cancel();
     }
 }

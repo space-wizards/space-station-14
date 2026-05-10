@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DisposalUnitBase, SeatBase ]
+  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase]
   id: BaseToilet
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
@@ -45,7 +45,7 @@
   - type: Strap
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: DisposalUnit
     container:
       occludes: true
@@ -53,7 +53,7 @@
       ents: []
     blacklist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
       - Plunger
       - SolutionTransfer
       - EntityStorage
@@ -67,6 +67,7 @@
     containers:
       stash: !type:ContainerSlot {}
       DisposalUnitComponent: !type:Container
+      solutions: !type:Container
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -102,14 +103,10 @@
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+    - SolutionDrainNormal
   - type: SolutionRegeneration
-    solution: tank
     generated:
       reagents:
       - ReagentId: Water
@@ -143,12 +140,8 @@
   id: ToiletDirtyWater
   suffix: Dirty Water
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: Water
           Quantity: 180
@@ -222,12 +215,8 @@
   components:
   - type: StealTarget
     stealGroup: ToiletGoldenDirtyWater
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: Water
           Quantity: 160

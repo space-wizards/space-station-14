@@ -343,8 +343,10 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         var holderUid = Spawn(ent.Comp.HolderPrototypeId, _xform.GetMapCoordinates(ent, xform: xform));
         var holder = new Entity<DisposalHolderComponent>(holderUid, Comp<DisposalHolderComponent>(holderUid));
 
-        if (holder.Comp.Container == null)
             return false;
+		
+		if ((holder.Comp.Container == null)
+			return false;
 
         foreach (var entity in GetContainedEntities(ent))
         {

@@ -16,10 +16,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Emotes;
 
 [UsedImplicitly]
-public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayState>
+public sealed partial class EmotesUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private SimpleRadialMenu? _menu;
@@ -147,7 +147,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             if (emote.Category == EmoteCategory.Invalid
                 || emote.ChatTriggers.Count == 0
                 || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
-                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
+                || whitelistSystem.IsWhitelistPass(emote.Blacklist, player.Value))
                 continue;
 
             if (!emote.Available
