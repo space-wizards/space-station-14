@@ -14,18 +14,18 @@ namespace Content.Server.Power.EntitySystems;
 /// <summary>
 ///  Handles sabotaged/rigged objects
 /// </summary>
-public sealed class RiggableSystem : EntitySystem
+public sealed partial class RiggableSystem : EntitySystem
 {
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<RiggableComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<RiggableComponent, ChargeChangedEvent>(OnChargeChanged);
     }
 
@@ -47,13 +47,14 @@ public sealed class RiggableSystem : EntitySystem
         }
     }
 
-    private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionChangedEvent args)
     {
-        if (args.SolutionId != entity.Comp.Solution)
+        if (args.Solution.Comp.Id != entity.Comp.Solution)
             return;
 
         var wasRigged = entity.Comp.IsRigged;
-        var quantity = args.Solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
+        var solution = args.Solution.Comp.Solution;
+        var quantity = solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
         entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
 
         if (entity.Comp.IsRigged && !wasRigged)

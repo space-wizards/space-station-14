@@ -9,9 +9,9 @@ namespace Content.Server.FeedbackSystem;
 /// </summary>
 [AnyCommand]
 [ToolshedCommand]
-public sealed class OpenFeedbackPopupCommand : ToolshedCommand
+public sealed partial class OpenFeedbackPopupCommand : ToolshedCommand
 {
-    [Dependency] private readonly ISharedFeedbackManager _feedback = null!;
+    [Dependency] private ISharedFeedbackManager _feedback = null!;
 
     [CommandImplementation]
     public void Execute(IInvocationContext context)
