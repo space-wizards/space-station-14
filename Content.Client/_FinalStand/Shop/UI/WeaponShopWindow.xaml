@@ -44,7 +44,7 @@
 
                 <PanelContainer VerticalExpand="True" Margin="0 0 0 10">
                     <BoxContainer Orientation="Vertical" Margin="8">
-                        <Label Text="STATS" HorizontalAlignment="Center" Margin="0 0 0 6" />
+                        <Label Text="Stats" HorizontalAlignment="Center" Margin="0 0 0 6" />
                         <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8" />
                         <Label Name="StatsLabel" />
                     </BoxContainer>

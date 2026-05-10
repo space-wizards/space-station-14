@@ -32,7 +32,7 @@
   id: FSWeaponShopViper
   parent: FSWeaponShopBase
   name: Viper
-  description: A Syndicate-modified 9mm pistol. Semi-auto and full-auto. Press E to purchase.
+  description: A Syndicate-modified 9mm pistol. Semi-auto and full-auto.
   components:
   - type: FSShopWeapon
     weaponProtoId: WeaponPistolViper
@@ -63,13 +63,13 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     state: base
-    scale: 0.5, 0.5
+    scale: 1,1
 
 - type: entity
   id: FSWeaponShopMateba
   parent: FSWeaponShopBase
   name: Mateba
-  description: Nanotrasen Death Squad revolver. High fire rate, .45 magnum. Press E to purchase.
+  description: Nanotrasen Death Squad revolver. High fire rate, .45 magnum.
   components:
   - type: FSShopWeapon
     weaponProtoId: WeaponRevolverMateba
@@ -100,4 +100,4 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
     state: icon
-    scale: 0.5, 0.5
+    scale: 1,1
