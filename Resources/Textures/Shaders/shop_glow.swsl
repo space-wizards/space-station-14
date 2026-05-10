@@ -1,0 +1,60 @@
+// Soft multi-ring glow for Final Stand shop entities.
+// Samples alpha at 3 concentric rings with decreasing weights to produce
+// a smooth halo falloff instead of the hard 1px outline.swsl border.
+// Only renders in transparent pixels (outside the sprite body).
+
+uniform highp vec4 glow_color;      // = vec4(0.13, 1.0, 0.31, 0.85)
+uniform highp float glow_intensity; // = 1.5
+
+void fragment() {
+    highp vec4 col = zTexture(UV);
+    highp vec2 ps = TEXTURE_PIXEL_SIZE;
+
+    // Ring 1 — 2px (weight 1.0, tight inner edge)
+    highp float a1 = 0.0;
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2( 2.0,  0.0) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2(-2.0,  0.0) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2( 0.0,  2.0) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2( 0.0, -2.0) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2( 1.5,  1.5) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2(-1.5,  1.5) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2( 1.5, -1.5) * ps).a);
+    a1 = max(a1, texture2D(TEXTURE, UV + vec2(-1.5, -1.5) * ps).a);
+
+    // Ring 2 — 5px (weight 0.5, mid falloff)
+    highp float a2 = 0.0;
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2( 5.0,  0.0) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2(-5.0,  0.0) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2( 0.0,  5.0) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2( 0.0, -5.0) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2( 3.5,  3.5) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2(-3.5,  3.5) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2( 3.5, -3.5) * ps).a);
+    a2 = max(a2, texture2D(TEXTURE, UV + vec2(-3.5, -3.5) * ps).a);
+
+    // Ring 3 — 8px (weight 0.2, soft outer halo)
+    highp float a3 = 0.0;
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2( 8.0,  0.0) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2(-8.0,  0.0) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2( 0.0,  8.0) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2( 0.0, -8.0) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2( 5.5,  5.5) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2(-5.5,  5.5) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2( 5.5, -5.5) * ps).a);
+    a3 = max(a3, texture2D(TEXTURE, UV + vec2(-5.5, -5.5) * ps).a);
+
+    // Weighted soft falloff — normalised so max combined weight = 1
+    highp float glowVal = (a1 * 1.0 + a2 * 0.5 + a3 * 0.2) / 1.7;
+    glowVal = clamp(glowVal, 0.0, 1.0);
+
+    // Only render in transparent pixels (never on top of the sprite body)
+    glowVal *= (1.0 - col.a);
+
+    // Gentle breathing pulse
+    highp float pulse = 0.75 + 0.25 * sin(TIME * 2.5);
+
+    highp float finalAlpha = clamp(glowVal * glow_intensity * pulse, 0.0, 1.0);
+
+    COLOR = mix(col, glow_color, finalAlpha);
+    lightSample = vec3(1.0);
+}

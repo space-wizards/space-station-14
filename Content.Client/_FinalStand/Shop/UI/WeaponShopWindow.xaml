@@ -1,0 +1,66 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    MinWidth="640" MinHeight="400">
+
+    <BoxContainer Orientation="Vertical" Margin="10">
+
+        <!-- Header: weapon name centred, balance pinned right -->
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 8">
+            <Label Name="WeaponNameLabel" HorizontalExpand="True" HorizontalAlignment="Center" />
+            <Label Text="Balance: " />
+            <Label Name="BalanceLabel" />
+        </BoxContainer>
+
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 10" />
+
+        <!-- Two-column body -->
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+
+            <!-- LEFT: description + upgrades -->
+            <BoxContainer Orientation="Vertical" SetWidth="380" Margin="0 0 12 0">
+
+                <!-- Description (fixed height, scrollable) -->
+                <PanelContainer SetHeight="80" Margin="0 0 0 10">
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                        <RichTextLabel Name="DescLabel" HorizontalExpand="True" />
+                    </ScrollContainer>
+                </PanelContainer>
+
+                <!-- Upgrades (fills remaining height, scrollable list) -->
+                <PanelContainer VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" Margin="8">
+                        <Label Text="Upgrades" Margin="0 0 0 6" />
+                        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8" />
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer Name="UpgradesContainer" Orientation="Vertical" HorizontalExpand="True" />
+                        </ScrollContainer>
+                    </BoxContainer>
+                </PanelContainer>
+
+            </BoxContainer>
+
+            <!-- RIGHT: stats + price + buy -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+
+                <PanelContainer VerticalExpand="True" Margin="0 0 0 10">
+                    <BoxContainer Orientation="Vertical" Margin="8">
+                        <Label Text="STATS" HorizontalAlignment="Center" Margin="0 0 0 6" />
+                        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8" />
+                        <Label Name="StatsLabel" />
+                    </BoxContainer>
+                </PanelContainer>
+
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 4">
+                    <Label Text="Price:   " />
+                    <Label Name="PriceLabel" />
+                </BoxContainer>
+
+                <Button Name="BuyButton" />
+
+            </BoxContainer>
+
+        </BoxContainer>
+
+    </BoxContainer>
+
+</DefaultWindow>

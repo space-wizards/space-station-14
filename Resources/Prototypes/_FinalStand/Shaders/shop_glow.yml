@@ -1,0 +1,15 @@
+- type: shader
+  id: FSShopGlowAffordable
+  kind: source
+  path: "/Textures/Shaders/shop_glow.swsl"
+  params:
+    glow_color: "#20FF50D9"
+    glow_intensity: 1.5
+
+- type: shader
+  id: FSShopGlowUnaffordable
+  kind: source
+  path: "/Textures/Shaders/shop_glow.swsl"
+  params:
+    glow_color: "#FF2200D9"
+    glow_intensity: 1.5
