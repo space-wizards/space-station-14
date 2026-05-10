@@ -50,7 +50,6 @@
         Asphyxiation: -1.0
     maxSaturation: 15
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Slime
   - type: Bloodstream
     bloodReferenceSolution:
@@ -168,7 +167,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
-    - type: ForceAttack
 
 - type: entity
   name: green slime
@@ -209,7 +207,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
-    - type: ForceAttack
 
 - type: entity
   name: yellow slime
@@ -249,4 +246,3 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
-    - type: ForceAttack
