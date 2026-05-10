@@ -192,6 +192,7 @@
     - Antagonists
   - type: IdentityBlocker
     coverage: EYES
+  - type: VisionCorrection
 
 - type: entity
   parent: [ClothingEyesBase, BaseCommandContraband]
@@ -301,3 +302,4 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: VisionCorrection
