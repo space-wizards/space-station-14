@@ -7,8 +7,8 @@ namespace Content.Server.Objectives.Systems;
 
 public sealed partial class SabotageConditionSystem : EntitySystem
 {
-    [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private CodeConditionSystem _codeCondition = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
