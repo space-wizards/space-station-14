@@ -12,13 +12,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
+    public sealed partial class PowerReceiverSystem : SharedPowerReceiverSystem
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
 
-        [Dependency] private readonly EntityQuery<ApcPowerReceiverComponent> _recQuery = default!;
-        [Dependency] private readonly EntityQuery<ApcPowerProviderComponent> _provQuery = default!;
-        [Dependency] private readonly EntityQuery<HandsComponent> _handsQuery = default!;
+        [Dependency] private EntityQuery<ApcPowerReceiverComponent> _recQuery = default!;
+        [Dependency] private EntityQuery<ApcPowerProviderComponent> _provQuery = default!;
+        [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
 
         public override void Initialize()
         {

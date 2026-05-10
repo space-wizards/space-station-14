@@ -3,14 +3,14 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Tiles;
 
-public sealed class RequiresTileSystem : EntitySystem
+public sealed partial class RequiresTileSystem : EntitySystem
 {
     /*
      * Needs to be on server as client can't predict QueueDel.
      */
 
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly EntityQuery<RequiresTileComponent> _tilesQuery = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private EntityQuery<RequiresTileComponent> _tilesQuery = default!;
 
     public override void Initialize()
     {

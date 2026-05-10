@@ -14,7 +14,7 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
-    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+    [Dependency] private IRuntimeLog _runtimeLog = default!;
 
     [Dependency] private readonly EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery = default!;
     [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery = default!;

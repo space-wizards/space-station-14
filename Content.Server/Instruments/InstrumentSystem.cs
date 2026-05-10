@@ -24,18 +24,18 @@ namespace Content.Server.Instruments;
 [UsedImplicitly]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly StunSystem _stuns = default!;
-    [Dependency] private readonly UserInterfaceSystem _bui = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private StunSystem _stuns = default!;
+    [Dependency] private UserInterfaceSystem _bui = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogSystem = default!;
 
-    [Dependency] private readonly EntityQuery<InstrumentComponent> _instrumentQuery = default!;
-    [Dependency] private readonly EntityQuery<ActiveInstrumentComponent> _activeInstrumentQuery = default!;
+    [Dependency] private EntityQuery<InstrumentComponent> _instrumentQuery = default!;
+    [Dependency] private EntityQuery<ActiveInstrumentComponent> _activeInstrumentQuery = default!;
 
     private const float MaxInstrumentBandRange = 10f;
 
