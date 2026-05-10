@@ -26,7 +26,6 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private GeneratorSystem _generator = default!;
-    [Dependency] private PowerSwitchableSystem _switchable = default!;
     [Dependency] private VoltageTogglerSystem _voltageToggler = default!;
     [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
 
