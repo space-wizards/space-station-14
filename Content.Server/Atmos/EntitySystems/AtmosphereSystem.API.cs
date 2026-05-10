@@ -7,7 +7,6 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;

@@ -164,7 +164,7 @@ namespace Content.Server.Atmos.EntitySystems
                     !pressure.Enabled)
                     continue;
 
-                if (_containers.IsEntityInContainer(entity, MetaData(entity))) continue;
+                if (_containers.IsEntityInContainer(entity)) continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.Comp.UpdateCounter)

@@ -34,7 +34,7 @@ public sealed class DragonSystem : EntitySystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SmokeSystem _smoke = default!;
-    
+
     [Dependency] private readonly EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>

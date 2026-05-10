@@ -74,10 +74,10 @@ namespace Content.Server.Doors.Systems
                 }
 
                 if (_airtightQuery.TryGetComponent(uid, out var airtight)
-                    && TryComp(uid, out TransformComponent? xform)
+                    && HasComp<TransformComponent>(uid)
                     && _appearanceQuery.TryGetComponent(uid, out var appearance))
                 {
-                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight);
+                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, airtight);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
                     firelock.Temperature = fire;
                     firelock.Pressure = pressure;
@@ -115,14 +115,13 @@ namespace Content.Server.Doors.Systems
         public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid uid, FirelockComponent firelock)
         {
             if (_airtightQuery.TryGetComponent(uid, out AirtightComponent? airtight))
-                return CheckPressureAndFire(uid, firelock, Transform(uid), airtight);
+                return CheckPressureAndFire(uid, firelock, airtight);
             return (false, false);
         }
 
         public (bool Pressure, bool Fire) CheckPressureAndFire(
         EntityUid uid,
         FirelockComponent firelock,
-        TransformComponent xform,
         AirtightComponent airtight)
         {
             if (!airtight.AirBlocked)
@@ -134,6 +133,7 @@ namespace Content.Server.Doors.Systems
                 return (false, false);
             }
 
+            var xform = Transform(uid);
             if (!HasComp<GridAtmosphereComponent>(xform.ParentUid))
                 return (false, false);
 

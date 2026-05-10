@@ -37,10 +37,10 @@ public sealed partial class DockingSystem
     /// Checks if 2 docks can be connected by moving the shuttle directly onto docks.
     /// </summary>
     private bool CanDock(
+        EntityUid shuttleDockUid,
         DockingComponent shuttleDock,
-        TransformComponent shuttleDockXform,
+        EntityUid gridDockUid,
         DockingComponent gridDock,
-        TransformComponent gridDockXform,
         Box2 shuttleAABB,
         Angle targetGridRotation,
         FixturesComponent shuttleFixtures,
@@ -53,6 +53,9 @@ public sealed partial class DockingSystem
         shuttleDockedAABB = Box2.UnitCentered;
         gridRotation = Angle.Zero;
         matty = Matrix3x2.Identity;
+
+        var shuttleDockXform = Transform(shuttleDockUid);
+        var gridDockXform = Transform(gridDockUid);
 
         if (shuttleDock.Docked ||
             gridDock.Docked ||
@@ -177,15 +180,13 @@ public sealed partial class DockingSystem
             // We'll try all combinations of shuttle docks and see which one is most suitable
             foreach (var (dockUid, shuttleDock) in shuttleDocks)
             {
-                var shuttleDockXform = Transform(dockUid);
-
                 foreach (var (gridDockUid, gridDock) in gridDocks)
                 {
-                    var gridXform = Transform(gridDockUid);
-
                     if (!CanDock(
-                            shuttleDock, shuttleDockXform,
-                            gridDock, gridXform,
+                            dockUid,
+                            shuttleDock,
+                            gridDockUid,
+                            gridDock,
                             shuttleAABB,
                             targetGridAngle,
                             shuttleFixturesComp,
@@ -236,10 +237,10 @@ public sealed partial class DockingSystem
                                 continue;
 
                             if (!CanDock(
+                                    otherUid,
                                     other,
-                                    Transform(otherUid),
+                                    otherGridUid,
                                     otherGrid,
-                                    Transform(otherGridUid),
                                     shuttleAABB,
                                     targetGridAngle,
                                     shuttleFixturesComp,
