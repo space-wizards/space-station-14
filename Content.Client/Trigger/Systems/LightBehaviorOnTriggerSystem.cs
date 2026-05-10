@@ -8,10 +8,10 @@ namespace Content.Client.Trigger.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class LightBehaviorOnTriggerSystem : XOnTriggerSystem<LightBehaviorOnTriggerComponent>
+public sealed partial class LightBehaviorOnTriggerSystem : XOnTriggerSystem<LightBehaviorOnTriggerComponent>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly LightBehaviorSystem _light = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private LightBehaviorSystem _light = default!;
 
     protected override void OnTrigger(Entity<LightBehaviorOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
