@@ -1724,5 +1724,13 @@ Entries:
   id: 210
   time: '2026-05-09T19:27:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38270
+- author: Beck
+  changes:
+  - message: You can now see the contraband and chameleon status of items in the examine
+      menu
+    type: Add
+  id: 211
+  time: '2026-05-10T11:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43658
 Name: Admin
 Order: 3
