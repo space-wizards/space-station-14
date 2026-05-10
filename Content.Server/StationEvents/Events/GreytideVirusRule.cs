@@ -25,8 +25,8 @@ public sealed partial class GreytideVirusRule : StationEventSystem<GreytideVirus
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    [Dependency] private readonly EntityQuery<FirelockComponent> _firelockQuery = default!;
-    [Dependency] private readonly EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
+    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
+    [Dependency] private EntityQuery<AccessReaderComponent> _accessReaderQuery = default!;
 
     protected override void Added(EntityUid uid, GreytideVirusRuleComponent virusComp, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {

@@ -11,7 +11,7 @@ namespace Content.Server.DeviceNetwork.Systems;
 public sealed partial class DeviceListSystem : SharedDeviceListSystem
 {
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
-    [Dependency] private readonly EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {

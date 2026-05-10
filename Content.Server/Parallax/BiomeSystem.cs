@@ -49,10 +49,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private ShuttleSystem _shuttles = default!;
     [Dependency] private TagSystem _tags = default!;
 
-    [Dependency] private readonly EntityQuery<BiomeComponent> _biomeQuery = default!;
-    [Dependency] private readonly EntityQuery<FixturesComponent> _fixturesQuery = default!;
-    [Dependency] private readonly EntityQuery<GhostComponent> _ghostQuery = default!;
-    [Dependency] private readonly EntityQuery<TransformComponent> _xformQuery = default!;
+    [Dependency] private EntityQuery<BiomeComponent> _biomeQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+    [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float DefaultLoadRange = 16f;

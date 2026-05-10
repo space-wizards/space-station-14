@@ -28,9 +28,9 @@ public sealed partial class CargoSystem
     [Dependency] private NameIdentifierSystem _nameIdentifier = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSys = default!;
 
-    [Dependency] private readonly EntityQuery<StackComponent> _stackQuery = default!;
-    [Dependency] private readonly EntityQuery<ContainerManagerComponent> _containerManagerQuery = default!;
-    [Dependency] private readonly EntityQuery<CargoBountyLabelComponent> _cargoBountyLabelQuery = default!;
+    [Dependency] private EntityQuery<StackComponent> _stackQuery = default!;
+    [Dependency] private EntityQuery<ContainerManagerComponent> _containerManagerQuery = default!;
+    [Dependency] private EntityQuery<CargoBountyLabelComponent> _cargoBountyLabelQuery = default!;
 
     private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 

@@ -26,9 +26,9 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private IParallelManager _parMan = default!;
         [Dependency] private BatterySystem _battery = default!;
 
-        [Dependency] private readonly EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery = default!;
-        [Dependency] private readonly EntityQuery<PowerNetworkBatteryComponent> _powerNetworkBatteryQuery = default!;
-        [Dependency] private readonly EntityQuery<BatteryComponent> _batteryQuery = default!;
+        [Dependency] private EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery = default!;
+        [Dependency] private EntityQuery<PowerNetworkBatteryComponent> _powerNetworkBatteryQuery = default!;
+        [Dependency] private EntityQuery<BatteryComponent> _batteryQuery = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();

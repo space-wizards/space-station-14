@@ -24,9 +24,9 @@ public sealed partial class TemperatureSystem
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
 
-    [Dependency] private readonly EntityQuery<TemperatureDamageComponent> _tempDamageQuery = default!;
-    [Dependency] private readonly EntityQuery<ContainerTemperatureComponent> _containerTemperatureQuery = default!;
-    [Dependency] private readonly EntityQuery<ThermalRegulatorComponent> _thermalRegulatorQuery = default!;
+    [Dependency] private EntityQuery<TemperatureDamageComponent> _tempDamageQuery = default!;
+    [Dependency] private EntityQuery<ContainerTemperatureComponent> _containerTemperatureQuery = default!;
+    [Dependency] private EntityQuery<ThermalRegulatorComponent> _thermalRegulatorQuery = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.

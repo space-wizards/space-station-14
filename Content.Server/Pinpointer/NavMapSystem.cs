@@ -18,7 +18,7 @@ namespace Content.Server.Pinpointer;
 /// <summary>
 /// Handles data to be used for in-grid map displays.
 /// </summary>
-public sealed class NavMapSystem : SharedNavMapSystem
+public sealed partial class NavMapSystem : SharedNavMapSystem
 {
     [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;

@@ -40,7 +40,7 @@ namespace Content.Server.Chat.Systems;
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
-public sealed class ChatSystem : SharedChatSystem
+public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private IReplayRecordingManager _replay = default!;
     [Dependency] private IConfigurationManager _configurationManager = default!;
@@ -57,7 +57,7 @@ public sealed class ChatSystem : SharedChatSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly EntityQuery<GhostHearingComponent> _ghostHearingQuery = default!;
+    [Dependency] private EntityQuery<GhostHearingComponent> _ghostHearingQuery = default!;
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;

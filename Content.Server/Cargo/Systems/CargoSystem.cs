@@ -40,9 +40,9 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private RadioSystem _radio = default!;
 
-    [Dependency] private readonly EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery = default!;
-    [Dependency] private readonly EntityQuery<MobStateComponent> _mobStateQuery = default!;
-    [Dependency] private readonly EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
+    [Dependency] private EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery = default!;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
 
     private HashSet<EntityUid> _setEnts = new();
     private List<EntityUid> _listEnts = new();
