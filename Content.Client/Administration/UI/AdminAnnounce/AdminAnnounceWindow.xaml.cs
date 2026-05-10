@@ -10,10 +10,10 @@ namespace Content.Client.Administration.UI.AdminAnnounce;
 [GenerateTypedNameReferences]
 public sealed partial class AdminAnnounceWindow : DefaultWindow
 {
-    [Dependency] private readonly ILocalizationManager _localization = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private ILocalizationManager _localization = default!;
+    [Dependency] private IEntitySystemManager _sysMan = default!;
     private AdminAnnounceColorPalette? _paletteWindow;
-    private readonly SharedAudioSystem? _audio;
+    private SharedAudioSystem? _audio;
 
     private EntityUid? _previewStream;
 
