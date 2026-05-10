@@ -4,10 +4,10 @@ using Content.Shared.Database;
 
 namespace Content.Shared.Atmos.Piping.Trinary.EntitySystems;
 
-public abstract class SharedGasMixerSystem : EntitySystem
+public abstract partial class SharedGasMixerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
