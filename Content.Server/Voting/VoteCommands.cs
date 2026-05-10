@@ -63,8 +63,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Round)]
-    public sealed partial class CreateCustomCommand : LocalizedEntityCommands
+    public abstract partial class BaseCreateCustomVoteCommand : LocalizedEntityCommands
     {
         [Dependency] private IVoteManager _voteManager = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -75,6 +74,8 @@ namespace Content.Server.Voting
         private const int MaxArgCount = 10;
 
         public override string Command => "customvote";
+        public abstract bool GhostOnly { get; }
+        public abstract bool ShowResultsInChat { get; }
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -90,6 +91,7 @@ namespace Content.Server.Voting
             {
                 Title = title,
                 Duration = TimeSpan.FromSeconds(30),
+                VoterEligibility = GhostOnly ? VoteManager.VoterEligibility.Ghost : VoteManager.VoterEligibility.All,
             };
 
             for (var i = 1; i < args.Length; i++)
@@ -114,12 +116,16 @@ namespace Content.Server.Voting
                 {
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", options.Title), ("ties", ties)));
+
+                    if (ShowResultsInChat)
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString($"cmd-{Command}-on-finished-tie", ("title", options.Title), ("ties", ties)));
                 }
                 else
                 {
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", options.Title), ("winner", args[(int) eventArgs.Winner])));
+
+                    if (ShowResultsInChat)
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString($"cmd-{Command}-on-finished-win", ("title", options.Title), ("winner", args[(int) eventArgs.Winner])));
                 }
 
                 _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
@@ -134,14 +140,30 @@ namespace Content.Server.Voting
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
-                return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-title"));
+                return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-title"));
 
             if (args.Length > MaxArgCount)
                 return CompletionResult.Empty;
 
             var n = args.Length - 1;
-            return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
+            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-option-n", ("n", n)));
         }
+    }
+
+    [AdminCommand(AdminFlags.Round)]
+    public sealed partial class CreateCustomCommand : BaseCreateCustomVoteCommand
+    {
+        public override string Command => "customvote";
+        public override bool GhostOnly => false;
+        public override bool ShowResultsInChat => true;
+    }
+
+    [AdminCommand(AdminFlags.Round)]
+    public sealed partial class CreateCustomGhostVoteCommand : BaseCreateCustomVoteCommand
+    {
+        public override string Command => "customghostvote";
+        public override bool GhostOnly => true;
+        public override bool ShowResultsInChat => false;
     }
 
     [AnyCommand]

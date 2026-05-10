@@ -17,6 +17,13 @@ cmd-customvote-on-finished-win = The vote '{$title}' has finished: {$winner} win
 cmd-customvote-arg-title = <title>
 cmd-customvote-arg-option-n = <option{ $n }>
 
+## 'customghostvote' command
+
+cmd-customghostvote-desc = Creates a custom ghost vote only ghosts can see and vote
+cmd-customghostvote-help = Usage: customghostvote <title> <option1> <option2> [option3...]
+cmd-customghostvote-arg-title = <title>
+cmd-customghostvote-arg-option-n = <option{ $n }>
+
 ## 'vote' command
 
 cmd-vote-desc = Votes on an active vote
