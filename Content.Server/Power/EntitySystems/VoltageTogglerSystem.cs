@@ -12,10 +12,10 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
 {
-    [Dependency] private readonly UseDelaySystem _useDelay = null!;
-    [Dependency] private readonly PopupSystem _popup = null!;
-    [Dependency] private readonly SharedAudioSystem _audio = null!;
-    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = null!;
+    [Dependency] private UseDelaySystem _useDelay = null!;
+    [Dependency] private PopupSystem _popup = null!;
+    [Dependency] private SharedAudioSystem _audio = null!;
+    [Dependency] private NodeGroupSystem _nodeGroupSystem = null!;
 
     public override void Initialize()
     {
