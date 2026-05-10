@@ -27,7 +27,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private EntityWhitelistSystem _whitelist = null!;
 
     public override void Initialize()
     {
