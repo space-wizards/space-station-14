@@ -110,7 +110,6 @@
   suffix: Corner
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Structures/Windows/directional.rsi
     state: uranium_window_corner
   - type: Icon

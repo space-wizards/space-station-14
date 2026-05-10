@@ -122,7 +122,6 @@
   suffix: Corner
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window_corner
   - type: Icon
