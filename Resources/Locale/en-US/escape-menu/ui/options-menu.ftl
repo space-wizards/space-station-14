@@ -373,6 +373,7 @@ ui-options-speech-bubble-background-opacity = Speech bubble background opacity
 ui-options-censor-nudity = Censor character nudity
 
 ui-options-auto-fill-highlights = Automatically supplement the highlights list based on your character's name and job
+ui-options-per-server-highlights = Save unique persistent highlights for each server
 ui-options-highlights-color = Highlights color:
 ui-options-highlights-color-example = This is highlighted text.
 ui-options-highlights-persistent = Persistent highlights:
