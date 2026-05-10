@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Explosion.EntitySystems;
-using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
@@ -18,7 +18,6 @@ public sealed partial class RiggableSystem : EntitySystem
     [Dependency] private SharedExplosionSystem _explosionSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
-    [Dependency] private ItemToggleSystem _itemToggle = default!;
 
     public override void Initialize()
     {
@@ -61,7 +60,7 @@ public sealed partial class RiggableSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
 
-            if (_itemToggle.IsActivated(entity.Owner))
+            if (TryComp<ItemToggleComponent>(entity.Owner, out var toggleComp) && toggleComp.Activated)
             {
                 if (TryComp<BatteryComponent>(entity, out var batteryComponent))
                 {
