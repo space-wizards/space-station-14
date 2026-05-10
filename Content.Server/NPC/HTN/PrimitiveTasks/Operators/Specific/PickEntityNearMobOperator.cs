@@ -76,47 +76,42 @@ public sealed partial class PickEntityNearMobOperator : HTNOperator
         if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entManager))
             return (false, null);
 
-        if (!blackboard.TryGetValue<float>(RangeKey, out var mobRange, _entManager))
+        if (!blackboard.TryGetValue<float>(MobRangeKey, out var mobRange, _entManager))
             return (false, null);
 
         var mobState = _entManager.GetEntityQuery<MobStateComponent>();
 
-        foreach (var entity in _lookup.GetEntitiesInRange(owner, range))
+        foreach (var mob in _lookup.GetEntitiesInRange(owner, mobRange, LookupFlags.Uncontained & ~LookupFlags.Sensors))
         {
-            if (!_entityWhitelist.CheckBoth(entity, Blacklist, Whitelist))
+            if (mob == owner)
                 continue;
 
-            //checking if there is anyone NEAR the entity we found
-            foreach (var mob in _lookup.GetEntitiesInRange(entity, mobRange))
+            if (!mobState.TryGetComponent(mob, out var state))
+                continue;
+
+            if (MobState != null && state.CurrentState != MobState)
+                continue;
+
+            foreach (var entity in _lookup.GetEntitiesInRange(mob, range))
             {
-                if (mob == owner)
+                if (!_entityWhitelist.CheckBoth(entity, Blacklist, Whitelist))
                     continue;
 
-                if (_container.IsEntityInContainer(mob))
-                    continue;
+                var pathRange = SharedInteractionSystem.InteractionRange;
+                var path = await _pathfinding.GetPath(owner, mob, pathRange, cancelToken);
 
-                if (mobState.TryGetComponent(mob, out var state))
+                if (path.Result == PathResult.NoPath)
+                    return (false, null);
+
+                return (true, new Dictionary<string, object>()
                 {
-                    if (MobState != null && state.CurrentState != MobState)
-                        continue;
-
-                    var pathRange = SharedInteractionSystem.InteractionRange;
-                    var path = await _pathfinding.GetPath(owner, mob, pathRange, cancelToken);
-
-                    if (path.Result == PathResult.NoPath)
-                        return (false, null);
-
-                    return (true, new Dictionary<string, object>()
-                    {
-                        {TargetKey, mob},
-                        {NearbyEntityTargetKey, entity},
-                        {TargetMoveKey, _entManager.GetComponent<TransformComponent>(mob).Coordinates},
-                        {NPCBlackboard.PathfindKey, path},
-                    });
-                }
+                    {TargetKey, mob},
+                    {NearbyEntityTargetKey, entity},
+                    {TargetMoveKey, _entManager.GetComponent<TransformComponent>(mob).Coordinates},
+                    {NPCBlackboard.PathfindKey, path},
+                });
             }
         }
-
         return (false, null);
     }
 }

@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: rumaks-xyz
-  changes:
-  - message: Changed the recipe for licoxide to require lithium instead of lead.
-    type: Tweak
-  id: 9175
-  time: '2025-10-30T20:04:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40991
 - author: SuperGDPWYL
   changes:
   - message: Certain thief objectives can no longer be rolled by jobs which have trivial
@@ -4083,3 +4076,10 @@
   id: 9686
   time: '2026-05-07T21:00:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42145
+- author: Cabin-keeper
+  changes:
+  - message: Added vulpkanin typing indicator
+    type: Add
+  id: 9687
+  time: '2026-05-09T16:50:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43910
