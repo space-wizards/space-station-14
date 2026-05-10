@@ -1,5 +1,7 @@
 using Content.Server._FinalStand.GameTicking.Rules;
 using Content.Server.Popups;
+using Content.Shared._FinalStand.Ammo;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Weapons.Ranged.Components;
@@ -13,11 +15,14 @@ public sealed class WaveAmmoBoxSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WaveAmmoBoxComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<WaveAmmoBoxComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<WaveAmmoBoxComponent, WaveAmmoBoxRefillDoAfterEvent>(OnRefillDoAfter);
         SubscribeLocalEvent<WaveAmmoBoxComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<WaveEndedEvent>(OnWaveEnded);
     }
@@ -36,7 +41,44 @@ public sealed class WaveAmmoBoxSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, WaveAmmoBoxComponent comp, InteractHandEvent args)
     {
-        var user = args.User;
+        TryStartRefill(uid, comp, args.User);
+        args.Handled = true;
+    }
+
+    private void OnInteractUsing(EntityUid uid, WaveAmmoBoxComponent comp, InteractUsingEvent args)
+    {
+        TryStartRefill(uid, comp, args.User);
+        args.Handled = true;
+    }
+
+    private void TryStartRefill(EntityUid uid, WaveAmmoBoxComponent comp, EntityUid user)
+    {
+        if (!comp.Enabled)
+        {
+            _popup.PopupEntity(Loc.GetString("wave-ammo-box-unpowered"), uid, user);
+            return;
+        }
+
+        if (comp.UsedBy.Contains(user))
+        {
+            _popup.PopupEntity(Loc.GetString("wave-ammo-box-already-used"), uid, user);
+            return;
+        }
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, comp.RefillDuration,
+            new WaveAmmoBoxRefillDoAfterEvent(), uid, target: uid)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+        });
+    }
+
+    private void OnRefillDoAfter(EntityUid uid, WaveAmmoBoxComponent comp, WaveAmmoBoxRefillDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        var user = args.Args.User;
 
         if (!comp.Enabled)
         {
@@ -64,13 +106,9 @@ public sealed class WaveAmmoBoxSystem : EntitySystem
         {
             foreach (var item in container.ContainedEntities)
             {
-                // integrated ammo (revolver, etc.)
                 TryRefill(item);
-
-                // explicitly refill gun magazine slots by known slot names
                 TryRefillGunMag(item);
 
-                // general one-level-deep search (backpack contents, holstered gun mags, etc.)
                 if (!TryComp<ContainerManagerComponent>(item, out var itemMgr))
                     continue;
                 foreach (var inner in itemMgr.Containers.Values)
@@ -85,10 +123,6 @@ public sealed class WaveAmmoBoxSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Handles guns with detachable magazines by looking up the "gun_magazine" slot directly.
-    /// This covers MagazineAmmoProviderComponent and ChamberMagazineAmmoProviderComponent guns.
-    /// </summary>
     private void TryRefillGunMag(EntityUid gun)
     {
         if (_containers.TryGetContainer(gun, SharedGunSystem.MagazineSlot, out var magSlot))

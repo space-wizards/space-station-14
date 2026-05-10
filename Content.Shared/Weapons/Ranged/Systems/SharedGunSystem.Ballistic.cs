@@ -34,6 +34,8 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
 
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterAutoHandleStateEvent>(OnBallisticAfterHandleState);
+
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
 
@@ -212,6 +214,15 @@ public abstract partial class SharedGunSystem
     }
 
     protected abstract void Cycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates);
+
+    private void OnBallisticAfterHandleState(Entity<BallisticAmmoProviderComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // When a magazine's ammo count is synced from server, refresh the ammo counter on the gun holding it.
+        // prediction: false — state application runs outside prediction passes (IsFirstTimePredicted=false),
+        // so the default prediction=true guard would skip the update.
+        var parent = Transform(ent).ParentUid;
+        UpdateAmmoCount(HasComp<GunComponent>(parent) ? parent : ent.Owner, prediction: false);
+    }
 
     private void OnBallisticInit(Entity<BallisticAmmoProviderComponent> ent, ref ComponentInit args)
     {
