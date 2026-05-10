@@ -20,6 +20,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
@@ -56,21 +57,22 @@ namespace Content.Server.Antag;
 /// </remarks>
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
-    [Dependency] private readonly IBanManager _ban = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _pref = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ArrivalsSystem _arrivals = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
-    [Dependency] private readonly JobSystem _jobs = default!;
-    [Dependency] private readonly LoadoutSystem _loadout = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IBanManager _ban = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IServerPreferencesManager _pref = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ArrivalsSystem _arrivals = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private FollowerSystem _follower = default!;
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
+    [Dependency] private JobSystem _jobs = default!;
+    [Dependency] private LoadoutSystem _loadout = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private PlayTimeTrackingSystem _playTime = default!;
+    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -169,6 +171,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         PreSelectSession((rule, select), def, args.Player);
         InitializeAntag((rule, select), def, uid.Value, args.Player);
         args.TookRole = true;
+
+        // Move ghosts that were watching the raffle on the spawner over to the freshly spawned antag.
+        _follower.TransferFollowers(ent.Owner, uid.Value);
+
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
 
