@@ -14,8 +14,8 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public event Action<byte[]>? StartPlayingRequest;
     public event Action? StopPlayingRequest;
