@@ -73,7 +73,10 @@ namespace Content.Server.Voting
             {
                 if (eventArgs.Winner == null)
                 {
-                    var ties = string.Join(", ", eventArgs.Winners.Select(c => options[(int) c]));
+                    var winners = voteOptions.Options
+                        .Where(t => eventArgs.Winners.Contains(t.data))
+                        .Select(t => t.text);
+                    var ties = string.Join(", ", winners);
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished as tie: {ties}");
 
                     if (showResultsInChat)
@@ -81,10 +84,11 @@ namespace Content.Server.Voting
                 }
                 else
                 {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished: {options[(int) eventArgs.Winner]}");
+                    var winner = voteOptions.Options.FirstOrDefault(t => t.data == eventArgs.Winner).text;
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished: {winner}");
 
                     if (showResultsInChat)
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", voteOptions.Title), ("winner", options[(int) eventArgs.Winner])));
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", voteOptions.Title), ("winner", winner)));
                 }
 
                 _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
