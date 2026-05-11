@@ -1,0 +1,321 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Plasmaman
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 0
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 2
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearancePlasmaman
+  categories: [ HideSpawnMenu ]
+  name: plasmaman appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganPlasmamanTorso
+      Head: OrganPlasmamanHead
+      ArmLeft: OrganPlasmamanArmLeft
+      ArmRight: OrganPlasmamanArmRight
+      HandRight: OrganPlasmamanHandRight
+      HandLeft: OrganPlasmamanHandLeft
+      LegLeft: OrganPlasmamanLegLeft
+      LegRight: OrganPlasmamanLegRight
+      FootLeft: OrganPlasmamanFootLeft
+      FootRight: OrganPlasmamanFootRight
+      Brain: OrganPlasmamanBrain
+      Eyes: OrganPlasmamanEyes
+      Tongue: OrganPlasmamanTongue
+      Lungs: OrganPlasmamanLungs
+      Heart: OrganPlasmamanHeart
+      Stomach: OrganPlasmamanStomach
+      Liver: OrganPlasmamanLiver
+      Kidneys: OrganPlasmamanKidneys
+  - type: HumanoidProfile
+    species: Plasmaman
+
+- type: entity
+  parent:
+  - AppearancePlasmaman
+  - BaseSpeciesMobOrganic
+  id: MobPlasmaman
+  name: Urist McPlasma
+  components:
+  - type: Damageable
+    damageModifierSet: Plasmaman
+  - type: PlasmamanOxygenIgnition
+    gas: Oxygen
+    molesToIgnite: 0.5
+    fireStacksPerUpdate: 0.33
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0
+        Heat: 0
+  - type: PlasmamanDash
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Bloodstream
+    bloodlossThreshold: 0
+    bleedReductionAmount: 0
+    maxBleedAmount: 0
+    bloodlossDamage:
+      types:
+        Bloodloss: 0
+    bloodlossHealDamage:
+      types:
+        Bloodloss: 0
+    bloodRefreshAmount: 0
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Plasma
+        Quantity: 600
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: SheetPlasma1
+      amount: 8
+  - type: Temperature
+    currentTemperature: 270.15
+    specificHeat: 46
+    atmosTemperatureTransferEfficiency: 0.02
+  - type: TemperatureSpeed
+    thresholds:
+      1: 1.0
+  - type: TemperatureDamage
+    heatDamageThreshold: 308
+    coldDamageThreshold: 0
+    coldDamage:
+      types:
+        Cold: 0
+    heatDamage:
+      types:
+        Heat: 3
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
+    normalBodyTemperature: 270.15
+    thermalRegulationTemperatureThreshold: 2
+  - type: Speech
+    speechSounds: Alto
+    speechVerb: Skeleton
+
+- type: entity
+  parent: OrganBase
+  id: OrganPlasmaman
+  abstract: true
+  suffix: plasmaman
+
+- type: entity
+  id: OrganPlasmamanMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Plasmaman ]
+
+- type: entity
+  parent: OrganPlasmaman
+  id: OrganPlasmamanInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _EE/Plasmaman/Mobs/Species/Plasmaman/organs.rsi
+
+- type: entity
+  parent: OrganPlasmaman
+  id: OrganPlasmamanExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _EE/Plasmaman/Mobs/Species/Plasmaman/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _EE/Plasmaman/Mobs/Species/Plasmaman/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Plasmaman
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganPlasmamanExternal ]
+  id: OrganPlasmamanTorso
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganPlasmamanExternal ]
+  id: OrganPlasmamanHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.FacialHair
+    - enum.HumanoidVisualLayers.HeadTop
+    - enum.HumanoidVisualLayers.Snout
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganPlasmamanExternal ]
+  id: OrganPlasmamanArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganPlasmamanExternal ]
+  id: OrganPlasmamanArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganPlasmamanExternal ]
+  id: OrganPlasmamanHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganPlasmamanExternal ]
+  id: OrganPlasmamanHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganPlasmamanExternal ]
+  id: OrganPlasmamanLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganPlasmamanExternal ]
+  id: OrganPlasmamanLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganPlasmamanExternal ]
+  id: OrganPlasmamanFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganPlasmamanExternal ]
+  id: OrganPlasmamanFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganPlasmamanInternal ]
+  id: OrganPlasmamanBrain
+  components:
+  - type: Sprite
+    state: brain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganPlasmamanInternal, OrganPlasmamanExternal ]
+  id: OrganPlasmamanEyes
+  components:
+  - type: Sprite
+    layers:
+    - state: eyes
+  - type: VisualOrgan
+    data:
+      sprite: _EE/Plasmaman/Mobs/Customization/plasmaman.rsi
+      state: eyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganPlasmamanInternal ]
+  id: OrganPlasmamanTongue
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
+  id: OrganPlasmamanLungs
+  components:
+  - type: Sprite
+    layers:
+    - state: lungs
+  - type: Metabolizer
+    metabolizerTypes: [ Plasmaman ]
+    stages: [ Respiration ]
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
+  id: OrganPlasmamanHeart
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Plasmaman ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
+  id: OrganPlasmamanStomach
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Plasmaman ]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
+  id: OrganPlasmamanLiver
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes: [ Plasmaman ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
+  id: OrganPlasmamanKidneys
+  components:
+  - type: Sprite
+    layers:
+    - state: kidneys
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Plasmaman ]
+    removeEmpty: true

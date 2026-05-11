@@ -1,0 +1,17 @@
+- type: species
+  id: Plasmaman
+  name: species-name-plasmaman
+  roundStart: true
+  prototype: MobPlasmaman
+  defaultSkinTone: "#a349a4"
+  dollPrototype: AppearancePlasmaman
+  skinColoration: Hues
+  naming: First
+  sexes:
+  - Unsexed
+  minAge: 18
+  youngAge: 60
+  oldAge: 120
+  maxAge: 180
+  maleFirstNames: names_plasmaman
+  femaleFirstNames: names_plasmaman
