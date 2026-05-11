@@ -12,12 +12,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class HijackShuttleConditionSystem : EntitySystem
+public sealed partial class HijackShuttleConditionSystem : EntitySystem
 {
-    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {

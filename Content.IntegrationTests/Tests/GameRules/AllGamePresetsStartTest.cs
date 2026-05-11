@@ -169,7 +169,9 @@ public sealed class AllGamePresetsStartTest : GameTest
         Assert.That(entMan.Count<MapGridComponent>(), Is.GreaterThan(0));
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
 
+        // Clear game preset and return to lobby
         await Pair.WaitCommand("golobby");
+        ticker.SetGamePreset((GamePresetPrototype) null);
         await Pair.RunUntilSynced();
         void AssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
         {
