@@ -33,8 +33,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Sound played when the shuttle has successfully docked with the station.
     /// </summary>
-    [DataField]
-    [AllowStereo]
+    [DataField, AllowStereo]
     public SoundSpecifier DockedAudio = new SoundPathSpecifier("/Audio/Announcements/shuttle_dock.ogg");
 
     /// <summary>
@@ -46,8 +45,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Sound played when the shuttle is unable to dock and instead parks in nearby space.
     /// </summary>
-    [DataField]
-    [AllowStereo]
+    [DataField, AllowStereo]
     public SoundSpecifier NearbyAudio = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     /// <summary>
@@ -59,8 +57,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Sound played when the shuttle is unable to find a station.
     /// </summary>
-    [DataField]
-    [AllowStereo]
+    [DataField, AllowStereo]
     public SoundSpecifier FailureAudio = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     /// <summary>

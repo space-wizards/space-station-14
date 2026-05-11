@@ -146,7 +146,7 @@
     laws: NutimovLawset
 
 - type: entity
-  id: XenoborgLawsetCircuitBoard
+  id: XenoborgCircuitBoard
   parent: BaseSiliconLawboard
   name: law board (Xenoborg)
   suffix: Admeme
@@ -156,7 +156,7 @@
     laws: XenoborgLawset
 
 - type: entity
-  id: MothershipLawsetCircuitBoard
+  id: MothershipCircuitBoard
   parent: BaseSiliconLawboard
   name: law board (Mothership Core)
   suffix: Admeme

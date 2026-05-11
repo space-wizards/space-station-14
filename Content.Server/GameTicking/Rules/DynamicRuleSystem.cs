@@ -11,12 +11,12 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
+public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
+    [Dependency] private RoundEndSystem _roundEnd = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Added(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
