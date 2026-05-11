@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,85 +15,77 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Audio;
 
-public sealed class StereoTest
+public sealed class StereoTest : GameTest
 {
+    [SidedDependency(Side.Server)] private IReflectionManager _sReflectionMan = null!;
+    [SidedDependency(Side.Server)] private IComponentFactory _sCompFactory = null!;
+    [SidedDependency(Side.Client)] private IResourceCache _cResourceCache = null!;
+
     /// <summary>
     /// Scans all registered component and prototype types for <see cref="SoundSpecifier"/> fields, then inspects
     /// every <see cref="EntityPrototype"/> and <see cref="IPrototype"/> instance to make sure that the files assigned to those fields
     /// are in mono format. Fields marked with <see cref="AllowStereoAttribute"/> are exempt from this check.
     /// </summary>
     [Test]
+    [RunOnSide(Side.Client)]
+    [Description($"Tests that all prototype {nameof(SoundSpecifier)} fields use mono audio, unless marked with {nameof(AllowStereoAttribute)}.")]
+    [TrackingIssue("https://github.com/space-wizards/space-station-14/issues/33094")]
     public async Task TestSoundSpecifiers()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        // Find all data definition types that may contain SoundSpecifiers.
+        // We get some false positives, but it's not a big deal.
+        var dataDefinitionTypes = _sReflectionMan.FindTypesWithAttribute<DataDefinitionAttribute>();
+        var dataDefinitions = GetRelevantFields(dataDefinitionTypes);
 
-        var server = pair.Server;
-        var protoMan = server.ProtoMan;
-        var reflectionMan = server.Resolve<IReflectionManager>();
-        var compFactory = server.EntMan.ComponentFactory;
+        // Scan all prototype types for SoundSpecifier and DataDefinition fields
+        var prototypeFields = GetRelevantFields(SProtoMan.EnumeratePrototypeKinds());
 
-        var client = pair.Client;
-        var resCache = client.Resolve<IResourceCache>();
-
-        await client.WaitAssertion(() =>
+        using (Assert.EnterMultipleScope())
         {
-            // Find all data definition types that may contain SoundSpecifiers.
-            // We get some false positives, but it's not a big deal.
-            var dataDefinitionTypes = reflectionMan.FindTypesWithAttribute<DataDefinitionAttribute>();
-            var dataDefinitions = GetRelevantFields(dataDefinitionTypes);
-
-            // Scan all prototype types for SoundSpecifier and DataDefinition fields
-            var prototypeFields = GetRelevantFields(protoMan.EnumeratePrototypeKinds());
-
-            using (Assert.EnterMultipleScope())
+            // Iterate over the flagged prototype types
+            foreach (var (kind, fields) in prototypeFields)
             {
-                // Iterate over the flagged prototype types
-                foreach (var (kind, fields) in prototypeFields)
+                // Inspect all prototype instances of the type
+                foreach (var proto in SProtoMan.EnumeratePrototypes(kind))
                 {
-                    // Inspect all prototype instances of the type
-                    foreach (var proto in protoMan.EnumeratePrototypes(kind))
+                    // Check each flagged field
+                    foreach (var field in fields)
                     {
-                        // Check each flagged field
-                        foreach (var field in fields)
-                        {
-                            // Skip if null
-                            if (field.GetValue(proto) is not { } fieldValue)
-                                continue;
-
-                            CheckValue(fieldValue, $"{kind.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
-                        }
-                    }
-                }
-
-                // Scan all component types for SoundSpecifiers and DataDefinition fields
-                var componentFields = GetRelevantFields(compFactory.AllRegisteredTypes);
-                // Inspect all EntityPrototypes
-                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    // Iterate over the flagged Component types
-                    foreach (var (comp, fields) in componentFields)
-                    {
-                        // Get the registered name of the component type
-                        var compName = compFactory.GetComponentName(comp);
-                        // Get the component data from the prototype, if it has it
-                        if (!proto.Components.TryGetComponent(compName, out var component))
+                        // Skip if null
+                        if (field.GetValue(proto) is not { } fieldValue)
                             continue;
 
-                        // Iterate over the flagged fields
-                        foreach (var field in fields)
-                        {
-                            // Skip if null
-                            if (field.GetValue(component) is not { } fieldValue)
-                                continue;
-
-                            CheckValue(fieldValue, $"{proto.ID}:{comp.Name}.{field.Name}", dataDefinitions, resCache, protoMan);
-                        }
+                        CheckValue(fieldValue, $"{kind.Name}.{field.Name}", dataDefinitions, _cResourceCache, SProtoMan);
                     }
                 }
             }
-        });
 
-        await pair.CleanReturnAsync();
+            // Scan all component types for SoundSpecifiers and DataDefinition fields
+            var componentFields = GetRelevantFields(_sCompFactory.AllRegisteredTypes);
+            // Inspect all EntityPrototypes
+            foreach (var proto in SProtoMan.EnumeratePrototypes<EntityPrototype>())
+            {
+                // Iterate over the flagged Component types
+                foreach (var (comp, fields) in componentFields)
+                {
+                    // Get the registered name of the component type
+                    var compName = _sCompFactory.GetComponentName(comp);
+                    // Get the component data from the prototype, if it has it
+                    if (!proto.Components.TryGetComponent(compName, out var component))
+                        continue;
+
+                    // Iterate over the flagged fields
+                    foreach (var field in fields)
+                    {
+                        // Skip if null
+                        if (field.GetValue(component) is not { } fieldValue)
+                            continue;
+
+                        CheckValue(fieldValue, $"{proto.ID}:{comp.Name}.{field.Name}", dataDefinitions, _cResourceCache, SProtoMan);
+                    }
+                }
+            }
+        }
     }
 
     private static Dictionary<Type, List<FieldInfo>> GetRelevantFields(IEnumerable<Type> types)
