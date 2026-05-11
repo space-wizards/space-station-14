@@ -1,0 +1,107 @@
+- type: loadoutEffectGroup
+  id: PlasmamanBreather
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Plasmaman
+
+# Critical enviro gear is granted by PlasmamanStartingGearSystem on every spawn.
+# Loadouts only add the optional survival box variant for the species so they
+# don't collide with the system-provided envirosuit/helm/gloves/mask/tank.
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGear
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvival
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanCriticalGear
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxHug
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxMime
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvivalEngineering
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvivalMedical
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvivalSecurity
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvivalSyndicate
+
+- type: loadout
+  id: LoadoutSpeciesPlasmamanGearMilitaryDouble
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  storage:
+    back:
+    - BoxSurvivalMilitaryDouble
+
+# Optional explicit picks (do duplicate equipment by design):
+# - LoadoutSpeciesEVAPlasma: extra plasma tank in suitstorage.
+# - LoadoutSpeciesPocketDoublePlasma: extra plasma tank in pocket1.
+- type: loadout
+  id: LoadoutSpeciesEVAPlasma
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  equipment:
+    suitstorage: PlasmaTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoublePlasma
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlasmamanBreather
+  equipment:
+    pocket1: DoubleEmergencyPlasmaTankFilled

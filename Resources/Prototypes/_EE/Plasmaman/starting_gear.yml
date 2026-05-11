@@ -1,0 +1,65 @@
+- type: startingGear
+  id: BasePlasmamanEnviroGear
+  abstract: true
+  equipment:
+    jumpsuit: ClothingUniformEnvirosuit
+    head: ClothingHeadEnvirohelm
+    gloves: ClothingHandsGlovesEnvirogloves
+    mask: ClothingMaskBreath
+    pocket1: DoubleEmergencyPlasmaTankFilled
+
+- type: startingGear
+  id: PlasmamanSurvivalGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvival
+
+- type: startingGear
+  id: PlasmamanSurvivalClownGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxHug
+
+- type: startingGear
+  id: PlasmamanSurvivalMimeGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxMime
+
+- type: startingGear
+  id: PlasmamanSurvivalExtendedGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvivalEngineering
+
+- type: startingGear
+  id: PlasmamanSurvivalMedicalGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvivalMedical
+
+- type: startingGear
+  id: PlasmamanSurvivalSecurityGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvivalSecurity
+
+- type: startingGear
+  id: PlasmamanSurvivalSyndicateGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvivalSyndicate
+
+- type: startingGear
+  id: PlasmamanSurvivalMilitaryDoubleGear
+  parent: BasePlasmamanEnviroGear
+  storage:
+    back:
+    - BoxSurvivalMilitaryDouble

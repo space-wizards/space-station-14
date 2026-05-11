@@ -1,0 +1,83 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformEnvirosuit
+  name: plasma envirosuit
+  description: A special containment suit that lets plasma-based lifeforms exist safely in oxygenated environments.
+  components:
+  - type: Sprite
+    sprite: _EE/Plasmaman/Clothing/Uniforms/Envirosuits/plain.rsi
+  - type: Clothing
+    sprite: _EE/Plasmaman/Clothing/Uniforms/Envirosuits/plain.rsi
+    femaleMask: NoMask
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.85
+  - type: PlasmamanOxygenProtection
+    protectsBody: true
+
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadEnvirohelm
+  name: plasma envirosuit helmet
+  description: A special containment helmet that lets plasma-based lifeforms exist safely in oxygenated environments.
+  components:
+  - type: Sprite
+    sprite: _EE/Plasmaman/Clothing/Head/Envirohelms/plain.rsi
+  - type: Item
+    sprite: _EE/Plasmaman/Clothing/Head/Envirohelms/plain.rsi
+  - type: Clothing
+    sprite: _EE/Plasmaman/Clothing/Head/Envirohelms/plain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.90
+  - type: PlasmamanOxygenProtection
+    protectsHead: true
+
+- type: entity
+  parent: ClothingHeadEnvirohelm
+  id: ClothingHeadEnvirohelmEmpty
+  suffix: Empty
+
+- type: entity
+  parent: ClothingHandsGlovesColorBrown
+  id: ClothingHandsGlovesEnvirogloves
+  name: plasma envirogloves
+  description: Protective gloves intended to seal a plasma envirosuit.
+  components:
+  - type: Insulated
+  - type: Fiber
+    fiberColor: fibers-brown
+
+- type: entity
+  parent: DoubleEmergencyOxygenTank
+  id: DoubleEmergencyPlasmaTank
+  name: double emergency plasma tank
+  description: A dual-tank emergency life support container filled with plasma. Intended for Plasmamen. It can hold 2.5 L of gas.
+  components:
+  - type: Sprite
+    sprite: _EE/Plasmaman/Objects/Tanks/plasmaman.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _EE/Plasmaman/Objects/Tanks/plasmaman.rsi
+  - type: Clothing
+    sprite: _EE/Plasmaman/Objects/Tanks/plasmaman.rsi
+  - type: GasTank
+    air:
+      volume: 2.5
+      temperature: 293.15
+
+- type: entity
+  parent: DoubleEmergencyPlasmaTank
+  id: DoubleEmergencyPlasmaTankFilled
+  suffix: Filled
+  components:
+  - type: GasTank
+    releasePressure: 21.3
+    air:
+      volume: 2.5
+      moles:
+        Plasma: 1.025689525
+      temperature: 293.15
