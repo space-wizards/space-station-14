@@ -53,6 +53,7 @@ public sealed partial class MagicMirrorSystem : EntitySystem
         if (ent.Comp.Target is not { } target)
             return;
 
+
         // Check if the target getting their hair altered has any clothes that hides their hair
         if (CheckHeadSlotOrClothes(target))
         {
@@ -99,8 +100,7 @@ public sealed partial class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(args.Actor, EntityManager))), target, target, PopupType.Medium);
         }
 
-        ent.Comp.DoAfter = doAfterId?.Index;
-        _audio.PlayPredicted(ent.Comp.ChangeHairSound, ent, args.Actor);
+
     }
 
     private void OnSelectSlotDoAfter(Entity<MagicMirrorComponent> ent, ref MagicMirrorSelectDoAfterEvent args)
@@ -112,6 +112,8 @@ public sealed partial class MagicMirrorSystem : EntitySystem
 
         if (ent.Comp.Target != args.Target)
             return;
+
+        _audio.PlayPredicted(ent.Comp.ChangeHairSound, args.Target.Value, args.User);
 
         foreach (var (organ, markings) in args.Markings)
         {
