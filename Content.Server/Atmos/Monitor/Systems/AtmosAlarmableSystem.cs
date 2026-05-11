@@ -15,12 +15,12 @@ using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed class AtmosAlarmableSystem : EntitySystem
+public sealed partial class AtmosAlarmableSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
-    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private AudioSystem _audioSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
 
     /// <summary>
     ///     An alarm. Has three valid states: Normal, Warning, Danger.
@@ -82,7 +82,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     {
         if (component.IgnoreAlarms) return;
 
-        if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
+        if (!TryComp(uid, out DeviceNetworkComponent? netConn))
             return;
 
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
@@ -108,9 +108,9 @@ public sealed class AtmosAlarmableSystem : EntitySystem
                     break;
                 }
 
-                if (args.Data.TryGetValue(AlertTypes, out HashSet<AtmosMonitorThresholdType>? types) && component.MonitorAlertTypes != null)
+                if (args.Data.TryGetValue(AlertTypes, out AtmosMonitorThresholdTypeFlags types) && component.MonitorAlertTypes != AtmosMonitorThresholdTypeFlags.None)
                 {
-                    isValid = types.Any(type => component.MonitorAlertTypes.Contains(type));
+                    isValid = (types & component.MonitorAlertTypes) != 0;
                 }
 
                 if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))

@@ -31,6 +31,22 @@
   objectType: Item
 
 - type: construction
+  id: cardHelmet
+  graph: cardHelmet
+  startNode: start
+  targetNode: cardhelmet
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: cardArmour
+  graph: cardArmour
+  startNode: start
+  targetNode: cardarmour
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
   id: BananaClownMask
   graph: BananaClownMask
   startNode: start

@@ -29,10 +29,7 @@
           - 0.50,0.50
           - -0.50,0.50
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        - DoorPassable
+        - ConveyorMask
         hard: False
   - type: Conveyor
   - type: DeviceNetwork
@@ -57,8 +54,9 @@
     graph: ConveyorGraph
     node: entity
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

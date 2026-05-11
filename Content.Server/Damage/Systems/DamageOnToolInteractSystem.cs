@@ -9,11 +9,11 @@ using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggle
 
 namespace Content.Server.Damage.Systems
 {
-    public sealed class DamageOnToolInteractSystem : EntitySystem
+    public sealed partial class DamageOnToolInteractSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+        [Dependency] private Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
@@ -31,26 +31,26 @@ namespace Content.Server.Damage.Systems
                 return;
 
             if (component.WeldingDamage is {} weldingDamage
-            && EntityManager.TryGetComponent(args.Used, out WelderComponent? welder)
+            && TryComp(args.Used, out WelderComponent? welder)
             && itemToggle.Activated
             && !welder.TankSafe)
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
-
-                if (dmg != null)
+                if (_damageableSystem.TryChangeDamage(args.Target, weldingDamage, out var dmg, origin: args.User))
+                {
                     _adminLogger.Add(LogType.Damaged,
                         $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
+                }
 
                 args.Handled = true;
             }
             else if (component.DefaultDamage is {} damage
                 && _toolSystem.HasQuality(args.Used, component.Tools))
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, damage, origin: args.User);
-
-                if (dmg != null)
+                if (_damageableSystem.TryChangeDamage(args.Target, damage, out var dmg, origin: args.User))
+                {
                     _adminLogger.Add(LogType.Damaged,
                         $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
+                }
 
                 args.Handled = true;
             }

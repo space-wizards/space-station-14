@@ -12,13 +12,13 @@ namespace Content.Server.Physics.Controllers;
 /// <summary>
 /// A system which makes its entity chasing another entity with selected component.
 /// </summary>
-public sealed class ChasingWalkSystem : VirtualController
+public sealed partial class ChasingWalkSystem : VirtualController
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     private readonly HashSet<Entity<IComponent>> _potentialChaseTargets = new();
 
@@ -101,5 +101,11 @@ public sealed class ChasingWalkSystem : VirtualController
 
         _physics.SetLinearVelocity(uid, speed);
         _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+
+        if (component.RotateWithImpulse)
+        {
+            var ang = speed.ToAngle() + Angle.FromDegrees(90); // we want "Up" to be forward, bullet convention.
+            _transform.SetWorldRotation(uid, ang + component.RotationAngleOffset);
+        }
     }
 }

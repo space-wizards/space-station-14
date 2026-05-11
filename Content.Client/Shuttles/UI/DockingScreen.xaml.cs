@@ -14,7 +14,7 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class DockingScreen : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private readonly SharedShuttleSystem _shuttles;
 
     /// <summary>
@@ -67,8 +67,8 @@ public sealed partial class DockingScreen : BoxContainer
     {
         DockingControl.BuildDocks(shuttle);
         var currentDock = DockingControl.ViewedDock;
-        // DockedWith.DisposeAllChildren();
-        DockPorts.DisposeAllChildren();
+        // DockedWith.RemoveAllChildren();
+        DockPorts.RemoveAllChildren();
         _ourDockButtons.Clear();
 
         if (shuttle == null)

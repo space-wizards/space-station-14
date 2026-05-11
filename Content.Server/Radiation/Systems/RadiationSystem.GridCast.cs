@@ -35,7 +35,7 @@ public partial class RadiationSystem
         stopwatch.Start();
 
         _sources.Clear();
-        _sources.EnsureCapacity(EntityManager.Count<RadiationSourceComponent>());
+        _sources.EnsureCapacity(Count<RadiationSourceComponent>());
 
         var sources = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
         var destinations = EntityQueryEnumerator<RadiationReceiverComponent, TransformComponent>();

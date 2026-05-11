@@ -1,31 +1,16 @@
 ﻿# ScatteringGrenade is intended for grenades that spawn entities, especially those with timers
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: GrenadeBase
   id: ScatteringGrenadeBase
   components:
-  - type: Appearance
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
   - type: ScatteringGrenade
-  - type: OnUseTimerTrigger
-    delay: 3
-  - type: Tag
-    tags:
-    - HandGrenade
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSecurityContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, TimerGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
@@ -45,7 +30,7 @@
 - type: entity
   parent: ClusterBang
   id: ClusterBangFull
-  name: ClusterBang
+  name: clusterbang
   description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:
@@ -71,11 +56,14 @@
           Primed: { state: primed }
           Unprimed: { state: icon }
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+    positional: true
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, ScatteringGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
   id: ClusterGrenade
   name: clustergrenade
   description: Why use one grenade when you can use three at once!
@@ -88,7 +76,7 @@
   - type: ScatteringGrenade
     fillPrototype: ExGrenade
     distance: 4
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -96,35 +84,43 @@
     initialBeepDelay: 0
     beepInterval: 0.5
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+    positional: true
   - type: StaticPrice
     price: 2500
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, ImpactGrenadeBase, BaseSyndicateContraband]
   id: ClusterBananaPeel
   name: cluster banana peel
   description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    state: produce
+    layers:
+    - state: produce
   - type: ScatteringGrenade
     fillPrototype: TrashBananaPeelExplosive
     capacity: 6
     delayBeforeTriggerContents: 20
+    triggerKey: trigger
   - type: LandAtCursor
   - type: DamageOnLand
     damage:
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Items/bikehorn.ogg"
+    positional: true
 
 - type: entity
-  parent: [SoapSyndie, ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [SoapSyndie, ScatteringGrenadeBase, ImpactGrenadeBase, BaseSyndicateContraband]
   id: SlipocalypseClusterSoap
   name: slipocalypse clustersoap
   description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
@@ -133,7 +129,9 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
     layers:
     - state: syndie-4
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: ScatteringGrenade
+    triggerKey: trigger
     fillPrototype: SoapletSyndie
     capacity: 30
     delayBeforeTriggerContents: 60
@@ -145,13 +143,16 @@
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: StaticPrice
     price: 1000
 
 - type: entity
-  parent: ScatteringGrenadeBase
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, TimerGrenadeBase]
   id: GrenadeFoamDart
   name: foam dart grenade
   description: Releases a bothersome spray of foam darts that cause severe welching.
@@ -167,7 +168,7 @@
     fillPrototype: BulletFoam
     capacity: 30
     velocity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -175,5 +176,8 @@
     initialBeepDelay: 0
     beepInterval: 2
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true

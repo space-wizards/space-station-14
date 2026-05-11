@@ -9,15 +9,15 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
+public sealed partial class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
 {
-    [Dependency] private readonly ParacusiaSystem _paracusia = default!;
+    [Dependency] private ParacusiaSystem _paracusia = default!;
 
     protected override void Started(EntityUid uid, MassHallucinationsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        var query = EntityQueryEnumerator<MindContainerComponent, HumanoidAppearanceComponent>();
+        var query = EntityQueryEnumerator<MindContainerComponent, HumanoidProfileComponent>();
         while (query.MoveNext(out var ent, out _, out _))
         {
             if (!EnsureComp<ParacusiaComponent>(ent, out var paracusia))

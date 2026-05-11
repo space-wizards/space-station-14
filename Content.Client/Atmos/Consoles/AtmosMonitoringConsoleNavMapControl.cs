@@ -11,7 +11,7 @@ namespace Content.Client.Atmos.Consoles;
 
 public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public bool ShowPipeNetwork = true;
     public int? FocusNetId = null;
@@ -162,10 +162,10 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         {
             var list = new List<AtmosMonitoringConsoleLine>();
 
-            foreach (var ((netId, layer, hexColor), atmosPipeData) in chunk.AtmosPipeData)
+            foreach (var ((netId, layer, pipeColor), atmosPipeData) in chunk.AtmosPipeData)
             {
                 // Determine the correct coloration for the pipe
-                var color = Color.FromHex(hexColor) * _basePipeNetColor;
+                var color = pipeColor * _basePipeNetColor;
 
                 if (FocusNetId != null && FocusNetId != netId)
                     color *= _unfocusedPipeNetColor;

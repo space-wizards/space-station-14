@@ -10,9 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Alerts.Controls
 {
-    public sealed class AlertControl : BaseButton
+    public sealed partial class AlertControl : BaseButton
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         private readonly SpriteSystem _sprite;
 
@@ -57,10 +57,15 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             _sprite = _entityManager.System<SpriteSystem>();
             TooltipSupplier = SupplyTooltip;
             Alert = alert;
+
+            HorizontalAlignment = HAlignment.Left;
             _severity = severity;
             _icon = new SpriteView
             {
-                Scale = new Vector2(2, 2)
+                Scale = new Vector2(2, 2),
+                MaxSize = new Vector2(64, 64),
+                Stretch = SpriteView.StretchMode.None,
+                HorizontalAlignment = HAlignment.Left
             };
 
             SetupIcon();

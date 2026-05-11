@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class MaskSystem : EntitySystem
+public sealed partial class MaskSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private SharedActionsSystem _actionSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -62,27 +62,7 @@ public sealed class MaskSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        if (!mask.IsToggled || !mask.IsToggleable)
-            return;
-
-        mask.IsToggled = false;
-        ToggleMaskComponents(uid, mask, args.Equipee, mask.EquippedPrefix, true);
-    }
-
-    /// <summary>
-    /// Called after setting IsToggled, raises events and dirties.
-    /// </summary>
-    private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, string? equippedPrefix = null, bool isEquip = false)
-    {
-        Dirty(uid, mask);
-        if (mask.ToggleActionEntity is { } action)
-            _actionSystem.SetToggled(action, mask.IsToggled);
-
-        var maskEv = new ItemMaskToggledEvent((uid, mask), wearer);
-        RaiseLocalEvent(uid, ref maskEv);
-
-        var wearerEv = new WearerMaskToggledEvent((uid, mask));
-        RaiseLocalEvent(wearer, ref wearerEv);
+        SetToggled(uid, false);
     }
 
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)

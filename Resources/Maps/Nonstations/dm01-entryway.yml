@@ -3958,8 +3958,6 @@ entities:
     - type: Transform
       pos: 8.5,27.5
       parent: 2
-    - type: Advertise
-      nextAdvertisementTime: 6277.3942716
 - proto: WallPlastitaniumDiagonalIndestructible
   entities:
   - uid: 171

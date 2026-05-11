@@ -6,9 +6,9 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for applying component-registry when artifact effect is activated.
 /// </summary>
-public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
+public sealed partial class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEApplyComponentsComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -21,18 +21,18 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
         foreach (var registry in ent.Comp.Components)
         {
             var componentType = registry.Value.Component.GetType();
-            if (!ent.Comp.ApplyIfAlreadyHave && EntityManager.HasComponent(artifact, componentType))
+            if (!ent.Comp.ApplyIfAlreadyHave && HasComp(artifact, componentType))
             {
                 continue;
             }
 
             if (ent.Comp.RefreshOnReactivate)
             {
-                EntityManager.RemoveComponent(artifact, componentType);
+                RemComp(artifact, componentType);
             }
 
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
-            EntityManager.AddComponent(artifact, clone);
+            AddComp(artifact, clone);
         }
     }
 }

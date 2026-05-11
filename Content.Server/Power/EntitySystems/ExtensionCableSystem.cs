@@ -6,9 +6,9 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class ExtensionCableSystem : EntitySystem
+    public sealed partial class ExtensionCableSystem : EntitySystem
     {
-        [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private SharedMapSystem _map = default!;
 
         public override void Initialize()
         {
@@ -174,7 +174,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnReceiverStarted(Entity<ExtensionCableReceiverComponent> receiver, ref ComponentStartup args)
         {
-            if (EntityManager.TryGetComponent(receiver.Owner, out PhysicsComponent? physicsComponent))
+            if (TryComp(receiver.Owner, out PhysicsComponent? physicsComponent))
             {
                 receiver.Comp.Connectable = physicsComponent.BodyType == BodyType.Static;
             }

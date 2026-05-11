@@ -4,6 +4,7 @@ using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Chat;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
@@ -20,16 +21,16 @@ namespace Content.Server.Delivery;
 /// </summary>
 public sealed partial class DeliverySystem : SharedDeliverySystem
 {
-    [Dependency] private readonly CargoSystem _cargo = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private CargoSystem _cargo = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
 
     /// <summary>
     /// Default reason to use if the penalization is triggered
@@ -102,7 +103,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.WasPenalized)
             return;
 
-        if (!_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo))
+        if (!_protoMan.Resolve(ent.Comp.PenaltyBankAccount, out var accountInfo))
             return;
 
         var multiplier = GetDeliveryMultiplier(ent);
