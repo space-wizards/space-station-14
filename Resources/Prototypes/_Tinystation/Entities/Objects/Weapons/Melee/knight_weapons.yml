@@ -1,0 +1,35 @@
+# Knight Weapons
+
+## Knight's Claymore
+# A holy greatsword blessed for the righteous.
+# Only entities with BibleUserComponent can pick it up or equip it.
+
+- type: entity
+  parent: [ BaseSword, BaseMinorContraband ]
+  id: KnightClaymore
+  name: knight's claymore
+  description: A holy greatsword, forged for the righteous.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 20
+        Holy: 5
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/claymore_storage_64x.rsi
+    shape:
+    - 0,0,1,3
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    slots:
+    - Back
+    - SuitStorage
+  - type: DisarmMalus
+  - type: RequireBibleUser

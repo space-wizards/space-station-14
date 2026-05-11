@@ -11,8 +11,8 @@ public sealed partial class KnightAccentSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
-    [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
-    private static partial Regex BoneRegex();
+    [GeneratedRegex(@"\bmy\s+(?=[aeiouAEIOU])", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex MyBeforeVowelRegex();
 
     public override void Initialize()
     {
@@ -23,24 +23,15 @@ public sealed partial class KnightAccentSystem : EntitySystem
 
     public string Accentuate(string message, KnightAccentComponent component)
     {
-        // Order:
-        // Do character manipulations first
-        // Then direct word/phrase replacements
-        // Then prefix/suffix
-
         var msg = message;
 
-        // Character manipulations:
-        // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
-        msg = BoneRegex().Replace(msg, "bone");
+        msg = MyBeforeVowelRegex().Replace(msg, "mine ");
 
-        // apply word replacements
         msg = _replacement.ApplyReplacements(msg, "knight");
 
-        // Suffix:
         if (_random.Prob(component.ackChance))
         {
-            msg += (" " + Loc.GetString("knight-suffix"));
+            msg += " " + Loc.GetString("knight-suffix");
         }
         return msg;
     }

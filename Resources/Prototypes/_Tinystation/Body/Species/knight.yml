@@ -112,6 +112,13 @@
       Female: Knight
       Unsexed: Knight
   - type: KnightAccent
+  - type: BibleUser
+  - type: KnightLayOnHands
+  - type: KnightRighteousFury
+  - type: ActionGrant
+    actions:
+    - ActionKnightLayOnHands
+    - ActionKnightRighteousFury
   - type: Fixtures
     fixtures:
       fix1:
