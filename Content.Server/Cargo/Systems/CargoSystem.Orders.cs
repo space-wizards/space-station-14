@@ -304,11 +304,9 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
+            var order = new CargoOrderData(GenerateOrderId(orderDatabase), args.Basket, args.Requester, args.Reason, component.Account);
 
-            var order = new CargoOrderData(GenerateOrderId(orderDatabase), args.Basket, args.Requester, args.Reason, targetAccount);
-
-            if (!AddOrder(stationUid.Value, order, orderDatabase))
+            if (!TryAddOrder(stationUid.Value, order, orderDatabase))
             {
                 PlayDenySound(uid, component);
                 return;
@@ -365,15 +363,21 @@ namespace Content.Server.Cargo.Systems
 
             var toDeliver = new List<CargoOrderData>();
 
-            foreach (var order in ent.Comp.Orders.Where(order => order.Approved))
+            foreach (var order in ent.Comp.Orders)
             {
+                if (!order.Approved)
+                    continue;
+
                 if (!order.Basket.Any(item => item.NumOrdered != item.Quantity))
                 {
                     toDeliver.Add(order);
                     continue;
                 }
 
-                if (order.Assigned)
+                if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
+                    continue;
+
+                if (TryExternalFulfillment((ent, stationData), order))
                     continue;
 
                 var ev = new FulfillCargoOrderEvent((ent, stationData), order);
@@ -390,6 +394,23 @@ namespace Content.Server.Cargo.Systems
 
             foreach (var order in toDeliver)
                 DeliveredOrder(ent, order, ent.Comp);
+        }
+
+        private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
+        {
+            // Emagged console when placed. Don't use Telepad
+            if (string.IsNullOrEmpty(order.Approver))
+                return false;
+
+            var ev = new FulfillCargoOrderEvent(station, order);
+            RaiseLocalEvent(ref ev);
+
+            if (!ev.Handled || !TryGetNetEntity(ev.FulfillmentEntity, out var netEnt))
+                return false;
+
+            order.Assigned = true;
+            order.AssignedEntity = netEnt;
+            return true;
         }
 
         private List<CargoOrderData> RelevantOrders(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account, bool approved = false)
@@ -481,12 +502,12 @@ namespace Content.Server.Cargo.Systems
                 $"AddAndApproveOrder {description} added order [orderId:{order.OrderId}, products:{adminString} requester:{order.Requester}, reason:{order.Reason}]");
 
             // Add it to the list
-            return AddOrder(dbUid, order, orderDatabase) && TryFulfillOrder(stationData, order, orderDatabase);
+            return TryAddOrder(dbUid, order, orderDatabase) && TryFulfillOrder(stationData, order, orderDatabase);
         }
 
-        private bool AddOrder(EntityUid dbUid, CargoOrderData data, StationCargoOrderDatabaseComponent orderDatabase)
+        private bool TryAddOrder(EntityUid dbUid, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
         {
-            orderDatabase.Orders.Add(data);
+            orderDatabase.Orders.Add(order);
             UpdateOrders(dbUid);
             return true;
         }

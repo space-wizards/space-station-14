@@ -29,6 +29,8 @@ namespace Content.Shared.Cargo
         public bool Approved;
         [ViewVariables]
         public bool Assigned;
+        [ViewVariables]
+        public NetEntity? AssignedEntity;
         [DataField]
         public string? Approver;
 
