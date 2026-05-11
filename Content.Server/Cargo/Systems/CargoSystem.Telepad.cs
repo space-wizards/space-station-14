@@ -95,13 +95,14 @@ public sealed partial class CargoSystem
                 continue;
             }
 
+            comp.CurrentOrders.RemoveAll(order => order.NumDispatched == order.OrderQuantity);
+
             if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
-            comp.CurrentOrders.RemoveAll(order => order.NumDispatched == order.OrderQuantity);
             var currentOrder = comp.CurrentOrders.First();
             if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
             {
