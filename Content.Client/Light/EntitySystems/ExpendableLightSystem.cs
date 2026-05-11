@@ -16,8 +16,6 @@ public sealed partial class ExpendableLightVisualsSystem : VisualizerSystem<Expe
         base.Initialize();
 
     }
-
-
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
