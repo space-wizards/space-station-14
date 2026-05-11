@@ -419,13 +419,13 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To resist reasonable a lawful search from a member of the security department, or an authorized head of staff.
+        To resist reasonable a lawful search or seizure from a member of the security department, or an authorized head of staff.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        The search must be legal, either through a valid warrant, evidence, or alert level.
-        The perpetrator must have made an active attempt to flee or resist restraint if applicable.
+        The search or seizure must be legal, either through a valid warrant, evidence, or alert level.
+        The perpetrator must have made an active attempt to flee, resist restraint, or refuse to hand over contraband if applicable.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -447,7 +447,7 @@
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         The difference between theft and grand theft is based on how crucial the stolen item is, this mostly is
         used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable
-        machine parts.
+        machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
       </Box>
     </ColorBox>
     <ColorBox>
