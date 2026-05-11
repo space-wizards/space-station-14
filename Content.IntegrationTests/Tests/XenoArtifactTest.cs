@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
+[TestOf(typeof(SharedXenoArtifactSystem))]
 public sealed class XenoArtifactTest : GameTest
 {
     private const string TestArtifact = "TestArtifact";
