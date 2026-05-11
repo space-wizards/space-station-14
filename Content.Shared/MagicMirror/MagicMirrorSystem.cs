@@ -99,6 +99,7 @@ public sealed partial class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(args.Actor, EntityManager))), target, target, PopupType.Medium);
         }
 
+        _audio.PlayPvs(ent.Comp.ChangeHairSound, target);
         ent.Comp.DoAfter = doAfterId?.Index;
     }
 
