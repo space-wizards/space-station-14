@@ -143,7 +143,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // Invalid order
-            if (!IsInAvalibleProducts((uid, component), order.Basket))
+            if (!IsInAvailableProducts((uid, component), order.Basket))
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-products-not-allowed"));
                 PlayDenySound(uid, component);
@@ -170,7 +170,6 @@ namespace Content.Server.Cargo.Systems
             }
 
             order.Approved = true;
-
             _audio.PlayPvs(ApproveSound, uid);
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
@@ -196,6 +195,7 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, products:{adminString} requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
+
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
             UpdateOrders(station.Value);
             UpdateUndeliveredOrders((station.Value, orderDatabase));
@@ -227,7 +227,6 @@ namespace Content.Server.Cargo.Systems
 
         private bool TryFulfillOrder(Entity<StationDataComponent> stationData, List<CargoOrderContainerData> containers, StationCargoOrderDatabaseComponent orderDatabase)
         {
-
             // No slots at the trade station
             _listEnts.Clear();
             GetTradeStations(stationData, ref _listEnts);
@@ -297,7 +296,7 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             // Invalid Order
-            if (!IsInAvalibleProducts((uid, component), args.Basket))
+            if (!IsInAvailableProducts((uid, component), args.Basket))
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-products-not-allowed"));
                 PlayDenySound(uid, component);
@@ -331,6 +330,7 @@ namespace Content.Server.Cargo.Systems
             UpdateOrderState(uid, station);
         }
 
+
         private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
         {
             if (!TryComp<CargoOrderConsoleComponent>(consoleUid, out var console))
@@ -355,7 +355,6 @@ namespace Content.Server.Cargo.Systems
                 ));
             }
         }
-
         private void UpdateUndeliveredOrders(Entity<StationCargoOrderDatabaseComponent> ent)
         {
             if (!TryComp<StationDataComponent>(ent, out var stationData))
@@ -380,20 +379,12 @@ namespace Content.Server.Cargo.Systems
                 if (TryExternalFulfillment((ent, stationData), order))
                     continue;
 
-                var ev = new FulfillCargoOrderEvent((ent, stationData), order);
-                RaiseLocalEvent(ref ev);
-                if (ev.Handled)
-                {
-                    order.Assigned = true;
-                    continue;
-                }
-
                 if (TryFulfillOrder((ent, stationData), order, ent.Comp))
                     toDeliver.Add(order);
             }
 
             foreach (var order in toDeliver)
-                DeliveredOrder(ent, order, ent.Comp);
+                TryDeliveredOrder(ent, order, ent.Comp);
         }
 
         private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
@@ -412,7 +403,6 @@ namespace Content.Server.Cargo.Systems
             order.AssignedEntity = netEnt;
             return true;
         }
-
         private List<CargoOrderData> RelevantOrders(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account, bool approved = false)
         {
             return RelevantOrders(station, station.Comp.Orders, account, approved);
@@ -511,14 +501,13 @@ namespace Content.Server.Cargo.Systems
             UpdateOrders(dbUid);
             return true;
         }
-        private bool DeliveredOrder(EntityUid dbUid, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
+        private bool TryDeliveredOrder(EntityUid dbUid, CargoOrderData order, StationCargoOrderDatabaseComponent orderDatabase)
         {
             orderDatabase.Orders.Remove(order);
             orderDatabase.DeliveredOrders.Add(order);
             UpdateOrders(dbUid);
             return true;
         }
-
         private static int GenerateOrderId(StationCargoOrderDatabaseComponent orderDB)
         {
             // We need an arbitrary unique ID to identify orders, since they may
@@ -690,12 +679,10 @@ namespace Content.Server.Cargo.Systems
             return message;
         }
 
-
-
         /// <summary>
         /// Check if all products in a basket are avalible on a ordering console
         /// </summary>
-        public bool IsInAvalibleProducts(Entity<CargoOrderConsoleComponent> ent, List<CargoOrderItemData> basket)
+        public bool IsInAvailableProducts(Entity<CargoOrderConsoleComponent> ent, List<CargoOrderItemData> basket)
         {
             var availableProducts = GetAvailableProducts(ent);
             foreach (var product in basket)
