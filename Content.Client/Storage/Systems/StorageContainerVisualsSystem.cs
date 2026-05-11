@@ -116,7 +116,7 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         {
             var layer = new PrototypeLayerData();
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
+            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
             var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
 
             // Same check as the one in SolutionContainerVisualsSystem.
