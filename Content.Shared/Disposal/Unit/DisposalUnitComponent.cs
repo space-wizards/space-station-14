@@ -236,6 +236,7 @@ public enum DisposalUnitVisuals : byte
 public enum DisposalUnitVisualLayers : byte
 {
     Base,
+    OverlayFlushing,
     OverlayEngaged,
     OverlayCharging,
     OverlayFull,

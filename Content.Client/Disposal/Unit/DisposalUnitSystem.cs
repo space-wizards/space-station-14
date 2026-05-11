@@ -35,7 +35,7 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
             {
                 new AnimationTrackSpriteFlick()
                 {
-                    LayerKey = DisposalUnitVisualLayers.Base,
+                    LayerKey = DisposalUnitVisualLayers.OverlayFlushing,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(ent.Comp.FlushingState, 0f) },
                 },
             }
