@@ -20,6 +20,9 @@
   - type: ContainerContainer
     containers:
       light_replacer_storage: !type:Container
+  - type: Tag
+    tags:
+    - LightReplacer
 
 - type: entity
   parent: LightReplacer

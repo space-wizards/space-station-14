@@ -8,9 +8,9 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// Generates electricity from lightning bolts
 /// </summary>
-public sealed class TeslaCoilSystem : EntitySystem
+public sealed partial class TeslaCoilSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private BatterySystem _battery = default!;
 
     public override void Initialize()
     {
@@ -24,7 +24,7 @@ public sealed class TeslaCoilSystem : EntitySystem
     {
         if (TryComp<BatteryComponent>(coil, out var batteryComponent))
         {
-            _battery.SetCharge((coil, batteryComponent), batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+            _battery.ChangeCharge((coil, batteryComponent), coil.Comp.ChargeFromLightning);
         }
     }
 }

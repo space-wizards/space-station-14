@@ -1,9 +1,8 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.Body.Components;
+using Content.Shared.Body;
 using Content.Shared.Database;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
@@ -21,15 +20,15 @@ namespace Content.Shared.Materials;
 /// Handles interactions and logic related to <see cref="MaterialReclaimerComponent"/>,
 /// <see cref="CollideMaterialReclaimerComponent"/>, and <see cref="ActiveMaterialReclaimerComponent"/>.
 /// </summary>
-public abstract class SharedMaterialReclaimerSystem : EntitySystem
+public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected SharedAmbientSoundSystem AmbientSound = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedContainerSystem Container = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 

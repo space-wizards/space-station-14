@@ -245,13 +245,13 @@
       supplyRampTolerance: 2500
 
 - type: entity
+  parent: [SolutionTank, SolutionSmall, PortableGeneratorBase]
+  id: PortableGeneratorJrPacman
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
     A small generator capable of powering individual rooms, in case of emergencies.
     Runs off welding fuel and is rated for up to 8 kW.
     Rated ages 3 and up.
-  parent: PortableGeneratorBase
-  id: PortableGeneratorJrPacman
   suffix: Welding Fuel, 8 kW
   components:
     - type: AmbientSound
@@ -303,10 +303,6 @@
       solution: tank
       reagents:
         WeldingFuel: 1
-    - type: SolutionContainerManager
-      solutions:
-        tank:
-          maxVol: 50
     - type: RefillableSolution
       solution: tank
     - type: PortableGenerator

@@ -22,8 +22,9 @@
         layer:
         - TableLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: IconSmooth
     key: state
     base: state_
@@ -79,8 +80,9 @@
         layer:
         - TableLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: IconSmooth
     key: state
     base: state_
@@ -122,8 +124,9 @@
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: IconSmooth
     key: state
     base: state_
@@ -166,8 +169,9 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -229,8 +233,11 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
-            min: 2
-            max: 2
+            min: 0
+            max: 1
+          SheetPlasteel1:
+            min: 0
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
@@ -319,8 +326,9 @@
         Blunt: 15
     tableMassLimit: 40
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -480,8 +488,9 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/brass.rsi
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -534,7 +543,7 @@
         acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WoodDestroy
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -715,6 +724,12 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25
@@ -927,8 +942,9 @@
     sprite: Structures/Furniture/Tables/counterwood.rsi
     state: full
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -973,8 +989,9 @@
     sprite: Structures/Furniture/Tables/countermetal.rsi
     state: full
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
