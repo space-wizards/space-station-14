@@ -314,10 +314,10 @@ internal static class SkinColorationUtils
     public const float EpsilonHue = 0.00277f;
 
     /// <summary>
-    /// A value derived by dividing 1 by 256.
-    /// Due to the way these values are stored and deconstructed we can't expect much more precision than this..
+    /// Due to RGB colors being clamped to 8 bits, precision is lost during transformation to HSL or HSV.
+    /// The precision of the result is approximately 1/180.
     /// </summary>
-    public const float Epsilon = 0.00390625f;
+    public const float Epsilon = 0.0056f;
 
     /// <summary>
     /// Checks if a hue value is within a specified range, correctly handling ranges that wrap around 1.0 (e.g., reds).

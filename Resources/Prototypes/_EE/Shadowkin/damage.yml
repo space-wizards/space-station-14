@@ -1,0 +1,8 @@
+- type: damageModifierSet
+  id: Shadowkin
+  coefficients:
+    Slash: 1.2
+    Piercing: 1.1
+    Heat: 1.2
+    Asphyxiation: 0.5
+    Cold: 0.8

@@ -1,0 +1,432 @@
+- type: markingsGroup
+  parent: Undergarments
+  id: Shadowkin
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      onlyGroupWhitelisted: true
+      required: false
+    enum.HumanoidVisualLayers.Head:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.HeadTop:
+      limit: 1
+      required: true
+      default: [ EarsShadowkin ]
+    enum.HumanoidVisualLayers.HeadSide:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Tail:
+      limit: 1
+      required: true
+      default: [ TailShadowkin ]
+    enum.HumanoidVisualLayers.LArm:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 6
+      required: false
+    enum.HumanoidVisualLayers.UndergarmentTop:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.UndergarmentBottom:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceShadowkin
+  categories: [ HideSpawnMenu ]
+  name: shadowkin appearance
+  components:
+  - type: InitialBody
+    organs:
+      Torso: OrganShadowkinTorso
+      Head: OrganShadowkinHead
+      ArmLeft: OrganShadowkinArmLeft
+      ArmRight: OrganShadowkinArmRight
+      HandRight: OrganShadowkinHandRight
+      HandLeft: OrganShadowkinHandLeft
+      LegLeft: OrganShadowkinLegLeft
+      LegRight: OrganShadowkinLegRight
+      FootLeft: OrganShadowkinFootLeft
+      FootRight: OrganShadowkinFootRight
+      Brain: OrganShadowkinBrain
+      Eyes: OrganShadowkinEyes
+      Tongue: OrganShadowkinTongue
+      Appendix: OrganShadowkinAppendix
+      Ears: OrganShadowkinEars
+      Lungs: OrganShadowkinCore
+      Heart: OrganShadowkinHeart
+      Stomach: OrganShadowkinStomach
+      Liver: OrganShadowkinLiver
+      Kidneys: OrganShadowkinKidneys
+  - type: HumanoidProfile
+    species: Shadowkin
+  - type: ScaleVisuals
+    scale: 0.85, 0.85
+
+- type: entity
+  parent:
+  - AppearanceShadowkin
+  - BaseSpeciesMobOrganic
+  id: MobShadowkin
+  name: Urist McShadow
+  components:
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#1c1624"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Critical
+      180: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      48: 0.85
+      64: 0.65
+  - type: Damageable
+    damageModifierSet: Shadowkin
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShadowkinShadow:
+            min: 1
+            max: 1
+          EffectFlashShadowkinShadeskip:
+            min: 1
+            max: 1
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:BurnBodyBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 15
+      behaviors:
+      - !type:PopupBehavior
+        popup: mouth-taste-metal
+        popupType: LargeCaution
+        targetOnly: true
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 40
+      behaviors:
+      - !type:VomitBehavior
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.7
+    baseSprintSpeed: 4.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: BlackBlood
+        Quantity: 600
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Temperature
+    specificHeat: 46
+  - type: TemperatureDamage
+    heatDamageThreshold: 330
+    coldDamageThreshold: 195
+    coldDamage:
+      types:
+        Cold: 0.05
+    heatDamage:
+      types:
+        Heat: 0.25
+  - type: TypingIndicator
+    proto: alien
+  # Лучше переносят разгерметизацию: меньше Blunt и убран Heat-канал.
+  # База: Blunt 0.50 + Heat 0.1 = 0.60/сек урона в вакууме. Здесь: 0.35/сек, на 42% меньше.
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.35
+  # Медленная регенерация порезов и ожогов в сознании; не работает в крите.
+  # Переопределяет базовое значение из BaseSpeciesMobOrganic (там Brute по 0.05 на тип).
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Heat: -0.07
+      groups:
+        Brute: -0.07
+  - type: Vocal
+    sounds:
+      Male: UnisexShadowkin
+      Female: UnisexShadowkin
+      Unsexed: UnisexShadowkin
+  # Сохраняем speechSounds: Alto из BaseSpeciesMob, иначе бип-блип в чате пропадает
+  - type: Speech
+    speechSounds: Alto
+    allowedEmotes: [ 'Mars', 'Wurble' ]
+  - type: ShadowkinAbility
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+
+- type: entity
+  parent: OrganBase
+  id: OrganShadowkin
+  abstract: true
+  suffix: shadowkin
+
+- type: entity
+  id: OrganShadowkinMetabolizer
+  abstract: true
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Shadowkin ]
+
+- type: entity
+  parent: OrganShadowkin
+  id: OrganShadowkinInternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _EE/Shadowkin/Mobs/Species/organs.rsi
+
+- type: entity
+  parent: OrganShadowkin
+  id: OrganShadowkinExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Shadowkin
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganShadowkinExternal ]
+  id: OrganShadowkinTorso
+
+- type: entity
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganShadowkinExternal ]
+  id: OrganShadowkinHead
+  components:
+  - type: VisualOrganMarkings
+    hideableLayers:
+    - enum.HumanoidVisualLayers.Hair
+    - enum.HumanoidVisualLayers.FacialHair
+    - enum.HumanoidVisualLayers.HeadTop
+    - enum.HumanoidVisualLayers.HeadSide
+    - enum.HumanoidVisualLayers.Snout
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganShadowkinExternal ]
+  id: OrganShadowkinArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganShadowkinExternal ]
+  id: OrganShadowkinArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganShadowkinExternal ]
+  id: OrganShadowkinHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganShadowkinExternal ]
+  id: OrganShadowkinHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganShadowkinExternal ]
+  id: OrganShadowkinLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganShadowkinExternal ]
+  id: OrganShadowkinLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganShadowkinExternal ]
+  id: OrganShadowkinFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganShadowkinExternal ]
+  id: OrganShadowkinFootRight
+
+- type: entity
+  parent: [ OrganBaseBrain, OrganShadowkinInternal ]
+  id: OrganShadowkinBrain
+  components:
+  - type: Sprite
+    state: brain
+
+- type: entity
+  parent: [ OrganBaseEyes, OrganShadowkinInternal, OrganShadowkinExternal ]
+  id: OrganShadowkinEyes
+  components:
+  - type: Sprite
+    layers:
+    - state: eyes
+  - type: VisualOrgan
+    data:
+      sprite: _EE/Shadowkin/Mobs/Species/parts.rsi
+      state: eyes
+
+- type: entity
+  parent: [ OrganBaseTongue, OrganShadowkinInternal ]
+  id: OrganShadowkinTongue
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  parent: [ OrganBaseAppendix, OrganShadowkinInternal ]
+  id: OrganShadowkinAppendix
+  components:
+  - type: Sprite
+    layers:
+    - state: appendix
+
+- type: entity
+  parent: [ OrganBaseEars, OrganShadowkinInternal ]
+  id: OrganShadowkinEars
+  components:
+  - type: Sprite
+    state: ears
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
+  id: OrganShadowkinCore
+  components:
+  - type: Sprite
+    layers:
+    - state: core
+  - type: Metabolizer
+    metabolizerTypes: [ Shadowkin ]
+    stages: [ Respiration ]
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
+  id: OrganShadowkinHeart
+  components:
+  - type: Sprite
+    state: heart
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Shadowkin ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
+  id: OrganShadowkinStomach
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 40
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Shadowkin ]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  parent: [ OrganBaseLiver, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
+  id: OrganShadowkinLiver
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes: [ Shadowkin ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+
+- type: entity
+  parent: [ OrganBaseKidneys, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
+  id: OrganShadowkinKidneys
+  components:
+  - type: Sprite
+    layers:
+    - state: kidneys
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Shadowkin ]
+    removeEmpty: true

@@ -1,0 +1,69 @@
+- type: emote
+  id: Mars
+  name: chat-emote-name-mars
+  category: Vocal
+  available: false
+  chatMessages: ["chat-emote-msg-mars"]
+  chatTriggers:
+    - mars
+    - marred
+
+- type: emote
+  id: Wurble
+  name: chat-emote-name-wurble
+  category: Vocal
+  available: false
+  chatMessages: ["chat-emote-msg-wurble"]
+  chatTriggers:
+    - wurble
+    - wurbles
+    - wurbled
+    - wurbling
+
+- type: emoteSounds
+  id: UnisexShadowkin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Mars:
+      collection: Mars
+    Wurble:
+      collection: Wurble
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+
+- type: soundCollection
+  id: Mars
+  files:
+  - /Audio/_EE/Shadowkin/Voice/mar.ogg
+
+- type: soundCollection
+  id: Wurble
+  files:
+  - /Audio/_EE/Shadowkin/Voice/wurble.ogg

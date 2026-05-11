@@ -7,7 +7,7 @@ namespace Content.Shared.EntityConditions;
 /// </summary>
 public sealed partial class SharedEntityConditionsSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     /// <summary>
     /// <c>TryCondition</c> overload that uses a <see cref="EntityConditionPrototype"/> instead of <see cref="EntityCondition"/>.
