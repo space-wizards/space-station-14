@@ -1,0 +1,57 @@
+- type: cargoProduct
+  id: EmergencyPlasmaInternals
+  icon:
+    sprite: _EE/Plasmaman/Objects/Tanks/plasmaman.rsi
+    state: icon
+  product: CratePlasmaInternals
+  cost: 750
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyPlasmamanEnvirosuit
+  icon:
+    sprite: _EE/Plasmaman/Clothing/Uniforms/Envirosuits/plain.rsi
+    state: icon
+  product: CratePlasmamanEnvirosuit
+  cost: 600
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: entity
+  parent: CrateInternals
+  id: CratePlasmaInternals
+  name: internals crate (plasma)
+  description: Contains two breath masks, two gas masks, and four plasma internals tanks. Intended for Plasmamen.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskGas
+          amount: 2
+        - id: ClothingMaskBreath
+          amount: 2
+        - id: DoubleEmergencyPlasmaTankFilled
+          amount: 4
+
+- type: entity
+  parent: CrateInternals
+  id: CratePlasmamanEnvirosuit
+  name: plasma envirosuit crate
+  description: Contains two full sets of envirosuits, two breath masks, and two plasma internals tanks. Intended for Plasmamen.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingUniformEnvirosuit
+          amount: 2
+        - id: ClothingHeadEnvirohelmEmpty
+          amount: 2
+        - id: ClothingHandsGlovesEnvirogloves
+          amount: 2
+        - id: ClothingMaskBreath
+          amount: 2
+        - id: DoubleEmergencyPlasmaTankFilled
+          amount: 2

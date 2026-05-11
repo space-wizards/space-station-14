@@ -40,6 +40,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
     [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly IDependencyCollection _dependencies = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -105,6 +106,10 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             {
                 loadout = new RoleLoadout(jobLoadout);
                 loadout.SetDefault(profile, _actors.GetSession(entity), _prototypeManager);
+            }
+            else if (profile != null)
+            {
+                loadout.EnsureValid(profile, _actors.GetSession(entity), _dependencies);
             }
         }
 
