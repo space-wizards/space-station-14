@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -59,24 +59,24 @@ public enum VehicleVisuals : byte
 /// Values are configured before this event is raised.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct OnVehicleEnteredEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
+public record struct OnVehicleEnteredEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on operator when they stop operating a vehicle.
 /// Values are configured after this event is raised.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
+public record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on the vehicle after an operator is set.
 /// New operator can be null.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator, EntityUid? OldOperator);
+public record struct VehicleOperatorSetEvent(EntityUid? NewOperator, EntityUid? OldOperator);
 
 /// <summary>
 /// Event raised on a vehicle to check if it can run/move around.
 /// </summary>
 [ByRefEvent, UsedImplicitly]
-public readonly record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
+public record struct VehicleCanRunEvent(Entity<VehicleComponent> Vehicle, bool CanRun = true);
