@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Audio;
 
-public sealed class StereoTest : GameTest
+public sealed partial class StereoTest : GameTest
 {
     [SidedDependency(Side.Server)] private IReflectionManager _sReflectionMan = null!;
     [SidedDependency(Side.Server)] private IComponentFactory _sCompFactory = null!;
