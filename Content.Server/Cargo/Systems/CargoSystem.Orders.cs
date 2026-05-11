@@ -292,9 +292,7 @@ namespace Content.Server.Cargo.Systems
             if (!GetAvailableProducts((uid, component)).Contains(args.CargoProductId))
                 return;
 
-            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
-
-            var order = new CargoOrderData(GenerateOrderId(orderDatabase), args.CargoProductId, args.Amount, args.Requester, args.Reason, targetAccount);
+            var order = new CargoOrderData(GenerateOrderId(orderDatabase), args.CargoProductId, args.Amount, args.Requester, args.Reason, component.Account);
 
             if (!TryAddOrder(stationUid.Value, order, orderDatabase))
             {
@@ -346,24 +344,22 @@ namespace Content.Server.Cargo.Systems
 
             var toDeliver = new List<CargoOrderData>();
 
-            foreach (var order in ent.Comp.Orders.Where(order => order.Approved))
+            foreach (var order in ent.Comp.Orders)
             {
+                if (!order.Approved)
+                    continue;
+
                 if (order.NumDispatched >= order.OrderQuantity)
                 {
                     toDeliver.Add(order);
                     continue;
                 }
 
-                if (order.Assigned)
+                if (order.Assigned && TryGetEntity(order.AssignedEntity, out var _))
                     continue;
 
-                var ev = new FulfillCargoOrderEvent((ent, stationData), order);
-                RaiseLocalEvent(ref ev);
-                if (ev.Handled)
-                {
-                    order.Assigned = true;
+                if (TryExternalFulfillment((ent, stationData), order))
                     continue;
-                }
 
                 if (TryFulfillOrder((ent, stationData), order, ent.Comp) && order.NumDispatched >= order.OrderQuantity)
                     toDeliver.Add(order);
@@ -373,6 +369,22 @@ namespace Content.Server.Cargo.Systems
                 TryDeliveredOrder(ent, order, ent.Comp);
         }
 
+        private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
+        {
+            // Emagged console when placed. Don't use Telepad
+            if (string.IsNullOrEmpty(order.Approver))
+                return false;
+
+            var ev = new FulfillCargoOrderEvent(station, order);
+            RaiseLocalEvent(ref ev);
+
+            if (!ev.Handled || !TryGetNetEntity(ev.FulfillmentEntity, out var netEnt))
+                return false;
+
+            order.Assigned = true;
+            order.AssignedEntity = netEnt;
+            return true;
+        }
         private List<CargoOrderData> RelevantOrders(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account, bool approved = false)
         {
             return RelevantOrders(station, station.Comp.Orders, account, approved);

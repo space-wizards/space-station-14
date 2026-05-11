@@ -11,6 +11,7 @@ using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Emag.Systems;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -127,28 +128,12 @@ public sealed partial class CargoSystem
 
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.CurrentOrders.Count == 0)
-            return;
-
-        if (_station.GetStations().Count == 0)
-            return;
-
-        if (_station.GetOwningStation(ent) is not { } station)
-        {
-            station = _random.Pick(_station.GetStations().Where(HasComp<StationCargoOrderDatabaseComponent>).ToList());
-        }
-
-        if (!TryComp<StationCargoOrderDatabaseComponent>(station, out var db) ||
-            !TryComp<StationDataComponent>(station, out var data))
-            return;
-
-        if (!TryGetLinkedConsole(ent, out var console))
-            return;
-
         foreach (var order in ent.Comp.CurrentOrders)
         {
             order.Assigned = false;
+            order.AssignedEntity = null;
         }
+        ent.Comp.CurrentOrders.Clear();
     }
 
     private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
