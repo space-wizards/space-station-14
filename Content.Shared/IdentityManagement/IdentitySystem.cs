@@ -3,11 +3,13 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Clothing;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Verbs;
 using Content.Shared.Preferences;
 using Content.Shared.VoiceMask;
 using Robust.Shared.Containers;
@@ -20,16 +22,17 @@ namespace Content.Shared.IdentityManagement;
 /// <summary>
 /// Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public sealed class IdentitySystem : EntitySystem
+public sealed partial class IdentitySystem : EntitySystem
 {
-    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
-    [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private GrammarSystem _grammarSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private HumanoidProfileSystem _humanoidProfile = default!;
+    [Dependency] private SharedIdCardSystem _idCard = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";
@@ -56,6 +59,8 @@ public sealed class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, VoiceMaskNameUpdatedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+
+        SubscribeLocalEvent<IdentityBlockerComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
     }
 
     /// <summary>
@@ -120,6 +125,43 @@ public sealed class IdentitySystem : EntitySystem
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
         Dirty(ent);
+    }
+
+    private void OnDetailedExamine(EntityUid ent, IdentityBlockerComponent component, ref GetVerbsEvent<ExamineVerb> args)
+    {
+        var coverage = component.Coverage;
+
+        string coverageText;
+        string iconTexture;
+
+        switch (coverage)
+        {
+            case IdentityBlockerCoverage.MOUTH:
+                coverageText = "identity-block-coverage-text-mouth";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-mouth.svg.192dpi.png";
+                break;
+
+            case IdentityBlockerCoverage.EYES:
+                coverageText = "identity-block-coverage-text-eyes";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-eyes.svg.192dpi.png";
+                break;
+
+            case IdentityBlockerCoverage.FULL:
+                coverageText = "identity-block-coverage-text-full";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-mask.svg.192dpi.png";
+                break;
+
+            default:
+                // technically the coverage can be NONE, so we return just in case
+                return;
+        }
+
+        _examine.AddHoverExamineVerb(args,
+            component,
+            Loc.GetString("identity-block-examinable-verb-text"),
+            Loc.GetString(coverageText),
+            iconTexture
+        );
     }
 
     #endregion
