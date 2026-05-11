@@ -10,12 +10,18 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class XenoArtifactTest : GameTest
 {
+    private const string TestArtifact = "TestArtifact";
+    private const string TestArtifactNode = "TestArtifactNode";
+    private const string TestGenArtifactFlat = "TestGenArtifactFlat";
+    private const string TestGenArtifactTall = "TestGenArtifactTall";
+    private const string TestGenArtifactFull = "TestGenArtifactFull";
+
     [SidedDependency(Side.Server)] private SharedXenoArtifactSystem _sArtifactSystem = null!;
 
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: entity
-  id: TestArtifact
+  id: {TestArtifact}
   parent: BaseXenoArtifact
   name: artifact
   components:
@@ -25,7 +31,7 @@ public sealed class XenoArtifactTest : GameTest
       tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
-  id: TestGenArtifactFlat
+  id: {TestGenArtifactFlat}
   parent: BaseXenoArtifact
   name: artifact
   components:
@@ -44,7 +50,7 @@ public sealed class XenoArtifactTest : GameTest
       tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
-  id: TestGenArtifactTall
+  id: {TestGenArtifactTall}
   parent: BaseXenoArtifact
   name: artifact
   components:
@@ -63,7 +69,7 @@ public sealed class XenoArtifactTest : GameTest
       tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
-  id: TestGenArtifactFull
+  id: {TestGenArtifactFull}
   name: artifact
   components:
   - type: XenoArtifact
@@ -81,7 +87,7 @@ public sealed class XenoArtifactTest : GameTest
       tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
-  id: TestArtifactNode
+  id: {TestArtifactNode}
   name: artifact node
   components:
   - type: XenoArtifactNode
@@ -96,13 +102,13 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifactUid = SSpawn("TestArtifact");
+            var artifactUid = SSpawn(TestArtifact);
             var artifactEnt = (artifactUid, comp: SComp<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node1, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node2, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node3, false));
 
             Assert.That(_sArtifactSystem.GetAllNodeIndices(artifactEnt).Count(), Is.EqualTo(3));
 
@@ -141,15 +147,15 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifactUid = SSpawn("TestArtifact");
+            var artifactUid = SSpawn(TestArtifact);
             var artifactEnt = (artifactUid, comp: SComp<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node1, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node2, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node3, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node4, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node5, false));
 
             Assert.That(_sArtifactSystem.GetAllNodeIndices(artifactEnt).Count(), Is.EqualTo(5));
 
@@ -181,13 +187,13 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifactUid = SSpawn("TestArtifact");
+            var artifactUid = SSpawn(TestArtifact);
             var artifactEnt = (artifactUid, comp: SComp<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node1, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node2, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node3, false));
 
             // Add connection: 1 -> 2 -> 3
             _sArtifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
@@ -206,7 +212,7 @@ public sealed class XenoArtifactTest : GameTest
             Assert.That(_sArtifactSystem.GetIndex(artifactEnt, node3!.Value), Is.EqualTo(2));
 
             // Add a new node, resizing the original adjacency matrix and array.
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node4));
 
             // Check that our connections haven't changed.
             Assert.That(_sArtifactSystem.NodeHasEdge(artifactEnt, node1.Value, node2.Value));
@@ -235,13 +241,13 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifactUid = SSpawn("TestArtifact");
+            var artifactUid = SSpawn(TestArtifact);
             var artifactEnt = (artifactUid, Comp: SComp<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node1, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node2, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node3, false));
 
             // Add connection: 1 -> 2 -> 3
             _sArtifactSystem.AddEdge(artifactEnt, node1!.Value, node2!.Value, false);
@@ -262,7 +268,7 @@ public sealed class XenoArtifactTest : GameTest
             Assert.That(artifactEnt.Comp.NodeAdjacencyMatrixRows, Is.EqualTo(3));
             Assert.That(artifactEnt.Comp.NodeAdjacencyMatrixColumns, Is.EqualTo(3));
 
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node4, false));
 
             // Make sure that adding in a new node didn't add a new slot but instead re-used the middle slot.
             Assert.That(artifactEnt.Comp.NodeAdjacencyMatrixRows, Is.EqualTo(3));
@@ -285,17 +291,17 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifactUid = SSpawn("TestArtifact");
+            var artifactUid = SSpawn(TestArtifact);
             Entity<XenoArtifactComponent> artifactEnt = (artifactUid, SComp<XenoArtifactComponent>(artifactUid));
 
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node3, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node4, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node5, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node6, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node7, false));
-            Assert.That(_sArtifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node8, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node1, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node2, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node3, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node4, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node5, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node6, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node7, false));
+            Assert.That(_sArtifactSystem.AddNode(artifactEnt, TestArtifactNode, out var node8, false));
 
             //                       /----( 6 )
             //           /----[*3 ]-/----( 7 )----( 8 )
@@ -336,7 +342,7 @@ public sealed class XenoArtifactTest : GameTest
     {
         await Server.WaitPost(() =>
         {
-            var artifact1Uid = SSpawn("TestGenArtifactFlat");
+            var artifact1Uid = SSpawn(TestGenArtifactFlat);
             Entity<XenoArtifactComponent> artifact1Ent = (artifact1Uid, SComp<XenoArtifactComponent>(artifact1Uid));
 
             var segments1 = _sArtifactSystem.GetSegments(artifact1Ent);
@@ -344,14 +350,14 @@ public sealed class XenoArtifactTest : GameTest
             Assert.That(segments1[0], Has.Count.EqualTo(1));
             Assert.That(segments1[1], Has.Count.EqualTo(1));
 
-            var artifact2Uid = SSpawn("TestGenArtifactTall");
+            var artifact2Uid = SSpawn(TestGenArtifactTall);
             Entity<XenoArtifactComponent> artifact2Ent = (artifact2Uid, SComp<XenoArtifactComponent>(artifact2Uid));
 
             var segments2 = _sArtifactSystem.GetSegments(artifact2Ent);
             Assert.That(segments2, Has.Count.EqualTo(1));
             Assert.That(segments2[0], Has.Count.EqualTo(2));
 
-            var artifact3Uid = SSpawn("TestGenArtifactFull");
+            var artifact3Uid = SSpawn(TestGenArtifactFull);
             Entity<XenoArtifactComponent> artifact3Ent = (artifact3Uid, SComp<XenoArtifactComponent>(artifact3Uid));
 
             var segments3 = _sArtifactSystem.GetSegments(artifact3Ent);
