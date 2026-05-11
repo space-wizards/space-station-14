@@ -8,9 +8,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Systems;
 
-public sealed class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComponent>
+public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVisualsComponent>
 {
-    [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private ItemSystem _itemSystem = default!;
 
     public override void Initialize()
     {
