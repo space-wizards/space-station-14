@@ -2,6 +2,7 @@ using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -9,10 +10,11 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 
 public sealed class RiggableTest : InteractionTest
 {
-    // Both the user and the explosion victim
     private static readonly EntProtoId HumanProtoId = "MobHuman";
     private static readonly EntProtoId BatteryProto = "PowerCellSmall";
     private static readonly EntProtoId FlashlightProto = "EmptyFlashlightLantern";
+    private static readonly EntProtoId PlasmaSyringeProto = "TestPlasmaSyringe";
+    private static readonly EntProtoId StunbatonProto = "Stunbaton";
 
     [TestPrototypes]
     private const string Prototypes = @"
@@ -36,6 +38,9 @@ public sealed class RiggableTest : InteractionTest
         Quantity: 15
 ";
 
+    /// <summary>
+    /// Gives the player a power cell, injects it with different solutions and tests the rigged cell in a flashlight
+    /// </summary>
     [Test]
     [TestCase("TestPlasmaSyringe", ExpectedResult = true)]
     [TestCase("TestMilkSyringe", ExpectedResult = false)]
@@ -79,5 +84,37 @@ public sealed class RiggableTest : InteractionTest
             // Nothing happened
             return false;
         }
+    }
+
+    /// <summary>
+    /// Gives the player an activated stunbaton and tests that it explodes immediately on plasma injection
+    /// </summary>
+    [Test]
+    public async Task RigActivatedTest()
+    {
+        var damageSys = SEntMan.System<DamageableSystem>();
+
+        await AddAtmosphere();
+        await SpawnTarget(HumanProtoId);
+
+        Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
+        Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
+            "Player spawned with damage.");
+
+        var baton = await PlaceInHands(StunbatonProto);
+
+        Assert.That(Comp<ItemToggleComponent>(baton).Activated, Is.True, "Stunbaton did not activate");
+
+        // Rig the baton
+        await PlaceInHands(PlasmaSyringeProto);
+        await Interact();
+
+        await RunTicks(5);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Rigged stunbaton did not explode?");
+            AssertDeleted(baton);
+        });
     }
 }
