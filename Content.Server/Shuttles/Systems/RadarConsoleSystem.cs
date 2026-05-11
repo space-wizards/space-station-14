@@ -6,10 +6,10 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
+public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem
 {
-    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private ShuttleConsoleSystem _console = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

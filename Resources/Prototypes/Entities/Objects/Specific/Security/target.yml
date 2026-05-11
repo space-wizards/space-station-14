@@ -25,6 +25,7 @@
   - type: InteractionOutline
   - type: Physics
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

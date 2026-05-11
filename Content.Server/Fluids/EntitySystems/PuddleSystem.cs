@@ -28,14 +28,14 @@ namespace Content.Server.Fluids.EntitySystems;
 /// </summary>
 public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
@@ -294,20 +294,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         Solution addedSolution,
         bool sound = true,
         bool checkForOverflow = true,
-        PuddleComponent? puddleComponent = null,
-        SolutionContainerManagerComponent? sol = null)
+        PuddleComponent? puddleComponent = null)
     {
-        if (!Resolve(puddleUid, ref puddleComponent, ref sol))
+        if (!Resolve(puddleUid, ref puddleComponent))
             return false;
 
-        _solutionContainerSystem.EnsureAllSolutions((puddleUid, sol));
-
-        if (addedSolution.Volume == 0 ||
-            !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName,
-                ref puddleComponent.Solution))
-        {
+        if (addedSolution.Volume == 0 || !_solutionContainerSystem.ResolveSolution(puddleUid, puddleComponent.SolutionName, ref puddleComponent.Solution))
             return false;
-        }
 
         _solutionContainerSystem.AddSolution(puddleComponent.Solution.Value, addedSolution);
 
