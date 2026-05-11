@@ -42,13 +42,10 @@ public sealed partial class CargoSystem
 
             // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
             if (!TryGetLinkedConsole((uid, tele), out var console) ||
-                console.Value.Owner != args.OrderConsole.Owner)
+                console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder)
                 continue;
 
-            for (var i = 0; i < args.Order.OrderQuantity; i++)
-            {
-                tele.CurrentOrders.Add(args.Order);
-            }
+            tele.CurrentOrders.Add(args.Order);
             tele.Accumulator = tele.Delay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
@@ -104,15 +101,16 @@ public sealed partial class CargoSystem
                 continue;
             }
 
+            comp.CurrentOrders.RemoveAll(order => order.NumDispatched == order.OrderQuantity);
             var currentOrder = comp.CurrentOrders.First();
             if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, comp.PrinterOutput))
             {
+                currentOrder.NumDispatched++;
                 _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentOrders.Remove(currentOrder);
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
@@ -148,7 +146,7 @@ public sealed partial class CargoSystem
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), console.Value.Comp.Account, order, db);
+            order.Assigned = false;
         }
     }
 
