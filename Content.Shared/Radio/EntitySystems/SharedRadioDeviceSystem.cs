@@ -5,11 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public abstract class SharedRadioDeviceSystem : EntitySystem
+public abstract partial class SharedRadioDeviceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
     {
