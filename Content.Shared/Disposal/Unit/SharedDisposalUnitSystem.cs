@@ -366,7 +366,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         IntakeAir(ent, xform);
         _disposalHolder.TransferAtmos(holder, ent);
 
-        return _disposalHolder.TryEnterTube(holder, tube);
+        return _disposalHolder.TryEnterTube(holder, (tube, tube.Comp));
     }
 
     /// <summary>
