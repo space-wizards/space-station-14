@@ -33,10 +33,9 @@ namespace Content.Client.Atmos.UI
             _window.MixerNodePercentageChanged += OnMixerSetPercentagePressed;
         }
 
-        private void OnToggleStatusButtonPressed()
+        private void OnToggleStatusButtonPressed(bool status)
         {
-            if (_window is null) return;
-            SendMessage(new GasMixerToggleStatusMessage(_window.MixerStatus));
+            SendMessage(new GasMixerToggleStatusMessage(status));
         }
 
         private void OnMixerOutputPressurePressed(string value)

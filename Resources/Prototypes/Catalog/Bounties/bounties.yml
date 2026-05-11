@@ -82,22 +82,6 @@
       - Carp
 
 - type: cargoBounty
-  id: BountyClownCostume
-  reward: 1700
-  description: bounty-description-clown-costume
-  entries:
-  - name: bounty-item-clown-mask
-    amount: 1
-    whitelist:
-      tags:
-      - ClownMask
-  - name: bounty-item-clown-shoes
-    amount: 1
-    whitelist:
-      tags:
-      - ClownShoes
-
-- type: cargoBounty
   id: BountyCorn
   reward: 10000
   description: bounty-description-corn
@@ -273,11 +257,11 @@
 
 - type: cargoBounty
   id: BountyPancake
-  reward: 10000
+  reward: 5000
   description: bounty-description-pancake
   entries:
   - name: bounty-item-pancake
-    amount: 13
+    amount: 6
     whitelist:
       tags:
       - Pancake
@@ -519,7 +503,6 @@
     whitelist:
       components:
       - Battery
-      - PredictedBattery
 
 - type: cargoBounty
   id: BountyLaserGun
@@ -597,16 +580,6 @@
     whitelist:
       tags:
       - ChiliBowl
-
-- type: cargoBounty
-  id: BountyRollerskates
-  reward: 900
-  description: bounty-description-rollerskates
-  entries:
-  - name: bounty-item-rollerskates
-    whitelist:
-      components:
-      - Skates
 
 - type: cargoBounty
   id: BountyBedsheet
