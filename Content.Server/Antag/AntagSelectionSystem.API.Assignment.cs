@@ -113,7 +113,7 @@ public sealed partial class AntagSelectionSystem
             }
         }
 
-        return player.AttachedEntity == null || IsEntityValid(player, def);
+        return player.AttachedEntity == null || HasComp<GhostComponent>(player.AttachedEntity) || IsEntityValid(player, def);
     }
 
     /// <inhereitdoc cref="IsMindValid(EntityUid?,AntagSpecifierPrototype)"/>
