@@ -87,14 +87,7 @@ public sealed partial class DisposalTubeSystem : EntitySystem
                 if (args.Next.GetOpposite() == currentDirection)
                 {
                     // If it isn't, pick one of the remaining exits at random
-                    var directions = exits.Skip(1).Where(direction => direction != currentDirection).ToArray();
-
-                    if (directions.Length == 0)
-                    {
-                        args.Next = Direction.Invalid;
-                        return;
-                    }
-
+                    var directions = exits.Skip(1).ToArray();
                     args.Next = _random.Pick(directions);
                 }
 
