@@ -264,7 +264,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            RemoveOrder(station.Value, component.Account, args.OrderId, orderDatabase);
+            RemoveOrder(station.Value, args.OrderId, orderDatabase);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -491,7 +491,7 @@ namespace Content.Server.Cargo.Systems
             return ++orderDB.NumOrdersCreated;
         }
 
-        public void RemoveOrder(EntityUid dbUid, ProtoId<CargoAccountPrototype> account, int index, StationCargoOrderDatabaseComponent orderDatabase)
+        public void RemoveOrder(EntityUid dbUid, int index, StationCargoOrderDatabaseComponent orderDatabase)
         {
             var sequenceIdx = orderDatabase.Orders.FindIndex(order => order.OrderId == index);
             if (sequenceIdx != -1)
