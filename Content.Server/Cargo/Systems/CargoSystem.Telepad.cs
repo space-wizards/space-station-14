@@ -11,7 +11,6 @@ using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared.Emag.Systems;
 
 namespace Content.Server.Cargo.Systems;
 
