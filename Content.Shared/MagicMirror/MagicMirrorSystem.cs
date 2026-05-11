@@ -113,6 +113,7 @@ public sealed partial class MagicMirrorSystem : EntitySystem
         if (ent.Comp.Target != args.Target)
             return;
 
+        // what plays the audio
         _audio.PlayPredicted(ent.Comp.ChangeHairSound, args.Target.Value, args.User);
 
         foreach (var (organ, markings) in args.Markings)
