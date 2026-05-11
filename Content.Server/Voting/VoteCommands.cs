@@ -208,7 +208,7 @@ namespace Content.Server.Voting
         public void StartFor(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> players, bool showResultsInChar, string title, params string[] options)
         {
             _customVote = _entSysManager.GetEntitySystem<CustomVoteSystem>();
-            _customVote.StartCustomVote(ctx.Session, showResultsInChar, title, options.ToList());
+            _customVote.StartCustomVote(ctx.Session, showResultsInChar, title, options.ToList(), players);
         }
     }
 
