@@ -15,6 +15,88 @@ using Robust.Shared.Toolshed;
 
 namespace Content.Server.Voting
 {
+    public sealed partial class CustomVoteSystem : EntitySystem
+    {
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private VoteWebhooks _voteWebhooks = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+
+        public void StartCustomVote(
+            ICommonSession? initiator,
+            bool showResultsInChat,
+            string title,
+            List<string> options,
+            IEnumerable<EntityUid>? players = null)
+        {
+            if (options.Count is < 2 or > 9)
+                return;
+
+            var playerSessions = new HashSet<ICommonSession>();
+            if (players != null)
+            {
+                foreach (var playerEnt in players)
+                {
+                    if (!TryComp<ActorComponent>(playerEnt, out var actor))
+                        continue;
+
+                    playerSessions.Add(actor.PlayerSession);
+                }
+            }
+
+            var voteOptions = new VoteOptions
+            {
+                Title = title,
+                Duration = TimeSpan.FromSeconds(30),
+                VoterEligibility = players != null ? VoteManager.VoterEligibility.SelectedPlayers : VoteManager.VoterEligibility.All,
+                SelectedVoters = playerSessions,
+            };
+
+            for (var i = 1; i <= options.Count; i++)
+            {
+                voteOptions.Options.Add((options[i-1], i));
+            }
+
+            voteOptions.SetInitiatorOrServer(initiator);
+
+            if (initiator != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
+
+            var vote = _voteManager.CreateVote(voteOptions);
+
+            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(voteOptions, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
+
+            vote.OnFinished += (_, eventArgs) =>
+            {
+                if (eventArgs.Winner == null)
+                {
+                    var ties = string.Join(", ", eventArgs.Winners.Select(c => options[(int) c]));
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished as tie: {ties}");
+
+                    if (showResultsInChat)
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", voteOptions.Title), ("ties", ties)));
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished: {options[(int) eventArgs.Winner]}");
+
+                    if (showResultsInChat)
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", voteOptions.Title), ("winner", options[(int) eventArgs.Winner])));
+                }
+
+                _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
+            };
+
+            vote.OnCancelled += _ =>
+            {
+                _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState);
+            };
+        }
+    }
+
     [AnyCommand]
     public sealed partial class CreateVoteCommand : LocalizedEntityCommands
     {
@@ -68,67 +150,7 @@ namespace Content.Server.Voting
     [AdminCommand(AdminFlags.Round)]
     public sealed partial class CreateCustomCommand : LocalizedEntityCommands
     {
-        [Dependency] private IVoteManager _voteManager = default!;
-        [Dependency] private IAdminLogManager _adminLogger = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private VoteWebhooks _voteWebhooks = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
-
-        // TODO: move this somewhere else to remove duplicated code
-        public void StartCustomVote(ICommonSession? initiator, bool showResultsInChat, string title, List<string> options)
-        {
-            if (options.Count is < 2 or > 9)
-                return;
-
-            var voteOptions = new VoteOptions
-            {
-                Title = title,
-                Duration = TimeSpan.FromSeconds(30),
-                VoterEligibility = VoteManager.VoterEligibility.All,
-            };
-
-            for (var i = 1; i <= options.Count; i++)
-            {
-                voteOptions.Options.Add((options[i-1], i));
-            }
-
-            voteOptions.SetInitiatorOrServer(initiator);
-
-            if (initiator != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
-            else
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
-
-            var vote = _voteManager.CreateVote(voteOptions);
-
-            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(voteOptions, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
-
-            vote.OnFinished += (_, eventArgs) =>
-            {
-                if (eventArgs.Winner == null)
-                {
-                    var ties = string.Join(", ", eventArgs.Winners.Select(c => options[(int) c]));
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished as tie: {ties}");
-
-                    if (showResultsInChat)
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", voteOptions.Title), ("ties", ties)));
-                }
-                else
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished: {options[(int) eventArgs.Winner]}");
-
-                    if (showResultsInChat)
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", voteOptions.Title), ("winner", options[(int) eventArgs.Winner])));
-                }
-
-                _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
-            };
-
-            vote.OnCancelled += _ =>
-            {
-                _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState);
-            };
-        }
+        [Dependency] private IEntitySystemManager _entSysManager = default!;
 
         private const int MaxArgCount = 10;
 
@@ -148,7 +170,7 @@ namespace Content.Server.Voting
                 options.Add(args[i]);
             }
 
-            StartCustomVote(shell.Player, true, args[0], options);
+            _entSysManager.GetEntitySystem<CustomVoteSystem>().StartCustomVote(shell.Player, true, args[0], options);
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -167,72 +189,22 @@ namespace Content.Server.Voting
     [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
     public sealed partial class CustomVoteCommand : ToolshedCommand
     {
-        [Dependency] private IVoteManager _voteManager = default!;
-        [Dependency] private IAdminLogManager _adminLogger = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private VoteWebhooks _voteWebhooks = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IEntitySystemManager _entSysManager = default!;
 
-        // TODO: move this somewhere else to remove duplicated code
-        public void StartCustomVote(ICommonSession? initiator, bool showResultsInChat, string title, List<string> options)
-        {
-            if (options.Count is < 2 or > 9)
-                return;
-
-            var voteOptions = new VoteOptions
-            {
-                Title = title,
-                Duration = TimeSpan.FromSeconds(30),
-                VoterEligibility = VoteManager.VoterEligibility.All,
-            };
-
-            for (var i = 1; i <= options.Count; i++)
-            {
-                voteOptions.Options.Add((options[i-1], i));
-            }
-
-            voteOptions.SetInitiatorOrServer(initiator);
-
-            if (initiator != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
-            else
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {voteOptions.Title} - {string.Join("; ", voteOptions.Options.Select(x => x.text))}");
-
-            var vote = _voteManager.CreateVote(voteOptions);
-
-            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(voteOptions, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
-
-            vote.OnFinished += (_, eventArgs) =>
-            {
-                if (eventArgs.Winner == null)
-                {
-                    var ties = string.Join(", ", eventArgs.Winners.Select(c => options[(int) c]));
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished as tie: {ties}");
-
-                    if (showResultsInChat)
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie", ("title", voteOptions.Title), ("ties", ties)));
-                }
-                else
-                {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {voteOptions.Title} finished: {options[(int) eventArgs.Winner]}");
-
-                    if (showResultsInChat)
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win", ("title", voteOptions.Title), ("winner", options[(int) eventArgs.Winner])));
-                }
-
-                _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
-            };
-
-            vote.OnCancelled += _ =>
-            {
-                _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState);
-            };
-        }
+        private CustomVoteSystem? _customVote;
 
         [CommandImplementation("startall")]
         public void StartAll(IInvocationContext ctx, string title, params string[] options)
         {
-            StartCustomVote(ctx.Session, true, title, options.ToList());
+            _customVote = _entSysManager.GetEntitySystem<CustomVoteSystem>();
+            _customVote.StartCustomVote(ctx.Session, true, title, options.ToList());
+        }
+
+        [CommandImplementation("startfor")]
+        public void StartFor(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> players, bool showResultsInChar, string title, params string[] options)
+        {
+            _customVote = _entSysManager.GetEntitySystem<CustomVoteSystem>();
+            _customVote.StartCustomVote(ctx.Session, showResultsInChar, title, options.ToList());
         }
     }
 
