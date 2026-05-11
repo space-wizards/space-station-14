@@ -180,13 +180,13 @@ namespace Content.Server.Voting
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
-                return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-title"));
+                return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-title"));
 
             if (args.Length > MaxArgCount)
                 return CompletionResult.Empty;
 
             var n = args.Length - 1;
-            return CompletionResult.FromHint(Loc.GetString($"cmd-{Command}-arg-option-n", ("n", n)));
+            return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
         }
     }
 
