@@ -297,7 +297,7 @@ namespace Content.Server.Cargo.Systems
 
             var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
 
-            var order = GetOrderData(args, product, GenerateOrderId(orderDatabase), targetAccount);
+            var order = new CargoOrderData(GenerateOrderId(orderDatabase), args.CargoProductId, args.Amount, args.Requester, args.Reason, targetAccount);
 
             if (!TryAddOrder(stationUid.Value, order, orderDatabase))
             {
@@ -407,11 +407,6 @@ namespace Content.Server.Cargo.Systems
                 component.NextDenySoundTime = _timing.CurTime + component.DenySoundDelay;
                 _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
             }
-        }
-
-        private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id, ProtoId<CargoAccountPrototype> account)
-        {
-            return new CargoOrderData(id, cargoProduct, args.Amount, args.Requester, args.Reason, account);
         }
 
         public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)

@@ -58,7 +58,6 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     public TimeSpan OrderCheckDelay = TimeSpan.FromSeconds(10);
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextOrderCheck;
-
 }
 
 /// <summary>
@@ -69,7 +68,6 @@ public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station
 {
     public Entity<StationDataComponent> Station = Station;
     public CargoOrderData Order = Order;
-
     public EntityUid? FulfillmentEntity;
     public bool Handled = false;
 }
