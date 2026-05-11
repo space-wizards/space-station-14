@@ -53,9 +53,9 @@ namespace Content.Server.Voting
                 SelectedVoters = playerSessions,
             };
 
-            for (var i = 1; i <= options.Count; i++)
+            for (var i = 0; i < options.Count; i++)
             {
-                voteOptions.Options.Add((options[i-1], i));
+                voteOptions.Options.Add((options[i], i+1));
             }
 
             voteOptions.SetInitiatorOrServer(initiator);
