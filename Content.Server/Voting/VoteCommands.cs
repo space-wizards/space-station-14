@@ -74,7 +74,7 @@ namespace Content.Server.Voting
         [Dependency] private VoteWebhooks _voteWebhooks = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
 
-        // TODO: move this somewhere else to reduce duplicated code
+        // TODO: move this somewhere else to remove duplicated code
         public void StartCustomVote(ICommonSession? initiator, bool showResultsInChat, string title, List<string> options)
         {
             if (options.Count is < 2 or > 9)
@@ -173,7 +173,7 @@ namespace Content.Server.Voting
         [Dependency] private VoteWebhooks _voteWebhooks = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
 
-        // TODO: move this somewhere else to reduce duplicated code
+        // TODO: move this somewhere else to remove duplicated code
         public void StartCustomVote(ICommonSession? initiator, bool showResultsInChat, string title, List<string> options)
         {
             if (options.Count is < 2 or > 9)
