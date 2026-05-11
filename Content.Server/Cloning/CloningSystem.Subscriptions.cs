@@ -1,6 +1,8 @@
 using Content.Server.Forensics;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
@@ -10,8 +12,8 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Paper;
-using Content.Shared.Stacks;
 using Content.Shared.Speech.Components;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -28,13 +30,14 @@ namespace Content.Server.Cloning;
 /// </remarks>
 public sealed partial class CloningSystem
 {
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
-    [Dependency] private readonly VocalSystem _vocal = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private PaperSystem _paper = default!;
+    [Dependency] private VocalSystem _vocal = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
+    [Dependency] private PullingSystem _pulling = default!;
 
     public override void Initialize()
     {
@@ -50,6 +53,7 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<PaperComponent, CloningItemEvent>(OnCloneItemPaper);
         SubscribeLocalEvent<ForensicsComponent, CloningItemEvent>(OnCloneItemForensics);
         SubscribeLocalEvent<StoreComponent, CloningItemEvent>(OnCloneItemStore);
+        SubscribeLocalEvent<ChameleonClothingComponent, CloningItemEvent>(OnCloneItemChameleon);
 
         // These are for cloning components that cannot be cloned using CopyComp.
         // Put them into CloningSettingsPrototype.EventComponents to have them be applied to the clone.
@@ -98,6 +102,12 @@ public sealed partial class CloningSystem
         {
             cloneStoreComp.Balance = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(ent.Comp.Balance);
         }
+    }
+
+    private void OnCloneItemChameleon(Entity<ChameleonClothingComponent> ent, ref CloningItemEvent args)
+    {
+        // copy the prototype the original is mimicing
+        _chameleonClothing.SetSelectedPrototype(args.CloneUid, ent.Comp.Default);
     }
 
     private void OnCloneVocal(Entity<VocalComponent> ent, ref CloningEvent args)

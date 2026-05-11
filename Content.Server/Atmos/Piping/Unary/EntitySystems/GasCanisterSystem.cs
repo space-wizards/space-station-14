@@ -14,12 +14,12 @@ using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCan
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
-public sealed class GasCanisterSystem : SharedGasCanisterSystem
+public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     private const float ReleaseArea = 0.05f; // 500cm^2 Number chosen for balance reasons. It's quite large, but so are gas canisters (holding 1.5 cubic meters of gas!)
 
@@ -83,7 +83,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
     private void ToggleSafetyValve(Entity<GasCanisterComponent> entity, bool open)
     {
-        entity.Comp.SafetyValveOpen = true;
+        entity.Comp.SafetyValveOpen = open;
         Audio.PlayPvs(entity.Comp.ValveSound, entity);
     }
 
@@ -117,7 +117,8 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
                 ? _atmos.GetContainingMixture(entity.Owner, args.Grid, args.Map, false, true)
                 : CompOrNull<GasTankComponent>(entity.Comp.GasTankSlot.Item.Value)?.Air;
 
-            _atmos.FlowGas(entity.Comp.Air, output, entity.Comp.ReleasePressure, args.dt,ReleaseArea);
+            // Only let gas flow one way!
+            _atmos.ReleaseGasTo(entity.Comp.Air, output, entity.Comp.ReleasePressure);
         }
 
         // If last pressure is very close to the current pressure, do nothing.

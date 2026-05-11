@@ -20,6 +20,10 @@ public sealed partial class GasCanisterComponent : GasMaxPressureHolderComponent
     [DataField]
     public ItemSlot GasTankSlot = new();
 
+    /// <summary>
+    /// The safety release valve on this gas canister. Automatically opens
+    /// when <see cref="GasMaxPressureHolderComponent.SafetyPressure"/> is reached.
+    /// </summary>
     [DataField]
     public bool SafetyValveOpen;
 
