@@ -185,8 +185,7 @@ public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
         {
             TrayScannerMode.All => true,
             TrayScannerMode.Wiring => HasComp<CableVisualizerComponent>(uid),
-            // TODO: proper comp query after disposals refactor
-            TrayScannerMode.Piping => HasComp<AtmosPipeLayersComponent>(uid) || _appearance.TryGetData(uid, DisposalTubeVisuals.VisualState, out _),
+            TrayScannerMode.Piping => HasComp<AtmosPipeLayersComponent>(uid) || HasComp<DisposalTubeComponent>(uid),
             _ => false,
         };
     }
