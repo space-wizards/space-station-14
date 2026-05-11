@@ -18,8 +18,8 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : BaseWindow
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IResourceCache _resCache = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IResourceCache _resCache = default!;
 
         private static Color DefaultTextColor = new(25, 25, 25);
 

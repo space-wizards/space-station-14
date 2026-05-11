@@ -8,13 +8,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Spreader;
 
-public sealed class KudzuSystem : EntitySystem
+public sealed partial class KudzuSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     private static readonly ProtoId<EdgeSpreaderPrototype> KudzuGroup = "Kudzu";
 
