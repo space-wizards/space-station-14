@@ -11,6 +11,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
+using Content.Shared._EE.Movement.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -551,14 +552,18 @@ public abstract partial class SharedMoverController : VirtualController
             return sound != null;
         }
 
-        if (_inventory.TryGetSlotEntity(uid, "shoes", out var shoes) &&
-            FootstepModifierQuery.TryComp(shoes, out var modifier))
+        var hasShoes = _inventory.TryGetSlotEntity(uid, "shoes", out var shoes);
+
+        if (!hasShoes && HasComp<NoShoesSilentFootstepsComponent>(uid))
+            return false;
+
+        if (hasShoes && FootstepModifierQuery.TryComp(shoes, out var modifier))
         {
             sound = modifier.FootstepSoundCollection;
             return sound != null;
         }
 
-        return TryGetFootstepSound(uid, xform, shoes != null, out sound, tileDef: tileDef);
+        return TryGetFootstepSound(uid, xform, hasShoes, out sound, tileDef: tileDef);
     }
 
     private bool TryGetFootstepSound(

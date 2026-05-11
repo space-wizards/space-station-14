@@ -4,6 +4,7 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Flash.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -41,6 +42,7 @@ public abstract class SharedFlashSystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly BlindableSystem _blinding = default!;
 
     [Dependency] private readonly EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
     [Dependency] private readonly EntityQuery<DamagedByFlashingComponent> _damagedByFlashingQuery = default!;
@@ -184,6 +186,12 @@ public abstract class SharedFlashSystem : EntitySystem
 
         if (attempt.Cancelled)
             return;
+
+        if (attempt.DurationMultiplier > 0f && Math.Abs(attempt.DurationMultiplier - 1f) > float.Epsilon)
+            flashDuration = flashDuration * (double)attempt.DurationMultiplier;
+
+        if (attempt.EyeDamage > 0)
+            _blinding.AdjustEyeDamage((target, null), attempt.EyeDamage);
 
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
         if (!_statusEffectsSystem.TryAddStatusEffect<FlashedComponent>(target, FlashedKey, flashDuration, true))
