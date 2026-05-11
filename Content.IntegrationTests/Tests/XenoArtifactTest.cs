@@ -98,6 +98,7 @@ public sealed class XenoArtifactTest : GameTest
     /// Checks that adding nodes and edges properly adds them into the adjacency matrix
     /// </summary>
     [Test]
+    [Description("Checks that adding nodes and edges properly adds them into the adjacency matrix")]
     public async Task XenoArtifactAddNodeTest()
     {
         await Server.WaitPost(() =>
@@ -143,6 +144,7 @@ public sealed class XenoArtifactTest : GameTest
     /// Checks to make sure that removing nodes properly cleans up all connections.
     /// </summary>
     [Test]
+    [Description("Checks to make sure that removing nodes properly cleans up all connections.")]
     public async Task XenoArtifactRemoveNodeTest()
     {
         await Server.WaitPost(() =>
@@ -183,6 +185,7 @@ public sealed class XenoArtifactTest : GameTest
     /// Sets up series of linked nodes and ensures that resizing the adjacency matrix doesn't disturb the connections
     /// </summary>
     [Test]
+    [Description("Sets up series of linked nodes and ensures that resizing the adjacency matrix doesn't disturb the connections")]
     public async Task XenoArtifactResizeTest()
     {
         await Server.WaitPost(() =>
@@ -237,6 +240,7 @@ public sealed class XenoArtifactTest : GameTest
     /// Checks if removing a node and adding a new node into its place in the adjacency matrix doesn't accidentally retain extra data.
     /// </summary>
     [Test]
+    [Description("Checks if removing a node and adding a new node into its place in the adjacency matrix doesn't accidentally retain extra data.")]
     public async Task XenoArtifactReplaceTest()
     {
         await Server.WaitPost(() =>
@@ -287,6 +291,7 @@ public sealed class XenoArtifactTest : GameTest
     /// Checks if the active nodes are properly detected.
     /// </summary>
     [Test]
+    [Description("Checks if the active nodes are properly detected.")]
     public async Task XenoArtifactBuildActiveNodesTest()
     {
         await Server.WaitPost(() =>
