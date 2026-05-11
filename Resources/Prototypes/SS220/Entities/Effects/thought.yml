@@ -1,0 +1,16 @@
+- type: entity
+  id: EffectThoughtBubble
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: true
+    enableOverrideDir: true
+    overrideDir: South
+    offset: 0.4, 0.8
+    scale: 0.8, 0.8
+    drawdepth: Effects
+    sprite: /Textures/SS220/Effects/ThoughtBubble.rsi
+    layers:
+    - state: thought
+      map: ["enum.ThoughtBubbleVisuals.Bubble"]
+
