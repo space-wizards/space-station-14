@@ -13,7 +13,6 @@ public sealed class RiggableTest : InteractionTest
     private static readonly EntProtoId HumanProtoId = "MobHuman";
     private static readonly EntProtoId BatteryProto = "PowerCellSmall";
     private static readonly EntProtoId FlashlightProto = "EmptyFlashlightLantern";
-    private static readonly EntProtoId PlasmaSyringeProto = "TestPlasmaSyringe";
     private static readonly EntProtoId StunbatonProto = "Stunbaton";
 
     [TestPrototypes]
@@ -106,7 +105,7 @@ public sealed class RiggableTest : InteractionTest
         Assert.That(Comp<ItemToggleComponent>(baton).Activated, Is.True, "Stunbaton did not activate");
 
         // Rig the baton
-        await PlaceInHands(PlasmaSyringeProto);
+        await PlaceInHands("TestPlasmaSyringe");
         await Interact();
 
         await RunTicks(5);
