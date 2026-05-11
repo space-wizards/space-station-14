@@ -226,19 +226,16 @@ namespace Content.Server.Cargo.Systems
                 _random.Shuffle(tradePads);
 
                 var freePads = GetFreeCargoPallets(trade, tradePads);
-                if (freePads.Count >= order.OrderQuantity) //check if the station has enough free pallets
+                foreach (var pad in freePads)
                 {
-                    foreach (var pad in freePads)
-                    {
-                        var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
+                    var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
-                        if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
-                        {
-                            tradeDestination = trade;
-                            order.NumDispatched++;
-                            if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
-                                break;
-                        }
+                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    {
+                        tradeDestination = trade;
+                        order.NumDispatched++;
+                        if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
+                            break;
                     }
                 }
 
@@ -351,7 +348,7 @@ namespace Content.Server.Cargo.Systems
 
             foreach (var order in ent.Comp.Orders.Where(order => order.Approved))
             {
-                if (order.NumDispatched == order.OrderQuantity)
+                if (order.NumDispatched >= order.OrderQuantity)
                 {
                     toDeliver.Add(order);
                     continue;
@@ -368,7 +365,7 @@ namespace Content.Server.Cargo.Systems
                     continue;
                 }
 
-                if (TryFulfillOrder((ent, stationData), order, ent.Comp))
+                if (TryFulfillOrder((ent, stationData), order, ent.Comp) && order.NumDispatched >= order.OrderQuantity)
                     toDeliver.Add(order);
             }
 
@@ -411,7 +408,7 @@ namespace Content.Server.Cargo.Systems
 
         public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
         {
-            return RelevantOrders(station, account, false).Count;
+            return RelevantOrders(station, account, false).Count + RelevantOrders(station, account, true).Sum(order => order.OrderQuantity - order.NumDispatched);
         }
 
         /// <summary>
