@@ -4,7 +4,6 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Localizations;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 

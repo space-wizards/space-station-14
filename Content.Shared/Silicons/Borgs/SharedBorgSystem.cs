@@ -63,8 +63,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private SharedAccessSystem _access = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-
+    [Dependency] private SharedTransformSystem _transform = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {
