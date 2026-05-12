@@ -39,7 +39,7 @@
 
 - type: entity
   id: WeaponTetherGun
-  parent: [BaseWeaponTetherGun, PowerCellSlotMediumItem]
+  parent: [ BaseWeaponTetherGun, PowerCellSlotMediumItem ]
   components:
   - type: PowerCellDraw
   - type: ToggleCellDraw
@@ -101,7 +101,7 @@
 
 - type: entity
   id: WeaponForceGun
-  parent: [BaseWeaponForceGun, PowerCellSlotMediumItem]
+  parent: [ BaseWeaponForceGun, PowerCellSlotMediumItem ]
   components:
   - type: PowerCellDraw
   - type: ToggleCellDraw
