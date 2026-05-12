@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseGameRule
+  id: ClosetKnight
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    minimumPlayers: 10
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobKnightCloset

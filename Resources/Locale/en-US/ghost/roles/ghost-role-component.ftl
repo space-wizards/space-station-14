@@ -353,3 +353,6 @@ ghost-role-information-emotional-support-scurret-description = Support the crew,
 
 ghost-role-information-knight-name = Knight
 ghost-role-information-knight-description = A noble warrior bound by honor and steel. Holy water restores your strength.
+
+ghost-role-information-knight-closet-name = Closet Knight
+ghost-role-information-knight-closet-description = A knight from a bygone era, discovered in an unlikely place. Restore your honor or conquer the station!

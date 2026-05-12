@@ -15,3 +15,21 @@
   - type: Loadout
     prototypes: [KnightGear]
   - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobKnightPerson
+  id: MobKnightCloset
+  name: closet knight
+  components:
+  - type: GhostRole
+    name: ghost-role-information-knight-closet-name
+    description: ghost-role-information-knight-closet-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [KnightGear]
+  - type: RandomHumanoidAppearance
