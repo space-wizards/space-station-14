@@ -1,9 +1,9 @@
 ﻿- type: entity
-  name: tether gun
+  abstract: true
   parent: BaseItem
   id: BaseWeaponTetherGun
+  name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
-  abstract: true
   components:
   - type: Item
     size: Normal
@@ -17,7 +17,7 @@
     layers:
     - state: base
     - state: base-unshaded
-      map: ["unshaded"]
+      map: [ "unshaded" ]
       shader: unshaded
       visible: false
   - type: ToggleableVisuals
@@ -38,15 +38,15 @@
           False: {visible: false}
 
 - type: entity
-  id: WeaponTetherGun
   parent: [ BaseWeaponTetherGun, PowerCellSlotMediumItem ]
+  id: WeaponTetherGun
   components:
   - type: PowerCellDraw
   - type: ToggleCellDraw
 
 - type: entity
-  id: WeaponTetherGunEmpty
   parent: WeaponTetherGun
+  id: WeaponTetherGunEmpty
   suffix: Empty
   components:
   - type: ItemSlots
@@ -55,11 +55,11 @@
         name: power-cell-slot-component-slot-name-default
 
 - type: entity
-  name: force gun
+  abstract: true
   parent: BaseItem
   id: BaseWeaponForceGun
+  name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
-  abstract: true
   components:
   - type: Item
     size: Normal
@@ -79,7 +79,7 @@
     layers:
     - state: base
     - state: base-unshaded
-      map: ["unshaded"]
+      map: [ "unshaded" ]
       shader: unshaded
       visible: false
   - type: ToggleableVisuals
@@ -100,15 +100,15 @@
           False: {visible: false}
 
 - type: entity
-  id: WeaponForceGun
   parent: [ BaseWeaponForceGun, PowerCellSlotMediumItem ]
+  id: WeaponForceGun
   components:
   - type: PowerCellDraw
   - type: ToggleCellDraw
 
 - type: entity
-  id: WeaponForceGunEmpty
   parent: WeaponForceGun
+  id: WeaponForceGunEmpty
   suffix: Empty
   components:
   - type: ItemSlots
@@ -118,11 +118,11 @@
 
 # Admeme
 - type: entity
-  name: tether gun
   parent: BaseWeaponTetherGun
   id: WeaponTetherGunAdmin
-  suffix: Admeme
+  name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
+  suffix: Admeme
   components:
   - type: TetherGun
     canTetherAlive: true
@@ -133,11 +133,11 @@
     frequency: 20
 
 - type: entity
-  name: force gun
   parent: BaseWeaponForceGun
   id: WeaponForceGunAdmin
-  suffix: Admeme
+  name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
+  suffix: Admeme
   components:
   - type: ForceGun
     canTetherAlive: true
