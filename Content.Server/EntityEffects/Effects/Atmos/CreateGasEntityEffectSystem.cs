@@ -11,7 +11,7 @@ namespace Content.Server.EntityEffects.Effects.Atmos;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class CreateGasEntityEffectSystem : EntityEffectSystem<TransformComponent, CreateGas>
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<CreateGas> args)
     {

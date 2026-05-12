@@ -21,21 +21,21 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public abstract class SharedPoweredLightSystem : EntitySystem
+public abstract partial class SharedPoweredLightSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedLightBulbSystem _bulbSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] private DamageOnInteractSystem _damageOnInteractSystem = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedLightBulbSystem _bulbSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";
@@ -54,6 +54,9 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
         SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
+
+        SubscribeLocalEvent<BlinkingPoweredLightComponent, MapInitEvent>(OnBlinkingMapInit);
+        SubscribeLocalEvent<BlinkingPoweredLightComponent, ComponentShutdown>(OnBlinkingShutdown);
     }
 
     private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -353,20 +356,6 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             args.Affected = true;
     }
 
-    public void ToggleBlinkingLight(EntityUid uid, PoweredLightComponent light, bool isNowBlinking)
-    {
-        if (light.IsBlinking == isNowBlinking)
-            return;
-
-        light.IsBlinking = isNowBlinking;
-        Dirty(uid, light);
-
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
-    }
-
     private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
     {
         if (!Resolve(uid, ref light))
@@ -426,5 +415,28 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         EjectBulb(args.Args.Target.Value, args.Args.User, component);
 
         args.Handled = true;
+    }
+
+    private void OnBlinkingMapInit(Entity<BlinkingPoweredLightComponent> ent, ref MapInitEvent args)
+    {
+        _appearance.SetData(ent, PoweredLightVisuals.Blinking, true);
+    }
+
+    private void OnBlinkingShutdown(Entity<BlinkingPoweredLightComponent> ent, ref ComponentShutdown args)
+    {
+        _appearance.SetData(ent, PoweredLightVisuals.Blinking, false);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = GameTiming.CurTime;
+        var query = EntityQueryEnumerator<BlinkingPoweredLightComponent>();
+        while (query.MoveNext(out var uid, out var blinkingComp))
+        {
+            if (curTime > blinkingComp.StopBlinkingTime)
+                RemCompDeferred<BlinkingPoweredLightComponent>(uid);
+        }
     }
 }
