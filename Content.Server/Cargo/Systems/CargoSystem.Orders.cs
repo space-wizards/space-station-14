@@ -366,10 +366,6 @@ namespace Content.Server.Cargo.Systems
 
             if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
             {
-                var orderHistory = orderDatabase
-                    .DeliveredOrders.Concat(orderDatabase.Orders)
-                    .OrderBy(order => order.OrderId)
-                    .ToList();
                 _uiSystem.SetUiState(
                     consoleUid,
                     CargoConsoleUiKey.Orders,
@@ -442,7 +438,7 @@ namespace Content.Server.Cargo.Systems
         private List<CargoOrderData> RelevantOrders(
             Entity<StationCargoOrderDatabaseComponent> station,
             ProtoId<CargoAccountPrototype> account,
-            bool? approved = false
+            bool? approved = null
         )
         {
             return RelevantOrders(station, station.Comp.Orders, account, approved);
@@ -455,7 +451,7 @@ namespace Content.Server.Cargo.Systems
             Entity<StationCargoOrderDatabaseComponent> station,
             List<CargoOrderData> allOrders,
             ProtoId<CargoAccountPrototype> account,
-            bool? approved
+            bool? approved = null
         )
         {
             if (!TryComp<StationBankAccountComponent>(station, out var bank))
@@ -695,8 +691,6 @@ namespace Content.Server.Cargo.Systems
             return products;
         }
 
-        #region Station
-
         private bool TryGetOrderDatabase(
             [NotNullWhen(true)] EntityUid? stationUid,
             [MaybeNullWhen(false)] out StationCargoOrderDatabaseComponent dbComp
@@ -704,7 +698,5 @@ namespace Content.Server.Cargo.Systems
         {
             return TryComp(stationUid, out dbComp);
         }
-
-        #endregion
     }
 }
