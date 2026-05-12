@@ -82,5 +82,8 @@ chat-emote-msg-flap = машет { POSS-ADJ($entity) } крыльями.
 
 chat-emote-name-flap = Взмахнуть крыльями
 
+chat-emote-name-pray = Молиться
+chat-emote-msg-pray = безмолвно молится.
+
 # Message
 

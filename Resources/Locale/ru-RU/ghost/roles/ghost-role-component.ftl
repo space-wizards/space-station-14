@@ -1,4 +1,4 @@
-﻿# also used in MakeGhostRuleWindow and MakeGhostRoleCommand
+# also used in MakeGhostRuleWindow and MakeGhostRoleCommand
 ghost-role-component-default-rules =
     Все стандартные правила применяются, если администратор не сказал вам обратное.
     Вы не помните ничего из своей предыдущей жизни и не помните ничего из того, что узнали, будучи призраком.
@@ -264,3 +264,8 @@ ghost-role-information-xenoborg-desc = Странный киборг, сдела
 
 ghost-role-information-xenoborg-name = Ксеноборг
 
+ghost-role-information-knight-name = Рыцарь
+ghost-role-information-knight-description = Благородный воин, связанный честью и сталью. Святая вода восстанавливает ваши силы.
+
+ghost-role-information-knight-closet-name = Рыцарь из шкафа
+ghost-role-information-knight-closet-description = Рыцарь минувших эпох, найденный в неожиданном месте. Верните свою честь или покорите станцию!

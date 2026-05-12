@@ -1,0 +1,40 @@
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelKnight
+  name: knight's duffel bag
+  description: A reinforced duffel bag for knightly expeditions. Has a special compartment for a shield.
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Back/Duffels/duffel_k.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,8,4
+  - type: ItemSlots
+    slots:
+      buckler:
+        name: knight-duffel-buckler-slot
+        priority: 4
+        insertOnInteract: true
+        ejectOnInteract: true
+        whitelist:
+          ids:
+          - WoodenBuckler
+  - type: ExplosionResistance
+    damageCoefficient: 0.0
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+
+- type: entity
+  parent: ClothingBackpackDuffelKnight
+  id: ClothingBackpackDuffelKnightFilled
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      buckler:
+      - WoodenBuckler

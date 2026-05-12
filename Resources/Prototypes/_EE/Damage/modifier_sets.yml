@@ -1,0 +1,9 @@
+# Felinid: чуть хрупче человека, лучше переносит холод, хуже жару.
+- type: damageModifierSet
+  id: Felinid
+  coefficients:
+    Blunt: 1.10
+    Slash: 1.10
+    Piercing: 1.10
+    Heat: 1.10
+    Cold: 0.90

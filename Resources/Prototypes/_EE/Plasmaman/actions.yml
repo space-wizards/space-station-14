@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseAction
+  id: ActionPlasmamanDash
+  name: action-name-plasmaman-dash
+  description: action-description-plasmaman-dash
+  components:
+  - type: Action
+    useDelay: 15
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:PlasmamanDashEvent {}

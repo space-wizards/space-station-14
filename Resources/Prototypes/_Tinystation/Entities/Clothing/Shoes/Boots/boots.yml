@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsKnight
+  name: Knight boots
+  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Shoes/Boots/knight_boots.rsi
+  - type: Clothing
+    sprite: _Tinystation/Clothing/Shoes/Boots/knight_boots.rsi
+  - type: Matchbox

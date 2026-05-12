@@ -1,0 +1,46 @@
+# Knight outfit
+- type: startingGear
+  id: KnightGear
+  inhand: []
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitKnight
+    outerClothing: ClothingOuterSuitKnight
+    back: ClothingBackpackDuffelKnightFilled
+    head: ClothingHeadHelmetKnight
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesFingerless
+    shoes: ClothingShoesBootsKnight
+    pocket1: Bible
+    belt: ClothingBeltQuiver
+    suitstorage: KnightClaymore
+  storage:
+    back:
+    - Zipties
+    - Zipties
+    - Zipties
+    - Zipties
+    - Torch
+    - Torch
+    - TrashBananaPeel
+    - TrashBananaPeel
+    - TrashBananaPeel
+    - TrashBananaPeel
+    - BowImprovised
+    - KukriKnife
+    belt:
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular
+    - ArrowRegular

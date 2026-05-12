@@ -21,7 +21,7 @@
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ Vox, Plasmaman ]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -34,12 +34,28 @@
         damage:
           types:
             Poison: 1.5
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 7
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 1
         conditions:
           - !type:MetabolizerTypeCondition
             type: [ Vox ]
+        clear: true
+        time: 5
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 1
+        conditions:
+          - !type:MetabolizerTypeCondition
+            type: [ Plasmaman ]
         clear: true
         time: 5
     Respiration:
@@ -52,7 +68,7 @@
       - !type:ModifyLungGas
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ Vox, Plasmaman ]
           inverted: true
         ratios:
           CarbonDioxide: 1.0
@@ -65,12 +81,28 @@
         damage:
           types:
             Poison: 0.7
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 7
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 0.5
         conditions:
           - !type:MetabolizerTypeCondition
             type: [ Vox ]
+        clear: true
+        time: 5
+      - !type:AdjustAlert
+        alertType: Toxins
+        minScale: 0.5
+        conditions:
+          - !type:MetabolizerTypeCondition
+            type: [ Plasmaman ]
         clear: true
         time: 5
 
@@ -91,6 +123,10 @@
     Bloodstream:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+          inverted: true
         damage:
           types:
             Poison: 1.5
@@ -100,6 +136,10 @@
     Respiration:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+          inverted: true
         ignoreResistances: true
         damage:
           types:
@@ -109,8 +149,24 @@
       - !type:AdjustAlert
         alertType: Toxins
         minScale: 1.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+          inverted: true
         clear: True
         time: 5
+      - !type:Oxygenate
+        factor: 4
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+      - !type:ModifyLungGas
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Plasmaman ]
+        ratios:
+          Nitrogen: 1.0
+          Plasma: -1.0
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

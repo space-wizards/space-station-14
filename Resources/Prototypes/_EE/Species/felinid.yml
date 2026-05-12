@@ -1,0 +1,8 @@
+- type: species
+  id: Felinid
+  name: species-name-felinid
+  roundStart: true
+  prototype: MobFelinid
+  defaultSkinTone: "#c0967f"
+  dollPrototype: AppearanceFelinid
+  skinColoration: HumanToned

@@ -1,0 +1,10 @@
+- type: species
+  id: Knight
+  name: species-name-knight
+  roundStart: false
+  prototype: MobKnightPerson
+  defaultSkinTone: "#fff9e2"
+  maleFirstNames: NamesKnightFirst
+  femaleFirstNames: NamesKnightFirst
+  dollPrototype: AppearanceKnightPerson
+  skinColoration: TintedHues

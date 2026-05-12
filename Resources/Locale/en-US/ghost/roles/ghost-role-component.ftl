@@ -350,3 +350,9 @@ ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your ma
 
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.
+
+ghost-role-information-knight-name = Knight
+ghost-role-information-knight-description = A noble warrior bound by honor and steel. Holy water restores your strength.
+
+ghost-role-information-knight-closet-name = Closet Knight
+ghost-role-information-knight-closet-description = A knight from a bygone era, discovered in an unlikely place. Restore your honor or conquer the station!
