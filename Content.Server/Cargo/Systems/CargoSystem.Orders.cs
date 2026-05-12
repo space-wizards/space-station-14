@@ -442,7 +442,7 @@ namespace Content.Server.Cargo.Systems
         private List<CargoOrderData> RelevantOrders(
             Entity<StationCargoOrderDatabaseComponent> station,
             ProtoId<CargoAccountPrototype> account,
-            bool approved = false
+            bool? approved = false
         )
         {
             return RelevantOrders(station, station.Comp.Orders, account, approved);
@@ -455,7 +455,7 @@ namespace Content.Server.Cargo.Systems
             Entity<StationCargoOrderDatabaseComponent> station,
             List<CargoOrderData> allOrders,
             ProtoId<CargoAccountPrototype> account,
-            bool approved = false
+            bool? approved
         )
         {
             if (!TryComp<StationBankAccountComponent>(station, out var bank))
@@ -465,7 +465,7 @@ namespace Content.Server.Cargo.Systems
 
             if (account == bank.PrimaryAccount)
                 orders = allOrders;
-            return [.. orders.Where(order => order.Approved == approved)];
+            return [.. orders.Where(order => order.Approved == (approved ?? true) && order.Visible)];
         }
 
         private void ConsolePopup(EntityUid actor, string text)
@@ -487,9 +487,7 @@ namespace Content.Server.Cargo.Systems
             ProtoId<CargoAccountPrototype> account
         )
         {
-            return RelevantOrders(station, account, false)
-                .Concat(RelevantOrders(station, account, true))
-                .Sum(order => order.OrderQuantity - order.NumDispatched);
+            return RelevantOrders(station, account).Sum(order => order.OrderQuantity - order.NumDispatched);
         }
 
         /// <summary>
@@ -526,6 +524,7 @@ namespace Content.Server.Cargo.Systems
             // Make an order
             var id = GenerateOrderId(orderDatabase);
             var order = new CargoOrderData(id, product, qty, sender, description, account);
+            order.Visible = false;
 
             // Approve it now
             order.SetApproverData(dest, sender);
