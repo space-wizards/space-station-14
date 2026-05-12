@@ -75,8 +75,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         InitializeRelay();
         InitializeUI();
 
-        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
-
         SubscribeLocalEvent<BorgChassisComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BorgChassisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
@@ -98,24 +96,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
-    }
-
-    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
-    {
-        if (args.Handled)
-        {
-            return;
-        }
-
-        // TODO: Why the hell is this only broadcasted and not raised directed on the entity?
-        // This is doing a ton of HasComps/TryComps.
-        if (!HasComp<BorgChassisComponent>(args.ForActor))
-        {
-            return;
-        }
-
-        args.Title = Name(args.ForActor).Trim();
-        args.Handled = true;
     }
 
     private void OnStartup(Entity<BorgChassisComponent> chassis, ref ComponentStartup args)

@@ -474,11 +474,7 @@ public sealed partial class CargoSystem
             {
                 string? actorName = null;
                 if (actor != null)
-                {
-                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(ent.Owner, actor.Value);
-                    RaiseLocalEvent(getIdentityEvent);
-                    actorName = getIdentityEvent.Title;
-                }
+                    actorName = _identity.GetNameAndId(actor.Value);
 
                 ent.Comp.History.Add(new CargoBountyHistoryData(data,
                     skipped

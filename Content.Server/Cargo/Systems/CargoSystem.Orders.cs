@@ -234,9 +234,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, player);
-                RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-                order.SetApproverData(tryGetIdentityShortInfoEvent.Title);
+                order.SetApproverData(_identity.GetNameAndId(player));
 
                 var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
                     ("productName", Loc.GetString(product.Name)),
