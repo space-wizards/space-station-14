@@ -137,10 +137,10 @@ public sealed partial class DoorComponent : Component
 
     #region Graphics
 
-    /// <summary>
-    /// The key used when playing door opening/closing/emagging/deny animations.
-    /// </summary>
-    public const string OpenCloseKey = "door_animation_openclose";
+
+    public const string OpenKey = "door_animation_open";
+
+    public const string CloseKey = "door_animation_close";
 
     /// <summary>
     /// The key used when playing door deny animations.

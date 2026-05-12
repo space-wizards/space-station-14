@@ -12,13 +12,13 @@ namespace Content.Client.Jittering;
 /// <inheritdoc />
 public sealed class JitteringSystem : SharedJitteringSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
-    [Dependency] private readonly EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
-    [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
-    [Dependency] private readonly EntityQuery<StatusEffectComponent> _statusQuery = default!;
+    [Dependency] private EntityQuery<AnimationPlayerComponent> _animationQuery = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<StatusEffectComponent> _statusQuery = default!;
 
     private const string JitterAnimationKey = "jittering";
 

@@ -8,10 +8,10 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.Stunnable;
 
-public sealed class StunSystem : SharedStunSystem
+public sealed partial class StunSystem : SharedStunSystem
 {
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    [Dependency] private SharedCombatModeSystem _combat = default!;
+    [Dependency] private SpriteSystem _spriteSystem = default!;
 
     public override void Initialize()
     {
