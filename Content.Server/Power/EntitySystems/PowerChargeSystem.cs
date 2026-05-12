@@ -9,12 +9,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed partial class PowerChargeSystem : EntitySystem
+public sealed class PowerChargeSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private AmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
 
     public override void Initialize()
     {

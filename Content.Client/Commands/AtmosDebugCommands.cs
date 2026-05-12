@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-internal sealed partial class AtvRangeCommand : LocalizedCommands
+internal sealed class AtvRangeCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "atvrange";
 
@@ -43,9 +43,9 @@ internal sealed partial class AtvRangeCommand : LocalizedCommands
 }
 
 [UsedImplicitly]
-internal sealed partial class AtvModeCommand : LocalizedCommands
+internal sealed class AtvModeCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "atvmode";
 
@@ -102,9 +102,9 @@ internal sealed partial class AtvModeCommand : LocalizedCommands
 }
 
 [UsedImplicitly]
-internal sealed partial class AtvCBMCommand : LocalizedCommands
+internal sealed class AtvCBMCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "atvcbm";
 

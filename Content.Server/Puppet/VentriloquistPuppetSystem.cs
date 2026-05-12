@@ -9,9 +9,9 @@ using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Puppet
 {
-    public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
+    public sealed class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
     {
-        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {

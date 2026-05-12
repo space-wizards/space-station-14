@@ -19,6 +19,8 @@
   - type: StatusEffects
     allowed:
     - Electrocution
+    - TemporaryBlindness
+    - RadiationProtection
     - Adrenaline
   - type: StandingState
   - type: Tag
@@ -306,11 +308,13 @@
   name: hivelord remains
   description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Rororium
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Rororium
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/rorocore.rsi
     state: boiled

@@ -8,7 +8,7 @@ public sealed partial class NoirOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> Shader = "Noir";
 
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;

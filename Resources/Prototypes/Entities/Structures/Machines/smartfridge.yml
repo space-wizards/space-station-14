@@ -105,9 +105,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: DamageOnHighSpeedImpact
     damage:
       types:

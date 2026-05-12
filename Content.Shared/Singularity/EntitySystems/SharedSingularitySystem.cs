@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Radiation.Components;
-using Content.Shared.Radiation.Systems;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.Events;
 using Robust.Shared.Containers;
@@ -13,15 +12,14 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// The entity system primarily responsible for managing <see cref="SingularityComponent"/>s.
 /// </summary>
-public abstract partial class SharedSingularitySystem : EntitySystem
+public abstract class SharedSingularitySystem : EntitySystem
 {
 #region Dependencies
-    [Dependency] private SharedAppearanceSystem _visualizer = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
-    [Dependency] private SharedEventHorizonSystem _horizons = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedRadiationSystem _radiation = default!;
-    [Dependency] protected IViewVariablesManager Vvm = default!;
+    [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -140,7 +138,10 @@ public abstract partial class SharedSingularitySystem : EntitySystem
             _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
         }
 
-        UpdateRadiation(uid, singularity);
+        if (TryComp<RadiationSourceComponent>(uid, out var radiationSource))
+        {
+            UpdateRadiation(uid, singularity, radiationSource);
+        }
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
@@ -164,12 +165,12 @@ public abstract partial class SharedSingularitySystem : EntitySystem
     /// </summary>
     /// <param name="uid">The uid of the singularity to update the radiation of.</param>
     /// <param name="singularity">The state of the singularity to update the radiation of.</param>
-    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null)
+    /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
+    private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(uid, ref singularity, logMissing: false))
+        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
-
-        _radiation.SetIntensity(uid, singularity.Level * singularity.RadsPerLevel);
+        rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
 
 #endregion Getters/Setters

@@ -6,13 +6,13 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Security.Systems;
 
-public sealed partial class DeployableBarrierSystem : EntitySystem
+public sealed class DeployableBarrierSystem : EntitySystem
 {
-    [Dependency] private FixtureSystem _fixtures = default!;
-    [Dependency] private SharedPointLightSystem _pointLight = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private PullingSystem _pulling = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

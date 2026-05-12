@@ -129,7 +129,7 @@
     bodyType: Dynamic
 
 - type: entity
-  parent: StorageTankBig
+  parent: StorageTank
   id: NuclearBombKeg
   name: nuclear fission explosive
   suffix: keg
@@ -175,11 +175,12 @@
         - MachineMask
         layer:
         - WallLayer
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: NuclearCola
-        Quantity: 3840
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: NuclearCola
+          Quantity: 3000
   - type: ReagentTank
     transferAmount: 100
   - type: StaticPrice

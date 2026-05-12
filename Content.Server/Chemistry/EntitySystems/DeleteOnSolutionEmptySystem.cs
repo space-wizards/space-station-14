@@ -4,15 +4,15 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 {
-    public sealed partial class DeleteOnSolutionEmptySystem : EntitySystem
+    public sealed class DeleteOnSolutionEmptySystem : EntitySystem
     {
-        [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
         public void OnStartup(Entity<DeleteOnSolutionEmptyComponent> entity, ref ComponentStartup args)
@@ -20,23 +20,19 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
             CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionChangedEvent args)
+        public void OnSolutionChange(Entity<DeleteOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
         {
-            var solution = args.Solution.Comp.Solution;
-            if (args.Solution.Comp.Id != entity.Comp.Solution)
-                return;
-
-            if (solution.Volume <= 0)
-                QueueDel(entity);
+            CheckSolutions(entity);
         }
 
         public void CheckSolutions(Entity<DeleteOnSolutionEmptyComponent> entity)
         {
-            if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+            if (!TryComp(entity, out SolutionContainerManagerComponent? solutions))
                 return;
 
-            if (solution.Volume <= 0)
-                QueueDel(entity);
+            if (_solutionContainerSystem.TryGetSolution((entity.Owner, solutions), entity.Comp.Solution, out _, out var solution))
+                if (solution.Volume <= 0)
+                    QueueDel(entity);
         }
     }
 }

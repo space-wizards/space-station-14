@@ -8,9 +8,9 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Doors.Systems;
 
-public sealed partial class DoorSystem : SharedDoorSystem
+public sealed class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private AirtightSystem _airtightSystem = default!;
+    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
 
     public override void Initialize()
     {

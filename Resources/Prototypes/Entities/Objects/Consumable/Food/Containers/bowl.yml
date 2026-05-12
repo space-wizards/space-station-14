@@ -10,6 +10,10 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50 # enough to make cheese in.
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
@@ -17,9 +21,6 @@
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
-  - type: Solution
-    solution:
-      maxVol: 50
   - type: MixableSolution
     solution: food
   - type: Edible

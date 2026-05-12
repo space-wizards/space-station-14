@@ -9,9 +9,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Chat.V2.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed partial class NukeChatMessagesCommand : ToolshedCommand
+public sealed class NukeChatMessagesCommand : ToolshedCommand
 {
-    [Dependency] private IEntitySystemManager _manager = default!;
+    [Dependency] private readonly IEntitySystemManager _manager = default!;
 
     [CommandImplementation("usernames")]
     public void Command(IInvocationContext ctx, string usernamesCsv)

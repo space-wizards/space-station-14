@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Station.Systems;
@@ -8,12 +7,12 @@ namespace Content.IntegrationTests.Tests.Internals;
 
 [TestFixture]
 [TestOf(typeof(InternalsSystem))]
-public sealed class AutoInternalsTests : GameTest
+public sealed class AutoInternalsTests
 {
     [Test]
     public async Task TestInternalsAutoActivateInSpaceForStationSpawn()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -32,12 +31,14 @@ public sealed class AutoInternalsTests : GameTest
 
             server.EntMan.DeleteEntity(dummy);
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestInternalsAutoActivateInSpaceForEntitySpawn()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -54,6 +55,8 @@ public sealed class AutoInternalsTests : GameTest
 
             server.EntMan.DeleteEntity(dummy);
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [TestPrototypes]

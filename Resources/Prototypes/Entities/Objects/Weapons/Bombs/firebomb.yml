@@ -42,7 +42,6 @@
   - type: TimerTriggerVisuals
     unprimedSprite: base
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -97,11 +96,13 @@
     - state: base
       map: ["enum.OpenableVisuals.Layer"]
     - state: fuel
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 30
   - type: Construction
     node: fuel
     defaultTarget: firebomb

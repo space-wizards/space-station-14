@@ -1,33 +1,29 @@
-using Content.Shared.CCVar;
 using Content.Shared.Drunk;
+using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Drunk;
 
-public sealed partial class DrunkOverlay : Overlay
+public sealed class DrunkOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> DrunkShader = "Drunk";
+    private static readonly ProtoId<ShaderPrototype> Shader = "Drunk";
 
-    [Dependency] private IEntityManager _entityManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IConfigurationManager _configManager = default!;
-    private readonly Shared.StatusEffectNew.StatusEffectsSystem _statusEffectsSystem;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drunkShader;
 
     public float CurrentBoozePower = 0.0f;
-    // Starting phase for the rotation effect.
-    // Needed so it doesn't always look the same for 0 motion.
-    public float Phase = 0f;
 
     private const float VisualThreshold = 10.0f;
     private const float PowerDivisor = 250.0f;
@@ -41,22 +37,12 @@ public sealed partial class DrunkOverlay : Overlay
 
     private const float BoozePowerScale = 8f;
 
-    private float _visualScale = 0f;
-    private float _timeScale = 1f;
-    private float _distortionScale = 1f;
+    private float _visualScale = 0;
 
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _statusEffectsSystem = _entityManager.System<Shared.StatusEffectNew.StatusEffectsSystem>();
-        _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
-        _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
-    }
-
-    private void OnReducedMotionChanged(bool reducedMotion)
-    {
-        _timeScale = reducedMotion ? 0.0f : 1.0f;
-        _distortionScale = reducedMotion ? 4.0f : 1.0f; // Make the offset stronger to compensate the lack of motion.
+        _drunkShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -67,14 +53,15 @@ public sealed partial class DrunkOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffectsSystem.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
+        var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
+        if (!statusSys.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxBoozePower : (float)Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
+        var power = time == null ? MaxBoozePower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
 
-        CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power + 1);
+        CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power+1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -95,12 +82,8 @@ public sealed partial class DrunkOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-
         _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _drunkShader.SetParameter("boozePower", _visualScale);
-        _drunkShader.SetParameter("timeScale", _timeScale);
-        _drunkShader.SetParameter("distortionScale", _distortionScale);
-        _drunkShader.SetParameter("phase", Phase);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);

@@ -32,9 +32,8 @@
     drawdepth: ThinWire
     visible: false
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -243,7 +242,6 @@
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_4
   - type: Damageable
-  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:

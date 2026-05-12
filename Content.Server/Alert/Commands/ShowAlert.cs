@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed partial class ShowAlert : IConsoleCommand
+    public sealed class ShowAlert : IConsoleCommand
     {
-        [Dependency] private IEntityManager _e = default!;
+        [Dependency] private readonly IEntityManager _e = default!;
 
         public string Command => "showalert";
         public string Description => "Shows an alert for a player, defaulting to current player";

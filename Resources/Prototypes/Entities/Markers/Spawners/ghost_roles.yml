@@ -349,7 +349,6 @@
   - type: GhostRole
     name: ghost-role-information-wizard-name
     description: ghost-role-information-wizard-desc
-    rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleWizard
     raffle:

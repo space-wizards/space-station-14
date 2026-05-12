@@ -5,9 +5,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.FeedbackSystem;
 
 /// <inheritdoc />
-public sealed partial class ServerFeedbackManager : SharedFeedbackManager
+public sealed class ServerFeedbackManager : SharedFeedbackManager
 {
-    [Dependency] private ISharedPlayerManager _player = null!;
+    [Dependency] private readonly ISharedPlayerManager _player = null!;
 
     public override void Initialize()
     {
@@ -29,6 +29,9 @@ public sealed partial class ServerFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override void SendToSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
     {
+        if (!NetManager.IsServer)
+            return;
+
         var msg = new FeedbackPopupMessage
         {
             FeedbackPrototypes = popupPrototypes,
@@ -41,6 +44,9 @@ public sealed partial class ServerFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override void SendToAllSessions(List<ProtoId<FeedbackPopupPrototype>> popupPrototypes, bool remove = false)
     {
+        if (!NetManager.IsServer)
+            return;
+
         var msg = new FeedbackPopupMessage
         {
             FeedbackPrototypes = popupPrototypes,
@@ -53,6 +59,9 @@ public sealed partial class ServerFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override void OpenForSession(ICommonSession session)
     {
+        if (!NetManager.IsServer)
+            return;
+
         var msg = new OpenFeedbackPopupMessage();
         NetManager.ServerSendMessage(msg, session.Channel);
     }
@@ -60,6 +69,9 @@ public sealed partial class ServerFeedbackManager : SharedFeedbackManager
     /// <inheritdoc />
     public override void OpenForAllSessions()
     {
+        if (!NetManager.IsServer)
+            return;
+
         var msg = new OpenFeedbackPopupMessage();
         NetManager.ServerSendToAll(msg);
     }

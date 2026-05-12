@@ -8,9 +8,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed partial class SetTemperatureCommand : IConsoleCommand
+    public sealed class SetTemperatureCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public string Command => "settemp";
         public string Description => "Sets a tile's temperature (in kelvin).";

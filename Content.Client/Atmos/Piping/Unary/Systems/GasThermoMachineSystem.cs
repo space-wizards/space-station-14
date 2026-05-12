@@ -4,9 +4,9 @@ using Content.Shared.Atmos.Piping.Unary.Systems;
 
 namespace Content.Client.Atmos.Piping.Unary.Systems;
 
-public sealed partial class GasThermoMachineSystem : SharedGasThermoMachineSystem
+public sealed class GasThermoMachineSystem : SharedGasThermoMachineSystem
 {
-    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

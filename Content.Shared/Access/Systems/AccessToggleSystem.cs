@@ -3,9 +3,9 @@ using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Shared.Access.Systems;
 
-public sealed partial class AccessToggleSystem : EntitySystem
+public sealed class AccessToggleSystem : EntitySystem
 {
-    [Dependency] private SharedAccessSystem _access = default!;
+    [Dependency] private readonly SharedAccessSystem _access = default!;
 
     public override void Initialize()
     {

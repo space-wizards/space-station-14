@@ -12,13 +12,13 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
 
-public sealed partial class EscapeInventorySystem : EntitySystem
+public sealed class EscapeInventorySystem : EntitySystem
 {
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private PopupSystem _popupSystem = default!;
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {

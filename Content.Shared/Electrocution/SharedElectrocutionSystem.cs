@@ -3,9 +3,9 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Electrocution
 {
-    public abstract partial class SharedElectrocutionSystem : EntitySystem
+    public abstract class SharedElectrocutionSystem : EntitySystem
     {
-        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

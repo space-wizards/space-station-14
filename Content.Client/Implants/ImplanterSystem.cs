@@ -6,10 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Implants;
 
-public sealed partial class ImplanterSystem : SharedImplanterSystem
+public sealed class ImplanterSystem : SharedImplanterSystem
 {
-    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {

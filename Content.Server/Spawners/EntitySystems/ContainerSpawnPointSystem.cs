@@ -9,14 +9,14 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
 
-public sealed partial class ContainerSpawnPointSystem : EntitySystem
+public sealed class ContainerSpawnPointSystem : EntitySystem
 {
-    [Dependency] private ContainerSystem _container = default!;
-    [Dependency] private GameTicker _gameTicker = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
     public override void Initialize()
     {

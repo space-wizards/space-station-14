@@ -16,12 +16,16 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
-        [Dependency] private IConfigurationManager _cfgManager = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
         private readonly ISawmill _logMill = default!;
 
         private readonly IdCardConsoleBoundUserInterface _owner;
+
+        // CCVar.
+        private int _maxNameLength;
+        private int _maxIdJobLength;
 
         private AccessLevelControl _accessButtons = new();
         private readonly List<string> _jobPrototypeIds = new();
@@ -42,8 +46,11 @@ namespace Content.Client.Access.UI
 
             _owner = owner;
 
+            _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+            _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
-            FullNameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
+            FullNameLineEdit.IsValid = s => s.Length <= _maxNameLength;
             FullNameLineEdit.OnTextChanged += _ =>
             {
                 FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
@@ -51,7 +58,7 @@ namespace Content.Client.Access.UI
             FullNameSaveButton.OnPressed += _ => SubmitData();
 
             JobTitleLineEdit.OnTextEntered += _ => SubmitData();
-            JobTitleLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+            JobTitleLineEdit.IsValid = s => s.Length <= _maxIdJobLength;
             JobTitleLineEdit.OnTextChanged += _ =>
             {
                 JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;
@@ -216,7 +223,7 @@ namespace Content.Client.Access.UI
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
                 _accessButtons.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList(),
-                jobProtoDirty ? _jobPrototypeIds[JobPresetOptionButton.SelectedId] : null);
+                jobProtoDirty ? _jobPrototypeIds[JobPresetOptionButton.SelectedId] : string.Empty);
         }
     }
 }

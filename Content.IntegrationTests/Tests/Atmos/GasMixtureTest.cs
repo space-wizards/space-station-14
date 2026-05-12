@@ -1,5 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
@@ -8,12 +7,12 @@ namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
     [TestOf(typeof(GasMixture))]
-    public sealed class GasMixtureTest : GameTest
+    public sealed class GasMixtureTest
     {
         [Test]
         public async Task TestMerge()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
@@ -57,6 +56,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                     Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
@@ -68,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(Atmospherics.BreathPercentage)]
         public async Task RemoveRatio(float ratio)
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             await server.WaitAssertion(() =>
@@ -102,6 +103,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                     Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

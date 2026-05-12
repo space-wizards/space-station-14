@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
@@ -13,7 +12,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public sealed partial class DoAfterServerTest : GameTest
+    public sealed partial class DoAfterServerTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -36,7 +35,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestSerializable()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             await server.WaitIdleAsync();
             var refMan = server.ResolveDependency<IReflectionManager>();
@@ -56,12 +55,14 @@ namespace Content.IntegrationTests.Tests.DoAfter
                     }
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestFinished()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -83,12 +84,14 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await server.WaitRunTicks(1);
             Assert.That(ev.Cancelled, Is.False);
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestCancelled()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
@@ -110,6 +113,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await server.WaitRunTicks(3);
             Assert.That(ev.Cancelled);
+
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -119,7 +124,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestGetInteractingEntities()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
@@ -170,6 +175,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 entityManager.DeleteEntity(target);
                 entityManager.DeleteEntity(target2);
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

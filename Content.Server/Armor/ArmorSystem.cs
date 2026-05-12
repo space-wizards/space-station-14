@@ -6,9 +6,9 @@ using Content.Shared.Damage.Prototypes;
 namespace Content.Server.Armor;
 
 /// <inheritdoc/>
-public sealed partial class ArmorSystem : SharedArmorSystem
+public sealed class ArmorSystem : SharedArmorSystem
 {
-    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     public override void Initialize()
     {

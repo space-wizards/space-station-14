@@ -13,7 +13,6 @@
   - type: Item
     size: Tiny
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -65,7 +64,7 @@
   - type: Dumpable
 
 - type: entity
-  parent: [SolutionSmall, FoodProduceBase]
+  parent: FoodProduceBase
   id: PlasticBanana
   name: banana
   suffix: Plastic
@@ -77,17 +76,18 @@
     flavors:
     - plastic
   - type: Edible
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nothing
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 100
   - type: Tag
     tags:
     - Banana
 
 - type: entity
-  parent: [SolutionSmall, DrinkBase]
+  parent: DrinkBase
   id: CrazyGlue
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
@@ -109,11 +109,13 @@
     consumptionUnit: 10
   - type: Item
     sprite: Objects/Fun/glue.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: SpaceGlue
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 100
   - type: Openable
     sound:
       collection: packetOpenSounds
@@ -121,7 +123,7 @@
     solution: drink
 
 - type: entity
-  parent: [SolutionSmall, DrinkBase]
+  parent: DrinkBase
   id: CrazyLube
   name: crazy lube
   description: A bottle of super slipery crazy lube manufactured by Honk! Co.
@@ -135,11 +137,13 @@
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: SpaceLube
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 100
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
@@ -192,7 +196,7 @@
     sprite: Objects/Fun/mrdips.rsi
 
 - type: entity
-  parent: [ SolutionFood, SolutionSmall, BaseItem ]
+  parent: BaseItem
   id: Error
   name: error
   description: Hmmmm. Something went wrong.
@@ -201,13 +205,13 @@
     sprite: error.rsi
     state: error
   - type: Edible
-  - type: Solution
-    id: food
-    solution:
-      maxVol: 26 # I'm assuming these values are some kind of reference so I'm leaving them as is
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Slippery
     slipData:
       knockdownTime: 3

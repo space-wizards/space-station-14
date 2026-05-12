@@ -4,10 +4,10 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Implants;
 
-public sealed partial class ReplacementImplantSystem : EntitySystem
+public sealed class ReplacementImplantSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {

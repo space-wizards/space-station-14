@@ -14,9 +14,8 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -318,9 +317,8 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -374,9 +372,8 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

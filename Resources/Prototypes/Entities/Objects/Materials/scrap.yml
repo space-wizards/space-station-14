@@ -12,9 +12,8 @@
     sprite: Objects/Materials/Scrap/generic.rsi
     size: Normal
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -38,9 +37,8 @@
   components:
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -24,9 +24,8 @@
   - type: DrunkStatusEffect
 
 - type: entity
-  abstract: true
   parent: MobStatusEffectBase
-  id: PainNumbnessStatusEffectBase
+  id: PainNumbnessTraitStatusEffect
   components:
   - type: StatusEffect
     whitelist:
@@ -34,6 +33,12 @@
       - MobState
       - MobThresholds
   - type: PainNumbnessStatusEffect
+
+- type: entity
+  parent: BloodstreamStatusEffectBase
+  id: StatusEffectHemophiliaTrait
+  components:
+  - type: HemophiliaStatusEffect
 
 - type: entity
   parent: BloodstreamStatusEffectDebuff
@@ -54,7 +59,7 @@
     bleedAmountMultiplier: 1.33
 
 - type: entity
-  parent: [ PainNumbnessStatusEffectBase, MobStatusEffectDebuff ]
+  parent: [ PainNumbnessTraitStatusEffect, MobStatusEffectDebuff ]
   id: StatusEffectPainNumbness
   name: pain numbness
 

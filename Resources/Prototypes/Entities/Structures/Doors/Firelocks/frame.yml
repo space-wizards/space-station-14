@@ -23,9 +23,8 @@
     node: frame1
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: RCDDeconstructable
     cost: 4
     delay: 6

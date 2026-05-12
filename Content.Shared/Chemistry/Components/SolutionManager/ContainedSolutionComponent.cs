@@ -12,7 +12,6 @@ namespace Content.Shared.Chemistry.Components.SolutionManager;
 /// The <see cref="Solution.MaxVolume"/> field should then be extracted out into this component.
 /// Solution entities would just become an apporpriately composed entity hanging out in the container.
 /// Will probably require entities in components being given a relation to associate themselves with their container.
-/// TODO: Proper relations system so this can be initialized with a SolutionComponent attached to it :)
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSolutionContainerSystem))]
@@ -21,6 +20,12 @@ public sealed partial class ContainedSolutionComponent : Component
     /// <summary>
     /// The entity that the solution is contained in.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public EntityUid Container;
+
+    /// <summary>
+    /// The name/key of the container the solution is located in.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField]
+    public string ContainerName = default!;
 }

@@ -7,10 +7,10 @@ using Content.Shared.DoAfter;
 namespace Content.Server.Anomaly;
 
 /// <inheritdoc cref="SharedAnomalyScannerSystem"/>
-public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
+public sealed class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
-    [Dependency] private SecretDataAnomalySystem _secretData = default!;
-    [Dependency] private AnomalySystem _anomaly = default!;
+    [Dependency] private readonly SecretDataAnomalySystem _secretData = default!;
+    [Dependency] private readonly AnomalySystem _anomaly = default!;
 
     public override void Initialize()
     {

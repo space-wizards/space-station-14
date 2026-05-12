@@ -23,7 +23,8 @@ public sealed class AmbientSoundTreeSystem : ComponentTreeSystem<AmbientSoundTre
 
         var pos = XformSystem.GetRelativePosition(
             entry.Transform,
-            entry.Component.TreeUid.Value);
+            entry.Component.TreeUid.Value,
+            GetEntityQuery<TransformComponent>());
 
         return ExtractAabb(in entry, pos, default);
     }

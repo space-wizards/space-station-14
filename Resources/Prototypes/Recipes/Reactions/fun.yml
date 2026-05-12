@@ -11,7 +11,7 @@
 - type: reaction
   id: BuzzochloricBees
   reactants:
-    Brass: # do you like jazz (not sorry)
+    Saxoite: # do you like jazz (not sorry)
       amount: 1
     Fiber: # bees are fuzzy
       amount: 1

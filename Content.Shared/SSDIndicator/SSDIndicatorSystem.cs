@@ -11,14 +11,14 @@ namespace Content.Shared.SSDIndicator;
 /// <summary>
 ///     Handle changing player SSD indicator status
 /// </summary>
-public sealed partial class SSDIndicatorSystem : EntitySystem
+public sealed class SSDIndicatorSystem : EntitySystem
 {
     public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
 
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private SharedNPCSystem _npc = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedNPCSystem _npc = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;

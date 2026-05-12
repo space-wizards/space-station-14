@@ -7,9 +7,9 @@ namespace Content.Client.Commands;
 /// <summary>
 /// Shows the area in which entities with <see cref="Content.Shared.Wall.WallMountComponent" /> can be interacted from.
 /// </summary>
-public sealed partial class ShowWallmountsCommand : LocalizedCommands
+public sealed class ShowWallmountsCommand : LocalizedCommands
 {
-    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
 
     public override string Command => "showwallmounts";
 

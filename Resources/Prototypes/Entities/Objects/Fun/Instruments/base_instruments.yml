@@ -40,9 +40,8 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

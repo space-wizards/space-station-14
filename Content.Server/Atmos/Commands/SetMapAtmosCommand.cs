@@ -1,18 +1,18 @@
 using Content.Server.Administration;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed partial class AddMapAtmosCommand : LocalizedEntityCommands
+public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
-    [Dependency] private IEntityManager _entities = default!;
-    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private const string _cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";

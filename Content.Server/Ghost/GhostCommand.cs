@@ -8,9 +8,9 @@ using Content.Server.GameTicking;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed partial class GhostCommand : IConsoleCommand
+    public sealed class GhostCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");

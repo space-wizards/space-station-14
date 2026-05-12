@@ -27,6 +27,11 @@ public abstract partial class Node
     /// </summary>
     [ViewVariables] public EntityUid Owner { get; private set; } = default!;
 
+    public void SetNodeGroupId(NodeGroupID newId)
+    {
+        NodeGroupID = newId;
+    }
+
     /// <summary>
     ///     If this node should be considered for connection by other nodes.
     /// </summary>
@@ -92,10 +97,9 @@ public abstract partial class Node
     /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
     /// </para>
     /// </remarks>
-    public abstract IEnumerable<Node> GetReachableNodes(
-        Entity<TransformComponent> xform,
+    public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
         EntityQuery<NodeContainerComponent> nodeQuery,
         EntityQuery<TransformComponent> xformQuery,
-        Entity<MapGridComponent>? grid,
+        MapGridComponent? grid,
         IEntityManager entMan);
 }

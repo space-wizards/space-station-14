@@ -33,9 +33,8 @@
     anchored: true
   - type: Anchorable
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

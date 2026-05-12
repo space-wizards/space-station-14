@@ -3,10 +3,10 @@ using Content.Shared.Interaction;
 
 namespace Content.Shared.DragDrop;
 
-public abstract partial class SharedDragDropSystem : EntitySystem
+public abstract class SharedDragDropSystem : EntitySystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
     public override void Initialize()
     {

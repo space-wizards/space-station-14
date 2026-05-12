@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Robust.Shared;
@@ -7,21 +6,20 @@ using Robust.Shared.Replays;
 namespace Content.IntegrationTests.Tests.Replays;
 
 [TestFixture]
-public sealed class ReplayTests : GameTest
+public sealed class ReplayTests
 {
-    public override PoolSettings PoolSettings => new()
-    {
-        DummyTicker = false,
-        Dirty = true
-    };
-
     /// <summary>
     /// Simple test that just makes sure that automatic replay recording on round restarts works without any issues.
     /// </summary>
     [Test]
     public async Task AutoRecordReplayTest()
     {
-        var pair = Pair;
+        var settings = new PoolSettings
+        {
+            DummyTicker = false,
+            Dirty = true
+        };
+        await using var pair = await PoolManager.GetServerClient(settings);
         var server = pair.Server;
 
         Assert.That(server.CfgMan.GetCVar(CVars.ReplayServerRecordingEnabled), Is.False);
@@ -56,5 +54,7 @@ public sealed class ReplayTests : GameTest
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
         Assert.That(recordMan.IsRecording, Is.False);
+
+        await pair.CleanReturnAsync();
     }
 }

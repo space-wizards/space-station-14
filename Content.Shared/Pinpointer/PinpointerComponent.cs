@@ -12,40 +12,40 @@ namespace Content.Shared.Pinpointer;
 public sealed partial class PinpointerComponent : Component
 {
     // TODO: Type serializer oh god
-    [DataField]
+    [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
     public string? Component;
 
-    [DataField]
+    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float MediumDistance = 16f;
 
-    [DataField]
+    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float CloseDistance = 8f;
 
-    [DataField]
+    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
     public float ReachedDistance = 1f;
 
     /// <summary>
     ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [DataField]
+    [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
     public double Precision = 0.09;
 
     /// <summary>
     ///     Name to display of the target being tracked.
     /// </summary>
-    [DataField]
+    [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]
     public string? TargetName;
 
     /// <summary>
     ///     Whether or not the target name should be updated when the target is updated.
     /// </summary>
-    [DataField]
+    [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
     public bool UpdateTargetName;
 
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
-    [DataField]
+    [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanRetarget;
 
     [ViewVariables]

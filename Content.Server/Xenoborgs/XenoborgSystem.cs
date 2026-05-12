@@ -16,10 +16,10 @@ namespace Content.Server.Xenoborgs;
 
 public sealed partial class XenoborgSystem : EntitySystem
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private BorgSystem _borg = default!;
-    [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private XenoborgsRuleSystem _xenoborgsRule = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly BorgSystem _borg = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
 
     private static readonly Color XenoborgBriefingColor = Color.BlueViolet;
 
@@ -96,8 +96,6 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
     {
-        // We don't need to update the mind if the mind is being fully detached!
-        if (args.TransferEntity != null)
-            _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
+        _roles.MindRemoveRole(args.Mind.Owner, comp.MindRole);
     }
 }

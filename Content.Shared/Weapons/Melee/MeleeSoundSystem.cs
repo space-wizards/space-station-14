@@ -8,9 +8,9 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// This handles <see cref="MeleeSoundComponent"/>
 /// </summary>
-public sealed partial class MeleeSoundSystem : EntitySystem
+public sealed class MeleeSoundSystem : EntitySystem
 {
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public const float DamagePitchVariation = 0.05f;
 

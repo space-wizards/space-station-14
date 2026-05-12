@@ -7,14 +7,17 @@ namespace Content.Client.Movement.Systems;
 /// <summary>
 /// Controls the switching of motion and standing still animation
 /// </summary>
-public sealed partial class ClientSpriteMovementSystem : SharedSpriteMovementSystem
+public sealed class ClientSpriteMovementSystem : SharedSpriteMovementSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    private EntityQuery<SpriteComponent> _spriteQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<SpriteMovementComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }

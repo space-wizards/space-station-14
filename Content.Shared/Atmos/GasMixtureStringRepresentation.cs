@@ -1,19 +1,10 @@
-﻿using System.Text;
-
-namespace Content.Shared.Atmos;
+﻿namespace Content.Shared.Atmos;
 
 public readonly record struct GasMixtureStringRepresentation(float TotalMoles, float Temperature, float Pressure, Dictionary<string, float> MolesPerGas) : IFormattable
 {
     public override string ToString()
     {
-        var stringBuilder = new StringBuilder();
-        foreach (var (gas, moles) in MolesPerGas)
-        {
-            stringBuilder.Append($"{gas}: {moles}, ");
-        }
-        var result = stringBuilder.ToString();
-
-        return $"{Temperature} K, {Pressure} kPa, {result}Total Moles: {TotalMoles}";
+        return $"{Temperature}K {Pressure} kPa";
     }
 
     public string ToString(string? format, IFormatProvider? formatProvider)

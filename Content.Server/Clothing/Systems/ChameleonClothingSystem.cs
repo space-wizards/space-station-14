@@ -8,10 +8,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
+public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
@@ -22,7 +22,7 @@ public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSys
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
-        SetSelectedPrototype(uid, component.Default, true, component: component);
+        SetSelectedPrototype(uid, component.Default, true, component);
     }
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
@@ -39,7 +39,10 @@ public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSys
         UI.SetUiState(uid, ChameleonUiKey.Key, state);
     }
 
-    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false, bool validate = true,
+    /// <summary>
+    ///     Change chameleon items name, description and sprite to mimic other entity prototype.
+    /// </summary>
+    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
         ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -53,10 +56,8 @@ public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSys
         // make sure that it is valid change
         if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-
-        if (validate && !IsValidTarget(proto, component.Slot, component.RequireTag))
+        if (!IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
-
         component.Default = protoId;
 
         UpdateIdentityBlocker(uid, component, proto);

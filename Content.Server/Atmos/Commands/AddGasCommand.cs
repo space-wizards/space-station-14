@@ -9,9 +9,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed partial class AddGasCommand : IConsoleCommand
+    public sealed class AddGasCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "addgas";
         public string Description => "Adds gas at a certain position.";

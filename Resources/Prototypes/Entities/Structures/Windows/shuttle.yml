@@ -12,9 +12,8 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:

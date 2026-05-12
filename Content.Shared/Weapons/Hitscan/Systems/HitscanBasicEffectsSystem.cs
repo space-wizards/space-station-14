@@ -7,10 +7,10 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
-public sealed partial class HitscanBasicEffectsSystem : EntitySystem
+public sealed class HitscanBasicEffectsSystem : EntitySystem
 {
-    [Dependency] private SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
 
     public override void Initialize()
     {

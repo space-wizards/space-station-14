@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed partial class TrashOnSolutionEmptySystem : EntitySystem
+    public sealed class TrashOnSolutionEmptySystem : EntitySystem
     {
-        [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
@@ -18,7 +18,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<TrashOnSolutionEmptyComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         }
 
         public void OnMapInit(Entity<TrashOnSolutionEmptyComponent> entity, ref MapInitEvent args)
@@ -26,13 +26,16 @@ namespace Content.Server.Nutrition.EntitySystems
             CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(Entity<TrashOnSolutionEmptyComponent> entity, ref SolutionChangedEvent args)
+        public void OnSolutionChange(Entity<TrashOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
         {
             CheckSolutions(entity);
         }
 
         public void CheckSolutions(Entity<TrashOnSolutionEmptyComponent> entity)
         {
+            if (!HasComp<SolutionContainerManagerComponent>(entity))
+                return;
+
             if (_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
                 UpdateTags(entity, solution);
         }

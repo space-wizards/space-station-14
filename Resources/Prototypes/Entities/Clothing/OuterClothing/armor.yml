@@ -5,7 +5,7 @@
 #Basic armor vest for inheritance
 - type: entity
   abstract: true
-  parent: [ ClothingOuterBaseMedium, AllowSuitStorageClothing ]
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorBase
   name: armor vest
   description: A standard Type I armored vest that provides decent protection against most types of damage.
@@ -24,18 +24,18 @@
   - type: ExplosionResistance
     damageCoefficient: 0.90
 
-#Standard armor vest, allowed for security only
+#Standard armor vest, allowed for security and bartenders
 - type: entity
-  parent: [ BaseSecurityContraband, ClothingOuterArmorBase ]
+  parent: [ BaseSecurityBartenderContraband, ClothingOuterArmorBase]
   id: ClothingOuterArmorBasic
   components:
   - type: Tag
     tags:
     - WhitelistChameleon
 
-#Alternate / slim basic armor vest, allowed for security and bartenders
+#Alternate / slim basic armor vest
 - type: entity
-  parent: [ BaseSecurityBartenderContraband, ClothingOuterArmorBasic ]
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterArmorBasicSlim
   name: armor vest
   suffix: slim
@@ -47,7 +47,7 @@
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
 
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: ClothingOuterArmorBase
   id: ClothingOuterArmorBulletproof
   name: bulletproof vest
   description: A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent.
@@ -67,7 +67,7 @@
     damageCoefficient: 0.80
 
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: ClothingOuterArmorBase
   id: ClothingOuterArmorReflective
   name: reflective vest
   description: An armored vest with advanced shielding to protect against energy weapons.
@@ -91,7 +91,7 @@
 
 #Detective's vest
 - type: entity
-  parent: [ClothingOuterArmorBasic, BaseSecurityContraband]
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -166,7 +166,7 @@
 
 #Elite web vest
 - type: entity
-  parent: [ClothingOuterArmorBase, ClothingOuterStorageBase, BaseSyndicateContraband]
+  parent: [ClothingOuterArmorBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWebElite
   name: elite web vest
   description: A synthetic armor vest. This one has added webbing and heat resistant fibers.

@@ -22,8 +22,9 @@ public sealed partial class NearbyComponentsRule : RulesRule
     public override bool Check(EntityManager entManager, EntityUid uid)
     {
         var inRange = new HashSet<Entity<IComponent>>();
+        var xformQuery = entManager.GetEntityQuery<TransformComponent>();
 
-        if (!entManager.TryGetComponent(uid, out TransformComponent? xform) ||
+        if (!xformQuery.TryGetComponent(uid, out var xform) ||
             xform.MapUid == null)
         {
             return false;
@@ -43,7 +44,7 @@ public sealed partial class NearbyComponentsRule : RulesRule
             foreach (var comp in inRange)
             {
                 if (Anchored &&
-                    (!entManager.TryGetComponent(comp, out TransformComponent? compXform) ||
+                    (!xformQuery.TryGetComponent(comp, out var compXform) ||
                      !compXform.Anchored))
                 {
                     continue;

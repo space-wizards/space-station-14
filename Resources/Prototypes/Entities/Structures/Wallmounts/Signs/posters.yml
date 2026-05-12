@@ -1,14 +1,13 @@
 - type: entity
-  abstract: true
   parent: BaseSign
   id: PosterBase
+  abstract: true
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
   - type: Damageable
-    damageModifierSet: Card
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -35,9 +34,6 @@
             min: 1
             max: 1
         offset: 0
-  - type: Construction
-    graph: PosterGraph
-    node: start
 
 - type: entity
   parent: BaseSign
@@ -49,8 +45,6 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
-  - type: Damageable
-    damageModifierSet: Card
   - type: Destructible
     thresholds:
     - trigger:
@@ -62,9 +56,6 @@
           path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Construction
-    graph: PosterGraph
-    node: tornPoster
 
 # Contraband
 - type: entity

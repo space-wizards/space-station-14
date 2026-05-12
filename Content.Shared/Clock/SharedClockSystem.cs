@@ -4,9 +4,9 @@ using Content.Shared.GameTicking;
 
 namespace Content.Shared.Clock;
 
-public abstract partial class SharedClockSystem : EntitySystem
+public abstract class SharedClockSystem : EntitySystem
 {
-    [Dependency] private SharedGameTicker _ticker = default!;
+    [Dependency] private readonly SharedGameTicker _ticker = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

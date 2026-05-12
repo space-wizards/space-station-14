@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Shuttles.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class DockCommand : LocalizedEntityCommands
+public sealed class DockCommand : LocalizedEntityCommands
 {
-    [Dependency] private DockingSystem _dockSystem = default!;
+    [Dependency] private readonly DockingSystem _dockSystem = default!;
 
     public override string Command => "dock";
 

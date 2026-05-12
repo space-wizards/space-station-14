@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed partial class MakeSentientCommand : LocalizedEntityCommands
+public sealed class MakeSentientCommand : LocalizedEntityCommands
 {
-    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override string Command => "makesentient";
 

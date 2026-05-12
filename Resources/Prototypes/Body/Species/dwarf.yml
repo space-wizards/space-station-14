@@ -1,7 +1,6 @@
 - type: entity
   parent: AppearanceHuman
   id: AppearanceDwarf
-  categories: [ HideSpawnMenu ]
   name: dwarf appearance
   components:
   - type: Inventory

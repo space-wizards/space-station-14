@@ -1,36 +1,39 @@
 - type: entity
   abstract: true
-  parent: [SolutionToolSmall, BaseItem]
+  parent: BaseItem
   id: BaseHandheldGrinder
   components:
+  - type: SolutionContainerManager
+    solutions:
+      grinderOutput:
+        maxVol: 20
   - type: SolutionTransfer
   - type: DrawableSolution
-    solution: solution
+    solution: grinderOutput
   - type: RefillableSolution
-    solution: solution
+    solution: grinderOutput
   - type: DrainableSolution
-    solution: solution
+    solution: grinderOutput
   - type: Edible
     edible: Drink
-    solution: solution
+    solution: grinderOutput
     destroyOnEmpty: false
     utensil: Spoon
   - type: MixableSolution
-    solution: solution
+    solution: grinderOutput
   - type: ExaminableSolution
-    solution: solution
+    solution: grinderOutput
     exactVolume: true
   - type: SolutionItemStatus
-    solution: solution
+    solution: grinderOutput
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: fill-
   - type: DnaSubstanceTrace
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Spillable
-    solution: solution
+    solution: grinderOutput
   - type: Appearance
   - type: HandheldGrinder
 

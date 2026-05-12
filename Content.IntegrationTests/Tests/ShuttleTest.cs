@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -10,12 +9,12 @@ using Robust.Shared.Physics.Systems;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class ShuttleTest : GameTest
+    public sealed class ShuttleTest
     {
         [Test]
         public async Task Test()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             await server.WaitIdleAsync();
 
@@ -51,6 +50,7 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.That(entManager.GetComponent<TransformComponent>(map.Grid).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

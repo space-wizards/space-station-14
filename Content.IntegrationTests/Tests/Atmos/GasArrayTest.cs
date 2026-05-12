@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Robust.Shared.GameObjects;
@@ -9,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 
 [TestFixture]
 [TestOf(typeof(Atmospherics))]
-public sealed class GasArrayTest : GameTest
+public sealed class GasArrayTest
 {
     private const string GasTankTestDummyId = "GasTankTestDummy";
 
@@ -43,7 +42,7 @@ public sealed class GasArrayTest : GameTest
     [Test]
     public async Task TestGasArrayDeserialization()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var compFactory = server.ResolveDependency<IComponentFactory>();
@@ -81,5 +80,6 @@ public sealed class GasArrayTest : GameTest
                 }
             });
         });
+        await pair.CleanReturnAsync();
     }
 }

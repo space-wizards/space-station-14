@@ -9,9 +9,8 @@
   - type: Icon
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:

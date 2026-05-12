@@ -388,7 +388,7 @@
     board: HellfireHeaterMachineCircuitBoard
 
 - type: entity
-  parent: [ SolutionTank, SolutionHuge, BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   id: BaseGasCondenser
   name: condenser
   description: Condenses gases into liquids. Now we just need some plumbing.
@@ -466,6 +466,10 @@
         pipeDirection: South
   - type: Transform
     noRot: false
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 400
   - type: MixableSolution
     solution: tank
   - type: DrainableSolution

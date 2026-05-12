@@ -13,10 +13,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed partial class AGhostCommand : LocalizedCommands
+public sealed class AGhostCommand : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entities = default!;
-    [Dependency] private ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     public override string Command => "aghost";
     public override string Help => "aghost";

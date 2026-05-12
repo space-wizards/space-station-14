@@ -137,20 +137,10 @@ public sealed partial class DoorComponent : Component
 
     #region Graphics
 
-
-    public const string OpenKey = "door_animation_open";
-
-    public const string CloseKey = "door_animation_close";
-
     /// <summary>
-    /// The key used when playing door deny animations.
+    /// The key used when playing door opening/closing/emagging/deny animations.
     /// </summary>
-    public const string DenyKey = "door_animation_deny";
-
-    /// <summary>
-    /// The key used when playing door emag animations.
-    /// </summary>
-    public const string EmagKey = "door_animation_emag";
+    public const string AnimationKey = "door_animation";
 
     /// <summary>
     /// The sprite state used for the door when it's open.
@@ -163,7 +153,7 @@ public sealed partial class DoorComponent : Component
     /// The sprite states used for the door while it's open.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public List<(Enum, string)> OpenSpriteStates = default!;
+    public List<(DoorVisualLayers, string)> OpenSpriteStates = default!;
 
     /// <summary>
     /// The sprite state used for the door when it's closed.
@@ -176,7 +166,7 @@ public sealed partial class DoorComponent : Component
     /// The sprite states used for the door while it's closed.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public List<(Enum, string)> ClosedSpriteStates = default!;
+    public List<(DoorVisualLayers, string)> ClosedSpriteStates = default!;
 
     /// <summary>
     /// The sprite state used for the door when it's opening.

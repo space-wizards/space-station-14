@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Ghost;
@@ -13,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
-public sealed class GhostRoleTests : GameTest
+public sealed class GhostRoleTests
 {
     private const string GhostRoleProtoId = "GhostRoleTestEntity";
     private const string TestMobProtoId = "GhostRoleTestMob";
@@ -34,13 +33,6 @@ public sealed class GhostRoleTests : GameTest
           - type: MobState # MobState is required for correct determination of if the player can return to body or not
         """;
 
-    public override PoolSettings PoolSettings => new()
-    {
-        Dirty = true,
-        DummyTicker = false,
-        Connected = true
-    };
-
     /// <summary>
     /// This is a simple test that just checks if a player can take a ghost role and then regain control of their
     /// original entity without encountering errors.
@@ -51,7 +43,12 @@ public sealed class GhostRoleTests : GameTest
     {
         var ghostCommand = adminGhost ? "aghost" : "ghost";
 
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true,
+            DummyTicker = false,
+            Connected = true
+        });
         var server = pair.Server;
         var client = pair.Client;
 
@@ -213,6 +210,7 @@ public sealed class GhostRoleTests : GameTest
         if (!adminGhost)
         {
             // End of the normal player ghost role test
+            await pair.CleanReturnAsync();
             return;
         }
 
@@ -244,5 +242,7 @@ public sealed class GhostRoleTests : GameTest
             // Check that there is are no lingereing ghosts
             Assert.That(entMan.Count<GhostComponent>(), Is.Zero);
         });
+
+        await pair.CleanReturnAsync();
     }
 }

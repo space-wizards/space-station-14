@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class AdminLogOnTriggerSystem : XOnTriggerSystem<AdminLogOnTriggerComponent>
+public sealed class AdminLogOnTriggerSystem : XOnTriggerSystem<AdminLogOnTriggerComponent>
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     protected override void OnTrigger(Entity<AdminLogOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

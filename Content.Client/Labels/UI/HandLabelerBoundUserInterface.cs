@@ -8,9 +8,9 @@ namespace Content.Client.Labels.UI
     /// <summary>
     /// Initializes a <see cref="HandLabelerWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed partial class HandLabelerBoundUserInterface : BoundUserInterface
+    public sealed class HandLabelerBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         [ViewVariables]
         private HandLabelerWindow? _window;

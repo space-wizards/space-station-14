@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
@@ -11,12 +9,11 @@ namespace Content.Shared.Silicons.Borgs;
 
 public abstract partial class SharedBorgSystem
 {
-    [Dependency] private EntityQuery<BorgModuleComponent> _moduleQuery = default!;
+    private EntityQuery<BorgModuleComponent> _moduleQuery;
 
     public void InitializeModule()
     {
         SubscribeLocalEvent<BorgModuleComponent, ExaminedEvent>(OnModuleExamine);
-        SubscribeLocalEvent<BorgModuleWhitelistComponent, ExaminedEvent>(OnWhitelistExamine);
         SubscribeLocalEvent<BorgModuleComponent, EntGotInsertedIntoContainerMessage>(OnModuleGotInserted);
         SubscribeLocalEvent<BorgModuleComponent, EntGotRemovedFromContainerMessage>(OnModuleGotRemoved);
 
@@ -34,41 +31,27 @@ public abstract partial class SharedBorgSystem
         SubscribeLocalEvent<ComponentBorgModuleComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
             OnComponentModuleInstalledRelay);
 
-        SubscribeLocalEvent<BorgModuleWhitelistComponent, BorgModuleInsertAttemptEvent>(OnCheckWhitelist);
-        SubscribeLocalEvent<BorgModuleWhitelistComponent, BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent>>(
-            OnCheckBlacklistRelay);
+        _moduleQuery = GetEntityQuery<BorgModuleComponent>();
     }
 
     #region BorgModule
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
     {
-        using (args.PushGroup(nameof(BorgModuleComponent)))
+        if (ent.Comp.BorgFitTypes == null)
+            return;
+
+        if (ent.Comp.BorgFitTypes.Count == 0)
+            return;
+
+        var typeList = new List<string>();
+
+        foreach (var type in ent.Comp.BorgFitTypes)
         {
-            if (TryFormatList(ent.Comp.BorgFitTypes, "borg-module-fit", "types", out var list))
-                args.PushMarkup(list);
+            typeList.Add(Loc.GetString(type));
         }
-    }
 
-    private void OnWhitelistExamine(Entity<BorgModuleWhitelistComponent> ent, ref ExaminedEvent args)
-    {
-        using (args.PushGroup(nameof(BorgModuleComponent), 1))
-        {
-            args.PushMarkup(Loc.GetString(ent.Comp.WhitelistInfo));
-        }
-    }
-
-    private bool TryFormatList(List<LocId>? list, string messageId, string listId, [NotNullWhen(true)] out string? formattedList)
-    {
-        formattedList = null;
-
-        if (list == null || list.Count == 0)
-            return false;
-
-        var entries = ContentLocalizationManager.FormatList([.. list.Select(s => Loc.GetString(s))]);
-
-        formattedList = Loc.GetString(messageId, (listId, entries));
-        return true;
-
+        var types = ContentLocalizationManager.FormatList(typeList);
+        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
     }
 
     private void OnModuleGotInserted(Entity<BorgModuleComponent> module, ref EntGotInsertedIntoContainerMessage args)
@@ -278,8 +261,7 @@ public abstract partial class SharedBorgSystem
     private void OnComponentModuleInstalledRelay(Entity<ComponentBorgModuleComponent> ent,
         ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
     {
-        if (args.Args.Cancelled ||
-            !TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
+        if (!TryComp<ComponentBorgModuleComponent>(args.Args.ModuleEnt, out var newModule))
             return;
 
         foreach (var comp in newModule.Components)
@@ -290,89 +272,6 @@ public abstract partial class SharedBorgSystem
                 args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
             }
         }
-
     }
-    #endregion
-
-    #region ModuleWhitelist
-
-    private void OnCheckWhitelist(Entity<BorgModuleWhitelistComponent> ent, ref BorgModuleInsertAttemptEvent args)
-    {
-        if (args.Cancelled || !TryComp<BorgChassisComponent>(args.ChassisEnt, out var chassis))
-            return;
-
-        //loop over all other contained modules to see if any conflict with this module's blacklist
-        //while simultaneously checking if any module fits its prerequisite criteria
-        var prerequisiteFulfilled = false;
-        foreach (var containedModuleUid in chassis.ModuleContainer.ContainedEntities)
-        {
-            if (_whitelist.IsWhitelistPass(ent.Comp.ModuleBlacklist, containedModuleUid))
-            {
-                args.Reason = Loc.GetString("borg-module-incompatible", ("existing", containedModuleUid));
-                args.Cancelled = true;
-                return;
-            }
-            if (!prerequisiteFulfilled && _whitelist.IsWhitelistPassOrNull(ent.Comp.ModuleWhitelist, containedModuleUid))
-                prerequisiteFulfilled = true;
-        }
-        if (!prerequisiteFulfilled)
-        {
-            args.Reason = Loc.GetString("borg-module-prerequisite-unfulfilled");
-            args.Cancelled = true;
-        }
-    }
-
-    private void OnCheckBlacklistRelay(Entity<BorgModuleWhitelistComponent> ent, ref BorgModuleRelayedEvent<BorgModuleInsertAttemptEvent> args)
-    {
-        if (args.Args.Cancelled)
-            return;
-
-        if (_whitelist.IsWhitelistPass(ent.Comp.ModuleBlacklist, args.Args.ModuleEnt))
-        {
-            args.Args.Cancelled = true;
-            args.Args.Reason = Loc.GetString("borg-module-incompatible", ("existing", ent));
-        }
-    }
-
-    //TODO: Replace this with a relayed event based system once there's a QueueRemove
-    //or something similar implemented that defers entity removal from containers to the following tick
-    //this cannot be implemented as a relayed event because the act of removing a module
-    //from a chassis modifies the relay's foreach loop collection to be modified, thus throwing an error
-
-    /// This function removes all modules who are now invalidated by the removal of removedModule
-    private void ValidateWhitelists(Entity<BorgChassisComponent> chassis, EntityUid removedModule)
-    {
-        var toRemove = new List<EntityUid>();
-        foreach (var containedModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-        {
-            if (containedModuleUid == removedModule ||
-                !TryComp<BorgModuleWhitelistComponent>(containedModuleUid, out var whitelist) ||
-                whitelist.ModuleWhitelist == null)
-                continue;
-
-            var keep = false;
-
-            foreach (var checkAgainstModuleUid in chassis.Comp.ModuleContainer.ContainedEntities)
-            {
-                if (checkAgainstModuleUid == containedModuleUid ||
-                    checkAgainstModuleUid == removedModule)
-                    continue;
-
-                if (_whitelist.IsWhitelistPass(whitelist.ModuleWhitelist, checkAgainstModuleUid))
-                {
-                    keep = true;
-                    break;
-                }
-            }
-            if (!keep)
-                toRemove.Add(containedModuleUid);
-        }
-
-        foreach (var moduleUid in toRemove)
-        {
-            _container.Remove(moduleUid, chassis.Comp.ModuleContainer);
-        }
-    }
-
     #endregion
 }

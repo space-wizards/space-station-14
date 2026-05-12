@@ -32,9 +32,8 @@
     # only show after making the announcement at 50%
     enabled: false
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

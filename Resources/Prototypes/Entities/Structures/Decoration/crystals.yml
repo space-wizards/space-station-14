@@ -38,9 +38,8 @@
       energy: 3
       color: "#52ff39"
     - type: Damageable
-      damageModifierSet: Glass
-    - type: Injurable
       damageContainer: StructuralInorganic
+      damageModifierSet: Glass
     - type: Destructible
       thresholds:
         - trigger:

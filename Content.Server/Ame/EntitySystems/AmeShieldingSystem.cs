@@ -4,10 +4,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Ame.EntitySystems;
 
-public sealed partial class AmeShieldingSystem : EntitySystem
+public sealed class AmeShieldingSystem : EntitySystem
 {
-    [Dependency] private AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private PointLightSystem _pointLightSystem = default!;
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
 
     public void SetCore(EntityUid uid, bool value, AmeShieldComponent? shield = null)
     {

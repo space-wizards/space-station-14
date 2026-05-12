@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Shared.Atmos;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Server.GameObjects;
@@ -10,12 +9,12 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Storage.EntitySystems;
 
-public sealed partial class EntityStorageSystem : SharedEntityStorageSystem
+public sealed class EntityStorageSystem : SharedEntityStorageSystem
 {
-    [Dependency] private ConstructionSystem _construction = default!;
-    [Dependency] private AtmosphereSystem _atmos = default!;
-    [Dependency] private IMapManager _map = default!;
-    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     public override void Initialize()
     {

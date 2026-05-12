@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -8,21 +7,14 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class FilterTests : GameTest
+public sealed class FilterTests
 {
-    public override PoolSettings PoolSettings => new()
-    {
-        AdminLogsEnabled = true,
-        DummyTicker = false,
-        Connected = true
-    };
-
     [Test]
     [TestCase(DateOrder.Ascending)]
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
         var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -104,5 +96,6 @@ public sealed class FilterTests : GameTest
 
             return firstFound && secondFound;
         });
+        await pair.CleanReturnAsync();
     }
 }

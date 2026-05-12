@@ -6,9 +6,9 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed partial class ExtensionCableSystem : EntitySystem
+    public sealed class ExtensionCableSystem : EntitySystem
     {
-        [Dependency] private SharedMapSystem _map = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         public override void Initialize()
         {

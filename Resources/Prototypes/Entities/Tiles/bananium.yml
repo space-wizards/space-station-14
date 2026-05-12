@@ -22,9 +22,8 @@
     graph: FloorBananium
     node: BananiumFloor
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

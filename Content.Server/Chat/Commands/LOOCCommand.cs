@@ -7,9 +7,9 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed partial class LOOCCommand : IConsoleCommand
+    internal sealed class LOOCCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _e = default!;
+        [Dependency] private readonly IEntityManager _e = default!;
 
         public string Command => "looc";
         public string Description => "Send Local Out Of Character chat messages.";

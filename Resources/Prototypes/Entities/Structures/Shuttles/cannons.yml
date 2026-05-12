@@ -16,9 +16,8 @@
     availableModes:
       - SemiAuto
   - type: Damageable
-    damageModifierSet: Electronic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -282,9 +281,8 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -14,9 +14,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Chemistry.EntitySystems;
 
 /// <inheritdoc/>
-public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
+public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
     private static readonly ProtoId<MixingCategoryPrototype> DefaultGrindCategory = "DummyGrind";
@@ -116,8 +116,9 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             }
 
 
-            if (extractableComponent.GrindableSolutionName is { } grindableSolutionId &&
-                _solutionContainer.TryGetSolution(entProto, grindableSolutionId, out var grindableSolution))
+            if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
+                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager, EntityManager.ComponentFactory) &&
+                _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
             {
                 var data = new ReagentEntitySourceData(
                     new() { DefaultGrindCategory },

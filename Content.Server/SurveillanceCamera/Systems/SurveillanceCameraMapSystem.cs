@@ -5,9 +5,9 @@ using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraMapSystem : EntitySystem
+public sealed class SurveillanceCameraMapSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

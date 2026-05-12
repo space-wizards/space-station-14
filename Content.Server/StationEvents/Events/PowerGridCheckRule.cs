@@ -9,14 +9,13 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
-    public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
+    public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
-        [Dependency] private ApcSystem _apcSystem = default!;
+        [Dependency] private readonly ApcSystem _apcSystem = default!;
 
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {

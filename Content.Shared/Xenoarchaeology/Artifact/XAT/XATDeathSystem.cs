@@ -7,16 +7,18 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires death of some mob near artifact.
 /// </summary>
-public sealed partial class XATDeathSystem : BaseXATSystem<XATDeathComponent>
+public sealed class XATDeathSystem : BaseXATSystem<XATDeathComponent>
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
+    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
+        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
 
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }

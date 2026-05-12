@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed partial class DsayCommand : LocalizedEntityCommands
+public sealed class DsayCommand : LocalizedEntityCommands
 {
-    [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
     public override string Command => "dsay";
 

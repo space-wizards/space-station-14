@@ -11,12 +11,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Rotting;
 
-public sealed partial class RottingSystem : SharedRottingSystem
+public sealed class RottingSystem : SharedRottingSystem
 {
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private AtmosphereSystem _atmosphere = default!;
-    [Dependency] private ContainerSystem _container = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -127,11 +127,11 @@ public sealed partial class RottingSystem : SharedRottingSystem
 
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 continue;
-
             // We need a way to get the mass of the mob alone without armor etc in the future
             // or just remove the mass mechanics altogether because they aren't good.
             var molRate = perishable.MolsPerSecondPerUnitMass * (float)rotting.RotUpdateRate.TotalSeconds;
-            _atmosphere.AdjustTileMixture(uid, Gas.Ammonia, molRate * physics.FixturesMass, excite: true);
+            var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
+            tileMix?.AdjustMoles(Gas.Ammonia, molRate * physics.FixturesMass);
         }
     }
 }

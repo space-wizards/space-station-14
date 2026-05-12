@@ -26,9 +26,8 @@
             Middle: { state: switch-off }
             Left: { state: switch-rev }
     - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
       damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:

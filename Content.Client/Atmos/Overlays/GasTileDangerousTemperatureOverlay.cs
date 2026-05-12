@@ -1,5 +1,4 @@
 using Content.Client.Atmos.EntitySystems;
-using Content.Client.Graphics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -14,20 +13,19 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 /// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
 /// /// </summary>
-public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
+public sealed class GasTileDangerousTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
 
-    [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
-    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IClyde _clyde = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
     private EntityQuery<GasTileOverlayComponent> _overlayQuery;
 
-    private readonly OverlayResourceCache<CachedResources> _resources = new();
-    private List<Entity<MapGridComponent>> _grids = new();
+    private IRenderTexture? _temperatureTarget;
 
     // Cache used to transform ThermalByte into Color for overlay
     private readonly Color[] _colorCache = new Color[256];
@@ -154,11 +152,10 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
-        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
-        if (res.TemperatureTarget is null || res.TemperatureTarget.Texture.Size != target.Size)
+        if (_temperatureTarget?.Texture.Size != target.Size)
         {
-            res.TemperatureTarget?.Dispose();
-            res.TemperatureTarget = _clyde.CreateRenderTarget(
+            _temperatureTarget?.Dispose();
+            _temperatureTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileDangerousTemperatureOverlay));
@@ -170,13 +167,16 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
         var mapId = args.MapId;
         var worldToViewportLocal = args.Viewport.GetWorldToLocalMatrix();
 
-        drawHandle.RenderInRenderTarget(res.TemperatureTarget,
+        var anyGasDrawn = false;
+        List<Entity<MapGridComponent>> grids = new();
+
+        drawHandle.RenderInRenderTarget(_temperatureTarget,
             () =>
             {
-                _grids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _grids);
+                grids.Clear();
+                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref grids);
 
-                foreach (var grid in _grids)
+                foreach (var grid in grids)
                 {
                     if (!_overlayQuery.TryGetComponent(grid.Owner, out var comp))
                         continue;
@@ -211,6 +211,8 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
                             if (gasColor.A <= 0f)
                                 continue;
 
+                            anyGasDrawn = true;
+
                             drawHandle.DrawRect(
                                 Box2.CenteredAround(tilePosition + gridTileCenterVec, gridTileSizeVec),
                                 gasColor
@@ -223,31 +225,29 @@ public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 
         drawHandle.SetTransform(Matrix3x2.Identity);
 
+        if (!anyGasDrawn)
+        {
+            _temperatureTarget?.Dispose();
+            _temperatureTarget = null;
+            return false;
+        }
+
         return true;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
+        if (_temperatureTarget is null)
+            return;
 
-        if (res.TemperatureTarget != null)
-            args.WorldHandle.DrawTextureRect(res.TemperatureTarget.Texture, args.WorldBounds);
+        args.WorldHandle.DrawTextureRect(_temperatureTarget.Texture, args.WorldBounds);
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 
     protected override void DisposeBehavior()
     {
-        _resources.Dispose();
+        _temperatureTarget?.Dispose();
+        _temperatureTarget = null;
         base.DisposeBehavior();
-    }
-
-    private sealed class CachedResources : IDisposable
-    {
-        public IRenderTexture? TemperatureTarget;
-
-        public void Dispose()
-        {
-            TemperatureTarget?.Dispose();
-        }
     }
 }

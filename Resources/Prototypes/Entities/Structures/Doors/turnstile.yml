@@ -45,9 +45,8 @@
       - Pullable # no dragging things in
   - type: Appearance
   - type: Damageable
-    damageModifierSet: StrongMetallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:

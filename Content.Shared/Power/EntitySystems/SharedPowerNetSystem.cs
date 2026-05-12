@@ -2,9 +2,9 @@ using Content.Shared.Power.Components;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public abstract partial class SharedPowerNetSystem : EntitySystem
+public abstract class SharedPowerNetSystem : EntitySystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public abstract bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp);
 

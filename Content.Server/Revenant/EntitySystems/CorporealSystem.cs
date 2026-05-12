@@ -6,10 +6,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Revenant.EntitySystems;
 
-public sealed partial class CorporealSystem : SharedCorporealSystem
+public sealed class CorporealSystem : SharedCorporealSystem
 {
-    [Dependency] private VisibilitySystem _visibilitySystem = default!;
-    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     public override void OnStartup(EntityUid uid, CorporealComponent component, ComponentStartup args)
     {

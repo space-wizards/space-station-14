@@ -6,10 +6,10 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    sealed partial class ObserveCommand : IConsoleCommand
+    sealed class ObserveCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _e = default!;
-        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public string Command => "observe";
         public string Description => "";

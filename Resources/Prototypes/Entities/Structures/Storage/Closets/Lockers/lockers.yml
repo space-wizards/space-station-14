@@ -454,7 +454,6 @@
         hard: True
         restitution: 0
         friction: 0.4
-  - type: EntityStorage
 
 - type: entity
   parent: LockerPrisoner

@@ -6,9 +6,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed partial class RemoveDecalCommand : IConsoleCommand
+    public sealed class RemoveDecalCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "rmdecal";
         public string Description => "removes a decal";

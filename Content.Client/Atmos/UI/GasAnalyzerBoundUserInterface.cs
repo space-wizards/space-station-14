@@ -1,33 +1,41 @@
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
-using Content.Shared.Atmos.Components;
+using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
-namespace Content.Client.Atmos.UI;
-
-public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
+namespace Content.Client.Atmos.UI
 {
-    [ViewVariables]
-    private GasAnalyzerWindow? _window;
-
-    public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
     {
-    }
+        [ViewVariables]
+        private GasAnalyzerWindow? _window;
 
-    protected override void Open()
-    {
-        base.Open();
+        public GasAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
+        }
 
-        _window = this.CreateWindowCenteredLeft<GasAnalyzerWindow>();
-        _window.OnClose += Close;
-    }
+        protected override void Open()
+        {
+            base.Open();
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        if (_window == null)
-            return;
+            _window = this.CreateWindowCenteredLeft<GasAnalyzerWindow>();
+            _window.OnClose += Close;
+        }
 
-        if (message is not GasAnalyzerUserMessage cast)
-            return;
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            if (_window == null)
+                return;
+            if (message is not GasAnalyzerUserMessage cast)
+                return;
+            _window.Populate(cast);
+        }
 
-        _window.Populate(cast);
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+                _window?.Dispose();
+        }
     }
 }

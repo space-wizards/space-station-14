@@ -34,9 +34,9 @@ public sealed class SaveActionsCommand : IConsoleCommand
 */
 
 [AnyCommand]
-public sealed partial class LoadActionsCommand : LocalizedCommands
+public sealed class LoadActionsCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "loadacts";
 

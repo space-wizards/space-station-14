@@ -1,6 +1,6 @@
 - type: entity
   name: lamp
-  parent: [SolutionToolWelderIndsutrial, BaseItem]
+  parent: BaseItem
   id: ArabianLamp
   description: Why the heck won't this piece of junk open!?
   components:
@@ -91,6 +91,13 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 25
+        maxVol: 25
   - type: SolutionTransfer
     transferAmount: 5
     canChangeTransferAmount: false
@@ -107,6 +114,7 @@
     heldOnly: true
     exactVolume: true
   - type: SolutionRegeneration
+    solution: Welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

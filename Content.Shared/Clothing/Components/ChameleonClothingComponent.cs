@@ -21,19 +21,15 @@ public sealed partial class ChameleonClothingComponent : Component
     public SlotFlags Slot;
 
     /// <summary>
-    ///     The currently selected EntityPrototype ID that chameleon item is trying to mimic.
+    ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
-    /// <remarks>
-    ///     TODO: Rename this, the name "Default" is misleading.
-    ///     Also should not be required, just make null use its original sprites.
-    /// </remarks>
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
     /// <summary>
     ///     Current user that wears chameleon clothing.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [ViewVariables]
     public EntityUid? User;
 
     /// <summary>
@@ -41,18 +37,6 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [DataField]
     public string? RequireTag;
-
-    /// <summary>
-    ///     Can this item have its prototype changed by a <see cref="ChameleonControllerOutfitSelectedEvent"/>?
-    /// </summary>
-    [DataField]
-    public bool CanBeSetByController = true;
-
-    /// <summary>
-    ///     Show a verb for toggling the UI?
-    /// </summary>
-    [DataField]
-    public bool ShowVerb = true;
 
     /// <summary>
     ///     Will component owner be affected by EMP pulses?

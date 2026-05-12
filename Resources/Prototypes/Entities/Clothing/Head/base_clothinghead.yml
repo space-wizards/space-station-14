@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolSmall, Clothing]
+  parent: Clothing
   id: ClothingHeadBase
   components:
   - type: Clothing
@@ -13,11 +13,13 @@
     storedRotation: -90
   - type: Edible
     requiresSpecialDigestion: true
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
   - type: Tag
     tags:
     - ClothMade
@@ -59,7 +61,7 @@
     equippedPrefix: off
   - type: Item
     heldPrefix: off
-    size: Normal # I'm not updating the solution because these probably shouldn't be edible...
+    size: Normal
   - type: ToggleableVisuals
     spriteLayer: light
   - type: ItemTogglePointLight

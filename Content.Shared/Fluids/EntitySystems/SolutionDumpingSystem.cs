@@ -19,16 +19,16 @@ namespace Content.Shared.Fluids.EntitySystems;
 /// </remarks>
 /// <seealso cref="DumpableSolutionComponent" />
 /// <seealso cref="DrainableSolutionComponent" />
-public sealed partial class SolutionDumpingSystem : EntitySystem
+public sealed class SolutionDumpingSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private OpenableSystem _openable = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedSolutionContainerSystem _solContainer = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solContainer = default!;
 
-    [Dependency] private EntityQuery<DumpableSolutionComponent> _dumpQuery = default!;
+    private EntityQuery<DumpableSolutionComponent> _dumpQuery;
 
     public override void Initialize()
     {
@@ -39,6 +39,9 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
         SubscribeLocalEvent<DrainableSolutionComponent, DragDropDraggedEvent>(OnDrainableDragged);
 
         SubscribeLocalEvent<DumpableSolutionComponent, DrainedTargetEvent>(OnDrainedToDumpableDragged);
+
+        // We use queries for these since CanDropDraggedEvent gets called pretty rapidly
+        _dumpQuery = GetEntityQuery<DumpableSolutionComponent>();
     }
 
     private void OnDrainableCanDrag(Entity<DrainableSolutionComponent> ent, ref CanDragEvent args)

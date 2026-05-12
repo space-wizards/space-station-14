@@ -10,7 +10,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         private void InitializePipes()
         {
@@ -81,10 +81,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
             EntityUid contents = entity.Comp.BowlSlot.Item.Value;
 
-            if (!_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Comp.Solution, out var pipeSolution, out _))
+            if (!TryComp<SolutionContainerManagerComponent>(contents, out var reagents) ||
+                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Comp.Solution, out var pipeSolution, out _))
                 return false;
 
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(contents))
+            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
             {
                 var reagentSolution = soln.Comp.Solution;
                 _solutionContainerSystem.TryAddSolution(pipeSolution.Value, reagentSolution);

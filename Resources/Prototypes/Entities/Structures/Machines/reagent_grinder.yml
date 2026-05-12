@@ -3,6 +3,7 @@
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
+  suffix: grinder/juicer
   components:
   - type: ReagentGrinder
   - type: ActivatableUI
@@ -58,31 +59,15 @@
       machine_parts: !type:Container
 
 - type: entity
-  id: KitchenReagentGrinderBeaker
-  parent: KitchenReagentGrinder
-  suffix: beaker
-  components:
-  - type: ContainerFill
-    containers:
-      beakerSlot:
-      - Beaker
-
-- type: entity
-  id: KitchenReagentGrinderBeakerLarge
-  parent: KitchenReagentGrinder
-  suffix: large beaker
-  components:
-  - type: ContainerFill
-    containers:
-      beakerSlot:
-      - LargeBeaker
-
-- type: entity
-  parent: [SolutionToolGinormous, Recycler] #too different so different parent
+  parent: Recycler #too different so different parent
   id: ReagentGrinderIndustrial
   name: industrial reagent grinder
   description: An industrial reagent grinder.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      output:
+        maxVol: 400 #*slaps roof of machine* This baby can fit so much omnizine in it
   - type: MaterialReclaimer
     whitelist:
       components:
@@ -93,7 +78,7 @@
     efficiency: 0.9
     reclaimMaterials: false # Materials have ExtractableComponent, which is whitelisted, so we have to avoid infinite recycling loops
     onlyReclaimDrainable: false
-    solutionContainerId: solution
+    solutionContainerId: output
   - type: Sprite
     sprite: Structures/Machines/recycling.rsi
     layers:
@@ -118,6 +103,6 @@
     - machine_parts
     - machine_board
   - type: DrainableSolution
-    solution: solution
+    solution: output
   - type: ExaminableSolution
-    solution: solution
+    solution: output

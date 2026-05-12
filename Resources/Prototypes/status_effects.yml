@@ -19,6 +19,9 @@
   id: Stutter
 
 - type: statusEffect
+  id: AllCaps
+
+- type: statusEffect
   id: Electrocution
 
 - type: statusEffect
@@ -39,6 +42,9 @@
   alert: Corporeal
 
 - type: statusEffect
+  id: TemporaryBlindness
+
+- type: statusEffect
   id: Pacified #cannot attack
 
 - type: statusEffect
@@ -46,6 +52,9 @@
 
 - type: statusEffect
   id: Flashed
+
+- type: statusEffect
+  id: RadiationProtection
 
 - type: statusEffect
   id: Adrenaline

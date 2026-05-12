@@ -7,9 +7,9 @@ using Robust.Shared.Random;
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="PoweredLightVariationPassComponent"/>
-public sealed partial class PoweredLightVariationPassSystem : VariationPassSystem<PoweredLightVariationPassComponent>
+public sealed class PoweredLightVariationPassSystem : VariationPassSystem<PoweredLightVariationPassComponent>
 {
-    [Dependency] private PoweredLightSystem _poweredLight = default!;
+    [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
 
     protected override void ApplyVariation(Entity<PoweredLightVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
@@ -39,7 +39,7 @@ public sealed partial class PoweredLightVariationPassSystem : VariationPassSyste
                 // some aging fluorescents (tubes) start to flicker
                 // its also way too annoying right now so we wrap it in another prob lol
                 if (Random.Prob(ent.Comp.AgedLightTubeFlickerChance))
-                    EnsureComp<BlinkingPoweredLightComponent>(uid);
+                    _poweredLight.ToggleBlinkingLight(uid, comp, true);
                 _poweredLight.ReplaceSpawnedPrototype((uid, comp), ent.Comp.AgedLightTubePrototype);
             }
             else

@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -18,25 +17,23 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class TraitorRuleTest : GameTest
+public sealed class TraitorRuleTest
 {
     private const string TraitorGameRuleProtoId = "Traitor";
     private const string TraitorAntagRoleName = "Traitor";
     private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
     private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
 
-    public override PoolSettings PoolSettings => new()
-    {
-        Dirty = true,
-        DummyTicker = false,
-        Connected = true,
-        InLobby = true,
-    };
-
     [Test]
     public async Task TestTraitorObjectives()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings()
+        {
+            Dirty = true,
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true,
+        });
         var server = pair.Server;
         var client = pair.Client;
         var entMan = server.EntMan;
@@ -126,6 +123,9 @@ public sealed class TraitorRuleTest : GameTest
             $"MaxDifficulty exceeded! Objectives: {string.Join(", ", mindComp.Objectives.Select(o => FormatObjective(o, entMan)))}");
         Assert.That(mindComp.Objectives, Is.Not.Empty,
             $"No objectives assigned!");
+
+
+        await pair.CleanReturnAsync();
     }
 
     private static string FormatObjective(Entity<ObjectiveComponent> entity, IEntityManager entMan)

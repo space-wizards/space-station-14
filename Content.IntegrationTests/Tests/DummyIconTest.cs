@@ -1,6 +1,5 @@
 #nullable enable
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
@@ -8,12 +7,12 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class DummyIconTest : GameTest
+    public sealed class DummyIconTest
     {
         [Test]
         public async Task Test()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
@@ -33,6 +32,7 @@ namespace Content.IntegrationTests.Tests
                         proto.ID);
                 }
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

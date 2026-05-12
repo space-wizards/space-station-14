@@ -3,9 +3,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed partial class SecretDataAnomalySystem : EntitySystem
+public sealed class SecretDataAnomalySystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private readonly List<AnomalySecretData> _deita = new();
 

@@ -1,8 +1,12 @@
 - type: entity
   abstract: true
-  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
   id: FlaskBase
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
   - type: FitsInDispenser
@@ -17,11 +21,15 @@
 # Flasks
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
   id: DrinkFlaskOld
   name: old flask
   description: A decrepit old flask, its lid seems to be missing.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
   - type: FitsInDispenser
@@ -45,11 +53,12 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mreflask.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 50
   - type: TrashOnSolutionEmpty
     solution: drink
 

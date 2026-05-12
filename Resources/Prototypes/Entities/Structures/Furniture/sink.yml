@@ -1,9 +1,8 @@
 - type: entity
-  parent: [SolutionTank, SolutionHuge]
-  id: SinkEmpty
   name: sink
-  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
+  id: SinkEmpty
   suffix: Empty
+  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
   placement:
     mode: SnapgridCenter
   components:
@@ -21,10 +20,14 @@
     maxFillLevels: 1
     fillBaseName: sink-fill-
     solutionName: drainBuffer
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionDrainNormal
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
   - type: SolutionRegeneration
+    solution: tank
     generated:
       reagents:
       - ReagentId: Water
@@ -37,9 +40,8 @@
   - type: DumpableSolution
     solution: drainBuffer
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
       - trigger:
@@ -66,20 +68,24 @@
 
 
 - type: entity
-  parent: SinkEmpty
+  name: sink
   id: Sink
+  parent: SinkEmpty
   suffix: Water
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 480
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 200
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
 
 - type: entity
-  parent: Sink
-  id: SinkWide
   name: wide sink
+  id: SinkWide
+  parent: Sink
   components:
     - type: Sprite
       sprite: Structures/Furniture/sink.rsi
@@ -114,8 +120,11 @@
   parent: SinkStemless
   suffix: Water
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 480
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500

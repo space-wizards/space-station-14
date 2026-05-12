@@ -4,9 +4,9 @@ using Content.Shared.Weapons.Hitscan.Events;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
-public sealed partial class HitscanStunSystem : EntitySystem
+public sealed class HitscanStunSystem : EntitySystem
 {
-    [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {

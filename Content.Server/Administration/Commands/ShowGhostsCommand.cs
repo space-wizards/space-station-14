@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class ShowGhostsCommand : IConsoleCommand
+    public sealed class ShowGhostsCommand : IConsoleCommand
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public string Command => "showghosts";
         public string Description => "makes all of the currently present ghosts visible. Cannot be reversed.";

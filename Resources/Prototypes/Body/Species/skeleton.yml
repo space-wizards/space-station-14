@@ -42,7 +42,6 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSkeletonPerson
-  categories: [ HideSpawnMenu ]
   name: skeletonperson appearance
   components:
   - type: Inventory
@@ -75,9 +74,8 @@
   name: Urist McBones
   components:
   - type: Damageable
-    damageModifierSet: Skeleton
-  - type: Injurable
     damageContainer: BiologicalMetaphysical
+    damageModifierSet: Skeleton
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

@@ -9,11 +9,6 @@
   equipment:
     head: ClothingHeadHatJesterAlt
 
-- type: loadout
-  id: ClownMitre
-  equipment:
-    head: ClothingHeadHatMitreClown
-
 # Jumpsuit
 - type: loadout
   id: ClownSuit

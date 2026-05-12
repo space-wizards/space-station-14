@@ -52,9 +52,8 @@
       - type: MovementAlwaysTouching
       - type: CanMoveInAir
       - type: Damageable
-        damageModifierSet: ManifestedSpirit
-      - type: Injurable
         damageContainer: ManifestedSpirit
+        damageModifierSet: ManifestedSpirit
       - type: Destructible
         thresholds:
         - trigger:

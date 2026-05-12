@@ -7,10 +7,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AnyCommand]
-public sealed partial class OpenUserVisibleNotesCommand : IConsoleCommand
+public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
 {
-    [Dependency] private IConfigurationManager _configuration = default!;
-    [Dependency] private IAdminNotesManager _notes = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IAdminNotesManager _notes = default!;
 
     public const string CommandName = "adminremarks";
 

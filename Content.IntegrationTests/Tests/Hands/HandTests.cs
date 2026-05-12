@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -11,7 +10,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Hands;
 
 [TestFixture]
-public sealed class HandTests : GameTest
+public sealed class HandTests
 {
     [TestPrototypes]
     private const string Prototypes = @"
@@ -26,16 +25,14 @@ public sealed class HandTests : GameTest
 ";
 
 
-    public override PoolSettings PoolSettings => new()
-    {
-        Connected = true,
-        DummyTicker = false
-    };
-
     [Test]
     public async Task TestPickupDrop()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
@@ -72,12 +69,17 @@ public sealed class HandTests : GameTest
         Assert.That(sys.GetActiveItem((player, hands)), Is.Null);
 
         await server.WaitPost(() => mapSystem.DeleteMap(data.MapId));
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestPickUpThenDropInContainer()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
         var server = pair.Server;
         var map = await pair.CreateTestMap();
         await pair.RunTicksSync(5);
@@ -132,5 +134,6 @@ public sealed class HandTests : GameTest
         Assert.That(containerSystem.IsInSameOrNoContainer((player, xform), (item, itemXform)));
 
         await server.WaitPost(() => mapSystem.DeleteMap(map.MapId));
+        await pair.CleanReturnAsync();
     }
 }

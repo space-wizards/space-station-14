@@ -3,10 +3,10 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Lock;
 
-public sealed partial class LockingWhitelistSystem : EntitySystem
+public sealed class LockingWhitelistSystem : EntitySystem
 {
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {

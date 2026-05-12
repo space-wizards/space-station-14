@@ -10,10 +10,10 @@ using Robust.Client.Timing;
 
 namespace Content.Client.Wieldable;
 
-public sealed partial class WieldableSystem : SharedWieldableSystem
+public sealed class WieldableSystem : SharedWieldableSystem
 {
-    [Dependency] private EyeCursorOffsetSystem _eyeOffset = default!;
-    [Dependency] private IClientGameTiming _gameTiming = default!;
+    [Dependency] private readonly EyeCursorOffsetSystem _eyeOffset = default!;
+    [Dependency] private readonly IClientGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {

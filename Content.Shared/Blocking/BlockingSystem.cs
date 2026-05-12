@@ -22,21 +22,16 @@ namespace Content.Shared.Blocking;
 
 public sealed partial class BlockingSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
-    [Dependency] private FixtureSystem _fixtureSystem = default!;
-    [Dependency] private SharedHandsSystem _handsSystem = default!;
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private TurfSystem _turf = default!;
-
-    [Dependency] private EntityQuery<BlockingComponent> _blockQuery = default!;
-    [Dependency] private EntityQuery<HandsComponent> _handQuery = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobQuery = default!;
-    [Dependency] private EntityQuery<BlockingUserComponent> _userQuery = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -96,7 +91,10 @@ public sealed partial class BlockingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_handQuery.TryGetComponent(args.Performer, out var hands))
+        var blockQuery = GetEntityQuery<BlockingComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
+
+        if (!handQuery.TryGetComponent(args.Performer, out var hands))
             return;
 
         var shields = _handsSystem.EnumerateHeld((args.Performer, hands)).ToArray();
@@ -106,7 +104,7 @@ public sealed partial class BlockingSystem : EntitySystem
             if (shield == uid)
                 continue;
 
-            if (_blockQuery.TryGetComponent(shield, out var otherBlockComp) && otherBlockComp.IsBlocking)
+            if (blockQuery.TryGetComponent(shield, out var otherBlockComp) && otherBlockComp.IsBlocking)
             {
                 CantBlockError(args.Performer);
                 return;
@@ -172,9 +170,10 @@ public sealed partial class BlockingSystem : EntitySystem
         if (playerTileRef != null)
         {
             var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
+            var mobQuery = GetEntityQuery<MobStateComponent>();
             foreach (var uid in intersecting)
             {
-                if (uid != user && _mobQuery.HasComponent(uid))
+                if (uid != user && mobQuery.HasComponent(uid))
                 {
                     TooCloseError(user);
                     return false;
@@ -272,14 +271,17 @@ public sealed partial class BlockingSystem : EntitySystem
         if (component.IsBlocking)
             StopBlocking(uid, component, user);
 
-        if (!_handQuery.TryGetComponent(user, out var hands))
+        var userQuery = GetEntityQuery<BlockingUserComponent>();
+        var handQuery = GetEntityQuery<HandsComponent>();
+
+        if (!handQuery.TryGetComponent(user, out var hands))
             return;
 
         var shields = _handsSystem.EnumerateHeld((user, hands)).ToArray();
 
         foreach (var shield in shields)
         {
-            if (HasComp<BlockingComponent>(shield) && _userQuery.TryGetComponent(user, out var blockingUserComponent))
+            if (HasComp<BlockingComponent>(shield) && userQuery.TryGetComponent(user, out var blockingUserComponent))
             {
                 blockingUserComponent.BlockingItem = shield;
                 return;

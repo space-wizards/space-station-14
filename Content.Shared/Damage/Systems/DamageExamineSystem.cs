@@ -9,10 +9,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed partial class DamageExamineSystem : EntitySystem
+public sealed class DamageExamineSystem : EntitySystem
 {
-    [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {

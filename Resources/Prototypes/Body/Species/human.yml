@@ -2,9 +2,6 @@
   parent: Undergarments
   id: Human
   limits:
-    enum.HumanoidVisualLayers.HeadTop:
-      limit: 1
-      required: false
     enum.HumanoidVisualLayers.Hair:
       limit: 1
       required: false
@@ -51,7 +48,6 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceHuman
-  categories: [ HideSpawnMenu ]
   name: human appearance
   components:
   - type: Inventory

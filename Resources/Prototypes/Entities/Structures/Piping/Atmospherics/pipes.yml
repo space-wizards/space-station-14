@@ -14,9 +14,8 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: Anchorable
@@ -94,7 +93,6 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-        volume: 100
   - type: Sprite
     layers:
     - state: pipeHalf

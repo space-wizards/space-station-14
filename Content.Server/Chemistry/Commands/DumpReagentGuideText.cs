@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed partial class DumpReagentGuideText : LocalizedEntityCommands
+public sealed class DumpReagentGuideText : LocalizedEntityCommands
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override string Command => "dumpreagentguidetext";
 

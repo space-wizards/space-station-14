@@ -2,9 +2,9 @@
 
 namespace Content.Server.RequiresGrid;
 
-public sealed partial class RequiresGridSystem : EntitySystem
+public sealed class RequiresGridSystem : EntitySystem
 {
-    [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
 
     public override void Initialize()
     {

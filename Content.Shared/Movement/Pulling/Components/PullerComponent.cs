@@ -21,10 +21,7 @@ public sealed partial class PullerComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, Access(Other = AccessPermissions.ReadWriteExecute)]
     public TimeSpan NextThrow;
 
-    /// <summary>
-    /// Minimum time between pull throws.
-    /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(1);
 
     // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
@@ -35,19 +32,16 @@ public sealed partial class PullerComponent : Component
     /// <summary>
     /// Entity currently being pulled if applicable.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField, DataField]
     public EntityUid? Pulling;
 
     /// <summary>
-    /// Does this entity need hands to be able to pull something?
+    ///     Does this entity need hands to be able to pull something?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool NeedsHands = true;
 
-    /// <summary>
-    /// The alert shown to the puller indicating that they are pulling something.
-    /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
 }
 

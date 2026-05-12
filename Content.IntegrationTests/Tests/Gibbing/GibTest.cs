@@ -1,17 +1,16 @@
 ﻿#nullable enable
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Gibbing;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Body;
 
 [TestFixture]
-public sealed class GibTest : GameTest
+public sealed class GibTest
 {
     [Test]
     public async Task TestGib()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var (server, client) = (pair.Server, pair.Client);
         var map = await pair.CreateTestMap();
 
@@ -31,5 +30,7 @@ public sealed class GibTest : GameTest
         await pair.RunTicksSync(5);
 
         Assert.That(!client.EntMan.EntityExists(nuid));
+
+        await pair.CleanReturnAsync();
     }
 }

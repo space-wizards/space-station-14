@@ -11,10 +11,10 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class GasPortableSystem : EntitySystem
+    public sealed class GasPortableSystem : EntitySystem
     {
-        [Dependency] private SharedMapSystem _mapSystem = default!;
-        [Dependency] private NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {

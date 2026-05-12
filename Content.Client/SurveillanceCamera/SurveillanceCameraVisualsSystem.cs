@@ -3,9 +3,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraVisualsSystem : EntitySystem
+public sealed class SurveillanceCameraVisualsSystem : EntitySystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

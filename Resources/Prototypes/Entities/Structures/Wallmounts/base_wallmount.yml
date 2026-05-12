@@ -33,9 +33,8 @@
       Brute:
         collection: GlassSmash
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Glass
 
 - type: entity
   parent: BaseWallmount
@@ -43,9 +42,8 @@
   abstract: true
   components:
   - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
 
 - type: entity
   parent: BaseWallmountMetallic

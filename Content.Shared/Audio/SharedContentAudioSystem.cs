@@ -5,9 +5,9 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Audio;
 
-public abstract partial class SharedContentAudioSystem : EntitySystem
+public abstract class SharedContentAudioSystem : EntitySystem
 {
-    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
     /// <summary>
     /// Standard variation to use for sounds.

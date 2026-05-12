@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Revenant;
 
-public sealed partial class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
+public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
-    [Dependency] private SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
     public override void Initialize()
     {

@@ -9,10 +9,19 @@ namespace Content.Shared.Objectives.Systems;
 /// <summary>
 /// Provides API for creating and interacting with objectives.
 /// </summary>
-public abstract partial class SharedObjectivesSystem : EntitySystem
+public abstract class SharedObjectivesSystem : EntitySystem
 {
-    [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
+    private EntityQuery<MetaDataComponent> _metaQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
+    }
 
     /// <summary>
     /// Checks requirements and duplicate objectives to see if an objective can be assigned.
@@ -30,10 +39,10 @@ public abstract partial class SharedObjectivesSystem : EntitySystem
         // only check for duplicate prototypes if it's unique
         if (comp.Unique)
         {
-            var proto = MetaData(uid).EntityPrototype?.ID;
+            var proto = _metaQuery.GetComponent(uid).EntityPrototype?.ID;
             foreach (var objective in mind.Objectives)
             {
-                if (MetaData(objective).EntityPrototype?.ID == proto)
+                if (_metaQuery.GetComponent(objective).EntityPrototype?.ID == proto)
                     return false;
             }
         }

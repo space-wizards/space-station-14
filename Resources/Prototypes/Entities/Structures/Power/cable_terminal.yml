@@ -15,9 +15,8 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
       damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
     - type: RCDDeconstructable
       cost: 2
       delay: 0

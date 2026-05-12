@@ -141,9 +141,8 @@
     resistance: 3
   - type: Occluder
   - type: Damageable
-    damageModifierSet: StrongMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: RCDDeconstructable
     cost: 6
     delay: 8

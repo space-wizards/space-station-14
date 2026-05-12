@@ -7,9 +7,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class VariantizeCommand : IConsoleCommand
+public sealed class VariantizeCommand : IConsoleCommand
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "variantize";
 

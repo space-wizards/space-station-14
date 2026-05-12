@@ -112,9 +112,8 @@
     layoutId: APC
   - type: WiresVisuals
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:

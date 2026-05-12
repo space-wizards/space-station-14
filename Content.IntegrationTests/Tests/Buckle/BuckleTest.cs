@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Buckle;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
@@ -13,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Buckle
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
     [TestOf(typeof(StrapComponent))]
-    public sealed partial class BuckleTest : GameTest
+    public sealed partial class BuckleTest
     {
         private const string BuckleDummyId = "BuckleDummy";
         private const string StrapDummyId = "StrapDummy";
@@ -51,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -229,12 +228,14 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(strap.BuckledEntities, Is.Empty);
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -297,12 +298,14 @@ namespace Content.IntegrationTests.Tests.Buckle
                 buckleSystem.Unbuckle(human, human);
                 Assert.That(buckle.Buckled, Is.False);
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -370,6 +373,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(buckle.Buckled);
                 });
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

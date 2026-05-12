@@ -54,9 +54,9 @@ public sealed partial class NestedEffect : EntityEffectBase<NestedEffect>
 /// <summary>
 /// Handles <see cref="NestedEffect"/>.
 /// </summary>
-public sealed partial class NestedEffectSystem : EntityEffectSystem<TransformComponent, NestedEffect>
+public sealed class NestedEffectSystem : EntityEffectSystem<TransformComponent, NestedEffect>
 {
-    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _effects = default!;
 
     protected override void Effect(Entity<TransformComponent> ent, ref EntityEffectEvent<NestedEffect> args)
     {

@@ -18,10 +18,10 @@ namespace Content.Server.NodeContainer.NodeGroups
         INodeGroup MakeNodeGroup(NodeGroupID id);
     }
 
-    public sealed partial class NodeGroupFactory : INodeGroupFactory
+    public sealed class NodeGroupFactory : INodeGroupFactory
     {
-        [Dependency] private IReflectionManager _reflectionManager = default!;
-        [Dependency] private IDynamicTypeFactory _typeFactory = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
 
         private readonly Dictionary<NodeGroupID, Type> _groupTypes = new();
 

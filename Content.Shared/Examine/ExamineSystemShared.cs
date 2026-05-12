@@ -15,13 +15,11 @@ namespace Content.Shared.Examine
 {
     public abstract partial class ExamineSystemShared : EntitySystem
     {
-        [Dependency] private OccluderSystem _occluder = default!;
-        [Dependency] private SharedTransformSystem _transform = default!;
-        [Dependency] private SharedContainerSystem _containerSystem = default!;
-        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected MobStateSystem MobStateSystem = default!;
-
-        [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private readonly OccluderSystem _occluder = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -44,6 +42,8 @@ namespace Content.Shared.Examine
         protected const float ExamineDetailsRange = 3f;
 
         protected const float ExamineBlurrinessMult = 2.5f;
+
+        private EntityQuery<GhostComponent> _ghostQuery;
 
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
@@ -268,7 +268,7 @@ namespace Content.Shared.Examine
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(metadata.EntityDescription))
             {
-                message.AddMarkupOrThrow(metadata.EntityDescription);
+                message.AddText(metadata.EntityDescription);
                 hasDescription = true;
             }
 

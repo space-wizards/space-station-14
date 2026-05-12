@@ -9,7 +9,6 @@
     groups:
       Acidic: [Touch]
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: MovedByPressure
   - type: Physics
@@ -112,7 +111,7 @@
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
 
 - type: entity
-  parent: [MobSiliconBase, SolutionFireExtinguisherMini]
+  parent: MobSiliconBase
   id: MobFireBot
   name: firebot
   description: A little fire extinguishing bot. He looks rather anxious.
@@ -126,7 +125,15 @@
   - type: HTN
     rootTask:
       task: FirebotCompound
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
   - type: SolutionRegeneration
+    solution: spray
     generated:
       reagents:
         - ReagentId: Water
@@ -256,7 +263,7 @@
     canCreateVacuum: false
 
 - type: entity
-  parent: [MobSiliconBase, SolutionMopNormal]
+  parent: MobSiliconBase
   id: MobCleanBot
   name: cleanbot
   description: The creep of automation now threatening space janitors.
@@ -272,20 +279,28 @@
   - type: UseDelay
     delay: 2
   - type: SolutionRegeneration
+    solution: absorbed
     generated:
       reagents:
         - ReagentId: Water
           Quantity: 10
   - type: SolutionPurge
+    solution: absorbed
     preserve:
       - Water
     quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      absorbed:
+        maxVol: 50
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
   - type: HTN
     rootTask:
       task: CleanbotCompound
+  - type: DrainableSolution
+    solution: drainBuffer
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot
@@ -306,6 +321,8 @@
       Alive:
         reagent: Tricordrazine
         quantity: 30
+        minDamage: 0
+        maxDamage: 50
       Critical:
         reagent: Inaprovaline
         quantity: 15

@@ -2,18 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.DisplacementMap;
 
-public sealed partial class DisplacementMapSystem : EntitySystem
+public sealed class DisplacementMapSystem : EntitySystem
 {
-    [Dependency] private ISerializationManager _serialization = null!;
-    [Dependency] private SpriteSystem _sprite = null!;
-
-    //needs to be replaced later: see comment on line 48
-    private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static string? BuildDisplacementLayerKey(object key)
     {
@@ -44,16 +40,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         EnsureDisplacementIsNotOnSprite(sprite, key);
 
         if (data.ShaderOverride is not null)
-        {
-            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
-            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
-            //should be replaced by an engine-level solution, but this is an adequate temporary solution.
-            //what's that phrase about temporary solutions?
-            sprite.Comp.LayerSetShader(index,
-                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID)
-                    ? data.ShaderOverrideUnshaded
-                    : data.ShaderOverride);
-        }
+            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)

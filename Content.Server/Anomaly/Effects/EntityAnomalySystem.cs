@@ -8,11 +8,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed partial class EntityAnomalySystem : SharedEntityAnomalySystem
+public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
 {
-    [Dependency] private SharedAnomalySystem _anomaly = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 

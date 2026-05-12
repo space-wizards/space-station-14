@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntityWhitelist))]
-    public sealed class EntityWhitelistTest : GameTest
+    public sealed class EntityWhitelistTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -112,6 +111,7 @@ namespace Content.IntegrationTests.Tests.Utility
                     Assert.That(sys.IsValid(whitelistSer, WhitelistTestInvalidTag), Is.False);
                 });
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

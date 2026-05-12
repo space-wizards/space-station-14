@@ -1,18 +1,16 @@
 ﻿using Content.Server.Damage.Components;
 using Content.Server.Destructible;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Rounding;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Systems;
 
-public sealed partial class ExaminableDamageSystem : EntitySystem
+public sealed class ExaminableDamageSystem : EntitySystem
 {
-    [Dependency] private DestructibleSystem _destructible = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -41,7 +39,7 @@ public sealed partial class ExaminableDamageSystem : EntitySystem
         if (!TryComp<DamageableComponent>(ent, out var damageable))
             return 0;
 
-        var damage = _damageable.GetTotalDamage((ent, damageable));
+        var damage = damageable.TotalDamage;
         var damageThreshold = _destructible.DestroyedAt(ent);
 
         if (damageThreshold == 0)

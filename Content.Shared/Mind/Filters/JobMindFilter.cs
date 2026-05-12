@@ -13,7 +13,7 @@ public sealed partial class JobMindFilter : MindFilter
     [DataField(required: true)]
     public ProtoId<JobPrototype> Job;
 
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
     {
         var jobSys = entMan.System<SharedJobSystem>();
         return jobSys.MindHasJobWithId(mind, Job);

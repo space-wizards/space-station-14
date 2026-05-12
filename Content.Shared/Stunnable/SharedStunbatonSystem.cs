@@ -3,9 +3,9 @@ using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Shared.Stunnable;
 
-public abstract partial class SharedStunbatonSystem : EntitySystem
+public abstract class SharedStunbatonSystem : EntitySystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {

@@ -10,14 +10,17 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-    [Dependency] private EntityTableSystem _entityTable =  default!;
+    [Dependency] private readonly EntityTableSystem _entityTable =  default!;
 
-    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
-    [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
+    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
+    private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 
     private void InitializeNode()
     {
         SubscribeLocalEvent<XenoArtifactNodeComponent, MapInitEvent>(OnNodeMapInit);
+
+        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
+        _nodeQuery = GetEntityQuery<XenoArtifactNodeComponent>();
     }
 
     /// <summary>

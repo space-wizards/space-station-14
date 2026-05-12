@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
@@ -9,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Power;
 
 [TestFixture, TestOf(typeof(SharedPowerStateSystem))]
-public sealed class PowerStatePrototypeTest : GameTest
+public sealed class PowerStatePrototypeTest
 {
     /// <summary>
     /// Asserts that the <see cref="SharedApcPowerReceiverComponent"/>'s load is the same
@@ -19,7 +18,7 @@ public sealed class PowerStatePrototypeTest : GameTest
     [Test]
     public async Task AssertApcPowerMatchesPowerState()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -54,5 +53,7 @@ public sealed class PowerStatePrototypeTest : GameTest
                 }
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 }

@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Body;
 using Content.Shared.Gibbing;
 using Robust.Shared.GameObjects;
@@ -7,7 +6,7 @@ namespace Content.IntegrationTests.Tests.Body;
 
 [TestFixture]
 [TestOf(typeof(GibbableOrganSystem))]
-public sealed class GibletTest : GameTest
+public sealed class GibletTest
 {
     [TestPrototypes]
     private const string Prototypes = @"
@@ -34,7 +33,7 @@ public sealed class GibletTest : GameTest
     [Test]
     public async Task GibletCountTest()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         await server.WaitIdleAsync();
@@ -55,5 +54,7 @@ public sealed class GibletTest : GameTest
                 Assert.That(entityManager.HasComponent<GibbableOrganComponent>(giblet), Is.True);
             }
         });
+
+        await pair.CleanReturnAsync();
     }
 }

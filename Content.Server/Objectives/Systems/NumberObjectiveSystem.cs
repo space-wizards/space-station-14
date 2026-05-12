@@ -8,10 +8,10 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Provides API for other components, handles picking the count and setting the title and description.
 /// </summary>
-public sealed partial class NumberObjectiveSystem : EntitySystem
+public sealed class NumberObjectiveSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

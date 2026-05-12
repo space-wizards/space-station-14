@@ -1,15 +1,14 @@
 namespace Content.Shared.Inventory.Events;
 
-public abstract class EquipAttemptBase(EntityUid user, EntityUid equipTarget, EntityUid equipment,
+public abstract class EquipAttemptBase(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
 
     /// <summary>
-    /// The entity performing the action.
-    /// NOT necessarily the one actually "receiving" the equipment.
+    /// The entity performing the action. NOT necessarily the one actually "receiving" the equipment.
     /// </summary>
-    public readonly EntityUid User = user;
+    public readonly EntityUid Equipee = equipee;
 
     /// <summary>
     /// The entity being equipped to.
@@ -40,17 +39,17 @@ public abstract class EquipAttemptBase(EntityUid user, EntityUid equipTarget, En
 /// <summary>
 /// Raised on the item that is being equipped.
 /// </summary>
-public sealed class BeingEquippedAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
-    SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
+public sealed class BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity that is equipping an item.
 /// </summary>
-public sealed class IsEquippingAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
-    SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
+public sealed class IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity on who item is being equipped.
 /// </summary>
-public sealed class IsEquippingTargetAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
-    SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
+public sealed class IsEquippingTargetAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+    SlotDefinition slotDefinition) : EquipAttemptBase(equipee, equipTarget, equipment, slotDefinition);

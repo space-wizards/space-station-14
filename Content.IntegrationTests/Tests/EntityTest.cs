@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-using Content.IntegrationTests.Fixtures;
-using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Configuration;
@@ -18,28 +16,17 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(EntityUid))]
-    public sealed class EntityTest : GameTest
+    public sealed class EntityTest
     {
-        private static readonly HashSet<ProtoId<EntityCategoryPrototype>> IgnoredCategories = ["Spawner", "Debug"];
-
-        public override PoolSettings PoolSettings => new()
-        {
-            Connected = true,
-            Dirty = true
-        };
-
-        public static PoolSettings Disconnected => new()
-        {
-            Dirty = true,
-        };
+        private static readonly ProtoId<EntityCategoryPrototype> SpawnerCategory = "Spawner";
 
         [Test]
-        [PairConfig(nameof(Disconnected))]
         public async Task SpawnAndDeleteAllEntitiesOnDifferentMaps()
         {
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
             // is minimal relative to the rest of the test.
-            var pair = Pair;
+            var settings = new PoolSettings { Dirty = true };
+            await using var pair = await PoolManager.GetServerClient(settings);
             var server = pair.Server;
 
             var entityMan = server.ResolveDependency<IEntityManager>();
@@ -92,14 +79,17 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
-        [PairConfig(nameof(Disconnected))]
         public async Task SpawnAndDeleteAllEntitiesInTheSameSpot()
         {
-            var pair = Pair;
-            Assert.That(pair.Client.Session, Is.Null);
+            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
+            // is minimal relative to the rest of the test.
+            var settings = new PoolSettings { Dirty = true };
+            await using var pair = await PoolManager.GetServerClient(settings);
             var server = pair.Server;
             var map = await pair.CreateTestMap();
 
@@ -144,6 +134,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
+
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -153,7 +145,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDirtyAllEntities()
         {
-            var pair = Pair;
+            // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
+            // is minimal relative to the rest of the test.
+            var settings = new PoolSettings { Connected = true, Dirty = true };
+            await using var pair = await PoolManager.GetServerClient(settings);
             var server = pair.Server;
             var client = pair.Client;
 
@@ -187,7 +182,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await pair.RunUntilSynced();
+            await pair.RunTicksSync(15);
 
             // Make sure the client actually received the entities
             // 500 is completely arbitrary. Note that the client & sever entity counts aren't expected to match.
@@ -214,6 +209,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
+
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -233,7 +230,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnAndDeleteEntityCountTest()
         {
-            var pair = Pair;
+            var settings = new PoolSettings { Connected = true, Dirty = true };
+            await using var pair = await PoolManager.GetServerClient(settings);
             var mapSys = pair.Server.System<SharedMapSystem>();
             var server = pair.Server;
             var client = pair.Client;
@@ -255,7 +253,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !excluded.Any(p.Components.ContainsKey))
-                .Where(p => p.Categories.All(x => !IgnoredCategories.Contains(x.ID)))
+                .Where(p => p.Categories.All(x => x.ID != SpawnerCategory))
                 .Select(p => p.ID)
                 .ToList();
 
@@ -319,6 +317,8 @@ namespace Content.IntegrationTests.Tests
                         BuildDiffString(clientEntities, Entities(client.EntMan), client.EntMan));
                 }
             });
+
+            await pair.CleanReturnAsync();
         }
 
         private static string BuildDiffString(IEnumerable<EntityUid> oldEnts, IEnumerable<EntityUid> newEnts, IEntityManager entMan)
@@ -385,11 +385,14 @@ namespace Content.IntegrationTests.Tests
                 "StationData", // errors when removed mid-round
                 "StationJobs",
                 "Actor", // We aren't testing actor components, those need their player session set.
+                "BlobFloorPlanBuilder", // Implodes if unconfigured.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
             };
 
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
@@ -442,6 +445,8 @@ namespace Content.IntegrationTests.Tests
                     }
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

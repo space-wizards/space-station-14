@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
@@ -24,7 +23,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
-public sealed partial class MindTests : GameTest
+public sealed partial class MindTests
 {
     private static readonly ProtoId<DamageTypePrototype> BluntDamageType = "Blunt";
 
@@ -35,7 +34,6 @@ public sealed partial class MindTests : GameTest
   components:
   - type: MindContainer
   - type: Damageable
-  - type: Injurable
     damageContainer: Biological
   - type: Body
     prototype: Human
@@ -58,7 +56,7 @@ public sealed partial class MindTests : GameTest
     [Test]
     public async Task TestCreateAndTransferMindToNewEntity()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -77,12 +75,14 @@ public sealed partial class MindTests : GameTest
             mindSystem.TransferTo(mind, entity, mind: mind);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind.Owner));
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestReplaceMind()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -107,12 +107,14 @@ public sealed partial class MindTests : GameTest
                 Assert.That(mind.OwnedEntity, Is.Not.EqualTo(entity));
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -158,12 +160,14 @@ public sealed partial class MindTests : GameTest
             var mind = entMan.GetComponent<MindComponent>(mindId);
             Assert.That(mindSystem.IsCharacterDeadPhysically(mind));
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestMindTransfersToOtherEntity()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -190,12 +194,18 @@ public sealed partial class MindTests : GameTest
                 Assert.That(mindSystem.GetMind(targetEntity), Is.EqualTo(mind));
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestOwningPlayerCanBeChanged()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -243,12 +253,14 @@ public sealed partial class MindTests : GameTest
         });
 
         await pair.RunTicksSync(5);
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestAddRemoveHasRoles()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -311,13 +323,15 @@ public sealed partial class MindTests : GameTest
                 Assert.That(roleSystem.MindHasRole<JobRoleComponent>(mindId), Is.False);
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestPlayerCanGhost()
     {
         // Client is needed to spawn session
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -385,12 +399,19 @@ public sealed partial class MindTests : GameTest
                 Assert.That(mId, Is.Not.EqualTo(mindId));
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            Dirty = true
+        });
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -461,5 +482,7 @@ public sealed partial class MindTests : GameTest
             Assert.That(player.AttachedEntity, Is.Not.Null);
             Assert.That(player.AttachedEntity!.Value, Is.EqualTo(ghost));
         });
+
+        await pair.CleanReturnAsync();
     }
 }

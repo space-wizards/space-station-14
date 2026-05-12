@@ -15,8 +15,8 @@ namespace Content.Client.Changelog
     [GenerateTypedNameReferences]
     public sealed partial class ChangelogWindow : FancyWindow
     {
-        [Dependency] private IClientAdminManager _adminManager = default!;
-        [Dependency] private ChangelogManager _changelog = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!;
 
         public ChangelogWindow()
         {
@@ -111,9 +111,9 @@ namespace Content.Client.Changelog
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed partial class ChangelogCommand : LocalizedCommands
+    public sealed class ChangelogCommand : LocalizedCommands
     {
-        [Dependency] private IUserInterfaceManager _uiManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
         public override string Command => "changelog";
 

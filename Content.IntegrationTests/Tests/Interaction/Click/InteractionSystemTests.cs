@@ -1,6 +1,5 @@
 #nullable enable annotations
 using System.Numerics;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -17,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
 {
     [TestFixture]
     [TestOf(typeof(InteractionSystem))]
-    public sealed class InteractionSystemTests : GameTest
+    public sealed class InteractionSystemTests
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -41,7 +40,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -102,12 +101,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InteractionObstructionTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -168,12 +168,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InteractionInRangeTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -233,13 +234,14 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
+            await pair.CleanReturnAsync();
         }
 
 
         [Test]
         public async Task InteractionOutOfRangeTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -298,12 +300,13 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task InsideContainerInteractionBlockTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -385,6 +388,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             });
 
             testInteractionSystem.ClearHandlers();
+            await pair.CleanReturnAsync();
         }
 
         public sealed class TestInteractionSystem : EntitySystem

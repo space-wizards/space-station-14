@@ -12,14 +12,13 @@
     layers:
     - state: folder-base
     - state: folder-colormap
-  - type: EntityTableSpawner
+  - type: RandomSpawner
     offset: 0
-    table: !type:GroupSelector
-      children:
-      - id: BoxFolderBase
-      - id: BoxFolderRed
-      - id: BoxFolderBlue
-      - id: BoxFolderYellow
-      - id: BoxFolderGrey
-      - id: BoxFolderBlack
-      - id: BoxFolderGreen
+    prototypes:
+    - BoxFolderBase
+    - BoxFolderRed
+    - BoxFolderBlue
+    - BoxFolderYellow
+    - BoxFolderGrey
+    - BoxFolderBlack
+    - BoxFolderGreen

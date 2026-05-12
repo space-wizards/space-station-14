@@ -1,5 +1,4 @@
 - type: entity
-  parent: SolutionLarge
   id: hydroponicsSoil
   name: soil
   description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
@@ -23,9 +22,8 @@
         layer:
         - FullTileMask
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -40,8 +38,10 @@
     noRot: true
   - type: PlantHolder
     drawWarnings: false
-  - type: Solution
-    id: soil
+  - type: SolutionContainerManager
+    solutions:
+      soil:
+        maxVol: 200
   - type: RefillableSolution
     solution: soil
     maxRefill: 50

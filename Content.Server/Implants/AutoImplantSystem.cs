@@ -2,9 +2,9 @@ using Content.Server.Implants.Components;
 
 namespace Content.Server.Implants;
 
-public sealed partial class AutoImplantSystem : EntitySystem
+public sealed class AutoImplantSystem : EntitySystem
 {
-    [Dependency] private SubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
 
     public override void Initialize()
     {

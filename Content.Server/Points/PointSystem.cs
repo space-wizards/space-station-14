@@ -10,10 +10,10 @@ using Robust.Shared.Utility;
 namespace Content.Server.Points;
 
 /// <inheritdoc/>
-public sealed partial class PointSystem : SharedPointSystem
+public sealed class PointSystem : SharedPointSystem
 {
-    [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

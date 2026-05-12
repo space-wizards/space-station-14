@@ -69,7 +69,6 @@
   abstract: true
   components:
   - type: Damageable
-  - type: Injurable
     damageContainer: Biological
   - type: Destructible
     thresholds:
@@ -262,7 +261,7 @@
   id: MobBloodstream
   abstract: true
   components:
-  - type: SolutionManager
+  - type: SolutionContainerManager
   - type: InjectableSolution
     solution: bloodstream
   - type: Bloodstream

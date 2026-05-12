@@ -1,7 +1,6 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceGingerbread
-  categories: [ HideSpawnMenu ]
   name: gingerbread appearance
   components:
   - type: Inventory
@@ -60,9 +59,9 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: Sugar
-        Quantity: 200
+        Quantity: 100
       - ReagentId: Butter
-        Quantity: 400
+        Quantity: 200
   - type: Fixtures
     fixtures:
       fix1:

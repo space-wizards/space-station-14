@@ -5,15 +5,16 @@ using Content.Shared.Nutrition.Components;
 namespace Content.Shared.Nutrition.EntitySystems;
 
 /// <inheritdoc cref="ExaminableHungerComponent"/>
-public sealed partial class ExaminableHungerSystem : EntitySystem
+public sealed class ExaminableHungerSystem : EntitySystem
 {
-    [Dependency] private HungerSystem _hunger = default!;
-
-    [Dependency] private EntityQuery<HungerComponent> _hungerQuery = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
+    private EntityQuery<HungerComponent> _hungerQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _hungerQuery = GetEntityQuery<HungerComponent>();
 
         SubscribeLocalEvent<ExaminableHungerComponent, ExaminedEvent>(OnExamine);
     }

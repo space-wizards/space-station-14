@@ -54,3 +54,11 @@
   - type: SalvageMagnet
   - type: ApcPowerReceiver
     powerLoad: 1000
+
+- type: weightedRandomEntity
+  id: RandomAsteroidPool
+  weights:
+    AsteroidSalvageSmall: 3
+    AsteroidSalvageMedium: 7
+    AsteroidSalvageLarge: 5
+    AsteroidSalvageHuge: 3

@@ -1,19 +1,4 @@
 - type: constructionGraph
-  id: CobwebsGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: removed
-      steps:
-      - tool: Brushing
-        doAfter: 2
-
-  - node: removed
-    actions:
-    - !type:DestroyEntity {}
-
-- type: constructionGraph
   id: WebStructures
   start: start
   graph:

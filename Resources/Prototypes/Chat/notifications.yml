@@ -33,10 +33,3 @@
   sound: /Audio/Effects/alert.ogg
   color: Red
   nextDelay: 120
-
-- type: chatNotification
-  id: AiTakingDamage
-  message: station-ai-core-taking-damage
-  sound: /Audio/Misc/notice2.ogg
-  color: Orange
-  nextDelay: 30

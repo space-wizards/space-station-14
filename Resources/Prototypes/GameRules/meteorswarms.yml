@@ -4,14 +4,14 @@
   id: MeteorSwarmDustEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: SpaceDustMinor
-    - id: SpaceDustMajor
+    - id: GameRuleSpaceDustMinor
+    - id: GameRuleSpaceDustMajor
 
 - type: entityTable
   id: MeteorSwarmSmallChanceEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: MeteorSwarmSmall
+    - id: GameRuleMeteorSwarmSmall
       prob: 0.15
 
 - type: entityTable
@@ -29,14 +29,14 @@
     children:
     - !type:NestedSelector
         tableId: MeteorSwarmDustEventsTable
-    - id: MeteorSwarmSmall
-    - id: MeteorSwarmMedium
-    - id: MeteorSwarmLarge
-    - id: UristSwarm
-    - id: ClownSwarm
-    - id: CowSwarm
-    - id: PotatoSwarm
-    - id: FunSwarm
+    - id: GameRuleMeteorSwarmSmall
+    - id: GameRuleMeteorSwarmMedium
+    - id: GameRuleMeteorSwarmLarge
+    - id: GameRuleUristSwarm
+    - id: GameRuleClownSwarm
+    - id: GameRuleCowSwarm
+    - id: GameRulePotatoSwarm
+    - id: GameRuleFunSwarm
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
@@ -94,7 +94,7 @@
 
 - type: entity
   parent: BaseGameRule
-  id: MeteorSwarm
+  id: GameRuleMeteorSwarm
   abstract: true
   components:
   - type: GameRule
@@ -105,8 +105,8 @@
   - type: MeteorSwarm
 
 - type: entity
-  parent: MeteorSwarm
-  id: SpaceDustMinor
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMinor
   components:
   - type: StationEvent
     weight: 44
@@ -126,8 +126,8 @@
       max: 5
 
 - type: entity
-  parent: MeteorSwarm
-  id: SpaceDustMajor
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMajor
   components:
   - type: StationEvent
     weight: 22
@@ -146,8 +146,8 @@
       max: 12
 
 - type: entity
-  parent: MeteorSwarm
-  id: MeteorSwarmSmall
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmSmall
   components:
   - type: StationEvent
     weight: 18
@@ -158,8 +158,8 @@
       MeteorMedium: 3
 
 - type: entity
-  parent: MeteorSwarm
-  id: MeteorSwarmMedium
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmMedium
   components:
   - type: StationEvent
     weight: 10
@@ -170,8 +170,8 @@
       MeteorLarge: 1
 
 - type: entity
-  parent: MeteorSwarm
-  id: MeteorSwarmLarge
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmLarge
   components:
   - type: StationEvent
     weight: 5
@@ -182,8 +182,8 @@
       MeteorLarge: 4
 
 - type: entity
-  parent: MeteorSwarm
-  id: UristSwarm
+  parent: GameRuleMeteorSwarm
+  id: GameRuleUristSwarm
   components:
   - type: StationEvent
     weight: 0.05
@@ -243,8 +243,8 @@
       orGroup: rodProto
 
 - type: entity
-  parent: MeteorSwarm
-  id: CowSwarm
+  parent: GameRuleMeteorSwarm
+  id: GameRuleCowSwarm
   components:
   - type: StationEvent
     weight: 0.05
@@ -261,8 +261,8 @@
       max: 10
 
 - type: entity
-  parent: MeteorSwarm
-  id: ClownSwarm
+  parent: GameRuleMeteorSwarm
+  id: GameRuleClownSwarm
   components:
   - type: StationEvent
     weight: 0.05
@@ -279,8 +279,8 @@
       max: 10
 
 - type: entity
-  parent: MeteorSwarm
-  id: PotatoSwarm
+  parent: GameRuleMeteorSwarm
+  id: GameRulePotatoSwarm
   components:
   - type: StationEvent
     weight: 0.05
@@ -297,8 +297,8 @@
       max: 10
 
 - type: entity
-  parent: MeteorSwarm
-  id: FunSwarm
+  parent: GameRuleMeteorSwarm
+  id: GameRuleFunSwarm
   components:
   - type: StationEvent
     weight: 0.03

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionBeaker, SolutionSmall, BaseItem]
+  parent: BaseItem
   id: BaseBeaker
   abstract: true
   components:
@@ -21,6 +21,10 @@
     damage:
       types:
         Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -54,9 +58,8 @@
     maxFillLevels: 6
     fillBaseName: beaker
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -96,7 +99,7 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  parent: [SolutionBeaker, SolutionSmall, BaseItem]
+  parent: BaseItem
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -118,6 +121,10 @@
     damage:
       types:
         Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -151,9 +158,8 @@
     maxFillLevels: 6
     fillBaseName: beaker
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: StaticPrice
     price: 30
   - type: DnaSubstanceTrace
@@ -184,11 +190,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-cryoxadone
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Cryoxadone
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -197,11 +205,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-arithrazine
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Arithrazine
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -210,11 +220,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Sigynate
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Sigynate
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -223,11 +235,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Phalanximine
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Phalanximine
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -236,11 +250,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-diphenhydramine
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Diphenhydramine
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Diphenhydramine
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -249,11 +265,13 @@
   components:
   - type: Label
     currentLabel: reagent-name-bruizine
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Bruizine
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Bruizine
+          Quantity: 50
 
 - type: entity
   parent: Beaker
@@ -262,15 +280,17 @@
   components:
   - type: Label
     currentLabel: reagent-name-lacerinol
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Lacerinol
-        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Lacerinol
+          Quantity: 50
 
 - type: entity
   name: large beaker
-  parent: [SolutionNormal, BaseBeaker]
+  parent: BaseBeaker
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
@@ -286,6 +306,10 @@
   - type: Item
     size: Normal
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -300,7 +324,7 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: [SolutionCryo, BaseBeakerMetallic]
+  parent: BaseBeakerMetallic
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
@@ -312,10 +336,15 @@
       - state: beakernoreact
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 60
+        canReact: false
 
 - type: entity
   name: bluespace beaker
-  parent: [SolutionGinormous, BaseBeakerMetallic]
+  parent: BaseBeakerMetallic
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:
@@ -327,10 +356,14 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 1000
 
 - type: entity
   name: dropper
-  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
+  parent: BaseItem
   description: Used to transfer small amounts of chemical solution between containers.
   id: Dropper
   components:
@@ -341,6 +374,10 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 5
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
@@ -378,7 +415,7 @@
   parent: Dropper
   id: BorgDropper
   name: hydraulic pipette
-  description: State-of-the-art hydraulic dropper built for cyborgs.
+  description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
@@ -387,12 +424,16 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
 - type: entity
   name: syringe
-  parent: [SolutionInjector, SolutionToolTiny, BaseItem]
+  parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
   id: BaseSyringe
   abstract: true
@@ -411,6 +452,10 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/syringe.rsi
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
   - type: Injector
     activeModeProtoId: SyringeDrawMode
     allowedModes:
@@ -444,7 +489,7 @@
 
 - type: entity
   name: mini syringe
-  parent: [SolutionToolVeryTiny, Syringe]
+  parent: Syringe
   description: A regular syringe, reshaped to fit inside of a gun.
   id: MiniSyringe
   components:
@@ -455,6 +500,10 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringeproj
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -512,7 +561,7 @@
 
 - type: entity
   id: SyringeBluespace
-  parent: [SolutionToolLarge, BaseSyringe]
+  parent: BaseSyringe
   name: bluespace syringe
   description: Injecting with advanced bluespace technology.
   components:
@@ -526,6 +575,10 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: bluespace_base0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 100
   - type: Injector
     activeModeProtoId: BluespaceSyringeDrawMode
     allowedModes:
@@ -541,7 +594,7 @@
 
 - type: entity
   id: SyringeCryostasis
-  parent: [SolutionCryo, BaseSyringe]
+  parent: BaseSyringe
   name: cryostasis syringe
   description: A syringe used to contain chemicals or solutions without reactions.
   components:
@@ -555,6 +608,16 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: cryo_base0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+        canReact: false
+  - type: Injector
+    activeModeProtoId: CryostasisSyringeDrawMode
+    allowedModes:
+    - CryostasisSyringeInjectMode
+    - CryostasisSyringeDrawMode
   - type: Tag
     tags:
     - Syringe
@@ -562,7 +625,7 @@
 
 - type: entity
   name: pill
-  parent: [SolutionPill, BaseItem]
+  parent: BaseItem
   id: Pill
   description: It's not a suppository.
   components:
@@ -581,10 +644,14 @@
   - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        canReact: false
   - type: ExplosionResistance
     damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -605,16 +672,6 @@
   - type: Tag
     tags:
     - Pill
-
-- type: entity
-  abstract: true
-  parent: [SolutionFood, SolutionTiny]
-  id: SolutionPill
-  components:
-  - type: Solution
-    solution:
-      canReact: false
-      maxVol: 20
 
 - type: entity
   name: pill canister

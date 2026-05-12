@@ -7,20 +7,18 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public sealed partial class PortPipeNode : PipeNode
     {
-        public override IEnumerable<Node> GetReachableNodes(
-            Entity<TransformComponent> xform,
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            Entity<MapGridComponent>? grid,
+            MapGridComponent? grid,
             IEntityManager entMan)
         {
-            if (!xform.Comp.Anchored || grid is not { } gridEnt)
+            if (!xform.Anchored || grid == null)
                 yield break;
 
-            var mapSystem = entMan.System<SharedMapSystem>();
-            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, gridEnt, gridIndex, mapSystem))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
             {
                 if (node is PortablePipeNode)
                     yield return node;

@@ -6,9 +6,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
 
-public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
+public sealed class JukeboxBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ViewVariables]
     private JukeboxMenu? _menu;

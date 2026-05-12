@@ -8,10 +8,11 @@ namespace Content.Shared.Station;
 
 public abstract partial class SharedStationSystem : EntitySystem
 {
-    [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
 
-    [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery = default!;
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<StationMemberComponent> _stationMemberQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -19,6 +20,9 @@ public abstract partial class SharedStationSystem : EntitySystem
         base.Initialize();
 
         InitializeTracker();
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
+        _stationMemberQuery = GetEntityQuery<StationMemberComponent>();
     }
 
     /// <summary>
@@ -174,28 +178,5 @@ public abstract partial class SharedStationSystem : EntitySystem
         }
 
         return null;
-    }
-
-    /// <summary>
-    /// Returns true if a entity's parent is the station, and false if the entity is not on the station
-    /// </summary>
-    /// <param name="entity">The entity to check if is on a grid</param>
-    /// <param name="onlyCountLargestGrid">If true, only the largest grid of each station will count, so if the entity is on
-    /// the ATS or a escape pod, it will return false</param>
-    public bool IsOnStation(EntityUid entity, bool onlyCountLargestGrid = true)
-    {
-        var entityParent = Transform(entity).ParentUid;
-
-        var query = EntityQueryEnumerator<StationDataComponent>();
-        while (query.MoveNext(out var uid, out var stationDataComp))
-        {
-            if (onlyCountLargestGrid && GetLargestGrid(uid) == entityParent)
-                return true;
-
-            if (!onlyCountLargestGrid && stationDataComp.Grids.Contains(entityParent))
-                return true;
-        }
-
-        return false;
     }
 }

@@ -7,10 +7,10 @@ using Robust.Shared.Console;
 namespace Content.Server.AlertLevel.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed partial class SetAlertLevelCommand : LocalizedEntityCommands
+    public sealed class SetAlertLevelCommand : LocalizedEntityCommands
     {
-        [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
-        [Dependency] private StationSystem _stationSystem = default!;
+        [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override string Command => "setalertlevel";
 

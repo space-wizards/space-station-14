@@ -39,11 +39,12 @@
   parent: WeldingFuelTank
   suffix: Full
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 960
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1500
 
 - type: entity
   parent: [StorageTankBig, WeldingFuelTank] # StorageTankBig must come first, or else the desnity won't get inherited.
@@ -64,11 +65,13 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 7
     fillBaseName: highfueltank-2-
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 3840
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 5000
+        maxVol: 5000
   - type: Explosive
     explosionType: Default
     totalIntensity: 120
@@ -103,14 +106,15 @@
   id: WaterTankFull
   suffix: Full
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 960
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 1500
 
 - type: entity
-  parent: [SolutionHuge, StorageTank]
+  parent: StorageTank
   id: WaterCooler
   name: water cooler
   description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
@@ -126,11 +130,12 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: watercooler-2-
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 480
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
@@ -177,11 +182,15 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 7
     fillBaseName: highwatertank-2-
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 3840 # This is *100, 000* on /tg/
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+#         This is *100, 000* on /tg/
+          Quantity: 10000
+        maxVol: 10000
+#   It's pressurized...
   - type: ExaminableSolution
     solution: tank
   - type: ReagentTank

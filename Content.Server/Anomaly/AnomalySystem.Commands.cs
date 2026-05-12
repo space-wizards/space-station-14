@@ -7,7 +7,7 @@ namespace Content.Server.Anomaly;
 
 public sealed partial class AnomalySystem
 {
-    [Dependency] private IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IConsoleHost _consoleHost = default!;
 
     public void InitializeCommands()
     {

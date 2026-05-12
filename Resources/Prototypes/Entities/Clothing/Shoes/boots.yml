@@ -56,8 +56,6 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: ClothingSlowOnDamageModifier
-    modifier: 0.5
 
 - type: entity
   parent: ClothingShoesMilitaryBase
@@ -90,8 +88,6 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
-  - type: ClothingSlowOnDamageModifier
-    modifier: 0.5
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -190,11 +186,13 @@
       - cobwebs
     ignoreReagents:
       - Fiber
-  - type: Solution
-    solution: # 20 (10 (fiber count of web) * 2 (to craft))
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions: # 6 (3 (fiber count of web) * 2 (to craft)) + 4 (magical crafting bonus)
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
   - type: Butcherable
     spawned:
     - id: MaterialWebSilk1

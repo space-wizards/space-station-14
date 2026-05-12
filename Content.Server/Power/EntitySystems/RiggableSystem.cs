@@ -14,18 +14,18 @@ namespace Content.Server.Power.EntitySystems;
 /// <summary>
 ///  Handles sabotaged/rigged objects
 /// </summary>
-public sealed partial class RiggableSystem : EntitySystem
+public sealed class RiggableSystem : EntitySystem
 {
-    [Dependency] private ExplosionSystem _explosionSystem = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<RiggableComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<RiggableComponent, ChargeChangedEvent>(OnChargeChanged);
     }
 
@@ -47,14 +47,13 @@ public sealed partial class RiggableSystem : EntitySystem
         }
     }
 
-    private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionChangedEvent args)
+    private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.Solution.Comp.Id != entity.Comp.Solution)
+        if (args.SolutionId != entity.Comp.Solution)
             return;
 
         var wasRigged = entity.Comp.IsRigged;
-        var solution = args.Solution.Comp.Solution;
-        var quantity = solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
+        var quantity = args.Solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
         entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
 
         if (entity.Comp.IsRigged && !wasRigged)

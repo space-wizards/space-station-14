@@ -24,9 +24,8 @@
   - type: Pullable
   - type: Rotatable
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: RCDDeconstructable
     cost: 6
     delay: 8

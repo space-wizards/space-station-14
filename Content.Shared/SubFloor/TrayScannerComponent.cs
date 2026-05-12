@@ -1,46 +1,33 @@
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class TrayScannerComponent : Component
 {
     /// <summary>
     ///     Whether the scanner is currently on.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool Enabled;
-
-    /// <summary>
-    ///     Current mode of operation, defines which subfloor entities are shown.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TrayScannerMode Mode = TrayScannerMode.All;
 
     /// <summary>
     ///     Radius in which the scanner will reveal entities. Centered on the <see cref="LastLocation"/>.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Range = 4f;
-
     [DataField]
-    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    public float Range = 4f;
 }
 
 [Serializable, NetSerializable]
-public enum TrayScannerMode
+public sealed class TrayScannerState : ComponentState
 {
-    All,
-    Piping,
-    Wiring
-}
+    public bool Enabled;
+    public float Range;
 
-[Serializable, NetSerializable]
-public enum TrayScannerVisual : byte
-{
-    Visual,
-    On,
-    Off
+    public TrayScannerState(bool enabled, float range)
+    {
+        Enabled = enabled;
+        Range = range;
+    }
 }

@@ -8,17 +8,20 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.CardboardBox;
 
-public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
+public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
-    [Dependency] private EntityLookupSystem _entityLookup = default!;
-    [Dependency] private TransformSystem _transform = default!;
-    [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    private EntityQuery<MobStateComponent> _mobStateQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _mobStateQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeNetworkEvent<PlayBoxEffectMessage>(OnBoxEffect);
     }
@@ -30,7 +33,11 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!TryComp<CardboardBoxComponent>(source, out var box))
             return;
 
-        var xform = Transform(source);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        if (!xformQuery.TryGetComponent(source, out var xform))
+            return;
+
         var sourcePos = _transform.GetMapCoordinates(source, xform);
 
         //Any mob that can move should be surprised?
@@ -65,7 +72,7 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 
             var ent = Spawn(box.Effect, mapPos);
 
-            if (!TryComp(ent, out TransformComponent? entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
+            if (!xformQuery.TryGetComponent(ent, out var entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
                 continue;
 
             _sprite.SetOffset((ent, sprite), new Vector2(0, 1));

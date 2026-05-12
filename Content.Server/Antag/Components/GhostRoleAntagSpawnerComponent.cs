@@ -1,10 +1,7 @@
-using Content.Shared.Antag;
-using Robust.Shared.Prototypes;
-
 namespace Content.Server.Antag.Components;
 
 /// <summary>
-/// Ghost role spawner that creates an antag for the associated game rule.
+/// Ghost role spawner that creates an antag for the associated gamerule.
 /// </summary>
 [RegisterComponent, Access(typeof(AntagSelectionSystem))]
 public sealed partial class GhostRoleAntagSpawnerComponent : Component
@@ -13,5 +10,5 @@ public sealed partial class GhostRoleAntagSpawnerComponent : Component
     public EntityUid? Rule;
 
     [DataField]
-    public ProtoId<AntagSpecifierPrototype>? Definition;
+    public AntagSelectionDefinition? Definition;
 }

@@ -7,10 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.CrewManifest.UI;
 
-public sealed partial class CrewManifestListing : BoxContainer
+public sealed class CrewManifestListing : BoxContainer
 {
-    [Dependency] private IEntitySystemManager _entitySystem = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     public CrewManifestListing()

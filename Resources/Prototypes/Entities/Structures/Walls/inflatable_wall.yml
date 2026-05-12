@@ -21,9 +21,8 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: Inflatable
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:
@@ -71,9 +70,8 @@
     closeSound:
       path: /Audio/Misc/zip.ogg
   - type: Damageable
-    damageModifierSet: Inflatable
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:

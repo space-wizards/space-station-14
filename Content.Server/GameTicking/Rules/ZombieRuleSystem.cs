@@ -18,23 +18,22 @@ using Content.Shared.Zombies;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Globalization;
-using System.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
+public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private SharedMindSystem _mindSystem = default!;
-    [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private ZombieSystem _zombie = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
 
     public override void Initialize()
     {
@@ -77,7 +76,7 @@ public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponen
         else
             args.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-        var antags = _antag.GetAntagIdentifiers(uid).ToList();
+        var antags = _antag.GetAntagIdentifiers(uid);
         args.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", antags.Count)));
         foreach (var (_, data, entName) in antags)
         {

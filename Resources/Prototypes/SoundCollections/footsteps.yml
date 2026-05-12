@@ -95,6 +95,12 @@
   - /Audio/Items/Toys/weh.ogg
 
 - type: soundCollection
+  id: FootstepHeavy
+  files:
+  - /Audio/Effects/Footsteps/suitstep1.ogg
+  - /Audio/Effects/Footsteps/suitstep2.ogg
+
+- type: soundCollection
   id: FootstepAsteroid
   files:
   - /Audio/Effects/Footsteps/asteroid1.ogg

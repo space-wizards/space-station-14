@@ -1,6 +1,6 @@
 - type: entity
-  abstract: true
   id: SpiderWebBase
+  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -23,7 +23,6 @@
   - type: Physics
   - type: Damageable
     damageModifierSet: Wood
-  - type: Injurable
   - type: Temperature
   - type: TemperatureDamage
     heatDamage:
@@ -46,9 +45,6 @@
     additionalKeys:
     - walls
     base: web_
-  - type: Construction
-    graph: CobwebsGraph
-    node: start
 
 - type: entity
   id: SpiderWeb
@@ -96,7 +92,7 @@
 
 - type: entity
   id: SpiderWebClown
-  parent: [SolutionFood, SolutionVeryTiny, SpiderWebBase]
+  parent: SpiderWebBase
   name: clown spider web
   description: It's stringy and slippy.
   components:
@@ -128,12 +124,9 @@
       - sweet
   - type: Edible
     delay: 2
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Sugar
-        Quantity: 2.5
-      - ReagentId: Honk
-        Quantity: 2.5
-      - ReagentId: SpaceLube
-        Quantity: 2.5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 2

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.IntegrationTests.Fixtures;
 using Content.Shared.Physics;
 using Content.Shared.Spawning;
 using Robust.Shared.GameObjects;
@@ -9,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntitySystemExtensions))]
-    public sealed class EntitySystemExtensionsTest : GameTest
+    public sealed class EntitySystemExtensionsTest
     {
         private const string BlockerDummyId = "BlockerDummy";
 
@@ -33,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
             var testMap = await pair.CreateTestMap();
@@ -96,6 +95,7 @@ namespace Content.IntegrationTests.Tests.Utility
                     Assert.That(entity, Is.Not.Null);
                 });
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

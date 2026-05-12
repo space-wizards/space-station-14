@@ -12,7 +12,6 @@
     layers:
     - state: syndie_broken
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

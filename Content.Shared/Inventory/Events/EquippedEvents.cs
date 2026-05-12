@@ -1,42 +1,58 @@
 ﻿namespace Content.Shared.Inventory.Events;
 
-public abstract class EquippedEventBase(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition) : EntityEventArgs
+public abstract class EquippedEventBase : EntityEventArgs
 {
     /// <summary>
-    /// The entity which got equipped to.
-    /// NOT necessarily the one who performed the interaction.
+    /// The entity equipping.
     /// </summary>
-    public readonly EntityUid EquipTarget = equipTarget;
+    public readonly EntityUid Equipee;
 
     /// <summary>
     /// The entity which got equipped.
     /// </summary>
-    public readonly EntityUid Equipment = equipment;
+    public readonly EntityUid Equipment;
 
     /// <summary>
     /// The slot the entity got equipped to.
     /// </summary>
-    public readonly string Slot = slotDefinition.Name;
+    public readonly string Slot;
 
     /// <summary>
     /// The slot group the entity got equipped in.
     /// </summary>
-    public readonly string SlotGroup = slotDefinition.SlotGroup;
+    public readonly string SlotGroup;
 
     /// <summary>
     /// Slotflags of the slot the entity just got equipped to.
     /// </summary>
-    public readonly SlotFlags SlotFlags = slotDefinition.SlotFlags;
+    public readonly SlotFlags SlotFlags;
+
+    public EquippedEventBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
+    {
+        Equipee = equipee;
+        Equipment = equipment;
+        Slot = slotDefinition.Name;
+        SlotGroup = slotDefinition.SlotGroup;
+        SlotFlags = slotDefinition.SlotFlags;
+    }
 }
 
 /// <summary>
-/// Raised directed on an equipee when something was equipped.
+/// Raised directed on an equipee when something is equipped.
 /// </summary>
-public sealed class DidEquipEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
-    : EquippedEventBase(equipTarget, equipment, slotDefinition);
+public sealed class DidEquipEvent : EquippedEventBase
+{
+    public DidEquipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
+    {
+    }
+}
 
 /// <summary>
-/// Raised directed on equipment when it was equipped to an equipee.
+/// Raised directed on equipment when it's equipped to an equipee
 /// </summary>
-public sealed class GotEquippedEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
-    : EquippedEventBase(equipTarget, equipment, slotDefinition);
+public sealed class GotEquippedEvent : EquippedEventBase
+{
+    public GotEquippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
+    {
+    }
+}

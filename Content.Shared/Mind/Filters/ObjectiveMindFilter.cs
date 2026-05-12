@@ -10,7 +10,7 @@ public sealed partial class ObjectiveMindFilter : MindFilter
     [DataField(required: true)]
     public EntityWhitelist Blacklist = new();
 
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
     {
         var whitelistSys = entMan.System<EntityWhitelistSystem>();
         foreach (var obj in mind.Comp.Objectives)

@@ -36,9 +36,8 @@
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities

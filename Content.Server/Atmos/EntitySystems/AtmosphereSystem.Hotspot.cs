@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Server.Atmos.Components;
 using Content.Server.Decals;
 using Content.Shared.Atmos;
@@ -33,8 +32,8 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultHotspotSounds = "AtmosHotspot";
 
-    [Dependency] private DecalSystem _decalSystem = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly DecalSystem _decalSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
     /// Number of cycles the hotspot system must process before it can play another sound
@@ -88,7 +87,8 @@ public sealed partial class AtmosphereSystem
         if (tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist ||
             tile.Hotspot.Volume <= 1f ||
             tile.Air == null ||
-            !IsMixtureIgnitable(tile.Air))
+            tile.Air.GetMoles(Gas.Oxygen) < 0.5f ||
+            tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f)
         {
             tile.Hotspot = new Hotspot();
             InvalidateVisuals(ent, tile);
@@ -201,16 +201,19 @@ public sealed partial class AtmosphereSystem
         if (tile.Air == null)
             return;
 
-        if (!IsMixtureOxidizer(tile.Air))
+        var oxygen = tile.Air.GetMoles(Gas.Oxygen);
+
+        if (oxygen < 0.5f)
             return;
 
-        var isFlammable = IsMixtureFuel(tile.Air);
+        var plasma = tile.Air.GetMoles(Gas.Plasma);
+        var tritium = tile.Air.GetMoles(Gas.Tritium);
 
         if (tile.Hotspot.Valid)
         {
             if (soh)
             {
-                if (isFlammable)
+                if (plasma > 0.5f || tritium > 0.5f)
                 {
                     tile.Hotspot.Temperature = MathF.Max(tile.Hotspot.Temperature, exposedTemperature);
                     tile.Hotspot.Volume = MathF.Max(tile.Hotspot.Volume, exposedVolume);
@@ -220,14 +223,13 @@ public sealed partial class AtmosphereSystem
             return;
         }
 
-        if (exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && isFlammable)
+        if (exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && (plasma > 0.5f || tritium > 0.5f))
         {
             if (sparkSourceUid.HasValue)
             {
                 _adminLog.Add(LogType.Flammable,
                     LogImpact.High,
-                    $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: " +
-                    $"{tile.Air.ToPrettyString()}");
+                    $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
             }
 
             tile.Hotspot = new Hotspot

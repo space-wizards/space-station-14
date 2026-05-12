@@ -145,7 +145,7 @@ namespace Content.MapRenderer
                 {
                     Console.Write($"Following map files did not exist on disk directly, searching through prototypes: {string.Join(", ", lookupPrototypeFiles)}");
 
-                    await using var pair = await PoolManager.GetServerClient(testContext: testContext);
+                    await using var pair = await PoolManager.GetServerClient();
                     var mapPrototypes = pair.Server
                         .ResolveDependency<IPrototypeManager>()
                         .EnumeratePrototypes<GameMapPrototype>()

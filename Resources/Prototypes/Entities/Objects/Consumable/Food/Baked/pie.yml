@@ -3,30 +3,33 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionNormal, FoodInjectableBase]
+  parent: FoodInjectableBase
   id: FoodPieBase
   components:
   - type: Item
-    size: Normal
+    shape:
+    - 0,0,1,0
   - type: FlavorProfile
     flavors:
       - sweet
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-  - type: Solution
-    solution:
-      reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
-      - ReagentId: Nutriment
-        Quantity: 64
-      - ReagentId: Vitamin
-        Quantity: 8
-      - ReagentId: Sugar
-        Quantity: 8
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 14
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Edible #It's actually possible now to have a pie stored in a tin rather than spawning trash when you finish eating it. But right now I'm just cleaning up.
     trash:
     - FoodPlateTin
   - type: SliceableFood
-    count: 8
+    count: 4
   - type: Tag
     tags:
     - Pie
@@ -44,15 +47,17 @@
       - sweet
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 8
-      - ReagentId: Vitamin
-        Quantity: 1
-      - ReagentId: Sugar
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Vitamin
+          Quantity: 3.5
+        - ReagentId: Sugar
+          Quantity: 1.25
   - type: Tag
     tags:
     - Pie
@@ -457,6 +462,8 @@
     heldPrefix: mime
 # Tastes like nothing.
 
+# No Slice
+
 - type: entity
   name: amanita pie
   parent: FoodPieBase
@@ -467,47 +474,18 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: tin
-    - state: amanita
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 64
-      - ReagentId: Vitamin
-        Quantity: 8
-      - ReagentId: Sugar
-        Quantity: 8
-      - ReagentId: Amatoxin
-        Quantity: 10
-  - type: SliceableFood
-    slice: FoodPieAmanitaSlice
-
-- type: entity
-  name: slice of amanita pie
-  parent: FoodPieSliceBase
-  id: FoodPieAmanitaSlice
-  components:
-  - type: FlavorProfile
-    flavors:
-      - mushroom
-  - type: Sprite
-    layers:
-    - state: plain-slice
-    - state: alpha-slice-filling
-      color: red
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 8
-      - ReagentId: Vitamin
-        Quantity: 1
-      - ReagentId: Sugar
-        Quantity: 1
-      - ReagentId: Amatoxin
-        Quantity: 1.25
+    state: amanita
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 17
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Amatoxin
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like pie, mushrooms.
 
 - type: entity
@@ -520,25 +498,7 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: tin
-    - state: plump
-  - type: SliceableFood
-    slice: FoodPiePlumpSlice
-
-- type: entity
-  name: slice of plump pie
-  parent: FoodPieSliceBase
-  id: FoodPiePlumpSlice
-  components:
-  - type: FlavorProfile
-    flavors:
-      - mushroom
-  - type: Sprite
-    layers:
-    - state: plain-slice
-    - state: alpha-slice-filling
-      color: purple
+    state: plump
 # Tastes like pie, mushrooms.
 
 # Tart
@@ -554,6 +514,17 @@
       - sweet
   - type: Sprite
     state: grape
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -588,15 +559,13 @@
       - chocolate
   - type: Sprite
     state: cocolava
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 64
-      - ReagentId: Vitamin
-        Quantity: 8
-      - ReagentId: Sugar
-        Quantity: 8
-      - ReagentId: Theobromine
-        Quantity: 8
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 35
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Theobromine
+          Quantity: 2
 # Tastes like tart, dark chocolate.

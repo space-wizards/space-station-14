@@ -10,7 +10,7 @@ namespace Content.Shared.Ghost;
 /// Handles limiting interactions, using ghost abilities, ghost visibility, and ghost warping.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
-[AutoGenerateComponentState(true)]
+[AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class GhostComponent : Component
 {
     // Actions
@@ -54,7 +54,7 @@ public sealed partial class GhostComponent : Component
     /// May not reflect actual time of death if this entity has been paused,
     /// but will give an accurate length of time <i>since</i> death.
     /// </remarks>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoPausedField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
     /// <summary>

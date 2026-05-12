@@ -15,11 +15,13 @@
     - 0,0,1,0
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 40 # Bonus for complete meal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Meals
 
@@ -89,13 +91,13 @@
   - type: Tag
     tags:
     - CarrotFries
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: JuiceCarrot
-        Quantity: 20
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: JuiceCarrot
+          Quantity: 20
 # Tastes like carrots, salt.
 
 - type: entity
@@ -114,13 +116,15 @@
       - nachos
   - type: Sprite
     state: nachos
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: TableSalt
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: TableSalt
+          Quantity: 2
 # Tastes like nachos.
 
 - type: entity
@@ -140,13 +144,15 @@
       - cheesy
   - type: Sprite
     state: nachos-cheesy
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 25
-      - ReagentId: TableSalt
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: TableSalt
+          Quantity: 2
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -167,15 +173,17 @@
       - spicy
   - type: Sprite
     state: nachos-cuban
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
-      - ReagentId: CapsaicinOil
-        Quantity: 10
-      - ReagentId: Vitamin
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: CapsaicinOil
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -184,9 +192,6 @@
   name: mint
   description: It's wafer thin.
   components:
-  - type: Edible
-    trash:
-    - FoodPlateSmall
   - type: Item
     storedOffset: 0,-1
   - type: FlavorProfile
@@ -194,13 +199,14 @@
       - minty
   - type: Sprite
     state: mint
-  - type: Solution
-    solution:
-      # Note that this acts as the limiter against injecting anything.
-      maxVol: 2
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note that this acts as the limiter against injecting anything.
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
 # Tastes like parsnips, salt.
 
 - type: entity
@@ -217,6 +223,15 @@
       - cheesy
   - type: Sprite
     state: eggplantparm
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2
   - type: Tag
     tags:
     - Fruit
@@ -239,14 +254,12 @@
 # Tastes like sweet potato.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: FoodMealCubancarp
   name: Cuban carp
   description: A grifftastic sandwich that burns your tongue and then leaves it numb!
   components:
   - type: Item
-    size: Normal
-    shape:
     storedOffset: 3,-7
   - type: FlavorProfile
     flavors:
@@ -255,17 +268,19 @@
       - spicy
   - type: Sprite
     state: cubancarp
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 100
-      - ReagentId: CarpoToxin
-        Quantity: 5
-      - ReagentId: CapsaicinOil
-        Quantity: 10
-      - ReagentId: Vitamin
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: CarpoToxin
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: CapsaicinOil
+          Quantity: 4
   - type: Tag
     tags:
     - CubanCarp
@@ -286,13 +301,22 @@
       - cabbage
   - type: Sprite
     state: cornedbeef
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Tag
     tags:
     - Meat
 # Tastes like meat, cabbage.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: FoodMealBearsteak
   name: filet migrawr
   description: Because eating bear wasn't manly enough.
@@ -300,6 +324,7 @@
   - type: Item
     size: Normal
     shape:
+    - 0,0,1,1
     storedOffset: -1,4
   - type: FlavorProfile
     flavors:
@@ -307,13 +332,22 @@
       - fishy
   - type: Sprite
     state: bearsteak
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
 # Tastes like meat, salmon.
 
 - type: entity
-  parent: [SolutionTiny, FoodMealBase]
+  parent: FoodMealBase
   id: FoodMealPigblanket
   name: pig in a blanket
   description: A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it.
@@ -321,26 +355,34 @@
   - type: Item
     size: Tiny
     shape:
+    - 0,0,0,0
   - type: FlavorProfile
     flavors:
       - meaty
       - butter
   - type: Sprite
     state: pigblanket
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1
   - type: Tag
     tags:
     - Meat
 # Tastes like meat, butter.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: FoodMealRibs
   name: bbq ribs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Item
-    size: Normal
-    shape:
     storedOffset: 0,-4
   - type: Edible
     trash:
@@ -351,15 +393,17 @@
       - smokey
   - type: Sprite
     state: ribs
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 60
-      - ReagentId: Protein
-        Quantity: 30
-      - ReagentId: BbqSauce
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 35
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 20
+        - ReagentId: BbqSauce
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -378,6 +422,15 @@
       - bun
   - type: Sprite
     state: benedict
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
   - type: Tag
     tags:
     - Meat
@@ -397,6 +450,13 @@
       - cheesy
   - type: Sprite
     state: omelette
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
   - type: Tag
     tags:
     - Meat
@@ -417,13 +477,24 @@
       - peppery
   - type: Sprite
     state: friedegg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Blackpepper
+          Quantity: 1
   - type: Tag
     tags:
     - Meat
 # Tastes like egg, salt, pepper.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: FoodMealMilkape
   name: milk ape
   description: The king of Jungle Thick.
@@ -431,6 +502,7 @@
   - type: Item
     size: Normal
     shape:
+    - 0,0,1,1
   - type: FlavorProfile
     flavors:
       - milk
@@ -453,10 +525,19 @@
       - memoryleek
   - type: Sprite
     state: memoryLeek
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Allicin
+          Quantity: 5
 # Tastes like pain.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: DisgustingSweptSoup
   name: salty sweet miso cola soup
   description: Jesus christ.
@@ -464,9 +545,21 @@
   - type: Item
     size: Normal
     shape:
+    - 0,0,1,1
     storedOffset: 0,-2
   - type: Sprite
     state: saltysweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 9
+        - ReagentId: Water
+          Quantity: 10
+        - ReagentId: Blackpepper
+          Quantity: 3
 # Tastes awesome.
 
 - type: entity
@@ -495,15 +588,15 @@
       - fishy
   - type: Sprite
     state: sashimi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 30
-      - ReagentId: CarpoToxin
-        Quantity: 5
-      - ReagentId: TableSalt
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CarpoToxin
+          Quantity: 15
   - type: Tag
     tags:
     - Meat
@@ -522,31 +615,31 @@
         - meaty
     - type: Sprite
       state: enchiladas
-    - type: Solution
-      solution:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: CapsaicinOil
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 35
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 20
+          - ReagentId: Protein
+            Quantity: 5
+          - ReagentId: CapsaicinOil
+            Quantity: 6
+          - ReagentId: Vitamin
+            Quantity: 6
     - type: Tag
       tags:
       - Meat
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
-  parent: [SolutionNormal, FoodMealBase]
+  parent: FoodMealBase
   id: FoodSaladWatermelonFruitBowl
   name: melon fruit bowl
   description: The only salad where you can eat the bowl.
   components:
   - type: Item
-    size: Normal
-    shape:
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
@@ -554,19 +647,21 @@
       - sour
   - type: Sprite
     state: melonfruitbowl
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 45
-      - ReagentId: Vitamin
-        Quantity: 60
-      - ReagentId: Water
-        Quantity: 5
-      - ReagentId: Bicaridine
-        Quantity: 5
-      - ReagentId: Kelotane
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 65
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 15
+        - ReagentId: Water
+          Quantity: 5
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Kelotane
+          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -588,12 +683,12 @@
       - butter
   - type: Sprite
     state: corn-in-butter
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
-      - ReagentId: Vitamin
-        Quantity: 15
-      - ReagentId: Butter
-        Quantity: 2.5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 4

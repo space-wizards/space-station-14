@@ -9,23 +9,21 @@ namespace Content.Server.Power.Nodes
     [DataDefinition]
     public sealed partial class CableTerminalNode : CableDeviceNode
     {
-        public override IEnumerable<Node> GetReachableNodes(
-            Entity<TransformComponent> xform,
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            Entity<MapGridComponent>? grid,
+            MapGridComponent? grid,
             IEntityManager entMan)
         {
-            if (!xform.Comp.Anchored || grid is not { } gridEnt)
+            if (!xform.Anchored || grid == null)
                 yield break;
 
-            var mapSystem = entMan.System<SharedMapSystem>();
-            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            var dir = xform.Comp.LocalRotation.GetDir();
+            var dir = xform.LocalRotation.GetDir();
             var targetIdx = gridIndex.Offset(dir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, gridEnt, targetIdx, mapSystem))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;

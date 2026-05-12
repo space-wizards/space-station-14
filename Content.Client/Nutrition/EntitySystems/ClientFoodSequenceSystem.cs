@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
-public sealed partial class ClientFoodSequenceSystem : SharedFoodSequenceSystem
+public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

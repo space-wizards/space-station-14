@@ -33,9 +33,8 @@
   - type: RadiationBlocker
     resistance: 8
   - type: Damageable
-    damageModifierSet: StrongMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -79,9 +78,8 @@
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
@@ -165,9 +163,8 @@
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:

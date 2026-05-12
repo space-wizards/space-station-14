@@ -9,10 +9,10 @@ using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
-    public abstract partial class SharedDecalSystem : EntitySystem
+    public abstract class SharedDecalSystem : EntitySystem
     {
-        [Dependency] protected IPrototypeManager PrototypeManager = default!;
-        [Dependency] protected IMapManager MapManager = default!;
+        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
 
         protected bool PvsEnabled;
 

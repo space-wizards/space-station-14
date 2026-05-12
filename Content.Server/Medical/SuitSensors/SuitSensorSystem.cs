@@ -6,11 +6,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.SuitSensors;
 
-public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
+public sealed class SuitSensorSystem : SharedSuitSensorSystem
 {
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
 
     public override void Update(float frameTime)
     {

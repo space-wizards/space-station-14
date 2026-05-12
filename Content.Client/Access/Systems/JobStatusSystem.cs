@@ -6,11 +6,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Access.Systems;
 
-public sealed partial class JobStatusSystem : SharedJobStatusSystem
+public sealed class JobStatusSystem : SharedJobStatusSystem
 {
-    [Dependency] private ShowJobIconsSystem _showJobIcons = default!;
-    [Dependency] private ShowCrewIconsSystem _showCrewIcons = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ShowJobIconsSystem _showJobIcons = default!;
+    [Dependency] private readonly ShowCrewIconsSystem _showCrewIcons = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private static readonly ProtoId<SecurityIconPrototype> CrewBorderIcon = "CrewBorderIcon";
     private static readonly ProtoId<SecurityIconPrototype> CrewUncertainBorderIcon = "CrewUncertainBorderIcon";

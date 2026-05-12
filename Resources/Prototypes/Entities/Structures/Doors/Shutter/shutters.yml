@@ -71,9 +71,8 @@
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -222,9 +221,8 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

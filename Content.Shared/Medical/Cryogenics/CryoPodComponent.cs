@@ -127,27 +127,24 @@ public enum CryoPodUiKey : byte
 [Serializable, NetSerializable]
 public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 {
-    public GasMixEntry GasMix;
+    public GasAnalyzerComponent.GasMixEntry GasMix;
     public HealthAnalyzerUiState Health;
     public FixedPoint2? BeakerCapacity;
     public List<ReagentQuantity>? Beaker;
     public List<ReagentQuantity>? Injecting;
-    public bool HasDamage;
 
     public CryoPodUserMessage(
-        GasMixEntry gasMix,
+        GasAnalyzerComponent.GasMixEntry gasMix,
         HealthAnalyzerUiState health,
         FixedPoint2? beakerCapacity,
         List<ReagentQuantity>? beaker,
-        List<ReagentQuantity>? injecting,
-        bool hasDamage)
+        List<ReagentQuantity>? injecting)
     {
         GasMix = gasMix;
         Health = health;
         BeakerCapacity = beakerCapacity;
         Beaker = beaker;
         Injecting = injecting;
-        HasDamage = hasDamage;
     }
 }
 

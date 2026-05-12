@@ -1,11 +1,9 @@
-﻿using Robust.Shared.GameStates;
-
-namespace Content.Shared.Construction.Components;
+﻿namespace Content.Shared.Construction.Components;
 
 /// <summary>
 /// If a entity has this component it can only be anchored to the station
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class AnchorOnlyOnStationComponent : Component
 {
     /// <summary>
@@ -13,11 +11,4 @@ public sealed partial class AnchorOnlyOnStationComponent : Component
     /// </summary>
     [DataField]
     public LocId PopupMessageAnchorFail = "anchorable-fail-not-on-station";
-
-    /// <summary>
-    /// If true, it will only be able to be anchored on the largest grid of a station.
-    /// If false, it will only be able to anchored on any grid of a station.
-    /// </summary>
-    [DataField]
-    public bool OnlyCountLargestGrid = true;
 }

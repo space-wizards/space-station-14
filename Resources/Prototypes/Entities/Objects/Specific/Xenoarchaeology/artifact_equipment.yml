@@ -54,9 +54,8 @@
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
-      damageModifierSet: StructuralMetallicStrong
-    - type: Injurable
       damageContainer: StructuralInorganic
+      damageModifierSet: StructuralMetallicStrong
     - type: Destructible
       thresholds:
         - trigger:
@@ -137,9 +136,8 @@
       path: /Audio/Items/toolbox_drop.ogg
   - type: LockVisuals
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
       - trigger:

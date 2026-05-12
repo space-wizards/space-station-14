@@ -22,9 +22,8 @@
         - Opaque
   - type: Climbable
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
       - trigger:
@@ -58,9 +57,8 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Wood
   - type: MeleeSound
     soundGroups:
       Brute:

@@ -17,12 +17,6 @@ public sealed partial class FlashComponent : Component
     public bool FlashOnUse = true;
 
     /// <summary>
-    /// Flash the area around the entity when the flash is used with ranged interaction?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool FlashOnRangedInteract = false;
-
-    /// <summary>
     /// Flash the target when melee attacking them?
     /// </summary>
     [DataField, AutoNetworkedField]

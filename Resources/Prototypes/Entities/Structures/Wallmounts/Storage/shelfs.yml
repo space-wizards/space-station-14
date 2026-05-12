@@ -12,7 +12,6 @@
     state: base
   - type: Damageable
     damageModifierSet: Wood
-  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
@@ -119,7 +118,6 @@
     state: base
   - type: Damageable
     damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
@@ -161,7 +159,6 @@
     state: base
   - type: Damageable
     damageModifierSet: Glass
-  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:

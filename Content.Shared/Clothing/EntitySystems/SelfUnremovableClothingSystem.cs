@@ -23,7 +23,7 @@ public sealed class SelfUnremovableClothingSystem : EntitySystem
         if (TryComp<ClothingComponent>(selfUnremovableClothing, out var clothing) && (clothing.Slots & args.SlotFlags) == SlotFlags.NONE)
             return;
 
-        if (args.UnEquipTarget == args.User)
+        if (args.UnEquipTarget == args.Unequipee)
         {
             args.Cancel();
         }

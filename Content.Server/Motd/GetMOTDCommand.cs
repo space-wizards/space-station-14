@@ -7,12 +7,12 @@ namespace Content.Server.Motd;
 /// A command that can be used by any player to print the Message of the Day.
 /// </summary>
 [AnyCommand]
-public sealed partial class GetMotdCommand : LocalizedCommands
+public sealed class GetMotdCommand : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override string Command => "get-motd";
-
+    
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _entityManager.EntitySysManager.GetEntitySystem<MOTDSystem>().TrySendMOTD(shell);

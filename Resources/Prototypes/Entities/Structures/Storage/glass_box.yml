@@ -70,9 +70,8 @@
     damageOverlay:
       sprite: Structures/Storage/glassbox.rsi
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Glass
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -177,8 +176,6 @@
   - type: Climbable
   - type: Damageable
     damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities

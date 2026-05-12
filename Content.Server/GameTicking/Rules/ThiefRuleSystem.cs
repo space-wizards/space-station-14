@@ -6,9 +6,9 @@ using Content.Shared.Roles.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
+public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     public override void Initialize()
     {

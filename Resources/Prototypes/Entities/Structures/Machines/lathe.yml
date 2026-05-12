@@ -66,20 +66,16 @@
     modifiers:
       SpaceLube: 0.25
       SpaceGlue: 5
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionLatheLube
+      lube:
+        maxVol: 250
   - type: Spillable
     solution: lube
   - type: RefillableSolution
     solution: lube
   - type: ExaminableSolution
     solution: lube
-
-- type: entity
-  parent: [SolutionLube, SolutionLarge]
-  id: SolutionLatheLube # Its own prototype since some lathes might interface with solutions in other ways
-  categories: [ HideSpawnMenu ]
 
 - type: entity
   abstract: true
@@ -670,6 +666,8 @@
   name: cutter machine
   description: This is a cutter. It cuts. Add variety to your station floor with eye-pleasing patterns! Don't stick your fingers in.
   components:
+  - type: Transform
+    noRot: false
   - type: Sprite
     sprite: Structures/Machines/cuttermachine.rsi
     snapCardinals: true
@@ -692,15 +690,10 @@
     - FloorSteelTilesStatic
     - FloorWhiteTilesStatic
     - FloorMaintsTilesStatic
-    - FloorIndustrialTilesStatic
     - FloorWoodTilesStatic
     - FloorConcreteTilesStatic
     - CircuitFloorsStatic
     - FloorMarbleTilesStatic
-    - FloorShuttleTilesStatic
-    - PlasticTilesStatic
-    - CarpetTilesStatic
-    - PreciousTilesStatic
     dynamicPacks:
     - FauxTiles
   - type: MaterialStorage

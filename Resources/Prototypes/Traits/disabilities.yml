@@ -86,7 +86,7 @@
   specials:
   - !type:ApplyStatusEffectSpecial
     statusEffects:
-    - TraitStatusEffectPainNumbness
+    - PainNumbnessTraitStatusEffect
 
 - type: trait
   id: Hemophilia
@@ -96,7 +96,7 @@
   specials:
   - !type:ApplyStatusEffectSpecial
     statusEffects:
-    - TraitStatusEffectHemophilia
+    - StatusEffectHemophiliaTrait
 
 - type: trait
   id: ImpairedMobility

@@ -90,8 +90,9 @@
           tags:
           - Bottle
           - PillCanister
-  - type: Solution # Chemmaster is special in how it interacts with reagents. For now.
-    id: buffer
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
   - type: DumpableSolution
     solution: buffer
     unlimited: true

@@ -14,11 +14,11 @@ public sealed partial class ParcelWrapOverrideComponent : Component
     /// The <see cref="EntityPrototype"/> of the parcel created by wrapping this entity.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId<WrappedParcelComponent> ParcelPrototype;
+    public EntProtoId? ParcelPrototype;
 
     /// <summary>
     /// How long it takes to use this to wrap something.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public TimeSpan? WrapDelay;
 }

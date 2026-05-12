@@ -5,9 +5,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CharacterInfo;
 
-public sealed partial class CharacterInfoSystem : EntitySystem
+public sealed class CharacterInfoSystem : EntitySystem
 {
-    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
 
     public event Action<CharacterData>? OnCharacterUpdate;
 

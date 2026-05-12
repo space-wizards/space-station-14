@@ -29,9 +29,8 @@
     factions:
       - SimpleHostile
   - type: Damageable
-    damageModifierSet: HellSpawn
-  - type: Injurable
     damageContainer: BiologicalMetaphysical
+    damageModifierSet: HellSpawn
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3

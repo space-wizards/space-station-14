@@ -10,9 +10,8 @@
     sprite: Structures/Windows/uranium_window.rsi
     state: full
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:

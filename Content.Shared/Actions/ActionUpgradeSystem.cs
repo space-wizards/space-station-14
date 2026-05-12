@@ -7,10 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
-public sealed partial class ActionUpgradeSystem : EntitySystem
+public sealed class ActionUpgradeSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
-    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {

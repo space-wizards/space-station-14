@@ -14,18 +14,20 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
-public sealed partial class HitscanBasicRaycastSystem : EntitySystem
+public sealed class HitscanBasicRaycastSystem : EntitySystem
 {
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private ISharedAdminLogManager _log = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ISharedAdminLogManager _log = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    [Dependency] private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery = default!;
+    private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _visualsQuery = GetEntityQuery<HitscanBasicVisualsComponent>();
 
         SubscribeLocalEvent<HitscanBasicRaycastComponent, HitscanTraceEvent>(OnHitscanFired);
     }

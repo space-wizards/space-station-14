@@ -5,9 +5,9 @@ using Content.Shared.NameModifier.Components;
 namespace Content.Shared.NameModifier.EntitySystems;
 
 /// <inheritdoc cref="NameModifierComponent"/>
-public sealed partial class NameModifierSystem : EntitySystem
+public sealed class NameModifierSystem : EntitySystem
 {
-    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -26,10 +25,9 @@ namespace Content.Client.Damage;
 ///     of the sprite layer, and then passing in a bool value
 ///     (true to enable, false to disable).
 /// </summary>
-public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
+public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -136,7 +134,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
     private void InitializeVisualizer(EntityUid entity, DamageVisualsComponent damageVisComp)
     {
         if (!TryComp(entity, out SpriteComponent? spriteComponent)
-            || !TryComp<InjurableComponent>(entity, out var injurableComponent)
+            || !TryComp<DamageableComponent>(entity, out var damageComponent)
             || !HasComp<AppearanceComponent>(entity))
             return;
 
@@ -152,8 +150,8 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
 
         // If the damage container on our entity's DamageableComponent
         // is not null, we can try to check through its groups.
-        if (injurableComponent.DamageContainer != null
-            && _prototypeManager.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
+        if (damageComponent.DamageContainerID != null
+            && _prototypeManager.Resolve<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
         {
             // Are we using damage overlay sprites by group?
             // Check if the container matches the supported groups,
@@ -176,7 +174,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             // See if that group is in our entity's damage container.
             else if (!damageVisComp.Overlay && damageVisComp.DamageGroup != null)
             {
-                if (!damageContainer.SupportedGroups.Contains(damageVisComp.DamageGroup.Value))
+                if (!damageContainer.SupportedGroups.Contains(damageVisComp.DamageGroup))
                 {
                     Log.Error($"Damage keys were invalid for entity {entity}.");
                     damageVisComp.Valid = false;
@@ -386,7 +384,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         if (!AppearanceSystem.TryGetData<DamageVisualizerGroupData>(uid, DamageVisualizerKeys.DamageUpdateGroups,
                 out var data, component))
         {
-            data = new DamageVisualizerGroupData(_damageable.GetDamagePerGroup(uid).Keys.ToList());
+            data = new DamageVisualizerGroupData(Comp<DamageableComponent>(uid).DamagePerGroup.Keys.ToList());
         }
 
         UpdateDamageVisuals(data.GroupList, (uid, damageComponent, spriteComponent, damageVisComp));
@@ -488,10 +486,11 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
     /// </summary>
     private void UpdateDamageVisuals(Entity<DamageableComponent, SpriteComponent, DamageVisualsComponent> entity)
     {
+        var damageComponent = entity.Comp1;
         var spriteComponent = entity.Comp2;
         var damageVisComp = entity.Comp3;
 
-        if (!CheckThresholdBoundary(_damageable.GetTotalDamage(entity.AsNullable()), damageVisComp.LastDamageThreshold, damageVisComp, out var threshold))
+        if (!CheckThresholdBoundary(damageComponent.TotalDamage, damageVisComp.LastDamageThreshold, damageVisComp, out var threshold))
             return;
 
         damageVisComp.LastDamageThreshold = threshold;
@@ -514,11 +513,11 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
     ///     according to the list of damage groups
     ///     passed into it.
     /// </summary>
-    private void UpdateDamageVisuals(List<ProtoId<DamageGroupPrototype>> delta, Entity<DamageableComponent, SpriteComponent, DamageVisualsComponent> entity)
+    private void UpdateDamageVisuals(List<string> delta, Entity<DamageableComponent, SpriteComponent, DamageVisualsComponent> entity)
     {
+        var damageComponent = entity.Comp1;
         var spriteComponent = entity.Comp2;
         var damageVisComp = entity.Comp3;
-        var damage = _damageable.GetAllDamage((entity.Owner, entity.Comp1));
 
         foreach (var damageGroup in delta)
         {
@@ -526,7 +525,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
                 continue;
 
             if (!_prototypeManager.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
-                || !damage.TryGetDamageInGroup(damageGroupPrototype, out var damageTotal))
+                || !damageComponent.Damage.TryGetDamageInGroup(damageGroupPrototype, out var damageTotal))
                 continue;
 
             if (!damageVisComp.LastThresholdPerGroup.TryGetValue(damageGroup, out var lastThreshold)
@@ -559,12 +558,12 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         damageTotal = damageTotal / damageVisComp.Divisor;
         var thresholdIndex = damageVisComp.Thresholds.BinarySearch(damageTotal);
 
-        if (thresholdIndex < -1)
+        if (thresholdIndex < 0)
         {
             thresholdIndex = ~thresholdIndex;
             threshold = damageVisComp.Thresholds[thresholdIndex - 1];
         }
-        else if (thresholdIndex >= 0)
+        else
         {
             threshold = damageVisComp.Thresholds[thresholdIndex];
         }
@@ -591,7 +590,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         }
         else if (damageVisComp.DamageGroup != null)
         {
-            UpdateDamageVisuals(new() { damageVisComp.DamageGroup.Value }, entity);
+            UpdateDamageVisuals(new List<string>() { damageVisComp.DamageGroup }, entity);
         }
         else if (damageVisComp.DamageOverlay != null)
         {

@@ -11,10 +11,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Ghost.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class MakeRaffledGhostRoleCommand : IConsoleCommand
+    public sealed class MakeRaffledGhostRoleCommand : IConsoleCommand
     {
-        [Dependency] private IPrototypeManager _protoManager = default!;
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "makeghostroleraffled";
         public string Description => "Turns an entity into a raffled ghost role.";

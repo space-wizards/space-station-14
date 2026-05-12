@@ -5,12 +5,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Connection;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed partial class GrantConnectBypassCommand : LocalizedCommands
+public sealed class GrantConnectBypassCommand : LocalizedCommands
 {
     private static readonly TimeSpan DefaultDuration = TimeSpan.FromHours(1);
 
-    [Dependency] private IPlayerLocator _playerLocator = default!;
-    [Dependency] private IConnectionManager _connectionManager = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IConnectionManager _connectionManager = default!;
 
     public override string Command => "grant_connect_bypass";
 

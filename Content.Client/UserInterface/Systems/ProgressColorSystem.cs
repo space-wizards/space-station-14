@@ -7,9 +7,9 @@ namespace Content.Client.UserInterface.Systems;
 /// <summary>
 /// This system handles getting an interpolated color based on the value of a cvar.
 /// </summary>
-public sealed partial class ProgressColorSystem : EntitySystem
+public sealed class ProgressColorSystem : EntitySystem
 {
-    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
 
     private bool _colorBlindFriendly;
 

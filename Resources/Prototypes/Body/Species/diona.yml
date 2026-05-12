@@ -35,7 +35,6 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceDiona
-  categories: [ HideSpawnMenu ]
   name: diona appearance
   components:
   - type: Inventory
@@ -101,7 +100,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: Sap
-        Quantity: 600
+        Quantity: 300
   - type: Reactive
     groups:
       Flammable: [ Touch ]

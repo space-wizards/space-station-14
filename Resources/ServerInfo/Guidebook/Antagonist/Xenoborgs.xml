@@ -16,7 +16,9 @@
   ## Objectives
 
   Your main objective is to kill and harvest all sentient brains in the station and bring them to the mothership core. These can be both real brains, and positronic brains.
-  Collect materials to create more xenoborg bodies.
+  
+  Steal power from the station using xenoborg extractors to produce xenoborg crystals to create more xenoborg bodies.
+  
   Protect the Mothership at all costs.
 
   ## The Mothership Core
@@ -74,6 +76,11 @@
     <GuideEntityEmbed Entity="BorgModuleCable" Caption="cable cyborg module"/>
   </Box>
 
+  [bold]Upgrade exclusive modules:[/bold]
+  <Box>
+    <GuideEntityEmbed Entity="XenoborgModuleDoorControl" Caption="door control xenoborg module"/>
+  </Box>
+
   ### The Heavy Xenoborg
   <Box>
     <GuideEntityEmbed Entity="XenoborgHeavy" Caption=""/>
@@ -88,7 +95,7 @@
 
   [bold]Upgrade exclusive modules:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="XenoborgModuleHeavyLaser" Caption="heavy laser xenoborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleHeavyLaser" Caption="laser cannon xenoborg module"/>
   </Box>
 
   ### The Scout Xenoborg
@@ -125,19 +132,41 @@
 
   [bold]Upgrade exclusive modules:[/bold]
   <Box>
-    <GuideEntityEmbed Entity="XenoborgModuleSuperCloakDevice" Caption="cloaking device xenoborg module"/>
+    <GuideEntityEmbed Entity="XenoborgModuleSuperCloakDevice" Caption="invisibility device xenoborg module"/>
   </Box>
+
+  ## Xenoborg extractors
+  <Box>
+    <GuideEntityEmbed Entity="XenoborgExtractor" Caption="xenoborg extractor"/>
+    <GuideEntityEmbed Entity="MaterialXenoborgCrystal" Caption="xenoborg crystal"/>
+  </Box>
+  Its a machine necessary for the xenoborgs to grow their army. It can steal power from cables connected to it and then produce xenoborg crystals.
+
+  The mothership core can produce a xenoborg extractor flatpack for 10 steel.
+
+  Once its anchored on top of a cable it needs to be set to that cable voltage to start draining power.
+
+  Once it's battery is full it will produce one xenoborg crystal.
+
+  It drains different amounts of power depending on the voltage.
+  - low voltage - 16kW - 2 minutes and 5 seconds to produce one xenoborg circuit.
+  - medium voltage - 50kW - 40 seconds to produce one xenoborg circuit.
+  - high voltage - 200kW - 10 seconds to produce one xenoborg circuit.
+
+  Attention! at the highest voltage it will trigger the rogue power consuming device alert! and anyone using the power monitor device will know something is wrong.
 
   ## Preparation and Tactics
   Before FTLing near the station, make sure the IFF is off.
+
   Before launching an attack, xenoborgs should discuss strategy and decide which targets to strike first.
+
   Xenoborgs should try to collect sentient brains without being detected. The longer the threat is unknown, the more dangerous the xenoborgs become.
 
   ## Mothership and Xenoborg lawsets
   The Mothership and Xenoborgs have unique laws that define their purpose to self replicate and protect the Mothership.
 
   <Box>
-    <GuideEntityEmbed Entity="XenoborgCircuitBoard" Caption=""/>
+    <GuideEntityEmbed Entity="XenoborgLawsetCircuitBoard" Caption=""/>
   </Box>
 
   The Mothership Core's laws are as follows::

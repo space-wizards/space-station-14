@@ -17,9 +17,8 @@
         restitution: 0.3  # fite me
         friction: 0.2
   - type: Damageable
-    damageModifierSet: StrongMetallic # We only want explosions breaking them (for the most part)
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic # We only want explosions breaking them (for the most part)
   - type: Destructible
     thresholds:
     - trigger:

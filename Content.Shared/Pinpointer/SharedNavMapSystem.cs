@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pinpointer;
 
-public abstract partial class SharedNavMapSystem : EntitySystem
+public abstract class SharedNavMapSystem : EntitySystem
 {
     public const int Categories = 3;
     public const int Directions = 4; // Not directly tied to number of atmos directions
@@ -23,12 +23,11 @@ public abstract partial class SharedNavMapSystem : EntitySystem
     public const int WallMask = AllDirMask << (int) NavMapChunkType.Wall;
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
-    [Robust.Shared.IoC.Dependency] private TagSystem _tagSystem = default!;
-    [Robust.Shared.IoC.Dependency] private INetManager _net = default!;
-
-    [Robust.Shared.IoC.Dependency] private EntityQuery<NavMapDoorComponent> _doorQuery = default!;
+    [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly INetManager _net = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
+    private EntityQuery<NavMapDoorComponent> _doorQuery;
 
     public override void Initialize()
     {
@@ -37,6 +36,8 @@ public abstract partial class SharedNavMapSystem : EntitySystem
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ConfigurableNavMapBeaconComponent, ExaminedEvent>(OnConfigurableExamined);
+
+        _doorQuery = GetEntityQuery<NavMapDoorComponent>();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

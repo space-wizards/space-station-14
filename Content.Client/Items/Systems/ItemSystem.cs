@@ -10,10 +10,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Items.Systems;
 
-public sealed partial class ItemSystem : SharedItemSystem
+public sealed class ItemSystem : SharedItemSystem
 {
-    [Dependency] private IResourceCache _resCache = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

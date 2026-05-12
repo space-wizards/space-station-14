@@ -5,9 +5,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.DetailExaminable;
 
-public sealed partial class DetailExaminableSystem : EntitySystem
+public sealed class DetailExaminableSystem : EntitySystem
 {
-    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     public override void Initialize()
     {

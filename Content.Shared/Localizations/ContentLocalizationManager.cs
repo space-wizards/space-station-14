@@ -5,9 +5,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Localizations
 {
-    public sealed partial class ContentLocalizationManager
+    public sealed class ContentLocalizationManager
     {
-        [Dependency] private ILocalizationManager _loc = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";

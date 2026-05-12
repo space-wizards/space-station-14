@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
-public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
+public abstract class SharedSurveillanceCameraSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -68,11 +68,3 @@ public enum SurveillanceCameraVisuals : byte
     Xray,
     Emp
 }
-
-/// <summary>
-/// Raised on a camera entity to find whether it is externally viewed by some entity.
-/// This does not use the actual viewers or monitors camera has and is simply used to see whether the camera is "technically"
-/// being looked through by somebody, such as the Station AI.
-/// </summary>
-[ByRefEvent]
-public record struct SurveillanceCameraGetIsViewedExternallyEvent(bool Viewed = false);

@@ -10,11 +10,11 @@ using Content.Shared.Power;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public abstract partial class SharedJammerSystem : EntitySystem
+public abstract class SharedJammerSystem : EntitySystem
 {
-    [Dependency] private ItemToggleSystem _itemToggle = default!;
-    [Dependency] private SharedDeviceNetworkJammerSystem _jammer = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

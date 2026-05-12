@@ -3,9 +3,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class Sheetlet<T>
+public abstract class Sheetlet<T>
 {
-    [Dependency] protected IResourceCache ResCache = default!;
+    [Dependency] protected readonly IResourceCache ResCache = default!;
 
     protected Sheetlet()
     {

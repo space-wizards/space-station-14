@@ -22,9 +22,8 @@
     allowed:
     - Corporeal
   - type: Damageable
-    damageModifierSet: ManifestedSpirit
-  - type: Injurable
     damageContainer: ManifestedSpirit
+    damageModifierSet: ManifestedSpirit
   - type: NoSlip
   - type: Eye
     drawFov: false

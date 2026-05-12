@@ -9,10 +9,10 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed partial class LightBehaviorSystem : EntitySystem
+public sealed class LightBehaviorSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private AnimationPlayerSystem _player = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AnimationPlayerSystem _player = default!;
 
     public override void Initialize()
     {

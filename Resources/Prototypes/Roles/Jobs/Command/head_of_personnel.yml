@@ -23,6 +23,7 @@
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
+  canBeAntag: false
   access:
   - Command
   - HeadOfPersonnel

@@ -175,7 +175,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        Pair = await PoolManager.GetServerClient(Settings, new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
+        Pair = await PoolManager.GetServerClient(Settings);
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();

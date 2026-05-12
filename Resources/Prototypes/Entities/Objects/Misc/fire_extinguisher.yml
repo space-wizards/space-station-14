@@ -1,8 +1,24 @@
 - type: entity
-  abstract: true
-  parent: [SolutionSpray, BaseItem]
-  id: BaseFireExtinguisher
+  name: fire extinguisher
+  parent: BaseItem
+  id: FireExtinguisher
+  description: It extinguishes fires.
   components:
+  - type: Sprite
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    layers:
+    - state: fire_extinguisher_closed
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Item
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 100
   - type: RefillableSolution
     solution: spray
   - type: DrainableSolution
@@ -34,35 +50,6 @@
     verbToggleOn: fire-extinguisher-component-verb-remove
     verbToggleOff: fire-extinguisher-component-verb-engage
   - type: SpraySafety
-  - type: Tool
-    qualities:
-    - Rolling
-    speedModifier: 0.5 # its very big, awkward to use
-  - type: Appearance
-  - type: Tag
-    tags:
-    - FireExtinguisher
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
-          True: { state: fire_extinguisher_open }
-          False: { state: fire_extinguisher_closed }
-
-- type: entity
-  parent: [SolutionFireExtinguisher, BaseFireExtinguisher]
-  id: FireExtinguisher
-  name: fire extinguisher
-  description: It extinguishes fires.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/fire_extinguisher.rsi
-    layers:
-    - state: fire_extinguisher_closed
-      map: [ "enum.ToggleableVisuals.Layer" ]
-  - type: Item
-    sprite: Objects/Misc/fire_extinguisher.rsi
-    size: Normal
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
@@ -70,37 +57,37 @@
         Blunt: 10
     soundHit:
       path: /Audio/Weapons/smash.ogg
+  - type: Tool
+    qualities:
+    - Rolling
+    speedModifier: 0.5 # its very big, awkward to use
+  - type: Appearance
+  - type: Tag
+    tags:
+      - FireExtinguisher
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { state: fire_extinguisher_open }
+          False: { state: fire_extinguisher_closed }
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
 
 - type: entity
-  parent: [SolutionSpray, SolutionNormal]
-  id: SolutionFireExtinguisher
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 120
-
-- type: entity
-  parent: [SolutionFireExtinguisherLarge, FireExtinguisher]
+  parent: FireExtinguisher
   id: BorgFireExtinguisher
   name: maneuvering jet
   description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
-
-- type: entity
-  parent: [SolutionSpray, SolutionLarge]
-  id: SolutionFireExtinguisherLarge
-  categories: [ HideSpawnMenu ]
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 240
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: Water
+          Quantity: 200
 
 - type: entity
   name: extinguisher spray
@@ -122,7 +109,7 @@
 
 - type: entity
   name: pocket fire extinguisher
-  parent: [SolutionFireExtinguisherMini, BaseFireExtinguisher]
+  parent: FireExtinguisher
   id: FireExtinguisherMini
   description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
   components:
@@ -134,6 +121,13 @@
   - type: Item
     sprite: Objects/Misc/fire_extinguisher_mini.rsi
     size: Small
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
@@ -146,17 +140,6 @@
       Steel: 50
       Glass: 40
 
-- type: entity
-  parent: [SolutionSpray, SolutionSmall]
-  id: SolutionFireExtinguisherMini
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 60
-
 # used for a engi xenoborg module
 - type: entity
   parent: [ FireExtinguisher, BaseXenoborgContraband ]
@@ -165,6 +148,7 @@
   description: It extinguishes fires. it slowly refills with water.
   components:
   - type: SolutionRegeneration
+    solution: spray
     generated:
       reagents:
       - ReagentId: Water

@@ -6,12 +6,12 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.GameTicking.Managers;
 
-public sealed partial class TitleWindowManager
+public sealed class TitleWindowManager
 {
-    [Dependency] private IBaseClient _client = default!;
-    [Dependency] private IClyde _clyde = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IGameController _gameController = default!;
+    [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameController _gameController = default!;
 
     public void Initialize()
     {

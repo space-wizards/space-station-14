@@ -16,7 +16,6 @@
   - type: Stack
     count: 1
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -1659,7 +1658,7 @@
     - Plating
     - FloorMowedAstroGrass
   - type: Stack
-    stackType: FloorTileMowedAstroGrass
+    stackType: FloorTileAstroGrass
 
 - type: entity
   id: FloorTileItemJungleAstroGrass
@@ -1676,7 +1675,7 @@
     - Plating
     - FloorJungleAstroGrass
   - type: Stack
-    stackType: FloorTileJungleAstroGrass
+    stackType: FloorTileAstroGrass
 
 - type: entity
   parent: FloorTileItemBase

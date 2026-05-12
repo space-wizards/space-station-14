@@ -7,9 +7,8 @@
   components:
   - type: Animateable
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:

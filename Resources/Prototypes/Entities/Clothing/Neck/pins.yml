@@ -263,7 +263,7 @@
     equippedPrefix: goldautism
 
 - type: entity
-  parent: [SolutionSpray, SolutionTiny, BaseItem]
+  parent: BaseItem
   id: SprayFlowerPin
   name: flower pin
   description: A cute flower pin. Something seems off with it...
@@ -281,11 +281,13 @@
     - neck
   - type: EquipSpray
     verbLocId: equip-spray-verb-press
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
   - type: RefillableSolution
     solution: spray
   - type: DrainableSolution

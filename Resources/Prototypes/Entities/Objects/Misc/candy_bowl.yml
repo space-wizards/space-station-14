@@ -21,7 +21,6 @@
     containers:
       bin-container: !type:Container
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: DamageOnLand
     damage:

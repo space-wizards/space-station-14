@@ -76,7 +76,6 @@ namespace Content.Server.GameTicking
 #if EXCEPTION_TOLERANCE
             Subs.CVar(_cfg, CCVars.RoundStartFailShutdownCount, value => RoundStartFailShutdownCount = value, true);
 #endif
-            Subs.CVar(_cfg, CCVars.GameTickerIgnoredPresets, value => _ignoredRules = value.Split(","));
         }
     }
 }

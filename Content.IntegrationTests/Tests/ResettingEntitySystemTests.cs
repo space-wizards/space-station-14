@@ -1,5 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
@@ -8,7 +7,7 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(RoundRestartCleanupEvent))]
-    public sealed class ResettingEntitySystemTests : GameTest
+    public sealed class ResettingEntitySystemTests
     {
         public sealed class TestRoundRestartCleanupEvent : EntitySystem
         {
@@ -27,17 +26,15 @@ namespace Content.IntegrationTests.Tests
             }
         }
 
-        public override PoolSettings PoolSettings => new PoolSettings
-        {
-            DummyTicker = false,
-            Connected = true,
-            Dirty = true
-        };
-
         [Test]
         public async Task ResettingEntitySystemResetTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                DummyTicker = false,
+                Connected = true,
+                Dirty = true
+            });
             var server = pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
@@ -55,6 +52,7 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(system.HasBeenReset);
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

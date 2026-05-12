@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -10,57 +9,86 @@ namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
-    [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IPrototypeManager Proto = default!;
-    [Dependency] protected IRobustRandom RobustRandom = default!;
-    [Dependency] protected GameTicker GameTicker = default!;
+    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
+    [Dependency] protected readonly IChatManager ChatManager = default!;
+    [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
     // Not protected, just to be used in utility methods
-    [Dependency] private AtmosphereSystem _atmosphere = default!;
-    [Dependency] private MapSystem _map = default!;
-
-    [Dependency] protected EntityQuery<GameRuleComponent> GameRuleQuery = default!;
-    [Dependency] protected EntityQuery<T> RuleQuery = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
-    private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
+    private void OnStartAttempt(RoundStartAttemptEvent args)
     {
-        if (!GameRuleQuery.TryComp(uid, out var ruleData))
+        if (args.Forced || args.Cancelled)
             return;
 
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out _, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            var name = ToPrettyString(uid);
+
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            if (gameRule.CancelPresetOnTooFewPlayers)
+            {
+                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                    ("readyPlayersCount", args.Players.Length),
+                    ("minimumPlayers", minPlayers),
+                    ("presetName", name)));
+                args.Cancel();
+                //TODO remove this once announcements are logged
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
+            }
+            else
+            {
+                ForceEndSelf(uid, gameRule);
+            }
+        }
+    }
+
+    private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
+    {
+        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+            return;
         Added(uid, component, ruleData, args);
     }
 
     private void OnGameRuleStarted(EntityUid uid, T component, ref GameRuleStartedEvent args)
     {
-        if (!GameRuleQuery.TryComp(uid, out var ruleData))
+        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
             return;
-
         Started(uid, component, ruleData, args);
     }
 
     private void OnGameRuleEnded(EntityUid uid, T component, ref GameRuleEndedEvent args)
     {
-        if (!GameRuleQuery.TryComp(uid, out var ruleData))
+        if (!TryComp<GameRuleComponent>(uid, out var ruleData))
             return;
-
         Ended(uid, component, ruleData, args);
     }
 
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
     {
-        var query = QueryAllRules();
-        while (query.MoveNext(out var uid, out var comp, out var ruleData))
+        var query = AllEntityQuery<T>();
+        while (query.MoveNext(out var uid, out var comp))
         {
+            if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+                continue;
+
             AppendRoundEndText(uid, comp, ruleData, ref ev);
         }
     }

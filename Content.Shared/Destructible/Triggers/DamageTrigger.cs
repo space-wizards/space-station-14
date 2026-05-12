@@ -20,6 +20,6 @@ public sealed partial class DamageTrigger : IThresholdTrigger
 
     public bool Reached(Entity<DamageableComponent> damageable, SharedDestructibleSystem system)
     {
-        return system.Damageable.GetTotalDamage(damageable.AsNullable()) >= Damage;
+        return damageable.Comp.TotalDamage >= Damage;
     }
 }

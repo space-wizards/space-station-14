@@ -4,10 +4,10 @@ using Content.Shared.Gravity;
 
 namespace Content.Server.Gravity;
 
-public sealed partial class GravityGeneratorSystem : SharedGravityGeneratorSystem
+public sealed class GravityGeneratorSystem : SharedGravityGeneratorSystem
 {
-    [Dependency] private GravitySystem _gravitySystem = default!;
-    [Dependency] private SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly GravitySystem _gravitySystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
     public override void Initialize()
     {

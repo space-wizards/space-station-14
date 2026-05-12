@@ -1,6 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
@@ -27,7 +26,7 @@ namespace Content.IntegrationTests.Tests;
 /// create them.
 /// </summary>
 [TestFixture]
-public sealed class MaterialArbitrageTest : GameTest
+public sealed class MaterialArbitrageTest
 {
     // These sets are for selectively excluding recipes from arbitrage.
     // You should NOT be adding to these. They exist here for downstreams and potential future issues.
@@ -37,7 +36,7 @@ public sealed class MaterialArbitrageTest : GameTest
     [Test]
     public async Task NoMaterialArbitrage()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var testMap = await pair.CreateTestMap();
@@ -440,6 +439,7 @@ public sealed class MaterialArbitrageTest : GameTest
         });
 
         await server.WaitPost(() => mapSystem.DeleteMap(testMap.MapId));
+        await pair.CleanReturnAsync();
 
         async Task<double> GetSpawnedPrice(Dictionary<string, float> ents)
         {

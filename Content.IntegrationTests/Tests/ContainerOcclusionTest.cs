@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
-    public sealed class ContainerOcclusionTest : GameTest
+    public sealed class ContainerOcclusionTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -35,7 +34,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pair.Server;
             var client = pair.Client;
 
@@ -70,12 +69,14 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(light.ContainerOccluded);
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestB()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pair.Server;
             var client = pair.Client;
 
@@ -111,12 +112,14 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(light.ContainerOccluded, Is.False);
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestAb()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pair.Server;
             var client = pair.Client;
 
@@ -154,6 +157,8 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(light.ContainerOccluded);
                 });
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

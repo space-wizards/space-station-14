@@ -5,9 +5,9 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed partial class LightFadeSystem : EntitySystem
+public sealed class LightFadeSystem : EntitySystem
 {
-    [Dependency] private AnimationPlayerSystem _player = default!;
+    [Dependency] private readonly AnimationPlayerSystem _player = default!;
 
     private const string FadeTrack = "light-fade";
 

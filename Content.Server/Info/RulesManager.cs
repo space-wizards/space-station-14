@@ -10,13 +10,13 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Info;
 
-public sealed partial class RulesManager
+public sealed class RulesManager
 {
-    [Dependency] private IServerDbManager _dbManager = default!;
-    [Dependency] private INetManager _netManager = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IAdminLogManager _adminLog = default!;
-    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     private static DateTime LastValidReadTime => DateTime.UtcNow - TimeSpan.FromDays(60);
 

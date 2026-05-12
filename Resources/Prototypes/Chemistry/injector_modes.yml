@@ -48,8 +48,7 @@
   - 5
   - 10
   - 15
-  - 30
-  - 60
+  - 50
 
 - type: injectorMode
   parent: [ BaseSyringeMode, BaseInjectMode ]
@@ -66,6 +65,14 @@
 - type: injectorMode
   parent: [ BaseBluespaceSyringeMode, BaseDrawMode ]
   id: BluespaceSyringeDrawMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseInjectMode ]
+  id: CryostasisSyringeInjectMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseDrawMode ]
+  id: CryostasisSyringeDrawMode
 
 ## Dropper
 - type: injectorMode

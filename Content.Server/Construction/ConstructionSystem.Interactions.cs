@@ -26,9 +26,9 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 #if EXCEPTION_TOLERANCE
-        [Dependency] private IRuntimeLog _runtimeLog = default!;
+        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
 
         private readonly Queue<EntityUid> _constructionUpdateQueue = new();

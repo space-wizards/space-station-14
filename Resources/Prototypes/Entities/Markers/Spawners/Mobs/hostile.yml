@@ -138,16 +138,15 @@
     - state: green
     - state: quartz_crab
       sprite: Mobs/Elemental/orecrab.rsi
-  - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      - id: MobSpawnCrabUranium
-      - id: MobSpawnCrabIron
-      - id: MobSpawnCrabQuartz
-      - id: MobSpawnCrabSilver
-      - id: MobSpawnCrabCoal
-      - id: MobSpawnCrabGold
-      - id: MobSpawnCrabBananium
+  - type: RandomSpawner
+    prototypes:
+    - MobSpawnCrabUranium
+    - MobSpawnCrabIron
+    - MobSpawnCrabQuartz
+    - MobSpawnCrabSilver
+    - MobSpawnCrabCoal
+    - MobSpawnCrabGold
+    - MobSpawnCrabBananium
 
 - type: entity
   parent: MarkerBase

@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -8,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Storage;
 
 [TestFixture]
-public sealed class EntityStorageTests : GameTest
+public sealed class EntityStorageTests
 {
     [TestPrototypes]
     private const string Prototypes = @"
@@ -18,7 +17,6 @@ public sealed class EntityStorageTests : GameTest
   components:
   - type: EntityStorage
   - type: Damageable
-  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -33,7 +31,7 @@ public sealed class EntityStorageTests : GameTest
     [Test]
     public async Task TestContainerDestruction()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var map = await pair.CreateTestMap();
 
@@ -78,5 +76,7 @@ public sealed class EntityStorageTests : GameTest
         await server.WaitRunTicks(5);
         Assert.That(server.EntMan.Deleted(box));
         Assert.That(server.EntMan.Deleted(crowbar), Is.False);
+
+        await pair.CleanReturnAsync();
     }
 }

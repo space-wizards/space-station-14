@@ -5,11 +5,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Whitelist;
 
-public sealed partial class EntityWhitelistSystem : EntitySystem
+public sealed class EntityWhitelistSystem : EntitySystem
 {
-    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
+    private EntityQuery<ItemComponent> _itemQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _itemQuery = GetEntityQuery<ItemComponent>();
+    }
 
     /// <inheritdoc cref="IsValid(Content.Shared.Whitelist.EntityWhitelist,Robust.Shared.GameObjects.EntityUid)"/>
     public bool IsValid(EntityWhitelist list, [NotNullWhen(true)] EntityUid? uid)

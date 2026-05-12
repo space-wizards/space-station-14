@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -11,7 +10,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSystem<TemperatureComponent, AdjustTemperature>
 {
-    [Dependency] private SharedTemperatureSystem _temperature = default!;
+    [Dependency] private readonly SharedTemperatureSystem _temperature = default!;
     protected override void Effect(Entity<TemperatureComponent> entity, ref EntityEffectEvent<AdjustTemperature> args)
     {
         var amount = args.Effect.Amount * args.Scale;
@@ -28,10 +27,4 @@ public sealed partial class AdjustTemperature : EntityEffectBase<AdjustTemperatu
     /// </summary>
     [DataField]
     public float Amount;
-
-    public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("entity-effect-guidebook-adjust-temperature",
-            ("chance", Probability),
-            ("deltasign", MathF.Sign(Amount)),
-            ("amount", Amount));
 }

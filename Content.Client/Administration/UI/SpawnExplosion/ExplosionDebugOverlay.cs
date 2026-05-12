@@ -11,10 +11,10 @@ using Robust.Shared.Map.Components;
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
 [UsedImplicitly]
-public sealed partial class ExplosionDebugOverlay : Overlay
+public sealed class ExplosionDebugOverlay : Overlay
 {
-    [Dependency] private IEntityManager _entityManager = default!;
-    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
     public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();

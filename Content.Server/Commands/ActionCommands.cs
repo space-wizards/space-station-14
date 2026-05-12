@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-internal sealed partial class UpgradeActionCommand : IConsoleCommand
+internal sealed class UpgradeActionCommand : IConsoleCommand
 {
-    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
 
     public string Command => "upgradeaction";
     public string Description => Loc.GetString("upgradeaction-command-description");

@@ -2,17 +2,19 @@
 # Base
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodInjectableBase]
+  parent: FoodInjectableBase
   id: FoodFrozenBase
   abstract: true
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20 # For sprinkles or something? Idk.
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 # Ice-cream
 
@@ -68,13 +70,15 @@
     storedRotation: -45
   - type: Sprite
     state: cornuto
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Theobromine
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 1
 
 # Popsicle
 
@@ -131,13 +135,15 @@
   - type: Edible
     trash:
     - FoodFrozenPopsicleTrash
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Theobromine
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 1
 
 # Snowcone
 
@@ -160,15 +166,17 @@
     - type: Edible
       trash:
       - FoodFrozenSnowconeTrash
-    - type: Solution
-      solution:
-        reagents:
-          - ReagentId: Ice
-            Quantity: 8
-          - ReagentId: Water
-            Quantity: 2
-          - ReagentId: Sugar
-            Quantity: 2
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20 # For sprinkles or something? Idk.
+          reagents:
+            - ReagentId: Ice
+              Quantity: 8
+            - ReagentId: Water
+              Quantity: 2
+            - ReagentId: Sugar
+              Quantity: 2
 
 - type: entity
   name: flavorless snowcone
@@ -176,11 +184,13 @@
   id: FoodFrozenSnowcone
   description: It's just shaved ice. Still fun to chew on.
   components:
-  - type: Solution
-    solution:
-      reagents:
-        - ReagentId: Ice
-          Quantity: 8
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+          - ReagentId: Ice
+            Quantity: 8
 
 - type: entity
   name: berry snowcone

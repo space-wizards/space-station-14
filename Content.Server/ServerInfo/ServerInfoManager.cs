@@ -8,7 +8,7 @@ namespace Content.Server.ServerInfo;
 /// <summary>
 /// Adds additional data like info links to the server info endpoint
 /// </summary>
-public sealed partial class ServerInfoManager
+public sealed class ServerInfoManager
 {
     private static readonly (CVarDef<string> cVar, string icon, string name)[] Vars =
     {
@@ -22,9 +22,9 @@ public sealed partial class ServerInfoManager
         // @formatter:on
     };
 
-    [Dependency] private IStatusHost _statusHost = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private readonly IStatusHost _statusHost = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     public void Initialize()
     {

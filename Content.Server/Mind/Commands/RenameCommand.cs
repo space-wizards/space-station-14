@@ -9,12 +9,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
-public sealed partial class RenameCommand : LocalizedEntityCommands
+public sealed class RenameCommand : LocalizedEntityCommands
 {
-    [Dependency] private IConfigurationManager _cfgManager = default!;
-    [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
     public override string Command => "rename";
 

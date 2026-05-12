@@ -84,9 +84,8 @@
     graph: AirAlarm
     node: air_alarm
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
       - trigger:

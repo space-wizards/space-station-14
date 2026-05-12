@@ -12,16 +12,18 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
-    [Dependency] private EntityQuery<UtensilComponent> _utensilsQuery = default!;
+    private EntityQuery<UtensilComponent> _utensilsQuery;
 
     public void InitializeUtensils()
     {
         SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ToolOpenableSystem) });
 
         SubscribeLocalEvent<EdibleComponent, GetUtensilsEvent>(OnGetEdibleUtensils);
+
+        _utensilsQuery = GetEntityQuery<UtensilComponent>();
     }
 
     /// <summary>

@@ -79,9 +79,12 @@
     damage:
       types:
         Piercing: 2
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionVenomTick
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
   - type: ReplacementAccent
@@ -89,18 +92,6 @@
   - type: Speech
     speechVerb: SmallMob
   - type: NonSpreaderZombie
-
-- type: entity
-  parent: Solution
-  id: SolutionVenomTick
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    id: melee
-    solution:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 5
 
 - type: entity
   id: MobTickSalvage

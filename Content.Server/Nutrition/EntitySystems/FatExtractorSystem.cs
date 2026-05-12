@@ -18,13 +18,13 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// <summary>
 /// This handles logic and interactions relating to <see cref="FatExtractorComponent"/>
 /// </summary>
-public sealed partial class FatExtractorSystem : EntitySystem
+public sealed class FatExtractorSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private HungerSystem _hunger = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

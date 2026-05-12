@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
@@ -10,14 +9,12 @@ namespace Content.IntegrationTests.Tests.GameRules
 {
     [TestFixture]
     [TestOf(typeof(MaxTimeRestartRuleSystem))]
-    public sealed class RuleMaxTimeRestartTest : GameTest
+    public sealed class RuleMaxTimeRestartTest
     {
-        public override PoolSettings PoolSettings => new() { InLobby = true };
-
         [Test]
         public async Task RestartTest()
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
             var server = pair.Server;
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.Zero);
@@ -67,6 +64,8 @@ namespace Content.IntegrationTests.Tests.GameRules
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

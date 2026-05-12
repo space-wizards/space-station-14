@@ -88,8 +88,6 @@
   considerations:
     - !type:TargetIsAliveCon
       curve: !type:BoolCurve
-    - !type:TargetIsVisibleCon
-      curve: !type:BoolCurve
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance

@@ -52,9 +52,8 @@
 
   # Damage
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: PacifismDangerousAttack
 
   # Guidebook

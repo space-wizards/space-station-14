@@ -1,10 +1,9 @@
-using Content.IntegrationTests.Fixtures;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Localization;
 
-public sealed class EntityPrototypeLocalizationTest : GameTest
+public sealed class EntityPrototypeLocalizationTest
 {
     /// <summary>
     /// An explanation of why LocIds should not be used for entity prototype names/descriptions.
@@ -19,7 +18,7 @@ public sealed class EntityPrototypeLocalizationTest : GameTest
     [Test]
     public async Task TestNoManualEntityLocStrings()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var protoMan = server.ProtoMan;
         var locMan = server.ResolveDependency<ILocalizationManager>();
@@ -45,5 +44,7 @@ public sealed class EntityPrototypeLocalizationTest : GameTest
                 }
             }
         });
+
+        await pair.CleanReturnAsync();
     }
 }

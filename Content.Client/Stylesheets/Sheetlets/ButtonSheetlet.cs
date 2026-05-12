@@ -103,19 +103,10 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         string? styleclass)
     {
         rules.AddRange([
-            CButton()
-                .MaybeClass(styleclass)
-                .PseudoNormal()
-                .Prop(Control.StylePropertyModulateSelf, palette.Element),
-            CButton()
-                .MaybeClass(styleclass)
-                .PseudoHovered()
-                .Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
-            CButton()
-                .MaybeClass(styleclass)
-                .PseudoPressed()
-                .Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
-            CButton()
+            E().MaybeClass(styleclass).PseudoNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
+            E().MaybeClass(styleclass).PseudoHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
+            E().MaybeClass(styleclass).PseudoPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
+            E()
                 .MaybeClass(styleclass)
                 .PseudoDisabled()
                 .Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),

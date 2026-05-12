@@ -9,11 +9,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Rotting;
 
-public abstract partial class SharedRottingSystem : EntitySystem
+public abstract class SharedRottingSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public const int MaxStages = 3;
 

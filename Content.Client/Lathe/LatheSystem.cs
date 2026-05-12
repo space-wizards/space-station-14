@@ -6,10 +6,10 @@ using Content.Shared.Research.Prototypes;
 
 namespace Content.Client.Lathe;
 
-public sealed partial class LatheSystem : SharedLatheSystem
+public sealed class LatheSystem : SharedLatheSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

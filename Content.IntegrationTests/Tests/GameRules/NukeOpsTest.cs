@@ -1,7 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
@@ -12,7 +11,6 @@ using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -31,19 +29,10 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class NukeOpsTest : GameTest
+public sealed class NukeOpsTest
 {
     private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
     private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
-
-    public override PoolSettings PoolSettings => new()
-    {
-        Dirty = true,
-        DummyTicker = false,
-        Connected = true,
-        InLobby = true
-    };
-
 
     /// <summary>
     /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
@@ -51,7 +40,13 @@ public sealed class NukeOpsTest : GameTest
     [Test]
     public async Task TryStopNukeOpsFromConstantlyFailing()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true,
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true
+        });
 
         var server = pair.Server;
         var client = pair.Client;
@@ -63,7 +58,6 @@ public sealed class NukeOpsTest : GameTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
         var roundEndSys = server.System<RoundEndSystem>();
-        var damageSys = server.System<DamageableSystem>();
 
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
@@ -237,11 +231,12 @@ public sealed class NukeOpsTest : GameTest
             var totalSeconds = 30;
             var totalTicks = (int)Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
             var increment = 5;
+            var damage = entMan.GetComponent<DamageableComponent>(player);
             for (var tick = 0; tick < totalTicks; tick += increment)
             {
                 await pair.RunTicksSync(increment);
                 Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
-                Assert.That(damageSys.GetTotalDamage(player), Is.EqualTo(FixedPoint2.Zero));
+                Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
             }
         }
 
@@ -264,5 +259,6 @@ public sealed class NukeOpsTest : GameTest
         });
 
         ticker.SetGamePreset((GamePresetPrototype?) null);
+        await pair.CleanReturnAsync();
     }
 }

@@ -33,16 +33,15 @@ public sealed partial class BorgModuleComponent : Component
     /// This only affects examine text. The actual whitelist for modules that can be inserted into a borg is defined in its <see cref="BorgChassisComponent"/>.
     /// </summary>
     [DataField]
-    public List<LocId>? BorgFitTypes;
+    public HashSet<LocId>? BorgFitTypes;
 }
 
 /// <summary>
-/// Raised on a chassis and module before a module is inserted into it.
+/// Raised on a chassis before a module is inserted into it.
 /// </summary>
 /// <param name="ModuleEnt">The module being added.</param>
-/// <param name="ChassisEnt">The chassis being added to.</param>
 [ByRefEvent]
-public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, EntityUid ChassisEnt, bool Cancelled = false, string? Reason = null);
+public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, bool Cancelled = false, string? Reason = null);
 
 /// <summary>
 /// Raised on a module when it is installed in order to add specific behavior to an entity.
@@ -52,7 +51,7 @@ public record struct BorgModuleInsertAttemptEvent(EntityUid ModuleEnt, EntityUid
 public readonly record struct BorgModuleInstalledEvent(EntityUid ChassisEnt);
 
 /// <summary>
-/// Raised on a module when it is uninstalled
+/// Raised on a module when it's uninstalled in order to
 /// </summary>
 /// <param name="ChassisEnt">The borg the module is being uninstalled from.</param>
 [ByRefEvent]

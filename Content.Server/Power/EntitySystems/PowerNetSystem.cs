@@ -18,13 +18,13 @@ namespace Content.Server.Power.EntitySystems
     ///     Manages power networks, power state, and all power components.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class PowerNetSystem : SharedPowerNetSystem
+    public sealed class PowerNetSystem : SharedPowerNetSystem
     {
-        [Dependency] private AppearanceSystem _appearance = default!;
-        [Dependency] private PowerNetConnectorSystem _powerNetConnector = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private IParallelManager _parMan = default!;
-        [Dependency] private BatterySystem _battery = default!;
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly BatterySystem _battery = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
@@ -57,6 +57,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
 
+            SubscribeLocalEvent<PowerConsumerComponent, MapInitEvent>(PowerConsumerMapInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
             SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
@@ -130,6 +131,11 @@ namespace Content.Server.Power.EntitySystems
         private static void BatteryUnpaused(EntityUid uid, PowerNetworkBatteryComponent component, ref EntityUnpausedEvent args)
         {
             component.NetworkBattery.Paused = false;
+        }
+
+        private void PowerConsumerMapInit(EntityUid uid, PowerConsumerComponent component, ref MapInitEvent args)
+        {
+            _appearance.SetData(uid, PowerDeviceVisuals.Powered, component.ReceivedPower > 0);
         }
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
@@ -414,6 +420,8 @@ namespace Content.Server.Power.EntitySystems
                 lastRecv = newRecv;
                 var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
                 RaiseLocalEvent(uid, ref msg);
+
+                _appearance.SetData(uid, PowerDeviceVisuals.Powered, newRecv > 0);
             }
         }
 

@@ -1,6 +1,5 @@
 #nullable enable
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Objectives;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Commands;
 
-public sealed class ObjectiveCommandsTest : GameTest
+public sealed class ObjectiveCommandsTest
 {
 
     private const string ObjectiveProtoId = "MindCommandsTestObjective";
@@ -28,11 +27,6 @@ public sealed class ObjectiveCommandsTest : GameTest
   - type: DieCondition
 """;
 
-    public override PoolSettings PoolSettings => new ()
-    {
-        Connected = false
-    };
-
     /// <summary>
     /// Creates a dummy session, and assigns it a mind, then
     /// tests using <c>addobjective</c>, <c>lsobjectives</c>,
@@ -41,7 +35,7 @@ public sealed class ObjectiveCommandsTest : GameTest
     [Test]
     public async Task AddListRemoveObjectiveTest()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var entMan = server.EntMan;
         var playerMan = server.ResolveDependency<ISharedPlayerManager>();
@@ -72,5 +66,7 @@ public sealed class ObjectiveCommandsTest : GameTest
         await pair.WaitCommand($"rmobjective {playerSession.Name} 0");
 
         Assert.That(mindComp.Objectives, Is.Empty, "rmobjective failed to remove objective");
+
+        await pair.CleanReturnAsync();
     }
 }

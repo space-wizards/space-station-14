@@ -3,9 +3,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.NPC;
 
-public sealed partial class ShowHtnCommand : LocalizedEntityCommands
+public sealed class ShowHtnCommand : LocalizedEntityCommands
 {
-    [Dependency] private HTNSystem _htnSystem = default!;
+    [Dependency] private readonly HTNSystem _htnSystem = default!;
 
     public override string Command => "showhtn";
 

@@ -30,26 +30,29 @@ namespace Content.Shared.Rootable;
 /// Adds an action to toggle rooting to the ground, primarily for the Diona species.
 /// Being rooted prevents weighlessness and slipping, but causes any floor contents to transfer its reagents to the bloodstream.
 /// </summary>
-public sealed partial class RootableSystem : EntitySystem
+public sealed class RootableSystem : EntitySystem
 {
-    [Dependency] private AlertsSystem _alerts = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedAdminLogManager _logger = default!;
-    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private ReactiveSystem _reactive = default!;
-    [Dependency] private SharedActionsSystem _actions = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedBloodstreamSystem _blood = default!;
-    [Dependency] private SharedGravitySystem _gravity = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _blood = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
-    [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
-    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    private EntityQuery<PuddleComponent> _puddleQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _puddleQuery = GetEntityQuery<PuddleComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RootableComponent, MapInitEvent>(OnRootableMapInit);
         SubscribeLocalEvent<RootableComponent, ComponentShutdown>(OnRootableShutdown);
@@ -118,15 +121,12 @@ public sealed partial class RootableSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
-        var cloneComp = Factory.GetComponent<RootableComponent>();
-        cloneComp.Action = ent.Comp.Action;
-        cloneComp.RootedAlert = ent.Comp.RootedAlert;
+        var cloneComp = EnsureComp<RootableComponent>(args.CloneUid);
         cloneComp.TransferRate = ent.Comp.TransferRate;
         cloneComp.TransferFrequency = ent.Comp.TransferFrequency;
         cloneComp.SpeedModifier = ent.Comp.SpeedModifier;
         cloneComp.RootSound = ent.Comp.RootSound;
-        AddComp(args.CloneUid, cloneComp, true);
+        Dirty(args.CloneUid, cloneComp);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> ent, ref MapInitEvent args)

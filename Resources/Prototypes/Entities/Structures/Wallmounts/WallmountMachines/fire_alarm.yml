@@ -82,9 +82,8 @@
     graph: FireAlarm
     node: fire_alarm
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: GuideHelp
     guides:
     - Networking

@@ -1,18 +1,20 @@
 # Base
 
 - type: entity
-  parent: [SolutionTiny, FoodInjectableBase]
+  parent: FoodInjectableBase
   id: FoodDonkpocketBase
   abstract: true
   components:
   - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
   - type: Item
     size: Tiny
   - type: Tag
@@ -40,21 +42,8 @@
     state: plain
 
 - type: entity
-  parent: [SolutionFood, SolutionTiny]
-  id: SolutionFoodDonkpocketWarm
-  categories: [ HideSpawnMenu ] # Needed for a very specific lighter so can't be abstract
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 12
-      - ReagentId: Omnizine
-        Quantity: 3
-
-- type: entity
   name: warm donk-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocket]
+  parent: FoodDonkpocket
   id: FoodDonkpocketWarm
   description: The heated food of choice for the seasoned traitor.
   components:
@@ -63,6 +52,15 @@
       - bread
       - meaty
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: dank-pocket
@@ -74,12 +72,18 @@
     flavors:
       - leafy
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     state: dank
 
 - type: entity
   name: warm dank-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketDank]
+  parent: FoodDonkpocketDank
   id: FoodDonkpocketDankWarm
   description: The heated food of choice for the seasoned botanist.
   components:
@@ -87,6 +91,14 @@
     flavors:
       - leafy
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 4
 
 - type: entity
   name: spicy-pocket
@@ -104,7 +116,7 @@
 
 - type: entity
   name: warm spicy-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketSpicy]
+  parent: FoodDonkpocketSpicy
   id: FoodDonkpocketSpicyWarm
   description: The classic snack food, now maybe a bit too spicy.
   components:
@@ -113,6 +125,14 @@
       - spicy
       - meaty
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
   - type: Sprite
     state: spicy
 
@@ -132,7 +152,7 @@
 
 - type: entity
   name: warm teriyaki-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketTeriyaki]
+  parent: FoodDonkpocketTeriyaki
   id: FoodDonkpocketTeriyakiWarm
   description: An East Asian take on the classic stationside snack, now steamy and warm.
   components:
@@ -141,6 +161,14 @@
       - meaty
       - sweet
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: pizza-pocket
@@ -154,12 +182,18 @@
       - cheesy
       - tomato
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
   - type: Sprite
     state: pizza
 
 - type: entity
   name: warm pizza-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketPizza]
+  parent: FoodDonkpocketPizza
   id: FoodDonkpocketPizzaWarm
   description: Cheese filling really hits the spot when warm.
   components:
@@ -169,6 +203,14 @@
       - cheesy
       - tomato
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: honk-pocket
@@ -180,19 +222,20 @@
     flavors:
       - funny
       - cheap
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 8
-      - ReagentId: Honk
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Honk
+          Quantity: 0.50
   - type: Sprite
     state: banana
 
 - type: entity
   name: warm honk-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketHonk]
+  parent: FoodDonkpocketHonk
   id: FoodDonkpocketHonkWarm
   description: The award-winning donk-pocket, now warm and toasty.
   components:
@@ -200,15 +243,16 @@
     flavors:
       - funny
       - cheap
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Honk
-        Quantity: 2
-      - ReagentId: Omnizine
-        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Honk
+          Quantity: 1
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: berry-pocket
@@ -220,12 +264,18 @@
     flavors:
       - sweet
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     state: berry
 
 - type: entity
   name: warm berry-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketBerry]
+  parent: FoodDonkpocketBerry
   id: FoodDonkpocketBerryWarm
   description: A relentlessly sweet donk-pocket, now warm and delicious.
   components:
@@ -233,15 +283,16 @@
     flavors:
       - sweet
       - cheap
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Omnizine
-        Quantity: 3
-      - ReagentId: JuiceBerry
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
+        - ReagentId: Sugar
+          Quantity: 2
 
 - type: entity
   name: stonk-pocket
@@ -253,18 +304,32 @@
     flavors:
       - profits
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     state: stonk
 
 - type: entity
   name: warm stonk-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketStonk]
+  parent: FoodDonkpocketStonk
   id: FoodDonkpocketStonkWarm
   components:
   - type: FlavorProfile
     flavors:
       - profits
       - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: carp-pocket
@@ -276,18 +341,32 @@
     flavors:
     - cheap
     - fishops
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     state: carp
 
 - type: entity
   name: warm carp-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketCarp]
+  parent: FoodDonkpocketCarp
   id: FoodDonkpocketCarpWarm
   components:
   - type: FlavorProfile
     flavors:
     - cheap
     - fishops
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 2
 
 - type: entity
   name: dink-pocket
@@ -299,15 +378,14 @@
     flavors:
       - cold
       - cheap
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 2
-      - ReagentId: JuiceCarrot
-        Quantity: 1
-      - ReagentId: Cellulose
-        Quantity: 7
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: JuiceCarrot
+          Quantity: 1
   - type: Sprite
     state: dink
 
@@ -321,13 +399,14 @@
     flavors:
     - cotton
     - cheap
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
-      - ReagentId: Fiber
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 5
   - type: Sprite
     state: moth
   - type: Edible
@@ -339,15 +418,16 @@
 
 - type: entity
   name: warm moth-pocket
-  parent: [SolutionFoodDonkpocketWarm, FoodDonkpocketMoth]
+  parent: FoodDonkpocketMoth
   id: FoodDonkpocketMothWarm
   components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 10
-      - ReagentId: Nutriment
-        Quantity: 2
-      - ReagentId: Omnizine
-        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Omnizine
+          Quantity: 2

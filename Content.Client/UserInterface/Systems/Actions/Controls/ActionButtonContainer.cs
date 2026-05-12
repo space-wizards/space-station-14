@@ -9,10 +9,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
 [Virtual]
-public partial class ActionButtonContainer : GridContainer
+public class ActionButtonContainer : GridContainer
 {
-    [Dependency] private IEntityManager _entity = default!;
-    [Dependency] private IInputManager _input = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private readonly IInputManager _input = default!;
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;

@@ -8,18 +8,21 @@ using Content.Shared.Timing;
 
 namespace Content.Shared.Friends.Systems;
 
-public sealed partial class PettableFriendSystem : EntitySystem
+public sealed class PettableFriendSystem : EntitySystem
 {
-    [Dependency] private NpcFactionSystem _factionException = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly NpcFactionSystem _factionException = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
-    [Dependency] private EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
-    [Dependency] private EntityQuery<UseDelayComponent> _useDelayQuery = default!;
+    private EntityQuery<FactionExceptionComponent> _exceptionQuery;
+    private EntityQuery<UseDelayComponent> _useDelayQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _exceptionQuery = GetEntityQuery<FactionExceptionComponent>();
+        _useDelayQuery = GetEntityQuery<UseDelayComponent>();
 
         SubscribeLocalEvent<PettableFriendComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PettableFriendComponent, GotRehydratedEvent>(OnRehydrated);

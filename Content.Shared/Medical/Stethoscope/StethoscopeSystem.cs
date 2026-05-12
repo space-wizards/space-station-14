@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -13,13 +12,12 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Medical.Stethoscope;
 
-public sealed partial class StethoscopeSystem : EntitySystem
+public sealed class StethoscopeSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     // The damage type to "listen" for with the stethoscope.
     private const string DamageToListenFor = "Asphyxiation";
@@ -98,8 +96,9 @@ public sealed partial class StethoscopeSystem : EntitySystem
         // TODO: Add check for respirator component when it gets moved to shared.
         // If the mob is dead or cannot asphyxiation damage, the popup shows nothing.
         if (!TryComp<MobStateComponent>(target, out var mobState)                        ||
+            !TryComp<DamageableComponent>(target, out var damageComp) ||
             _mobState.IsDead(target, mobState)                                           ||
-            !_damageable.GetAllDamage(target).DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
+            !damageComp.Damage.DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
         {
             _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
             stethoscope.Comp.LastMeasuredDamage = null;

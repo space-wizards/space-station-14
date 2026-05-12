@@ -1,26 +1,30 @@
 - type: entity
   abstract: true
-  parent: [SolutionTiny, BaseItem]
+  parent: BaseItem
   id: BaseHandheldMixer
   components:
+  - type: SolutionContainerManager
+    solutions:
+      mixer:
+        maxVol: 10
   - type: MixableSolution
-    solution: solution
+    solution: mixer
   - type: RefillableSolution
-    solution: solution
+    solution: mixer
   - type: DrainableSolution
-    solution: solution
+    solution: mixer
   - type: ExaminableSolution
-    solution: solution
+    solution: mixer
     exactVolume: true
   - type: DrawableSolution
-    solution: solution
+    solution: mixer
   - type: InjectableSolution
-    solution: solution
+    solution: mixer
   - type: Spillable
-    solution: solution
+    solution: mixer
   - type: SolutionTransfer
   - type: SolutionItemStatus
-    solution: solution
+    solution: mixer
   - type: Appearance
   - type: DnaSubstanceTrace
   - type: ReactionMixer

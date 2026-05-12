@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Maps;
@@ -9,7 +8,6 @@ using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -17,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Station;
 
 [TestFixture]
 [TestOf(typeof(StationJobsSystem))]
-public sealed class StationJobsTest : GameTest
+public sealed class StationJobsTest
 {
     private const string StationMapId = "FooStation";
 
@@ -87,7 +85,7 @@ public sealed class StationJobsTest : GameTest
     [Test]
     public async Task AssignJobsTest()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -106,25 +104,16 @@ public sealed class StationJobsTest : GameTest
             }
         });
 
-        var dummies = await server.AddDummySessions(TotalPlayers);
         await server.WaitAssertion(() =>
         {
-            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>(TotalPlayers);
-            var i = 0;
-            foreach (var dummy in dummies)
-            {
-                if (i < PlayerCount)
-                {
-                    fakePlayers.AddJob(dummy, "TAssistant", JobPriority.Medium)
-                        .AddPreference("TClown", JobPriority.Low)
-                        .AddPreference("TMime", JobPriority.High);
-                    i++;
-                }
-                else
-                {
-                    fakePlayers.AddJob(dummy, "TCaptain", JobPriority.High);
-                }
-            }
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
+                .AddPreference("TClown", JobPriority.Low)
+                .AddPreference("TMime", JobPriority.High)
+                .WithPlayers(
+                    new Dictionary<NetUserId, HumanoidCharacterProfile>()
+                    .AddJob("TCaptain", JobPriority.High, CaptainCount)
+                );
             Assert.That(fakePlayers, Is.Not.Empty);
 
             var start = new Stopwatch();
@@ -164,12 +153,13 @@ public sealed class StationJobsTest : GameTest
                 Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
             });
         });
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AdjustJobsTest()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -213,12 +203,13 @@ public sealed class StationJobsTest : GameTest
                 Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
             });
         });
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task InvalidRoundstartJobsTest()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -256,15 +247,20 @@ public sealed class StationJobsTest : GameTest
                 }
             });
         });
+        await pair.CleanReturnAsync();
     }
 }
 
 internal static class JobExtensions
 {
     public static Dictionary<NetUserId, HumanoidCharacterProfile> AddJob(
-        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, ICommonSession session, string jobId, JobPriority prio = JobPriority.Medium)
+        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium,
+        int amount = 1)
     {
-        inp.Add(session.UserId, HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
+        for (var i = 0; i < amount; i++)
+        {
+            inp.Add(new NetUserId(Guid.NewGuid()), HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
+        }
 
         return inp;
     }

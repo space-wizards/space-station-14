@@ -3,9 +3,9 @@ using Content.Shared.Configurable;
 
 namespace Content.Client.Configurable;
 
-public sealed partial class ConfigurationSystem : SharedConfigurationSystem
+public sealed class ConfigurationSystem : SharedConfigurationSystem
 {
-    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

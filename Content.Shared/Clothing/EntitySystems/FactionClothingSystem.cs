@@ -8,9 +8,9 @@ namespace Content.Shared.Clothing.EntitySystems;
 /// <summary>
 /// Handles <see cref="FactionClothingComponent"/> faction adding and removal.
 /// </summary>
-public sealed partial class FactionClothingSystem : EntitySystem
+public sealed class FactionClothingSystem : EntitySystem
 {
-    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
 
     public override void Initialize()
     {
@@ -22,8 +22,8 @@ public sealed partial class FactionClothingSystem : EntitySystem
 
     private void OnEquipped(Entity<FactionClothingComponent> ent, ref GotEquippedEvent args)
     {
-        TryComp<NpcFactionMemberComponent>(args.EquipTarget, out var factionComp);
-        var faction = (args.EquipTarget, factionComp);
+        TryComp<NpcFactionMemberComponent>(args.Equipee, out var factionComp);
+        var faction = (args.Equipee, factionComp);
         ent.Comp.AlreadyMember = _faction.IsMember(faction, ent.Comp.Faction);
 
         _faction.AddFaction(faction, ent.Comp.Faction);
@@ -37,6 +37,6 @@ public sealed partial class FactionClothingSystem : EntitySystem
             return;
         }
 
-        _faction.RemoveFaction(args.EquipTarget, ent.Comp.Faction);
+        _faction.RemoveFaction(args.Equipee, ent.Comp.Faction);
     }
 }

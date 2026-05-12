@@ -11,8 +11,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
-using Content.Server.Antag;
-using Content.Server.Antag.Components;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
 using Content.Shared.Prototypes;
@@ -23,15 +21,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
 
-public sealed partial class ObjectivesSystem : SharedObjectivesSystem
+public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
-    [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private SharedJobSystem _job = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private IEnumerable<string>? _objectives;
 
@@ -62,14 +60,19 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, AntagSelectionComponent>();
-        while (query.MoveNext(out var uid, out _, out var comp))
+        var query = EntityQueryEnumerator<GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var gameRule))
         {
-            if (comp.AgentName is not { } agent)
+            if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            var minds = _antag.GetAntagIdentities((uid, comp));
+            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
+            RaiseLocalEvent(uid, ref info);
+            if (info.Minds.Count == 0)
+                continue;
 
+            // first group the gamerules by their agents, for example 2 different dragons
+            var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
                 summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
 
@@ -82,11 +85,11 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             if (summary.ContainsKey(prepend.Text))
             {
                 // same prepended text (usually empty) so combine them
-                summary[prepend.Text].AddRange(minds);
+                summary[prepend.Text].AddRange(info.Minds);
             }
             else
             {
-                summary[prepend.Text] = minds.ToList();
+                summary[prepend.Text] = info.Minds;
             }
         }
 
@@ -99,7 +102,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             foreach (var (_, minds) in summary)
             {
                 total += minds.Count;
-                totalInCustody += minds.Count(pair => IsInCustody(pair.Item1));
+                totalInCustody += minds.Where(pair => IsInCustody(pair.Item1)).Count();
             }
 
             var result = new StringBuilder();
@@ -255,7 +258,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     /// <summary>
     /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
     /// </summary>
-    public bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
+    private bool IsInCustody(EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind))
             return false;

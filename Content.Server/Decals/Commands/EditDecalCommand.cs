@@ -7,9 +7,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Decals;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class EditDecalCommand : IConsoleCommand
+public sealed class EditDecalCommand : IConsoleCommand
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "editdecal";
     public string Description => "Edits a decal.";

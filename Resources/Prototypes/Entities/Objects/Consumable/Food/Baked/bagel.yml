@@ -3,7 +3,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionVeryTiny, FoodInjectableBase]
+  parent: FoodInjectableBase
   id: FoodBagelBase
   description: A delicious bagel.
   components:
@@ -15,11 +15,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bagel.rsi
     state: bagel
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   parent: FoodBagelBase
@@ -38,13 +40,15 @@
       - medicine
   - type: Sprite
     state: bagel-poppy
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Bicaridine
-        Quantity: 5
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   parent: FoodBagelBase
@@ -63,10 +67,13 @@
   - type: Tag
     tags:
     - ClothMade
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
-      - ReagentId: Fiber
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2.5
+        - ReagentId: Fiber
+          Quantity: 2.5
+

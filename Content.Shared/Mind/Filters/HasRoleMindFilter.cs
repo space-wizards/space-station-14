@@ -14,7 +14,7 @@ public sealed partial class HasRoleMindFilter : MindFilter
     [DataField(required: true)]
     public EntityWhitelist Whitelist;
 
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
     {
         var roleSys = entMan.System<SharedRoleSystem>();
         return !roleSys.MindHasRole(mind, Whitelist);

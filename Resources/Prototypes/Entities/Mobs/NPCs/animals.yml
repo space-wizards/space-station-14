@@ -84,7 +84,7 @@
 
 - type: entity
   name: bee
-  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
@@ -127,11 +127,12 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: GroundBee
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 1
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -339,6 +340,7 @@
   parent: FoodEgg
   suffix: Fertilized, Chicken
   components:
+  - type: Timer
   - type: TimedSpawner
     prototypes:
     - MobChicken
@@ -352,7 +354,7 @@
 
 - type: entity
   name: cockroach
-  parent: [SolutionFood, SolutionTiny, SimpleMobBase]
+  parent: SimpleMobBase
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
@@ -411,15 +413,17 @@
     baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Slime
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
   - type: Damageable
+    damageContainer: Biological
     damageModifierSet: Cockroach
   - type: Tag
     tags:
@@ -558,6 +562,7 @@
     weightlessFriction: 1
     baseWeightlessModifier: 1
   - type: Damageable
+    damageContainer: Biological
     damageModifierSet: Moth
   - type: Bloodstream
     bloodReferenceSolution:
@@ -774,6 +779,7 @@
   parent: FoodEgg
   suffix: Fertilized, Duck
   components:
+    - type: Timer
     - type: TimedSpawner
       prototypes:
       - MobDuckMallard
@@ -787,7 +793,7 @@
 
 - type: entity
   name: butterfly
-  parent: [ SolutionFood, SolutionTiny, SimpleMobBase, FlyingMobBase ]
+  parent: [ SimpleMobBase, FlyingMobBase ]
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
@@ -830,11 +836,12 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: UncookedAnimalProteins
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
   - type: Butcherable
     spawned:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -904,9 +911,13 @@
         Base: dead
       Dead:
         Base: dead
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionUdder
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: Milk
+          Quantity: 30
   - type: Udder
     reagentId: Milk
     quantityPerUpdate: 25
@@ -939,18 +950,6 @@
     guides:
     - Chef
     - FoodRecipes
-
-- type: entity
-  parent: SolutionLarge
-  id: SolutionUdder
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    id: udder # TODO This should really use a different id...
-    solution:
-      reagents:
-      - ReagentId: Milk
-        Quantity: 30
 
 - type: entity
   name: crab
@@ -1065,10 +1064,15 @@
         Base: dead
       Dead:
         Base: dead
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionUdderGoat
-    - SolutionWool
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkGoat
+          Quantity: 30
+      wool:
+        maxVol: 250
   - type: Udder
     reagentId: MilkGoat
     quantityPerUpdate: 25
@@ -1115,25 +1119,6 @@
   - type: HTN
     rootTask:
       task: RuminantHostileCompound
-
-- type: entity
-  parent: SolutionUdder
-  id: SolutionUdderGoat
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: MilkGoat
-        Quantity: 30
-
-- type: entity
-  parent: SolutionLarge
-  id: SolutionWool
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Solution
-    id: wool
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -1409,16 +1394,23 @@
     - map: [ "outerClothing" ]
     - map: [ "mask" ]
     - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
   - type: Hands
     activeHandId: Hand
     hands:
       Hand:
         location: Left
   - type: ComplexInteraction
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon:
+          True: {visible: true}
+          False: {visible: false}
   - type: CreamPied
-    sprite:
-      sprite: Effects/creampie.rsi
-      state: creampie_monkey
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Monkey_burning
@@ -1456,10 +1448,7 @@
       - Passive
   - type: HTN
     rootTask:
-      task: MonkeyCompound
-    blackboard:
-      NavInteract: !type:Bool
-        true
+      task: SimpleHostileCompound
   - type: IdExaminable
   - type: Tag
     tags:
@@ -1518,7 +1507,7 @@
 - type: entity
   name: monkey
   id: MobBaseSyndicateMonkey
-  parent: MobBaseAncestor # TODO: fix copy paste from MobMonkey
+  parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   suffix: syndicate base
   components:
@@ -1642,6 +1631,10 @@
     - map: [ "id" ]
     - map: [ "mask" ]
     - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -1735,7 +1728,9 @@
 
 - type: entity
   name: mouse
-  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin]
+  parent:
+  - SimpleMobBase
+  - BaseMobAnimal
   id: MobMouse
   description: Squeak!
   components:
@@ -1843,6 +1838,12 @@
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -1912,17 +1913,6 @@
         recursive: false
 
 - type: entity
-  abstract: true
-  parent: [SolutionFood, SolutionTiny]
-  id: SolutionVermin
-  components:
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: UncookedAnimalProteins
-        Quantity: 15
-
-- type: entity
   parent: MobMouse
   suffix: Dead
   save: false
@@ -1937,6 +1927,22 @@
         Asphyxiation: 4
         Slash: 7
         Blunt: 3
+
+- type: entity
+  parent: MobMouse
+  id: MobMouseAdmeme
+  suffix: Admeme
+  components:
+  # allow admeme mouse to eat pills
+  - type: IgnoreBadFood
+  # intended for swarms that eat pills so only temporary
+  - type: TimedDespawn
+    lifetime: 60
+  - type: Hunger
+    baseDecayRate: 10 # always hungry
+    starvingSlowdownModifier: 1
+  - type: Thirst
+    baseDecayRate: 10 # always thirsty
 
 - type: entity
   parent: MobMouse
@@ -1964,6 +1970,7 @@
       Dead:
         Base: splat-1
   - type: Item
+    size: Tiny
     heldPrefix: 1
 
 - type: entity
@@ -1992,6 +1999,7 @@
       Dead:
         Base: splat-2
   - type: Item
+    size: Tiny
     heldPrefix: 2
 
 - type: entity
@@ -2021,13 +2029,14 @@
       reagents:
       - ReagentId: UnstableMutagen
         Quantity: 50
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: UncookedAnimalProteins
-        Quantity: 5
-      - ReagentId: Uranium
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Uranium
+          Quantity: 10
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -2035,6 +2044,7 @@
     - id: SheetUranium1
       amount: 1
   - type: Damageable
+    damageContainer: Biological
     damageModifierSet: Zombie
 
 - type: entity
@@ -2089,10 +2099,12 @@
       - ReagentId: Blood
         Quantity: 150
   - type: Damageable
+    damageContainer: Biological
     damageModifierSet: Scale
   - type: Tag
     tags:
     - VimPilot
+
 
 - type: entity
   name: slug
@@ -2489,6 +2501,7 @@
       - ReagentId: Blood
         Quantity: 50
   - type: Damageable
+    damageContainer: Biological
     damageModifierSet: Scale
 
 # Code unique spider prototypes or combine them all into one spider and get a
@@ -2519,10 +2532,12 @@
     thresholds:
       0: Alive
       90: Dead
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionVenomSpider
+      melee:
+        maxVol: 30
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: Mechanotoxin
@@ -2573,6 +2588,7 @@
   - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute from base.yml.
     allowedStates:
     - Alive
+    damageCap: 89
     damage:
       types:
         Poison: -0.07
@@ -2582,11 +2598,6 @@
         Heat: -0.03
         Cold: -0.03
         Shock: -0.03
-
-- type: entity
-  parent: [SolutionWeapon, SolutionTiny]
-  id: SolutionVenomSpider
-  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: MobSpiderBase
@@ -2967,11 +2978,6 @@
   - type: MobPrice
     price: 200
   - type: MessyDrinker
-  # TODO: Fix the sprite offset
-  #- type: CreamPied
-  #  sprite:
-  #    sprite: Effects/creampie.rsi
-  #    state: creampie_corgi
 
 - type: entity
   parent: MobCorgiBase
@@ -3045,9 +3051,8 @@
       - ReagentId: DemonsBlood
         Quantity: 150
   - type: Damageable
-    damageModifierSet: Infernal
-  - type: Injurable
     damageContainer: BiologicalMetaphysical
+    damageModifierSet: Infernal
   - type: Temperature
     currentTemperature: 310.15
     specificHeat: 42
@@ -3517,16 +3522,16 @@
     baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food
-  - type: Solution
-    id: food
-    solution:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-      - ReagentId: Blood # TODO Instead of this, eat from the bloodstream directly
-        Quantity: 55
-      - ReagentId: Fat
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 55
+        - ReagentId: Fat
+          Quantity: 5
   - type: Butcherable
     spawned:
     - id: FoodMeat

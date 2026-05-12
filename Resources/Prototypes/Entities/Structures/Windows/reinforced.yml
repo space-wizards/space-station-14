@@ -12,9 +12,8 @@
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
   - type: RCDDeconstructable
     cost: 6
     delay: 6

@@ -71,9 +71,10 @@
   - type: StaticPrice
     price: 80
   - type: Riggable
-  - type: SolutionManager
+  - type: SolutionContainerManager
     solutions:
-    - SolutionRiggable
+      battery:
+        maxVol: 5
   - type: InjectableSolution
     solution: battery
   - type: DrawableSolution
@@ -144,7 +145,6 @@
         visible: false
         shader: unshaded
     - type: Flash
-    - type: RevolutionaryConverter
     - type: LimitedCharges
       maxCharges: 5
     - type: MeleeWeapon

@@ -8,9 +8,8 @@
     sprite: Structures/ironsand_steps.rsi
     state: straight
   - type: Damageable
-    damageModifierSet: Rock
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Rock
   - type: Destructible
     thresholds:
     - trigger:

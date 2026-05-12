@@ -34,6 +34,7 @@
   - type: ActionGrant
     actions:
     - ActionJumpToCore
+    - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
     interfaces:
@@ -201,7 +202,6 @@
     container: station_ai_mind_slot
   - type: Damageable
     damageModifierSet: StrongMetallic
-  - type: Injurable
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
@@ -283,16 +283,6 @@
         enum.StationAiVisualLayers.Base:
           False: { state: ai_empty }
           True: { state: ai_error }
-  - type: CreamPied
-    sprite:
-      sprite: Effects/creampie.rsi
-      state: creampie_ai
-  - type: Reactive
-    reactions:
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
-      effects:
-      - !type:WashCreamPie
   - type: InteractionPopup
     interactSuccessString: petting-success-station-ai
     interactFailureString: petting-failure-station-ai
@@ -386,7 +376,6 @@
         density: 200
   - type: Damageable
     damageModifierSet: StrongMetallic
-  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
@@ -488,16 +477,6 @@
   description: The AI's viewer.
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
-  - type: Fixtures
-    fixtures:
-      lightTrigger:
-        shape:
-          !type:PhysShapeCircle
-          radius: 8
-        density: 80
-        hard: false
-        layer:
-        - GhostImpassable
   - type: NoFTL
   - type: Tag
     tags:
@@ -517,7 +496,6 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
-  - type: CameraActiveOnCollideCollider
 
 # The holographic representation of the AI that is projected from a holopad.
 - type: entity

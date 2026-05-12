@@ -25,5 +25,3 @@
       Glass: 150
   - type: StaticPrice
     price: 85
-  - type: UseDelay
-    delay: 1

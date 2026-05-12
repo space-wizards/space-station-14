@@ -8,9 +8,9 @@ using Robust.Shared.Map.Events;
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed partial class DeviceListSystem : SharedDeviceListSystem
+public sealed class DeviceListSystem : SharedDeviceListSystem
 {
-    [Dependency] private NetworkConfiguratorSystem _configurator = default!;
+    [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
 
     public override void Initialize()
     {

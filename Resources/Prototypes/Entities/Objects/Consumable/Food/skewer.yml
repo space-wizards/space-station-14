@@ -56,8 +56,11 @@
   - type: Edible
     trash:
     - FoodKebabSkewer
-  - type: Solution
-    id: food # I'm not having this inherit from basefood because this shouldn't be edible, nor have a solution until you attach an entity to it.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        canReact: false # Dont want cause reactions inside skewers after merging ingredients
+        maxVol: 0
   - type: FoodSequenceStartPoint
     key: Skewer
     maxLayers: 4

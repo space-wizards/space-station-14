@@ -9,9 +9,8 @@
   - type: Anchorable
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:

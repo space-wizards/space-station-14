@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -6,17 +5,16 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Networking;
 
 [TestFixture]
-public sealed class PvsCommandTest : GameTest
+public sealed class PvsCommandTest
 {
     private static readonly EntProtoId TestEnt = "MobHuman";
-
-    public override PoolSettings PoolSettings => new() { Connected = true, DummyTicker = false };
 
     [Test]
     public async Task TestPvsCommands()
     {
-        var pair = Pair;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var (server, client) = pair;
+        await pair.RunTicksSync(5);
 
         // Spawn a complex entity.
         EntityUid entity = default;
@@ -48,5 +46,6 @@ public sealed class PvsCommandTest : GameTest
         Assert.That(meta.LastStateApplied, Is.GreaterThan(lastApplied));
 
         await server.WaitPost(() => server.EntMan.DeleteEntity(entity));
+        await pair.CleanReturnAsync();
     }
 }

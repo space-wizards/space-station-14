@@ -2,9 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationRecords;
 
-public sealed partial class StationRecordKeyStorageSystem : EntitySystem
+public sealed class StationRecordKeyStorageSystem : EntitySystem
 {
-    [Dependency] private SharedStationRecordsSystem _records = default!;
+    [Dependency] private readonly SharedStationRecordsSystem _records = default!;
 
     public override void Initialize()
     {

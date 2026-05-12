@@ -87,9 +87,9 @@ public partial class RadiationSystem
 ///     Toggle visibility of radiation rays coming from rad sources.
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
-public sealed partial class RadiationViewCommand : LocalizedEntityCommands
+public sealed class RadiationViewCommand : LocalizedEntityCommands
 {
-    [Dependency] private RadiationSystem _radiation = default!;
+    [Dependency] private readonly RadiationSystem _radiation = default!;
 
     public override string Command => "showradiation";
 

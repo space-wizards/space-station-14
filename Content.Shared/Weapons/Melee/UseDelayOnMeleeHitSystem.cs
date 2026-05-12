@@ -6,9 +6,9 @@ using Content.Shared.Weapons.Melee.Events;
 namespace Content.Shared.Weapons.Melee;
 
 /// <inheritdoc cref="UseDelayOnMeleeHitComponent"/>
-public sealed partial class UseDelayOnMeleeHitSystem : EntitySystem
+public sealed class UseDelayOnMeleeHitSystem : EntitySystem
 {
-    [Dependency] private UseDelaySystem _delay = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {

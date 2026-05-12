@@ -32,9 +32,8 @@
       node: grille
       deconstructionTarget: start
     - type: Damageable
-      damageModifierSet: PerforatedMetallic
-    - type: Injurable
       damageContainer: StructuralInorganic
+      damageModifierSet: PerforatedMetallic
     - type: Electrified
       requirePower: true
       noWindowInTile: true
@@ -60,8 +59,6 @@
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-          - FullTileMask
           layer:
           - GlassLayer
     - type: Destructible
@@ -138,9 +135,8 @@
     tags:
     - ForceNoFixRotations
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
     damageContainer: StructuralInorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:

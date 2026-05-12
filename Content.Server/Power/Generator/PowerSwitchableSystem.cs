@@ -16,12 +16,12 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="PowerSwitchableComponent"/>
 /// <seealso cref="PortableGeneratorSystem"/>
 /// <seealso cref="GeneratorSystem"/>
-public sealed partial class PowerSwitchableSystem : SharedPowerSwitchableSystem
+public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
 {
-    [Dependency] private NodeGroupSystem _nodeGroup = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     // TODO: Prediction
     /// <inheritdoc/>

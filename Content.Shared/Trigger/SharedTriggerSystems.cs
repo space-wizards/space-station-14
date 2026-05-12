@@ -6,9 +6,9 @@ namespace Content.Shared.Trigger;
 /// <summary>
 /// This is a base Trigger system which handles all the boilerplate for triggers automagically!
 /// </summary>
-public abstract partial class TriggerOnXSystem : EntitySystem
+public abstract class TriggerOnXSystem : EntitySystem
 {
-    [Dependency] protected TriggerSystem Trigger = default!;
+    [Dependency] protected readonly TriggerSystem Trigger = default!;
 }
 
 /// <summary>

@@ -7,10 +7,10 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles keep alive condition logic.
 /// </summary>
-public sealed partial class KeepAliveConditionSystem : EntitySystem
+public sealed class KeepAliveConditionSystem : EntitySystem
 {
-    [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private TargetObjectiveSystem _target = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
     public override void Initialize()
     {

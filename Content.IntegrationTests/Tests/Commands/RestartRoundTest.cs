@@ -1,4 +1,3 @@
-using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Shared.CCVar;
@@ -11,27 +10,25 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RestartRoundNowCommand))]
-    public sealed class RestartRoundNowTest : GameTest
+    public sealed class RestartRoundNowTest
     {
-        public override PoolSettings PoolSettings => new PoolSettings
-        {
-            DummyTicker = false,
-            Dirty = true
-        };
-
         [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var pair = Pair;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                DummyTicker = false,
+                Dirty = true
+            });
             var server = pair.Server;
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTicker = entityManager.System<GameTicker>();
 
-            await pair.RunUntilSynced();
+            await pair.RunTicksSync(5);
 
             GameTick tickBeforeRestart = default;
 
@@ -61,7 +58,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
             });
 
-            await pair.RunUntilSynced();
+            await pair.RunTicksSync(5);
+            await pair.CleanReturnAsync();
         }
     }
 }
