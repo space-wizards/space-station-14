@@ -8,7 +8,6 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
@@ -234,9 +233,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, player);
-                RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-                order.SetApproverData(tryGetIdentityShortInfoEvent.Title);
+                order.SetApproverData(GetNameAndId(uid, player));
 
                 var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
                     ("productName", Loc.GetString(product.Name)),

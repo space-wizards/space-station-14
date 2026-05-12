@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Cargo;
 
@@ -219,6 +220,13 @@ public abstract partial class SharedCargoSystem : EntitySystem
             return;
 
         Dirty(ent);
+    }
+
+    public string? GetNameAndId(EntityUid whileInteractingWith, EntityUid forActor)
+    {
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(whileInteractingWith, forActor);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        return tryGetIdentityShortInfoEvent.Title;
     }
 }
 
