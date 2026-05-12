@@ -404,12 +404,12 @@ namespace Content.Server.Cargo.Systems
                         orderDatabase.Capacity,
                         GetNetEntity(station.Value),
                         RelevantOrders(
-                            (station!.Value, orderDatabase),
+                            (station.Value, orderDatabase),
                             orderDatabase.Orders,
                             console.Account,
                             approved: false
                         ),
-                        RelevantOrders((station!.Value, orderDatabase), orderHistory, console.Account, approved: true),
+                        RelevantOrders((station.Value, orderDatabase), orderHistory, console.Account, approved: true),
                         GetAvailableProducts((consoleUid, console))
                     )
                 );
@@ -440,7 +440,10 @@ namespace Content.Server.Cargo.Systems
                 if (TryExternalFulfillment((ent, stationData), order))
                     continue;
 
-                if (TryFulfillOrder((ent, stationData), order, ent.Comp))
+                if (
+                    TryFulfillOrder((ent, stationData), order, ent.Comp)
+                    && order.Basket.Any(item => item.NumOrdered != item.Quantity)
+                )
                     toDeliver.Add(order);
             }
 
@@ -468,7 +471,7 @@ namespace Content.Server.Cargo.Systems
         private List<CargoOrderData> RelevantOrders(
             Entity<StationCargoOrderDatabaseComponent> station,
             ProtoId<CargoAccountPrototype> account,
-            bool approved = false
+            bool? approved = null
         )
         {
             return RelevantOrders(station, station.Comp.Orders, account, approved);
@@ -481,7 +484,7 @@ namespace Content.Server.Cargo.Systems
             Entity<StationCargoOrderDatabaseComponent> station,
             List<CargoOrderData> allOrders,
             ProtoId<CargoAccountPrototype> account,
-            bool approved = false
+            bool? approved = null
         )
         {
             if (!TryComp<StationBankAccountComponent>(station, out var bank))
@@ -491,7 +494,7 @@ namespace Content.Server.Cargo.Systems
 
             if (account == bank.PrimaryAccount)
                 orders = allOrders;
-            return [.. orders.Where(order => order.Approved == approved)];
+            return [.. orders.Where(order => order.Approved == (approved ?? true) && order.Visible)];
         }
 
         private void ConsolePopup(EntityUid actor, string text)
@@ -548,6 +551,7 @@ namespace Content.Server.Cargo.Systems
         {
             // Make an order
             var order = new CargoOrderData(GenerateOrderId(orderDatabase), basket, sender, description, account);
+            order.Visible = false;
 
             // Approve it now
             order.SetApproverData(dest, sender);

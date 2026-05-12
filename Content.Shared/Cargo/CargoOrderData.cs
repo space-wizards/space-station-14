@@ -46,6 +46,9 @@ namespace Content.Shared.Cargo
         [DataField]
         public ProtoId<CargoAccountPrototype> Account;
 
+        [DataField]
+        public bool Visible = true;
+
         public CargoOrderData(
             int orderId,
             List<CargoOrderItemData> basket,
