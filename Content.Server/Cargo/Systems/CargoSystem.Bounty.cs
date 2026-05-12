@@ -7,6 +7,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Paper;
@@ -473,7 +474,11 @@ public sealed partial class CargoSystem
             {
                 string? actorName = null;
                 if (actor != null)
-                    actorName = _identity.GetNameAndId(actor.Value);
+                {
+                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(ent.Owner, actor.Value);
+                    RaiseLocalEvent(getIdentityEvent);
+                    actorName = getIdentityEvent.Title;
+                }
 
                 ent.Comp.History.Add(new CargoBountyHistoryData(data,
                     skipped

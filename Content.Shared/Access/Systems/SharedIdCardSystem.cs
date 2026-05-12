@@ -37,6 +37,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdCardComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
         SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
@@ -61,15 +62,21 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         UpdateEntityName(uid, id);
     }
 
-    public bool TryGetFullTitle(EntityUid forActor, bool forLogging, out string? title)
+    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent ev)
     {
-        if (TryFindIdCard(forActor, out var idCard) && !(forLogging && idCard.Comp.BypassLogging))
+        if (ev.Handled)
+        {
+            return;
+        }
+
+        string? title = null;
+        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
         {
             title = ExtractFullTitle(idCard);
-            return true;
         }
-        title = null;
-        return false;
+
+        ev.Title = title;
+        ev.Handled = true;
     }
 
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)

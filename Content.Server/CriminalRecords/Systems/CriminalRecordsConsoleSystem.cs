@@ -33,7 +33,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     [Dependency] private StationRecordsSystem _records = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
@@ -82,7 +81,9 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
     private void GetOfficer(EntityUid uid, out string officer)
     {
-        officer = _identity.GetNameAndId(uid) ?? Loc.GetString("criminal-records-console-unknown-officer");
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, uid);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        officer = tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("criminal-records-console-unknown-officer");
     }
 
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
@@ -124,13 +125,17 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
         // will probably never fail given the checks above
         name = _records.RecordName(key.Value);
+        officer = Loc.GetString("criminal-records-console-unknown-officer");
         var jobName = "Unknown";
 
         _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
         if (entry != null)
             jobName = entry.JobTitle;
 
-        officer = _identity.GetNameAndId(mob.Value) ?? Loc.GetString("criminal-records-console-unknown-officer");
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, mob.Value);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        if (tryGetIdentityShortInfoEvent.Title != null)
+            officer = tryGetIdentityShortInfoEvent.Title;
 
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 

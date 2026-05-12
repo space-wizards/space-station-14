@@ -34,7 +34,6 @@ public sealed partial class AccessReaderSystem : EntitySystem
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private SharedStationRecordsSystem _recordsSystem = default!;
-    [Dependency] private IdentitySystem _identity = default!;
 
     private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";
 
@@ -921,7 +920,12 @@ public sealed partial class AccessReaderSystem : EntitySystem
 
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
-        name = _identity.GetNameAndId(accessor, true) ?? name;
+        var getIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, accessor, true);
+        RaiseLocalEvent(getIdentityShortInfoEvent);
+        if (getIdentityShortInfoEvent.Title != null)
+        {
+            name = getIdentityShortInfoEvent.Title;
+        }
 
         LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
     }
