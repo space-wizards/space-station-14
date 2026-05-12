@@ -1,22 +1,22 @@
-﻿- type: entity
+- type: entity
   id: JetpackEffect # TODO: Rename it to JetpackEffectBlue
   categories: [ HideSpawnMenu ]
   components:
-  - type: TimedDespawn
-    lifetime: 2
   - type: Sprite
     drawdepth: SmallMobs
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/jetpack.rsi
       state: blue_sparkles
+  - type: TimedDespawn
+    lifetime: 2
   - type: EffectVisuals
+  - type: AnimationPlayer
   - type: Tag
     tags:
       - HideContextMenu
-  - type: AnimationPlayer
 
 - type: entity
   id: JetpackEffectGreen
@@ -28,7 +28,7 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/jetpack.rsi
       state: green_sparkles
 
@@ -42,7 +42,7 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/jetpack.rsi
       state: orange_sparkles
 
@@ -56,7 +56,7 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/jetpack.rsi
       state: purple_sparkles
 
@@ -70,6 +70,6 @@
     noRot: true
     layers:
     - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
+      map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Effects/jetpack.rsi
       state: red_sparkles
