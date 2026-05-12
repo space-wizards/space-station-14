@@ -9,8 +9,6 @@
     layers:
     - state: projectile
       shader: unshaded
-  - type: Ammo
-    muzzleFlash: null
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -29,6 +27,8 @@
         - HighImpassable
         - LowImpassable
         hard: False
+  - type: Ammo
+    muzzleFlash: null
   - type: Projectile
     #soundHit: Waiting on serv3
     damage:

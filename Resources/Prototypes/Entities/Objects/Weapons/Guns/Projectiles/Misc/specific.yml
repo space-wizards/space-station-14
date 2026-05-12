@@ -16,7 +16,7 @@
     muzzleFlash: null
 
 - type: entity
-  parent: [SolutionVapor, SolutionSmall]
+  parent: [ SolutionVapor, SolutionSmall ]
   id: BulletWaterShot
   categories: [ HideSpawnMenu ]
   name: water

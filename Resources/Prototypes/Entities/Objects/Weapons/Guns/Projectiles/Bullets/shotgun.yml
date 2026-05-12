@@ -126,7 +126,7 @@
     spread: 45
 
 - type: entity
-  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBulletPractice]
+  parent: [ SolutionAmmo, SolutionToolVeryTiny, BaseBulletPractice ]
   id: PelletShotgunTranquilizer
   categories: [ HideSpawnMenu ]
   name: pellet (.50 tranquilizer)

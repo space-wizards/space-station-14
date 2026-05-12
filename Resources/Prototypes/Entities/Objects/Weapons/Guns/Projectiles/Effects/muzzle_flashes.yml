@@ -1,9 +1,7 @@
-﻿- type: entity
+- type: entity
   id: MuzzleFlashEffect
   categories: [ HideSpawnMenu ]
   components:
-  - type: TimedDespawn
-    lifetime: 0.4
   - type: Sprite
     drawdepth: BelowMobs
     layers:
@@ -11,11 +9,13 @@
       map: [ "enum.EffectLayers.Unshaded" ]
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
       state: muzzle_bullet
-  - type: EffectVisuals
+  - type: TimedDespawn
+    lifetime: 0.4
   - type: Tag
     tags:
     - HideContextMenu
   - type: AnimationPlayer
+  - type: EffectVisuals
 
 - type: entity
   parent: MuzzleFlashEffect

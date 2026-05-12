@@ -222,7 +222,7 @@
 
 # Energy crossbow
 - type: entity
-  parent: [SolutionAmmo, BaseBullet]
+  parent: [ SolutionAmmo, BaseBullet ]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt

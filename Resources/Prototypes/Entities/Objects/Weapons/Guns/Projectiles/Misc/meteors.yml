@@ -185,7 +185,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionHuge, BaseMeteor]
+  parent: [ SolutionHuge, BaseMeteor ]
   id: BaseSolutionMeteor
 
 - type: entity

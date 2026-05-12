@@ -3,18 +3,18 @@
   id: HitscanEffect
   categories: [ HideSpawnMenu ]
   components:
-  - type: TimedDespawn
-    lifetime: 2.0
   - type: Sprite
     drawdepth: Effects
     layers:
     - shader: unshaded
       map: [ "enum.EffectLayers.Unshaded" ]
-  - type: EffectVisuals
+  - type: TimedDespawn
+    lifetime: 2.0
   - type: Tag
     tags:
     - HideContextMenu
   - type: AnimationPlayer
+  - type: EffectVisuals
 
 - type: entity
   id: BasicHitscan
