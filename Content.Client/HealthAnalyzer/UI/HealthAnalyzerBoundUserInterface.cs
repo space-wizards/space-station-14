@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.HealthAnalyzer.UI;
 
 [UsedImplicitly]
-public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
+public sealed partial class HealthAnalyzerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IGameTiming _timing = default!;
     private readonly BloodstreamSystem _bloodstream = default!;
