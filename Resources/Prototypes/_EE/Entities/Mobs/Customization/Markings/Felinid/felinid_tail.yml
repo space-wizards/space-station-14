@@ -1,0 +1,106 @@
+# Felinid Tails
+# Адаптация из Einstein-Engines (Nyanotrasen).
+
+- type: marking
+  id: FelinidTailBasic
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_tip
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_even
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_odd
+
+- type: marking
+  id: FelinidTailBasicWithBow
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_tip
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_even
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_odd
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_bow
+
+- type: marking
+  id: FelinidTailBasicWithBell
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_tip
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_even
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_odd
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_bell
+
+- type: marking
+  id: FelinidTailBasicWithBowAndBell
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_tip
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_even
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_tail_stripes_odd
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_bow
+  - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
+    state: basic_bell
+
+# DeltaV felinid tails
+
+- type: marking
+  id: FelinidFluffyTail
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tail_fluffy.rsi
+    state: Felinid_fluffy_tail_full
+
+- type: marking
+  id: FelinidFluffyTailRings
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tail_fluffy.rsi
+    state: Felinid_fluffy_tail_full
+  - sprite: _EE/Mobs/Customization/Felinid/tail_fluffy.rsi
+    state: felinid_fluffy_tail_rings
+
+- type: marking
+  id: FelinidAlternativeTail
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tail_alternative.rsi
+    state: m_waggingtail_cat_FRONT
+
+- type: marking
+  id: FelinidTiger
+  bodyPart: Tail
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
+  sprites:
+  - sprite: _EE/Mobs/Customization/Felinid/tail_tiger.rsi
+    state: m_tail_tiger_primary
+  - sprite: _EE/Mobs/Customization/Felinid/tail_tiger.rsi
+    state: m_tail_tiger_secondary
+  - sprite: _EE/Mobs/Customization/Felinid/tail_tiger.rsi
+    state: m_tail_tiger_tertiary

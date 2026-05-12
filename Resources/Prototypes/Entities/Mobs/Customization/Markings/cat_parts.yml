@@ -1,7 +1,7 @@
 - type: marking
   id: CatEars
-  bodyPart: Special
-  groupWhitelist: [Human]
+  bodyPart: HeadTop
+  groupWhitelist: [Felinid]
   coloring:
     default:
       type:
@@ -23,7 +23,9 @@
 - type: marking
   id: CatTail
   bodyPart: Tail
-  groupWhitelist: [Human]
+  # TODO: когда-нибудь сделаем анимацию виляния (нужен второй state tail_cat_wagging
+  # и маркинг CatTailAnimated). Пока скрыт.
+  groupWhitelist: []
   coloring:
     default:
       type:

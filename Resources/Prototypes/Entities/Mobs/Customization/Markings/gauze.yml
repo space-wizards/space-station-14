@@ -2,7 +2,7 @@
 - type: marking
   id: GauzeLefteyePatch
   bodyPart: Eyes
-  groupWhitelist: [Human, Arachnid]
+  groupWhitelist: [Human, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -15,7 +15,7 @@
 - type: marking
   id: GauzeLefteyePad
   bodyPart: Eyes
-  groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
+  groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin, Felinid]
   coloring:
     default:
       type:
@@ -28,7 +28,7 @@
 - type: marking
   id: GauzeRighteyePatch
   bodyPart: Eyes
-  groupWhitelist: [Human, Arachnid]
+  groupWhitelist: [Human, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -41,7 +41,7 @@
 - type: marking
   id: GauzeRighteyePad
   bodyPart: Eyes
-  groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
+  groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin, Felinid]
   coloring:
     default:
       type:
@@ -54,7 +54,7 @@
 - type: marking
   id: GauzeBlindfold
   bodyPart: Eyes
-  groupWhitelist: [Human, Arachnid]
+  groupWhitelist: [Human, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -67,7 +67,7 @@
 - type: marking
   id: GauzeShoulder
   bodyPart: Chest
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -80,7 +80,7 @@
 - type: marking
   id: GauzeStomach
   bodyPart: Chest
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -93,7 +93,7 @@
 - type: marking
   id: GauzeUpperArmRight
   bodyPart: RArm
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -106,7 +106,7 @@
 - type: marking
   id: GauzeLowerArmRight
   bodyPart: RHand
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -119,7 +119,7 @@
 - type: marking
   id: GauzeLeftArm
   bodyPart: LArm
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -132,7 +132,7 @@
 - type: marking
   id: GauzeLowerLegLeft
   bodyPart: LFoot
-  groupWhitelist: [Human, Arachnid]
+  groupWhitelist: [Human, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -145,7 +145,7 @@
 - type: marking
   id: GauzeUpperLegLeft
   bodyPart: LLeg
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -158,7 +158,7 @@
 - type: marking
   id: GauzeUpperLegRight
   bodyPart: RLeg
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -171,7 +171,7 @@
 - type: marking
   id: GauzeLowerLegRight
   bodyPart: RFoot
-  groupWhitelist: [Human, Arachnid]
+  groupWhitelist: [Human, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -184,7 +184,7 @@
 - type: marking
   id: GauzeBoxerWrapRight
   bodyPart: RHand
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -197,7 +197,7 @@
 - type: marking
   id: GauzeBoxerWrapLeft
   bodyPart: LHand
-  groupWhitelist: [Human, Reptilian, Arachnid]
+  groupWhitelist: [Human, Reptilian, Arachnid, Felinid]
   coloring:
     default:
       type:
@@ -210,7 +210,7 @@
 - type: marking
   id: GauzeHead
   bodyPart: Head
-  groupWhitelist: [Human, Reptilian, Arachnid, Moth]
+  groupWhitelist: [Human, Reptilian, Arachnid, Moth, Felinid]
   coloring:
     default:
       type:

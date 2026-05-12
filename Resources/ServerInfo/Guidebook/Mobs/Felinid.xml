@@ -1,0 +1,19 @@
+<Document>
+  # Felinid
+
+  <Box>
+    <GuideEntityEmbed Entity="MobFelinid" Caption=""/>
+  </Box>
+
+  Felinids are lightweight cat-like humanoids. Mostly human in build, but with feline ears, a tail, claws, an animal stomach, and unusually sensitive eyes.
+
+  Their claws deal Piercing and Slash instead of Blunt damage, and they walk silently when barefoot.
+
+  Their animal stomach lets them safely digest raw meat, but theobromine is poisonous to them.
+
+  Their fur helps them tolerate the cold, but they overheat more easily than humans.
+
+  Felinids regenerate light physical wounds a little faster than humans while alive — but they are also slightly more fragile. They take [color=#1e90ff]10% less Cold damage[/color] but [color=#ffa500]10% more Blunt, Slash, Piercing and Heat damage[/color].
+
+  Their eyes are very sensitive: flashes blind them for significantly longer than other species, and have a chance to inflict permanent eye damage.
+</Document>
