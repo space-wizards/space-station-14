@@ -309,7 +309,7 @@ public sealed partial class IdentitySystem : EntitySystem
         if (_borgQuery.HasComponent(forActor))
             return Name(forActor).Trim();
 
-        if (!_idCard.TryGetFullTitle(forActor, forLogging, out var title))
+        if (_idCard.TryGetFullTitle(forActor, forLogging, out var title))
             return title;
 
         return null;
