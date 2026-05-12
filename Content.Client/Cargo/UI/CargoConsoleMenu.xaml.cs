@@ -252,7 +252,7 @@ namespace Content.Client.Cargo.UI
                     if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
                         continue;
 
-                    var rowrow = new CargoOrderRowRow
+                    var rowrow = new CargoOrderSubRow
                     {
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                         ProductName = { Text = prototype.Name },
@@ -268,6 +268,11 @@ namespace Content.Client.Cargo.UI
                 // TODO: Disable based on access.
                 row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
                 row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
+
+                Orders.AddChild(new Robust.Client.UserInterface.Control
+                {
+                    MinHeight = 5
+                });
                 Orders.AddChild(row);
             }
         }
@@ -347,17 +352,20 @@ namespace Content.Client.Cargo.UI
                     if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
                         continue;
 
-                    var rowrow = new CargoOrderRowRow
+                    var subRow = new CargoOrderSubRow
                     {
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                         ProductName = { Text = prototype.Name },
                         Amount = { Text = $"x{item.Quantity}" },
                         PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
                     };
-                    row.Products.AddChild(rowrow);
+                    row.Products.AddChild(subRow);
                 }
 
-                // TODO: Disable based on access.
+                OrderHistory.AddChild(new Robust.Client.UserInterface.Control
+                {
+                    MinHeight = 5
+                });
                 OrderHistory.AddChild(row);
             }
         }

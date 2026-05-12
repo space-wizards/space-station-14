@@ -1,5 +1,6 @@
-using Content.Shared.Cargo;
+using System.Linq;
 using Content.Client.Cargo.UI;
+using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
@@ -7,9 +8,8 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
-using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
@@ -47,7 +47,8 @@ namespace Content.Client.Cargo.BUI
         [ViewVariables]
         public List<CargoOrderItemData> Basket = new();
 
-        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey)
+            : base(owner, uiKey)
         {
             _cargoSystem = EntMan.System<SharedCargoSystem>();
         }
@@ -103,7 +104,6 @@ namespace Content.Client.Cargo.BUI
                 }
             };
 
-
             _orderMenu.SubmitButton.OnPressed += (_) =>
             {
                 if (AddItem())
@@ -143,7 +143,10 @@ namespace Content.Client.Cargo.BUI
         {
             base.UpdateState(state);
 
-            if (state is not CargoConsoleInterfaceState cState || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole))
+            if (
+                state is not CargoConsoleInterfaceState cState
+                || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole)
+            )
                 return;
             var station = EntMan.GetEntity(cState.Station);
 
@@ -195,10 +198,7 @@ namespace Content.Client.Cargo.BUI
 
         private bool AddOrder()
         {
-            SendMessage(new CargoConsoleAddOrderMessage(
-                _menu?.Requester.Text ?? "",
-                _menu?.Reason.Text ?? "",
-                Basket));
+            SendMessage(new CargoConsoleAddOrderMessage(_menu?.Requester.Text ?? "", _menu?.Reason.Text ?? "", Basket));
             Basket = new List<CargoOrderItemData>();
             return true;
         }
