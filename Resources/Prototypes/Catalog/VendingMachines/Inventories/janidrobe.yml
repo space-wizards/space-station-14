@@ -1,4 +1,4 @@
-w- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: JaniDrobeInventory
   startingInventory:
     ClothingUniformJumpsuitJanitor: 2
