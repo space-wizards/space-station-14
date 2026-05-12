@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
@@ -9,7 +10,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Antag;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed partial class GhostRoleTest : GameTest
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GameTicker _ticker = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
 
@@ -41,15 +41,14 @@ public sealed partial class GhostRoleTest : GameTest
     [RunOnSide(Side.Server)]
     public void TestAntagGhostRoles(string ruleId)
     {
-        AntagSelectionComponent antag = null;
         var rule = SProtoMan.Index<EntityPrototype>(ruleId);
-        Assert.That(rule.TryGetComponent(out antag, SEntMan.ComponentFactory));
+        Assert.That(rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
 
         _ticker.StartGameRule(ruleId, out var gameRule);
 
         Dictionary<ProtoId<AntagSpecifierPrototype>, int> rules = [];
 
-        foreach (var selector in antag.Antags)
+        foreach (var selector in antag!.Antags)
         {
             var specifier = SProtoMan.Index(selector.Proto);
             var count = selector.GetTargetAntagCount(_random, 1);
@@ -77,7 +76,7 @@ public sealed partial class GhostRoleTest : GameTest
 
             // Take the ghost role and ensure we take it!
             Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
-            Assert.That(ServerSession.AttachedEntity, Is.Not.Null);
+            Assert.That(ServerSession!.AttachedEntity, Is.Not.Null);
 
             // Ensure we spawned in the correct location
             var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
@@ -93,10 +92,7 @@ public sealed partial class GhostRoleTest : GameTest
         }
 
         // Ensure all ghost roles spawned and were assigned!!!
-        foreach (var (_, count) in rules)
-        {
-            Assert.That(count, Is.EqualTo(0));
-        }
+        Assert.That(rules.Values, Is.All.Zero);
 
         // End all rules
         _ticker.ClearGameRules();
