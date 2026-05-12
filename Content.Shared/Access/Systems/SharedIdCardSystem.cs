@@ -61,7 +61,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         UpdateEntityName(uid, id);
     }
 
-    public bool TryGetFullTitle(EntityUid forActor, bool forLogging = false, out string? title)
+    public bool TryGetFullTitle(EntityUid forActor, bool forLogging, out string? title)
     {
         if (TryFindIdCard(forActor, out var idCard) && !(forLogging && idCard.Comp.BypassLogging))
         {
