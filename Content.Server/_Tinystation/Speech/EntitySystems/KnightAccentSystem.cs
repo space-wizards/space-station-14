@@ -8,8 +8,8 @@ namespace Content.Server._Tinystation.Speech.EntitySystems;
 
 public sealed partial class KnightAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ReplacementAccentSystem _replacement = default!;
 
     [GeneratedRegex(@"\bmy\s+(?=[aeiouAEIOU])", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex MyBeforeVowelRegex();

@@ -7,9 +7,9 @@ using Content.Shared._Tinystation.Knight.Components;
 
 namespace Content.Server._Tinystation.Knight.Systems;
 
-public sealed class RequireBibleUserSystem : EntitySystem
+public sealed partial class RequireBibleUserSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     public override void Initialize()
     {

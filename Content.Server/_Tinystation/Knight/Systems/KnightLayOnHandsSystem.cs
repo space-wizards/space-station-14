@@ -10,11 +10,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Tinystation.Knight.Systems;
 
-public sealed class KnightLayOnHandsSystem : EntitySystem
+public sealed partial class KnightLayOnHandsSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
