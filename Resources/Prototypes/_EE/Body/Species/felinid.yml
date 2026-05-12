@@ -14,11 +14,11 @@
     enum.HumanoidVisualLayers.HeadTop:
       limit: 1
       required: true
-      default: [ FelinidEarsBasic ]
+      default: [ CatEars ]
     enum.HumanoidVisualLayers.Tail:
       limit: 1
       required: true
-      default: [ FelinidTailBasic ]
+      default: [ VulpTailVulp ]
     enum.HumanoidVisualLayers.LArm:
       limit: 1
       required: false
@@ -44,9 +44,6 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.Snout:
-      limit: 0
-      required: false
-    enum.HumanoidVisualLayers.Special:
       limit: 0
       required: false
 
@@ -142,11 +139,13 @@
         Piercing: -0.10
         Slash: -0.10
         Heat: -0.07
-  - type: NoShoesSilentFootsteps
+  - type: SilentFootsteps
   - type: EyeDamageOnFlashing
     flashDurationMultiplier: 1.8
     eyeDamageChance: 0.5
     eyeDamage: 2
+  - type: Wagging
+    action: ActionToggleWaggingVulpkanin
 
 - type: entity
   parent: [ OrganBaseStomach, OrganHumanInternal ]

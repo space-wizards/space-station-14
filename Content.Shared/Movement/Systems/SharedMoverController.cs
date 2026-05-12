@@ -552,6 +552,9 @@ public abstract partial class SharedMoverController : VirtualController
             return sound != null;
         }
 
+        if (HasComp<SilentFootstepsComponent>(uid))
+            return false;
+
         var hasShoes = _inventory.TryGetSlotEntity(uid, "shoes", out var shoes);
 
         if (!hasShoes && HasComp<NoShoesSilentFootstepsComponent>(uid))

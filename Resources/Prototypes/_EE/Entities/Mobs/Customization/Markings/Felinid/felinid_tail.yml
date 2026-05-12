@@ -4,7 +4,8 @@
 - type: marking
   id: FelinidTailBasic
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
     state: basic_tail_tip
@@ -16,7 +17,8 @@
 - type: marking
   id: FelinidTailBasicWithBow
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
     state: basic_tail_tip
@@ -30,7 +32,8 @@
 - type: marking
   id: FelinidTailBasicWithBell
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
     state: basic_tail_tip
@@ -44,7 +47,8 @@
 - type: marking
   id: FelinidTailBasicWithBowAndBell
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tails.rsi
     state: basic_tail_tip
@@ -62,7 +66,8 @@
 - type: marking
   id: FelinidFluffyTail
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tail_fluffy.rsi
     state: Felinid_fluffy_tail_full
@@ -70,7 +75,8 @@
 - type: marking
   id: FelinidFluffyTailRings
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tail_fluffy.rsi
     state: Felinid_fluffy_tail_full
@@ -80,7 +86,8 @@
 - type: marking
   id: FelinidAlternativeTail
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tail_alternative.rsi
     state: m_waggingtail_cat_FRONT
@@ -88,7 +95,8 @@
 - type: marking
   id: FelinidTiger
   bodyPart: Tail
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-торс (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/tail_tiger.rsi
     state: m_tail_tiger_primary

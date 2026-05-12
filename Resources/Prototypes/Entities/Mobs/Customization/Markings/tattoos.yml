@@ -1,7 +1,7 @@
 - type: marking
   id: TattooHiveChest
   bodyPart: Chest
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -14,7 +14,7 @@
 - type: marking
   id: TattooNightlingChest
   bodyPart: Chest
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -27,7 +27,7 @@
 - type: marking
   id: TattooSilverburghLeftLeg
   bodyPart: LLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -40,7 +40,7 @@
 - type: marking
   id: TattooSilverburghRightLeg
   bodyPart: RLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -53,7 +53,7 @@
 - type: marking
   id: TattooCampbellLeftArm
   bodyPart: LArm
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -66,7 +66,7 @@
 - type: marking
   id: TattooCampbellRightArm
   bodyPart: RArm
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -79,7 +79,7 @@
 - type: marking
   id: TattooCampbellLeftLeg
   bodyPart: LLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -92,7 +92,7 @@
 - type: marking
   id: TattooCampbellRightLeg
   bodyPart: RLeg
-  groupWhitelist: [Human]
+  groupWhitelist: [Human, Felinid]
   coloring:
     default:
       type:
@@ -105,7 +105,7 @@
 - type: marking
   id: TattooEyeRight
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [Human, Slime, Reptilian, Felinid]
   coloring:
     default:
       type:
@@ -118,7 +118,7 @@
 - type: marking
   id: TattooEyeLeft
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [Human, Slime, Reptilian, Felinid]
   coloring:
     default:
       type:
@@ -188,7 +188,7 @@
   # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
   # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [Human, Slime, Reptilian, Felinid]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
@@ -197,7 +197,7 @@
 - type: marking
   id: TattooEyeshadowLower
   bodyPart: Eyes
-  groupWhitelist: [Human, Slime, Reptilian]
+  groupWhitelist: [Human, Slime, Reptilian, Felinid]
   forcedColoring: true
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi

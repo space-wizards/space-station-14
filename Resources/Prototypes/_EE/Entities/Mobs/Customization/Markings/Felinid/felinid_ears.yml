@@ -4,7 +4,8 @@
 - type: marking
   id: FelinidEarsBasic
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: basic_outer
@@ -14,7 +15,8 @@
 - type: marking
   id: FelinidEarsCurled
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: curled_outer
@@ -24,7 +26,8 @@
 - type: marking
   id: FelinidEarsDroopy
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: droopy_outer
@@ -34,7 +37,8 @@
 - type: marking
   id: FelinidEarsFuzzy
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: basic_outer
@@ -44,7 +48,8 @@
 - type: marking
   id: FelinidEarsStubby
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: stubby_outer
@@ -54,7 +59,8 @@
 - type: marking
   id: FelinidEarsTall
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: tall_outer
@@ -66,7 +72,8 @@
 - type: marking
   id: FelinidEarsTorn
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: torn_outer
@@ -76,7 +83,8 @@
 - type: marking
   id: FelinidEarsWide
   bodyPart: HeadTop
-  groupWhitelist: [ Felinid ]
+  # TODO: визуальная подгонка под Tiny human-голову (EE спрайты под scale 0.8), пока скрыто.
+  groupWhitelist: []
   sprites:
   - sprite: _EE/Mobs/Customization/Felinid/ears.rsi
     state: wide_outer
