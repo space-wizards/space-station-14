@@ -16,10 +16,10 @@ namespace Content.Shared.Body;
 /// <seealso cref="BodyRelayedEvent{TEvent}" />
 public sealed partial class BodySystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
-    [Dependency] private readonly EntityQuery<BodyComponent> _bodyQuery = default!;
-    [Dependency] private readonly EntityQuery<OrganComponent> _organQuery = default!;
+    [Dependency] private EntityQuery<BodyComponent> _bodyQuery = default!;
+    [Dependency] private EntityQuery<OrganComponent> _organQuery = default!;
 
     public override void Initialize()
     {

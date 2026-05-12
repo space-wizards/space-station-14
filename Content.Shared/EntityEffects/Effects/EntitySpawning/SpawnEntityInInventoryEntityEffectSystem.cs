@@ -10,7 +10,7 @@ namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEffectSystem<InventoryComponent, SpawnEntityInInventory>
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     protected override void Effect(Entity<InventoryComponent> entity, ref EntityEffectEvent<SpawnEntityInInventory> args)
     {

@@ -5,10 +5,10 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Weapons.Misc;
 
-public sealed class TetherGunSystem : SharedTetherGunSystem
+public sealed partial class TetherGunSystem : SharedTetherGunSystem
 {
-    [Dependency] private readonly PowerCellSystem _cell = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
