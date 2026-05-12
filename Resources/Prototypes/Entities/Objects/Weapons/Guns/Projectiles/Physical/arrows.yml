@@ -1,12 +1,12 @@
 - type: entity
+  abstract: true
   parent: [ BaseItem, SolutionDart ]
   id: BaseArrow
-  abstract: true
   components:
-  - type: Item
-    size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+  - type: Item
+    size: Small
   - type: Fixtures
     fixtures:
       fix1:
@@ -53,7 +53,6 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: solution
-
 
 - type: entity
   parent: BaseArrow

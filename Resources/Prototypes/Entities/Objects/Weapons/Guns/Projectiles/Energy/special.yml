@@ -1,8 +1,8 @@
 - type: entity
-  name: emitter bolt
-  id: EmitterBolt
   parent: BaseBullet
+  id: EmitterBolt
   categories: [ HideSpawnMenu ]
+  name: emitter bolt
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi

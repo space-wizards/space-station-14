@@ -1,19 +1,19 @@
 # One bullet to bring them all into the darkness and bind them
 - type: entity
+  abstract: true
   id: BaseBullet
   name: BaseBullet
   description: If you can see this you're probably dead!
-  abstract: true
   components:
-  - type: Reflective
-  - type: FlyBySound
-  - type: Clickable
   - type: Sprite
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: bullet
       shader: unshaded
+  - type: Reflective
+  - type: FlyBySound
+  - type: Clickable
   - type: Physics
     bodyType: Dynamic
   - type: TileFrictionModifier
@@ -47,9 +47,10 @@
     lifetime: 10
 
 - type: entity
-  id: BaseBulletTrigger # Trigger-on-collide bullets
   parent: BaseBullet
+  id: BaseBulletTrigger # Trigger-on-collide bullets
   categories: [ HideSpawnMenu ]
+  name: base bullet trigger
   components:
   - type: TriggerOnCollide
     fixtureID: projectile
@@ -70,10 +71,10 @@
       fly-by: *flybyfixture
 
 - type: entity
-  id: BaseBulletPractice
-  name: base bullet practice
   parent: BaseBullet
+  id: BaseBulletPractice
   categories: [ HideSpawnMenu ]
+  name: base bullet practice
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -85,10 +86,10 @@
         Blunt: 1
 
 - type: entity
-  id: BaseBulletIncendiary
-  name: base bullet incendiary
   parent: BaseBullet
+  id: BaseBulletIncendiary
   categories: [ HideSpawnMenu ]
+  name: base bullet incendiary
   components:
   - type: Projectile
     damage:
@@ -104,10 +105,10 @@
     fireStacks: 0.25
 
 - type: entity
-  id: BaseBulletAP
-  name: base bullet armor-piercing
   parent: BaseBullet
+  id: BaseBulletAP
   categories: [ HideSpawnMenu ]
+  name: base bullet armor-piercing
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -120,10 +121,10 @@
     ignoreResistances: true
 
 - type: entity
-  id: BaseBulletUranium
-  name: base bullet uranium
   parent: BaseBullet
+  id: BaseBulletUranium
   categories: [ HideSpawnMenu ]
+  name: base bullet uranium
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi

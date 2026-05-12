@@ -1,8 +1,8 @@
 - type: entity
-  name: watcher bolt
-  id: WatcherBolt
   parent: BaseBullet
+  id: WatcherBolt
   categories: [ HideSpawnMenu ]
+  name: watcher bolt
   components:
   - type: FlyBySound
     sound:
@@ -48,10 +48,10 @@
     heat: -50000
 
 - type: entity
-  name: magmawing watcher bolt
-  id: WatcherBoltMagmawing
   parent: WatcherBolt
+  id: WatcherBoltMagmawing
   categories: [ HideSpawnMenu ]
+  name: magmawing watcher bolt
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
@@ -73,8 +73,8 @@
 - type: entity
   parent: BaseBullet
   id: BasiliskRay
-  name: basilisk ray
   categories: [ HideSpawnMenu ]
+  name: basilisk ray
   components:
   - type: FlyBySound
     sound:

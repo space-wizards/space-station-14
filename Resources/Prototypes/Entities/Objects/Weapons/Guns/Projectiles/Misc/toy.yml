@@ -4,6 +4,10 @@
   name: foam dart
   description: I hope you're wearing eye protection.
   components:
+  - type: Sprite
+    sprite: Objects/Fun/Foam/foam_dart.rsi
+    layers:
+    - state: foamdart
   - type: Fixtures
     fixtures:
       fix1:
@@ -23,10 +27,6 @@
     - BulletFoam
     - Trash
   - type: Ammo
-  - type: Sprite
-    sprite: Objects/Fun/Foam/foam_dart.rsi
-    layers:
-    - state: foamdart
   - type: EmbeddableProjectile
     removalTime: .2
   - type: ThrowingAngle
@@ -34,10 +34,10 @@
   - type: LandAtCursor
 
 - type: entity
-  id: BulletCap
-  name: cap bullet
   parent: BaseBullet
+  id: BulletCap
   categories: [ HideSpawnMenu ]
+  name: cap bullet
   components:
   - type: Sprite
     sprite: Objects/Fun/capgun.rsi

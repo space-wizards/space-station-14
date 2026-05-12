@@ -1,8 +1,8 @@
 - type: entity
-  name: taser bolt
-  id: BulletTaser
   parent: BaseBullet
+  id: BulletTaser
   categories: [ HideSpawnMenu ]
+  name: taser bolt
   components:
   - type: FlyBySound
     sound:
@@ -84,10 +84,10 @@
     sprintSpeedModifier: 0.5
 
 - type: entity
-  name: disabler bolt
-  id: BulletDisabler
   parent: BaseBullet
+  id: BulletDisabler
   categories: [ HideSpawnMenu ]
+  name: disabler bolt
   components:
   - type: Reflective
     reflective:
@@ -127,10 +127,10 @@
     forceSound: true
 
 - type: entity
-  name: disabler bolt practice
-  id: BulletDisablerPractice
   parent: BaseBullet
+  id: BulletDisablerPractice
   categories: [ HideSpawnMenu ]
+  name: disabler bolt practice
   components:
   - type: FlyBySound
     sound:
@@ -167,10 +167,10 @@
     forceSound: true
 
 - type: entity
-  name: disabler bolt smg
-  id: BulletDisablerSmg
   parent: BaseBullet
+  id: BulletDisablerSmg
   categories: [ HideSpawnMenu ]
+  name: disabler bolt smg
   components:
   - type: Reflective
     reflective:
@@ -210,10 +210,10 @@
     forceSound: true
 
 - type: entity
-  name: disabling laser barrage
+  parent: BulletDisablerSmg
   id: BulletDisablerSmgSpread
   categories: [ HideSpawnMenu ]
-  parent: BulletDisablerSmg
+  name: disabling laser barrage
   components:
   - type: ProjectileSpread
     proto: BulletDisablerSmg

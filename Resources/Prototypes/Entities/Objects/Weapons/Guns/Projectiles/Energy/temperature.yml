@@ -1,8 +1,8 @@
-﻿- type: entity
-  name: freezing bolt
-  id: BoltTempgunCold
+- type: entity
   parent: WatcherBolt
+  id: BoltTempgunCold
   categories: [ HideSpawnMenu ]
+  name: freezing bolt
   components:
   - type: Reflective
     reflective:
@@ -19,10 +19,10 @@
     heat: -100000
 
 - type: entity
-  name: scorching bolt
-  id: BoltTempgunHot
   parent: WatcherBoltMagmawing
+  id: BoltTempgunHot
   categories: [ HideSpawnMenu ]
+  name: scorching bolt
   components:
   - type: Reflective
     reflective:

@@ -1,8 +1,8 @@
 - type: entity
-  id: BulletRocket
-  name: rocket
   parent: BaseBulletTrigger
+  id: BulletRocket
   categories: [ HideSpawnMenu ]
+  name: rocket
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -21,10 +21,10 @@
     energy: 0.5
 
 - type: entity
-  id: BulletWeakRocket
-  name: weak rocket
   parent: BaseBulletTrigger
+  id: BulletWeakRocket
   categories: [ HideSpawnMenu ]
+  name: weak rocket
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -43,10 +43,10 @@
     energy: 0.5
 
 - type: entity
-  id: BulletGrenadeBaton
-  name: baton grenade
   parent: BaseBullet
+  id: BulletGrenadeBaton
   categories: [ HideSpawnMenu ]
+  name: baton grenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -63,10 +63,10 @@
     damage: 80
 
 - type: entity
-  id: BulletGrenadeBlast
-  name: blast grenade
   parent: BaseBulletTrigger
+  id: BulletGrenadeBlast
   categories: [ HideSpawnMenu ]
+  name: blast grenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -81,10 +81,10 @@
     canCreateVacuum: false
 
 - type: entity
-  id: BulletGrenadeFlash
-  name: flash grenade
   parent: BaseBulletTrigger
+  id: BulletGrenadeFlash
   categories: [ HideSpawnMenu ]
+  name: flash grenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -97,10 +97,10 @@
   - type: DeleteOnTrigger
 
 - type: entity
-  id: BulletGrenadeFrag
-  name: frag grenade
   parent: BaseBulletTrigger
+  id: BulletGrenadeFrag
   categories: [ HideSpawnMenu ]
+  name: frag grenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -124,8 +124,8 @@
 - type: entity
   parent: BaseBulletTrigger
   id: BulletGrenadeCleanade
-  name: cleanade grenade round
   categories: [ HideSpawnMenu ]
+  name: cleanade grenade round
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -151,10 +151,10 @@
     tileBreakScale: 0.01
 
 - type: entity
-  id: BulletGrenadeEMP
-  name: EMP rocket
   parent: BaseBulletTrigger
+  id: BulletGrenadeEMP
   categories: [ HideSpawnMenu ]
+  name: EMP rocket
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -172,10 +172,10 @@
     energy: 0.5
 
 - type: entity
-  id: BulletCannonBall
-  name: cannonball
   parent: BaseBulletTrigger
+  id: BulletCannonBall
   categories: [ HideSpawnMenu ]
+  name: cannonball
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
