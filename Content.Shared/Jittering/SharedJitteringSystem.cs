@@ -5,7 +5,7 @@ namespace Content.Shared.Jittering;
 /// <summary>
 /// Handles "jitter" animations where a sprite erratically moves around its origin.
 /// </summary>
-public abstract class SharedJitteringSystem : EntitySystem
+public abstract partial class SharedJitteringSystem : EntitySystem
 {
     /// <summary>
     /// Adjusts the jittering of an active status effect.
