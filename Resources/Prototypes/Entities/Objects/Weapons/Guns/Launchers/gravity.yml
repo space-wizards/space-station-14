@@ -1,17 +1,10 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: BaseWeaponTetherGun
   name: tether gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
-  - type: Item
-    size: Normal
-  - type: TetherGun
-    frequency: 5
-    dampingRatio: 4
-  - type: ItemToggle
-    onUse: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
     layers:
@@ -20,6 +13,10 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
+  - type: Item
+    size: Normal
+  - type: ItemToggle
+    onUse: false
   - type: ToggleableVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -34,8 +31,11 @@
     visuals:
       enum.TetherVisualsStatus.Key:
         unshaded:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
+  - type: TetherGun
+    frequency: 5
+    dampingRatio: 4
 
 - type: entity
   parent: [ BaseWeaponTetherGun, PowerCellSlotMediumItem ]
@@ -61,19 +61,6 @@
   name: force gun
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
-  - type: Item
-    size: Normal
-  - type: ForceGun
-    frequency: 15
-    dampingRatio: 4
-    massLimit: 50
-    lineColor: "#18a2d5"
-    soundLaunch:
-      path: /Audio/Weapons/soup.ogg
-      params:
-        volume: 2
-  - type: ItemToggle
-    onUse: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
     layers:
@@ -82,6 +69,10 @@
       map: [ "unshaded" ]
       shader: unshaded
       visible: false
+  - type: Item
+    size: Normal
+  - type: ItemToggle
+    onUse: false
   - type: ToggleableVisuals
     spriteLayer: unshaded
     inhandVisuals:
@@ -96,8 +87,17 @@
     visuals:
       enum.TetherVisualsStatus.Key:
         unshaded:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
+  - type: ForceGun
+    frequency: 15
+    dampingRatio: 4
+    massLimit: 50
+    lineColor: "#18a2d5"
+    soundLaunch:
+      path: /Audio/Weapons/soup.ogg
+      params:
+        volume: 2
 
 - type: entity
   parent: [ BaseWeaponForceGun, PowerCellSlotMediumItem ]

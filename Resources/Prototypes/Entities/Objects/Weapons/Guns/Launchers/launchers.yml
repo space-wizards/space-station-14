@@ -6,19 +6,19 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
+  - type: Item
+    size: Ginormous
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     quickEquip: false
     slots:
     - Back
-  - type: Item
-    size: Ginormous
   - type: StaticPrice
     price: 500
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
   - type: Gun
     fireRate: 1
     projectileSpeed: 25 # Slower than a bullet, same speed as our old projectile limit.
@@ -39,15 +39,15 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,2
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     slots:
     - Back
     - suitStorage
-  - type: Item
-    size: Huge
-    shape:
-    - 0,0,4,2
   - type: AmmoCounter
   - type: BallisticAmmoProvider
     whitelist:
@@ -72,18 +72,18 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Huge
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     slots:
     - Back
     - suitStorage
-  - type: Item
-    size: Huge
   - type: AmmoCounter
   - type: GunRequiresWield
-  - type: ContainerContainer
-    containers:
-      revolver-ammo: !type:Container
   - type: RevolverAmmoProvider
     whitelist:
       tags:
@@ -210,6 +210,13 @@
   id: WeaponGrapplingGun
   name: grappling gun
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      visible: true
   - type: Item
     size: Small
     shape:
@@ -225,13 +232,6 @@
   - type: BasicEntityAmmoProvider
     proto: GrapplingHook
     capacity: 1
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-    layers:
-    - state: base
-    - state: base-unshaded
-      map: [ "unshaded" ]
-      visible: true
   - type: UseDelay
     delay: 1.5
   - type: Appearance
@@ -239,8 +239,8 @@
     visuals:
       enum.TetherVisualsStatus.Key:
         unshaded:
-          True: {state: base-unshaded}
-          False: {state: base-unshaded-off}
+          True: { state: base-unshaded }
+          False: { state: base-unshaded-off }
   - type: PacifismAllowedGun
 
 # Admeme
