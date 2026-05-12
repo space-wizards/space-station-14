@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -31,6 +32,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     private readonly IEntityManager _entityManager;
     private readonly IPrototypeManager _prototypes;
     private readonly IGameTiming _timing;
+    private readonly DamageableSystem _damageable;
     private readonly SpriteSystem _spriteSystem;
 
     public HealthAnalyzerControl()
@@ -43,6 +45,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         _prototypes = dependencies.Resolve<IPrototypeManager>();
         _timing = dependencies.Resolve<IGameTiming>();
         _spriteSystem = _entityManager.System<SpriteSystem>();
+        _damageable = _entityManager.System<DamageableSystem>();
     }
 
     /// <summary>
@@ -118,7 +121,8 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
         // Total Damage
-        DamageLabel.Text = damageable.TotalDamage.ToString();
+
+        DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
         // Alerts
         var showAlerts = unrevivable || bleeding;
@@ -147,10 +151,11 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
         // Damage Groups
         var damageSortedGroups =
-            damageable.DamagePerGroup.OrderByDescending(damage => damage.Value)
+            _damageable.GetDamagePerGroup(target.Value)
+                .OrderByDescending(damage => damage.Value)
                 .ToDictionary(x => x.Key, x => x.Value);
 
-        IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
+        var damagePerType = _damageable.GetAllDamage(target.Value).DamageDict;
 
         DrawDiagnosticGroups(damageSortedGroups, damagePerType);
     }
@@ -180,8 +185,8 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     }
 
     private void DrawDiagnosticGroups(
-        Dictionary<string, FixedPoint2> groups,
-        IReadOnlyDictionary<string, FixedPoint2> damageDict)
+        Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> groups,
+        IReadOnlyDictionary<ProtoId<DamageTypePrototype>, FixedPoint2> damageDict)
     {
         GroupsContainer.RemoveAllChildren();
 

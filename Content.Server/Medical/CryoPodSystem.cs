@@ -1,11 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Medical.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Medical.HealthAnalyzer;
 
@@ -13,11 +14,12 @@ namespace Content.Server.Medical;
 
 public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
-    [Dependency] private readonly GasAnalyzerSystem _gasAnalyzerSystem = default!;
-    [Dependency] private readonly SharedHealthAnalyzerSystem _healthAnalyzerSystem = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private GasCanisterSystem _gasCanisterSystem = default!;
+    [Dependency] private GasAnalyzerSystem _gasAnalyzerSystem = default!;
+    [Dependency] private SharedHealthAnalyzerSystem _healthAnalyzerSystem = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
 
     public override void Initialize()
@@ -56,11 +58,13 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient, true);
+        health.ScanMode = true;
+        var hasDamage = patient is null ? false : _damageable.GetTotalDamage(patient.Value) > 0;
 
         UI.ServerSendUiMessage(
             entity.Owner,
             CryoPodUiKey.Key,
-            new CryoPodUserMessage(gasMix, health, beakerCapacity, beaker, injecting)
+            new CryoPodUserMessage(gasMix, health, beakerCapacity, beaker, injecting, hasDamage)
         );
     }
 

@@ -15,25 +15,22 @@ namespace Content.Shared.Throwing;
 
 public sealed partial class CatchableSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ThrownItemSystem _thrown = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ThrownItemSystem _thrown = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    private EntityQuery<HandsComponent> _handsQuery;
-    private EntityQuery<CombatModeComponent> _combatModeQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
+    [Dependency] private EntityQuery<CombatModeComponent> _combatModeQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<CatchableComponent, ThrowDoHitEvent>(OnDoHit);
-
-        _handsQuery = GetEntityQuery<HandsComponent>();
-        _combatModeQuery = GetEntityQuery<CombatModeComponent>();
     }
 
     private void OnDoHit(Entity<CatchableComponent> ent, ref ThrowDoHitEvent args)
@@ -55,10 +52,7 @@ public sealed partial class CatchableSystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-        if (!rand.Prob(ent.Comp.CatchChance))
+        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.CatchChance, GetNetEntity(ent)))
             return;
 
         // Try to catch!
