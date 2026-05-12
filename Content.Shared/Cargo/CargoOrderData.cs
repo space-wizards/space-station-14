@@ -1,7 +1,8 @@
+using System.Text;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System.Text;
+
 namespace Content.Shared.Cargo
 {
     [DataDefinition, NetSerializable, Serializable]
@@ -34,15 +35,19 @@ namespace Content.Shared.Cargo
 
         [DataField]
         public string Requester { get; private set; }
+
         // public String RequesterRank; // TODO Figure out how to get Character ID card data
         // public int RequesterId;
         [DataField]
         public string Reason { get; private set; }
         public bool Approved;
+
         [ViewVariables]
         public bool Assigned;
+
         [ViewVariables]
         public NetEntity? AssignedEntity;
+
         [DataField]
         public string? Approver;
 
@@ -52,7 +57,14 @@ namespace Content.Shared.Cargo
         [DataField]
         public ProtoId<CargoAccountPrototype> Account;
 
-        public CargoOrderData(int orderId, ProtoId<CargoProductPrototype> product, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account)
+        public CargoOrderData(
+            int orderId,
+            ProtoId<CargoProductPrototype> product,
+            int amount,
+            string requester,
+            string reason,
+            ProtoId<CargoAccountPrototype> account
+        )
         {
             OrderId = orderId;
             Product = product;

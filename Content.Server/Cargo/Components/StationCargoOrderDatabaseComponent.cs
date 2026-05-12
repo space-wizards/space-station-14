@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
@@ -37,10 +35,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// Not every console can order from every market, but a console can't order from a market not on this list.
     /// </summary>
     [DataField]
-    public List<ProtoId<CargoMarketPrototype>> Markets = new()
-    {
-        "market",
-    };
+    public List<ProtoId<CargoMarketPrototype>> Markets = new() { "market" };
 
     // TODO: Can probably dump this
     /// <summary>
@@ -54,8 +49,10 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId PrinterOutput = "PaperCargoInvoice";
+
     [DataField]
     public TimeSpan OrderCheckDelay = TimeSpan.FromSeconds(10);
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextOrderCheck;
 }

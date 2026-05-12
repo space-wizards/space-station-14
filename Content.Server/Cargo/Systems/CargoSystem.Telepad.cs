@@ -7,9 +7,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power;
-using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
@@ -41,8 +39,10 @@ public sealed partial class CargoSystem
                 continue;
 
             // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (!TryGetLinkedConsole((uid, tele), out var console) ||
-                console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder)
+            if (
+                !TryGetLinkedConsole((uid, tele), out var console)
+                || console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder
+            )
                 continue;
 
             tele.CurrentOrders.Add(args.Order);
@@ -53,12 +53,16 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryGetLinkedConsole(Entity<CargoTelepadComponent> ent,
-        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console)
+    private bool TryGetLinkedConsole(
+        Entity<CargoTelepadComponent> ent,
+        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console
+    )
     {
         console = null;
-        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent) ||
-            sinkComponent.LinkedSources.FirstOrNull() is not { } linked)
+        if (
+            !TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent)
+            || sinkComponent.LinkedSources.FirstOrNull() is not { } linked
+        )
             return false;
 
         if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
@@ -67,7 +71,6 @@ public sealed partial class CargoSystem
         console = (linked, consoleComp);
         return true;
     }
-
 
     private void UpdateTelepad(float frameTime)
     {
@@ -135,8 +138,12 @@ public sealed partial class CargoSystem
         ent.Comp.CurrentOrders.Clear();
     }
 
-    private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
-        TransformComponent? xform = null)
+    private void SetEnabled(
+        EntityUid uid,
+        CargoTelepadComponent component,
+        ApcPowerReceiverComponent? receiver = null,
+        TransformComponent? xform = null
+    )
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
         if (!Resolve(uid, ref receiver, ref xform, false))
