@@ -1,4 +1,4 @@
-- type: vendingMachineInventory
+w- type: vendingMachineInventory
   id: JaniDrobeInventory
   startingInventory:
     ClothingUniformJumpsuitJanitor: 2
@@ -6,7 +6,7 @@
     ClothingHandsGlovesJanitor: 2
     ClothingShoesColorBlack: 2
     ClothingHeadHatPurplesoft: 2
-    ClothingBeltJanitor: 2
+    ClothingBeltJanitorFilled: 2
     ClothingHeadsetService: 2
     ClothingOuterWinterJani: 2
     ClothingNeckScarfStripedPurple: 3
