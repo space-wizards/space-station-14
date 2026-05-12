@@ -23,8 +23,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.4
         density: 100
         hard: false
@@ -57,8 +56,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 100
         hard: false
@@ -71,12 +69,11 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -92,8 +89,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 100
         hard: false
@@ -106,12 +102,11 @@
     totalIntensity: 50
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -132,8 +127,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 100
         hard: false
@@ -146,12 +140,11 @@
     totalIntensity: 100
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -174,12 +167,11 @@
     totalIntensity: 150
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1200
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -214,12 +206,11 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MaleScreams
@@ -233,8 +224,8 @@
             min: 1
             max: 2
       - !type:ExplodeBehavior
-
-# Cow Meteor
+      
+      # Cow Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorCow
@@ -253,12 +244,11 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Animals/cow_moo.ogg
@@ -273,8 +263,8 @@
             min: 1
             max: 2
       - !type:ExplodeBehavior
-
-# Clown Meteor
+      
+      # Clown Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorClown
@@ -293,12 +283,11 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Items/bikehorn.ogg
@@ -316,8 +305,8 @@
             min: 0
             max: 1
       - !type:ExplodeBehavior
-
-# Potato Meteor
+      
+      # Potato Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorPotato
@@ -335,12 +324,11 @@
         Quantity: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
       - !type:SpillBehavior
         solution: solution
       - !type:SpawnEntitiesBehavior

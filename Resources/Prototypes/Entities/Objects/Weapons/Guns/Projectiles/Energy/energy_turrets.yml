@@ -2,7 +2,7 @@
   name: energy bolt
   id: BulletEnergyTurretBase
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Reflective
     reflective:
@@ -21,8 +21,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -42,7 +41,7 @@
   name: laser bolt
   id: BulletEnergyTurretLaser
   parent: BulletEnergyTurretBase
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectHeavyLaser
@@ -61,7 +60,7 @@
   name: disabler bolt
   id: BulletEnergyTurretDisabler
   parent: BulletEnergyTurretBase
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser
@@ -85,7 +84,7 @@
   name: tesla gun lightning
   id: TeslaGunBullet
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 5
@@ -112,4 +111,4 @@
     requirePower: false
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu

@@ -2,7 +2,7 @@
   name: freezing bolt
   id: BoltTempgunCold
   parent: WatcherBolt
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Reflective
     reflective:
@@ -22,7 +22,7 @@
   name: scorching bolt
   id: BoltTempgunHot
   parent: WatcherBoltMagmawing
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Reflective
     reflective:

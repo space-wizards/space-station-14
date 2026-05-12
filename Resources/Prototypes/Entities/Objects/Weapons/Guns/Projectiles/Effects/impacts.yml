@@ -1,6 +1,6 @@
 - type: entity
   id: BulletImpactEffect
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 0.25
@@ -14,29 +14,29 @@
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
 
 - type: entity
   id: BulletImpactEffectDisabler
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
-    - type: TimedDespawn
-      lifetime: 0.2
-    - type: Sprite
-      drawdepth: Effects
-      layers:
-        - shader: unshaded
-          map: ["enum.EffectLayers.Unshaded"]
-          sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-          state: impact_laser_blue
-    - type: EffectVisuals
-    - type: Tag
-      tags:
-        - HideContextMenu
+  - type: TimedDespawn
+    lifetime: 0.2
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+      state: impact_laser_blue
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
 
 - type: entity
   id: BulletImpactEffectOrangeDisabler
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 0.2
@@ -55,7 +55,7 @@
 
 - type: entity
   id: BulletImpactEffectKinetic
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 0.2
@@ -69,4 +69,4 @@
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu

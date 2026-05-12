@@ -2,7 +2,7 @@
   id: BulletKinetic
   name: kinetic bolt
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   description: Not too bad, but you still don't want to get hit by it.
   components:
   - type: Reflective
@@ -28,7 +28,7 @@
 - type: entity
   id: BulletKineticShuttle
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     noRot: false
@@ -56,7 +56,7 @@
   id: BulletCharge
   name: charge bolt
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   description: Marks a target for additional damage.
   components:
   - type: Reflective
@@ -66,13 +66,13 @@
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: chronobolt
-        shader: unshaded
+    - state: chronobolt
+      shader: unshaded
   - type: GatheringProjectile
   - type: DamageMarkerOnCollide
     whitelist:
       components:
-        - MobState
+      - MobState
     damage:
       types:
         Blunt: 18
@@ -95,7 +95,7 @@
   - type: DamageMarkerOnCollide
     whitelist:
       components:
-        - MobState
+      - MobState
     damage:
       types:
         Blunt: 1

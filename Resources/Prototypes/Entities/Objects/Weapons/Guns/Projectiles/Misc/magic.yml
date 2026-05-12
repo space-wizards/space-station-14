@@ -3,7 +3,7 @@
   name: fireball
   description: You better GITTAH WEIGH.
   parent: BulletRocket
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: PointLight
     color: "#E25822"
@@ -31,7 +31,7 @@
     fireStacks: 0.35
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   parent: BaseBulletTrigger
   id: ProjectileDragonsBreath
   name: dragon's breath
@@ -68,7 +68,7 @@
   name: fireball
   description: Hovering blob of flame.
   parent: ProjectileFireball
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 30
@@ -84,7 +84,7 @@
   name: cursed locker
   description: A cursed magical locker! Can you resist?
   parent: ClosetSteelBase
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: ResistLocker
     resistTime: 30
@@ -93,7 +93,7 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - MobState
+      - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
@@ -112,18 +112,18 @@
     sprite: Structures/Storage/closet.rsi
     layers:
     - state: cursed
-      map: [ "enum.StorageVisualLayers.Base" ]
+      map: ["enum.StorageVisualLayers.Base"]
     - state: decursed_door
-      map: [ "enum.StorageVisualLayers.Door" ]
+      map: ["enum.StorageVisualLayers.Door"]
     - state: paper
       visible: false
       sprite: Structures/Storage/closet_labels.rsi
-      map: [ "enum.PaperLabelVisuals.Layer" ]
+      map: ["enum.PaperLabelVisuals.Layer"]
     - state: cursed_door
-      map: [ "enum.LockVisualLayers.Lock" ]
+      map: ["enum.LockVisualLayers.Lock"]
     - state: welded
       visible: false
-      map: [ "enum.WeldableLayers.BaseWelded" ]
+      map: ["enum.WeldableLayers.BaseWelded"]
   #TODO: Will have to eventually make a custom visualizer for cursed lockers
   - type: EntityStorageVisuals
     stateBaseClosed: decursed
@@ -132,8 +132,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 75
         mask:
@@ -141,8 +140,7 @@
         layer:
         - MachineLayer
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
@@ -162,7 +160,7 @@
   id: ProjectilePolyboltBase
   abstract: true
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -186,7 +184,7 @@
   parent: ProjectilePolyboltBase
   name: carp polybolt
   description: Nooo, I don't wanna be fish!
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCarp
@@ -200,7 +198,7 @@
   parent: ProjectilePolyboltBase
   name: monkey polybolt
   description: Nooo, I don't wanna be monkey!
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedMonkey
@@ -214,7 +212,7 @@
   parent: ProjectilePolyboltBase
   name: door polybolt
   description: Nooo, I don't wanna be door!
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -236,7 +234,7 @@
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -263,7 +261,7 @@
   id: BulletInstakillMagic
   name: magical lead cylinder
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   description: This looks familiar.
   components:
   - type: Projectile
@@ -277,7 +275,7 @@
   parent: ProjectilePolyboltBase
   name: cluwne polybolt
   description: KnoH KnoH!
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCluwne
@@ -291,7 +289,7 @@
   parent: BaseBullet
   name: icicle
   description: Brrrrr.
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
@@ -307,7 +305,7 @@
   id: ProjectilePolyboltBread
   name: bread polybolt
   description: Nooo, I don't wanna be bread!
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: PolymorphOnTrigger
     polymorph: BreadMorph

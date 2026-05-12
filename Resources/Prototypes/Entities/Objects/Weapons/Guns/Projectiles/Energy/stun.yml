@@ -2,7 +2,7 @@
   name: taser bolt
   id: BulletTaser
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: FlyBySound
     sound:
@@ -20,8 +20,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
@@ -58,7 +57,7 @@
 - type: entity
   parent: BulletTaser
   id: BulletTaserSuper
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   name: taser bolt
   description: If you can see this, you've probably been stun-meta'd
   components:
@@ -88,7 +87,7 @@
   name: disabler bolt
   id: BulletDisabler
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Reflective
     reflective:
@@ -107,8 +106,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -132,7 +130,7 @@
   name: disabler bolt practice
   id: BulletDisablerPractice
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: FlyBySound
     sound:
@@ -148,8 +146,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -173,7 +170,7 @@
   name: disabler bolt smg
   id: BulletDisablerSmg
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Reflective
     reflective:
@@ -192,8 +189,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.3,0.15,0.3"
         hard: false
         mask:
@@ -216,7 +212,7 @@
 - type: entity
   name: disabling laser barrage
   id: BulletDisablerSmgSpread
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   parent: BulletDisablerSmg
   components:
   - type: ProjectileSpread
@@ -228,7 +224,7 @@
 - type: entity
   parent: [SolutionAmmo, BaseBullet]
   id: EnergyCrossbowBolt
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   name: energy bolt
   description: This'll hurt.
   components:

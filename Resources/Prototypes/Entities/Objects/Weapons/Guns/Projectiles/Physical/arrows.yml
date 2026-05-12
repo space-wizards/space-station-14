@@ -18,8 +18,7 @@
         restitution: 0.3
         friction: 0.2
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.3,0.1,-0.1"
         hard: false
         mask:

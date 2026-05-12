@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: MuzzleFlashEffect
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: TimedDespawn
     lifetime: 0.4
@@ -14,13 +14,13 @@
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
   parent: MuzzleFlashEffect
   id: MuzzleFlashEffectOmnilaser
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     drawdepth: BelowMobs
@@ -34,7 +34,7 @@
 - type: entity
   parent: MuzzleFlashEffect
   id: MuzzleFlashEffectHeavyLaser
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     drawdepth: BelowMobs

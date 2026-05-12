@@ -2,7 +2,7 @@
   name: watcher bolt
   id: WatcherBolt
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: FlyBySound
     sound:
@@ -20,8 +20,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
         hard: false
         mask:
@@ -52,7 +51,7 @@
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
   parent: WatcherBolt
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
@@ -75,7 +74,7 @@
   parent: BaseBullet
   id: BasiliskRay
   name: basilisk ray
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: FlyBySound
     sound:
@@ -93,8 +92,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.05,-0.05,0.05,0.05"
         hard: false
         mask:

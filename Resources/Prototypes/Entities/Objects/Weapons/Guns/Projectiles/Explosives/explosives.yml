@@ -2,7 +2,7 @@
   id: BulletRocket
   name: rocket
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -24,7 +24,7 @@
   id: BulletWeakRocket
   name: weak rocket
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -46,7 +46,7 @@
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -66,7 +66,7 @@
   id: BulletGrenadeBlast
   name: blast grenade
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -84,7 +84,7 @@
   id: BulletGrenadeFlash
   name: flash grenade
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -100,7 +100,7 @@
   id: BulletGrenadeFrag
   name: frag grenade
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -125,7 +125,7 @@
   parent: BaseBulletTrigger
   id: BulletGrenadeCleanade
   name: cleanade grenade round
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -154,7 +154,7 @@
   id: BulletGrenadeEMP
   name: EMP rocket
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -175,7 +175,7 @@
   id: BulletCannonBall
   name: cannonball
   parent: BaseBulletTrigger
-  categories: [ HideSpawnMenu ]
+  categories: [HideSpawnMenu]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
