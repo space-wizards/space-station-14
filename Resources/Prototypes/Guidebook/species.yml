@@ -12,6 +12,7 @@
   - SlimePerson
   - Vox
   - Vulpkanin
+  - Felinid
 
 - type: guideEntry
   id: Arachnid
@@ -57,3 +58,8 @@
   id: Vulpkanin
   name: species-name-vulpkanin
   text: "/ServerInfo/Guidebook/Mobs/Vulpkanin.xml"
+
+- type: guideEntry
+  id: Felinid
+  name: species-name-felinid
+  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"

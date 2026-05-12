@@ -10,6 +10,10 @@ namespace Content.Shared.Flash;
 public record struct FlashAttemptEvent(EntityUid Target, EntityUid? User, EntityUid? Used, bool Cancelled = false) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.HEAD | SlotFlags.EYES | SlotFlags.MASK;
+
+    public float DurationMultiplier = 1f;
+
+    public int EyeDamage = 0;
 }
 
 /// <summary>
