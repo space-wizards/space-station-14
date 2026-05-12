@@ -8,27 +8,34 @@
     <BoxContainer
         Margin="-14,-2"
         HorizontalExpand="True"
-        Orientation="Vertical"
-        SeparationOverride="6">
+        Orientation="Vertical">
 
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="WindowHeadingBackground" />
 
-            <BoxContainer Margin="6">
+            <BoxContainer >
+                <Control MinWidth="5" />
                 <Label
                     Name="Title"
-                    MaxHeight="28"
+                    MaxHeight="20"
                     Access="Public"
                     StyleClasses="LabelKeyText" />
+                <Control HorizontalExpand="True" />
+                <RichTextLabel
+                        Name="Requester"
+                        Access="Public"
+                        MaxHeight="20"
+                        HorizontalAlignment="Right"/>
+                <Control MinWidth="15" />
             </BoxContainer>
-
+            <Control MinHeight="3" />
             <PanelContainer
                 Name="Stride"
                 Access="Public"
                 StyleClasses="LowDivider" />
         </BoxContainer>
-
-        <!--  Info  -->
+        <Control MinHeight="2" />
+        <!--  Products  -->
         <BoxContainer
             Name="Products"
             Access="Public"
@@ -37,6 +44,7 @@
             VerticalExpand="True">
             <!--  Products are added here by code  -->
         </BoxContainer>
+        <Control MinHeight="2" />
         <BoxContainer
             VerticalAlignment="Bottom"
             HorizontalExpand="True"
@@ -85,11 +93,11 @@
                     VerticalExpand="True" />
             </BoxContainer>
         </BoxContainer>
-
-        <BoxContainer Orientation="Vertical">
+        <Control MinHeight="4" />
+        <BoxContainer Name="Buttons" Orientation="Vertical" Access="Public">
             <PanelContainer StyleClasses="LowDivider" />
             <!--  Buttons  -->
-            <BoxContainer Margin="6">
+            <BoxContainer Margin="3">
                 <Button
                     Name="Approve"
                     Access="Public"

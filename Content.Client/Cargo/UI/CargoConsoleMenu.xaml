@@ -2,8 +2,8 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    MinSize="540 390"
-    SetSize="995 600">
+    MinSize="600 450"
+    SetSize="995 650">
 
     <!--  Main Container  -->
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
@@ -70,8 +70,7 @@
 
                         <OptionButton
                             Name="Categories"
-                            Prefix="{Loc 'cargo-console-menu-categories-label'}"
-                            StyleClasses="OpenLeft" />
+                            Prefix="{Loc 'cargo-console-menu-categories-label'}" />
                     </BoxContainer>
 
                     <!--  Product list  -->

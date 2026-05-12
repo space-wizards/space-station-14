@@ -5,7 +5,6 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
@@ -63,12 +62,9 @@ namespace Content.Client.Cargo.BUI
             var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
-            string orderRequester;
-
-            if (EntMan.EntityExists(localPlayer))
-                orderRequester = Identity.Name(localPlayer.Value, EntMan);
-            else
-                orderRequester = string.Empty;
+            var orderRequester = (EntMan.EntityExists(localPlayer)
+                ? _cargoSystem.GetNameAndId(Owner, localPlayer.Value)
+                : null) ?? Loc.GetString("cargo-console-paper-approver-default");
 
             _orderMenu = new CargoConsoleOrderMenu();
 

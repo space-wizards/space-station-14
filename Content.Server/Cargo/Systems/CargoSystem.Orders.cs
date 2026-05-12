@@ -8,7 +8,6 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
@@ -188,9 +187,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, player);
-                RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-                order.SetApproverData(tryGetIdentityShortInfoEvent.Title);
+                order.SetApproverData(GetNameAndId(uid, player));
                 var message = GetApprovedRadioMessage(order);
                 _radio.SendRadioMessage(uid, message, account.RadioChannel, uid, escapeMarkup: false);
                 if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
@@ -241,7 +238,7 @@ namespace Content.Server.Cargo.Systems
             }
             message += Loc.GetString(
                 "cargo-console-unlock-approved-order-broadcast-footer",
-                ("approver", order.Approver ?? string.Empty),
+                ("approver", order.Approver ?? Loc.GetString("cargo-console-paper-approver-default")),
                 ("cost", GetBasketTotalCost(order.Basket))
             );
             return message;

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.HijackBeacon;
@@ -6,7 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Cargo;
 
@@ -358,6 +359,13 @@ public abstract partial class SharedCargoSystem : EntitySystem
         return !container.IsSingleProduct
             && GetContainerItemCount(container) == 1
             && !container.CrateRequired;
+    }
+
+    public string? GetNameAndId(EntityUid whileInteractingWith, EntityUid forActor)
+    {
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(whileInteractingWith, forActor);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        return tryGetIdentityShortInfoEvent.Title;
     }
 
 }

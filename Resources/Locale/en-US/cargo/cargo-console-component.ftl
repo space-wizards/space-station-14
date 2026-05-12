@@ -22,7 +22,8 @@ cargo-console-menu-orders-label = Orders
 cargo-console-menu-populate-categories-all-text = All
 cargo-console-menu-order-row-title = Order {$orderID}
 cargo-console-menu-order-row-product-reason = Reason: {$orderReason}
-cargo-console-menu-order-row-product-description = Requested by: {$orderRequester} from [color={$accountColor}]{$account}[/color]
+cargo-console-menu-order-row-product-description = Account Used: {$accountName} \[[color={$accountColor}]{$account}[/color]\]
+cargo-console-menu-order-row-product-requester = {$requester}
 cargo-console-menu-order-row-button-approve = Approve
 cargo-console-menu-order-row-button-cancel = Cancel
 cargo-console-menu-order-row-alerts-reason-absent = The reason is not specified

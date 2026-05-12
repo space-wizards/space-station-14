@@ -11,7 +11,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.UI
@@ -89,12 +88,12 @@ namespace Content.Client.Cargo.UI
                     !_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
                     return true;
 
-                return val >= 0 && val <= (int) (console.TransferLimit * bank.Accounts[console.Account]);
+                return val >= 0 && val <= (int)(console.TransferLimit * bank.Accounts[console.Account]);
             };
 
             AccountActionButton.OnPressed += _ =>
             {
-                var account = (ProtoId<CargoAccountPrototype>?) ActionOptions.SelectedMetadata;
+                var account = (ProtoId<CargoAccountPrototype>?)ActionOptions.SelectedMetadata;
                 OnAccountAction?.Invoke(account, TransferSpinBox.Value);
             };
 
@@ -200,8 +199,8 @@ namespace Content.Client.Cargo.UI
                 description += "\n";
                 description += Loc.GetString(
                                 "cargo-console-menu-order-row-product-description",
-                                ("orderRequester", requester),
                                 ("accountColor", account.Color),
+                                ("accountName", Loc.GetString(account.Name)),
                                 ("account", Loc.GetString(account.Code)));
                 var row = new CargoOrderRow
                 {
@@ -212,6 +211,11 @@ namespace Content.Client.Cargo.UI
                         Text = Loc.GetString(
                             "cargo-console-menu-order-row-title",
                             ("orderID", order.OrderId)),
+                    },
+
+                    Requester =
+                    {
+                        Text = requester,
                     },
 
                     Stride =
@@ -246,32 +250,36 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket)).ToString())),
                     },
+
+                    Buttons =
+                    {
+                        Visible = true
+                    },
                 };
                 foreach (var item in order.Basket)
                 {
                     if (!_protoManager.Resolve<CargoProductPrototype>(item.Product, out var prototype))
                         continue;
 
-                    var rowrow = new CargoOrderSubRow
+                    var subRow = new CargoOrderSubRow
                     {
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                         ProductName = { Text = prototype.Name },
                         Amount = { Text = $"x{item.Quantity}" },
                         PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", (prototype.Cost * item.Quantity).ToString())) },
                     };
-                    row.Products.AddChild(rowrow);
+                    row.Products.AddChild(subRow);
                 }
 
 
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(order); };
 
-                // TODO: Disable based on access.
                 row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
                 row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
 
                 Orders.AddChild(new Robust.Client.UserInterface.Control
                 {
-                    MinHeight = 5
+                    MinHeight = 3
                 });
                 Orders.AddChild(row);
             }
@@ -300,10 +308,10 @@ namespace Content.Client.Cargo.UI
                 description += "\n";
                 description += Loc.GetString(
                                 "cargo-console-menu-order-row-product-description",
-                                ("orderRequester", requester),
                                 ("accountColor", account.Color),
+                                ("accountName", Loc.GetString(account.Name)),
                                 ("account", Loc.GetString(account.Code)));
-                var row = new CargoOrderHistoryRow
+                var row = new CargoOrderRow
                 {
                     Order = order,
 
@@ -312,6 +320,13 @@ namespace Content.Client.Cargo.UI
                         Text = Loc.GetString(
                             "cargo-console-menu-order-row-title",
                             ("orderID", order.OrderId)),
+                    },
+
+                    Requester =
+                    {
+                        Text = Loc.GetString(
+                            "cargo-console-menu-order-row-product-requester",
+                            ("requester", requester)),
                     },
 
                     Stride =
@@ -346,6 +361,11 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", _cargoSystem.GetContainersCost(_cargoSystem.PackBasketIntoContainers(ref order.Basket)).ToString())),
                     },
+
+                    Buttons =
+                    {
+                        Visible = false
+                    },
                 };
                 foreach (var item in order.Basket)
                 {
@@ -364,7 +384,7 @@ namespace Content.Client.Cargo.UI
 
                 OrderHistory.AddChild(new Robust.Client.UserInterface.Control
                 {
-                    MinHeight = 5
+                    MinHeight = 3
                 });
                 OrderHistory.AddChild(row);
             }
