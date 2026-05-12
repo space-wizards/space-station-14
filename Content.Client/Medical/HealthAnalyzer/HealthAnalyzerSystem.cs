@@ -2,4 +2,4 @@
 
 namespace Content.Client.Medical.HealthAnalyzer;
 
-public sealed class HealthAnalyzerSystem : SharedHealthAnalyzerSystem;
+public sealed partial class HealthAnalyzerSystem : SharedHealthAnalyzerSystem;

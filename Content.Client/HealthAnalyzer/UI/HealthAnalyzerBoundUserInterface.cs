@@ -6,22 +6,24 @@ using Content.Shared.MedicalScanner;
 using Content.Shared.Traits.Assorted;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.HealthAnalyzer.UI;
 
 [UsedImplicitly]
 public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
 {
-    private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly BloodstreamSystem _bloodstream = default!;
+    private readonly SolutionContainerSystem _solutionContainer = default!;
 
     [ViewVariables]
     private HealthAnalyzerWindow? _window;
 
     public HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        _solutionContainer = EntMan.System<SolutionContainerSystem>();
         _bloodstream = EntMan.System<BloodstreamSystem>();
+        _solutionContainer = EntMan.System<SolutionContainerSystem>();
     }
 
     protected override void Open()
@@ -33,12 +35,9 @@ public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
-        if (_window == null)
-            return;
-
-        if (message is not HealthAnalyzerScannedUserMessage cast)
+        if (_window == null || state is not HealthAnalyzerUiState cast)
             return;
 
         _window.Populate(cast);
@@ -50,7 +49,7 @@ public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     /// </summary>
     public override void Update()
     {
-        if (_window == null || !EntMan.TryGetComponent<HealthAnalyzerComponent>(Owner, out var analyzer))
+        if (_window == null || _timing.ApplyingState || !EntMan.TryGetComponent<HealthAnalyzerComponent>(Owner, out var analyzer))
             return;
 
         if (analyzer.ScannedEntity is null)

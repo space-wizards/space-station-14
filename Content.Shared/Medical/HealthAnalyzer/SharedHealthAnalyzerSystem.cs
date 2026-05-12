@@ -20,7 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.HealthAnalyzer;
 
-public abstract class SharedHealthAnalyzerSystem : EntitySystem
+public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -56,7 +56,7 @@ public abstract class SharedHealthAnalyzerSystem : EntitySystem
 
             if (Deleted(patient))
             {
-                StopAnalyzingEntity((analyzer, component), patient);
+                StopAnalyzingEntity((analyzer, component));
                 continue;
             }
 
@@ -128,16 +128,16 @@ public abstract class SharedHealthAnalyzerSystem : EntitySystem
     /// </summary>
     private void OnToggled(Entity<HealthAnalyzerComponent> analyzer, ref ItemToggledEvent args)
     {
-        if (!args.Activated && analyzer.Comp.ScannedEntity is { } patient)
-            StopAnalyzingEntity(analyzer, patient);
+        if (!args.Activated && analyzer.Comp.ScannedEntity is not null)
+            StopAnalyzingEntity(analyzer);
     }
 
     /// <summary>
-    /// Turn off the analyser when dropped
+    /// Turn off the analyzer when dropped
     /// </summary>
     private void OnDropped(Entity<HealthAnalyzerComponent> uid, ref DroppedEvent args)
     {
-        if (uid.Comp.ScannedEntity is { } patient)
+        if (uid.Comp.ScannedEntity is not null)
             _toggle.TryDeactivate(uid.Owner);
     }
 
@@ -159,6 +159,7 @@ public abstract class SharedHealthAnalyzerSystem : EntitySystem
         //Link the health analyzer to the scanned entity
         analyzer.Comp.ScannedEntity = target;
         analyzer.Comp.IsAnalyzerActive = true;
+        analyzer.Comp.NextUpdate = _timing.CurTime + analyzer.Comp.UpdateInterval;
 
         _toggle.TryActivate(analyzer.Owner);
 
@@ -171,7 +172,7 @@ public abstract class SharedHealthAnalyzerSystem : EntitySystem
     /// </summary>
     /// <param name="analyzer">The health analyzer that's receiving the updates</param>
     /// <param name="target">The entity to analyze</param>
-    private void StopAnalyzingEntity(Entity<HealthAnalyzerComponent> analyzer, EntityUid target)
+    private void StopAnalyzingEntity(Entity<HealthAnalyzerComponent> analyzer)
     {
         //Unlink the analyzer
         analyzer.Comp.ScannedEntity = null;
@@ -181,7 +182,6 @@ public abstract class SharedHealthAnalyzerSystem : EntitySystem
         DirtyField(analyzer.AsNullable(), nameof(analyzer.Comp.ScannedEntity));
         UpdateUi(analyzer);
     }
-
 
     /// <summary>
     /// If the scanner is active, sends one last update and sets it to inactive.

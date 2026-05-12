@@ -6,7 +6,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs;
@@ -18,8 +17,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+
 namespace Content.Client.HealthAnalyzer.UI;
 
 // Health analyzer UI is split from its window because it's used by both the
@@ -31,7 +30,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     private readonly IResourceCache _cache;
     private readonly IEntityManager _entityManager;
     private readonly IPrototypeManager _prototypes;
-    private readonly IGameTiming _timing;
     private readonly DamageableSystem _damageable;
     private readonly SpriteSystem _spriteSystem;
 
@@ -43,7 +41,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
         _cache = dependencies.Resolve<IResourceCache>();
         _entityManager = dependencies.Resolve<IEntityManager>();
         _prototypes = dependencies.Resolve<IPrototypeManager>();
-        _timing = dependencies.Resolve<IGameTiming>();
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _damageable = _entityManager.System<DamageableSystem>();
     }
@@ -68,9 +65,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <param name="bleeding">Whether this entity is bleeding.</param>
     public void Populate(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
     {
-        if (_timing.IsFirstTimePredicted)
-            return;
-
         var target = _entityManager.GetEntity(targetEntity);
 
         if (target == null || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
