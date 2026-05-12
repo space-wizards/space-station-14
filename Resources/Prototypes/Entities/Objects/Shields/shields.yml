@@ -155,6 +155,7 @@
     - type: Sprite
       state: buckler-icon
     - type: Item
+      size: Huge
       heldPrefix: buckler
     - type: Blocking
       passiveBlockModifier:

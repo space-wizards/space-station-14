@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesKnightFirst
+  values:
+    prefix: names-knight-first-dataset-
+    count: 27

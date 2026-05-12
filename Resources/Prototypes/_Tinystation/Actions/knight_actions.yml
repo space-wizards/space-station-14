@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseAction
+  id: ActionKnightLayOnHands
+  name: Lay on Hands
+  description: Channel holy energy to heal a living creature.
+  components:
+  - type: Action
+    useDelay: 45
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Tinystation/Interface/Actions/knight_actions.rsi
+      state: lay_on_hands
+  - type: TargetAction
+    repeat: false
+    deselectOnMiss: true
+    range: 8
+    checkCanAccess: true
+    targetingIndicator: true
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - MobState
+    canTargetSelf: false
+    event: !type:KnightLayOnHandsEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionKnightRighteousFury
+  name: Righteous Fury
+  description: When wounded, your righteous fury ignites — increasing attack power and speed!
+  components:
+  - type: Action
+    useDelay: 15
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Tinystation/Interface/Actions/knight_actions.rsi
+      state: righteous_fury
+  - type: InstantAction
+    event: !type:KnightRighteousFuryEvent

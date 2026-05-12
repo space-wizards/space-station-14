@@ -1,0 +1,7 @@
+- type: speechVerb
+  id: Knight
+  name: chat-speech-verb-name-knight
+  speechVerbStrings:
+  - chat-speech-verb-knight-1
+  - chat-speech-verb-knight-2
+  - chat-speech-verb-knight-3
