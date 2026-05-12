@@ -147,9 +147,17 @@ public sealed partial class MarkingManager
                     continue;
                 }
 
-                if (marking.Sprites.Count != markings[i].MarkingColors.Count)
+                var existingColors = markings[i].MarkingColors;
+                // If there are less colors than sprites, use existing colors and fill missing spots with white
+                if (marking.Sprites.Count > existingColors.Count)
                 {
-                    markings[i] = new Marking(marking.ID, marking.Sprites.Count);
+                    var missingColors = Enumerable.Repeat(Color.White, marking.Sprites.Count - existingColors.Count);
+                    markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
+                }
+                // If there are more colors than sprites, just drop the extras
+                else if (marking.Sprites.Count < existingColors.Count)
+                {
+                    markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
                 }
             }
         }
