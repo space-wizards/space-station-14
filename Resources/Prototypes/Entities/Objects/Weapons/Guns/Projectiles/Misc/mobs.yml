@@ -2,7 +2,7 @@
   name: watcher bolt
   id: WatcherBolt
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
     sound:
@@ -37,7 +37,7 @@
         - LowImpassable
         hard: False
   - type: Projectile
-    #   soundHit:  Waiting on serv3
+    #soundHit: Waiting on serv3
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
@@ -51,7 +51,7 @@
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
   parent: WatcherBolt
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
@@ -62,7 +62,7 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Projectile
-    #   soundHit:  Waiting on serv3
+    #soundHit: Waiting on serv3
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
@@ -74,7 +74,7 @@
   parent: BaseBullet
   id: BasiliskRay
   name: basilisk ray
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
     sound:

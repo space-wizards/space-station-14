@@ -1,5 +1,5 @@
 - type: entity
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   id: BulletAntiMateriel
   name: bullet (.60 anti-materiel)

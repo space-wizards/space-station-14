@@ -2,7 +2,7 @@
   name: emitter bolt
   id: EmitterBolt
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
@@ -30,7 +30,7 @@
         - LowImpassable
         hard: False
   - type: Projectile
-    #   soundHit:  Waiting on serv3
+    #soundHit: Waiting on serv3
     damage:
       types:
         Heat: 14

@@ -73,7 +73,7 @@
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -106,7 +106,7 @@
         damage: 300
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -144,7 +144,7 @@
         damage: 500
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -171,7 +171,7 @@
         damage: 1200
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -210,7 +210,7 @@
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MaleScreams
@@ -248,7 +248,7 @@
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Animals/cow_moo.ogg
@@ -287,7 +287,7 @@
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Items/bikehorn.ogg
@@ -328,7 +328,7 @@
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:SpillBehavior
         solution: solution
       - !type:SpawnEntitiesBehavior

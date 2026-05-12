@@ -2,7 +2,7 @@
   name: energy bolt
   id: BulletEnergyTurretBase
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
@@ -41,7 +41,7 @@
   name: laser bolt
   id: BulletEnergyTurretLaser
   parent: BulletEnergyTurretBase
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectHeavyLaser
@@ -60,7 +60,7 @@
   name: disabler bolt
   id: BulletEnergyTurretDisabler
   parent: BulletEnergyTurretBase
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser
@@ -84,7 +84,7 @@
   name: tesla gun lightning
   id: TeslaGunBullet
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 5

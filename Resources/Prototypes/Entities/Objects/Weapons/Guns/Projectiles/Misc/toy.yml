@@ -37,7 +37,7 @@
   id: BulletCap
   name: cap bullet
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/capgun.rsi

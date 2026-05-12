@@ -2,7 +2,7 @@
   name: laser bolt
   id: BulletLaser
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
@@ -47,7 +47,7 @@
 - type: entity
   name: wide laser barrage
   id: BulletLaserSpread
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
@@ -58,7 +58,7 @@
 - type: entity
   name: lethal laser barrage
   id: BulletLaserSpreadNarrow
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
@@ -69,7 +69,7 @@
 - type: entity
   name: magnum laser bolt
   id: BulletLaserMagnum
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: Sprite
@@ -89,7 +89,7 @@
 - type: entity
   name: magnum window-piercing bolt
   id: BulletLaserWindowPiercingMagnum
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: Sprite

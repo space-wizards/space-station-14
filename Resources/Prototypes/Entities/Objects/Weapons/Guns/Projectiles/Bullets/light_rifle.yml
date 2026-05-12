@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseBullet
   id: BulletLightRifle
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bullet (.30 rifle)
   components:
   - type: Projectile
@@ -12,7 +12,7 @@
 - type: entity
   parent: BaseBulletPractice
   id: BulletLightRiflePractice
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bullet (.30 rifle practice)
   components:
   - type: Projectile
@@ -23,7 +23,7 @@
 - type: entity
   parent: BaseBulletIncendiary
   id: BulletLightRifleIncendiary
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bullet (.30 rifle incendiary)
   components:
   - type: Projectile
@@ -35,7 +35,7 @@
 - type: entity
   parent: BaseBulletUranium
   id: BulletLightRifleUranium
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: bullet (.30 rifle uranium)
   components:
   - type: Projectile

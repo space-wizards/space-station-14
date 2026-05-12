@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, SolutionDart]
+  parent: [ BaseItem, SolutionDart ]
   id: BaseArrow
   abstract: true
   components:
@@ -69,7 +69,7 @@
       color: brown
     - state: tip
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -92,7 +92,7 @@
     - state: tip
       color: lightblue
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -118,7 +118,7 @@
     - state: tip
       color: purple
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -144,7 +144,7 @@
     - state: tip
       color: green
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -171,7 +171,7 @@
     - state: tip
       color: white
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -197,7 +197,7 @@
     - state: tip
       color: brown
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:

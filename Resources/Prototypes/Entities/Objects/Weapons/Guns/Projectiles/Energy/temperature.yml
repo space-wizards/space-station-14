@@ -2,13 +2,13 @@
   name: freezing bolt
   id: BoltTempgunCold
   parent: WatcherBolt
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
     - Energy
   - type: Projectile
-    #   soundHit:  Waiting on serv3
+    #soundHit: Waiting on serv3
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
@@ -22,13 +22,13 @@
   name: scorching bolt
   id: BoltTempgunHot
   parent: WatcherBoltMagmawing
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
     - Energy
   - type: Projectile
-    #   soundHit:  Waiting on serv3
+    #soundHit: Waiting on serv3
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:

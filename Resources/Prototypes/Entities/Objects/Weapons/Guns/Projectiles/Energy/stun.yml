@@ -2,7 +2,7 @@
   name: taser bolt
   id: BulletTaser
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
     sound:
@@ -57,7 +57,7 @@
 - type: entity
   parent: BulletTaser
   id: BulletTaserSuper
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: taser bolt
   description: If you can see this, you've probably been stun-meta'd
   components:
@@ -87,7 +87,7 @@
   name: disabler bolt
   id: BulletDisabler
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
@@ -130,7 +130,7 @@
   name: disabler bolt practice
   id: BulletDisablerPractice
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
     sound:
@@ -170,7 +170,7 @@
   name: disabler bolt smg
   id: BulletDisablerSmg
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
@@ -212,7 +212,7 @@
 - type: entity
   name: disabling laser barrage
   id: BulletDisablerSmgSpread
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   parent: BulletDisablerSmg
   components:
   - type: ProjectileSpread
@@ -224,7 +224,7 @@
 - type: entity
   parent: [SolutionAmmo, BaseBullet]
   id: EnergyCrossbowBolt
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   name: energy bolt
   description: This'll hurt.
   components:

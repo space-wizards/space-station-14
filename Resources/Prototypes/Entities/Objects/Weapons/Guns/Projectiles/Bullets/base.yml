@@ -49,7 +49,7 @@
 - type: entity
   id: BaseBulletTrigger # Trigger-on-collide bullets
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: TriggerOnCollide
     fixtureID: projectile
@@ -73,7 +73,7 @@
   id: BaseBulletPractice
   name: base bullet practice
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -88,7 +88,7 @@
   id: BaseBulletIncendiary
   name: base bullet incendiary
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -107,7 +107,7 @@
   id: BaseBulletAP
   name: base bullet armor-piercing
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -123,7 +123,7 @@
   id: BaseBulletUranium
   name: base bullet uranium
   parent: BaseBullet
-  categories: [HideSpawnMenu]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
