@@ -61,14 +61,15 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         UpdateEntityName(uid, id);
     }
 
-    public string? TryGetFullTitle(EntityUid forActor, bool forLogging = false)
+    public bool TryGetFullTitle(EntityUid forActor, bool forLogging = false, out string? title)
     {
-        string? title = null;
         if (TryFindIdCard(forActor, out var idCard) && !(forLogging && idCard.Comp.BypassLogging))
         {
             title = ExtractFullTitle(idCard);
+            return true;
         }
-        return title;
+        title = null;
+        return false;
     }
 
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)

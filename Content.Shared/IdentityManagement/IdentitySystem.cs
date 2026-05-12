@@ -309,8 +309,8 @@ public sealed partial class IdentitySystem : EntitySystem
         if (_borgQuery.HasComponent(forActor))
             return Name(forActor).Trim();
 
-        if (_idCard.TryFindIdCard(forActor, out var idCard) && !(forLogging && idCard.Comp.BypassLogging))
-            return _idCard.TryGetFullTitle(idCard);
+        if (!_idCard.TryGetFullTitle(forActor, forLogging, out var title))
+            return title;
 
         return null;
     }
