@@ -1,0 +1,24 @@
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase]
+  id: ClothingHeadHelmetKnight
+  name: knight helmet
+  description: A sturdy helmet fit for a holy knight. Offers decent protection in battle.
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Clothing/Head/Helmets/knight_helmet.rsi
+  - type: Clothing
+    sprite: _Tinystation/Clothing/Head/Helmets/knight_helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD

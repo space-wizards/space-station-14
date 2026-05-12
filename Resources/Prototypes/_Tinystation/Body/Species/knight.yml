@@ -1,0 +1,243 @@
+- type: markingsGroup
+  id: Knight
+  onlyGroupWhitelisted: true
+  limits:
+    enum.HumanoidVisualLayers.Hair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.FacialHair:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.Chest:
+      limit: 2
+      required: false
+    enum.HumanoidVisualLayers.Snout:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RArm:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RHand:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RLeg:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.LFoot:
+      limit: 1
+      required: false
+    enum.HumanoidVisualLayers.RFoot:
+      limit: 1
+      required: false
+
+- type: entity
+  parent: BaseSpeciesAppearance
+  id: AppearanceKnightPerson
+  categories: [ HideSpawnMenu ]
+  name: knightrson appearance
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: InitialBody
+    organs:
+      Torso: OrganKnightPersonTorso
+      Head: OrganKnightPersonHead
+      ArmLeft: OrganKnightPersonArmLeft
+      ArmRight: OrganKnightPersonArmRight
+      HandRight: OrganKnightPersonHandRight
+      HandLeft: OrganKnightPersonHandLeft
+      LegLeft: OrganKnightPersonLegLeft
+      LegRight: OrganKnightPersonLegRight
+      FootLeft: OrganKnightPersonFootLeft
+      FootRight: OrganKnightPersonFootRight
+  - type: HumanoidProfile
+    species: Knight
+
+- type: entity
+  parent:
+  - AppearanceKnightPerson
+  - BaseSpeciesMob
+  id: MobKnightPerson
+  name: Urist McKnight
+  components:
+  - type: Damageable
+    damageModifierSet: Knight
+  - type: Injurable
+    damageContainer: BiologicalMetaphysical
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+  - type: TransferMindOnGib
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:GibBehavior
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.9
+      80: 0.7
+  - type: Speech
+    speechVerb: Knight
+    allowedEmotes: [Pray]
+  - type: ZombieImmune
+  - type: Vocal
+    sounds:
+      Male: Knight
+      Female: Knight
+      Unsexed: Knight
+  - type: KnightAccent
+  - type: BibleUser
+  - type: KnightLayOnHands
+  - type: KnightRighteousFury
+  - type: ActionGrant
+    actions:
+    - ActionKnightLayOnHands
+    - ActionKnightRighteousFury
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPie
+    - reagents: [ Holywater ]
+      methods: [ Touch ]
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -1
+          Brute: -0.75
+          Metaphysical: -2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "knight-healed-by-holywater-popup" ]
+        probability: 0.25
+  - type: FireVisuals
+    alternateState: Standing
+  - type: FlashImmunity
+    showInExamine: false
+  # Needed so internals / metabolism logic works, but skeletons don't actually need air.
+  - type: Instrument
+    program: 13 # Xylophone. Woodblock is 115 (another good option)
+  - type: ActivatableUI
+    blockSpectators: true # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requiresComplex: true
+    verbOnly: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+
+- type: entity
+  parent: OrganBase
+  id: OrganKnightPerson
+  abstract: true
+  suffix: KnightPerson
+
+- type: entity
+  parent: OrganKnightPerson
+  id: OrganKnightPersonExternal
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Mobs/Species/Knight/parts.rsi
+  - type: VisualOrgan
+    data:
+      sprite: _Tinystation/Mobs/Species/Knight/parts.rsi
+  - type: VisualOrganMarkings
+    markingData:
+      group: Knight
+
+- type: entity
+  parent: [ OrganBaseTorsoSexed, OrganBaseTorso, OrganKnightPersonExternal ]
+  id: OrganKnightPersonTorso
+
+- type: entity
+  parent: [ OrganBaseHead, OrganKnightPersonExternal ]
+  id: OrganKnightPersonHead
+
+- type: entity
+  parent: [ OrganBaseArmLeft, OrganKnightPersonExternal ]
+  id: OrganKnightPersonArmLeft
+
+- type: entity
+  parent: [ OrganBaseArmRight, OrganKnightPersonExternal ]
+  id: OrganKnightPersonArmRight
+
+- type: entity
+  parent: [ OrganBaseHandLeft, OrganKnightPersonExternal ]
+  id: OrganKnightPersonHandLeft
+
+- type: entity
+  parent: [ OrganBaseHandRight, OrganKnightPersonExternal ]
+  id: OrganKnightPersonHandRight
+
+- type: entity
+  parent: [ OrganBaseLegLeft, OrganKnightPersonExternal ]
+  id: OrganKnightPersonLegLeft
+
+- type: entity
+  parent: [ OrganBaseLegRight, OrganKnightPersonExternal ]
+  id: OrganKnightPersonLegRight
+
+- type: entity
+  parent: [ OrganBaseFootLeft, OrganKnightPersonExternal ]
+  id: OrganKnightPersonFootLeft
+
+- type: entity
+  parent: [ OrganBaseFootRight, OrganKnightPersonExternal ]
+  id: OrganKnightPersonFootRight

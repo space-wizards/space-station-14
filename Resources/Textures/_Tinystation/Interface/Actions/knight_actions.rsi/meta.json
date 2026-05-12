@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Placeholder icons by Alikhan-Amandinov for Tiny-Station Knight species",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "lay_on_hands"
+    },
+    {
+      "name": "righteous_fury"
+    }
+  ]
+}

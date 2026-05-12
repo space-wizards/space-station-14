@@ -397,7 +397,7 @@
         Quantity: 15
 
 - type: entity
-  parent: [SolutionGinormous, BaseBrandedLighter, BaseCentcommContraband]
+  parent: [SolutionToolWelderExperimental, BaseBrandedLighter, BaseCentcommContraband]
   id: CentCommFlippo
   name: Gilded CentComm Flippo
   description: "An Ornate, jade embossed and gilded flippo frame containing a bluespace powered jet. The latch is secured by a miniature access reader that only responds to CentComm officials. The nicest lighter known to man."
@@ -421,21 +421,10 @@
     color: Gold
   - type: RefillableSolution
     solution: Welder
-  - type: Solution
-    solution:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 480
   - type: Tool
     useSound:
       collection: Welder
     qualities: Welding
-  - type: SolutionRegeneration
-    solution: Welder
-    generated:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 0.1
   - type: Lock
   - type: AccessReader
     access: [["CentralCommand"]]
