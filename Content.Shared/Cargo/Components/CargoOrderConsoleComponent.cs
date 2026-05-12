@@ -1,9 +1,9 @@
 using Content.Shared.Access;
 using Content.Shared.Cargo.Prototypes;
-using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Content.Shared.Radio;
 using Content.Shared.Stacks;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -138,6 +138,7 @@ public enum CargoOrderConsoleMode : byte
     /// Place orders directly
     /// </summary>
     DirectOrder,
+
     /// <summary>
     /// Transfers the order to the primary account
     /// </summary>
