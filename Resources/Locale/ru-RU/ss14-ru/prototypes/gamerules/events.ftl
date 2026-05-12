@@ -76,3 +76,16 @@ ent-DerelictSyndicateAssaultCyborgSpawn = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-DerelictCyborgSpawn = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
+
+ent-SlimesSpawnHorde = { ent-BaseStationEventShortDelay }
+    .desc = { ent-BaseStationEventShortDelay.desc }
+
+ent-SnakeSpawnHorde = { ent-BaseStationEventShortDelay }
+    .desc = { ent-BaseStationEventShortDelay.desc }
+
+ent-SpiderClownSpawnHorde = { ent-BaseStationEventShortDelay }
+    .desc = { ent-BaseStationEventShortDelay.desc }
+
+ent-SpiderSpawnHorde = { ent-BaseStationEventShortDelay }
+    .desc = { ent-BaseStationEventShortDelay.desc }
+

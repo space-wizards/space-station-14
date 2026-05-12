@@ -12,3 +12,7 @@ ent-AccordionInstrument = аккордеон
     .desc = { ent-BaseKeyedInstrument.desc }
 ent-KalimbaInstrument = калимба
     .desc = Мощь фортепиано прямо под вашими пальцами.
+
+ent-BaseKeyedInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
+

@@ -61,3 +61,30 @@ ent-ClothingHandsKnuckleDustersStun = шок-кастеты
     .desc = Пара кастетов в сочетании с технологией шокер-дубинки. С ними бить тайдеров намного легче.
 ent-ClothingHandsKnuckleBoneCrushers = костекрушители
     .desc = Благословлены богами на сломление всех непокорных.
+
+ent-ClothingHandsGlovesBoxingBase = { ent-ClothingHandsBase }
+    .desc = { ent-ClothingHandsBase.desc }
+
+ent-ClothingHandsGlovesBoxingRiggedBase = { ent-ClothingHandsGlovesBoxingBase }
+    .desc = { ent-ClothingHandsGlovesBoxingBase.desc }
+    .suffix = Rigged
+
+ent-ClothingHandsGlovesBoxingRiggedBlue = синие боксерские перчатки
+    .desc = Синие перчатки для соревновательного бокса.
+    .suffix = { ent-ClothingHandsGlovesBoxingRiggedBase.suffix }
+
+ent-ClothingHandsGlovesBoxingRiggedGreen = зелёные боксерские перчатки
+    .desc = Зелёные перчатки для соревновательного бокса.
+    .suffix = { ent-ClothingHandsGlovesBoxingRiggedBase.suffix }
+
+ent-ClothingHandsGlovesBoxingRiggedRed = красные боксерские перчатки
+    .desc = Красные перчатки для соревновательного бокса.
+    .suffix = { ent-ClothingHandsGlovesBoxingRiggedBase.suffix }
+
+ent-ClothingHandsGlovesBoxingRiggedYellow = жёлтые боксерские перчатки
+    .desc = Жёлтые перчатки для соревновательного бокса.
+    .suffix = { ent-ClothingHandsGlovesBoxingRiggedBase.suffix }
+
+ent-GlovesBoxingRiggedRandomSpawner = random rigged boxing glove spawner
+    .desc = { "" }
+

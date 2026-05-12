@@ -47,3 +47,4 @@ ent-DrinkLean = лин
     .desc = Бро, у Дрейка такая крутая причёска фейд, бро, Дрейк лучший, бро, давай, бро.
 ent-DrinkWaterCup = стаканчик воды
     .desc = Бумажный стаканчик воды.
+    .suffix = { ent-DrinkBaseEmptyTrash.suffix }

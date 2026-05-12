@@ -5,6 +5,7 @@ ent-AnomalyLocatorUnpowered = локатор аномалий
     .suffix = Всегда запитан
 ent-AnomalyLocator = { ent-AnomalyLocatorUnpowered }
     .desc = { ent-AnomalyLocatorUnpowered.desc }
+    .suffix = Заряжен
 ent-AnomalyLocatorEmpty = { ent-AnomalyLocatorUnpowered }
     .suffix = Пустой
     .desc = { ent-AnomalyLocatorUnpowered.desc }
@@ -13,9 +14,15 @@ ent-AnomalyLocatorWideUnpowered = локатор аномалий широког
     .suffix = Всегда запитан
 ent-AnomalyLocatorWide = { ent-AnomalyLocatorWideUnpowered }
     .desc = { ent-AnomalyLocatorWideUnpowered.desc }
+    .suffix = Заряжен
 ent-AnomalyLocatorWideEmpty = { ent-AnomalyLocatorWide }
     .suffix = Пустой
     .desc = { ent-AnomalyLocatorWide.desc }
 ent-WeaponGauntletGorilla = перчатка Г.О.Р.И.Л.Л.А.
     .suffix = Горилла
     .desc = Робастная часть исследовательского снаряжения. Будучи запитанным от ядра аномалии, способно одним ударом отправить в полёт аномальный объект.
+
+ent-AnomalyScannerAdmin = сканер аномалий админа
+    .desc = Ручной сканер, предназначенный для получения информации о различных аномальных объектах. Похоже, у этого сканера есть несколько дополнительных функций.
+    .suffix = Админ
+

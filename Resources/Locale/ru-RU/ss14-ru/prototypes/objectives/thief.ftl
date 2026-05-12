@@ -98,3 +98,7 @@ ent-TropicoStealObjective = { ent-BaseThiefStealAnimalObjective }
     .desc = { ent-BaseThiefStealAnimalObjective.desc }
 ent-EscapeThiefShuttleObjective = Улететь на Центком живым и свободным.
     .desc = Вы же не хотите, чтобы о вашей незаконной деятельности кто-нибудь узнал?
+
+ent-ClothingEyesHudsStealCollectionObjective = { ent-BaseThiefStealCollectionObjective }
+    .desc = { ent-BaseThiefStealCollectionObjective.desc }
+

@@ -1,5 +1,6 @@
 ent-WeaponEnergyTurretStationControlPanelElectronicsBase = микросхема панели управления охранной турелью
     .desc = Электронная плата, используемая в панели управления охранной турелью.
+    .suffix = { ent-BaseElectronics.suffix }
 ent-WeaponEnergyTurretSecurityControlPanelElectronics = { ent-WeaponEnergyTurretStationControlPanelElectronicsBase }
     .suffix = Служба Безопасности
     .desc = { ent-WeaponEnergyTurretStationControlPanelElectronicsBase.desc }

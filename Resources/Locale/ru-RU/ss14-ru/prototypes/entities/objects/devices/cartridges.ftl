@@ -16,3 +16,7 @@ ent-MedTekCartridge = картридж МедТек
     .desc = Программа, предоставляющая инструменты для медицинской диагностики.
 ent-AstroNavCartridge = картридж АстроНав
     .desc = Навигационная программа, предоставляющая GPS-координаты.
+
+ent-BasePDACartridge = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+

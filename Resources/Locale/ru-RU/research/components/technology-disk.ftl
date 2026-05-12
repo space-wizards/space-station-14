@@ -7,3 +7,8 @@ tech-disk-ui-name = Терминал технологических дисков
 tech-disk-ui-total-label = На выбранном сервере имеется { $amount } очков
 tech-disk-ui-cost-label = Печать каждого диска стоит { $amount } очков
 tech-disk-ui-print-button = Напечать диск
+
+tech-disk-examine-desc = [color=lightGray]Диск для РНД сервера содержащий технологию [bold]{ $tier } уровня[/bold] для ветки технологий [bold]{ $branch }.[/bold][/color]
+
+tech-disk-examine-desc-unknown = [color=lightGray]Диск для РНД сервера содержащий технологию.[/color]
+

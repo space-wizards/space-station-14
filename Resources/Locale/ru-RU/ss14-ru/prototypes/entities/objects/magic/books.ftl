@@ -20,3 +20,8 @@ ent-FireballSpellbook = книга заклинания огненный шар
     .desc = { ent-BaseSpellbook.desc }
 ent-ScrollRunes = свиток рун
     .desc = { ent-BaseSpellbook.desc }
+
+ent-WizardsGrimoireDebug = { ent-WizardsGrimoire }
+    .desc = Тяжёлый том, содержащий сложные таинственные формулы для подготовки магических заклинаний и призыва сверхъестественного снаряжения. Внутри обложки кто-то написал "ИСПОЛЬЗОВАТЬ ТОЛЬКО ДЛЯ ЭКСПЕРИМЕНТОВ".
+    .suffix = Волшебник, DEBUG
+

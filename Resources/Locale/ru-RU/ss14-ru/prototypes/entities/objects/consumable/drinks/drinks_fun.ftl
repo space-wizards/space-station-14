@@ -11,3 +11,4 @@ ent-DrinkJarWhat = банка чего-то
     .desc = Вы не можете точно сказать, что это такое.
 ent-DrinkMopwataBottleRandom = вкуснейшая швабода
     .desc = Мутная коричневая бутылка с выцветшей этикеткой, на которой изображена швабра. Она наполнена мутным... винтажом.
+    .suffix = { ent-DrinkBottleGlassSmallBaseFull.suffix }

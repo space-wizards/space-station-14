@@ -14,3 +14,8 @@ apc-menu-power-state-label-text = { POWERWATTS($power) }
 
 apc-menu-flavor-left = Обратитесь к инженеру за помощью.
 apc-menu-flavor-right = v1.2
+
+apc-menu-power-state-label-tripped = ПЕРЕГРУЗКА
+
+# For the flavor text on the footer
+

@@ -39,3 +39,6 @@ lathe-menu-move-up-tooltip = Перенести эту партию вперёд
 lathe-menu-move-down-tooltip = Перенести эту партию назад в очереди.
 lathe-menu-item-single = { $index }. { $name }
 lathe-menu-item-batch = { $index }. { $name } ({ $printed }/{ $total })
+
+lathe-menu-title = Меню станка
+

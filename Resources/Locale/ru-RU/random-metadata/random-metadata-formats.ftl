@@ -17,3 +17,24 @@ name-format-ert = { $part0 } { $part1 }
 # "<appearance> <type>"
 name-format-book = { $part0 } { $part1 }
 name-format-nuclear-operation = { $part0 } { $part1 }
+
+name-format-ert-corpsman = Медик { $part0 }
+
+# "<appearance> <type>"
+
+name-format-ert-doctor = Врач { $part0 }
+
+name-format-ert-grenade = Гренадер { $part0 }
+
+name-format-ert-leader = Сержант { $part0 }
+
+name-format-ert-officer = Офицер { $part0 }
+
+name-format-ert-pointman = Сапёр { $part0 }
+
+name-format-ert-rifle = Стрелок { $part0 }
+
+name-format-ert-specialist = Специалист { $part0 }
+
+name-format-ert-vanguard = Авангард { $part0 }
+

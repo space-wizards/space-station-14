@@ -9,6 +9,7 @@ ent-HolopadBluespace = блюспейс голопад
     .suffix = Неограниченный диапазон
 ent-HolopadHologram = голограмма
     .desc = { "" }
+    .suffix = НЕ МАППИТЬ
 ent-HolopadGeneralTools = { ent-Holopad }
     .suffix = Инструменты
     .desc = { ent-Holopad.desc }

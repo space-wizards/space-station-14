@@ -40,6 +40,7 @@ ent-Gauze1 = { ent-Gauze }
     .suffix = Один
 ent-AloeCream = алоэ крем
     .desc = Крем для наружного применения при ожогах.
+    .suffix = { ent-Ointment.suffix }
 ent-HealingToolbox = лечащий тулбокс
     .desc = Мощный тулбокс, пропитанный энергией робаста. Залечит ваши ранения и наполнит вас убийственными намерениями.
 ent-PillDexalin = таблетка

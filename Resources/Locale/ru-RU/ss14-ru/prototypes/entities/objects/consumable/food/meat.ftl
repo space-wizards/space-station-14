@@ -140,3 +140,7 @@ ent-FoodMeatXenoCutletCooked = ксено вырезка
     .desc = Котлета из ксеноса, сочащаяся... вкусом?
 ent-FoodMeatDragonCutletCooked = драконья вырезка
     .desc = Это блюдо для королей!
+
+ent-FoodMeatBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
+

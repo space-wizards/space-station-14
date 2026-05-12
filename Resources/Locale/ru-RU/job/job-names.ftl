@@ -115,3 +115,18 @@ JobTechnicalAssistant = технический ассистент
 JobVisitor = посетитель
 JobWarden = смотритель
 JobZookeeper = зоотехник
+
+job-name-centcommoff = представитель Центком
+
+job-name-ninja = ниндзя
+
+job-name-pirate = пират
+
+job-name-syndicate-commander = командир оперативников
+
+job-name-syndicate-corpsman = медик оперативников
+
+job-name-syndicate-operative = ядерный оперативник
+
+job-name-wizard = волшебник
+

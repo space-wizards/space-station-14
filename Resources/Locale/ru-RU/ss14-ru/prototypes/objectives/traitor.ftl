@@ -50,3 +50,15 @@ ent-CaptainGunStealObjective = { ent-BaseCaptainObjective }
 # ent-NukeDiskStealObjective = { ent-BaseCaptainObjective }
 #     .desc = { ent-BaseCaptainObjective.desc }
 
+ent-BaseTraitorObjective = { ent-BaseObjective }
+    .desc = { ent-BaseObjective.desc }
+
+ent-HijackTradeStationObjective = Взломайте автоматизированную торговую станцию
+    .desc = Вашему аплинку разрешен один маяк взлома. Разместите его на автоматизированной торговой станции и защищайте его, пока он взламывает торговую станцию.
+
+ent-KillStationAiObjective = {ent-BaseTraitorObjective }
+    .desc = Nanotrasen с гордостью заявляет о своей передовой технологии искусственного интеллекта. Напомните им, что это всего лишь игрушка, которую можно сломать.
+
+ent-SupercritAnomaliesObjective = { ent-BaseTraitorObjective}
+    .desc = Nanotrasen проявляет большой интерес к аномалиям, которые могут иметь потенциально катастрофические последствия. Познакомьте их с огнем, с которым они играют.
+

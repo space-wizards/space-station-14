@@ -64,3 +64,8 @@ ent-TableCounterWood = деревянная стойка
     .desc = Беречь от огня. По слухам, она легко горит.
 ent-TableCounterMetal = металлическая стойка
     .desc = Отличное место, чтобы пропустить стаканчик.
+
+ent-TableFancySkyBlue = { ent-TableFancyBase }
+    .desc = { ent-TableFancyBase.desc }
+    .suffix = Небесный
+

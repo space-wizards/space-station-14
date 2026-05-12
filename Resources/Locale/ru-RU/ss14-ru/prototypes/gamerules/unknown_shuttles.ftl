@@ -38,3 +38,7 @@ ent-UnknownShuttleMicroshuttle = { ent-BaseUnknownShuttleRule }
     .desc = { ent-BaseUnknownShuttleRule.desc }
 ent-UnknownShuttleSpacebus = { ent-BaseUnknownShuttleRule }
     .desc = { ent-BaseUnknownShuttleRule.desc }
+
+ent-BaseUnknownShuttleAnnouncedRule = { ent-BaseUnknownShuttleRule }
+    .desc = { ent-BaseUnknownShuttleRule.desc }
+

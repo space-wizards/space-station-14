@@ -353,3 +353,10 @@ flavor-complex-punishment = как наказание
 flavor-complex-artifact-glue = как дроблённые артефакты
 flavor-weh = как вех
 flavor-hew = как хев
+
+flavor-complex-canned-tuna = как консервированный тунец
+
+# Drink-specific flavors.
+
+## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
+

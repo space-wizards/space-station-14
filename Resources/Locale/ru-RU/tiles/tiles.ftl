@@ -148,3 +148,44 @@ tiles-white-marble = белая мраморная плитка
 tiles-dark-marble = чёрная мраморная плитка
 tiles-plasma-marble = плазменная мраморная плитка
 tiles-uranium-marble = урановая мраморная плитка
+
+tiles-astro-ironsand = астро-железный песок
+
+tiles-astro-ironsand-borderless = безграничный астро-железный песок
+
+tiles-dark-floor-horizontal-slats-bordered = тёмная горизонтальная реечная плитка с бордюром
+
+tiles-dark-floor-slats-continuous = тёмная сплошная реечная плитка
+
+tiles-dark-floor-vertical-slats-bordered = тёмная вертикальная реечная плитка с бордюром
+
+tiles-ironsand-concrete-slab = железопесчаная бетонная плита
+
+tiles-ironsand-concrete-smooth = гладкий бетонный пол из железного песка
+
+tiles-ironsand-concrete-tile = железопесчаная бетонная плитка
+
+tiles-ironsand-packed = утрамбованный железный песок
+
+tiles-ironsand-paved = асфальтированный железный песок
+
+tiles-ironsand-plating = железный песок
+
+tiles-ironsand-tile = плитка из железного песка
+
+tiles-rcd-plating = РСУ покрытие
+
+tiles-space = космос
+
+tiles-steel-floor-horizontal-slats-bordered = стальная горизонтальная реечная плитка с бордюром
+
+tiles-steel-floor-slats-continuous = стальная сплошная реечная плитка
+
+tiles-steel-floor-vertical-slats-bordered = стальная вертикальная реечная плитка с бордюром
+
+tiles-white-floor-horizontal-slats-bordered = белая горизонтальная реечная плитка с бордюром
+
+tiles-white-floor-slats-continuous = белая сплошная реечная плитка
+
+tiles-white-floor-vertical-slats-bordered = белая вертикальная реечная плитка с бордюром
+

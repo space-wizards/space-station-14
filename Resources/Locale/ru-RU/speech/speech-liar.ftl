@@ -143,3 +143,22 @@ liar-word-27 = здоров
 liar-word-replacement-27 = ранен
 liar-word-28 = здорова
 liar-word-replacement-28 = ранена
+
+liar-word-14-2 = wasn't
+
+liar-word-16-2 = isn't
+
+liar-word-18-2 = won't
+
+liar-word-20-2 = can't
+
+liar-word-22-2 = shouldn't
+
+liar-word-37-2 = aren't
+
+liar-word-5-2 = yeap
+
+liar-word-7-2 = ya
+
+liar-word-7-3 = yis
+

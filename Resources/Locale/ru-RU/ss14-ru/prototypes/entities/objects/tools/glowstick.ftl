@@ -20,3 +20,7 @@ ent-LightBehaviourTest5 = light pulse radius test
     .desc = { ent-BaseItem.desc }
 ent-LightBehaviourTest6 = light randomize radius test
     .desc = { ent-BaseItem.desc }
+
+ent-GlowstickGreen = зелёный химсвет
+    .desc = { ent-GlowstickBase.desc }
+

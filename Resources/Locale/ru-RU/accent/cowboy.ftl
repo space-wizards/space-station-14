@@ -198,3 +198,68 @@ accent-cowboy-replacement-66 = хрястнул
 
 accent-cowboy-words-67 = убежал
 accent-cowboy-replacement-67 = дал дёру
+
+accent-cowboy-replacement-68 = stick up
+
+accent-cowboy-replacement-69 = skedaddle
+
+accent-cowboy-replacement-70 = skedaddling
+
+accent-cowboy-replacement-71 = holler
+
+accent-cowboy-replacement-72 = hollered
+
+accent-cowboy-replacement-73 = hollering
+
+accent-cowboy-replacement-74 = law
+
+accent-cowboy-replacement-75 = deputy
+
+accent-cowboy-replacement-76 = law
+
+accent-cowboy-replacement-77 = crooked law
+
+accent-cowboy-replacement-78 = boot
+
+accent-cowboy-replacement-79 = boots
+
+accent-cowboy-replacement-80 = rustle
+
+accent-cowboy-replacement-81 = rustled
+
+accent-cowboy-replacement-82 = rustled
+
+accent-cowboy-replacement-83 = yarn
+
+accent-cowboy-words-68 = robbery
+
+accent-cowboy-words-69 = run
+
+accent-cowboy-words-70 = running
+
+accent-cowboy-words-71 = scream
+
+accent-cowboy-words-72 = screamed
+
+accent-cowboy-words-73 = screaming
+
+accent-cowboy-words-74 = sec
+
+accent-cowboy-words-75 = secoff
+
+accent-cowboy-words-76 = security
+
+accent-cowboy-words-77 = shitsec
+
+accent-cowboy-words-78 = shoe
+
+accent-cowboy-words-79 = shoes
+
+accent-cowboy-words-80 = steal
+
+accent-cowboy-words-81 = stole
+
+accent-cowboy-words-82 = stolen
+
+accent-cowboy-words-83 = story
+

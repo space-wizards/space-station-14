@@ -89,3 +89,6 @@ wanted-list-status-label = [color=darkgray]статус:[/color] { $status ->
 wanted-list-history-table-time-col = Время
 wanted-list-history-table-reason-col = Преступление
 wanted-list-history-table-initiator-col = Инициатор
+
+crew-manifest-cartridge-loading-failed = Ошибка загрузки манифеста экипажа!
+

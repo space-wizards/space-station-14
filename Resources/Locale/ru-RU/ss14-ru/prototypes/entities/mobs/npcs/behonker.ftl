@@ -1,5 +1,6 @@
 ent-BaseMobBehonker = бехонкер
     .desc = Парящий демонический аспект хонкоматери.
+    .suffix = { ent-SimpleSpaceMobBase.suffix }
 ent-MobBehonkerElectrical = бехонкер
     .suffix = Электро
     .desc = { ent-BaseMobBehonker.desc }

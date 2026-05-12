@@ -17,3 +17,6 @@ sandbox-window-toggle-suicide-button = Самоубийство
 sandbox-window-show-spawns-button = Показать спавны
 sandbox-window-show-bb-button = Показать BB
 sandbox-window-show-npc-button = Показать NPC
+
+sandbox-window-toggle-thermal-vision = Переключить тепловизор
+

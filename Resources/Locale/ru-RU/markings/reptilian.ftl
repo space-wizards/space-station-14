@@ -83,3 +83,6 @@ marking-LizardSnoutVisageSharp = Унатх, маска (Заострённая)
 marking-LizardSnoutVisageSharp-visage_sharp = Унатх, маска (Заострённая)
 marking-LizardSnoutVisageRound = Унатх, маска (Круглая)
 marking-LizardSnoutVisageRound-visage_round = Унатх, маска (Круглая)
+
+marking-LizardFrillsShort-frills_short = Унатх, воротник (Короткий)
+

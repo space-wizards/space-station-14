@@ -30,3 +30,10 @@ guidebook-reagent-recipes-mix-info =
             }
     }
 guidebook-reagent-physical-description = [italic]На вид вещество { $description }.[/italic].
+
+guidebook-reagent-effects-metabolism-stage-rate = [bold]{ $stage }[/bold] [color=gray]({ $rate } ед. в секунду)[/color]
+
+guidebook-reagent-effects-metabolite-item = { $reagent } с коэффициентом { NATURALPERCENT($rate, 2) }
+
+guidebook-reagent-effects-metabolites = Метаболизируется в { $items }.
+

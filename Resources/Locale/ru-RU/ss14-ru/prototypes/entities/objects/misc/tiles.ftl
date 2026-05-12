@@ -222,3 +222,49 @@ ent-FloorTileItemXenoborg = ксеноборг-пол
     .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemDarkSquiggly = тёмная волнистая стальная плитка
     .desc = { ent-FloorTileItemDark.desc }
+
+ent-FloorTileItemAstroIronsand = астро-железный песок
+    .desc = Фальшивый красный песок. Импортирован с фальшивого Марса.
+
+ent-FloorTileItemAstroIronsandBorderless = безграничный астро-железный песок
+    .desc = Фальшивый красный песок. Импортирован с фальшивого Марса.
+
+ent-FloorTileItemBase = { ent-BaseItem }
+    .desc = Может послужить неплохим метательным оружием.
+
+ent-FloorTileItemDarkHorizontalSlatsBordered = тёмная горизонтальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemDark.desc }
+
+ent-FloorTileItemDarkSlatsContinuous = тёмная сплошная реечная плитка
+    .desc = { ent-FloorTileItemDark.desc }
+
+ent-FloorTileItemDarkVerticalSlatsBordered = тёмная вертикальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemDark.desc }
+
+ent-FloorTileItemIronsandConcrete = железопесчаная бетонная плитка
+    .desc = { ent-FloorTileItemBase.desc }
+
+ent-FloorTileItemIronsandConcreteMono = монолитная бетонная плитка из железного песка
+    .desc = { ent-FloorTileItemIronsandConcrete.desc }
+
+ent-FloorTileItemIronsandConcreteSmooth = гладкий бетонный пол из железного песка
+    .desc = { ent-FloorTileItemIronsandConcrete.desc }
+
+ent-FloorTileItemSteelHorizontalSlatsBordered = стальная горизонтальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemSteel.desc }
+
+ent-FloorTileItemSteelSlatsContinuous = стальная сплошная реечная плитка
+    .desc = { ent-FloorTileItemSteel.desc }
+
+ent-FloorTileItemSteelVerticalSlatsBordered = стальная вертикальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemSteel.desc }
+
+ent-FloorTileItemWhiteHorizontalSlatsBordered = белая горизонтальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemWhite.desc }
+
+ent-FloorTileItemWhiteSlatsContinuous = белая сплошная реечная плитка
+    .desc = { ent-FloorTileItemWhite.desc }
+
+ent-FloorTileItemWhiteVerticalSlatsBordered = белая вертикальная реечная плитка с бордюром
+    .desc = { ent-FloorTileItemWhite.desc }
+

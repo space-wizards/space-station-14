@@ -76,3 +76,7 @@ ent-FoodBreadNutriBatard = питательный батард
     .desc = Бон 'петит!
 ent-FoodBreadCottonNutriBatard = хлопковый батард
     .desc = Бон 'петит!
+
+ent-FoodBreadBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
+

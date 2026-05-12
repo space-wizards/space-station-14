@@ -22,3 +22,7 @@ ent-StairWood = { ent-Stairs }
 ent-StairStageWood = { ent-Stairs }
     .suffix = Деревянный, Одна ступень
     .desc = { ent-Stairs.desc }
+
+ent-BaseFloorDecoration = { "" }
+    .desc = { "" }
+

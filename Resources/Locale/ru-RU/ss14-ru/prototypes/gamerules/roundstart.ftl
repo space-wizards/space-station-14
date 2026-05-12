@@ -52,3 +52,16 @@ ent-SpaceTrafficControlFriendlyEventScheduler = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
 ent-BasicRoundstartVariation = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }
+
+ent-BaseXenoborgsRule = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+
+ent-SubGamemodesRuleNoWizardNoXenoborg = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+
+ent-SubGamemodesRuleNoXenoborg = { ent-BaseGameRule }
+    .desc = { ent-BaseGameRule.desc }
+
+ent-Xenoborgs = { ent-BaseXenoborgsRule }
+    .desc = { ent-BaseXenoborgsRule.desc }
+

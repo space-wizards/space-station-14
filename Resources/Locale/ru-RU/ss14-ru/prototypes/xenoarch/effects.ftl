@@ -138,3 +138,7 @@ ent-XenoArtifactEffectCreationGasNitrousOxide = { ent-BaseXenoArtifactEffect }
     .desc = Выброс оксида азота
 ent-XenoArtifactEffectCreationGasCarbonDioxide = { ent-BaseXenoArtifactEffect }
     .desc = Выброс диоксида углерода
+
+ent-XenoArtifactHostileFaunaSpawn = { ent-BaseXenoArtifactEffect }
+    .desc = Создание враждебной фауны
+

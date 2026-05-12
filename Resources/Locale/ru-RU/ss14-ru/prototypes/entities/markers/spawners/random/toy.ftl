@@ -5,3 +5,40 @@ ent-FigureSpawner = спавнер фигурки
 ent-SpacemenFigureSpawner = спавнер минифигурки космонавтов
     .suffix = Только для библиотекарей, маппить с осторожностью!
     .desc = { ent-MarkerBase.desc }
+
+ent-CapGunSpawner90 = Cap Gun Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-CrayonSpawner90 = Crayon Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-MechFigurineSpawner50 = Mech Figurine Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 50
+
+ent-MiscToySpawner90 = Miscellaneous Toy Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-PlushieSpawner50 = Plushie Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 50
+
+ent-SpacemenFigurineSpawner90 = Spacemen Minifigure Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-ToySoundMakerSpawner90 = Toy Sound Maker Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-ToySpawner90 = Toy Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+
+ent-ToyWeaponSpawner90 = Toy Weapon Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = 90
+

@@ -46,3 +46,6 @@ marking-UndergarmentBottomBriefsVulpkanin = Трусы
 marking-UndergarmentBottomBriefsVulpkanin-briefs_vulpkanin = Трусы
 marking-UndergarmentBottomSatinVulpkanin = Сатин
 marking-UndergarmentBottomSatinVulpkanin-satin_vulpkanin = Сатин
+
+marking-UndergarmentTopTanktop = Майка
+

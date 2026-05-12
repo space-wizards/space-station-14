@@ -13,3 +13,6 @@ store-not-account-owner = Этот { $store } не привязан к вам!
 store-preset-name-uplink = Аплинк
 store-preset-name-spellbook = Книга заклинаний
 store-preset-name-changeling = Магазин ДНК
+
+store-preset-name-nukie-delivery = Блюспейс доставка Ядерных Оперативников
+

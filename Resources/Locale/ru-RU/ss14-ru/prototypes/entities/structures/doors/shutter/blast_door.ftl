@@ -12,3 +12,11 @@ ent-BlastDoorXenoOpen = { ent-BlastDoorXeno }
     .desc = { ent-BlastDoorXeno.desc }
 ent-BlastDoorXenoFrame = каркас ксеногермозатора
     .desc = Имеется надпись "ОПАСНОСТЬ ВЗРЫВА".
+
+ent-BlastDoorXenoborg = ксеноборг-гермозатвор
+    .desc = Не потеряйте голову!
+
+ent-BlastDoorXenoborgOpen = { ent-BlastDoorXenoborg }
+    .desc = { ent-BlastDoorXenoborg.desc }
+    .suffix = Открытый
+

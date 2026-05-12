@@ -28,3 +28,7 @@ ent-DrinkShakeRobo = робо-коктейль
     .desc = { ent-DrinkShakeBase.desc }
 ent-DrinkShakeWhite = белый коктейль
     .desc = { ent-DrinkShakeBase.desc }
+
+ent-DrinkShotGlass = стопка
+    .desc = Идеально подходит для того, чтобы со злостью ударить ей по столу.
+

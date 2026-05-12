@@ -12,3 +12,22 @@ changeling-devour-consume-complete-others = { CAPITALIZE(POSS-ADJ($user)) } жу
 changeling-transform-attempt-self = Наши кости хрустят, мышцы рвутся, одна плоть превращается в другую.
 changeling-transform-attempt-others = { CAPITALIZE(POSS-ADJ($user)) } кости хрустят, мышцы рвутся, тело превращается в другое.
 changeling-paused-map-name = Карта хранения личностей генокрада
+
+changeling-devour-attempt-failed-already-devoured = Мы уже поглотили это тело!
+
+changeling-devour-attempt-failed-cannot-devour = Мы не можем поглотить это!
+
+changeling-devour-attempt-failed-not-dead = Это тело ещё живо! Мы не можем его поглотить!
+
+changeling-transform-bui-drop-identity-cannot-drop = Вы не можете избавиться от текущей личности.
+
+# other
+
+changeling-transform-bui-drop-identity-entity = Избавиться от {$entity}
+
+changeling-transform-bui-drop-identity-entity-popup = Вы избавились от личности {$entity}.
+
+changeling-transform-bui-drop-identity-menu = Избавиться от поглощённой личности.
+
+changeling-transform-bui-select-entity = {$entity}
+

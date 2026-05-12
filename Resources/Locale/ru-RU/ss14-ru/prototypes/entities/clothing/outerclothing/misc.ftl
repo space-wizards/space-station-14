@@ -31,6 +31,7 @@ ent-ClothingOuterSanta = костюм Санты
     .desc = Хо хо хо!
 ent-ClothingOuterWizardBase = { ent-ClothingOuterBase }
     .desc = { ent-ClothingOuterBase.desc }
+    .suffix = Wizard Clothes
 ent-ClothingOuterWizardViolet = фиолетовая мантия волшебника
     .desc = Причудливая инкрустированная драгоценными камнями фиолетовая мантия, излучающая магическую энергию.
 ent-ClothingOuterWizard = мантия волшебника

@@ -3,6 +3,7 @@ ent-HandheldHealthAnalyzerUnpowered = анализатор здоровья
     .suffix = Всегда запитан
 ent-HandheldHealthAnalyzer = { ent-HandheldHealthAnalyzerUnpowered }
     .desc = { ent-HandheldHealthAnalyzerUnpowered.desc }
+    .suffix = Заряжен
 ent-HandheldHealthAnalyzerEmpty = { ent-HandheldHealthAnalyzerUnpowered }
     .suffix = Пустой
     .desc = { ent-HandheldHealthAnalyzerUnpowered.desc }

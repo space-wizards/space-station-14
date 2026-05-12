@@ -8,3 +8,8 @@ ent-TrashBananaPeelExplosive = банановая кожура
 ent-TrashBananaPeelExplosiveUnarmed = банан
     .desc = Что-то в этом банане не так.
     .suffix = Не активирован
+
+ent-SnapPopExplosive = { ent-SnapPop }
+    .desc = { ent-SnapPop.desc }
+    .suffix = Взрывчатка
+

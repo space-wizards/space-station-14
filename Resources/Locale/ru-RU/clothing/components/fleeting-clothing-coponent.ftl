@@ -1,0 +1,4 @@
+fleeting-clothing-component-default-examine = Это хрупкий предмет. Он исчезнет если его снять.
+
+fleeting-clothing-component-default-popup = {CAPITALIZE(THE($item))} рассыпается в пыль.
+

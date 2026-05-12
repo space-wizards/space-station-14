@@ -262,3 +262,7 @@ ent-PosterMapWaystation = карта Waystation
     .desc = Карта станции Waystation... подожди, разве это не перевёрнутая Packed??
 ent-PosterMapOrigin = карта Origin
     .desc = Карта станции Origin.
+
+ent-PosterLegitBotanyFear = Страх гидропоники
+    .desc = Подумай трижды, прежде чем открыть шлюз в гидропонику, там может прятаться красная угроза.
+

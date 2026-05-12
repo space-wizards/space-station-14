@@ -38,3 +38,9 @@ rcd-component-lighting = Освещение
 rcd-component-deconstruct = демонтаж
 rcd-component-floor-steel = стальной пол
 rcd-component-plating = корпусное покрытие
+
+rcd-component-cannot-build-identical-entity = Эта постройка уже есть тут!
+
+
+### Category names
+

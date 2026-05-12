@@ -37,15 +37,23 @@ ent-ClothingEyesEyepatchHudMedical = медицинский моновизор
     .desc = Окуляр с индикатором на стекле, который сканирует гуманоидов в поле зрения и предоставляет точные данные о состоянии их здоровья. Для настоящих патриотов.
 ent-ClothingEyesEyepatchHudMedicalFlipped = медицинский моновизор
     .desc = { ent-ClothingEyesEyepatchHudMedical.desc }
+    .suffix = { ent-ClothingHeadEyeBaseFlipped.suffix }
 ent-ClothingEyesEyepatchHudSecurity = моновизор охраны
     .desc = Окуляр с индикатором на стекле, который сканирует гуманоидов в поле зрения и предоставляет точные данные об их идентификационном статусе и записях в системе безопасности. Для настоящих патриотов.
 ent-ClothingEyesEyepatchHudSecurityFlipped = моновизор охраны
     .desc = { ent-ClothingEyesEyepatchHudSecurity.desc }
+    .suffix = { ent-ClothingHeadEyeBaseFlipped.suffix }
 ent-ClothingEyesEyepatchHudBeer = пивной монокуляр
     .desc = Пара солнцезащитных очков, оснащённых сканером реагентов, а также дающих понимание вязкости жидкости во время движения. Для настоящих патриотов.
 ent-ClothingEyesEyepatchHudBeerFlipped = пивной монокуляр
     .desc = { ent-ClothingEyesEyepatchHudBeer.desc }
+    .suffix = { ent-ClothingHeadEyeBaseFlipped.suffix }
 ent-ClothingEyesEyepatchHudDiag = диагностический моновизор
     .desc = Окуляр с индикатором на стекле, способный анализировать целостность и состояние роботов и экзокостюмов. Сделан из си-боргия.
 ent-ClothingEyesEyepatchHudDiagFlipped = diagnostic hud eyepatch
     .desc = { ent-ClothingEyesEyepatchHudDiag.desc }
+    .suffix = { ent-ClothingHeadEyeBaseFlipped.suffix }
+
+ent-ClothingEyesHudBase = { ent-ClothingEyesBase }
+    .desc = { ent-ClothingEyesBase.desc }
+

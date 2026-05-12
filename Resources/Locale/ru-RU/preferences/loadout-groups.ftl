@@ -171,3 +171,10 @@ loadout-group-reporter-jumpsuit = Репортёр, комбинезон
 loadout-group-psychologist-jumpsuit = Психолог, комбинезон
 loadout-group-boxer-jumpsuit = Боксёр, комбинезон
 loadout-group-boxer-gloves = Боксёр, перчатки
+
+loadout-group-reporter-head = Репортёр, голова
+
+loadout-group-reporter-outerclothing = Репортёр, верхняя одежда
+
+loadout-group-survival-military = См. строку 14, никто не увидит это, так что :3
+

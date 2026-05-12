@@ -104,6 +104,8 @@ ent-VisitorPDA = { ent-ClearPDA }
     .desc = { ent-ClearPDA.desc }
 ent-SyndiPDA = КПК Синдиката
     .desc = Окей, пора стать продуктивным членом... о, круто, я плохой парень, пора убивать людей!
+    .suffix = КПК Синдиката, Ядерный Оперативник
+# Corvax-HiddenDesc-End
 ent-SyndiOperativePDA = КПК оперативника Синдиката
     .desc = Смерть НТ!
 ent-SyndiCorpsmanPDA = КПК медика Синдиката
@@ -130,6 +132,7 @@ ent-ERTSecurityPDA = КПК офицера безопасности ОБР
     .desc = Красный значит мощный. На боку нацарапаны метки подсчёта.
 ent-CBURNPDA = КПК РХБЗЗ
     .desc = Пахнет гнилой плотью.
+    .suffix = { ent-ERTLeaderPDA.suffix }
 ent-PsychologistPDA = КПК психолога
     .desc = Выглядит безупречно чистым.
 ent-ReporterPDA = КПК репортёра
@@ -164,3 +167,14 @@ ent-WizardPDA = КПК волшебника
     .desc = Вы слышите слабый шёпот, доносящийся из него.
 ent-ScurretPDA = { ent-ClearPDA }
     .desc = Временный КПК, выдаваемый временным слизенькам. Не делает ничего особенного. Вава!
+
+ent-BasePDA = КПК
+    .desc = Ассистент по персональным данным.
+
+ent-ChameleonAgentPDA = { ent-ChameleonPDA }
+    .desc = { ent-ChameleonPDA.desc }
+    .suffix = Chameleon, Agent ID
+
+ent-NinjaPDA = КПК ниндзя
+    .desc = Ах ты, скрытный ублюдок!
+

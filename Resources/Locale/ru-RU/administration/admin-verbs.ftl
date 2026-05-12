@@ -18,3 +18,84 @@ admin-verbs-erase-description =
 toolshed-verb-mark = Отметить
 toolshed-verb-mark-description = Помещает данную сущность в переменную $marked, заменяя её предыдущее значение.
 export-entity-verb-get-data-text = Экспорт спрайта
+
+admin-verbs-adjust-stack = Отрегулировать стопку
+
+admin-verbs-bar-job-slots = Закрыть слоты должностей
+
+admin-verbs-block-unanchoring = Заблокировать открепление
+
+admin-verbs-bolt = Заболтировать
+
+admin-verbs-dialog-adjust-stack-amount = Количество (макс. { $max })
+
+admin-verbs-dialog-redescribe-description = Описание
+
+admin-verbs-dialog-redescribe-title = Изменить описание
+
+admin-verbs-dialog-rename-and-redescribe-title = Изменить имя и описание
+
+admin-verbs-dialog-rename-name = Имя
+
+admin-verbs-dialog-rename-title = Изменить имя
+
+admin-verbs-dialog-set-bullet-amount-amount = Количество (стандарт { $cap })
+
+admin-verbs-dialog-set-bullet-amount-title = Установить кол-во патронов
+
+admin-verbs-drain-battery = Разрядить батарею
+
+admin-verbs-emergency-access-off = Выключить аварийный доступ
+
+# Dialogs verbs
+
+admin-verbs-emergency-access-on = Включить аварийный доступ
+
+admin-verbs-fill-stack = Заполнить стопку
+
+admin-verbs-grant-all-access = Выдать полный доступ
+
+admin-verbs-halt-movement = Остановить движение
+
+admin-verbs-infinite-battery = Бесконечная батарея
+
+admin-verbs-locate-cargo-shuttle = Найти грузовой шаттл
+
+admin-verbs-make-indestructible = Сделать неуязвимым
+
+admin-verbs-make-minigun = Сделать миниганом
+
+admin-verbs-make-vulnerable = Сделать уязвимым
+
+admin-verbs-pause-map = Поставить карту на паузу
+
+admin-verbs-redescribe = Изменить описание
+
+admin-verbs-refill-battery = Зарядить батарею
+
+admin-verbs-refill-internals-nitrogen = Заполнить баллон азотом
+
+admin-verbs-refill-internals-oxygen = Заполнить баллон кислородом
+
+admin-verbs-refill-internals-plasma = Заполнить баллон плазмой
+
+admin-verbs-rejuvenate = Возродить
+
+admin-verbs-rename = Изменить имя
+
+admin-verbs-rename-and-redescribe = Изменить имя и описание
+
+admin-verbs-revoke-all-access = Убрать все доступы
+
+admin-verbs-send-to-test-arena = Отправить на испытательную арену
+
+admin-verbs-set-bullet-amount = Установить кол-во патронов
+
+# Toggles verbs
+
+admin-verbs-snap-joints = Удалить джоинты
+
+admin-verbs-unbolt = Разболтировать
+
+admin-verbs-unpause-map = Снять карту с паузы
+

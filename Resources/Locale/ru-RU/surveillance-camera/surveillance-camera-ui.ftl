@@ -9,3 +9,18 @@ surveillance-camera-monitor-ui-status-disconnected = Отключено
 surveillance-camera-monitor-ui-no-subnets = Нет подсетей
 surveillance-camera-setup = Настроить
 surveillance-camera-setup-ui-set = Установить
+
+surveillance-camera-monitor-ui-legend-active = Активна
+
+surveillance-camera-monitor-ui-legend-inactive = Неактивна
+
+surveillance-camera-monitor-ui-legend-invalid = Ошибка
+
+surveillance-camera-monitor-ui-legend-selected = Выбрана
+
+surveillance-camera-monitor-ui-tab-list = Список
+
+surveillance-camera-monitor-ui-tab-map = Карта
+
+wire-name-camera-map = КРТ
+

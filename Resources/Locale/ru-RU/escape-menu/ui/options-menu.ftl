@@ -379,3 +379,18 @@ ui-options-enable-overlay-starting-job = Показывать начальную
 ui-options-overlay-merge-distance = Stack merge distance
 ui-options-overlay-ghost-fade-distance = Ghost overlay fade range from mouse
 ui-options-overlay-ghost-hide-distance = Ghost overlay hide range from mouse
+
+ui-options-function-inspect-client-component = Изучить клиентский компонент
+
+ui-options-function-inspect-client-component-tooltip = Открыть меню ViewVariables для сущности под курсором, используя клиентский компонент, заданный командой "quickinspect".
+
+ui-options-function-inspect-entity-tooltip = Открыть меню ViewVariables сущности, над которой находится курсор.
+
+ui-options-function-inspect-server-component = Изучить серверный компонент
+
+ui-options-function-inspect-server-component-tooltip = Открыть меню ViewVariables для сущности под курсором, используя серверный компонент, заданный командой "quickinspect".
+
+ui-options-hold-to-attack-melee = Удерживать чтобы атаковать (ближний бой)
+
+ui-options-hold-to-attack-ranged = Удерживать чтобы атаковать (дальний бой)
+

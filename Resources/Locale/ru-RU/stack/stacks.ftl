@@ -405,3 +405,38 @@ stack-white-marble-floor = белый мраморный пол
 stack-dark-marble-floor = чёрный мраморный пол
 stack-plasma-marble-floor = плазменный мраморный пол
 stack-uranium-marble-floor = урановый мраморный пол
+
+stack-astro-ironsand-floor = астро-железный песок
+
+stack-astro-ironsand-floor-borderless = безграничный астро-железный песок
+
+stack-dark-steel-horizontal-slats-tile-bordered = тёмная горизонтальная реечная плитка с бордюром
+
+stack-dark-steel-slats-tile-continuous = тёмная сплошная реечная плитка
+
+stack-dark-steel-vertical-slats-tile-bordered = тёмная вертикальная реечная плитка с бордюром
+
+stack-ironsand-concrete-mono-tile = монолитная бетонная плитка из железного песка
+
+stack-ironsand-concrete-smooth = гладкий бетонный пол из железного песка
+
+stack-ironsand-concrete-tile = железопесчаная бетонная плитка
+
+stack-steel = { $amount ->
+    [1] лист
+    [few] листа
+    *[other] листов
+} стали
+
+stack-steel-horizontal-slats-tile-bordered = стальная горизонтальная реечная плитка с бордюром
+
+stack-steel-slats-tile-continuous = стальная сплошная реечная плитка
+
+stack-steel-vertical-slats-tile-bordered = стальная вертикальная реечная плитка с бордюром
+
+stack-white-steel-horizontal-slats-tile-bordered = белая горизонтальная реечная плитка с бордюром
+
+stack-white-steel-slats-tile-continuous = белая сплошная реечная плитка
+
+stack-white-steel-vertical-slats-tile-bordered = белая вертикальная реечная плитка с бордюром
+

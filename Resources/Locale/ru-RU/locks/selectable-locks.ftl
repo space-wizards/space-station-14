@@ -9,3 +9,6 @@ selectable-lock-tool-screwing-verb = Инструмент (Отвёртка)
 selectable-lock-tool-screwing-popup = { CAPITALIZE($target) } заблокирован отвёрткой.
 selectable-lock-tool-cutting-verb = Инструмент (Кусачки)
 selectable-lock-tool-cutting-popup = { CAPITALIZE($target) } заблокирован кусачками.
+
+selectable-lock-verb-category-name = Заблокировать
+

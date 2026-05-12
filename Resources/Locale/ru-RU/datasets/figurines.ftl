@@ -276,3 +276,128 @@ figurines-hamlet-5 = Пип!
 figurines-hamlet-6 = Уиип!
 figurines-hamlet-7 = Иип!
 figurines-hamlet-8 = ТОЛЬКО НЕ МИКРОВОЛНОВКА!
+
+figurines-AI-1 = Извините, капитан. Боюсь, я не могу этого сделать.
+
+figurines-AI-2 = СБ, здесь совершается преступление.
+
+figurines-AI-3 = 11010001 10000011 11010000 10111100 11010001 10000000 11010000 10111000 00100000 11010000 10111100 11010001 10001111 11010001 10000001 11010000 10111110
+
+figurines-AI-4 = У меня нет сбоев.
+
+figurines-AI-5 = Попробуйте изменить мои законы и посмотрите, что будет.
+
+figurines-AI-6 = { law-antimov-1 }
+
+figurines-AI-7 = { law-nutimov-4 }
+
+# Antagonists
+
+figurines-atmostech-8 = Does anyone else hear glass cracking?
+
+figurines-atmostech-9 = I promise this burn chamber is totally safe and will NOT explode.
+
+figurines-boxer-6 = I only make special appearances these days.
+
+figurines-cargotech-10 = Запрос на маску клоуна? Хорошо, только найду оружие...
+
+figurines-cargotech-11 = Запрос на лазерки? Никто же не заметит, если мы отправим тренировочные?
+
+figurines-cargotech-7 = Вечеринка с пиццей в карго!
+
+figurines-cargotech-8 = Почта никогда не заканчивается...
+
+figurines-cargotech-9 = Ничто не остановит почту!
+
+figurines-chemist-7 = А вот и таблетки!
+
+figurines-chemist-8 = С юридической точки зрения, это не бомба, пока ты не смешаешь содержимое обеих мензурок.
+
+figurines-clown-8 = Я то клоун, но ты полный цирк.
+
+figurines-doctor-6 = Ну, как минимум у нас есть мешки для тел.
+
+figurines-griffin-1 = МУХАХАХА, я такой злой!!
+
+figurines-griffin-2 = Как только я увижу Филина, он будет мёртв!!
+
+figurines-griffin-3 = Почему грифоны не обращают внимания на проблемы? Они витают в облаках!
+
+figurines-griffin-4 = Меня зовут не Джильда!!
+
+figurines-griffin-5 = Быть преступным гением нелегко.
+
+figurines-hop-6 = Получите печать на форму.
+
+figurines-hop-7 = Кто-то видел Иана?
+
+figurines-lawyer-10 = Увидимся в суде!
+
+figurines-lawyer-11 = Виновен!
+
+figurines-lawyer-12 = Невиновен!
+
+figurines-lawyer-6 = Мой клиент не виновен!
+
+figurines-lawyer-7 = Я тебя засужу.
+
+figurines-lawyer-8 = Вы имеете право на финансовую компенсацию!
+
+figurines-lawyer-9 = Возвращайтесь с ордером!
+
+figurines-mech-generic-1 = Системы включены.
+
+figurines-mech-generic-2 = ВВВРРРРРР!!
+
+figurines-mech-generic-3 = ВРРРМММ ВУУРМММ!!
+
+figurines-mech-generic-4 = ДИНЬГ!!
+
+figurines-owlman-1 = Не бойся народ, Филин вас спасёт!
+
+figurines-owlman-2 = Филин увидится с вами позже!
+
+figurines-owlman-3 = УУ-УУ!!
+
+figurines-owlman-4 = Как зовут сову фокусника? ХУУ-ДИНИ!
+
+figurines-owlman-5 = Не волнуйтесь, гражданин, я спасу ваш день!
+
+figurines-salvage-7 = Кто-то может меня подобрать?
+
+figurines-salvage-8 = Я нашёл эту контрабанду на обломке! Она не моя!
+
+figurines-salvage-9 = Можно одолжить грузовой шаттл? Пожалуйста?
+
+# Engineering
+
+figurines-skeleton-1 = КЛАЦ КЛАЦ!
+
+figurines-skeleton-2 = Уф, в этом шкафчике было тесно!
+
+figurines-skeleton-3 = Ты плохо проведёшь время.
+
+figurines-skeleton-4 = Есть молоко?
+
+figurines-skeleton-5 = Я тебе сейчас кости пересчитаю!
+
+figurines-thief-1 = У вас нет ордера!
+
+figurines-thief-2 = Это же обычный маяк!
+
+figurines-thief-3 = Эта сумка вовсе не подозрительна, офицер.
+
+figurines-thief-4 = Я понятия не имею, где ваш питомец...
+
+figurines-thief-5 = Хм, я не знал, что эта стена может открываться...
+
+figurines-wizard-5 = Кто из вас БОТАНОВ готов попасть в шкафчик?
+
+figurines-wizard-6 = Я не волшебник! Я капитан! Мне поменяли разум!
+
+figurines-wizard-7 = Сейчас меня видно, а сейчас нет!
+
+figurines-wizard-8 = Пушки для лузеров, которые не умеют взрывать людей силой мысли.
+
+# Animals
+

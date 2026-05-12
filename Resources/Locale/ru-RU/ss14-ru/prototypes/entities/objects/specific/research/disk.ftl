@@ -12,3 +12,32 @@ ent-TechnologyDisk = технологический диск
 ent-TechnologyDiskRare = { ent-TechnologyDisk }
     .suffix = Редкий
     .desc = { ent-TechnologyDisk.desc }
+
+ent-TechnologyDiskArsenal = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Arsenal
+
+ent-TechnologyDiskCivilianServices = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Civilian Services
+
+ent-TechnologyDiskExperimental = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Experimental
+
+ent-TechnologyDiskIndustrial = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Industrial
+
+ent-TechnologyDiskT1 = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Tier 1
+
+ent-TechnologyDiskT2 = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Tier 2
+
+ent-TechnologyDiskT3 = { ent-TechnologyDisk }
+    .desc = { ent-TechnologyDisk.desc }
+    .suffix = Tier 3
+

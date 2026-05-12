@@ -51,6 +51,7 @@ ent-ToyAmongPequeno = маленький амонг
     .desc = Сас!
 ent-FoamCutlass = игрушечная абордажная сабля
     .desc = Переоденьтесь в пирата и заставьте своих друзей пройти по доске.
+    .suffix = Волшебник
 ent-PonderingOrbWizard = шар размышлений
     .desc = Ponderous, man... Really ponderous. Волшебным образом показывает сеть камер станции.
     .suffix = Волшебник
@@ -71,3 +72,7 @@ ent-NewtonCradle = колыбель Ньютона
     .desc = Устройство, которое скучающие бумагомаратели используют, дабы напомнить себе, что время ещё не остановилось. Содержит гравитацию.
 ent-RubberChicken = резиновая курочка
     .desc = Вызывающая стресс пародия на самое аппетитное пернатое в природе.
+
+ent-CrazyLube = crazy lube
+    .desc = A bottle of super slipery crazy lube manufactured by Honk! Co.
+

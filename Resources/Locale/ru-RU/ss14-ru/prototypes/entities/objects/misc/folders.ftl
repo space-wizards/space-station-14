@@ -10,6 +10,7 @@ ent-BoxFolderFillThreePapers = { "" }
     .desc = { "" }
 ent-BoxFolderBase = { ent-BoxFolderBaseEmpty }
     .desc = { ent-BoxFolderBaseEmpty.desc }
+    .suffix = { ent-BoxFolderFill.suffix }
 ent-BoxFolderRedEmpty = { ent-BoxFolderBaseEmpty }
     .suffix = Красный
     .desc = { ent-BoxFolderBaseEmpty.desc }
@@ -85,18 +86,34 @@ ent-BoxFolderClipboardEmpty = планшет
     .desc = Оружие тех, кто действует на передовой бюрократии.
 ent-BoxFolderClipboard = { ent-BoxFolderClipboardEmpty }
     .desc = { ent-BoxFolderClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFill.suffix }
 ent-BoxFolderClipboardThreePapers = { ent-BoxFolderClipboardEmpty }
     .desc = { ent-BoxFolderClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFillThreePapers.suffix }
 ent-BoxFolderPlasticClipboardEmpty = пластиковый планшет
     .desc = Дешёвый планшет из синего пластика. Для тех, кто ещё не готов держать бюрократическую мощь настоящего деревянного планшета.
 ent-BoxFolderPlasticClipboard = { ent-BoxFolderPlasticClipboardEmpty }
     .desc = { ent-BoxFolderPlasticClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFill.suffix }
 ent-BoxFolderCentComClipboardEmpty = планшет Центком
     .desc = Роскошный планшет, обитый зелёным бархатом. Представители Центком часто носят его с собой, но редко используют.
 ent-BoxFolderCentComClipboard = { ent-BoxFolderCentComClipboardEmpty }
     .desc = { ent-BoxFolderCentComClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFill.suffix }
 ent-BoxFolderCentComClipboardThreePapers = { ent-BoxFolderCentComClipboardEmpty }
     .desc = { ent-BoxFolderCentComClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFillThreePapers.suffix }
 ent-BoxFolderQmClipboard = цифровой планшет заявок
     .desc = Громоздкий цифровой планшет, содержащий информацию о поставках и финансовых операциях. При таком количестве компрометирующих документов его следует беречь.
+
+ent-BoxFolderBaseThreePapers = { ent-BoxFolderBaseEmpty }
+    .desc = { ent-BoxFolderBaseEmpty.desc }
+    .suffix = { ent-BoxFolderFillThreePapers.suffix }
+
+ent-BoxFolderNuclearCodes = папка с кодами ядерной аутентификации
+    .desc = { ent-BaseItem.desc }
+
+ent-BoxFolderPlasticClipboardThreePapers = { ent-BoxFolderPlasticClipboardEmpty }
+    .desc = { ent-BoxFolderPlasticClipboardEmpty.desc }
+    .suffix = { ent-BoxFolderFillThreePapers.suffix }
 

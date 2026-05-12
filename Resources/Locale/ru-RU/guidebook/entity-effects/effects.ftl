@@ -494,3 +494,22 @@ entity-effect-guidebook-plant-seeds-remove =
         [1] Removes the
         *[other] remove the
     } seeds of the plant
+
+-create-3rd-person =
+    { $chance ->
+        [1] Создаёт
+        *[other] создают
+    }
+
+entity-effect-guidebook-plant-mutate-chemicals =
+    { $chance ->
+        [1] Мутирует
+        *[other] мутируют
+    } растение, чтобы то производило { $name }
+
+entity-effect-guidebook-plant-remove-kudzu =
+    { $chance ->
+        [1] Убирает
+        *[other] убирает
+    } кудзу из растения
+

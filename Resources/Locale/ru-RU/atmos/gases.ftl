@@ -8,3 +8,22 @@ gas-plasma-abbreviation = P
 gas-tritium-abbreviation = T
 gas-water-vapor-abbreviation = H₂O
 gas-unknown-abbreviation = X
+
+gas-ammonia = Аммиак
+
+gas-carbon-dioxide = Углекислый газ
+
+gas-frezon = Фрезон
+
+gas-nitrogen = Азот
+
+gas-nitrous-oxide = Оксид азота
+
+gas-oxygen = Кислород
+
+gas-plasma = Плазма
+
+gas-tritium = Тритий
+
+gas-water-vapor = Водяной пар
+

@@ -1,16 +1,19 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Localizations
 {
     public sealed partial class ContentLocalizationManager
     {
+        [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private ILocalizationManager _loc = default!;
 
-        // Default culture used for tests and general fallback.
-        private const string Culture = "en-US";
+        private const string DefaultCulture = "ru-RU";
+        private const string FallbackCulture = "en-US";
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -25,10 +28,24 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(Culture);
+            _cfg.OverrideDefault(CVars.LocCultureName, DefaultCulture);
 
-            // Default / fallback culture (en-US).
-            _loc.LoadCulture(culture);
+            var culture = _loc.SetDefaultCulture();
+            AddFunctions(culture);
+
+            var fallbackCulture = new CultureInfo(FallbackCulture);
+            if (culture.NameEquals(fallbackCulture))
+                return;
+
+            if (!_loc.HasCulture(fallbackCulture))
+                _loc.LoadCulture(fallbackCulture);
+
+            AddFunctions(fallbackCulture);
+            _loc.SetFallbackCluture(fallbackCulture);
+        }
+
+        private void AddFunctions(CultureInfo culture)
+        {
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
@@ -42,22 +59,6 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
             _loc.AddFunction(culture, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(culture, "MANY", FormatMany);
-
-            // Russian culture support (kept for client/server localization).
-            var cultureRu = new CultureInfo("ru-RU");
-            _loc.LoadCulture(cultureRu);
-            _loc.AddFunction(cultureRu, "PRESSURE", FormatPressure);
-            _loc.AddFunction(cultureRu, "POWERWATTS", FormatPowerWatts);
-            _loc.AddFunction(cultureRu, "POWERJOULES", FormatPowerJoules);
-            _loc.AddFunction(cultureRu, "ENERGYWATTHOURS", FormatEnergyWattHours);
-            _loc.AddFunction(cultureRu, "UNITS", FormatUnits);
-            _loc.AddFunction(cultureRu, "TOSTRING", args => FormatToString(cultureRu, args));
-            _loc.AddFunction(cultureRu, "LOC", FormatLoc);
-            _loc.AddFunction(cultureRu, "NATURALFIXED", args => FormatNaturalFixed(cultureRu, args));
-            _loc.AddFunction(cultureRu, "NATURALPERCENT", args => FormatNaturalPercent(cultureRu, args));
-            _loc.AddFunction(cultureRu, "PLAYTIME", FormatPlaytime);
-            _loc.AddFunction(cultureRu, "MAKEPLURAL", FormatMakePlural);
-            _loc.AddFunction(cultureRu, "MANY", FormatMany);
         }
 
         private ILocValue FormatMany(LocArgs args)

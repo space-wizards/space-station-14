@@ -89,6 +89,7 @@ ent-LockerEvidence = шкаф для улик
     .desc = Для хранения пакетиков с гильзами и вещей задержанных.
 ent-LockerSyndicatePersonal = оружейный шкаф
     .desc = Это персональное хранилище для оперативного снаряжения.
+    .suffix = Locked
 ent-LockerBluespaceStation = блюспейс шкаф
     .desc = Передовая технология шкафчикостроения.
     .suffix = Один на станцию

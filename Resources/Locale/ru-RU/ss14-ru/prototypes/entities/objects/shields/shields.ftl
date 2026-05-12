@@ -24,3 +24,7 @@ ent-BrokenEnergyShield = сломанный энергощит
     .desc = Что-то внутри перегорело, он больше не функционирует.
 ent-TelescopicShield = телескопический щит
     .desc = Продвинутый щит на случай беспорядков, изготовлен из облегчённых материалов, способен складываться для удобства хранения.
+
+ent-BaseRepairableShield = base repairable shield
+    .desc = A repairable shield!
+

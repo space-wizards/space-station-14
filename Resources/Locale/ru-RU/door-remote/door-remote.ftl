@@ -8,3 +8,6 @@ door-remote-switch-state-toggle-bolts = Вы настраиваете пульт
 door-remote-switch-state-toggle-emergency-access = Вы настраиваете пульт на переключение аварийного доступа
 door-remote-no-power = Дверь обесточена
 door-remote-denied = В доступе отказано
+
+door-remote-toggle-eletrify-text = Переключение перегрузки
+

@@ -96,3 +96,7 @@ ent-StationAiUploadCircuitboard = консоль загрузки ИИ (конс
     .desc = Консольная плата для консоли загрузки ИИ.
 ent-StationAiFixerCircuitboard = консоль восстановления ИИ (консольная плата)
     .desc = Консольная плата для консоли восстановления ИИ.
+
+ent-BaseComputerCircuitboard = консольная плата
+    .desc = { ent-BaseItem.desc }
+

@@ -21,3 +21,8 @@ store-caregory-spellbook-defensive = Защитные заклинания
 store-caregory-spellbook-utility = Вспомогательные заклинания
 store-caregory-spellbook-equipment = Волшебное снаряжение
 store-caregory-spellbook-events = Заклинания событий
+
+store-category-nukie-delivery = Offers
+
+store-category-objective = Цель
+

@@ -12,3 +12,7 @@ ent-DrinkBaseMaterialStrongMetal = { ent-DrinkBaseMaterialMetal }
     .desc = { ent-DrinkBaseMaterialMetal.desc }
 ent-DrinkBaseMaterialGold = { "" }
     .desc = { "" }
+
+ent-DrinkBaseMaterialStrongPlastic = { ent-DrinkBaseMaterialPlastic }
+    .desc = { ent-DrinkBaseMaterialPlastic.desc }
+

@@ -26,3 +26,7 @@ ent-SolarPanelDamageVariationPass = { ent-BaseVariationPass }
     .desc = { ent-BaseVariationPass.desc }
 ent-SolarPanelEmptyVariationPass = { ent-BaseVariationPass }
     .desc = { ent-BaseVariationPass.desc }
+
+ent-BasicDecalBurnsVariationPass = { ent-BaseVariationPass }
+    .desc = { ent-BaseVariationPass.desc }
+

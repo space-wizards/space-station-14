@@ -6,3 +6,6 @@ access-overrider-window-no-target = Нет подключённых устрой
 access-overrider-window-missing-privileges = Доступ к этому устройству не может быть изменён. На вставленной ID-карте отсутствуют следующие права:
 access-overrider-cannot-modify-access = Вы не обладаете достаточными правами для модификации этого устройства!
 access-overrider-out-of-range = Подключённое устройство слишком далеко
+
+access-overrider-window-missing-privileges-no-id = Доступ к этому устройству не может быть изменён. Отсутствуют следующие права:
+

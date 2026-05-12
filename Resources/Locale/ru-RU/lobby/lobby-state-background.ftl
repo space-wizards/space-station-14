@@ -33,3 +33,8 @@ lobby-state-background-janishootout-artist = psychpsyo
 
 lobby-state-background-reclaimernuke-title = Утилизаторы с ядеркой
 lobby-state-background-reclaimernuke-artist = GetOutMarutak
+
+lobby-state-background-invisiblewall-artist = Vandersloot
+
+lobby-state-background-invisiblewall-title = Invisible Wall
+

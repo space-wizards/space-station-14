@@ -12,3 +12,7 @@ ent-SoapHomemade = мыло
     .desc = Самодельный брусок мыла. Пахнет... уф....
 ent-SoapOmega = омега мыло
     .desc = Самое совершенное мыло, известное человечеству. Пахнет блюспейсом.
+
+ent-BaseSoap = мыло
+    .desc = { ent-BaseItem.desc }
+

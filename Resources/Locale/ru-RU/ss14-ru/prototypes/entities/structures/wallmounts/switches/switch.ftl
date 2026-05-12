@@ -15,6 +15,7 @@ ent-ApcNetSwitchDirectional = переключатель сети ЛКП
     .desc = { ent-ApcNetSwitch.desc }
 ent-LockableButton = кнопка с замком
     .desc = { ent-SignalButtonDirectional.desc }
+    .suffix = { ent-SignalButtonDirectional.suffix }
 ent-LockableButtonCaptain = { ent-LockableButton }
     .suffix = Капитан
     .desc = { ent-LockableButton.desc }

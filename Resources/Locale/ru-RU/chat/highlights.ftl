@@ -47,3 +47,6 @@ highlights-psychologist = психолог
 highlights-personal-ai = персональный ии, "пии"
 highlights-cyborg = киборг, борг
 highlights-station-ai = станционный ии, "ии", "сии"
+
+highlights-musician = музыкант, театрал, артист, сервисный работник, сервисник
+

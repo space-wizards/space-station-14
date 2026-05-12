@@ -1,0 +1,3 @@
+ent-SmallMech = { "" }
+    .desc = { "" }
+

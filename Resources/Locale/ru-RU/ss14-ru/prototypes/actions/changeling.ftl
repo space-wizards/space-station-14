@@ -4,3 +4,7 @@ ent-ActionChangelingDevour = [color=red]Поглотить[/color]
     .desc = Поглощайте сущность ваших жертв и впитывайте их личности и разум в себя.
 ent-ActionChangelingTransform = [color=red]Трансформация[/color]
     .desc = Трансформируйтесь и обретайте личности тех, кого вы поглотили.
+
+ent-ActionChangelingStore = Магазин ДНК
+    .desc = Открывает магазин способностей.
+

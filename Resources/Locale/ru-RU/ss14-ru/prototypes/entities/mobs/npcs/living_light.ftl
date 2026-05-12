@@ -6,3 +6,16 @@ ent-MobLuminousObject = светящийся объект
     .desc = Небольшой светящийся объект, своим свечением обжигающий кожу.
 ent-MobLuminousEntity = светящаяся сущность
     .desc = Ослепительная прозрачная сущность, чей яркий глаз кажется опасным и обжигающим.
+
+ent-MobLuminousEntitySalvage = { ent-MobLuminousEntity }
+    .desc = { ent-MobLuminousEntity.desc }
+    .suffix = Salvage Ruleset
+
+ent-MobLuminousObjectSalvage = { ent-MobLuminousObject }
+    .desc = { ent-MobLuminousObject.desc }
+    .suffix = Salvage Ruleset
+
+ent-MobLuminousPersonSalvage = { ent-MobLuminousPerson }
+    .desc = { ent-MobLuminousPerson.desc }
+    .suffix = Salvage Ruleset
+

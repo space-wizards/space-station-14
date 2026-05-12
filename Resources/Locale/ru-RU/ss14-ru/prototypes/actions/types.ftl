@@ -72,3 +72,19 @@ ent-ActionToggleRootable = Укоренение
     .desc = Начните или прекратите укореняться к полу.
 ent-ActionChameleonController = Управление одеждой
     .desc = Быстро смените весь свой наряд!
+
+ent-ActionChangeVoiceMaskImplant = { ent-ActionChangeVoiceMask }
+    .desc = { ent-ActionChangeVoiceMask.desc }
+
+ent-ActionIntrinsicStore = Магазин
+    .desc = Открыть магазин
+
+ent-ActionJumpBoost = Прыжок
+    .desc = { ent-ActionGravityJump.desc }
+
+ent-ActionShootWater = Пшикнуть водой!
+    .desc = Пшикните водой на ваших врагов.
+
+ent-ActionToggleWaggingVulpkanin = { ent-ActionToggleWagging }
+    .desc = { ent-ActionToggleWagging.desc }
+
