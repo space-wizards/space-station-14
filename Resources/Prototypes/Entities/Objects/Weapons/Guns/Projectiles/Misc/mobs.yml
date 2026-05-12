@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: watcher bolt
   id: WatcherBolt
   parent: BaseBullet
@@ -28,7 +28,15 @@
         - Opaque
         - Impassable
         - BulletImpassable
-      fly-by: *flybyfixture
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
   - type: Projectile
     #   soundHit:  Waiting on serv3
     impactEffect: BulletImpactEffectDisabler
