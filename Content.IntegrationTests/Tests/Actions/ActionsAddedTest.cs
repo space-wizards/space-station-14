@@ -14,10 +14,9 @@ namespace Content.IntegrationTests.Tests.Actions;
 /// <summary>
 /// This test checks that actions properly get added to an entity's actions component.
 /// </summary>
-[TestFixture]
 public sealed class ActionsAddedTest : GameTest
 {
-    public override PoolSettings PoolSettings => new PoolSettings { Connected = true, DummyTicker = false };
+    public override PoolSettings PoolSettings => new() { Connected = true, DummyTicker = false };
 
     [SidedDependency(Side.Server)] private readonly SharedActionsSystem _sActionSystem = default!;
     [SidedDependency(Side.Client)] private readonly SharedActionsSystem _cActionSystem = default!;
