@@ -7,7 +7,7 @@ using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
-using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Antag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
