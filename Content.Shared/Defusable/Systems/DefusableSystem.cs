@@ -14,16 +14,16 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Defusable.Systems;
 
-public sealed class DefusableSystem : EntitySystem
+public sealed partial class DefusableSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedExplosionSystem _explosion = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedWiresSystem _wiresSystem = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -276,7 +276,8 @@ public sealed class DefusableSystem : EntitySystem
         {
             TryDefuseBomb(user, ent);
 
-            _adminLogger.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.Add(LogType.Explosion,
+                LogImpact.High,
                 $"{ToPrettyString(ent.Owner):user} has defused {ToPrettyString(ent.Owner):entity}!");
         }
 
