@@ -49,6 +49,17 @@ public abstract class SharedMindShieldSystem : EntitySystem
         return ev.IsMindshielded;
     }
 
+    /// <summary>
+    /// Used to know if an entity LOOKS mindshielded - this means that it would display an icon on the security HUD. In situations where you aren't checking for mind control, only for the presence of a mindshield, you should use this method.
+    /// </summary>
+    /// <param name="entity">The entity to check for.</param>
+    /// <returns>Wether the entity looks mindshielded.</returns>
+    public bool LooksMindshielded(EntityUid entity)
+    {
+        var ev = new QueryMindShieldVisualsEvent();
+        RaiseLocalEvent(entity, ref ev);
+        return ev.IsVisible;
+    }
 }
 
 /// <summary>
