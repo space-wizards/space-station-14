@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class EmptyAllContainersBehaviour : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {
