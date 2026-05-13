@@ -16,8 +16,8 @@ namespace Content.Server.Destructible
     [UsedImplicitly]
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IEntitySystemManager _entitySystemManager = default!;
 
         public override void Initialize()
         {
