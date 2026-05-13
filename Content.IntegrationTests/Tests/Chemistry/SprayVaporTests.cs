@@ -1,14 +1,13 @@
+#nullable enable
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.NUnit.Constraints;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Decals;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Decals;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Fluids.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -16,7 +15,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
-[TestFixture]
 [TestOf(typeof(SharedSpraySystem))]
 [TestOf(typeof(VaporSystem))]
 public sealed class SprayVaporTests : GameTest
@@ -74,7 +72,7 @@ public sealed class SprayVaporTests : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.That(!puddle.Comp.Solution.ContainsPrototype(Blood));
+            Assert.That(puddle.Comp!.Solution.ContainsPrototype(Blood), Is.False);
         });
     }
 }
