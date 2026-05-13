@@ -130,8 +130,10 @@
     damageContainers:
       - Biological
     damage:
-      groups:
-        Brute: -15 # 5 for each type in the group
+      types:
+        Blunt: -5
+        Piercing: -5
+        Slash: -5
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:
@@ -176,8 +178,10 @@
     damageContainers:
       - Biological
     damage:
-      groups:
-        Brute: -30 # 10 for each type in the group
+      types:
+        Blunt: -10
+        Piercing: -10
+        Slash: -10
     bloodlossModifier: -10 # a suture should stop ongoing bleeding
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
@@ -268,9 +272,8 @@
       damageContainers:
         - Biological
       damage:
-        groups:
-          Brute: 5 # Tourniquets HURT!
         types:
+          Blunt: 5 # Tourniquets HURT
           Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
       bloodlossModifier: -10 # Tourniquets stop bleeding
       delay: 0.5
@@ -368,10 +371,14 @@
     damageContainers:
     - Biological
     damage:
-      groups: # these are all split across multiple types
-        Brute: -150
-        Burn: -150
-        Toxin: -150
+      types: # these are all split across multiple types
+        Blunt: -50
+        Piercing: -50
+        Slash: -50
+        Heat: -50
+        Cold: -50
+        Shock: -50
+        Poison: -150
     bloodlossModifier: -20
     delay: 1
     selfHealPenaltyMultiplier: 0
@@ -389,7 +396,7 @@
 # Pills
 - type: entity
   name: pill
-  suffix: Dexalin 10u
+  suffix: Dexalin 20u
   parent: Pill
   id: PillDexalin
   components:
@@ -398,20 +405,18 @@
   - type: Sprite
     state: pill16
   - type: Label
-    currentLabel: dexalin 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Dexalin
-          Quantity: 10
+    currentLabel: dexalin 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Dexalin
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterDexalin
-  suffix: Dexalin 10u, 7
+  suffix: Dexalin 20u, 7
   components:
   - type: Label
     currentLabel: dexalin 10u
@@ -423,7 +428,7 @@
 
 - type: entity
   name: pill
-  suffix: Dylovene 10u
+  suffix: Dylovene 20u
   parent: Pill
   id: PillDylovene
   components:
@@ -432,23 +437,21 @@
   - type: Sprite
     state: pill10
   - type: Label
-    currentLabel: dylovene 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Dylovene
-          Quantity: 10
+    currentLabel: dylovene 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Dylovene
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterDylovene
-  suffix: Dylovene 10u, 5
+  suffix: Dylovene 20u, 5
   components:
   - type: Label
-    currentLabel: dylovene 10u
+    currentLabel: dylovene 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -457,7 +460,7 @@
 
 - type: entity
   name: pill
-  suffix: Hyronalin 10u
+  suffix: Hyronalin 20u
   parent: Pill
   id: PillHyronalin
   components:
@@ -466,23 +469,21 @@
   - type: Sprite
     state: pill17
   - type: Label
-    currentLabel: hyronalin 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Hyronalin
-          Quantity: 10
+    currentLabel: hyronalin 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Hyronalin
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterHyronalin
-  suffix: Hyronalin 10u, 5
+  suffix: Hyronalin 20u, 5
   components:
   - type: Label
-    currentLabel: hyronalin 10u
+    currentLabel: hyronalin 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -491,7 +492,7 @@
 
 - type: entity
   name: pill
-  suffix: Potassium iodide 10u
+  suffix: Potassium iodide 20u
   parent: Pill
   id: PillPotassiumIodide
   components:
@@ -500,23 +501,21 @@
   - type: Sprite
     state: pill9
   - type: Label
-    currentLabel: potassium iodide 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: PotassiumIodide
-          Quantity: 10
+    currentLabel: potassium iodide 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: PotassiumIodide
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterPotassiumIodide
-  suffix: Potassium iodide 10u, 5
+  suffix: Potassium iodide 20u, 5
   components:
   - type: Label
-    currentLabel: potassium iodide 10u
+    currentLabel: potassium iodide 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -525,7 +524,7 @@
 
 - type: entity
   name: pill
-  suffix: Iron 10u
+  suffix: Iron 20u
   parent: Pill
   id: PillIron
   components:
@@ -534,18 +533,16 @@
   - type: Sprite
     state: pill14
   - type: Label
-    currentLabel: iron 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Iron
-          Quantity: 10
+    currentLabel: iron 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 20
 
 - type: entity
   name: pill
-  suffix: Copper 10u
+  suffix: Copper 20u
   parent: Pill
   id: PillCopper
   components:
@@ -554,23 +551,21 @@
   - type: Sprite
     state: pill13
   - type: Label
-    currentLabel: copper 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Copper
-          Quantity: 10
+    currentLabel: copper 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Copper
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterIron
-  suffix: Iron 10u, 5
+  suffix: Iron 20u, 5
   components:
   - type: Label
-    currentLabel: iron 10u
+    currentLabel: iron 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -581,10 +576,10 @@
   name: pill canister
   parent: PillCanister
   id: PillCanisterCopper
-  suffix: Copper 10u, 5
+  suffix: Copper 20u, 5
   components:
   - type: Label
-    currentLabel: copper 10u
+    currentLabel: copper 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -593,7 +588,7 @@
 
 - type: entity
   name: pill
-  suffix: Kelotane 10u
+  suffix: Kelotane 20u
   parent: Pill
   id: PillKelotane
   components:
@@ -602,23 +597,21 @@
   - type: Sprite
     state: pill4
   - type: Label
-    currentLabel: kelotane 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Kelotane
-          Quantity: 10
+    currentLabel: kelotane 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Kelotane
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterKelotane
-  suffix: Kelotane 10u, 5
+  suffix: Kelotane 20u, 5
   components:
   - type: Label
-    currentLabel: kelotane 10u
+    currentLabel: kelotane 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -637,22 +630,20 @@
     state: pill8
   - type: Label
     currentLabel: dermaline 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Dermaline
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Dermaline
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterDermaline
-  suffix: Dermaline 10u, 5
+  suffix: Dermaline 20u, 5
   components:
   - type: Label
-    currentLabel: dermaline 10u
+    currentLabel: dermaline 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -664,17 +655,15 @@
   parent: Pill
   id: PillSpaceDrugs
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 20
 
 - type: entity
   name: pill
-  suffix: Tricordrazine 10u
+  suffix: Tricordrazine 20u
   parent: Pill
   id: PillTricordrazine
   components:
@@ -683,23 +672,21 @@
   - type: Sprite
     state: pill3
   - type: Label
-    currentLabel: tricordrazine 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Tricordrazine
-          Quantity: 10
+    currentLabel: tricordrazine 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tricordrazine
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterTricordrazine
-  suffix: Tricordrazine 10u, 5
+  suffix: Tricordrazine 20u, 5
   components:
   - type: Label
-    currentLabel: tricordrazine 10u
+    currentLabel: tricordrazine 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -708,7 +695,7 @@
 
 - type: entity
   name: pill
-  suffix: Bicaridine 10u
+  suffix: Bicaridine 20u
   parent: Pill
   id: PillBicaridine
   components:
@@ -717,23 +704,21 @@
   - type: Sprite
     state: pill5
   - type: Label
-    currentLabel: bicaridine 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Bicaridine
-          Quantity: 10
+    currentLabel: bicaridine 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Bicaridine
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterBicaridine
-  suffix: Bicaridine 10u, 5
+  suffix: Bicaridine 20u, 5
   components:
   - type: Label
-    currentLabel: bicaridine 10u
+    currentLabel: bicaridine 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -742,7 +727,7 @@
 
 - type: entity
   name: pill
-  suffix: Charcoal 10u
+  suffix: Charcoal 20u
   parent: Pill
   id: PillCharcoal
   components:
@@ -751,23 +736,21 @@
   - type: Sprite
     state: pill21
   - type: Label
-    currentLabel: charcoal 10u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Charcoal
-          Quantity: 10
+    currentLabel: charcoal 20u
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Charcoal
+        Quantity: 20
 
 - type: entity
   name: pill canister
   parent: PillCanister
   id: PillCanisterCharcoal
-  suffix: Charcoal 10u, 3
+  suffix: Charcoal 20u, 3
   components:
   - type: Label
-    currentLabel: charcoal 10u
+    currentLabel: charcoal 20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -779,43 +762,37 @@
   parent: Pill
   id: PillRomerol
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Romerol
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Romerol
+        Quantity: 20
 
 - type: entity
   name: ambuzol pill
   parent: Pill
   id: PillAmbuzol
   components:
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 20
-          reagents:
-            - ReagentId: Ambuzol
-              Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ambuzol
+        Quantity: 10
 
 - type: entity
   name: ambuzol plus pill
   parent: Pill
   id: PillAmbuzolPlus
   components:
-    - type: Pill
-      pillType: 2
-    - type: Sprite
-      state: pill3
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 20
-          reagents:
-            - ReagentId: AmbuzolPlus
-              Quantity: 5
+  - type: Pill
+    pillType: 2
+  - type: Sprite
+    state: pill3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: AmbuzolPlus
+        Quantity: 5
 
 - type: entity
   parent: PillCanister
@@ -827,40 +804,33 @@
       storagebase: !type:GroupSelector
         children:
         - id: PillDexalin
-          amount: &Range1to6 !type:RangeNumberSelector
-            range: 1, 6
+          amount: 1, 6
         - id: PillDylovene
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillHyronalin
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillPotassiumIodide
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillIron
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillCopper
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillKelotane
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillDermaline
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillTricordrazine
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillBicaridine
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillCharcoal
-          amount: *Range1to6
-        - id: PillAmbuzol
-          weight: 0.75
-          amount: *Range1to6
-        - id: PillAmbuzolPlus
-          weight: 0.75
-          amount: *Range1to6
+          amount: 1, 6
         - id: PillSpaceDrugs
           weight: 0.75
-          amount: *Range1to6
+          amount: 1, 6
         - id: StrangePill
           weight: 0.75
-          amount: *Range1to6
+          amount: 1, 6
 
 # Syringes
 - type: entity
@@ -870,13 +840,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ephedrine
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Ephedrine
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ephedrine
+        Quantity: 15
 
 - type: entity
   suffix: inaprovaline
@@ -885,13 +853,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-inaprovaline
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Inaprovaline
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Inaprovaline
+        Quantity: 15
 
 - type: entity
   suffix: tranexamic acid
@@ -900,13 +866,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-tranexamic-acid
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: TranexamicAcid
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: TranexamicAcid
+        Quantity: 15
 
 - type: entity
   suffix: bicaridine
@@ -915,13 +879,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-bicaridine
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Bicaridine
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Bicaridine
+        Quantity: 15
 
 - type: entity
   suffix: dermaline
@@ -930,13 +892,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-dermaline
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Dermaline
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Dermaline
+        Quantity: 15
 
 - type: entity
   suffix: hyronalin
@@ -945,13 +905,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-hyronalin
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Hyronalin
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Hyronalin
+        Quantity: 15
 
 - type: entity
   suffix: ipecac
@@ -960,13 +918,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ipecac
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Ipecac
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ipecac
+        Quantity: 15
 
 - type: entity
   suffix: ambuzol
@@ -975,13 +931,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ambuzol
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Ambuzol
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ambuzol
+        Quantity: 15
 
 - type: entity
   suffix: sigynate
@@ -990,13 +944,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-sigynate
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Sigynate
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sigynate
+        Quantity: 15
 
 - type: entity
   suffix: ethylredoxrazine
@@ -1005,13 +957,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-ethylredoxrazine
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Ethylredoxrazine
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ethylredoxrazine
+        Quantity: 15
 
 - type: entity
   suffix: phalanximine
@@ -1020,13 +970,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-phalanximine
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Phalanximine
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Phalanximine
+        Quantity: 15
 
 - type: entity
   suffix: saline
@@ -1035,13 +983,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-saline
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-          - ReagentId: Saline
-            Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Saline
+        Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
@@ -1051,13 +997,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-romerol
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Romerol
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Romerol
+        Quantity: 15
 
 - type: entity
   suffix: hyperzine
@@ -1066,13 +1010,11 @@
   components:
   - type: Label
     currentLabel: reagent-name-stimulants
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Stimulants
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Stimulants
+        Quantity: 15
 
 # Entity Tables
 - type: entityTable
