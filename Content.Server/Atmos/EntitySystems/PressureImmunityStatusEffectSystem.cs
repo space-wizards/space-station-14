@@ -8,11 +8,11 @@ namespace Content.Server.Atmos.EntitySystems;
 /// <summary>
 /// Responds to pressure immunity refreshes for the active status effect.
 /// </summary>
-public sealed class PressureImmunityStatusEffectSystem : EntitySystem
+public sealed partial class PressureImmunityStatusEffectSystem : EntitySystem
 {
     public static readonly EntProtoId PressureImmunityEffect = "StatusEffectPressureImmunity";
 
-    [Dependency] private readonly BarotraumaSystem _barotrauma = default!;
+    [Dependency] private BarotraumaSystem _barotrauma = default!;
 
     /// <inheritdoc />
     public override void Initialize()
