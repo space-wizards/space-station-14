@@ -13,16 +13,16 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Shared.Light.EntitySystems;
 
 /// <summary>
-///     System that handles the emergency light <see cref="EmergencyLightComponent"/>.
+/// System that handles the emergency light <see cref="EmergencyLightComponent"/>.
 /// </summary>
-public sealed class EmergencyLightSystem : EntitySystem
+public sealed partial class EmergencyLightSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedStationSystem _station = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambient = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedStationSystem _station = default!;
 
     public override void Initialize()
     {

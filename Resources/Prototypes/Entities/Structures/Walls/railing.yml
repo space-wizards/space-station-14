@@ -15,8 +15,9 @@
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Climbable
   - type: Construction
     graph: Railing

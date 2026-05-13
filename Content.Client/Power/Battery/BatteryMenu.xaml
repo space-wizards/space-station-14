@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
@@ -16,7 +16,7 @@
                                     Margin="2 16" />
 
                     <!-- Box with breaker, label, values -->
-                    <PanelContainer HorizontalExpand="True" StyleClasses="Inset">
+                    <PanelContainer HorizontalExpand="True" StyleClasses="BackgroundPanelDark">
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
@@ -46,7 +46,7 @@
                                     Margin="2 16" />
 
                     <!-- Box with breaker, label, values -->
-                    <PanelContainer HorizontalExpand="True" StyleClasses="Inset">
+                    <PanelContainer HorizontalExpand="True" StyleClasses="BackgroundPanelDark">
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
@@ -69,7 +69,7 @@
             <!-- Middle pane: charge/discharge -->
             <BoxContainer Name="ChargeDischarge" Orientation="Vertical" HorizontalExpand="True">
                 <!-- Charge -->
-                <PanelContainer VerticalExpand="True" StyleClasses="Inset" Margin="0 0 0 8">
+                <PanelContainer VerticalExpand="True" StyleClasses="BackgroundPanelDark" Margin="0 0 0 8">
                     <BoxContainer Orientation="Vertical">
                         <Label Text="{Loc 'battery-menu-charge-header'}" StyleClasses="LabelKeyText" />
                         <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
@@ -86,7 +86,7 @@
                     </BoxContainer>
                 </PanelContainer>
                 <!-- Discharge -->
-                <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+                <PanelContainer VerticalExpand="True" StyleClasses="BackgroundPanelDark">
                     <BoxContainer Orientation="Vertical">
                         <Label Text="{Loc 'battery-menu-discharge-header'}" StyleClasses="LabelKeyText" />
                         <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
@@ -111,7 +111,7 @@
             </BoxContainer>
 
             <!-- Right pane: storage -->
-            <PanelContainer Name="Storage" StyleClasses="Inset" HorizontalExpand="True">
+            <PanelContainer Name="Storage" StyleClasses="BackgroundPanelDark" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical">
                     <Label Text="{Loc 'battery-menu-storage-header'}" StyleClasses="LabelKeyText" />
                     <GridContainer Columns="2">

@@ -15,8 +15,8 @@ namespace Content.Client.Robotics.UI;
 [GenerateTypedNameReferences]
 public sealed partial class RoboticsConsoleWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly LockSystem _lock;
     private readonly SpriteSystem _sprite;
 
