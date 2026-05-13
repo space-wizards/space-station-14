@@ -8,9 +8,9 @@ namespace Content.Server.Wires;
 
 public sealed partial class WiresSystem : SharedWiresSystem
 {
-    [Dependency] private readonly ConstructionSystem _construction = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private ConstructionSystem _construction = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

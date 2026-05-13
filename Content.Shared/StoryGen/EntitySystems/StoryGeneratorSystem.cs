@@ -10,8 +10,8 @@ namespace Content.Shared.StoryGen;
 /// </summary>
 public sealed partial class StoryGeneratorSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     /// Tries to generate a random story using the given template, picking a random word from the referenced
