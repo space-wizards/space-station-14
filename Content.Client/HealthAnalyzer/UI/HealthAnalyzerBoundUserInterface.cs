@@ -6,8 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.HealthAnalyzer.UI;
 
 [UsedImplicitly]
-public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey)
-    : BoundUserInterface(owner, uiKey)
+public sealed partial class HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private HealthAnalyzerWindow? _window;
