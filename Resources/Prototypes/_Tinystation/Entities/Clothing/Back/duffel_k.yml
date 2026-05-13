@@ -23,6 +23,11 @@
           - Blocking
           sizes:
           - Huge
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      buckler: !type:ContainerSlot {}
   - type: ExplosionResistance
     damageCoefficient: 0.0
   - type: ClothingSpeedModifier
