@@ -12,9 +12,9 @@ namespace Content.Server.Speech.Muting;
 /// <summary>
 /// Handles the speech restrictions imposed by <see cref="MutedStatusEffectComponent"/>.
 /// </summary>
-public sealed class MutedStatusEffectSystem : EntitySystem
+public sealed partial class MutedStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     /// <inheritdoc />
     public override void Initialize()

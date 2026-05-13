@@ -6,9 +6,9 @@ namespace Content.Shared.StatusEffectNew;
 /// Keeps permanent status effects from <see cref="PermanentStatusEffectsComponent"/> applied
 /// for as long as the owning component exists.
 /// </summary>
-public sealed class PermanentStatusEffectsSystem : EntitySystem
+public sealed partial class PermanentStatusEffectsSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
