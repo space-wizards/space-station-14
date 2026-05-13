@@ -113,7 +113,7 @@ public sealed partial class AntagSelectionSystem
             }
         }
 
-        return player.AttachedEntity == null || IsEntityValid(player, def);
+        return player.AttachedEntity == null || HasComp<GhostComponent>(player.AttachedEntity) || IsEntityValid(player, def);
     }
 
     /// <inhereitdoc cref="IsMindValid(EntityUid?,AntagSpecifierPrototype)"/>
@@ -397,7 +397,6 @@ public sealed partial class AntagSelectionSystem
             Debug.Assert(!assert, $"Tried to spawn a ghost role for {proto.ID}, but it had no prototype!");
             return;
         }
-
 
         if (!TryGetValidSpawnPosition(gameRule, proto, out var coordinates))
         {

@@ -4,7 +4,7 @@ namespace Content.Shared.Radiation.Systems;
 
 public abstract partial class SharedRadiationSystem : EntitySystem
 {
-    [Dependency] protected readonly EntityQuery<RadiationSourceComponent> SourceQuery = default!;
+    [Dependency] protected EntityQuery<RadiationSourceComponent> SourceQuery = default!;
 
     /// <summary>
     /// Sets the intensity of a <see cref="RadiationSourceComponent"/> to the passed intensity.
@@ -17,11 +17,5 @@ public abstract partial class SharedRadiationSystem : EntitySystem
             return;
 
         entity.Comp.Intensity = intensity;
-        UpdateSource((entity, entity.Comp));
     }
-
-    /// <summary>
-    /// Updates the radiation source cache. Does nothing on client, see server!
-    /// </summary>
-    protected virtual void UpdateSource(Entity<RadiationSourceComponent> entity) { }
 }

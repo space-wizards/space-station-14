@@ -8,10 +8,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
+public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
