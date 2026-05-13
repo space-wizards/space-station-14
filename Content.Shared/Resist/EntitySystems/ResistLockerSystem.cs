@@ -4,7 +4,6 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist.Components;
-using Content.Shared.Resist;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Components;
@@ -15,14 +14,14 @@ namespace Content.Shared.Resist.EntitySystems;
 /// <summary>
 /// Handles allowing entities with <see cref="ResistLockerComponent"/> to break out of locked or welded containers by moving.
 /// </summary>
-public sealed class ResistLockerSystem : EntitySystem
+public sealed partial class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly WeldableSystem _weldable = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
