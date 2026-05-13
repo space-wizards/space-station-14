@@ -5,9 +5,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Changeling.Systems;
 
-public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
+public sealed partial class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -33,6 +33,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
                 OriginalJob = identity.OriginalJob,
                 OriginalName = identity.OriginalName,
                 Starting = identity.Starting,
+                GrantedDna = identity.GrantedDna,
             };
 
             ent.Comp.ConsumedIdentities.Add(data);
@@ -41,6 +42,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
         ent.Comp.CurrentIdentity = EnsureEntity<ChangelingStoredIdentityComponent>(state.CurrentIdentity, ent);
 
         ent.Comp.IdentityCloningSettings = state.IdentityCloningSettings;
+        ent.Comp.MaxStoredDisguises = state.MaxStoredDisguises;
 
         UpdateUi(ent);
     }

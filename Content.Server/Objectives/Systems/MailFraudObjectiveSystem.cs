@@ -7,9 +7,9 @@ namespace Content.Server.Objectives.Systems;
 
 public sealed partial class MailFraudObjectiveSystem : EntitySystem
 {
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly CounterConditionSystem _counterCondition = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private CounterConditionSystem _counterCondition = default!;
 
     public override void Initialize()
     {
