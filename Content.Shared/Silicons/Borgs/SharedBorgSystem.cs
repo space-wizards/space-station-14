@@ -96,6 +96,15 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
+        SubscribeLocalEvent<BorgChassisComponent, TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+    }
+
+    private void OnTryGetIdentityShortInfo(Entity<BorgChassisComponent> chassis, ref TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+            return;
+        args.Title = Name(args.ForActor).Trim();
+        args.Handled = true;
     }
 
     private void OnStartup(Entity<BorgChassisComponent> chassis, ref ComponentStartup args)

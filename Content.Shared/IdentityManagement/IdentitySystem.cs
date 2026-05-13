@@ -43,10 +43,6 @@ public sealed partial class IdentitySystem : EntitySystem
     // Recycled hashset for tracking identities each tick that need to update
     private readonly HashSet<EntityUid> _queuedIdentityUpdates = new();
 
-    private EntityQuery<StationAiHeldComponent> _aiQuery;
-
-    private EntityQuery<BorgChassisComponent> _borgQuery;
-
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -69,8 +65,6 @@ public sealed partial class IdentitySystem : EntitySystem
 
         SubscribeLocalEvent<IdentityBlockerComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
 
-        _aiQuery = GetEntityQuery<StationAiHeldComponent>();
-        _borgQuery = GetEntityQuery<BorgChassisComponent>();
     }
 
     /// <summary>
@@ -301,18 +295,11 @@ public sealed partial class IdentitySystem : EntitySystem
     /// <param name="forLogging"> For when special IDs don't leave behind a log trail; It compares to<c>IdCardComponent.BypassLogging</c></param>
     /// <returns> A string of the name and ID or null if no valid identity or no ID card</returns>
     [PublicAPI]
-    public string? GetNameAndId(EntityUid forActor, bool forLogging = false)
+    public string? GetNameAndId(EntityUid? whileInteractingWith, EntityUid forActor, bool forLogging = false)
     {
-        if (_aiQuery.HasComponent(forActor))
-            return $"{Name(forActor)} ({Loc.GetString("job-name-station-ai")})";
-
-        if (_borgQuery.HasComponent(forActor))
-            return Name(forActor).Trim();
-
-        if (_idCard.TryGetFullTitle(forActor, forLogging, out var title))
-            return title;
-
-        return null;
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(whileInteractingWith, forActor, forLogging);
+        RaiseLocalEvent(forActor, tryGetIdentityShortInfoEvent, true);
+        return tryGetIdentityShortInfoEvent.Title;
     }
 }
 

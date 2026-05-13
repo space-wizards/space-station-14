@@ -245,7 +245,7 @@ namespace Content.Server.Communications
                     return;
                 }
 
-                author = _identity.GetNameAndId(mob) ?? author;
+                author = _identity.GetNameAndId(uid, mob) ?? author;
             }
 
             comp.AnnouncementCooldownRemaining = comp.Delay;

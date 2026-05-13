@@ -25,6 +25,15 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
 
+        SubscribeLocalEvent<StationAiHeldComponent, TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+    }
+
+    private void OnTryGetIdentityShortInfo(Entity<StationAiHeldComponent> ent, ref TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+            return;
+        args.Title = $"{Name(args.ForActor)} ({Loc.GetString("job-name-station-ai")})";
+        args.Handled = true;
     }
 
     private void OnCoreJump(Entity<StationAiHeldComponent> ent, ref JumpToCoreEvent args)

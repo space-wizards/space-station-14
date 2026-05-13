@@ -82,7 +82,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
     private void GetOfficer(EntityUid uid, out string officer)
     {
-        officer = _identity.GetNameAndId(uid) ?? Loc.GetString("criminal-records-console-unknown-officer");
+        officer = _identity.GetNameAndId(null, uid) ?? Loc.GetString("criminal-records-console-unknown-officer");
     }
 
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
@@ -130,7 +130,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (entry != null)
             jobName = entry.JobTitle;
 
-        officer = _identity.GetNameAndId(mob.Value) ?? Loc.GetString("criminal-records-console-unknown-officer");
+        officer = _identity.GetNameAndId(null, mob.Value) ?? Loc.GetString("criminal-records-console-unknown-officer");
 
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
