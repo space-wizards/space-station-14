@@ -22,14 +22,9 @@ namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
-        [Dependency]
-        private SharedTransformSystem _transformSystem = default!;
-
-        [Dependency]
-        private EmagSystem _emag = default!;
-
-        [Dependency]
-        private IGameTiming _timing = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private EmagSystem _emag = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         private void InitializeConsole()
         {
@@ -461,7 +456,7 @@ namespace Content.Server.Cargo.Systems
 
             if (account == bank.PrimaryAccount)
                 orders = allOrders;
-            return [.. orders.Where(order => order.Approved == (approved ?? true) && order.Visible)];
+            return [.. orders.Where(order => order.Visible && (approved == null || order.Approved == approved))];
         }
 
         private void ConsolePopup(EntityUid actor, string text)
