@@ -6,9 +6,9 @@ namespace Content.Shared.Damage.Systems;
 /// <summary>
 /// Damages the thrown item when it lands.
 /// </summary>
-public sealed class DamageOnLandSystem : EntitySystem
+public sealed partial class DamageOnLandSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {

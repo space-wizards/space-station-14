@@ -6,11 +6,11 @@ using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageOnToolInteractSystem : EntitySystem
+public sealed partial class DamageOnToolInteractSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
