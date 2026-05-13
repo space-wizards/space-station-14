@@ -3,7 +3,6 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mindshield;
-using Content.Shared.Mindshield.FakeMindShield;
 using Content.Shared.Mobs;
 using Content.Shared.Store;
 using Content.Shared.VoiceMask;
