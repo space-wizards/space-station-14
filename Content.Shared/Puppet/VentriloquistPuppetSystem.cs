@@ -8,10 +8,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Puppet;
 
-public sealed class VentriloquistPuppetSystem : EntitySystem
+public sealed partial class VentriloquistPuppetSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
