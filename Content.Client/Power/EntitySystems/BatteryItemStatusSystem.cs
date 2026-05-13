@@ -11,10 +11,10 @@ namespace Content.Client.Power.EntitySystems;
 /// Wires up item status logic for <see cref="BatteryComponent"/> and <see cref="BatteryStatusControl"/>.
 /// Shows battery charge information when examining items with batteries.
 /// </summary>
-public sealed class BatteryItemStatusSystem : EntitySystem
+public sealed partial class BatteryItemStatusSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
 
     public override void Initialize()
     {

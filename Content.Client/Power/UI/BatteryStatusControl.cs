@@ -1,13 +1,12 @@
-using Content.Client.Power.Components;
-using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
+using Content.Client.Power.EntitySystems;
 using Content.Client.Stylesheets;
-using Content.Shared.PowerCell;
-using Content.Shared.Power.EntitySystems;
-using Content.Shared.Power.Components;
+using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Power.EntitySystems;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Power.UI;
@@ -16,7 +15,7 @@ namespace Content.Client.Power.UI;
 /// Displays battery charge information for entities with <see cref="BatteryItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="BatteryItemStatusSystem"/>
-public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatusControl.Data>
+public sealed partial class BatteryStatusControl : PollingItemStatusControl<BatteryStatusControl.Data>
 {
     private readonly EntityUid _parent;
     private readonly IEntityManager _entityManager;

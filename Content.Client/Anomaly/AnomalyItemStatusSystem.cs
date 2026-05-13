@@ -9,14 +9,14 @@ namespace Content.Client.Anomaly;
 /// Wires up item status logic for <see cref="CorePoweredThrowerComponent"/>.
 /// </summary>
 /// <seealso cref="AnomalyStatusControl"/>
-public sealed class AnomalyItemStatusSystem : EntitySystem
+public sealed partial class AnomalyItemStatusSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<CorePoweredThrowerComponent>(
-            entity => new AnomalyStatusControl(entity, EntityManager, _itemSlots));
+        Subs.ItemStatus<CorePoweredThrowerComponent>(entity =>
+            new AnomalyStatusControl(entity, EntityManager, _itemSlots));
     }
 }

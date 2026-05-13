@@ -1,6 +1,7 @@
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Trigger.Systems;
 using Content.Shared.Trigger.Components;
 using Robust.Client.UserInterface.Controls;
 
@@ -10,7 +11,7 @@ namespace Content.Client.Trigger.UI;
 /// Displays timer delay information for <see cref="TimerTriggerComponent"/> from predicted client state.
 /// </summary>
 /// <seealso cref="TimerTriggerItemStatusSystem"/>
-public sealed class TimerTriggerStatusControl : PollingItemStatusControl<TimerTriggerStatusControl.Data>
+public sealed partial class TimerTriggerStatusControl : PollingItemStatusControl<TimerTriggerStatusControl.Data>
 {
     private readonly Entity<TimerTriggerComponent> _parent;
     private readonly RichTextLabel _label;

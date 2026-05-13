@@ -1,7 +1,7 @@
-using Content.Client.Magazine.EntitySystems;
-using Content.Client.Magazine.UI;
+using Content.Client.Weapons.Ranged.EntitySystems;
+using Content.Client.Weapons.Ranged.UI;
 
-namespace Content.Client.Magazine.Components;
+namespace Content.Client.Weapons.Ranged.Components;
 
 /// <summary>
 /// Exposes magazine ammunition information via item status control.

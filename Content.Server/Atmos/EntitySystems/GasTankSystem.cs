@@ -8,7 +8,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 

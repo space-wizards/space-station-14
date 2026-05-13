@@ -11,7 +11,7 @@ namespace Content.Client.Anomaly.UI;
 /// Displays anomaly core charge information based on <see cref="AnomalyCoreComponent"/> in the slot of.
 /// <see cref="CorePoweredThrowerComponent"/>.
 /// </summary>
-public sealed class AnomalyStatusControl : PollingItemStatusControl<AnomalyStatusControl.Data>
+public sealed partial class AnomalyStatusControl : PollingItemStatusControl<AnomalyStatusControl.Data>
 {
     private readonly Entity<CorePoweredThrowerComponent> _parent;
     private readonly IEntityManager _entityManager;

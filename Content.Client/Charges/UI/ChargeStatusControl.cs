@@ -1,3 +1,4 @@
+using Content.Client.Charges.EntitySystems;
 using Content.Client.Charges.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
@@ -12,7 +13,7 @@ namespace Content.Client.Charges.UI;
 /// Displays limited charges information for <see cref="ChargeItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="ChargeItemStatusSystem"/>
-public sealed class ChargeStatusControl : PollingItemStatusControl<ChargeStatusControl.Data>
+public sealed partial class ChargeStatusControl : PollingItemStatusControl<ChargeStatusControl.Data>
 {
     private readonly Entity<ChargeItemStatusComponent> _parent;
     private readonly IEntityManager _entityManager;

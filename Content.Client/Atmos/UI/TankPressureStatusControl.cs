@@ -2,7 +2,7 @@ using Content.Client.Atmos.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Atmos;
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Robust.Client.UserInterface.Controls;
 
@@ -12,7 +12,7 @@ namespace Content.Client.Atmos.UI;
 /// Displays gas tank pressure information for <see cref="TankPressureItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="TankPressureItemStatusSystem"/>
-public sealed class TankPressureStatusControl : PollingItemStatusControl<TankPressureStatusControl.Data>
+public sealed partial class TankPressureStatusControl : PollingItemStatusControl<TankPressureStatusControl.Data>
 {
     private readonly Entity<TankPressureItemStatusComponent> _parent;
     private readonly IEntityManager _entityManager;

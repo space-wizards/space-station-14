@@ -1,17 +1,17 @@
-using Content.Client.Magazine.Components;
+using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Magazine.UI;
+namespace Content.Client.Weapons.Ranged.UI;
 
 /// <summary>
 /// Displays magazine ammunition information for <see cref="MagazineItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="MagazineItemStatusSystem"/>
-public sealed class MagazineStatusControl : PollingItemStatusControl<MagazineStatusControl.Data>
+public sealed partial class MagazineStatusControl : PollingItemStatusControl<MagazineStatusControl.Data>
 {
     private readonly Entity<MagazineItemStatusComponent> _parent;
     private readonly IEntityManager _entityManager;

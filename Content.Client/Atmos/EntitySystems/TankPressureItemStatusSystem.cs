@@ -8,12 +8,12 @@ namespace Content.Client.Atmos.EntitySystems;
 /// Wires up item status logic for <see cref="TankPressureItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="TankPressureStatusControl"/>
-public sealed class TankPressureItemStatusSystem : EntitySystem
+public sealed partial class TankPressureItemStatusSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        Subs.ItemStatus<TankPressureItemStatusComponent>(
-            entity => new TankPressureStatusControl(entity, EntityManager));
+        Subs.ItemStatus<TankPressureItemStatusComponent>(entity =>
+            new TankPressureStatusControl(entity, EntityManager));
     }
 }
