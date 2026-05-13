@@ -9,8 +9,8 @@
   - type: Sprite
     sprite: Clothing/Belt/sheath.rsi
     layers:
-    - state: icon
-    - state: fill
+    - state: sheath
+    - state: sheath-sabre
       map: [ "enum.ItemSlotVisualLayers.Fill" ]
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
@@ -19,7 +19,7 @@
   - type: ItemSlots
     slots:
       item:
-        name: fill
+        name: sheath-sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg
@@ -30,9 +30,9 @@
   - type: ItemSlotVisuals
     slotVisuals:
     - layer: fill
-      fillBaseName: fill
-      inHandsFillBaseName: -fill
-      equippedFillBaseName: -fill
+      fillBaseName: sheath-sabre
+      inHandsFillBaseName: -sabre
+      equippedFillBaseName: -sabre
   - type: Appearance
 
 - type: entity
