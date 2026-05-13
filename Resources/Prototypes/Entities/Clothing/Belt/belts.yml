@@ -19,7 +19,7 @@
   - type: ItemSlots
     slots:
       sabre:
-        name: sheath-sabre
+        name: Sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg
