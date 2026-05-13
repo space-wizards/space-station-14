@@ -457,8 +457,6 @@
     heldPrefix: mime
 # Tastes like nothing.
 
-# No Slice
-
 - type: entity
   name: amanita pie
   parent: FoodPieBase
@@ -469,7 +467,9 @@
     flavors:
       - mushroom
   - type: Sprite
-    state: amanita
+    layers:
+    - state: tin
+    - state: amanita
   - type: Solution
     solution:
       reagents:
@@ -481,6 +481,33 @@
         Quantity: 8
       - ReagentId: Amatoxin
         Quantity: 10
+  - type: SliceableFood
+    slice: FoodPieAmanitaSlice
+
+- type: entity
+  name: slice of amanita pie
+  parent: FoodPieSliceBase
+  id: FoodPieAmanitaSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: Sprite
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: red
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
+      - ReagentId: Amatoxin
+        Quantity: 1.25
 # Tastes like pie, mushrooms.
 
 - type: entity
@@ -493,7 +520,25 @@
     flavors:
       - mushroom
   - type: Sprite
-    state: plump
+    layers:
+    - state: tin
+    - state: plump
+  - type: SliceableFood
+    slice: FoodPiePlumpSlice
+
+- type: entity
+  name: slice of plump pie
+  parent: FoodPieSliceBase
+  id: FoodPiePlumpSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: Sprite
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: purple
 # Tastes like pie, mushrooms.
 
 # Tart

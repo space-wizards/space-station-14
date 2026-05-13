@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.NPC.Systems;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
@@ -36,7 +37,7 @@ public sealed partial class DungeonJob
                 if (!ValidateResume())
                     return;
 
-                if (reservedTiles.Contains(tile))
+                if (reservedTiles.Contains(tile) && !gen.IgnoreReserved)
                     continue;
 
                 if (!_anchorable.TileFree((_gridUid, _grid),
