@@ -8,11 +8,11 @@ using Content.Shared.Roles;
 
 namespace Content.Server.Body.Systems;
 
-public sealed class InternalsSystem : SharedInternalsSystem
+public sealed partial class InternalsSystem : SharedInternalsSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly GasTankSystem _gasTank = default!;
-    [Dependency] private readonly RespiratorSystem _respirator = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private GasTankSystem _gasTank = default!;
+    [Dependency] private RespiratorSystem _respirator = default!;
 
     private EntityQuery<InternalsComponent> _internalsQuery;
 
