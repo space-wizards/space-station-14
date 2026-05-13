@@ -37,8 +37,8 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdCardComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+        SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
         Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);

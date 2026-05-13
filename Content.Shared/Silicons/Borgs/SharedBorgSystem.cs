@@ -75,6 +75,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
         InitializeRelay();
         InitializeUI();
 
+        SubscribeLocalEvent<BorgChassisComponent, TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+
         SubscribeLocalEvent<BorgChassisComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BorgChassisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BorgChassisComponent, ItemSlotInsertAttemptEvent>(OnItemSlotInsertAttempt);
@@ -96,7 +98,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
-        SubscribeLocalEvent<BorgChassisComponent, TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
 
     private void OnTryGetIdentityShortInfo(Entity<BorgChassisComponent> chassis, ref TryGetIdentityShortInfoEvent args)

@@ -130,8 +130,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (entry != null)
             jobName = entry.JobTitle;
 
-        officer = _identity.GetNameAndId(null, mob.Value) ?? Loc.GetString("criminal-records-console-unknown-officer");
-
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
         (string, object)[] args;

@@ -10,8 +10,6 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
-using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Silicons.StationAi;
 using Content.Shared.Verbs;
 using Content.Shared.VoiceMask;
 using JetBrains.Annotations;
@@ -64,7 +62,6 @@ public sealed partial class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, VoiceMaskNameUpdatedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
 
         SubscribeLocalEvent<IdentityBlockerComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
-
     }
 
     /// <summary>
@@ -289,11 +286,12 @@ public sealed partial class IdentitySystem : EntitySystem
     #endregion
 
     /// <summary>
-    ///     Attempts to get a display name and ID title for the given entity.
+    /// Attempts to get a display name and ID title for the given entity.
     /// </summary>
-    /// <param name="forActor"> Entity to find name for. Should be a borg, AI, or character </param>
-    /// <param name="forLogging"> For when special IDs don't leave behind a log trail; It compares to<c>IdCardComponent.BypassLogging</c></param>
-    /// <returns> A string of the name and ID or null if no valid identity or no ID card</returns>
+    /// <param name="whileInteractingWith"> Entity for interacting with which title should be collected. Currently unused.</param>
+    /// <param name="forActor"> Entity to find name for.</param>
+    /// <param name="forLogging"> For special IDs that don't leave behind a log trail; It compares to<c>IdCardComponent.BypassLogging</c>.</param>
+    /// <returns> A string of the name and ID or null if no valid identity or no ID card.</returns>
     [PublicAPI]
     public string? GetNameAndId(EntityUid? whileInteractingWith, EntityUid forActor, bool forLogging = false)
     {
