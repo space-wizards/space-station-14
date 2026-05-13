@@ -25,9 +25,9 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSys = default!;
 
     private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 
@@ -119,9 +119,9 @@ public sealed partial class CargoSystem
         label.Id = bounty.Id;
         label.AssociatedStationId = stationId;
         var msg = new FormattedMessage();
-        msg.AddText(Loc.GetString("bounty-manifest-header", ("id", bounty.Id)));
+        msg.AddMarkupOrThrow(Loc.GetString("bounty-manifest-header", ("id", bounty.Id)));
         msg.PushNewline();
-        msg.AddText(Loc.GetString("bounty-manifest-list-start"));
+        msg.AddMarkupOrThrow(Loc.GetString("bounty-manifest-list-start"));
         msg.PushNewline();
         foreach (var entry in prototype.Entries)
         {

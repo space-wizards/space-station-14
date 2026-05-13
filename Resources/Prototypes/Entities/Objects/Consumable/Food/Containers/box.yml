@@ -583,7 +583,7 @@
           children:
           - id: FoodSaladValid
             weight: 0.05
-            amount: 4
+            amount: 2
           - id: FoodSnackSyndi
             amount: 4
 
@@ -617,8 +617,6 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - !type:NestedSelector # First since it can spawn a 3x3
-          tableId: HappyHonkToySafeEntityTable
         - id: FoodBurgerCheese
         - !type:GroupSelector
           children:
@@ -626,6 +624,8 @@
           - id: DrinkLemonLimeCan
           - id: DrinkLemonLimeCranberryCan
           - id: DrinkIcedTeaCan
+        - !type:NestedSelector
+          tableId: HappyHonkToySafeEntityTable
 
 - type: entity
   id: FoodMealHappyHonkBigBite
@@ -638,42 +638,11 @@
       storagebase: !type:AllSelector
         children:
         - id: FoodBurgerBig
-        - id: FoodMealFriesCheesy
         - id: DrinkColaBottleFull
+        - !type:NestedSelector
+          tableId: HappyHonkToySafeEntityTable
+        - id: FoodMealFriesCheesy
         - id: FoodPieAppleSlice
-        - !type:GroupSelector # One item is too big, so the HappyHonkToySafeEntityTable can't  be used like the others.
-          children:
-          - id: ToyMouse
-          - id: ToyAi
-          - id: ToyNuke
-          - id: ToyFigurinePassenger
-          - id: ToyFigurineGriffin
-          - id: ToyHonk
-          - id: ToyIan
-          - id: ToyMarauder
-          - id: ToyMauler
-          - id: ToyGygax
-          - id: ToyOdysseus
-          - id: ToyFigurineOwlman
-          - id: ToyDeathRipley
-          - id: ToyPhazon
-          - id: ToyFireRipley
-          - id: ToyReticence
-          - id: ToyRipley
-          - id: ToySeraph
-          - id: ToyDurand
-          - id: ToyFigurineSkeleton
-          - id: FoamBlade
-          - id: ClothingHeadHatBunny
-          - id: PersonalAI
-          #- id: CrayonBox
-          - id: ToySword
-          - id: RevolverCapGun
-          - id: ToyRubberDuck
-          - id: BikeHorn
-            weight: 0.5
-          - id: GoldenBikeHorn
-            weight: 0.1
 
 - type: entity
   parent: BoxCardboard
@@ -700,7 +669,7 @@
       storagebase:
         id: MaterialCloth10
 
-- type: entityTable
+- type: entityTable # size: 2x2
   id: HappyHonkToySafeEntityTable
   table: !type:GroupSelector
     children:
@@ -709,20 +678,8 @@
     - id: ToyNuke
     - id: ToyFigurinePassenger
     - id: ToyFigurineGriffin
-    - id: ToyHonk
     - id: ToyIan
-    - id: ToyMarauder
-    - id: ToyMauler
-    - id: ToyGygax
-    - id: ToyOdysseus
     - id: ToyFigurineOwlman
-    - id: ToyDeathRipley
-    - id: ToyPhazon
-    - id: ToyFireRipley
-    - id: ToyReticence
-    - id: ToyRipley
-    - id: ToySeraph
-    - id: ToyDurand
     - id: ToyFigurineSkeleton
     - id: FoamBlade
     - id: ClothingHeadHatBunny
@@ -735,17 +692,24 @@
       weight: 0.5
     - id: GoldenBikeHorn
       weight: 0.1
+    - !type:NestedSelector
+      tableId: AllFigurineMechsTable
+      weight: 6
 
-- type: entityTable
+- type: entityTable # size: 1x2
   id: HappyHonkToyUnsafeEntityTable
   table: !type:GroupSelector
-    children:
+    children: # Total Weight 6
+    - id: ClothingHeadHatCatEars
+      weight: 0.25
     - id: C4
-      weight: 0.02
+      weight: 0.05
     - id: ToyMarauder
     - id: ToyMauler
     - id: ToyNuke
     - id: ToySword
+    - id: WeaponRevolverPythonAP
+      weight: 0.4
     - id: BalloonSyn
-      weight: 0.6
+      weight: 0.3
     - id: PlushieNuke

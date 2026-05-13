@@ -40,14 +40,9 @@ namespace Content.Server.Atmos.Components
         // depressurizing a room. However it can also effectively be used as a means of generating gasses for free
         // TODO ATMOS Mass conservation. Make it actually push/pull air from adjacent tiles instead of destroying & creating,
 
-
-        // TODO ATMOS Do we need these two fields?
+        // TODO ATMOS slate for removal. Stuff doesn't use this.
         [DataField("rotateAirBlocked")]
         public bool RotateAirBlocked { get; set; } = true;
-
-        // TODO ATMOS remove this? What is this even for??
-        [DataField("fixAirBlockedDirectionInitialize")]
-        public bool FixAirBlockedDirectionInitialize { get; set; } = true;
 
         /// <summary>
         /// If true, then the tile that this entity is on will have no air at all if all directions are blocked.

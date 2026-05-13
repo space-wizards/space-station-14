@@ -17,14 +17,14 @@ namespace Content.Shared.Payload.EntitySystems;
 /// <summary>
 /// Handles activation, triggering, and explosions of payload entity.
 /// </summary>
-public sealed class PayloadSystem : EntitySystem
+public sealed partial class PayloadSystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private ISerializationManager _serializationManager = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
@@ -62,7 +62,9 @@ public sealed class PayloadSystem : EntitySystem
         // TODO: Adjust to the new trigger system
         // Pass trigger event onto all contained payloads. Payload capacity configurable by construction graphs.
         foreach (var entAll in GetAllPayloads(ent.Owner))
-            RaiseLocalEvent(entAll, ref args, false);
+        {
+            RaiseLocalEvent(entAll, ref args);
+        }
     }
 
     private void OnTriggerTriggered(Entity<PayloadTriggerComponent> ent, ref TriggerEvent args)
@@ -128,7 +130,9 @@ public sealed class PayloadSystem : EntitySystem
         trigger.Active = false;
 
         foreach (var type in trigger.GrantedComponents)
+        {
             RemComp(ent.Owner, type);
+        }
 
         trigger.GrantedComponents.Clear();
     }
@@ -143,10 +147,9 @@ public sealed class PayloadSystem : EntitySystem
                 return;
             }
 
-            if (GetAllPayloads(ent.Owner).Any())
-                args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", ent.Owner)));
-            else
-                args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", ent.Owner)));
+            args.PushMarkup(GetAllPayloads(ent.Owner).Any()
+                ? Loc.GetString("payload-case-has-payload", ("ent", ent.Owner))
+                : Loc.GetString("payload-case-does-not-have-payload", ("ent", ent.Owner)));
         }
     }
 
@@ -155,8 +158,8 @@ public sealed class PayloadSystem : EntitySystem
         if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
-        if (ent.Comp.BeakerSlotA.Item is not EntityUid beakerA
-            || ent.Comp.BeakerSlotB.Item is not EntityUid beakerB
+        if (ent.Comp.BeakerSlotA.Item is not { } beakerA
+            || ent.Comp.BeakerSlotB.Item is not { } beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
             || !_solutionContainer.TryGetSolution(beakerA, compA.Solution, out var solnA, out var solutionA)

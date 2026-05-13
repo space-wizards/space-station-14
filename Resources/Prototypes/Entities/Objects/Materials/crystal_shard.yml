@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: MaterialBase
   id: ShardCrystalBase
   name: crystal shard
   description:  A small piece of crystal.
@@ -27,16 +27,7 @@
       types:
         Slash: 3.5
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: StaticPrice
     price: 50
 
@@ -174,14 +165,14 @@
   id: ShardCrystalRandom
   name: random crystal shard
   components:
-  - type: RandomSpawner
-    prototypes:
-      - ShardCrystalGreen
-      - ShardCrystalPink
-      - ShardCrystalYellow
-      - ShardCrystalBlack
-      - ShardCrystalOrange
-      - ShardCrystalBlue
-      - ShardCrystalCyan
-      - ShardCrystalRed
-    chance: 1
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: ShardCrystalGreen
+      - id: ShardCrystalPink
+      - id: ShardCrystalYellow
+      - id: ShardCrystalBlack
+      - id: ShardCrystalOrange
+      - id: ShardCrystalBlue
+      - id: ShardCrystalCyan
+      - id: ShardCrystalRed

@@ -59,6 +59,13 @@ public partial class MobStateSystem
             args.Cancelled = true;
     }
 
+    private void Down(EntityUid target)
+    {
+        _standing.Down(target);
+        var ev = new DropHandItemsEvent();
+        RaiseLocalEvent(target, ref ev);
+    }
+
     private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)
     {
         switch (ent.Comp.CurrentState)
@@ -103,23 +110,33 @@ public partial class MobStateSystem
         switch (state)
         {
             case MobState.Alive:
+            {
                 _standing.Stand(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
+            }
             case MobState.Critical:
-                _standing.Down(target);
+            {
+                Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
+            }
             case MobState.Dead:
+            {
                 EnsureComp<CollisionWakeComponent>(target);
-                _standing.Down(target);
+                Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;
+            }
             case MobState.Invalid:
+            {
                 //unused;
                 break;
+            }
             default:
+            {
                 throw new NotImplementedException();
+            }
         }
     }
 
@@ -165,14 +182,14 @@ public partial class MobStateSystem
     private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
-        if (args.Equipee == target)
+        if (args.User == target)
             CheckAct(target, component, args);
     }
 
     private void OnUnequipAttempt(EntityUid target, MobStateComponent component, IsUnequippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
-        if (args.Unequipee == target)
+        if (args.User == target)
             CheckAct(target, component, args);
     }
 
