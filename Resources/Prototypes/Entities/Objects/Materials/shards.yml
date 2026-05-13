@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: MaterialBase
   id: ShardBase
   description: It's a shard of some unknown material.
   components:
@@ -53,8 +53,9 @@
     - Trash
   - type: SpaceGarbage
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -100,14 +101,12 @@
     tags:
       - GlassShard
       - Trash
-  - type: Extractable
-    grindableSolutionName: shardglass
-  - type: SolutionContainerManager
-    solutions:
-      shardglass:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 5 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
+  - type: Solution
+    solution:
+      maxVol: 5
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 5 #Half of the value of regular glass. TECHNICALLY, welding a single shard of glass gives you the full thing back with just 1 sheet, but that is stupid so I am making it half.
   - type: Construction
     graph: ShivConstruct
     node: start
@@ -136,14 +135,15 @@
     tags:
       - ReinforcedGlassShard
       - Trash
-  - type: Extractable
-    grindableSolutionName: shardrglass
-  - type: SolutionContainerManager
-    solutions:
-      shardrglass:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 5 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 5
+      - ReagentId: Iron
+        Quantity: 2.25
+      - ReagentId: Carbon
+        Quantity: 0.25
   - type: Construction
     graph: ReinforcedShivConstruct
     node: start
@@ -172,16 +172,13 @@
     tags:
       - PlasmaGlassShard
       - Trash
-  - type: Extractable
-    grindableSolutionName: shardpglass
-  - type: SolutionContainerManager
-    solutions:
-      shardpglass:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 5
-        - ReagentId: Plasma
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 5
+      - ReagentId: Plasma
+        Quantity: 5
   - type: Construction
     graph: PlasmaShivConstruct
     node: start
@@ -212,16 +209,13 @@
     tags:
       - UraniumGlassShard
       - Trash
-  - type: Extractable
-    grindableSolutionName: sharduglass
-  - type: SolutionContainerManager
-    solutions:
-      sharduglass:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 5
-        - ReagentId: Uranium
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 5
+      - ReagentId: Uranium
+        Quantity: 5
   - type: Construction
     graph: UraniumShivConstruct
     node: start
@@ -242,15 +236,12 @@
     damage:
       types:
         Piercing: 5
-  - type: Extractable
-    grindableSolutionName: shardcglass
-  - type: SolutionContainerManager
-    solutions:
-      shardcglass:
-        reagents:
-        - ReagentId: Silicon
-          Quantity: 5
-        - ReagentId: Zinc
-          Quantity: 1.65
-        - ReagentId: Copper
-          Quantity: 3.35
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 5
+      - ReagentId: Zinc
+        Quantity: 1.65
+      - ReagentId: Copper
+        Quantity: 3.35
