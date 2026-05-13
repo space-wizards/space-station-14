@@ -40,9 +40,9 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Reverse
-      - Forward
-      - Off
+    - Reverse
+    - Forward
+    - Off
   - type: Appearance
   - type: GenericVisualizer
     visuals:
