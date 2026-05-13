@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class DumpCanisterBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly GasCanisterSystem _gasCanister = default!;
+    [Dependency] private GasCanisterSystem _gasCanister = default!;
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {

@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class DoActsBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
 
     /// <summary>
     ///     What acts should be triggered upon activation.

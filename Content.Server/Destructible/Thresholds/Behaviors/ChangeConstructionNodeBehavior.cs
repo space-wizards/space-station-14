@@ -8,7 +8,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class ChangeConstructionNodeBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private ConstructionSystem _construction = default!;
 
     [DataField]
     public string Node { get; private set; } = string.Empty;

@@ -11,7 +11,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class EjectVendorItems : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly VendingMachineSystem _vendingMachine = default!;
+    [Dependency] private VendingMachineSystem _vendingMachine = default!;
 
     /// <summary>
     ///     The percent amount of the total inventory that will be ejected.
