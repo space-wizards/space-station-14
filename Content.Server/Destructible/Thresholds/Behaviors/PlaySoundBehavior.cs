@@ -8,7 +8,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class PlaySoundBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     /// <summary>
     ///     Sound played upon destruction.

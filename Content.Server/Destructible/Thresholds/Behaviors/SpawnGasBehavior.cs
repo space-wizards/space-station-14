@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class SpawnGasBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     [DataField("gasMixture", required: true)]
     public GasMixture Gas = new();

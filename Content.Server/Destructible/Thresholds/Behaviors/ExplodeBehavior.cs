@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class ExplodeBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly SharedExplosionSystem _explosionSystem = default!;
+    [Dependency] private SharedExplosionSystem _explosionSystem = default!;
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {

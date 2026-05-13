@@ -14,9 +14,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class SolutionExplosionBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly PuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
+    [Dependency] private SharedExplosionSystem _explosion = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     [DataField(required: true)]
     public string Solution = default!;

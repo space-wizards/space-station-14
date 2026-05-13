@@ -6,7 +6,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class TimerStartBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     public void Execute(EntityUid owner, EntityUid? cause = null)
     {

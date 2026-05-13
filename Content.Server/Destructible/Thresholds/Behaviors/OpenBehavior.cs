@@ -10,7 +10,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class OpenBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private OpenableSystem _openable = default!;
 
     public void Execute(EntityUid uid, EntityUid? cause = null)
     {

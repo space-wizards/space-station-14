@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class GibBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
 
     /// <summary>
     /// Whether to gib recursively.

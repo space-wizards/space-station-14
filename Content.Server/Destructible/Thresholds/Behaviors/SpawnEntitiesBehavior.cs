@@ -14,10 +14,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class SpawnEntitiesBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     /// <summary>
     ///     Entities spawned on reaching this threshold, from a min to a max.

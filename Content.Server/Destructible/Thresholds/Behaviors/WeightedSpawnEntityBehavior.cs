@@ -20,10 +20,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class WeightedSpawnEntityBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SpawnOnDespawnSystem _spawnOnDespawn = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SpawnOnDespawnSystem _spawnOnDespawn = default!;
 
     private static readonly EntProtoId TempEntityProtoId = "TemporaryEntityForTimedDespawnSpawners";
 

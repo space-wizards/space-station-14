@@ -6,7 +6,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class TriggerBehavior : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     /// <summary>
     /// The trigger key to use when triggering.

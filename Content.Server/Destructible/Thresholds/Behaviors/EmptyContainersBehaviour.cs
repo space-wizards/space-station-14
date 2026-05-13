@@ -11,7 +11,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 [DataDefinition]
 public sealed partial class EmptyContainersBehaviour : EntitySystem, IThresholdBehavior
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private ContainerSystem _container = default!;
 
     [DataField]
     public List<string> Containers = new();
