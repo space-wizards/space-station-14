@@ -12,7 +12,6 @@ namespace Content.Client.Guidebook.RichText;
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTagHandler
 {
-    [Dependency] private readonly ILogManager _logManager = default!;
     public static Color LinkColor => Color.CornflowerBlue;
 
     public string Name => "textlink";
@@ -54,7 +53,7 @@ public sealed class TextLinkTag : IMarkupTagHandler
         if (control.TryGetParentHandler<ILinkClickHandler>(out var handler))
             handler.HandleClick(link);
         else
-            _logManager.GetSawmill("textlinktag").Warning("Warning! No valid ILinkClickHandler found.");
+            IoCManager.Resolve<ILogManager>().GetSawmill("textlinktag").Warning("Warning! No valid ILinkClickHandler found.");
     }
 }
 
