@@ -1334,6 +1334,7 @@
         damage:
           Brute: -3
           Burn: -3
+          Poison: -0.5
 
 - type: reagent
   id : Aloxadone
