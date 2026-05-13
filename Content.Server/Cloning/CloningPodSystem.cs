@@ -17,17 +17,17 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Cloning;
 
-public sealed class CloningPodSystem : SharedCloningPodSystem
+public sealed partial class CloningPodSystem : SharedCloningPodSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly EuiManager _euiManager = null!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MaterialStorageSystem _material = default!;
-    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private EuiManager _euiManager = null!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MaterialStorageSystem _material = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private readonly ProtoId<ReagentPrototype> _bloodId = "Blood";
 

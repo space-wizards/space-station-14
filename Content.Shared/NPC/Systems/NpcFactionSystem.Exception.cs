@@ -9,8 +9,8 @@ namespace Content.Shared.NPC.Systems;
 /// </summary>
 public sealed partial class NpcFactionSystem
 {
-    [Dependency] private readonly EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
-    [Dependency] private readonly EntityQuery<FactionExceptionTrackerComponent> _trackerQuery = default!;
+    [Dependency] private EntityQuery<FactionExceptionComponent> _exceptionQuery = default!;
+    [Dependency] private EntityQuery<FactionExceptionTrackerComponent> _trackerQuery = default!;
 
     public void InitializeException()
     {
