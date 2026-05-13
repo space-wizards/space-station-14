@@ -7,7 +7,7 @@ namespace Content.Shared.Mind.Filters;
 /// </summary>
 public sealed partial class AntagonistMindFilter : MindFilter
 {
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan)
     {
         var roleSys = entMan.System<SharedRoleSystem>();
         return !roleSys.MindIsAntagonist(mind);
