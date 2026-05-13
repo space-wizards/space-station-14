@@ -22,7 +22,7 @@ public sealed partial class BinomialNumberSelector : NumberSelector
     [DataField]
     public float Chance = .5f;
 
-    public override int Get(System.Random rand)
+    public override int Get(IRobustRandom rand)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         int count = 0;
