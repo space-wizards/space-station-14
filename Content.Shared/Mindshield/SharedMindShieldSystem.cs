@@ -64,7 +64,8 @@ public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRela
     public bool IsMindshielded = false;
 }
 /// <summary>
-/// Raised in order to query wether an entity is visually mindshielded. Should be raised CLIENT-SIDE only
+/// Raised in order to query wether an entity is visually mindshielded. Does NOT make the entity function as if it was mindshielded.
+/// This can be used only for the client (to display mindshield visuals), but it can eventually be used for things like an officer Beepsky who needs to see if crewmembers are mindshielded.
 /// </summary>
 [ByRefEvent]
 public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRelayEvent

@@ -7,7 +7,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Mindshield.FakeMindShield;
+namespace Content.Shared.Mindshield;
 
 public sealed partial class FakeMindShieldSystem : EntitySystem
 {
