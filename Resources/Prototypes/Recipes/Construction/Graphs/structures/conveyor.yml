@@ -6,11 +6,8 @@
       edges:
         - to: entity
           steps:
-            - tag: ConveyorAssembly
-              icon:
-                sprite: Structures/conveyor.rsi
-                state: conveyor_loose
-              name: construction-graph-tag-conveyor-belt-assembly
+            - material: ConveyorBeltStack
+              amount: 1
               doAfter: 2
     - node: item
       entity: ConveyorBeltAssembly

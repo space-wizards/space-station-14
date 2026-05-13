@@ -80,7 +80,6 @@
     - ConveyorAssembly
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_loose
     layers:
     - state: conveyor_loose
       map: [ "base" ]
