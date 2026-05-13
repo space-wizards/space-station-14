@@ -6,7 +6,6 @@
     MinWidth="300">
     <ScrollContainer
         Name="Container"
-        Visible="False"
         Margin="5 5 5 5"
         ReturnMeasure="True"
         VerticalExpand="True">

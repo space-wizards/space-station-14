@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Atmos;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -23,7 +22,6 @@ namespace Content.Client.HealthAnalyzer.UI;
 
 // Health analyzer UI is split from its window because it's used by both the
 // health analyzer item and the cryo pod UI.
-
 [GenerateTypedNameReferences]
 public sealed partial class HealthAnalyzerControl : BoxContainer
 {
@@ -51,8 +49,9 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <param name="state">The state that carries the information about the patient.</param>
     public void Populate(HealthAnalyzerUiState state)
     {
-        Populate(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
-        PopulateTemperature(state.Temperature);
+        PopulateDataFields(state.TargetEntity, state.ScanMode, state.BloodLevel, state.Unrevivable, state.Bleeding);
+        if (!float.IsNaN(state.Temperature))
+            PopulateTemperature(state.Temperature);
     }
 
     /// <summary>
@@ -63,13 +62,21 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
     /// <param name="bloodlevel">The bloodlevel of the entity.</param>
     /// <param name="unrevivable">Whether this entity is revivable.</param>
     /// <param name="bleeding">Whether this entity is bleeding.</param>
-    public void Populate(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
+    private void PopulateDataFields(NetEntity? targetEntity, bool scanMode, float bloodlevel, bool unrevivable, bool bleeding)
     {
         var target = _entityManager.GetEntity(targetEntity);
 
-        if (target == null || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
+        // If the entity has been deleted,
+        if (_entityManager.Deleted(target))
         {
-            NoPatientDataText.Visible = true;
+            // At the start, the health analyzer will have no entity. So we simply do nothing if it has never been used.
+            if (NoPatientDataText.Visible)
+                return;
+            // If the target is still null even though it was used, that means the target has been deleted.
+            ScanModeLabel.Text = Loc.GetString("health-analyzer-window-scan-mode-inactive");
+            ScanModeLabel.FontColorOverride = Color.Red;
+            SpriteView.Visible = false;
+            NoDataTex.Visible = true;
             return;
         }
         NoPatientDataText.Visible = false;
@@ -115,7 +122,6 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
         // Total Damage
-
         DamageLabel.Text = _damageable.GetTotalDamage(target.Value).ToString();
 
         // Alerts
@@ -128,20 +134,23 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
             AlertsContainer.RemoveAllChildren();
 
         if (unrevivable)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-unrevivable-text"),
                 Margin = new Thickness(0, 4),
-                MaxWidth = 300
+                MaxWidth = 300,
             });
-
+        }
         if (bleeding)
+        {
             AlertsContainer.AddChild(new RichTextLabel
             {
                 Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
                 Margin = new Thickness(0, 4),
-                MaxWidth = 300
+                MaxWidth = 300,
             });
+        }
 
         // Damage Groups
         var damageSortedGroups =
