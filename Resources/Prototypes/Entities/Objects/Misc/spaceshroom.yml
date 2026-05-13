@@ -28,8 +28,9 @@
           children:
           - id: FoodSpaceshroom
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Wood
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
         - trigger:
@@ -41,7 +42,7 @@
 
 - type: entity
   name: spaceshroom
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodSpaceshroom
   description: A wild mushroom. There's no telling what effect it could have...
   components:
@@ -57,15 +58,13 @@
       reagents:
       - ReagentId: SpaceDrugs
         Quantity: 10
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents: # 20u out of 60u space, with 10-15 extra from solution random fill
+      - ReagentId: Nutriment
+        Quantity: 12
+      - ReagentId: Vitamin
+        Quantity: 8
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillSpaceshroom
@@ -89,6 +88,7 @@
   - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
+  - type: TemperatureDamage
   - type: InternalTemperature
     thickness: 0.02
     area: 0.02
@@ -124,22 +124,20 @@
 # Cooked Object
 - type: entity
   name: cooked spaceshroom
-  parent: FoodProduceBase
+  parent: [SolutionSmall, FoodProduceBase]
   id: FoodSpaceshroomCooked
   description: A wild mushroom that has been cooked through. It seems the heat has removed its chemical effects.
   components:
   - type: FlavorProfile
     flavors:
       - spaceshroomcooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents: # Cooked means no drugs I guess? Lame!
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 10
   - type: Sprite
     sprite: Objects/Misc/spaceshroom.rsi
     state: spaceshroom_cooked

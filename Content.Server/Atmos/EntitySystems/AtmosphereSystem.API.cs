@@ -1,12 +1,13 @@
+using System.Buffers;
 using System.Diagnostics;
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -19,61 +20,6 @@ public partial class AtmosphereSystem
      If you feel like you're stepping on eggshells because you can't access things in AtmosphereSystem,
      consider adding a method here instead of making your own way to work around it.
      */
-
-    /// <summary>
-    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
-    /// </summary>
-    /// <param name="ent">The entity to get the mixture for.</param>
-    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
-    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
-    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
-    [PublicAPI]
-    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent, bool ignoreExposed = false, bool excite = false)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
-
-        return GetContainingMixture(ent, ent.Comp.GridUid, ent.Comp.MapUid, ignoreExposed, excite);
-    }
-
-    /// <summary>
-    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
-    /// </summary>
-    /// <param name="ent">The entity to get the mixture for.</param>
-    /// <param name="grid">The grid that the entity may be on.</param>
-    /// <param name="map">The map that the entity may be on.</param>
-    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
-    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
-    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
-    [PublicAPI]
-    public GasMixture? GetContainingMixture(
-        Entity<TransformComponent?> ent,
-        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
-        Entity<MapAtmosphereComponent?>? map,
-        bool ignoreExposed = false,
-        bool excite = false)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return null;
-
-        if (!ignoreExposed && !ent.Comp.Anchored)
-        {
-            // Used for things like disposals/cryo to change which air people are exposed to.
-            var ev = new AtmosExposedGetAirEvent((ent, ent.Comp), excite);
-            RaiseLocalEvent(ent, ref ev);
-            if (ev.Handled)
-                return ev.Gas;
-
-            // TODO ATMOS: recursively iterate up through parents
-            // This really needs recursive InContainer metadata flag for performance
-            // And ideally some fast way to get the innermost airtight container.
-        }
-
-        var position = _transformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
-        return GetTileMixture(grid, map, position, excite);
-    }
 
     /// <summary>
     /// Checks if a grid has an atmosphere.
@@ -154,6 +100,69 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
+    /// Gets the gas mixture for a specific tile that an entity is on.
+    /// </summary>
+    /// <param name="entity">The entity to get the tile mixture for.</param>
+    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <remarks>This does not return the <see cref="GasMixture"/> that the entity
+    /// may be contained in, ex. if the entity is currently in a locker/crate with its own
+    /// <see cref="GasMixture"/>.</remarks>
+    [PublicAPI]
+    public GasMixture? GetTileMixture(Entity<TransformComponent?> entity, bool excite = false)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return null;
+
+        var indices = XformSystem.GetGridTilePositionOrDefault(entity);
+        return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
+    }
+
+    /// <summary>
+    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// </summary>
+    /// <param name="ent">The entity to get the mixture for.</param>
+    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
+    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
+    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    [PublicAPI]
+    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent, bool ignoreExposed = false, bool excite = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return GetContainingMixture(ent, ent.Comp.GridUid, ent.Comp.MapUid, ignoreExposed, excite);
+    }
+
+    /// <summary>
+    /// Gets the <see cref="GasMixture"/> that an entity is contained within.
+    /// </summary>
+    /// <param name="ent">The entity to get the mixture for.</param>
+    /// <param name="grid">The grid that the entity may be on.</param>
+    /// <param name="map">The map that the entity may be on.</param>
+    /// <param name="ignoreExposed">If true, will ignore mixtures that the entity is contained in
+    /// (ex. lockers and cryopods) and just get the tile mixture.</param>
+    /// <param name="excite">If true, will mark the tile as active for atmosphere processing.</param>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    [PublicAPI]
+    public GasMixture? GetContainingMixture(Entity<TransformComponent?> ent,
+        Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
+        Entity<MapAtmosphereComponent?>? map,
+        bool ignoreExposed = false,
+        bool excite = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        if (!ignoreExposed && TryGetExposedMixture(ent, out var mixture))
+            return mixture;
+
+        var position = XformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
+        return GetTileMixture(grid, map, position, excite);
+    }
+
+    /// <summary>
     /// Gets the gas mixtures for a list of tiles on a grid or map.
     /// </summary>
     /// <param name="grid">The grid to get mixtures from.</param>
@@ -226,33 +235,6 @@ public partial class AtmosphereSystem
         return mixtures;
     }
 
-    /// <summary>
-    /// Gets the gas mixture for a specific tile that an entity is on.
-    /// </summary>
-    /// <param name="entity">The entity to get the tile mixture for.</param>
-    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
-    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
-    /// <remarks>This does not return the <see cref="GasMixture"/> that the entity
-    /// may be contained in, ex. if the entity is currently in a locker/crate with its own
-    /// <see cref="GasMixture"/>.</remarks>
-    [PublicAPI]
-    public GasMixture? GetTileMixture(Entity<TransformComponent?> entity, bool excite = false)
-    {
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return null;
-
-        var indices = _transformSystem.GetGridTilePositionOrDefault(entity);
-        return GetTileMixture(entity.Comp.GridUid, entity.Comp.MapUid, indices, excite);
-    }
-
-    /// <summary>
-    /// Gets the gas mixture for a specific tile on a grid or map.
-    /// </summary>
-    /// <param name="grid">The grid to get the mixture from.</param>
-    /// <param name="map">The map to get the mixture from.</param>
-    /// <param name="gridTile">The tile to get the mixture from.</param>
-    /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
-    /// <returns>>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
     [PublicAPI]
     public GasMixture? GetTileMixture(
         Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? grid,
@@ -281,6 +263,123 @@ public partial class AtmosphereSystem
         return GasMixture.SpaceGas;
     }
 
+    public override void MergeContainingMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool ignoreExposed = false, bool excite = false)
+    {
+        if (GetContainingMixture(entity, ignoreExposed, excite) is not { } containingMixture)
+            return;
+
+        Merge(containingMixture, mixture);
+    }
+
+    [PublicAPI]
+    public override void MergeTileMixture(Entity<TransformComponent?> entity, GasMixture mixture, bool excite = false)
+    {
+        if (GetTileMixture(entity, excite) is not { } tileMixture)
+            return;
+
+        Merge(tileMixture, mixture);
+    }
+
+    public override void AdjustContainingMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool ignoreExposed = false, bool excite = false)
+    {
+        GetContainingMixture(entity, ignoreExposed, excite)?.AdjustMoles(gas, mols);
+    }
+
+    [PublicAPI]
+    public override void AdjustTileMixture(Entity<TransformComponent?> entity, Gas gas, float mols, bool excite = false)
+    {
+        GetTileMixture(entity, excite)?.AdjustMoles(gas, mols);
+    }
+
+    /// <summary>
+    /// Retrieves the pressures of all gas mixtures
+    /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
+    /// provided <paramref name="pressures"/> span.
+    /// </summary>
+    /// <param name="tiles">The tiles span to find the pressures of.</param>
+    /// <param name="pressures">The span to store the pressures to - this should be the same length
+    /// as the tile array.</param>
+    /// <exception cref="ArgumentException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for <see cref="TileAtmosphere"/> or <see cref="GasMixture"/>s that are null,
+    /// this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(tiles.Length, pressures.Length);
+
+        var len = tiles.Length;
+        var arr1 = ArrayPool<GasMixture?>.Shared.Rent(len);
+
+        try
+        {
+            var mixtSpan = arr1.AsSpan(0, len);
+            for (var i = 0; i < tiles.Length; i++)
+            {
+                mixtSpan[i] = tiles[i]?.Air;
+            }
+
+            GetBulkGasMixturePressures(mixtSpan, pressures);
+        }
+        finally
+        {
+            ArrayPool<GasMixture?>.Shared.Return(arr1);
+        }
+    }
+
+    /// <summary>
+    /// Gets the pressures of a <see cref="Span{T}"/> of <see cref="GasMixture"/>s.
+    /// </summary>
+    /// <param name="mixtures">The <see cref="GasMixture"/> to get the pressures of.</param>
+    /// <param name="pressures">The <see cref="Span{T}"/> to store the pressures to - this should be the same length
+    /// as the mixtures array.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the provided spans do not match.</exception>
+    /// <remarks>Note that for GasMixtures that are null, this method will return a value close to zero but not exactly zero.</remarks>
+    [PublicAPI]
+    public static void GetBulkGasMixturePressures(Span<GasMixture?> mixtures, Span<float> pressures)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(mixtures.Length, pressures.Length);
+
+        var len = mixtures.Length;
+
+        var arr1 = ArrayPool<float>.Shared.Rent(len);
+        var arr2 = ArrayPool<float>.Shared.Rent(len);
+        var arr3 = ArrayPool<float>.Shared.Rent(len);
+        try
+        {
+            var mixtVol = arr1.AsSpan(0, len);
+            var mixtTemp = arr2.AsSpan(0, len);
+            var mixtMoles = arr3.AsSpan(0, len);
+
+            for (var i = 0; i < len; i++)
+            {
+                if (mixtures[i] is not { } mixture)
+                {
+                    // To prevent any NaN/Div/0 errors, we just bite the bullet
+                    // and set everything to the lowest possible value.
+                    mixtVol[i] = 1;
+                    mixtTemp[i] = 1;
+                    mixtMoles[i] = float.Epsilon;
+                    continue;
+                }
+
+                mixtVol[i] = mixture.Volume;
+                mixtTemp[i] = mixture.Temperature;
+                mixtMoles[i] = mixture.TotalMoles;
+            }
+
+            // TODO NumericsHelpers need a method that substitutes NaNs with zeros. AVX-512 has one iirc but for 256/128 we need to do some masking bs
+            NumericsHelpers.Multiply(mixtMoles, Atmospherics.R);
+            NumericsHelpers.Multiply(mixtMoles, mixtTemp);
+            NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
+        }
+        finally
+        {
+            ArrayPool<float>.Shared.Return(arr1);
+            ArrayPool<float>.Shared.Return(arr2);
+            ArrayPool<float>.Shared.Return(arr3);
+        }
+    }
+
     /// <summary>
     /// Triggers a tile's <see cref="GasMixture"/> to react.
     /// </summary>
@@ -300,12 +399,16 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Checks if a tile on a grid is air-blocked in the specified directions.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
     /// </summary>
     /// <param name="gridUid">The grid to check.</param>
     /// <param name="tile">The tile on the grid to check.</param>
     /// <param name="directions">The directions to check for air-blockage.</param>
     /// <param name="mapGridComp">Optional map grid component associated with the grid.</param>
     /// <returns>True if the tile is air-blocked in the specified directions, false otherwise.</returns>
+    /// <remarks>This rebuilds airtight data on-the-fly. You should only use this if you've just
+    /// invalidated airtight data, and you cannot wait one atmostick to revalidate it.</remarks>
     [PublicAPI]
     public bool IsTileAirBlocked(EntityUid gridUid,
         Vector2i tile,
@@ -315,9 +418,58 @@ public partial class AtmosphereSystem
         if (!Resolve(gridUid, ref mapGridComp, false))
             return false;
 
-        // TODO ATMOS: This reconstructs the data instead of getting the cached version. Might want to include a method to get the cached version later.
         var data = GetAirtightData(gridUid, mapGridComp, tile);
         return data.BlockedDirections.IsFlagSet(directions);
+    }
+
+    /// <summary>
+    /// Checks if a tile on a grid is air-blocked in the specified directions, using cached data.
+    /// This only checks for if the current tile, and only the current tile, is blocking
+    /// air.
+    /// </summary>
+    /// <param name="grid">The grid to check.</param>
+    /// <param name="tile">The tile on the grid to check.</param>
+    /// <param name="directions">The directions to check for air-blockage.</param>
+    /// <returns>True if the tile is air-blocked in the specified directions, false otherwise.</returns>
+    /// <remarks>Returns data that is currently cached by Atmospherics.
+    /// You should always use this method over <see cref="IsTileAirBlocked"/> as it's more performant.
+    /// If you need to get up-to-date data because you've just invalidated airtight data,
+    /// use <see cref="IsTileAirBlocked"/>.</remarks>
+    [PublicAPI]
+    public bool IsTileAirBlockedCached(Entity<GridAtmosphereComponent?> grid,
+        Vector2i tile,
+        AtmosDirection directions = AtmosDirection.All)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return false;
+
+        if (!grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+            return false;
+
+        return atmosTile.AirtightData.BlockedDirections.IsFlagSet(directions);
+    }
+
+    /// <summary>
+    /// Returns the <see cref="TileAtmosphere.AdjacentBits"/> for a tile on a grid.
+    /// This represents the directions that the air can currently flow to.
+    /// </summary>
+    /// <param name="grid">The grid entity that the tile belongs to.</param>
+    /// <param name="tile">The <see cref="Vector2i"/> coordinates to check.</param>
+    /// <returns>The <see cref="TileAtmosphere.AdjacentBits"/> of the tile,
+    /// <see cref="AtmosDirection.Invalid"/> if the grid or tile couldn't be found.</returns>
+    /// <remarks>Note that this data is cached and is updated at the beginning of every atmostick.
+    /// As such, any airtight changes that were made may not be reflected in this value until
+    /// the cache is refreshed in the next processing tick.</remarks>
+    [PublicAPI]
+    public AtmosDirection GetAirflowDirections(Entity<GridAtmosphereComponent?> grid, Vector2i tile)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return AtmosDirection.Invalid;
+
+        if (!grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+            return AtmosDirection.Invalid;
+
+        return atmosTile.AdjacentBits;
     }
 
     /// <summary>
@@ -652,6 +804,26 @@ public partial class AtmosphereSystem
         Debug.Assert(contains == grid.Comp.DeltaPressureEntities.Contains(ent));
 
         return contains;
+    }
+
+    /// <summary>
+    /// Applies an exponential moving average to a value, given a new value, an old value, and a time delta.
+    /// </summary>
+    /// <param name="newValue">The new value to factor into the average.</param>
+    /// <param name="oldValue">The old value to factor into the average.</param>
+    /// <param name="deltaTime">The time delta to factor into the average.</param>
+    /// <param name="tau">The time constant to use for the average.
+    /// Higher values will make the average change more slowly,
+    /// while lower values will make it change more quickly.</param>
+    /// <returns>The result of the exponential moving average.</returns>
+    [PublicAPI]
+    public static float ExponentialMovingAverage(float newValue,
+        float oldValue,
+        float deltaTime,
+        float tau = 0.5f)
+    {
+        var a = deltaTime / tau;
+        return a * newValue + (1 - a) * oldValue;
     }
 
     [ByRefEvent]

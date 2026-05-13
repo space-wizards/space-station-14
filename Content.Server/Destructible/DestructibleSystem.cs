@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -16,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.FixedPoint;
+using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
 using Content.Shared.Trigger.Systems;
 using JetBrains.Annotations;
@@ -29,21 +29,21 @@ namespace Content.Server.Destructible
     [UsedImplicitly]
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
-        [Dependency] public readonly IRobustRandom Random = default!;
+        [Dependency] public IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
-        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-        [Dependency] public readonly AudioSystem AudioSystem = default!;
-        [Dependency] public readonly BodySystem BodySystem = default!;
-        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
-        [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
-        [Dependency] public readonly StackSystem StackSystem = default!;
-        [Dependency] public readonly TriggerSystem TriggerSystem = default!;
-        [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
-        [Dependency] public readonly PuddleSystem PuddleSystem = default!;
-        [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
-        [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IAdminLogManager AdminLogger = default!;
+        [Dependency] public AtmosphereSystem AtmosphereSystem = default!;
+        [Dependency] public AudioSystem AudioSystem = default!;
+        [Dependency] public GibbingSystem Gibbing = default!;
+        [Dependency] public ConstructionSystem ConstructionSystem = default!;
+        [Dependency] public ExplosionSystem ExplosionSystem = default!;
+        [Dependency] public StackSystem StackSystem = default!;
+        [Dependency] public TriggerSystem TriggerSystem = default!;
+        [Dependency] public SharedSolutionContainerSystem SolutionContainerSystem = default!;
+        [Dependency] public PuddleSystem PuddleSystem = default!;
+        [Dependency] public SharedContainerSystem ContainerSystem = default!;
+        [Dependency] public IPrototypeManager PrototypeManager = default!;
+        [Dependency] public IAdminLogManager AdminLogger = default!;
 
         public override void Initialize()
         {
@@ -78,7 +78,7 @@ namespace Content.Server.Destructible
                     }));
 
                     // If it doesn't have a humanoid component, it's probably not particularly notable?
-                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidAppearanceComponent>(uid))
+                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
                         logImpact = LogImpact.Medium;
 
                     if (args.Origin != null)
