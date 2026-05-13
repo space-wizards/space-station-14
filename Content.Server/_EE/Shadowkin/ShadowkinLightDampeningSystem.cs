@@ -8,14 +8,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Shadowkin;
 
-public sealed class ShadowkinLightDampeningSystem : EntitySystem
+public sealed partial class ShadowkinLightDampeningSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedPoweredLightSystem _poweredLight = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedPoweredLightSystem _poweredLight = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private static readonly (float Offset, bool Enabled)[] FlickerSteps =
     {

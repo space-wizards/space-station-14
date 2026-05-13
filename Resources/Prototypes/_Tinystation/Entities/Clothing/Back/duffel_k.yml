@@ -18,8 +18,11 @@
         insertOnInteract: true
         ejectOnInteract: true
         whitelist:
-          ids:
-          - WoodenBuckler
+          requireAll: true
+          components:
+          - Blocking
+          sizes:
+          - Huge
   - type: ExplosionResistance
     damageCoefficient: 0.0
   - type: ClothingSpeedModifier

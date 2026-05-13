@@ -126,7 +126,28 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             break;
         }
 
-        return found;
+        if (found)
+            return true;
+
+        var candidates = new ValueList<Vector2i>();
+        foreach (var tileRef in _map.GetAllTiles(targetGrid, gridComp))
+        {
+            var indices = tileRef.GridIndices;
+            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, indices)
+                || _atmosphere.IsTileAirBlockedCached(targetGrid, indices))
+            {
+                continue;
+            }
+
+            candidates.Add(indices);
+        }
+
+        if (candidates.Count == 0)
+            return false;
+
+        tile = candidates[RobustRandom.Next(candidates.Count)];
+        targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tile);
+        return true;
     }
 
     protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)

@@ -39,7 +39,7 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore -p:Configuration=DebugOpt
 
     - name: Build Project
       run: dotnet build --configuration DebugOpt --no-restore /m

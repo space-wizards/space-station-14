@@ -11,7 +11,7 @@ using Content.Shared.Roles;
 
 namespace Content.Server._EE.Plasmaman;
 
-public sealed class PlasmamanStartingGearSystem : EntitySystem
+public sealed partial class PlasmamanStartingGearSystem : EntitySystem
 {
     private const string PlasmamanSpecies = "Plasmaman";
 
@@ -28,11 +28,11 @@ public sealed class PlasmamanStartingGearSystem : EntitySystem
 
     private static readonly string[] JumpsuitDependentSlots = { "pocket1", "pocket2" };
 
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly StorageSystem _storage = default!;
-    [Dependency] private readonly GasTankSystem _gasTank = default!;
-    [Dependency] private readonly SharedInternalsSystem _internals = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private StorageSystem _storage = default!;
+    [Dependency] private GasTankSystem _gasTank = default!;
+    [Dependency] private SharedInternalsSystem _internals = default!;
 
     public override void Initialize()
     {

@@ -8,11 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Shadowkin;
 
-public sealed class ShadowkinAbilitySystem : EntitySystem
+public sealed partial class ShadowkinAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private const string AnchorFlashDestroyEffect = "ShadowkinAnchorFlashDestroyEffect";
     private readonly HashSet<EntityUid> _flashRange = new();

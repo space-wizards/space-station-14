@@ -216,8 +216,9 @@
     damage:
       types:
         Heat: -0.07
-      groups:
-        Brute: -0.07
+        Blunt: -0.07
+        Slash: -0.07
+        Piercing: -0.07
   - type: Vocal
     sounds:
       Male: UnisexShadowkin
@@ -379,10 +380,7 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Shadowkin ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+    stages: [ Bloodstream ]
 
 - type: entity
   parent: [ OrganBaseStomach, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
@@ -390,21 +388,10 @@
   components:
   - type: Sprite
     state: stomach
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 40
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Shadowkin ]
-    groups:
-    - id: Food
-    - id: Drink
+    stages: [ Digestion ]
 
 - type: entity
   parent: [ OrganBaseLiver, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
@@ -415,9 +402,7 @@
   - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [ Shadowkin ]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
+    stages: [ Metabolites ]
 
 - type: entity
   parent: [ OrganBaseKidneys, OrganShadowkinInternal, OrganShadowkinMetabolizer ]
@@ -429,4 +414,3 @@
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [ Shadowkin ]
-    removeEmpty: true

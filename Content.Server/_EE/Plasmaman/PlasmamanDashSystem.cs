@@ -9,15 +9,15 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._EE.Plasmaman;
 
-public sealed class PlasmamanDashSystem : EntitySystem
+public sealed partial class PlasmamanDashSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly RespiratorSystem _respirator = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private RespiratorSystem _respirator = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {

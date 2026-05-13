@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
   id: ActionShadowkinPlaceAnchor
-  name: action-name-shadowkin-place-anchor
-  description: action-description-shadowkin-place-anchor
+  name: Place Shadow Anchor
+  description: Leave a shadow at this spot. You can teleport back to it later.
   components:
   - type: Action
     icon:
@@ -15,8 +15,8 @@
 - type: entity
   parent: BaseAction
   id: ActionShadowkinRecall
-  name: action-name-shadowkin-recall
-  description: action-description-shadowkin-recall
+  name: Recall
+  description: Instantly teleport to your shadow.
   components:
   - type: Action
     icon:

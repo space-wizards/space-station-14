@@ -12,17 +12,17 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Plasmaman;
 
-public sealed class PlasmamanOxygenIgnitionSystem : EntitySystem
+public sealed partial class PlasmamanOxygenIgnitionSystem : EntitySystem
 {
     private const float UpdateDelay = 1f;
 
     private static readonly ProtoId<TagPrototype> HelmetEvaTag = "HelmetEVA";
     private static readonly ProtoId<TagPrototype> HardsuitTag = "Hardsuit";
 
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private float _updateTimer;
 

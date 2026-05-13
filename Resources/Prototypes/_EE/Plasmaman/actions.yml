@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
   id: ActionPlasmamanDash
-  name: action-name-plasmaman-dash
-  description: action-description-plasmaman-dash
+  name: Plasma Dash
+  description: Vent plasma from your body to launch yourself a short distance forward. Only works in space - range scales with your breath saturation, and costs some of it.
   components:
   - type: Action
     useDelay: 15

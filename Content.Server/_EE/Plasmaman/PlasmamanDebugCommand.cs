@@ -18,9 +18,9 @@ using Robust.Shared.Containers;
 namespace Content.Server._EE.Plasmaman;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class PlasmamanDebugCommand : IConsoleCommand
+public sealed partial class PlasmamanDebugCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public string Command => "plasmamandebug";
     public string Description => "Dumps Plasmaman breathing pipeline (saturation, internals, tank, lungs).";

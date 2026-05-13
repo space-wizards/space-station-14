@@ -8,7 +8,6 @@
     sprite: _EE/Plasmaman/Clothing/Uniforms/Envirosuits/plain.rsi
   - type: Clothing
     sprite: _EE/Plasmaman/Clothing/Uniforms/Envirosuits/plain.rsi
-    femaleMask: NoMask
   - type: Armor
     modifiers:
       coefficients:

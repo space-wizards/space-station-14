@@ -277,10 +277,7 @@
   - type: Metabolizer
     maxReagents: 2
     metabolizerTypes: [ Plasmaman ]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+    stages: [ Bloodstream ]
 
 - type: entity
   parent: [ OrganBaseStomach, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
@@ -291,9 +288,7 @@
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Plasmaman ]
-    groups:
-    - id: Food
-    - id: Drink
+    stages: [ Digestion ]
 
 - type: entity
   parent: [ OrganBaseLiver, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
@@ -304,9 +299,7 @@
   - type: Metabolizer
     maxReagents: 1
     metabolizerTypes: [ Plasmaman ]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
+    stages: [ Metabolites ]
 
 - type: entity
   parent: [ OrganBaseKidneys, OrganPlasmamanInternal, OrganPlasmamanMetabolizer ]
@@ -318,4 +311,3 @@
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [ Plasmaman ]
-    removeEmpty: true
