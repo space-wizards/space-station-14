@@ -12,10 +12,10 @@ namespace Content.Server.Speech.EntitySystems;
 /// As soon as the chat refactor moves to Shared
 /// the logic here can move to the shared <see cref="SharedSpeakOnActionSystem"/>
 /// </summary>
-public sealed class SpeakOnActionSystem : SharedSpeakOnActionSystem
+public sealed partial class SpeakOnActionSystem : SharedSpeakOnActionSystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private ChatSystem _chat = default!;
 
     public override void Initialize()
     {

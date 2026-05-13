@@ -9,12 +9,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Puppet
 {
-    public sealed class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
+    public sealed partial class VentriloquistPuppetSystem : SharedVentriloquistPuppetSystem
     {
         public static readonly EntProtoId MutedEffect = "StatusEffectVentriloquistPuppetMuted";
 
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
         public override void Initialize()
         {
