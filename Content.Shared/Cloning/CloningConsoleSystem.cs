@@ -20,16 +20,16 @@ namespace Content.Shared.Cloning;
 /// Handles the logic and interactions for the cloning console,
 /// enabling management of cloning pods and cloning operations.
 /// </summary>
-public sealed class CloningConsoleSystem : EntitySystem
+public sealed partial class CloningConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedCloningPodSystem _cloningPod = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedCloningPodSystem _cloningPod = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

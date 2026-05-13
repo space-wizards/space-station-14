@@ -19,16 +19,16 @@ namespace Content.Shared.MedicalScanner.EntitySystems;
 /// <summary>
 /// System for handling medical scanner logic, interactions, and connections.
 /// </summary>
-public sealed class MedicalScannerSystem : EntitySystem
+public sealed partial class MedicalScannerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly ClimbSystem _climb = default!;
-    [Dependency] private readonly CloningConsoleSystem _cloningConsole = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private ClimbSystem _climb = default!;
+    [Dependency] private CloningConsoleSystem _cloningConsole = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
     private const float UpdateRate = 1f;
     private float _updateDif;

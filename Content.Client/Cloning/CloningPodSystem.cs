@@ -2,4 +2,4 @@ using Content.Shared.Cloning;
 
 namespace Content.Client.Cloning;
 
-public sealed class CloningPodSystem : SharedCloningPodSystem;
+public sealed partial class CloningPodSystem : SharedCloningPodSystem;

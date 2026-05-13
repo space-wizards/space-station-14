@@ -30,23 +30,23 @@ namespace Content.Shared.Cloning;
 /// </summary>
 public abstract partial class SharedCloningPodSystem : EntitySystem
 {
-    [Dependency] private readonly CloningConsoleSystem _cloningConsole = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = null!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedChatSystem _chat = default!;
-    [Dependency] private readonly SharedCloningSystem _cloning = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _material = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private CloningConsoleSystem _cloningConsole = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = null!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private SharedCloningSystem _cloning = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private SharedMaterialStorageSystem _material = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// Tracks which minds are waiting to be transferred into a clone.
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = [];
