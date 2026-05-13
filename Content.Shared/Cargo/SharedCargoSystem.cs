@@ -220,7 +220,6 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
         Dirty(ent);
     }
-
 }
 
 [NetSerializable, Serializable]
