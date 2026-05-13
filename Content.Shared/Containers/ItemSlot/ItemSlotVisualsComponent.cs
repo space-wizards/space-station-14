@@ -12,15 +12,15 @@ namespace Content.Shared.Containers.ItemSlot;
 public sealed partial class ItemSlotVisualsComponent : Component
 {
     /// Like <see cref="ItemSlotsComponent"/> but for Visuals.
-    [DataField]
-    public List<ItemSlotVisuals> SlotVisuals = new();
+    [DataField(readOnly:true)]
+    public Dictionary<string, ItemSlotVisuals> SlotVisuals = new();
 }
 
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ItemSlotVisuals
 {
-    [DataField(required: true)]
+    [DataField]
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 
     // Useful for specifying which Slot you want a Visual Layer for, not needed if the Item has one Slot.

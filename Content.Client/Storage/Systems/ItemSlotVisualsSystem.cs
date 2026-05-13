@@ -24,7 +24,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (args.Sprite == null)
             return;
 
-        foreach (var visual in component.SlotVisuals)
+        foreach (var visual in component.SlotVisuals.Values)
         {
             if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), visual.Layer, out var layerIndex, false))
                 continue;
@@ -50,7 +50,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (!TryComp<ItemComponent>(uid, out var item))
             return;
 
-        foreach (var visual in component.SlotVisuals)
+        foreach (var visual in component.SlotVisuals.Values)
         {
             var layer = new PrototypeLayerData();
 
@@ -76,7 +76,7 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
-        foreach (var visual in ent.Comp.SlotVisuals)
+        foreach (var visual in ent.Comp.SlotVisuals.Values)
         {
             var layer = new PrototypeLayerData();
 

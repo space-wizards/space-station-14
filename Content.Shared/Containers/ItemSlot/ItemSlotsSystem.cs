@@ -89,7 +89,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!TryComp<ItemSlotVisualsComponent>(uid, out var visuals) || !TryComp<AppearanceComponent>(uid, out _))
                 return;
 
-            foreach (var visual in visuals.SlotVisuals)
+            foreach (var visual in visuals.SlotVisuals.Values)
             {
                 var contains = false;
 

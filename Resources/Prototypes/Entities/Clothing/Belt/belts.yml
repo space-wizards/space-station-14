@@ -18,7 +18,7 @@
     size: Ginormous
   - type: ItemSlots
     slots:
-      item:
+      sabre:
         name: sheath-sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
@@ -29,10 +29,10 @@
           - CaptainSabre
   - type: ItemSlotVisuals
     slotVisuals:
-    - layer: fill
-      fillBaseName: sheath-sabre
-      inHandsFillBaseName: -sabre
-      equippedFillBaseName: -sabre
+      sabre:
+        fillBaseName: sheath-sabre
+        inHandsFillBaseName: -sabre
+        equippedFillBaseName: -sabre
   - type: Appearance
 
 - type: entity

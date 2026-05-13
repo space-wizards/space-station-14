@@ -158,7 +158,7 @@
   components:
   - type: ContainerFill
     containers:
-      item:
+      sabre:
       - CaptainSabre
 
 - type: entity
