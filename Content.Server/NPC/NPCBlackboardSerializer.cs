@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
 
-public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>, ITypeCopier<NPCBlackboard>
+public sealed partial class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>, ITypeCopier<NPCBlackboard>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -99,3 +99,4 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         }
     }
 }
+

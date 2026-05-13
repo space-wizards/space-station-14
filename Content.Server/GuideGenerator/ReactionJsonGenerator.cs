@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
-public sealed class ReactionJsonGenerator
+public sealed partial class ReactionJsonGenerator
 {
     public static void PublishJson(StreamWriter file)
     {
@@ -31,4 +31,5 @@ public sealed class ReactionJsonGenerator
         file.Write(JsonSerializer.Serialize(reactions, serializeOptions));
     }
 }
+
 

@@ -81,7 +81,7 @@ public sealed partial class NanoTaskPrintTask : INanoTaskUiMessagePayload
 ///     Cartridge message event carrying the NanoTask UI messages
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiMessageEvent : CartridgeMessageEvent
+public sealed partial class NanoTaskUiMessageEvent : CartridgeMessageEvent
 {
     public readonly INanoTaskUiMessagePayload Payload;
     public NanoTaskUiMessageEvent(INanoTaskUiMessagePayload payload)
@@ -89,3 +89,4 @@ public sealed class NanoTaskUiMessageEvent : CartridgeMessageEvent
         Payload = payload;
     }
 }
+

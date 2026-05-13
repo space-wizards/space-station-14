@@ -6,7 +6,8 @@ namespace Content.Shared.Cargo.Events;
 /// Raised on a client request to refresh the pallet console
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoPalletAppraiseMessage : BoundUserInterfaceMessage
+public sealed partial class CargoPalletAppraiseMessage : BoundUserInterfaceMessage
 {
 
 }
+

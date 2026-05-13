@@ -10,7 +10,7 @@ namespace Content.Client.UserInterface.Controls.FancyTree;
 /// <remarks>
 ///     Ideally this would just be a draw method in <see cref="TreeItem"/>, but sadly the draw override gets called BEFORE children are drawn.
 /// </remarks>
-public sealed class TreeLine : Control
+public sealed partial class TreeLine : Control
 {
     protected override void Draw(DrawingHandleScreen handle)
     {
@@ -59,3 +59,4 @@ public sealed class TreeLine : Control
         }
     }
 }
+

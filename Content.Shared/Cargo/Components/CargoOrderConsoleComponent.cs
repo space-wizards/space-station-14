@@ -170,7 +170,7 @@ public enum CargoOrderConsoleMode : byte
 /// Withdraw funds from an account
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoConsoleWithdrawFundsMessage : BoundUserInterfaceMessage
+public sealed partial class CargoConsoleWithdrawFundsMessage : BoundUserInterfaceMessage
 {
     public ProtoId<CargoAccountPrototype>? Account;
     public int Amount;
@@ -186,4 +186,5 @@ public sealed class CargoConsoleWithdrawFundsMessage : BoundUserInterfaceMessage
 /// Toggle the limit on withdrawals and transfers.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoConsoleToggleLimitMessage : BoundUserInterfaceMessage;
+public sealed partial class CargoConsoleToggleLimitMessage : BoundUserInterfaceMessage;
+

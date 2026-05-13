@@ -6,4 +6,5 @@ namespace Content.Shared.Rejuvenate;
 /// Systems should handle healing the entity in a subscription to this event.
 /// Used for the Rejuvenate admin verb.
 /// </summary>
-public sealed class RejuvenateEvent : EntityEventArgs;
+public sealed partial class RejuvenateEvent : EntityEventArgs;
+

@@ -1,13 +1,13 @@
-﻿using Content.Server.Storage.Components;
+using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class ClearBluespaceLockerLinks : LocalizedCommands
+public sealed partial class ClearBluespaceLockerLinks : LocalizedCommands
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public override string Command => "clearbluespacelockerlinks";
 
@@ -28,3 +28,4 @@ public sealed class ClearBluespaceLockerLinks : LocalizedCommands
         _entityManager.RemoveComponent<BluespaceLockerComponent>(entityUid.Value);
     }
 }
+

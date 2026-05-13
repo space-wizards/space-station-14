@@ -2,4 +2,5 @@ using Content.Shared.Revolutionary;
 
 namespace Content.Server.Revolutionary;
 
-public sealed class RevolutionarySystem : SharedRevolutionarySystem;
+public sealed partial class RevolutionarySystem : SharedRevolutionarySystem;
+

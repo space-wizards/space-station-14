@@ -31,9 +31,10 @@ public record struct GetEyeOffsetAttemptEvent(bool Cancelled);
 ///     Pockets and suitstorage are excluded.
 /// </summary>
 [ByRefEvent]
-public sealed class GetEyeOffsetRelayedEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed partial class GetEyeOffsetRelayedEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~(SlotFlags.POCKET & SlotFlags.SUITSTORAGE);
 
     public Vector2 Offset;
 }
+

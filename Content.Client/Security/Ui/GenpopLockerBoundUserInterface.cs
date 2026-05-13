@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Security.Ui;
 
 [UsedImplicitly]
-public sealed class GenpopLockerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class GenpopLockerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private GenpopLockerMenu? _menu;
 
@@ -33,4 +33,5 @@ public sealed class GenpopLockerBoundUserInterface(EntityUid owner, Enum uiKey) 
         _menu = null;
     }
 }
+
 

@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveEntityStorageCommand : LocalizedCommands
+    public sealed partial class RemoveEntityStorageCommand : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "rmstorage";
 
@@ -45,3 +45,4 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
+

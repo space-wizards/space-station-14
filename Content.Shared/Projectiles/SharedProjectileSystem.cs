@@ -21,11 +21,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -224,7 +224,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class ImpactEffectEvent : EntityEventArgs
+public sealed partial class ImpactEffectEvent : EntityEventArgs
 {
     public string Prototype;
     public NetCoordinates Coordinates;
@@ -250,3 +250,4 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+

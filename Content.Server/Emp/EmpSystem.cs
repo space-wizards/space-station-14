@@ -5,7 +5,7 @@ using Content.Shared.Emp;
 
 namespace Content.Server.Emp;
 
-public sealed class EmpSystem : SharedEmpSystem
+public sealed partial class EmpSystem : SharedEmpSystem
 {
     public override void Initialize()
     {
@@ -37,3 +37,4 @@ public sealed class EmpSystem : SharedEmpSystem
         args.Cancelled = true;
     }
 }
+

@@ -3,7 +3,7 @@ using Content.Shared.Chat;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class UnblockableSpeechSystem : EntitySystem
+    public sealed partial class UnblockableSpeechSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -16,3 +16,4 @@ namespace Content.Server.Speech.EntitySystems
         }
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -8,7 +8,7 @@ namespace Content.Shared.FeedbackSystem;
 /// <summary>
 /// When clients receive this message a popup will appear with the contents from the given prototypes.
 /// </summary>
-public sealed class FeedbackPopupMessage : NetMessage
+public sealed partial class FeedbackPopupMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -52,10 +52,11 @@ public sealed class FeedbackPopupMessage : NetMessage
 /// <summary>
 /// Sent from the server to open the feedback popup.
 /// </summary>
-public sealed class OpenFeedbackPopupMessage : NetMessage
+public sealed partial class OpenFeedbackPopupMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer) { }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer) { }
 }
+

@@ -9,7 +9,7 @@ namespace Content.Shared.CrewManifest;
 ///     to the player when it is updated.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestCrewManifestMessage : EntityEventArgs
+public sealed partial class RequestCrewManifestMessage : EntityEventArgs
 {
     public NetEntity Id { get; }
 
@@ -20,7 +20,7 @@ public sealed class RequestCrewManifestMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestEuiState : EuiStateBase
+public sealed partial class CrewManifestEuiState : EuiStateBase
 {
     public string StationName { get; }
     public CrewManifestEntries? Entries { get; }
@@ -33,7 +33,7 @@ public sealed class CrewManifestEuiState : EuiStateBase
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestEntries
+public sealed partial class CrewManifestEntries
 {
     /// <summary>
     ///     Entries in the crew manifest. Goes by department ID.
@@ -43,7 +43,7 @@ public sealed class CrewManifestEntries
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestEntry
+public sealed partial class CrewManifestEntry
 {
     public string Name { get; }
 
@@ -67,5 +67,6 @@ public sealed class CrewManifestEntry
 ///     this entity's point of view.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CrewManifestOpenUiMessage : BoundUserInterfaceMessage
+public sealed partial class CrewManifestOpenUiMessage : BoundUserInterfaceMessage
 {}
+

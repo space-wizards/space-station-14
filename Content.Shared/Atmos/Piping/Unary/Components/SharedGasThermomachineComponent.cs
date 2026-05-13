@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
@@ -14,13 +14,13 @@ public enum ThermomachineUiKey : byte
 
 [Serializable]
 [NetSerializable]
-public sealed class GasThermomachineToggleMessage : BoundUserInterfaceMessage
+public sealed partial class GasThermomachineToggleMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable]
 [NetSerializable]
-public sealed class GasThermomachineChangeTemperatureMessage : BoundUserInterfaceMessage
+public sealed partial class GasThermomachineChangeTemperatureMessage : BoundUserInterfaceMessage
 {
     public float Temperature { get; }
 
@@ -29,3 +29,4 @@ public sealed class GasThermomachineChangeTemperatureMessage : BoundUserInterfac
         Temperature = temperature;
     }
 }
+

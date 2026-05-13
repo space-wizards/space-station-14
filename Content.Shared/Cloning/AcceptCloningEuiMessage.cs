@@ -1,4 +1,4 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cloning
@@ -11,7 +11,7 @@ namespace Content.Shared.Cloning
     }
 
     [Serializable, NetSerializable]
-    public sealed class AcceptCloningChoiceMessage : EuiMessageBase
+    public sealed partial class AcceptCloningChoiceMessage : EuiMessageBase
     {
         public readonly AcceptCloningUiButton Button;
 
@@ -21,3 +21,4 @@ namespace Content.Shared.Cloning
         }
     }
 }
+

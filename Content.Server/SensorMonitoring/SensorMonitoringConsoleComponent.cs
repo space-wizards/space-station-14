@@ -1,4 +1,4 @@
-﻿using Content.Shared.SensorMonitoring;
+using Content.Shared.SensorMonitoring;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
@@ -31,7 +31,7 @@ public sealed partial class SensorMonitoringConsoleComponent : Component
     public TimeSpan LastUIUpdate;
     public ValueList<int> RemovedSensors;
 
-    public sealed class SensorData
+    public sealed partial class SensorData
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public int NetId;
@@ -43,7 +43,7 @@ public sealed partial class SensorMonitoringConsoleComponent : Component
         public Dictionary<string, SensorStream> Streams = new();
     }
 
-    public sealed class SensorStream
+    public sealed partial class SensorStream
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public int NetId;
@@ -57,9 +57,10 @@ public sealed partial class SensorMonitoringConsoleComponent : Component
         public Queue<SensorSample> Samples = new();
     }
 
-    public sealed class ViewingPlayer
+    public sealed partial class ViewingPlayer
     {
 
     }
 }
+
 

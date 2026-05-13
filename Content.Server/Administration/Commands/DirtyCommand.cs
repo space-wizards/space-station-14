@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class DirtyCommand : LocalizedEntityCommands
+public sealed partial class DirtyCommand : LocalizedEntityCommands
 {
     public override string Command => "dirty";
 
@@ -40,3 +40,4 @@ public sealed class DirtyCommand : LocalizedEntityCommands
         }
     }
 }
+

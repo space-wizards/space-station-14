@@ -11,7 +11,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.PDA;
 
 [CommonSheetlet]
-public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed partial class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
@@ -90,4 +90,5 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
         ];
     }
 }
+
 

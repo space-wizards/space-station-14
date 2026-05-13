@@ -23,8 +23,8 @@ namespace Content.Client.Chemistry.UI
     [GenerateTypedNameReferences]
     public sealed partial class ChemMasterWindow : FancyWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         private readonly SpriteSystem _sprite;
 
@@ -118,10 +118,10 @@ namespace Content.Client.Chemistry.UI
                 ("10", ChemMasterReagentAmount.U10, StyleClass.ButtonOpenBoth),
                 ("15", ChemMasterReagentAmount.U15, StyleClass.ButtonOpenBoth),
                 ("20", ChemMasterReagentAmount.U20, StyleClass.ButtonOpenBoth),
-                ("25", ChemMasterReagentAmount.U25, StyleClass.ButtonOpenBoth),
                 ("30", ChemMasterReagentAmount.U30, StyleClass.ButtonOpenBoth),
-                ("50", ChemMasterReagentAmount.U50, StyleClass.ButtonOpenBoth),
-                ("100", ChemMasterReagentAmount.U100, StyleClass.ButtonOpenBoth),
+                ("40", ChemMasterReagentAmount.U40, StyleClass.ButtonOpenBoth),
+                ("60", ChemMasterReagentAmount.U60, StyleClass.ButtonOpenBoth),
+                ("120", ChemMasterReagentAmount.U120, StyleClass.ButtonOpenBoth),
                 (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleClass.ButtonOpenLeft),
             };
 
@@ -449,7 +449,7 @@ namespace Content.Client.Chemistry.UI
         }
     }
 
-    public sealed class ReagentButton : Button
+    public sealed partial class ReagentButton : Button
     {
         public ChemMasterReagentAmount Amount { get; set; }
         public bool IsBuffer = true;
@@ -464,3 +464,4 @@ namespace Content.Client.Chemistry.UI
         }
     }
 }
+

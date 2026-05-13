@@ -1,6 +1,6 @@
-﻿namespace Content.Shared.Throwing
+namespace Content.Shared.Throwing
 {
-    public sealed class ThrowAttemptEvent : CancellableEntityEventArgs
+    public sealed partial class ThrowAttemptEvent : CancellableEntityEventArgs
     {
         public ThrowAttemptEvent(EntityUid uid, EntityUid itemUid)
         {
@@ -24,7 +24,7 @@
     /// <summary>
     /// Raised when we try to pushback an entity from throwing
     /// </summary>
-    public sealed class ThrowPushbackAttemptEvent : CancellableEntityEventArgs {}
+    public sealed partial class ThrowPushbackAttemptEvent : CancellableEntityEventArgs {}
 
     /// <summary>
     /// Raised on an entity that is being pushed from a thrown entity
@@ -35,3 +35,4 @@
         public bool Push;
     };
 }
+

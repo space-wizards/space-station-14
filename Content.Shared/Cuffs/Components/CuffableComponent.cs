@@ -43,7 +43,7 @@ public sealed partial class CuffableComponent : Component
 public sealed partial class RemoveCuffsAlertEvent : BaseAlertEvent;
 
 [Serializable, NetSerializable]
-public sealed class CuffableComponentState : ComponentState
+public sealed partial class CuffableComponentState : ComponentState
 {
     public readonly bool CanStillInteract;
     public readonly int NumHandsCuffed;
@@ -63,4 +63,5 @@ public sealed class CuffableComponentState : ComponentState
 
 [ByRefEvent]
 public readonly record struct CuffedStateChangeEvent;
+
 

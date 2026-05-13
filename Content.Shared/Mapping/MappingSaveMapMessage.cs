@@ -1,10 +1,10 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mapping;
 
-public sealed class MappingSaveMapMessage : NetMessage
+public sealed partial class MappingSaveMapMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
     public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableUnordered;
@@ -17,3 +17,4 @@ public sealed class MappingSaveMapMessage : NetMessage
     {
     }
 }
+

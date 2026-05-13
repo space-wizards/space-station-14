@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Radio.Ui;
 
 [UsedImplicitly]
-public sealed class IntercomBoundUserInterface : BoundUserInterface
+public sealed partial class IntercomBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private IntercomMenu? _menu;
@@ -47,3 +47,4 @@ public sealed class IntercomBoundUserInterface : BoundUserInterface
         _menu?.Update(ent);
     }
 }
+

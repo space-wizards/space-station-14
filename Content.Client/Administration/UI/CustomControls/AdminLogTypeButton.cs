@@ -1,10 +1,10 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public sealed class AdminLogTypeButton : Button
+public sealed partial class AdminLogTypeButton : Button
 {
     public AdminLogTypeButton(LogType type)
     {
@@ -15,3 +15,4 @@ public sealed class AdminLogTypeButton : Button
 
     public LogType Type { get; }
 }
+

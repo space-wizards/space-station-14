@@ -1,6 +1,6 @@
 namespace Content.Shared.Atmos
 {
-    public sealed class AtmosCommandUtils
+    public sealed partial class AtmosCommandUtils
     {
         /// <summary>
         /// Gas ID parser for atmospherics commands.
@@ -22,3 +22,4 @@ namespace Content.Shared.Atmos
         }
     }
 }
+

@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Disposal
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class TubeConnectionsCommand : LocalizedEntityCommands
+    public sealed partial class TubeConnectionsCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private DisposalTubeSystem _disposalTubeSystem = default!;
 
         public override string Command => "tubeconnections";
 
@@ -56,3 +56,4 @@ namespace Content.Server.Disposal
         }
     }
 }
+

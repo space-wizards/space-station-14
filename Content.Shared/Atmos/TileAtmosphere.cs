@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos;
 /// Use the public APIs in <see cref="SharedAtmosphereSystem"/> instead.
 /// </summary>
 [Access(typeof(SharedAtmosphereSystem), typeof(SharedGasTileOverlaySystem), typeof(SharedAtmosDebugOverlaySystem))]
-public sealed class TileAtmosphere : IGasMixtureHolder
+public sealed partial class TileAtmosphere : IGasMixtureHolder
 {
     /// <summary>
     /// The last cycle this tile's air was archived into <see cref="AirArchived"/>.
@@ -245,3 +245,4 @@ public sealed class TileAtmosphere : IGasMixtureHolder
     {
     }
 }
+

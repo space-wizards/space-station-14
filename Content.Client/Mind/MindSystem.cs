@@ -1,8 +1,8 @@
-﻿using Content.Shared.Mind;
+using Content.Shared.Mind;
 
 namespace Content.Client.Mind;
 
-public sealed class MindSystem : SharedMindSystem
+public sealed partial class MindSystem : SharedMindSystem
 {
     public override void Initialize()
     {
@@ -25,3 +25,4 @@ public sealed class MindSystem : SharedMindSystem
             UserMinds[component.UserId.Value] = uid;
     }
 }
+

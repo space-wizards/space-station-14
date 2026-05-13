@@ -5,7 +5,7 @@ using Content.Shared.Remotes.EntitySystems;
 
 namespace Content.Client.Remotes.Systems;
 
-public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
+public sealed partial class DoorRemoteSystem : SharedDoorRemoteSystem
 {
     public override void Initialize()
     {
@@ -20,3 +20,4 @@ public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
         ent.Comp.IsStatusControlUpdateRequired = true;
     }
 }
+

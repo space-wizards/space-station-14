@@ -4,7 +4,7 @@ using Content.Shared.UserInterface;
 
 namespace Content.Client.UserInterface;
 
-public sealed class StatValuesEui : BaseEui
+public sealed partial class StatValuesEui : BaseEui
 {
     private readonly StatsWindow _window;
 
@@ -27,3 +27,4 @@ public sealed class StatValuesEui : BaseEui
         _window.UpdateValues(eui.Headers, eui.Values);
     }
 }
+

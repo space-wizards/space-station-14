@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cargo.BUI;
 
 [NetSerializable, Serializable]
-public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
+public sealed partial class CargoConsoleInterfaceState : BoundUserInterfaceState
 {
     public string Name;
     public int Count;
@@ -24,3 +24,4 @@ public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
         Products = products;
     }
 }
+

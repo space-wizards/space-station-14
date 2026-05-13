@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Hands.Controls;
 
-public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
+public sealed partial class HandsContainer : ItemSlotUIContainer<HandButton>
 {
     private readonly GridContainer _grid;
     private readonly List<HandButton> _orderedButtons = new();
@@ -63,3 +63,4 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
         }
     }
 }
+

@@ -24,13 +24,13 @@ public sealed partial class GasTileOverlayComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTileOverlayState(Dictionary<Vector2i, GasOverlayChunk> chunks) : ComponentState
+public sealed partial class GasTileOverlayState(Dictionary<Vector2i, GasOverlayChunk> chunks) : ComponentState
 {
     public readonly Dictionary<Vector2i, GasOverlayChunk> Chunks = chunks;
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTileOverlayDeltaState(
+public sealed partial class GasTileOverlayDeltaState(
     Dictionary<Vector2i, GasOverlayChunk> modifiedChunks,
     HashSet<Vector2i> allChunks)
     : ComponentState, IComponentDeltaState<GasTileOverlayState>
@@ -70,3 +70,4 @@ public sealed class GasTileOverlayDeltaState(
         return new GasTileOverlayState(chunks);
     }
 }
+

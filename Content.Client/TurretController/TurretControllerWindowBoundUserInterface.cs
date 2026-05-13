@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.TurretController;
 
-public sealed class TurretControllerWindowBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class TurretControllerWindowBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private TurretControllerWindow? _window;
@@ -42,3 +42,4 @@ public sealed class TurretControllerWindowBoundUserInterface(EntityUid owner, En
         SendPredictedMessage(new DeployableTurretArmamentSettingChangedMessage((int)setting));
     }
 }
+

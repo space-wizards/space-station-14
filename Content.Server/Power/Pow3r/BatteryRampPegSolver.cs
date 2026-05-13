@@ -8,7 +8,7 @@ using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
 {
-    public sealed class BatteryRampPegSolver : IPowerSolver
+    public sealed partial class BatteryRampPegSolver : IPowerSolver
     {
         private UpdateNetworkJob _networkJob;
         private bool _disableParallel;
@@ -470,3 +470,4 @@ namespace Content.Server.Power.Pow3r
         #endregion
     }
 }
+

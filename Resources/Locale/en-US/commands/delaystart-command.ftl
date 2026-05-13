@@ -1,7 +1,7 @@
-﻿cmd-delaystart-desc = Delays the round start.
-cmd-delaystart-help = Usage: {$command} [seconds]
-                      If no arguments are passed, the round will be paused or resumed accordingly.
-cmd-delaystart-invalid-seconds = {$value} isn't a valid amount of seconds.
+cmd-delaystart-desc = Adjusts the roundstart timer (accepts positive and negative integers). Pauses/Resumes the countdown if no argument is provided.
+cmd-delaystart-help = Usage: delaystart [seconds]
+
+cmd-delaystart-preround-only = This can only be executed while the game is in the pre-round lobby.
 cmd-delaystart-paused = Paused the countdown.
-cmd-delaystart-unpaused = Resumed the countdown.
-cmd-delaystart-too-late = Round start could not be delayed in time!
+cmd-delaystart-resumed = Resumed the countdown.
+cmd-delaystart-invalid-seconds = {$seconds} isn't a valid amount of seconds.

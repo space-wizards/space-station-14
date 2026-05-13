@@ -1,4 +1,4 @@
-﻿using Content.Shared.Decals;
+using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
@@ -7,7 +7,7 @@ namespace Content.Client.Mapping;
 /// <summary>
 ///     Used to represent a button's data in the mapping editor.
 /// </summary>
-public sealed class MappingPrototype
+public sealed partial class MappingPrototype
 {
     /// <summary>
     ///     The prototype instance, if any.
@@ -37,3 +37,4 @@ public sealed class MappingPrototype
         Name = name;
     }
 }
+

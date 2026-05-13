@@ -74,7 +74,7 @@ public record struct CryostorageContainedPlayerData()
 }
 
 [Serializable, NetSerializable]
-public sealed class CryostorageBuiState : BoundUserInterfaceState
+public sealed partial class CryostorageBuiState : BoundUserInterfaceState
 {
     public List<CryostorageContainedPlayerData> PlayerData;
 
@@ -85,7 +85,7 @@ public sealed class CryostorageBuiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class CryostorageRemoveItemBuiMessage : BoundUserInterfaceMessage
+public sealed partial class CryostorageRemoveItemBuiMessage : BoundUserInterfaceMessage
 {
     public NetEntity StoredEntity;
 
@@ -112,3 +112,4 @@ public enum CryostorageUIKey : byte
 {
     Key
 }
+

@@ -2,4 +2,5 @@ using Content.Shared.Dice;
 
 namespace Content.Server.Dice;
 
-public sealed class DiceSystem : SharedDiceSystem;
+public sealed partial class DiceSystem : SharedDiceSystem;
+

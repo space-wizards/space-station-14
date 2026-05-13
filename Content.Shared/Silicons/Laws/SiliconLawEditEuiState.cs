@@ -1,10 +1,10 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
 
 [Serializable, NetSerializable]
-public sealed class SiliconLawsEuiState : EuiStateBase
+public sealed partial class SiliconLawsEuiState : EuiStateBase
 {
     public List<SiliconLaw> Laws { get; }
     public NetEntity Target { get; }
@@ -16,7 +16,7 @@ public sealed class SiliconLawsEuiState : EuiStateBase
 }
 
 [Serializable, NetSerializable]
-public sealed class SiliconLawsSaveMessage : EuiMessageBase
+public sealed partial class SiliconLawsSaveMessage : EuiMessageBase
 {
     public List<SiliconLaw> Laws { get; }
     public NetEntity Target { get; }
@@ -27,3 +27,4 @@ public sealed class SiliconLawsSaveMessage : EuiMessageBase
         Target = target;
     }
 }
+

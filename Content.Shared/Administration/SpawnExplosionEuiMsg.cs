@@ -12,7 +12,7 @@ public static class SpawnExplosionEuiMsg
     ///     This message is sent to the server to request explosion preview data.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class PreviewRequest : EuiMessageBase
+    public sealed partial class PreviewRequest : EuiMessageBase
     {
         public readonly MapCoordinates Epicenter;
         public readonly string TypeId;
@@ -34,7 +34,7 @@ public static class SpawnExplosionEuiMsg
     ///     This message is used to send explosion-preview data to the client.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class PreviewData : EuiMessageBase
+    public sealed partial class PreviewData : EuiMessageBase
     {
         public readonly float Slope;
         public readonly float TotalIntensity;
@@ -48,3 +48,4 @@ public static class SpawnExplosionEuiMsg
         }
     }
 }
+

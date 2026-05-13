@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Lock.Visualizers;
 
-public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent>
+public sealed partial class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, LockVisualsComponent comp, ref AppearanceChangeEvent args)
     {
@@ -36,3 +36,4 @@ public enum LockVisualLayers : byte
 {
     Lock
 }
+

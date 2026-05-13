@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public sealed class BanPanelEuiState : EuiStateBase
+public sealed partial class BanPanelEuiState : EuiStateBase
 {
     public string PlayerName { get; set; }
     public bool HasBan { get; set; }
@@ -23,13 +23,13 @@ public sealed class BanPanelEuiState : EuiStateBase
 public static class BanPanelEuiStateMsg
 {
     [Serializable, NetSerializable]
-    public sealed class CreateBanRequest(Ban ban) : EuiMessageBase
+    public sealed partial class CreateBanRequest(Ban ban) : EuiMessageBase
     {
         public Ban Ban { get; } = ban;
     }
 
     [Serializable, NetSerializable]
-    public sealed class GetPlayerInfoRequest : EuiMessageBase
+    public sealed partial class GetPlayerInfoRequest : EuiMessageBase
     {
         public string PlayerUsername { get; set; }
 
@@ -86,3 +86,4 @@ public sealed record Ban
     public readonly ProtoId<AntagPrototype>[]? BannedAntags;
     public readonly bool Erase;
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Toolshed.TypeParsers;
 
-public sealed class FixedPoint2TypeParser : TypeParser<FixedPoint2>
+public sealed partial class FixedPoint2TypeParser : TypeParser<FixedPoint2>
 {
     public override bool TryParse(ParserContext ctx, out FixedPoint2 result)
     {
@@ -34,3 +34,4 @@ public sealed class FixedPoint2TypeParser : TypeParser<FixedPoint2>
         return CompletionResult.FromHint(GetArgHint(arg));
     }
 }
+

@@ -8,7 +8,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// System for marking xeno artifact with certain text.
 /// </remarks>
 /// <remarks> Not actually a trigger but nice and easy to use. </remarks>
-public sealed class XATExaminableTextSystem : BaseXATSystem<XATExaminableTextComponent>
+public sealed partial class XATExaminableTextSystem : BaseXATSystem<XATExaminableTextComponent>
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,3 +26,4 @@ public sealed class XATExaminableTextSystem : BaseXATSystem<XATExaminableTextCom
         args.PushMarkup(Loc.GetString(node.Comp1.ExamineText));
     }
 }
+

@@ -2,7 +2,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.SurveillanceCamera;
 
-public sealed class SurveillanceCameraMonitorSystem : EntitySystem
+public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
 {
     public override void Update(float frameTime)
     {
@@ -32,3 +32,4 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         RemCompDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
     }
 }
+

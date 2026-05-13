@@ -1,4 +1,4 @@
-﻿using System.Collections.Frozen;
+using System.Collections.Frozen;
 using System.Linq;
 using System.Text;
 using System.Text.Unicode;
@@ -8,7 +8,7 @@ namespace Content.Shared.Chat.V2.Moderation;
 /// <summary>
 /// A basic censor. Not bullet-proof.
 /// </summary>
-public sealed class SimpleCensor : IChatCensor
+public sealed partial class SimpleCensor : IChatCensor
 {
     // Common substitution symbols are replaced with one of the characters they commonly substitute.
     private bool _shouldSanitizeLeetspeak;
@@ -338,3 +338,4 @@ public sealed class SimpleCensor : IChatCensor
         return this;
     }
 }
+

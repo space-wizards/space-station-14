@@ -1,13 +1,13 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
-public sealed class ThrowScoreboardCommand : LocalizedEntityCommands
+public sealed partial class ThrowScoreboardCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
 
     public override string Command => "throwscoreboard";
 
@@ -21,3 +21,4 @@ public sealed class ThrowScoreboardCommand : LocalizedEntityCommands
         _gameTicker.ShowRoundEndScoreboard();
     }
 }
+

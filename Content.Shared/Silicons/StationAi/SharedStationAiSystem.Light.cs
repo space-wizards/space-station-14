@@ -22,7 +22,8 @@ public abstract partial class SharedStationAiSystem
 }
 
 [Serializable, NetSerializable]
-public sealed class StationAiLightEvent : BaseStationAiAction
+public sealed partial class StationAiLightEvent : BaseStationAiAction
 {
     public bool Enabled;
 }
+

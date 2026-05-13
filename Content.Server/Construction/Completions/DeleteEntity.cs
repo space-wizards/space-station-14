@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Completions
 {
-    public sealed class ConstructionBeforeDeleteEvent : CancellableEntityEventArgs
+    public sealed partial class ConstructionBeforeDeleteEvent : CancellableEntityEventArgs
     {
         public EntityUid? User;
 
@@ -27,3 +27,4 @@ namespace Content.Server.Construction.Completions
         }
     }
 }
+

@@ -4,7 +4,7 @@ using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed class SpanishAccentSystem : EntitySystem
+    public sealed partial class SpanishAccentSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -72,3 +72,4 @@ namespace Content.Server.Speech.EntitySystems
         }
     }
 }
+

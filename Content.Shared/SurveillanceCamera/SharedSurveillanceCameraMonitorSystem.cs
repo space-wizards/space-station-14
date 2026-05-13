@@ -7,7 +7,7 @@ namespace Content.Shared.SurveillanceCamera;
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
+public sealed partial class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
     // that contains the monitor should clear.
@@ -36,7 +36,7 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
     public string? CameraSubnet { get; }
@@ -49,7 +49,7 @@ public sealed class SurveillanceCameraMonitorSwitchMessage : BoundUserInterfaceM
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInterfaceMessage
 {
     public string Subnet { get; }
 
@@ -61,17 +61,17 @@ public sealed class SurveillanceCameraMonitorSubnetRequestMessage : BoundUserInt
 
 // Sent when the user requests that the cameras on the current subnet be refreshed.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraRefreshCamerasMessage : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraRefreshCamerasMessage : BoundUserInterfaceMessage
 {}
 
 // Sent when the user requests that the subnets known by the monitor be refreshed.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraRefreshSubnetsMessage : BoundUserInterfaceMessage
 {}
 
 // Sent when the user wants to disconnect the monitor from the camera.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraDisconnectMessage : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraDisconnectMessage : BoundUserInterfaceMessage
 {}
 
 [Serializable, NetSerializable]
@@ -83,7 +83,7 @@ public enum SurveillanceCameraMonitorUiKey : byte
 // SETUP
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
+public sealed partial class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
 {
     public string Name { get; }
     public uint Network { get; }
@@ -102,7 +102,7 @@ public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceStat
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupSetName : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraSetupSetName : BoundUserInterfaceMessage
 {
     public string Name { get; }
 
@@ -113,7 +113,7 @@ public sealed class SurveillanceCameraSetupSetName : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupSetNetwork : BoundUserInterfaceMessage
+public sealed partial class SurveillanceCameraSetupSetNetwork : BoundUserInterfaceMessage
 {
     public int Network { get; }
 
@@ -130,3 +130,4 @@ public enum SurveillanceCameraSetupUiKey : byte
     Camera,
     Router
 }
+

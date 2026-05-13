@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Administration;
@@ -8,7 +8,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.GameTicking.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Round)]
-public sealed class DynamicRuleCommand : ToolshedCommand
+public sealed partial class DynamicRuleCommand : ToolshedCommand
 {
     private DynamicRuleSystem? _dynamicRuleSystem;
 
@@ -100,4 +100,5 @@ public sealed class DynamicRuleCommand : ToolshedCommand
         return _dynamicRuleSystem.Rules(input);
     }
 }
+
 

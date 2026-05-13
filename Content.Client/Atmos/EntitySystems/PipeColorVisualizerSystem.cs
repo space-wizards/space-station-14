@@ -4,7 +4,7 @@ using Content.Shared.Atmos.Piping;
 
 namespace Content.Client.Atmos.EntitySystems;
 
-public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisualsComponent>
+public sealed partial class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PipeColorVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -22,3 +22,4 @@ public enum PipeVisualLayers : byte
 {
     Pipe,
 }
+

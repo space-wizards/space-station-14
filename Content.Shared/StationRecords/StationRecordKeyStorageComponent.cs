@@ -14,7 +14,7 @@ public sealed partial class StationRecordKeyStorageComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class StationRecordKeyStorageComponentState : ComponentState
+public sealed partial class StationRecordKeyStorageComponentState : ComponentState
 {
     public (NetEntity, uint)? Key;
 
@@ -23,3 +23,4 @@ public sealed class StationRecordKeyStorageComponentState : ComponentState
         Key = key;
     }
 }
+

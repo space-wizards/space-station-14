@@ -11,7 +11,7 @@ namespace Content.Server.KillTracking;
 /// <summary>
 /// This handles <see cref="KillTrackerComponent"/> and recording who is damaging and killing entities.
 /// </summary>
-public sealed class KillTrackingSystem : EntitySystem
+public sealed partial class KillTrackingSystem : EntitySystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -130,3 +130,4 @@ public sealed class KillTrackingSystem : EntitySystem
 /// <param name="Suicide">True if the entity that was killed caused their own death.</param>
 [ByRefEvent]
 public readonly record struct KillReportedEvent(EntityUid Entity, KillSource Primary, KillSource? Assist, bool Suicide);
+

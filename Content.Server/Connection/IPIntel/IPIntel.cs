@@ -1,4 +1,4 @@
-﻿using System.Buffers.Binary;
+using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Connection.IPIntel;
 
 // Handles checking/warning if the connecting IP address is sus.
-public sealed class IPIntel
+public sealed partial class IPIntel
 {
     private readonly IIPIntelApi _api;
     private readonly IServerDbManager _db;
@@ -385,3 +385,4 @@ public sealed class IPIntel
         Errored,
     }
 }
+

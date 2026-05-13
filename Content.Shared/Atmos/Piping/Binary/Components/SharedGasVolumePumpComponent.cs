@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components
 {
@@ -11,7 +11,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasVolumePumpToggleStatusMessage : BoundUserInterfaceMessage
+    public sealed partial class GasVolumePumpToggleStatusMessage : BoundUserInterfaceMessage
     {
         public bool Enabled { get; }
 
@@ -22,7 +22,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasVolumePumpChangeTransferRateMessage : BoundUserInterfaceMessage
+    public sealed partial class GasVolumePumpChangeTransferRateMessage : BoundUserInterfaceMessage
     {
         public float TransferRate { get; }
 
@@ -32,3 +32,4 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
         }
     }
 }
+

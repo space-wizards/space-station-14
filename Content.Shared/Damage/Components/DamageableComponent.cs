@@ -66,7 +66,7 @@ public sealed partial class DamageableComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DamageableComponentState(
+public sealed partial class DamageableComponentState(
     DamageSpecifier damage,
     ProtoId<DamageModifierSetPrototype>? modifierSetId)
     : ComponentState
@@ -74,3 +74,4 @@ public sealed class DamageableComponentState(
     public readonly DamageSpecifier Damage = damage;
     public readonly ProtoId<DamageModifierSetPrototype>? ModifierSetId = modifierSetId;
 }
+

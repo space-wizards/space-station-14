@@ -6,10 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles;
 
-public sealed class RoleSystem : SharedRoleSystem
+public sealed partial class RoleSystem : SharedRoleSystem
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public string? MindGetBriefing(EntityUid? mindId)
     {
@@ -74,7 +74,7 @@ public sealed class RoleSystem : SharedRoleSystem
 /// Handlers can either replace or append to the briefing, whichever is more appropriate.
 /// </summary>
 [ByRefEvent]
-public sealed class GetBriefingEvent
+public sealed partial class GetBriefingEvent
 {
     /// <summary>
     /// The text that will be shown on the Character Screen
@@ -107,3 +107,4 @@ public sealed class GetBriefingEvent
         }
     }
 }
+

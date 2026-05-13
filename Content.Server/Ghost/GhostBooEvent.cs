@@ -1,7 +1,8 @@
 namespace Content.Server.Ghost
 {
-    public sealed class GhostBooEvent : HandledEntityEventArgs
+    public sealed partial class GhostBooEvent : HandledEntityEventArgs
     {
 
     }
 }
+

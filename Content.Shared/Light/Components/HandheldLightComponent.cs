@@ -68,7 +68,7 @@ public sealed partial class HandheldLightComponent : Component
     public string RadiatingBehaviourId { get; set; } = string.Empty;
 
     [Serializable, NetSerializable]
-    public sealed class HandheldLightComponentState : ComponentState
+    public sealed partial class HandheldLightComponentState : ComponentState
     {
         public byte? Charge { get; }
 
@@ -95,3 +95,4 @@ public enum HandheldLightPowerStates
     LowPower,
     Dying,
 }
+

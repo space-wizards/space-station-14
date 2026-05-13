@@ -77,7 +77,7 @@ public sealed partial class NanoTaskItemAndId
 ///     The UI state of the NanoTask
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiState : BoundUserInterfaceState
+public sealed partial class NanoTaskUiState : BoundUserInterfaceState
 {
     public List<NanoTaskItemAndId> Tasks;
 
@@ -86,3 +86,4 @@ public sealed class NanoTaskUiState : BoundUserInterfaceState
         Tasks = tasks;
     }
 }
+

@@ -163,7 +163,7 @@ public sealed partial class DisposalUnitComponent : Component
     ///     Message data sent from client to server when a disposal unit ui button is pressed.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
+    public sealed partial class UiButtonPressedMessage : BoundUserInterfaceMessage
     {
         public readonly UiButton Button;
 
@@ -195,3 +195,4 @@ public enum DisposalsPressureState : byte
     /// </summary>
     Pressurizing
 }
+

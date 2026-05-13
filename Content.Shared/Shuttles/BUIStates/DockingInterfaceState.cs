@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Shuttles.BUIStates;
 
 [Serializable, NetSerializable]
-public sealed class DockingInterfaceState
+public sealed partial class DockingInterfaceState
 {
     public Dictionary<NetEntity, List<DockingPortState>> Docks;
 
@@ -12,3 +12,4 @@ public sealed class DockingInterfaceState
         Docks = docks;
     }
 }
+

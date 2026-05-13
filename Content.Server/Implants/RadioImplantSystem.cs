@@ -1,10 +1,10 @@
-﻿using Content.Shared.Implants;
+using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Radio.Components;
 
 namespace Content.Server.Implants;
 
-public sealed class RadioImplantSystem : EntitySystem
+public sealed partial class RadioImplantSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -70,3 +70,4 @@ public sealed class RadioImplantSystem : EntitySystem
         }
     }
 }
+

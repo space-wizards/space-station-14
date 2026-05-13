@@ -8,7 +8,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires player to examine details of artifact.
 /// </summary>
-public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
+public sealed partial class XATExamineSystem : BaseXATSystem<XATExamineComponent>
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -30,3 +30,4 @@ public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
         args.PushMarkup(Loc.GetString("artifact-examine-trigger-desc"));
     }
 }
+

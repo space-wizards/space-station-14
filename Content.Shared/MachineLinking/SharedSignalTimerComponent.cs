@@ -12,7 +12,7 @@ public enum SignalTimerUiKey : byte
 /// Represents a SignalTimerComponent state that can be sent to the client
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
 {
     public string CurrentText;
     public string CurrentDelayMinutes;
@@ -41,7 +41,7 @@ public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
+public sealed partial class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
 {
     public string Text { get; }
 
@@ -52,7 +52,7 @@ public sealed class SignalTimerTextChangedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
+public sealed partial class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
 {
     public TimeSpan Delay { get; }
     public SignalTimerDelayChangedMessage(TimeSpan delay)
@@ -62,7 +62,8 @@ public sealed class SignalTimerDelayChangedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SignalTimerStartMessage : BoundUserInterfaceMessage
+public sealed partial class SignalTimerStartMessage : BoundUserInterfaceMessage
 {
 
 }
+

@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cargo.BUI;
 
 [NetSerializable, Serializable]
-public sealed class CargoPalletConsoleInterfaceState : BoundUserInterfaceState
+public sealed partial class CargoPalletConsoleInterfaceState : BoundUserInterfaceState
 {
     /// <summary>
     /// estimated apraised value of all the entities on top of pallets on the same grid as the console
@@ -27,3 +27,4 @@ public sealed class CargoPalletConsoleInterfaceState : BoundUserInterfaceState
         Enabled = enabled;
     }
 }
+

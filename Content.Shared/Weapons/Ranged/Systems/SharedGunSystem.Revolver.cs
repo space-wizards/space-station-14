@@ -466,8 +466,9 @@ public partial class SharedGunSystem
         public bool?[] Chambers = default!;
     }
 
-    public sealed class RevolverSpinEvent : EntityEventArgs
+    public sealed partial class RevolverSpinEvent : EntityEventArgs
     {
 
     }
 }
+

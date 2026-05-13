@@ -4,18 +4,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Kitchen.Components
 {
     [Serializable, NetSerializable]
-    public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage
+    public sealed partial class MicrowaveStartCookMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage
+    public sealed partial class MicrowaveEjectMessage : BoundUserInterfaceMessage
     {
 
     }
 
     [Serializable, NetSerializable]
-    public sealed class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
+    public sealed partial class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
     {
         public NetEntity EntityID;
         public MicrowaveEjectSolidIndexedMessage(NetEntity entityId)
@@ -25,7 +25,7 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
+    public sealed partial class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
     {
         public ReagentQuantity ReagentQuantity;
         public MicrowaveVaporizeReagentIndexedMessage(ReagentQuantity reagentQuantity)
@@ -35,7 +35,7 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
+    public sealed partial class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
     {
         public int ButtonIndex;
         public uint NewCookTime;
@@ -47,7 +47,7 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
+    public sealed partial class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
         public NetEntity[] ContainedSolids;
         public bool IsMicrowaveBusy;
@@ -84,3 +84,4 @@ namespace Content.Shared.Kitchen.Components
     }
 
 }
+

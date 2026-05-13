@@ -1,6 +1,6 @@
-﻿namespace Content.Client.Stylesheets;
+namespace Content.Client.Stylesheets;
 
-public sealed class StyleProperties
+public sealed partial class StyleProperties
 {
     public const string PrimaryPalette = "palette-primary";
     public const string SecondaryPalette = "palette-secondary";
@@ -8,3 +8,4 @@ public sealed class StyleProperties
     public const string NegativePalette = "palette-negative";
     public const string HighlightPalette = "palette-highlight";
 }
+

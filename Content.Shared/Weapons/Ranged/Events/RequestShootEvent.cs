@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Raised on the client to indicate it'd like to shoot.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestShootEvent : EntityEventArgs
+public sealed partial class RequestShootEvent : EntityEventArgs
 {
     /// <summary>
     /// The gun shooting.
@@ -30,3 +30,4 @@ public sealed class RequestShootEvent : EntityEventArgs
     /// </summary>
     public bool Continuous;
 }
+

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 
@@ -26,7 +26,7 @@ public sealed partial class IdentityComponent : Component
 ///     A data structure representing the 'identity' of an entity as presented to
 ///     other players.
 /// </summary>
-public sealed class IdentityRepresentation
+public sealed partial class IdentityRepresentation
 {
     public string TrueName;
     public Gender TrueGender;
@@ -80,3 +80,4 @@ public sealed class IdentityRepresentation
             : $"{AgeString} {PresumedJob} {genderString}";
     }
 }
+

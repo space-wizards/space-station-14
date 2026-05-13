@@ -1,9 +1,9 @@
-﻿using Content.Shared.Power;
+using Content.Shared.Power;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.PowerCharge;
 
-public sealed class PowerChargeBoundUserInterface : BoundUserInterface
+public sealed partial class PowerChargeBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private PowerChargeWindow? _window;
@@ -36,3 +36,4 @@ public sealed class PowerChargeBoundUserInterface : BoundUserInterface
         _window?.UpdateState(chargeState);
     }
 }
+

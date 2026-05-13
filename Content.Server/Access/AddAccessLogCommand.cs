@@ -7,7 +7,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Access;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Mapping)]
-public sealed class AddAccessLogCommand : ToolshedCommand
+public sealed partial class AddAccessLogCommand : ToolshedCommand
 {
     [CommandImplementation]
     public void AddAccessLog(IInvocationContext ctx, EntityUid input, float seconds, string accessor)
@@ -31,3 +31,4 @@ public sealed class AddAccessLogCommand : ToolshedCommand
         AddAccessLog(ctx, input, seconds, accessor);
     }
 }
+

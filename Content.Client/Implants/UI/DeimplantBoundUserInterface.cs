@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Implants.UI;
 
-public sealed class DeimplantBoundUserInterface : BoundUserInterface
+public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private DeimplantChoiceWindow? _window;
@@ -30,3 +30,4 @@ public sealed class DeimplantBoundUserInterface : BoundUserInterface
         }
     }
 }
+

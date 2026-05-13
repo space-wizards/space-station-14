@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Ame.UI
 {
     [UsedImplicitly]
-    public sealed class AmeControllerBoundUserInterface : BoundUserInterface
+    public sealed partial class AmeControllerBoundUserInterface : BoundUserInterface
     {
         private AmeWindow? _window;
 
@@ -42,3 +42,4 @@ namespace Content.Client.Ame.UI
         }
     }
 }
+

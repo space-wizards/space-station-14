@@ -7,11 +7,11 @@ using System.Text.Json.Nodes;
 
 namespace Content.Server.Discord.WebhookMessages;
 
-public sealed class VoteWebhooks : IPostInjectInit
+public sealed partial class VoteWebhooks : IPostInjectInit
 {
-    [Dependency] private readonly IEntitySystemManager _entSys = default!;
-    [Dependency] private readonly DiscordWebhook _discord = default!;
-    [Dependency] private readonly IBaseServer _baseServer = default!;
+    [Dependency] private IEntitySystemManager _entSys = default!;
+    [Dependency] private DiscordWebhook _discord = default!;
+    [Dependency] private IBaseServer _baseServer = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -168,7 +168,7 @@ public sealed class VoteWebhooks : IPostInjectInit
         }
     }
 
-    public sealed class WebhookState
+    public sealed partial class WebhookState
     {
         public required string WebhookUrl;
         public required WebhookPayload Payload;
@@ -178,3 +178,4 @@ public sealed class VoteWebhooks : IPostInjectInit
 
     void IPostInjectInit.PostInject() { }
 }
+

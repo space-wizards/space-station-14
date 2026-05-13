@@ -6,7 +6,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordinates>
+public sealed partial class EntityCoordinatesConverter : AdminLogConverter<EntityCoordinates>
 {
     // System.Text.Json actually keeps hold of your JsonSerializerOption instances in a cache on .NET 7.
     // Use a weak reference to avoid holding server instances live too long in integration tests.
@@ -60,3 +60,4 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<EntityCoordin
         Write(writer, value, options, entityManager);
     }
 }
+

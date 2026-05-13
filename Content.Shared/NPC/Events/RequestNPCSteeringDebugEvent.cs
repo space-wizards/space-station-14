@@ -6,7 +6,8 @@ namespace Content.Shared.NPC.Events;
 /// Raised from client to server to request NPC steering debug info.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestNPCSteeringDebugEvent : EntityEventArgs
+public sealed partial class RequestNPCSteeringDebugEvent : EntityEventArgs
 {
     public bool Enabled;
 }
+

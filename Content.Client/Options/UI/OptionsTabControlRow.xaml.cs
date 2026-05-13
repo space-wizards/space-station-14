@@ -48,8 +48,8 @@ namespace Content.Client.Options.UI;
 [GenerateTypedNameReferences]
 public sealed partial class OptionsTabControlRow : Control
 {
-    [Dependency] private readonly ILocalizationManager _loc = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private ValueList<BaseOption> _options;
 
@@ -411,7 +411,7 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
 /// </para>
 /// </remarks>
 /// <seealso cref="OptionsTabControlRow"/>
-public sealed class OptionCheckboxCVar : BaseOptionCVar<bool>
+public sealed partial class OptionCheckboxCVar : BaseOptionCVar<bool>
 {
     private readonly CheckBox _checkBox;
     private readonly bool _invert;
@@ -459,7 +459,7 @@ public sealed class OptionCheckboxCVar : BaseOptionCVar<bool>
 /// Implementation of a CVar option that simply corresponds with a floating-point <see cref="OptionSlider"/>.
 /// </summary>
 /// <seealso cref="OptionsTabControlRow"/>
-public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
+public sealed partial class OptionSliderFloatCVar : BaseOptionCVar<float>
 {
     /// <summary>
     /// Scale with which to multiply slider values when mapped to the backing CVar.
@@ -535,7 +535,7 @@ public sealed class OptionSliderFloatCVar : BaseOptionCVar<float>
 /// Implementation of a CVar option that simply corresponds with a string <see cref="OptionColorSlider"/>.
 /// </summary>
 /// <seealso cref="OptionsTabControlRow"/>
-public sealed class OptionColorSliderCVar : BaseOptionCVar<string>
+public sealed partial class OptionColorSliderCVar : BaseOptionCVar<string>
 {
     private readonly OptionColorSlider _slider;
 
@@ -587,7 +587,7 @@ public sealed class OptionColorSliderCVar : BaseOptionCVar<string>
 /// Implementation of a CVar option that simply corresponds with an integer <see cref="OptionSlider"/>.
 /// </summary>
 /// <seealso cref="OptionsTabControlRow"/>
-public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
+public sealed partial class OptionSliderIntCVar : BaseOptionCVar<int>
 {
     private readonly OptionSlider _slider;
     private readonly Func<OptionSliderIntCVar, int, string> _format;
@@ -651,7 +651,7 @@ public sealed class OptionSliderIntCVar : BaseOptionCVar<int>
 /// Implementation of a CVar option via a drop-down.
 /// </summary>
 /// <seealso cref="OptionsTabControlRow"/>
-public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
+public sealed partial class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 {
     private readonly OptionDropDown _dropDown;
     private readonly ItemEntry[] _entries;
@@ -729,7 +729,7 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     /// <param name="label">The visual text shown to the user for the option.</param>
     /// <seealso cref="OptionDropDownCVar{T}"/>
     /// <seealso cref="OptionsTabControlRow.AddOptionDropDown{T}"/>
-    public sealed class ValueOption(T key, string label)
+    public sealed partial class ValueOption(T key, string label)
     {
         /// <summary>
         /// The value that this option has. This is what will be written to the CVar if selected.
@@ -747,3 +747,4 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         public T Key;
     }
 }
+

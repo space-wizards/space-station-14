@@ -10,7 +10,7 @@ namespace Content.Shared.Hands
     /// <summary>
     /// Raised directed on an entity when attempting to drop its hand items.
     /// </summary>
-    public sealed class DropAttemptEvent : CancellableEntityEventArgs
+    public sealed partial class DropAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Uid;
     }
@@ -18,7 +18,7 @@ namespace Content.Shared.Hands
     /// <summary>
     ///     Raised directed at an item that needs to update its in-hand sprites/layers.
     /// </summary>
-    public sealed class GetInhandVisualsEvent : EntityEventArgs
+    public sealed partial class GetInhandVisualsEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the hand holding the item.
@@ -48,7 +48,7 @@ namespace Content.Shared.Hands
     /// <remarks>
     ///     Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
     /// </remarks>
-    public sealed class HeldVisualsUpdatedEvent : EntityEventArgs
+    public sealed partial class HeldVisualsUpdatedEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that is holding the item.
@@ -71,7 +71,7 @@ namespace Content.Shared.Hands
     ///     Raised when an entity item in a hand is deselected.
     /// </summary>
     [PublicAPI]
-    public sealed class HandDeselectedEvent : HandledEntityEventArgs
+    public sealed partial class HandDeselectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the deselected hand.
@@ -88,7 +88,7 @@ namespace Content.Shared.Hands
     ///     Raised when an item entity held by a hand is selected.
     /// </summary>
     [PublicAPI]
-    public sealed class HandSelectedEvent : HandledEntityEventArgs
+    public sealed partial class HandSelectedEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that owns the selected hand.
@@ -102,7 +102,7 @@ namespace Content.Shared.Hands
     }
 
     [Serializable, NetSerializable]
-    public sealed class RequestSetHandEvent : EntityEventArgs
+    public sealed partial class RequestSetHandEvent : EntityEventArgs
     {
         /// <summary>
         ///     The hand to be swapped to.
@@ -119,7 +119,7 @@ namespace Content.Shared.Hands
     /// Plays a clientside pickup animation by copying the specified entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class PickupAnimationEvent : EntityEventArgs
+    public sealed partial class PickupAnimationEvent : EntityEventArgs
     {
         /// <summary>
         /// Entity to be copied for the clientside animation.
@@ -145,7 +145,7 @@ namespace Content.Shared.Hands
     ///     Raised directed on both the blocking entity and user when
     ///     a virtual hand item is deleted.
     /// </summary>
-    public sealed class VirtualItemDeletedEvent : EntityEventArgs
+    public sealed partial class VirtualItemDeletedEvent : EntityEventArgs
     {
         public EntityUid BlockingEntity;
         public EntityUid User;
@@ -244,7 +244,7 @@ namespace Content.Shared.Hands
     /// <summary>
     /// Raised directed on an entity when it is equipped into hands.
     /// </summary>
-    public sealed class GotEquippedHandEvent : EquippedHandEvent
+    public sealed partial class GotEquippedHandEvent : EquippedHandEvent
     {
         public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
@@ -252,7 +252,7 @@ namespace Content.Shared.Hands
     /// <summary>
     /// Raised directed on an entity when it is unequipped from hands.
     /// </summary>
-    public sealed class GotUnequippedHandEvent : UnequippedHandEvent
+    public sealed partial class GotUnequippedHandEvent : UnequippedHandEvent
     {
         public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
@@ -260,7 +260,7 @@ namespace Content.Shared.Hands
     /// <summary>
     /// Raised directed on a user when it picks something up.
     /// </summary>
-    public sealed class DidEquipHandEvent : EquippedHandEvent
+    public sealed partial class DidEquipHandEvent : EquippedHandEvent
     {
         public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
@@ -268,7 +268,7 @@ namespace Content.Shared.Hands
     /// <summary>
     /// Raised directed on a user when something leaves its hands.
     /// </summary>
-    public sealed class DidUnequipHandEvent : UnequippedHandEvent
+    public sealed partial class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
@@ -277,7 +277,7 @@ namespace Content.Shared.Hands
     ///     Event raised by a client when they want to use the item currently held in their hands.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestUseInHandEvent : EntityEventArgs
+    public sealed partial class RequestUseInHandEvent : EntityEventArgs
     {
     }
 
@@ -285,7 +285,7 @@ namespace Content.Shared.Hands
     ///     Event raised by a client when they want to activate the item currently in their hands.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestActivateInHandEvent : EntityEventArgs
+    public sealed partial class RequestActivateInHandEvent : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -299,7 +299,7 @@ namespace Content.Shared.Hands
     ///     Event raised by a client when they want to use the currently held item on some other held item
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestHandInteractUsingEvent : EntityEventArgs
+    public sealed partial class RequestHandInteractUsingEvent : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -313,7 +313,7 @@ namespace Content.Shared.Hands
     ///     Event raised by a client when they want to move an item held in another hand to their currently active hand
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestMoveHandItemEvent : EntityEventArgs
+    public sealed partial class RequestMoveHandItemEvent : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -327,7 +327,7 @@ namespace Content.Shared.Hands
     ///     Event raised by a client when they want to alt interact with the item currently in their hands.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestHandAltInteractEvent : EntityEventArgs
+    public sealed partial class RequestHandAltInteractEvent : EntityEventArgs
     {
         public string HandName { get; }
 
@@ -337,7 +337,7 @@ namespace Content.Shared.Hands
         }
     }
 
-    public sealed class HandCountChangedEvent : EntityEventArgs
+    public sealed partial class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)
         {
@@ -348,7 +348,7 @@ namespace Content.Shared.Hands
     }
 
     [ByRefEvent]
-    public sealed class HeldRelayedEvent<TEvent> : EntityEventArgs
+    public sealed partial class HeldRelayedEvent<TEvent> : EntityEventArgs
     {
         public TEvent Args;
 
@@ -358,3 +358,4 @@ namespace Content.Shared.Hands
         }
     }
 }
+

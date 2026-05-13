@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal;
 
@@ -12,7 +12,7 @@ public enum MailingUnitUiKey : byte
 ///     Message data sent from client to server when a disposal unit ui button is pressed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class TargetSelectedMessage : BoundUserInterfaceMessage
+public sealed partial class TargetSelectedMessage : BoundUserInterfaceMessage
 {
     public readonly string? Target;
 
@@ -21,3 +21,4 @@ public sealed class TargetSelectedMessage : BoundUserInterfaceMessage
         Target = target;
     }
 }
+

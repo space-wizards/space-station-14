@@ -5,7 +5,7 @@ using Content.Shared.Labels.EntitySystems;
 
 namespace Content.Client.Labels.EntitySystems;
 
-public sealed class HandLabelerSystem : SharedHandLabelerSystem
+public sealed partial class HandLabelerSystem : SharedHandLabelerSystem
 {
     protected override void UpdateUI(Entity<HandLabelerComponent> ent)
     {
@@ -16,3 +16,4 @@ public sealed class HandLabelerSystem : SharedHandLabelerSystem
         }
     }
 }
+

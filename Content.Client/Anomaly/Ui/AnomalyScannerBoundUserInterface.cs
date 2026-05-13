@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
-public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
+public sealed partial class AnomalyScannerBoundUserInterface : BoundUserInterface
 {
     private AnomalyScannerMenu? _menu;
 
@@ -46,4 +46,5 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
         _menu?.Dispose();
     }
 }
+
 

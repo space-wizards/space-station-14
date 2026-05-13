@@ -3,8 +3,9 @@ namespace Content.Server.Tabletop
     /// <summary>
     ///     A class that stores per-player data for tabletops.
     /// </summary>
-    public sealed class TabletopSessionPlayerData
+    public sealed partial class TabletopSessionPlayerData
     {
         public EntityUid Camera { get; set; }
     }
 }
+

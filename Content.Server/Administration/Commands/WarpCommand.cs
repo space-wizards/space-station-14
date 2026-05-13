@@ -13,9 +13,9 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class WarpCommand : LocalizedCommands
+    public sealed partial class WarpCommand : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "warp";
 
@@ -162,3 +162,4 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
+

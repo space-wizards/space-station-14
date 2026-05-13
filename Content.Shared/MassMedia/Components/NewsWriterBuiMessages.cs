@@ -10,7 +10,7 @@ public enum NewsWriterUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly NewsArticle[] Articles;
     public readonly bool PublishEnabled;
@@ -29,7 +29,7 @@ public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterPublishMessage : BoundUserInterfaceMessage
+public sealed partial class NewsWriterPublishMessage : BoundUserInterfaceMessage
 {
     public readonly string Title;
     public readonly string Content;
@@ -43,7 +43,7 @@ public sealed class NewsWriterPublishMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
+public sealed partial class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 {
     public readonly int ArticleNum;
 
@@ -54,12 +54,12 @@ public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
+public sealed partial class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterSaveDraftMessage : BoundUserInterfaceMessage
+public sealed partial class NewsWriterSaveDraftMessage : BoundUserInterfaceMessage
 {
     public readonly string DraftTitle;
     public readonly string DraftContent;
@@ -72,6 +72,7 @@ public sealed class NewsWriterSaveDraftMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterRequestDraftMessage : BoundUserInterfaceMessage
+public sealed partial class NewsWriterRequestDraftMessage : BoundUserInterfaceMessage
 {
 }
+

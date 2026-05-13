@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -26,7 +26,7 @@ namespace Content.Shared.Administration
         }
 
         [Serializable, NetSerializable]
-        public sealed class BwoinkTextMessage : EntityEventArgs
+        public sealed partial class BwoinkTextMessage : EntityEventArgs
         {
             public DateTime SentAt { get; }
 
@@ -59,7 +59,7 @@ namespace Content.Shared.Administration
     ///     The webhook url itself is not and should not be sent.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class BwoinkDiscordRelayUpdated : EntityEventArgs
+    public sealed partial class BwoinkDiscordRelayUpdated : EntityEventArgs
     {
         public bool DiscordRelayEnabled { get; }
 
@@ -73,7 +73,7 @@ namespace Content.Shared.Administration
     ///     Sent by the client to notify the server when it begins or stops typing.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class BwoinkClientTypingUpdated : EntityEventArgs
+    public sealed partial class BwoinkClientTypingUpdated : EntityEventArgs
     {
         public NetUserId Channel { get; }
         public bool Typing { get; }
@@ -89,7 +89,7 @@ namespace Content.Shared.Administration
     ///     Sent by server to notify admins when a player begins or stops typing.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class BwoinkPlayerTypingUpdated : EntityEventArgs
+    public sealed partial class BwoinkPlayerTypingUpdated : EntityEventArgs
     {
         public NetUserId Channel { get; }
         public string PlayerName { get; }
@@ -103,3 +103,4 @@ namespace Content.Shared.Administration
         }
     }
 }
+

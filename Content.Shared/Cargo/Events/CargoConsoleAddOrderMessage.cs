@@ -6,7 +6,7 @@ namespace Content.Shared.Cargo.Events;
 ///     Add order to database.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
+public sealed partial class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
 {
     public string Requester;
     public string Reason;
@@ -21,3 +21,4 @@ public sealed class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
         Amount = amount;
     }
 }
+

@@ -3,7 +3,7 @@ using Content.Shared.Weapons.Hitscan.Events;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class TriggerOnHitscanSystem : TriggerOnXSystem
+public sealed partial class TriggerOnHitscanSystem : TriggerOnXSystem
 {
     public override void Initialize()
     {
@@ -26,3 +26,4 @@ public sealed class TriggerOnHitscanSystem : TriggerOnXSystem
         Trigger.Trigger(ent.Owner, args.Data.Shooter, ent.Comp.KeyOut);
     }
 }
+

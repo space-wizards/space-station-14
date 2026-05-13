@@ -11,7 +11,7 @@ namespace Content.Client.Examine;
 ///     Buttons that show up in the examine tooltip to specify more detailed
 ///     ways to examine an item.
 /// </summary>
-public sealed class ExamineButton : ContainerButton
+public sealed partial class ExamineButton : ContainerButton
 {
     public const string StyleClassExamineButton = "examine-button";
 
@@ -66,3 +66,4 @@ public sealed class ExamineButton : ContainerButton
         }
     }
 }
+

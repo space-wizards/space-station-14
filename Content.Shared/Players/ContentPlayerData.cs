@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Network;
@@ -10,7 +10,7 @@ namespace Content.Shared.Players;
 ///     Use <see cref="PlaIPlayerDatarver.Player.IPlayerData)"/> to retrieve this from an <see cref="PlayerData"/>.
 ///     <remarks>Not currently used on the client.</remarks>
 /// </summary>
-public sealed class ContentPlayerData
+public sealed partial class ContentPlayerData
 {
     /// <summary>
     ///     The session ID of the player owning this data.
@@ -43,3 +43,4 @@ public sealed class ContentPlayerData
         Name = name;
     }
 }
+

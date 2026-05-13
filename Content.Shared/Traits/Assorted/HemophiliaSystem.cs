@@ -1,9 +1,9 @@
-﻿using Content.Shared.Body.Events;
+using Content.Shared.Body.Events;
 using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed class HemophiliaSystem : EntitySystem
+public sealed partial class HemophiliaSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -18,3 +18,4 @@ public sealed class HemophiliaSystem : EntitySystem
         args.Args = ev;
     }
 }
+

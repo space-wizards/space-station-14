@@ -10,10 +10,10 @@ namespace Content.Server.NPC.Commands;
 /// Lists out the domain of a particular HTN compound task.
 /// </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NPCDomainCommand : LocalizedEntityCommands
+public sealed partial class NPCDomainCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly HTNSystem _htnSystem = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private HTNSystem _htnSystem = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     public override string Command => "npcdomain";
 
@@ -45,3 +45,4 @@ public sealed class NPCDomainCommand : LocalizedEntityCommands
         return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<HTNCompoundPrototype>(proto: _protoManager), Loc.GetString("cmd-npcdomain-hint"));
     }
 }
+

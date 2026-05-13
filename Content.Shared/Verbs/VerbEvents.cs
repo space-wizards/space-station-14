@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Verbs
 {
     [Serializable, NetSerializable]
-    public sealed class RequestServerVerbsEvent : EntityEventArgs
+    public sealed partial class RequestServerVerbsEvent : EntityEventArgs
     {
         public readonly NetEntity EntityUid;
 
@@ -37,7 +37,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public sealed class VerbsResponseEvent : EntityEventArgs
+    public sealed partial class VerbsResponseEvent : EntityEventArgs
     {
         public readonly List<Verb>? Verbs;
         public readonly NetEntity Entity;
@@ -55,7 +55,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public sealed class ExecuteVerbEvent : EntityEventArgs
+    public sealed partial class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly NetEntity Target;
         public readonly Verb RequestedVerb;
@@ -70,7 +70,7 @@ namespace Content.Shared.Verbs
     /// <summary>
     ///     Directed event that requests verbs from any systems/components on a target entity.
     /// </summary>
-    public sealed class GetVerbsEvent<TVerb> : EntityEventArgs where TVerb : Verb
+    public sealed partial class GetVerbsEvent<TVerb> : EntityEventArgs where TVerb : Verb
     {
         /// <summary>
         ///     Event output. Set of verbs that can be executed.
@@ -148,3 +148,4 @@ namespace Content.Shared.Verbs
         }
     }
 }
+

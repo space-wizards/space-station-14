@@ -5,7 +5,7 @@ using Content.Shared.Fluids;
 namespace Content.Client.Fluids;
 
 /// <inheritdoc/>
-public sealed class AbsorbentSystem : SharedAbsorbentSystem
+public sealed partial class AbsorbentSystem : SharedAbsorbentSystem
 {
     public override void Initialize()
     {
@@ -13,3 +13,4 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Subs.ItemStatus<AbsorbentComponent>(ent => new AbsorbentItemStatus(ent, EntityManager));
     }
 }
+

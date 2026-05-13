@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.EntityTable.ValueSelector;
 
 [TypeSerializer]
-public sealed class NumberSelectorTypeSerializer :
+public sealed partial class NumberSelectorTypeSerializer :
     ITypeReader<NumberSelector, ValueDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager,
@@ -52,3 +52,4 @@ public sealed class NumberSelectorTypeSerializer :
         return (NumberSelector) serializationManager.Read(type, node, context)!;
     }
 }
+

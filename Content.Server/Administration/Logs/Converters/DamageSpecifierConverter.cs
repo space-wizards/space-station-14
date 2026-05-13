@@ -6,7 +6,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed class DamageSpecifierConverter : AdminLogConverter<DamageSpecifier>
+public sealed partial class DamageSpecifierConverter : AdminLogConverter<DamageSpecifier>
 {
     public override void Write(Utf8JsonWriter writer, DamageSpecifier value, JsonSerializerOptions options)
     {
@@ -18,3 +18,4 @@ public sealed class DamageSpecifierConverter : AdminLogConverter<DamageSpecifier
         writer.WriteEndObject();
     }
 }
+

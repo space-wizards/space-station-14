@@ -12,13 +12,13 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed class GasAnalyzerSystem : EntitySystem
+public sealed partial class GasAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly AtmosphereSystem _atmo = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private AtmosphereSystem _atmo = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
     /// <summary>
     /// Minimum moles of a gas to be sent to the client.
@@ -281,7 +281,7 @@ public sealed class GasAnalyzerSystem : EntitySystem
 /// should subscribe to this and return the GasMixtures as desired. A device that is flippable should subscribe
 /// to this event to report if it is flipped or not. See GasFilterSystem or GasMixerSystem for an example.
 /// </summary>
-public sealed class GasAnalyzerScanEvent : EntityEventArgs
+public sealed partial class GasAnalyzerScanEvent : EntityEventArgs
 {
     /// <summary>
     /// The string is for the name (ex "pipe", "inlet", "filter"), GasMixture for the corresponding gas mix. Add all mixes that should be reported when scanned.
@@ -293,3 +293,4 @@ public sealed class GasAnalyzerScanEvent : EntityEventArgs
     /// </summary>
     public bool DeviceFlipped;
 }
+

@@ -1,6 +1,6 @@
 namespace Content.Shared.DeviceLinking.Events;
 
-public sealed class NewLinkEvent : EntityEventArgs
+public sealed partial class NewLinkEvent : EntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly EntityUid Sink;
@@ -17,3 +17,4 @@ public sealed class NewLinkEvent : EntityEventArgs
         SinkPort = sinkPort;
     }
 }
+

@@ -8,7 +8,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Mech.Ui;
 
 [UsedImplicitly]
-public sealed class MechBoundUserInterface : BoundUserInterface
+public sealed partial class MechBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private MechMenu? _menu;
@@ -66,4 +66,5 @@ public sealed class MechBoundUserInterface : BoundUserInterface
         return component?.Ui;
     }
 }
+
 

@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Events;
 
 [Serializable, NetSerializable]
-public sealed class PanicBunkerStatus
+public sealed partial class PanicBunkerStatus
 {
     public bool Enabled;
     public bool DisableWithAdmins;
@@ -15,7 +15,7 @@ public sealed class PanicBunkerStatus
 }
 
 [Serializable, NetSerializable]
-public sealed class PanicBunkerChangedEvent : EntityEventArgs
+public sealed partial class PanicBunkerChangedEvent : EntityEventArgs
 {
     public PanicBunkerStatus Status;
 
@@ -24,3 +24,4 @@ public sealed class PanicBunkerChangedEvent : EntityEventArgs
         Status = status;
     }
 }
+

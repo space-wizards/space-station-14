@@ -16,7 +16,7 @@ namespace Content.Shared.Actions;
 ///     cref="GotEquippedHandEvent"/>. This exists mostly as a convenience event, while also helping to keep
 ///     action-granting logic separate from general equipment behavior.
 /// </remarks>
-public sealed class GetItemActionsEvent : EntityEventArgs
+public sealed partial class GetItemActionsEvent : EntityEventArgs
 {
     private readonly ActionContainerSystem _system;
     public readonly SortedSet<EntityUid> Actions = new();
@@ -80,7 +80,7 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 ///     Event used to communicate with the server that a client wishes to perform some action.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestPerformActionEvent : EntityEventArgs
+public sealed partial class RequestPerformActionEvent : EntityEventArgs
 {
     public readonly NetEntity Action;
     public readonly NetEntity? EntityTarget;
@@ -180,3 +180,4 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// </summary>
     public bool Toggle;
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Robust.Shared.Serialization;
@@ -91,5 +91,6 @@ public sealed partial class TryStandDoAfterEvent : SimpleDoAfterEvent;
 /// An event sent by the client to the server to ask it very nicely to perform a forced stand-up.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ForceStandUpEvent : EntityEventArgs;
+public sealed partial class ForceStandUpEvent : EntityEventArgs;
+
 

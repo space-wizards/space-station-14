@@ -8,7 +8,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// Exists to delay the event horizon eating its way out of the container until events relating to the insertion have been processed.
 /// Needs to be a class because ref structs can't be put into the queue.
 /// </summary>
-public sealed class EventHorizonContainedEvent : EntityEventArgs
+public sealed partial class EventHorizonContainedEvent : EntityEventArgs
 {
     /// <summary>
     /// The uid of the event horizon that has been contained.
@@ -32,3 +32,4 @@ public sealed class EventHorizonContainedEvent : EntityEventArgs
         Args = args;
     }
 }
+

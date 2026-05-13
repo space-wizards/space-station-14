@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mind;
+using Content.Shared.Mind;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
@@ -10,7 +10,7 @@ namespace Content.Server.Mind.Toolshed;
 ///     Contains various mind-manipulation commands like getting minds, controlling mobs, etc.
 /// </summary>
 [ToolshedCommand]
-public sealed class MindCommand : ToolshedCommand
+public sealed partial class MindCommand : ToolshedCommand
 {
     private SharedMindSystem? _mind;
 
@@ -44,3 +44,4 @@ public sealed class MindCommand : ToolshedCommand
         return target;
     }
 }
+

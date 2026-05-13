@@ -9,7 +9,7 @@ namespace Content.Shared.Interaction.Events
     ///     Combat will also check the general interaction blockers, so this event should only be used for combat-specific
     ///     action blocking.
     /// </remarks>
-    public sealed class AttackAttemptEvent : CancellableEntityEventArgs
+    public sealed partial class AttackAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid Uid { get; }
         public EntityUid? Target { get; }
@@ -33,7 +33,7 @@ namespace Content.Shared.Interaction.Events
     /// <summary>
     /// Raised directed at an entity to check if they can attack while inside of a container.
     /// </summary>
-    public sealed class CanAttackFromContainerEvent : EntityEventArgs
+    public sealed partial class CanAttackFromContainerEvent : EntityEventArgs
     {
         public EntityUid Uid;
         public EntityUid? Target;
@@ -46,3 +46,4 @@ namespace Content.Shared.Interaction.Events
         }
     }
 }
+

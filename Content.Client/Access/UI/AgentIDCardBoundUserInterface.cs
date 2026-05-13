@@ -9,7 +9,7 @@ namespace Content.Client.Access.UI
     /// <summary>
     /// Initializes a <see cref="AgentIDCardWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed class AgentIDCardBoundUserInterface : BoundUserInterface
+    public sealed partial class AgentIDCardBoundUserInterface : BoundUserInterface
     {
         private AgentIDCardWindow? _window;
 
@@ -59,3 +59,4 @@ namespace Content.Client.Access.UI
         }
     }
 }
+

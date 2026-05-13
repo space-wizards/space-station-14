@@ -7,7 +7,7 @@ namespace Content.Shared.Info;
 /// <summary>
 ///  Sent by the server when the client connects to sync the client rules and displaying a popup with them if necessitated.
 /// </summary>
-public sealed class SendRulesInformationMessage : NetMessage
+public sealed partial class SendRulesInformationMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -33,7 +33,7 @@ public sealed class SendRulesInformationMessage : NetMessage
 /// <summary>
 ///     Sent by the client when it has accepted the rules.
 /// </summary>
-public sealed class RulesAcceptedMessage : NetMessage
+public sealed partial class RulesAcceptedMessage : NetMessage
 {
     /// <summary>
     /// Whether or not the player used the "fuckrules" command to skip the rules window countdown.
@@ -53,3 +53,4 @@ public sealed class RulesAcceptedMessage : NetMessage
         buffer.Write(FuckRules);
     }
 }
+

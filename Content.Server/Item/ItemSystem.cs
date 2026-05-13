@@ -1,7 +1,8 @@
-﻿using Content.Shared.Item;
+using Content.Shared.Item;
 
 namespace Content.Server.Item;
 
-public sealed class ItemSystem : SharedItemSystem
+public sealed partial class ItemSystem : SharedItemSystem
 {
 }
+

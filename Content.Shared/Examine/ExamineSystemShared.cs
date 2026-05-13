@@ -15,13 +15,13 @@ namespace Content.Shared.Examine
 {
     public abstract partial class ExamineSystemShared : EntitySystem
     {
-        [Dependency] private readonly OccluderSystem _occluder = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
+        [Dependency] private OccluderSystem _occluder = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] protected MobStateSystem MobStateSystem = default!;
 
-        [Dependency] private readonly EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -268,7 +268,7 @@ namespace Content.Shared.Examine
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(metadata.EntityDescription))
             {
-                message.PushMarkup(metadata.EntityDescription);
+                message.AddMarkupOrThrow(metadata.EntityDescription);
                 hasDescription = true;
             }
 
@@ -293,7 +293,7 @@ namespace Content.Shared.Examine
     ///     If you're pushing multiple messages that should be grouped together (or ordered in some way),
     ///     call <see cref="PushGroup"/> before pushing and <see cref="PopGroup"/> when finished.
     /// </summary>
-    public sealed class ExaminedEvent : EntityEventArgs
+    public sealed partial class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
@@ -535,7 +535,7 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     Event raised directed at an entity that someone is attempting to examine
     /// </summary>
-    public sealed class ExamineAttemptEvent : CancellableEntityEventArgs
+    public sealed partial class ExamineAttemptEvent : CancellableEntityEventArgs
     {
         public readonly EntityUid Examiner;
 
@@ -545,3 +545,4 @@ namespace Content.Shared.Examine
         }
     }
 }
+

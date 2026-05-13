@@ -40,17 +40,18 @@ public abstract class EquipAttemptBase(EntityUid user, EntityUid equipTarget, En
 /// <summary>
 /// Raised on the item that is being equipped.
 /// </summary>
-public sealed class BeingEquippedAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
+public sealed partial class BeingEquippedAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity that is equipping an item.
 /// </summary>
-public sealed class IsEquippingAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
+public sealed partial class IsEquippingAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity on who item is being equipped.
 /// </summary>
-public sealed class IsEquippingTargetAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
+public sealed partial class IsEquippingTargetAttemptEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : EquipAttemptBase(user, equipTarget, equipment, slotDefinition);
+

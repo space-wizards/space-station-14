@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
@@ -8,7 +8,7 @@ namespace Content.Client.Disposal.Tube
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DisposalRouterBoundUserInterface : BoundUserInterface
+    public sealed partial class DisposalRouterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private DisposalRouterWindow? _window;
@@ -46,3 +46,4 @@ namespace Content.Client.Disposal.Tube
         }
     }
 }
+

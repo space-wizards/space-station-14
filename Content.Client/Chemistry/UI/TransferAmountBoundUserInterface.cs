@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Chemistry.UI;
 
 [UsedImplicitly]
-public sealed class TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private TransferAmountWindow? _window;
@@ -30,3 +30,4 @@ public sealed class TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey
         };
     }
 }
+

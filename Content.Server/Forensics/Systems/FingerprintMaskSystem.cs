@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Server.Forensics;
 
-public sealed class FingerprintMaskSystem : EntitySystem
+public sealed partial class FingerprintMaskSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -22,3 +22,4 @@ public sealed class FingerprintMaskSystem : EntitySystem
         args.Args.Cancel();
     }
 }
+

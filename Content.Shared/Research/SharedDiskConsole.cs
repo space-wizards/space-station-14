@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research;
 
@@ -9,7 +9,7 @@ public enum DiskConsoleUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class DiskConsoleBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class DiskConsoleBoundUserInterfaceState : BoundUserInterfaceState
 {
     public bool CanPrint;
     public int PointCost;
@@ -24,7 +24,8 @@ public sealed class DiskConsoleBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class DiskConsolePrintDiskMessage : BoundUserInterfaceMessage
+public sealed partial class DiskConsolePrintDiskMessage : BoundUserInterfaceMessage
 {
 
 }
+

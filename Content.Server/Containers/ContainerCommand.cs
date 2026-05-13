@@ -7,7 +7,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Containers;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class ContainerCommand : ToolshedCommand
+public sealed partial class ContainerCommand : ToolshedCommand
 {
     private SharedContainerSystem? _container;
 
@@ -85,3 +85,4 @@ public sealed class ContainerCommand : ToolshedCommand
         return _container.GetAllContainers(ent);
     }
 }
+

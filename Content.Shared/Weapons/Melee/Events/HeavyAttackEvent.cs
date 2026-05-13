@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 /// Raised on the client when it attempts a heavy attack.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HeavyAttackEvent : AttackEvent
+public sealed partial class HeavyAttackEvent : AttackEvent
 {
     public readonly NetEntity Weapon;
 
@@ -22,3 +22,4 @@ public sealed class HeavyAttackEvent : AttackEvent
         Entities = entities;
     }
 }
+

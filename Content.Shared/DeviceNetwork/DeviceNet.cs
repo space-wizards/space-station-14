@@ -10,7 +10,7 @@ namespace Content.Shared.DeviceNetwork;
 ///     This basically just makes <see cref="DeviceNetworkComponent"/> accessible via their addresses and frequencies on
 ///     some network.
 /// </remarks>
-public sealed class DeviceNet
+public sealed partial class DeviceNet
 {
     /// <summary>
     ///     Devices, mapped by their "Address", which is just an int that gets converted to Hex for displaying to users.
@@ -236,3 +236,4 @@ public sealed class DeviceNet
         return address;
     }
 }
+

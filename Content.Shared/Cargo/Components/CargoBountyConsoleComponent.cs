@@ -59,7 +59,7 @@ public sealed partial class CargoBountyConsoleComponent : Component
 }
 
 [NetSerializable, Serializable]
-public sealed class CargoBountyConsoleState : BoundUserInterfaceState
+public sealed partial class CargoBountyConsoleState : BoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
     public List<CargoBountyHistoryData> History;
@@ -74,7 +74,7 @@ public sealed class CargoBountyConsoleState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
+public sealed partial class BountyPrintLabelMessage : BoundUserInterfaceMessage
 {
     public string BountyId;
 
@@ -85,7 +85,7 @@ public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class BountySkipMessage : BoundUserInterfaceMessage
+public sealed partial class BountySkipMessage : BoundUserInterfaceMessage
 {
     public string BountyId;
 
@@ -94,3 +94,4 @@ public sealed class BountySkipMessage : BoundUserInterfaceMessage
         BountyId = bountyId;
     }
 }
+

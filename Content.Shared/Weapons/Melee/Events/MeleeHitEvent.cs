@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 ///     Raised directed on the melee weapon entity used to attack something in combat mode,
 ///     whether through a click attack or wide attack.
 /// </summary>
-public sealed class MeleeHitEvent : HandledEntityEventArgs
+public sealed partial class MeleeHitEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The base amount of damage dealt by the melee hit.
@@ -93,3 +93,4 @@ public record struct GetMeleeAttackRateEvent(EntityUid Weapon, float Rate, float
 /// </summary>
 [ByRefEvent]
 public record struct GetHeavyDamageModifierEvent(EntityUid Weapon, FixedPoint2 DamageModifier, float Multipliers, EntityUid User);
+

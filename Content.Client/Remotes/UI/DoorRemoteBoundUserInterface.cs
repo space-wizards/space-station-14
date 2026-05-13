@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Remotes.UI;
 
-public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private static readonly Color SelectedOptionColor = Palettes.Green.Element.WithAlpha(128);
     private static readonly Color SelectedOptionHoverColor = Palettes.Green.HoveredElement.WithAlpha(128);
@@ -61,3 +61,4 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
         SendPredictedMessage(msg);
     }
 }
+

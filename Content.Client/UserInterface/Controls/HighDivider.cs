@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed class HighDivider : Control
+    public sealed partial class HighDivider : Control
     {
         public HighDivider()
         {
@@ -12,3 +12,4 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 }
+

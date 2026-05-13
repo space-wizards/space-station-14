@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Client.Timing;
 using Robust.Shared.Timing;
 
@@ -24,7 +24,7 @@ namespace Content.Client.UserInterface;
 /// or at a regular schedule. If it does not, there is no opportunity to error correct the prediction.
 /// </para>
 /// </remarks>
-public sealed class BuiPredictionState
+public sealed partial class BuiPredictionState
 {
     private readonly BoundUserInterface _parent;
     private readonly IClientGameTiming _gameTiming;
@@ -78,3 +78,4 @@ public sealed class BuiPredictionState
         }
     }
 }
+

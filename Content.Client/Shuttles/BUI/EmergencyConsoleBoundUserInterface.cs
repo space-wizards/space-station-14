@@ -6,9 +6,10 @@ using JetBrains.Annotations;
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
-public sealed class EmergencyConsoleBoundUserInterface : ComputerBoundUserInterface<EmergencyConsoleWindow, EmergencyConsoleBoundUserInterfaceState>
+public sealed partial class EmergencyConsoleBoundUserInterface : ComputerBoundUserInterface<EmergencyConsoleWindow, EmergencyConsoleBoundUserInterfaceState>
 {
     public EmergencyConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 }
+

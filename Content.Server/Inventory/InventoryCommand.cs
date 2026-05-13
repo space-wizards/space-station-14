@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
@@ -8,7 +8,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Inventory;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class InventoryCommand : ToolshedCommand
+public sealed partial class InventoryCommand : ToolshedCommand
 {
     private InventorySystem? _inventorySystem;
 
@@ -220,3 +220,4 @@ public sealed class InventoryCommand : ToolshedCommand
         Ensure // Try put item in slot. If there is one, return the item already there
     }
 }
+

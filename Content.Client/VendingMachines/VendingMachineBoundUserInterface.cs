@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Content.Client.VendingMachines
 {
-    public sealed class VendingMachineBoundUserInterface : BoundUserInterface
+    public sealed partial class VendingMachineBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private VendingMachineMenu? _menu;
@@ -82,3 +82,4 @@ namespace Content.Client.VendingMachines
         }
     }
 }
+

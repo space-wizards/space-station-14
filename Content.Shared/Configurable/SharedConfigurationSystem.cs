@@ -8,10 +8,10 @@ namespace Content.Shared.Configurable;
 /// <summary>
 /// <see cref="ConfigurationComponent"/>
 /// </summary>
-public abstract class SharedConfigurationSystem : EntitySystem
+public abstract partial class SharedConfigurationSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
@@ -66,7 +66,7 @@ public abstract class SharedConfigurationSystem : EntitySystem
 /// <summary>
 /// Sent when configuration values got changes
 /// </summary>
-public sealed class ConfigurationUpdatedEvent : EntityEventArgs
+public sealed partial class ConfigurationUpdatedEvent : EntityEventArgs
 {
     public ConfigurationComponent Configuration;
 
@@ -75,3 +75,4 @@ public sealed class ConfigurationUpdatedEvent : EntityEventArgs
         Configuration = configuration;
     }
 }
+

@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.StationRecords;
 
 [Serializable, NetSerializable]
-public sealed class StationRecordsFilter
+public sealed partial class StationRecordsFilter
 {
     public StationRecordFilterType Type = StationRecordFilterType.Name;
     public string Value  = "";
@@ -19,7 +19,7 @@ public sealed class StationRecordsFilter
 /// Message for updating the filter on any kind of records console.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SetStationRecordFilter : BoundUserInterfaceMessage
+public sealed partial class SetStationRecordFilter : BoundUserInterfaceMessage
 {
     public readonly string Value;
     public readonly StationRecordFilterType Type;
@@ -44,3 +44,4 @@ public enum StationRecordFilterType : byte
     Prints,
     DNA,
 }
+

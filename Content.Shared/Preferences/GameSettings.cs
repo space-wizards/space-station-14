@@ -6,7 +6,7 @@ namespace Content.Shared.Preferences
     /// Information needed for character setup.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class GameSettings
+    public sealed partial class GameSettings
     {
         private int _maxCharacterSlots;
 
@@ -17,3 +17,4 @@ namespace Content.Shared.Preferences
         }
     }
 }
+

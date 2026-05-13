@@ -2,6 +2,7 @@ using Content.Shared.Power.Generator;
 
 namespace Content.Client.Power.Generator;
 
-public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
+public sealed partial class PowerSwitchableSystem : SharedPowerSwitchableSystem
 {
 }
+

@@ -1,5 +1,6 @@
-﻿using Content.Shared.Access.Systems;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.Access.Systems;
 
-public sealed class JobStatusSystem : SharedJobStatusSystem;
+public sealed partial class JobStatusSystem : SharedJobStatusSystem;
+

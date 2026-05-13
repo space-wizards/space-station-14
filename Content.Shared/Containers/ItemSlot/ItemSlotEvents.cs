@@ -6,7 +6,7 @@ namespace Content.Shared.Containers.ItemSlots;
 ///     Used for various "eject this item" buttons.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
+public sealed partial class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
 {
     /// <summary>
     ///     The name of the slot/container from which to insert or eject an item.
@@ -30,3 +30,4 @@ public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
         TryInsert = tryInsert;
     }
 }
+

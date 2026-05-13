@@ -1,9 +1,9 @@
-﻿using Content.Shared.Administration.Components;
+using Content.Shared.Administration.Components;
 using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Administration.Systems;
 
-public sealed class AdminGunSystem : EntitySystem
+public sealed partial class AdminGunSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -15,3 +15,4 @@ public sealed class AdminGunSystem : EntitySystem
         args.FireRate = 15;
     }
 }
+

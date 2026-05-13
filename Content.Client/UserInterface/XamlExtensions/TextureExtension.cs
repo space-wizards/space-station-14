@@ -1,4 +1,4 @@
-﻿using Content.Client.Resources;
+using Content.Client.Resources;
 using JetBrains.Annotations;
 using Robust.Client.ResourceManagement;
 
@@ -6,7 +6,7 @@ namespace Content.Client.UserInterface.XamlExtensions;
 
 
 [PublicAPI]
-public sealed class TexExtension
+public sealed partial class TexExtension
 {
     private IResourceCache _resourceCache;
     public string Path { get; }
@@ -22,3 +22,4 @@ public sealed class TexExtension
         return _resourceCache.GetTexture(Path);
     }
 }
+

@@ -5,7 +5,7 @@ namespace Content.Server.Shuttles.Events;
 /// <summary>
 /// Raised whenever 2 grids undock.
 /// </summary>
-public sealed class UndockEvent : EntityEventArgs
+public sealed partial class UndockEvent : EntityEventArgs
 {
     public DockingComponent DockA = default!;
     public DockingComponent DockB = default!;

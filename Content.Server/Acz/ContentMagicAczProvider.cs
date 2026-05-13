@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Packaging;
 using Robust.Packaging;
@@ -7,7 +7,7 @@ using Robust.Server.ServerStatus;
 
 namespace Content.Server.Acz;
 
-public sealed class ContentMagicAczProvider : IMagicAczProvider
+public sealed partial class ContentMagicAczProvider : IMagicAczProvider
 {
     private readonly IDependencyCollection _deps;
 
@@ -23,3 +23,4 @@ public sealed class ContentMagicAczProvider : IMagicAczProvider
         await ClientPackaging.WriteResources(contentDir, pass, logger, cancel);
     }
 }
+

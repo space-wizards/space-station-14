@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Silicons.Laws.Ui;
 
 [UsedImplicitly]
-public sealed class SiliconLawBoundUserInterface : BoundUserInterface
+public sealed partial class SiliconLawBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private SiliconLawMenu? _menu;
@@ -53,3 +53,4 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         _menu?.Update(_owner, msg);
     }
 }
+

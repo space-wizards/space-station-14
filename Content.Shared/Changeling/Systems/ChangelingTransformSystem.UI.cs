@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -6,7 +6,7 @@ namespace Content.Shared.Changeling.Systems;
 /// Send when a player selects an identity to transform into in the radial menu.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
+public sealed partial class ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// The uid of the stored identity.
@@ -18,7 +18,7 @@ public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIde
 /// Send when a player selects an identity to drop from their storage.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformIdentityDropMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
+public sealed partial class ChangelingTransformIdentityDropMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// The uid of the stored identity.
@@ -31,3 +31,4 @@ public enum ChangelingTransformUiKey : byte
 {
     Key,
 }
+

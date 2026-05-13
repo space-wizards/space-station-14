@@ -67,7 +67,7 @@ public struct PowerMonitoringDeviceMetaData
 ///     Data from by the server to the client for the power monitoring console UI
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
+public sealed partial class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public double TotalSources;
     public double TotalBatteryUsage;
@@ -119,7 +119,7 @@ public struct PowerMonitoringConsoleEntry
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PowerMonitoringConsoleMessage : BoundUserInterfaceMessage
+public sealed partial class PowerMonitoringConsoleMessage : BoundUserInterfaceMessage
 {
     public NetEntity? FocusDevice;
     public PowerMonitoringConsoleGroup FocusGroup;
@@ -159,3 +159,4 @@ public enum PowerMonitoringConsoleUiKey
 {
     Key
 }
+

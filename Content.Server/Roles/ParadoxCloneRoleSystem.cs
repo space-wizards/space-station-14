@@ -8,7 +8,7 @@ namespace Content.Server.Roles;
 /// <summary>
 ///     System responsible for giving a ghost of a paradox clone a name modifier.
 /// </summary>
-public sealed class ParadoxCloneRoleSystem : EntitySystem
+public sealed partial class ParadoxCloneRoleSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -32,3 +32,4 @@ public sealed class ParadoxCloneRoleSystem : EntitySystem
             args.Args.AddModifier(ent.Comp.NameModifier.Value, 50);
     }
 }
+

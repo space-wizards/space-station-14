@@ -43,7 +43,7 @@ namespace Content.Client.Stylesheets
     // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
     [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
     // i did :)
-    public sealed class StyleNano : StyleBase
+    public sealed partial class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
@@ -1637,3 +1637,4 @@ namespace Content.Client.Stylesheets
         }
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -6,7 +6,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// Sensor data reported by the <see cref="TegGeneratorComponent"/> when queried over the device network.
 /// </summary>
 /// <seealso cref="TegSystem"/>
-public sealed class TegSensorData
+public sealed partial class TegSensorData
 {
     /// <summary>
     /// Information for the A-side circulator.
@@ -49,4 +49,5 @@ public sealed class TegSensorData
         float InletTemperature,
         float OutletTemperature);
 }
+
 

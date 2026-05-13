@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleComponent>
+public sealed partial class VentCrittersRule : StationEventSystem<VentCrittersRuleComponent>
 {
     /*
      * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
@@ -59,3 +59,4 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         }
     }
 }
+

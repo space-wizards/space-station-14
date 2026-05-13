@@ -48,7 +48,7 @@ namespace Content.Shared.Interaction
     ///     Raised directed on the used object when clicking on another object and no standard interaction occurred.
     ///     Used for low-priority interactions facilitated by the used entity.
     /// </summary>
-    public sealed class AfterInteractEvent : InteractEvent
+    public sealed partial class AfterInteractEvent : InteractEvent
     {
         public AfterInteractEvent(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
@@ -59,10 +59,11 @@ namespace Content.Shared.Interaction
     ///     Raised directed on the target when clicking on another object and no standard interaction occurred. Used for
     ///     low-priority interactions facilitated by the target entity.
     /// </summary>
-    public sealed class AfterInteractUsingEvent : InteractEvent
+    public sealed partial class AfterInteractUsingEvent : InteractEvent
     {
         public AfterInteractUsingEvent(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
         { }
     }
 }
+

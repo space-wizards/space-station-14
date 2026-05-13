@@ -1,4 +1,4 @@
-﻿using Content.Client.Resources;
+using Content.Client.Resources;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -13,7 +13,7 @@ namespace Content.Client.Stylesheets.Fonts;
 /// <param name="resCache"></param>
 /// <param name="variant"></param>
 [PublicAPI]
-public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant = "")
+public sealed partial class NotoFontFamilyStack(IResourceCache resCache, string variant = "")
 {
     /// <summary>
     ///     The primary font path, with string substitution markers.
@@ -88,3 +88,4 @@ public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant 
         return resCache.GetFont(paths, size);
     }
 }
+

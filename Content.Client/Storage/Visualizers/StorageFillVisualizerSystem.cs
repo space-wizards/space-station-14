@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Storage.Visualizers;
 
-public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVisualizerComponent>
+public sealed partial class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVisualizerComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, StorageFillVisualizerComponent component, ref AppearanceChangeEvent args)
     {
@@ -18,3 +18,4 @@ public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVi
         SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageFillLayers.Fill, state);
     }
 }
+

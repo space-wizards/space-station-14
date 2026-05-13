@@ -2,4 +2,5 @@ using Content.Shared.NameIdentifier;
 
 namespace Content.Client.NameIdentifier;
 
-public sealed class NameIdentifierSystem : SharedNameIdentifierSystem;
+public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem;
+

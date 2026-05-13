@@ -2,7 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Electrocution
 {
-    public sealed class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+    public sealed partial class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; }
 
@@ -19,7 +19,7 @@ namespace Content.Shared.Electrocution
         }
     }
 
-    public sealed class ElectrocutedEvent : EntityEventArgs
+    public sealed partial class ElectrocutedEvent : EntityEventArgs
     {
         public readonly EntityUid TargetUid;
         public readonly EntityUid? SourceUid;
@@ -33,3 +33,4 @@ namespace Content.Shared.Electrocution
         }
     }
 }
+

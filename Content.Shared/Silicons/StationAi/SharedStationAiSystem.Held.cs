@@ -218,7 +218,7 @@ public abstract partial class SharedStationAiSystem
 /// Also handles AI action validation.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
+public sealed partial class StationAiRadialMessage : BoundUserInterfaceMessage
 {
     public BaseStationAiAction Event = default!;
 }
@@ -227,7 +227,7 @@ public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 /// <summary>
 /// Raised on client to get the relevant data for radial actions.
 /// </summary>
-public sealed class StationAiRadial : BaseStationAiAction
+public sealed partial class StationAiRadial : BaseStationAiAction
 {
     public SpriteSpecifier? Sprite;
 
@@ -262,3 +262,4 @@ public enum AiUi : byte
 {
     Key,
 }
+

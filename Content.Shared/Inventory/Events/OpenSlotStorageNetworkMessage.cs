@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Inventory.Events;
 
 [NetSerializable, Serializable]
-public sealed class OpenSlotStorageNetworkMessage : EntityEventArgs
+public sealed partial class OpenSlotStorageNetworkMessage : EntityEventArgs
 {
     public readonly string Slot;
 
@@ -12,3 +12,4 @@ public sealed class OpenSlotStorageNetworkMessage : EntityEventArgs
         Slot = slot;
     }
 }
+

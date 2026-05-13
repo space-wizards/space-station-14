@@ -8,9 +8,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class DeleteGasCommand : LocalizedCommands
+    public sealed partial class DeleteGasCommand : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "deletegas";
 
@@ -165,3 +165,4 @@ namespace Content.Server.Atmos.Commands
     }
 
 }
+

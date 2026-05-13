@@ -11,13 +11,13 @@ public enum SpaceHeaterUiKey
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterToggleMessage : BoundUserInterfaceMessage
+public sealed partial class SpaceHeaterToggleMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterChangeTemperatureMessage : BoundUserInterfaceMessage
+public sealed partial class SpaceHeaterChangeTemperatureMessage : BoundUserInterfaceMessage
 {
     public float Temperature { get; }
 
@@ -29,7 +29,7 @@ public sealed class SpaceHeaterChangeTemperatureMessage : BoundUserInterfaceMess
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterChangePowerLevelMessage : BoundUserInterfaceMessage
+public sealed partial class SpaceHeaterChangePowerLevelMessage : BoundUserInterfaceMessage
 {
     public SpaceHeaterPowerLevel PowerLevel { get; }
 
@@ -41,7 +41,7 @@ public sealed class SpaceHeaterChangePowerLevelMessage : BoundUserInterfaceMessa
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterChangeModeMessage : BoundUserInterfaceMessage
+public sealed partial class SpaceHeaterChangeModeMessage : BoundUserInterfaceMessage
 {
     public SpaceHeaterMode Mode { get; }
 
@@ -53,7 +53,7 @@ public sealed class SpaceHeaterChangeModeMessage : BoundUserInterfaceMessage
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class SpaceHeaterBoundUserInterfaceState : BoundUserInterfaceState
 {
     public float MinTemperature { get; }
     public float MaxTemperature { get; }
@@ -88,3 +88,4 @@ public enum SpaceHeaterPowerLevel : byte
     Medium,
     High
 }
+

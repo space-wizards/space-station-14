@@ -5,7 +5,7 @@ namespace Content.Shared.Arcade
     public static class BlockGameMessages
     {
         [Serializable, NetSerializable]
-        public sealed class BlockGamePlayerActionMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGamePlayerActionMessage : BoundUserInterfaceMessage
         {
             public readonly BlockGamePlayerAction PlayerAction;
             public BlockGamePlayerActionMessage(BlockGamePlayerAction playerAction)
@@ -15,7 +15,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameVisualUpdateMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGameVisualUpdateMessage : BoundUserInterfaceMessage
         {
             public readonly BlockGameVisualType GameVisualType;
             public readonly BlockGameBlock[] Blocks;
@@ -34,7 +34,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameScoreUpdateMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGameScoreUpdateMessage : BoundUserInterfaceMessage
         {
             public readonly int Points;
             public BlockGameScoreUpdateMessage(int points)
@@ -44,7 +44,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameUserStatusMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGameUserStatusMessage : BoundUserInterfaceMessage
         {
             public readonly bool IsPlayer;
 
@@ -67,7 +67,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
+        public sealed partial class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
         {
             public readonly int FinalScore;
             public readonly int? LocalPlacement;
@@ -90,7 +90,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
         {
             public List<HighScoreEntry> LocalHighscores;
             public List<HighScoreEntry> GlobalHighscores;
@@ -103,7 +103,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class HighScoreEntry : IComparable
+        public sealed partial class HighScoreEntry : IComparable
         {
             public string Name;
             public int Score;
@@ -122,7 +122,7 @@ namespace Content.Shared.Arcade
         }
 
         [Serializable, NetSerializable]
-        public sealed class BlockGameLevelUpdateMessage : BoundUserInterfaceMessage
+        public sealed partial class BlockGameLevelUpdateMessage : BoundUserInterfaceMessage
         {
             public readonly int Level;
             public BlockGameLevelUpdateMessage(int level)
@@ -132,3 +132,4 @@ namespace Content.Shared.Arcade
         }
     }
 }
+

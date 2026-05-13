@@ -10,7 +10,7 @@ public abstract class SharedPointingSystem : EntitySystem
     protected readonly float PointKeyTimeHover = 0.5f;
 
     [Serializable, NetSerializable]
-    public sealed class SharedPointingArrowComponentState : ComponentState
+    public sealed partial class SharedPointingArrowComponentState : ComponentState
     {
         public Vector2 StartPosition { get; init; }
         public TimeSpan EndTime { get; init; }
@@ -25,7 +25,7 @@ public abstract class SharedPointingSystem : EntitySystem
     }
 }
 
-public sealed class PointAttemptEvent : CancellableEntityEventArgs
+public sealed partial class PointAttemptEvent : CancellableEntityEventArgs
 {
     public PointAttemptEvent(EntityUid uid)
     {
@@ -34,3 +34,4 @@ public sealed class PointAttemptEvent : CancellableEntityEventArgs
 
     public EntityUid Uid { get; }
 }
+

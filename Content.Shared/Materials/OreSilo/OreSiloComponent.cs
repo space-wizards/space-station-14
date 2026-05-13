@@ -27,7 +27,7 @@ public sealed partial class OreSiloComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class OreSiloBuiState : BoundUserInterfaceState
+public sealed partial class OreSiloBuiState : BoundUserInterfaceState
 {
     public readonly HashSet<(NetEntity, string, string)> Clients;
 
@@ -38,7 +38,7 @@ public sealed class OreSiloBuiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class ToggleOreSiloClientMessage : BoundUserInterfaceMessage
+public sealed partial class ToggleOreSiloClientMessage : BoundUserInterfaceMessage
 {
     public readonly NetEntity Client;
 
@@ -53,3 +53,4 @@ public enum OreSiloUiKey : byte
 {
     Key
 }
+

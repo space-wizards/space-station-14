@@ -9,7 +9,7 @@ namespace Content.Client.Atmos.UI;
 ///     Initializes a <see cref="SpaceHeaterWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
-public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
+public sealed partial class SpaceHeaterBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private SpaceHeaterWindow? _window;
@@ -81,3 +81,4 @@ public sealed class SpaceHeaterBoundUserInterface : BoundUserInterface
         _window?.Dispose();
     }
 }
+

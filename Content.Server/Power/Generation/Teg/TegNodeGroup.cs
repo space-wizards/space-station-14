@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -16,7 +16,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegNodeCirculator"/>
 /// <seealso cref="TegSystem"/>
 [NodeGroup(NodeGroupID.Teg)]
-public sealed class TegNodeGroup : BaseNodeGroup
+public sealed partial class TegNodeGroup : BaseNodeGroup
 {
     /// <summary>
     /// If true, this TEG is fully built and has all its parts properly connected.
@@ -213,3 +213,4 @@ public sealed partial class TegNodeCirculator : Node
         }
     }
 }
+

@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// Trigger system for melee related triggers.
 /// </summary>
-public sealed class TriggerOnMeleeTriggerSystem : TriggerOnXSystem
+public sealed partial class TriggerOnMeleeTriggerSystem : TriggerOnXSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -54,3 +54,4 @@ public sealed class TriggerOnMeleeTriggerSystem : TriggerOnXSystem
         }
     }
 }
+

@@ -7,7 +7,7 @@ using Content.Shared.Power;
 namespace Content.Server.Chemistry.EntitySystems;
 
 /// <inheritdoc/>
-public sealed class SolutionContainerMixerSystem : SharedSolutionContainerMixerSystem
+public sealed partial class SolutionContainerMixerSystem : SharedSolutionContainerMixerSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,3 +28,4 @@ public sealed class SolutionContainerMixerSystem : SharedSolutionContainerMixerS
         return this.IsPowered(entity, EntityManager);
     }
 }
+

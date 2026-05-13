@@ -1,8 +1,8 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 
 namespace Content.Server.Database
 {
-    public sealed class UnbanDef
+    public sealed partial class UnbanDef
     {
         public int BanId { get; }
 
@@ -18,3 +18,4 @@ namespace Content.Server.Database
         }
     }
 }
+

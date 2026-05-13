@@ -23,8 +23,8 @@ namespace Content.Client.Medical.CrewMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class CrewMonitoringWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
 
@@ -449,9 +449,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     }
 }
 
-public sealed class CrewMonitoringButton : Button
+public sealed partial class CrewMonitoringButton : Button
 {
     public int IndexInTable;
     public NetEntity SuitSensorUid;
     public EntityCoordinates? Coordinates;
 }
+

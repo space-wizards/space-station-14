@@ -3,10 +3,11 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Client.Speech.EntitySystems;
 
-public sealed class SlurredSystem : SharedSlurredSystem
+public sealed partial class SlurredSystem : SharedSlurredSystem
 {
     protected override string AccentuateInternal(EntityUid uid, SlurredAccentComponent comp, string message)
     {
         return message;
     }
 }
+

@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Monitor.UI;
 
-public sealed class AirAlarmBoundUserInterface : BoundUserInterface
+public sealed partial class AirAlarmBoundUserInterface : BoundUserInterface
 {
     private AirAlarmWindow? _window;
 
@@ -78,3 +78,4 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
             _window?.Dispose();
     }
 }
+

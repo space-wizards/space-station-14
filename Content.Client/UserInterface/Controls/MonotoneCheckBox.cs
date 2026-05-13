@@ -5,7 +5,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A check box intended for use with a monotone color palette
 /// </summary>
-public sealed class MonotoneCheckBox : CheckBox
+public sealed partial class MonotoneCheckBox : CheckBox
 {
     public const string StyleClassMonotoneCheckBox = "monotoneCheckBox";
 
@@ -22,3 +22,4 @@ public sealed class MonotoneCheckBox : CheckBox
         Modulate = Disabled ? Color.Gray : Color.White;
     }
 }
+

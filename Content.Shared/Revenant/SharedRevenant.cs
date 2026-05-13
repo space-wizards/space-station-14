@@ -9,7 +9,7 @@ public sealed partial class SoulEvent : SimpleDoAfterEvent
 {
 }
 
-public sealed class SoulSearchDoAfterComplete : EntityEventArgs
+public sealed partial class SoulSearchDoAfterComplete : EntityEventArgs
 {
     public readonly EntityUid Target;
 
@@ -19,7 +19,7 @@ public sealed class SoulSearchDoAfterComplete : EntityEventArgs
     }
 }
 
-public sealed class SoulSearchDoAfterCancelled : EntityEventArgs
+public sealed partial class SoulSearchDoAfterCancelled : EntityEventArgs
 {
 }
 
@@ -28,7 +28,7 @@ public sealed partial class HarvestEvent : SimpleDoAfterEvent
 {
 }
 
-public sealed class HarvestDoAfterComplete : EntityEventArgs
+public sealed partial class HarvestDoAfterComplete : EntityEventArgs
 {
     public readonly EntityUid Target;
 
@@ -38,7 +38,7 @@ public sealed class HarvestDoAfterComplete : EntityEventArgs
     }
 }
 
-public sealed class HarvestDoAfterCancelled : EntityEventArgs
+public sealed partial class HarvestDoAfterCancelled : EntityEventArgs
 {
 }
 
@@ -66,3 +66,4 @@ public enum RevenantVisuals : byte
     Stunned,
     Harvesting,
 }
+

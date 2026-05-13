@@ -3,7 +3,7 @@ namespace Content.Server.GameTicking
     /// <summary>
     ///     Describes an entry in the crew manifest.
     /// </summary>
-    public sealed class ManifestEntry
+    public sealed partial class ManifestEntry
     {
         public ManifestEntry(string characterName, string jobId)
         {
@@ -24,3 +24,4 @@ namespace Content.Server.GameTicking
         public string JobId { get; }
     }
 }
+

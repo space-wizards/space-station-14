@@ -1,8 +1,9 @@
-﻿using Content.Shared.Research.Systems;
+using Content.Shared.Research.Systems;
 
 namespace Content.Client.Research;
 
-public sealed class ResearchSystem : SharedResearchSystem
+public sealed partial class ResearchSystem : SharedResearchSystem
 {
 
 }
+

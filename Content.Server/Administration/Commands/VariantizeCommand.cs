@@ -7,11 +7,11 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class VariantizeCommand : LocalizedEntityCommands
+public sealed partial class VariantizeCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private TileSystem _tile = default!;
 
     public override string Command => "variantize";
 
@@ -43,3 +43,4 @@ public sealed class VariantizeCommand : LocalizedEntityCommands
         }
     }
 }
+

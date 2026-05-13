@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Inventory.Events;
+namespace Content.Shared.Inventory.Events;
 
 public abstract class BeforeEquipEventBase(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition) : EntityEventArgs
 {
@@ -39,12 +39,13 @@ public abstract class BeforeEquipEventBase(EntityUid user, EntityUid equipTarget
 /// Raised directed on an equipee before something is equipped to them.
 /// Note: This is only raised when equipped using TryEquip, not if the container is directly modified.
 /// </summary>
-public sealed class BeforeEquipEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+public sealed partial class BeforeEquipEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
     : BeforeEquipEventBase(user, equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised directed on equipment before it is equipped to an equipee.
 /// Note: This is only raised when equipped using TryEquip, not if the container is directly modified.
 /// </summary>
-public sealed class BeforeGettingEquippedEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+public sealed partial class BeforeGettingEquippedEvent(EntityUid user, EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
     : BeforeEquipEventBase(user, equipTarget, equipment, slotDefinition);
+

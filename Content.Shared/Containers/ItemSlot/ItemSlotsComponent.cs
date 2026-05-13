@@ -41,7 +41,7 @@ namespace Content.Shared.Containers.ItemSlots
     }
 
     [Serializable, NetSerializable]
-    public sealed class ItemSlotsComponentState : ComponentState
+    public sealed partial class ItemSlotsComponentState : ComponentState
     {
         public readonly Dictionary<string, ItemSlot> Slots;
 
@@ -276,3 +276,4 @@ namespace Content.Shared.Containers.ItemSlots
     [ByRefEvent]
     public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 }
+

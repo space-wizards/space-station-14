@@ -2,6 +2,7 @@ using Content.Shared.StationRecords;
 
 namespace Content.Client.StationRecords;
 
-public sealed class StationRecordsSystem : SharedStationRecordsSystem
+public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
 {
 }
+

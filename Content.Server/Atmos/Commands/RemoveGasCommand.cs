@@ -7,9 +7,9 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class RemoveGasCommand : LocalizedEntityCommands
+    public sealed partial class RemoveGasCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Command => "removegas";
 
@@ -45,3 +45,4 @@ namespace Content.Server.Atmos.Commands
     }
 
 }
+

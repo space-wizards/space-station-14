@@ -20,7 +20,7 @@ using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
-public sealed class ActionButton : Control, IEntityControl
+public sealed partial class ActionButton : Control, IEntityControl
 {
     public const string StyleClassActionHighlightRect = "ActionHighlightRect";
 
@@ -446,3 +446,4 @@ public sealed class ActionButton : Control, IEntityControl
 
     EntityUid? IEntityControl.UiEntity => Action;
 }
+

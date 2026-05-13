@@ -6,7 +6,8 @@ namespace Content.Shared.Salvage.Magnet;
 /// Claim an offer from the magnet UI.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MagnetClaimOfferEvent : BoundUserInterfaceMessage
+public sealed partial class MagnetClaimOfferEvent : BoundUserInterfaceMessage
 {
     public int Index;
 }
+

@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Silicons.Borgs;
 
 [UsedImplicitly]
-public sealed class BorgBoundUserInterface : BoundUserInterface
+public sealed partial class BorgBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private BorgMenu? _menu;
@@ -49,3 +49,4 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         _menu?.UpdateModulePanel();
     }
 }
+

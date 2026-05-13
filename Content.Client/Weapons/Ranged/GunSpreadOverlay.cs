@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed class GunSpreadOverlay : Overlay
+public sealed partial class GunSpreadOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -80,3 +80,4 @@ public sealed class GunSpreadOverlay : Overlay
         worldHandle.DrawLine(mapPos.Position, mousePos.Position + (-currentAngle).RotateVec(direction), Color.Yellow);
     }
 }
+

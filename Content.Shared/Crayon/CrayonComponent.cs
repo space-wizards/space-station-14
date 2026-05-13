@@ -55,7 +55,7 @@ public enum CrayonUiKey : byte
 /// Used by the client to notify the server about the selected decal ID
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CrayonSelectMessage : BoundUserInterfaceMessage
+public sealed partial class CrayonSelectMessage : BoundUserInterfaceMessage
 {
     public readonly string State;
     public CrayonSelectMessage(string selected)
@@ -68,7 +68,7 @@ public sealed class CrayonSelectMessage : BoundUserInterfaceMessage
 /// Sets the color of the crayon, used by Rainbow Crayon
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CrayonColorMessage : BoundUserInterfaceMessage
+public sealed partial class CrayonColorMessage : BoundUserInterfaceMessage
 {
     public readonly Color Color;
     public CrayonColorMessage(Color color)
@@ -83,7 +83,7 @@ public sealed class CrayonColorMessage : BoundUserInterfaceMessage
 /// preventing the crayon from becoming a magic text storage device.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CrayonUsedMessage : BoundUserInterfaceMessage
+public sealed partial class CrayonUsedMessage : BoundUserInterfaceMessage
 {
     public readonly string DrawnDecal;
 
@@ -101,7 +101,7 @@ public sealed class CrayonUsedMessage : BoundUserInterfaceMessage
 /// This info is already networked on its own.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class CrayonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public string Selected;
     /// <summary>
@@ -117,3 +117,4 @@ public sealed class CrayonBoundUserInterfaceState : BoundUserInterfaceState
         Color = color;
     }
 }
+

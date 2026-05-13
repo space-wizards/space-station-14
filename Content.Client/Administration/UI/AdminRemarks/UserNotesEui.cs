@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Administration.UI.AdminRemarks;
 
 [UsedImplicitly]
-public sealed class UserNotesEui : BaseEui
+public sealed partial class UserNotesEui : BaseEui
 {
     public UserNotesEui()
     {
@@ -32,3 +32,4 @@ public sealed class UserNotesEui : BaseEui
         NoteWindow.OpenCentered();
     }
 }
+

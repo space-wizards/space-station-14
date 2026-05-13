@@ -1,10 +1,10 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AnyCommand]
-public sealed class MarkedCommand : ToolshedCommand
+public sealed partial class MarkedCommand : ToolshedCommand
 {
     [CommandImplementation]
     public IEnumerable<EntityUid> Marked(IInvocationContext ctx)
@@ -13,3 +13,4 @@ public sealed class MarkedCommand : ToolshedCommand
         return marked ?? Array.Empty<EntityUid>();
     }
 }
+

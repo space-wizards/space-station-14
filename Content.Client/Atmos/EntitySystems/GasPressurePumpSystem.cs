@@ -4,7 +4,7 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 
 namespace Content.Client.Atmos.EntitySystems;
 
-public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
+public sealed partial class GasPressurePumpSystem : SharedGasPressurePumpSystem
 {
     public override void Initialize()
     {
@@ -25,3 +25,4 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
         }
     }
 }
+

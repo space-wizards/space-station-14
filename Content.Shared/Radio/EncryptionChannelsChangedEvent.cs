@@ -2,7 +2,7 @@ using Content.Shared.Radio.Components;
 
 namespace Content.Shared.Radio;
 
-public sealed class EncryptionChannelsChangedEvent : EntityEventArgs
+public sealed partial class EncryptionChannelsChangedEvent : EntityEventArgs
 {
     public readonly EncryptionKeyHolderComponent Component;
 
@@ -11,3 +11,4 @@ public sealed class EncryptionChannelsChangedEvent : EntityEventArgs
         Component = component;
     }
 }
+

@@ -4,7 +4,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
+public sealed partial class EntityUidConverter : AdminLogConverter<EntityUid>
 {
     // System.Text.Json actually keeps hold of your JsonSerializerOption instances in a cache on .NET 7.
     // Use a weak reference to avoid holding server instances live too long in integration tests.
@@ -42,3 +42,4 @@ public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
         Write(writer, value, options, entityManager);
     }
 }
+

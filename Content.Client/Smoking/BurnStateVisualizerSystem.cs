@@ -3,7 +3,7 @@ using Content.Shared.Smoking;
 
 namespace Content.Client.Smoking;
 
-public sealed class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisualsComponent>
+public sealed partial class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, BurnStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -22,4 +22,5 @@ public sealed class BurnStateVisualizerSystem : VisualizerSystem<BurnStateVisual
         SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, state);
     }
 }
+
 

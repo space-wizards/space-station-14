@@ -7,9 +7,9 @@ using System.Linq;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SetSolutionTemperature : LocalizedCommands
+    public sealed partial class SetSolutionTemperature : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "setsolutiontemperature";
 
@@ -59,3 +59,4 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
+

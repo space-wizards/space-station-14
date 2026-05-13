@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Store.Ui;
 
 [UsedImplicitly]
-public sealed class StoreBoundUserInterface : BoundUserInterface
+public sealed partial class StoreBoundUserInterface : BoundUserInterface
 {
     private IPrototypeManager _prototypeManager = default!;
     private readonly StoreSystem _storeSystem = default!;
@@ -94,3 +94,4 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         _menu.UpdateListing(filteredListings.ToList());
     }
 }
+

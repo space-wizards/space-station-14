@@ -6,7 +6,7 @@ namespace Content.Server.Shuttles;
 /// <summary>
 /// Stores the data for a valid docking configuration for the emergency shuttle
 /// </summary>
-public sealed class DockingConfig
+public sealed partial class DockingConfig
 {
     /// <summary>
     /// The pairs of docks that can connect.
@@ -30,3 +30,4 @@ public sealed class DockingConfig
     /// </summary>
     public Angle Angle;
 }
+

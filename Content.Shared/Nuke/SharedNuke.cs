@@ -40,7 +40,7 @@ namespace Content.Shared.Nuke
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeUiState : BoundUserInterfaceState
+    public sealed partial class NukeUiState : BoundUserInterfaceState
     {
         public bool DiskInserted;
         public NukeStatus Status;
@@ -57,3 +57,4 @@ namespace Content.Shared.Nuke
     {
     }
 }
+

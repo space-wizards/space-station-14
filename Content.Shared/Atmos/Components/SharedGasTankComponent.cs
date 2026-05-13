@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -9,16 +9,17 @@ public enum SharedGasTankUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTankToggleInternalsMessage : BoundUserInterfaceMessage;
+public sealed partial class GasTankToggleInternalsMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed class GasTankSetPressureMessage : BoundUserInterfaceMessage
+public sealed partial class GasTankSetPressureMessage : BoundUserInterfaceMessage
 {
     public float Pressure;
 }
 
 [Serializable, NetSerializable]
-public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class GasTankBoundUserInterfaceState : BoundUserInterfaceState
 {
     public float TankPressure;
 }
+

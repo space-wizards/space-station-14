@@ -53,7 +53,7 @@ public sealed partial class DepartmentPrototype : IPrototype
 /// Sorts <see cref="DepartmentPrototype"/> appropriately for display in the UI,
 /// respecting their <see cref="DepartmentPrototype.Weight"/>.
 /// </summary>
-public sealed class DepartmentUIComparer : IComparer<DepartmentPrototype>
+public sealed partial class DepartmentUIComparer : IComparer<DepartmentPrototype>
 {
     public static readonly DepartmentUIComparer Instance = new();
 
@@ -72,3 +72,4 @@ public sealed class DepartmentUIComparer : IComparer<DepartmentPrototype>
         return cmp != 0 ? cmp : string.Compare(x.ID, y.ID, StringComparison.Ordinal);
     }
 }
+

@@ -58,7 +58,8 @@ public partial struct CameraMarker
 /// Network event for requesting camera marker updates.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RequestCameraMarkerUpdateMessage(NetEntity cameraEntity) : EntityEventArgs
+public sealed partial class RequestCameraMarkerUpdateMessage(NetEntity cameraEntity) : EntityEventArgs
 {
     public NetEntity CameraEntity { get; } = cameraEntity;
 }
+

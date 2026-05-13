@@ -371,7 +371,7 @@ public sealed partial class ExplosionSystem
 /// <summary>
 ///     This class has information about the space equivalent of an airtight entity blocking explosions: the edges of grids.
 /// </summary>
-public sealed class BlockedSpaceTile
+public sealed partial class BlockedSpaceTile
 {
     /// <summary>
     ///     What directions of this tile are not blocked?
@@ -383,7 +383,7 @@ public sealed class BlockedSpaceTile
     /// </summary>
     public List<GridEdgeData> BlockingGridEdges = new();
 
-    public sealed class GridEdgeData
+    public sealed partial class GridEdgeData
     {
         public Vector2i Tile;
         public EntityUid? Grid;
@@ -397,3 +397,4 @@ public sealed class BlockedSpaceTile
         }
     }
 }
+

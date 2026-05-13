@@ -20,7 +20,7 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Overlay that shows a health bar on mobs.
 /// </summary>
-public sealed class EntityHealthBarOverlay : Overlay
+public sealed partial class EntityHealthBarOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
     private readonly IPrototypeManager _prototype;
@@ -172,3 +172,4 @@ public sealed class EntityHealthBarOverlay : Overlay
         return _progressColor.GetProgressColor(progress);
     }
 }
+

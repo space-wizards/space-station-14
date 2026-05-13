@@ -48,7 +48,7 @@ public abstract class PathRequest
     }
 }
 
-public sealed class AStarPathRequest : PathRequest
+public sealed partial class AStarPathRequest : PathRequest
 {
     public EntityCoordinates End;
 
@@ -71,7 +71,7 @@ public sealed class AStarPathRequest : PathRequest
     }
 }
 
-public sealed class BFSPathRequest : PathRequest
+public sealed partial class BFSPathRequest : PathRequest
 {
     /// <summary>
     /// How far away we're allowed to expand in distance.
@@ -100,7 +100,7 @@ public sealed class BFSPathRequest : PathRequest
 /// <summary>
 /// Stores the final result of a pathfinding request
 /// </summary>
-public sealed class PathResultEvent
+public sealed partial class PathResultEvent
 {
     public PathResult Result;
     public readonly List<PathPoly> Path;
@@ -111,3 +111,4 @@ public sealed class PathResultEvent
         Path = path;
     }
 }
+

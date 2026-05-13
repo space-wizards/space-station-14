@@ -6,7 +6,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Ghost.UI;
 
-public sealed class ReturnToBodyMenu : DefaultWindow
+public sealed partial class ReturnToBodyMenu : DefaultWindow
 {
     public readonly Button DenyButton;
     public readonly Button AcceptButton;
@@ -57,4 +57,5 @@ public sealed class ReturnToBodyMenu : DefaultWindow
         });
     }
 }
+
 

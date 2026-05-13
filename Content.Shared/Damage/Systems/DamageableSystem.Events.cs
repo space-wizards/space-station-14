@@ -255,7 +255,7 @@ public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid?
 ///
 ///     For example, armor.
 /// </summary>
-public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
+public sealed partial class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
     : EntityEventArgs, IInventoryRelayEvent
 {
     /// <inheritdoc/>
@@ -291,7 +291,7 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
 public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters);
 
 [Obsolete("Will be replaced with damage-model specific events; general 'took damage' can be served by DamageDealtEvent")]
-public sealed class DamageChangedEvent : EntityEventArgs
+public sealed partial class DamageChangedEvent : EntityEventArgs
 {
     /// <summary>
     ///     This is the component whose damage was changed.
@@ -353,3 +353,4 @@ public sealed class DamageChangedEvent : EntityEventArgs
         InterruptsDoAfters = interruptsDoAfters && DamageIncreased;
     }
 }
+

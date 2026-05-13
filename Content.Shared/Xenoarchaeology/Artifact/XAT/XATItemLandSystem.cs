@@ -7,7 +7,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires hand-held artifact to be thrown (and land).
 /// </summary>
-public sealed class XATItemLandSystem : BaseXATSystem<XATItemLandComponent>
+public sealed partial class XATItemLandSystem : BaseXATSystem<XATItemLandComponent>
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,3 +22,4 @@ public sealed class XATItemLandSystem : BaseXATSystem<XATItemLandComponent>
         Trigger(artifact, node);
     }
 }
+

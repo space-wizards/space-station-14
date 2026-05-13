@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components
@@ -8,7 +8,7 @@ namespace Content.Shared.Disposal.Components
         public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
-        public sealed class DisposalRouterUserInterfaceState : BoundUserInterfaceState
+        public sealed partial class DisposalRouterUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string Tags;
 
@@ -19,7 +19,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public sealed class UiActionMessage : BoundUserInterfaceMessage
+        public sealed partial class UiActionMessage : BoundUserInterfaceMessage
         {
             public readonly UiAction Action;
             public readonly string Tags = "";
@@ -48,3 +48,4 @@ namespace Content.Shared.Disposal.Components
         }
     }
 }
+

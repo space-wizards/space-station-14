@@ -1,4 +1,4 @@
-﻿using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Robust.Client.Graphics;
@@ -9,7 +9,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ChatSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IButtonConfig
+public sealed partial class ChatSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -49,3 +49,4 @@ public sealed class ChatSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, I
         ];
     }
 }
+

@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;
 
-public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsComponent>
+public sealed partial class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PotencyVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -19,3 +19,4 @@ public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsCompon
         }
     }
 }
+

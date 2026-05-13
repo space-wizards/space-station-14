@@ -14,7 +14,7 @@ public sealed partial class DoorElectronicsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
+public sealed partial class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
 {
     public List<ProtoId<AccessLevelPrototype>> AccessList;
 
@@ -25,7 +25,7 @@ public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfa
 }
 
 [Serializable, NetSerializable]
-public sealed class DoorElectronicsConfigurationState : BoundUserInterfaceState
+public sealed partial class DoorElectronicsConfigurationState : BoundUserInterfaceState
 {
     public List<ProtoId<AccessLevelPrototype>> AccessList;
 
@@ -40,3 +40,4 @@ public enum DoorElectronicsConfigurationUiKey : byte
 {
     Key
 }
+

@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles species requirement for objectives that require a certain species.
 /// </summary>
-public sealed class SpeciesRequirementSystem : EntitySystem
+public sealed partial class SpeciesRequirementSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -32,3 +32,4 @@ public sealed class SpeciesRequirementSystem : EntitySystem
         }
     }
 }
+

@@ -6,7 +6,7 @@ namespace Content.Shared.NPC;
 /// Debug message containing a pathfinding route.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PathRouteMessage : EntityEventArgs
+public sealed partial class PathRouteMessage : EntityEventArgs
 {
     public List<DebugPathPoly> Path;
     public Dictionary<DebugPathPoly, float> Costs;
@@ -17,3 +17,4 @@ public sealed class PathRouteMessage : EntityEventArgs
         Costs = costs;
     }
 }
+

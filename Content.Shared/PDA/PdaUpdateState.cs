@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA
 {
     [Serializable, NetSerializable]
-    public sealed class PdaUpdateState : CartridgeLoaderUiState // WTF is this. what. I ... fuck me I just want net entities to work
+    public sealed partial class PdaUpdateState : CartridgeLoaderUiState // WTF is this. what. I ... fuck me I just want net entities to work
         // TODO purge this shit
         //AAAAAAAAAAAAAAAA
     {
@@ -51,3 +51,4 @@ namespace Content.Shared.PDA
         public Color StationAlertColor;
     }
 }
+

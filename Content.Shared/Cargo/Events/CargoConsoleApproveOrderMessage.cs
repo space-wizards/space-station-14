@@ -6,7 +6,7 @@ namespace Content.Shared.Cargo.Events;
 ///     Set order in database as approved.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
+public sealed partial class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
 {
     public int OrderId;
 
@@ -15,3 +15,4 @@ public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
         OrderId = orderId;
     }
 }
+

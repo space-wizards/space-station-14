@@ -1,4 +1,4 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fluids;
@@ -14,7 +14,7 @@ public abstract class SharedPuddleDebugOverlaySystem : EntitySystem
 /// Message for disable puddle overlay
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PuddleOverlayDisableMessage : EntityEventArgs
+public sealed partial class PuddleOverlayDisableMessage : EntityEventArgs
 {
 }
 
@@ -22,7 +22,7 @@ public sealed class PuddleOverlayDisableMessage : EntityEventArgs
 /// Message for puddle overlay display data
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PuddleOverlayDebugMessage : EntityEventArgs
+public sealed partial class PuddleOverlayDebugMessage : EntityEventArgs
 {
     public PuddleDebugOverlayData[] OverlayData { get; }
 
@@ -48,3 +48,4 @@ public readonly struct PuddleDebugOverlayData
         Pos = pos;
     }
 }
+

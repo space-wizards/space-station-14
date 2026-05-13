@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Power;
 
-public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterface
+public sealed partial class PowerMonitoringConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private PowerMonitoringWindow? _menu;
@@ -41,3 +41,4 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         SendMessage(new PowerMonitoringConsoleMessage(netEntity, group));
     }
 }
+

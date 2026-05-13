@@ -8,10 +8,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.HealthExaminable;
 
-public sealed class HealthExaminableSystem : EntitySystem
+public sealed partial class HealthExaminableSystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -108,7 +108,7 @@ public sealed class HealthExaminableSystem : EntitySystem
 ///     in order to add special text that is not handled by the
 ///     damage thresholds.
 /// </summary>
-public sealed class HealthBeingExaminedEvent
+public sealed partial class HealthBeingExaminedEvent
 {
     public FormattedMessage Message;
 
@@ -117,3 +117,4 @@ public sealed class HealthBeingExaminedEvent
         Message = message;
     }
 }
+

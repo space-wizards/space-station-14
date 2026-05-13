@@ -45,10 +45,11 @@ public sealed partial class AmbientSoundComponent : Component, IComponentTreeEnt
 }
 
 [Serializable, NetSerializable]
-public sealed class AmbientSoundComponentState : ComponentState
+public sealed partial class AmbientSoundComponentState : ComponentState
 {
     public bool Enabled { get; init; }
     public float Range { get; init; }
     public float Volume { get; init; }
     public SoundSpecifier Sound { get; init; } = default!;
 }
+

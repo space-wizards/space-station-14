@@ -1,11 +1,11 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Resources;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed class ChannelFilterButton : ChatPopupButton<ChannelFilterPopup>
+public sealed partial class ChannelFilterButton : ChatPopupButton<ChannelFilterPopup>
 {
     private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
     private static readonly Color ColorHovered = Color.FromHex("#9699bb");
@@ -89,3 +89,4 @@ public sealed class ChannelFilterButton : ChatPopupButton<ChannelFilterPopup>
         _chatUIController.UnreadMessageCountsUpdated -= Popup.UpdateUnread;
     }
 }
+

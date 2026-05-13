@@ -3,7 +3,7 @@ using Content.Shared.Chat;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed class ChannelSelectorButton : ChatPopupButton<ChannelSelectorPopup>
+public sealed partial class ChannelSelectorButton : ChatPopupButton<ChannelSelectorPopup>
 {
     public event Action<ChatSelectChannel>? OnChannelSelect;
 
@@ -74,3 +74,4 @@ public sealed class ChannelSelectorButton : ChatPopupButton<ChannelSelectorPopup
         Modulate = radio?.Color ?? ChannelSelectColor(channel);
     }
 }
+

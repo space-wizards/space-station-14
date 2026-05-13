@@ -10,7 +10,7 @@ namespace Content.Client.SprayPainter.UI;
 /// <summary>
 /// A BUI for a spray painter. Allows selecting pipe colours, decals, and paintable object types sorted by category.
 /// </summary>
-public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private SprayPainterWindow? _window;
@@ -101,3 +101,4 @@ public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) 
         SendPredictedMessage(new SprayPainterSetDecalColorPickerMessage(toggle));
     }
 }
+

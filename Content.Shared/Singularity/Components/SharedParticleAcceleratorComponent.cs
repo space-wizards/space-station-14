@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components
 {
@@ -47,7 +47,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class ParticleAcceleratorUIState : BoundUserInterfaceState
+    public sealed partial class ParticleAcceleratorUIState : BoundUserInterfaceState
     {
         public bool Assembled;
         public bool Enabled;
@@ -87,7 +87,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class ParticleAcceleratorSetEnableMessage : BoundUserInterfaceMessage
+    public sealed partial class ParticleAcceleratorSetEnableMessage : BoundUserInterfaceMessage
     {
         public readonly bool Enabled;
         public ParticleAcceleratorSetEnableMessage(bool enabled)
@@ -97,7 +97,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class ParticleAcceleratorRescanPartsMessage : BoundUserInterfaceMessage
+    public sealed partial class ParticleAcceleratorRescanPartsMessage : BoundUserInterfaceMessage
     {
         public ParticleAcceleratorRescanPartsMessage()
         {
@@ -105,7 +105,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class ParticleAcceleratorSetPowerStateMessage : BoundUserInterfaceMessage
+    public sealed partial class ParticleAcceleratorSetPowerStateMessage : BoundUserInterfaceMessage
     {
         public readonly ParticleAcceleratorPowerState State;
 
@@ -121,3 +121,4 @@ namespace Content.Shared.Singularity.Components
         Key
     }
 }
+

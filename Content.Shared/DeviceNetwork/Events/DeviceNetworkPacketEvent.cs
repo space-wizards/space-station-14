@@ -3,7 +3,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// <summary>
 /// Event raised when a device network packet gets sent.
 /// </summary>
-public sealed class DeviceNetworkPacketEvent : EntityEventArgs
+public sealed partial class DeviceNetworkPacketEvent : EntityEventArgs
 {
     /// <summary>
     /// The id of the network that this packet is being sent on.

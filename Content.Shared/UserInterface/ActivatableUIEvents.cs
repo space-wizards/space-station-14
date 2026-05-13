@@ -5,7 +5,7 @@ namespace Content.Shared.UserInterface;
 /// This is raised BEFORE opening a UI! Do not listen and then open / do something use
 /// <see cref="AfterActivatableUIOpenEvent"/> for that.
 /// </summary>
-public sealed class ActivatableUIOpenAttemptEvent(EntityUid user, bool silent) : CancellableEntityEventArgs
+public sealed partial class ActivatableUIOpenAttemptEvent(EntityUid user, bool silent) : CancellableEntityEventArgs
 {
     /// <summary>
     /// The player trying to open the UI.
@@ -24,7 +24,7 @@ public sealed class ActivatableUIOpenAttemptEvent(EntityUid user, bool silent) :
 /// This is raised BEFORE opening a UI! Do not listen and then open / do something use
 /// <see cref="AfterActivatableUIOpenEvent"/> for that.
 /// </summary>
-public sealed class UserOpenActivatableUIAttemptEvent(EntityUid user, EntityUid target, bool silent) : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
+public sealed partial class UserOpenActivatableUIAttemptEvent(EntityUid user, EntityUid target, bool silent) : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
 {
     /// <summary>
     /// The player trying to open the UI.
@@ -46,7 +46,7 @@ public sealed class UserOpenActivatableUIAttemptEvent(EntityUid user, EntityUid 
 /// <summary>
 /// Raised on the entity with an activatable UI after the UI has been opened.
 /// </summary>
-public sealed class AfterActivatableUIOpenEvent(EntityUid user) : EntityEventArgs
+public sealed partial class AfterActivatableUIOpenEvent(EntityUid user) : EntityEventArgs
 {
     /// <summary>
     /// The player that opened the UI.
@@ -59,7 +59,7 @@ public sealed class AfterActivatableUIOpenEvent(EntityUid user) : EntityEventArg
 /// but before the UI actually opens.
 /// Use this if you need to prepare the UI itself.
 /// </summary>
-public sealed class BeforeActivatableUIOpenEvent(EntityUid user) : EntityEventArgs
+public sealed partial class BeforeActivatableUIOpenEvent(EntityUid user) : EntityEventArgs
 {
     /// <summary>
     /// The player that is opening the UI.
@@ -67,6 +67,7 @@ public sealed class BeforeActivatableUIOpenEvent(EntityUid user) : EntityEventAr
     public readonly EntityUid User = user;
 }
 
-public sealed class ActivatableUIPlayerChangedEvent : EntityEventArgs
+public sealed partial class ActivatableUIPlayerChangedEvent : EntityEventArgs
 {
 }
+

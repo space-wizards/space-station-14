@@ -63,7 +63,7 @@ public sealed partial class LocalizedDatasetValues : IReadOnlyList<string>
         return GetEnumerator();
     }
 
-    public sealed class Enumerator : IEnumerator<string>
+    public sealed partial class Enumerator : IEnumerator<string>
     {
         private int _index = 0; // Whee, 1-indexing
 
@@ -92,3 +92,4 @@ public sealed partial class LocalizedDatasetValues : IReadOnlyList<string>
         }
     }
 }
+

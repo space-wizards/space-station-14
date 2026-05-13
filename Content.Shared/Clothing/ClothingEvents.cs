@@ -7,7 +7,7 @@ namespace Content.Shared.Clothing;
 /// <summary>
 ///     Raised directed at a piece of clothing to get the set of layers to show on the wearer's sprite
 /// </summary>
-public sealed class GetEquipmentVisualsEvent : EntityEventArgs
+public sealed partial class GetEquipmentVisualsEvent : EntityEventArgs
 {
     /// <summary>
     ///     Entity that is wearing the item.
@@ -37,7 +37,7 @@ public sealed class GetEquipmentVisualsEvent : EntityEventArgs
 /// <remarks>
 ///     Useful for systems/components that modify the visual layers that an item adds to a player. (e.g. RGB memes)
 /// </remarks>
-public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
+public sealed partial class EquipmentVisualsUpdatedEvent : EntityEventArgs
 {
     /// <summary>
     ///     Entity that is wearing the item.
@@ -100,3 +100,4 @@ public readonly record struct ClothingDidEquippedEvent(Entity<ClothingComponent>
 /// </summary>
 [ByRefEvent]
 public readonly record struct ClothingDidUnequippedEvent(Entity<ClothingComponent> Clothing);
+

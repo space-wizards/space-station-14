@@ -10,7 +10,7 @@ namespace Content.Shared.Chat.TypingIndicator;
 ///     Send to server when client started/stopped typing in chat input field.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class TypingChangedEvent : EntityEventArgs
+public sealed partial class TypingChangedEvent : EntityEventArgs
 {
     public readonly TypingIndicatorState State;
 
@@ -25,7 +25,7 @@ public sealed class TypingChangedEvent : EntityEventArgs
 ///     If _overrideIndicator is not null after the event is finished it will be used.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
+public sealed partial class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
 
@@ -58,3 +58,4 @@ public sealed class BeforeShowTypingIndicatorEvent : IInventoryRelayEvent
         return _overrideIndicator;
     }
 }
+

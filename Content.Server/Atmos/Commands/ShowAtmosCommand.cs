@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ShowAtmos : LocalizedEntityCommands
+    public sealed partial class ShowAtmos : LocalizedEntityCommands
     {
-        [Dependency] private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem = default!;
+        [Dependency] private AtmosDebugOverlaySystem _atmosDebugOverlaySystem = default!;
 
         public override string Command => "showatmos";
 
@@ -30,3 +30,4 @@ namespace Content.Server.Atmos.Commands
         }
     }
 }
+

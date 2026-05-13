@@ -8,9 +8,9 @@ using System.Linq;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SetSolutionCapacity : LocalizedCommands
+    public sealed partial class SetSolutionCapacity : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "setsolutioncapacity";
 
@@ -61,3 +61,4 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
+

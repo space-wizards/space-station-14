@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -26,13 +26,13 @@ public enum ChameleonControllerKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class ChameleonControllerBuiState : BoundUserInterfaceState;
+public sealed partial class ChameleonControllerBuiState : BoundUserInterfaceState;
 
 /// <summary>
 ///     Triggered when the user clicks on a job in the menu.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ChameleonControllerSelectedOutfitMessage(ProtoId<ChameleonOutfitPrototype> selectedOutfit) : BoundUserInterfaceMessage
+public sealed partial class ChameleonControllerSelectedOutfitMessage(ProtoId<ChameleonOutfitPrototype> selectedOutfit) : BoundUserInterfaceMessage
 {
     public readonly ProtoId<ChameleonOutfitPrototype> SelectedChameleonOutfit = selectedOutfit;
 }
@@ -56,3 +56,4 @@ public record struct ChameleonControllerOutfitSelectedEvent(
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }
+

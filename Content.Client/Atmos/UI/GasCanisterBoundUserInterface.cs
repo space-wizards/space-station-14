@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.IdentityManagement;
@@ -12,7 +12,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasCanisterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasCanisterBoundUserInterface : BoundUserInterface
+    public sealed partial class GasCanisterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private GasCanisterWindow? _window;
@@ -85,3 +85,4 @@ namespace Content.Client.Atmos.UI
         }
     }
 }
+

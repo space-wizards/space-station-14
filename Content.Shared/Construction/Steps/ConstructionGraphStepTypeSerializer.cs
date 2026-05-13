@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 namespace Content.Shared.Construction.Steps
 {
     [TypeSerializer]
-    public sealed class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
+    public sealed partial class ConstructionGraphStepTypeSerializer : ITypeReader<ConstructionGraphStep, MappingDataNode>
     {
         private Type? GetType(MappingDataNode node)
         {
@@ -76,3 +76,4 @@ namespace Content.Shared.Construction.Steps
         }
     }
 }
+

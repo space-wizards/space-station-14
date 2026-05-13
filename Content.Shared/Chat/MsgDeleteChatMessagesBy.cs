@@ -1,10 +1,10 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chat;
 
-public sealed class MsgDeleteChatMessagesBy : NetMessage
+public sealed partial class MsgDeleteChatMessagesBy : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -35,3 +35,4 @@ public sealed class MsgDeleteChatMessagesBy : NetMessage
         }
     }
 }
+

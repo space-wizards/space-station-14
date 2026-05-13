@@ -13,8 +13,8 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class DamageCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
 
         public override string Command => "damage";
 
@@ -143,3 +143,4 @@ namespace Content.Server.Damage.Commands
         }
     }
 }
+

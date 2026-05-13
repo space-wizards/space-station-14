@@ -1,11 +1,11 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Administration;
 
-public sealed class AdminCommandPermissions
+public sealed partial class AdminCommandPermissions
 {
     // Commands executable by anybody.
     public readonly HashSet<string> AnyCommands = new();
@@ -81,3 +81,4 @@ public sealed class AdminCommandPermissions
         return false;
     }
 }
+

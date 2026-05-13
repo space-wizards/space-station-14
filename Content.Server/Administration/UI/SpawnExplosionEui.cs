@@ -10,7 +10,7 @@ namespace Content.Server.Administration.UI;
 ///     Admin Eui for spawning and preview-ing explosions
 /// </summary>
 [UsedImplicitly]
-public sealed class SpawnExplosionEui : BaseEui
+public sealed partial class SpawnExplosionEui : BaseEui
 {
     private readonly ExplosionSystem _explosionSystem;
     private readonly ISawmill _sawmill;
@@ -42,3 +42,4 @@ public sealed class SpawnExplosionEui : BaseEui
         SendMessage(new SpawnExplosionEuiMsg.PreviewData(explosion, request.IntensitySlope, request.TotalIntensity));
     }
 }
+

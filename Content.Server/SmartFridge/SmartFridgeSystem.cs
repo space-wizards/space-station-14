@@ -1,5 +1,6 @@
-﻿using Content.Shared.SmartFridge;
+using Content.Shared.SmartFridge;
 
 namespace Content.Server.SmartFridge;
 
-public sealed class SmartFridgeSystem : SharedSmartFridgeSystem;
+public sealed partial class SmartFridgeSystem : SharedSmartFridgeSystem;
+

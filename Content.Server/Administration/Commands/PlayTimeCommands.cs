@@ -1,4 +1,4 @@
-﻿using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Administration;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
@@ -7,10 +7,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeAddOverallCommand : LocalizedCommands
+public sealed partial class PlayTimeAddOverallCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_addoverall";
 
@@ -57,10 +57,10 @@ public sealed class PlayTimeAddOverallCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeAddRoleCommand : LocalizedCommands
+public sealed partial class PlayTimeAddRoleCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_addrole";
 
@@ -121,10 +121,10 @@ public sealed class PlayTimeAddRoleCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeGetOverallCommand : LocalizedCommands
+public sealed partial class PlayTimeGetOverallCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_getoverall";
 
@@ -164,10 +164,10 @@ public sealed class PlayTimeGetOverallCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeGetRoleCommand : LocalizedCommands
+public sealed partial class PlayTimeGetRoleCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_getrole";
 
@@ -241,10 +241,10 @@ public sealed class PlayTimeGetRoleCommand : LocalizedCommands
 /// Saves the timers for a particular player immediately
 /// </summary>
 [AdminCommand(AdminFlags.Moderator)]
-public sealed class PlayTimeSaveCommand : LocalizedCommands
+public sealed partial class PlayTimeSaveCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_save";
 
@@ -281,10 +281,10 @@ public sealed class PlayTimeSaveCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class PlayTimeFlushCommand : LocalizedCommands
+public sealed partial class PlayTimeFlushCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     public override string Command => "playtime_flush";
 
@@ -324,3 +324,4 @@ public sealed class PlayTimeFlushCommand : LocalizedCommands
         return CompletionResult.Empty;
     }
 }
+

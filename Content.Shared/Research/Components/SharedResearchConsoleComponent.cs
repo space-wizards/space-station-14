@@ -9,7 +9,7 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
+    public sealed partial class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
     {
         public string Id;
 
@@ -20,13 +20,13 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
+    public sealed partial class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
     {
 
     }
 
     [Serializable, NetSerializable]
-    public sealed class ResearchConsoleBoundInterfaceState : BoundUserInterfaceState
+    public sealed partial class ResearchConsoleBoundInterfaceState : BoundUserInterfaceState
     {
         public int Points;
         public ResearchConsoleBoundInterfaceState(int points)
@@ -35,3 +35,4 @@ namespace Content.Shared.Research.Components
         }
     }
 }
+

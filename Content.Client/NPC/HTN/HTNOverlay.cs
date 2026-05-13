@@ -5,7 +5,7 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.NPC.HTN;
 
-public sealed class HTNOverlay : Overlay
+public sealed partial class HTNOverlay : Overlay
 {
     private readonly IEntityManager _entManager = default!;
     private readonly Font _font = default!;
@@ -42,3 +42,4 @@ public sealed class HTNOverlay : Overlay
         }
     }
 }
+

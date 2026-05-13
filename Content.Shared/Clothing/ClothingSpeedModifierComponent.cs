@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing;
@@ -32,7 +32,7 @@ public sealed partial class ClothingSpeedModifierComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ClothingSpeedModifierComponentState : ComponentState
+public sealed partial class ClothingSpeedModifierComponentState : ComponentState
 {
     public float WalkModifier;
     public float SprintModifier;
@@ -43,3 +43,4 @@ public sealed class ClothingSpeedModifierComponentState : ComponentState
         SprintModifier = sprintModifier;
     }
 }
+

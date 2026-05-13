@@ -1,10 +1,10 @@
-﻿using NetCord.Logging;
+using NetCord.Logging;
 using NLogLevel = NetCord.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 
 namespace Content.Server.Discord.DiscordLink;
 
-public sealed class DiscordSawmillLogger(ISawmill sawmill) : IGatewayLogger, IRestLogger, IVoiceLogger
+public sealed partial class DiscordSawmillLogger(ISawmill sawmill) : IGatewayLogger, IRestLogger, IVoiceLogger
 {
     private static LogLevel GetLogLevel(NLogLevel logLevel)
     {
@@ -32,3 +32,4 @@ public sealed class DiscordSawmillLogger(ISawmill sawmill) : IGatewayLogger, IRe
         sawmill.Log(GetLogLevel(logLevel), exception, formatter(state, exception));
     }
 }
+

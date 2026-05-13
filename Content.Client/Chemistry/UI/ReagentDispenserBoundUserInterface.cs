@@ -12,7 +12,7 @@ namespace Content.Client.Chemistry.UI
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ReagentDispenserBoundUserInterface : BoundUserInterface
+    public sealed partial class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ReagentDispenserWindow? _window;
@@ -60,3 +60,4 @@ namespace Content.Client.Chemistry.UI
         }
     }
 }
+

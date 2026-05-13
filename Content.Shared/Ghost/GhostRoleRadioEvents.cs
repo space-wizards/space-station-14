@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Ghost.Roles;
 
 [Serializable, NetSerializable]
-public sealed class GhostRoleRadioMessage : BoundUserInterfaceMessage
+public sealed partial class GhostRoleRadioMessage : BoundUserInterfaceMessage
 {
     public ProtoId<GhostRolePrototype> ProtoId;
 
@@ -19,3 +19,4 @@ public enum GhostRoleRadioUiKey : byte
 {
     Key
 }
+

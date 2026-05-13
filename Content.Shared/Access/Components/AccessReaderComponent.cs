@@ -110,7 +110,7 @@ public readonly partial record struct AccessRecord(
 }
 
 [Serializable, NetSerializable]
-public sealed class AccessReaderComponentState : ComponentState
+public sealed partial class AccessReaderComponentState : ComponentState
 {
     public bool Enabled;
     public HashSet<ProtoId<AccessLevelPrototype>> DenyTags;
@@ -142,9 +142,10 @@ public sealed class AccessReaderComponentState : ComponentState
 /// <summary>
 /// Raised after the settings on the access reader are changed.
 /// </summary>
-public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs;
+public sealed partial class AccessReaderConfigurationChangedEvent : EntityEventArgs;
 
 /// <summary>
 /// Raised before the settings on the access reader are changed. Can be cancelled.
 /// </summary>
-public sealed class AccessReaderConfigurationAttemptEvent : CancellableEntityEventArgs;
+public sealed partial class AccessReaderConfigurationAttemptEvent : CancellableEntityEventArgs;
+

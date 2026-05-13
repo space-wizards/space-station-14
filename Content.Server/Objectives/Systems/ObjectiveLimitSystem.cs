@@ -3,7 +3,7 @@ using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 
-public sealed class ObjectiveLimitSystem : EntitySystem
+public sealed partial class ObjectiveLimitSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -62,3 +62,4 @@ public sealed class ObjectiveLimitSystem : EntitySystem
         return false;
     }
 }
+

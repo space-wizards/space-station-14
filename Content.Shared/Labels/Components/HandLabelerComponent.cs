@@ -31,9 +31,10 @@ public sealed partial class HandLabelerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class HandLabelerComponentState(string assignedLabel) : IComponentState
+public sealed partial class HandLabelerComponentState(string assignedLabel) : IComponentState
 {
     public string AssignedLabel = assignedLabel;
 
     public int MaxLabelChars;
 }
+

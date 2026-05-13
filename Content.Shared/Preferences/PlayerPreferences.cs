@@ -11,7 +11,7 @@ namespace Content.Shared.Preferences
     /// </summary>
     [Serializable]
     [NetSerializable]
-    public sealed class PlayerPreferences
+    public sealed partial class PlayerPreferences
     {
         private Dictionary<int, HumanoidCharacterProfile> _characters;
 
@@ -61,3 +61,4 @@ namespace Content.Shared.Preferences
         }
     }
 }
+

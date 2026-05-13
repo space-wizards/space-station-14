@@ -18,12 +18,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : LocalizedEntityCommands
+public sealed partial class StatValuesCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly PricingSystem _priceSystem = default!;
-    [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private PricingSystem _priceSystem = default!;
+    [Dependency] private ItemSystem _itemSystem = default!;
 
     public override string Command => "showvalues";
 
@@ -314,3 +314,4 @@ public sealed class StatValuesCommand : LocalizedEntityCommands
         return state;
     }
 }
+

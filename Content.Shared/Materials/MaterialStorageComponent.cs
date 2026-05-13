@@ -123,7 +123,7 @@ public record struct GetMaterialWhitelistEvent(EntityUid Storage)
 /// Message sent to try and eject a material from a storage
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class EjectMaterialMessage : EntityEventArgs
+public sealed partial class EjectMaterialMessage : EntityEventArgs
 {
     public NetEntity Entity;
     public string Material;
@@ -136,4 +136,5 @@ public sealed class EjectMaterialMessage : EntityEventArgs
         SheetsToExtract = sheetsToExtract;
     }
 }
+
 

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Eui
 {
-    public sealed class MsgEuiMessage : NetMessage
+    public sealed partial class MsgEuiMessage : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
@@ -35,3 +35,4 @@ namespace Content.Shared.Eui
         }
     }
 }
+

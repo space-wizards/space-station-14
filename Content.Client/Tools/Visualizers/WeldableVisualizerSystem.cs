@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Tools.Visualizers;
 
-public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
+public sealed partial class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, WeldableComponent component, ref AppearanceChangeEvent args)
     {
@@ -17,3 +17,4 @@ public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponen
         }
     }
 }
+

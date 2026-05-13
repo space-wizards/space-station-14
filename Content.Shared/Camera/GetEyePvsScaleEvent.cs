@@ -32,9 +32,10 @@ public record struct GetEyePvsScaleAttemptEvent(bool Cancelled);
 ///     Pockets and suitstorage are excluded.
 /// </summary>
 [ByRefEvent]
-public sealed class GetEyePvsScaleRelayedEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed partial class GetEyePvsScaleRelayedEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~(SlotFlags.POCKET & SlotFlags.SUITSTORAGE);
 
     public float Scale;
 }
+

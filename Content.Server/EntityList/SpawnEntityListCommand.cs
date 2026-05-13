@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.EntityList;
 using Robust.Shared.Console;
@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public sealed class SpawnEntityListCommand : LocalizedEntityCommands
+    public sealed partial class SpawnEntityListCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public override string Command => "spawnentitylist";
 

@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN;
 /// <summary>
 /// The current plan for a HTN NPC.
 /// </summary>
-public sealed class HTNPlan
+public sealed partial class HTNPlan
 {
     /// <summary>
     /// Effects that were applied for each primitive task in the plan.
@@ -32,3 +32,4 @@ public sealed class HTNPlan
         Effects = effects;
     }
 }
+

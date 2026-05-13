@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class BatterySystem : SharedBatterySystem
+public sealed partial class BatterySystem : SharedBatterySystem
 {
     public override void Initialize()
     {
@@ -66,3 +66,4 @@ public sealed class BatterySystem : SharedBatterySystem
         }
     }
 }
+

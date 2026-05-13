@@ -3,7 +3,7 @@ namespace Content.Server.Ghost.Roles.Events
     /// <summary>
     /// Raised on a spawned entity after they use a ghost role mob spawner.
     /// </summary>
-    public sealed class GhostRoleSpawnerUsedEvent : EntityEventArgs
+    public sealed partial class GhostRoleSpawnerUsedEvent : EntityEventArgs
     {
         /// <summary>
         /// The entity that spawned this.
@@ -23,3 +23,4 @@ namespace Content.Server.Ghost.Roles.Events
         }
     }
 }
+

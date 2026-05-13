@@ -37,7 +37,7 @@ public sealed partial class WiresPanelSecurityComponent : Component
 /// <summary>
 ///     This event gets raised when security settings on a wires panel change
 /// </summary>
-public sealed class WiresPanelSecurityEvent : EntityEventArgs
+public sealed partial class WiresPanelSecurityEvent : EntityEventArgs
 {
     public readonly string? Examine;
     public readonly bool WiresAccessible;
@@ -48,3 +48,4 @@ public sealed class WiresPanelSecurityEvent : EntityEventArgs
         WiresAccessible = wiresAccessible;
     }
 }
+

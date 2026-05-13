@@ -25,7 +25,7 @@ namespace Content.Shared.StatusEffect
     ///     Holds information about an active status effect.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class StatusEffectState
+    public sealed partial class StatusEffectState
     {
         /// <summary>
         ///     The start and end times of the status effect.
@@ -63,7 +63,7 @@ namespace Content.Shared.StatusEffect
     }
 
     [Serializable, NetSerializable]
-    public sealed class StatusEffectsComponentState : ComponentState
+    public sealed partial class StatusEffectsComponentState : ComponentState
     {
         public Dictionary<string, StatusEffectState> ActiveEffects;
         public List<string> AllowedEffects;
@@ -75,3 +75,4 @@ namespace Content.Shared.StatusEffect
         }
     }
 }
+

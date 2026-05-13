@@ -31,14 +31,14 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
 [UsedImplicitly]
-public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>, IOnStateChanged<GameplayState>, IOnStateChanged<LobbyState>
+public sealed partial class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>, IOnStateChanged<GameplayState>, IOnStateChanged<LobbyState>
 {
-    [Dependency] private readonly IClientAdminManager _adminManager = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private IClientAdminManager _adminManager = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
+    [Dependency] private IInputManager _input = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
 
     private BwoinkSystem? _bwoinkSystem;
@@ -329,7 +329,7 @@ public interface IAHelpUIHandler : IDisposable
     public Action<NetUserId, string, bool, bool>? SendMessageAction { get; set; }
     public event Action<NetUserId, string>? InputTextChanged;
 }
-public sealed class AdminAHelpUIHandler : IAHelpUIHandler
+public sealed partial class AdminAHelpUIHandler : IAHelpUIHandler
 {
     private readonly NetUserId _ownerId;
     public AdminAHelpUIHandler(NetUserId owner)
@@ -490,7 +490,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     }
 }
 
-public sealed class UserAHelpUIHandler : IAHelpUIHandler
+public sealed partial class UserAHelpUIHandler : IAHelpUIHandler
 {
     private readonly NetUserId _ownerId;
     public UserAHelpUIHandler(NetUserId owner)
@@ -589,3 +589,4 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         _chatPanel = null;
     }
 }
+

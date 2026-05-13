@@ -29,7 +29,7 @@ public enum CriminalRecordsConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
+public sealed partial class CriminalRecordsConsoleState : BoundUserInterfaceState
 {
     /// <summary>
     /// Currently selected crewmember record key.
@@ -61,7 +61,7 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
 /// Used to change status, respecting the wanted/reason nullability rules in <see cref="CriminalRecord"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordChangeStatus : BoundUserInterfaceMessage
+public sealed partial class CriminalRecordChangeStatus : BoundUserInterfaceMessage
 {
     public readonly SecurityStatus Status;
     public readonly string? Reason;
@@ -77,7 +77,7 @@ public sealed class CriminalRecordChangeStatus : BoundUserInterfaceMessage
 /// Used to add a single line to the record's crime history.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordAddHistory : BoundUserInterfaceMessage
+public sealed partial class CriminalRecordAddHistory : BoundUserInterfaceMessage
 {
     public readonly string Line;
 
@@ -91,7 +91,7 @@ public sealed class CriminalRecordAddHistory : BoundUserInterfaceMessage
 /// Used to delete a single line from the crime history, by index.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
+public sealed partial class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
 {
     public readonly uint Index;
 
@@ -108,7 +108,7 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
 ///
 [Serializable, NetSerializable]
 
-public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
+public sealed partial class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
 {
     public readonly SecurityStatus FilterStatus;
     public CriminalRecordSetStatusFilter(SecurityStatus newFilterStatus)
@@ -116,4 +116,5 @@ public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
         FilterStatus = newFilterStatus;
     }
 }
+
 

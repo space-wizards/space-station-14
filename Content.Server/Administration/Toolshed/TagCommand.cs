@@ -9,7 +9,7 @@ using Robust.Shared.Toolshed.TypeParsers;
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class TagCommand : ToolshedCommand
+public sealed partial class TagCommand : ToolshedCommand
 {
     private TagSystem? _tag;
 
@@ -83,3 +83,4 @@ public sealed class TagCommand : ToolshedCommand
     public IEnumerable<EntityUid> RmMany([PipedArgument] IEnumerable<EntityUid> input, IEnumerable<ProtoId<TagPrototype>> tags)
         => input.Select(x => RmMany(x, tags.ToArray()));
 }
+

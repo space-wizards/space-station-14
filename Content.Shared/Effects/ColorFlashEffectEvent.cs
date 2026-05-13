@@ -6,7 +6,7 @@ namespace Content.Shared.Effects;
 /// Raised on the server and sent to a client to play the color flash animation.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ColorFlashEffectEvent : EntityEventArgs
+public sealed partial class ColorFlashEffectEvent : EntityEventArgs
 {
     /// <summary>
     /// Color to play for the flash.
@@ -21,3 +21,4 @@ public sealed class ColorFlashEffectEvent : EntityEventArgs
         Entities = entities;
     }
 }
+

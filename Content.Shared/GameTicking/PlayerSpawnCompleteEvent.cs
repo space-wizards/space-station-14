@@ -1,4 +1,4 @@
-﻿using Content.Shared.Preferences;
+using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.GameTicking;
 ///     Can be used to give random players a role, modify their equipment, etc.
 /// </summary>
 [PublicAPI]
-public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
+public sealed partial class PlayerSpawnCompleteEvent : EntityEventArgs
 {
     public EntityUid Mob { get; }
     public ICommonSession Player { get; }
@@ -42,3 +42,4 @@ public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
         JoinOrder = joinOrder;
     }
 }
+

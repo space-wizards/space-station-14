@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
-public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
+public sealed partial class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 {
     private AnomalyGeneratorWindow? _window;
 
@@ -35,4 +35,5 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
         _window?.UpdateState(msg);
     }
 }
+
 

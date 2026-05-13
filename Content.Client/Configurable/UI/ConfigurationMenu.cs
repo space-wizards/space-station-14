@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -8,7 +8,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Configurable.UI
 {
-    public sealed class ConfigurationMenu : DefaultWindow
+    public sealed partial class ConfigurationMenu : DefaultWindow
     {
         public readonly BoxContainer Column;
         public readonly BoxContainer Row;
@@ -104,3 +104,4 @@ namespace Content.Client.Configurable.UI
         }
     }
 }
+

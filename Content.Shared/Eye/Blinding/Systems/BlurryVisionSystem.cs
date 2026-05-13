@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed class BlurryVisionSystem : EntitySystem
+public sealed partial class BlurryVisionSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -53,7 +53,7 @@ public sealed class BlurryVisionSystem : EntitySystem
     }
 }
 
-public sealed class GetBlurEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed partial class GetBlurEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public readonly float BaseBlur;
     public float Blur;
@@ -67,3 +67,4 @@ public sealed class GetBlurEvent : EntityEventArgs, IInventoryRelayEvent
 
     public SlotFlags TargetSlots => SlotFlags.HEAD | SlotFlags.MASK | SlotFlags.EYES;
 }
+

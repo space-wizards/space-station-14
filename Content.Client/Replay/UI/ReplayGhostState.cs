@@ -8,7 +8,7 @@ namespace Content.Client.Replay.UI;
 /// <summary>
 /// Gameplay state when moving around a replay as a ghost.
 /// </summary>
-public sealed class ReplayGhostState : ReplaySpectateEntityState
+public sealed partial class ReplayGhostState : ReplaySpectateEntityState
 {
     protected override void Startup()
     {
@@ -38,3 +38,4 @@ public sealed class ReplayGhostState : ReplaySpectateEntityState
         base.Shutdown();
     }
 }
+

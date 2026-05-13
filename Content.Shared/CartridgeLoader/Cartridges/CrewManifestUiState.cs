@@ -1,10 +1,10 @@
-﻿using Content.Shared.CrewManifest;
+using Content.Shared.CrewManifest;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestUiState : BoundUserInterfaceState
+public sealed partial class CrewManifestUiState : BoundUserInterfaceState
 {
     public string StationName;
     public CrewManifestEntries? Entries;
@@ -15,3 +15,4 @@ public sealed class CrewManifestUiState : BoundUserInterfaceState
         Entries = entries;
     }
 }
+

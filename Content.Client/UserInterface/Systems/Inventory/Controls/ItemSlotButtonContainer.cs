@@ -1,8 +1,8 @@
-﻿using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
-public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
+public sealed partial class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
 {
     private readonly InventoryUIController _inventoryController;
     private string _slotGroup = "";
@@ -23,3 +23,4 @@ public sealed class ItemSlotButtonContainer : ItemSlotUIContainer<SlotControl>
         _inventoryController = UserInterfaceManager.GetUIController<InventoryUIController>();
     }
 }
+

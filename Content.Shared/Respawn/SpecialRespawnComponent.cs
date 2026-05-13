@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -30,7 +30,7 @@ public sealed partial class SpecialRespawnComponent: Component
     public string Prototype = "";
 }
 
-public sealed class SpecialRespawnSetupEvent : EntityEventArgs
+public sealed partial class SpecialRespawnSetupEvent : EntityEventArgs
 {
     public EntityUid Entity;
 
@@ -39,3 +39,4 @@ public sealed class SpecialRespawnSetupEvent : EntityEventArgs
         Entity = entity;
     }
 }
+

@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ClearAlert : LocalizedCommands
+    public sealed partial class ClearAlert : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private IEntityManager _e = default!;
 
         public override string Command => "clearalert";
 
@@ -48,3 +48,4 @@ namespace Content.Server.Alert.Commands
         }
     }
 }
+

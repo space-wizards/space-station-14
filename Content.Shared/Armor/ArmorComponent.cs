@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
@@ -41,7 +41,7 @@ public record struct ArmorExamineEvent(FormattedMessage Msg);
 /// <summary>
 /// A Relayed inventory event, gets the total Armor for all Inventory slots defined by the Slotflags in TargetSlots
 /// </summary>
-public sealed class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed partial class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
     /// All slots to relay to
@@ -58,3 +58,4 @@ public sealed class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEven
         TargetSlots = slots;
     }
 }
+

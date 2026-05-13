@@ -1,11 +1,11 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.UserInterface.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed class ProgressTextureRect : TextureRect
+    public sealed partial class ProgressTextureRect : TextureRect
     {
         public float Progress;
 
@@ -26,3 +26,4 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 }
+

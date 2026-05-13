@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Fax;
 
 [Serializable, NetSerializable]
-public sealed class AdminFaxEuiState : EuiStateBase
+public sealed partial class AdminFaxEuiState : EuiStateBase
 {
     public List<AdminFaxEntry> Entries { get; }
 
@@ -15,7 +15,7 @@ public sealed class AdminFaxEuiState : EuiStateBase
 }
 
 [Serializable, NetSerializable]
-public sealed class AdminFaxEntry
+public sealed partial class AdminFaxEntry
 {
     public NetEntity Uid { get; }
     public string Name { get; }
@@ -32,12 +32,12 @@ public sealed class AdminFaxEntry
 public static class AdminFaxEuiMsg
 {
     [Serializable, NetSerializable]
-    public sealed class Close : EuiMessageBase
+    public sealed partial class Close : EuiMessageBase
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class Follow : EuiMessageBase
+    public sealed partial class Follow : EuiMessageBase
     {
         public NetEntity TargetFax { get; }
 
@@ -48,7 +48,7 @@ public static class AdminFaxEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class Send : EuiMessageBase
+    public sealed partial class Send : EuiMessageBase
     {
         public NetEntity Target { get; }
         public string Title { get; }
@@ -70,3 +70,4 @@ public static class AdminFaxEuiMsg
         }
     }
 }
+

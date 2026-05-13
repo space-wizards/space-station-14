@@ -156,7 +156,7 @@ namespace Content.Shared.Roles
     /// Sorts <see cref="JobPrototype"/>s appropriately for display in the UI,
     /// respecting their <see cref="JobPrototype.Weight"/>.
     /// </summary>
-    public sealed class JobUIComparer : IComparer<JobPrototype>
+    public sealed partial class JobUIComparer : IComparer<JobPrototype>
     {
         public static readonly JobUIComparer Instance = new();
 
@@ -176,3 +176,4 @@ namespace Content.Shared.Roles
         }
     }
 }
+

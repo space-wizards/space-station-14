@@ -1,4 +1,4 @@
-﻿using Content.Client.Changelog;
+using Content.Client.Changelog;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -9,7 +9,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Info
 {
-    public sealed class LinkBanner : BoxContainer
+    public sealed partial class LinkBanner : BoxContainer
     {
         private readonly IConfigurationManager _cfg;
 
@@ -71,3 +71,4 @@ namespace Content.Client.Info
         }
     }
 }
+

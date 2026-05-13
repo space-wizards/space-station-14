@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Weapons.Melee.Events;
 
 [Serializable, NetSerializable]
-public sealed class DisarmAttackEvent : AttackEvent
+public sealed partial class DisarmAttackEvent : AttackEvent
 {
     public NetEntity? Target;
 
@@ -13,3 +13,4 @@ public sealed class DisarmAttackEvent : AttackEvent
         Target = target;
     }
 }
+

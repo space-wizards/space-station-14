@@ -62,13 +62,13 @@ namespace Content.Shared.Decals
     }
 
     [Serializable, NetSerializable]
-    public sealed class DecalGridState(Dictionary<Vector2i, DecalChunk> chunks) : ComponentState
+    public sealed partial class DecalGridState(Dictionary<Vector2i, DecalChunk> chunks) : ComponentState
     {
         public Dictionary<Vector2i, DecalChunk> Chunks = chunks;
     }
 
     [Serializable, NetSerializable]
-    public sealed class DecalGridDeltaState(Dictionary<Vector2i, DecalChunk> modifiedChunks, HashSet<Vector2i> allChunks)
+    public sealed partial class DecalGridDeltaState(Dictionary<Vector2i, DecalChunk> modifiedChunks, HashSet<Vector2i> allChunks)
         : ComponentState, IComponentDeltaState<DecalGridState>
     {
         public Dictionary<Vector2i, DecalChunk> ModifiedChunks = modifiedChunks;
@@ -106,3 +106,4 @@ namespace Content.Shared.Decals
         }
     }
 }
+

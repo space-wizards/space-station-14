@@ -1,4 +1,4 @@
-﻿using Content.Shared.DoAfter;
+using Content.Shared.DoAfter;
 using Content.Shared.Mech.Components;
 using Robust.Shared.Serialization;
 
@@ -24,7 +24,7 @@ public sealed partial class MechEquipmentComponent : Component
 /// <summary>
 /// Raised on the equipment when the installation is finished successfully
 /// </summary>
-public sealed class MechEquipmentInstallFinished : EntityEventArgs
+public sealed partial class MechEquipmentInstallFinished : EntityEventArgs
 {
     public EntityUid Mech;
 
@@ -37,7 +37,7 @@ public sealed class MechEquipmentInstallFinished : EntityEventArgs
 /// <summary>
 /// Raised on the equipment when the installation fails.
 /// </summary>
-public sealed class MechEquipmentInstallCancelled : EntityEventArgs
+public sealed partial class MechEquipmentInstallCancelled : EntityEventArgs
 {
 }
 
@@ -50,4 +50,5 @@ public sealed partial class GrabberDoAfterEvent : SimpleDoAfterEvent
 public sealed partial class InsertEquipmentEvent : SimpleDoAfterEvent
 {
 }
+
 

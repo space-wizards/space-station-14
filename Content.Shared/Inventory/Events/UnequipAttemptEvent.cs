@@ -40,17 +40,18 @@ public abstract class UnequipAttemptEventBase(EntityUid user, EntityUid unEquipT
 /// <summary>
 /// Raised on the item that is being unequipped.
 /// </summary>
-public sealed class BeingUnequippedAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
+public sealed partial class BeingUnequippedAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : UnequipAttemptEventBase(user, unEquipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity that is unequipping an item.
 /// </summary>
-public sealed class IsUnequippingAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
+public sealed partial class IsUnequippingAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : UnequipAttemptEventBase(user, unEquipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised on the entity from who item is being unequipped.
 /// </summary>
-public sealed class IsUnequippingTargetAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
+public sealed partial class IsUnequippingTargetAttemptEvent(EntityUid user, EntityUid unEquipTarget, EntityUid equipment,
     SlotDefinition slotDefinition) : UnequipAttemptEventBase(user, unEquipTarget, equipment, slotDefinition);
+

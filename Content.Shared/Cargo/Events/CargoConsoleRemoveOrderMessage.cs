@@ -6,7 +6,7 @@ namespace Content.Shared.Cargo.Events;
 ///     Remove order from database.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
+public sealed partial class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
 {
     public int OrderId;
 
@@ -15,3 +15,4 @@ public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
         OrderId = orderId;
     }
 }
+

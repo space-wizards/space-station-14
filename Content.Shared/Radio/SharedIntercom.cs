@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radio;
@@ -10,7 +10,7 @@ public enum IntercomUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed class ToggleIntercomMicMessage : BoundUserInterfaceMessage
+public sealed partial class ToggleIntercomMicMessage : BoundUserInterfaceMessage
 {
     public bool Enabled;
 
@@ -21,7 +21,7 @@ public sealed class ToggleIntercomMicMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class ToggleIntercomSpeakerMessage : BoundUserInterfaceMessage
+public sealed partial class ToggleIntercomSpeakerMessage : BoundUserInterfaceMessage
 {
     public bool Enabled;
 
@@ -32,7 +32,7 @@ public sealed class ToggleIntercomSpeakerMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SelectIntercomChannelMessage : BoundUserInterfaceMessage
+public sealed partial class SelectIntercomChannelMessage : BoundUserInterfaceMessage
 {
     public string Channel;
 
@@ -41,3 +41,4 @@ public sealed class SelectIntercomChannelMessage : BoundUserInterfaceMessage
         Channel = channel;
     }
 }
+

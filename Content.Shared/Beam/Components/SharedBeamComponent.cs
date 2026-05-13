@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Beam.Components;
@@ -50,7 +50,7 @@ public abstract partial class SharedBeamComponent : Component
 /// Called where a <see cref="BeamControllerEntity"/> is first created. Stores the originator beam euid and the controller euid.
 /// Raised on the <see cref="BeamControllerEntity"/> and broadcast.
 /// </summary>
-public sealed class BeamControllerCreatedEvent : EntityEventArgs
+public sealed partial class BeamControllerCreatedEvent : EntityEventArgs
 {
     public EntityUid OriginBeam;
     public EntityUid BeamControllerEntity;
@@ -65,7 +65,7 @@ public sealed class BeamControllerCreatedEvent : EntityEventArgs
 /// <summary>
 /// Called after TryCreateBeam succeeds.
 /// </summary>
-public sealed class CreateBeamSuccessEvent : EntityEventArgs
+public sealed partial class CreateBeamSuccessEvent : EntityEventArgs
 {
     public readonly EntityUid User;
     public readonly EntityUid Target;
@@ -80,7 +80,7 @@ public sealed class CreateBeamSuccessEvent : EntityEventArgs
 /// <summary>
 /// Called once the beam is fully created
 /// </summary>
-public sealed class BeamFiredEvent : EntityEventArgs
+public sealed partial class BeamFiredEvent : EntityEventArgs
 {
     public readonly EntityUid CreatedBeam;
 
@@ -95,7 +95,7 @@ public sealed class BeamFiredEvent : EntityEventArgs
 /// Used to get sprite data over to the client.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BeamVisualizerEvent : EntityEventArgs
+public sealed partial class BeamVisualizerEvent : EntityEventArgs
 {
     public readonly NetEntity Beam;
     public readonly float DistanceLength;
@@ -112,3 +112,4 @@ public sealed class BeamVisualizerEvent : EntityEventArgs
         Shader = shader;
     }
 }
+

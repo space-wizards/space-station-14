@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
 
@@ -16,7 +16,7 @@ public enum BatteryUiKey : byte
 /// </summary>
 /// <seealso cref="BatteryUiKey"/>
 [Serializable, NetSerializable]
-public sealed class BatteryBuiState : BoundUserInterfaceState
+public sealed partial class BatteryBuiState : BoundUserInterfaceState
 {
     // These are mostly just regular Pow3r parameters.
 
@@ -48,7 +48,7 @@ public sealed class BatteryBuiState : BoundUserInterfaceState
 /// Sent client to server to change the input breaker state on a large battery.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BatterySetInputBreakerMessage(bool on) : BoundUserInterfaceMessage
+public sealed partial class BatterySetInputBreakerMessage(bool on) : BoundUserInterfaceMessage
 {
     public bool On = on;
 }
@@ -57,7 +57,7 @@ public sealed class BatterySetInputBreakerMessage(bool on) : BoundUserInterfaceM
 /// Sent client to server to change the output breaker state on a large battery.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BatterySetOutputBreakerMessage(bool on) : BoundUserInterfaceMessage
+public sealed partial class BatterySetOutputBreakerMessage(bool on) : BoundUserInterfaceMessage
 {
     public bool On = on;
 }
@@ -66,7 +66,7 @@ public sealed class BatterySetOutputBreakerMessage(bool on) : BoundUserInterface
 /// Sent client to server to change the charge rate on a large battery.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BatterySetChargeRateMessage(float rate) : BoundUserInterfaceMessage
+public sealed partial class BatterySetChargeRateMessage(float rate) : BoundUserInterfaceMessage
 {
     public float Rate = rate;
 }
@@ -75,8 +75,9 @@ public sealed class BatterySetChargeRateMessage(float rate) : BoundUserInterface
 /// Sent client to server to change the discharge rate on a large battery.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BatterySetDischargeRateMessage(float rate) : BoundUserInterfaceMessage
+public sealed partial class BatterySetDischargeRateMessage(float rate) : BoundUserInterfaceMessage
 {
     public float Rate = rate;
 }
+
 

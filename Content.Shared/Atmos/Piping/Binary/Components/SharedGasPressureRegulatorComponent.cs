@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
@@ -16,10 +16,11 @@ public enum GasPressureRegulatorUiKey : byte
 /// </summary>
 /// <param name="pressure">The new pressure threshold value.</param>
 [Serializable, NetSerializable]
-public sealed class GasPressureRegulatorChangeThresholdMessage(float pressure) : BoundUserInterfaceMessage
+public sealed partial class GasPressureRegulatorChangeThresholdMessage(float pressure) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// Gets the new threshold pressure value.
     /// </summary>
     public float ThresholdPressure { get; } = pressure;
 }
+

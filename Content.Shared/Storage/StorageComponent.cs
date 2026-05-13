@@ -171,7 +171,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class OpenNestedStorageEvent : EntityEventArgs
+    public sealed partial class OpenNestedStorageEvent : EntityEventArgs
     {
         public readonly NetEntity InteractedItemUid;
         public readonly NetEntity StorageUid;
@@ -184,7 +184,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageInteractWithItemEvent : EntityEventArgs
+    public sealed partial class StorageInteractWithItemEvent : EntityEventArgs
     {
         public readonly NetEntity InteractedItemUid;
 
@@ -198,7 +198,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageSetItemLocationEvent : EntityEventArgs
+    public sealed partial class StorageSetItemLocationEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
 
@@ -215,7 +215,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageTransferItemEvent : EntityEventArgs
+    public sealed partial class StorageTransferItemEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
 
@@ -235,7 +235,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
+    public sealed partial class StorageInsertItemIntoLocationEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
 
@@ -252,7 +252,7 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageSaveItemLocationEvent : EntityEventArgs
+    public sealed partial class StorageSaveItemLocationEvent : EntityEventArgs
     {
         public readonly NetEntity Item;
 
@@ -270,7 +270,7 @@ namespace Content.Shared.Storage
     /// Network event for displaying an animation of entities flying into a storage entity
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class AnimateInsertingEntitiesEvent : EntityEventArgs
+    public sealed partial class AnimateInsertingEntitiesEvent : EntityEventArgs
     {
         public readonly NetEntity Storage;
         public readonly List<NetEntity> StoredEntities;
@@ -309,3 +309,4 @@ namespace Content.Shared.Storage
         Vertical
     }
 }
+

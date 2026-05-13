@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cloning.CloningConsole
 {
     [Serializable, NetSerializable]
-    public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed partial class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly string? ScannerBodyInfo;
         public readonly string? ClonerBodyInfo;
@@ -52,7 +52,7 @@ namespace Content.Shared.Cloning.CloningConsole
     }
 
     [Serializable, NetSerializable]
-    public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
+    public sealed partial class UiButtonPressedMessage : BoundUserInterfaceMessage
     {
         public readonly UiButton Button;
 
@@ -62,3 +62,4 @@ namespace Content.Shared.Cloning.CloningConsole
         }
     }
 }
+

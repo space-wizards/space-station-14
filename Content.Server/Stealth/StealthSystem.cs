@@ -1,8 +1,9 @@
-﻿using Content.Shared.Stealth;
+using Content.Shared.Stealth;
 
 namespace Content.Server.Stealth;
 
-public sealed class StealthSystem : SharedStealthSystem
+public sealed partial class StealthSystem : SharedStealthSystem
 {
 
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Players.RateLimiting;
 /// <summary>
 /// Contains all data necessary to register a rate limit with <see cref="SharedPlayerRateLimitManager.Register"/>.
 /// </summary>
-public sealed class RateLimitRegistration(
+public sealed partial class RateLimitRegistration(
     CVarDef<float> cVarLimitPeriodLength,
     CVarDef<int> cVarLimitCount,
     Action<ICommonSession>? playerLimitedAction,
@@ -74,3 +74,4 @@ public enum RateLimitStatus : byte
     /// </summary>
     Blocked,
 }
+

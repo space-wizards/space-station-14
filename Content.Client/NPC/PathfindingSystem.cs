@@ -14,17 +14,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.NPC
 {
-    public sealed class PathfindingSystem : SharedPathfindingSystem
+    public sealed partial class PathfindingSystem : SharedPathfindingSystem
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IResourceCache _cache = default!;
-        [Dependency] private readonly NPCSteeringSystem _steering = default!;
-        [Dependency] private readonly MapSystem _mapSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IOverlayManager _overlayManager = default!;
+        [Dependency] private IResourceCache _cache = default!;
+        [Dependency] private NPCSteeringSystem _steering = default!;
+        [Dependency] private MapSystem _mapSystem = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -132,7 +132,7 @@ namespace Content.Client.NPC
         }
     }
 
-    public sealed class PathfindingOverlay : Overlay
+    public sealed partial class PathfindingOverlay : Overlay
     {
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eyeManager;
@@ -579,3 +579,4 @@ namespace Content.Client.NPC
         }
     }
 }
+

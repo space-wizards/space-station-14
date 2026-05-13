@@ -9,7 +9,7 @@ namespace Content.Shared.Chat;
 /// An event raised just before an emote is performed, providing systems with an opportunity to cancel the emote's performance.
 /// </summary>
 [ByRefEvent]
-public sealed class BeforeEmoteEvent(EntityUid source, EmotePrototype emote)
+public sealed partial class BeforeEmoteEvent(EntityUid source, EmotePrototype emote)
     : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public readonly EntityUid Source = source;
@@ -45,7 +45,8 @@ public record struct EmoteEvent(EmotePrototype Emote)
 /// Sent by the client when requesting the server to play a specific emote selected from the emote radial menu.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PlayEmoteMessage(ProtoId<EmotePrototype> protoId) : EntityEventArgs
+public sealed partial class PlayEmoteMessage(ProtoId<EmotePrototype> protoId) : EntityEventArgs
 {
     public readonly ProtoId<EmotePrototype> ProtoId = protoId;
 }
+

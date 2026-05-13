@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Administration.UI.CustomControls
 {
-    public sealed class UICommandButton : CommandButton
+    public sealed partial class UICommandButton : CommandButton
     {
         public Type? WindowType { get; set; }
         private DefaultWindow? _window;
@@ -18,3 +18,4 @@ namespace Content.Client.Administration.UI.CustomControls
         }
     }
 }
+

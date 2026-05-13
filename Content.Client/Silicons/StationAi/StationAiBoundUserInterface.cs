@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.StationAi;
 
-public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private SimpleRadialMenu? _menu;
 
@@ -44,3 +44,4 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         SendPredictedMessage(new StationAiRadialMessage { Event = p });
     }
 }
+

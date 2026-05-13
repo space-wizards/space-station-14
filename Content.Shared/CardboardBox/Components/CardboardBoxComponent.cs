@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -59,7 +59,7 @@ public sealed partial class CardboardBoxComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class PlayBoxEffectMessage : EntityEventArgs
+public sealed partial class PlayBoxEffectMessage : EntityEventArgs
 {
     public NetEntity Source;
     public NetEntity Mover;
@@ -70,3 +70,4 @@ public sealed class PlayBoxEffectMessage : EntityEventArgs
         Mover = mover;
     }
 }
+

@@ -6,8 +6,9 @@ namespace Content.Shared.NPC;
 /// Has debug information for HTN NPCs.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HTNMessage : EntityEventArgs
+public sealed partial class HTNMessage : EntityEventArgs
 {
     public NetEntity Uid;
     public string Text = string.Empty;
 }
+

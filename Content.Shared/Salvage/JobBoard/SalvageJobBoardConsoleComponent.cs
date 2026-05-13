@@ -39,7 +39,7 @@ public sealed partial class SalvageJobBoardConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class SalvageJobBoardConsoleState : BoundUserInterfaceState
+public sealed partial class SalvageJobBoardConsoleState : BoundUserInterfaceState
 {
     public string Title;
     public float Progression;
@@ -55,7 +55,7 @@ public sealed class SalvageJobBoardConsoleState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class JobBoardPrintLabelMessage : BoundUserInterfaceMessage
+public sealed partial class JobBoardPrintLabelMessage : BoundUserInterfaceMessage
 {
     public string JobId;
 
@@ -70,3 +70,4 @@ public enum SalvageJobBoardUiKey : byte
 {
     Key
 }
+

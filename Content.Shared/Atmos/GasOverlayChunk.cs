@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos
 {
     [Serializable, NetSerializable]
     [Access(typeof(SharedGasTileOverlaySystem))]
-    public sealed class GasOverlayChunk
+    public sealed partial class GasOverlayChunk
     {
         /// <summary>
         ///     The index of this chunk
@@ -89,3 +89,4 @@ namespace Content.Shared.Atmos
         }
     }
 }
+

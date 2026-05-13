@@ -4,7 +4,7 @@ using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class RandomSpawnRule : StationEventSystem<RandomSpawnRuleComponent>
+public sealed partial class RandomSpawnRule : StationEventSystem<RandomSpawnRuleComponent>
 {
     protected override void Started(EntityUid uid, RandomSpawnRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -17,3 +17,4 @@ public sealed class RandomSpawnRule : StationEventSystem<RandomSpawnRuleComponen
         }
     }
 }
+

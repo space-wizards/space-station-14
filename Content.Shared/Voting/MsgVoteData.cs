@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting
 {
-    public sealed class MsgVoteData : NetMessage
+    public sealed partial class MsgVoteData : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -86,3 +86,4 @@ namespace Content.Shared.Voting
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
     }
 }
+

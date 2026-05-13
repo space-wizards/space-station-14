@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public sealed class EditSolutionsEuiState : EuiStateBase
+    public sealed partial class EditSolutionsEuiState : EuiStateBase
     {
         public readonly NetEntity Target;
         public readonly List<(string, NetEntity)>? Solutions;
@@ -19,3 +19,4 @@ namespace Content.Shared.Administration
         }
     }
 }
+

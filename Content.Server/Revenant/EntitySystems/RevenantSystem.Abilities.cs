@@ -36,16 +36,16 @@ namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem
 {
-    [Dependency] private readonly EmagSystem _emagSystem = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly GhostSystem _ghost = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private EmagSystem _emagSystem = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private GhostSystem _ghost = default!;
+    [Dependency] private TileSystem _tile = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 

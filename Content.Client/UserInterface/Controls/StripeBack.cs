@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed class StripeBack : Container
+    public sealed partial class StripeBack : Container
     {
         private const float PadSize = 4;
         private const float EdgeSize = 2;
@@ -122,3 +122,4 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 }
+

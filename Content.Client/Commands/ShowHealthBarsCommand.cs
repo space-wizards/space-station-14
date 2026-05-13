@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Content.Client.Commands;
 
-public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
+public sealed partial class ShowHealthBarsCommand : LocalizedEntityCommands
 {
     public override string Command => "showhealthbars";
 
@@ -44,3 +44,4 @@ public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-showhealthbars-notify-disabled"));
     }
 }
+

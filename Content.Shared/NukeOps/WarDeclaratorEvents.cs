@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.NukeOps;
 
@@ -19,7 +19,7 @@ public enum WarConditionStatus : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class WarDeclaratorBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class WarDeclaratorBoundUserInterfaceState : BoundUserInterfaceState
 {
     public WarConditionStatus? Status;
     public TimeSpan ShuttleDisabledTime;
@@ -35,7 +35,7 @@ public sealed class WarDeclaratorBoundUserInterfaceState : BoundUserInterfaceSta
 }
 
 [Serializable, NetSerializable]
-public sealed class WarDeclaratorActivateMessage : BoundUserInterfaceMessage
+public sealed partial class WarDeclaratorActivateMessage : BoundUserInterfaceMessage
 {
     public string Message { get; }
 
@@ -44,3 +44,4 @@ public sealed class WarDeclaratorActivateMessage : BoundUserInterfaceMessage
         Message = msg;
     }
 }
+

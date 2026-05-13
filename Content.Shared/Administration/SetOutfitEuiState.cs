@@ -4,8 +4,9 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public sealed class SetOutfitEuiState : EuiStateBase
+    public sealed partial class SetOutfitEuiState : EuiStateBase
     {
         public NetEntity TargetNetEntity;
     }
 }
+

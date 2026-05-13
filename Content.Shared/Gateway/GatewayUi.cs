@@ -22,7 +22,7 @@ public enum GatewayUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class GatewayBoundUserInterfaceState : BoundUserInterfaceState
 {
     /// <summary>
     /// List of enabled destinations and information about them.
@@ -82,7 +82,7 @@ public record struct GatewayDestinationData
 }
 
 [Serializable, NetSerializable]
-public sealed class GatewayOpenPortalMessage : BoundUserInterfaceMessage
+public sealed partial class GatewayOpenPortalMessage : BoundUserInterfaceMessage
 {
     public NetEntity Destination;
 
@@ -91,3 +91,4 @@ public sealed class GatewayOpenPortalMessage : BoundUserInterfaceMessage
         Destination = destination;
     }
 }
+

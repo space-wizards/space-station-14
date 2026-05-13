@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
@@ -10,7 +10,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasVolumePumpWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasVolumePumpBoundUserInterface : BoundUserInterface
+    public sealed partial class GasVolumePumpBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private float _maxTransferRate;
@@ -64,3 +64,4 @@ namespace Content.Client.Atmos.UI
         }
     }
 }
+

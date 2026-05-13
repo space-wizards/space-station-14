@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// This handles <see cref="TriggerOnEmbedComponent"/> subscriptions.
 /// </summary>
-public sealed class TriggerOnEmbedSystem : TriggerOnXSystem
+public sealed partial class TriggerOnEmbedSystem : TriggerOnXSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -29,3 +29,4 @@ public sealed class TriggerOnEmbedSystem : TriggerOnXSystem
         Trigger.Trigger(ent, user, ent.Comp.KeyOut);
     }
 }
+

@@ -26,7 +26,7 @@ public sealed partial class DoAfterComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class DoAfterComponentState : ComponentState
+public sealed partial class DoAfterComponentState : ComponentState
 {
     public readonly ushort NextId;
     public readonly Dictionary<ushort, DoAfter> DoAfters;
@@ -60,3 +60,4 @@ public enum DoAfterStatus : byte
     Cancelled,
     Finished,
 }
+

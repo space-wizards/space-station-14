@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Thief;
 
 [UsedImplicitly]
-public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
+public sealed partial class ThiefBackpackBoundUserInterface : BoundUserInterface
 {
     private ThiefBackpackMenu? _window;
 
@@ -41,3 +41,4 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         SendMessage(new ThiefBackpackApproveMessage());
     }
 }
+

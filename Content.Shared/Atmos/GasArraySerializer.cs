@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Atmos;
 
-public sealed class GasArraySerializer : ITypeSerializer<float[], SequenceDataNode>, ITypeSerializer<float[], MappingDataNode>
+public sealed partial class GasArraySerializer : ITypeSerializer<float[], SequenceDataNode>, ITypeSerializer<float[], MappingDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager,
         SequenceDataNode node,
@@ -103,3 +103,4 @@ public sealed class GasArraySerializer : ITypeSerializer<float[], SequenceDataNo
         return mapping;
     }
 }
+

@@ -6,7 +6,7 @@ namespace Content.Client.Shuttles;
 /// <summary>
 /// Handles making a thruster visibly turn on/emit an exhaust plume according to its state.
 /// </summary>
-public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
+public sealed partial class ThrusterSystem : VisualizerSystem<ThrusterComponent>
 {
     /// <summary>
     /// Updates whether or not the thruster is visibly active/thrusting.
@@ -49,3 +49,4 @@ public enum ThrusterVisualLayers : byte
     Thrusting,
     ThrustingUnshaded,
 }
+

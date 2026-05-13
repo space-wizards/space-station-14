@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Alert;
@@ -7,7 +7,7 @@ namespace Content.Shared.Alert;
 /// A message that calls the click interaction on a alert
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ClickAlertEvent : EntityEventArgs
+public sealed partial class ClickAlertEvent : EntityEventArgs
 {
     public readonly ProtoId<AlertPrototype> Type;
 
@@ -16,3 +16,4 @@ public sealed class ClickAlertEvent : EntityEventArgs
         Type = alertType;
     }
 }
+

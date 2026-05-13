@@ -8,7 +8,7 @@ namespace Content.Server.GuideGenerator
     // (serializing objects that inherit abstract base classes or interfaces) since
     // System.Text.Json (our new JSON solution) doesn't support that while Newtonsoft.Json (our old
     // solution) does.
-    public sealed class UniversalJsonConverter<T> : JsonConverter<T>
+    public sealed partial class UniversalJsonConverter<T> : JsonConverter<T>
     {
 
         // This converter can only convert types that are T or descend from T.
@@ -98,3 +98,4 @@ namespace Content.Server.GuideGenerator
         }
     }
 }
+

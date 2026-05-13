@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
+public sealed partial class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -22,3 +22,4 @@ public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
+

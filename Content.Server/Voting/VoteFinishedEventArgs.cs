@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 
 
 namespace Content.Server.Voting
 {
-    public sealed class VoteFinishedEventArgs : EventArgs
+    public sealed partial class VoteFinishedEventArgs : EventArgs
     {
         /// <summary>
         ///     Null if stalemate.
@@ -28,3 +28,4 @@ namespace Content.Server.Voting
         }
     }
 }
+

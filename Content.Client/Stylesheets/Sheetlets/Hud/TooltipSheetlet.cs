@@ -1,4 +1,4 @@
-﻿using Content.Client.Examine;
+using Content.Client.Examine;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
@@ -11,7 +11,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITooltipConfig
+public sealed partial class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITooltipConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -62,3 +62,4 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
         ];
     }
 }
+

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.SuitSensor;
 
 [Serializable, NetSerializable]
-public sealed class SuitSensorStatus
+public sealed partial class SuitSensorStatus
 {
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {
@@ -84,3 +84,4 @@ public sealed partial class SuitSensorChangeDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+

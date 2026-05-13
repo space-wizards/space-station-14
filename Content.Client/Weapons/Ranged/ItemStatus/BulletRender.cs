@@ -142,7 +142,7 @@ public abstract class BaseBulletRenderer : Control
 /// <remarks>
 /// This is a custom control to allow complex responsive layout logic.
 /// </remarks>
-public sealed class BulletRender : BaseBulletRenderer
+public sealed partial class BulletRender : BaseBulletRenderer
 {
     public const int MinCountPerRow = 7;
 
@@ -234,7 +234,7 @@ public sealed class BulletRender : BaseBulletRenderer
     }
 }
 
-public sealed class BatteryBulletRenderer : BaseBulletRenderer
+public sealed partial class BatteryBulletRenderer : BaseBulletRenderer
 {
     private static readonly Color ItemColor = Color.FromHex("#E00000");
     private static readonly Color ItemColorGone = Color.Black;
@@ -261,3 +261,4 @@ public sealed class BatteryBulletRenderer : BaseBulletRenderer
         handle.DrawRect(UIBox2.FromDimensions(renderPos, new Vector2(SizeH, SizeV)), color);
     }
 }
+

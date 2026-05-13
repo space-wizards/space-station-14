@@ -1,10 +1,10 @@
-﻿using Content.Client.Hands.UI;
+using Content.Client.Hands.UI;
 using Content.Client.Items;
 using Content.Shared.Inventory.VirtualItem;
 
 namespace Content.Client.Inventory;
 
-public sealed class VirtualItemSystem : SharedVirtualItemSystem
+public sealed partial class VirtualItemSystem : SharedVirtualItemSystem
 {
     public override void Initialize()
     {
@@ -13,3 +13,4 @@ public sealed class VirtualItemSystem : SharedVirtualItemSystem
         Subs.ItemStatus<VirtualItemComponent>(_ => new HandVirtualItemStatus());
     }
 }
+

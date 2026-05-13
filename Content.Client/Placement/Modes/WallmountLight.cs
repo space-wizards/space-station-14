@@ -5,7 +5,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Placement.Modes
 {
-    public sealed class WallmountLight : PlacementMode
+    public sealed partial class WallmountLight : PlacementMode
     {
         public WallmountLight(PlacementManager pMan) : base(pMan)
         {
@@ -61,3 +61,4 @@ namespace Content.Client.Placement.Modes
         }
     }
 }
+

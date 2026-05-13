@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration.Notes;
 
 [Serializable, NetSerializable]
-public sealed class AdminNotesEuiState : EuiStateBase
+public sealed partial class AdminNotesEuiState : EuiStateBase
 {
     public AdminNotesEuiState(string notedPlayerName, Dictionary<(int, NoteType), SharedAdminNote> notes, bool canCreate, bool canDelete, bool canEdit)
     {
@@ -26,7 +26,7 @@ public sealed class AdminNotesEuiState : EuiStateBase
 public static class AdminNoteEuiMsg
 {
     [Serializable, NetSerializable]
-    public sealed class CreateNoteRequest : EuiMessageBase
+    public sealed partial class CreateNoteRequest : EuiMessageBase
     {
         public CreateNoteRequest(NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
         {
@@ -45,7 +45,7 @@ public static class AdminNoteEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class DeleteNoteRequest : EuiMessageBase
+    public sealed partial class DeleteNoteRequest : EuiMessageBase
     {
         public DeleteNoteRequest(int id, NoteType type)
         {
@@ -58,7 +58,7 @@ public static class AdminNoteEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class EditNoteRequest : EuiMessageBase
+    public sealed partial class EditNoteRequest : EuiMessageBase
     {
         public EditNoteRequest(int id, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
         {
@@ -78,3 +78,4 @@ public static class AdminNoteEuiMsg
         public DateTime? ExpiryTime { get; set; }
     }
 }
+

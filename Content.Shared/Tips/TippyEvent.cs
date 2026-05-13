@@ -8,7 +8,7 @@ namespace Content.Shared.Tips;
 /// Networked event that makes a client show a message on their screen using tippy or another protoype.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class TippyEvent(string msg, EntProtoId? proto, float speakTime, float slideTime, float waddleInterval) : EntityEventArgs
+public sealed partial class TippyEvent(string msg, EntProtoId? proto, float speakTime, float slideTime, float waddleInterval) : EntityEventArgs
 {
     /// <summary>
     /// The text to show in the speech bubble.
@@ -35,3 +35,4 @@ public sealed class TippyEvent(string msg, EntProtoId? proto, float speakTime, f
     /// </summary>
     public float WaddleInterval = waddleInterval;
 }
+

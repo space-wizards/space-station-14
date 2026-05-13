@@ -21,7 +21,7 @@ public sealed partial class ExplosionVisualsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ExplosionVisualsState : ComponentState
+public sealed partial class ExplosionVisualsState : ComponentState
 {
     public MapCoordinates Epicenter;
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
@@ -55,3 +55,4 @@ public enum ExplosionAppearanceData
 {
     Progress, // iteration index tracker for explosions that are still expanding outwards,
 }
+

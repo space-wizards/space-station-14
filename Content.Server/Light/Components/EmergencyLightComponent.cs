@@ -47,7 +47,7 @@ public enum EmergencyLightState : byte
     On
 }
 
-public sealed class EmergencyLightEvent : EntityEventArgs
+public sealed partial class EmergencyLightEvent : EntityEventArgs
 {
     public EmergencyLightState State { get; }
 
@@ -56,3 +56,4 @@ public sealed class EmergencyLightEvent : EntityEventArgs
         State = state;
     }
 }
+

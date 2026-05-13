@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Inventory.Events;
+namespace Content.Shared.Inventory.Events;
 
 public abstract class UnequippedEventBase(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition) : EntityEventArgs
 {
@@ -32,11 +32,12 @@ public abstract class UnequippedEventBase(EntityUid equipTarget, EntityUid equip
 /// <summary>
 /// Raised directed on an equipee when something was unequipped.
 /// </summary>
-public sealed class DidUnequipEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+public sealed partial class DidUnequipEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
     : UnequippedEventBase(equipTarget, equipment, slotDefinition);
 
 /// <summary>
 /// Raised directed on equipment when it was unequipped from an equipee.
 /// </summary>
-public sealed class GotUnequippedEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
+public sealed partial class GotUnequippedEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition)
     : UnequippedEventBase(equipTarget, equipment, slotDefinition);
+

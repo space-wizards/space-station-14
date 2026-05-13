@@ -1,10 +1,10 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class LizardAccentSystem : EntitySystem
+public sealed partial class LizardAccentSystem : EntitySystem
 {
     private static readonly Regex RegexLowerS = new("s+");
     private static readonly Regex RegexUpperS = new("S+");
@@ -36,3 +36,4 @@ public sealed class LizardAccentSystem : EntitySystem
         args.Message = message;
     }
 }
+

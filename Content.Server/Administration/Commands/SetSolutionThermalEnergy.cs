@@ -7,9 +7,9 @@ using System.Linq;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SetSolutionThermalEnergy : LocalizedCommands
+    public sealed partial class SetSolutionThermalEnergy : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public override string Command => "setsolutionthermalenergy";
 
@@ -67,3 +67,4 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
+

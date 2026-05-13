@@ -18,7 +18,7 @@ namespace Content.Server.GameTicking
     [UsedImplicitly]
     public sealed partial class GameTicker
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         private void InitializePlayer()
         {
@@ -225,7 +225,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    public sealed class PlayerJoinedLobbyEvent : EntityEventArgs
+    public sealed partial class PlayerJoinedLobbyEvent : EntityEventArgs
     {
         public readonly ICommonSession PlayerSession;
 
@@ -235,3 +235,4 @@ namespace Content.Server.GameTicking
         }
     }
 }
+

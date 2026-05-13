@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class GodModeCommand : LocalizedEntityCommands
+    public sealed partial class GodModeCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly SharedGodmodeSystem _godmodeSystem = default!;
+        [Dependency] private SharedGodmodeSystem _godmodeSystem = default!;
 
         public override string Command => "godmode";
 
@@ -64,3 +64,4 @@ namespace Content.Server.Damage.Commands
         }
     }
 }
+

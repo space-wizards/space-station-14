@@ -1,11 +1,11 @@
-﻿using Content.Shared.Eui;
+using Content.Shared.Eui;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public sealed class PermissionsEuiState : EuiStateBase
+    public sealed partial class PermissionsEuiState : EuiStateBase
     {
         public bool IsLoading;
 
@@ -35,7 +35,7 @@ namespace Content.Shared.Administration
     public static class PermissionsEuiMsg
     {
         [Serializable, NetSerializable]
-        public sealed class AddAdmin : EuiMessageBase
+        public sealed partial class AddAdmin : EuiMessageBase
         {
             public string UserNameOrId = string.Empty;
             public string? Title;
@@ -46,13 +46,13 @@ namespace Content.Shared.Administration
         }
 
         [Serializable, NetSerializable]
-        public sealed class RemoveAdmin : EuiMessageBase
+        public sealed partial class RemoveAdmin : EuiMessageBase
         {
             public NetUserId UserId;
         }
 
         [Serializable, NetSerializable]
-        public sealed class UpdateAdmin : EuiMessageBase
+        public sealed partial class UpdateAdmin : EuiMessageBase
         {
             public NetUserId UserId;
             public string? Title;
@@ -64,20 +64,20 @@ namespace Content.Shared.Administration
 
 
         [Serializable, NetSerializable]
-        public sealed class AddAdminRank : EuiMessageBase
+        public sealed partial class AddAdminRank : EuiMessageBase
         {
             public string Name = string.Empty;
             public AdminFlags Flags;
         }
 
         [Serializable, NetSerializable]
-        public sealed class RemoveAdminRank : EuiMessageBase
+        public sealed partial class RemoveAdminRank : EuiMessageBase
         {
             public int Id;
         }
 
         [Serializable, NetSerializable]
-        public sealed class UpdateAdminRank : EuiMessageBase
+        public sealed partial class UpdateAdminRank : EuiMessageBase
         {
             public int Id;
 
@@ -86,3 +86,4 @@ namespace Content.Shared.Administration
         }
     }
 }
+

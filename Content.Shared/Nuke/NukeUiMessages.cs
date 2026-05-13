@@ -14,12 +14,12 @@ namespace Content.Shared.Nuke
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeAnchorMessage : BoundUserInterfaceMessage
+    public sealed partial class NukeAnchorMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeKeypadMessage : BoundUserInterfaceMessage
+    public sealed partial class NukeKeypadMessage : BoundUserInterfaceMessage
     {
         public int Value;
 
@@ -30,17 +30,18 @@ namespace Content.Shared.Nuke
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeKeypadClearMessage : BoundUserInterfaceMessage
+    public sealed partial class NukeKeypadClearMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeKeypadEnterMessage : BoundUserInterfaceMessage
+    public sealed partial class NukeKeypadEnterMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class NukeArmedMessage : BoundUserInterfaceMessage
+    public sealed partial class NukeArmedMessage : BoundUserInterfaceMessage
     {
     }
 }
+

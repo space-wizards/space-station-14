@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Shuttles.BUIStates;
 
 [Serializable, NetSerializable]
-public sealed class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NavInterfaceState NavState;
     public ShuttleMapInterfaceState MapState;
@@ -17,3 +17,4 @@ public sealed class ShuttleBoundUserInterfaceState : BoundUserInterfaceState
         DockState = dockState;
     }
 }
+

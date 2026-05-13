@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry
     /// <summary>
     /// This class holds constants that are shared between client and server.
     /// </summary>
-    public sealed class SharedChemMaster
+    public sealed partial class SharedChemMaster
     {
         public const uint PillTypes = 20;
         public const string BufferSolutionName = "buffer";
@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSetModeMessage : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterSetModeMessage : BoundUserInterfaceMessage
     {
         public readonly ChemMasterMode ChemMasterMode;
 
@@ -30,7 +30,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSetPillTypeMessage : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterSetPillTypeMessage : BoundUserInterfaceMessage
     {
         public readonly uint PillType;
 
@@ -41,7 +41,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterReagentAmountButtonMessage : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterReagentAmountButtonMessage : BoundUserInterfaceMessage
     {
         public readonly ReagentId ReagentId;
         public readonly ChemMasterReagentAmount Amount;
@@ -56,7 +56,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterCreatePillsMessage : BoundUserInterfaceMessage
     {
         public readonly uint Dosage;
         public readonly uint Number;
@@ -71,7 +71,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterOutputToBottleMessage : BoundUserInterfaceMessage
     {
         public readonly uint Dosage;
         public readonly string Label;
@@ -84,7 +84,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource drawSource) : BoundUserInterfaceMessage
+    public sealed partial class ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource drawSource) : BoundUserInterfaceMessage
     {
         public readonly ChemMasterDrawSource DrawSource = drawSource;
     }
@@ -104,7 +104,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage;
+    public sealed partial class ChemMasterSortingTypeCycleMessage : BoundUserInterfaceMessage;
 
 
     public enum ChemMasterReagentAmount
@@ -114,10 +114,10 @@ namespace Content.Shared.Chemistry
         U10 = 10,
         U15 = 15,
         U20 = 20,
-        U25 = 25,
         U30 = 30,
-        U50 = 50,
-        U100 = 100,
+        U40 = 40,
+        U60 = 60,
+        U120 = 120,
         All,
     }
 
@@ -142,7 +142,7 @@ namespace Content.Shared.Chemistry
     /// Information about the capacity and contents of a container for display in the UI
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class ContainerInfo
+    public sealed partial class ContainerInfo
     {
         /// <summary>
         /// The container name to show to the player
@@ -175,7 +175,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed partial class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly ContainerInfo? InputContainerInfo;
         public readonly ContainerInfo? OutputContainerInfo;
@@ -222,3 +222,4 @@ namespace Content.Shared.Chemistry
         Key
     }
 }
+

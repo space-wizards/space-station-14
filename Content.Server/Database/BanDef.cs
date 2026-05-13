@@ -9,7 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Database
 {
-    public sealed class BanDef
+    public sealed partial class BanDef
     {
         public int? Id { get; }
         public BanType Type { get; }
@@ -126,3 +126,4 @@ namespace Content.Server.Database
         }
     }
 }
+

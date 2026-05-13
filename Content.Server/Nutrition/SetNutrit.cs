@@ -9,7 +9,7 @@ using System.Linq;
 namespace Content.Server.Nutrition;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class SetNutrit : LocalizedEntityCommands
+public sealed partial class SetNutrit : LocalizedEntityCommands
 {
     public override string Command => "setnutrit";
 
@@ -113,3 +113,4 @@ public sealed class SetNutrit : LocalizedEntityCommands
         }
     }
 }
+

@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.UserInterface.Controls;
 
 [CommonSheetlet]
-public sealed class ConfirmButtonSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed partial class ConfirmButtonSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
@@ -30,3 +30,4 @@ public sealed class ConfirmButtonSheetlet : Sheetlet<NanotrasenStylesheet>
         ];
     }
 }
+

@@ -1,11 +1,11 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Shared.Mind;
 
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed class MindStringRepresentationConverter : AdminLogConverter<MindStringRepresentation>
+public sealed partial class MindStringRepresentationConverter : AdminLogConverter<MindStringRepresentation>
 {
     private JsonConverter<EntityStringRepresentation> _converter = null!;
 
@@ -36,3 +36,4 @@ public sealed class MindStringRepresentationConverter : AdminLogConverter<MindSt
         writer.WriteEndObject();
     }
 }
+

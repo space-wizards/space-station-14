@@ -126,7 +126,7 @@ public abstract class ExplosionTileFlood
 ///     This basically exists to replace the use of HashSet&lt;Vector2i&gt; if all you need is the the functions Contains()
 ///     and Add(). This is both faster and apparently allocates less. Does not support iterating over contents
 /// </remarks>
-public sealed class UniqueVector2iSet
+public sealed partial class UniqueVector2iSet
 {
     private const int ChunkSize = 32; // # of bits in an integer.
 
@@ -196,3 +196,4 @@ public sealed class UniqueVector2iSet
         }
     }
 }
+

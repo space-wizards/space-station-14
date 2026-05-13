@@ -1,4 +1,4 @@
-﻿using Content.Client.Changelog;
+using Content.Client.Changelog;
 using Content.Client.Credits;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Info
 {
-    public sealed class DevInfoBanner : BoxContainer
+    public sealed partial class DevInfoBanner : BoxContainer
     {
         public DevInfoBanner() {
             var buttons = new BoxContainer
@@ -36,3 +36,4 @@ namespace Content.Client.Info
         }
     }
 }
+

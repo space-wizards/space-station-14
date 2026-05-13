@@ -11,12 +11,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class PlayGlobalSoundCommand : LocalizedCommands
+public sealed partial class PlayGlobalSoundCommand : LocalizedCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IResourceManager _res = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private IResourceManager _res = default!;
 
     public override string Command => "playglobalsound";
 
@@ -114,3 +114,4 @@ public sealed class PlayGlobalSoundCommand : LocalizedCommands
         return CompletionResult.Empty;
     }
 }
+

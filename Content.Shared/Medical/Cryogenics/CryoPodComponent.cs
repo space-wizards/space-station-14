@@ -125,7 +125,7 @@ public enum CryoPodUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
+public sealed partial class CryoPodUserMessage : BoundUserInterfaceMessage
 {
     public GasMixEntry GasMix;
     public HealthAnalyzerUiState Health;
@@ -152,7 +152,7 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class CryoPodSimpleUiMessage : BoundUserInterfaceMessage
+public sealed partial class CryoPodSimpleUiMessage : BoundUserInterfaceMessage
 {
     public enum MessageType { EjectPatient, EjectBeaker }
 
@@ -165,7 +165,7 @@ public sealed class CryoPodSimpleUiMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class CryoPodInjectUiMessage : BoundUserInterfaceMessage
+public sealed partial class CryoPodInjectUiMessage : BoundUserInterfaceMessage
 {
     public readonly FixedPoint2 Quantity;
 
@@ -174,3 +174,4 @@ public sealed class CryoPodInjectUiMessage : BoundUserInterfaceMessage
         Quantity = quantity;
     }
 }
+

@@ -11,10 +11,10 @@ using Content.Shared.GameTicking.Prototypes;
 
 namespace Content.Shared.GameTicking
 {
-    public abstract class SharedGameTicker : EntitySystem
+    public abstract partial class SharedGameTicker : EntitySystem
     {
-        [Dependency] private readonly IReplayRecordingManager _replay = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IReplayRecordingManager _replay = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         /// <summary>
         ///     A list storing the start times of all game rules that have been started this round.
@@ -61,17 +61,17 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerJoinLobbyEvent : EntityEventArgs
+    public sealed partial class TickerJoinLobbyEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerJoinGameEvent : EntityEventArgs
+    public sealed partial class TickerJoinGameEvent : EntityEventArgs
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerLateJoinStatusEvent : EntityEventArgs
+    public sealed partial class TickerLateJoinStatusEvent : EntityEventArgs
     {
         // TODO: Make this a replicated CVar, honestly.
         public bool Disallowed { get; }
@@ -83,7 +83,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerConnectionStatusEvent : EntityEventArgs
+    public sealed partial class TickerConnectionStatusEvent : EntityEventArgs
     {
         public TimeSpan RoundStartTimeSpan { get; }
         public TickerConnectionStatusEvent(TimeSpan roundStartTimeSpan)
@@ -93,7 +93,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerLobbyStatusEvent : EntityEventArgs
+    public sealed partial class TickerLobbyStatusEvent : EntityEventArgs
     {
         public bool IsRoundStarted { get; }
         public ProtoId<LobbyBackgroundPrototype>? LobbyBackground { get; }
@@ -115,7 +115,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerLobbyInfoEvent : EntityEventArgs
+    public sealed partial class TickerLobbyInfoEvent : EntityEventArgs
     {
         public string TextBlob { get; }
 
@@ -126,7 +126,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerLobbyCountdownEvent : EntityEventArgs
+    public sealed partial class TickerLobbyCountdownEvent : EntityEventArgs
     {
         /// <summary>
         /// The game time that the game will start at.
@@ -146,7 +146,7 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerJobsAvailableEvent(
+    public sealed partial class TickerJobsAvailableEvent(
         Dictionary<NetEntity, string> stationNames,
         Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>> jobsAvailableByStation)
         : EntityEventArgs
@@ -232,3 +232,4 @@ namespace Content.Shared.GameTicking
         JoinedGame,
     }
 }
+

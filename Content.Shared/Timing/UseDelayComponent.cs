@@ -28,7 +28,7 @@ public sealed partial class UseDelayComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class UseDelayComponentState : IComponentState
+public sealed partial class UseDelayComponentState : IComponentState
 {
     public Dictionary<string, UseDelayInfo> Delays = new();
 }
@@ -51,3 +51,4 @@ public sealed partial class UseDelayInfo
         EndTime = endTime;
     }
 }
+

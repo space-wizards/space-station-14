@@ -1,10 +1,10 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed class LogFilter
+public sealed partial class LogFilter
 {
     public CancellationToken CancellationToken { get; set; }
 
@@ -36,3 +36,4 @@ public sealed class LogFilter
 
     public DateOrder DateOrder { get; set; } = DateOrder.Descending;
 }
+

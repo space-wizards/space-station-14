@@ -1,4 +1,4 @@
-﻿using Content.Client.Resources;
+using Content.Client.Resources;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
@@ -13,7 +13,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class WindowSheetlet<T> : Sheetlet<T>
+public sealed partial class WindowSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
@@ -130,3 +130,4 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
         ];
     }
 }
+

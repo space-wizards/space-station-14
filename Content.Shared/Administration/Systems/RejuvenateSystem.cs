@@ -1,8 +1,8 @@
-﻿using Content.Shared.Rejuvenate;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Administration.Systems;
 
-public sealed class RejuvenateSystem : EntitySystem
+public sealed partial class RejuvenateSystem : EntitySystem
 {
     /// <summary>
     /// Fully heals the target, removing all damage, debuffs or other negative status effects.
@@ -12,3 +12,4 @@ public sealed class RejuvenateSystem : EntitySystem
         RaiseLocalEvent(target, new RejuvenateEvent());
     }
 }
+

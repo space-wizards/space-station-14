@@ -1,9 +1,10 @@
-﻿using Content.Shared.Armor;
+using Content.Shared.Armor;
 
 namespace Content.Client.Armor;
 
 /// <inheritdoc/>
-public sealed class ArmorSystem : SharedArmorSystem
+public sealed partial class ArmorSystem : SharedArmorSystem
 {
 
 }
+

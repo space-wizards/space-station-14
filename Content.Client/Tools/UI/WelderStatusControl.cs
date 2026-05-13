@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Tools.UI;
 
-public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusControl.Data>
+public sealed partial class WelderStatusControl : PollingItemStatusControl<WelderStatusControl.Data>
 {
     private readonly Entity<WelderComponent> _parent;
     private readonly IEntityManager _entityManager;
@@ -43,3 +43,4 @@ public sealed class WelderStatusControl : PollingItemStatusControl<WelderStatusC
 
     public record struct Data(FixedPoint2 Fuel, FixedPoint2 FuelCapacity, bool Lit);
 }
+

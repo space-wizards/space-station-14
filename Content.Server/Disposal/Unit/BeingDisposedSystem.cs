@@ -1,10 +1,10 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Disposal.Unit;
 
-public sealed class BeingDisposedSystem : EntitySystem
+public sealed partial class BeingDisposedSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -40,3 +40,4 @@ public sealed class BeingDisposedSystem : EntitySystem
         }
     }
 }
+

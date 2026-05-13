@@ -10,11 +10,11 @@ using Robust.Shared.Player;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Logs)]
-    public sealed class ListObjectivesCommand : LocalizedEntityCommands
+    public sealed partial class ListObjectivesCommand : LocalizedEntityCommands
         {
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-        [Dependency] private readonly SharedObjectivesSystem _objectivesSystem = default!;
-        [Dependency] private readonly IPlayerManager _players = default!;
+        [Dependency] private SharedMindSystem _mindSystem = default!;
+        [Dependency] private SharedObjectivesSystem _objectivesSystem = default!;
+        [Dependency] private IPlayerManager _players = default!;
 
         public override string Command => "lsobjectives";
 
@@ -72,3 +72,4 @@ namespace Content.Server.Objectives.Commands
         }
     }
 }
+

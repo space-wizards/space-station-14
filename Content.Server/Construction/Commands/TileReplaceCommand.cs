@@ -7,10 +7,10 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class TileReplaceCommand : LocalizedEntityCommands
+public sealed partial class TileReplaceCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private ITileDefinitionManager _tileDef = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     // ReSharper disable once StringLiteralTypo
     public override string Command => "tilereplace";
@@ -81,4 +81,5 @@ public sealed class TileReplaceCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-tilereplace-changed", ("changed", changed)));
     }
 }
+
 

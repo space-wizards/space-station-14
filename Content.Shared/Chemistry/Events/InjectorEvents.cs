@@ -1,4 +1,4 @@
-﻿using Content.Shared.DoAfter;
+using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 
@@ -31,7 +31,7 @@ public abstract partial class BeforeInjectTargetEvent(EntityUid user, EntityUid 
 ///     This event is raised on the user using the injector before the injector is injected.
 ///     The event is triggered on the user and all their clothing.
 /// </summary>
-public sealed class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
+public sealed partial class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage);
 
 /// <summary>
@@ -39,5 +39,6 @@ public sealed class SelfBeforeInjectEvent(EntityUid user, EntityUid usedInjector
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
 [ByRefEvent]
-public sealed class TargetBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
+public sealed partial class TargetBeforeInjectEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : BeforeInjectTargetEvent(user, usedInjector, target, overrideMessage);
+

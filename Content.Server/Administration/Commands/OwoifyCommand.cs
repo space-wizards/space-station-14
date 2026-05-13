@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class OwoifyCommand : LocalizedCommands
+public sealed partial class OwoifyCommand : LocalizedCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public override string Command => "owoify";
 
@@ -40,3 +40,4 @@ public sealed class OwoifyCommand : LocalizedCommands
         metaDataSys.SetEntityDescription(eUid.Value, owoSys.Accentuate(meta.EntityDescription), meta);
     }
 }
+

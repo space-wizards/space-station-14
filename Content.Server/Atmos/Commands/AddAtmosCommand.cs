@@ -8,9 +8,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class AddAtmosCommand : LocalizedCommands
+    public sealed partial class AddAtmosCommand : LocalizedCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public override string Command => "addatmos";
 
@@ -48,3 +48,4 @@ namespace Content.Server.Atmos.Commands
         }
     }
 }
+

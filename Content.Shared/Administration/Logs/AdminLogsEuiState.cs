@@ -1,11 +1,11 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.Logs;
 
 [Serializable, NetSerializable]
-public sealed class AdminLogsEuiState : EuiStateBase
+public sealed partial class AdminLogsEuiState : EuiStateBase
 {
     public AdminLogsEuiState(int roundId, Dictionary<Guid, string> players, int roundLogs)
     {
@@ -26,7 +26,7 @@ public sealed class AdminLogsEuiState : EuiStateBase
 public static class AdminLogsEuiMsg
 {
     [Serializable, NetSerializable]
-    public sealed class SetLogFilter : EuiMessageBase
+    public sealed partial class SetLogFilter : EuiMessageBase
     {
         public SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
         {
@@ -41,7 +41,7 @@ public static class AdminLogsEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class NewLogs : EuiMessageBase
+    public sealed partial class NewLogs : EuiMessageBase
     {
         public NewLogs(List<SharedAdminLog> logs, bool replace, bool hasNext)
         {
@@ -56,7 +56,7 @@ public static class AdminLogsEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class LogsRequest : EuiMessageBase
+    public sealed partial class LogsRequest : EuiMessageBase
     {
         public LogsRequest(
             int? roundId,
@@ -98,7 +98,8 @@ public static class AdminLogsEuiMsg
     }
 
     [Serializable, NetSerializable]
-    public sealed class NextLogsRequest : EuiMessageBase
+    public sealed partial class NextLogsRequest : EuiMessageBase
     {
     }
 }
+

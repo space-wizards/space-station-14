@@ -3,7 +3,7 @@ using Content.Shared.Ghost;
 
 namespace Content.Shared.Warps;
 
-public sealed class WarpPointSystem : EntitySystem
+public sealed partial class WarpPointSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -20,3 +20,4 @@ public sealed class WarpPointSystem : EntitySystem
         args.PushText(Loc.GetString("warp-point-component-on-examine-success", ("location", loc)));
     }
 }
+

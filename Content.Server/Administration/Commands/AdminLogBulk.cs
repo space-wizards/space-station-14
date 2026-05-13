@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -9,7 +9,7 @@ namespace Content.Server.Administration.Commands;
 
 #if DEBUG
 [AdminCommand(AdminFlags.Host)]
-public sealed class AdminLogBulk : LocalizedCommands
+public sealed partial class AdminLogBulk : LocalizedCommands
 {
     public override string Command => "adminlogbulk";
 
@@ -59,3 +59,4 @@ public sealed class AdminLogBulk : LocalizedCommands
     }
 }
 #endif
+

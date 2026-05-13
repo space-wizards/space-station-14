@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Kitchen.UI;
 
-public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GrinderMenu? _menu;
@@ -61,3 +61,4 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
         SendPredictedMessage(new ReagentGrinderEjectChamberContentMessage(EntMan.GetNetEntity(uid)));
     }
 }
+

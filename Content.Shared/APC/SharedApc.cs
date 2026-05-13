@@ -175,7 +175,7 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
+    public sealed partial class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
     {
         public readonly bool MainBreaker;
         public readonly int Power;
@@ -218,7 +218,7 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
+    public sealed partial class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
     {
     }
 
@@ -235,3 +235,4 @@ namespace Content.Shared.APC
         Key,
     }
 }
+

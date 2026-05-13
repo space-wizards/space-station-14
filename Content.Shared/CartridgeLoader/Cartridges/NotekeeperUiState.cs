@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class NotekeeperUiState : BoundUserInterfaceState
+public sealed partial class NotekeeperUiState : BoundUserInterfaceState
 {
     public List<string> Notes;
 
@@ -12,3 +12,4 @@ public sealed class NotekeeperUiState : BoundUserInterfaceState
         Notes = notes;
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Systems;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
@@ -6,7 +6,7 @@ using Robust.Shared.Toolshed.Errors;
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class RejuvenateCommand : ToolshedCommand
+public sealed partial class RejuvenateCommand : ToolshedCommand
 {
     private RejuvenateSystem? _rejuvenate;
 
@@ -37,3 +37,4 @@ public sealed class RejuvenateCommand : ToolshedCommand
             _rejuvenate.PerformRejuvenate(ent);
     }
 }
+

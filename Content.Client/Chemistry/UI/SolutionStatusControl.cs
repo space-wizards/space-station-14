@@ -1,4 +1,4 @@
-﻿using Content.Client.Chemistry.Components;
+using Content.Client.Chemistry.Components;
 using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Items.UI;
 using Content.Client.Message;
@@ -14,7 +14,7 @@ namespace Content.Client.Chemistry.UI;
 /// Displays basic solution information for <see cref="SolutionItemStatusComponent"/>.
 /// </summary>
 /// <seealso cref="SolutionItemStatusSystem"/>
-public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionStatusControl.Data>
+public sealed partial class SolutionStatusControl : PollingItemStatusControl<SolutionStatusControl.Data>
 {
     private readonly Entity<SolutionItemStatusComponent> _parent;
     private readonly IEntityManager _entityManager;
@@ -57,3 +57,4 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
 
     public readonly record struct Data(FixedPoint2 Volume, FixedPoint2 MaxVolume, FixedPoint2? TransferVolume);
 }
+

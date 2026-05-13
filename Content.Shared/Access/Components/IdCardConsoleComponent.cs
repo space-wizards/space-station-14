@@ -21,7 +21,7 @@ public sealed partial class IdCardConsoleComponent : Component
     public ItemSlot TargetIdSlot = new();
 
     [Serializable, NetSerializable]
-    public sealed class WriteToTargetIdMessage : BoundUserInterfaceMessage
+    public sealed partial class WriteToTargetIdMessage : BoundUserInterfaceMessage
     {
         public readonly string FullName;
         public readonly string JobTitle;
@@ -77,7 +77,7 @@ public sealed partial class IdCardConsoleComponent : Component
     };
 
     [Serializable, NetSerializable]
-    public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed partial class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly string PrivilegedIdName;
         public readonly bool IsPrivilegedIdPresent;
@@ -120,3 +120,4 @@ public sealed partial class IdCardConsoleComponent : Component
         Key,
     }
 }
+

@@ -3,7 +3,7 @@ namespace Content.Shared.IdentityManagement;
 /// <summary>
 /// Event of attempt to collect actor full title - full name + job from id card for employee or entity name for borgs.
 /// </summary>
-public sealed class TryGetIdentityShortInfoEvent(EntityUid? whileInteractingWith, EntityUid forActor, bool forLogging = false) : HandledEntityEventArgs
+public sealed partial class TryGetIdentityShortInfoEvent(EntityUid? whileInteractingWith, EntityUid forActor, bool forLogging = false) : HandledEntityEventArgs
 {
     /// <summary>
     /// Full name of <see cref="ForActor"/>, with JobTitle.
@@ -30,3 +30,4 @@ public sealed class TryGetIdentityShortInfoEvent(EntityUid? whileInteractingWith
     /// </summary>
     public readonly bool RequestForAccessLogging = forLogging;
 }
+

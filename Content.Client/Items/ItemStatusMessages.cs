@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Items
 {
@@ -9,7 +9,7 @@ namespace Content.Client.Items
     /// Handlers should add any controls they want to add to <see cref="Controls"/>.
     /// </remarks>
     /// <seealso cref="ItemStatusRegisterExt"/>
-    public sealed class ItemStatusCollectMessage : EntityEventArgs
+    public sealed partial class ItemStatusCollectMessage : EntityEventArgs
     {
         /// <summary>
         /// A list of controls that will be displayed on the HUD. Handlers should add their controls here.
@@ -51,3 +51,4 @@ namespace Content.Client.Items
         }
     }
 }
+

@@ -1,10 +1,10 @@
-﻿
+
 namespace Content.Shared.Administration
 {
     /// <summary>
     ///     Represents data for a single server admin.
     /// </summary>
-    public sealed class AdminData
+    public sealed partial class AdminData
     {
         // Can be false if they're de-adminned with the ability to re-admin.
         /// <summary>
@@ -76,3 +76,4 @@ namespace Content.Shared.Administration
         }
     }
 }
+

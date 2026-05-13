@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -70,7 +70,7 @@ public partial struct EntitySpawnEntry
 
 public static class EntitySpawnCollection
 {
-    public sealed class OrGroup
+    public sealed partial class OrGroup
     {
         public List<EntitySpawnEntry> Entries { get; set; } = new();
         public float CumulativeProbability { get; set; } = 0f;
@@ -276,3 +276,4 @@ public static class EntitySpawnCollection
         return random.Next(entry.Amount, entry.MaxAmount);
     }
 }
+

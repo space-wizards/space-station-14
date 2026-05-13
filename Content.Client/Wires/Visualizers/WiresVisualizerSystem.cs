@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Wires.Visualizers
 {
-    public sealed class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
+    public sealed partial class WiresVisualizerSystem : VisualizerSystem<WiresVisualsComponent>
     {
         protected override void OnAppearanceChange(EntityUid uid, WiresVisualsComponent component, ref AppearanceChangeEvent args)
         {
@@ -30,3 +30,4 @@ namespace Content.Client.Wires.Visualizers
         MaintenancePanel
     }
 }
+

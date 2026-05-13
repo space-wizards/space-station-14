@@ -8,7 +8,7 @@ namespace Content.Shared.Pointing;
 ///     Event raised when someone runs the client-side pointing verb.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PointingAttemptEvent : EntityEventArgs
+public sealed partial class PointingAttemptEvent : EntityEventArgs
 {
     public NetEntity Target;
 
@@ -31,3 +31,4 @@ public readonly record struct AfterPointedAtEvent(EntityUid Pointed);
 /// <param name="Pointer"></param>
 [ByRefEvent]
 public readonly record struct AfterGotPointedAtEvent(EntityUid Pointer);
+

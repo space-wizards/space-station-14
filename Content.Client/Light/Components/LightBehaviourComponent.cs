@@ -364,7 +364,7 @@ namespace Content.Client.Light.Components
     {
         public const string KeyPrefix = nameof(LightBehaviourComponent);
 
-        public sealed class AnimationContainer
+        public sealed partial class AnimationContainer
         {
             public AnimationContainer(int key, Animation animation, LightBehaviourAnimationTrack track)
             {
@@ -406,3 +406,4 @@ namespace Content.Client.Light.Components
         }
     }
 }
+

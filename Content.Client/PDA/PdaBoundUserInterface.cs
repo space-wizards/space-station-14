@@ -8,7 +8,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
-    public sealed class PdaBoundUserInterface : CartridgeLoaderBoundUserInterface
+    public sealed partial class PdaBoundUserInterface : CartridgeLoaderBoundUserInterface
     {
         private readonly PdaSystem _pdaSystem;
 
@@ -129,3 +129,4 @@ namespace Content.Client.PDA
         }
     }
 }
+

@@ -1,6 +1,6 @@
 namespace Content.Server.Access
 {
-    public sealed class AccessReaderChangeEvent : EntityEventArgs
+    public sealed partial class AccessReaderChangeEvent : EntityEventArgs
     {
         public EntityUid Sender { get; }
 
@@ -13,3 +13,4 @@ namespace Content.Server.Access
         }
     }
 }
+

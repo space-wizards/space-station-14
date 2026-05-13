@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader;
 
 [Serializable, NetSerializable]
-public sealed class CartridgeUiMessage : BoundUserInterfaceMessage
+public sealed partial class CartridgeUiMessage : BoundUserInterfaceMessage
 {
     public CartridgeMessageEvent MessageEvent;
 
@@ -23,3 +23,4 @@ public abstract class CartridgeMessageEvent : EntityEventArgs
     [NonSerialized]
     public EntityUid Actor;
 }
+

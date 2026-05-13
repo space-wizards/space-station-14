@@ -6,7 +6,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Movement.Systems;
 
-public sealed class MobCollisionSystem : SharedMobCollisionSystem
+public sealed partial class MobCollisionSystem : SharedMobCollisionSystem
 {
     private EntityQuery<ActorComponent> _actorQuery;
 
@@ -49,3 +49,4 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
         });
     }
 }
+

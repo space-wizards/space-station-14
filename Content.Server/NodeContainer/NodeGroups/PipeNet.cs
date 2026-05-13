@@ -8,7 +8,7 @@ using Content.Shared.NodeContainer.NodeGroups;
 namespace Content.Server.NodeContainer.NodeGroups;
 
 [NodeGroup(NodeGroupID.Pipe)]
-public sealed class PipeNet : BaseNodeGroup, IPipeNet
+public sealed partial class PipeNet : BaseNodeGroup, IPipeNet
 {
     [ViewVariables] public GasMixture Air { get; set; } = new() {Temperature = Atmospherics.T20C};
 
@@ -90,3 +90,4 @@ Temperature: {Air.Temperature:G3}
 Volume: {Air.Volume:G3}";
     }
 }
+

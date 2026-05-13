@@ -173,7 +173,8 @@ public sealed partial class MeleeWeaponComponent : Component
 /// Event raised on entity in GetWeapon function to allow systems to manually
 /// specify what the weapon should be.
 /// </summary>
-public sealed class GetMeleeWeaponEvent : HandledEntityEventArgs
+public sealed partial class GetMeleeWeaponEvent : HandledEntityEventArgs
 {
     public EntityUid? Weapon;
 }
+

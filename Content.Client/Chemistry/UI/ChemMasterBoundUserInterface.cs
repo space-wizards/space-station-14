@@ -10,7 +10,7 @@ namespace Content.Client.Chemistry.UI
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemMasterBoundUserInterface : BoundUserInterface
+    public sealed partial class ChemMasterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ChemMasterWindow? _window;
@@ -79,3 +79,4 @@ namespace Content.Client.Chemistry.UI
         }
     }
 }
+

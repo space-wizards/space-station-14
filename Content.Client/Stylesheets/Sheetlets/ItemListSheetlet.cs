@@ -1,4 +1,4 @@
-﻿using Robust.Client.Graphics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
+public sealed partial class ItemListSheetlet : Sheetlet<PalettedStylesheet>
 {
     private static StyleBoxFlat Box(Color c)
     {
@@ -50,3 +50,4 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
+

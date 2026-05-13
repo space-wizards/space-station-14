@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Item;
@@ -10,7 +10,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Storage;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class StorageCommand : ToolshedCommand
+public sealed partial class StorageCommand : ToolshedCommand
 {
     private SharedStorageSystem? _storage;
     private SharedContainerSystem? _container;
@@ -78,3 +78,4 @@ public sealed class StorageCommand : ToolshedCommand
         return containedEntities;
     }
 }
+

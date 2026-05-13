@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Trinary.Components
 {
@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasMixerBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed partial class GasMixerBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string MixerLabel { get; }
         public float OutputPressure { get; }
@@ -27,7 +27,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasMixerToggleStatusMessage : BoundUserInterfaceMessage
+    public sealed partial class GasMixerToggleStatusMessage : BoundUserInterfaceMessage
     {
         public bool Enabled { get; }
 
@@ -38,7 +38,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasMixerChangeOutputPressureMessage : BoundUserInterfaceMessage
+    public sealed partial class GasMixerChangeOutputPressureMessage : BoundUserInterfaceMessage
     {
         public float Pressure { get; }
 
@@ -49,7 +49,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasMixerChangeNodePercentageMessage : BoundUserInterfaceMessage
+    public sealed partial class GasMixerChangeNodePercentageMessage : BoundUserInterfaceMessage
     {
         public float NodeOne { get; }
 
@@ -59,3 +59,4 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
         }
     }
 }
+

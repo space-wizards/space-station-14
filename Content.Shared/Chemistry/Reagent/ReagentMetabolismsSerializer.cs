@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 namespace Content.Shared.Chemistry.Reagent;
 
 [TypeSerializer]
-public sealed class ReagentMetabolismsSerializer : ITypeInheritanceHandler<ReagentMetabolisms, MappingDataNode>
+public sealed partial class ReagentMetabolismsSerializer : ITypeInheritanceHandler<ReagentMetabolisms, MappingDataNode>
 {
     public MappingDataNode PushInheritance(
         ISerializationManager serializationManager,
@@ -29,3 +29,4 @@ public sealed class ReagentMetabolismsSerializer : ITypeInheritanceHandler<Reage
         return result;
     }
 }
+

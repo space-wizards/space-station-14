@@ -136,7 +136,7 @@ public struct AtmosDeviceNavMapData
 }
 
 [Serializable, NetSerializable]
-public sealed class AtmosMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
+public sealed partial class AtmosMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     /// <summary>
     /// A list of all entries to populate the UI with
@@ -255,3 +255,4 @@ public enum AtmosMonitoringConsoleUiKey
 {
     Key
 }
+

@@ -1,4 +1,4 @@
-﻿using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
@@ -9,7 +9,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class PlaceholderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPlaceholderConfig
+public sealed partial class PlaceholderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPlaceholderConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -32,3 +32,4 @@ public sealed class PlaceholderSheetlet<T> : Sheetlet<T> where T: PalettedStyles
         ];
     }
 }
+

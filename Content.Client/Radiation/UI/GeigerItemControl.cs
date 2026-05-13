@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Radiation.UI;
 
-public sealed class GeigerItemControl : Control
+public sealed partial class GeigerItemControl : Control
 {
     private readonly GeigerComponent _component;
     private readonly RichTextLabel _label;
@@ -51,3 +51,4 @@ public sealed class GeigerItemControl : Control
         _component.UiUpdateNeeded = false;
     }
 }
+

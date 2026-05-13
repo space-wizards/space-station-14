@@ -1,4 +1,4 @@
-﻿using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
@@ -12,7 +12,7 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Hotbar;
 
-public sealed class HotbarUIController : UIController
+public sealed partial class HotbarUIController : UIController
 {
     private InventoryUIController? _inventory;
     private HandsUIController? _hands;
@@ -90,3 +90,4 @@ public sealed class HotbarUIController : UIController
         return result;
     }
 }
+

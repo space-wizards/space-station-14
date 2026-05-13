@@ -8,12 +8,12 @@ using Content.Server.GameTicking;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed class GhostCommand : LocalizedEntityCommands
+    public sealed partial class GhostCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-        [Dependency] private readonly GhostSystem _ghostSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private SharedMindSystem _mindSystem = default!;
+        [Dependency] private GhostSystem _ghostSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         public override string Command => "ghost";
 
@@ -55,3 +55,4 @@ namespace Content.Server.Ghost
         }
     }
 }
+

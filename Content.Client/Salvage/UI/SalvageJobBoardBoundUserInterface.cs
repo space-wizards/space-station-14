@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Salvage.UI;
 
 [UsedImplicitly]
-public sealed class SalvageJobBoardBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class SalvageJobBoardBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private SalvageJobBoardMenu? _menu;
@@ -33,3 +33,4 @@ public sealed class SalvageJobBoardBoundUserInterface(EntityUid owner, Enum uiKe
         _menu?.Update(state);
     }
 }
+

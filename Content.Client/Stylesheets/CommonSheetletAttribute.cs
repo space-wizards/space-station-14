@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Content.Client.Stylesheets;
 
@@ -7,7 +7,8 @@ namespace Content.Client.Stylesheets;
 /// </summary>
 [PublicAPI]
 [MeansImplicitUse]
-public sealed class CommonSheetletAttribute : Attribute
+public sealed partial class CommonSheetletAttribute : Attribute
 {
 
 }
+

@@ -8,7 +8,7 @@ namespace Content.Client.Guidebook.Richtext;
 /// <summary>
 /// A document, containing arbitrary text and UI elements.
 /// </summary>
-public sealed class Document : BoxContainer, IDocumentTag
+public sealed partial class Document : BoxContainer, IDocumentTag
 {
     public Document()
     {
@@ -27,3 +27,4 @@ public interface IDocumentTag
 {
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control);
 }
+

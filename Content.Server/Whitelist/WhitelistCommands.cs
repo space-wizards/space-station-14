@@ -10,10 +10,10 @@ using Robust.Shared.Network;
 namespace Content.Server.Whitelist;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class AddWhitelistCommand : LocalizedCommands
+public sealed partial class AddWhitelistCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
 
     public override string Command => "whitelistadd";
 
@@ -59,10 +59,10 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RemoveWhitelistCommand : LocalizedCommands
+public sealed partial class RemoveWhitelistCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
 
     public override string Command => "whitelistremove";
 
@@ -108,12 +108,12 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class KickNonWhitelistedCommand : LocalizedCommands
+public sealed partial class KickNonWhitelistedCommand : LocalizedCommands
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IServerNetManager _netManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IServerNetManager _netManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
 
     public override string Command => "kicknonwhitelisted";
 
@@ -139,3 +139,4 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
         }
     }
 }
+

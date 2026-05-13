@@ -1,10 +1,10 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting;
 
-public sealed class MsgVoteMenu : NetMessage
+public sealed partial class MsgVoteMenu : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -18,3 +18,4 @@ public sealed class MsgVoteMenu : NetMessage
 
     public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableUnordered;
 }
+

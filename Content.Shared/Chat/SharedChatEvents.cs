@@ -9,7 +9,7 @@ namespace Content.Shared.Chat;
 /// This event should be sent everytime an entity talks (Radio, local chat, etc...).
 /// The event is sent to both the entity itself, and all clothing (For stuff like voice masks).
 /// </summary>
-public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed partial class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
     public EntityUid Sender;
@@ -27,7 +27,7 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
 /// <summary>
 /// Raised broadcast in order to transform speech.transmit
 /// </summary>
-public sealed class TransformSpeechEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+public sealed partial class TransformSpeechEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
     public EntityUid Sender;
@@ -40,7 +40,7 @@ public sealed class TransformSpeechEvent : CancellableEntityEventArgs, IInventor
     }
 }
 
-public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
+public sealed partial class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
 {
     public EntityUid Sender;
     public bool IgnoreBlocker;
@@ -55,7 +55,7 @@ public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
 /// <summary>
 /// Raised on an entity when it speaks, either through 'say' or 'whisper'.
 /// </summary>
-public sealed class EntitySpokeEvent : EntityEventArgs
+public sealed partial class EntitySpokeEvent : EntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly string Message;
@@ -75,3 +75,4 @@ public sealed class EntitySpokeEvent : EntityEventArgs
         ObfuscatedMessage = obfuscatedMessage;
     }
 }
+
