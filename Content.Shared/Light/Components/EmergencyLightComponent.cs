@@ -5,45 +5,45 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Light.Components;
 
 /// <summary>
-///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
+/// Component that represents an emergency light, it has an internal battery that charges when the power is on.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(EmergencyLightSystem))]
 public sealed partial class EmergencyLightComponent : Component
 {
     /// <summary>
-    ///     The current state of the emergency light.
+    /// The current state of the emergency light.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public EmergencyLightState State;
 
     /// <summary>
-    ///     Is this emergency light forced on for some reason and cannot be disabled through normal means
-    ///     (i.e. blue alert or higher?)
+    /// Is this emergency light forced on for some reason and cannot be disabled through normal means
+    /// (i.e. blue alert or higher?)
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public bool ForciblyEnabled = false;
 
     /// <summary>
-    ///     The wattage of the emergency light.
+    /// The wattage of the emergency light.
     /// </summary>
     [DataField]
     public float Wattage = 5;
 
     /// <summary>
-    ///     The wattage of the emergency light when charging.
+    /// The wattage of the emergency light when charging.
     /// </summary>
     [DataField]
     public float ChargingWattage = 60;
 
     /// <summary>
-    ///     The efficiency of the emergency light when charging.
+    /// The efficiency of the emergency light when charging.
     /// </summary>
     [DataField]
     public float ChargingEfficiency = 0.85f;
 
     /// <summary>
-    ///     The text to display for each state of the emergency light.
+    /// The text to display for each state of the emergency light.
     /// </summary>
     public Dictionary<EmergencyLightState, LocId> BatteryStateText = new()
     {
@@ -55,7 +55,7 @@ public sealed partial class EmergencyLightComponent : Component
 }
 
 /// <summary>
-///     The state of the emergency light.
+/// The state of the emergency light.
 /// </summary>
 [Serializable, NetSerializable]
 public enum EmergencyLightState : byte
@@ -67,7 +67,7 @@ public enum EmergencyLightState : byte
 }
 
 /// <summary>
-///     Event for when the state of the emergency light changes.
+/// Event for when the state of the emergency light changes.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class EmergencyLightEvent(EmergencyLightState state) : EntityEventArgs
@@ -76,7 +76,7 @@ public sealed class EmergencyLightEvent(EmergencyLightState state) : EntityEvent
 }
 
 /// <summary>
-///     The visuals of the emergency light.
+/// The visuals of the emergency light.
 /// </summary>
 [Serializable, NetSerializable]
 public enum EmergencyLightVisuals
@@ -86,7 +86,7 @@ public enum EmergencyLightVisuals
 }
 
 /// <summary>
-///     The visual layers of the emergency light.
+/// The visual layers of the emergency light.
 /// </summary>
 [Serializable, NetSerializable]
 public enum EmergencyLightVisualLayers
