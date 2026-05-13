@@ -6,7 +6,6 @@ using Content.IntegrationTests.NUnit.Constraints;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.CombatMode;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Actions;
@@ -16,7 +15,11 @@ namespace Content.IntegrationTests.Tests.Actions;
 /// </summary>
 public sealed class ActionsAddedTest : GameTest
 {
-    public override PoolSettings PoolSettings => new() { Connected = true, DummyTicker = false };
+    public override PoolSettings PoolSettings => new()
+    {
+        Connected = true,
+        DummyTicker = false
+    };
 
     [SidedDependency(Side.Server)] private readonly SharedActionsSystem _sActionSystem = default!;
     [SidedDependency(Side.Client)] private readonly SharedActionsSystem _cActionSystem = default!;
@@ -30,11 +33,10 @@ public sealed class ActionsAddedTest : GameTest
     public async Task TestCombatActionsAdded()
     {
         var clientSession = Client.Session;
-        var serverSession = Server.ResolveDependency<IPlayerManager>().Sessions.Single();
 
         // Dummy ticker is disabled - client should be in control of a normal mob.
-        Assert.That(serverSession.AttachedEntity, Is.Not.Null);
-        var serverEnt = serverSession.AttachedEntity!.Value;
+        Assert.That(ServerSession?.AttachedEntity, Is.Not.Null);
+        var serverEnt = ServerSession.AttachedEntity.Value;
         var clientEnt = clientSession!.AttachedEntity!.Value;
 
         using (Assert.EnterMultipleScope())
