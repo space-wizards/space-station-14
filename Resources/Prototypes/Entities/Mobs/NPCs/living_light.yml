@@ -49,7 +49,6 @@
   - type: StatusEffects
     allowed:
     - Corporeal
-    - Electrocution
   - type: Fixtures
     fixtures:
       fix1:

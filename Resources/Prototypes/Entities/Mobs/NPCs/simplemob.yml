@@ -18,7 +18,6 @@
     baseSprintSpeed : 4
   - type: StatusEffects
     allowed:
-    - Electrocution
     - Pacified
     - Flashed
     - Adrenaline
@@ -89,7 +88,6 @@
     baseDecayRate: 0.04
   - type: StatusEffects
     allowed:
-    - Electrocution
     - Pacified
     - Flashed
     - Adrenaline

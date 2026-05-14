@@ -1,11 +1,13 @@
 using Content.Shared.Electrocution.Components;
 using Content.Shared.Inventory;
-using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Electrocution;
 
 public abstract partial class SharedElectrocutionSystem : EntitySystem
 {
+    public static readonly EntProtoId ElectrocutionId = "StatusEffectElectrocuted";
+
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -59,12 +61,11 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
     /// <param name="time">How long the entity will be stunned.</param>
     /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
     /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
-    /// <param name="statusEffects">Status effects to apply to the entity.</param>
     /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
     /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
     public virtual bool TryDoElectrocution(
         EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+        bool ignoreInsulation = false)
     {
         // only done serverside
         return false;
