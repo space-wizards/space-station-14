@@ -12,13 +12,13 @@ namespace Content.Server.Silicons.Laws;
 /// <summary>
 /// This handles generating random ion laws.
 /// </summary>
-public sealed class IonLawSystem : EntitySystem
+public sealed partial class IonLawSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private StationRecordsSystem _stationRecordsSystem = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
     private readonly Dictionary<string, List<IonLawSelector>> _selectors = new();
