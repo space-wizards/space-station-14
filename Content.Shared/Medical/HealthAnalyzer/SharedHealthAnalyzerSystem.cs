@@ -40,13 +40,14 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
             if (component.NextUpdate > _timing.CurTime || component.ScannedEntity is not {} patient)
                 continue;
 
+            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
+
             if (Deleted(patient))
             {
                 PauseAnalyzingEntity((analyzer, component));
+                DirtyField(analyzer, component, nameof(component.NextUpdate));
                 continue;
             }
-
-            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
 
             //Get distance between health analyzer and the scanned entity
             //null is infinite range
@@ -55,6 +56,7 @@ public abstract partial class SharedHealthAnalyzerSystem : EntitySystem
             {
                 //Range too far, disable updates until they are back in range
                 PauseAnalyzingEntity((analyzer, component));
+                DirtyField(analyzer, component, nameof(component.NextUpdate));
                 continue;
             }
 
