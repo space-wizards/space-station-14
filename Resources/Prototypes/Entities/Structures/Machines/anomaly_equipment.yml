@@ -329,3 +329,64 @@
   - type: GuideHelp
     guides:
     - AnomalousResearch
+- type: entity
+  id: MachineMiniAnomalyGenerator
+  parent: MachineAnomalyGenerator
+  name: mini anomaly generator
+  description: The peak of pseudoscientific technology.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    sprite: _NF/Structures/Machines/Anomaly/mini_anomaly_generator.rsi
+    offset: 0,0.5
+    noRot: true
+    layers:
+    - state: base
+    - state: dials-unshaded
+      map: ["dials"]
+      visible: false
+      shader: unshaded
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: inserting
+      visible: false
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: generating
+      visible: false
+      shader: unshaded
+      map: ["enum.AnomalyGeneratorVisualLayers.Base"]
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: StaticPrice
+    price: 1500
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 250 # mass ~= anomaly generator
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+        dials:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyGeneratorVisuals.Generating:
+        enum.AnomalyGeneratorVisualLayers.Base:
+          True: { visible: true }
+          False: { visible: false }
