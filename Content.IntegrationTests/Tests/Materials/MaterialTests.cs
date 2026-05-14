@@ -3,7 +3,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
-using Robust.Shared.GameObjects;
+using Content.IntegrationTests.Utility;
 using Content.IntegrationTests.Fixtures.Attributes;
 
 namespace Content.IntegrationTests.Tests.Materials;
@@ -16,43 +16,28 @@ namespace Content.IntegrationTests.Tests.Materials;
 [TestOf(typeof(MaterialPrototype))]
 public sealed class MaterialPrototypeSpawnsStackMaterialTest : GameTest
 {
-    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
+    private static readonly string[] MaterialPrototypes = GameDataScrounger.PrototypesOfKind<MaterialPrototype>();
 
-    [Test]
-    public async Task MaterialPrototypeSpawnsStackMaterial()
+    [TestCaseSource(nameof(MaterialPrototypes))]
+    [Description($"Checks that a {nameof(MaterialPrototype)} with a defined {nameof(MaterialPrototype.StackEntity)} is configured correctly.")]
+    [RunOnSide(Side.Server)]
+    public async Task MaterialPrototypeSpawnsStackMaterial(string protoId)
     {
-        await Pair.CreateTestMap();
+        var proto = SProtoMan.Index<MaterialPrototype>(protoId);
+        if (proto.StackEntity is not { } stackEntityId)
+            return;
 
-        await Server.WaitAssertion(() =>
-        {
-            var allMaterialProtos = SProtoMan.EnumeratePrototypes<MaterialPrototype>();
-            var coords = TestMap!.GridCoords;
+        var stackEntityProto = SProtoMan.Index(stackEntityId);
 
-            using (Assert.EnterMultipleScope())
-            {
-                foreach (var proto in allMaterialProtos)
-                {
-                    if (proto.StackEntity == null)
-                        continue;
+        stackEntityProto.TryGetComponent<StackComponent>(out var stack, SEntMan.ComponentFactory);
+        Assert.That(stack, Is.Not.Null, $"{protoId} 'stack entity' {proto.StackEntity} does not have the {nameof(StackComponent)}");
 
-                    var spawned = SEntMan.SpawnEntity(proto.StackEntity, coords);
+        stackEntityProto.TryGetComponent<MaterialComponent>(out var material, SEntMan.ComponentFactory);
+        Assert.That(material, Is.Not.Null, $"{protoId} 'material stack' {proto.StackEntity} does not have the {nameof(MaterialComponent)}");
 
-                    Assert.That(STryComp<StackComponent>(spawned, out var stack),
-                        $"{proto.ID} 'stack entity' {proto.StackEntity} does not have the stack component");
+        Assert.That(SProtoMan.TryIndex(stack.StackTypeId, out var stackProto),
+            $"{protoId} material has no stack prototype");
 
-                    Assert.That(STryComp<MaterialComponent>(spawned, out _),
-                        $"{proto.ID} 'material stack' {proto.StackEntity} does not have the material component");
-
-                    StackPrototype? stackProto = null;
-                    Assert.That(stack?.StackTypeId != null && SProtoMan.TryIndex(stack.StackTypeId, out stackProto),
-                        $"{proto.ID} material has no stack prototype");
-
-                    if (stackProto != null)
-                        Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn.Id));
-                }
-            }
-
-            _sMapSystem.DeleteMap(TestMap.MapId);
-        });
+        Assert.That(proto.StackEntity, Is.EqualTo(stackProto!.Spawn.Id));
     }
 }
