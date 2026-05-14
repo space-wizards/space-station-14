@@ -32,5 +32,5 @@ public sealed class TryGetIdentityShortInfoEvent(EntityUid target, EntityUid? wh
     /// <remarks>
     /// TODO: This should not be in here. Just check the id card used to access the access reader instead of making the event fail to get the info.
     /// </remarks>
-    public bool RequestForAccessLogging = forLogging;
+    public readonly bool RequestForAccessLogging = forLogging;
 }
