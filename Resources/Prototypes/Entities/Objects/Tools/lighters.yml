@@ -53,6 +53,8 @@
       - ReagentId: WeldingFuel
         Quantity: 7.5
 
+## Basic
+
 - type: entity
   parent: [SolutionLighter, BaseLighter]
   id: Lighter
@@ -153,8 +155,6 @@
       - state: inhand-right-flame
         shader: unshaded
   - type: PointLight
-    enabled: false
-    netsync: false
     radius: 1.5
     color: yellow
   - type: ComponentToggler
@@ -163,6 +163,8 @@
       damage:
         types:
           Heat: 2
+
+## Flippos
 
 - type: entity
   abstract: true
@@ -409,6 +411,7 @@
   - type: Welder
     fuelConsumption: 0.1
     fuelLitCost: 1
+    # Used to be slippery while lit, but worked very poorly and caused the fixtures to disappear
   - type: PointLight
     color: yellow
 
@@ -416,7 +419,7 @@
   parent: [BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
-  description: The flippo of choice for the seasoned traitor. A breaded novelty lighter made by Donk Co.
+  description: The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co.
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/donkco.rsi
@@ -424,3 +427,18 @@
     sprite: Objects/Tools/Lighters/donkco.rsi
   - type: PointLight
     color: orange
+  - type: Tag
+    tags:
+    - DonkPocket
+    - Meat
+  - type: SolutionManager
+    solutions:
+    - SolutionFoodDonkpocketWarm
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - meaty
+    - cheap
+  - type: Edible
+    trash:
+    - DiscountDanLighter # A prize hidden inside the donk!
