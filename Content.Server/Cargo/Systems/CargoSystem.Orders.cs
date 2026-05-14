@@ -38,11 +38,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<StationCargoOrderDatabaseComponent, MapInitEvent>(OnMapInit);
         }
 
-        private void OnInteractUsingCash(
-            EntityUid uid,
-            CargoOrderConsoleComponent component,
-            ref InteractUsingEvent args
-        )
+        private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
         {
             var price = _pricing.GetPrice(args.Used);
 
@@ -279,11 +275,7 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        private void OnRemoveOrderMessage(
-            EntityUid uid,
-            CargoOrderConsoleComponent component,
-            CargoConsoleRemoveOrderMessage args
-        )
+        private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
         {
             var station = _station.GetOwningStation(uid);
 
@@ -293,11 +285,7 @@ namespace Content.Server.Cargo.Systems
             RemoveOrder(station.Value, args.OrderId, orderDatabase);
         }
 
-        private void OnAddOrderMessage(
-            EntityUid uid,
-            CargoOrderConsoleComponent component,
-            CargoConsoleAddOrderMessage args
-        )
+        private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
         {
             if (args.Actor is not { Valid: true } player)
                 return;
@@ -369,12 +357,7 @@ namespace Content.Server.Cargo.Systems
                         GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
                         orderDatabase.Capacity,
                         GetNetEntity(station.Value),
-                        RelevantOrders(
-                            (station!.Value, orderDatabase),
-                            orderDatabase.Orders,
-                            console.Account,
-                            approved: false
-                        ),
+                        RelevantOrders((station!.Value, orderDatabase), orderDatabase.Orders, console.Account, approved: false),
                         GetAvailableProducts((consoleUid, console))
                     )
                 );
@@ -473,10 +456,7 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        public int GetOutstandingOrderCount(
-            Entity<StationCargoOrderDatabaseComponent> station,
-            ProtoId<CargoAccountPrototype> account
-        )
+        public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
         {
             return RelevantOrders(station, account).Sum(order => order.OrderQuantity - order.NumDispatched);
         }
@@ -634,19 +614,17 @@ namespace Content.Server.Cargo.Systems
                         ("itemName", product.Name),
                         ("orderQuantity", order.OrderQuantity),
                         ("requester", order.Requester),
-                        (
-                            "reason",
+                        ("reason",
                             string.IsNullOrWhiteSpace(order.Reason)
-                                ? Loc.GetString("cargo-console-paper-reason-default")
-                                : order.Reason
+                            ? Loc.GetString("cargo-console-paper-reason-default")
+                            : order.Reason
                         ),
                         ("account", Loc.GetString(accountProto.Name)),
                         ("accountcode", Loc.GetString(accountProto.Code)),
-                        (
-                            "approver",
+                        ("approver",
                             string.IsNullOrWhiteSpace(order.Approver)
-                                ? Loc.GetString("cargo-console-paper-approver-default")
-                                : order.Approver
+                            ? Loc.GetString("cargo-console-paper-approver-default")
+                            : order.Approver
                         )
                     )
                 );
@@ -659,6 +637,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             return true;
+
         }
 
         public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)

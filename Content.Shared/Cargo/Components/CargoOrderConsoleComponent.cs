@@ -138,7 +138,6 @@ public enum CargoOrderConsoleMode : byte
     /// Place orders directly
     /// </summary>
     DirectOrder,
-
     /// <summary>
     /// Transfers the order to the primary account
     /// </summary>
