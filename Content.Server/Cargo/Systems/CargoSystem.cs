@@ -41,6 +41,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private IdentitySystem _identity = default!;
+
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<CargoSellBlacklistComponent> _blacklistQuery;
     private EntityQuery<MobStateComponent> _mobQuery;

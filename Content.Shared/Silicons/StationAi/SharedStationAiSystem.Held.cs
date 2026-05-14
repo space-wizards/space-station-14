@@ -32,7 +32,7 @@ public abstract partial class SharedStationAiSystem
     {
         if (args.Handled)
             return;
-        args.Title = $"{Name(args.ForActor)} ({Loc.GetString("job-name-station-ai")})";
+        args.Title = $"{Name(args.Target)} ({Loc.GetString("job-name-station-ai")})";
         args.Handled = true;
     }
 

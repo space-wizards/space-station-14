@@ -66,7 +66,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     {
         if (ev.Handled)
             return;
-        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
+        if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
         {
             ev.Title = ExtractFullTitle(idCard);
             ev.Handled = true;

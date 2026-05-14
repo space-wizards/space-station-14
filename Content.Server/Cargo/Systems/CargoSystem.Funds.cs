@@ -45,11 +45,11 @@ public sealed partial class CargoSystem
         }
 
         ent.Comp.NextAccountActionTime = Timing.CurTime + ent.Comp.AccountActionDelay;
-        UpdateBankAccount((station, bank), -args.Amount,  ent.Comp.Account, dirty: false);
+        UpdateBankAccount((station, bank), -args.Amount, ent.Comp.Account, dirty: false);
         _audio.PlayPvs(ApproveSound, ent);
 
         var ourAccount = _protoMan.Index(ent.Comp.Account);
-        var name = _identity.GetNameAndId(ent, args.Actor) ?? Loc.GetString("cargo-console-fund-transfer-user-unknown");
+        var name = _identity.GetIdentityShortInfo(args.Actor, ent) ?? Loc.GetString("cargo-console-fund-transfer-user-unknown");
         if (args.Account == null)
         {
             var stackPrototype = _protoMan.Index(ent.Comp.CashType);

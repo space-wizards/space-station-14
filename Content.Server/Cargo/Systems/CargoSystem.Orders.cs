@@ -234,7 +234,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                order.SetApproverData(_identity.GetNameAndId(uid, player));
+                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
 
                 var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
                     ("productName", Loc.GetString(product.Name)),

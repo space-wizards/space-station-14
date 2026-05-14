@@ -80,11 +80,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
     }
 
-    private void GetOfficer(EntityUid uid, out string officer)
-    {
-        officer = _identity.GetNameAndId(null, uid) ?? Loc.GetString("criminal-records-console-unknown-officer");
-    }
-
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
@@ -110,8 +105,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
         var oldStatus = record.Status;
 
-        var name = _records.RecordName(key.Value);
-        GetOfficer(mob.Value, out var officer);
+        var officer = _identity.GetIdentityShortInfo(mob.Value, ent) ?? Loc.GetString("criminal-records-console-unknown-officer");
 
         // when arresting someone add it to history automatically
         // fallback exists if the player was not set to wanted beforehand
@@ -123,7 +117,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
 
         // will probably never fail given the checks above
-        name = _records.RecordName(key.Value);
+        var name = _records.RecordName(key.Value);
         var jobName = "Unknown";
 
         _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
@@ -185,7 +179,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (line.Length < 1 || line.Length > ent.Comp.MaxStringLength)
             return;
 
-        GetOfficer(mob.Value, out var officer);
+        var officer = _identity.GetIdentityShortInfo(mob.Value, ent) ?? Loc.GetString("criminal-records-console-unknown-officer");
 
         if (!_criminalRecords.TryAddHistory(key.Value, line, officer))
             return;

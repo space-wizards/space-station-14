@@ -473,7 +473,7 @@ public sealed partial class CargoSystem
             {
                 string? actorName = null;
                 if (actor != null)
-                    actorName = _identity.GetNameAndId(ent.Owner, actor.Value);
+                    actorName = _identity.GetIdentityShortInfo(actor.Value, ent.Owner);
 
                 ent.Comp.History.Add(new CargoBountyHistoryData(data,
                     skipped

@@ -52,7 +52,7 @@ public sealed partial class ResearchSystem
                 "research-console-unlock-technology-radio-broadcast",
                 ("technology", Loc.GetString(technologyPrototype.Name)),
                 ("amount", technologyPrototype.Cost),
-                ("approver", _identity.GetNameAndId(uid, act) ?? string.Empty)
+                ("approver", _identity.GetIdentityShortInfo(act, uid) ?? string.Empty)
             );
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
         }

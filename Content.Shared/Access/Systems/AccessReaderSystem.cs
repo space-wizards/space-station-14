@@ -921,7 +921,7 @@ public sealed partial class AccessReaderSystem : EntitySystem
 
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
-        name = _identity.GetNameAndId(ent, accessor, true) ?? name;
+        name = _identity.GetIdentityShortInfo(accessor, ent, true) ?? name;
 
         LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
     }

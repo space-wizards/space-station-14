@@ -287,16 +287,17 @@ public sealed partial class IdentitySystem : EntitySystem
 
     /// <summary>
     /// Attempts to get a display name and ID title for the given entity.
+    /// For example "Urist McHands (Captain)" for players or "Robby (SI-123)" for silicons.
     /// </summary>
-    /// <param name="whileInteractingWith"> Entity for interacting with which title should be collected. Currently unused.</param>
-    /// <param name="forActor"> Entity to find name for.</param>
-    /// <param name="forLogging"> For special IDs that don't leave behind a log trail; It compares to<c>IdCardComponent.BypassLogging</c>.</param>
-    /// <returns> A string of the name and ID or null if no valid identity or no ID card.</returns>
+    /// <param name="target"> The entity to find the name for.</param>
+    /// <param name="whileInteractingWith"> The entity being used to request the target's name.</param>
+    /// <param name="forLogging"> For special IDs that don't leave behind a log trail; It compares to<c>IdCardComponent.BypassLogging</c>.</param> // TODO: This should not be here.
+    /// <returns> A string of the name and ID or null if no valid identity or no ID card was found.</returns>
     [PublicAPI]
-    public string? GetNameAndId(EntityUid? whileInteractingWith, EntityUid forActor, bool forLogging = false)
+    public string? GetIdentityShortInfo(EntityUid target, EntityUid? whileInteractingWith = null, bool forLogging = false)
     {
-        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(whileInteractingWith, forActor, forLogging);
-        RaiseLocalEvent(forActor, tryGetIdentityShortInfoEvent, true);
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(target, whileInteractingWith, forLogging);
+        RaiseLocalEvent(target, tryGetIdentityShortInfoEvent, true);
         return tryGetIdentityShortInfoEvent.Title;
     }
 }
