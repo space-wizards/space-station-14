@@ -25,6 +25,6 @@ public sealed partial class MessagerCartridgeUi : UIFragment
         if (state is not MessagerCartridgeUiState messagerState)
             return;
 
-        _fragment?.UpdateState(messagerState.Status);
+        _fragment?.UpdateState(messagerState.Status, messagerState.Users);
     }
 }

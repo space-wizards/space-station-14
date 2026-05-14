@@ -6,10 +6,25 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
 {
     public MessagerStatus Status;
+    public List<MessagerUserEntry> Users;
 
-    public MessagerCartridgeUiState(MessagerStatus status)
+    public MessagerCartridgeUiState(MessagerStatus status, List<MessagerUserEntry> users)
     {
         Status = status;
+        Users = users;
+    }
+}
+
+[Serializable, NetSerializable, DataRecord]
+public sealed partial class MessagerUserEntry
+{
+    public int Id;
+    public string Name;
+
+    public MessagerUserEntry(int id, string name)
+    {
+        Id = id;
+        Name = name;
     }
 }
 

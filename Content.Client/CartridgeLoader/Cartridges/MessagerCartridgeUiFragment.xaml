@@ -13,9 +13,9 @@
             </BoxContainer>
             <customControls:VSeparator Margin="2 0"/>
             <BoxContainer Name="MessageBoxContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-                <BoxContainer Name="MainScreenContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
+                <BoxContainer Name="MainScreenContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="True">
                 </BoxContainer>
-                <BoxContainer Name="MessageInputContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="True">
+                <BoxContainer Name="MessageInputContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
                     <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
                         <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>
                     </ScrollContainer>
