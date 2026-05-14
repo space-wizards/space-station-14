@@ -16,7 +16,7 @@
     sprite: Objects/Fun/Instruments/trumpet.rsi
     state: icon
   product: CrateFunInstrumentsBrass
-  cost: 2000
+  cost: 1000
   category: cargoproduct-category-name-instruments
   group: market
 
@@ -46,7 +46,7 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   product: CrateFunInstrumentsKeyedPercussion
-  cost: 1500
+  cost: 1250
   category: cargoproduct-category-name-instruments
   group: market
 
@@ -56,7 +56,7 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   product: CrateFunInstrumentsSpecial
-  cost: 2000 # no more hight prices for bad/special instruments
+  cost: 2250 # Price is not special
   category: cargoproduct-category-name-instruments
   group: market
 
