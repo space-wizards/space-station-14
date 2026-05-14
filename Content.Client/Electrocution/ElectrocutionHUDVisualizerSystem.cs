@@ -1,4 +1,5 @@
 using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Player;

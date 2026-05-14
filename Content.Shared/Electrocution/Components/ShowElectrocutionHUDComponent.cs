@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Electrocution;
+namespace Content.Shared.Electrocution.Components;
 
 /// <summary>
 /// Allow an entity to see the Electrocution HUD showing electrocuted doors.

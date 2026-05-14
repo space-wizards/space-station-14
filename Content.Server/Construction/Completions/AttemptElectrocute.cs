@@ -1,5 +1,5 @@
 using Content.Server.Electrocution;
-using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Content.Shared.Construction;
 
 namespace Content.Server.Construction.Completions;

@@ -1,35 +1,25 @@
 using Content.Shared.Inventory;
 
-namespace Content.Shared.Electrocution
+namespace Content.Shared.Electrocution;
+
+public sealed class ElectrocutionAttemptEvent(
+    EntityUid targetUid,
+    EntityUid? sourceUid,
+    float siemensCoefficient,
+    SlotFlags targetSlots)
+    : CancellableEntityEventArgs, IInventoryRelayEvent
 {
-    public sealed class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
-    {
-        public SlotFlags TargetSlots { get; }
+    public SlotFlags TargetSlots { get; } = targetSlots;
 
-        public readonly EntityUid TargetUid;
-        public readonly EntityUid? SourceUid;
-        public float SiemensCoefficient = 1f;
+    public readonly EntityUid TargetUid = targetUid;
+    public readonly EntityUid? SourceUid = sourceUid;
+    public float SiemensCoefficient = siemensCoefficient;
+}
 
-        public ElectrocutionAttemptEvent(EntityUid targetUid, EntityUid? sourceUid, float siemensCoefficient, SlotFlags targetSlots)
-        {
-            TargetUid = targetUid;
-            TargetSlots = targetSlots;
-            SourceUid = sourceUid;
-            SiemensCoefficient = siemensCoefficient;
-        }
-    }
-
-    public sealed class ElectrocutedEvent : EntityEventArgs
-    {
-        public readonly EntityUid TargetUid;
-        public readonly EntityUid? SourceUid;
-        public readonly float SiemensCoefficient;
-
-        public ElectrocutedEvent(EntityUid targetUid, EntityUid? sourceUid, float siemensCoefficient)
-        {
-            TargetUid = targetUid;
-            SourceUid = sourceUid;
-            SiemensCoefficient = siemensCoefficient;
-        }
-    }
+public sealed class ElectrocutedEvent(EntityUid targetUid, EntityUid? sourceUid, float siemensCoefficient)
+    : EntityEventArgs
+{
+    public readonly EntityUid TargetUid = targetUid;
+    public readonly EntityUid? SourceUid = sourceUid;
+    public readonly float SiemensCoefficient = siemensCoefficient;
 }

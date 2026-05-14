@@ -21,7 +21,7 @@ public sealed partial class InsulatedSystem : EntitySystem
         if (!HasComp<ClothingComponent>(ent))
             return;
 
-        var iconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png";
+        const string iconTexture = "/Textures/Interface/VerbIcons/zap.svg.192dpi.png";
 
         _examine.AddHoverExamineVerb(args,
             component,

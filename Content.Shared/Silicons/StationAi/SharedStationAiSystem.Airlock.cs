@@ -2,7 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
-using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 
 namespace Content.Shared.Silicons.StationAi;
 

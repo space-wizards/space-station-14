@@ -1,5 +1,5 @@
 using Content.Server.Electrocution;
-using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Wires;
