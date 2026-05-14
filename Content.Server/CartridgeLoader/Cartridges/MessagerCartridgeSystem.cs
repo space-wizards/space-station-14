@@ -16,7 +16,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
 
     private void OnUiReady(EntityUid uid, MessagerCartridgeComponent component, CartridgeUiReadyEvent args)
     {
-        var state = new MessagerCartridgeUiState();
+        var state = new MessagerCartridgeUiState(MessagerStatus.Connecting);
         _cartridgeLoaderSystem.UpdateCartridgeUiState(args.Loader, state);
     }
 

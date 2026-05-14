@@ -22,9 +22,9 @@ public sealed partial class MessagerCartridgeUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not MessagerCartridgeUiState)
+        if (state is not MessagerCartridgeUiState messagerState)
             return;
 
-        _fragment?.UpdateState();
+        _fragment?.UpdateState(messagerState.Status);
     }
 }
