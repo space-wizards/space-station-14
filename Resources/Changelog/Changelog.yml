@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SuperGDPWYL
-  changes:
-  - message: Certain thief objectives can no longer be rolled by jobs which have trivial
-      access to the objective item.
-    type: Tweak
-  id: 9176
-  time: '2025-10-31T09:37:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40065
 - author: aada
   changes:
   - message: Several lathe recipes capable of duplicating materials have been made
@@ -4083,3 +4075,10 @@
   id: 9687
   time: '2026-05-09T16:50:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43910
+- author: YoungThugSS14
+  changes:
+  - message: Gorlex Hypospray has a 0.5 delay again
+    type: Fix
+  id: 9688
+  time: '2026-05-11T03:27:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43921
