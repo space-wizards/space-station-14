@@ -173,3 +173,20 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+
+- type: entity
+  parent: BasePDACartridge
+  id: MessagerCartridge
+  name: Messager cartridge
+  description: A messager cartridge template.
+  components:
+  - type: Sprite
+    state: cart-y
+  - type: UIFragment
+    ui: !type:MessagerCartridgeUi
+  - type: Cartridge
+    programName: messager-cartridge-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: some_icon
+  - type: MessagerCartridge
