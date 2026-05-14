@@ -705,18 +705,20 @@
   - type: StaminaDamageOnHit
     damage: 8
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1.25
     damage:
       types:
         Blunt: 0.4
     soundHit:
-      collection: BoxingHit
+      collection: Punch
     animation: WeaponArcFist
     mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
   - type: FingerprintMask
+  - type: MeleeSpeech
+    Battlecry: Punchicus!!
   - type: StaticPrice
     price: 2500
   - type: Tag
