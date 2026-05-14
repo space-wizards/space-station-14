@@ -116,7 +116,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
             tile = new Vector2i(randomX, randomY);
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
-                || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
+                || _atmosphere.IsTileAirBlockedCached(targetGrid, tile))
             {
                 continue;
             }
