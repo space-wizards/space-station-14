@@ -62,7 +62,7 @@ namespace Content.Client.Cargo.BUI
 
             var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
             if (EntMan.EntityExists(localPlayer))
-                orderRequester = _identity.GetNameAndId(Owner, localPlayer.Value) ?? orderRequester;
+                orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
             _orderMenu = new CargoConsoleOrderMenu();
 
