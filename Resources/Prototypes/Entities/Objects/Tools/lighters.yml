@@ -419,7 +419,7 @@
   parent: [SolutionLighter, BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
-  description: The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co.
+  description: The flippo of choice for the seasoned traitor. An edible novelty lighter made by Donk Co.
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/donkco.rsi
