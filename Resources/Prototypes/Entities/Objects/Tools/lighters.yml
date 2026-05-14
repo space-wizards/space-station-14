@@ -416,7 +416,7 @@
     color: yellow
 
 - type: entity
-  parent: [BaseBrandedLighter]
+  parent: [SolutionLighter, BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
   description: The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co.
