@@ -4,6 +4,7 @@ default-program-name = Program
 messager-cartridge-program-name = Messager
 messager-status-connecting = Connecting...
 messager-status-connection-lost = Connection Lost
+messager-send = Send
 notekeeper-program-name = Notekeeper
 nano-task-program-name = NanoTask
 news-read-program-name = Station news
