@@ -78,7 +78,7 @@
       Appendix: OrganHumanAppendix
       Ears: OrganHumanEars
       Lungs: OrganHumanLungs
-      Heart: OrganHumanHeart
+      Heart: OrganFelinidHeart
       Stomach: OrganFelinidStomach
       Liver: OrganHumanLiver
       Kidneys: OrganHumanKidneys
@@ -150,6 +150,14 @@
 - type: entity
   parent: [ OrganBaseStomach, OrganHumanInternal ]
   id: OrganFelinidStomach
+  suffix: felinid
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganHumanInternal ]
+  id: OrganFelinidHeart
   suffix: felinid
   components:
   - type: Metabolizer
