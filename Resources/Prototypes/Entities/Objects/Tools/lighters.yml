@@ -310,6 +310,10 @@
     sprite: Objects/Tools/Lighters/interdyne.rsi
   - type: Item
     sprite: Objects/Tools/Lighters/interdyne.rsi
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Radiation: 1
   - type: PointLight
     color: cyan
 
