@@ -398,10 +398,6 @@ namespace Content.Server.Cargo.Systems
 
         private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
         {
-            // Emagged console when placed. Don't use Telepad
-            if (string.IsNullOrEmpty(order.Approver))
-                return false;
-
             var ev = new FulfillCargoOrderEvent(station, order);
             RaiseLocalEvent(ref ev);
 
