@@ -338,7 +338,7 @@
     mode: AlignTileAny
   components:
   - type: Sprite
-    sprite: _NF/Structures/Machines/Anomaly/mini_anomaly_generator.rsi
+    sprite: Structures/Machines/Anomaly/mini_anomaly_generator.rsi
     offset: 0,0.5
     noRot: true
     layers:
