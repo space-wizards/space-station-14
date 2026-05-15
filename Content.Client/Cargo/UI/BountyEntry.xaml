@@ -10,7 +10,6 @@
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <RichTextLabel Name="RewardLabel"/>
                     <RichTextLabel Name="ManifestLabel"/>
-                    <!-- <RichTextLabel Name="ClaimedByLabel"/> -->
                 </BoxContainer>
                 <Control MinWidth="10"/>
                 <BoxContainer Orientation="Vertical" MinWidth="120">
@@ -32,11 +31,7 @@
                                 StyleClasses="OpenLeft"/>
                     </BoxContainer>
                     <RichTextLabel Name="IdLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/>
-                    <!--<RichTextLabel Name="ClaimedByLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/> -->
                 </BoxContainer>
-                <!-- <BoxContainer Orientation="Vertical" HorizontalExpand="True"> -->
-                <!--     <RichTextLabel Name="ClaimedByLabel"/> -->
-                <!-- </BoxContainer> -->
             </BoxContainer>
             <BoxContainer>
                 <RichTextLabel Name="ClaimedByLabel"/>
