@@ -19,7 +19,7 @@ public sealed partial class HolopadWindow : FancyWindow
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
     private readonly SharedTelephoneSystem _telephoneSystem = default!;
@@ -174,28 +174,25 @@ public sealed partial class HolopadWindow : FancyWindow
         if (!_entManager.TryGetComponent<TelephoneComponent>(_owner, out var telephone))
             return;
 
-        // Caller ID text
+        // Caller and holopad ID text
         var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId?.CallerId, telephone.LastCallerId?.CallerJob, Color.LightGray, "Default", 11);
         var holopadId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId?.DeviceId, Color.LightGray, "Default", 11);
 
-        if (FormattedMessage.TryFromMarkup(callerId, out var callerIdMsg))
+        if (!FormattedMessage.TryFromMarkup(callerId, out var callerIdMsg))
         {
-            CallerIdText.SetMessage(callerIdMsg);
-            LockOutIdText.SetMessage(callerIdMsg);
-        }
-        else
-        {
+            callerIdMsg = FormattedMessage.FromMarkupPermissive(callerId);
             _sawmill.Error($"CallerId markup text was incorrectly formatted: {callerIdMsg}");
         }
 
-        if (FormattedMessage.TryFromMarkup(holopadId, out var holopadIdMsg))
+        if (!FormattedMessage.TryFromMarkup(holopadId, out var holopadIdMsg))
         {
-            HolopadIdText.SetMessage(holopadIdMsg);
-        }
-        else
-        {
+            holopadIdMsg = FormattedMessage.FromMarkupPermissive(holopadId);
             _sawmill.Error($"HolopadId markup text was incorrectly formatted: {holopadIdMsg}");
         }
+
+        CallerIdText.SetMessage(callerIdMsg);
+        LockOutIdText.SetMessage(callerIdMsg);
+        HolopadIdText.SetMessage(holopadIdMsg);
 
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();
