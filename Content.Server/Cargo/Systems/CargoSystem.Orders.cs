@@ -393,7 +393,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             foreach (var order in toDeliver)
-                TryDeliveredOrder(ent, order, ent.Comp);
+                TryDeliverOrder(ent, order, ent.Comp);
         }
 
         private bool TryExternalFulfillment(Entity<StationDataComponent> station, CargoOrderData order)
@@ -524,7 +524,7 @@ namespace Content.Server.Cargo.Systems
             return true;
         }
 
-        private bool TryDeliveredOrder(
+        private bool TryDeliverOrder(
             EntityUid dbUid,
             CargoOrderData order,
             StationCargoOrderDatabaseComponent orderDatabase
