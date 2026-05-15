@@ -44,9 +44,6 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private MetaDataSystem _meta = default!;
 
-    private float _updateTimer = 1.0f;
-    private const float UpdateTime = 1.0f;
-
     public override void Initialize()
     {
         base.Initialize();
