@@ -19,13 +19,13 @@ namespace Content.Server.SprayPainter;
 /// Handles spraying pipes and decals using a spray painter.
 /// Other paintable objects are handled in shared.
 /// </summary>
-public sealed class SprayPainterSystem : SharedSprayPainterSystem
+public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DecalSystem _decals = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly ChargesSystem _charges = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private DecalSystem _decals = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private ChargesSystem _charges = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {
