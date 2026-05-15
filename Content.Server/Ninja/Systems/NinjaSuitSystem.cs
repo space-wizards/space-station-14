@@ -14,13 +14,13 @@ namespace Content.Server.Ninja.Systems;
 /// Handles power cell upgrading and actions.
 /// TODO: Move all of this to shared and predict it
 /// </summary>
-public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
+public sealed partial class NinjaSuitSystem : SharedNinjaSuitSystem
 {
-    [Dependency] private readonly SharedEmpSystem _emp = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedEmpSystem _emp = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SpaceNinjaSystem _ninja = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     // How much the cell score should be increased per 1 AutoRechargeRate.
     private const int AutoRechargeValue = 100;
@@ -62,7 +62,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
 
-        if (!TryComp<PredictedBatteryComponent>(args.EntityUid, out var inserting))
+        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting))
         {
             args.Cancel();
             return;
@@ -88,11 +88,11 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     }
 
     // this function assigns a score to a power cell depending on the capacity, to be used when comparing which cell is better.
-    private float GetCellScore(EntityUid uid, PredictedBatteryComponent battcomp)
+    private float GetCellScore(EntityUid uid, BatteryComponent battcomp)
     {
         // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate,
         // this is to ensure a ninja can still upgrade to a micro reactor cell even if they already have a medium or high.
-        if (TryComp<PredictedBatterySelfRechargerComponent>(uid, out var selfcomp))
+        if (TryComp<BatterySelfRechargerComponent>(uid, out var selfcomp))
             return battcomp.MaxCharge + selfcomp.AutoRechargeRate * AutoRechargeValue;
         return battcomp.MaxCharge;
     }

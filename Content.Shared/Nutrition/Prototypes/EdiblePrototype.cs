@@ -12,7 +12,7 @@ public sealed partial class EdiblePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The sound we make when eaten.

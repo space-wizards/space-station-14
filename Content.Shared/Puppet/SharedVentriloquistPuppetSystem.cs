@@ -8,9 +8,9 @@ using Content.Shared.Movement.Events;
 namespace Content.Shared.Puppet;
 
 // TODO deduplicate with BlockMovementComponent
-public abstract class SharedVentriloquistPuppetSystem : EntitySystem
+public abstract partial class SharedVentriloquistPuppetSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
 
     public override void Initialize()
     {

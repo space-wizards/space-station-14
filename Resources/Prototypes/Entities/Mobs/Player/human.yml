@@ -1,9 +1,3 @@
-- type: entity
-  save: false
-  name: Urist McHands
-  parent: BaseMobHuman
-  id: MobHuman
-
 #Syndie
 - type: entity
   parent: MobHuman
@@ -13,7 +7,6 @@
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
-    hair: HairBald
   - type: Loadout
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]

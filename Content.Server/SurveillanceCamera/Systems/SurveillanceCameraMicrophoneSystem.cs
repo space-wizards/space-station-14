@@ -8,10 +8,10 @@ using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
+public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _xforms = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedTransformSystem _xforms = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -30,7 +30,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
         // This function ensures that chat popups appear on camera views that have connected microphones.
         foreach (var (_, __, camera, xform) in EntityQuery<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>())
         {
-            if (camera.ActiveViewers.Count == 0)
+            if (camera.ActivePvsViewers.Count == 0)
                 continue;
 
             // get range to camera. This way wispers will still appear as obfuscated if they are too far from the camera's microphone
@@ -41,7 +41,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             if (range < 0 || range > ev.VoiceRange)
                 continue;
 
-            foreach (var viewer in camera.ActiveViewers)
+            foreach (var viewer in camera.ActivePvsViewers)
             {
                 // if the player has not already received the chat message, send it to them but don't log it to the chat
                 // window. This is simply so that it appears in camera.

@@ -12,9 +12,9 @@ namespace Content.Server.Tabletop;
 [UsedImplicitly]
 public sealed partial class TabletopSystem : SharedTabletopSystem
 {
-    [Dependency] private readonly EyeSystem _eye = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
+    [Dependency] private EyeSystem _eye = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
 
     public override void Initialize()
     {

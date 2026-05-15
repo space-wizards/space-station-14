@@ -11,15 +11,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Power.EntitySystems;
 
-public sealed class ChargerSystem : EntitySystem
+public sealed partial class ChargerSystem : EntitySystem
 {
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -35,7 +35,7 @@ public sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<ChargerComponent, EmpDisabledRemovedEvent>(OnEmpRemoved);
         SubscribeLocalEvent<InsideChargerComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
-        SubscribeLocalEvent<InsideChargerComponent, PredictedBatteryStateChangedEvent>(OnStatusChanged);
+        SubscribeLocalEvent<InsideChargerComponent, BatteryStateChangedEvent>(OnStatusChanged);
     }
 
     private void OnStartup(Entity<ChargerComponent> ent, ref ComponentStartup args)
@@ -176,7 +176,7 @@ public sealed class ChargerSystem : EntitySystem
 
         args.NewChargeRate += chargerComp.ChargeRate;
     }
-    private void OnStatusChanged(Entity<InsideChargerComponent> ent, ref PredictedBatteryStateChangedEvent args)
+    private void OnStatusChanged(Entity<InsideChargerComponent> ent, ref BatteryStateChangedEvent args)
     {
         // If the battery is full update the visuals and power draw of the charger.
 

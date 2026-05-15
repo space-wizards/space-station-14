@@ -2,8 +2,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.EntityConditions;
+using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects;
@@ -15,9 +15,9 @@ namespace Content.Shared.EntityEffects;
 /// </summary>
 public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private readonly SharedEntityConditionsSystem _condition = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private SharedEntityConditionsSystem _condition = default!;
 
     public override void Initialize()
     {
@@ -58,6 +58,12 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         }
     }
 
+    /// <inheritdoc cref="ApplyEffects(EntityUid,EntityEffect[],float,EntityUid?)"/>
+    public void ApplyEffects(EntityUid target, EntityEffect[] effects, FixedPoint2 scale, EntityUid? user = null)
+    {
+        ApplyEffects(target, effects, scale.Float());
+    }
+
     /// <summary>
     /// Applies a list of entity effects to a target entity.
     /// </summary>
@@ -88,13 +94,8 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             return false;
 
         // TODO: Replace with proper random prediciton when it exists.
-        if (effect.Probability <= 1f)
-        {
-            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(target).Id, 0);
-            var rand = new System.Random(seed);
-            if (!rand.Prob(effect.Probability))
+        if (effect.Probability <= 1f && !SharedRandomExtensions.PredictedProb(_timing, effect.Probability, GetNetEntity(target), GetNetEntity(user)))
                 return false;
-        }
 
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
