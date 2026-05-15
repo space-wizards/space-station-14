@@ -114,10 +114,12 @@ public sealed partial class ChangelingLastResortSystem : EntitySystem
         _mind.TransferTo(mindId, target, mind: mind);
 
         if (mind.UserId is { } userId && _player.TryGetSessionById(userId, out var session))
+        {
             _antag.TryApplyAntagConfiguration<ChangelingRuleComponent>(session,
                 target,
                 ChangelingRule,
                 ChangelingAntag);
+        }
 
         QueueDel(args.User);
 
