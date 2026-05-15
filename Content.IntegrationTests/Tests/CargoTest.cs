@@ -1,157 +1,164 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
-using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Content.Shared.Containers;
-using Content.Shared.EntityTable;
 
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
 public sealed class CargoTest : GameTest
 {
-    private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
-    [
-    ];
+    private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored = [];
+
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly IComponentFactory _sCompFact = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly PricingSystem _sPricing = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly CargoSystem _sCargo = null!;
 
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
 
-        var testMap = await pair.CreateTestMap();
-
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var tableSystem = entManager.System<EntityTableSystem>();
-        var compFact = server.ResolveDependency<IComponentFactory>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
-                    var entProto = protoManager.Index<EntityPrototype>(proto.Product);
+                    var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
                     double price = 0;
-                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, compFact))
+                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
-                        var averageSpawns = tableSystem.AverageSpawns(fill.Containers.First().Value);
+                        var averageSpawns = _sTableSystem.AverageSpawns(fill.Containers.First().Value);
                         // Randomness will lead to non interger expected values, if all the expected values are intergers then we skip
                         // Compares against epsilon incase of any floating point stuff
                         if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
                         {
                             foreach (var item in averageSpawns)
                             {
-                                var ent2 = entManager.SpawnEntity(item.spawn, testMap.MapCoords);
-                                price += pricing.GetPrice(ent2) * item.Item2;
-                                entManager.DeleteEntity(ent2);
+                                var ent2 = SSpawnAtPosition(item.spawn, coordinates);
+                                price += _sPricing.GetPrice(ent2) * item.Item2;
+                                SEntMan.DeleteEntity(ent2);
                             }
                             // Price of container is not included right now
-                            Assert.That(price, Is.AtMost(proto.Cost),
-                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!");
+                            Assert.That(
+                                price,
+                                Is.AtMost(proto.Cost),
+                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!"
+                            );
                             continue;
                         }
                     }
 
-                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
-                    price += pricing.GetPrice(ent);
+                    var ent = SSpawnAtPosition(proto.Product, coordinates);
+                    price += _sPricing.GetPrice(ent);
 
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
-                    entManager.DeleteEntity(ent);
+                    Assert.That(
+                        price,
+                        Is.AtMost(proto.Cost),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
+                    );
+                    SEntMan.DeleteEntity(ent);
                 }
             });
         });
     }
+
     [Test]
     public async Task NoCargoBountyArbitrageTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
 
-        var testMap = await pair.CreateTestMap();
-
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var mapSystem = server.System<SharedMapSystem>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var cargo = entManager.System<CargoSystem>();
-
-        var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
-
             Assert.Multiple(() =>
             {
-                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                    var ent = SSpawnAtPosition(proto.Product, coordinates);
 
-                    foreach (var bounty in bounties)
+                    foreach (var bounty in SProtoMan.EnumeratePrototypes<CargoBountyPrototype>())
                     {
-                        if (cargo.IsBountyComplete(ent, bounty))
-                            Assert.That(proto.Cost, Is.GreaterThanOrEqualTo(bounty.Reward), $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                        if (_sCargo.IsBountyComplete(ent, bounty))
+                            Assert.That(
+                                proto.Cost,
+                                Is.GreaterThanOrEqualTo(bounty.Reward),
+                                $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!"
+                            );
                     }
 
-                    entManager.DeleteEntity(ent);
+                    SEntMan.DeleteEntity(ent);
                 }
             });
-
-            mapSystem.DeleteMap(mapId);
         });
     }
 
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        var pair = Pair;
-        var server = pair.Server;
-
-        var protoManager = server.ProtoMan;
-        var compFact = server.ResolveDependency<IComponentFactory>();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.Components.ContainsKey("StaticPrice"))
-                .ToList();
-
-            foreach (var proto in protoIds)
+            Assert.Multiple(() =>
             {
-                // Sanity check
-                Assert.That(proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, compFact), Is.True);
+                var protoIds = SProtoMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Where(p => !Pair.IsTestPrototype(p))
+                    .Where(p => p.Components.ContainsKey("StaticPrice"));
 
-                if (proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, compFact) && stackPriceComp.Price > 0)
+                foreach (var proto in protoIds)
                 {
-                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
-                        $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
-                }
+                    // Sanity check
+                    Assert.That(
+                        proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, _sCompFact),
+                        Is.True
+                    );
 
-                if (proto.HasComponent<StackComponent>(compFact))
-                {
-                    Assert.That(staticPriceComp.Price, Is.EqualTo(0),
-                        $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other.");
+                    if (
+                        proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, _sCompFact)
+                        && stackPriceComp.Price > 0
+                    )
+                    {
+                        Assert.That(
+                            staticPriceComp.Price,
+                            Is.EqualTo(0),
+                            $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other."
+                        );
+                    }
+
+                    if (proto.HasComponent<StackComponent>(_sCompFact))
+                    {
+                        Assert.That(
+                            staticPriceComp.Price,
+                            Is.EqualTo(0),
+                            $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other."
+                        );
+                    }
                 }
-            }
+            });
         });
     }
 
@@ -162,75 +169,66 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
 
-        var testMap = await pair.CreateTestMap();
-
-        var entManager = server.ResolveDependency<IEntityManager>();
-        var mapSystem = server.System<SharedMapSystem>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-        var componentFactory = server.ResolveDependency<IComponentFactory>();
-        var whitelist = entManager.System<EntityWhitelistSystem>();
-        var cargo = entManager.System<CargoSystem>();
-        var sliceableSys = entManager.System<SliceableFoodSystem>();
-
-        var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
-
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var mapId = testMap.MapId;
-            var grid = mapManager.CreateGridEntity(mapId);
-            var coord = new EntityCoordinates(grid.Owner, 0, 0);
-
-            var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, componentFactory))
-                .Select(p => p.ID)
-                .ToList();
-
-            foreach (var proto in sliceableEntityProtos)
+            Assert.Multiple(() =>
             {
-                var ent = entManager.SpawnEntity(proto, coord);
-                var sliceable = entManager.GetComponent<SliceableFoodComponent>(ent);
+                var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
+                var sliceableEntityProtos = SProtoMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Where(p => !Pair.IsTestPrototype(p))
+                    .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, _sCompFact))
+                    .Select(p => p.ID);
 
-                // Check each bounty
-                foreach (var bounty in bounties)
+                foreach (var proto in sliceableEntityProtos)
                 {
-                    // Check each entry in the bounty
-                    foreach (var entry in bounty.Entries)
+                    var ent = SSpawnAtPosition(proto, coordinates);
+                    var sliceable = SEntMan.GetComponent<SliceableFoodComponent>(ent);
+
+                    // Check each bounty
+                    foreach (var bounty in bounties)
                     {
-                        // See if the entity counts as part of this bounty entry
-                        if (!cargo.IsValidBountyEntry(ent, entry))
-                            continue;
-
-                        // Spawn a slice
-                        var slice = entManager.SpawnEntity(sliceable.Slice, coord);
-
-                        // See if the slice also counts for this bounty entry
-                        if (!cargo.IsValidBountyEntry(slice, entry))
+                        // Check each entry in the bounty
+                        foreach (var entry in bounty.Entries)
                         {
-                            entManager.DeleteEntity(slice);
-                            continue;
+                            // See if the entity counts as part of this bounty entry
+                            if (!_sCargo.IsValidBountyEntry(ent, entry))
+                                continue;
+
+                            // Spawn a slice
+                            var slice = SSpawnAtPosition(sliceable.Slice, coordinates);
+
+                            // See if the slice also counts for this bounty entry
+                            if (!_sCargo.IsValidBountyEntry(slice, entry))
+                            {
+                                SEntMan.DeleteEntity(slice);
+                                continue;
+                            }
+
+                            SEntMan.DeleteEntity(slice);
+
+                            // If for some reason it can only make one slice, that's okay, I guess
+                            Assert.That(
+                                sliceable.TotalCount,
+                                Is.EqualTo(1),
+                                $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.TotalCount} slices which count for the same bounty!"
+                            );
                         }
-
-                        entManager.DeleteEntity(slice);
-
-                        // If for some reason it can only make one slice, that's okay, I guess
-                        Assert.That(sliceable.TotalCount, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.TotalCount} slices which count for the same bounty!");
                     }
-                }
 
-                entManager.DeleteEntity(ent);
-            }
-            mapSystem.DeleteMap(mapId);
+                    SEntMan.DeleteEntity(ent);
+                }
+            });
         });
     }
 
     [TestPrototypes]
-    private const string StackProto = @"
+    private const string StackProto =
+        @"
 - type: stack
   id: StackProto
   name: stack-steel
@@ -249,16 +247,12 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task StackPrice()
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var entManager = server.ResolveDependency<IEntityManager>();
-
-        await server.WaitAssertion(() =>
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
+        await Server.WaitAssertion(() =>
         {
-            var priceSystem = entManager.System<PricingSystem>();
-
-            var ent = entManager.SpawnEntity("StackEnt", MapCoordinates.Nullspace);
-            var price = priceSystem.GetPrice(ent);
+            var ent = SSpawnAtPosition("StackEnt", coordinates);
+            var price = _sPricing.GetPrice(ent);
             Assert.That(price, Is.EqualTo(100.0));
         });
     }
@@ -266,17 +260,16 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task MobPrice()
     {
-        var pair = Pair;
-
-        var componentFactory = pair.Server.ResolveDependency<IComponentFactory>();
-
-        await pair.Server.WaitAssertion(() =>
+        await Pair.Server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                foreach (var (proto, comp) in pair.GetPrototypesWithComponent<MobPriceComponent>())
+                foreach (var (proto, comp) in Pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
-                    Assert.That(proto.TryGetComponent<MobStateComponent>(out _, componentFactory), $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!");
+                    Assert.That(
+                        proto.TryGetComponent<MobStateComponent>(out _, _sCompFact),
+                        $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
+                    );
                 }
             });
         });
