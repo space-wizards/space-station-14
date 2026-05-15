@@ -25,16 +25,16 @@ namespace Content.Shared.Guardian
     /// </summary>
     public sealed class GuardianSystem : EntitySystem
     {
-        [Dependency] private SharedDoAfterSystem _doAfterSystem = null!;
-        [Dependency] private SharedPopupSystem _popupSystem = null!;
-        [Dependency] private DamageableSystem _damageSystem = null!;
-        [Dependency] private SharedActionsSystem _actionSystem = null!;
-        [Dependency] private SharedHandsSystem _handsSystem = null!;
-        [Dependency] private SharedAudioSystem _audio = null!;
-        [Dependency] private GibbingSystem _gibbing = null!;
-        [Dependency] private SharedContainerSystem _container = null!;
-        [Dependency] private SharedTransformSystem _transform = null!;
-        [Dependency] private IGameTiming _timing = null!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private DamageableSystem _damageSystem = default!;
+        [Dependency] private SharedActionsSystem _actionSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private GibbingSystem _gibbing = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {
