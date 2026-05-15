@@ -38,11 +38,7 @@ public sealed partial class CargoSystem
             if (_station.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (
-                !TryGetLinkedConsole((uid, tele), out var console)
-                || console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder
-            )
+            if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
             tele.CurrentOrders.Add(args.Order);
@@ -53,23 +49,29 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryGetLinkedConsole(
-        Entity<CargoTelepadComponent> ent,
-        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console
+    private bool IsLinkedToConsole(EntityUid uid, EntityUid? approvingConsole)
+    {
+        if (approvingConsole == null || !TryGetLinkedConsoles(uid, out var consoles))
+            return false;
+
+        return consoles.Any(console => console.Owner == approvingConsole);
+    }
+
+    private bool TryGetLinkedConsoles(
+        EntityUid uid,
+        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>> consoles
     )
     {
-        console = null;
-        if (
-            !TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent)
-            || sinkComponent.LinkedSources.FirstOrNull() is not { } linked
-        )
+        consoles = new();
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
             return false;
-
-        if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
-            return false;
-
-        console = (linked, consoleComp);
-        return true;
+        foreach (var linked in sinkComponent.LinkedSources)
+        {
+            if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+                continue;
+            consoles.Add((linked, consoleComp));
+        }
+        return consoles.Count > 0;
     }
 
     private void UpdateTelepad(float frameTime)
@@ -100,14 +102,17 @@ public sealed partial class CargoSystem
 
             comp.CurrentOrders.RemoveAll(order => order.NumDispatched == order.OrderQuantity);
 
-            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
+            if (comp.CurrentOrders.Count == 0)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
             var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
+            if (
+                IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
+                && FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput)
+            )
             {
                 currentOrder.NumDispatched++;
                 _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));

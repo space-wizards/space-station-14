@@ -48,6 +48,9 @@ namespace Content.Shared.Cargo
         [ViewVariables]
         public NetEntity? AssignedEntity;
 
+        [ViewVariables]
+        public NetEntity? ApprovingConsole;
+
         [DataField]
         public string? Approver;
 

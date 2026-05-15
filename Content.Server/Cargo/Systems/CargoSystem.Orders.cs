@@ -188,6 +188,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             order.Approved = true;
+            order.ApprovingConsole = GetNetEntity(uid);
             _audio.PlayPvs(ApproveSound, uid);
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
@@ -223,6 +224,8 @@ namespace Content.Server.Cargo.Systems
 
             UpdateBankAccount((station.Value, bank), -cost, order.Account);
             UpdateOrders(station.Value);
+            // Prevent unnecessary close checks
+            orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
             UpdateUndeliveredOrders((station.Value, orderDatabase));
         }
 
@@ -235,7 +238,6 @@ namespace Content.Server.Cargo.Systems
             // No slots at the trade station
             _listEnts.Clear();
             GetTradeStations(stationData, ref _listEnts);
-            EntityUid? tradeDestination = null;
 
             // Try to fulfill from any station where possible, if the pad is not occupied.
             foreach (var trade in _listEnts)
@@ -248,20 +250,17 @@ namespace Content.Server.Cargo.Systems
                 {
                     var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
-                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    if (
+                        order.OrderQuantity > order.NumDispatched
+                        && FulfillOrder(order, coordinates, orderDatabase.PrinterOutput)
+                    )
                     {
-                        tradeDestination = trade;
                         order.NumDispatched++;
-                        if (order.OrderQuantity <= order.NumDispatched) //Spawn a crate on free pellets until the order is fulfilled.
-                            break;
                     }
                 }
-
-                if (tradeDestination != null)
-                    break;
             }
 
-            return tradeDestination.HasValue;
+            return order.NumDispatched >= order.OrderQuantity;
         }
 
         private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
@@ -329,7 +328,7 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(
                 LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(player):user} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order}, requester:{order.Requester}, reason:{order.Reason}]"
+                $"{ToPrettyString(player):user} added order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.Product}, requester:{order.Requester}, reason:{order.Reason}]"
             );
         }
 
@@ -388,7 +387,7 @@ namespace Content.Server.Cargo.Systems
                 if (TryExternalFulfillment((ent, stationData), order))
                     continue;
 
-                if (TryFulfillOrder((ent, stationData), order, ent.Comp) && order.NumDispatched >= order.OrderQuantity)
+                if (TryFulfillOrder((ent, stationData), order, ent.Comp))
                     toDeliver.Add(order);
             }
 
@@ -458,7 +457,7 @@ namespace Content.Server.Cargo.Systems
 
         public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
         {
-            return RelevantOrders(station, account).Sum(order => order.OrderQuantity - order.NumDispatched);
+            return RelevantOrders(station, account, true).Sum(order => order.OrderQuantity - order.NumDispatched);
         }
 
         /// <summary>
@@ -518,6 +517,11 @@ namespace Content.Server.Cargo.Systems
             StationCargoOrderDatabaseComponent orderDatabase
         )
         {
+            var outstanding = GetOutstandingOrderCount((dbUid, orderDatabase), order.Account);
+            if (outstanding >= orderDatabase.Capacity)
+            {
+                return false;
+            }
             orderDatabase.Orders.Add(order);
             UpdateOrders(dbUid);
             return true;
@@ -531,6 +535,9 @@ namespace Content.Server.Cargo.Systems
         {
             orderDatabase.Orders.Remove(order);
             orderDatabase.DeliveredOrders.Add(order);
+            // Prevent unbounded growth of delivered orders.
+            if (orderDatabase.DeliveredOrders.Count > 1000)
+                orderDatabase.DeliveredOrders.RemoveAt(0);
             UpdateOrders(dbUid);
             return true;
         }
