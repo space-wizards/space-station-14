@@ -1367,3 +1367,16 @@
         GlassBeaker:
           amount: 2
           defaultPrototype: Beaker
+
+- type: entity
+  id: MessagerServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Messager server machine board
+  description: A machine printed circuit board for a Messager server.
+  components:
+    - type: MachineBoard
+      prototype: MessagerServer
+      stackRequirements:
+        Steel: 1
+        Cable: 2
+        Glass: 5

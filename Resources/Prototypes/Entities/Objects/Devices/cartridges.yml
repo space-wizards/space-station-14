@@ -190,3 +190,8 @@
       sprite: Interface/Misc/program_icons.rsi
       state: some_icon
   - type: MessagerCartridge
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: Messager
+    receiveFrequencyId: Messager
+    autoConnect: false
