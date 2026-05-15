@@ -9,7 +9,6 @@ using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
 using Content.Shared.Fluids;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -19,18 +18,17 @@ namespace Content.Shared.Changeling.Systems;
 
 public sealed partial class ChangelingAbilitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
-    [Dependency] private readonly SharedEnsnareableSystem _snare = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private readonly ChangelingDevourSystem _changelingDevour = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private SharedEnsnareableSystem _snare = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private ReactiveSystem _reactive = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private ChangelingDevourSystem _changelingDevour = default!;
 
     public override void Initialize()
     {
@@ -82,12 +80,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
     private void OnStingAction(Entity<ChangelingStingAbilityComponent> ent, ref ChangelingStingActionEvent args)
     {
-        if (ent.Comp.RequireAlive && _mobState.IsDead(args.Target))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-sting-attempt-failed-dead"), args.Performer, args.Performer);
-            return;
-        }
-
         if (!HasComp<BloodstreamComponent>(args.Target))
             return;
 
@@ -103,7 +95,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         _reactive.DoEntityReaction(args.Target, ent.Comp.InjectSolution, ReactionMethod.Injection);
         if (!_bloodstream.TryAddToBloodstream(args.Target, ent.Comp.InjectSolution))
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.ActivatedPopupSelf, ("target", Identity.Entity(args.Target, EntityManager))), args.Performer, args.Performer);
+            _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Performer, args.Performer);
         }
 
         args.Handled = true;

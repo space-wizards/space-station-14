@@ -10,13 +10,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop
 {
-    public abstract class SharedTabletopSystem : EntitySystem
+    public abstract partial class SharedTabletopSystem : EntitySystem
     {
-        [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] protected readonly SharedTransformSystem Transforms = default!;
+        [Dependency] protected ActionBlockerSystem ActionBlockerSystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedMapSystem _mapSystem = default!;
+        [Dependency] protected SharedTransformSystem Transforms = default!;
 
         public override void Initialize()
         {
