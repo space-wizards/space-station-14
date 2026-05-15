@@ -329,13 +329,11 @@
   - type: GuideHelp
     guides:
     - AnomalousResearch
+
 - type: entity
-  id: MachineMiniAnomalyGenerator
   parent: MachineAnomalyGenerator
+  id: MachineMiniAnomalyGenerator
   name: mini anomaly generator
-  description: The peak of pseudoscientific technology.
-  placement:
-    mode: AlignTileAny
   components:
   - type: Sprite
     sprite: Structures/Machines/Anomaly/mini_anomaly_generator.rsi
