@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Client.Holopad;
 
@@ -20,6 +19,7 @@ public sealed partial class HolopadWindow : FancyWindow
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
     private readonly SharedTelephoneSystem _telephoneSystem = default!;
@@ -37,6 +37,9 @@ public sealed partial class HolopadWindow : FancyWindow
     public event Action? SendHolopadStartBroadcastMessageAction;
     public event Action? SendHolopadActivateProjectorMessageAction;
     public event Action? SendHolopadRequestStationAiMessageAction;
+
+    private TimeSpan _updateDelay = TimeSpan.FromSeconds(0.25f);
+    private TimeSpan _nextUpdate;
 
     public HolopadWindow()
     {
@@ -72,21 +75,6 @@ public sealed partial class HolopadWindow : FancyWindow
         {
             BackgroundColor = new Color(82, 82, 82),
         };
-
-        if (FormattedMessage.TryFromMarkup(Loc.GetString("holopad-window-emergency-broadcast-in-progress"), out var broadcastMsg))
-        {
-            EmergencyBroadcastText.SetMessage(broadcastMsg);
-        }
-
-        if (FormattedMessage.TryFromMarkup(Loc.GetString("holopad-window-subtitle"), out var subtitleMsg))
-        {
-            SubtitleText.SetMessage(subtitleMsg);
-        }
-
-        if (FormattedMessage.TryFromMarkup(Loc.GetString("holopad-window-options"), out var optionsMsg))
-        {
-            OptionsText.SetMessage(optionsMsg);
-        }
     }
 
     #region: Button actions
@@ -306,24 +294,28 @@ public sealed partial class HolopadWindow : FancyWindow
         }
 
         // Update control disability
-        AnswerCallButton.Disabled = (telephone.CurrentState != TelephoneState.Ringing);
-        EndCallButton.Disabled = (telephone.CurrentState == TelephoneState.Idle || telephone.CurrentState == TelephoneState.EndingCall);
-        StartBroadcastButton.Disabled = (telephone.CurrentState != TelephoneState.Idle || broadcastOnCooldown);
-        RequestStationAiButton.Disabled = (telephone.CurrentState != TelephoneState.Idle);
-        ActivateProjectorButton.Disabled = (telephone.CurrentState != TelephoneState.Idle);
+        AnswerCallButton.Disabled = telephone.CurrentState is not TelephoneState.Ringing;
+        EndCallButton.Disabled = telephone.CurrentState is TelephoneState.Idle or TelephoneState.EndingCall;
+        StartBroadcastButton.Disabled = telephone.CurrentState is not TelephoneState.Idle || broadcastOnCooldown;
+        RequestStationAiButton.Disabled = telephone.CurrentState is not TelephoneState.Idle;
+        ActivateProjectorButton.Disabled = telephone.CurrentState is not TelephoneState.Idle;
 
         // Update control visibility
-        FetchingAvailableHolopadsContainer.Visible = (ContactsList.ChildCount == 0);
-        ActiveCallControlsContainer.Visible = (telephone.CurrentState != TelephoneState.Idle || _currentUiKey == HolopadUiKey.AiRequestWindow);
+        FetchingAvailableHolopadsContainer.Visible = ContactsList.ChildCount == 0;
+        ActiveCallControlsContainer.Visible = telephone.CurrentState is not TelephoneState.Idle || _currentUiKey is HolopadUiKey.AiRequestWindow;
         CallPlacementControlsContainer.Visible = !ActiveCallControlsContainer.Visible;
-        CallerIdContainer.Visible = (telephone.CurrentState == TelephoneState.Ringing);
-        AnswerCallButton.Visible = (telephone.CurrentState == TelephoneState.Ringing);
+        CallerIdContainer.Visible = telephone.CurrentState is TelephoneState.Ringing;
+        AnswerCallButton.Visible = telephone.CurrentState is TelephoneState.Ringing;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
+        if (_timing.CurTime < _nextUpdate)
+            return;
+
+        _nextUpdate = _timing.CurTime + _updateDelay;
         UpdateAppearance();
     }
 

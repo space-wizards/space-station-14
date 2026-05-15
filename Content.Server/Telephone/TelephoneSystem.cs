@@ -105,7 +105,9 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(args.MessageSource, nameEv);
 
         // Determine if speech should be relayed via the telephone itself or a designated speaker
-        var speaker = (entity.Comp.Speaker != null) ? entity.Comp.Speaker.Value : entity.Owner;
+        var speaker = entity.Comp.Speaker != null
+            ? entity.Comp.Speaker.Value
+            : entity.Owner;
 
         var name = Loc.GetString("chat-telephone-name-relay",
             ("originalName", nameEv.VoiceName),
@@ -334,10 +336,10 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
             if (!TryComp<TelephoneComponent>(linkedUid, out var linkedTelephone))
                 continue;
 
-            var linked = (linkedUid, linkedTelephone);
-
             if (!linkedTelephone.LinkedTelephones.Remove(entity))
                 continue;
+
+            var linked = (linkedUid, linkedTelephone);
 
             if (!IsTelephoneEngaged(linked))
                 EndTelephoneCalls(linked);
