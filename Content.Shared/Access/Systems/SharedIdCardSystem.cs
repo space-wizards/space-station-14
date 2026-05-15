@@ -66,12 +66,14 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     {
         if (ev.Handled)
             return;
+
         if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
         {
             ev.Title = ExtractFullTitle(idCard);
             ev.Handled = true;
         }
     }
+
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         // Try to update the job status icon of the player owning the ID, if any.

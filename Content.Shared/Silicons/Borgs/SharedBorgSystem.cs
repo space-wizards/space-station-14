@@ -104,6 +104,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         args.Title = Name(args.Target).Trim();
         args.Handled = true;
     }

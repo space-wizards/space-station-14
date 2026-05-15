@@ -49,7 +49,8 @@ public sealed partial class CargoSystem
         _audio.PlayPvs(ApproveSound, ent);
 
         var ourAccount = _protoMan.Index(ent.Comp.Account);
-        var name = _identity.GetIdentityShortInfo(args.Actor, ent) ?? Loc.GetString("cargo-console-fund-transfer-user-unknown");
+        var name = _identity.GetIdentityShortInfo(args.Actor, ent)
+                   ?? Loc.GetString("cargo-console-fund-transfer-user-unknown");
         if (args.Account == null)
         {
             var stackPrototype = _protoMan.Index(ent.Comp.CashType);
