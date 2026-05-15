@@ -112,7 +112,7 @@ namespace Content.Server.Spawners.EntitySystems
                 return;
 
             var offset = component.Offset;
-            var vOffset = _robustRandom.NextVector2(-offset, offset);
+            var vOffset = _robustRandom.NextVector2Box(-offset, offset);
 
             var xform = Transform(uid);
             var coords = _xform.GetMapCoordinates(uid, xform).Offset(vOffset);
