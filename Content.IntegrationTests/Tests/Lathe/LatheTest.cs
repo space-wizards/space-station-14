@@ -14,7 +14,6 @@ namespace Content.IntegrationTests.Tests.Lathe;
 
 public sealed class LatheTest : GameTest
 {
-    [SidedDependency(Side.Server)] private IComponentFactory _sCompFactory = null!;
     [SidedDependency(Side.Server)] private EntityWhitelistSystem _sWhitelistSystem = null!;
     [SidedDependency(Side.Server)] private SharedLatheSystem _sLatheSystem = null!;
 
@@ -42,8 +41,8 @@ public sealed class LatheTest : GameTest
                 {
                     var latheProto = SProtoMan.Index(latheProtoId);
 
-                    Assert.That(latheProto.TryGetComponent<LatheComponent>(out var latheComp, _sCompFactory));
-                    Assert.That(latheProto.TryGetComponent<MaterialStorageComponent>(out var storageComp, _sCompFactory));
+                    Assert.That(latheProto.TryGetComponent<LatheComponent>(out var latheComp, SEntMan.ComponentFactory));
+                    Assert.That(latheProto.TryGetComponent<MaterialStorageComponent>(out var storageComp, SEntMan.ComponentFactory));
 
                     // Test which material-containing entities are accepted by this lathe
                     var acceptedMaterials = new HashSet<ProtoId<MaterialPrototype>>();
@@ -64,7 +63,7 @@ public sealed class LatheTest : GameTest
                     var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
                     _sLatheSystem.AddRecipesFromPacks(recipes, latheComp!.StaticPacks);
                     _sLatheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
-                    if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, _sCompFactory))
+                    if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, SEntMan.ComponentFactory))
                     {
                         _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
                         _sLatheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);
