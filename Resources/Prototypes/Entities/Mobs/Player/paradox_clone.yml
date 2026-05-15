@@ -35,3 +35,53 @@
   - type: Sprite
     sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
+
+# ghost
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: MobParadoxCloneGhost
+  name: space-time paradox
+  description: This has something to do with trousers and with time. Probably.
+  # categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Fixtures
+    fixtures:
+      lightTrigger:
+        shape:
+          !type:PhysShapeCircle
+          radius: 8
+        density: 80
+        hard: false
+        layer:
+        - GhostImpassable
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: Eye
+    pvsScale: 1.5
+    drawFov: false
+  - type: Visibility
+    layer: 2
+  - type: Sprite
+    layers:
+    - sprite: Mobs/Aliens/paradox_clone.rsi
+      state: paradox
+      shader: unshaded
+  - type: CameraActiveOnCollideCollider
+
+- type: entity
+  parent: BaseAction
+  id: ActionParadoxCloneMaterialize
+  name: Materialize
+  description: Fully enter this dimension.
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/carp_rift.rsi
+      state: icon
+    useDelay: 1
+    priority: 3
+  - type: InstantAction
+    event: !type:ParadoxCloneMaterializeActionEvent

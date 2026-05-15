@@ -3,11 +3,13 @@ using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.Objectives.Components;
+using Content.Shared.Actions;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.ParadoxClone;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
 
@@ -17,10 +19,11 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
     [Dependency] private readonly TargetSystem _target = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     public override void Initialize()
     {
@@ -78,11 +81,25 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
 
         }
 
-        if (ent.Comp.OriginalBody == null || !_cloning.TryCloning(ent.Comp.OriginalBody.Value, _transform.GetMapCoordinates(spawner), ent.Comp.Settings, out var clone))
+        // We spawn a clone in nullspace. It'll be retrieved later.
+        if (ent.Comp.OriginalBody == null || !_cloning.TryCloning(ent.Comp.OriginalBody.Value, null, ent.Comp.Settings, out var clone))
         {
             Log.Error($"Unable to make a paradox clone of entity {ToPrettyString(ent.Comp.OriginalBody)}");
             return;
         }
+
+        // spawn it at the original body's position
+        if (!_entMan.TryGetComponent<TransformComponent>(ent.Comp.OriginalBody, out var transform))
+            return;
+
+        var ghost = Spawn(ent.Comp.GhostProto, transform.Coordinates);
+
+        // make sure the ghost can keep track of its "real" body
+        _entMan.AddComponent(ghost, new ParadoxCloneComponent
+        {
+            ClonedBody = (EntityUid)clone,
+            RemainingTime = ent.Comp.GhostGracePeriod
+        });
 
         var targetComp = EnsureComp<TargetOverrideComponent>(clone.Value);
         targetComp.Target = ent.Comp.OriginalMind; // set the kill target
@@ -94,7 +111,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         // turn their suit sensors off so they don't immediately get noticed
         _sensor.SetAllSensors(clone.Value, SuitSensorMode.SensorOff);
 
-        args.Entity = clone;
+        args.Entity = ghost;
     }
 
     private void AfterAntagEntitySelected(Entity<ParadoxCloneRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
@@ -106,5 +123,9 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             return;
 
         _mind.CopyObjectives(ent.Comp.OriginalMind.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
+
+        // give the ghost the materialize action so that it can spawn its "real" body when it desires
+        var action = Spawn(ent.Comp.MaterializeAction);
+        _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
     }
 }
