@@ -8,7 +8,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -100,7 +99,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            comp.CurrentOrders.RemoveAll(order => order.NumDispatched == order.OrderQuantity);
+            comp.CurrentOrders.RemoveAll(order => order.NumDispatched >= order.OrderQuantity);
 
             if (comp.CurrentOrders.Count == 0)
             {
