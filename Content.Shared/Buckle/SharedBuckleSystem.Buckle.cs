@@ -29,7 +29,7 @@ public abstract partial class SharedBuckleSystem
 {
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     private void InitializeBuckle()
     {
