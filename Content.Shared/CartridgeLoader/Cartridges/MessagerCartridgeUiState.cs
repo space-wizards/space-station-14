@@ -15,6 +15,9 @@ public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
     }
 }
 
+/// <summary>
+///     User list client
+/// </summary>
 [Serializable, NetSerializable, DataRecord]
 public sealed partial class MessagerUserEntry
 {
