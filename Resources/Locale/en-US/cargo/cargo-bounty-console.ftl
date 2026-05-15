@@ -1,5 +1,6 @@
 ﻿bounty-console-menu-title = Cargo bounty console
 bounty-console-label-button-text = Print label
+bounty-console-claim-button-text = Claim
 bounty-console-skip-button-text = Skip
 bounty-console-time-label = Time: [color=orange]{$time}[/color]
 bounty-console-reward-label = Reward: [color=limegreen]${$reward}[/color]
@@ -11,6 +12,9 @@ bounty-console-manifest-entry =
     }
 bounty-console-manifest-reward = Reward: ${$reward}
 bounty-console-description-label = [color=gray]{$description}[/color]
+bounty-console-claimed-by-label = Claimed By: [color=yellow]{$claimers}[/color]
+bounty-console-claimed-by-none = None
+
 bounty-console-id-label = ID#{$id}
 
 bounty-console-flavor-left = Bounties sourced from local unscrupulous dealers.

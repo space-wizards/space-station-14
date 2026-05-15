@@ -39,6 +39,7 @@ public sealed partial class CargoSystem
     {
         SubscribeLocalEvent<CargoBountyConsoleComponent, BoundUIOpenedEvent>(OnBountyConsoleOpened);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountyPrintLabelMessage>(OnPrintLabelMessage);
+        SubscribeLocalEvent<CargoBountyConsoleComponent, BountyClaimMessage>(OnClaimMessage);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountySkipMessage>(OnSkipBountyMessage);
         SubscribeLocalEvent<CargoBountyLabelComponent, PriceCalculationEvent>(OnGetBountyPrice);
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
@@ -74,6 +75,20 @@ public sealed partial class CargoSystem
         component.NextPrintTime = Timing.CurTime + component.PrintDelay;
         SetupBountyLabel(label, station, bounty.Value);
         _audio.PlayPvs(component.PrintSound, uid);
+    }
+
+    private void OnClaimMessage(EntityUid uid, CargoBountyConsoleComponent component, BountyClaimMessage args)
+    {
+        if (_station.GetOwningStation(uid) is not { } station)
+            return;
+
+        if (args.Actor is { Valid: true } actor)
+        {
+            TryAddBountyClaimer(station, args.BountyId, actor);
+            _audio.PlayPvs(component.ClaimSound, uid);
+        }
+
+        UpdateBountyConsoles();
     }
 
     private void OnSkipBountyMessage(EntityUid uid, CargoBountyConsoleComponent component, BountySkipMessage args)
@@ -538,5 +553,44 @@ public sealed partial class CargoSystem
         {
             bountyDatabase.CheckedBounties.Clear();
         }
+    }
+
+    private bool TryAddBountyClaimer(
+        EntityUid station,
+        string bountyId,
+        EntityUid actor,
+        StationCargoBountyDatabaseComponent? db = null)
+    {
+        if (!Resolve(station, ref db))
+            return false;
+
+        var actorName = Identity.Name(actor, EntityManager);
+        if (string.IsNullOrWhiteSpace(actorName))
+            return false;
+
+        for (var i = 0; i < db.Bounties.Count; i++)
+        {
+            var bounty = db.Bounties[i];
+            if (bounty.Id != bountyId)
+                continue;
+
+            var existingClaimers = bounty.ClaimedBy;
+            if (existingClaimers.Contains(actorName))
+                return false;
+
+            var claimers = new List<string>(existingClaimers);
+            if (claimers.Count >= 5)
+                claimers.RemoveAt(0);
+
+            claimers.Add(actorName);
+
+            db.Bounties[i] = bounty with
+            {
+                ClaimedBy = claimers,
+            };
+            return true;
+        }
+
+        return false;
     }
 }

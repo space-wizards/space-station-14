@@ -26,6 +26,11 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
             SendMessage(new BountyPrintLabelMessage(id));
         };
 
+        _menu.OnClaimButtonPressed += id =>
+        {
+            SendMessage(new BountyClaimMessage(id));
+        };
+
         _menu.OnSkipButtonPressed += id =>
         {
             SendMessage(new BountySkipMessage(id));

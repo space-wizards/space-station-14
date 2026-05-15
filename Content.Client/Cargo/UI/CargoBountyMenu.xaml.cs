@@ -10,6 +10,7 @@ namespace Content.Client.Cargo.UI;
 public sealed partial class CargoBountyMenu : FancyWindow
 {
     public Action<string>? OnLabelButtonPressed;
+    public Action<string>? OnClaimButtonPressed;
     public Action<string>? OnSkipButtonPressed;
 
     public CargoBountyMenu()
@@ -27,6 +28,7 @@ public sealed partial class CargoBountyMenu : FancyWindow
         {
             var entry = new BountyEntry(b, untilNextSkip);
             entry.OnLabelButtonPressed += () => OnLabelButtonPressed?.Invoke(b.Id);
+            entry.OnClaimButtonPressed += () => OnClaimButtonPressed?.Invoke(b.Id);
             entry.OnSkipButtonPressed += () => OnSkipButtonPressed?.Invoke(b.Id);
 
             BountyEntriesContainer.AddChild(entry);

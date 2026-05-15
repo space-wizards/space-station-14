@@ -34,6 +34,12 @@ public sealed partial class CargoBountyConsoleComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
+    /// The sound made when the bounty is claimed.
+    /// </summary>
+    [DataField("claimSound")]
+    public SoundSpecifier ClaimSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg"); // MIKEY - update to be unique!
+
+    /// <summary>
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField("skipSound")]
@@ -79,6 +85,17 @@ public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
     public string BountyId;
 
     public BountyPrintLabelMessage(string bountyId)
+    {
+        BountyId = bountyId;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class BountyClaimMessage : BoundUserInterfaceMessage
+{
+    public string BountyId;
+
+    public BountyClaimMessage(string bountyId)
     {
         BountyId = bountyId;
     }
