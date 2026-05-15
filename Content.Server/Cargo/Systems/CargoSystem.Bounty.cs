@@ -565,8 +565,6 @@ public sealed partial class CargoSystem
             return false;
 
         var actorName = Identity.Name(actor, EntityManager);
-        if (string.IsNullOrWhiteSpace(actorName))
-            return false;
 
         for (var i = 0; i < db.Bounties.Count; i++)
         {
