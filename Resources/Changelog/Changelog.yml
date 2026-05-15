@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Several lathe recipes capable of duplicating materials have been made
-      more expensive.
-    type: Fix
-  id: 9177
-  time: '2025-10-31T00:20:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41134
 - author: NoreUhh
   changes:
   - message: Added two new fun reagents, Felinase and Caninase, which change how you
@@ -4082,3 +4074,10 @@
   id: 9688
   time: '2026-05-11T03:27:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43921
+- author: Princess-Cheeseballs
+  changes:
+  - message: Handheld artifacts will no longer create entities glued to players.
+    type: Fix
+  id: 9689
+  time: '2026-05-15T17:38:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43589
