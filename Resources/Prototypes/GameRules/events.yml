@@ -265,7 +265,7 @@
     objectives:
     - ParadoxCloneKillObjective
     - ParadoxCloneLivingObjective
-  - type: AntagRandomSpawn # TODO: improve spawning so they only start in maints
+  - type: AntagRandomLivingPersonSpawn # TODO: improve spawning so they only start in maints
   - type: AntagSelection
     agentName: paradox-clone-round-end-agent-name
     antags:
