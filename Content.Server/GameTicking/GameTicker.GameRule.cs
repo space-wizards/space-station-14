@@ -29,7 +29,7 @@ public sealed partial class GameTicker
     /// </summary>
     [ViewVariables] private string[] _ignoredRules = [];
 
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = null!;
+    [Dependency] private EntityWhitelistSystem _whitelist = null!;
 
     /// <summary>
     ///     A list storing the start times of all game rules that have been started this round.
@@ -83,7 +83,7 @@ public sealed partial class GameTicker
     /// start it yet, instead waiting until the rule is actually started by other code (usually roundstart)
     /// </summary>
     /// <returns>The entity for the added gamerule</returns>
-    public EntityUid AddGameRule(string ruleId)
+    public EntityUid AddGameRule([ForbidLiteral] string ruleId)
     {
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
@@ -116,7 +116,7 @@ public sealed partial class GameTicker
     /// </summary>
     /// <param name="gameRule">Game rule entity that we are trying to spawn</param>
     /// <returns>The entityUid of the spawned game rule, if it wasn't ignored.</returns>
-    public EntityUid? AddFilteredGameRule(EntProtoId gameRule)
+    public EntityUid? AddFilteredGameRule([ForbidLiteral] EntProtoId gameRule)
     {
         if (IsIgnored(gameRule))
             return null;
@@ -129,7 +129,7 @@ public sealed partial class GameTicker
     /// </summary>
     /// <param name="gameRule">GameRule we are trying to validate</param>
     /// <returns>True if the gamerule should be ignored and not spawned.</returns>
-    public bool IsIgnored(EntProtoId gameRule)
+    public bool IsIgnored([ForbidLiteral] EntProtoId gameRule)
     {
         return _ignoredRules.Contains(gameRule);
     }
@@ -138,7 +138,7 @@ public sealed partial class GameTicker
     /// Game rules can be 'started' separately from being added. 'Starting' them usually
     /// happens at round start while they can be added and removed before then.
     /// </summary>
-    public bool StartGameRule(string ruleId)
+    public bool StartGameRule([ForbidLiteral] string ruleId)
     {
         return StartGameRule(ruleId, out _);
     }
@@ -147,7 +147,7 @@ public sealed partial class GameTicker
     /// Game rules can be 'started' separately from being added. 'Starting' them usually
     /// happens at round start while they can be added and removed before then.
     /// </summary>
-    public bool StartGameRule(string ruleId, out EntityUid ruleEntity)
+    public bool StartGameRule([ForbidLiteral] string ruleId, out EntityUid ruleEntity)
     {
         ruleEntity = AddGameRule(ruleId);
         return StartGameRule(ruleEntity);
@@ -261,7 +261,7 @@ public sealed partial class GameTicker
         return Resolve(ruleEntity, ref component) && !HasComp<EndedGameRuleComponent>(ruleEntity);
     }
 
-    public bool IsGameRuleAdded(string rule)
+    public bool IsGameRuleAdded([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetAddedGameRules())
         {
@@ -309,7 +309,7 @@ public sealed partial class GameTicker
         return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
 
-    public bool IsGameRuleActive(string rule)
+    public bool IsGameRuleActive([ForbidLiteral] string rule)
     {
         foreach (var ruleEntity in GetActiveGameRules())
         {
