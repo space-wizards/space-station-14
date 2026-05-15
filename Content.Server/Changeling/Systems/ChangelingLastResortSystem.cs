@@ -12,27 +12,26 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Changeling.Systems;
 
-public sealed class ChangelingLastResortSystem : EntitySystem
+public sealed partial class ChangelingLastResortSystem : EntitySystem
 {
     private static readonly EntProtoId ChangelingRule = "Changeling";
     private static readonly ProtoId<AntagSpecifierPrototype> ChangelingAntag = "Changeling";
 
-    [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private RejuvenateSystem _rejuvenate = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -56,7 +55,8 @@ public sealed class ChangelingLastResortSystem : EntitySystem
             _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
     }
 
-    private void OnLastResortAction(Entity<ChangelingLastResortAbilityComponent> ent, ref ChangelingLastResortActionEvent args)
+    private void OnLastResortAction(Entity<ChangelingLastResortAbilityComponent> ent,
+        ref ChangelingLastResortActionEvent args)
     {
         if (args.Handled || !_mind.TryGetMind(args.Performer, out var mindId, out var mind))
             return;
@@ -69,7 +69,8 @@ public sealed class ChangelingLastResortSystem : EntitySystem
         _gibbing.Gib(args.Performer);
     }
 
-    private void OnTakeOverCorpseAction(Entity<ChangelingSlugComponent> ent, ref ChangelingTakeOverCorpseActionEvent args)
+    private void OnTakeOverCorpseAction(Entity<ChangelingSlugComponent> ent,
+        ref ChangelingTakeOverCorpseActionEvent args)
     {
         if (args.Handled || !CanTakeOver(ent.Owner, args.Target))
             return;
@@ -77,9 +78,16 @@ public sealed class ChangelingLastResortSystem : EntitySystem
         args.Handled = true;
 
         _audio.PlayPvs(ent.Comp.Sound, ent.Owner);
-        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others", ("user", ent.Owner)), ent.Owner, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("changeling-takeover-start-others", ("user", ent.Owner)),
+            ent.Owner,
+            PopupType.MediumCaution);
 
-        var doAfter = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.TakeOverDuration, new ChangelingTakeOverCorpseDoAfterEvent(), ent, target: args.Target)
+        var doAfter = new DoAfterArgs(EntityManager,
+            ent.Owner,
+            ent.Comp.TakeOverDuration,
+            new ChangelingTakeOverCorpseDoAfterEvent(),
+            ent,
+            target: args.Target)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -90,7 +98,8 @@ public sealed class ChangelingLastResortSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfter);
     }
 
-    private void OnTakeOverCorpseDoAfter(Entity<ChangelingSlugComponent> ent, ref ChangelingTakeOverCorpseDoAfterEvent args)
+    private void OnTakeOverCorpseDoAfter(Entity<ChangelingSlugComponent> ent,
+        ref ChangelingTakeOverCorpseDoAfterEvent args)
     {
         args.Handled = true;
 
@@ -105,7 +114,10 @@ public sealed class ChangelingLastResortSystem : EntitySystem
         _mind.TransferTo(mindId, target, mind: mind);
 
         if (mind.UserId is { } userId && _player.TryGetSessionById(userId, out var session))
-            _antag.TryApplyAntagConfiguration<ChangelingRuleComponent>(session, target, ChangelingRule, ChangelingAntag);
+            _antag.TryApplyAntagConfiguration<ChangelingRuleComponent>(session,
+                target,
+                ChangelingRule,
+                ChangelingAntag);
 
         QueueDel(args.User);
 
