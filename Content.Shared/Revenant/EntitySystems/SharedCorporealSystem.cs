@@ -13,12 +13,12 @@ namespace Content.Shared.Revenant.EntitySystems;
 /// Additionally applies a few visual effects.
 /// Used for status effect.
 /// </summary>
-public abstract class SharedCorporealSystem : EntitySystem
+public abstract partial class SharedCorporealSystem : EntitySystem
 {
     public static readonly EntProtoId CorporealStatusEffect = "StatusEffectCorporeal";
 
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
