@@ -49,18 +49,19 @@ public sealed class CargoTest : GameTest
                         continue;
                     var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
                     double price = 0;
+                    EntityUid ent;
                     if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
                         var averageSpawns = _sTableSystem.AverageSpawns(fill.Containers.First().Value);
-                        // Randomness will lead to non interger expected values, if all the expected values are intergers then we skip
-                        // Compares against epsilon incase of any floating point stuff
+                        // Randomness will lead to non integer expected values, if all the expected values are integers then we skip
+                        // Compares against epsilon in case of any floating point stuff
                         if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
                         {
                             foreach (var item in averageSpawns)
                             {
-                                var ent2 = SSpawnAtPosition(item.spawn, coordinates);
-                                price += _sPricing.GetPrice(ent2) * item.Item2;
-                                SEntMan.DeleteEntity(ent2);
+                                ent = SSpawnAtPosition(item.spawn, coordinates);
+                                price += _sPricing.GetPrice(ent) * item.Item2;
+                                SEntMan.DeleteEntity(ent);
                             }
                             // Price of container is not included right now
                             Assert.That(
@@ -72,7 +73,7 @@ public sealed class CargoTest : GameTest
                         }
                     }
 
-                    var ent = SSpawnAtPosition(proto.Product, coordinates);
+                    ent = SSpawnAtPosition(proto.Product, coordinates);
                     price += _sPricing.GetPrice(ent);
 
                     Assert.That(
