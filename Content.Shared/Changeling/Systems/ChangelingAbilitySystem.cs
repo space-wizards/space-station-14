@@ -9,6 +9,7 @@ using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
 using Content.Shared.Fluids;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -27,6 +28,7 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
     [Dependency] private SharedPuddleSystem _puddle = default!;
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private ReactiveSystem _reactive = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
     [Dependency] private ChangelingDevourSystem _changelingDevour = default!;
 
@@ -80,6 +82,12 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
 
     private void OnStingAction(Entity<ChangelingStingAbilityComponent> ent, ref ChangelingStingActionEvent args)
     {
+        if (ent.Comp.RequireAlive && _mobState.IsDead(args.Target))
+        {
+            _popup.PopupClient(Loc.GetString("changeling-sting-attempt-failed-dead"), args.Performer, args.Performer);
+            return;
+        }
+
         if (!HasComp<BloodstreamComponent>(args.Target))
             return;
 

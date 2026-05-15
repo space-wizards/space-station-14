@@ -91,7 +91,7 @@
     injectSolution:
       reagents:
       - ReagentId: NorepinephricAcid
-        Quantity: 25
+        Quantity: 23
 
 # TODO: It's almost useless right now because of the hallucinations
 - type: entity
@@ -150,7 +150,7 @@
     injectSolution:
       reagents:
       - ReagentId: Neurodepressant
-        Quantity: 5
+        Quantity: 10
 
 - type: entity
   id: ActionChangelingDevour

@@ -21,12 +21,6 @@ public sealed partial class ChangelingStingAbilityComponent : Component
     /// </summary>
     [DataField(required: true)]
     public Solution InjectSolution = new();
-
-    /// <summary>
-    /// The popup to display only to the user when the sting succeeds.
-    /// </summary>
-    [DataField]
-    public LocId ActivatedPopupSelf = "changeling-sting-success";
 }
 
 /// <summary>

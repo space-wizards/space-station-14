@@ -349,7 +349,7 @@
           reagent: Neurodepressant
           max: 10
         effectProto: StatusEffectDrowsiness
-        time: 3
+        time: 5
         type: Update
       - !type:PopupMessage
         conditions:
@@ -358,7 +358,7 @@
           max: 10
         type: Local
         messages: [ "effect-neurodepressant-light-dizzy" ]
-        probability: 0.20
+        probability: 0.1
       - !type:Electrocute
         electrocuteTime: 2
         probability: 0.05
@@ -369,9 +369,8 @@
         - !type:ReagentCondition
           reagent: Neurodepressant
           min: 10
-          max: 20
         effectProto: StatusEffectDrowsiness
-        time: 8
+        time: 10
         type: Update
       - !type:PopupMessage
         conditions:
@@ -384,17 +383,9 @@
         messages:
         - effect-neurodepressant-heavy-dizzy
         - effect-neurodepressant-vision-fuzzy
-        probability: 0.35
+        probability: 0.1
 
       # 20u+
-      - !type:ModifyStatusEffect
-        conditions:
-        - !type:ReagentCondition
-          reagent: Neurodepressant
-          min: 20
-        effectProto: StatusEffectDrowsiness
-        time: 8
-        type: Update
       - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentCondition
@@ -408,14 +399,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: Neurodepressant
-          max: 20
+          min: 20
         visualType: MediumCaution
         type: Local
         messages:
         - effect-neurodepressant-spinning
         - effect-neurodepressant-numb-limbs
         - generic-reagent-effect-sick
-        probability: 0.25
+        probability: 0.1
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentCondition
