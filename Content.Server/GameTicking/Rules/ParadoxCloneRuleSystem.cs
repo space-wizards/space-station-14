@@ -1,5 +1,4 @@
 using Content.Server.Antag;
-using Content.Server.Antag.Components;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Medical.SuitSensors;
@@ -22,7 +21,6 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
     [Dependency] private readonly TargetSystem _target = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
 
     public override void Initialize()
     {
@@ -75,11 +73,6 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
 
             // pick a random player
             var randomHumanoidMind = _random.Pick(allAliveHumanoids);
-            if (_entMan.TryGetComponent<AntagRandomLivingPersonSpawnComponent>(ent.Owner, out var comp))
-            {
-                if (comp.Mind != null)
-                    randomHumanoidMind = (Entity<MindComponent>)comp.Mind;
-            }
             ent.Comp.OriginalMind = randomHumanoidMind;
             ent.Comp.OriginalBody = randomHumanoidMind.Comp.OwnedEntity;
 
