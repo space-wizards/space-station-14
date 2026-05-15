@@ -7,9 +7,9 @@ using Content.Shared.Explosion;
 
 namespace Content.Server.Disposal.Unit;
 
-public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
+public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosSystem = default!;
 
     public override void Initialize()
     {

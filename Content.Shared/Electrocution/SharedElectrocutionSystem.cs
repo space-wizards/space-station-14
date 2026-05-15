@@ -3,9 +3,9 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Electrocution
 {
-    public abstract class SharedElectrocutionSystem : EntitySystem
+    public abstract partial class SharedElectrocutionSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -60,10 +60,18 @@ namespace Content.Shared.Electrocution
         /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
         /// <param name="statusEffects">Status effects to apply to the entity.</param>
         /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
+        /// <param name="isElectrocutionRelay">Should the electrocution be called in entities that interacts with the source?</param>
+        /// <param name="RelayEntitiesVisited">Data structure that contains visited entities from relay</param>
         /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
         public virtual bool TryDoElectrocution(
-            EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+            EntityUid uid, EntityUid? sourceUid,
+            int shockDamage, TimeSpan time,
+            bool refresh,
+            float siemensCoefficient = 1f,
+            StatusEffectsComponent? statusEffects = null,
+            bool ignoreInsulation = false,
+            bool isElectrocutionRelay = false,
+            HashSet<EntityUid>? RelayEntitiesVisited = null)
         {
             // only done serverside
             return false;
