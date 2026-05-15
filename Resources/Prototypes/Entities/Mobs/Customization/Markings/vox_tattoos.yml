@@ -94,7 +94,7 @@
 - type: marking
   id: TattooVoxTailRing
   # TODO // Looks off on some tails (i.e docked/amputated), if conditionals for markings ever get implemented this needs to be updated to account for those.
-  bodyPart: Tail
+  bodyPart: TailOverlay
   groupWhitelist: [Vox]
   coloring:
     default:
@@ -162,7 +162,7 @@
   sprites:
   - sprite: Mobs/Customization/vox_tattoos.rsi
     state: eyeshadow_large
-    
+
 - type: marking
   id: VoxTattooEyeliner
   bodyPart: Eyes
@@ -173,7 +173,7 @@
 
 - type: marking
   id: VoxBeakCoverStripe
-  bodyPart: Snout
+  bodyPart: SnoutCover
   coloring:
     default:
       type:
@@ -186,7 +186,7 @@
 
 - type: marking
   id: VoxBeakCoverTip
-  bodyPart: Snout
+  bodyPart: SnoutCover
   coloring:
     default:
       type:
