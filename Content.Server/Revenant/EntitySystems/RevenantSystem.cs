@@ -24,11 +24,14 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem : EntitySystem
 {
+    private static readonly EntProtoId CorporealStatusEffect = "StatusEffectCorporealRevenant";
+
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
@@ -76,7 +79,6 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, 0, component);
 
         //default the visuals
-        _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
         _appearance.SetData(uid, RevenantVisuals.Harvesting, false);
         _appearance.SetData(uid, RevenantVisuals.Stunned, false);
 
@@ -114,7 +116,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnDamage(EntityUid uid, RevenantComponent component, DamageChangedEvent args)
     {
-        if (!_newStatusEffects.HasStatusEffect(uid, SharedCorporealSystem.CorporealStatusEffect) || args.DamageDelta == null)
+        if (!_newStatusEffects.HasStatusEffect(uid, CorporealStatusEffect) || args.DamageDelta == null)
             return;
 
         var essenceDamage = args.DamageDelta.GetTotal().Float() * component.DamageToEssenceCoefficient * -1;
@@ -168,7 +170,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
         ChangeEssenceAmount(uid, -abilityCost, component, false);
 
-        _newStatusEffects.TryAddStatusEffectDuration(uid, SharedCorporealSystem.CorporealStatusEffect, TimeSpan.FromSeconds(debuffs.Y));
+        _newStatusEffects.TryAddStatusEffectDuration(uid, CorporealStatusEffect, TimeSpan.FromSeconds(debuffs.Y));
         _stun.TryAddStunDuration(uid, TimeSpan.FromSeconds(debuffs.X));
 
         return true;

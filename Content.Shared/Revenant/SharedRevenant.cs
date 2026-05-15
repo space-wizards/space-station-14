@@ -62,7 +62,6 @@ public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent
 [NetSerializable, Serializable]
 public enum RevenantVisuals : byte
 {
-    Corporeal,
     Stunned,
     Harvesting,
 }
