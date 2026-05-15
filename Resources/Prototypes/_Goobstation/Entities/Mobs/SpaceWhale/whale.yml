@@ -1,0 +1,163 @@
+# Topornaya prosotaya verisya kita:
+#  - HP 4000
+#  - Bite + Roar (no phases, no Ram/TailSwipe/Retreat/PainLearning/RecentKills)
+#  - Wall-breaking through DamageOnCollide: Structural 5000 на любой контакт.
+#  - WhaleBrain (one tick): pick target (LOS 30 / scent 15 / orbit 10 from station rim).
+# See LEGACY.md for what got pulled out and how to bring it back.
+
+- type: entity
+  id: SpaceLeviathanBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  abstract: true
+  name: space whale
+  description: When the space becomes too quiet, there is no hope, there is no escape, but there is this.
+  components:
+  - type: TailedEntity
+    amount: 30
+    spacing: 0.8
+    prototype: SpaceWhaleSegment
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 11
+    baseWalkSpeed: 11
+  - type: WarpPoint
+    follow: true
+    location: space leviathan
+  - type: InputMover
+  - type: MobMover
+  - type: CombatMode
+  - type: NpcFactionMember
+    factions:
+    - Dragon
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2
+        density: 200
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MeleeWeapon
+    altDisarm: false
+    attackRate: 1.0
+    # Whale radius is 2, target hugging the body sits ~2 tiles from the center.
+    # Default range 1.5 didn't reach. Angle 0 was a "laser beam" cone — fixed to 90°.
+    range: 3.5
+    angle: 90
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Blunt: 50
+        Slash: 45
+        Structural: 800
+  - type: Speech
+    speechVerb: LargeMob
+  - type: InteractionPopup
+    interactSuccessString: petting-success-leviathan
+    interactFailureString: petting-failure-leviathan
+    interactFailureSound:
+      path: /Audio/Effects/bite.ogg
+  - type: Sprite
+    sprite: _Goobstation/Mobs/SpaceWhale/leviathan.rsi
+    state: head
+    noRot: false
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      4000: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 4000
+      behaviors:
+      - !type:GibBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpaceCash1000000:
+            min: 1
+            max: 1
+  - type: DamageOnCollide
+    inverted: true
+    cooldown: 0.3
+    damage:
+      types:
+        Structural: 3000
+        Blunt: 25
+  - type: WhaleAura
+    radius: 6
+  - type: WhaleMemory
+    aggressionWindow: 30
+  - type: WhaleAbility
+  - type: WhaleBrain
+    tickInterval: 0.3
+    sightRadius: 30
+    scentRadius: 15
+    orbitClearance: 10
+  - type: Devourer
+    whitelist:
+      components:
+      - MobState
+  - type: WhaleConsumer
+    searchRadius: 4.0
+    healPerCorpse: 500
+    scanInterval: 1.0
+
+- type: entity
+  id: SpaceLeviathan
+  parent: SpaceLeviathanBase
+  suffix: persistent boss
+  components:
+  - type: WhaleSpawnedBy
+
+- type: entity
+  id: SpaceLeviathanDebug
+  parent: SpaceLeviathanBase
+  suffix: admin spawn
+
+- type: entity
+  id: SpaceWhaleSegment
+  parent: FlyingMobBase
+  suffix: do not spawn
+  components:
+  - type: SpaceWhaleSegment
+  - type: Sprite
+    sprite: _Goobstation/Mobs/SpaceWhale/leviathan.rsi
+    state: segment
+    noRot: false
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+    canCollide: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1.0
+        density: 50
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+  - type: DamageOnCollide
+    inverted: true
+    cooldown: 0.5
+    requirePushing: true
+    damage:
+      types:
+        Structural: 400
+        Blunt: 15
