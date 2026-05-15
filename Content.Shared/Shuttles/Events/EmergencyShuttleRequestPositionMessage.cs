@@ -6,8 +6,7 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised on the client to request the expected position of the emergency shuttle for debugging.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class EmergencyShuttleRequestPositionMessage : EntityEventArgs
+public sealed class EmergencyShuttleRequestPositionMessage : EntityEventArgs
 {
 
 }
-

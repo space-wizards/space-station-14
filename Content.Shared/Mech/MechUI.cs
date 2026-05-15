@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech;
 
@@ -11,7 +11,7 @@ public enum MechUiKey : byte
 /// <summary>
 /// Event raised to collect BUI states for each of the mech's equipment items
 /// </summary>
-public sealed partial class MechEquipmentUiStateReadyEvent : EntityEventArgs
+public sealed class MechEquipmentUiStateReadyEvent : EntityEventArgs
 {
     public Dictionary<NetEntity, BoundUserInterfaceState> States = new();
 }
@@ -19,7 +19,7 @@ public sealed partial class MechEquipmentUiStateReadyEvent : EntityEventArgs
 /// <summary>
 /// Event raised to relay an equipment ui message
 /// </summary>
-public sealed partial class MechEquipmentUiMessageRelayEvent : EntityEventArgs
+public sealed class MechEquipmentUiMessageRelayEvent : EntityEventArgs
 {
     public MechEquipmentUiMessage Message;
 
@@ -33,7 +33,7 @@ public sealed partial class MechEquipmentUiMessageRelayEvent : EntityEventArgs
 /// UI event raised to remove a piece of equipment from a mech
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
+public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
 {
     public NetEntity Equipment;
 
@@ -56,7 +56,7 @@ public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
 /// event raised for the grabber equipment to eject an item from it's storage
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MechGrabberEjectMessage : MechEquipmentUiMessage
+public sealed class MechGrabberEjectMessage : MechEquipmentUiMessage
 {
     public NetEntity Item;
 
@@ -71,7 +71,7 @@ public sealed partial class MechGrabberEjectMessage : MechEquipmentUiMessage
 /// Event raised for the soundboard equipment to play a sound from its component
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MechSoundboardPlayMessage : MechEquipmentUiMessage
+public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 {
     public int Sound;
 
@@ -86,31 +86,31 @@ public sealed partial class MechSoundboardPlayMessage : MechEquipmentUiMessage
 /// BUI state for mechs that also contains all equipment ui states.
 /// </summary>
 /// <remarks>
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ??????????????????????????????
-///    ?????????????????????????????
-/// trojan horse bui state?
+///    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⢐⠤⢃⢰⠐⡄⣀⠀⠀
+///    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⣨⠀⢁⠁⠐⡐⠠⠜⠐⠀
+///    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠐⢀⡁⣀⠔⡌⠡⢀⢐⠁⠀
+///    ⠀⠀⠀⠀⢀⠔⠀⡂⡄⠠⢀⡀⠀⣄⡀⠠⠤⠴⡋⠑⡠⠀⠔⠐⢂⠕⢀⡂⠀⠀
+///    ⠀⠀⠀⡔⠁⠠⡐⠁⠀⠀⠀⢘⠀⠀⠀⠀⠠⠀⠈⠪⠀⠑⠡⣃⠈⠤⡈⠀⠀⠀
+///    ⠀⠀⠨⠀⠄⡒⠀⡂⢈⠀⣀⢌⠀⠀⠁⡈⠀⢆⢀⠀⡀⠉⠒⢆⠑⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⡁⠐⠠⠐⡀⠀⢀⣀⠣⡀⠢⡀⠀⢀⡃⠰⠀⠈⠠⢁⠎⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⠅⠒⣈⢣⠠⠈⠕⠁⠱⠄⢤⠈⠪⠡⠎⢘⠈⡁⢙⠈⠀⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⠃⠀⢡⠀⠧⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢕⡈⠌⠀⠀⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⠀⠀⠀⠈⡀⡀⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠀⡐⠀⠀⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⠀⠀⠀⠀⢈⢂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠀⡃⠀⠀⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⠀⠀⠀⠀⠀⠎⠐⢅⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⠅⠚⠄⠀⠀⠀⠀⠀⠀⠀
+///    ⠀⠀⢈⠩⠈⠀⠐⠁⠀⢀⠀⠄⡂⠒⠐⠀⠆⠁⠰⠠⠀⢅⠈⠐⠄⢁⢡⠀⠀⠀
+///    ⠀⠀⢈⡀⠰⡁⠀⠁⠴⠁⠔⠀⠀⠄⠄⡁⠀⠂⠀⠢⠠⠁⠀⠠⠈⠂⠬⠀⠀⠀
+///    ⠀⠀⠠⡂⢄⠤⠒⣁⠐⢕⢀⡈⡐⡠⠄⢐⠀⠈⠠⠈⡀⠂⢀⣀⠰⠁⠠⠀⠀
+/// trojan horse bui state⠀
 /// </remarks>
 [Serializable, NetSerializable]
-public sealed partial class MechBoundUiState : BoundUserInterfaceState
+public sealed class MechBoundUiState : BoundUserInterfaceState
 {
     public Dictionary<NetEntity, BoundUserInterfaceState> EquipmentStates = new();
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechGrabberUiState : BoundUserInterfaceState
+public sealed class MechGrabberUiState : BoundUserInterfaceState
 {
     public List<NetEntity> Contents = new();
     public int MaxContents;
@@ -120,8 +120,7 @@ public sealed partial class MechGrabberUiState : BoundUserInterfaceState
 /// List of sound collection ids to be localized and displayed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MechSoundboardUiState : BoundUserInterfaceState
+public sealed class MechSoundboardUiState : BoundUserInterfaceState
 {
     public List<string> Sounds = new();
 }
-

@@ -88,7 +88,7 @@ public sealed partial class StackComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StackComponentState : ComponentState
+public sealed class StackComponentState : ComponentState
 {
     public int Count { get; }
     public int? MaxCountOverride { get; }
@@ -116,4 +116,3 @@ public enum StackLayerFunction : byte
     // </summary>
     Threshold
 }
-

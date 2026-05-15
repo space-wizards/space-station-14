@@ -8,7 +8,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
+    public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
     {
         public readonly bool CanAnnounce;
         public readonly bool CanBroadcast = true;
@@ -32,7 +32,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleSelectAlertLevelMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleSelectAlertLevelMessage : BoundUserInterfaceMessage
     {
         public readonly string Level;
 
@@ -43,7 +43,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleAnnounceMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleAnnounceMessage : BoundUserInterfaceMessage
     {
         public readonly string Message;
 
@@ -54,7 +54,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleBroadcastMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleBroadcastMessage : BoundUserInterfaceMessage
     {
         public readonly string Message;
         public CommunicationsConsoleBroadcastMessage(string message)
@@ -64,12 +64,12 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleCallEmergencyShuttleMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleCallEmergencyShuttleMessage : BoundUserInterfaceMessage
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CommunicationsConsoleRecallEmergencyShuttleMessage : BoundUserInterfaceMessage
+    public sealed class CommunicationsConsoleRecallEmergencyShuttleMessage : BoundUserInterfaceMessage
     {
     }
 
@@ -79,4 +79,3 @@ namespace Content.Shared.Communications
         Key
     }
 }
-

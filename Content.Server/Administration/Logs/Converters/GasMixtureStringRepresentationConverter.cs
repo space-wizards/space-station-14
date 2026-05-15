@@ -1,10 +1,10 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Content.Server.Atmos;
 
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed partial class GasMixtureStringRepresentationConverter : AdminLogConverter<GasMixtureStringRepresentation>
+public sealed class GasMixtureStringRepresentationConverter : AdminLogConverter<GasMixtureStringRepresentation>
 {
     public override void Write(Utf8JsonWriter writer, GasMixtureStringRepresentation value, JsonSerializerOptions options)
     {
@@ -24,4 +24,3 @@ public sealed partial class GasMixtureStringRepresentationConverter : AdminLogCo
         writer.WriteEndObject();
     }
 }
-

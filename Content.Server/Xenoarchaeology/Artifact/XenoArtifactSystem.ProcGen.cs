@@ -9,7 +9,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed partial class XenoArtifactSystem
 {
-    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {

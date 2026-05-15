@@ -1,11 +1,11 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
-public sealed partial class InventoryDisplay : LayoutContainer
+public sealed class InventoryDisplay : LayoutContainer
 {
     private int Columns = 0;
     private int Rows = 0;
@@ -77,4 +77,3 @@ public sealed partial class InventoryDisplay : LayoutContainer
         Children.Clear();
     }
 }
-

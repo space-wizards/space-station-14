@@ -5,7 +5,7 @@ using Content.Shared.Forensics;
 
 namespace Content.Server.Body.Systems;
 
-public sealed partial class BloodstreamSystem : SharedBloodstreamSystem
+public sealed class BloodstreamSystem : SharedBloodstreamSystem
 {
     public override void Initialize()
     {
@@ -33,4 +33,3 @@ public sealed partial class BloodstreamSystem : SharedBloodstreamSystem
             Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 }
-

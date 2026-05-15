@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Replay;
 
-public sealed partial class ContentLoadReplayJob : LoadReplayJob
+public sealed class ContentLoadReplayJob : LoadReplayJob
 {
     private readonly LoadingScreen<bool> _screen;
 
@@ -36,4 +36,3 @@ public sealed partial class ContentLoadReplayJob : LoadReplayJob
         await base.Yield(value, maxValue, state, force);
     }
 }
-

@@ -5,7 +5,7 @@ namespace Content.Shared.Singularity.Events;
 /// <summary>
 /// An event raised whenever a singularity changes its level.
 /// </summary>
-public sealed partial class SingularityLevelChangedEvent : EntityEventArgs
+public sealed class SingularityLevelChangedEvent : EntityEventArgs
 {
     /// <summary>
     /// The new level of the singularity.
@@ -29,4 +29,3 @@ public sealed partial class SingularityLevelChangedEvent : EntityEventArgs
         Singularity = singularity;
     }
 }
-

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Administration.UI.SetOutfit
 {
     [UsedImplicitly]
-    public sealed partial class SetOutfitEui : BaseEui
+    public sealed class SetOutfitEui : BaseEui
     {
         private readonly SetOutfitMenu _window;
         private IEntityManager _entManager;
@@ -42,4 +42,3 @@ namespace Content.Client.Administration.UI.SetOutfit
         }
     }
 }
-

@@ -8,7 +8,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Power.EntitySystems;
 
-public sealed partial class PowerReceiverSystem : SharedPowerReceiverSystem
+public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
 {
     public override void Initialize()
     {
@@ -55,4 +55,3 @@ public sealed partial class PowerReceiverSystem : SharedPowerReceiverSystem
         return true;
     }
 }
-

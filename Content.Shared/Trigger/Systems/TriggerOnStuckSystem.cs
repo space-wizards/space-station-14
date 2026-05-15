@@ -3,7 +3,7 @@ using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerOnStuckSystem : TriggerOnXSystem
+public sealed class TriggerOnStuckSystem : TriggerOnXSystem
 {
     public override void Initialize()
     {
@@ -17,4 +17,3 @@ public sealed partial class TriggerOnStuckSystem : TriggerOnXSystem
         Trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
     }
 }
-

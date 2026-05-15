@@ -10,10 +10,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed partial class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
+public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
 {
-    [Dependency] private BluespaceLockerSystem _bluespaceLocker = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly BluespaceLockerSystem _bluespaceLocker = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void Started(EntityUid uid, BluespaceLockerRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

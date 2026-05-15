@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Thief;
 
 [Serializable, NetSerializable]
-public sealed partial class ThiefBackpackBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class ThiefBackpackBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly Dictionary<int, ThiefBackpackSetInfo> Sets;
     public int MaxSelectedSets;
@@ -23,7 +23,7 @@ public sealed partial class ThiefBackpackBoundUserInterfaceState : BoundUserInte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ThiefBackpackChangeSetMessage : BoundUserInterfaceMessage
+public sealed class ThiefBackpackChangeSetMessage : BoundUserInterfaceMessage
 {
     public readonly int SetNumber;
 
@@ -34,7 +34,7 @@ public sealed partial class ThiefBackpackChangeSetMessage : BoundUserInterfaceMe
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ThiefBackpackApproveMessage : BoundUserInterfaceMessage
+public sealed class ThiefBackpackApproveMessage : BoundUserInterfaceMessage
 {
     public ThiefBackpackApproveMessage() { }
 }
@@ -67,4 +67,3 @@ public partial struct ThiefBackpackSetInfo
         Selected = selected;
     }
 }
-

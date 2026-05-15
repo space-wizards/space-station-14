@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.MagicMirror;
 
-public sealed partial class MagicMirrorBoundUserInterface : BoundUserInterface
+public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private MagicMirrorWindow? _window;
@@ -43,5 +43,4 @@ public sealed partial class MagicMirrorBoundUserInterface : BoundUserInterface
         _markingsModel.Markings = data.AppliedMarkings;
     }
 }
-
 

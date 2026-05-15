@@ -8,8 +8,8 @@ namespace Content.Server.Salvage;
 [AdminCommand(AdminFlags.Admin)]
 sealed class SalvageRulerCommand : LocalizedEntityCommands
 {
-    [Dependency] private IMapManager _maps = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly IMapManager _maps = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override string Command => "salvageruler";
 
@@ -57,5 +57,4 @@ sealed class SalvageRulerCommand : LocalizedEntityCommands
         shell.WriteLine(total.ToString());
     }
 }
-
 

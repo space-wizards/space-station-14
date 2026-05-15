@@ -14,9 +14,9 @@ namespace Content.Shared.Movement.Systems;
 /// <summary>
 /// Lets specific sessions scroll and set their zoom directly.
 /// </summary>
-public abstract partial class SharedContentEyeSystem : EntitySystem
+public abstract class SharedContentEyeSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminManager _admin = default!;
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
 
     // Admin flags required to ignore normal eye restrictions.
     public const AdminFlags EyeFlag = AdminFlags.Debug;
@@ -25,7 +25,7 @@ public abstract partial class SharedContentEyeSystem : EntitySystem
     public static readonly Vector2 DefaultZoom = Vector2.One;
     public static readonly Vector2 MinZoom = DefaultZoom * (float)Math.Pow(ZoomMod, -3);
 
-    [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     public override void Initialize()
     {
@@ -187,7 +187,7 @@ public abstract partial class SharedContentEyeSystem : EntitySystem
     /// Sendable from client to server to request a target zoom.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class RequestTargetZoomEvent : EntityEventArgs
+    public sealed class RequestTargetZoomEvent : EntityEventArgs
     {
         public Vector2 TargetZoom;
         public bool IgnoreLimit;
@@ -197,7 +197,7 @@ public abstract partial class SharedContentEyeSystem : EntitySystem
     /// Client->Server request for new PVS scale.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class RequestPvsScaleEvent(float scale) : EntityEventArgs
+    public sealed class RequestPvsScaleEvent(float scale) : EntityEventArgs
     {
         public float Scale = scale;
     }
@@ -206,7 +206,7 @@ public abstract partial class SharedContentEyeSystem : EntitySystem
     /// Sendable from client to server to request changing fov.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class RequestEyeEvent : EntityEventArgs
+    public sealed class RequestEyeEvent : EntityEventArgs
     {
         public readonly bool DrawFov;
         public readonly bool DrawLight;
@@ -218,4 +218,3 @@ public abstract partial class SharedContentEyeSystem : EntitySystem
         }
     }
 }
-

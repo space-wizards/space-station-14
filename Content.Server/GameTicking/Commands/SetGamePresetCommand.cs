@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    public sealed partial class SetGamePresetCommand : LocalizedEntityCommands
+    public sealed class SetGamePresetCommand : LocalizedEntityCommands
     {
-        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
         public override string Command => "setgamepreset";
 
@@ -65,4 +65,3 @@ namespace Content.Server.GameTicking.Commands
         }
     }
 }
-

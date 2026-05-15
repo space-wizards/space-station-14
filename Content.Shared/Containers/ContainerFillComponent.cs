@@ -35,7 +35,7 @@ public sealed partial class ContainerFillComponent : Component
 // all of this exists just to validate prototype ids.
 // it would be nice if you could specify only a type validator and not have to re-implement everything else.
 // or a dictionary serializer that accepts a custom type serializer for the dictionary values
-public sealed partial class ContainerFillSerializer : ITypeValidator<Dictionary<string, List<string>>, MappingDataNode>
+public sealed class ContainerFillSerializer : ITypeValidator<Dictionary<string, List<string>>, MappingDataNode>
 {
     private static PrototypeIdListSerializer<EntityPrototype> ListSerializer => new();
 
@@ -59,4 +59,3 @@ public sealed partial class ContainerFillSerializer : ITypeValidator<Dictionary<
         return new ValidatedMappingNode(mapping);
     }
 }
-

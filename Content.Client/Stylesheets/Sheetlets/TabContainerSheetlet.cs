@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.SheetletConfigs;
+﻿using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class TabContainerSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITabContainerConfig
+public sealed class TabContainerSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITabContainerConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -31,4 +31,3 @@ public sealed partial class TabContainerSheetlet<T> : Sheetlet<T> where T: Palet
         ];
     }
 }
-

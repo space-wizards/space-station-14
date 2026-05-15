@@ -1,8 +1,7 @@
-using Content.Shared.PneumaticCannon;
+﻿using Content.Shared.PneumaticCannon;
 
 namespace Content.Client.PneumaticCannon;
 
-public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
+public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 {
 }
-

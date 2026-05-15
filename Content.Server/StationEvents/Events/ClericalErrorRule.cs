@@ -8,9 +8,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed partial class ClericalErrorRule : StationEventSystem<ClericalErrorRuleComponent>
+public sealed class ClericalErrorRule : StationEventSystem<ClericalErrorRuleComponent>
 {
-    [Dependency] private StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
     protected override void Started(EntityUid uid, ClericalErrorRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

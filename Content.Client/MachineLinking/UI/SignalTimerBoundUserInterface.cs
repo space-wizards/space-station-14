@@ -5,7 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.MachineLinking.UI;
 
-public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
+public sealed class SignalTimerBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private SignalTimerWindow? _window;
@@ -62,4 +62,3 @@ public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
         _window.SetHasAccess(cast.HasAccess);
     }
 }
-

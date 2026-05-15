@@ -9,7 +9,7 @@ namespace Content.Shared.Preferences;
 /// <summary>
 /// The client sends this to update their construction favorites.
 /// </summary>
-public sealed partial class MsgUpdateConstructionFavorites : NetMessage
+public sealed class MsgUpdateConstructionFavorites : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -34,4 +34,3 @@ public sealed partial class MsgUpdateConstructionFavorites : NetMessage
         }
     }
 }
-

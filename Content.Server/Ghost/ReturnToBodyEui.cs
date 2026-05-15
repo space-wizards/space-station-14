@@ -7,7 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Ghost;
 
-public sealed partial class ReturnToBodyEui : BaseEui
+public sealed class ReturnToBodyEui : BaseEui
 {
     private readonly SharedMindSystem _mindSystem;
     private readonly ISharedPlayerManager _player;
@@ -37,4 +37,3 @@ public sealed partial class ReturnToBodyEui : BaseEui
         Close();
     }
 }
-

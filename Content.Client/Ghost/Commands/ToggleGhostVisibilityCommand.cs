@@ -2,9 +2,9 @@
 
 namespace Content.Client.Ghost.Commands;
 
-public sealed partial class ToggleGhostVisibilityCommand : LocalizedEntityCommands
+public sealed class ToggleGhostVisibilityCommand : LocalizedEntityCommands
 {
-    [Dependency] private GhostSystem _ghost = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
 
     public override string Command => "toggleghostvisibility";
 

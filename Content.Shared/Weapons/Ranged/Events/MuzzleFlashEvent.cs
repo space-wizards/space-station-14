@@ -6,7 +6,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// Raised whenever a muzzle flash client-side entity needs to be spawned.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MuzzleFlashEvent : EntityEventArgs
+public sealed class MuzzleFlashEvent : EntityEventArgs
 {
     public NetEntity Uid;
     public string Prototype;
@@ -20,4 +20,3 @@ public sealed partial class MuzzleFlashEvent : EntityEventArgs
         Angle = angle;
     }
 }
-

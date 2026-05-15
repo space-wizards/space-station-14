@@ -4,7 +4,7 @@ using Content.Shared.Wall;
 
 namespace Content.Server.Security;
 
-public sealed partial class GenpopSystem : SharedGenpopSystem
+public sealed class GenpopSystem : SharedGenpopSystem
 {
     private const float GenpopIDEjectDistanceFromWall = 1f;
     protected override void CreateId(Entity<GenpopLockerComponent> ent, string name, float sentence, string crime)
@@ -38,4 +38,3 @@ public sealed partial class GenpopSystem : SharedGenpopSystem
         Dirty(ent);
     }
 }
-

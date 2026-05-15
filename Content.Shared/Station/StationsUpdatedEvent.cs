@@ -1,9 +1,9 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Station;
 
 [NetSerializable, Serializable]
-public sealed partial class StationsUpdatedEvent : EntityEventArgs
+public sealed class StationsUpdatedEvent : EntityEventArgs
 {
     public readonly List<(string Name, NetEntity Entity)> Stations;
 
@@ -12,4 +12,3 @@ public sealed partial class StationsUpdatedEvent : EntityEventArgs
         Stations = stations;
     }
 }
-

@@ -1,11 +1,11 @@
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 
 namespace Content.Shared.UserInterface;
 
-public sealed partial class IntrinsicUISystem : EntitySystem
+public sealed class IntrinsicUISystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -54,7 +54,7 @@ public sealed partial class IntrinsicUISystem : EntitySystem
 }
 
 // Competing with ActivatableUI for horrible event names.
-public sealed partial class IntrinsicUIOpenAttemptEvent : CancellableEntityEventArgs
+public sealed class IntrinsicUIOpenAttemptEvent : CancellableEntityEventArgs
 {
     public EntityUid User { get; }
     public Enum? Key { get; }
@@ -64,4 +64,3 @@ public sealed partial class IntrinsicUIOpenAttemptEvent : CancellableEntityEvent
         Key = key;
     }
 }
-

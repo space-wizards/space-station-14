@@ -5,7 +5,7 @@ using Robust.Shared.Input;
 
 namespace Content.Client.SmartFridge;
 
-public sealed partial class SmartFridgeBoundUserInterface : BoundUserInterface
+public sealed class SmartFridgeBoundUserInterface : BoundUserInterface
 {
     private SmartFridgeMenu? _menu;
 
@@ -42,4 +42,3 @@ public sealed partial class SmartFridgeBoundUserInterface : BoundUserInterface
         SendPredictedMessage(new SmartFridgeDispenseItemMessage(entry.Entry));
     }
 }
-

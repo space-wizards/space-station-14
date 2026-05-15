@@ -1,4 +1,4 @@
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
@@ -48,7 +48,7 @@ public sealed partial class PortableGeneratorComponent : Component
 /// Sent to the server to adjust the targeted power level of a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorSetTargetPowerMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorSetTargetPowerMessage : BoundUserInterfaceMessage
 {
     public int TargetPower;
 
@@ -62,7 +62,7 @@ public sealed partial class PortableGeneratorSetTargetPowerMessage : BoundUserIn
 /// Sent to the server to try to start a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorStartMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorStartMessage : BoundUserInterfaceMessage
 {
 }
 
@@ -70,7 +70,7 @@ public sealed partial class PortableGeneratorStartMessage : BoundUserInterfaceMe
 /// Sent to the server to try to stop a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorStopMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorStopMessage : BoundUserInterfaceMessage
 {
 }
 
@@ -78,7 +78,7 @@ public sealed partial class PortableGeneratorStopMessage : BoundUserInterfaceMes
 /// Sent to the server to try to change the power output of a power-switchable portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorSwitchOutputMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorSwitchOutputMessage : BoundUserInterfaceMessage
 {
 }
 
@@ -86,7 +86,7 @@ public sealed partial class PortableGeneratorSwitchOutputMessage : BoundUserInte
 /// Sent to the server to try to eject all fuel stored in a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorEjectFuelMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorEjectFuelMessage : BoundUserInterfaceMessage
 {
 }
 
@@ -94,7 +94,7 @@ public sealed partial class PortableGeneratorEjectFuelMessage : BoundUserInterfa
 /// Contains network state for the portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class PortableGeneratorComponentBuiState : BoundUserInterfaceState
+public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
 {
     public float RemainingFuel;
     public bool Clogged;
@@ -147,4 +147,3 @@ public enum GeneratorVisuals : byte
     /// </summary>
     Running,
 }
-

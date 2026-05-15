@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Emoting.Systems;
 
-public sealed partial class BodyEmotesSystem : EntitySystem
+public sealed class BodyEmotesSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {

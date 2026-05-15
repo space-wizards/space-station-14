@@ -4,9 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Audio;
 
-public abstract partial class SharedAmbientSoundSystem : EntitySystem
+public abstract class SharedAmbientSoundSystem : EntitySystem
 {
-    [Dependency] private EntityQuery<AmbientSoundComponent> _query = default!;
+    [Dependency] private readonly EntityQuery<AmbientSoundComponent> _query = default!;
 
     public override void Initialize()
     {

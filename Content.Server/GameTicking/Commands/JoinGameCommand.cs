@@ -13,12 +13,12 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class JoinGameCommand : LocalizedEntityCommands
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private GameTicker _gameTicker = default!;
-        [Dependency] private StationJobsSystem _stationJobs = default!;
-        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         private ISawmill? _sawmill;
 
@@ -84,4 +84,3 @@ namespace Content.Server.GameTicking.Commands
         }
     }
 }
-

@@ -336,7 +336,7 @@ public abstract class CreateBanInfo
 /// </summary>
 /// <seealso cref="IBanManager.CreateServerBan(CreateServerBanInfo)"/>
 [Access(typeof(BanManager), Other = AccessPermissions.Execute)]
-public sealed partial class CreateServerBanInfo : CreateBanInfo
+public sealed class CreateServerBanInfo : CreateBanInfo
 {
     /// <param name="reason">The reason for the server ban.</param>
     public CreateServerBanInfo(string reason) : base(reason)
@@ -349,7 +349,7 @@ public sealed partial class CreateServerBanInfo : CreateBanInfo
 /// </summary>
 /// <seealso cref="IBanManager.CreateRoleBan(CreateRoleBanInfo)"/>
 [Access(typeof(BanManager), Other = AccessPermissions.Execute)]
-public sealed partial class CreateRoleBanInfo : CreateBanInfo
+public sealed class CreateRoleBanInfo : CreateBanInfo
 {
     internal readonly HashSet<ProtoId<AntagPrototype>> AntagPrototypes = [];
     internal readonly HashSet<ProtoId<JobPrototype>> JobPrototypes = [];
@@ -397,4 +397,3 @@ public sealed partial class CreateRoleBanInfo : CreateBanInfo
         return this;
     }
 }
-

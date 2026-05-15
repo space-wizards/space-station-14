@@ -6,7 +6,7 @@ namespace Content.Shared.NameModifier.EntitySystems;
 
 public sealed partial class ModifyWearerNameSystem : EntitySystem
 {
-    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {

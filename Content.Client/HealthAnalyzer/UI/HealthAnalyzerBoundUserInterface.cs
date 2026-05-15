@@ -1,11 +1,11 @@
-using Content.Shared.MedicalScanner;
+﻿using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
-    public sealed partial class HealthAnalyzerBoundUserInterface : BoundUserInterface
+    public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private HealthAnalyzerWindow? _window;
@@ -35,4 +35,3 @@ namespace Content.Client.HealthAnalyzer.UI
         }
     }
 }
-

@@ -1,4 +1,4 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Eui
     /// <summary>
     ///     Sent server -> client to signal that the client should open an EUI.
     /// </summary>
-    public sealed partial class MsgEuiCtl : NetMessage
+    public sealed class MsgEuiCtl : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
@@ -47,4 +47,3 @@ namespace Content.Shared.Eui
         }
     }
 }
-

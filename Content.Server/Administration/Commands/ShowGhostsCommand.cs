@@ -1,4 +1,4 @@
-using Content.Server.Ghost;
+﻿using Content.Server.Ghost;
 using Content.Server.Revenant.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class ShowGhostsCommand : LocalizedCommands
+    public sealed class ShowGhostsCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Command => "showghosts";
 
@@ -34,4 +34,3 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
-

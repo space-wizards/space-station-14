@@ -1,8 +1,8 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Content.Shared.Chat.V2.Moderation;
 
-public sealed partial class RegexCensor(Regex censorInstruction) : IChatCensor
+public sealed class RegexCensor(Regex censorInstruction) : IChatCensor
 {
     private readonly Regex _censorInstruction = censorInstruction;
 
@@ -13,4 +13,3 @@ public sealed partial class RegexCensor(Regex censorInstruction) : IChatCensor
         return !string.Equals(input, output);
     }
 }
-

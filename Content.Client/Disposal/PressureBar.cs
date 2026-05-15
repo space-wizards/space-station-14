@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Unit;
 using Robust.Client.Graphics;
@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Disposal;
 
-public sealed partial class PressureBar : ProgressBar
+public sealed class PressureBar : ProgressBar
 {
     public bool UpdatePressure(TimeSpan fullTime)
     {
@@ -54,4 +54,3 @@ public sealed partial class PressureBar : ProgressBar
             Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
     }
 }
-

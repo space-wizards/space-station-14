@@ -31,7 +31,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
-public sealed partial class SpawnSalvageMissionJob : Job<bool>
+public sealed class SpawnSalvageMissionJob : Job<bool>
 {
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
@@ -346,4 +346,3 @@ public sealed partial class SpawnSalvageMissionJob : Job<bool>
         }
     }
 }
-

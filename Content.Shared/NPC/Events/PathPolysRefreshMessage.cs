@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.NPC;
 
 [Serializable, NetSerializable]
-public sealed partial class PathPolysRefreshMessage : EntityEventArgs
+public sealed class PathPolysRefreshMessage : EntityEventArgs
 {
     public NetEntity GridUid;
     public Vector2i Origin;
@@ -13,4 +13,3 @@ public sealed partial class PathPolysRefreshMessage : EntityEventArgs
     /// </summary>
     public Dictionary<Vector2i, List<DebugPathPoly>> Polys = new();
 }
-

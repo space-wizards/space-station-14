@@ -13,7 +13,7 @@ using static Content.Shared.NodeContainer.NodeVis;
 
 namespace Content.Client.NodeContainer
 {
-    public sealed partial class NodeVisualizationOverlay : Overlay
+    public sealed class NodeVisualizationOverlay : Overlay
     {
         private readonly NodeGroupSystem _system;
         private readonly EntityLookupSystem _lookup;
@@ -246,4 +246,3 @@ namespace Content.Client.NodeContainer
         }
     }
 }
-

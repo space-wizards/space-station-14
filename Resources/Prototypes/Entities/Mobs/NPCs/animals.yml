@@ -941,13 +941,14 @@
     - FoodRecipes
 
 - type: entity
-  parent: SolutionLarge
+  parent: Solution
   id: SolutionUdder
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
-    id: udder # TODO This should really use a different id...
+    id: food # TODO This should really use a different id...
     solution:
+      maxVol: 240
       reagents:
       - ReagentId: Milk
         Quantity: 30
@@ -1122,18 +1123,22 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
+    id: food
     solution:
+      maxVol: 240
       reagents:
       - ReagentId: MilkGoat
         Quantity: 30
 
 - type: entity
-  parent: SolutionLarge
+  parent: Solution
   id: SolutionWool
   categories: [ HideSpawnMenu ]
   components:
   - type: Solution
     id: wool
+    solution:
+      maxVol: 240
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -1767,7 +1772,6 @@
       movement:
         state: mouse-0
   - type: Item
-    size: Tiny
     heldPrefix: 0
   - type: Clothing
     quickEquip: false
@@ -1964,6 +1968,7 @@
       Dead:
         Base: splat-1
   - type: Item
+    size: Tiny
     heldPrefix: 1
 
 - type: entity
@@ -1992,6 +1997,7 @@
       Dead:
         Base: splat-2
   - type: Item
+    size: Tiny
     heldPrefix: 2
 
 - type: entity
@@ -2523,6 +2529,7 @@
     solutions:
     - SolutionVenomSpider
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: Mechanotoxin

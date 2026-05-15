@@ -6,7 +6,7 @@ namespace Content.Shared.MedicalScanner;
 /// On interacting with an entity retrieves the entity UID for use with getting the current damage of the mob.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
+public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
 {
     public HealthAnalyzerUiState State;
 
@@ -41,4 +41,3 @@ public struct HealthAnalyzerUiState
         Unrevivable = unrevivable;
     }
 }
-

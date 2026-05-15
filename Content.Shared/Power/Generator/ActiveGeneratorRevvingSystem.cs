@@ -1,6 +1,6 @@
 namespace Content.Shared.Power.Generator;
 
-public sealed partial class ActiveGeneratorRevvingSystem : EntitySystem
+public sealed class ActiveGeneratorRevvingSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -79,4 +79,3 @@ public sealed partial class ActiveGeneratorRevvingSystem : EntitySystem
         }
     }
 }
-

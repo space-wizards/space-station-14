@@ -151,7 +151,7 @@ public partial record struct Hand
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HandsComponentState : ComponentState
+public sealed class HandsComponentState : ComponentState
 {
     public readonly Dictionary<string, Hand> Hands;
     public readonly List<string> SortedHands;
@@ -175,4 +175,3 @@ public enum HandLocation : byte
     Middle,
     Left
 }
-

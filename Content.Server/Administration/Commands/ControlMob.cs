@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed partial class ControlMob : LocalizedCommands
+    public sealed class ControlMob : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Command => "controlmob";
 
@@ -51,4 +51,3 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
-

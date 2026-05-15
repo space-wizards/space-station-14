@@ -1,9 +1,9 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory.Events;
 
 [NetSerializable, Serializable]
-public sealed partial class UseSlotNetworkMessage : EntityEventArgs
+public sealed class UseSlotNetworkMessage : EntityEventArgs
 {
     // The slot-owner is implicitly the client that is sending this message.
     // Otherwise clients could start forcefully undressing other clients.
@@ -14,4 +14,3 @@ public sealed partial class UseSlotNetworkMessage : EntityEventArgs
         Slot = slot;
     }
 }
-

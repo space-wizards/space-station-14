@@ -1,6 +1,6 @@
-namespace Content.Shared.Speech
+﻿namespace Content.Shared.Speech
 {
-    public sealed partial class SpeakAttemptEvent : CancellableEntityEventArgs
+    public sealed class SpeakAttemptEvent : CancellableEntityEventArgs
     {
         public SpeakAttemptEvent(EntityUid uid)
         {
@@ -10,4 +10,3 @@ namespace Content.Shared.Speech
         public EntityUid Uid { get; }
     }
 }
-

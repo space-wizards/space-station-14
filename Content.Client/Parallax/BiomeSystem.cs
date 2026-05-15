@@ -2,8 +2,7 @@ using Content.Shared.Parallax.Biomes;
 
 namespace Content.Client.Parallax;
 
-public sealed partial class BiomeSystem : SharedBiomeSystem
+public sealed class BiomeSystem : SharedBiomeSystem
 {
 
 }
-

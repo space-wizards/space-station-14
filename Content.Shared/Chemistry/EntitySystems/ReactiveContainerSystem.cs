@@ -5,12 +5,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
-public sealed partial class ReactiveContainerSystem : EntitySystem
+public sealed class ReactiveContainerSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private ReactiveSystem _reactiveSystem = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {

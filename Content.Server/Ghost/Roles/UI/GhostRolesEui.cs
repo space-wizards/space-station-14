@@ -4,7 +4,7 @@ using Content.Shared.Ghost.Roles;
 
 namespace Content.Server.Ghost.Roles.UI
 {
-    public sealed partial class GhostRolesEui : BaseEui
+    public sealed class GhostRolesEui : BaseEui
     {
         private readonly GhostRoleSystem _ghostRoleSystem;
 
@@ -44,4 +44,3 @@ namespace Content.Server.Ghost.Roles.UI
         }
     }
 }
-

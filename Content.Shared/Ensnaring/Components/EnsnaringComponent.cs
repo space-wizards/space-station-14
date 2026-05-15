@@ -1,4 +1,4 @@
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ensnaring.Components;
@@ -6,7 +6,6 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedEnsnareableSystem))]
 public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
@@ -70,7 +69,7 @@ public sealed partial class EnsnaringComponent : Component
 /// <summary>
 /// Used whenever you want to do something when someone becomes ensnared by the <see cref="EnsnaringComponent"/>
 /// </summary>
-public sealed partial class EnsnareEvent : EntityEventArgs
+public sealed class EnsnareEvent : EntityEventArgs
 {
     public readonly float WalkSpeed;
     public readonly float SprintSpeed;
@@ -85,7 +84,7 @@ public sealed partial class EnsnareEvent : EntityEventArgs
 /// <summary>
 /// Used whenever you want to do something when someone is freed by the <see cref="EnsnaringComponent"/>
 /// </summary>
-public sealed partial class EnsnareRemoveEvent : CancellableEntityEventArgs
+public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
 {
     public readonly float WalkSpeed;
     public readonly float SprintSpeed;
@@ -96,4 +95,3 @@ public sealed partial class EnsnareRemoveEvent : CancellableEntityEventArgs
         SprintSpeed = sprintSpeed;
     }
 }
-

@@ -9,7 +9,7 @@ namespace Content.Shared.Players;
 /// <summary>
 /// Sent server -> client to inform the client of their role bans.
 /// </summary>
-public sealed partial class MsgRoleBans : NetMessage
+public sealed class MsgRoleBans : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
 
@@ -52,4 +52,3 @@ public sealed partial class MsgRoleBans : NetMessage
         }
     }
 }
-

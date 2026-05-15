@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
@@ -13,7 +13,7 @@ namespace Content.Server.Administration
     /// <seealso cref="AnyCommandAttribute"/>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     [MeansImplicitUse]
-    public sealed partial class AdminCommandAttribute : Attribute
+    public sealed class AdminCommandAttribute : Attribute
     {
         public AdminCommandAttribute(AdminFlags flags)
         {
@@ -23,4 +23,3 @@ namespace Content.Server.Administration
         public AdminFlags Flags { get; }
     }
 }
-

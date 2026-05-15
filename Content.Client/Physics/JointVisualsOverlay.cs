@@ -9,7 +9,7 @@ namespace Content.Client.Physics;
 /// <summary>
 /// Draws a texture on top of a joint.
 /// </summary>
-public sealed partial class JointVisualsOverlay : Overlay
+public sealed class JointVisualsOverlay : Overlay
 {
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -70,4 +70,3 @@ public sealed partial class JointVisualsOverlay : Overlay
         }
     }
 }
-

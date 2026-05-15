@@ -4,7 +4,7 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed partial class SpeedModifierContactCapClothingSystem : EntitySystem
+public sealed class SpeedModifierContactCapClothingSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -18,4 +18,3 @@ public sealed partial class SpeedModifierContactCapClothingSystem : EntitySystem
         args.Args.SetIfMax(ent.Comp.MaxContactSprintSlowdown, ent.Comp.MaxContactWalkSlowdown);
     }
 }
-

@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events
 {
@@ -6,7 +6,7 @@ namespace Content.Shared.Tabletop.Events
     /// An event ot tell the server that we have stopped playing this tabletop game.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class TabletopStopPlayingEvent : EntityEventArgs
+    public sealed class TabletopStopPlayingEvent : EntityEventArgs
     {
         /// <summary>
         /// The entity UID of the table associated with this tabletop game.
@@ -19,4 +19,3 @@ namespace Content.Shared.Tabletop.Events
         }
     }
 }
-

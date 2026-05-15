@@ -5,11 +5,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed partial class BlindnessSystem : EntitySystem
+public sealed class BlindnessSystem : EntitySystem
 {
     public static readonly EntProtoId BlindingStatusEffect = "StatusEffectBlindness";
 
-    [Dependency] private BlindableSystem _blindableSystem = default!;
+    [Dependency] private readonly BlindableSystem _blindableSystem = default!;
 
     public override void Initialize()
     {

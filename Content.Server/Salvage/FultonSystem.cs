@@ -9,9 +9,9 @@ namespace Content.Server.Salvage;
 /// <summary>
 /// Transports attached entities to the linked beacon after a timer has elapsed.
 /// </summary>
-public sealed partial class FultonSystem : SharedFultonSystem
+public sealed class FultonSystem : SharedFultonSystem
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {

@@ -4,19 +4,15 @@ using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
+public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
 {
     protected override void Added(EntityUid uid, SubGamemodesComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
         var picked = EntitySpawnCollection.GetSpawns(comp.Rules, RobustRandom);
         foreach (var id in picked)
         {
-            if (GameTicker.IsIgnored(id))
-                continue;
-
             Log.Info($"Starting gamerule {id} as a subgamemode of {ToPrettyString(uid):rule}");
             GameTicker.AddGameRule(id);
         }
     }
 }
-

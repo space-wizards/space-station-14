@@ -10,12 +10,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Spider;
 
-public sealed partial class SpiderSystem : SharedSpiderSystem
+public sealed class SpiderSystem : SharedSpiderSystem
 {
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private TurfSystem _turf = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.

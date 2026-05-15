@@ -1,6 +1,6 @@
 namespace Content.Shared.Interaction.Events;
 
-public sealed partial class ChangeDirectionAttemptEvent : CancellableEntityEventArgs
+public sealed class ChangeDirectionAttemptEvent : CancellableEntityEventArgs
 {
     public ChangeDirectionAttemptEvent(EntityUid uid)
     {
@@ -9,4 +9,3 @@ public sealed partial class ChangeDirectionAttemptEvent : CancellableEntityEvent
 
     public EntityUid Uid { get; }
 }
-

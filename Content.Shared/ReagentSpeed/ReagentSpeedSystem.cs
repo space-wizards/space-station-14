@@ -2,9 +2,9 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.ReagentSpeed;
 
-public sealed partial class ReagentSpeedSystem : EntitySystem
+public sealed class ReagentSpeedSystem : EntitySystem
 {
-    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
 
     /// <summary>
     /// Consumes reagents and modifies the duration.

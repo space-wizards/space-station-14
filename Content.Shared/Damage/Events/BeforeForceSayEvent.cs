@@ -8,8 +8,7 @@ namespace Content.Shared.Damage.Events;
 ///     Event for interrupting and changing the prefix for when an entity is being forced to say something
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class BeforeForceSayEvent(ProtoId<LocalizedDatasetPrototype> prefixDataset) : EntityEventArgs
+public sealed class BeforeForceSayEvent(ProtoId<LocalizedDatasetPrototype> prefixDataset) : EntityEventArgs
 {
     public ProtoId<LocalizedDatasetPrototype> Prefix = prefixDataset;
 }
-

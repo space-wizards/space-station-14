@@ -22,8 +22,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Strip;
 
-public sealed partial class StrippableSystem : SharedStrippableSystem
+public sealed class StrippableSystem : SharedStrippableSystem
 {
 
 }
-

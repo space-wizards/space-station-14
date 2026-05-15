@@ -10,7 +10,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IButtonConfig
+public sealed class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -103,4 +103,3 @@ public sealed partial class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IB
         ];
     }
 }
-

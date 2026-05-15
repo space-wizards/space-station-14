@@ -1,9 +1,9 @@
-using Content.Shared.Singularity.Components;
+﻿using Content.Shared.Singularity.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.ParticleAccelerator.UI
 {
-    public sealed partial class ParticleAcceleratorBoundUserInterface : BoundUserInterface
+    public sealed class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ParticleAcceleratorControlMenu? _menu;
@@ -45,4 +45,3 @@ namespace Content.Client.ParticleAccelerator.UI
         }
     }
 }
-

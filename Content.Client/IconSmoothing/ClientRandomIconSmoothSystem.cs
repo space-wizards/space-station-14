@@ -3,10 +3,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.IconSmoothing;
 
-public sealed partial class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSystem
+public sealed class ClientRandomIconSmoothSystem : SharedRandomIconSmoothSystem
 {
-    [Dependency] private IconSmoothSystem _iconSmooth = default!;
-    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private readonly IconSmoothSystem _iconSmooth = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

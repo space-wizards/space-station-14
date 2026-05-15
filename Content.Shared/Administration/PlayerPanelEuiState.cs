@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelEuiState(
+public sealed class PlayerPanelEuiState(
     NetUserId guid,
     string username,
     TimeSpan playtime,
@@ -34,7 +34,7 @@ public sealed partial class PlayerPanelEuiState(
 
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelFreezeMessage : EuiMessageBase
+public sealed class PlayerPanelFreezeMessage : EuiMessageBase
 {
     public readonly bool Mute;
 
@@ -45,14 +45,13 @@ public sealed partial class PlayerPanelFreezeMessage : EuiMessageBase
 }
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelLogsMessage : EuiMessageBase;
+public sealed class PlayerPanelLogsMessage : EuiMessageBase;
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelDeleteMessage : EuiMessageBase;
+public sealed class PlayerPanelDeleteMessage : EuiMessageBase;
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelRejuvenationMessage: EuiMessageBase;
+public sealed class PlayerPanelRejuvenationMessage: EuiMessageBase;
 
 [Serializable, NetSerializable]
-public sealed partial class PlayerPanelFollowMessage: EuiMessageBase;
-
+public sealed class PlayerPanelFollowMessage: EuiMessageBase;

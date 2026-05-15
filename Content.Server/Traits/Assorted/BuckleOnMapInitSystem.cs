@@ -2,9 +2,9 @@
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed partial class BuckleOnMapInitSystem : EntitySystem
+public sealed class BuckleOnMapInitSystem : EntitySystem
 {
-    [Dependency] private SharedBuckleSystem _buckleSystem = default!;
+    [Dependency] private readonly SharedBuckleSystem _buckleSystem = default!;
 
     public override void Initialize()
     {

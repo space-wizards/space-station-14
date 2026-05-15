@@ -40,31 +40,25 @@ namespace Content.Shared.Construction.Components
         public EntityUid Tool { get; }
 
         /// <summary>
-        /// This is shown to the player after the entity fails to anchor or unanchor as a popup
-        /// </summary>
-        public string? FailMessage;
-
-        /// <summary>
         ///     Extra delay to add to the do_after.
         ///     Add to this, don't replace it.
         ///     Output parameter.
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, string? failMessage = null)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
         {
             User = user;
             Tool = tool;
-            FailMessage = failMessage;
         }
     }
 
-    public sealed partial class AnchorAttemptEvent : BaseAnchoredAttemptEvent
+    public sealed class AnchorAttemptEvent : BaseAnchoredAttemptEvent
     {
         public AnchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
 
-    public sealed partial class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
+    public sealed class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
     {
         public UnanchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
@@ -84,7 +78,7 @@ namespace Content.Shared.Construction.Components
     /// <summary>
     ///     Raised just before the entity's body type is changed.
     /// </summary>
-    public sealed partial class BeforeAnchoredEvent : BaseAnchoredEvent
+    public sealed class BeforeAnchoredEvent : BaseAnchoredEvent
     {
         public BeforeAnchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
@@ -94,7 +88,7 @@ namespace Content.Shared.Construction.Components
     ///     general <see cref="AnchorStateChangedEvent"/>. This event has the benefit of having user & tool information,
     ///     as a result of interactions mediated by the <see cref="AnchorableSystem"/>.
     /// </summary>
-    public sealed partial class UserAnchoredEvent : BaseAnchoredEvent
+    public sealed class UserAnchoredEvent : BaseAnchoredEvent
     {
         public UserAnchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
@@ -102,7 +96,7 @@ namespace Content.Shared.Construction.Components
     /// <summary>
     ///     Raised just before the entity's body type is changed.
     /// </summary>
-    public sealed partial class BeforeUnanchoredEvent : BaseAnchoredEvent
+    public sealed class BeforeUnanchoredEvent : BaseAnchoredEvent
     {
         public BeforeUnanchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
@@ -113,9 +107,8 @@ namespace Content.Shared.Construction.Components
     ///     event has the benefit of having user & tool information, whereas the more general event may be due to
     ///     explosions or grid-destruction or other interactions not mediated by the <see cref="AnchorableSystem"/>.
     /// </summary>
-    public sealed partial class UserUnanchoredEvent : BaseAnchoredEvent
+    public sealed class UserUnanchoredEvent : BaseAnchoredEvent
     {
         public UserUnanchoredEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
     }
 }
-

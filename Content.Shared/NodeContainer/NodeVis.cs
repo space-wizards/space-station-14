@@ -1,11 +1,11 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.NodeContainer
 {
     public static class NodeVis
     {
         [Serializable, NetSerializable]
-        public sealed partial class MsgEnable : EntityEventArgs
+        public sealed class MsgEnable : EntityEventArgs
         {
             public MsgEnable(bool enabled)
             {
@@ -16,7 +16,7 @@ namespace Content.Shared.NodeContainer
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class MsgData : EntityEventArgs
+        public sealed class MsgData : EntityEventArgs
         {
             public List<GroupData> Groups = new();
             public List<int> GroupDeletions = new();
@@ -24,7 +24,7 @@ namespace Content.Shared.NodeContainer
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class GroupData
+        public sealed class GroupData
         {
             public int NetId;
             public string GroupId = "";
@@ -34,7 +34,7 @@ namespace Content.Shared.NodeContainer
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class NodeDatum
+        public sealed class NodeDatum
         {
             public NetEntity Entity;
             public int NetId;
@@ -44,4 +44,3 @@ namespace Content.Shared.NodeContainer
         }
     }
 }
-

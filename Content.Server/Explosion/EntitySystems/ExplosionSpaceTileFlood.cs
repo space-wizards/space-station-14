@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.EntitySystems;
 /// <summary>
 ///     See <see cref="ExplosionTileFlood"/>.
 /// </summary>
-public sealed partial class ExplosionSpaceTileFlood : ExplosionTileFlood
+public sealed class ExplosionSpaceTileFlood : ExplosionTileFlood
 {
     /// <summary>
     ///     The keys of this dictionary correspond to space tiles that intersect a grid. The values have information
@@ -161,4 +161,3 @@ public sealed partial class ExplosionSpaceTileFlood : ExplosionTileFlood
         return _gridBlockMap.TryGetValue(tile, out var blocker) ? blocker.UnblockedDirections : AtmosDirection.All;
     }
 }
-

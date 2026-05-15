@@ -13,7 +13,7 @@ namespace Content.Shared.Radiation.Events;
 ///     Will be sent only to clients that activated radiation view using console command.
 /// </remarks>
 [Serializable, NetSerializable]
-public sealed partial class OnRadiationOverlayUpdateEvent(
+public sealed class OnRadiationOverlayUpdateEvent(
     double elapsedTimeMs,
     int sourcesCount,
     int receiversCount,
@@ -47,7 +47,7 @@ public sealed partial class OnRadiationOverlayUpdateEvent(
 ///     After that client will start/stop receiving <see cref="OnRadiationOverlayUpdateEvent"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class OnRadiationOverlayToggledEvent : EntityEventArgs
+public sealed class OnRadiationOverlayToggledEvent : EntityEventArgs
 {
     /// <summary>
     ///     Does debug radiation view enabled.
@@ -64,7 +64,7 @@ public sealed partial class OnRadiationOverlayToggledEvent : EntityEventArgs
 ///     Raised when grid resistance was update for radiation overlay visualization.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class OnRadiationOverlayResistanceUpdateEvent : EntityEventArgs
+public sealed class OnRadiationOverlayResistanceUpdateEvent : EntityEventArgs
 {
     /// <summary>
     ///     Key is grids uid. Values are tiles with their rad resistance.
@@ -76,4 +76,3 @@ public sealed partial class OnRadiationOverlayResistanceUpdateEvent : EntityEven
         Grids = grids;
     }
 }
-

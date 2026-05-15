@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
@@ -85,7 +85,7 @@ public abstract partial class BaseStylesheet
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed partial class MissingStyleResourceException(BaseStylesheet sheet, string target) : Exception
+public sealed class MissingStyleResourceException(BaseStylesheet sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
@@ -99,11 +99,10 @@ public sealed partial class MissingStyleResourceException(BaseStylesheet sheet, 
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
 /// <param name="target"></param>
-public sealed partial class ExpectedResourceException(BaseStylesheet sheet, string target) : Exception
+public sealed class ExpectedResourceException(BaseStylesheet sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";
 
     public override string? Source => sheet.ToString();
 }
-

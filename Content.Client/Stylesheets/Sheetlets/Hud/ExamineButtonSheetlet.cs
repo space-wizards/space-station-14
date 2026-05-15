@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed partial class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     // Examine button colors
     // TODO: FIX!!
@@ -44,4 +44,3 @@ public sealed partial class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

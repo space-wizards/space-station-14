@@ -64,7 +64,7 @@ public sealed partial class HolopadComponent : Component
 ///     Data from by the server to the client for the holopad UI
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadBoundInterfaceState : BoundUserInterfaceState
+public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly Dictionary<NetEntity, string> Holopads;
 
@@ -78,7 +78,7 @@ public sealed partial class HolopadBoundInterfaceState : BoundUserInterfaceState
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadStartNewCallMessage : BoundUserInterfaceMessage
+public sealed class HolopadStartNewCallMessage : BoundUserInterfaceMessage
 {
     public readonly NetEntity Receiver;
 
@@ -92,31 +92,31 @@ public sealed partial class HolopadStartNewCallMessage : BoundUserInterfaceMessa
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 
 /// <summary>
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadEndCallMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadEndCallMessage : BoundUserInterfaceMessage { }
 
 /// <summary>
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadStartBroadcastMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadStartBroadcastMessage : BoundUserInterfaceMessage { }
 
 /// <summary>
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadActivateProjectorMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadActivateProjectorMessage : BoundUserInterfaceMessage { }
 
 /// <summary>
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadStationAiRequestMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadStationAiRequestMessage : BoundUserInterfaceMessage { }
 
 #endregion
 
@@ -131,4 +131,3 @@ public enum HolopadUiKey : byte
     AiActionWindow,
     AiRequestWindow
 }
-

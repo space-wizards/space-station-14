@@ -1,4 +1,4 @@
-using Content.Server.Storage.Components;
+﻿using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Console;
@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class LinkBluespaceLocker : LocalizedCommands
+public sealed class LinkBluespaceLocker : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override string Command => "linkbluespacelocker";
 
@@ -65,4 +65,3 @@ public sealed partial class LinkBluespaceLocker : LocalizedCommands
         }
     }
 }
-

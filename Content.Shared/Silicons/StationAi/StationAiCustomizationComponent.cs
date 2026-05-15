@@ -27,7 +27,7 @@ public sealed partial class StationAiCustomizationComponent : Component
 /// Message sent to server that contains a station AI customization that the client has selected
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class StationAiCustomizationMessage : BoundUserInterfaceMessage
+public sealed class StationAiCustomizationMessage : BoundUserInterfaceMessage
 {
     public readonly ProtoId<StationAiCustomizationGroupPrototype> GroupProtoId;
     public readonly ProtoId<StationAiCustomizationPrototype> CustomizationProtoId;
@@ -63,4 +63,3 @@ public enum StationAiCustomizationType : byte
     CoreIconography,
     Hologram,
 }
-

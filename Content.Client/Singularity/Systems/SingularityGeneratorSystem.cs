@@ -8,6 +8,5 @@ namespace Content.Client.Singularity.Systems;
 /// Manages <see cref="SingularityGeneratorComponent"/>s.
 /// Exists to make relevant signal handlers (ie: <see cref="SharedSingularityGeneratorSystem.OnEmagged"/>) work on the client.
 /// </summary>
-public sealed partial class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
+public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
 {}
-

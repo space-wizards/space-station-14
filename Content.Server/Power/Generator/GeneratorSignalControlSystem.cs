@@ -3,10 +3,10 @@ using Content.Shared.Power.Generator;
 
 namespace Content.Server.Power.Generator;
 
-public sealed partial class GeneratorSignalControlSystem: EntitySystem
+public sealed class GeneratorSignalControlSystem: EntitySystem
 {
-    [Dependency] private GeneratorSystem _generator = default!;
-    [Dependency] private ActiveGeneratorRevvingSystem _revving = default!;
+    [Dependency] private readonly GeneratorSystem _generator = default!;
+    [Dependency] private readonly ActiveGeneratorRevvingSystem _revving = default!;
 
     public override void Initialize()
     {

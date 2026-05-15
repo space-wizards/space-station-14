@@ -1,10 +1,10 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GhostKick;
 
-public sealed partial class MsgGhostKick : NetMessage
+public sealed class MsgGhostKick : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Core;
 
@@ -16,4 +16,3 @@ public sealed partial class MsgGhostKick : NetMessage
     {
     }
 }
-

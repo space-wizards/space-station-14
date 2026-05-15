@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Research.UI
 {
-    public sealed partial class DiskConsoleBoundUserInterface : BoundUserInterface
+    public sealed class DiskConsoleBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private DiskConsoleMenu? _menu;
@@ -41,4 +41,3 @@ namespace Content.Client.Research.UI
         }
     }
 }
-

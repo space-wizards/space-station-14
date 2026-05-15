@@ -7,7 +7,7 @@ namespace Content.Client.Chemistry.Visualizers;
 /// <summary>
 /// Handles vapor playing the 'being sprayed' animation if necessary.
 /// </summary>
-public sealed partial class VaporVisualizerSystem : VisualizerSystem<VaporVisualsComponent>
+public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsComponent>
 {
     public override void Initialize()
     {
@@ -61,4 +61,3 @@ public enum VaporVisualLayers : byte
 {
     Base
 }
-

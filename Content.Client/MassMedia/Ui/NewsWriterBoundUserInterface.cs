@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.MassMedia.Ui;
 
 [UsedImplicitly]
-public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
+public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private NewsWriterMenu? _menu;
@@ -83,4 +83,3 @@ public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
         SendMessage(new NewsWriterSaveDraftMessage(title, content));
     }
 }
-

@@ -25,7 +25,6 @@
     normalState: fire
   - type: Damageable
     damageModifierSet: Wood
-  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -63,10 +62,10 @@
   - type: PhysicalComposition
 
 - type: entity
+  name: paper
   parent: BasePaper
   id: Paper
-  name: paper
-  description: A piece of white paper.
+  description: 'A piece of white paper.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -88,7 +87,6 @@
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
   - type: FaxableObject
-  - type: PaperVisualizer
   - type: PaperVisuals
   - type: StationAiWhitelist
 
@@ -469,5 +467,4 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Injurable
   - type: StationAiWhitelist

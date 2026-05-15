@@ -9,7 +9,6 @@ namespace Content.Server.ExCable;
 /// Dummy Node group class for handling the explosive cables.
 /// </summary>
 [NodeGroup(NodeGroupID.ExCable)]
-public sealed partial class ExCableNodeGroup : BaseNodeGroup
+public sealed class ExCableNodeGroup : BaseNodeGroup
 {
 }
-

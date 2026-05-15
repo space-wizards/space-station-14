@@ -4,7 +4,7 @@ namespace Content.Shared.Item;
 /// Raised on a *mob* when it tries to pickup something.
 /// IMPORTANT: Attempt event subscriptions should not be doing any state changes like throwing items, opening UIs, playing sounds etc!
 /// </summary>
-public sealed partial class PickupAttemptEvent : BasePickupAttemptEvent
+public sealed class PickupAttemptEvent : BasePickupAttemptEvent
 {
     public PickupAttemptEvent(EntityUid user, EntityUid item, bool showPopup) : base(user, item, showPopup) { }
 }
@@ -13,7 +13,7 @@ public sealed partial class PickupAttemptEvent : BasePickupAttemptEvent
 /// Raised directed at entity being picked up when someone tries to pick it up.
 /// IMPORTANT: Attempt event subscriptions should not be doing any state changes like throwing items, opening UIs, playing sounds etc!
 /// </summary>
-public sealed partial class GettingPickedUpAttemptEvent : BasePickupAttemptEvent
+public sealed class GettingPickedUpAttemptEvent : BasePickupAttemptEvent
 {
     public GettingPickedUpAttemptEvent(EntityUid user, EntityUid item, bool showPopup) : base(user, item, showPopup) { }
 }
@@ -45,4 +45,3 @@ public class BasePickupAttemptEvent : CancellableEntityEventArgs
         ShowPopup = showPopup;
     }
 }
-

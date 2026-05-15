@@ -20,7 +20,7 @@ namespace Content.Client.Shuttles.UI;
 [Virtual]
 public partial class BaseShuttleControl : MapGridControl
 {
-    [Dependency] private IParallelManager _parallel = default!;
+    [Dependency] private readonly IParallelManager _parallel = default!;
     protected readonly SharedMapSystem Maps;
 
     protected readonly Font Font;
@@ -295,7 +295,7 @@ public partial class BaseShuttleControl : MapGridControl
     }
 }
 
-public sealed partial class GridDrawData
+public sealed class GridDrawData
 {
     /*
      * List of lists because we use LineStrip and TriangleStrip respectively (less data to pass to the GPU).
@@ -310,4 +310,3 @@ public sealed partial class GridDrawData
 
     public GameTick LastBuild;
 }
-

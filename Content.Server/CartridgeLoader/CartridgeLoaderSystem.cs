@@ -13,11 +13,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CartridgeLoader;
 
-public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
+public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
-    [Dependency] private ContainerSystem _containerSystem = default!;
-    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private PdaSystem _pda = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly PdaSystem _pda = default!;
 
     public override void Initialize()
     {
@@ -486,7 +486,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 /// Gets sent to running programs when the cartridge loader receives a device net package
 /// </summary>
 /// <seealso cref="DeviceNetworkPacketEvent"/>
-public sealed partial class CartridgeDeviceNetPacketEvent : EntityEventArgs
+public sealed class CartridgeDeviceNetPacketEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
     public readonly DeviceNetworkPacketEvent PacketEvent;
@@ -502,7 +502,7 @@ public sealed partial class CartridgeDeviceNetPacketEvent : EntityEventArgs
 /// Gets sent to running programs when the cartridge loader receives an after interact event
 /// </summary>
 /// <seealso cref="AfterInteractEvent"/>
-public sealed partial class CartridgeAfterInteractEvent : EntityEventArgs
+public sealed class CartridgeAfterInteractEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
     public readonly AfterInteractEvent InteractEvent;
@@ -519,4 +519,3 @@ public sealed partial class CartridgeAfterInteractEvent : EntityEventArgs
 /// </summary>
 [ByRefEvent]
 public record struct ProgramInstallationAttempt(EntityUid LoaderUid, string Prototype, bool Cancelled = false);
-

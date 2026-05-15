@@ -8,12 +8,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Speech
 {
-    public sealed partial class SpeechSoundSystem : EntitySystem
+    public sealed class SpeechSoundSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private IPrototypeManager _protoManager = default!;
-        [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {

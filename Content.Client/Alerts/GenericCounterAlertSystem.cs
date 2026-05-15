@@ -8,9 +8,9 @@ namespace Content.Client.Alerts;
 /// <summary>
 /// This handles <see cref="GenericCounterAlertComponent"/>
 /// </summary>
-public sealed partial class GenericCounterAlertSystem : EntitySystem
+public sealed class GenericCounterAlertSystem : EntitySystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

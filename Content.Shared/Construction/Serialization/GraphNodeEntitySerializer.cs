@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Construction.Serialization;
 
-public sealed partial class GraphNodeEntitySerializer : ITypeSerializer<IGraphNodeEntity, ValueDataNode>, ITypeSerializer<IGraphNodeEntity, MappingDataNode>
+public sealed class GraphNodeEntitySerializer : ITypeSerializer<IGraphNodeEntity, ValueDataNode>, ITypeSerializer<IGraphNodeEntity, MappingDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, ValueDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -51,4 +51,3 @@ public sealed partial class GraphNodeEntitySerializer : ITypeSerializer<IGraphNo
         return serializationManager.WriteValue(value, alwaysWrite, context, false);
     }
 }
-

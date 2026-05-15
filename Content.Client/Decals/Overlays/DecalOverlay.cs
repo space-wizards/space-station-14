@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals.Overlays
 {
-    public sealed partial class DecalOverlay : GridOverlay
+    public sealed class DecalOverlay : GridOverlay
     {
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
@@ -118,4 +118,3 @@ namespace Content.Client.Decals.Overlays
         }
     }
 }
-

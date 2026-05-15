@@ -1,6 +1,6 @@
 namespace Content.Shared.DeviceLinking.Events;
 
-public sealed partial class LinkAttemptEvent : CancellableEntityEventArgs
+public sealed class LinkAttemptEvent : CancellableEntityEventArgs
 {
     public readonly EntityUid Source;
     public readonly EntityUid Sink;
@@ -17,4 +17,3 @@ public sealed partial class LinkAttemptEvent : CancellableEntityEventArgs
         SinkPort = sinkPort;
     }
 }
-

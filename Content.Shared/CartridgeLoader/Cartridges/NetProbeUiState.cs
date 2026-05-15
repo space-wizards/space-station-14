@@ -1,9 +1,9 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed partial class NetProbeUiState : BoundUserInterfaceState
+public sealed class NetProbeUiState : BoundUserInterfaceState
 {
     /// <summary>
     /// The list of probed network devices
@@ -32,4 +32,3 @@ public sealed partial class ProbedNetworkDevice
         NetId = netId;
     }
 }
-

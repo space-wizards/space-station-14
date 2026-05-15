@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 /// Data for melee lunges from attacks.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MeleeLungeEvent : EntityEventArgs
+public sealed class MeleeLungeEvent : EntityEventArgs
 {
     public NetEntity Entity;
 
@@ -40,4 +40,3 @@ public sealed partial class MeleeLungeEvent : EntityEventArgs
         Animation = animation;
     }
 }
-

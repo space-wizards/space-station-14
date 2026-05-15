@@ -5,10 +5,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
-public sealed partial class FirelockSystem : SharedFirelockSystem
+public sealed class FirelockSystem : SharedFirelockSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

@@ -4,9 +4,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class UncuffOnTriggerSystem : XOnTriggerSystem<UncuffOnTriggerComponent>
+public sealed class UncuffOnTriggerSystem : XOnTriggerSystem<UncuffOnTriggerComponent>
 {
-    [Dependency] private SharedCuffableSystem _cuffable = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
 
     protected override void OnTrigger(Entity<UncuffOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

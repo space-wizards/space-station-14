@@ -4,8 +4,7 @@ namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// Component used for marking entities devoured by a changeling.
-/// Used to track which changelings have an identity of this entity.
-/// Used for cleanup purposes.
+/// Used to prevent granting the identity several times.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ChangelingDevouredComponent : Component

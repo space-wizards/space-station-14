@@ -11,9 +11,9 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.BanList;
 
 [UsedImplicitly]
-public sealed partial class BanListEui : BaseEui
+public sealed class BanListEui : BaseEui
 {
-    [Dependency] private IUserInterfaceManager _ui = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private BanListIdsPopup? _popup;
 

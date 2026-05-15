@@ -1,6 +1,6 @@
 namespace Content.Shared.Speech;
 
-public sealed partial class ListenEvent : EntityEventArgs
+public sealed class ListenEvent : EntityEventArgs
 {
     public readonly string Message;
     public readonly EntityUid Source;
@@ -12,7 +12,7 @@ public sealed partial class ListenEvent : EntityEventArgs
     }
 }
 
-public sealed partial class ListenAttemptEvent : CancellableEntityEventArgs
+public sealed class ListenAttemptEvent : CancellableEntityEventArgs
 {
     public readonly EntityUid Source;
 
@@ -21,4 +21,3 @@ public sealed partial class ListenAttemptEvent : CancellableEntityEventArgs
         Source = source;
     }
 }
-

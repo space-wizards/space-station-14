@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems;
 
-public sealed partial class RotatingLightSystem : SharedRotatingLightSystem
+public sealed class RotatingLightSystem : SharedRotatingLightSystem
 {
     public override void Initialize()
     {
@@ -22,4 +22,3 @@ public sealed partial class RotatingLightSystem : SharedRotatingLightSystem
         Dirty(uid, comp);
     }
 }
-

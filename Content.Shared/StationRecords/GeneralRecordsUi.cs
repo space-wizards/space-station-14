@@ -27,7 +27,7 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class GeneralStationRecordConsoleState : BoundUserInterfaceState
+public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 {
     /// <summary>
     /// Current selected key.
@@ -65,7 +65,7 @@ public sealed partial class GeneralStationRecordConsoleState : BoundUserInterfac
 /// Used by any kind of records console including general and criminal.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SelectStationRecord : BoundUserInterfaceMessage
+public sealed class SelectStationRecord : BoundUserInterfaceMessage
 {
     public readonly uint? SelectedKey;
 
@@ -77,7 +77,7 @@ public sealed partial class SelectStationRecord : BoundUserInterfaceMessage
 
 
 [Serializable, NetSerializable]
-public sealed partial class DeleteStationRecord : BoundUserInterfaceMessage
+public sealed class DeleteStationRecord : BoundUserInterfaceMessage
 {
     public DeleteStationRecord(uint id)
     {
@@ -86,4 +86,3 @@ public sealed partial class DeleteStationRecord : BoundUserInterfaceMessage
 
     public readonly uint Id;
 }
-

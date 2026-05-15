@@ -6,7 +6,7 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// Event raised before a device network packet is send.
 /// Subscribed to by other systems to prevent the packet from being sent.
 /// </summary>
-public sealed partial class BeforePacketSentEvent : CancellableEntityEventArgs
+public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// The EntityUid of the entity the packet was sent from.
@@ -39,4 +39,3 @@ public sealed partial class BeforePacketSentEvent : CancellableEntityEventArgs
         Frequency = frequency;
     }
 }
-

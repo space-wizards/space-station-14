@@ -3,9 +3,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Dice;
 
-public sealed partial class DiceSystem : SharedDiceSystem
+public sealed class DiceSystem : SharedDiceSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

@@ -35,7 +35,7 @@ public interface IAtmosDeviceData
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmUIState : BoundUserInterfaceState
+public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
     public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
     {
@@ -69,11 +69,11 @@ public sealed partial class AirAlarmUIState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
 {}
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
 {
     public AirAlarmMode Mode { get; }
 
@@ -84,7 +84,7 @@ public sealed partial class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceM
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
 {
     public bool Enabled { get; }
 
@@ -95,7 +95,7 @@ public sealed partial class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMe
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
     public IAtmosDeviceData Data { get; }
@@ -108,7 +108,7 @@ public sealed partial class AirAlarmUpdateDeviceDataMessage : BoundUserInterface
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
 {
     public IAtmosDeviceData Data { get; }
 
@@ -119,7 +119,7 @@ public sealed partial class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMe
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
+public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
     public AtmosAlarmThreshold Threshold { get; }
@@ -134,4 +134,3 @@ public sealed partial class AirAlarmUpdateAlarmThresholdMessage : BoundUserInter
         Gas = gas;
     }
 }
-

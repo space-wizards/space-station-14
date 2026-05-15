@@ -2,5 +2,4 @@ using Content.Shared.Body.Systems;
 
 namespace Content.Client.Body.Systems;
 
-public sealed partial class BloodstreamSystem : SharedBloodstreamSystem;
-
+public sealed class BloodstreamSystem : SharedBloodstreamSystem;

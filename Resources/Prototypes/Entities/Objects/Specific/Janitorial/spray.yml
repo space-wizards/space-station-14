@@ -149,6 +149,7 @@
   - type: SolutionTransfer
     canSend: false # No giving away infinite space cleaner!
   - type: SolutionRegeneration
+    solution: drink
     generated:
       reagents:
       - ReagentId: SpaceCleaner

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Fax.AdminUI;
 
 [UsedImplicitly]
-public sealed partial class AdminFaxEui : BaseEui
+public sealed class AdminFaxEui : BaseEui
 {
     private readonly AdminFaxWindow _window;
 
@@ -36,4 +36,3 @@ public sealed partial class AdminFaxEui : BaseEui
         _window.PopulateFaxes(cast.Entries);
     }
 }
-

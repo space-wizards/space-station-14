@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Nutrition;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed partial class Hungry : LocalizedEntityCommands
+public sealed class Hungry : LocalizedEntityCommands
 {
     public override string Command => "hungry";
 
@@ -36,4 +36,3 @@ public sealed partial class Hungry : LocalizedEntityCommands
         EntityManager.System<HungerSystem>().SetHunger(playerEntity, hungryThreshold, hunger);
     }
 }
-

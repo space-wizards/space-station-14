@@ -1,4 +1,4 @@
-using Content.Client.Power.EntitySystems;
+﻿using Content.Client.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
@@ -13,7 +13,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasThermomachineWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class GasThermomachineBoundUserInterface : BoundUserInterface
+    public sealed class GasThermomachineBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private GasThermomachineWindow? _window;
@@ -96,4 +96,3 @@ namespace Content.Client.Atmos.UI
         }
     }
 }
-

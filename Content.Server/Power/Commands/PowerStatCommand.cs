@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Power.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed partial class PowerStatCommand : LocalizedEntityCommands
+public sealed class PowerStatCommand : LocalizedEntityCommands
 {
-    [Dependency] private PowerNetSystem _powerNet = default!;
+    [Dependency] private readonly PowerNetSystem _powerNet = default!;
 
     public override string Command => "powerstat";
 

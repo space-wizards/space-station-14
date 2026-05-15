@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
@@ -9,7 +9,7 @@ using Robust.Shared.Toolshed.TypeParsers;
 namespace Content.Server.Toolshed.Commands.Verbs;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Moderator)]
-public sealed partial class RunVerbAsCommand : ToolshedCommand
+public sealed class RunVerbAsCommand : ToolshedCommand
 {
     private SharedVerbSystem? _verb;
 
@@ -57,4 +57,3 @@ public sealed partial class RunVerbAsCommand : ToolshedCommand
         }
     }
 }
-

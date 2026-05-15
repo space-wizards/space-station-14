@@ -6,9 +6,9 @@ using Robust.Shared.Containers;
 namespace Content.Shared.Storage.EntitySystems
 {
     [UsedImplicitly]
-    public abstract partial class SharedItemCounterSystem : EntitySystem
+    public abstract class SharedItemCounterSystem : EntitySystem
     {
-        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         /// <inheritdoc />
         public override void Initialize()

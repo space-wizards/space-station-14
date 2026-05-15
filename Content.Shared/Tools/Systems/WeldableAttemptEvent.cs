@@ -4,7 +4,7 @@ namespace Content.Shared.Tools.Systems;
 ///     Checks that entity can be weld/unweld.
 ///     Raised twice: before do_after and after to check that entity still valid.
 /// </summary>
-public sealed partial class WeldableAttemptEvent : CancellableEntityEventArgs
+public sealed class WeldableAttemptEvent : CancellableEntityEventArgs
 {
     public readonly EntityUid User;
     public readonly EntityUid Tool;

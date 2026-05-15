@@ -8,10 +8,10 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Adds a health bar overlay.
 /// </summary>
-public sealed partial class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
+public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
 {
-    [Dependency] private IOverlayManager _overlayMan = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private EntityHealthBarOverlay _overlay = default!;
 

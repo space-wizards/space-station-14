@@ -9,11 +9,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed partial class SolutionRandomFillSystem : EntitySystem
+public sealed class SolutionRandomFillSystem : EntitySystem
 {
-    [Dependency] private SharedSolutionContainerSystem _solutionsSystem = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {

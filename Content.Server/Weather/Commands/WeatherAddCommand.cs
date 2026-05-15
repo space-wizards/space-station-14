@@ -12,12 +12,12 @@ namespace Content.Server.Weather.Commands;
 /// Add specific weather to map.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class WeatherAddCommand : LocalizedEntityCommands
+public sealed class WeatherAddCommand : LocalizedEntityCommands
 {
-    [Dependency] private IPrototypeManager _proto = default!;
-    [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private WeatherSystem _weather = default!;
-    [Dependency] private IComponentFactory _compFactory = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly WeatherSystem _weather = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
 
     public override string Command => "weatheradd";
 

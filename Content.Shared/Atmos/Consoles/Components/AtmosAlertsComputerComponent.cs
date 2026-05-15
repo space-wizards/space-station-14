@@ -98,7 +98,7 @@ public struct AtmosAlertsFocusDeviceData
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AtmosAlertsComputerBoundInterfaceState : BoundUserInterfaceState
+public sealed class AtmosAlertsComputerBoundInterfaceState : BoundUserInterfaceState
 {
     /// <summary>
     /// A list of all air alarms
@@ -180,7 +180,7 @@ public struct AtmosAlertsComputerEntry
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AtmosAlertsComputerFocusChangeMessage : BoundUserInterfaceMessage
+public sealed class AtmosAlertsComputerFocusChangeMessage : BoundUserInterfaceMessage
 {
     public NetEntity? FocusDevice;
 
@@ -194,7 +194,7 @@ public sealed partial class AtmosAlertsComputerFocusChangeMessage : BoundUserInt
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AtmosAlertsComputerDeviceSilencedMessage : BoundUserInterfaceMessage
+public sealed class AtmosAlertsComputerDeviceSilencedMessage : BoundUserInterfaceMessage
 {
     public NetEntity AtmosDevice;
     public bool SilenceDevice = true;
@@ -233,4 +233,3 @@ public enum AtmosAlertsComputerUiKey
 {
     Key
 }
-

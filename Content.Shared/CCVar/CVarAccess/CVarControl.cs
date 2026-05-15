@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Reflection;
 
 namespace Content.Shared.CCVar.CVarAccess;
@@ -8,7 +8,7 @@ namespace Content.Shared.CCVar.CVarAccess;
 /// </summary>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 [Reflect(discoverable: true)]
-public sealed partial class CVarControl : Attribute
+public sealed class CVarControl : Attribute
 {
     public AdminFlags AdminFlags { get; }
     public object? Min { get; }
@@ -36,4 +36,3 @@ public sealed partial class CVarControl : Attribute
         }
     }
 }
-

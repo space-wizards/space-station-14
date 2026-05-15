@@ -1,6 +1,6 @@
-namespace Content.Shared.Actions.Events;
+﻿namespace Content.Shared.Actions.Events;
 
-public sealed partial class ActionUpgradeEvent : EntityEventArgs
+public sealed class ActionUpgradeEvent : EntityEventArgs
 {
     public int NewLevel;
     public EntityUid? ActionId;
@@ -11,4 +11,3 @@ public sealed partial class ActionUpgradeEvent : EntityEventArgs
         ActionId = actionId;
     }
 }
-

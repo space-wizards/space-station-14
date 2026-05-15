@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Construction
 {
     [Serializable, NetSerializable]
-    public sealed partial class ConstructionGuide
+    public sealed class ConstructionGuide
     {
         public readonly ConstructionGuideEntry[] Entries;
 
@@ -15,7 +15,7 @@ namespace Content.Shared.Construction
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ConstructionGuideEntry
+    public sealed class ConstructionGuideEntry
     {
         public int? EntryNumber { get; set; } = null;
         public int Padding { get; set; } = 0;
@@ -24,4 +24,3 @@ namespace Content.Shared.Construction
         public SpriteSpecifier? Icon { get; set; } = null;
     }
 }
-

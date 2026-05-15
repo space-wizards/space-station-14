@@ -9,7 +9,7 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class LOOCCommand : LocalizedEntityCommands
     {
-        [Dependency] private ChatSystem _chatSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         public override string Command => "looc";
 
@@ -38,4 +38,3 @@ namespace Content.Server.Chat.Commands
         }
     }
 }
-

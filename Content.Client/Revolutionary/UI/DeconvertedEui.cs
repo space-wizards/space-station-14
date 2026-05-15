@@ -1,8 +1,8 @@
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 
 namespace Content.Client.Revolutionary.UI;
 
-public sealed partial class DeconvertedEui : BaseEui
+public sealed class DeconvertedEui : BaseEui
 {
     private readonly DeconvertedMenu _menu;
 
@@ -23,4 +23,3 @@ public sealed partial class DeconvertedEui : BaseEui
         _menu.Close();
     }
 }
-

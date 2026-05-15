@@ -8,12 +8,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday
 {
-    public sealed partial class HolidaySystem : EntitySystem
+    public sealed class HolidaySystem : EntitySystem
     {
-        [Dependency] private IConfigurationManager _configManager = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IChatManager _chatManager = default!;
-        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
@@ -120,7 +120,7 @@ namespace Content.Server.Holiday
     /// <summary>
     ///     Event for when the list of currently active holidays has been refreshed.
     /// </summary>
-    public sealed partial class HolidaysRefreshedEvent : EntityEventArgs
+    public sealed class HolidaysRefreshedEvent : EntityEventArgs
     {
         public readonly IEnumerable<HolidayPrototype> Holidays;
 
@@ -130,4 +130,3 @@ namespace Content.Server.Holiday
         }
     }
 }
-

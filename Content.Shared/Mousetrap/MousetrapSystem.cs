@@ -5,7 +5,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Mousetrap;
 
-public sealed partial class MousetrapSystem : EntitySystem
+public sealed class MousetrapSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -40,4 +40,3 @@ public sealed partial class MousetrapSystem : EntitySystem
         }
     }
 }
-

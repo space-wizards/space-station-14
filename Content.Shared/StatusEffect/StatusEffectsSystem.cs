@@ -10,11 +10,11 @@ using Robust.Shared.Utility;
 namespace Content.Shared.StatusEffect
 {
     [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
-    public sealed partial class StatusEffectsSystem : EntitySystem
+    public sealed class StatusEffectsSystem : EntitySystem
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         private List<EntityUid> _toRemove = new();
 
         public override void Initialize()

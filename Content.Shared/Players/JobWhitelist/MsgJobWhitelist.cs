@@ -1,10 +1,10 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Players.JobWhitelist;
 
-public sealed partial class MsgJobWhitelist : NetMessage
+public sealed class MsgJobWhitelist : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
 
@@ -31,4 +31,3 @@ public sealed partial class MsgJobWhitelist : NetMessage
         }
     }
 }
-

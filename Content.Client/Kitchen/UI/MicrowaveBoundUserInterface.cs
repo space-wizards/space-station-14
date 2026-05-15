@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
-    public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
+    public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private MicrowaveMenu? _menu;
@@ -149,4 +149,3 @@ namespace Content.Client.Kitchen.UI
         }
     }
 }
-

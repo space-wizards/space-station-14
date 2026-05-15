@@ -7,9 +7,9 @@ namespace Content.Server.Anomaly.Effects;
 /// <summary>
 /// This handles <see cref="ExplosionAnomalyComponent"/>
 /// </summary>
-public sealed partial class ExplosionAnomalySystem : EntitySystem
+public sealed class ExplosionAnomalySystem : EntitySystem
 {
-    [Dependency] private ExplosionSystem _boom = default!;
+    [Dependency] private readonly ExplosionSystem _boom = default!;
 
     public override void Initialize()
     {

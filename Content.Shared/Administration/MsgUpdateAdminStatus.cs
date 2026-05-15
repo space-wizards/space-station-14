@@ -1,10 +1,10 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
 {
-    public sealed partial class MsgUpdateAdminStatus : NetMessage
+    public sealed class MsgUpdateAdminStatus : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -61,4 +61,3 @@ namespace Content.Shared.Administration
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
     }
 }
-

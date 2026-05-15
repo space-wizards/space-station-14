@@ -6,9 +6,9 @@ namespace Content.Shared.Silicons.Bots;
 /// <summary>
 /// This system handles HugBots.
 /// </summary>
-public abstract partial class SharedHugBotSystem : EntitySystem
+public abstract class SharedHugBotSystem : EntitySystem
 {
-    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
     public override void Initialize()
     {

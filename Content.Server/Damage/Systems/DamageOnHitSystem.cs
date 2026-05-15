@@ -5,9 +5,9 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Damage.Systems;
 
-public sealed partial class DamageOnHitSystem : EntitySystem
+public sealed class DamageOnHitSystem : EntitySystem
 {
-    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {

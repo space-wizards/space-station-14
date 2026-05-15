@@ -55,7 +55,7 @@ public sealed partial class DeployableTurretControllerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DeployableTurretControllerBoundInterfaceState : BoundUserInterfaceState
+public sealed class DeployableTurretControllerBoundInterfaceState : BoundUserInterfaceState
 {
     public Dictionary<string, string> TurretStateByAddress;
 
@@ -66,7 +66,7 @@ public sealed partial class DeployableTurretControllerBoundInterfaceState : Boun
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DeployableTurretArmamentSettingChangedMessage : BoundUserInterfaceMessage
+public sealed class DeployableTurretArmamentSettingChangedMessage : BoundUserInterfaceMessage
 {
     public int ArmamentState;
 
@@ -77,7 +77,7 @@ public sealed partial class DeployableTurretArmamentSettingChangedMessage : Boun
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DeployableTurretExemptAccessLevelChangedMessage : BoundUserInterfaceMessage
+public sealed class DeployableTurretExemptAccessLevelChangedMessage : BoundUserInterfaceMessage
 {
     public HashSet<ProtoId<AccessLevelPrototype>> AccessLevels;
     public bool Enabled;
@@ -100,4 +100,3 @@ public enum DeployableTurretControllerUiKey : byte
 {
     Key,
 }
-

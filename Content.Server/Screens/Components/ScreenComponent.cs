@@ -9,7 +9,7 @@ public sealed partial class ScreenComponent : Component
 /// <summary>
 ///     Player-facing hashable string consts for NetworkPayload
 /// </summary>
-public sealed partial class ScreenMasks
+public sealed class ScreenMasks
 {
     public static readonly string Text = Loc.GetString("screen-text");
     public static readonly string Color = Loc.GetString("screen-color");
@@ -18,7 +18,7 @@ public sealed partial class ScreenMasks
 /// <summary>
 ///     Player-facing hashable string consts for NetworkPayload
 /// </summary>
-public sealed partial class ShuttleTimerMasks
+public sealed class ShuttleTimerMasks
 {
     public static readonly string ShuttleTime = Loc.GetString("shuttle-timer-shuttle-time");
     public static readonly string DestTime = Loc.GetString("shuttle-timer-dest-time");
@@ -32,5 +32,4 @@ public sealed partial class ShuttleTimerMasks
     public static readonly string Bye = Loc.GetString("shuttle-timer-bye");
     public static readonly string Kill = Loc.GetString("shuttle-timer-kill");
 }
-
 

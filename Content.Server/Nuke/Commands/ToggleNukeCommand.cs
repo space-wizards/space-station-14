@@ -8,9 +8,9 @@ namespace Content.Server.Nuke.Commands;
 
 [UsedImplicitly]
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class ToggleNukeCommand : LocalizedCommands
+public sealed class ToggleNukeCommand : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override string Command => "nukearm";
 

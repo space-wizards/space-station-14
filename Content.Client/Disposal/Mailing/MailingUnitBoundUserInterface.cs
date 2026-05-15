@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Content.Client.Disposal.Mailing;
 
-public sealed partial class MailingUnitBoundUserInterface : BoundUserInterface
+public sealed class MailingUnitBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     public MailingUnitWindow? MailingUnitWindow;
@@ -78,4 +78,3 @@ public sealed partial class MailingUnitBoundUserInterface : BoundUserInterface
         MailingUnitWindow.TargetListContainer.SetItems(entries);
     }
 }
-

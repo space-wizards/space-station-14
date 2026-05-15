@@ -13,51 +13,51 @@ public enum SprayPainterUiKey
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetDecalMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
 {
     public ProtoId<DecalPrototype> DecalPrototype = protoId;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetDecalColorMessage(Color? color) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalColorMessage(Color? color) : BoundUserInterfaceMessage
 {
     public Color? Color = color;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetDecalSnapMessage(bool snap) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalSnapMessage(bool snap) : BoundUserInterfaceMessage
 {
     public bool Snap = snap;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetDecalAngleMessage(int angle) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalAngleMessage(int angle) : BoundUserInterfaceMessage
 {
     public int Angle = angle;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterTabChangedMessage(int index, bool isSelectedTabWithDecals) : BoundUserInterfaceMessage
+public sealed class SprayPainterTabChangedMessage(int index, bool isSelectedTabWithDecals) : BoundUserInterfaceMessage
 {
     public readonly int Index = index;
     public readonly bool IsSelectedTabWithDecals = isSelectedTabWithDecals;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetPaintableStyleMessage(string group, string style) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPaintableStyleMessage(string group, string style) : BoundUserInterfaceMessage
 {
     public readonly string Group = group;
     public readonly string Style = style;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetPipeColorMessage(string? key) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetPipeColorMessage(string? key) : BoundUserInterfaceMessage
 {
     public readonly string? Key = key;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterSetDecalColorPickerMessage(bool toggle) : BoundUserInterfaceMessage
+public sealed class SprayPainterSetDecalColorPickerMessage(bool toggle) : BoundUserInterfaceMessage
 {
     public bool Toggle = toggle;
 }
@@ -123,4 +123,3 @@ public partial record struct EntityPaintedEvent(
     EntityUid Tool,
     EntProtoId Prototype,
     ProtoId<PaintableGroupPrototype> Group);
-

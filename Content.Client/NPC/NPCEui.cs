@@ -3,7 +3,7 @@ using Content.Shared.Eui;
 
 namespace Content.Client.NPC;
 
-public sealed partial class NPCEui : BaseEui
+public sealed class NPCEui : BaseEui
 {
     private NPCWindow? _window = new();
 
@@ -27,4 +27,3 @@ public sealed partial class NPCEui : BaseEui
         _window = null;
     }
 }
-

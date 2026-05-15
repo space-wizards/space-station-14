@@ -10,7 +10,7 @@ namespace Content.Client.Disposal.Unit
     /// Initializes a <see cref="MailingUnitWindow"/> or a <see cref="_disposalUnitWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class DisposalUnitBoundUserInterface : BoundUserInterface
+    public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
         [ViewVariables] private DisposalUnitWindow? _disposalUnitWindow;
 
@@ -61,4 +61,3 @@ namespace Content.Client.Disposal.Unit
         }
     }
 }
-

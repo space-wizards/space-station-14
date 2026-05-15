@@ -10,9 +10,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class FixRotationsCommand : LocalizedEntityCommands
+public sealed class FixRotationsCommand : LocalizedEntityCommands
 {
-    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
     private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
@@ -108,4 +108,3 @@ public sealed partial class FixRotationsCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-fixrotations-changed", ("changed", changed)));
     }
 }
-

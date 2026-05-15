@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed partial class SurveillanceCameraSetupBoundUi : BoundUserInterface
+public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
 {
     [ViewVariables]
     private readonly SurveillanceCameraSetupUiKey _type;
@@ -70,4 +70,3 @@ public sealed partial class SurveillanceCameraSetupBoundUi : BoundUserInterface
         }
     }
 }
-

@@ -7,10 +7,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
-public sealed partial class AirlockSystem : SharedAirlockSystem
+public sealed class AirlockSystem : SharedAirlockSystem
 {
-    [Dependency] private AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

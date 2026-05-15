@@ -8,7 +8,7 @@ namespace Content.Server.Shuttles.Systems;
 /// <summary>
 ///     Deletes anything with <see cref="SpaceGarbageComponent"/> that has a cross-grid collision with a static body.
 /// </summary>
-public sealed partial class SpaceGarbageSystem : EntitySystem
+public sealed class SpaceGarbageSystem : EntitySystem
 {
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -33,4 +33,3 @@ public sealed partial class SpaceGarbageSystem : EntitySystem
         QueueDel(uid);
     }
 }
-

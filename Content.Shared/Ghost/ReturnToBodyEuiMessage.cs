@@ -1,10 +1,10 @@
-using Content.Shared.Eui;
+﻿using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost;
 
 [Serializable, NetSerializable]
-public sealed partial class ReturnToBodyMessage : EuiMessageBase
+public sealed class ReturnToBodyMessage : EuiMessageBase
 {
     public readonly bool Accepted;
 
@@ -13,4 +13,3 @@ public sealed partial class ReturnToBodyMessage : EuiMessageBase
         Accepted = accepted;
     }
 }
-

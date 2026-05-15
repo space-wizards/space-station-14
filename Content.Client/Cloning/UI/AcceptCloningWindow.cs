@@ -7,7 +7,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
-    public sealed partial class AcceptCloningWindow : DefaultWindow
+    public sealed class AcceptCloningWindow : DefaultWindow
     {
         public readonly Button DenyButton;
         public readonly Button AcceptButton;
@@ -60,4 +60,3 @@ namespace Content.Client.Cloning.UI
         }
     }
 }
-

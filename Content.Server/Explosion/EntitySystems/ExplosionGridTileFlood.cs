@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.EntitySystems;
 /// <summary>
 ///     See <see cref="ExplosionTileFlood"/>. Each instance of this class corresponds to a seperate grid.
 /// </summary>
-public sealed partial class ExplosionGridTileFlood : ExplosionTileFlood
+public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 {
     private readonly ExplosionSystem _explosionSystem;
 
@@ -321,4 +321,3 @@ public sealed partial class ExplosionGridTileFlood : ExplosionTileFlood
         return ~_airtightMap.GetValueOrDefault(tile).BlockedDirections;
     }
 }
-

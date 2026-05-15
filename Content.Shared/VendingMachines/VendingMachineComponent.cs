@@ -286,7 +286,7 @@ namespace Content.Shared.VendingMachines
     };
 
     [Serializable, NetSerializable]
-    public sealed partial class VendingMachineComponentState : ComponentState
+    public sealed class VendingMachineComponentState : ComponentState
     {
         public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
@@ -305,4 +305,3 @@ namespace Content.Shared.VendingMachines
         public bool Broken;
     }
 }
-

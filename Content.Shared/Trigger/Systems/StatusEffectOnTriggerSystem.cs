@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class SetStatusEffectOnTriggerSystem : XOnTriggerSystem<SetStatusEffectOnTriggerComponent>
+public sealed class SetStatusEffectOnTriggerSystem : XOnTriggerSystem<SetStatusEffectOnTriggerComponent>
 {
-    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     protected override void OnTrigger(Entity<SetStatusEffectOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -13,9 +13,9 @@ public sealed partial class SetStatusEffectOnTriggerSystem : XOnTriggerSystem<Se
     }
 }
 
-public sealed partial class RemoveStatusEffectOnTriggerSystem : XOnTriggerSystem<RemoveStatusEffectOnTriggerComponent>
+public sealed class RemoveStatusEffectOnTriggerSystem : XOnTriggerSystem<RemoveStatusEffectOnTriggerComponent>
 {
-    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     protected override void OnTrigger(Entity<RemoveStatusEffectOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

@@ -4,9 +4,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Radiation.Systems;
 
-public sealed partial class RadiationPulseSystem : EntitySystem
+public sealed class RadiationPulseSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {

@@ -8,9 +8,9 @@ namespace Content.Client.Atmos.EntitySystems;
 ///     System responsible for rendering heat distortion using <see cref="GasTileHeatBlurOverlay"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class GasTileHeatBlurOverlaySystem : EntitySystem
+public sealed class GasTileHeatBlurOverlaySystem : EntitySystem
 {
-    [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
     private GasTileHeatBlurOverlay _gasTileHeatBlurOverlay = default!;
 

@@ -7,7 +7,7 @@ using Content.Shared.NodeContainer;
 
 namespace Content.Client.Atmos.Piping.Unary.Systems;
 
-public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
+public sealed class GasCanisterSystem : SharedGasCanisterSystem
 {
     public override void Initialize()
     {
@@ -37,4 +37,3 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
         }
     }
 }
-

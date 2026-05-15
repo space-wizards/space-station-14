@@ -24,7 +24,7 @@ public abstract partial class RulesRule
     public abstract bool Check(EntityManager entManager, EntityUid uid);
 }
 
-public sealed partial class RulesSystem : EntitySystem
+public sealed class RulesSystem : EntitySystem
 {
     public bool IsTrue(EntityUid uid, RulesPrototype rules)
     {
@@ -37,4 +37,3 @@ public sealed partial class RulesSystem : EntitySystem
         return true;
     }
 }
-

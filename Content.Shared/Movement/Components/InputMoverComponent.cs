@@ -86,7 +86,7 @@ namespace Content.Shared.Movement.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class InputMoverComponentState : ComponentState
+    public sealed class InputMoverComponentState : ComponentState
     {
         public MoveButtons HeldMoveButtons;
         public NetEntity? RelativeEntity;
@@ -96,4 +96,3 @@ namespace Content.Shared.Movement.Components
         public bool CanMove;
     }
 }
-

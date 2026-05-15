@@ -1,4 +1,4 @@
-using Content.Shared.Tabletop.Components;
+﻿using Content.Shared.Tabletop.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -9,7 +9,7 @@ namespace Content.Shared.Tabletop.Events
     /// <see cref="TabletopDraggableComponent"/> has been moved.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class TabletopMoveEvent : EntityEventArgs
+    public sealed class TabletopMoveEvent : EntityEventArgs
     {
         /// <summary>
         /// The UID of the entity being moved.
@@ -34,4 +34,3 @@ namespace Content.Shared.Tabletop.Events
         }
     }
 }
-

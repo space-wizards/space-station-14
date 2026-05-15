@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.SheetletConfigs;
+﻿using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class CheckboxSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ICheckboxConfig
+public sealed class CheckboxSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ICheckboxConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -31,4 +31,3 @@ public sealed partial class CheckboxSheetlet<T> : Sheetlet<T> where T : Paletted
         ];
     }
 }
-

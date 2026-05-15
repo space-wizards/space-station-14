@@ -23,16 +23,16 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Admin;
 
 [UsedImplicitly]
-public sealed partial class AdminUIController : UIController,
+public sealed class AdminUIController : UIController,
     IOnStateEntered<GameplayState>,
     IOnStateEntered<LobbyState>,
     IOnSystemChanged<AdminSystem>
 {
-    [Dependency] private IClientAdminManager _admin = default!;
-    [Dependency] private IClientConGroupController _conGroups = default!;
-    [Dependency] private IClientConsoleHost _conHost = default!;
-    [Dependency] private IInputManager _input = default!;
-    [Dependency] private VerbMenuUIController _verb = default!;
+    [Dependency] private readonly IClientAdminManager _admin = default!;
+    [Dependency] private readonly IClientConGroupController _conGroups = default!;
+    [Dependency] private readonly IClientConsoleHost _conHost = default!;
+    [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
     private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;

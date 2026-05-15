@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Administration;
@@ -10,7 +10,7 @@ namespace Content.Server.Polymorph.Toolshed;
 ///     Undoes a polymorph, reverting the target to it's original form.
 /// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
-public sealed partial class UnpolymorphCommand : ToolshedCommand
+public sealed class UnpolymorphCommand : ToolshedCommand
 {
     private PolymorphSystem? _system;
 
@@ -26,4 +26,3 @@ public sealed partial class UnpolymorphCommand : ToolshedCommand
     public IEnumerable<EntityUid> Unpolymorph([PipedArgument] IEnumerable<EntityUid> input)
         => input.Select(Unpolymorph).Where(x => x is not null).Select(x => (EntityUid)x!);
 }
-

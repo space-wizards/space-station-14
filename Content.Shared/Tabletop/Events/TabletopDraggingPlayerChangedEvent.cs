@@ -7,7 +7,7 @@ namespace Content.Shared.Tabletop.Events
     /// trying to move a single item at the same time.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class TabletopDraggingPlayerChangedEvent : EntityEventArgs
+    public sealed class TabletopDraggingPlayerChangedEvent : EntityEventArgs
     {
         /// <summary>
         /// The UID of the entity being dragged.
@@ -23,4 +23,3 @@ namespace Content.Shared.Tabletop.Events
         }
     }
 }
-

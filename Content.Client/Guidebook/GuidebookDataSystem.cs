@@ -8,7 +8,7 @@ namespace Content.Client.Guidebook;
 /// Requests data from the server on <see cref="Initialize"/>.
 /// Can also be pushed new data when the server reloads prototypes.
 /// </summary>
-public sealed partial class GuidebookDataSystem : EntitySystem
+public sealed class GuidebookDataSystem : EntitySystem
 {
     private GuidebookData? _data;
 
@@ -43,4 +43,3 @@ public sealed partial class GuidebookDataSystem : EntitySystem
         return _data.TryGetValue(prototype, component, field, out value);
     }
 }
-

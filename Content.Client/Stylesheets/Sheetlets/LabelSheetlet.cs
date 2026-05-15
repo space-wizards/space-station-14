@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class LabelSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -77,4 +77,3 @@ public sealed partial class LabelSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

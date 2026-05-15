@@ -21,7 +21,7 @@ public sealed partial class FundingAllocationConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SetFundingAllocationBuiMessage : BoundUserInterfaceMessage
+public sealed class SetFundingAllocationBuiMessage : BoundUserInterfaceMessage
 {
     public Dictionary<ProtoId<CargoAccountPrototype>, int> Percents;
     public double PrimaryCut;
@@ -36,7 +36,7 @@ public sealed partial class SetFundingAllocationBuiMessage : BoundUserInterfaceM
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FundingAllocationConsoleBuiState : BoundUserInterfaceState
+public sealed class FundingAllocationConsoleBuiState : BoundUserInterfaceState
 {
     public NetEntity Station;
 
@@ -51,4 +51,3 @@ public enum FundingAllocationConsoleUiKey : byte
 {
     Key
 }
-

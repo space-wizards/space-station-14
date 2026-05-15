@@ -8,9 +8,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed partial class SetAtmosTemperatureCommand : LocalizedEntityCommands
+    public sealed class SetAtmosTemperatureCommand : LocalizedEntityCommands
     {
-        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Command => "setatmostemp";
 
@@ -48,4 +48,3 @@ namespace Content.Server.Atmos.Commands
         }
     }
 }
-

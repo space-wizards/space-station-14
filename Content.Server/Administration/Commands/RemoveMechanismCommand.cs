@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class RemoveMechanismCommand : LocalizedCommands
+    public sealed class RemoveMechanismCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "rmmechanism";
 
@@ -31,4 +31,3 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
-

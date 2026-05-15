@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
@@ -12,7 +12,7 @@ public interface IIPIntelApi
     Task<HttpResponseMessage> GetIPScore(IPAddress ip);
 }
 
-public sealed partial class IPIntelApi : IIPIntelApi
+public sealed class IPIntelApi : IIPIntelApi
 {
     // Holds-The-HttpClient
     private readonly IHttpClientHolder _http;
@@ -38,4 +38,3 @@ public sealed partial class IPIntelApi : IIPIntelApi
         return _http.Client.GetAsync($"{_baseUrl}/check.php?ip={ip}&contact={_contactEmail}&flags={_flags}");
     }
 }
-

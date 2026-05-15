@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chemistry.UI;
 
-public sealed partial class InjectorStatusControl : Control
+public sealed class InjectorStatusControl : Control
 {
     private readonly IPrototypeManager _prototypeManager;
 
@@ -73,4 +73,3 @@ public sealed partial class InjectorStatusControl : Control
         }
     }
 }
-

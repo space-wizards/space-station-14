@@ -11,10 +11,10 @@ using JetBrains.Annotations;
 namespace Content.Server.DeviceLinking.Systems
 {
     [UsedImplicitly]
-    public sealed partial class DoorSignalControlSystem : EntitySystem
+    public sealed class DoorSignalControlSystem : EntitySystem
     {
-        [Dependency] private DoorSystem _doorSystem = default!;
-        [Dependency] private DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
         public override void Initialize()
         {

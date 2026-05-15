@@ -4,7 +4,7 @@ using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed partial class NotCommandRequirementSystem : EntitySystem
+public sealed class NotCommandRequirementSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -22,4 +22,3 @@ public sealed partial class NotCommandRequirementSystem : EntitySystem
             args.Cancelled = true;
     }
 }
-

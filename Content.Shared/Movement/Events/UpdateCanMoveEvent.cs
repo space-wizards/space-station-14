@@ -12,7 +12,7 @@ namespace Content.Shared.Movement.Events;
 ///     If you subscribe to this you must also call <see cref="ActionBlockerSystem.UpdateCanMove(EntityUid,InputMoverComponent?)"/>
 ///     both when you want to prevent a mob from moving, and when you want to allow them to move again!
 /// </remarks>
-public sealed partial class UpdateCanMoveEvent : CancellableEntityEventArgs
+public sealed class UpdateCanMoveEvent : CancellableEntityEventArgs
 {
     public UpdateCanMoveEvent(EntityUid uid)
     {
@@ -21,4 +21,3 @@ public sealed partial class UpdateCanMoveEvent : CancellableEntityEventArgs
 
     public EntityUid Uid { get; }
 }
-

@@ -33,7 +33,7 @@ public sealed partial class GasAnalyzerComponent : Component
 /// Atmospheric data is gathered in the system and sent to the user.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, NetEntity deviceUid, bool deviceFlipped) : BoundUserInterfaceMessage
+public sealed class GasAnalyzerUserMessage(GasMixEntry[] nodeGasMixes, string deviceName, NetEntity deviceUid, bool deviceFlipped) : BoundUserInterfaceMessage
 {
     public string DeviceName = deviceName;
     public NetEntity DeviceUid = deviceUid;
@@ -103,5 +103,4 @@ public enum GasAnalyzerVisuals : byte
 {
     Enabled,
 }
-
 

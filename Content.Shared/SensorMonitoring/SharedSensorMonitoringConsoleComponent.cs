@@ -1,16 +1,16 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
 
 namespace Content.Shared.SensorMonitoring;
 
 [Serializable, NetSerializable]
-public sealed partial class SensorMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
+public sealed class SensorMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public TimeSpan RetentionTime;
     public SensorData[] Sensors = Array.Empty<SensorData>();
 
     [Serializable, NetSerializable]
-    public sealed partial class SensorData
+    public sealed class SensorData
     {
         public int NetId;
         public string Name = "";
@@ -21,7 +21,7 @@ public sealed partial class SensorMonitoringConsoleBoundInterfaceState : BoundUs
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SensorStream
+    public sealed class SensorStream
     {
         public int NetId;
         public string Name = "";
@@ -31,21 +31,21 @@ public sealed partial class SensorMonitoringConsoleBoundInterfaceState : BoundUs
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SensorMonitoringIncrementalUpdate : BoundUserInterfaceMessage
+public sealed class SensorMonitoringIncrementalUpdate : BoundUserInterfaceMessage
 {
     public TimeSpan RelTime;
     public SensorData[] Sensors = Array.Empty<SensorData>();
     public int[] RemovedSensors = Array.Empty<int>();
 
     [Serializable, NetSerializable]
-    public sealed partial class SensorData
+    public sealed class SensorData
     {
         public int NetId;
         public SensorStream[] Streams = Array.Empty<SensorStream>();
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SensorStream
+    public sealed class SensorStream
     {
         public int NetId;
         public SensorUnit Unit;
@@ -110,4 +110,3 @@ public enum SensorDeviceType
 
 [Serializable, NetSerializable]
 public record struct SensorSample(TimeSpan Time, float Value);
-

@@ -9,11 +9,11 @@ using Content.Shared.Power;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed partial class SolutionHeaterSystem : EntitySystem
+public sealed class SolutionHeaterSystem : EntitySystem
 {
-    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

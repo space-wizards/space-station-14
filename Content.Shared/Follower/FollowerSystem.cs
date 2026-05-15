@@ -24,15 +24,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
 
-public sealed partial class FollowerSystem : EntitySystem
+public sealed class FollowerSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private SharedJointSystem _jointSystem = default!;
-    [Dependency] private SharedPhysicsSystem _physicsSystem = default!;
-    [Dependency] private INetManager _netMan = default!;
-    [Dependency] private ISharedAdminManager _adminManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
     private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
     private static readonly ProtoId<TagPrototype> PreventGhostnadoWarpTag = "NotGhostnadoWarpable";
@@ -159,7 +159,11 @@ public sealed partial class FollowerSystem : EntitySystem
 
     private void OnFollowedPolymorphed(Entity<FollowedComponent> entity, ref PolymorphedEvent args)
     {
-        TransferFollowers(entity.AsNullable(), args.NewEntity);
+        foreach (var follower in entity.Comp.Following)
+        {
+            // Stop following the target's old entity and start following the new one
+            StartFollowingEntity(follower, args.NewEntity);
+        }
     }
 
     // TODO: Slartibarfast mentioned that ideally this should be generalized and made part of SetRelay in SharedMoverController.Relay.cs.
@@ -169,7 +173,8 @@ public sealed partial class FollowerSystem : EntitySystem
         if (args.NewRemoteEntity == null)
             return;
 
-        TransferFollowers(entity.AsNullable(), args.NewRemoteEntity.Value);
+        foreach (var follower in entity.Comp.Following)
+            StartFollowingEntity(follower, args.NewRemoteEntity.Value);
     }
 
     /// <summary>
@@ -302,21 +307,6 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Moves every follower of <paramref name="from"/> over to <paramref name="to"/>.
-    ///     Use this when an entity is being replaced (polymorph, remote swap, ghost role spawn) and
-    ///     its watchers should ride along to the successor instead of being detached.
-    /// </summary>
-    public void TransferFollowers(Entity<FollowedComponent?> from, EntityUid to)
-    {
-        if (from.Owner == to || !Resolve(from, ref from.Comp, false))
-            return;
-
-        // Snapshot since HashSet is mutated down the line
-        foreach (var follower in from.Comp.Following.ToArray())
-            StartFollowingEntity(follower, to);
-    }
-
-    /// <summary>
     /// Gets the entity with the most non-admin ghosts following it.
     /// </summary>
     public EntityUid? GetMostGhostFollowed()
@@ -372,7 +362,7 @@ public abstract class FollowEvent : EntityEventArgs
 /// <summary>
 ///     Raised on an entity when it start following another entity.
 /// </summary>
-public sealed partial class StartedFollowingEntityEvent : FollowEvent
+public sealed class StartedFollowingEntityEvent : FollowEvent
 {
     public StartedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
     {
@@ -382,7 +372,7 @@ public sealed partial class StartedFollowingEntityEvent : FollowEvent
 /// <summary>
 ///     Raised on an entity when it stops following another entity.
 /// </summary>
-public sealed partial class StoppedFollowingEntityEvent : FollowEvent
+public sealed class StoppedFollowingEntityEvent : FollowEvent
 {
     public StoppedFollowingEntityEvent(EntityUid following, EntityUid follower) : base(following, follower)
     {
@@ -392,7 +382,7 @@ public sealed partial class StoppedFollowingEntityEvent : FollowEvent
 /// <summary>
 ///     Raised on an entity when it start following another entity.
 /// </summary>
-public sealed partial class EntityStartedFollowingEvent : FollowEvent
+public sealed class EntityStartedFollowingEvent : FollowEvent
 {
     public EntityStartedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
     {
@@ -402,10 +392,9 @@ public sealed partial class EntityStartedFollowingEvent : FollowEvent
 /// <summary>
 ///     Raised on an entity when it starts being followed by another entity.
 /// </summary>
-public sealed partial class EntityStoppedFollowingEvent : FollowEvent
+public sealed class EntityStoppedFollowingEvent : FollowEvent
 {
     public EntityStoppedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
     {
     }
 }
-

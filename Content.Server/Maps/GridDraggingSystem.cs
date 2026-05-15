@@ -8,11 +8,11 @@ using Robust.Shared.Player;
 namespace Content.Server.Maps;
 
 /// <inheritdoc />
-public sealed partial class GridDraggingSystem : SharedGridDraggingSystem
+public sealed class GridDraggingSystem : SharedGridDraggingSystem
 {
-    [Dependency] private IConGroupController _admin = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly IConGroupController _admin = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private readonly HashSet<ICommonSession> _draggers = new();
 

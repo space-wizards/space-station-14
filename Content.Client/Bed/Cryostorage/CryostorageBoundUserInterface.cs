@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Bed.Cryostorage;
 
 [UsedImplicitly]
-public sealed partial class CryostorageBoundUserInterface : BoundUserInterface
+public sealed class CryostorageBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private CryostorageMenu? _menu;
@@ -43,4 +43,3 @@ public sealed partial class CryostorageBoundUserInterface : BoundUserInterface
         }
     }
 }
-

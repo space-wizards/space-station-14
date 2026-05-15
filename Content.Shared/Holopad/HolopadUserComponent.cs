@@ -25,7 +25,7 @@ public sealed partial class HolopadUserComponent : Component
 /// A networked event raised when the visual state of a hologram is being updated
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class HolopadUserTypingChangedEvent : EntityEventArgs
+public sealed class HolopadUserTypingChangedEvent : EntityEventArgs
 {
     /// <summary>
     /// The hologram being updated
@@ -43,4 +43,3 @@ public sealed partial class HolopadUserTypingChangedEvent : EntityEventArgs
         State = state;
     }
 }
-

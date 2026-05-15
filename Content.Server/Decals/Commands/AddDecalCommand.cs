@@ -12,12 +12,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed partial class AddDecalCommand : LocalizedEntityCommands
+    public sealed class AddDecalCommand : LocalizedEntityCommands
     {
-        [Dependency] private IPrototypeManager _protoManager = default!;
-        [Dependency] private TurfSystem _turfSystem = default!;
-        [Dependency] private MapSystem _mapSystem = default!;
-        [Dependency] private DecalSystem _decalSystem = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly TurfSystem _turfSystem = default!;
+        [Dependency] private readonly MapSystem _mapSystem = default!;
+        [Dependency] private readonly DecalSystem _decalSystem = default!;
 
         public override string Command => "adddecal";
 
@@ -120,4 +120,3 @@ namespace Content.Server.Decals.Commands
         }
     }
 }
-

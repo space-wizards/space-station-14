@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Atmos.Consoles;
 
-public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleSystem
+public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleSystem
 {
     public override void Initialize()
     {
@@ -67,4 +67,3 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
         }
     }
 }
-

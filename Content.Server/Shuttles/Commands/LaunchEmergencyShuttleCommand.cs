@@ -9,9 +9,9 @@ namespace Content.Server.Shuttles.Commands;
 /// Early launches in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class LaunchEmergencyShuttleCommand : LocalizedEntityCommands
+public sealed class LaunchEmergencyShuttleCommand : LocalizedEntityCommands
 {
-    [Dependency] private EmergencyShuttleSystem _shuttleSystem = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _shuttleSystem = default!;
 
     public override string Command => "launchemergencyshuttle";
 

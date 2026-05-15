@@ -3,9 +3,9 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.Flash;
 
-public sealed partial class DamagedByFlashingSystem : EntitySystem
+public sealed class DamagedByFlashingSystem : EntitySystem
 {
-    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {

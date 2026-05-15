@@ -1,10 +1,10 @@
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Silicons.Laws;
 
 namespace Content.Client.Silicons.Laws.SiliconLawEditUi;
 
-public sealed partial class SiliconLawEui : BaseEui
+public sealed class SiliconLawEui : BaseEui
 {
     private readonly EntityManager _entityManager;
 
@@ -36,4 +36,3 @@ public sealed partial class SiliconLawEui : BaseEui
         _siliconLawUi.OpenCentered();
     }
 }
-

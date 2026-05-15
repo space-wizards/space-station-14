@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using Robust.Shared.Serialization;
 
@@ -183,6 +183,5 @@ namespace Content.Shared.Atmos
         }
     }
 
-    public sealed partial class AtmosDirectionFlags { }
+    public sealed class AtmosDirectionFlags { }
 }
-

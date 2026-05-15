@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
 {
     public const int DefaultGrabberSize = 10;
 
@@ -56,4 +56,3 @@ public sealed partial class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

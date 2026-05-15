@@ -4,7 +4,7 @@ using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed partial class KudzuGrowthRule : StationEventSystem<KudzuGrowthRuleComponent>
+public sealed class KudzuGrowthRule : StationEventSystem<KudzuGrowthRuleComponent>
 {
     protected override void Started(EntityUid uid, KudzuGrowthRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -18,4 +18,3 @@ public sealed partial class KudzuGrowthRule : StationEventSystem<KudzuGrowthRule
 
     }
 }
-

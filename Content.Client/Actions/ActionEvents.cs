@@ -6,7 +6,7 @@ namespace Content.Client.Actions;
 /// <summary>
 ///     This event is raised when a user clicks on an empty action slot. Enables other systems to fill this slot.
 /// </summary>
-public sealed partial class FillActionSlotEvent : EntityEventArgs
+public sealed class FillActionSlotEvent : EntityEventArgs
 {
     public EntityUid? Action;
 }
@@ -24,4 +24,3 @@ public record struct ActionTargetAttemptEvent(
     ActionComponent Action,
     bool Handled = false,
     bool FoundTarget = false);
-

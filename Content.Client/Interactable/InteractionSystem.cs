@@ -5,6 +5,5 @@ using Robust.Shared.Containers;
 namespace Content.Client.Interactable
 {
     // TODO Remove Shared prefix
-    public sealed partial class InteractionSystem : SharedInteractionSystem;
+    public sealed class InteractionSystem : SharedInteractionSystem;
 }
-

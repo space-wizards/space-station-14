@@ -1,10 +1,10 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Content.Shared.Administration.Logs;
 
 namespace Content.Server.Administration.Logs.Converters;
 
 [AdminLogConverter]
-public sealed partial class PlayerSessionConverter : AdminLogConverter<SerializablePlayer>
+public sealed class PlayerSessionConverter : AdminLogConverter<SerializablePlayer>
 {
     public override void Write(Utf8JsonWriter writer, SerializablePlayer value, JsonSerializerOptions options)
     {
@@ -21,4 +21,3 @@ public sealed partial class PlayerSessionConverter : AdminLogConverter<Serializa
         writer.WriteEndObject();
     }
 }
-

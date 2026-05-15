@@ -19,21 +19,21 @@ using Robust.Shared.Physics.Events;
 namespace Content.Shared.Slippery;
 
 [UsedImplicitly]
-public sealed partial class SlipperySystem : EntitySystem
+public sealed class SlipperySystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private MovementModStatusSystem _movementMod = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private StatusEffectsSystem _status = default!;
-    [Dependency] private SharedStaminaSystem _stamina = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SpeedModifierContactsSystem _speedModifier = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
 
-    [Dependency] private EntityQuery<KnockedDownComponent> _knockedDownQuery = default!;
-    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
-    [Dependency] private EntityQuery<SlidingComponent> _slidingQuery = default!;
+    [Dependency] private readonly EntityQuery<KnockedDownComponent> _knockedDownQuery = default!;
+    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private readonly EntityQuery<SlidingComponent> _slidingQuery = default!;
 
     public override void Initialize()
     {
@@ -159,7 +159,7 @@ public sealed partial class SlipperySystem : EntitySystem
 /// <summary>
 ///     Raised on an entity to determine if it can slip or not.
 /// </summary>
-public sealed partial class SlipAttemptEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class SlipAttemptEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public bool NoSlip;
 
@@ -186,4 +186,3 @@ public record struct SlipCausingAttemptEvent (bool Cancelled);
 /// <param name="Slipped">The entity being slipped</param>
 [ByRefEvent]
 public readonly record struct SlipEvent(EntityUid Slipped);
-

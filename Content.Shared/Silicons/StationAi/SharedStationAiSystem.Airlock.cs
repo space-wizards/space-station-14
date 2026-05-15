@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.StationAi;
 // Handles airlock radial
 public abstract partial class SharedStationAiSystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private void InitializeAirlock()
     {
@@ -109,7 +109,7 @@ public abstract partial class SharedStationAiSystem
 
 /// <summary> Event for StationAI attempt at bolting/unbolting door. </summary>
 [Serializable, NetSerializable]
-public sealed partial class StationAiBoltEvent : BaseStationAiAction
+public sealed class StationAiBoltEvent : BaseStationAiAction
 {
     /// <summary> Marker, should be door bolted or unbolted. </summary>
     public bool Bolted;
@@ -117,7 +117,7 @@ public sealed partial class StationAiBoltEvent : BaseStationAiAction
 
 /// <summary> Event for StationAI attempt at setting emergency access for door on/off. </summary>
 [Serializable, NetSerializable]
-public sealed partial class StationAiEmergencyAccessEvent : BaseStationAiAction
+public sealed class StationAiEmergencyAccessEvent : BaseStationAiAction
 {
     /// <summary> Marker, should door have emergency access on or off. </summary>
     public bool EmergencyAccess;
@@ -125,9 +125,8 @@ public sealed partial class StationAiEmergencyAccessEvent : BaseStationAiAction
 
 /// <summary> Event for StationAI attempt at electrifying/de-electrifying door. </summary>
 [Serializable, NetSerializable]
-public sealed partial class StationAiElectrifiedEvent : BaseStationAiAction
+public sealed class StationAiElectrifiedEvent : BaseStationAiAction
 {
     /// <summary> Marker, should door be electrified or no. </summary>
     public bool Electrified;
 }
-

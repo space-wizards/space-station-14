@@ -15,13 +15,13 @@ namespace Content.Server.SurveillanceCamera;
 
 public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private UserInterfaceSystem _userInterface = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SurveillanceCameraMapSystem _cameraMapSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -422,18 +422,18 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     }
 }
 
-public sealed partial class OnSurveillanceCameraViewerAddEvent : EntityEventArgs
+public sealed class OnSurveillanceCameraViewerAddEvent : EntityEventArgs
 {
 
 }
 
-public sealed partial class OnSurveillanceCameraViewerRemoveEvent : EntityEventArgs
+public sealed class OnSurveillanceCameraViewerRemoveEvent : EntityEventArgs
 {
 
 }
 
 // What happens when a camera deactivates.
-public sealed partial class SurveillanceCameraDeactivateEvent : EntityEventArgs
+public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
 {
     public EntityUid Camera { get; }
 
@@ -445,4 +445,3 @@ public sealed partial class SurveillanceCameraDeactivateEvent : EntityEventArgs
 
 [ByRefEvent]
 public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);
-

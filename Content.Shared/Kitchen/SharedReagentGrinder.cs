@@ -6,13 +6,13 @@ namespace Content.Shared.Kitchen;
 /// Sent by the client if they want to toggle the grinder's auto mode.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ReagentGrinderToggleAutoModeMessage() : BoundUserInterfaceMessage;
+public sealed class ReagentGrinderToggleAutoModeMessage() : BoundUserInterfaceMessage;
 
 /// <summary>
 /// Sent by the client if they want to start the grinder.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ReagentGrinderStartMessage(GrinderProgram program) : BoundUserInterfaceMessage
+public sealed class ReagentGrinderStartMessage(GrinderProgram program) : BoundUserInterfaceMessage
 {
     public GrinderProgram Program = program;
 }
@@ -21,13 +21,13 @@ public sealed partial class ReagentGrinderStartMessage(GrinderProgram program) :
 /// Sent by the client if they want to eject all grindable entities within the grinder.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ReagentGrinderEjectChamberAllMessage() : BoundUserInterfaceMessage;
+public sealed class ReagentGrinderEjectChamberAllMessage() : BoundUserInterfaceMessage;
 
 /// <summary>
 /// Sent by the client if they want eject a single grindable entity within the grinder.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ReagentGrinderEjectChamberContentMessage(NetEntity entityId) : BoundUserInterfaceMessage
+public sealed class ReagentGrinderEjectChamberContentMessage(NetEntity entityId) : BoundUserInterfaceMessage
 {
     public NetEntity EntityId = entityId;
 }
@@ -70,4 +70,3 @@ public enum GrinderAutoMode : byte
     Grind,
     Juice
 }
-

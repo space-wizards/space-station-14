@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Pinpointer.UI;
 
 [UsedImplicitly]
-public sealed partial class NavMapBeaconBoundUserInterface : BoundUserInterface
+public sealed class NavMapBeaconBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private NavMapBeaconWindow? _window;
@@ -30,4 +30,3 @@ public sealed partial class NavMapBeaconBoundUserInterface : BoundUserInterface
         };
     }
 }
-

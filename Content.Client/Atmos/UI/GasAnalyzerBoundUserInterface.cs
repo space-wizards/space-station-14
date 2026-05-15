@@ -3,7 +3,7 @@ using Content.Shared.Atmos.Components;
 
 namespace Content.Client.Atmos.UI;
 
-public sealed partial class GasAnalyzerBoundUserInterface : BoundUserInterface
+public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private GasAnalyzerWindow? _window;
@@ -31,4 +31,3 @@ public sealed partial class GasAnalyzerBoundUserInterface : BoundUserInterface
         _window.Populate(cast);
     }
 }
-

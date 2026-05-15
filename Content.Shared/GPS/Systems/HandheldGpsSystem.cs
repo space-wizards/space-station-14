@@ -4,9 +4,9 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GPS.Systems;
 
-public sealed partial class HandheldGpsSystem : EntitySystem
+public sealed class HandheldGpsSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

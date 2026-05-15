@@ -2,9 +2,9 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Audio.Jukebox;
 
-public abstract partial class SharedJukeboxSystem : EntitySystem
+public abstract class SharedJukeboxSystem : EntitySystem
 {
-    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
     /// <summary>
     /// Returns whether or not the given jukebox is currently playing a song.

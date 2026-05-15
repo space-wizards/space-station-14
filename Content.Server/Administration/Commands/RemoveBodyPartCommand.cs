@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class RemoveBodyPartCommand : LocalizedCommands
+    public sealed class RemoveBodyPartCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "rmbodypart";
 
@@ -32,4 +32,3 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
-

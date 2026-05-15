@@ -10,7 +10,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Paper.UI;
 
 [CommonSheetlet]
-public sealed partial class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
@@ -41,4 +41,3 @@ public sealed partial class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
         ];
     }
 }
-

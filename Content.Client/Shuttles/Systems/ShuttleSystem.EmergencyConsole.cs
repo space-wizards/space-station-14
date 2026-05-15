@@ -55,7 +55,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 /// <summary>
 /// Shows the expected position of the emergency shuttle. Nothing more.
 /// </summary>
-public sealed partial class EmergencyShuttleOverlay : Overlay
+public sealed class EmergencyShuttleOverlay : Overlay
 {
     private readonly EntityQuery<TransformComponent> _transformQuery;
     private readonly SharedTransformSystem _transformSystem;
@@ -81,4 +81,3 @@ public sealed partial class EmergencyShuttleOverlay : Overlay
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }
-

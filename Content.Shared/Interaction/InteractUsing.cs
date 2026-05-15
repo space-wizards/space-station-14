@@ -8,7 +8,7 @@ namespace Content.Shared.Interaction;
 ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
 /// </summary>
 [PublicAPI]
-public sealed partial class InteractUsingEvent : HandledEntityEventArgs
+public sealed class InteractUsingEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     Entity that triggered the interaction.
@@ -48,7 +48,7 @@ public sealed partial class InteractUsingEvent : HandledEntityEventArgs
 /// Raised when a user entity interacts with a target while holding an object in their hand.
 /// </summary>
 [PublicAPI]
-public sealed partial class UserInteractUsingEvent : HandledEntityEventArgs
+public sealed class UserInteractUsingEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     Entity that triggered the interaction.
@@ -83,5 +83,4 @@ public sealed partial class UserInteractUsingEvent : HandledEntityEventArgs
         ClickLocation = clickLocation;
     }
 }
-
 

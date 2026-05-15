@@ -9,7 +9,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires some way of 'using' (with default action) an artifact entity.
 /// </summary>
-public sealed partial class XATInteractionSystem : BaseXATSystem<XATInteractionComponent>
+public sealed class XATInteractionSystem : BaseXATSystem<XATInteractionComponent>
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,4 +40,3 @@ public sealed partial class XATInteractionSystem : BaseXATSystem<XATInteractionC
         Trigger(artifact, node);
     }
 }
-

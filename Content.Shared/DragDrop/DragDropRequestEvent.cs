@@ -6,7 +6,7 @@ namespace Content.Shared.DragDrop
     /// Raised on the client to the server requesting a drag-drop.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class DragDropRequestEvent : EntityEventArgs
+    public sealed class DragDropRequestEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that was dragged and dropped.
@@ -25,4 +25,3 @@ namespace Content.Shared.DragDrop
         }
     }
 }
-

@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using NetCord;
@@ -12,7 +12,7 @@ namespace Content.Server.Discord.DiscordLink;
 /// <summary>
 /// Represents the arguments for the <see cref="DiscordLink.OnCommandReceived"/> event.
 /// </summary>
-public sealed partial class CommandReceivedEventArgs
+public sealed class CommandReceivedEventArgs
 {
     /// <summary>
     /// The command that was received. This is the first word in the message, after the bot prefix.
@@ -40,10 +40,10 @@ public sealed partial class CommandReceivedEventArgs
 /// <summary>
 /// Handles the connection to Discord and provides methods to interact with it.
 /// </summary>
-public sealed partial class DiscordLink : IPostInjectInit
+public sealed class DiscordLink : IPostInjectInit
 {
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
 
     /// <summary>
     ///    The Discord client. This is null if the bot is not connected.
@@ -251,4 +251,3 @@ public sealed partial class DiscordLink : IPostInjectInit
 
     #endregion
 }
-

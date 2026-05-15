@@ -5,9 +5,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Light.EntitySystems;
 
 /// <inheritdoc/>
-public sealed partial class RoofSystem : SharedRoofSystem
+public sealed class RoofSystem : SharedRoofSystem
 {
-    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 

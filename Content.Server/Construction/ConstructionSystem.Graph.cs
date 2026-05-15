@@ -449,7 +449,7 @@ namespace Content.Server.Construction
     ///     This event gets raised when an entity changes prototype / uid during construction. The event is raised
     ///     directed both at the old and new entity.
     /// </summary>
-    public sealed partial class ConstructionChangeEntityEvent : EntityEventArgs
+    public sealed class ConstructionChangeEntityEvent : EntityEventArgs
     {
         public readonly EntityUid New;
         public readonly EntityUid Old;
@@ -473,4 +473,3 @@ namespace Content.Server.Construction
     {
     }
 }
-

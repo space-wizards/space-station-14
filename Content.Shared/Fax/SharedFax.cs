@@ -9,7 +9,7 @@ public enum FaxUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxUiState : BoundUserInterfaceState
+public sealed class FaxUiState : BoundUserInterfaceState
 {
     public string DeviceName { get; }
     public Dictionary<string, string> AvailablePeers { get; }
@@ -35,7 +35,7 @@ public sealed partial class FaxUiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxFileMessage : BoundUserInterfaceMessage
+public sealed class FaxFileMessage : BoundUserInterfaceMessage
 {
     public string? Label;
     public string Content;
@@ -56,22 +56,22 @@ public static class FaxFileMessageValidation
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxCopyMessage : BoundUserInterfaceMessage
+public sealed class FaxCopyMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxSendMessage : BoundUserInterfaceMessage
+public sealed class FaxSendMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxRefreshMessage : BoundUserInterfaceMessage
+public sealed class FaxRefreshMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FaxDestinationMessage : BoundUserInterfaceMessage
+public sealed class FaxDestinationMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
     public FaxDestinationMessage(string address)
@@ -79,4 +79,3 @@ public sealed partial class FaxDestinationMessage : BoundUserInterfaceMessage
         Address = address;
     }
 }
-

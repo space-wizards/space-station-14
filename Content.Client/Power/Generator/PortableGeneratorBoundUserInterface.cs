@@ -1,4 +1,4 @@
-using Content.Shared.Power.Generator;
+﻿using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Power.Generator;
 
 [UsedImplicitly]
-public sealed partial class PortableGeneratorBoundUserInterface : BoundUserInterface
+public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
 {
     private GeneratorWindow? _window;
 
@@ -69,4 +69,3 @@ public sealed partial class PortableGeneratorBoundUserInterface : BoundUserInter
         SendMessage(new PortableGeneratorEjectFuelMessage());
     }
 }
-

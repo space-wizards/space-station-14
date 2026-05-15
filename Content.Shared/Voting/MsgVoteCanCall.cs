@@ -1,4 +1,4 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Voting
     /// <summary>
     ///     Used to tell clients whether they are able to currently call votes.
     /// </summary>
-    public sealed partial class MsgVoteCanCall : NetMessage
+    public sealed class MsgVoteCanCall : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -56,4 +56,3 @@ namespace Content.Shared.Voting
         }
     }
 }
-

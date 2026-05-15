@@ -10,11 +10,11 @@ using Robust.Shared.Random;
 namespace Content.Server.Spawners.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class ConditionalSpawnerSystem : EntitySystem
+    public sealed class ConditionalSpawnerSystem : EntitySystem
     {
-        [Dependency] private IRobustRandom _robustRandom = default!;
-        [Dependency] private GameTicker _ticker = default!;
-        [Dependency] private EntityTableSystem _entityTable = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
         public override void Initialize()
         {

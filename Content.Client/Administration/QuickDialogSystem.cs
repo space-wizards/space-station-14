@@ -6,7 +6,7 @@ namespace Content.Client.Administration;
 /// <summary>
 /// This handles the client portion of quick dialogs.
 /// </summary>
-public sealed partial class QuickDialogSystem : EntitySystem
+public sealed class QuickDialogSystem : EntitySystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -35,4 +35,3 @@ public sealed partial class QuickDialogSystem : EntitySystem
         };
     }
 }
-

@@ -3,7 +3,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Pathfinding;
 
-public sealed partial class PathPoly : IEquatable<PathPoly>
+public sealed class PathPoly : IEquatable<PathPoly>
 {
     [ViewVariables]
     public readonly EntityUid GraphUid;
@@ -72,4 +72,3 @@ public sealed partial class PathPoly : IEquatable<PathPoly>
         return HashCode.Combine(GraphUid, ChunkOrigin, TileIndex, Box);
     }
 }
-

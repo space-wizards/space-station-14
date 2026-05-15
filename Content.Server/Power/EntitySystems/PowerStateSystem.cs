@@ -4,7 +4,7 @@ using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed partial class PowerStateSystem : SharedPowerStateSystem
+public sealed class PowerStateSystem : SharedPowerStateSystem
 {
     public override void Initialize()
     {
@@ -19,4 +19,3 @@ public sealed partial class PowerStateSystem : SharedPowerStateSystem
         SetWorkingState(ent.Owner, ent.Comp.IsWorking);
     }
 }
-

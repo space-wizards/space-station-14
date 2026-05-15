@@ -3,9 +3,9 @@ using Content.Shared.Construction.Components;
 
 namespace Content.Shared.Gravity;
 
-public abstract partial class SharedGravityGeneratorSystem : EntitySystem
+public abstract class SharedGravityGeneratorSystem : EntitySystem
 {
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {

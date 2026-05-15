@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Research.UI
 {
-    public sealed partial class ResearchClientBoundUserInterface : BoundUserInterface
+    public sealed class ResearchClientBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ResearchClientServerSelectionMenu? _menu;
@@ -40,4 +40,3 @@ namespace Content.Client.Research.UI
         }
     }
 }
-

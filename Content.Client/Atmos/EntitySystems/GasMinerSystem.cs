@@ -4,8 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed partial class GasMinerSystem : SharedGasMinerSystem
+public sealed class GasMinerSystem : SharedGasMinerSystem
 {
 
 }
-

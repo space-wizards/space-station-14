@@ -7,7 +7,7 @@ namespace Content.Shared.Verbs
     ///     Contains combined name and icon information for a verb category.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class VerbCategory
+    public sealed class VerbCategory
     {
         public readonly string Text;
 
@@ -90,4 +90,3 @@ namespace Content.Shared.Verbs
             new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
     }
 }
-

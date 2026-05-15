@@ -2,5 +2,4 @@ using Content.Shared.CriminalRecords.Systems;
 
 namespace Content.Client.CriminalRecords.Systems;
 
-public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem;
-
+public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem;

@@ -19,7 +19,7 @@ public sealed partial class ActionsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ActionsComponentState : ComponentState
+public sealed class ActionsComponentState : ComponentState
 {
     public readonly HashSet<NetEntity> Actions;
 
@@ -49,4 +49,3 @@ public enum ItemActionIconStyle : byte
     /// </summary>
     NoItem
 }
-

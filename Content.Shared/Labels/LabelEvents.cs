@@ -21,8 +21,7 @@ public enum PaperLabelVisuals : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HandLabelerLabelChangedMessage(string label) : BoundUserInterfaceMessage
+public sealed class HandLabelerLabelChangedMessage(string label) : BoundUserInterfaceMessage
 {
     public string Label { get; } = label;
 }
-

@@ -3,9 +3,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Clock;
 
-public sealed partial class ClockSystem : SharedClockSystem
+public sealed class ClockSystem : SharedClockSystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Update(float frameTime)
     {

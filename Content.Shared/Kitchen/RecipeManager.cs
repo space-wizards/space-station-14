@@ -3,9 +3,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
-    public sealed partial class RecipeManager
+    public sealed class RecipeManager
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public List<FoodRecipePrototype> Recipes { get; private set; } = new();
 

@@ -4,9 +4,9 @@ using Content.Shared.Storage.Components;
 
 namespace Content.Shared.Morgue;
 
-public sealed partial class EntityStorageLayingDownOverrideSystem : EntitySystem
+public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
 {
-    [Dependency] private StandingStateSystem _standing = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
 
     public override void Initialize()
     {

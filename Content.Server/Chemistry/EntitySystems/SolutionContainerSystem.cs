@@ -1,6 +1,5 @@
-using Content.Shared.Chemistry.EntitySystems;
+﻿using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed partial class SolutionContainerSystem : SharedSolutionContainerSystem;
-
+public sealed class SolutionContainerSystem : SharedSolutionContainerSystem;

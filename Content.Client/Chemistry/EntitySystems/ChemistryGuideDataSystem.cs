@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body;
@@ -14,9 +14,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Chemistry.EntitySystems;
 
 /// <inheritdoc/>
-public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
+public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
     private static readonly ProtoId<MixingCategoryPrototype> DefaultGrindCategory = "DummyGrind";
@@ -172,7 +172,7 @@ public abstract class ReagentSourceData
 /// <summary>
 /// Used to store a reagent source that's an entity with a corresponding solution.
 /// </summary>
-public sealed partial class ReagentEntitySourceData : ReagentSourceData
+public sealed class ReagentEntitySourceData : ReagentSourceData
 {
     public readonly EntityPrototype SourceEntProto;
 
@@ -193,7 +193,7 @@ public sealed partial class ReagentEntitySourceData : ReagentSourceData
 /// <summary>
 /// Used to store a reagent source that comes from a reaction between multiple reagents.
 /// </summary>
-public sealed partial class ReagentReactionSourceData : ReagentSourceData
+public sealed class ReagentReactionSourceData : ReagentSourceData
 {
     public readonly ReactionPrototype ReactionPrototype;
 
@@ -211,7 +211,7 @@ public sealed partial class ReagentReactionSourceData : ReagentSourceData
 /// <summary>
 /// Used to store a reagent source that comes from gas condensation.
 /// </summary>
-public sealed partial class ReagentGasSourceData : ReagentSourceData
+public sealed class ReagentGasSourceData : ReagentSourceData
 {
     public readonly GasPrototype GasPrototype;
 
@@ -225,5 +225,4 @@ public sealed partial class ReagentGasSourceData : ReagentSourceData
         GasPrototype = gasPrototype;
     }
 }
-
 

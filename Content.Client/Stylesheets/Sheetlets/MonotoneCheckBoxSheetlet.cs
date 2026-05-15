@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class MonotoneCheckBoxSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig
+public sealed class MonotoneCheckBoxSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -28,4 +28,3 @@ public sealed partial class MonotoneCheckBoxSheetlet<T> : Sheetlet<T> where T : 
         ];
     }
 }
-

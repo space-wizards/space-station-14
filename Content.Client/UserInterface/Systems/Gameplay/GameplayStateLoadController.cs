@@ -3,7 +3,7 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.Gameplay;
 
-public sealed partial class GameplayStateLoadController : UIController
+public sealed class GameplayStateLoadController : UIController
 {
     public Action? OnScreenLoad;
     public Action? OnScreenUnload;
@@ -18,4 +18,3 @@ public sealed partial class GameplayStateLoadController : UIController
         OnScreenLoad?.Invoke();
     }
 }
-

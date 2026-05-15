@@ -1,9 +1,9 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader;
 
 [Serializable, NetSerializable]
-public sealed partial class CartridgeLoaderUiMessage : BoundUserInterfaceMessage
+public sealed class CartridgeLoaderUiMessage : BoundUserInterfaceMessage
 {
     public readonly NetEntity CartridgeUid;
     public readonly CartridgeUiMessageAction Action;
@@ -24,4 +24,3 @@ public enum CartridgeUiMessageAction
     Uninstall,
     UIReady
 }
-

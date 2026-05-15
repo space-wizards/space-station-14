@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Storage;
 
 [UsedImplicitly]
-public sealed partial class StorageBoundUserInterface : BoundUserInterface
+public sealed class StorageBoundUserInterface : BoundUserInterface
 {
     private StorageWindow? _window;
 
@@ -93,4 +93,3 @@ public sealed partial class StorageBoundUserInterface : BoundUserInterface
         LayoutContainer.SetPosition(_window, position);
     }
 }
-

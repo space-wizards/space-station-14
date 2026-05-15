@@ -19,7 +19,7 @@ public sealed partial class TileHistoryComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class TileHistoryState : ComponentState
+public sealed class TileHistoryState : ComponentState
 {
     public Dictionary<Vector2i, TileHistoryChunk> ChunkHistory;
 
@@ -30,7 +30,7 @@ public sealed partial class TileHistoryState : ComponentState
 }
 
 [Serializable, NetSerializable]
-public sealed partial class TileHistoryDeltaState : ComponentState, IComponentDeltaState<TileHistoryState>
+public sealed class TileHistoryDeltaState : ComponentState, IComponentDeltaState<TileHistoryState>
 {
     public Dictionary<Vector2i, TileHistoryChunk> ChunkHistory;
     public HashSet<Vector2i> AllHistoryChunks;
@@ -123,4 +123,3 @@ public sealed partial class TileHistoryChunk
         LastModified = other.LastModified;
     }
 }
-

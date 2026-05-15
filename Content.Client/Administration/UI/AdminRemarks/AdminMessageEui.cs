@@ -8,7 +8,7 @@ using static Content.Shared.Administration.Notes.AdminMessageEuiMsg;
 namespace Content.Client.Administration.UI.AdminRemarks;
 
 [UsedImplicitly]
-public sealed partial class AdminMessageEui : BaseEui
+public sealed class AdminMessageEui : BaseEui
 {
     private readonly AdminMessagePopupWindow _popup;
 
@@ -40,4 +40,3 @@ public sealed partial class AdminMessageEui : BaseEui
         _popup.Orphan();
     }
 }
-

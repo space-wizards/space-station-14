@@ -49,7 +49,7 @@ public sealed partial class MobThresholdsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MobThresholdsComponentState : ComponentState
+public sealed class MobThresholdsComponentState : ComponentState
 {
     public Dictionary<FixedPoint2, MobState> UnsortedThresholds;
 
@@ -79,4 +79,3 @@ public sealed partial class MobThresholdsComponentState : ComponentState
         AllowRevives = allowRevives;
     }
 }
-

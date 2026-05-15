@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Medical.CrewMonitoring;
 
-public sealed partial class CrewMonitoringBoundUserInterface : BoundUserInterface
+public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private CrewMonitoringWindow? _menu;
@@ -46,4 +46,3 @@ public sealed partial class CrewMonitoringBoundUserInterface : BoundUserInterfac
         }
     }
 }
-

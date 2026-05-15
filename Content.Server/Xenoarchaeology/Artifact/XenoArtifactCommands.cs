@@ -12,7 +12,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 /// Toolshed commands for manipulating xeno artifact.
 /// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed partial class XenoArtifactCommand : ToolshedCommand
+public sealed class XenoArtifactCommand : ToolshedCommand
 {
     public static readonly EntProtoId ArtifactPrototype = "BaseXenoArtifact";
 
@@ -122,4 +122,3 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
         }
     }
 }
-

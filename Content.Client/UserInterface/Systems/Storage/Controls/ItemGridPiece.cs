@@ -9,7 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
-public sealed partial class ItemGridPiece : Control, IEntityControl
+public sealed class ItemGridPiece : Control, IEntityControl
 {
     private readonly IEntityManager _entityManager;
     private readonly StorageUIController _storageController;
@@ -303,4 +303,3 @@ public enum ItemGridPieceMarks
     First,
     Second,
 }
-

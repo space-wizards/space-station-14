@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
-public sealed partial class ChangelogUIController : UIController
+public sealed class ChangelogUIController : UIController
 {
     private ChangelogWindow _changeLogWindow = default!;
 
@@ -40,4 +40,3 @@ public sealed partial class ChangelogUIController : UIController
         }
     }
 }
-

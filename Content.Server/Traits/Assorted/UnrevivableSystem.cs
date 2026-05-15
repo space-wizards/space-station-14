@@ -3,7 +3,7 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed partial class UnrevivableSystem : EntitySystem
+public sealed class UnrevivableSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -18,4 +18,3 @@ public sealed partial class UnrevivableSystem : EntitySystem
             args.Cancelled = true;
     }
 }
-

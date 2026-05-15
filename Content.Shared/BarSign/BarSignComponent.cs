@@ -46,11 +46,10 @@ public enum BarSignVisuals : byte
 /// Send from the client when setting the bar sign.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SetBarSignMessage(ProtoId<BarSignPrototype> sign) : BoundUserInterfaceMessage
+public sealed class SetBarSignMessage(ProtoId<BarSignPrototype> sign) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// The new prototype to use.
     /// </summary>
     public ProtoId<BarSignPrototype> Sign = sign;
 }
-

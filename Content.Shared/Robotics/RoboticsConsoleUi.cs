@@ -1,4 +1,4 @@
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
@@ -12,7 +12,7 @@ public enum RoboticsConsoleUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RoboticsConsoleState : BoundUserInterfaceState
+public sealed class RoboticsConsoleState : BoundUserInterfaceState
 {
     /// <summary>
     /// Map of device network addresses to cyborg data.
@@ -35,7 +35,7 @@ public sealed partial class RoboticsConsoleState : BoundUserInterfaceState
 /// Message to disable the selected cyborg.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
+public sealed class RoboticsConsoleDisableMessage : BoundUserInterfaceMessage
 {
     public readonly string Address;
 
@@ -49,7 +49,7 @@ public sealed partial class RoboticsConsoleDisableMessage : BoundUserInterfaceMe
 /// Message to destroy the selected cyborg.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
+public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 {
     public readonly string Address;
 
@@ -145,4 +145,3 @@ public static class RoboticsConsoleConstants
     public const string NET_DISABLE_COMMAND = "cyborg-disable";
     public const string NET_DESTROY_COMMAND = "cyborg-destroy";
 }
-

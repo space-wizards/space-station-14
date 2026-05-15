@@ -5,9 +5,9 @@ using Content.Shared.NameModifier.Components;
 namespace Content.Shared.NameModifier.EntitySystems;
 
 /// <inheritdoc cref="NameModifierComponent"/>
-public sealed partial class NameModifierSystem : EntitySystem
+public sealed class NameModifierSystem : EntitySystem
 {
-    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -96,7 +96,7 @@ public sealed partial class NameModifierSystem : EntitySystem
 /// Subscribe to this event and use its methods to add modifiers to the entity's name.
 /// </summary>
 [ByRefEvent]
-public sealed partial class RefreshNameModifiersEvent : IInventoryRelayEvent
+public sealed class RefreshNameModifiersEvent : IInventoryRelayEvent
 {
     /// <summary>
     /// The entity's name without any modifiers applied.
@@ -153,4 +153,3 @@ public sealed partial class RefreshNameModifiersEvent : IInventoryRelayEvent
         return name;
     }
 }
-

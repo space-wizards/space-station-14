@@ -7,10 +7,10 @@ using Robust.Shared.Timing;
 namespace Content.Client.Replay.UI.Loading;
 
 [Virtual]
-public partial class LoadingScreen<TResult> : State
+public class LoadingScreen<TResult> : State
 {
-    [Dependency] private IResourceCache _resourceCache = default!;
-    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
     public event Action<TResult?, Exception?>? OnJobFinished;
     private LoadingScreenControl _screen = default!;

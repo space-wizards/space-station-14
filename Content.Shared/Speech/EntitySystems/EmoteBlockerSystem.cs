@@ -4,7 +4,7 @@ using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public sealed partial class EmoteBlockerSystem : EntitySystem
+public sealed class EmoteBlockerSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -39,4 +39,3 @@ public sealed partial class EmoteBlockerSystem : EntitySystem
         }
     }
 }
-

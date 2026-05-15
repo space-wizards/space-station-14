@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class EntityEffectOnTriggerSystem : XOnTriggerSystem<EntityEffectOnTriggerComponent>
+public sealed class EntityEffectOnTriggerSystem : XOnTriggerSystem<EntityEffectOnTriggerComponent>
 {
-    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _effects = default!;
 
     protected override void OnTrigger(Entity<EntityEffectOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

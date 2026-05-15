@@ -49,7 +49,7 @@ public enum SiliconLawsUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SiliconLawBuiState : BoundUserInterfaceState
+public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
     public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
@@ -60,4 +60,3 @@ public sealed partial class SiliconLawBuiState : BoundUserInterfaceState
         RadioChannels = radioChannels;
     }
 }
-

@@ -1,8 +1,8 @@
-using Robust.Shared.Physics.Events;
+﻿using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Physics;
 
-public sealed partial class SharedPreventCollideSystem : EntitySystem
+public sealed class SharedPreventCollideSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -18,4 +18,3 @@ public sealed partial class SharedPreventCollideSystem : EntitySystem
     }
 
 }
-

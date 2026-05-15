@@ -10,9 +10,9 @@ using Robust.Shared.Random;
 namespace Content.Server.GameTicking.Rules;
 
 /// <inheritdoc cref="RoundstartStationVariationRuleComponent"/>
-public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
+public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -26,7 +26,7 @@ public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSyste
         var spawns = EntitySpawnCollection.GetSpawns(component.Rules, _random);
         foreach (var rule in spawns)
         {
-            GameTicker.AddFilteredGameRule(rule);
+            GameTicker.AddGameRule(rule);
         }
     }
 

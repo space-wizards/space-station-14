@@ -13,7 +13,7 @@ namespace Content.Client.Guidebook.Controls;
 /// The link is activated by the owner if the prototype is represented
 /// somewhere in the same document.
 /// </summary>
-public sealed partial class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
+public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
 {
     private bool _linkActive = false;
     private FormattedMessage? _message;
@@ -69,4 +69,3 @@ public interface IAnchorClickHandler
 {
     public void HandleAnchor(IPrototypeLinkControl prototypeLinkControl);
 }
-

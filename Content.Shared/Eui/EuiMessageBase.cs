@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Eui
 {
@@ -9,8 +9,7 @@ namespace Content.Shared.Eui
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CloseEuiMessage : EuiMessageBase
+    public sealed class CloseEuiMessage : EuiMessageBase
     {
     }
 }
-

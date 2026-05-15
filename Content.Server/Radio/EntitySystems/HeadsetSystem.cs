@@ -8,10 +8,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Radio.EntitySystems;
 
-public sealed partial class HeadsetSystem : SharedHeadsetSystem
+public sealed class HeadsetSystem : SharedHeadsetSystem
 {
-    [Dependency] private INetManager _netMan = default!;
-    [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
 
     public override void Initialize()
     {

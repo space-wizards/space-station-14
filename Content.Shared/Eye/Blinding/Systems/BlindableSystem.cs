@@ -6,10 +6,10 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
-public sealed partial class BlindableSystem : EntitySystem
+public sealed class BlindableSystem : EntitySystem
 {
-    [Dependency] private BlurryVisionSystem _blurriness = default!;
-    [Dependency] private EyeClosingSystem _eyelids = default!;
+    [Dependency] private readonly BlurryVisionSystem _blurriness = default!;
+    [Dependency] private readonly EyeClosingSystem _eyelids = default!;
 
     public override void Initialize()
     {
@@ -119,13 +119,13 @@ public record struct EyeDamageChangedEvent(int Damage);
 /// <summary>
 ///     Raised directed at an entity to see whether the entity is currently blind or not.
 /// </summary>
-public sealed partial class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+public sealed class CanSeeAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public bool Blind => Cancelled;
     public SlotFlags TargetSlots => SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD;
 }
 
-public sealed partial class GetEyeProtectionEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class GetEyeProtectionEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
     ///     Time to subtract from any temporary blindness sources.
@@ -134,4 +134,3 @@ public sealed partial class GetEyeProtectionEvent : EntityEventArgs, IInventoryR
 
     public SlotFlags TargetSlots => SlotFlags.EYES | SlotFlags.MASK | SlotFlags.HEAD;
 }
-

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Client.CrewManifest;
 
 [UsedImplicitly]
-public sealed partial class CrewManifestEui : BaseEui
+public sealed class CrewManifestEui : BaseEui
 {
     private readonly CrewManifestUi _window;
 
@@ -46,4 +46,3 @@ public sealed partial class CrewManifestEui : BaseEui
         _window.Populate(cast.StationName, cast.Entries);
     }
 }
-

@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,7 +10,7 @@ using Content.Client.UserInterface.ControlExtensions;
 namespace Content.Client.Guidebook.RichText;
 
 [UsedImplicitly]
-public sealed partial class TextLinkTag : IMarkupTagHandler
+public sealed class TextLinkTag : IMarkupTagHandler
 {
     public static Color LinkColor => Color.CornflowerBlue;
 
@@ -61,4 +61,3 @@ public interface ILinkClickHandler
 {
     public void HandleClick(string link);
 }
-

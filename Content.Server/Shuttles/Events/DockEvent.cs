@@ -5,7 +5,7 @@ namespace Content.Server.Shuttles.Events;
 /// <summary>
 /// Raised whenever 2 airlocks dock.
 /// </summary>
-public sealed partial class DockEvent : EntityEventArgs
+public sealed class DockEvent : EntityEventArgs
 {
     public DockingComponent DockA = default!;
     public DockingComponent DockB = default!;

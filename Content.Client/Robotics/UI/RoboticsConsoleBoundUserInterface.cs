@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Robotics.UI;
 
-public sealed partial class RoboticsConsoleBoundUserInterface : BoundUserInterface
+public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     public RoboticsConsoleWindow _window = default!;
@@ -40,4 +40,3 @@ public sealed partial class RoboticsConsoleBoundUserInterface : BoundUserInterfa
         _window.UpdateState(cast);
     }
 }
-

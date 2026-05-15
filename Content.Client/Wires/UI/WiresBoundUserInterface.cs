@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Wires.UI
 {
-    public sealed partial class WiresBoundUserInterface : BoundUserInterface
+    public sealed class WiresBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private WiresMenu? _menu;
@@ -41,4 +41,3 @@ namespace Content.Client.Wires.UI
         }
     }
 }
-

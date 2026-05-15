@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-internal sealed partial class SetMenuVisibilityCommand : LocalizedCommands
+internal sealed class SetMenuVisibilityCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "menuvis";
 

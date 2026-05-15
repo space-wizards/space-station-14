@@ -8,13 +8,13 @@ namespace Content.Shared.Chemistry
     /// <summary>
     /// This class holds constants that are shared between client and server.
     /// </summary>
-    public sealed partial class SharedReagentDispenser
+    public sealed class SharedReagentDispenser
     {
         public const string OutputSlotName = "beakerSlot";
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ReagentDispenserSetDispenseAmountMessage : BoundUserInterfaceMessage
+    public sealed class ReagentDispenserSetDispenseAmountMessage : BoundUserInterfaceMessage
     {
         public readonly ReagentDispenserDispenseAmount ReagentDispenserDispenseAmount;
 
@@ -46,17 +46,17 @@ namespace Content.Shared.Chemistry
                 case "20":
                     ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U20;
                     break;
+                case "25":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U25;
+                    break;
                 case "30":
                     ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U30;
                     break;
-                case "40":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U40;
+                case "50":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U50;
                     break;
-                case "60":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U60;
-                    break;
-                case "120":
-                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U120;
+                case "100":
+                    ReagentDispenserDispenseAmount = ReagentDispenserDispenseAmount.U100;
                     break;
                 default:
                     throw new Exception($"Cannot convert the string `{s}` into a valid ReagentDispenser DispenseAmount");
@@ -65,7 +65,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
+    public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
     {
         public readonly ItemStorageLocation StorageLocation;
 
@@ -79,7 +79,7 @@ namespace Content.Shared.Chemistry
     ///     Message sent by the user interface to ask the reagent dispenser to eject a container
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class ReagentDispenserEjectContainerMessage : BoundUserInterfaceMessage
+    public sealed class ReagentDispenserEjectContainerMessage : BoundUserInterfaceMessage
     {
         public readonly ItemStorageLocation StorageLocation;
 
@@ -90,7 +90,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ReagentDispenserClearContainerSolutionMessage : BoundUserInterfaceMessage
+    public sealed class ReagentDispenserClearContainerSolutionMessage : BoundUserInterfaceMessage
     {
 
     }
@@ -102,14 +102,14 @@ namespace Content.Shared.Chemistry
         U10 = 10,
         U15 = 15,
         U20 = 20,
+        U25 = 25,
         U30 = 30,
-        U40 = 40,
-        U60 = 60,
-        U120 = 120,
+        U50 = 50,
+        U100 = 100,
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ReagentInventoryItem(ItemStorageLocation storageLocation, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
+    public sealed class ReagentInventoryItem(ItemStorageLocation storageLocation, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
     {
         public ItemStorageLocation StorageLocation = storageLocation;
         public string ReagentLabel = reagentLabel;
@@ -118,7 +118,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly ContainerInfo? OutputContainer;
 
@@ -146,4 +146,3 @@ namespace Content.Shared.Chemistry
         Key
     }
 }
-

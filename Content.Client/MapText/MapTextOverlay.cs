@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Shared.MapText;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -14,7 +14,7 @@ namespace Content.Client.MapText;
 /// <summary>
 /// Draws map text as an overlay
 /// </summary>
-public sealed partial class MapTextOverlay : Overlay
+public sealed class MapTextOverlay : Overlay
 {
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
@@ -83,4 +83,3 @@ public sealed partial class MapTextOverlay : Overlay
         }
     }
 }
-

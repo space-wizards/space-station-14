@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Kudzu;
 
-public sealed partial class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
+public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, KudzuVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -18,4 +18,3 @@ public sealed partial class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsCo
         }
     }
 }
-

@@ -1,6 +1,6 @@
-namespace Content.Shared.Emoting;
+﻿namespace Content.Shared.Emoting;
 
-public sealed partial class EmoteSystem : EntitySystem
+public sealed class EmoteSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -28,4 +28,3 @@ public sealed partial class EmoteSystem : EntitySystem
             args.Cancel();
     }
 }
-

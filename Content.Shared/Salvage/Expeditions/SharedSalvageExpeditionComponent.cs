@@ -11,8 +11,7 @@ public abstract partial class SharedSalvageExpeditionComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SalvageExpeditionComponentState : ComponentState
+public sealed class SalvageExpeditionComponentState : ComponentState
 {
     public ExpeditionStage Stage;
 }
-

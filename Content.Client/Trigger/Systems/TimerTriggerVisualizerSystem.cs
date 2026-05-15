@@ -6,9 +6,9 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Trigger.Systems;
 
-public sealed partial class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
+public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTriggerVisualsComponent>
 {
-    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {

@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Crafting;
 
 [UsedImplicitly]
-public sealed partial class CraftingUIController : UIController, IOnStateChanged<GameplayState>
+public sealed class CraftingUIController : UIController, IOnStateChanged<GameplayState>
 {
     private ConstructionMenuPresenter? _presenter;
     private MenuButton? CraftingButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CraftingButton;
@@ -64,4 +64,3 @@ public sealed partial class CraftingUIController : UIController, IOnStateChanged
         _presenter?.OnHudCraftingButtonToggled(obj);
     }
 }
-

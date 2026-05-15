@@ -1,10 +1,10 @@
-using Content.Shared.MapText;
+﻿using Content.Shared.MapText;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.MapText;
 
 /// <inheritdoc/>
-public sealed partial class MapTextSystem : SharedMapTextSystem
+public sealed class MapTextSystem : SharedMapTextSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,4 +26,3 @@ public sealed partial class MapTextSystem : SharedMapTextSystem
         };
     }
 }
-

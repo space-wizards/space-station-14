@@ -5,10 +5,10 @@ using Content.Shared.Fluids.Components;
 namespace Content.Shared.Fluids.EntitySystems;
 
 /// <inheritdoc cref="SpillWhenWornComponent"/>
-public sealed partial class SpillWhenWornSystem : EntitySystem
+public sealed class SpillWhenWornSystem : EntitySystem
 {
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {

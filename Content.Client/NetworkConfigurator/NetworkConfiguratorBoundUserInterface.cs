@@ -1,4 +1,4 @@
-using Content.Client.NetworkConfigurator.Systems;
+﻿using Content.Client.NetworkConfigurator.Systems;
 using Content.Shared.DeviceNetwork;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed partial class NetworkConfiguratorBoundUserInterface : BoundUserInterface
+public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
     private readonly NetworkConfiguratorSystem _netConfig;
 
@@ -104,4 +104,3 @@ public sealed partial class NetworkConfiguratorBoundUserInterface : BoundUserInt
         SendMessage(new NetworkConfiguratorButtonPressedMessage(buttonKey));
     }
 }
-

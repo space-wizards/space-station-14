@@ -8,7 +8,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Toolshed.Commands.StatusEffects;
 
 [ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
-public sealed partial class StatusEffectCommand : ToolshedCommand
+public sealed class StatusEffectCommand : ToolshedCommand
 {
     private StatusEffectsSystem? _statusEffectsSystem;
 
@@ -139,4 +139,3 @@ public sealed partial class StatusEffectCommand : ToolshedCommand
         return delay == 0 ? null : TimeSpan.FromSeconds(delay);
     }
 }
-

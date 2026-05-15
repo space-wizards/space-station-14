@@ -7,9 +7,9 @@ namespace Content.Server.Speech.EntitySystems;
 /// <summary>
 /// System that gives the speaker a faux-French accent.
 /// </summary>
-public sealed partial class FrenchAccentSystem : EntitySystem
+public sealed class FrenchAccentSystem : EntitySystem
 {
-    [Dependency] private ReplacementAccentSystem _replacement = default!;
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexStartH = new(@"(?<!\w)h", RegexOptions.IgnoreCase);

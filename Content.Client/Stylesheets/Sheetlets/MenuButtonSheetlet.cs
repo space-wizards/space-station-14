@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
@@ -11,7 +11,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
     private static MutableSelectorElement CButton()
     {
@@ -78,4 +78,3 @@ public sealed partial class MenuButtonSheetlet<T> : Sheetlet<T> where T : Palett
         return rules.ToArray();
     }
 }
-

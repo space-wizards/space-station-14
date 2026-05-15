@@ -2,6 +2,5 @@ using Content.Shared.Stunnable;
 
 namespace Content.Server.Stunnable;
 
-public sealed partial class StunSystem : SharedStunSystem;
-
+public sealed class StunSystem : SharedStunSystem;
 

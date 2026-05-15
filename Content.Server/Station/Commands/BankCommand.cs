@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Administration;
@@ -10,7 +10,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Station.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed partial class BankCommand : ToolshedCommand
+public sealed class BankCommand : ToolshedCommand
 {
     private CargoSystem? _cargo;
 
@@ -91,4 +91,3 @@ public readonly record struct BankAccount(
         return $"{EntityManager.ToPrettyString(Station)} Account {Account} : {money}";
     }
 }
-

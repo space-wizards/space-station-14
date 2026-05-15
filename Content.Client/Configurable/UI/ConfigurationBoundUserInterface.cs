@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text.RegularExpressions;
 using Content.Shared.Configurable;
 using Robust.Client.UserInterface;
@@ -7,7 +7,7 @@ using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
 {
-    public sealed partial class ConfigurationBoundUserInterface : BoundUserInterface
+    public sealed class ConfigurationBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ConfigurationMenu? _menu;
@@ -89,4 +89,3 @@ namespace Content.Client.Configurable.UI
         }
     }
 }
-

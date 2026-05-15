@@ -3,10 +3,10 @@ using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public sealed partial class ActionGunSystem : EntitySystem
+public sealed class ActionGunSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
-    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
 
     public override void Initialize()
     {

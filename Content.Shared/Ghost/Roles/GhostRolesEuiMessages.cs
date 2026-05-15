@@ -35,7 +35,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class GhostRolesEuiState : EuiStateBase
+    public sealed class GhostRolesEuiState : EuiStateBase
     {
         public GhostRoleInfo[] GhostRoles { get; }
 
@@ -46,7 +46,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class RequestGhostRoleMessage : EuiMessageBase
+    public sealed class RequestGhostRoleMessage : EuiMessageBase
     {
         public uint Identifier { get; }
 
@@ -57,7 +57,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class FollowGhostRoleMessage : EuiMessageBase
+    public sealed class FollowGhostRoleMessage : EuiMessageBase
     {
         public uint Identifier { get; }
 
@@ -68,7 +68,7 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class LeaveGhostRoleRaffleMessage : EuiMessageBase
+    public sealed class LeaveGhostRoleRaffleMessage : EuiMessageBase
     {
         public uint Identifier { get; }
 
@@ -105,4 +105,3 @@ namespace Content.Shared.Ghost.Roles
         RaffleJoined
     }
 }
-

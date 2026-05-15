@@ -29,7 +29,7 @@ public sealed partial class AccessOverriderComponent : Component
     public EntityUid TargetAccessReaderId = new();
 
     [Serializable, NetSerializable]
-    public sealed partial class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
+    public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
     {
         public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
 
@@ -47,7 +47,7 @@ public sealed partial class AccessOverriderComponent : Component
     public float DoAfter;
 
     [Serializable, NetSerializable]
-    public sealed partial class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
     {
         public readonly string TargetLabel;
         public readonly Color TargetLabelColor;
@@ -87,4 +87,3 @@ public sealed partial class AccessOverriderComponent : Component
         Key,
     }
 }
-

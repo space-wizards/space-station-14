@@ -9,7 +9,7 @@ using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r
 {
-    public sealed partial class PowerState
+    public sealed class PowerState
     {
         public static readonly JsonSerializerOptions SerializerOptions = new()
         {
@@ -81,7 +81,7 @@ namespace Content.Server.Power.Pow3r
             }
         }
 
-        public sealed partial class GenIdStorage<T>
+        public sealed class GenIdStorage<T>
         {
             // This is an implementation of "generational index" storage.
             //
@@ -331,7 +331,7 @@ namespace Content.Server.Power.Pow3r
             }
         }
 
-        public sealed partial class NodeIdJsonConverter : JsonConverter<NodeId>
+        public sealed class NodeIdJsonConverter : JsonConverter<NodeId>
         {
             public override NodeId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -344,7 +344,7 @@ namespace Content.Server.Power.Pow3r
             }
         }
 
-        public sealed partial class Supply
+        public sealed class Supply
         {
             [ViewVariables] public NodeId Id;
 
@@ -383,7 +383,7 @@ namespace Content.Server.Power.Pow3r
             [JsonIgnore] public float AvailableSupply;
         }
 
-        public sealed partial class Load
+        public sealed class Load
         {
             [ViewVariables] public NodeId Id;
 
@@ -398,7 +398,7 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables] [JsonIgnore] public NodeId LinkedNetwork;
         }
 
-        public sealed partial class Battery
+        public sealed class Battery
         {
             [ViewVariables] public NodeId Id;
 
@@ -464,7 +464,7 @@ namespace Content.Server.Power.Pow3r
 
         // Readonly breaks json serialization.
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-        public sealed partial class Network
+        public sealed class Network
         {
             [ViewVariables] public NodeId Id;
 
@@ -507,4 +507,3 @@ namespace Content.Server.Power.Pow3r
         }
     }
 }
-

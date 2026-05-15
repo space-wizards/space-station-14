@@ -4,9 +4,9 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 {
-    public sealed partial class DeleteOnSolutionEmptySystem : EntitySystem
+    public sealed class DeleteOnSolutionEmptySystem : EntitySystem
     {
-        [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {

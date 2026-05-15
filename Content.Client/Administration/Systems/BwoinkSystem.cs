@@ -7,9 +7,9 @@ using Robust.Shared.Timing;
 namespace Content.Client.Administration.Systems
 {
     [UsedImplicitly]
-    public sealed partial class BwoinkSystem : SharedBwoinkSystem
+    public sealed class BwoinkSystem : SharedBwoinkSystem
     {
-        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public event EventHandler<BwoinkTextMessage>? OnBwoinkTextMessageRecieved;
         private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;

@@ -254,7 +254,7 @@ public abstract class RadialMenuButtonBase : BaseButton
 /// works only if control have parent, and ActiveContainer property is set.
 /// Also considers all space outside of radial menu buttons as itself for clicking.
 /// </summary>
-public sealed partial class RadialMenuContextualCentralTextureButton : TextureButton
+public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
     /// <inheritdoc />
     public RadialMenuContextualCentralTextureButton()
@@ -296,7 +296,7 @@ public sealed partial class RadialMenuContextualCentralTextureButton : TextureBu
 /// <summary>
 /// Menu button for outer area of radial menu (covers everything 'outside').
 /// </summary>
-public sealed partial class RadialMenuOuterAreaButton : RadialMenuButtonBase
+public sealed class RadialMenuOuterAreaButton : RadialMenuButtonBase
 {
     public float OuterRadius { get; set; }
 
@@ -684,4 +684,3 @@ public class RadialMenuButtonWithSector : RadialMenuButton, IRadialMenuItemWithS
         return new Angle(angleSectorFrom).EqualsApprox(new Angle(angleSectorTo));
     }
 }
-

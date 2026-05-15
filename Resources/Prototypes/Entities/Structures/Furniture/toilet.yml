@@ -88,6 +88,7 @@
     solutions:
     - SolutionDrainNormal
   - type: SolutionRegeneration
+    solution: tank
     generated:
       reagents:
       - ReagentId: Water

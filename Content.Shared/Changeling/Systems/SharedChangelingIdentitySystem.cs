@@ -1,10 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
-using Content.Shared.Mind;
-using Content.Shared.Mobs;
-using Content.Shared.Roles.Jobs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -13,15 +9,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
-public abstract partial class SharedChangelingIdentitySystem : EntitySystem
+public abstract class SharedChangelingIdentitySystem : EntitySystem
 {
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private MetaDataSystem _metaSystem = default!;
-    [Dependency] private SharedCloningSystem _cloningSystem = default!;
-    [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private SharedPvsOverrideSystem _pvsOverrideSystem = default!;
-    [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private SharedJobSystem _job = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly SharedCloningSystem _cloningSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverrideSystem = default!;
 
     public MapId? PausedMapId;
 
@@ -33,24 +27,9 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingDevouredEvent>(OnDevouredEntity);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
 
         SubscribeLocalEvent<ChangelingDevouredComponent, ComponentShutdown>(OnDevouredShutdown);
-        SubscribeLocalEvent<RecentlyDevouredComponent, MobStateChangedEvent>(OnRecentlyDevouredMobState);
-    }
-
-    private void OnDevouredEntity(Entity<ChangelingIdentityComponent> ent, ref ChangelingDevouredEvent args)
-    {
-        if (args.ObtainedIdentity)
-        {
-            GrantIdentity(ent, args.Devoured);
-        }
-
-        if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
-        {
-            data.GrantedDna = true;
-        }
     }
 
     private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
@@ -66,15 +45,8 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        GrantIdentity(ent, ent.Owner);
-
-        if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
-            return;
-
-        data.Starting = true;
-        data.GrantedDna = true; // I have no idea how you're supposed to ever get DNA from yourself, but just in case.
-
-        ent.Comp.CurrentIdentity = data.Identity;
+        var clone = CloneToPausedMap(ent, ent.Owner);
+        ent.Comp.CurrentIdentity = clone;
     }
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
@@ -94,17 +66,19 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             if (!TryComp<ChangelingIdentityComponent>(ling, out var identityComp))
                 continue;
 
-            RemoveOriginalReference((ling, identityComp), ent);
+            var keysToUpdate = identityComp.ConsumedIdentities
+                .Where(kvp => kvp.Value == ent.Owner)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            if (keysToUpdate.Count == 0)
+                continue; // No need to dirty.
+
+            foreach (var key in keysToUpdate)
+                identityComp.ConsumedIdentities[key] = null;
+
+            Dirty(ling, identityComp);
         }
-    }
-
-    private void OnRecentlyDevouredMobState(Entity<RecentlyDevouredComponent> ent, ref MobStateChangedEvent args)
-    {
-        // Once we are revived the body is no longer recently devoured.
-        if (args.NewMobState != MobState.Alive)
-            return;
-
-        RemCompDeferred<RecentlyDevouredComponent>(ent);
     }
 
     private void OnStoredRemove(Entity<ChangelingStoredIdentityComponent> ent, ref ComponentRemove args)
@@ -125,7 +99,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         foreach (var consumedIdentity in ent.Comp.ConsumedIdentities)
         {
-            QueueDel(consumedIdentity.Identity);
+            QueueDel(consumedIdentity.Key);
         }
     }
 
@@ -135,30 +109,14 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// <param name="ent">The changeling entity</param>
     private void CleanupDevouredReferences(Entity<ChangelingIdentityComponent> ent)
     {
-        foreach (var devouredUid in ent.Comp.ConsumedIdentities)
+        foreach (var devouredUid in ent.Comp.ConsumedIdentities.Values)
         {
-            if (!TryComp<ChangelingDevouredComponent>(devouredUid.Original, out var devouredComp))
+            if (!TryComp<ChangelingDevouredComponent>(devouredUid, out var devouredComp))
                 continue;
 
             if (devouredComp.DevouredBy.Remove(ent.Owner))
-                Dirty(devouredUid.Original.Value, devouredComp);
+                Dirty(devouredUid.Value, devouredComp);
         }
-    }
-
-    /// <summary>
-    /// Removes reference to an original entity from <see cref="ChangelingIdentityComponent"/>.
-    /// </summary>
-    /// <param name="ent">The changeling.</param>
-    /// <param name="original">The entity to remove from identity originals.</param>
-    private void RemoveOriginalReference(Entity<ChangelingIdentityComponent> ent, EntityUid original)
-    {
-        foreach (var identity in ent.Comp.ConsumedIdentities)
-        {
-            if (identity.Original == original)
-                identity.Original = null;
-        }
-
-        Dirty(ent);
     }
 
     /// <summary>
@@ -196,39 +154,19 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
     {
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
             return null;
 
-        // We see if we already have a identity slot for this entity.
-        // This can happen if we devoured them before, but then dropped their stored identity.
-        if (!TryGetDataFromOriginal(ent.AsNullable(), target, out var newIdentity))
-        {
-            newIdentity = new ChangelingIdentityData();
-            ent.Comp.ConsumedIdentities.Add(newIdentity);
-        }
+        ent.Comp.ConsumedIdentities.Add(clone.Value, target);
 
-        UpdateIdentityData(newIdentity, clone.Value, target);
-        AddDevouredReference(ent, target);
-
-        HandlePvsOverride(ent, clone.Value);
         Dirty(ent);
+        HandlePvsOverride(ent, clone.Value);
 
         return clone;
-    }
-
-    /// <summary>
-    /// Marks that the changeling has successfully devoured the target.
-    /// </summary>
-    public void AddDevouredReference(Entity<ChangelingIdentityComponent> ent, EntityUid target)
-    {
-        var targetDevoured = EnsureComp<ChangelingDevouredComponent>(target);
-        targetDevoured.DevouredBy.Add(ent.Owner);
-
-        Dirty(target, targetDevoured);
     }
 
     /// <summary>
@@ -242,25 +180,9 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         if (!HasComp<ChangelingStoredIdentityComponent>(identity))
             return; // Not a stored identity.
 
-        var toDrop = ent.Comp.ConsumedIdentities.Where(data => data.Identity == identity).ToList();
-
-        foreach (var dropped in toDrop)
-        {
-            if (TryComp<ChangelingDevouredComponent>(dropped.Original, out var devoured))
-            {
-                if (devoured.DevouredBy.Remove(ent))
-                    Dirty(dropped.Original.Value, devoured);
-            }
-
-            dropped.Identity = null;
-        }
-
         PredictedQueueDel(identity);
-
-        if (toDrop.Count > 0)
-        {
+        if (ent.Comp.ConsumedIdentities.Remove(identity))
             Dirty(ent);
-        }
     }
 
     /// <summary>
@@ -285,10 +207,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            if (identity.Identity == null)
-                continue;
-
-            _pvsOverrideSystem.RemoveSessionOverride(identity.Identity.Value, session);
+            _pvsOverrideSystem.RemoveSessionOverride(identity.Key, session);
         }
     }
 
@@ -301,33 +220,8 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            if (identity.Identity == null)
-                continue;
-
-            _pvsOverrideSystem.AddSessionOverride(identity.Identity.Value, session);
+            _pvsOverrideSystem.AddSessionOverride(identity.Key, session);
         }
-    }
-
-    /// <summary>
-    /// Returns whether the changeling has space to store another disguise.
-    /// </summary>
-    public bool HasFreeDisguiseSlot(Entity<ChangelingIdentityComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
-        return ent.Comp.ConsumedIdentities.Count(data => data.Identity != null) < ent.Comp.MaxStoredDisguises;
-    }
-
-    /// <summary>
-    /// Whether the given changeling has a valid identity of the given entity.
-    /// </summary>
-    public bool HasIdentity(Entity<ChangelingIdentityComponent?> changeling, EntityUid devoured)
-    {
-        if (!Resolve(changeling, ref changeling.Comp, false))
-            return false;
-
-        return changeling.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == devoured && data.Identity != null) != null;
     }
 
     /// <summary>
@@ -342,77 +236,5 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityName(mapUid, Loc.GetString("changeling-paused-map-name"));
         PausedMapId = newMapId;
         _map.SetPaused(mapUid, true);
-    }
-
-    /// <summary>
-    /// Creates a ChangelingIdentityData for given entities.
-    /// </summary>
-    /// <param name="identity">The created identity this is supposed to refer to.</param>
-    /// <param name="original">The original entity this is supposed to refer to.</param>
-    /// <returns>Identity data based on the given parameters.</returns>
-    public ChangelingIdentityData CreateIdentityData(EntityUid identity, EntityUid original)
-    {
-        ChangelingIdentityData identityData = new ChangelingIdentityData();
-        UpdateIdentityData(identityData, identity, original);
-
-        return identityData;
-    }
-
-    /// <summary>
-    /// Updates an existing identity data with information from a new identity and original entity.
-    /// </summary>
-    /// <param name="data">The existing data.</param>
-    /// <param name="identity">The changeling identity to use.</param>
-    /// <param name="original">The original entity of the identity.</param>
-    public void UpdateIdentityData(ChangelingIdentityData data, EntityUid identity, EntityUid original)
-    {
-        data.Identity = identity;
-        data.Original = original;
-        data.OriginalName = Name(original);
-
-        var foundMind = _mind.TryGetMind(original, out var mindId, out _);
-        data.OriginalMind = foundMind ? mindId : null;
-
-        if (foundMind)
-        {
-            _job.MindTryGetJobId(mindId, out var jobId);
-            data.OriginalJob = jobId;
-        }
-    }
-
-    /// <summary>
-    /// Fetches the relevant <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the identity's EntityUid.
-    /// </summary>
-    /// <param name="ent">The changeling entity.</param>
-    /// <param name="identity">The identity's EntityUid.</param>
-    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> if one is found.</param>
-    /// <returns>True if identity data is found, otherwise False.</returns>
-    public bool TryGetDataFromIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid identity, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
-    {
-        identityData = null;
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
-        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == identity);
-
-        return identityData != null;
-    }
-
-    /// <summary>
-    /// Fetches the relevant <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the original entity's EntityUid.
-    /// </summary>
-    /// <param name="ent">The changeling entity.</param>
-    /// <param name="original">The original entity's EntityUid.</param>
-    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> if one is found.</param>
-    /// <returns>True if identity data is found, otherwise False.</returns>
-    public bool TryGetDataFromOriginal(Entity<ChangelingIdentityComponent?> ent, EntityUid original, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
-    {
-        identityData = null;
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
-        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Original == original);
-
-        return identityData != null;
     }
 }

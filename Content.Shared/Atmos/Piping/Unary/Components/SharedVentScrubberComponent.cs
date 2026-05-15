@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public sealed partial class GasVentScrubberData : IAtmosDeviceData
+    public sealed class GasVentScrubberData : IAtmosDeviceData
     {
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
@@ -85,4 +85,3 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         Scrubbing = 1,
     }
 }
-

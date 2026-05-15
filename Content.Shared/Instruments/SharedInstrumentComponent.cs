@@ -48,7 +48,7 @@ public sealed partial class ActiveInstrumentComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class InstrumentComponentState : ComponentState
+public sealed class InstrumentComponentState : ComponentState
 {
     public bool Playing;
 
@@ -72,7 +72,7 @@ public sealed partial class InstrumentComponentState : ComponentState
 ///     This message is sent to the client to completely stop midi input and midi playback.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentStopMidiEvent : EntityEventArgs
+public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
 
@@ -86,7 +86,7 @@ public sealed partial class InstrumentStopMidiEvent : EntityEventArgs
 ///     Send from the client to the server to set a master instrument.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentSetMasterEvent : EntityEventArgs
+public sealed class InstrumentSetMasterEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
     public NetEntity? Master { get; }
@@ -102,7 +102,7 @@ public sealed partial class InstrumentSetMasterEvent : EntityEventArgs
 ///     Send from the client to the server to set a master instrument channel.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentSetFilteredChannelEvent : EntityEventArgs
+public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
     public int Channel { get; }
@@ -120,7 +120,7 @@ public sealed partial class InstrumentSetFilteredChannelEvent : EntityEventArgs
 ///     This message is sent to the client to start the synth.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentStartMidiEvent : EntityEventArgs
+public sealed class InstrumentStartMidiEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
 
@@ -134,7 +134,7 @@ public sealed partial class InstrumentStartMidiEvent : EntityEventArgs
 ///     This message carries a MidiEvent to be played on clients.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentMidiEventEvent : EntityEventArgs
+public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
     public RobustMidiEvent[] MidiEvent { get; }
@@ -156,7 +156,7 @@ public enum InstrumentUiKey
 /// Sets the MIDI channels on an instrument.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InstrumentSetChannelsEvent : EntityEventArgs
+public sealed class InstrumentSetChannelsEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
     public MidiTrack?[] Tracks { get; set; }
@@ -172,7 +172,7 @@ public sealed partial class InstrumentSetChannelsEvent : EntityEventArgs
 /// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MidiTrack
+public sealed class MidiTrack
 {
     /// <summary>
     /// The first specified Track Name
@@ -245,4 +245,3 @@ public sealed partial class MidiTrack
         return sanitized.ToString();
     }
 }
-

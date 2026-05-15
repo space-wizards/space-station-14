@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private FirelockSystem _firelockSystem = default!;
+        [Dependency] private readonly FirelockSystem _firelockSystem = default!;
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 

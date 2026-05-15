@@ -5,7 +5,7 @@ public sealed partial class SpaceVillainGame
     /// <summary>
     /// A state holder for the fighters in the SpaceVillain game.
     /// </summary>
-    public sealed partial class Fighter
+    public sealed class Fighter
     {
         /// <summary>
         /// The current hit point total of the fighter.
@@ -66,4 +66,3 @@ public sealed partial class SpaceVillainGame
         public bool Invincible = false;
     }
 }
-

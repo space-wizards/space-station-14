@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Solar
 {
     [Serializable, NetSerializable]
-    public sealed partial class SolarControlConsoleBoundInterfaceState : BoundUserInterfaceState
+    public sealed class SolarControlConsoleBoundInterfaceState : BoundUserInterfaceState
     {
         /// <summary>
         /// The target rotation of the panels in radians.
@@ -35,7 +35,7 @@ namespace Content.Shared.Solar
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SolarControlConsoleAdjustMessage : BoundUserInterfaceMessage
+    public sealed class SolarControlConsoleAdjustMessage : BoundUserInterfaceMessage
     {
         /// <summary>
         /// New target rotation of the panels in radians.
@@ -54,4 +54,3 @@ namespace Content.Shared.Solar
         Key
     }
 }
-

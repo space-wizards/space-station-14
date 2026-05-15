@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.SheetletConfigs;
+﻿using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class LineEditSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ILineEditConfig
+public sealed class LineEditSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ILineEditConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -35,4 +35,3 @@ public sealed partial class LineEditSheetlet<T> : Sheetlet<T> where T : Paletted
         ];
     }
 }
-

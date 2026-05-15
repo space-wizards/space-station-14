@@ -100,7 +100,7 @@ public enum SmartFridgeUiKey : byte
 /// Sent by the client when trying to dispense an item inside the fridge.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SmartFridgeDispenseItemMessage(SmartFridgeEntry entry) : BoundUserInterfaceMessage
+public sealed class SmartFridgeDispenseItemMessage(SmartFridgeEntry entry) : BoundUserInterfaceMessage
 {
     public SmartFridgeEntry Entry = entry;
 }
@@ -109,8 +109,7 @@ public sealed partial class SmartFridgeDispenseItemMessage(SmartFridgeEntry entr
 /// Sent by the client when trying to remove an empty smart fridge entry from the list of items in the UI.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SmartFridgeRemoveEntryMessage(SmartFridgeEntry entry) : BoundUserInterfaceMessage
+public sealed class SmartFridgeRemoveEntryMessage(SmartFridgeEntry entry) : BoundUserInterfaceMessage
 {
     public SmartFridgeEntry Entry = entry;
 }
-

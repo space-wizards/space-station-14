@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.Systems.Chat;
 /// Command which creates a window containing a chatbox
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ChatWindowCommand : LocalizedCommands
+public sealed class ChatWindowCommand : LocalizedCommands
 {
     public override string Command => "chatwindow";
 
@@ -22,7 +22,7 @@ public sealed partial class ChatWindowCommand : LocalizedCommands
 /// Command which creates a window containing a chatbox configured for admin use
 /// </summary>
 [UsedImplicitly]
-public sealed partial class AdminChatWindowCommand : LocalizedCommands
+public sealed class AdminChatWindowCommand : LocalizedCommands
 {
     public override string Command => "achatwindow";
 
@@ -33,4 +33,3 @@ public sealed partial class AdminChatWindowCommand : LocalizedCommands
         window.OpenCentered();
     }
 }
-

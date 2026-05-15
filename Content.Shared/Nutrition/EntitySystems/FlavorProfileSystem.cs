@@ -10,10 +10,10 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <summary>
 ///     Deals with flavor profiles when you eat something.
 /// </summary>
-public sealed partial class FlavorProfileSystem : EntitySystem
+public sealed class FlavorProfileSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
 
@@ -114,7 +114,7 @@ public sealed partial class FlavorProfileSystem : EntitySystem
     }
 }
 
-public sealed partial class FlavorProfileModificationEvent : EntityEventArgs
+public sealed class FlavorProfileModificationEvent : EntityEventArgs
 {
     public FlavorProfileModificationEvent(EntityUid user, HashSet<string> flavors)
     {
@@ -125,4 +125,3 @@ public sealed partial class FlavorProfileModificationEvent : EntityEventArgs
     public EntityUid User { get; }
     public HashSet<string> Flavors { get; }
 }
-

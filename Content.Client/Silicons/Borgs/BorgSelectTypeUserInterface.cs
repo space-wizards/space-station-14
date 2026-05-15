@@ -1,4 +1,4 @@
-using Content.Shared.Silicons.Borgs.Components;
+﻿using Content.Shared.Silicons.Borgs.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -11,7 +11,7 @@ namespace Content.Client.Silicons.Borgs;
 /// <seealso cref="BorgSwitchableTypeComponent"/>
 /// <seealso cref="BorgSwitchableTypeUiKey"/>
 [UsedImplicitly]
-public sealed partial class BorgSelectTypeUserInterface : BoundUserInterface
+public sealed class BorgSelectTypeUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private BorgSelectTypeMenu? _menu;
@@ -28,4 +28,3 @@ public sealed partial class BorgSelectTypeUserInterface : BoundUserInterface
         _menu.ConfirmedBorgType += prototype => SendPredictedMessage(new BorgSelectTypeMessage(prototype));
     }
 }
-

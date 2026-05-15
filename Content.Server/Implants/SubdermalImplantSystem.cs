@@ -2,5 +2,4 @@ using Content.Shared.Implants;
 
 namespace Content.Server.Implants;
 
-public sealed partial class SubdermalImplantSystem : SharedSubdermalImplantSystem;
-
+public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem;

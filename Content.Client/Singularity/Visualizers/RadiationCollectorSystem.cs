@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Singularity.Visualizers;
 
-public sealed partial class RadiationCollectorSystem : VisualizerSystem<RadiationCollectorComponent>
+public sealed class RadiationCollectorSystem : VisualizerSystem<RadiationCollectorComponent>
 {
     public override void Initialize()
     {
@@ -108,4 +108,3 @@ public enum RadiationCollectorVisualLayers : byte
 {
     Main
 }
-

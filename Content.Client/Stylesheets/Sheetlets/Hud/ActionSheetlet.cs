@@ -11,7 +11,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed partial class ActionSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPanelConfig
+public sealed class ActionSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPanelConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -41,4 +41,3 @@ public sealed partial class ActionSheetlet<T> : Sheetlet<T> where T: PalettedSty
         ];
     }
 }
-

@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Construction.UI
 {
     [UsedImplicitly]
-    public sealed partial class FlatpackCreatorBoundUserInterface : BoundUserInterface
+    public sealed class FlatpackCreatorBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private FlatpackCreatorMenu? _menu;
@@ -30,4 +30,3 @@ namespace Content.Client.Construction.UI
         }
     }
 }
-

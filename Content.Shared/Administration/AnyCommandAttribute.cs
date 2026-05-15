@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Toolshed;
 
@@ -9,9 +9,8 @@ namespace Content.Shared.Administration
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     [MeansImplicitUse]
-    public sealed partial class AnyCommandAttribute : Attribute
+    public sealed class AnyCommandAttribute : Attribute
     {
 
     }
 }
-

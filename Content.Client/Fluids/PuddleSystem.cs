@@ -7,10 +7,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed partial class PuddleSystem : SharedPuddleSystem
+public sealed class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private IconSmoothSystem _smooth = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly IconSmoothSystem _smooth = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

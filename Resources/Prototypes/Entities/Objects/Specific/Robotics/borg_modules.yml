@@ -649,7 +649,7 @@
     - item: MiningDrillDiamond
     - item: Shovel
     - item: AdvancedMineralScannerUnpowered
-    - item: BorgOreBagOfHolding
+    - item: OreBagOfHolding
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 

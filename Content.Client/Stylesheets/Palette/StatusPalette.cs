@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Palette;
 
-public sealed partial class StatusPalette
+public sealed class StatusPalette
 {
     /// The status colors to blend between, these are equally spaced from 0 to 1 with 0 being StatusColors[0], and 1 being
     /// StatusColors.Last()
@@ -55,4 +55,3 @@ public sealed partial class StatusPalette
         return from.OkBlend(to, f);
     }
 }
-

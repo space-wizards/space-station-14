@@ -1,9 +1,8 @@
-using Content.Shared.CartridgeLoader;
+﻿using Content.Shared.CartridgeLoader;
 
 namespace Content.Client.CartridgeLoader;
 
-public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
+public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
     //Empty client system for component replication
 }
-

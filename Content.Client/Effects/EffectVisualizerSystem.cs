@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Effects;
 
-public sealed partial class EffectVisualizerSystem : EntitySystem
+public sealed class EffectVisualizerSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -15,4 +15,3 @@ public sealed partial class EffectVisualizerSystem : EntitySystem
         QueueDel(uid);
     }
 }
-

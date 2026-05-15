@@ -3,7 +3,7 @@ using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems
 {
-    public sealed partial class BackwardsAccentSystem : EntitySystem
+    public sealed class BackwardsAccentSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -23,4 +23,3 @@ namespace Content.Server.Speech.EntitySystems
         }
     }
 }
-

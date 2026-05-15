@@ -5,10 +5,10 @@ using Content.Shared.Power;
 
 namespace Content.Server.AlertLevel;
 
-public sealed partial class AlertLevelDisplaySystem : EntitySystem
+public sealed class AlertLevelDisplaySystem : EntitySystem
 {
-    [Dependency] private StationSystem _stationSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

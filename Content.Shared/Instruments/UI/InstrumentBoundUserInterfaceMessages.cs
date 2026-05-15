@@ -3,12 +3,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Instruments.UI;
 
 [Serializable, NetSerializable]
-public sealed partial class InstrumentBandRequestBuiMessage : BoundUserInterfaceMessage
+public sealed class InstrumentBandRequestBuiMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed partial class InstrumentBandResponseBuiMessage : BoundUserInterfaceMessage
+public sealed class InstrumentBandResponseBuiMessage : BoundUserInterfaceMessage
 {
     public (NetEntity, string)[] Nearby { get; set; }
 
@@ -17,4 +17,3 @@ public sealed partial class InstrumentBandResponseBuiMessage : BoundUserInterfac
         Nearby = nearby;
     }
 }
-

@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects;
 // </summary>
 public sealed partial class SharedEntityEffectsSystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     /// <summary>
     /// <c>TryApplyEffect</c> overload using a <see cref="EntityEffectPrototype"/> instead of <see cref="EntityEffect"/>.

@@ -5,7 +5,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 /// <summary>
 /// BUI for hand-held xeno artifact scanner,  server-provided UI updates.
 /// </summary>
-public sealed partial class NodeScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class NodeScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private NodeScannerDisplay? _scannerDisplay;
@@ -30,4 +30,3 @@ public sealed partial class NodeScannerBoundUserInterface(EntityUid owner, Enum 
         _scannerDisplay?.Dispose();
     }
 }
-

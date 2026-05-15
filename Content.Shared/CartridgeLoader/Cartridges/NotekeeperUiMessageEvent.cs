@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed partial class NotekeeperUiMessageEvent : CartridgeMessageEvent
+public sealed class NotekeeperUiMessageEvent : CartridgeMessageEvent
 {
     public readonly NotekeeperUiAction Action;
     public readonly string Note;
@@ -21,4 +21,3 @@ public enum NotekeeperUiAction
     Add,
     Remove
 }
-

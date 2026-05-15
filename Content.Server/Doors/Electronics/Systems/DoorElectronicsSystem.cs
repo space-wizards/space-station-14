@@ -12,10 +12,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Doors.Electronics;
 
-public sealed partial class DoorElectronicsSystem : EntitySystem
+public sealed class DoorElectronicsSystem : EntitySystem
 {
-    [Dependency] private UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     public override void Initialize()
     {

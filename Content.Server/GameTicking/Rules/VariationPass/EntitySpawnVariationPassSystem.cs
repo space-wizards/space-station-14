@@ -1,11 +1,11 @@
-using Content.Server.GameTicking.Rules.VariationPass.Components;
+﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="EntitySpawnVariationPassComponent"/>
-public sealed partial class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
+public sealed class EntitySpawnVariationPassSystem : VariationPassSystem<EntitySpawnVariationPassComponent>
 {
     protected override void ApplyVariation(Entity<EntitySpawnVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
@@ -27,4 +27,3 @@ public sealed partial class EntitySpawnVariationPassSystem : VariationPassSystem
         }
     }
 }
-

@@ -14,11 +14,11 @@ public sealed partial class PuddleSystem
 
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         // Openable handles the event if it's closed
-        SubscribeLocalEvent<SpillableComponent, SolutionOverflowEvent>(OnOverflow);
+        SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionOverflowEvent args)
+    private void OnOverflow(Entity<SpillableComponent> entity, ref SolutionContainerOverflowEvent args)
     {
         if (args.Handled)
             return;

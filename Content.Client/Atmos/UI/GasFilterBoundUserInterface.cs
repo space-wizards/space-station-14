@@ -1,4 +1,4 @@
-using Content.Client.Atmos.EntitySystems;
+﻿using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Localizations;
@@ -11,7 +11,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasFilterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class GasFilterBoundUserInterface : BoundUserInterface
+    public sealed class GasFilterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private const float MaxTransferRate = Atmospherics.MaxTransferRate;
@@ -101,4 +101,3 @@ namespace Content.Client.Atmos.UI
         }
     }
 }
-

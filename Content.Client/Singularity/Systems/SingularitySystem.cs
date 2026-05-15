@@ -1,4 +1,4 @@
-using Content.Shared.Singularity;
+﻿using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Client.GameObjects;
@@ -11,7 +11,7 @@ namespace Content.Client.Singularity.Systems;
 /// The client-side version of <see cref="SharedSingularitySystem"/>.
 /// Primarily manages <see cref="SingularityComponent"/>s.
 /// </summary>
-public sealed partial class SingularitySystem : SharedSingularitySystem
+public sealed class SingularitySystem : SharedSingularitySystem
 {
     public override void Initialize()
     {
@@ -34,4 +34,3 @@ public sealed partial class SingularitySystem : SharedSingularitySystem
         SetLevel(uid, state.Level, comp);
     }
 }
-

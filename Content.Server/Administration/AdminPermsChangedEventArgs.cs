@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration
@@ -6,7 +6,7 @@ namespace Content.Server.Administration
     /// <summary>
     ///     Sealed when the permissions of an admin on the server change.
     /// </summary>
-    public sealed partial class AdminPermsChangedEventArgs : EventArgs
+    public sealed class AdminPermsChangedEventArgs : EventArgs
     {
         public AdminPermsChangedEventArgs(ICommonSession player, AdminFlags? flags)
         {
@@ -30,4 +30,3 @@ namespace Content.Server.Administration
         public bool IsAdmin => Flags.HasValue;
     }
 }
-

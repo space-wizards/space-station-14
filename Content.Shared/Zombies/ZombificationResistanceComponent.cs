@@ -27,7 +27,7 @@ public sealed partial class ZombificationResistanceComponent : Component
 /// <summary>
 /// Gets the total resistance from the ZombificationResistanceComponent, i.e. just all of them multiplied together.
 /// </summary>
-public sealed partial class ZombificationResistanceQueryEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class ZombificationResistanceQueryEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
     /// All slots to relay to
@@ -44,4 +44,3 @@ public sealed partial class ZombificationResistanceQueryEvent : EntityEventArgs,
         TargetSlots = slots;
     }
 }
-

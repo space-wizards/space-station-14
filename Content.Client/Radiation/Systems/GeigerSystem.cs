@@ -5,7 +5,7 @@ using Content.Shared.Radiation.Systems;
 
 namespace Content.Client.Radiation.Systems;
 
-public sealed partial class GeigerSystem : SharedGeigerSystem
+public sealed class GeigerSystem : SharedGeigerSystem
 {
     public override void Initialize()
     {
@@ -19,4 +19,3 @@ public sealed partial class GeigerSystem : SharedGeigerSystem
         component.UiUpdateNeeded = true;
     }
 }
-

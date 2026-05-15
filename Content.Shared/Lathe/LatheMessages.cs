@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Lathe;
 
 [Serializable, NetSerializable]
-public sealed partial class LatheUpdateState : BoundUserInterfaceState
+public sealed class LatheUpdateState : BoundUserInterfaceState
 {
     public List<ProtoId<LatheRecipePrototype>> Recipes;
 
@@ -25,7 +25,7 @@ public sealed partial class LatheUpdateState : BoundUserInterfaceState
 ///     Sent to the server to sync material storage and the recipe queue.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LatheSyncRequestMessage : BoundUserInterfaceMessage
+public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage
 {
 
 }
@@ -34,7 +34,7 @@ public sealed partial class LatheSyncRequestMessage : BoundUserInterfaceMessage
 ///     Sent to the server when a client queues a new recipe.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LatheQueueRecipeMessage : BoundUserInterfaceMessage
+public sealed class LatheQueueRecipeMessage : BoundUserInterfaceMessage
 {
     public readonly string ID;
     public readonly int Quantity;
@@ -49,7 +49,7 @@ public sealed partial class LatheQueueRecipeMessage : BoundUserInterfaceMessage
 ///     Sent to the server to remove a batch from the queue.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LatheDeleteRequestMessage(int index) : BoundUserInterfaceMessage
+public sealed class LatheDeleteRequestMessage(int index) : BoundUserInterfaceMessage
 {
     public int Index = index;
 }
@@ -58,7 +58,7 @@ public sealed partial class LatheDeleteRequestMessage(int index) : BoundUserInte
 ///     Sent to the server to move the position of a batch in the queue.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LatheMoveRequestMessage(int index, int change) : BoundUserInterfaceMessage
+public sealed class LatheMoveRequestMessage(int index, int change) : BoundUserInterfaceMessage
 {
     public int Index = index;
     public int Change = change;
@@ -68,7 +68,7 @@ public sealed partial class LatheMoveRequestMessage(int index, int change) : Bou
 ///     Sent to the server to stop producing the current item.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LatheAbortFabricationMessage() : BoundUserInterfaceMessage
+public sealed class LatheAbortFabricationMessage() : BoundUserInterfaceMessage
 {
 }
 
@@ -77,4 +77,3 @@ public enum LatheUiKey
 {
     Key,
 }
-

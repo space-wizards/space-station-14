@@ -384,7 +384,7 @@ public class ListContainer : Control
     }
 }
 
-public sealed partial class ListContainerButton : ContainerButton, IEntityControl
+public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
 
@@ -413,4 +413,3 @@ public abstract record ListData;
 
 public record EntityListData(EntityUid Uid) : ListData;
 #endregion
-

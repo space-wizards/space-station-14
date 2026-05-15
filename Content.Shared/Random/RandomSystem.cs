@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Random;
 
-public sealed partial class RandomSystem : EntitySystem
+public sealed class RandomSystem : EntitySystem
 {
     public IBudgetEntry? GetBudgetEntry(ref float budget, ref float probSum, IList<IBudgetEntry> entries, System.Random random)
     {
@@ -56,4 +56,3 @@ public sealed partial class RandomSystem : EntitySystem
         throw new InvalidOperationException();
     }
 }
-

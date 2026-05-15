@@ -9,7 +9,7 @@ namespace Content.Server.Commands;
 [AdminCommand(AdminFlags.Fun)]
 internal sealed class UpgradeActionCommand : LocalizedEntityCommands
 {
-    [Dependency] private ActionUpgradeSystem _actionUpgradeSystem = default!;
+    [Dependency] private readonly ActionUpgradeSystem _actionUpgradeSystem = default!;
 
     public override string Command => "upgradeaction";
 
@@ -77,4 +77,3 @@ internal sealed class UpgradeActionCommand : LocalizedEntityCommands
         }
     }
 }
-

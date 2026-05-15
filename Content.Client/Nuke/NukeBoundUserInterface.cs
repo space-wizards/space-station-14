@@ -7,7 +7,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Nuke
 {
     [UsedImplicitly]
-    public sealed partial class NukeBoundUserInterface : BoundUserInterface
+    public sealed class NukeBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private NukeMenu? _menu;
@@ -65,4 +65,3 @@ namespace Content.Client.Nuke
         }
     }
 }
-

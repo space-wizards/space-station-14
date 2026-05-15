@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// System for creating a trigger when the round ends.
 /// </summary>
-public sealed partial class TriggerOnRoundEndSystem : TriggerOnXSystem
+public sealed class TriggerOnRoundEndSystem : TriggerOnXSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,4 +27,3 @@ public sealed partial class TriggerOnRoundEndSystem : TriggerOnXSystem
         }
     }
 }
-

@@ -12,9 +12,9 @@ namespace Content.Server.Revenant.EntitySystems;
 /// Attached to entities when a revenant drains them in order to
 /// manage their essence.
 /// </summary>
-public sealed partial class EssenceSystem : EntitySystem
+public sealed class EssenceSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {

@@ -5,7 +5,7 @@ using Content.Shared.Mind;
 
 namespace Content.Server.Cloning
 {
-    public sealed partial class AcceptCloningEui : BaseEui
+    public sealed class AcceptCloningEui : BaseEui
     {
         private readonly EntityUid _mindId;
         private readonly MindComponent _mind;
@@ -34,4 +34,3 @@ namespace Content.Server.Cloning
         }
     }
 }
-

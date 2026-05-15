@@ -16,7 +16,7 @@ namespace Content.Client.CombatMode;
 ///   while for all other types of weapons and items in hand, as well as for an empty hand,
 ///   a crosshair of a different type is displayed. These crosshairs simply show the state of combat mode (on|off).
 /// </summary>
-public sealed partial class CombatModeIndicatorsOverlay : Overlay
+public sealed class CombatModeIndicatorsOverlay : Overlay
 {
     private readonly IInputManager _inputManager;
     private readonly IEntityManager _entMan;
@@ -93,4 +93,3 @@ public sealed partial class CombatModeIndicatorsOverlay : Overlay
             UIBox2.FromDimensions(centerPos - expandedSize * 0.5f, expandedSize), MainColor);
     }
 }
-

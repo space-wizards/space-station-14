@@ -7,7 +7,7 @@ namespace Content.Client.Atmos.Visualizers;
 /// <summary>
 /// Controls client-side visuals for portable scrubbers.
 /// </summary>
-public sealed partial class PortableScrubberSystem : VisualizerSystem<PortableScrubberVisualsComponent>
+public sealed class PortableScrubberSystem : VisualizerSystem<PortableScrubberVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PortableScrubberVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -37,4 +37,3 @@ public enum PortableScrubberVisualLayers : byte
 
     IsDraining
 }
-

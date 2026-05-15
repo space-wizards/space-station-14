@@ -3,9 +3,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.Markers;
 
-public sealed partial class MarkerSystem : EntitySystem
+public sealed class MarkerSystem : EntitySystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private bool _markersVisible;
 

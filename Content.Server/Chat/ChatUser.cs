@@ -1,8 +1,8 @@
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 
 namespace Content.Server.Chat;
 
-public sealed partial class ChatUser
+public sealed class ChatUser
 {
     /// <summary>
     ///     The unique key associated with this chat user, starting from 1 and incremented.
@@ -32,4 +32,3 @@ public sealed partial class ChatUser
         Entities.Add(entity);
     }
 }
-

@@ -26,7 +26,7 @@ public sealed partial class ToolComponent : Component
 /// Attempt event called *before* any do afters to see if the tool usage should succeed or not.
 /// Raised on both the tool and then target.
 /// </summary>
-public sealed partial class ToolUseAttemptEvent(EntityUid user, float fuel) : CancellableEntityEventArgs
+public sealed class ToolUseAttemptEvent(EntityUid user, float fuel) : CancellableEntityEventArgs
 {
     public EntityUid User { get; } = user;
     public float Fuel = fuel;
@@ -41,4 +41,3 @@ public struct ToolUserAttemptUseEvent(EntityUid? target)
     public EntityUid? Target = target;
     public bool Cancelled = false;
 }
-

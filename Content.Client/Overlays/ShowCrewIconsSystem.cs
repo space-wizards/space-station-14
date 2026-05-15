@@ -4,7 +4,7 @@ using Content.Shared.Overlays;
 namespace Content.Client.Overlays;
 
 // The GetStatusIconsEvent subscription is handled in JobStatusSystem
-public sealed partial class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsComponent>
+public sealed class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsComponent>
 {
     public bool UncertainCrewBorder = false;
 
@@ -32,4 +32,3 @@ public sealed partial class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIco
         RefreshOverlay();
     }
 }
-

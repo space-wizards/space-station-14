@@ -1,10 +1,10 @@
-using Content.Shared.Objectives;
+﻿using Content.Shared.Objectives;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterInfo;
 
 [Serializable, NetSerializable]
-public sealed partial class RequestCharacterInfoEvent : EntityEventArgs
+public sealed class RequestCharacterInfoEvent : EntityEventArgs
 {
     public readonly NetEntity NetEntity;
 
@@ -15,7 +15,7 @@ public sealed partial class RequestCharacterInfoEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed partial class CharacterInfoEvent : EntityEventArgs
+public sealed class CharacterInfoEvent : EntityEventArgs
 {
     public readonly NetEntity NetEntity;
     public readonly string JobTitle;
@@ -30,4 +30,3 @@ public sealed partial class CharacterInfoEvent : EntityEventArgs
         Briefing = briefing;
     }
 }
-

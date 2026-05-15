@@ -4,7 +4,7 @@ using Content.Shared.Eui;
 
 namespace Content.Server.CrewManifest;
 
-public sealed partial class CrewManifestEui : BaseEui
+public sealed class CrewManifestEui : BaseEui
 {
     private readonly CrewManifestSystem _crewManifest;
 
@@ -40,4 +40,3 @@ public sealed partial class CrewManifestEui : BaseEui
         _crewManifest.CloseEui(_station, Player, Owner);
     }
 }
-

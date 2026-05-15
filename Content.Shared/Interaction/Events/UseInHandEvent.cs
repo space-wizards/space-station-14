@@ -8,7 +8,7 @@ namespace Content.Shared.Interaction.Events;
 ///     Raised when using the entity in your hands.
 /// </summary>
 [PublicAPI]
-public sealed partial class UseInHandEvent : HandledEntityEventArgs
+public sealed class UseInHandEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     Entity holding the item in their hand.
@@ -26,4 +26,3 @@ public sealed partial class UseInHandEvent : HandledEntityEventArgs
         User = user;
     }
 }
-

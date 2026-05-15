@@ -7,9 +7,9 @@ namespace Content.Client.Cargo.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed partial class ClientPriceGunSystem : SharedPriceGunSystem
+public sealed class ClientPriceGunSystem : SharedPriceGunSystem
 {
-    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     protected override bool GetPriceOrBounty(Entity<PriceGunComponent> entity, EntityUid target, EntityUid user)
     {

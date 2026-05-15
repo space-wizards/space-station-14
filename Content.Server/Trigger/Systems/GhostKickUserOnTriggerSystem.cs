@@ -5,9 +5,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Trigger.Systems;
 
-public sealed partial class GhostKickUserOnTriggerSystem : EntitySystem
+public sealed class GhostKickUserOnTriggerSystem : EntitySystem
 {
-    [Dependency] private GhostKickManager _ghostKickManager = default!;
+    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
 
     public override void Initialize()
     {

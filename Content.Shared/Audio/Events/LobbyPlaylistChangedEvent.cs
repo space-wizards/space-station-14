@@ -6,7 +6,7 @@ namespace Content.Shared.Audio.Events;
 /// Event of changing lobby music playlist (on server).
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LobbyPlaylistChangedEvent : EntityEventArgs
+public sealed class LobbyPlaylistChangedEvent : EntityEventArgs
 {
     /// <inheritdoc />
     public LobbyPlaylistChangedEvent(string[] playlist)
@@ -24,7 +24,6 @@ public sealed partial class LobbyPlaylistChangedEvent : EntityEventArgs
 /// Event of stopping lobby music.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LobbyMusicStopEvent : EntityEventArgs
+public sealed class LobbyMusicStopEvent : EntityEventArgs
 {
 }
-

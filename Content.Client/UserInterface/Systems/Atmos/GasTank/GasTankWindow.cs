@@ -15,11 +15,11 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank;
 
-public sealed partial class GasTankWindow
+public sealed class GasTankWindow
     : BaseWindow
 {
-    [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IResourceCache _cache = default!;
 
     private readonly RichTextLabel _lblPressure;
     private readonly FloatSpinBox _spbPressure;

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets
 {
     [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
-    public sealed partial class StyleSpace : StyleBase
+    public sealed class StyleSpace : StyleBase
     {
         public static readonly Color SpaceRed = Color.FromHex("#9b2236");
 
@@ -200,4 +200,3 @@ namespace Content.Client.Stylesheets
         }
     }
 }
-

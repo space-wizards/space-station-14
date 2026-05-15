@@ -10,9 +10,9 @@ namespace Content.Server.Movement.Systems;
 /// Stores a buffer of previous positions of the relevant entity.
 /// Can be used to check the entity's position at a recent point in time.
 /// </summary>
-public sealed partial class LagCompensationSystem : EntitySystem
+public sealed class LagCompensationSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     // I figured 500 ping is max, so 1.5 is 750.
     // Max ping I've had is 350ms from aus to spain.

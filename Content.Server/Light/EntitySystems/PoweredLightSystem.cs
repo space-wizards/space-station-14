@@ -7,7 +7,7 @@ namespace Content.Server.Light.EntitySystems;
 /// <summary>
 ///     System for the PoweredLightComponents
 /// </summary>
-public sealed partial class PoweredLightSystem : SharedPoweredLightSystem
+public sealed class PoweredLightSystem : SharedPoweredLightSystem
 {
     public override void Initialize()
     {
@@ -48,4 +48,3 @@ public sealed partial class PoweredLightSystem : SharedPoweredLightSystem
         UpdateLight(uid, light);
     }
 }
-

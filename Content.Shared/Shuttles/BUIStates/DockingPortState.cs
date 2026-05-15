@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.BUIStates;
 /// State of each individual docking port for interface purposes
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class DockingPortState
+public sealed class DockingPortState
 {
     public string Name = string.Empty;
 
@@ -28,4 +28,3 @@ public sealed partial class DockingPortState
     /// </summary>
     public Color HighlightedColor;
 }
-

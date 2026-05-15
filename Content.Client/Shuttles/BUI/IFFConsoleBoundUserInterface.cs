@@ -8,7 +8,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
-public sealed partial class IFFConsoleBoundUserInterface : BoundUserInterface
+public sealed class IFFConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private IFFConsoleWindow? _window;
@@ -53,4 +53,3 @@ public sealed partial class IFFConsoleBoundUserInterface : BoundUserInterface
         }
     }
 }
-

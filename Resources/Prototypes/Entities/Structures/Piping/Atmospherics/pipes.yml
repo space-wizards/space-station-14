@@ -94,7 +94,6 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-        volume: 100
   - type: Sprite
     layers:
     - state: pipeHalf

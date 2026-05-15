@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A button intended for use with a monotone color palette
 /// </summary>
-public sealed partial class MonotoneButton : Button
+public sealed class MonotoneButton : Button
 {
     /// <summary>
     /// Specifies the color of the label text when the button is pressed.
@@ -43,4 +43,3 @@ public sealed partial class MonotoneButton : Button
         UpdateAppearance();
     }
 }
-

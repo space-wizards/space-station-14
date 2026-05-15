@@ -22,7 +22,7 @@ namespace Content.Server.Database
     ///     Provides methods to retrieve and update character preferences.
     ///     Don't use this directly, go through <see cref="ServerPreferencesManager" /> instead.
     /// </summary>
-    public sealed partial class ServerDbSqlite : ServerDbBase
+    public sealed class ServerDbSqlite : ServerDbBase
     {
         private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
 
@@ -493,4 +493,3 @@ namespace Content.Server.Database
         }
     }
 }
-

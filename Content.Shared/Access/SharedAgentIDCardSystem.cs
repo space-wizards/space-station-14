@@ -23,7 +23,7 @@ namespace Content.Shared.Access.Systems
     /// Represents an <see cref="AgentIDCardComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
     {
         public string CurrentName { get; }
         public string CurrentJob { get; }
@@ -38,7 +38,7 @@ namespace Content.Shared.Access.Systems
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class AgentIDCardNameChangedMessage : BoundUserInterfaceMessage
+    public sealed class AgentIDCardNameChangedMessage : BoundUserInterfaceMessage
     {
         public string Name { get; }
 
@@ -49,7 +49,7 @@ namespace Content.Shared.Access.Systems
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class AgentIDCardJobChangedMessage : BoundUserInterfaceMessage
+    public sealed class AgentIDCardJobChangedMessage : BoundUserInterfaceMessage
     {
         public string Job { get; }
 
@@ -60,7 +60,7 @@ namespace Content.Shared.Access.Systems
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
+    public sealed class AgentIDCardJobIconChangedMessage : BoundUserInterfaceMessage
     {
         public ProtoId<JobIconPrototype> JobIconId { get; }
 
@@ -70,4 +70,3 @@ namespace Content.Shared.Access.Systems
         }
     }
 }
-

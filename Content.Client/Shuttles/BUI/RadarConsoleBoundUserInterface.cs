@@ -8,7 +8,7 @@ using RadarConsoleWindow = Content.Client.Shuttles.UI.RadarConsoleWindow;
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
-public sealed partial class RadarConsoleBoundUserInterface : BoundUserInterface
+public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private RadarConsoleWindow? _window;
@@ -33,4 +33,3 @@ public sealed partial class RadarConsoleBoundUserInterface : BoundUserInterface
         _window?.UpdateState(cState.State);
     }
 }
-

@@ -4,9 +4,9 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Electrocution;
 
-public sealed partial class InsulatedSystem : EntitySystem
+public sealed class InsulatedSystem : EntitySystem
 {
-    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     /// <inheritdoc />
     public override void Initialize()

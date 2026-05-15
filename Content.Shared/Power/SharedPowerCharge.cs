@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
 
@@ -6,7 +6,7 @@ namespace Content.Shared.Power;
 ///     Sent to the server to set whether the machine should be on or off
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SwitchChargingMachineMessage : BoundUserInterfaceMessage
+public sealed class SwitchChargingMachineMessage : BoundUserInterfaceMessage
 {
     public bool On;
 
@@ -17,7 +17,7 @@ public sealed partial class SwitchChargingMachineMessage : BoundUserInterfaceMes
 }
 
 [Serializable, NetSerializable]
-public sealed partial class PowerChargeState : BoundUserInterfaceState
+public sealed class PowerChargeState : BoundUserInterfaceState
 {
     public bool On;
     // 0 -> 255
@@ -75,4 +75,3 @@ public enum PowerChargePowerStatus : byte
     Charging,
     FullyCharged
 }
-

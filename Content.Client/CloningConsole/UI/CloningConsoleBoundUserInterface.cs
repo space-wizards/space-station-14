@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.CloningConsole.UI
 {
     [UsedImplicitly]
-    public sealed partial class CloningConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CloningConsoleBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private CloningConsoleWindow? _window;
@@ -33,4 +33,3 @@ namespace Content.Client.CloningConsole.UI
         }
     }
 }
-

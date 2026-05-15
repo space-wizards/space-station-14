@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Client.Administration.UI.BanPanel;
 
 [UsedImplicitly]
-public sealed partial class BanPanelEui : BaseEui
+public sealed class BanPanelEui : BaseEui
 {
     private BanPanel BanPanel { get; }
 
@@ -40,4 +40,3 @@ public sealed partial class BanPanelEui : BaseEui
         BanPanel.Dispose();
     }
 }
-

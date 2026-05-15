@@ -3,5 +3,4 @@ namespace Content.Shared.Movement.Pulling.Events;
 /// <summary>
 /// Event raised directed BOTH at the puller and pulled entity when a pull stops.
 /// </summary>
-public sealed partial class PullStoppedMessage(EntityUid pullerUid, EntityUid pulledUid) : PullMessage(pullerUid, pulledUid);
-
+public sealed class PullStoppedMessage(EntityUid pullerUid, EntityUid pulledUid) : PullMessage(pullerUid, pulledUid);

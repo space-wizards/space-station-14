@@ -232,7 +232,7 @@ namespace Content.Shared.Verbs
     /// </summary>
     /// <remarks>Currently only used for the verb that opens the view variables panel.</remarks>
     [Serializable, NetSerializable]
-    public sealed partial class VvVerb : Verb
+    public sealed class VvVerb : Verb
     {
         public override int TypePriority => int.MaxValue;
     }
@@ -246,7 +246,7 @@ namespace Content.Shared.Verbs
     ///    currently held item. These verbs are collectively shown first in the context menu.
     /// </remarks>
     [Serializable, NetSerializable]
-    public sealed partial class InteractionVerb : Verb
+    public sealed class InteractionVerb : Verb
     {
         public new static string DefaultTextStyleClass = "InteractionVerb";
         public override int TypePriority => 4;
@@ -269,7 +269,7 @@ namespace Content.Shared.Verbs
     ///     target of an interaction. These verbs are only obtained if the target and the held entity are NOT the same.
     /// </remarks>
     [Serializable, NetSerializable]
-    public sealed partial class UtilityVerb : Verb
+    public sealed class UtilityVerb : Verb
     {
         public override int TypePriority => 3;
         public override bool DefaultDoContactInteraction => true;
@@ -288,7 +288,7 @@ namespace Content.Shared.Verbs
     ///     This will get relayed to all clothing (Not pockets) through an inventory relay event.
     /// </remarks>
     [Serializable, NetSerializable]
-    public sealed partial class InnateVerb : Verb
+    public sealed class InnateVerb : Verb
     {
         public override int TypePriority => 3;
         public InnateVerb() : base()
@@ -305,7 +305,7 @@ namespace Content.Shared.Verbs
     ///     These verbs are collectively shown second-to-last in the context menu.
     /// </remarks>
     [Serializable, NetSerializable]
-    public sealed partial class AlternativeVerb : Verb
+    public sealed class AlternativeVerb : Verb
     {
         public override int TypePriority => 2;
         public new static string DefaultTextStyleClass = "AlternativeVerb";
@@ -327,7 +327,7 @@ namespace Content.Shared.Verbs
     ///    These verbs are collectively shown second in the context menu.
     /// </remarks>
     [Serializable, NetSerializable]
-    public sealed partial class ActivationVerb : Verb
+    public sealed class ActivationVerb : Verb
     {
         public override int TypePriority => 1;
         public new static string DefaultTextStyleClass = "ActivationVerb";
@@ -340,7 +340,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ExamineVerb : Verb
+    public sealed class ExamineVerb : Verb
     {
         public override int TypePriority => 0;
         public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
@@ -356,9 +356,8 @@ namespace Content.Shared.Verbs
     ///     <see cref="InventoryRelayedEvent{T}"/>.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class EquipmentVerb : Verb
+    public sealed class EquipmentVerb : Verb
     {
         public override int TypePriority => 5;
     }
 }
-

@@ -25,12 +25,12 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed partial class StationSystem : SharedStationSystem
 {
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private IPlayerManager _player = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -418,7 +418,7 @@ public sealed partial class StationSystem : SharedStationSystem
 /// This is the ideal point to add components to it.
 /// </summary>
 [PublicAPI]
-public sealed partial class StationInitializedEvent : EntityEventArgs
+public sealed class StationInitializedEvent : EntityEventArgs
 {
     /// <summary>
     /// Station this event is for.
@@ -435,7 +435,7 @@ public sealed partial class StationInitializedEvent : EntityEventArgs
 /// Directed event fired on a station when a grid becomes a member of the station.
 /// </summary>
 [PublicAPI]
-public sealed partial class StationGridAddedEvent : EntityEventArgs
+public sealed class StationGridAddedEvent : EntityEventArgs
 {
     /// <summary>
     /// ID of the grid added to the station.
@@ -465,7 +465,7 @@ public sealed partial class StationGridAddedEvent : EntityEventArgs
 /// Directed event fired on a station when a grid is no longer a member of the station.
 /// </summary>
 [PublicAPI]
-public sealed partial class StationGridRemovedEvent : EntityEventArgs
+public sealed class StationGridRemovedEvent : EntityEventArgs
 {
     /// <summary>
     /// ID of the grid removed from the station.
@@ -488,7 +488,7 @@ public sealed partial class StationGridRemovedEvent : EntityEventArgs
 /// Directed event fired on a station when it is renamed.
 /// </summary>
 [PublicAPI]
-public sealed partial class StationRenamedEvent : EntityEventArgs
+public sealed class StationRenamedEvent : EntityEventArgs
 {
     /// <summary>
     /// Prior name of the station.
@@ -506,5 +506,4 @@ public sealed partial class StationRenamedEvent : EntityEventArgs
         NewName = newName;
     }
 }
-
 

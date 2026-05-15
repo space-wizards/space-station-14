@@ -7,7 +7,7 @@ namespace Content.Client.Humanoid;
 // Do not use this in any non-privileged instance. This just replaces an entire marking set
 // with the set sent over.
 
-public sealed partial class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
+public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private HumanoidMarkingModifierWindow? _window;
@@ -47,6 +47,5 @@ public sealed partial class HumanoidMarkingModifierBoundUserInterface : BoundUse
         SendMessage(new HumanoidMarkingModifierMarkingSetMessage(_markingsModel.Markings));
     }
 }
-
 
 

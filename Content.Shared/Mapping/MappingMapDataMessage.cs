@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Mapping;
 
-public sealed partial class MappingMapDataMessage : NetMessage
+public sealed class MappingMapDataMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
     public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableUnordered;
@@ -44,4 +44,3 @@ public sealed partial class MappingMapDataMessage : NetMessage
         buffer.Write(buf.AsSpan(0, length));
     }
 }
-

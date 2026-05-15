@@ -7,9 +7,9 @@ namespace Content.Shared.Trigger.Systems;
 /// <summary>
 /// This handles <see cref="PopupOnTriggerComponent"/>
 /// </summary>
-public sealed partial class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTriggerComponent>
+public sealed class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTriggerComponent>
 {
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     protected override void OnTrigger(Entity<PopupOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

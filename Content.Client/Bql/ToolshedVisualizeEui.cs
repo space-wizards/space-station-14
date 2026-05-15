@@ -1,4 +1,4 @@
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 using Content.Shared.Bql;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -7,7 +7,7 @@ using Robust.Client.Console;
 namespace Content.Client.Bql;
 
 [UsedImplicitly]
-public sealed partial class ToolshedVisualizeEui : BaseEui
+public sealed class ToolshedVisualizeEui : BaseEui
 {
     private readonly ToolshedVisualizeWindow _window;
 
@@ -43,4 +43,3 @@ public sealed partial class ToolshedVisualizeEui : BaseEui
         _window.OpenCentered();
     }
 }
-

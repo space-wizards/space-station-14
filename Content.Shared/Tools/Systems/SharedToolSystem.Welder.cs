@@ -13,7 +13,7 @@ namespace Content.Shared.Tools.Systems;
 
 public abstract partial class SharedToolSystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public void InitializeWelder()
     {
@@ -117,13 +117,13 @@ public abstract partial class SharedToolSystem
         if (TryComp(target, out ReagentTankComponent? tank)
             && tank.TankType == ReagentTankType.Fuel
             && SolutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out var targetSolution)
-            && SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solution, out var welderSolution))
+            && SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solutionComp, out var welderSolution))
         {
             var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
             if (trans > 0)
             {
                 var drained = SolutionContainerSystem.Drain(target, targetSoln.Value, trans);
-                SolutionContainerSystem.TryAddSolution(solution.Value, drained);
+                SolutionContainerSystem.TryAddSolution(solutionComp.Value, drained);
                 _audioSystem.PlayPredicted(entity.Comp.WelderRefill, entity, user: args.User);
                 _popup.PopupClient(Loc.GetString("welder-component-after-interact-refueled-message"), entity, args.User);
             }
@@ -210,10 +210,9 @@ public abstract partial class SharedToolSystem
     private void UpdateWelders()
     {
         // TODO: Same as the other EntityQueryEnumerators...
-        // TODO: ActiveWelderComponent
-        var query = EntityQueryEnumerator<WelderComponent>();
+        var query = EntityQueryEnumerator<WelderComponent, SolutionManagerComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var welder))
+        while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
         {
             if (curTime < welder.NextUpdate)
                 continue;
@@ -224,8 +223,7 @@ public abstract partial class SharedToolSystem
             if (!welder.Enabled)
                 continue;
 
-            // TODO: Relations
-            if (!SolutionContainerSystem.TryGetSolution(uid, welder.FuelSolutionName, out var solutionComp, out var solution))
+            if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
             SolutionContainerSystem.RemoveReagent(solutionComp.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderUpdateTimer.TotalSeconds);

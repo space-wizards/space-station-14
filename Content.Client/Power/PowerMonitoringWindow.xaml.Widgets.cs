@@ -347,7 +347,7 @@ public sealed partial class PowerMonitoringWindow
     }
 }
 
-public sealed partial class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
+public sealed class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
 {
     public BoxContainer MainContainer;
     public BoxContainer SourcesContainer;
@@ -396,7 +396,7 @@ public sealed partial class PowerMonitoringWindowEntry : PowerMonitoringWindowBa
     }
 }
 
-public sealed partial class PowerMonitoringWindowSubEntry : PowerMonitoringWindowBaseEntry
+public sealed class PowerMonitoringWindowSubEntry : PowerMonitoringWindowBaseEntry
 {
     public TextureRect? Icon;
 
@@ -435,7 +435,7 @@ public abstract class PowerMonitoringWindowBaseEntry : BoxContainer
     }
 }
 
-public sealed partial class PowerMonitoringButton : Button
+public sealed class PowerMonitoringButton : Button
 {
     public BoxContainer MainContainer;
     public TextureRect TextureRect;
@@ -535,4 +535,3 @@ public sealed partial class PowerMonitoringButton : Button
         MainContainer.AddChild(PowerValue);
     }
 }
-

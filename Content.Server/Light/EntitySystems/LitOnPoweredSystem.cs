@@ -5,9 +5,9 @@ using Content.Shared.Power;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public sealed partial class LitOnPoweredSystem : EntitySystem
+    public sealed class LitOnPoweredSystem : EntitySystem
     {
-        [Dependency] private SharedPointLightSystem _lights = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
         public override void Initialize()
         {

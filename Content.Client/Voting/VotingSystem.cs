@@ -2,7 +2,7 @@ using Content.Shared.Voting;
 
 namespace Content.Client.Voting;
 
-public sealed partial class VotingSystem : EntitySystem
+public sealed class VotingSystem : EntitySystem
 {
     public event Action<VotePlayerListResponseEvent>? VotePlayerListResponse; //Provides a list of players elligble for vote actions
 
@@ -23,4 +23,3 @@ public sealed partial class VotingSystem : EntitySystem
         RaiseNetworkEvent(new VotePlayerListRequestEvent());
     }
 }
-

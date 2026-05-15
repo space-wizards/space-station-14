@@ -1,4 +1,4 @@
-using Content.Shared.CrewManifest;
+﻿using Content.Shared.CrewManifest;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -8,7 +8,7 @@ using Content.Shared.Roles;
 
 namespace Content.Client.CrewManifest.UI;
 
-public sealed partial class CrewManifestSection : BoxContainer
+public sealed class CrewManifestSection : BoxContainer
 {
     public CrewManifestSection(
         IPrototypeManager prototypeManager,
@@ -74,4 +74,3 @@ public sealed partial class CrewManifestSection : BoxContainer
         }
     }
 }
-

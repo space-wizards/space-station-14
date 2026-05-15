@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed partial class OptionButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IIconConfig
+public sealed class OptionButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IIconConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -29,4 +29,3 @@ public sealed partial class OptionButtonSheetlet<T> : Sheetlet<T> where T : Pale
         ];
     }
 }
-

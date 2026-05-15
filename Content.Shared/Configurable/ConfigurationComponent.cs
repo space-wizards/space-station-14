@@ -38,7 +38,7 @@ namespace Content.Shared.Configurable
         ///     Message data sent from client to server when the device configuration is updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed partial class ConfigurationUpdatedMessage : BoundUserInterfaceMessage
+        public sealed class ConfigurationUpdatedMessage : BoundUserInterfaceMessage
         {
             public Dictionary<string, string> Config { get; }
 
@@ -49,7 +49,7 @@ namespace Content.Shared.Configurable
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class ValidationUpdateMessage : BoundUserInterfaceMessage
+        public sealed class ValidationUpdateMessage : BoundUserInterfaceMessage
         {
             public string ValidationString { get; }
 
@@ -66,4 +66,3 @@ namespace Content.Shared.Configurable
         }
     }
 }
-

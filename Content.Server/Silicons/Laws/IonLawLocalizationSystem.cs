@@ -1,10 +1,10 @@
 ﻿namespace Content.Server.Silicons.Laws;
 
-public sealed partial class IonLawLocalizationSystem : EntitySystem
+public sealed class IonLawLocalizationSystem : EntitySystem
 {
-    [Dependency] private ILocalizationManager _loc = default!;
-    [Dependency] private IonLawSystem _ionLaw = default!;
-    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private readonly IonLawSystem _ionLaw = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 

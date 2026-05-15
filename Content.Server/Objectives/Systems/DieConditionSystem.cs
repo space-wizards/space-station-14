@@ -4,9 +4,9 @@ using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed partial class DieConditionSystem : EntitySystem
+public sealed class DieConditionSystem : EntitySystem
 {
-    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {

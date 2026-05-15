@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
-public sealed partial class CargoPalletConsoleBoundUserInterface : BoundUserInterface
+public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private CargoPalletMenu? _menu;
@@ -46,4 +46,3 @@ public sealed partial class CargoPalletConsoleBoundUserInterface : BoundUserInte
         _menu?.SetCount(palletState.Count);
     }
 }
-

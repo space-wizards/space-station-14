@@ -3,7 +3,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Server.Inventory
 {
-    public sealed partial class ServerInventorySystem : InventorySystem
+    public sealed class ServerInventorySystem : InventorySystem
     {
         public override void Initialize()
         {
@@ -37,4 +37,3 @@ namespace Content.Server.Inventory
         }
     }
 }
-

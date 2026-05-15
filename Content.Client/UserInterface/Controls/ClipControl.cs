@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,7 +8,7 @@ namespace Content.Client.UserInterface.Controls;
 /// Pretends to child controls that there's infinite space.
 /// This can be used to make something like a <see cref="RichTextLabel"/> clip instead of wrapping.
 /// </summary>
-public sealed partial class ClipControl : Control
+public sealed class ClipControl : Control
 {
     private bool _clipHorizontal = true;
     private bool _clipVertical = true;
@@ -53,4 +53,3 @@ public sealed partial class ClipControl : Control
         return finalSize;
     }
 }
-

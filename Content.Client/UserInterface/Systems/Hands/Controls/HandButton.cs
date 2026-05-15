@@ -1,9 +1,9 @@
-using Content.Client.UserInterface.Controls;
+﻿using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 
 namespace Content.Client.UserInterface.Systems.Hands.Controls;
 
-public sealed partial class HandButton : SlotControl
+public sealed class HandButton : SlotControl
 {
     public HandLocation HandLocation { get; }
 
@@ -26,4 +26,3 @@ public sealed partial class HandButton : SlotControl
         };
     }
 }
-

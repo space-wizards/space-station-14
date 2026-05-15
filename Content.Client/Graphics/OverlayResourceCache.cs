@@ -1,4 +1,4 @@
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 
 namespace Content.Client.Graphics;
 
@@ -6,7 +6,7 @@ namespace Content.Client.Graphics;
 /// A cache for <see cref="Overlay"/>s to store per-viewport render resources, such as render targets.
 /// </summary>
 /// <typeparam name="T">The type of data stored in the cache.</typeparam>
-public sealed partial class OverlayResourceCache<T> : IDisposable where T : class, IDisposable
+public sealed class OverlayResourceCache<T> : IDisposable where T : class, IDisposable
 {
     private readonly Dictionary<long, CacheEntry> _cache = new();
 
@@ -88,4 +88,3 @@ public sealed partial class OverlayResourceCache<T> : IDisposable where T : clas
         public WeakReference<IClydeViewport> Viewport;
     }
 }
-

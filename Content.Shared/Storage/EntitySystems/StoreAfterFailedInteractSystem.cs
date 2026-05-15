@@ -3,9 +3,9 @@ using Content.Shared.Storage.Events;
 
 namespace Content.Shared.Storage.EntitySystems;
 
-public sealed partial class StoreAfterFailedInteractSystem : EntitySystem
+public sealed class StoreAfterFailedInteractSystem : EntitySystem
 {
-    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
 
     public override void Initialize()
     {

@@ -2,7 +2,7 @@ using Content.Shared.Atmos.Components;
 
 namespace Content.Client.Atmos.Consoles;
 
-public sealed partial class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
+public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private AtmosAlertsComputerWindow? _menu;
@@ -47,4 +47,3 @@ public sealed partial class AtmosAlertsComputerBoundUserInterface : BoundUserInt
         _menu?.Dispose();
     }
 }
-

@@ -4,7 +4,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class EnsureComponentOperator : HTNOperator
 {
-    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
 
     /// <summary>
     /// Target entity to inject.

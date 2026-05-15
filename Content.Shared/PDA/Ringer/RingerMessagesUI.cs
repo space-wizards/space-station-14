@@ -3,10 +3,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA.Ringer;
 
 [Serializable, NetSerializable]
-public sealed partial class RingerPlayRingtoneMessage : BoundUserInterfaceMessage;
+public sealed class RingerPlayRingtoneMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class RingerSetRingtoneMessage : BoundUserInterfaceMessage
+public sealed class RingerSetRingtoneMessage : BoundUserInterfaceMessage
 {
     public Note[] Ringtone { get; }
 
@@ -15,4 +15,3 @@ public sealed partial class RingerSetRingtoneMessage : BoundUserInterfaceMessage
         Ringtone = ringTone;
     }
 }
-

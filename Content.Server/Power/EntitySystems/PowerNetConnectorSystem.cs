@@ -3,7 +3,7 @@ using Content.Server.Power.NodeGroups;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed partial class PowerNetConnectorSystem : EntitySystem
+public sealed class PowerNetConnectorSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -62,4 +62,3 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         }
     }
 }
-

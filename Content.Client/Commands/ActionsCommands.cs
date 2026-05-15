@@ -1,4 +1,4 @@
-using Content.Client.Actions;
+﻿using Content.Client.Actions;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -8,7 +8,7 @@ namespace Content.Client.Commands;
 // sandboxing and uncomment this code (and the SaveActionAssignments() function).
 /*
 [AnyCommand]
-public sealed partial class SaveActionsCommand : IConsoleCommand
+public sealed class SaveActionsCommand : IConsoleCommand
 {
     public string Command => "saveacts";
     public string Description => "Saves the current action toolbar assignments to a file";
@@ -34,9 +34,9 @@ public sealed partial class SaveActionsCommand : IConsoleCommand
 */
 
 [AnyCommand]
-public sealed partial class LoadActionsCommand : LocalizedCommands
+public sealed class LoadActionsCommand : LocalizedCommands
 {
-    [Dependency] private IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "loadacts";
 
@@ -58,4 +58,3 @@ public sealed partial class LoadActionsCommand : LocalizedCommands
         }
     }
 }
-

@@ -2,7 +2,7 @@ using Robust.Client.Console;
 
 namespace Content.Client.Replay;
 
-public sealed partial class ReplayConGroup : IClientConGroupImplementation
+public sealed class ReplayConGroup : IClientConGroupImplementation
 {
     public event Action? ConGroupUpdated { add { } remove { } }
     public bool CanAdminMenu() => true;
@@ -11,4 +11,3 @@ public sealed partial class ReplayConGroup : IClientConGroupImplementation
     public bool CanScript() => true;
     public bool CanViewVar() => true;
 }
-

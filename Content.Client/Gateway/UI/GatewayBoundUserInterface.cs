@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Gateway.UI;
 
 [UsedImplicitly]
-public sealed partial class GatewayBoundUserInterface : BoundUserInterface
+public sealed class GatewayBoundUserInterface : BoundUserInterface
 {
     private GatewayWindow? _window;
 
@@ -37,4 +37,3 @@ public sealed partial class GatewayBoundUserInterface : BoundUserInterface
         _window?.UpdateState(current);
     }
 }
-

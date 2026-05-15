@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public sealed partial class WirelessNetworkSystem : EntitySystem
+    public sealed class WirelessNetworkSystem : EntitySystem
     {
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {

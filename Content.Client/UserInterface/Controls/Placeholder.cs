@@ -2,7 +2,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed partial class Placeholder : PanelContainer
+    public sealed class Placeholder : PanelContainer
     {
         public const string StyleClassPlaceholderText = "PlaceholderText";
 
@@ -27,4 +27,3 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 }
-

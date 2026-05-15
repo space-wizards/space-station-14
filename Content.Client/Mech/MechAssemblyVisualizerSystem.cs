@@ -1,4 +1,4 @@
-using Content.Shared.Mech;
+﻿using Content.Shared.Mech;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Mech;
@@ -7,7 +7,7 @@ namespace Content.Client.Mech;
 /// Handles the sprite state changes while
 /// constructing mech assemblies.
 /// </summary>
-public sealed partial class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
+public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,
         ref AppearanceChangeEvent args)
@@ -22,4 +22,3 @@ public sealed partial class MechAssemblyVisualizerSystem : VisualizerSystem<Mech
         SpriteSystem.LayerSetRsiState((uid, args.Sprite), 0, state);
     }
 }
-

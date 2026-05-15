@@ -7,7 +7,7 @@ namespace Content.Client.PDA.Ringer;
 /// <summary>
 /// Handles the client-side logic for <see cref="SharedRingerSystem"/>.
 /// </summary>
-public sealed partial class RingerSystem : SharedRingerSystem
+public sealed class RingerSystem : SharedRingerSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -34,4 +34,3 @@ public sealed partial class RingerSystem : SharedRingerSystem
         }
     }
 }
-

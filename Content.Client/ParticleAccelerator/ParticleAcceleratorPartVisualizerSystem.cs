@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.ParticleAccelerator;
 
-public sealed partial class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
+public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, ParticleAcceleratorPartVisualsComponent comp, ref AppearanceChangeEvent args)
     {
@@ -29,4 +29,3 @@ public sealed partial class ParticleAcceleratorPartVisualizerSystem : Visualizer
         }
     }
 }
-

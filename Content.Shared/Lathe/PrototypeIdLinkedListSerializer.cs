@@ -15,7 +15,7 @@ namespace Content.Shared.Lathe;
 /// This is in the Content.Shared.Lathe namespace as there are no other LinkedList ProtoId instances.
 /// </remarks>
 [TypeSerializer]
-public sealed partial class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, SequenceDataNode>, ITypeCopier<LinkedList<T>> where T : class
+public sealed class LinkedListSerializer<T> : ITypeSerializer<LinkedList<T>, SequenceDataNode>, ITypeCopier<LinkedList<T>> where T : class
 {
     public ValidationNode Validate(ISerializationManager serializationManager, SequenceDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -79,4 +79,3 @@ public sealed partial class LinkedListSerializer<T> : ITypeSerializer<LinkedList
         }
     }
 }
-

@@ -7,7 +7,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// System for xeno artifact trigger that requires some chemical reagent.
 /// </summary>
-public sealed partial class XATReactiveSystem : BaseXATSystem<XATReactiveComponent>
+public sealed class XATReactiveSystem : BaseXATSystem<XATReactiveComponent>
 {
     /// <inheritdoc/>
     public override void Initialize()
@@ -56,4 +56,3 @@ public sealed partial class XATReactiveSystem : BaseXATSystem<XATReactiveCompone
         return false;
     }
 }
-

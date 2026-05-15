@@ -59,7 +59,6 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, IsUnequippingTargetAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ChameleonControllerOutfitSelectedEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, VoiceMaskNameUpdatedEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, VoiceMaskToggledEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeEmoteEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, StoodEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, DownedEvent>(RelayInventoryEvent);
@@ -179,7 +178,7 @@ public partial class InventorySystem
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
 ///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
-public sealed partial class InventoryRelayedEvent<TEvent> : EntityEventArgs
+public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
 {
     public TEvent Args;
 
@@ -211,4 +210,3 @@ public interface IInventoryRelayEvent
     /// </remarks>
     public SlotFlags TargetSlots { get; }
 }
-

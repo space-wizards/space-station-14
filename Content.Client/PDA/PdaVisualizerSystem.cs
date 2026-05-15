@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.PDA;
 
-public sealed partial class PdaVisualizerSystem : VisualizerSystem<PdaVisualsComponent>
+public sealed class PdaVisualizerSystem : VisualizerSystem<PdaVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, PdaVisualsComponent comp, ref AppearanceChangeEvent args)
     {
@@ -28,4 +28,3 @@ public sealed partial class PdaVisualizerSystem : VisualizerSystem<PdaVisualsCom
         IdLight
     }
 }
-

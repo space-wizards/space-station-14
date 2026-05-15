@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
-public sealed partial class ResizableChatBox : ChatBox
+public sealed class ResizableChatBox : ChatBox
 {
         public ResizableChatBox()
         {
@@ -21,7 +21,7 @@ public sealed partial class ResizableChatBox : ChatBox
         // them to when the window is resized. We need it to be able to resize
         // within some bounds so that it doesn't overlap other UI elements, while still
         // being freely resizable within those bounds.
-        [Dependency] private IClyde _clyde = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
 
         private const int DragMarginSize = 7;
         private const int MinDistanceFromBottom = 255;

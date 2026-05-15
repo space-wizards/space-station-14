@@ -6,7 +6,7 @@ namespace Content.Shared.Interaction.Events;
 /// <remarks>
 ///     This is currently used by the forensics and disease systems to perform on-contact interactions.
 /// </remarks>
-public sealed partial class ContactInteractionEvent : HandledEntityEventArgs
+public sealed class ContactInteractionEvent : HandledEntityEventArgs
 {
     public EntityUid Other;
 
@@ -15,4 +15,3 @@ public sealed partial class ContactInteractionEvent : HandledEntityEventArgs
         Other = other;
     }
 }
-

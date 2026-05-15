@@ -10,7 +10,7 @@ namespace Content.Client.Stylesheets.NTSheetlets;
 
 /// Not NTHeading because NanoHeading is the name of the element
 [CommonSheetlet]
-public sealed partial class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
@@ -34,4 +34,3 @@ public sealed partial class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
         ];
     }
 }
-

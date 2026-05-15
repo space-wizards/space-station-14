@@ -48,9 +48,7 @@
   - type: Store
     name: store-preset-name-changeling
     categories:
-    - ChangelingStoreCombat
-    - ChangelingStoreStealth
-    - ChangelingStoreUtility
+    - ChangelingAbilities
     currencyWhitelist:
     - ChangelingDNA
 

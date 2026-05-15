@@ -2,5 +2,4 @@ using Content.Shared.HotPotato;
 
 namespace Content.Server.HotPotato;
 
-public sealed partial class HotPotatoSystem : SharedHotPotatoSystem;
-
+public sealed class HotPotatoSystem : SharedHotPotatoSystem;

@@ -9,7 +9,7 @@ namespace Content.Server.Body.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class AddHandCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         private static int _handIdAccumulator;
 
@@ -81,4 +81,3 @@ namespace Content.Server.Body.Commands
         }
     }
 }
-

@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed partial class CargoOrderConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
     {
         private readonly SharedCargoSystem _cargoSystem;
 
@@ -195,4 +195,3 @@ namespace Content.Client.Cargo.BUI
         }
     }
 }
-

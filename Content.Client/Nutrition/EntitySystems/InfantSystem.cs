@@ -6,9 +6,9 @@ namespace Content.Client.Nutrition.EntitySystems;
 /// <summary>
 /// This handles visuals for <see cref="InfantComponent"/>
 /// </summary>
-public sealed partial class InfantSystem : EntitySystem
+public sealed class InfantSystem : EntitySystem
 {
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

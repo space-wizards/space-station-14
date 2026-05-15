@@ -10,7 +10,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     [MeansImplicitUse]
-    public sealed partial class NodeGroupAttribute : Attribute
+    public sealed class NodeGroupAttribute : Attribute
     {
         public NodeGroupID[] NodeGroupIDs { get; }
 
@@ -20,4 +20,3 @@ namespace Content.Server.NodeContainer.NodeGroups
         }
     }
 }
-

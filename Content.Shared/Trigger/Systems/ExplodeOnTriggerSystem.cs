@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class ExplodeOnTriggerSystem : XOnTriggerSystem<ExplodeOnTriggerComponent>
+public sealed class ExplodeOnTriggerSystem : XOnTriggerSystem<ExplodeOnTriggerComponent>
 {
-    [Dependency] private SharedExplosionSystem _explosion = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
 
     protected override void OnTrigger(Entity<ExplodeOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -14,9 +14,9 @@ public sealed partial class ExplodeOnTriggerSystem : XOnTriggerSystem<ExplodeOnT
     }
 }
 
-public sealed partial class ExplosionOnTriggerSystem : XOnTriggerSystem<ExplosionOnTriggerComponent>
+public sealed class ExplosionOnTriggerSystem : XOnTriggerSystem<ExplosionOnTriggerComponent>
 {
-    [Dependency] private SharedExplosionSystem _explosion = default!;
+    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
 
     protected override void OnTrigger(Entity<ExplosionOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

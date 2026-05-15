@@ -4,8 +4,7 @@ namespace Content.Shared.Interaction.Events;
 /// Event raised on an item when attempting to use it in your hands. Cancelling it stops the interaction.
 /// </summary>
 /// <param name="user">The user of said item</param>
-public sealed partial class GettingUsedAttemptEvent(EntityUid user) : CancellableEntityEventArgs
+public sealed class GettingUsedAttemptEvent(EntityUid user) : CancellableEntityEventArgs
 {
     public EntityUid User = user;
 }
-

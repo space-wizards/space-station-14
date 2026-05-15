@@ -6,10 +6,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [UsedImplicitly]
-    public sealed partial class PromoteHostCommand : LocalizedCommands
+    public sealed class PromoteHostCommand : LocalizedCommands
     {
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override string Command => "promotehost";
 

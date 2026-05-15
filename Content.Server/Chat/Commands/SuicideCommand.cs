@@ -11,9 +11,9 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class SuicideCommand : LocalizedEntityCommands
     {
-        [Dependency] private SharedMindSystem _mindSystem = default!;
-        [Dependency] private SuicideSystem _suicideSystem = default!;
-        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly SuicideSystem _suicideSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override string Command => "suicide";
 
@@ -51,4 +51,3 @@ namespace Content.Server.Chat.Commands
         }
     }
 }
-

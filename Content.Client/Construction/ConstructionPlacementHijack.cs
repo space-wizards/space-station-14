@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Construction
 {
-    public sealed partial class ConstructionPlacementHijack : PlacementHijack
+    public sealed class ConstructionPlacementHijack : PlacementHijack
     {
         private readonly ConstructionSystem _constructionSystem;
         private readonly ConstructionPrototype? _prototype;
@@ -61,4 +61,3 @@ namespace Content.Client.Construction
         }
     }
 }
-

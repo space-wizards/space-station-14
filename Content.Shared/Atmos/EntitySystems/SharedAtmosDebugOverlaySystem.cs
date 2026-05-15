@@ -28,7 +28,7 @@ namespace Content.Shared.Atmos.EntitySystems
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed partial class AtmosDebugOverlayMessage : EntityEventArgs
+        public sealed class AtmosDebugOverlayMessage : EntityEventArgs
         {
             public NetEntity GridId { get; }
 
@@ -45,9 +45,8 @@ namespace Content.Shared.Atmos.EntitySystems
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class AtmosDebugOverlayDisableMessage : EntityEventArgs
+        public sealed class AtmosDebugOverlayDisableMessage : EntityEventArgs
         {
         }
     }
 }
-

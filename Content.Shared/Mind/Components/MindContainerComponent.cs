@@ -64,7 +64,7 @@ public abstract class MindEvent : EntityEventArgs
 /// <remarks>
 /// Called after the owned entity is already set to null. TransferEntity is the entity this mind will be added to afterward, if any.
 /// </remarks>
-public sealed partial class MindRemovedMessage : MindEvent
+public sealed class MindRemovedMessage : MindEvent
 {
     public MindRemovedMessage(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
@@ -78,7 +78,7 @@ public sealed partial class MindRemovedMessage : MindEvent
 /// <remarks>
 /// Called after the owned entity is already set to null. TransferEntity is the entity this mind will be added to afterward, if any.
 /// </remarks>
-public sealed partial class MindGotRemovedEvent : MindEvent
+public sealed class MindGotRemovedEvent : MindEvent
 {
     public MindGotRemovedEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
@@ -92,7 +92,7 @@ public sealed partial class MindGotRemovedEvent : MindEvent
 /// <remarks>
 /// Called before the OwnedEntity is set to null. TransferEntity is the entity this mind will be added to afterward, if any.
 /// </remarks>
-public sealed partial class BeforeMindRemovedMessage : MindEvent
+public sealed class BeforeMindRemovedMessage : MindEvent
 {
     public BeforeMindRemovedMessage(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
@@ -106,7 +106,7 @@ public sealed partial class BeforeMindRemovedMessage : MindEvent
 /// <remarks>
 /// Called before the OwnedEntity is set to null. TransferEntity is the entity this mind will be added to afterward, if any.
 /// </remarks>
-public sealed partial class BeforeMindGotRemovedEvent : MindEvent
+public sealed class BeforeMindGotRemovedEvent : MindEvent
 {
     public BeforeMindGotRemovedEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
@@ -120,7 +120,7 @@ public sealed partial class BeforeMindGotRemovedEvent : MindEvent
 /// <remarks>
 /// Called after the owned entity is already set to the new entity. TransferEntity is the previous entity that this mind owned, if any.
 /// </remarks>
-public sealed partial class MindAddedMessage : MindEvent
+public sealed class MindAddedMessage : MindEvent
 {
     public MindAddedMessage(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
@@ -134,11 +134,10 @@ public sealed partial class MindAddedMessage : MindEvent
 /// <remarks>
 /// Called after the owned entity is already set to the new entity. TransferEntity is the previous entity that this mind owned, if any.
 /// </remarks>
-public sealed partial class MindGotAddedEvent : MindEvent
+public sealed class MindGotAddedEvent : MindEvent
 {
     public MindGotAddedEvent(Entity<MindComponent> mind, Entity<MindContainerComponent> container, EntityUid? transferEntity)
         : base(mind, container, transferEntity)
     {
     }
 }
-

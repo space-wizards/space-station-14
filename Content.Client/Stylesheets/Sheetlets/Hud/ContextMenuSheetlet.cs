@@ -14,7 +14,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed partial class ContextMenuSheetlet<T> : Sheetlet<T>
+public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
     // TODO: make this not hardcoded (I am too scared to change the context menu colors)
@@ -86,4 +86,3 @@ public sealed partial class ContextMenuSheetlet<T> : Sheetlet<T>
         return rules.ToArray();
     }
 }
-

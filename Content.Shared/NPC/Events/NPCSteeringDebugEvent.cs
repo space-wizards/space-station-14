@@ -7,7 +7,7 @@ namespace Content.Shared.NPC.Events;
 /// Client debug data for NPC steering
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class NPCSteeringDebugEvent : EntityEventArgs
+public sealed class NPCSteeringDebugEvent : EntityEventArgs
 {
     public List<NPCSteeringDebugData> Data;
 
@@ -31,4 +31,3 @@ public readonly record struct NPCSteeringDebugData(
     public readonly float[] Danger = Danger;
     public readonly List<Vector2> DangerPoints = DangerPoints;
 }
-

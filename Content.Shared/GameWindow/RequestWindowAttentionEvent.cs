@@ -1,10 +1,9 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameWindow
 {
     [Serializable, NetSerializable]
-    public sealed partial class RequestWindowAttentionEvent : EntityEventArgs
+    public sealed class RequestWindowAttentionEvent : EntityEventArgs
     {
     }
 }
-

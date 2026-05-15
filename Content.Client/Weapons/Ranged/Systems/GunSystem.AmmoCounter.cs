@@ -71,7 +71,7 @@ public sealed partial class GunSystem
     /// <summary>
     /// Raised when an ammocounter is requesting a control.
     /// </summary>
-    public sealed partial class AmmoCounterControlEvent : EntityEventArgs
+    public sealed class AmmoCounterControlEvent : EntityEventArgs
     {
         public Control? Control;
     }
@@ -79,7 +79,7 @@ public sealed partial class GunSystem
     /// <summary>
     /// Raised whenever the ammo count / magazine for a control needs updating.
     /// </summary>
-    public sealed partial class UpdateAmmoCounterEvent : HandledEntityEventArgs
+    public sealed class UpdateAmmoCounterEvent : HandledEntityEventArgs
     {
         public Control Control = default!;
     }
@@ -116,7 +116,7 @@ public sealed partial class GunSystem
         }
     }
 
-    public sealed partial class BoxesStatusControl : Control
+    public sealed class BoxesStatusControl : Control
     {
         private readonly BatteryBulletRenderer _bullets;
         private readonly Label _ammoCount;
@@ -361,4 +361,3 @@ public sealed partial class GunSystem
 
     #endregion
 }
-

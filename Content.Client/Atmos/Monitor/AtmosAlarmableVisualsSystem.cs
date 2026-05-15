@@ -5,7 +5,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Atmos.Monitor;
 
-public sealed partial class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmableVisualsComponent>
+public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmableVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, AtmosAlarmableVisualsComponent component, ref AppearanceChangeEvent args)
     {
@@ -45,4 +45,3 @@ public sealed partial class AtmosAlarmableVisualsSystem : VisualizerSystem<Atmos
         }
     }
 }
-

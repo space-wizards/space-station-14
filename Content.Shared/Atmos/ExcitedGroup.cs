@@ -1,4 +1,4 @@
-namespace Content.Shared.Atmos;
+﻿namespace Content.Shared.Atmos;
 
 /// <summary>
 /// <para>Internal Atmospherics class that stores data about a group of <see cref="TileAtmosphere"/>s
@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos;
 /// together and performs equalization processing on the entire group when the group dissolves.
 /// Dissolution happens when LINDA operations between the tiles decrease to very low mole deltas.</para>
 /// </summary>
-public sealed partial class ExcitedGroup
+public sealed class ExcitedGroup
 {
     /// <summary>
     /// Whether this Active Group has been disposed of.
@@ -42,4 +42,3 @@ public sealed partial class ExcitedGroup
     [ViewVariables]
     public int BreakdownCooldown = 0;
 }
-

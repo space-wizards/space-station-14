@@ -6,9 +6,8 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised on a client when it wishes to FTL to a beacon.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class ShuttleConsoleFTLBeaconMessage : BoundUserInterfaceMessage
+public sealed class ShuttleConsoleFTLBeaconMessage : BoundUserInterfaceMessage
 {
     public NetEntity Beacon;
     public Angle Angle;
 }
-

@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Medical.Cryogenics;
 
 
-public sealed partial class BeakerBarChart : Control
+public sealed class BeakerBarChart : Control
 {
     private sealed class Entry
     {
@@ -283,4 +283,3 @@ public sealed partial class BeakerBarChart : Control
         return tooltip;
     }
 }
-

@@ -22,14 +22,14 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class StrippingSlotButtonPressed(string slot, bool isHand) : BoundUserInterfaceMessage
+    public sealed class StrippingSlotButtonPressed(string slot, bool isHand) : BoundUserInterfaceMessage
     {
         public readonly string Slot = slot;
         public readonly bool IsHand = isHand;
     }
 
     [NetSerializable, Serializable]
-    public sealed partial class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
+    public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
 
     [ByRefEvent]
     public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
@@ -51,7 +51,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed partial class BeforeItemStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeItemStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
     ///     Used to modify strip times. Raised directed at the user.
@@ -60,7 +60,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed partial class BeforeStripEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeStripEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
     ///     Used to modify strip times. Raised directed at the target.
@@ -69,7 +69,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed partial class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
     /// <summary>
     ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.
@@ -91,4 +91,3 @@ namespace Content.Shared.Strip.Components
         public override DoAfterEvent Clone() => this;
     }
 }
-

@@ -4,7 +4,6 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Store;
-using Content.Shared.VoiceMask;
 
 namespace Content.Shared.Implants;
 
@@ -17,7 +16,6 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, TransformSpeakerNameEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, TransformSpeechEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SeeIdentityAttemptEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, VoiceMaskToggledEvent>(RelayToImplantEvent);
 
         // Ref relays, for when you need to write to the event!
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
@@ -59,23 +57,22 @@ public abstract partial class SharedSubdermalImplantSystem
             RaiseLocalEvent(implant, relayEv);
         }
 
-        args = relayEv.Args;
+        args = relayEv.Event;
     }
 }
 
 /// <summary>
 /// Wrapper for relaying events from an implanted entity to their implants.
 /// </summary>
-public sealed partial class ImplantRelayEvent<T> where T : notnull
+public sealed class ImplantRelayEvent<T> where T : notnull
 {
-    public T Args;
+    public T Event;
 
     public readonly EntityUid ImplantedEntity;
 
     public ImplantRelayEvent(T ev, EntityUid implantedEntity)
     {
-        Args = ev;
+        Event = ev;
         ImplantedEntity = implantedEntity;
     }
 }
-

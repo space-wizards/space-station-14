@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Components
 {
@@ -28,7 +28,7 @@ namespace Content.Shared.Research.Components
     ///     Sent to the server when the client deselects a research server.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class ResearchClientServerDeselectedMessage : BoundUserInterfaceMessage
+    public sealed class ResearchClientServerDeselectedMessage : BoundUserInterfaceMessage
     {
     }
 
@@ -36,7 +36,7 @@ namespace Content.Shared.Research.Components
     ///     Sent to the server when the client chooses a research server.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class ResearchClientServerSelectedMessage : BoundUserInterfaceMessage
+    public sealed class ResearchClientServerSelectedMessage : BoundUserInterfaceMessage
     {
         public int ServerId;
 
@@ -50,7 +50,7 @@ namespace Content.Shared.Research.Components
     ///     Request that the server updates the client.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class ResearchClientSyncMessage : BoundUserInterfaceMessage
+    public sealed class ResearchClientSyncMessage : BoundUserInterfaceMessage
     {
     }
 
@@ -61,7 +61,7 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ResearchClientBoundInterfaceState : BoundUserInterfaceState
+    public sealed class ResearchClientBoundInterfaceState : BoundUserInterfaceState
     {
         public int ServerCount;
         public string[] ServerNames;
@@ -77,4 +77,3 @@ namespace Content.Shared.Research.Components
         }
     }
 }
-

@@ -1,9 +1,9 @@
-using Content.Server.Objectives.Components;
+﻿using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed partial class FreeObjectiveSystem : EntitySystem
+public sealed class FreeObjectiveSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -18,4 +18,3 @@ public sealed partial class FreeObjectiveSystem : EntitySystem
         args.Progress = 1f;
     }
 }
-

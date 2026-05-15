@@ -1,4 +1,4 @@
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.NPC.HTN;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed partial class AddNPCCommand : LocalizedCommands
+    public sealed class AddNPCCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entities = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Command => "addnpc";
 
@@ -43,4 +43,3 @@ namespace Content.Server.NPC.Commands
         }
     }
 }
-

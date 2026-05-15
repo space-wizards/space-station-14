@@ -7,7 +7,7 @@ namespace Content.Shared.Damage.Events;
 /// The components in the list are going to be hit,
 /// give opportunities to change the damage or other stuff.
 /// </summary>
-public sealed partial class StaminaMeleeHitEvent : HandledEntityEventArgs
+public sealed class StaminaMeleeHitEvent : HandledEntityEventArgs
 {
     /// <summary>
     /// List of hit stamina components.
@@ -29,4 +29,3 @@ public sealed partial class StaminaMeleeHitEvent : HandledEntityEventArgs
         HitList = hitList;
     }
 }
-

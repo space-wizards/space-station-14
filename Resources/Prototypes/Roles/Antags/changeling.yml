@@ -23,12 +23,10 @@
   - type: Store
     name: store-preset-name-changeling
     categories:
-    - ChangelingStoreCombat
-    - ChangelingStoreStealth
-    - ChangelingStoreUtility
+    - ChangelingAbilities
     currencyWhitelist:
     - ChangelingDNA
     balance:
-      ChangelingDNA: 60
+      ChangelingDNA: 50
   mindRoles:
   - MindRoleChangeling

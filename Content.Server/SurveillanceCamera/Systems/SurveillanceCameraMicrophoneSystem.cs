@@ -8,10 +8,10 @@ using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
+public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
-    [Dependency] private SharedTransformSystem _xforms = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -96,7 +96,7 @@ public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
     }
 }
 
-public sealed partial class SurveillanceCameraSpeechSendEvent : EntityEventArgs
+public sealed class SurveillanceCameraSpeechSendEvent : EntityEventArgs
 {
     public EntityUid Speaker { get; }
     public string Message { get; }
@@ -107,5 +107,4 @@ public sealed partial class SurveillanceCameraSpeechSendEvent : EntityEventArgs
         Message = message;
     }
 }
-
 

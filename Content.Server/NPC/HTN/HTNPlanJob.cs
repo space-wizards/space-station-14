@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN;
 /// <summary>
 /// A time-sliced job that will retrieve an HTN plan eventually.
 /// </summary>
-public sealed partial class HTNPlanJob : Job<HTNPlan>
+public sealed class HTNPlanJob : Job<HTNPlan>
 {
     private readonly HTNTask _rootTask;
     private NPCBlackboard _blackboard;
@@ -254,4 +254,3 @@ public sealed partial class HTNPlanJob : Job<HTNPlan>
         public int BranchTraversal;
     }
 }
-

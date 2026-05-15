@@ -9,5 +9,4 @@ namespace Content.Shared.Guidebook;
 /// is done on the server (it uses reflection, which is blocked by the sandbox on clients).
 /// </remarks>
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public sealed partial class GuidebookDataAttribute : Attribute { }
-
+public sealed class GuidebookDataAttribute : Attribute { }

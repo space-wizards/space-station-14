@@ -7,9 +7,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Decals;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class EditDecalCommand : LocalizedCommands
+public sealed class EditDecalCommand : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override string Command => "editdecal";
 
@@ -150,4 +150,3 @@ public sealed partial class EditDecalCommand : LocalizedCommands
         }
     }
 }
-

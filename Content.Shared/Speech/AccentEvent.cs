@@ -1,6 +1,6 @@
-namespace Content.Shared.Speech;
+﻿namespace Content.Shared.Speech;
 
-public sealed partial class AccentGetEvent : EntityEventArgs
+public sealed class AccentGetEvent : EntityEventArgs
 {
     /// <summary>
     ///     The entity to apply the accent to.
@@ -19,4 +19,3 @@ public sealed partial class AccentGetEvent : EntityEventArgs
         Message = message;
     }
 }
-

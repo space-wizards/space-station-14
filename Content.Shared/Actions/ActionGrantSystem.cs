@@ -5,9 +5,9 @@ namespace Content.Shared.Actions;
 /// <summary>
 /// <see cref="ActionGrantComponent"/>
 /// </summary>
-public sealed partial class ActionGrantSystem : EntitySystem
+public sealed class ActionGrantSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     public override void Initialize()
     {

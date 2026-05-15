@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Chat
 {
     [Serializable, NetSerializable]
-    public sealed partial class ChatMessage
+    public sealed class ChatMessage
     {
         public ChatChannel Channel;
 
@@ -59,7 +59,7 @@ namespace Content.Shared.Chat
     ///     Sent from server to client to notify the client about a new chat message.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class MsgChatMessage : NetMessage
+    public sealed class MsgChatMessage : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -82,4 +82,3 @@ namespace Content.Shared.Chat
         }
     }
 }
-

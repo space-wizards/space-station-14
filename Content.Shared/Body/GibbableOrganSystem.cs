@@ -2,7 +2,7 @@ using Content.Shared.Gibbing;
 
 namespace Content.Shared.Body;
 
-public sealed partial class GibbableOrganSystem : EntitySystem
+public sealed class GibbableOrganSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -16,4 +16,3 @@ public sealed partial class GibbableOrganSystem : EntitySystem
         args.Args.Giblets.Add(ent);
     }
 }
-

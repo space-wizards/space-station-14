@@ -1,4 +1,4 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed partial class SolutionCommand : ToolshedCommand
+public sealed class SolutionCommand : ToolshedCommand
 {
     private SharedSolutionContainerSystem? _solutionContainer;
 
@@ -71,4 +71,3 @@ public readonly record struct SolutionRef(Entity<SolutionComponent> Solution)
         return $"{Solution.Owner} {Solution.Comp.Solution}";
     }
 }
-

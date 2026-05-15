@@ -2,7 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Temperature;
 
-public sealed partial class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
@@ -14,7 +14,7 @@ public sealed partial class ModifyChangedTemperatureEvent : EntityEventArgs, IIn
     }
 }
 
-public sealed partial class OnTemperatureChangeEvent : EntityEventArgs
+public sealed class OnTemperatureChangeEvent : EntityEventArgs
 {
     public readonly float CurrentTemperature;
     public readonly float LastTemperature;
@@ -27,5 +27,4 @@ public sealed partial class OnTemperatureChangeEvent : EntityEventArgs
         TemperatureDelta = delta;
     }
 }
-
 

@@ -44,7 +44,7 @@ public sealed partial class RgbLightControllerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RgbLightControllerState : ComponentState
+public sealed class RgbLightControllerState : ComponentState
 {
     public readonly float CycleRate;
     public List<int>? Layers;
@@ -55,4 +55,3 @@ public sealed partial class RgbLightControllerState : ComponentState
         Layers = layers;
     }
 }
-

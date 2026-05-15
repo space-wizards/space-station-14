@@ -11,11 +11,11 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing;
 
-public sealed partial class StandingStateSystem : EntitySystem
+public sealed class StandingStateSystem : EntitySystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
     public const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
@@ -209,17 +209,17 @@ public record struct DropHandItemsEvent();
 /// <summary>
 /// Subscribe if you can potentially block a down attempt.
 /// </summary>
-public sealed partial class DownAttemptEvent : CancellableEntityEventArgs;
+public sealed class DownAttemptEvent : CancellableEntityEventArgs;
 
 /// <summary>
 /// Subscribe if you can potentially block a stand attempt.
 /// </summary>
-public sealed partial class StandAttemptEvent : CancellableEntityEventArgs;
+public sealed class StandAttemptEvent : CancellableEntityEventArgs;
 
 /// <summary>
 /// Raised when an entity becomes standing
 /// </summary>
-public sealed partial class StoodEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class StoodEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
 };
@@ -227,7 +227,7 @@ public sealed partial class StoodEvent : EntityEventArgs, IInventoryRelayEvent
 /// <summary>
 /// Raised when an entity is not standing
 /// </summary>
-public sealed partial class DownedEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
 }
@@ -238,4 +238,3 @@ public sealed partial class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 /// </summary>
 [ByRefEvent]
 public record struct FellDownThrowAttemptEvent(EntityUid Thrower, bool Cancelled = false);
-

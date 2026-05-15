@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
-public sealed partial class ReagentEntry
+public sealed class ReagentEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -46,7 +46,7 @@ public sealed partial class ReagentEntry
     }
 }
 
-public sealed partial class ReactionEntry
+public sealed class ReactionEntry
 {
     [JsonPropertyName("id")]
     public string Id { get; }
@@ -79,7 +79,7 @@ public sealed partial class ReactionEntry
     }
 }
 
-public sealed partial class ReactantEntry
+public sealed class ReactantEntry
 {
     [JsonPropertyName("amount")]
     public float Amount { get; }
@@ -93,4 +93,3 @@ public sealed partial class ReactantEntry
         Catalyst = cata;
     }
 }
-

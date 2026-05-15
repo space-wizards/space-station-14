@@ -1,4 +1,4 @@
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed partial class ListGasesCommand : LocalizedEntityCommands
+    public sealed class ListGasesCommand : LocalizedEntityCommands
     {
-        [Dependency] private AtmosphereSystem _atmosSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
 
         public override string Command => "listgases";
 
@@ -23,4 +23,3 @@ namespace Content.Server.Atmos.Commands
     }
 
 }
-

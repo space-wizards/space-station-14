@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
 {
-    public sealed partial class AdminAnnounceEui : BaseEui
+    public sealed class AdminAnnounceEui : BaseEui
     {
         private readonly AdminAnnounceWindow _window;
 
@@ -40,4 +40,3 @@ namespace Content.Client.Administration.UI
         }
     }
 }
-

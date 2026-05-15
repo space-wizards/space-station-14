@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Cargo.BUI;
 
 [UsedImplicitly]
-public sealed partial class FundingAllocationConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class FundingAllocationConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private FundingAllocationMenu? _menu;
@@ -33,4 +33,3 @@ public sealed partial class FundingAllocationConsoleBoundUserInterface(EntityUid
         _menu?.Update(state);
     }
 }
-

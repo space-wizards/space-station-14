@@ -15,8 +15,6 @@
   - type: ExaminableSolution
     solution: hypospray
     exactVolume: true
-  - type: UseDelay
-    delay: 0.5
   - type: Appearance
 
 - type: entity
@@ -55,6 +53,8 @@
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: RefillableSolution
     solution: hypospray
+  - type: UseDelay
+    delay: 0.5
   - type: StaticPrice
     price: 750
   - type: Tag
@@ -110,6 +110,8 @@
     maxFillLevels: 2
     fillBaseName: borghypo_fill
     solutionName: hypospray
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: BaseHypospray

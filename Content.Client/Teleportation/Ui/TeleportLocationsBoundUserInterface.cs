@@ -1,4 +1,4 @@
-using Content.Shared.Teleportation;
+﻿using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Teleportation.Ui;
 
 [UsedImplicitly]
-public sealed partial class TeleportLocationsBoundUserInterface : BoundUserInterface
+public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private TeleportMenu? _menu;
@@ -34,4 +34,3 @@ public sealed partial class TeleportLocationsBoundUserInterface : BoundUserInter
         };
     }
 }
-

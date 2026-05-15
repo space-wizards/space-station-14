@@ -4,7 +4,7 @@ using Content.Shared.Disposal.Mailing;
 
 namespace Content.Client.Disposal.Mailing;
 
-public sealed partial class MailingUnitSystem : SharedMailingUnitSystem
+public sealed class MailingUnitSystem : SharedMailingUnitSystem
 {
     public override void Initialize()
     {
@@ -20,4 +20,3 @@ public sealed partial class MailingUnitSystem : SharedMailingUnitSystem
         }
     }
 }
-

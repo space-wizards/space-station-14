@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
@@ -8,7 +8,7 @@ namespace Content.Client.Disposal.Tube
     /// Initializes a <see cref="DisposalTaggerWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class DisposalTaggerBoundUserInterface : BoundUserInterface
+    public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private DisposalTaggerWindow? _window;
@@ -47,4 +47,3 @@ namespace Content.Client.Disposal.Tube
         }
     }
 }
-

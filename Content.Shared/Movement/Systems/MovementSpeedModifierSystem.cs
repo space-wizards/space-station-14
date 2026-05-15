@@ -7,10 +7,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems
 {
-    public sealed partial class MovementSpeedModifierSystem : EntitySystem
+    public sealed class MovementSpeedModifierSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _timing = default!;
-        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private float _frictionModifier;
         private float _airDamping;
@@ -181,7 +181,7 @@ namespace Content.Shared.Movement.Systems
     ///     should hook into this event and set it then. If you want this event to be raised,
     ///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
     /// </summary>
-    public sealed partial class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
+    public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
     {
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
@@ -261,4 +261,3 @@ namespace Content.Shared.Movement.Systems
         SlotFlags IInventoryRelayEvent.TargetSlots =>  ~SlotFlags.POCKET;
     }
 }
-

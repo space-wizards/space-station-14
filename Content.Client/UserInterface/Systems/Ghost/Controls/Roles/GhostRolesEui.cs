@@ -9,7 +9,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
     [UsedImplicitly]
-    public sealed partial class GhostRolesEui : BaseEui
+    public sealed class GhostRolesEui : BaseEui
     {
         private readonly GhostRolesWindow _window;
         private GhostRoleRulesWindow? _windowRules = null;
@@ -121,4 +121,3 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         }
     }
 }
-

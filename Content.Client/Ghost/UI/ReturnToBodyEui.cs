@@ -1,4 +1,4 @@
-using Content.Client.Eui;
+﻿using Content.Client.Eui;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -6,7 +6,7 @@ using Robust.Client.Graphics;
 namespace Content.Client.Ghost.UI;
 
 [UsedImplicitly]
-public sealed partial class ReturnToBodyEui : BaseEui
+public sealed class ReturnToBodyEui : BaseEui
 {
     private readonly ReturnToBodyMenu _menu;
 
@@ -42,4 +42,3 @@ public sealed partial class ReturnToBodyEui : BaseEui
     }
 
 }
-

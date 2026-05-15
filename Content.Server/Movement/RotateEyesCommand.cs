@@ -6,7 +6,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Movement;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class RotateEyesCommand : LocalizedEntityCommands
+public sealed class RotateEyesCommand : LocalizedEntityCommands
 {
     public override string Command => "rotateeyes";
 
@@ -41,4 +41,3 @@ public sealed partial class RotateEyesCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-rotateeyes-count", ("count", count)));
     }
 }
-

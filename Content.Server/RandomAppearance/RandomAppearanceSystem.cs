@@ -3,10 +3,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.RandomAppearance;
 
-public sealed partial class RandomAppearanceSystem : EntitySystem
+public sealed class RandomAppearanceSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

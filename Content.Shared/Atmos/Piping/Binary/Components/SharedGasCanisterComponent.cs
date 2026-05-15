@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components
 {
@@ -30,7 +30,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     /// Represents a <see cref="GasCanisterComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class GasCanisterBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasCanisterBoundUserInterfaceState : BoundUserInterfaceState
     {
         public float CanisterPressure { get; }
         public bool PortStatus { get; }
@@ -45,14 +45,14 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasCanisterHoldingTankEjectMessage : BoundUserInterfaceMessage
+    public sealed class GasCanisterHoldingTankEjectMessage : BoundUserInterfaceMessage
     {
         public GasCanisterHoldingTankEjectMessage()
         {}
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasCanisterChangeReleasePressureMessage : BoundUserInterfaceMessage
+    public sealed class GasCanisterChangeReleasePressureMessage : BoundUserInterfaceMessage
     {
         public float Pressure { get; }
 
@@ -63,7 +63,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasCanisterChangeReleaseValveMessage : BoundUserInterfaceMessage
+    public sealed class GasCanisterChangeReleaseValveMessage : BoundUserInterfaceMessage
     {
         public bool Valve { get; }
 
@@ -73,4 +73,3 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
         }
     }
 }
-

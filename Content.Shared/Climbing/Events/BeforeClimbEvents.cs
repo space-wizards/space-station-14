@@ -21,7 +21,7 @@ public abstract partial class BeforeClimbEvent : CancellableEntityEventArgs
 ///     This event is raised on the the person either getting put on or going on the table.
 ///     The event is also called on their clothing as well.
 /// </summary>
-public sealed partial class SelfBeforeClimbEvent : BeforeClimbEvent, IInventoryRelayEvent
+public sealed class SelfBeforeClimbEvent : BeforeClimbEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
     public SelfBeforeClimbEvent(EntityUid gettingPutOntable, EntityUid puttingOnTable, Entity<ClimbableComponent> beingClimbedOn) : base(gettingPutOntable, puttingOnTable, beingClimbedOn) { }
@@ -30,8 +30,7 @@ public sealed partial class SelfBeforeClimbEvent : BeforeClimbEvent, IInventoryR
 /// <summary>
 ///     This event is raised on the thing being climbed on.
 /// </summary>
-public sealed partial class TargetBeforeClimbEvent : BeforeClimbEvent
+public sealed class TargetBeforeClimbEvent : BeforeClimbEvent
 {
     public TargetBeforeClimbEvent(EntityUid gettingPutOntable, EntityUid puttingOnTable, Entity<ClimbableComponent> beingClimbedOn) : base(gettingPutOntable, puttingOnTable, beingClimbedOn) { }
 }
-

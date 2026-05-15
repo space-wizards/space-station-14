@@ -9,9 +9,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Cargo;
 
-public abstract partial class SharedCargoSystem : EntitySystem
+public abstract class SharedCargoSystem : EntitySystem
 {
-    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
     public override void Initialize()
     {

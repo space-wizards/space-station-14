@@ -6,9 +6,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.Systems
 {
-    public abstract partial class SharedShuttleConsoleSystem : EntitySystem
+    public abstract class SharedShuttleConsoleSystem : EntitySystem
     {
-        [Dependency] protected ActionBlockerSystem ActionBlockerSystem = default!;
+        [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
 
         public override void Initialize()
         {

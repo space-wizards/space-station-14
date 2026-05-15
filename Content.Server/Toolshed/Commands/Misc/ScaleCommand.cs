@@ -11,7 +11,7 @@ namespace Content.Server.Toolshed.Commands.Misc;
 /// Used to change an entity's sprite scale.
 /// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
-public sealed partial class ScaleCommand : ToolshedCommand
+public sealed class ScaleCommand : ToolshedCommand
 {
     private SharedScaleVisualsSystem? _scaleVisuals;
     private SharedPhysicsSystem? _physics;
@@ -80,4 +80,3 @@ public sealed partial class ScaleCommand : ToolshedCommand
         }
     }
 }
-

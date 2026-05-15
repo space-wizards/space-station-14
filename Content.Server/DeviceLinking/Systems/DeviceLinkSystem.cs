@@ -10,9 +10,9 @@ using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.DeviceLinking.Systems;
 
-public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
+public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
 {
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
 
     public override void Initialize()
     {

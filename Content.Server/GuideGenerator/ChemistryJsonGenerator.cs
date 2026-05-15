@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
 
-public sealed partial class ChemistryJsonGenerator
+public sealed class ChemistryJsonGenerator
 {
     public static void PublishJson(StreamWriter file)
     {
@@ -53,7 +53,7 @@ public sealed partial class ChemistryJsonGenerator
         file.Write(JsonSerializer.Serialize(prototypes, serializeOptions));
     }
 
-    public sealed partial class FixedPointJsonConverter : JsonConverter<FixedPoint2>
+    public sealed class FixedPointJsonConverter : JsonConverter<FixedPoint2>
     {
         public override void Write(Utf8JsonWriter writer, FixedPoint2 value, JsonSerializerOptions options)
         {
@@ -68,4 +68,3 @@ public sealed partial class ChemistryJsonGenerator
         }
     }
 }
-

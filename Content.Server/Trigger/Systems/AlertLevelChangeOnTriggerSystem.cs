@@ -5,10 +5,10 @@ using Content.Server.Station.Systems;
 
 namespace Content.Server.Trigger.Systems;
 
-public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
+public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
-    [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private StationSystem _station = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {

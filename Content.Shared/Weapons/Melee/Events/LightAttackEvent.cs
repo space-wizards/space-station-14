@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 /// Raised when a light attack is made.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class LightAttackEvent : AttackEvent
+public sealed class LightAttackEvent : AttackEvent
 {
     public readonly NetEntity? Target;
     public readonly NetEntity Weapon;
@@ -18,4 +18,3 @@ public sealed partial class LightAttackEvent : AttackEvent
         Weapon = weapon;
     }
 }
-

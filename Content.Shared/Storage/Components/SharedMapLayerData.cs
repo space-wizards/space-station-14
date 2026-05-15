@@ -36,7 +36,7 @@ namespace Content.Shared.Storage.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ShowLayerData : ICloneable
+    public sealed class ShowLayerData : ICloneable
     {
         public readonly IReadOnlyList<string> QueuedEntities;
 
@@ -57,4 +57,3 @@ namespace Content.Shared.Storage.Components
         }
     }
 }
-

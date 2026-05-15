@@ -12,7 +12,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Client.DoAfter;
 
-public sealed partial class DoAfterOverlay : Overlay
+public sealed class DoAfterOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
@@ -168,4 +168,3 @@ public sealed partial class DoAfterOverlay : Overlay
         return _progressColor.GetProgressColor(progress).WithAlpha(alpha);
     }
 }
-

@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Light.Components;
 
-public sealed partial class HandheldLightStatus : Control
+public sealed class HandheldLightStatus : Control
 {
     private const float TimerCycle = 1;
 
@@ -83,4 +83,3 @@ public sealed partial class HandheldLightStatus : Control
         }
     }
 }
-

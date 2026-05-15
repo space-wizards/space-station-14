@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
@@ -9,14 +9,13 @@ public enum GasPressurePumpUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class GasPressurePumpToggleStatusMessage(bool enabled) : BoundUserInterfaceMessage
+public sealed class GasPressurePumpToggleStatusMessage(bool enabled) : BoundUserInterfaceMessage
 {
     public bool Enabled { get; } = enabled;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class GasPressurePumpChangeOutputPressureMessage(float pressure) : BoundUserInterfaceMessage
+public sealed class GasPressurePumpChangeOutputPressureMessage(float pressure) : BoundUserInterfaceMessage
 {
     public float Pressure { get; } = pressure;
 }
-

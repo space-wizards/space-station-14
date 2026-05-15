@@ -10,10 +10,10 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// Handles storing grids from <see cref="RuleLoadedGridsEvent"/> and antags spawning on their spawners.
 /// </summary>
-public sealed partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
+public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
 {
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

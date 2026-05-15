@@ -21,7 +21,7 @@ namespace Content.Shared.Weapons.Melee.Events
     /// <summary>
     ///     Event raised on entities that have been attacked.
     /// </summary>
-    public sealed partial class AttackedEvent : EntityEventArgs
+    public sealed class AttackedEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
@@ -48,4 +48,3 @@ namespace Content.Shared.Weapons.Melee.Events
         }
     }
 }
-

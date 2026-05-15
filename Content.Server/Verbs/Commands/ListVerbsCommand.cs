@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Verbs.Commands
 {
     [AdminCommand(AdminFlags.Moderator)]
-    public sealed partial class ListVerbsCommand : LocalizedEntityCommands
+    public sealed class ListVerbsCommand : LocalizedEntityCommands
     {
-        [Dependency] private SharedVerbSystem _verbSystem = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
         public override string Command => "listverbs";
 
@@ -71,4 +71,3 @@ namespace Content.Server.Verbs.Commands
         }
     }
 }
-

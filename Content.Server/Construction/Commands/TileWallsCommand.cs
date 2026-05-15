@@ -11,11 +11,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed partial class TileWallsCommand : LocalizedEntityCommands
+public sealed class TileWallsCommand : LocalizedEntityCommands
 {
-    [Dependency] private ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private TagSystem _tagSystem = default!;
-    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     // ReSharper disable once StringLiteralTypo
     public override string Command => "tilewalls";
@@ -109,4 +109,3 @@ public sealed partial class TileWallsCommand : LocalizedEntityCommands
         shell.WriteLine(Loc.GetString("cmd-tilewalls-changed", ("changed", changed)));
     }
 }
-

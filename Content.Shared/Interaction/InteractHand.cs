@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.Interaction;
 
-public sealed partial class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
+public sealed class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
 {
     public InteractHandEventArgs(EntityUid user, EntityUid target)
     {
@@ -18,7 +18,7 @@ public sealed partial class InteractHandEventArgs : EventArgs, ITargetedInteract
 ///     Raised directed on a target entity when it is interacted with by a user with an empty hand.
 /// </summary>
 [PublicAPI]
-public sealed partial class InteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+public sealed class InteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
 {
     /// <summary>
     ///     Entity that triggered the interaction.
@@ -41,7 +41,7 @@ public sealed partial class InteractHandEvent : HandledEntityEventArgs, ITargete
 /// Raised directed on the user when they interact with an entity with an empty hand.
 /// </summary>
 [PublicAPI]
-public sealed partial class UserInteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+public sealed class UserInteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
 {
     /// <summary>
     ///     Entity that triggered the interaction.
@@ -64,7 +64,7 @@ public sealed partial class UserInteractHandEvent : HandledEntityEventArgs, ITar
 /// Raised on the user before interacting on an entity with bare hand.
 /// Interaction is cancelled if this event is handled, so set it to true if you do custom interaction logic.
 /// </summary>
-public sealed partial class BeforeInteractHandEvent : HandledEntityEventArgs
+public sealed class BeforeInteractHandEvent : HandledEntityEventArgs
 {
     public EntityUid Target { get; }
 
@@ -73,4 +73,3 @@ public sealed partial class BeforeInteractHandEvent : HandledEntityEventArgs
         Target = target;
     }
 }
-

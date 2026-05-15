@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed partial class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
+public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly SurveillanceCameraMonitorSystem _surveillanceCameraMonitorSystem;
@@ -129,4 +129,3 @@ public sealed partial class SurveillanceCameraMonitorBoundUserInterface : BoundU
         }
     }
 }
-

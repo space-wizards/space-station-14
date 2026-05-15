@@ -10,10 +10,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
-public sealed partial class CrayonSystem : SharedCrayonSystem
+public sealed class CrayonSystem : SharedCrayonSystem
 {
-    [Dependency] private SharedChargesSystem _charges = default!;
-    [Dependency] private EntityManager _entityManager = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {

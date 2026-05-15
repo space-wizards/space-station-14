@@ -4,9 +4,9 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Inventory;
 
-public sealed partial class SelfEquipOnlySystem : EntitySystem
+public sealed class SelfEquipOnlySystem : EntitySystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -14,12 +14,12 @@ namespace Content.Client.StatusIcon;
 /// <summary>
 /// This handles rendering gathering and rendering icons on entities.
 /// </summary>
-public sealed partial class StatusIconSystem : SharedStatusIconSystem
+public sealed class StatusIconSystem : SharedStatusIconSystem
 {
-    [Dependency] private IConfigurationManager _configuration = default!;
-    [Dependency] private IOverlayManager _overlay = default!;
-    [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     private bool _globalEnabled;
     private bool _localEnabled;

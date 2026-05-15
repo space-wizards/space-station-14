@@ -18,10 +18,10 @@ namespace Content.Server.Shuttles.Commands;
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
 
-public sealed partial class FTLDiskCommand : LocalizedCommands
+public sealed class FTLDiskCommand : LocalizedCommands
 {
-    [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IEntitySystemManager _entSystemManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
 
     public override string Command => "ftldisk";
 

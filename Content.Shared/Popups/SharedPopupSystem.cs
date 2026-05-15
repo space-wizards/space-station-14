@@ -167,7 +167,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup on the user's cursor.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class PopupCursorEvent : PopupEvent
+    public sealed class PopupCursorEvent : PopupEvent
     {
         public PopupCursorEvent(string message, PopupType type) : base(message, type)
         {
@@ -178,7 +178,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup at a world location.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class PopupCoordinatesEvent : PopupEvent
+    public sealed class PopupCoordinatesEvent : PopupEvent
     {
         public NetCoordinates Coordinates { get; }
 
@@ -192,7 +192,7 @@ namespace Content.Shared.Popups
     ///     Network event for displaying a popup above an entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class PopupEntityEvent : PopupEvent
+    public sealed class PopupEntityEvent : PopupEvent
     {
         public NetEntity Uid { get; }
 
@@ -231,4 +231,3 @@ namespace Content.Shared.Popups
         LargeCaution
     }
 }
-

@@ -1,4 +1,4 @@
-using Content.Client.Examine;
+﻿using Content.Client.Examine;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -13,7 +13,7 @@ namespace Content.Client.Power.Generation.Teg;
 /// </para>
 /// </remarks>
 /// <seealso cref="TegCirculatorComponent"/>
-public sealed partial class TegSystem : EntitySystem
+public sealed class TegSystem : EntitySystem
 {
     private static readonly EntProtoId ArrowPrototype = "TegCirculatorArrow";
 
@@ -27,4 +27,3 @@ public sealed partial class TegSystem : EntitySystem
         Spawn(ArrowPrototype, new EntityCoordinates(uid, 0, 0));
     }
 }
-

@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Pinpointer.UI;
 
-public sealed partial class StationMapBoundUserInterface : BoundUserInterface
+public sealed class StationMapBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private StationMapWindow? _window;
@@ -41,4 +41,3 @@ public sealed partial class StationMapBoundUserInterface : BoundUserInterface
             _window.Set(stationName, gridUid, null);
     }
 }
-

@@ -7,10 +7,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Arcade.BlockGame;
 
-public sealed partial class BlockGameArcadeSystem : EntitySystem
+public sealed class BlockGameArcadeSystem : EntitySystem
 {
-    [Dependency] private UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {

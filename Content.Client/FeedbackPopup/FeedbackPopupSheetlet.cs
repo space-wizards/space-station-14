@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets;
+﻿using Content.Client.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.FeedbackPopup;
 
 [CommonSheetlet]
-public sealed partial class FeedbackPopupSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class FeedbackPopupSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -34,4 +34,3 @@ public sealed partial class FeedbackPopupSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

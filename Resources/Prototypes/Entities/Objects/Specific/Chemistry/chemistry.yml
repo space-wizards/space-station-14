@@ -613,7 +613,6 @@
   components:
   - type: Solution
     solution:
-      canReact: false
       maxVol: 20
 
 - type: entity

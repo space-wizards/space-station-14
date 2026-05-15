@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Voting;
 
 [Serializable, NetSerializable]
-public sealed partial class VotePlayerListRequestEvent : EntityEventArgs
+public sealed class VotePlayerListRequestEvent : EntityEventArgs
 {
 
 }
 
 [Serializable, NetSerializable]
-public sealed partial class VotePlayerListResponseEvent : EntityEventArgs
+public sealed class VotePlayerListResponseEvent : EntityEventArgs
 {
     public VotePlayerListResponseEvent((NetUserId, NetEntity, string)[] players, bool denied)
     {
@@ -28,4 +28,3 @@ public sealed partial class VotePlayerListResponseEvent : EntityEventArgs
     /// </summary>
     public bool Denied;
 }
-

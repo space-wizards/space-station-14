@@ -7,7 +7,7 @@ namespace Content.Shared.UserInterface;
 /// It's a message not a state because it's for debugging and it makes it easier to bootstrap more data dumping.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class StatValuesEuiMessage : EuiMessageBase
+public sealed class StatValuesEuiMessage : EuiMessageBase
 {
     /// <summary>
     /// Titles for the window.
@@ -16,4 +16,3 @@ public sealed partial class StatValuesEuiMessage : EuiMessageBase
     public List<string> Headers = new();
     public List<string[]> Values = new();
 }
-

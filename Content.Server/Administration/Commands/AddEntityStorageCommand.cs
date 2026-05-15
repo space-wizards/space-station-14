@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class AddEntityStorageCommand : LocalizedCommands
+    public sealed class AddEntityStorageCommand : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
 
         public override string Command => "addstorage";
 
@@ -44,4 +44,3 @@ namespace Content.Server.Administration.Commands
         }
     }
 }
-

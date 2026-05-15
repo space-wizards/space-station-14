@@ -14,16 +14,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;
 
-public sealed partial class MagicMirrorSystem : EntitySystem
+public sealed class MagicMirrorSystem : EntitySystem
 {
-    [Dependency] private SharedInteractionSystem _interaction = default!;
-    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
-    [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private TagSystem _tag = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
 
     private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
 
@@ -252,7 +252,7 @@ public enum MagicMirrorUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MagicMirrorSelectMessage : BoundUserInterfaceMessage
+public sealed class MagicMirrorSelectMessage : BoundUserInterfaceMessage
 {
     public MagicMirrorSelectMessage(Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings)
     {
@@ -264,7 +264,7 @@ public sealed partial class MagicMirrorSelectMessage : BoundUserInterfaceMessage
 
 
 [Serializable, NetSerializable]
-public sealed partial class MagicMirrorUiState : BoundUserInterfaceState
+public sealed class MagicMirrorUiState : BoundUserInterfaceState
 {
     public MagicMirrorUiState(Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> profiles,
         Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> markings,
@@ -289,4 +289,3 @@ public sealed partial class MagicMirrorSelectDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
-

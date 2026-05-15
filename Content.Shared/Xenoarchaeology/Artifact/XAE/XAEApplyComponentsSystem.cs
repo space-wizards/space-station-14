@@ -6,9 +6,9 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for applying component-registry when artifact effect is activated.
 /// </summary>
-public sealed partial class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
+public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEApplyComponentsComponent> ent, ref XenoArtifactNodeActivatedEvent args)

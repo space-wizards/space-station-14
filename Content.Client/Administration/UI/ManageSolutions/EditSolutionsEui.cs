@@ -9,7 +9,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
     ///     Admin Eui for displaying and editing the reagents in a solution.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class EditSolutionsEui : BaseEui
+    public sealed class EditSolutionsEui : BaseEui
     {
         private readonly EditSolutionsWindow _window;
 
@@ -38,4 +38,3 @@ namespace Content.Client.Administration.UI.ManageSolutions
         }
     }
 }
-

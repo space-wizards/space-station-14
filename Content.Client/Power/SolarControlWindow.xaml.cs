@@ -89,11 +89,11 @@ namespace Content.Client.Power
 
     }
 
-    public sealed partial class SolarControlNotARadar : Control
+    public sealed class SolarControlNotARadar : Control
     {
         // This is used for client-side prediction of the panel rotation.
         // This makes the display feel a lot smoother.
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 
@@ -162,11 +162,10 @@ namespace Content.Client.Power
     }
 
     [UsedImplicitly]
-    public sealed partial class SolarControlConsoleBoundUserInterface : ComputerBoundUserInterface<SolarControlWindow, SolarControlConsoleBoundInterfaceState>
+    public sealed class SolarControlConsoleBoundUserInterface : ComputerBoundUserInterface<SolarControlWindow, SolarControlConsoleBoundInterfaceState>
     {
         public SolarControlConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
     }
 }
-

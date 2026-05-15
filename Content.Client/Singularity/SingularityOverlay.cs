@@ -9,13 +9,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Singularity
 {
-    public sealed partial class SingularityOverlay : Overlay, IEntityEventSubscriber
+    public sealed class SingularityOverlay : Overlay, IEntityEventSubscriber
     {
         private static readonly ProtoId<ShaderPrototype> Shader = "Singularity";
 
-        [Dependency] private IEntityManager _entMan = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         private SharedTransformSystem? _xformSystem = null;
 
         /// <summary>

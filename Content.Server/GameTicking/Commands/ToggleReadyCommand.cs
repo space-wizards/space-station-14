@@ -4,9 +4,9 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands;
 
 [AnyCommand]
-public sealed partial class ToggleReadyCommand : LocalizedEntityCommands
+public sealed class ToggleReadyCommand : LocalizedEntityCommands
 {
-    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override string Command => "toggleready";
 

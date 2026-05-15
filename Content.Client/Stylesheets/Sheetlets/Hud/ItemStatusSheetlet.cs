@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.Fonts;
+﻿using Content.Client.Stylesheets.Fonts;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed partial class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -28,4 +28,3 @@ public sealed partial class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

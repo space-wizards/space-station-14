@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed partial class ChannelSelectorItemButton : Button
+public sealed class ChannelSelectorItemButton : Button
 {
     public const string StyleClassChatSelectorOptionButton = "ChatSelectorOptionButton";
 
@@ -26,4 +26,3 @@ public sealed partial class ChannelSelectorItemButton : Button
             Text = Loc.GetString("hud-chatbox-select-name-prefixed", ("name", Text), ("prefix", prefix));
     }
 }
-

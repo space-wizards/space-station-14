@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.DeviceLinking.UI;
 
 [UsedImplicitly]
-public sealed partial class RandomGateBoundUserInterface : BoundUserInterface
+public sealed class RandomGateBoundUserInterface : BoundUserInterface
 {
     private RandomGateSetupWindow? _window;
 
@@ -35,4 +35,3 @@ public sealed partial class RandomGateBoundUserInterface : BoundUserInterface
         _window.SetProbability(castState.SuccessProbability * 100);
     }
 }
-

@@ -26,7 +26,7 @@ public sealed partial class GenpopLockerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class GenpopLockerIdConfiguredMessage : BoundUserInterfaceMessage
+public sealed class GenpopLockerIdConfiguredMessage : BoundUserInterfaceMessage
 {
     public string Name;
     public float Sentence;
@@ -45,4 +45,3 @@ public enum GenpopLockerUiKey : byte
 {
     Key
 }
-

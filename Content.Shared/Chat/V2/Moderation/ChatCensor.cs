@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 
 namespace Content.Shared.Chat.V2.Moderation;
 
@@ -7,7 +7,7 @@ public interface IChatCensor
     public bool Censor(string input, out string output, char replaceWith = '*');
 }
 
-public sealed partial class CompoundChatCensor(IEnumerable<IChatCensor> censors) : IChatCensor
+public sealed class CompoundChatCensor(IEnumerable<IChatCensor> censors) : IChatCensor
 {
     public bool Censor(string input, out string output, char replaceWith = '*')
     {
@@ -27,7 +27,7 @@ public sealed partial class CompoundChatCensor(IEnumerable<IChatCensor> censors)
     }
 }
 
-public sealed partial class ChatCensorFactory
+public sealed class ChatCensorFactory
 {
     private List<IChatCensor> _censors = new();
 
@@ -57,4 +57,3 @@ public sealed partial class ChatCensorFactory
         return notEmpty;
     }
 }
-

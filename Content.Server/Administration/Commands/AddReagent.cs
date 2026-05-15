@@ -13,11 +13,10 @@ namespace Content.Server.Administration.Commands
     ///     Command that allows you to edit an existing solution by adding (or removing) reagents.
     /// </summary>
     [AdminCommand(AdminFlags.Admin)]
-    public sealed partial class AddReagent : LocalizedCommands
+    public sealed class AddReagent : LocalizedCommands
     {
-        [Dependency] private IEntityManager _entManager = default!;
-        [Dependency] private IPrototypeManager _protomanager = default!;
-        [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protomanager = default!;
 
         public override string Command => "addreagent";
 
@@ -36,9 +35,10 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_solutionContainer.TryGetSolution(uid.Value, args[1], out var solution))
+            var solutionContainerSystem = _entManager.System<SharedSolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution(uid.Value, args[1], out var solution))
             {
-                var solutions = _solutionContainer.EnumerateSolutions(uid.Value).ToArray();
+                var solutions = solutionContainerSystem.EnumerateSolutions(uid.Value).ToArray();
                 if (!solutions.Any())
                 {
                     shell.WriteLine(Loc.GetString("cmd-addreagent-no-solutions"));
@@ -64,9 +64,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                _solutionContainer.TryAddReagent(solution.Value, args[2], quantity, out _);
+                solutionContainerSystem.TryAddReagent(solution.Value, args[2], quantity, out _);
             else
-                _solutionContainer.RemoveReagent(solution.Value, args[2], quantity);
+                solutionContainerSystem.RemoveReagent(solution.Value, args[2], quantity);
         }
     }
 }

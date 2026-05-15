@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
 
@@ -6,7 +6,7 @@ namespace Content.Shared.Administration;
 /// A networked event raised when the server wants to open a quick dialog.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class QuickDialogOpenEvent : EntityEventArgs
+public sealed class QuickDialogOpenEvent : EntityEventArgs
 {
     /// <summary>
     /// The title of the dialog.
@@ -41,7 +41,7 @@ public sealed partial class QuickDialogOpenEvent : EntityEventArgs
 /// A networked event raised when the client replies to a quick dialog.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class QuickDialogResponseEvent : EntityEventArgs
+public sealed class QuickDialogResponseEvent : EntityEventArgs
 {
     /// <summary>
     /// The internal dialog ID.
@@ -70,7 +70,7 @@ public sealed partial class QuickDialogResponseEvent : EntityEventArgs
 /// An entry in a quick dialog.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class QuickDialogEntry
+public sealed class QuickDialogEntry
 {
     /// <summary>
     /// ID of the dialog field.
@@ -133,4 +133,3 @@ public enum QuickDialogEntryType
     /// </summary>
     LongText,
 }
-

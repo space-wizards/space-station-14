@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed partial class OOCCommand : LocalizedCommands
+    internal sealed class OOCCommand : LocalizedCommands
     {
-        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Command => "ooc";
 

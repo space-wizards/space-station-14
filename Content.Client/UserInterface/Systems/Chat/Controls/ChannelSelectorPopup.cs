@@ -4,7 +4,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed partial class ChannelSelectorPopup : Popup
+public sealed class ChannelSelectorPopup : Popup
 {
     // order in which the channels show up in the channel selector
     public static readonly ChatSelectChannel[] ChannelSelectorOrder =
@@ -123,4 +123,3 @@ public sealed partial class ChannelSelectorPopup : Popup
         _chatUIController.SelectableChannelsChanged -= SetChannels;
     }
 }
-

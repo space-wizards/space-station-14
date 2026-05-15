@@ -19,7 +19,7 @@ public sealed partial class AlertsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AlertComponentState : ComponentState
+public sealed class AlertComponentState : ComponentState
 {
     public Dictionary<AlertKey, AlertState> Alerts { get; }
     public AlertComponentState(Dictionary<AlertKey, AlertState> alerts)
@@ -27,4 +27,3 @@ public sealed partial class AlertComponentState : ComponentState
         Alerts = alerts;
     }
 }
-

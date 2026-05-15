@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Chemistry;
 
 [UsedImplicitly]
-public sealed partial class ReactiveSystem : EntitySystem
+public sealed class ReactiveSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
     {

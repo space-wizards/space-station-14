@@ -9,10 +9,10 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed partial class CloseRecentWindowUIController : UIController
+public sealed class CloseRecentWindowUIController : UIController
 {
-    [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private IUserInterfaceManager _uiManager = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
     /// <summary>
     /// A list of windows that have been interacted with recently.  Windows should only

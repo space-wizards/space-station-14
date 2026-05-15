@@ -26,10 +26,7 @@ public abstract partial class SharedStackSystem
 
         ReduceCount(stackEnt, 1);
         var stackId = _prototype.Index(stackEnt.Comp.StackTypeId);
-        var entityUid = PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
-
-        SetCount(entityUid, 1);
-        return entityUid;
+        return PredictedSpawnNextToOrDrop(stackId.Spawn, stackEnt.Owner);
     }
 
     #endregion

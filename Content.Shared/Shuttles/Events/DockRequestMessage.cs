@@ -6,10 +6,9 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised on the client when it's viewing a particular docking port to try and dock it.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class DockRequestMessage : BoundUserInterfaceMessage
+public sealed class DockRequestMessage : BoundUserInterfaceMessage
 {
     public NetEntity DockEntity;
 
     public NetEntity TargetDockEntity;
 }
-

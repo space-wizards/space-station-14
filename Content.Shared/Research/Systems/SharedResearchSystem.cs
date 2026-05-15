@@ -9,11 +9,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Systems;
 
-public abstract partial class SharedResearchSystem : EntitySystem
+public abstract class SharedResearchSystem : EntitySystem
 {
-    [Dependency] protected IPrototypeManager PrototypeManager = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedLatheSystem _lathe = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedLatheSystem _lathe = default!;
 
     public override void Initialize()
     {

@@ -1,9 +1,9 @@
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 
 
 namespace Content.Server.Administration
 {
-    public sealed partial class AdminRank
+    public sealed class AdminRank
     {
         public AdminRank(string name, AdminFlags flags)
         {
@@ -15,4 +15,3 @@ namespace Content.Server.Administration
         public AdminFlags Flags { get; }
     }
 }
-

@@ -5,13 +5,13 @@ namespace Content.Shared.Localizations
 {
     public static class Units
     {
-        public sealed partial class TypeTable
+        public sealed class TypeTable
         {
             public readonly Entry[] E;
 
             public TypeTable(params Entry[] e) => E = e;
 
-            public sealed partial class Entry
+            public sealed class Entry
             {
                 // Any item within [Min, Max) is considered to be in-range
                 // of this Entry.
@@ -139,4 +139,3 @@ namespace Content.Shared.Localizations
         };
     }
 }
-

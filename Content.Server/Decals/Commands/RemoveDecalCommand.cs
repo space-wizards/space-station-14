@@ -6,9 +6,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed partial class RemoveDecalCommand : LocalizedEntityCommands
+    public sealed class RemoveDecalCommand : LocalizedEntityCommands
     {
-        [Dependency] private DecalSystem _decalSystem = default!;
+        [Dependency] private readonly DecalSystem _decalSystem = default!;
 
         public override string Command => "rmdecal";
 
@@ -45,4 +45,3 @@ namespace Content.Server.Decals.Commands
         }
     }
 }
-

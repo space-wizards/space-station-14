@@ -1,10 +1,10 @@
-using Content.Server.EUI;
+﻿using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 
 namespace Content.Server.Ghost.Roles.UI
 {
-    public sealed partial class MakeGhostRoleEui : BaseEui
+    public sealed class MakeGhostRoleEui : BaseEui
     {
         private IEntityManager _entManager;
 
@@ -29,4 +29,3 @@ namespace Content.Server.Ghost.Roles.UI
         }
     }
 }
-

@@ -5,9 +5,9 @@ using Robust.Client.Player;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed partial class ContentEyeSystem : SharedContentEyeSystem
+public sealed class ContentEyeSystem : SharedContentEyeSystem
 {
-    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     public void RequestZoom(EntityUid uid, Vector2 zoom, bool ignoreLimit, bool scalePvs, ContentEyeComponent? content = null)
     {

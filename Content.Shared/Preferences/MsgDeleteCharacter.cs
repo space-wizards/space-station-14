@@ -1,4 +1,4 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Preferences
     /// <summary>
     /// The client sends this to delete a character profile.
     /// </summary>
-    public sealed partial class MsgDeleteCharacter : NetMessage
+    public sealed class MsgDeleteCharacter : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -24,4 +24,3 @@ namespace Content.Shared.Preferences
         }
     }
 }
-

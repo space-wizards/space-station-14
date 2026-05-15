@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage.ForceSay;
 
@@ -7,8 +7,7 @@ namespace Content.Shared.Damage.ForceSay;
 ///     that COMMANDS them to speak the current message in their chatbox
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class DamageForceSayEvent : EntityEventArgs
+public sealed class DamageForceSayEvent : EntityEventArgs
 {
     public string? Suffix;
 }
-

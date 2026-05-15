@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public sealed partial class OpenAdminLogsCommand : LocalizedEntityCommands
+public sealed class OpenAdminLogsCommand : LocalizedEntityCommands
 {
-    [Dependency] private EuiManager _euiManager = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
     public override string Command => Cmd;
     public const string Cmd = "adminlogs";

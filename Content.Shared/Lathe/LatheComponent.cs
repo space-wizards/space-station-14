@@ -85,7 +85,7 @@ namespace Content.Shared.Lathe
         #endregion
     }
 
-    public sealed partial class LatheGetRecipesEvent : EntityEventArgs
+    public sealed class LatheGetRecipesEvent : EntityEventArgs
     {
         public readonly EntityUid Lathe;
         public readonly LatheComponent Comp;
@@ -122,4 +122,3 @@ namespace Content.Shared.Lathe
     [ByRefEvent]
     public readonly record struct LatheStartPrintingEvent(LatheRecipePrototype Recipe);
 }
-

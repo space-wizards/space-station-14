@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <remarks>
 ///     The actual arrow and other icons are defined in the style sheet.
 /// </remarks>
-public sealed partial class DirectionIcon : TextureRect
+public sealed class DirectionIcon : TextureRect
 {
     public static string StyleClassDirectionIconArrow = "direction-icon-arrow"; // south pointing arrow
     public static string StyleClassDirectionIconHere = "direction-icon-here"; // "you have reached your destination"
@@ -71,4 +71,3 @@ public sealed partial class DirectionIcon : TextureRect
         base.Draw(handle);
     }
 }
-

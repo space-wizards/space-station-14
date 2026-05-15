@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Research.UI;
 
 [UsedImplicitly]
-public sealed partial class ResearchConsoleBoundUserInterface : BoundUserInterface
+public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private ResearchConsoleMenu? _consoleMenu;
@@ -60,4 +60,3 @@ public sealed partial class ResearchConsoleBoundUserInterface : BoundUserInterfa
         _consoleMenu?.UpdateInformationPanel(castState);
     }
 }
-

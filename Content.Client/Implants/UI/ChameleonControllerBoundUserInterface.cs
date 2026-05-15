@@ -1,4 +1,4 @@
-using Content.Shared.Clothing;
+﻿using Content.Shared.Clothing;
 using Content.Shared.Implants;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Implants.UI;
 
 [UsedImplicitly]
-public sealed partial class ChameleonControllerBoundUserInterface : BoundUserInterface
+public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 {
     private readonly UseDelaySystem _delay;
 
@@ -47,4 +47,3 @@ public sealed partial class ChameleonControllerBoundUserInterface : BoundUserInt
         _menu.UpdateGrid(true);
     }
 }
-

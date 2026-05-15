@@ -10,12 +10,12 @@ namespace Content.Server.Mech.Systems;
 /// <summary>
 /// Handles the insertion of mech equipment into mechs.
 /// </summary>
-public sealed partial class MechEquipmentSystem : EntitySystem
+public sealed class MechEquipmentSystem : EntitySystem
 {
-    [Dependency] private MechSystem _mech = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly MechSystem _mech = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

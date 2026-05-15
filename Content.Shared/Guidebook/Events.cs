@@ -7,14 +7,14 @@ namespace Content.Shared.Guidebook;
 /// full set of guidebook data from the server.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RequestGuidebookDataEvent : EntityEventArgs { }
+public sealed class RequestGuidebookDataEvent : EntityEventArgs { }
 
 /// <summary>
 /// Raised by the server at a specific client in response to <see cref="RequestGuidebookDataEvent"/>.
 /// Also raised by the server at ALL clients when prototype data is hot-reloaded.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class UpdateGuidebookDataEvent : EntityEventArgs
+public sealed class UpdateGuidebookDataEvent : EntityEventArgs
 {
     public GuidebookData Data;
 
@@ -23,4 +23,3 @@ public sealed partial class UpdateGuidebookDataEvent : EntityEventArgs
         Data = data;
     }
 }
-

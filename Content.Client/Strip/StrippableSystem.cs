@@ -11,7 +11,7 @@ namespace Content.Client.Strip;
 /// <summary>
 ///     This is the client-side stripping system, which just triggers UI updates on events.
 /// </summary>
-public sealed partial class StrippableSystem : SharedStrippableSystem
+public sealed class StrippableSystem : SharedStrippableSystem
 {
     public override void Initialize()
     {
@@ -42,4 +42,3 @@ public sealed partial class StrippableSystem : SharedStrippableSystem
         }
     }
 }
-

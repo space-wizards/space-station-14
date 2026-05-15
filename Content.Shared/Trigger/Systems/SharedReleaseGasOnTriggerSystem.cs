@@ -8,10 +8,10 @@ namespace Content.Shared.Trigger.Systems;
 /// Can also release gas over a set timespan to prevent trolling people
 /// with the instant-wall-of-pressure-inator.
 /// </summary>
-public abstract partial class SharedReleaseGasOnTriggerSystem : EntitySystem
+public abstract class SharedReleaseGasOnTriggerSystem : EntitySystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {

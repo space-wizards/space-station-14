@@ -1,4 +1,4 @@
-using Content.Shared.FixedPoint;
+﻿using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry
     /// Sent by the client when setting the transfer amount using the BUI.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class TransferAmountSetValueMessage(FixedPoint2 value) : BoundUserInterfaceMessage
+    public sealed class TransferAmountSetValueMessage(FixedPoint2 value) : BoundUserInterfaceMessage
     {
         /// <summary>
         /// The new transfer amount.
@@ -21,4 +21,3 @@ namespace Content.Shared.Chemistry
         Key,
     }
 }
-

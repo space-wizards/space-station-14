@@ -13,7 +13,7 @@ public enum HumanoidMarkingModifierKey
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfaceMessage
+public sealed class HumanoidMarkingModifierMarkingSetMessage : BoundUserInterfaceMessage
 {
     public Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> Markings { get; }
 
@@ -24,7 +24,7 @@ public sealed partial class HumanoidMarkingModifierMarkingSetMessage : BoundUser
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HumanoidMarkingModifierState : BoundUserInterfaceState
+public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
     public HumanoidMarkingModifierState(
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings,
@@ -41,4 +41,3 @@ public sealed partial class HumanoidMarkingModifierState : BoundUserInterfaceSta
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData> OrganData { get; }
     public Dictionary<ProtoId<OrganCategoryPrototype>, OrganProfileData> OrganProfileData { get; }
 }
-

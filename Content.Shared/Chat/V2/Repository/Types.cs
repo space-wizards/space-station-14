@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.InteropServices;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -21,7 +21,7 @@ public struct ChatRecord(string userName, NetUserId userId, IChatEvent storedEve
 /// </summary>
 /// <param name="ev"></param>
 [Serializable, NetSerializable]
-public sealed partial class MessageCreatedEvent(IChatEvent ev) : EntityEventArgs
+public sealed class MessageCreatedEvent(IChatEvent ev) : EntityEventArgs
 {
     public IChatEvent Event = ev;
 }
@@ -32,7 +32,7 @@ public sealed partial class MessageCreatedEvent(IChatEvent ev) : EntityEventArgs
 /// <param name="id"></param>
 /// <param name="newMessage"></param>
 [Serializable, NetSerializable]
-public sealed partial class MessagePatchedEvent(uint id, string newMessage) : EntityEventArgs
+public sealed class MessagePatchedEvent(uint id, string newMessage) : EntityEventArgs
 {
     public uint MessageId = id;
     public string NewMessage = newMessage;
@@ -43,7 +43,7 @@ public sealed partial class MessagePatchedEvent(uint id, string newMessage) : En
 /// </summary>
 /// <param name="id"></param>
 [Serializable, NetSerializable]
-public sealed partial class MessageDeletedEvent(uint id) : EntityEventArgs
+public sealed class MessageDeletedEvent(uint id) : EntityEventArgs
 {
     public uint MessageId = id;
 }
@@ -53,9 +53,8 @@ public sealed partial class MessageDeletedEvent(uint id) : EntityEventArgs
 /// </summary>
 /// <param name="set"></param>
 [Serializable, NetSerializable]
-public sealed partial class MessagesNukedEvent(List<uint> set) : EntityEventArgs
+public sealed class MessagesNukedEvent(List<uint> set) : EntityEventArgs
 {
     public uint[] MessageIds = CollectionsMarshal.AsSpan(set).ToArray();
 }
-
 

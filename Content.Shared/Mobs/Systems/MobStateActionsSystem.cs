@@ -7,9 +7,9 @@ namespace Content.Shared.Mobs.Systems;
 /// <summary>
 ///     Adds and removes defined actions when a mob's <see cref="MobState"/> changes.
 /// </summary>
-public sealed partial class MobStateActionsSystem : EntitySystem
+public sealed class MobStateActionsSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

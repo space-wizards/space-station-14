@@ -7,7 +7,7 @@ namespace Content.Client.Audio;
 /// <summary>
 /// Debug overlay that shows all ambientsound sources in range
 /// </summary>
-public sealed partial class AmbientSoundOverlay : Overlay
+public sealed class AmbientSoundOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
     private readonly AmbientSoundSystem _ambient;
@@ -55,4 +55,3 @@ public sealed partial class AmbientSoundOverlay : Overlay
         }
     }
 }
-

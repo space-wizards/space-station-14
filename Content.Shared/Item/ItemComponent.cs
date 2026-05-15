@@ -67,7 +67,7 @@ public sealed partial class ItemComponent : Component
 ///     that it can properly update its hands or inventory sprites and GUI.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class VisualsChangedEvent : EntityEventArgs
+public sealed class VisualsChangedEvent : EntityEventArgs
 {
     public readonly NetEntity Item;
     public readonly string ContainerId;
@@ -78,4 +78,3 @@ public sealed partial class VisualsChangedEvent : EntityEventArgs
         ContainerId = containerId;
     }
 }
-

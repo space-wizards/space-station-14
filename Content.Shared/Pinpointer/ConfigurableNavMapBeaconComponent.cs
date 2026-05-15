@@ -11,7 +11,7 @@ namespace Content.Shared.Pinpointer;
 public sealed partial class ConfigurableNavMapBeaconComponent : Component;
 
 [Serializable, NetSerializable]
-public sealed partial class NavMapBeaconConfigureBuiMessage : BoundUserInterfaceMessage
+public sealed class NavMapBeaconConfigureBuiMessage : BoundUserInterfaceMessage
 {
     public string? Text;
     public bool Enabled;
@@ -36,4 +36,3 @@ public enum NavMapBeaconVisuals : byte
 {
     Enabled,
 }
-

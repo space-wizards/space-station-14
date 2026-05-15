@@ -84,7 +84,7 @@ public sealed partial class ChameleonClothingComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string? SelectedId;
@@ -99,7 +99,7 @@ public sealed partial class ChameleonBoundUserInterfaceState : BoundUserInterfac
 }
 
 [Serializable, NetSerializable]
-public sealed partial class ChameleonPrototypeSelectedMessage : BoundUserInterfaceMessage
+public sealed class ChameleonPrototypeSelectedMessage : BoundUserInterfaceMessage
 {
     public readonly string SelectedId;
 
@@ -114,4 +114,3 @@ public enum ChameleonUiKey : byte
 {
     Key
 }
-

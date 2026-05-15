@@ -7,7 +7,7 @@ namespace Content.Client.Chemistry.UI;
 /// <summary>
 ///     Creates a grid of buttons given a comma-seperated list of Text
 /// </summary>
-public sealed partial class ButtonGrid : GridContainer
+public sealed class ButtonGrid : GridContainer
 {
     private string _buttonList = "";
 
@@ -117,4 +117,3 @@ public sealed partial class ButtonGrid : GridContainer
         }
     }
 }
-

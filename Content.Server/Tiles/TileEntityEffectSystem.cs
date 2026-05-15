@@ -3,9 +3,9 @@ using Content.Shared.EntityEffects;
 
 namespace Content.Server.Tiles;
 
-public sealed partial class TileEntityEffectSystem : EntitySystem
+public sealed class TileEntityEffectSystem : EntitySystem
 {
-    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
     public override void Initialize()
     {

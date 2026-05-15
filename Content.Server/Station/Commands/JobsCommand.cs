@@ -11,7 +11,7 @@ using Robust.Shared.Toolshed.TypeParsers;
 namespace Content.Server.Station.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.VarEdit)]
-public sealed partial class JobsCommand : ToolshedCommand
+public sealed class JobsCommand : ToolshedCommand
 {
     private StationJobsSystem? _jobs;
 
@@ -111,4 +111,3 @@ public readonly record struct JobSlotRef(string Job, EntityUid Station, StationJ
         return Jobs.TryGetJobSlot(Station, Job, out var slot) && slot is null;
     }
 }
-

@@ -1,9 +1,9 @@
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace Content.Client.Instruments.MidiParser;
 
-public sealed partial class MidiStreamWrapper
+public sealed class MidiStreamWrapper
 {
     private readonly MemoryStream _stream;
     private byte[] _buffer;
@@ -101,4 +101,3 @@ public sealed partial class MidiStreamWrapper
         return value;
     }
 }
-

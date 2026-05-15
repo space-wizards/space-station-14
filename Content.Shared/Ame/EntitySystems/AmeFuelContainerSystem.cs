@@ -6,7 +6,7 @@ namespace Content.Shared.Ame.EntitySystems;
 /// <summary>
 /// Adds details about fuel level when examining antimatter engine fuel containers.
 /// </summary>
-public sealed partial class AmeFuelContainerSystem : EntitySystem
+public sealed class AmeFuelContainerSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -28,4 +28,3 @@ public sealed partial class AmeFuelContainerSystem : EntitySystem
             ("capacity", comp.FuelCapacity)));
     }
 }
-

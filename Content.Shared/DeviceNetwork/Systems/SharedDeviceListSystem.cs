@@ -15,7 +15,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
     }
 }
 
-public sealed partial class DeviceListUpdateEvent : EntityEventArgs
+public sealed class DeviceListUpdateEvent : EntityEventArgs
 {
     public DeviceListUpdateEvent(List<EntityUid> oldDevices, List<EntityUid> devices)
     {
@@ -33,4 +33,3 @@ public enum DeviceListUpdateResult : byte
     TooManyDevices,
     UpdateOk
 }
-

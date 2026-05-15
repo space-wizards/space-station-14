@@ -5,10 +5,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Ensnaring;
 
-public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
+public sealed class EnsnareableSystem : SharedEnsnareableSystem
 {
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

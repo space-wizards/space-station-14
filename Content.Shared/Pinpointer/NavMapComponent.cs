@@ -74,7 +74,7 @@ public sealed partial class NavMapComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NavMapChunk(Vector2i origin)
+public sealed class NavMapChunk(Vector2i origin)
 {
     /// <summary>
     /// The chunk origin
@@ -96,7 +96,7 @@ public sealed partial class NavMapChunk(Vector2i origin)
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NavMapRegionOverlay(Enum uiKey, List<(Vector2i, Vector2i)> gridCoords)
+public sealed class NavMapRegionOverlay(Enum uiKey, List<(Vector2i, Vector2i)> gridCoords)
 {
     /// <summary>
     /// The key to the UI that will be displaying this region on its navmap
@@ -123,5 +123,4 @@ public enum NavMapChunkType : byte
     Wall = SharedNavMapSystem.Directions,
     Airlock = 2 * SharedNavMapSystem.Directions,
 }
-
 

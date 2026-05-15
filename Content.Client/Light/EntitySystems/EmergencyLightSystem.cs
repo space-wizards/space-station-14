@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed partial class EmergencyLightSystem : VisualizerSystem<EmergencyLightComponent>
+public sealed class EmergencyLightSystem : VisualizerSystem<EmergencyLightComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, EmergencyLightComponent comp, ref AppearanceChangeEvent args)
     {
@@ -24,4 +24,3 @@ public sealed partial class EmergencyLightSystem : VisualizerSystem<EmergencyLig
         }
     }
 }
-

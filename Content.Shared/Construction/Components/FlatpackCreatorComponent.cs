@@ -72,8 +72,7 @@ public enum FlatpackCreatorVisuals : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class FlatpackCreatorStartPackBuiMessage : BoundUserInterfaceMessage
+public sealed class FlatpackCreatorStartPackBuiMessage : BoundUserInterfaceMessage
 {
 
 }
-

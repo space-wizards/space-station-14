@@ -5,7 +5,7 @@ namespace Content.Shared.Doors
     /// <summary>
     /// Raised when the door's State variable is changed to a new variable that it was not equal to before.
     /// </summary>
-    public sealed partial class DoorStateChangedEvent : EntityEventArgs
+    public sealed class DoorStateChangedEvent : EntityEventArgs
     {
         public readonly DoorState State;
 
@@ -18,7 +18,7 @@ namespace Content.Shared.Doors
     /// <summary>
     /// Raised when the door's bolt status was changed.
     /// </summary>
-    public sealed partial class DoorBoltsChangedEvent : EntityEventArgs
+    public sealed class DoorBoltsChangedEvent : EntityEventArgs
     {
         public readonly bool BoltsDown;
 
@@ -32,7 +32,7 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to open.
     /// Cancel to stop the door from being opened.
     /// </summary>
-    public sealed partial class BeforeDoorOpenedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorOpenedEvent : CancellableEntityEventArgs
     {
         public EntityUid? User = null;
     }
@@ -47,7 +47,7 @@ namespace Content.Shared.Doors
     /// closed (opaque &amp; collidable). If canceled while partially closing, it will start opening again. Useful in case
     /// an entity entered the door just as it was about to become "solid".
     /// </remarks>
-    public sealed partial class BeforeDoorClosedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorClosedEvent : CancellableEntityEventArgs
     {
         /// <summary>
         /// If true, this check is being performed when the door is partially closing.
@@ -66,7 +66,7 @@ namespace Content.Shared.Doors
     /// Called when the door is determining whether it is able to deny.
     /// Cancel to stop the door from being able to deny.
     /// </summary>
-    public sealed partial class BeforeDoorDeniedEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorDeniedEvent : CancellableEntityEventArgs
     {
     }
 
@@ -77,8 +77,7 @@ namespace Content.Shared.Doors
     /// <remarks>
     /// This is called when a door decides whether it SHOULD auto close, not when it actually closes.
     /// </remarks>
-    public sealed partial class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
+    public sealed class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
     }
 }
-

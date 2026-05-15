@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Shuttles.BUIStates;
 
 [Serializable, NetSerializable]
-public sealed partial class EmergencyConsoleBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class EmergencyConsoleBoundUserInterfaceState : BoundUserInterfaceState
 {
     /// <summary>
     /// null if we're not early launching.
@@ -14,4 +14,3 @@ public sealed partial class EmergencyConsoleBoundUserInterfaceState : BoundUserI
 
     public TimeSpan? TimeToLaunch;
 }
-

@@ -40,22 +40,22 @@ public sealed partial class JukeboxComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class JukeboxPlayingMessage : BoundUserInterfaceMessage;
+public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class JukeboxPauseMessage : BoundUserInterfaceMessage;
+public sealed class JukeboxPauseMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class JukeboxStopMessage : BoundUserInterfaceMessage;
+public sealed class JukeboxStopMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
+public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
 {
     public ProtoId<JukeboxPrototype> SongId { get; } = songId;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class JukeboxSetTimeMessage(float songTime) : BoundUserInterfaceMessage
+public sealed class JukeboxSetTimeMessage(float songTime) : BoundUserInterfaceMessage
 {
     public float SongTime { get; } = songTime;
 }
@@ -78,4 +78,3 @@ public enum JukeboxVisualLayers : byte
 {
     Base
 }
-

@@ -13,9 +13,9 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed partial class OpenExplosionEui : LocalizedEntityCommands
+public sealed class OpenExplosionEui : LocalizedEntityCommands
 {
-    [Dependency] private EuiManager _euiManager = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
     public override string Command => "explosionui";
 
@@ -34,11 +34,11 @@ public sealed partial class OpenExplosionEui : LocalizedEntityCommands
 }
 
 [AdminCommand(AdminFlags.Fun)] // for the admin. Not so much for anyone else.
-public sealed partial class ExplosionCommand : LocalizedEntityCommands
+public sealed class ExplosionCommand : LocalizedEntityCommands
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private ExplosionSystem _explosion = default!;
-    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override string Command => "explosion";
 

@@ -4,7 +4,7 @@ using Content.Shared.Speech;
 
 namespace Content.Server.Speech;
 
-public sealed partial class AccentSystem : EntitySystem
+public sealed class AccentSystem : EntitySystem
 {
     public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
 
@@ -24,4 +24,3 @@ public sealed partial class AccentSystem : EntitySystem
         args.Message = accentEvent.Message;
     }
 }
-

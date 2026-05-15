@@ -7,7 +7,7 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.Access;
 
-public sealed partial class AccessOverlay : Overlay
+public sealed class AccessOverlay : Overlay
 {
     private const string TextFontPath = "/Fonts/NotoSans/NotoSans-Regular.ttf";
     private const int TextFontSize = 12;
@@ -92,4 +92,3 @@ public sealed partial class AccessOverlay : Overlay
         }
     }
 }
-

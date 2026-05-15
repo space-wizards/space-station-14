@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
@@ -25,7 +25,7 @@ public enum NetworkConfiguratorButtonKey
 /// Message sent when the remove button for one device on the list was pressed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorRemoveDeviceMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorRemoveDeviceMessage : BoundUserInterfaceMessage
 {
     public readonly string Address;
 
@@ -39,12 +39,12 @@ public sealed partial class NetworkConfiguratorRemoveDeviceMessage : BoundUserIn
 /// Message sent when the clear button was pressed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorClearDevicesMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorClearDevicesMessage : BoundUserInterfaceMessage
 {
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorButtonPressedMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorButtonPressedMessage : BoundUserInterfaceMessage
 {
     public readonly NetworkConfiguratorButtonKey ButtonKey;
 
@@ -55,13 +55,13 @@ public sealed partial class NetworkConfiguratorButtonPressedMessage : BoundUserI
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorClearLinksMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorClearLinksMessage : BoundUserInterfaceMessage
 {
 
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorToggleLinkMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorToggleLinkMessage : BoundUserInterfaceMessage
 {
     public readonly string Source;
     public readonly string Sink;
@@ -74,7 +74,7 @@ public sealed partial class NetworkConfiguratorToggleLinkMessage : BoundUserInte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class NetworkConfiguratorLinksSaveMessage : BoundUserInterfaceMessage
+public sealed class NetworkConfiguratorLinksSaveMessage : BoundUserInterfaceMessage
 {
     public readonly List<(string source, string sink)> Links;
 
@@ -83,4 +83,3 @@ public sealed partial class NetworkConfiguratorLinksSaveMessage : BoundUserInter
         Links = links;
     }
 }
-

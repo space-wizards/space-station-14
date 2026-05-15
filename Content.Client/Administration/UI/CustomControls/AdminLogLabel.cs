@@ -1,10 +1,10 @@
-using Content.Shared.Administration.Logs;
+﻿using Content.Shared.Administration.Logs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Administration.UI.CustomControls;
 
-public sealed partial class AdminLogLabel : RichTextLabel
+public sealed class AdminLogLabel : RichTextLabel
 {
     public AdminLogLabel(ref SharedAdminLog log, HSeparator separator)
     {
@@ -31,4 +31,3 @@ public sealed partial class AdminLogLabel : RichTextLabel
         OnVisibilityChanged -= VisibilityChanged;
     }
 }
-

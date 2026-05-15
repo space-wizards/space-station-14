@@ -14,7 +14,7 @@ namespace Content.Client.Popups;
 /// <summary>
 /// Draws popup text, either in world or on screen.
 /// </summary>
-public sealed partial class PopupOverlay : Overlay
+public sealed class PopupOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
@@ -104,4 +104,3 @@ public sealed partial class PopupOverlay : Overlay
         }
     }
 }
-

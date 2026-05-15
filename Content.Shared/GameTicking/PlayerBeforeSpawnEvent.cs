@@ -1,4 +1,4 @@
-using Content.Shared.Preferences;
+﻿using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.GameTicking;
 ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
 /// </summary>
 [PublicAPI]
-public sealed partial class PlayerBeforeSpawnEvent : HandledEntityEventArgs
+public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
 {
     public ICommonSession Player { get; }
     public HumanoidCharacterProfile Profile { get; }
@@ -31,4 +31,3 @@ public sealed partial class PlayerBeforeSpawnEvent : HandledEntityEventArgs
         Station = station;
     }
 }
-

@@ -1,8 +1,8 @@
-using static Content.Client.Inventory.ClientInventorySystem;
+﻿using static Content.Client.Inventory.ClientInventorySystem;
 
 namespace Content.Client.UserInterface.Controls
 {
-    public sealed partial class SlotButton : SlotControl
+    public sealed class SlotButton : SlotControl
     {
         public SlotButton() { }
 
@@ -17,4 +17,3 @@ namespace Content.Client.UserInterface.Controls
         }
     }
 }
-

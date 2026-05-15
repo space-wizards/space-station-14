@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Teleportation;
 
@@ -12,9 +12,8 @@ public enum TeleportLocationUiKey : byte
 /// Sends message to request that the clicker teleports to the requested location
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TeleportLocationDestinationMessage(NetEntity netEnt, string pointName) : BoundUserInterfaceMessage
+public sealed class TeleportLocationDestinationMessage(NetEntity netEnt, string pointName) : BoundUserInterfaceMessage
 {
     public NetEntity NetEnt = netEnt;
     public string PointName = pointName;
 }
-

@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos;
 /// TemperatureProtection is needed for that.
 /// </summary>
 [ByRefEvent]
-public sealed partial class GetFireProtectionEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class GetFireProtectionEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
@@ -32,4 +32,3 @@ public sealed partial class GetFireProtectionEvent : EntityEventArgs, IInventory
         Multiplier = MathF.Max(Multiplier, 0f);
     }
 }
-

@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -7,7 +7,7 @@ namespace Content.Server.Tabletop
     /// <summary>
     ///     A class for storing data about a running tabletop game.
     /// </summary>
-    public sealed partial class TabletopSession
+    public sealed class TabletopSession
     {
         /// <summary>
         ///     The center position of this session.
@@ -30,4 +30,3 @@ namespace Content.Server.Tabletop
         }
     }
 }
-

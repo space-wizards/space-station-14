@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Botany;
 
-public sealed partial class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVisualsComponent>
+public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVisualsComponent>
 {
     public override void Initialize()
     {
@@ -52,4 +52,3 @@ public enum PlantHolderLayers : byte
     AlertLight,
     HarvestLight,
 }
-

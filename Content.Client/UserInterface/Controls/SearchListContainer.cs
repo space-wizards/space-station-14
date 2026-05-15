@@ -1,9 +1,9 @@
-using System.Linq;
+﻿using System.Linq;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed partial class SearchListContainer : ListContainer
+public sealed class SearchListContainer : ListContainer
 {
     private LineEdit? _searchBar;
     private List<ListData> _unfilteredData = new();
@@ -66,4 +66,3 @@ public sealed partial class SearchListContainer : ListContainer
         base.PopulateList(filteredData);
     }
 }
-

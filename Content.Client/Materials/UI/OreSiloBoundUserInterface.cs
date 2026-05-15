@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Materials.UI;
 
 [UsedImplicitly]
-public sealed partial class OreSiloBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class OreSiloBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private OreSiloMenu? _menu;
@@ -32,4 +32,3 @@ public sealed partial class OreSiloBoundUserInterface(EntityUid owner, Enum uiKe
         _menu?.Update(msg);
     }
 }
-

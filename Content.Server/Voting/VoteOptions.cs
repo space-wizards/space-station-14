@@ -6,7 +6,7 @@ namespace Content.Server.Voting
     /// <summary>
     ///     Options for creating a vote.
     /// </summary>
-    public sealed partial class VoteOptions
+    public sealed class VoteOptions
     {
         /// <summary>
         ///     The text that is shown for "who called the vote".
@@ -77,4 +77,3 @@ namespace Content.Server.Voting
         }
     }
 }
-

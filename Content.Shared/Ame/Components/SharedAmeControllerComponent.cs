@@ -9,7 +9,7 @@ public partial class SharedAmeControllerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AmeControllerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly bool HasPower;
     public readonly bool IsMaster;
@@ -36,7 +36,7 @@ public sealed partial class AmeControllerBoundUserInterfaceState : BoundUserInte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class UiButtonPressedMessage : BoundUserInterfaceMessage
+public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
 {
     public readonly UiButton Button;
 
@@ -75,4 +75,3 @@ public enum AmeControllerState
     Fuck,
     Off,
 }
-

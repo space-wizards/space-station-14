@@ -75,7 +75,7 @@ public sealed partial class StealthComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StealthComponentState : ComponentState
+public sealed class StealthComponentState : ComponentState
 {
     public readonly float Visibility;
     public readonly TimeSpan? LastUpdated;
@@ -88,4 +88,3 @@ public sealed partial class StealthComponentState : ComponentState
         Enabled = enabled;
     }
 }
-

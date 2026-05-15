@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets;
+﻿using Content.Client.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -6,7 +6,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed partial class HLine : PanelContainer
+public sealed class HLine : PanelContainer
 {
     public Color? Color
     {
@@ -39,4 +39,3 @@ public sealed partial class HLine : PanelContainer
     {
     }
 }
-

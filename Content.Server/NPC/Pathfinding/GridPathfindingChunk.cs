@@ -2,7 +2,7 @@ using Content.Shared.NPC;
 
 namespace Content.Server.NPC.Pathfinding;
 
-public sealed partial class GridPathfindingChunk
+public sealed class GridPathfindingChunk
 {
     // TODO: Make this a 1d array
     [ViewVariables]
@@ -42,4 +42,3 @@ public sealed partial class GridPathfindingChunk
         }
     }
 }
-

@@ -2,9 +2,9 @@ using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.Body;
 
-public sealed partial class HandOrganSystem : EntitySystem
+public sealed class HandOrganSystem : EntitySystem
 {
-    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {

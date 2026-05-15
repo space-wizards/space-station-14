@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.StationAi;
 
-public sealed partial class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private StationAiFixerConsoleWindow? _window;
 
@@ -40,4 +40,3 @@ public sealed partial class StationAiFixerConsoleBoundUserInterface(EntityUid ow
         SendPredictedMessage(new StationAiFixerConsoleMessage(action));
     }
 }
-

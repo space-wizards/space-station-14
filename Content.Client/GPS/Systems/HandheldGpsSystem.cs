@@ -4,7 +4,7 @@ using Content.Client.Items;
 
 namespace Content.Client.GPS.Systems;
 
-public sealed partial class HandheldGpsSystem : EntitySystem
+public sealed class HandheldGpsSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -13,4 +13,3 @@ public sealed partial class HandheldGpsSystem : EntitySystem
         Subs.ItemStatus<HandheldGPSComponent>(ent => new HandheldGpsStatusControl(ent));
     }
 }
-

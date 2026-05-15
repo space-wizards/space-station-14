@@ -1,9 +1,9 @@
-namespace Content.Server.GameTicking.Events;
+﻿namespace Content.Server.GameTicking.Events;
 
 /// <summary>
 ///     Raised at the start of <see cref="GameTicker.StartRound"/>, after round id has been incremented
 /// </summary>
-public sealed partial class RoundStartingEvent : EntityEventArgs
+public sealed class RoundStartingEvent : EntityEventArgs
 {
     public RoundStartingEvent(int id)
     {
@@ -12,4 +12,3 @@ public sealed partial class RoundStartingEvent : EntityEventArgs
 
     public int Id { get; }
 }
-

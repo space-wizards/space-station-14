@@ -3,7 +3,7 @@ using Content.Shared.Temperature.Components;
 
 namespace Content.Shared.Temperature.Systems;
 
-public sealed partial class AlwaysHotSystem : EntitySystem
+public sealed class AlwaysHotSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -17,4 +17,3 @@ public sealed partial class AlwaysHotSystem : EntitySystem
         args.IsHot = true;
     }
 }
-

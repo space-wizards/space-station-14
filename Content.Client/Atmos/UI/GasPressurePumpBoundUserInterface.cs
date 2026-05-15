@@ -11,7 +11,7 @@ namespace Content.Client.Atmos.UI;
 /// Initializes a <see cref="GasPressurePumpWindow"/> and updates it when new server messages are received.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GasPressurePumpWindow? _window;
@@ -52,4 +52,3 @@ public sealed partial class GasPressurePumpBoundUserInterface(EntityUid owner, E
         SendPredictedMessage(new GasPressurePumpChangeOutputPressureMessage(value));
     }
 }
-

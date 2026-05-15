@@ -11,7 +11,7 @@ public enum StoreUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StoreUpdateState : BoundUserInterfaceState
+public sealed class StoreUpdateState : BoundUserInterfaceState
 {
     public readonly HashSet<ListingDataWithCostModifiers> Listings;
 
@@ -31,20 +31,20 @@ public sealed partial class StoreUpdateState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {
 
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StoreBuyListingMessage(ProtoId<ListingPrototype> listing, NetEntity? soundSource) : BoundUserInterfaceMessage
+public sealed class StoreBuyListingMessage(ProtoId<ListingPrototype> listing, NetEntity? soundSource) : BoundUserInterfaceMessage
 {
     public ProtoId<ListingPrototype> Listing = listing;
     public NetEntity? SoundSource = soundSource;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
+public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
 {
     public string Currency;
 
@@ -61,8 +61,7 @@ public sealed partial class StoreRequestWithdrawMessage : BoundUserInterfaceMess
 ///     Used when the refund button is pressed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class StoreRequestRefundMessage : BoundUserInterfaceMessage
+public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage
 {
 
 }
-

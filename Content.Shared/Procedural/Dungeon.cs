@@ -3,7 +3,7 @@ namespace Content.Shared.Procedural;
 /// <summary>
 /// Procedurally generated dungeon data.
 /// </summary>
-public sealed partial class Dungeon
+public sealed class Dungeon
 {
     public static Dungeon Empty = new Dungeon();
 
@@ -86,4 +86,3 @@ public sealed partial class Dungeon
             RefreshAllTiles();
     }
 }
-

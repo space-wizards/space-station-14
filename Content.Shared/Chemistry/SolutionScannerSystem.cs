@@ -3,7 +3,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Chemistry;
 
-public sealed partial class SolutionScannerSystem : EntitySystem
+public sealed class SolutionScannerSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -17,9 +17,8 @@ public sealed partial class SolutionScannerSystem : EntitySystem
     }
 }
 
-public sealed partial class SolutionScanEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class SolutionScanEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public bool CanScan;
     public SlotFlags TargetSlots { get; } = SlotFlags.EYES;
 }
-

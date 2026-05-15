@@ -5,10 +5,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Instruments;
 
-public sealed partial class SwappableInstrumentSystem : EntitySystem
+public sealed class SwappableInstrumentSystem : EntitySystem
 {
-    [Dependency] private SharedInstrumentSystem _sharedInstrument = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedInstrumentSystem _sharedInstrument = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

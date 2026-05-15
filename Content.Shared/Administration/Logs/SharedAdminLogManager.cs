@@ -3,9 +3,9 @@
 namespace Content.Shared.Administration.Logs;
 
 [Virtual]
-public partial class SharedAdminLogManager : ISharedAdminLogManager
+public class SharedAdminLogManager : ISharedAdminLogManager
 {
-    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     public IEntityManager EntityManager => _entityManager;
 
     public bool Enabled { get; protected set; }

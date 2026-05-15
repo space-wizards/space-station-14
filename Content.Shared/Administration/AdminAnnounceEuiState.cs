@@ -10,14 +10,14 @@ namespace Content.Shared.Administration
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class AdminAnnounceEuiState : EuiStateBase
+    public sealed class AdminAnnounceEuiState : EuiStateBase
     {
     }
 
     public static class AdminAnnounceEuiMsg
     {
         [Serializable, NetSerializable]
-        public sealed partial class DoAnnounce : EuiMessageBase
+        public sealed class DoAnnounce : EuiMessageBase
         {
             public bool CloseAfter;
             public string Announcer = default!;
@@ -26,4 +26,3 @@ namespace Content.Shared.Administration
         }
     }
 }
-

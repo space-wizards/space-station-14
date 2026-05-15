@@ -6,8 +6,7 @@ namespace Content.Shared.Gateway;
 /// Sent from client to server upon taking a gateway destination.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class GatewayDestinationMessage : EntityEventArgs
+public sealed class GatewayDestinationMessage : EntityEventArgs
 {
     public int Index;
 }
-

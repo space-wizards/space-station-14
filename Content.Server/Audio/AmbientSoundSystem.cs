@@ -6,7 +6,7 @@ using Content.Shared.Power;
 
 namespace Content.Server.Audio;
 
-public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
+public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 {
     public override void Initialize()
     {
@@ -25,4 +25,3 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
         SetAmbience(uid, args.Powered);
     }
 }
-

@@ -1,4 +1,4 @@
-using Content.Shared.Chat.Prototypes;
+﻿using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chat.V2;
 using Content.Shared.Radio;
 
@@ -7,7 +7,7 @@ namespace Content.Server.Chat.V2;
 /// <summary>
 /// Raised locally when a comms announcement is made.
 /// </summary>
-public sealed partial class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid console, string message) : IChatEvent
+public sealed class CommsAnnouncementCreatedEvent(EntityUid sender, EntityUid console, string message) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = sender;
@@ -19,7 +19,7 @@ public sealed partial class CommsAnnouncementCreatedEvent(EntityUid sender, Enti
 /// <summary>
 /// Raised locally when a character speaks in Dead Chat.
 /// </summary>
-public sealed partial class DeadChatCreatedEvent(EntityUid speaker, string message, bool isAdmin) : IChatEvent
+public sealed class DeadChatCreatedEvent(EntityUid speaker, string message, bool isAdmin) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
@@ -31,7 +31,7 @@ public sealed partial class DeadChatCreatedEvent(EntityUid speaker, string messa
 /// <summary>
 /// Raised locally when a character emotes.
 /// </summary>
-public sealed partial class EmoteCreatedEvent(EntityUid sender, string message, float range) : IChatEvent
+public sealed class EmoteCreatedEvent(EntityUid sender, string message, float range) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = sender;
@@ -43,7 +43,7 @@ public sealed partial class EmoteCreatedEvent(EntityUid sender, string message, 
 /// <summary>
 /// Raised locally when a character talks in local.
 /// </summary>
-public sealed partial class LocalChatCreatedEvent(EntityUid speaker, string message, float range) : IChatEvent
+public sealed class LocalChatCreatedEvent(EntityUid speaker, string message, float range) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
@@ -55,7 +55,7 @@ public sealed partial class LocalChatCreatedEvent(EntityUid speaker, string mess
 /// <summary>
 /// Raised locally when a character speaks in LOOC.
 /// </summary>
-public sealed partial class LoocCreatedEvent(EntityUid speaker, string message) : IChatEvent
+public sealed class LoocCreatedEvent(EntityUid speaker, string message) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
@@ -66,7 +66,7 @@ public sealed partial class LoocCreatedEvent(EntityUid speaker, string message) 
 /// <summary>
 /// Raised locally when a character speaks on the radio.
 /// </summary>
-public sealed partial class RadioCreatedEvent(
+public sealed class RadioCreatedEvent(
     EntityUid speaker,
     string message,
     RadioChannelPrototype channel)
@@ -82,7 +82,7 @@ public sealed partial class RadioCreatedEvent(
 /// <summary>
 /// Raised locally when a character whispers.
 /// </summary>
-public sealed partial class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
+public sealed class WhisperCreatedEvent(EntityUid speaker, string message, float minRange, float maxRange) : IChatEvent
 {
     public uint Id { get; set; }
     public EntityUid Sender { get; set; } = speaker;
@@ -91,5 +91,4 @@ public sealed partial class WhisperCreatedEvent(EntityUid speaker, string messag
     public float MinRange = minRange;
     public float MaxRange = maxRange;
 }
-
 

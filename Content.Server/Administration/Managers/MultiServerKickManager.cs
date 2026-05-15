@@ -15,19 +15,19 @@ namespace Content.Server.Administration.Managers;
 /// Handles kicking people that connect to multiple servers on the same DB at once.
 /// </summary>
 /// <seealso cref="CCVars.AdminAllowMultiServerPlay"/>
-public sealed partial class MultiServerKickManager
+public sealed class MultiServerKickManager
 {
     public const string NotificationChannel = "multi_server_kick";
 
-    [Dependency] private IPlayerManager _playerManager = null!;
-    [Dependency] private IServerDbManager _dbManager = null!;
-    [Dependency] private ILogManager _logManager = null!;
-    [Dependency] private IConfigurationManager _cfg = null!;
-    [Dependency] private IAdminManager _adminManager = null!;
-    [Dependency] private ITaskManager _taskManager = null!;
-    [Dependency] private IServerNetManager _netManager = null!;
-    [Dependency] private ILocalizationManager _loc = null!;
-    [Dependency] private ServerDbEntryManager _serverDbEntry = null!;
+    [Dependency] private readonly IPlayerManager _playerManager = null!;
+    [Dependency] private readonly IServerDbManager _dbManager = null!;
+    [Dependency] private readonly ILogManager _logManager = null!;
+    [Dependency] private readonly IConfigurationManager _cfg = null!;
+    [Dependency] private readonly IAdminManager _adminManager = null!;
+    [Dependency] private readonly ITaskManager _taskManager = null!;
+    [Dependency] private readonly IServerNetManager _netManager = null!;
+    [Dependency] private readonly ILocalizationManager _loc = null!;
+    [Dependency] private readonly ServerDbEntryManager _serverDbEntry = null!;
 
     private ISawmill _sawmill = null!;
     private bool _allowed;

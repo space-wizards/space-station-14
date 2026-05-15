@@ -6,9 +6,9 @@ using System.Numerics;
 
 namespace Content.Client.Holopad;
 
-public sealed partial class HolopadBoundUserInterface : BoundUserInterface
+public sealed class HolopadBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     [ViewVariables]
     private HolopadWindow? _window;

@@ -1,11 +1,11 @@
-using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI;
 
-public sealed partial class GasPressureRegulatorBoundUserInterface(EntityUid owner, Enum uiKey)
+public sealed class GasPressureRegulatorBoundUserInterface(EntityUid owner, Enum uiKey)
     : BoundUserInterface(owner, uiKey)
 {
     private GasPressureRegulatorWindow? _window;
@@ -56,4 +56,3 @@ public sealed partial class GasPressureRegulatorBoundUserInterface(EntityUid own
         SendPredictedMessage(new GasPressureRegulatorChangeThresholdMessage(sentThreshold));
     }
 }
-

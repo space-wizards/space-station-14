@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 namespace Content.Shared.EntityTable.EntitySelectors;
 
 [TypeSerializer]
-public sealed partial class EntityTableTypeSerializer :
+public sealed class EntityTableTypeSerializer :
     ITypeReader<EntityTableSelector, MappingDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager,
@@ -35,4 +35,3 @@ public sealed partial class EntityTableTypeSerializer :
         return (EntityTableSelector) serializationManager.Read(type, node, context)!;
     }
 }
-

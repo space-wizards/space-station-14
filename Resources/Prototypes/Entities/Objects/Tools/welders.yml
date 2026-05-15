@@ -168,8 +168,12 @@
     enabled: false
     radius: 1.5
     color: lightblue
-  - type: Welder
-    fuelReagent: Plasma
+  - type: SolutionRegeneration
+    solution: welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 1
   - type: RequiresEyeProtection
     statusEffectTime: 5 # less harmful; sunglasses can block it
 
@@ -181,13 +185,8 @@
   - type: Solution
     solution:
       reagents:
-      - ReagentId: Plasma
+      - ReagentId: WeldingFuel
         Quantity: 480 # Literally infinite so this number basically doesn't matter, also this should be a battery tbqh.
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 1
 
 - type: entity
   name: emergency welding tool
@@ -244,6 +243,7 @@
     fuelConsumption: 2
     fuelLitCost: 1
   - type: SolutionRegeneration
+    solution: welder
     generated:
       reagents:
       - ReagentId: WeldingFuel

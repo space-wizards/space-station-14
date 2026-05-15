@@ -7,7 +7,7 @@ namespace Content.Shared.Interaction.Events;
 /// <summary>
 ///     Raised Directed at an entity to check whether they will handle the suicide.
 /// </summary>
-public sealed partial class SuicideEvent : HandledEntityEventArgs
+public sealed class SuicideEvent : HandledEntityEventArgs
 {
     public SuicideEvent(EntityUid victim)
     {
@@ -19,7 +19,7 @@ public sealed partial class SuicideEvent : HandledEntityEventArgs
     public EntityUid Victim { get; private set; }
 }
 
-public sealed partial class SuicideByEnvironmentEvent : HandledEntityEventArgs
+public sealed class SuicideByEnvironmentEvent : HandledEntityEventArgs
 {
     public SuicideByEnvironmentEvent(EntityUid victim)
     {
@@ -29,7 +29,7 @@ public sealed partial class SuicideByEnvironmentEvent : HandledEntityEventArgs
     public EntityUid Victim { get; set; }
 }
 
-public sealed partial class SuicideGhostEvent : HandledEntityEventArgs
+public sealed class SuicideGhostEvent : HandledEntityEventArgs
 {
     public SuicideGhostEvent(EntityUid victim)
     {
@@ -39,4 +39,3 @@ public sealed partial class SuicideGhostEvent : HandledEntityEventArgs
     public EntityUid Victim { get; set; }
     public bool CanReturnToBody;
 }
-

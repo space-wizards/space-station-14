@@ -2,9 +2,9 @@ using Content.Shared.Actions;
 
 namespace Content.Shared.Spider;
 
-public abstract partial class SharedSpiderSystem : EntitySystem
+public abstract class SharedSpiderSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _action = default!;
+    [Dependency] private readonly SharedActionsSystem _action = default!;
 
     public override void Initialize()
     {
