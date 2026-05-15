@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 272.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 02/26/2026 19:16:55
-  entityCount: 2781
+  time: 05/15/2026 05:29:19
+  entityCount: 2782
 maps:
 - 1
 grids:
@@ -1966,7 +1966,7 @@ entities:
       pos: -6.5,4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -1558.4391
+      secondsUntilStateChange: -2078.5774
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6711,7 +6711,8 @@ entities:
   - uid: 2533
     components:
     - type: Transform
-      pos: -3.5,12.5
+      rot: 1.5707963267948966 rad
+      pos: -4.5,10.5
       parent: 2
     - type: TechnologyDatabase
       supportedDisciplines:
@@ -13255,6 +13256,13 @@ entities:
     components:
     - type: Transform
       pos: -3.5,7.5
+      parent: 2
+- proto: MachineMiniAnomalyGenerator
+  entities:
+  - uid: 2782
+    components:
+    - type: Transform
+      pos: -3.5,12.5
       parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
