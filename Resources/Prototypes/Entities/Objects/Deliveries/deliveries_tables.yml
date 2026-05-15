@@ -17,6 +17,9 @@
   table: !type:GroupSelector
     children:
     - id: LetterDelivery
+      weight: 49
+    - id: TraitorRecruitmentLetterDelivery # 1 in 50 random basic letters
+      weight: 1
 
 # Packages
 

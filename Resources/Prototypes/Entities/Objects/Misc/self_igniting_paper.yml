@@ -1,0 +1,19 @@
+- type: entity
+  abstract: true
+  parent: Paper
+  id: BaseSelfIgnitingPaper
+  components:
+  - type: TimerTrigger
+    delay: 20
+    keysIn: []
+    keyOut: ignite
+    popup: null
+    examinable: false
+  - type: FireStackOnTrigger
+    keysIn: [ ignite ]
+    fireStacks: 3
+
+- type: entity
+  parent: BaseSelfIgnitingPaper
+  id: TraitorRecruitmentBriefingPaper
+  name: letter

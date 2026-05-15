@@ -52,7 +52,19 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
-        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
+        // Let interested components (e.g. TraitorRecruitmentDelivery) override
+        // the recipient pick before falling back to a random station record.
+        var selectRecipient = new DeliverySelectRecipientEvent(stationId);
+        RaiseLocalEvent(ent, ref selectRecipient);
+
+        if (selectRecipient.Cancelled)
+        {
+            QueueDel(ent);
+            return;
+        }
+
+        var entry = selectRecipient.Recipient;
+        if (entry == null && !_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out entry))
             return;
 
         ent.Comp.RecipientName = entry.Name;
