@@ -66,7 +66,7 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: randomsynth
   product: CrateFunInstrumentsRandom
-  cost: 1500
+  cost: 1750
   category: cargoproduct-category-name-instruments
   group: market
 
