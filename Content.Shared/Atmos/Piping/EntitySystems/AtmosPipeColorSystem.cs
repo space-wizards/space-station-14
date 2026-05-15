@@ -2,9 +2,9 @@ using Content.Shared.Atmos.Piping.Components;
 
 namespace Content.Shared.Atmos.Piping.EntitySystems;
 
-public sealed class AtmosPipeColorSystem : EntitySystem
+public sealed partial class AtmosPipeColorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -14,32 +14,32 @@ public sealed class AtmosPipeColorSystem : EntitySystem
         SubscribeLocalEvent<AtmosPipeColorComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStartup(EntityUid uid, AtmosPipeColorComponent component, ComponentStartup args)
+    private void OnStartup(Entity<AtmosPipeColorComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, component.Color, appearance);
+        _appearance.SetData(ent.Owner, PipeColorVisuals.Color, ent.Comp.Color, appearance);
     }
 
-    private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<AtmosPipeColorComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, Color.White, appearance);
+        _appearance.SetData(ent.Owner, PipeColorVisuals.Color, Color.White, appearance);
     }
 
-    public void SetColor(EntityUid uid, AtmosPipeColorComponent component, Color color)
+    public void SetColor(Entity<AtmosPipeColorComponent> ent, Color color)
     {
-        component.Color = color;
+        ent.Comp.Color = color;
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, color, appearance);
+        _appearance.SetData(ent.Owner, PipeColorVisuals.Color, color, appearance);
 
         var ev = new AtmosPipeColorChangedEvent(color);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent.Owner, ref ev);
     }
 }
