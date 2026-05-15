@@ -8,13 +8,13 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed class ChangelingTransformationStingSystem : EntitySystem
+public sealed partial class ChangelingTransformationStingSystem : EntitySystem
 {
-    [Dependency] private readonly HumanoidTransformStatusEffectSystem _humanoidTransformEffect = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private HumanoidTransformStatusEffectSystem _humanoidTransformEffect = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     private readonly Dictionary<EntityUid, (EntityUid Target, EntityUid Action)> _pendingStingTargets = new();
 

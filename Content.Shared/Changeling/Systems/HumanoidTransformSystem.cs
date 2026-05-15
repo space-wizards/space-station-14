@@ -7,10 +7,10 @@ namespace Content.Shared.Changeling.Systems;
 /// Handles the logic for <see cref="HumanoidTransformStatusEffectComponent"/> status effects.
 /// Uses <see cref="ChangelingTransformSystem"/> to apply and revert transformations.
 /// </summary>
-public sealed class HumanoidTransformStatusEffectSystem : EntitySystem
+public sealed partial class HumanoidTransformStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly ChangelingTransformSystem _changelingTransform = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentity = default!;
+    [Dependency] private ChangelingTransformSystem _changelingTransform = default!;
+    [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
 
     public override void Initialize()
     {
