@@ -2,9 +2,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Holopad;
 
-public abstract class SharedHolopadSystem : EntitySystem
+public abstract partial class SharedHolopadSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public bool IsHolopadControlLocked(Entity<HolopadComponent> entity, EntityUid? user = null)
     {
