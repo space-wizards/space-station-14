@@ -577,7 +577,7 @@ public sealed partial class CargoSystem
                 return false;
 
             var claimers = new List<string>(existingClaimers);
-            if (claimers.Count >= 5)
+            if (claimers.Count >= 3)
                 claimers.RemoveAt(0);
 
             claimers.Add(actorName);
