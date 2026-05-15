@@ -10,10 +10,10 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 /// Manager responsible for sharing the logic of markings between in-simulation bodies and out-of-simulation profile editing
 /// </summary>
-public sealed class MarkingManager
+public sealed partial class MarkingManager
 {
-    [Dependency] private readonly IComponentFactory _component = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _component = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private FrozenDictionary<HumanoidVisualLayers, FrozenDictionary<string, MarkingPrototype>> _categorizedMarkings = default!;
     private FrozenDictionary<string, MarkingPrototype> _markings = default!;
@@ -175,13 +175,16 @@ public sealed class MarkingManager
     /// </summary>
     public void EnsureValidLayers(Dictionary<HumanoidVisualLayers, List<Marking>> markingSets, HashSet<HumanoidVisualLayers> layers)
     {
-        foreach (var markings in markingSets.Values)
+        foreach (var (markingSet, markings) in markingSets)
         {
             for (var i = markings.Count - 1; i >= 0; i--)
             {
                 if (!TryGetMarking(markings[i], out var marking) || !layers.Contains(marking.BodyPart))
                     markings.RemoveAt(i);
             }
+
+            if (markings.Count == 0)
+                markingSets.Remove(markingSet);
         }
     }
 
@@ -213,7 +216,7 @@ public sealed class MarkingManager
                     continue;
                 }
 
-                counts[marking.BodyPart] = counts.GetValueOrDefault(marking.BodyPart) + 1;
+                counts[marking.BodyPart] = count + 1;
             }
         }
 

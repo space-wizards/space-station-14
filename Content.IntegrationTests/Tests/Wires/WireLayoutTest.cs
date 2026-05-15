@@ -1,4 +1,5 @@
-﻿using Content.Server.Doors;
+﻿using Content.IntegrationTests.Fixtures;
+using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
 using Robust.Shared.GameObjects;
@@ -10,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Wires;
 [TestFixture]
 [Parallelizable(ParallelScope.All)]
 [TestOf(typeof(WiresSystem))]
-public sealed class WireLayoutTest
+public sealed class WireLayoutTest : GameTest
 {
     [TestPrototypes]
     public const string Prototypes = """
@@ -53,7 +54,7 @@ public sealed class WireLayoutTest
     [Test]
     public async Task TestLayoutInheritance()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var testMap = await pair.CreateTestMap();
 
@@ -89,8 +90,6 @@ public sealed class WireLayoutTest
                 Assert.That(ent3.Comp.WiresList, Has.One.With.Property("Action").InstanceOf<DoorBoltWireAction>(), "1 door bolt wire");
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
     private static Entity<T> SpawnWithComp<T>(IEntityManager entityManager, string prototype, MapCoordinates coords)

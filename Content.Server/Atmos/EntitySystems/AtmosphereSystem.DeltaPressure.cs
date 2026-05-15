@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
@@ -30,11 +31,6 @@ public sealed partial class AtmosphereSystem
     /// Used to determine the size of the opposing groups when processing delta pressure entities.
     /// </summary>
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
-
-    /// <summary>
-    /// The length to pre-allocate list/dicts of delta pressure entities on a <see cref="GridAtmosphereComponent"/>.
-    /// </summary>
-    public const int DeltaPressurePreAllocateLength = 1000;
 
     /// <summary>
     /// Bulk processes a range of <see cref="DeltaPressureComponent"/> entities on a <see cref="GridAtmosphereComponent"/>
@@ -205,71 +201,6 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// A DeltaPressure helper method that retrieves the pressures of all gas mixtures
-    /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
-    /// provided <paramref name="pressures"/> span.
-    /// </summary>
-    /// <param name="tiles">The tiles span to find the pressures of.</param>
-    /// <param name="pressures">The span to store the pressures to - this should be the same length
-    /// as the tile array.</param>
-    /// <exception cref="ArgumentException">Thrown when the length of the provided spans do not match.</exception>
-    private static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
-    {
-        // this shit is internal because I don't even trust myself
-        if (tiles.Length != pressures.Length)
-            throw new ArgumentException("Length of Tiles and Pressures span must be the same!");
-
-        var len = pressures.Length;
-
-        // Once again, ArrayPool might return arrays that are longer than the length.
-        // We really need them to be all the same length, so slice them here.
-        var arr1 = ArrayPool<float>.Shared.Rent(len);
-        var arr2 = ArrayPool<float>.Shared.Rent(len);
-        var arr3 = ArrayPool<float>.Shared.Rent(len);
-
-        var mixtVol = arr1.AsSpan(0, len);
-        var mixtTemp = arr2.AsSpan(0, len);
-        var mixtMoles = arr3.AsSpan(0, len);
-
-        try
-        {
-            for (var i = 0; i < len; i++)
-            {
-                if (tiles[i] is not { Air: { } mixture })
-                {
-                    // To prevent any NaN/Div/0 errors, we just bite the bullet
-                    // and set everything to the lowest possible value.
-                    mixtVol[i] = 1;
-                    mixtTemp[i] = 1;
-                    mixtMoles[i] = float.Epsilon;
-                    continue;
-                }
-
-                mixtVol[i] = mixture.Volume;
-                mixtTemp[i] = mixture.Temperature;
-                mixtMoles[i] = mixture.TotalMoles;
-            }
-
-            /*
-             Retrieval of single tile pressures requires calling a get method for each tile,
-             which does a bunch of scalar operations.
-
-             So we go ahead and batch-retrieve the pressures of all tiles
-             and process them in bulk.
-             */
-            NumericsHelpers.Multiply(mixtMoles, Atmospherics.R);
-            NumericsHelpers.Multiply(mixtMoles, mixtTemp);
-            NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
-        }
-        finally
-        {
-            ArrayPool<float>.Shared.Return(arr1);
-            ArrayPool<float>.Shared.Return(arr2);
-            ArrayPool<float>.Shared.Return(arr3);
-        }
-    }
-
-    /// <summary>
     /// Packs data into a <see cref="DeltaPressureDamageResult"/> data struct and enqueues it
     /// into the <see cref="GridAtmosphereComponent.DeltaPressureDamageResults"/> queue for
     /// later processing.
@@ -320,18 +251,6 @@ public sealed partial class AtmosphereSystem
             system.ProcessDeltaPressureEntityBulk(atmosphere, start + startIndex, end + startIndex);
         }
     }
-
-    /// <summary>
-    /// Struct that holds the result of delta pressure damage processing for an entity.
-    /// This is only created and enqueued when the entity needs to take damage.
-    /// </summary>
-    /// <param name="Ent">The entity to deal damage to.</param>
-    /// <param name="Pressure">The current absolute pressure the entity is experiencing.</param>
-    /// <param name="DeltaPressure">The current delta pressure the entity is experiencing.</param>
-    public readonly record struct DeltaPressureDamageResult(
-        Entity<DeltaPressureComponent> Ent,
-        float Pressure,
-        float DeltaPressure);
 
     /// <summary>
     /// Does damage to an entity depending on the pressure experienced by it, based on the
