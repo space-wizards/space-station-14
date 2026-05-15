@@ -189,6 +189,7 @@ namespace Content.Server.Cargo.Systems
 
             order.Approved = true;
             order.ApprovingConsole = GetNetEntity(uid);
+
             _audio.PlayPvs(ApproveSound, uid);
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
