@@ -24,13 +24,19 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
         base.Initialize();
 
         SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
+
+        SubscribeLocalEvent<GasPressurePumpComponent, MapInitEvent>(OnMapInit); // Frontier
     }
 
     private void OnPumpUpdated(Entity<GasPressurePumpComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         if (!ent.Comp.Enabled
             || !_power.IsPowered(ent)
-            || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+            || !_nodeContainer.TryGetNodes(ent.Owner,
+                ent.Comp.InletName,
+                ent.Comp.OutletName,
+                out PipeNode? inlet,
+                out PipeNode? outlet))
         {
             _ambientSoundSystem.SetAmbience(ent, false);
             return;
@@ -55,4 +61,16 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
             _ambientSoundSystem.SetAmbience(ent, removed.TotalMoles > 0f);
         }
     }
+
+    private void OnMapInit(EntityUid uid, GasPressurePumpComponent pump, MapInitEvent args) // Frontier - Init on map
+        {
+            if (pump.StartOnMapInit)
+            {
+                pump.Enabled = true;
+                UpdateAppearance(uid, pump);
+
+                DirtyUI(uid, pump);
+                _userInterfaceSystem.CloseUi(uid, GasPressurePumpUiKey.Key);
+            }
+        }
 }

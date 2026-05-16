@@ -38,5 +38,11 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inletTwoConcentration")]
         public float InletTwoConcentration = 0.5f;
+
+        /// <summary>
+        /// Frontier - Start the pump with the map.
+        /// </summary>
+        [DataField]
+        public bool StartOnMapInit { get; set; } = false;
     }
 }

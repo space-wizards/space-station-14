@@ -661,3 +661,29 @@
     - type: Construction
       graph: GasBinary
       node: bendradiator
+
+# Truned ON on map start
+
+- type: entity
+  parent: GasPressurePump
+  id: GasPressurePumpOn
+  suffix: On
+  components:
+  - type: GasPressurePump
+    startOnMapInit: true
+
+- type: entity
+  parent: GasPressurePumpOn
+  id: GasPressurePumpOnMax
+  suffix: On, Max
+  components:
+  - type: GasPressurePump
+    targetPressure: 4500
+
+- type: entity
+  parent: GasVolumePump
+  id: GasVolumePumpOn
+  suffix: On
+  components:
+  - type: GasVolumePump
+    startOnMapInit: true

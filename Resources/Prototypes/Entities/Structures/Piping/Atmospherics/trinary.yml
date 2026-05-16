@@ -285,3 +285,18 @@
       - PneumaticValve
       - Pumps
       - Valves
+
+# Truned ON on map start
+
+- type: entity
+  parent: GasMixer
+  id: GasMixerOn
+  suffix: On
+  components:
+  - type: GasMixer
+    startOnMapInit: true
+
+- type: entity
+  parent: [GasMixerFlipped, GasMixerOn]
+  id: GasMixerOnFlipped
+  suffix: On, Flipped
