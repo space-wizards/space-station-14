@@ -12,10 +12,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        private readonly SharedCargoSystem _cargoSystem;
-        private readonly IdentitySystem _identity;
+        [Dependency]
+        private SharedCargoSystem _cargoSystem = default!;
+
+        [Dependency]
+        private IdentitySystem _identity = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -43,12 +46,6 @@ namespace Content.Client.Cargo.BUI
         /// </summary>
         [ViewVariables]
         private CargoProductPrototype? _product;
-
-        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-            _cargoSystem = EntMan.System<SharedCargoSystem>();
-            _identity = EntMan.System<IdentitySystem>();
-        }
 
         protected override void Open()
         {
