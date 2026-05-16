@@ -23,7 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Movement.Systems;
 
-public sealed class PullController : VirtualController
+public sealed partial class PullController : VirtualController
 {
     /*
      * This code is awful. If you try to tweak this without refactoring it I'm gonna revert it.
@@ -55,11 +55,11 @@ public sealed class PullController : VirtualController
     // How much you must move for the puller movement check to actually hit.
     private const float MinimumMovementDistance = 0.005f;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     If distance between puller and pulled entity lower that this threshold,

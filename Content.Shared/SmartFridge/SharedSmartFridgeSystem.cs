@@ -14,15 +14,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.SmartFridge;
 
-public abstract class SharedSmartFridgeSystem : EntitySystem
+public abstract partial class SharedSmartFridgeSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -41,6 +41,7 @@ public abstract class SharedSmartFridgeSystem : EntitySystem
             sub =>
             {
                 sub.Event<SmartFridgeDispenseItemMessage>(OnDispenseItem);
+                sub.Event<SmartFridgeRemoveEntryMessage>(OnRemoveEntry);
             });
     }
 
@@ -166,6 +167,22 @@ public abstract class SharedSmartFridgeSystem : EntitySystem
             Text = Loc.GetString("verb-categories-insert"),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png")),
         });
+    }
+
+    private void OnRemoveEntry(Entity<SmartFridgeComponent> ent, ref SmartFridgeRemoveEntryMessage args)
+    {
+        if (!Allowed(ent, args.Actor))
+            return;
+
+        if (!ent.Comp.ContainedEntries.TryGetValue(args.Entry, out var contained)
+            || contained.Count > 0
+            || !ent.Comp.Entries.Contains(args.Entry))
+            return;
+
+        ent.Comp.Entries.Remove(args.Entry);
+        ent.Comp.ContainedEntries.Remove(args.Entry);
+        Dirty(ent);
+        UpdateUI(ent);
     }
 
     private void OnGetDumpableVerb(Entity<SmartFridgeComponent> ent, ref GetDumpableVerbEvent args)

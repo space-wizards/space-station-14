@@ -8,10 +8,10 @@ using System.Numerics;
 
 namespace Content.Server.Weapons.Melee;
 
-public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
+public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [Dependency] private readonly LagCompensationSystem _lag = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private LagCompensationSystem _lag = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
 
     protected override bool ArcRaySuccessful(EntityUid targetUid,
         Vector2 position,
