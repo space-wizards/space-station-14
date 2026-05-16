@@ -3,8 +3,8 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
 using Content.Shared.Antag;
-using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -26,7 +26,7 @@ public abstract partial class AntagTest : GameTest
 
     [SidedDependency(Side.Server)] protected AntagSelectionSystem AntagSys = default!;
     [SidedDependency(Side.Server)] protected GameTicker STicker = default!;
-    [SidedDependency(Side.Server)] protected SharedMindSystem SMind = default!;
+    [SidedDependency(Side.Server)] protected MindSystem SMind = default!;
 
     protected void SAssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
     {
