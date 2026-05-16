@@ -79,7 +79,7 @@ public sealed partial class LubeSystem : EntitySystem
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 var lubed = EnsureComp<LubedComponent>(target);
                 var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
-                lubed.SlipsLeft = rand.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
+                lubed.SlipsLeft = rand.Next(entity.Comp.MinSlips * quantity.Int(), 1 + entity.Comp.MaxSlips * quantity.Int());
                 lubed.SlipStrength = entity.Comp.SlipStrength;
                 Dirty(target, lubed);
                 return true;
