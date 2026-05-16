@@ -56,6 +56,11 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: coil
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
     maxCharge: 5000000
     startingCharge: 0
   - type: BatteryDischarger
@@ -75,6 +80,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
@@ -173,6 +179,7 @@
     messages: WindowMessages
   - type: Repairable
   - type: Damageable
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: DamageVisuals
     thresholds: [8, 16, 25]

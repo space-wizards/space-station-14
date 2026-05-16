@@ -13,13 +13,13 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSystem<BloodstreamComponent, CleanBloodstream>
 {
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
     protected override void Effect(Entity<BloodstreamComponent> entity, ref EntityEffectEvent<CleanBloodstream> args)
     {
         var scale = args.Scale * args.Effect.CleanseRate;
 
-        _bloodstream.FlushChemicals((entity, entity), args.Effect.Excluded, scale);
+        _bloodstream.FlushChemicals((entity, entity), scale, args.Effect.Excluded);
     }
 }
 

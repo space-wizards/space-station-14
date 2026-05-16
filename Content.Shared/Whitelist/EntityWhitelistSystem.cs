@@ -7,10 +7,10 @@ namespace Content.Shared.Whitelist;
 
 public sealed partial class EntityWhitelistSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
 
-    private EntityQuery<ItemComponent> _itemQuery;
     private string _itemComponentName = string.Empty;
     private string _tagComponentName = string.Empty;
 
