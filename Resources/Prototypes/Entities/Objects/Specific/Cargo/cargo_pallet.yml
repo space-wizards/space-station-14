@@ -66,8 +66,7 @@
   description: Designates valid items to sell. Made of plastitanium to discourage pesky vandals.
   parent: BaseCargoPallet
   components:
-  - type: CargoPallet
-    palletType: sell
+  - type: CargoSellPallet
   - type: Sprite
     sprite: Structures/cargo_pallets.rsi
   - type: Icon
@@ -83,8 +82,7 @@
   description: Designates where orders will appear when purchased. Made of plastitanium to discourage pesky vandals.
   parent: BaseCargoPallet
   components:
-  - type: CargoPallet
-    palletType: buy
+  - type: CargoBuyPallet
   - type: Sprite
     sprite: Structures/cargo_pallets.rsi
   - type: Icon
