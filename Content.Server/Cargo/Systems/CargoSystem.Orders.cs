@@ -234,29 +234,42 @@ namespace Content.Server.Cargo.Systems
         )
         {
             // No slots at the trade station
-            var tradeStations = EntityQueryEnumerator<TradeStationComponent>();
+            _listEnts.Clear();
+            GetTradeStations(stationData, ref _listEnts);
 
             // Try to fulfill from any station where possible, if the pad is not occupied.
-            while (tradeStations.MoveNext(out var trade, out var _))
+            foreach (var trade in _listEnts)
             {
-                foreach (var pad in GetFreeCargoPallets(trade).Shuffle())
-                {
-                    if (order.NumDispatched >= order.OrderQuantity)
-                        break;
+                var tradePads = GetCargoPallets(trade, BuySellType.Buy);
+                _random.Shuffle(tradePads);
 
+                var freePads = GetFreeCargoPallets(trade, tradePads);
+                foreach (var pad in freePads)
+                {
                     var coordinates = new EntityCoordinates(trade, pad.Transform.LocalPosition);
 
-                    if (FulfillOrder(order, coordinates, orderDatabase.PrinterOutput))
+                    if (
+                        order.OrderQuantity > order.NumDispatched
+                        && FulfillOrder(order, coordinates, orderDatabase.PrinterOutput)
+                    )
                     {
                         order.NumDispatched++;
                     }
                 }
-
-                if (order.NumDispatched >= order.OrderQuantity)
-                    break;
             }
 
             return order.NumDispatched >= order.OrderQuantity;
+        }
+
+        private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+        {
+            foreach (var gridUid in data.Grids)
+            {
+                if (!_tradeQuery.HasComponent(gridUid))
+                    continue;
+
+                ents.Add(gridUid);
+            }
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
