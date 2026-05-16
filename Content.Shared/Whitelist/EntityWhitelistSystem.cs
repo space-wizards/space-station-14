@@ -18,8 +18,6 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
     {
         base.Initialize();
 
-        _itemQuery = GetEntityQuery<ItemComponent>();
-
         // caching for minor performance improvement
         _itemComponentName = Factory.GetComponentName<ItemComponent>();
         _tagComponentName = Factory.GetComponentName<TagComponent>();
