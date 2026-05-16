@@ -3,9 +3,9 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared._Offbrand.StatusEffects;
 
-public sealed class KnockdownOnAppliedStatusEffectSystem : EntitySystem
+public sealed partial class KnockdownOnAppliedStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {

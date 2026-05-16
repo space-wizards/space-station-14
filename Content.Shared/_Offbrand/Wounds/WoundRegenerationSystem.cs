@@ -3,10 +3,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class WoundRegenerationSystem : EntitySystem
+public sealed partial class WoundRegenerationSystem : EntitySystem
 {
-	[Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly WoundableSystem _woundable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private WoundableSystem _woundable = default!;
 
     public override void Initialize()
     {

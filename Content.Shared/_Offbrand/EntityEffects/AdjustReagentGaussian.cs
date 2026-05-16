@@ -33,10 +33,10 @@ public sealed partial class AdjustReagentGaussian : EntityEffectBase<AdjustReage
     }
 }
 
-public sealed class AdjustReagentGaussianEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagentGaussian>
+public sealed partial class AdjustReagentGaussianEntityEffectSystem : EntityEffectSystem<SolutionComponent, AdjustReagentGaussian>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void Effect(Entity<SolutionComponent> ent, ref EntityEffectEvent<AdjustReagentGaussian> args)
     {

@@ -23,10 +23,10 @@ public sealed partial class ModifyOrganDamage : EntityEffectBase<ModifyOrganDama
     }
 }
 
-public sealed class ModifyOrganDamageEntityEffectSystem : EntityEffectSystem<BodyComponent, ModifyOrganDamage>
+public sealed partial class ModifyOrganDamageEntityEffectSystem : EntityEffectSystem<BodyComponent, ModifyOrganDamage>
 {
-    [Dependency] private readonly BodySystem _body = default!;
-    [Dependency] private readonly DamageableOrganSystem _organ = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private DamageableOrganSystem _organ = default!;
 
     protected override void Effect(Entity<BodyComponent> ent, ref EntityEffectEvent<ModifyOrganDamage> args)
     {

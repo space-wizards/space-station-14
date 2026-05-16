@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class ShockAlertsSystem : EntitySystem
+public sealed partial class ShockAlertsSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PainSystem _pain = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private PainSystem _pain = default!;
 
     public override void Initialize()
     {

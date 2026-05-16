@@ -2,10 +2,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Analyzers;
 
-public sealed class AnalyzerSystem : EntitySystem
+public sealed partial class AnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Update(float frameTime)
     {

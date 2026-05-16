@@ -5,9 +5,9 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared._Offbrand.StatusEffects;
 
-public sealed class ModifyOrganOxygenDamageChanceStatusEffectSystem : EntitySystem
+public sealed partial class ModifyOrganOxygenDamageChanceStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly PerfusionSystem _perfusion = default!;
+    [Dependency] private PerfusionSystem _perfusion = default!;
 
     public override void Initialize()
     {

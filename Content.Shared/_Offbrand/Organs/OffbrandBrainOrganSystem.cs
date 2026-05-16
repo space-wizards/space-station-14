@@ -4,9 +4,9 @@ using Content.Shared.Body;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class OffbrandBrainOrganSystem : EntitySystem
+public sealed partial class OffbrandBrainOrganSystem : EntitySystem
 {
-    [Dependency] private readonly BrainDamageThresholdsSystem _thresholds = default!;
+    [Dependency] private BrainDamageThresholdsSystem _thresholds = default!;
 
     public override void Initialize()
     {

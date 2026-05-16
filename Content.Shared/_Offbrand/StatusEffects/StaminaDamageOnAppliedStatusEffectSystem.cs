@@ -3,9 +3,9 @@ using Content.Shared.StatusEffectNew;
 
 namespace Content.Shared._Offbrand.StatusEffects;
 
-public sealed class StaminaDamageOnAppliedStatusEffectSystem : EntitySystem
+public sealed partial class StaminaDamageOnAppliedStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {

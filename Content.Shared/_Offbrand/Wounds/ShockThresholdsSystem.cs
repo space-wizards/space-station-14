@@ -9,9 +9,9 @@ namespace Content.Shared._Offbrand.Wounds;
 
 public sealed partial class ShockThresholdsSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PainSystem _pain = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private PainSystem _pain = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {

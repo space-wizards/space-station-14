@@ -4,9 +4,9 @@ using Content.Shared.Body;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class DamageAlertsOrganSystem : EntitySystem
+public sealed partial class DamageAlertsOrganSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {

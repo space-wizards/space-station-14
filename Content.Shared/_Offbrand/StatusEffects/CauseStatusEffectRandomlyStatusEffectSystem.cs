@@ -7,10 +7,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.StatusEffects;
 
-public sealed class CauseStatusEffectRandomlyStatusEffectSystem : EntitySystem
+public sealed partial class CauseStatusEffectRandomlyStatusEffectSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Update(float frameTime)
     {

@@ -7,7 +7,7 @@ namespace Content.Shared._Offbrand.Weapons;
 
 public sealed partial class HeldGunModifierRefreshSystem : EntitySystem
 {
-    [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
 
     public override void Initialize()
     {

@@ -6,9 +6,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class DamageableOrganSystem : EntitySystem
+public sealed partial class DamageableOrganSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

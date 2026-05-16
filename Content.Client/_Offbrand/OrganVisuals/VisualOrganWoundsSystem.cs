@@ -8,12 +8,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._Offbrand.OrganVisuals;
 
-public sealed class VisualOrganWoundsSystem : EntitySystem
+public sealed partial class VisualOrganWoundsSystem : EntitySystem
 {
     private static readonly ProtoId<ShaderPrototype> Shader = "Masked";
 
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {

@@ -7,8 +7,8 @@ namespace Content.Shared._Offbrand.Wounds;
 
 public sealed partial class BrainDamageThresholdsSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {

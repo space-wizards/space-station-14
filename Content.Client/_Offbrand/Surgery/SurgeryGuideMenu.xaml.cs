@@ -16,8 +16,8 @@ public record SurgeryListData(ConstructionPrototype Construction) : ListData;
 [GenerateTypedNameReferences]
 public sealed partial class SurgeryGuideMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly ConstructionSystem _construction = default!;
     private readonly SpriteSystem _sprite = default!;

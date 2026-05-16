@@ -4,12 +4,12 @@ using Robust.Shared.Network;
 
 namespace Content.Shared._Offbrand.Skeletons;
 
-public sealed class DetachableOrganSystem : EntitySystem
+public sealed partial class DetachableOrganSystem : EntitySystem
 {
-    [Dependency] private readonly EntityQuery<DetachableOrganComponent> _detachableOrgan = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly OrganRelationSystem _organRelation = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private EntityQuery<DetachableOrganComponent> _detachableOrgan = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private OrganRelationSystem _organRelation = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {

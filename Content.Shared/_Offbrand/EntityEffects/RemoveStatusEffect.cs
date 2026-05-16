@@ -18,9 +18,9 @@ public sealed partial class RemoveStatusEffect : EntityEffectBase<RemoveStatusEf
             ("key", prototype.Index(EffectProto).Name));
 }
 
-public sealed class RemoveStatusEffectEntityEffectSystem : EntityEffectSystem<StatusEffectContainerComponent, RemoveStatusEffect>
+public sealed partial class RemoveStatusEffectEntityEffectSystem : EntityEffectSystem<StatusEffectContainerComponent, RemoveStatusEffect>
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     protected override void Effect(Entity<StatusEffectContainerComponent> ent, ref EntityEffectEvent<RemoveStatusEffect> args)
     {

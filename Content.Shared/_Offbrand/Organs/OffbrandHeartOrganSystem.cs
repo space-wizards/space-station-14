@@ -10,11 +10,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class OffbrandHeartOrganSystem : EntitySystem
+public sealed partial class OffbrandHeartOrganSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableOrganSystem _damageable = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private DamageableOrganSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {

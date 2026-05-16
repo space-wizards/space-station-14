@@ -10,14 +10,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Offbrand.Analyzers;
 
-public sealed class VitalsAnalyzerSystem : EntitySystem
+public sealed partial class VitalsAnalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly PerfusionSystem _perfusion = default!;
-    [Dependency] private readonly BodySystem _body = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private PerfusionSystem _perfusion = default!;
+    [Dependency] private BodySystem _body = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
     private const string MedicineGroup = "Medicine";
     private static readonly ProtoId<MetabolismStagePrototype> MetabolitesStage = "Metabolites";

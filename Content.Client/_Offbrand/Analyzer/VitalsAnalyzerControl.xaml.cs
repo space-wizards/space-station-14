@@ -11,8 +11,8 @@ namespace Content.Client._Offbrand.Analyzer;
 [GenerateTypedNameReferences]
 public sealed partial class VitalsAnalyzerControl : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public VitalsAnalyzerControl()
     {

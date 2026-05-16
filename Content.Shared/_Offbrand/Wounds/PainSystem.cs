@@ -7,7 +7,7 @@ namespace Content.Shared._Offbrand.Wounds;
 
 public sealed partial class PainSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

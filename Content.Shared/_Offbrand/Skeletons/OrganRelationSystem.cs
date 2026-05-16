@@ -2,10 +2,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Offbrand.Skeletons;
 
-public sealed class OrganRelationSystem : EntitySystem
+public sealed partial class OrganRelationSystem : EntitySystem
 {
-    [Dependency] private readonly EntityQuery<ChildOrganComponent> _child = default!;
-    [Dependency] private readonly EntityQuery<ParentOrganComponent> _parent = default!;
+    [Dependency] private EntityQuery<ChildOrganComponent> _child = default!;
+    [Dependency] private EntityQuery<ParentOrganComponent> _parent = default!;
 
     public override void Initialize()
     {

@@ -7,9 +7,9 @@ using Content.Shared.Temperature;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class CryostasisFactorSystem : EntitySystem
+public sealed partial class CryostasisFactorSystem : EntitySystem
 {
-    [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {

@@ -3,9 +3,9 @@ using Content.Shared.Mobs;
 
 namespace Content.Shared._Offbrand.Wounds;
 
-public sealed class UnvisitOnAliveSystem : EntitySystem
+public sealed partial class UnvisitOnAliveSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {

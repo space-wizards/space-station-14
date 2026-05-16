@@ -26,9 +26,9 @@ public sealed partial class OrganDamageCondition : EntityConditionBase<OrganDama
     }
 }
 
-public sealed class OrganDamageEntityConditionSystem : EntityConditionSystem<BodyComponent, OrganDamageCondition>
+public sealed partial class OrganDamageEntityConditionSystem : EntityConditionSystem<BodyComponent, OrganDamageCondition>
 {
-    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private BodySystem _body = default!;
 
     protected override void Condition(Entity<BodyComponent> ent, ref EntityConditionEvent<OrganDamageCondition> args)
     {

@@ -4,7 +4,7 @@ using Content.Shared.Temperature.Components;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class DamageOnInhaledAirOrganSystem : EntitySystem
+public sealed partial class DamageOnInhaledAirOrganSystem : EntitySystem
 {
     [Dependency] private DamageableOrganSystem _damageable = default!;
 

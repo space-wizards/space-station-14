@@ -6,9 +6,9 @@ using Content.Shared.FixedPoint;
 
 namespace Content.Shared._Offbrand.Organs;
 
-public sealed class OrganDamageOnDamageSystem : OffbrandDamageSystem
+public sealed partial class OrganDamageOnDamageSystem : OffbrandDamageSystem
 {
-    [Dependency] private readonly DamageableOrganSystem _damageable = default!;
+    [Dependency] private DamageableOrganSystem _damageable = default!;
 
     public override void Initialize()
     {
