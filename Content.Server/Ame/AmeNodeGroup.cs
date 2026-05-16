@@ -17,11 +17,11 @@ namespace Content.Server.Ame;
 /// Node group class for handling the Antimatter Engine's console and parts.
 /// </summary>
 [NodeGroup(NodeGroupID.AMEngine)]
-public sealed class AmeNodeGroup : BaseNodeGroup
+public sealed partial class AmeNodeGroup : BaseNodeGroup
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     /// The AME controller which is currently in control of this node group.
@@ -173,7 +173,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         // Balanced around a single core AME with injection level 2 producing 120KW.
         // Two core with four injection is 150kW. Two core with two injection is 90kW.
 
-        // Increasing core count creates diminishing returns, increasing injection amount increases 
+        // Increasing core count creates diminishing returns, increasing injection amount increases
         // Unlike the previous solution, increasing fuel and cores always leads to an increase in power, even if by very small amounts.
         // Increasing core count without increasing fuel always leads to reduced power as well.
         // At 18+ cores and 2 inject, the power produced is less than 0, the Max ensures the AME can never produce "negative" power.

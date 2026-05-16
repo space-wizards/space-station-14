@@ -18,14 +18,14 @@ namespace Content.Server.Materials;
 /// <summary>
 /// This handles <see cref="SharedMaterialStorageSystem"/>
 /// </summary>
-public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
+public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private StackSystem _stackSystem = default!;
 
     public override void Initialize()
     {
@@ -73,7 +73,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
                 return;
 
             var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == msg.Material).Value;
-            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity));
+            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity.Value));
 
             volume = sheetsToExtract * volumePerSheet;
         }
@@ -183,7 +183,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (amountToSpawn == 0)
             return new List<EntityUid>();
 
-        return _stackSystem.SpawnMultiple(materialProto.StackEntity, amountToSpawn, coordinates);
+        return _stackSystem.SpawnMultipleAtPosition(materialProto.StackEntity.Value, amountToSpawn, coordinates);
     }
 
     /// <summary>

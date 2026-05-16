@@ -1,6 +1,6 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Random;
@@ -10,11 +10,11 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact activation effect that ignites any flammable entity in range.
 /// </summary>
-public sealed class XAEIgniteSystem : BaseXAESystem<XAEIgniteComponent>
+public sealed partial class XAEIgniteSystem : BaseXAESystem<XAEIgniteComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
     private EntityQuery<FlammableComponent> _flammables;
 

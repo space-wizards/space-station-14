@@ -1,0 +1,9 @@
+- type: parallax
+  id: RelicStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/oldspace.png"
+      slowness: 0.0
+      scrolling: "-0.125, 0"
+      scale: "1, 1"

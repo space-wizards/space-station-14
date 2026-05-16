@@ -21,16 +21,16 @@ namespace Content.Shared.Delivery;
 /// Shared side of the DeliverySystem.
 /// This covers for letters/packages, as well as spawning a reward for the player upon opening.
 /// </summary>
-public abstract class SharedDeliverySystem : EntitySystem
+public abstract partial class SharedDeliverySystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private NameModifierSystem _nameModifier = default!;
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
     private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
@@ -162,7 +162,7 @@ public abstract class SharedDeliverySystem : EntitySystem
     private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true, bool force = false)
     {
         // Check fingerprint access if there is a reader on the mail
-        if (!force && TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
+        if (!force && !_fingerprintReader.IsAllowed(ent.Owner, user, out _))
             return false;
 
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);

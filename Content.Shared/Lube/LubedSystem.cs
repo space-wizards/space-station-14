@@ -1,3 +1,5 @@
+using Content.Shared.Hands;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
@@ -9,22 +11,22 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Lube;
 
-public sealed class LubedSystem : EntitySystem
+public sealed partial class LubedSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LubedComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<LubedComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
+        SubscribeLocalEvent<LubedComponent, BeforeGettingEquippedHandEvent>(OnHandPickUp);
         SubscribeLocalEvent<LubedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
@@ -33,9 +35,9 @@ public sealed class LubedSystem : EntitySystem
         _nameMod.RefreshNameModifiers(uid);
     }
 
-    private void OnHandPickUp(EntityUid uid, LubedComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnHandPickUp(Entity<LubedComponent> ent, ref BeforeGettingEquippedHandEvent args)
     {
-        // When predicting dropping a glued item prediction will reinsert the item into the hand when rerolling the state to a previous one.
+        // When predicting dropping a glued item prediction will reinsert the item into the hand when reverting the state to a previous one.
         // So dropping the item would try to throw it during prediction without this guard statement.
         if (_timing.ApplyingState)
             return;
@@ -56,8 +58,8 @@ public sealed class LubedSystem : EntitySystem
         Dirty(uid, component);
         if (component.SlipsLeft <= 0)
         {
-            RemComp<LubedComponent>(uid);
-            _nameMod.RefreshNameModifiers(uid);
+            RemComp<LubedComponent>(ent);
+            _nameMod.RefreshNameModifiers(ent.Owner);
             return;
         }
     }

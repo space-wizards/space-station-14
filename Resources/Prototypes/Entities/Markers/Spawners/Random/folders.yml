@@ -10,15 +10,16 @@
   - type: Sprite
     sprite: Objects/Misc/folders.rsi
     layers:
-      - state: folder-base
-      - state: folder-colormap
-  - type: RandomSpawner
+    - state: folder-base
+    - state: folder-colormap
+  - type: EntityTableSpawner
     offset: 0
-    prototypes:
-      - BoxFolderRed
-      - BoxFolderBlue
-      - BoxFolderYellow
-      - BoxFolderWhite
-      - BoxFolderGrey
-      - BoxFolderBlack
-      - BoxFolderGreen
+    table: !type:GroupSelector
+      children:
+      - id: BoxFolderBase
+      - id: BoxFolderRed
+      - id: BoxFolderBlue
+      - id: BoxFolderYellow
+      - id: BoxFolderGrey
+      - id: BoxFolderBlack
+      - id: BoxFolderGreen

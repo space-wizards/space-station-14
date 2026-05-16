@@ -1,18 +1,18 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Armable;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.LandMines;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
 
-public sealed class LandMineSystem : EntitySystem
+public sealed partial class LandMineSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     public override void Initialize()
     {
@@ -28,15 +28,15 @@ public sealed class LandMineSystem : EntitySystem
     /// </summary>
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
-      if (!string.IsNullOrEmpty(component.TriggerText))
-      {
-          _popupSystem.PopupCoordinates(
-              Loc.GetString(component.TriggerText, ("mine", uid)),
-              Transform(uid).Coordinates,
-              args.Tripper,
-              PopupType.LargeCaution);
-      }
-      _audioSystem.PlayPvs(component.Sound, uid);
+        if (!string.IsNullOrEmpty(component.TriggerText))
+        {
+            _popupSystem.PopupCoordinates(
+                Loc.GetString(component.TriggerText, ("mine", uid)),
+                Transform(uid).Coordinates,
+                args.Tripper,
+                PopupType.LargeCaution);
+        }
+        _audioSystem.PlayPvs(component.Sound, uid);
     }
 
     /// <summary>
@@ -44,7 +44,8 @@ public sealed class LandMineSystem : EntitySystem
     /// </summary>
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
-        _trigger.Trigger(uid, args.Tripper);
+        // TODO: Adjust to the new trigger system
+        _trigger.Trigger(uid, args.Tripper, TriggerSystem.DefaultTriggerKey);
     }
 
     /// <summary>

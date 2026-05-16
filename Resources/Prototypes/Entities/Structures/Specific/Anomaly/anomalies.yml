@@ -37,7 +37,6 @@
     sprite: Structures/Specific/anomaly.rsi
   - type: InteractionOutline
   - type: Clickable
-  - type: Damageable
   - type: Appearance
   - type: AnimationPlayer
   - type: GuideHelp
@@ -845,8 +844,9 @@
           radius: 0.2
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Diona
+  - type: Injurable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
       - trigger:
@@ -909,10 +909,10 @@
         maxRange: 2
       spawns:
       - ReagentSlimeSpawner
-  - type: SolutionContainerManager
-    solutions:
-      anomaly:
-        maxVol: 1500
+  - type: Solution
+    id: anomaly
+    solution:
+      maxVol: 1550 # Doesn't really matter since it's an anom anyways
   - type: PuddleCreateAnomaly
     solution: anomaly
   - type: InjectionAnomaly
@@ -971,14 +971,19 @@
     - Honk
     - Carpetium
     - JuiceThatMakesYouWeh
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: anomaly
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: DrainableSolution
     solution: anomaly
   - type: DrawableSolution
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution

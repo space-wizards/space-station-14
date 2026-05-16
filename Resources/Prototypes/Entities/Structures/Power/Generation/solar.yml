@@ -13,6 +13,10 @@
   - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -68,9 +72,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_panel_plasma
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -111,9 +112,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_panel_uranium
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -150,9 +148,6 @@
     supplyRampTolerance: 500
     supplyRampRate: 500
   - type: SolarPanel
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -189,9 +184,6 @@
   components:
   - type: Sprite
     state: solar_panel_glass_broken
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -230,9 +222,6 @@
   components:
   - type: Sprite
     state: solar_panel_plasma_broken
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -271,9 +260,6 @@
   components:
   - type: Sprite
     state: solar_panel_uranium_broken
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -332,8 +318,9 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -387,8 +374,9 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

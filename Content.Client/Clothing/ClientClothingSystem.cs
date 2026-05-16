@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using Content.Client.DisplacementMap;
 using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -14,14 +12,13 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.Clothing;
 
-public sealed class ClientClothingSystem : ClothingSystem
+public sealed partial class ClientClothingSystem : ClothingSystem
 {
     public const string Jumpsuit = "jumpsuit";
 
@@ -49,10 +46,10 @@ public sealed class ClientClothingSystem : ClothingSystem
         {"suitstorage", "SUITSTORAGE"},
     };
 
-    [Dependency] private readonly IResourceCache _cache = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -177,6 +174,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
+        layer.Scale = clothing.Scale;
         layers = new() { layer };
 
         return true;
@@ -225,7 +223,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     {
         base.OnGotEquipped(uid, component, args);
 
-        RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
+        RenderEquipment(args.EquipTarget, uid, args.Slot, clothingComponent: component);
     }
 
     private void RenderEquipment(EntityUid equipee, EntityUid equipment, string slot,
@@ -273,7 +271,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         // Select displacement maps
         var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
 
-        var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
+        var equipeeSex = CompOrNull<HumanoidProfileComponent>(equipee)?.Sex;
         if (equipeeSex != null)
         {
             switch (equipeeSex)

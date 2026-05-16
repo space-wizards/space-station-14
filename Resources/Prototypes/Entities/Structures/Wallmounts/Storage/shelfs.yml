@@ -12,6 +12,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
@@ -45,6 +46,7 @@
   description: It looks as strong as reality itself.
   components:
   - type: Lock
+  - type: LockedStorage
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -117,6 +119,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
@@ -158,6 +161,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Glass
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:

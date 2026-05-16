@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
@@ -9,9 +8,9 @@ namespace Content.Server.DeviceLinking.Systems;
 /// <summary>
 /// Handles the control of output based on the input and enable ports.
 /// </summary>
-public sealed class MemoryCellSystem : EntitySystem
+public sealed partial class MemoryCellSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     public override void Initialize()
     {

@@ -9,4 +9,5 @@ deployable-turret-component-is-broken = The turret is heavily damaged and must b
 deployable-turret-component-cannot-access-wires = You can't reach the maintenance panel while the turret is active 
 
 # Turret notification for station AI
-station-ai-turret-is-attacking-warning = {CAPITALIZE($source)} has engaged a hostile target.
+station-ai-turret-component-name = {$name} ({$address})
+station-ai-turret-component-is-attacking-warning = {CAPITALIZE($source)} has engaged a hostile target.

@@ -12,14 +12,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageOnAttackedSystem : EntitySystem
+public sealed partial class DamageOnAttackedSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
@@ -73,9 +73,9 @@ public sealed class DamageOnAttackedSystem : EntitySystem
             }
         }
 
-        totalDamage = _damageableSystem.TryChangeDamage(args.User, totalDamage, entity.Comp.IgnoreResistances, origin: entity);
+        totalDamage = _damageableSystem.ChangeDamage(args.User, totalDamage, entity.Comp.IgnoreResistances, origin: entity);
 
-        if (totalDamage != null && totalDamage.AnyPositive())
+        if (totalDamage.AnyPositive())
         {
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured themselves by attacking {ToPrettyString(entity):target} and received {totalDamage.GetTotal():damage} damage");
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User);
