@@ -187,7 +187,8 @@ namespace Content.Server.Cargo.Systems
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                order.SetApproverData(GetNameAndId(uid, player));
+                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
+
                 var message = GetApprovedRadioMessage(order);
                 _radio.SendRadioMessage(uid, message, account.RadioChannel, uid, escapeMarkup: false);
                 if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
