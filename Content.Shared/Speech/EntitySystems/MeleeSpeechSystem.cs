@@ -8,13 +8,12 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public sealed class MeleeSpeechSystem : EntitySystem
+public sealed partial class MeleeSpeechSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedChatSystem _chat = default!;
-
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
