@@ -7,12 +7,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
-public sealed class CreamPieSystem : SharedCreamPieSystem
+public sealed partial class CreamPieSystem : SharedCreamPieSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {

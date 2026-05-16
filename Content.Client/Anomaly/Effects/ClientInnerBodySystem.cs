@@ -8,13 +8,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Anomaly.Effects;
 
-public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
+public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
-    [Dependency] private readonly EntityQuery<InnerBodyAnomalyVisualsComponent> _visualsQuery = default!;
+    [Dependency] private EntityQuery<InnerBodyAnomalyVisualsComponent> _visualsQuery = default!;
 
     public override void Initialize()
     {
