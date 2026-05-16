@@ -4,9 +4,9 @@ using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class AlertLevelInterceptionRule : StationEventSystem<AlertLevelInterceptionRuleComponent>
+public sealed partial class AlertLevelInterceptionRule : StationEventSystem<AlertLevelInterceptionRuleComponent>
 {
-    [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
+    [Dependency] private AlertLevelSystem _alertLevel = default!;
 
     protected override void Started(EntityUid uid, AlertLevelInterceptionRuleComponent component, GameRuleComponent gameRule,
         GameRuleStartedEvent args)

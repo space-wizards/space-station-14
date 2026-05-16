@@ -9,9 +9,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Communications.UI
 {
-    public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
+    public sealed partial class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
         private readonly SharedStationSystem _station = default!;
         private readonly AlertLevelSystem _alertLevel = default!;
 

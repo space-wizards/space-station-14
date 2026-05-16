@@ -8,11 +8,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.AlertLevel.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class SetAlertLevelCommand : LocalizedEntityCommands
+public sealed partial class SetAlertLevelCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
-    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private AlertLevelSystem _alertLevelSystem = default!;
+    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override string Command => "setalertlevel";
 

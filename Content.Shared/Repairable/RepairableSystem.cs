@@ -12,10 +12,10 @@ namespace Content.Shared.Repairable;
 
 public sealed partial class RepairableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -41,6 +41,8 @@ public sealed partial class RepairableSystem : EntitySystem
             RepairSomeDamage((ent, damageable), ent.Comp.Damage, args.User);
         else
             RepairAllDamage((ent, damageable), args.User);
+
+        totalDamage = _damageableSystem.GetTotalDamage((ent.Owner, damageable));
 
         args.Repeat = ent.Comp.AutoDoAfter && totalDamage > 0;
         args.Args.Event.Repeat = args.Repeat;

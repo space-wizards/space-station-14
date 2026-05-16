@@ -4,10 +4,10 @@ using Content.Shared.Station;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
+public sealed partial class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
-    [Dependency] private readonly SharedStationSystem _station = default!;
+    [Dependency] private AlertLevelSystem _alertLevel = default!;
+    [Dependency] private SharedStationSystem _station = default!;
 
     public override void Initialize()
     {
