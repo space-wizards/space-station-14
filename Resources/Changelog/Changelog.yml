@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jrpl
-  changes:
-  - message: Chameleon clothing made of Cloth can now be eaten by Moths.
-    type: Tweak
-  id: 9180
-  time: '2025-11-01T13:37:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41232
 - author: SlamBamActionman
   changes:
   - message: Fixed the G.O.R.I.L.L.A gauntlet being able to unanchor walls, doors
@@ -4080,3 +4073,12 @@
   id: 9691
   time: '2026-05-16T18:18:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43804
+- author: ProPeperos
+  changes:
+  - message: Conveyor Belts now have a new directional sprite!
+    type: Add
+  - message: Conveyor Belts now stack to 3, but are 2 times bigger in inventory
+    type: Tweak
+  id: 9692
+  time: '2026-05-16T20:10:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43599
