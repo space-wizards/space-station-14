@@ -21,13 +21,13 @@ namespace Content.Server.Ninja.Systems;
 /// <summary>
 /// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
 /// </summary>
-public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
+public sealed partial class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private CodeConditionSystem _codeCondition = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {

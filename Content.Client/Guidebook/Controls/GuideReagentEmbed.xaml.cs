@@ -28,10 +28,10 @@ namespace Content.Client.Guidebook.Controls;
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
-    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private IEntitySystemManager _systemManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IConfigurationManager _config = default!;
 
     private readonly ChemistryGuideDataSystem _chemistryGuideData;
     private readonly ContrabandSystem _contraband;
@@ -231,14 +231,14 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             {
                 description.PushNewline();
                 description.AddMarkupPermissive(
-                    _contraband.GenerateDepartmentExamineMessage(reagent.AllowedDepartments, reagent.AllowedJobs, ContrabandItemType.Reagent));
+                    _contraband.GenerateDepartmentExamineMessage(reagent.AllowedDepartments, reagent.AllowedJobs, Color.Yellow, ContrabandItemType.Reagent));
             }
             // Other contraband text
             else if (reagent.ContrabandSeverity != null &&
                      _prototype.Resolve(reagent.ContrabandSeverity.Value, out var severity))
             {
                 description.PushNewline();
-                description.AddMarkupPermissive(Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Reagent)));
+                description.AddMarkupPermissive(Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Reagent), ("color", severity.Color)));
             }
         }
 
