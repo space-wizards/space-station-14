@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
@@ -30,6 +31,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent))]
     [TestCaseSource(nameof(_gamePresets))]
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GameTickerIgnoredPresets), "DummyNonAntag")]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
         // Initially in the lobby
@@ -39,9 +41,6 @@ public sealed class AllGamePresetsStartTest : AntagTest
             Assert.That(Client.AttachedEntity, Is.Null);
             Assert.That(STicker.PlayerGameStatuses[Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
         });
-
-        // Don't start dummy antag game rule because we want our antags to be predictable for the test.
-        Server.CfgMan.SetCVar(CCVars.GameTickerIgnoredPresets, GameTicker.DummyGameRule);
 
         var preset = SProtoMan.Index<GamePresetPrototype>(presetId);
 
@@ -64,7 +63,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         {
             foreach (var ruleId in preset.Rules)
             {
-                if (ruleId == GameTicker.DummyGameRule)
+                if (STicker.IsIgnored(ruleId))
                     continue;
 
                 if (!SProtoMan.Resolve(ruleId, out var rule ))
@@ -126,7 +125,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
         {
             Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
-            Assert.That(STicker.PlayerGameStatuses.Count == players.Count);
+            Assert.That(STicker.PlayerGameStatuses, Has.Count.EqualTo(players.Count));
         });
         Assert.That(Client.EntMan.EntityExists(Client.AttachedEntity));
 

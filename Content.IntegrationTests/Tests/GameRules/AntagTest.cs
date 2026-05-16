@@ -28,6 +28,13 @@ public abstract partial class AntagTest : GameTest
     [SidedDependency(Side.Server)] protected GameTicker STicker = default!;
     [SidedDependency(Side.Server)] protected MindSystem SMind = default!;
 
+    /// <summary>
+    /// Asserts that a given player session has been properly assigned a specific antag specifier.
+    /// Checks that the antag has the correct components on its entity, on its mind, and has the correct mind roles
+    /// As well as ensuring that the entity has not spawned in nullspace.
+    /// </summary>
+    /// <param name="antag">Antag definition this session should have been assigned</param>
+    /// <param name="session">Dummy session we are checking antagonist status on</param>
     protected void SAssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
     {
         Assert.That(SMind.TryGetMind(session, out var mindEnt, out var mindComp),
@@ -61,7 +68,8 @@ public abstract partial class AntagTest : GameTest
             {
                 foreach (var role in antag.MindRoles)
                 {
-                    Assert.That(mindComp!.MindRoleContainer.ContainedEntities.Any(x => SEntMan.GetComponent<MetaDataComponent>(x).EntityPrototype?.ID == role),
+                    Assert.That(mindComp!.MindRoleContainer.ContainedEntities,
+                        Has.Exactly(1).Matches<EntityUid>(x => SComp<MetaDataComponent>(x).EntityPrototype?.ID == role),
                         $"{SToPrettyString(mindEnt)} owned by {session}, failed to acquire role {role} for antagonist {antag}");
                 }
             });

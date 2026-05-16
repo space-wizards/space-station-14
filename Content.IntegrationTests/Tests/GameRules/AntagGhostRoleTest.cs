@@ -31,12 +31,12 @@ public sealed partial class AntagGhostRoleTest : AntagTest
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
 
-    private static string[] _antagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
+    private static readonly string[] AntagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
 
     [Test]
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent)), TestOf(typeof(GhostRoleSystem))]
-    [TestCaseSource(nameof(_antagGameRules))]
-    [Description("Ensures all GameRule entities with AntagSelectionComponent can properly spawn those roles and they can be taken.")]
+    [TestCaseSource(nameof(AntagGameRules))]
+    [Description($"Ensures all GameRule entities with {nameof(AntagSelectionComponent)} can properly spawn those roles and they can be taken.")]
     [RunOnSide(Side.Server)]
     public void TestAntagGhostRoles(string ruleId)
     {
@@ -86,7 +86,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
     [RunOnSide(Side.Server)]
     public void TestAntagGhostRolesSequential()
     {
-        foreach (var ruleId in  _antagGameRules)
+        foreach (var ruleId in AntagGameRules)
         {
             var rule = SProtoMan.Index<EntityPrototype>(ruleId);
             Assert.That(rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
