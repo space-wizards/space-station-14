@@ -174,6 +174,7 @@
   suffix: Dwarf
 
 - type: entity
+  parent: OrganDwarf
   id: OrganDwarfAppearance
   abstract: true
   suffix: Dwarf
@@ -184,6 +185,7 @@
     displacement: Dwarfism
 
 - type: entity
+  parent: OrganDwarf
   id: OrganDwarfMetabolizer
   abstract: true
   components:
@@ -191,7 +193,7 @@
     metabolizerTypes: [ Dwarf ]
 
 - type: entity
-  parent: [ OrganHumanTorso, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanTorso, OrganDwarfAppearance ]
   id: OrganDwarfTorso
   components:
   - type: VisualOrganMarkings
@@ -233,7 +235,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanHead, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanHead, OrganDwarfAppearance ]
   id: OrganDwarfHead
   components:
   - type: VisualOrganMarkings
@@ -275,7 +277,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanArmLeft, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanArmLeft, OrganDwarfAppearance ]
   id: OrganDwarfArmLeft
   components:
   - type: VisualOrganMarkings
@@ -287,7 +289,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanArmRight, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanArmRight, OrganDwarfAppearance ]
   id: OrganDwarfArmRight
   components:
   - type: VisualOrganMarkings
@@ -299,7 +301,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanHandRight, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanHandRight, OrganDwarfAppearance ]
   id: OrganDwarfHandRight
   components:
   - type: VisualOrganMarkings
@@ -311,7 +313,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanHandLeft, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanHandLeft, OrganDwarfAppearance ]
   id: OrganDwarfHandLeft
   components:
   - type: VisualOrganMarkings
@@ -323,7 +325,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanLegLeft, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanLegLeft, OrganDwarfAppearance ]
   id: OrganDwarfLegLeft
   components:
   - type: VisualOrganMarkings
@@ -335,7 +337,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanLegRight, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanLegRight, OrganDwarfAppearance ]
   id: OrganDwarfLegRight
   components:
   - type: VisualOrganMarkings
@@ -347,7 +349,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanFootLeft, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanFootLeft, OrganDwarfAppearance ]
   id: OrganDwarfFootLeft
   components:
   - type: VisualOrganMarkings
@@ -359,7 +361,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanFootRight, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanFootRight, OrganDwarfAppearance ]
   id: OrganDwarfFootRight
   components:
   - type: VisualOrganMarkings
@@ -371,7 +373,7 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganHumanEyes, OrganDwarf, OrganDwarfAppearance ]
+  parent: [ OrganHumanEyes, OrganDwarfAppearance ]
   id: OrganDwarfEyes
   components:
   - type: VisualOrgan
@@ -387,16 +389,16 @@
             state: dwarfism
 
 - type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanStomach, OrganDwarf ]
+  parent: [ OrganDwarfMetabolizer, OrganHumanStomach ]
   id: OrganDwarfStomach
   components:
   - type: Metabolizer
     maxReagents: 5
 
 - type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanLiver, OrganDwarf ]
+  parent: [ OrganDwarfMetabolizer, OrganHumanLiver ]
   id: OrganDwarfLiver
 
 - type: entity
-  parent: [ OrganDwarfMetabolizer, OrganHumanHeart, OrganDwarf ]
+  parent: [ OrganDwarfMetabolizer, OrganHumanHeart ]
   id: OrganDwarfHeart
