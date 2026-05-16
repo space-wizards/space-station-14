@@ -117,30 +117,30 @@ public sealed class CargoTest : GameTest
                     }
 
                     List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 10)];
-                    var containers = cargo.PackBasketIntoContainers(ref basket);
-                    if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity))
+                    var containers = _sCargo.PackBasketIntoContainers(ref basket);
+                    if (!_sCargo.SpawnContainer(containers.First(), coordinates, out var containerEntity))
                         Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
 
                     foreach (var bounty in SProtoMan.EnumeratePrototypes<CargoBountyPrototype>())
                     {
-                        if (cargo.IsBountyComplete(containerEntity, bounty))
+                        if (_sCargo.IsBountyComplete(containerEntity, bounty))
                         {
                             basket.First().Quantity = bounty.Entries.First().Amount;
                             basket.First().NumOrdered = 0;
-                            containers = cargo.PackBasketIntoContainers(ref basket);
-                            if (!cargo.SpawnContainer(containers.First(), testMap.GridCoords, out var containerEntity1))
+                            containers = _sCargo.PackBasketIntoContainers(ref basket);
+                            if (!_sCargo.SpawnContainer(containers.First(), coordinates, out var containerEntity1))
                                 Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
-                            var cost = cargo.GetBasketCost(basket) + cargo.GetContainersCost(containers);
-                            if (cargo.IsBountyComplete(containerEntity1, bounty))
+                            var cost = _sCargo.GetBasketCost(basket) + _sCargo.GetContainersCost(containers);
+                            if (_sCargo.IsBountyComplete(containerEntity1, bounty))
                             {
                                 Assert.That(cost, Is.GreaterThanOrEqualTo(bounty.Reward),
                                     $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {cost} when buying {basket.First().Quantity} " +
                                     $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
                             }
-                            entManager.DeleteEntity(containerEntity1);
+                            SEntMan.DeleteEntity(containerEntity1);
                         }
                     }
-                    entManager.DeleteEntity(containerEntity);
+                    SEntMan.DeleteEntity(containerEntity);
                 }
             });
         });
