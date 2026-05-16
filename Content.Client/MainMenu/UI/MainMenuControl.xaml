@@ -2,7 +2,7 @@
          xmlns:pllax="clr-namespace:Content.Client.Parallax"
          xmlns:clog="clr-namespace:Content.Client.Changelog">
     <pllax:ParallaxControl
-        ParallaxPrototype="TrainStation"
+        Name="BackgroundParallax"
         SpeedX="5"
         SpeedY="20"
         ScaleX="3"
