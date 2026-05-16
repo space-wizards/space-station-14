@@ -14,7 +14,7 @@ namespace Content.Client.MainMenu.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MainMenuControl : Control
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public const string StyleIdentifierMainMenu = "mainMenu";
     public const string StyleIdentifierMainMenuVBox = "mainMenuVBox";
