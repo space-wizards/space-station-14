@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Tesla generators will no longer occasionally spawn an additional tesla.
-    type: Fix
-  id: 9179
-  time: '2025-10-31T20:35:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41199
 - author: Jrpl
   changes:
   - message: Chameleon clothing made of Cloth can now be eaten by Moths.
@@ -4080,3 +4073,10 @@
   id: 9690
   time: '2026-05-16T16:10:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43939
+- author: Ewanderer
+  changes:
+  - message: You can now compost biomass to ammonia with the biogenerator!
+    type: Add
+  id: 9691
+  time: '2026-05-16T18:18:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43804
