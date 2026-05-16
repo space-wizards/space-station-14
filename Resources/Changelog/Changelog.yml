@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: NoreUhh
-  changes:
-  - message: Added two new fun reagents, Felinase and Caninase, which change how you
-      talk!
-    type: Add
-  id: 9178
-  time: '2025-10-31T01:14:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41136
 - author: Errant
   changes:
   - message: Tesla generators will no longer occasionally spawn an additional tesla.
@@ -4081,3 +4073,10 @@
   id: 9689
   time: '2026-05-15T17:38:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43589
+- author: 0-Anon
+  changes:
+  - message: Made the botanical belt in botanist lockers start filled.
+    type: Tweak
+  id: 9690
+  time: '2026-05-16T16:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43939
