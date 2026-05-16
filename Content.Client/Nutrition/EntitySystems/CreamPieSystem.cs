@@ -1,5 +1,4 @@
 using Content.Client.DisplacementMap;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
@@ -71,7 +70,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
 
         if (ent.Comp1.Displacement != null && _prototype.Resolve(ent.Comp1.Displacement, out var displacementProto))
         {
-            _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
+            _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index - 1, CreamPiedVisualLayer.Key, out _);
         }
     }
 }
