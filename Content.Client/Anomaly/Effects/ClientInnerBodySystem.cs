@@ -51,7 +51,7 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
             {
                 _displacement.TryAddDisplacement(displacement.Displacement,
                     (ent.Owner, sprite),
-                    index,
+                    index - 1,
                     ent.Comp.LayerMap,
                     out _);
             }

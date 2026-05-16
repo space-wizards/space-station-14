@@ -92,7 +92,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
         if (component.Displacement != fireDisplacement)
         {
             if (fireDisplacement != null && _prototype.Resolve<DisplacementDataPrototype>(fireDisplacement, out var displacementProto))
-                _displacement.TryAddDisplacement(displacementProto.Displacement, (uid, sprite), index, FireVisualLayers.Fire, out _);
+                _displacement.TryAddDisplacement(displacementProto.Displacement, (uid, sprite), index - 1, FireVisualLayers.Fire, out _);
             else
                 _displacement.EnsureDisplacementIsNotOnSprite((uid, sprite), FireVisualLayers.Fire);
 

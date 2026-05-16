@@ -751,7 +751,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             SpriteSystem.LayerSetRsiState(spriteEnt.AsNullable(), spriteLayer, $"{statePrefix}_{threshold}");
             if (displacement != null)
             {
-                _displacement.TryAddDisplacement(displacement, spriteEnt, spriteLayer, layerKey, out _);
+                _displacement.TryAddDisplacement(displacement, spriteEnt, spriteLayer - 1, layerKey, out _);
             }
             else
             {
