@@ -108,6 +108,60 @@
 
 - type: entity
   abstract: true
+  id: OffbrandOrganWoundable
+  components:
+  - type: WoundableOrgan
+  - type: Woundable
+    maximumDamage:
+      Blunt: [200, 10]
+      Slash: [200, 10]
+      Piercing: [200, 10]
+      Heat: [200, 10]
+      Cold: [200, 10]
+      Caustic: [200, 10]
+      Shock: [200, 10]
+      Poison: [100, 10]
+      Radiation: [100, 10]
+      Cellular: [100, 10]
+      Asphyxiation: [100, 0]
+      Bloodloss: [0, 0]
+    potentialWounds:
+      Blunt:
+        0: WoundBruise
+      Slash:
+        30: WoundCutMassive
+        20: WoundCutSevere
+        10: WoundCutModerate
+        0: WoundCutSmall
+      Piercing:
+        30: WoundPunctureMassive
+        20: WoundPunctureSevere
+        10: WoundPunctureModerate
+        0: WoundPunctureSmall
+      Heat:
+        30: WoundHeatCarbonized
+        20: WoundHeatSevere
+        10: WoundHeatModerate
+        0: WoundHeatSmall
+      Cold:
+        30: WoundColdPetrified
+        20: WoundColdSevere
+        10: WoundColdModerate
+        0: WoundColdSmall
+      Caustic:
+        30: WoundCausticSloughing
+        20: WoundCausticSevere
+        10: WoundCausticModerate
+        0: WoundCausticSmall
+      Shock:
+        30: WoundShockExploded
+        20: WoundShockSevere
+        10: WoundShockModerate
+        0: WoundShockSmall
+
+- type: entity
+  abstract: true
+  parent: OffbrandOrganWoundable
   id: OffbrandOrganWoundableLarge
   components:
   - type: StatusEffectContainer
@@ -119,6 +173,7 @@
 
 - type: entity
   abstract: true
+  parent: OffbrandOrganWoundable
   id: OffbrandOrganWoundableMedium
   components:
   - type: StatusEffectContainer
@@ -130,6 +185,7 @@
 
 - type: entity
   abstract: true
+  parent: OffbrandOrganWoundable
   id: OffbrandOrganWoundableSmall
   components:
   - type: StatusEffectContainer

@@ -6,7 +6,7 @@ namespace Content.Shared._Offbrand.Wounds;
 public sealed partial class WoundRegenerationSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private WoundableSystem _woundable = default!;
+    [Dependency] private WoundableBodySystem _woundableBody = default!;
 
     public override void Initialize()
     {
@@ -46,6 +46,6 @@ public sealed partial class WoundRegenerationSystem : EntitySystem
 
     private void DoUpdate(Entity<WoundRegenerationComponent, WoundableBodyComponent> ent)
     {
-        _woundable.HealWounds((ent, ent), ent.Comp1.Damage, true, true);
+        _woundableBody.HealWounds((ent, ent), ent.Comp1.Damage, true, true);
     }
 }

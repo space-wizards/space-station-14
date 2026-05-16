@@ -16,7 +16,7 @@ public sealed partial class UniqueWoundOnDamageSystem : OffbrandDamageSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<UniqueWoundOnDamageComponent, DamageChangedEvent>(OnDamageChanged, after: [typeof(WoundableSystem)]);
+        SubscribeLocalEvent<UniqueWoundOnDamageComponent, DamageChangedEvent>(OnDamageChanged, after: [typeof(WoundableBodySystem)]);
     }
 
     private void OnDamageChanged(Entity<UniqueWoundOnDamageComponent> ent, ref DamageChangedEvent args)

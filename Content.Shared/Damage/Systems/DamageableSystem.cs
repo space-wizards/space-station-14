@@ -49,7 +49,7 @@ public sealed partial class DamageableSystem : EntitySystem
     ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
     ///     The damage changed event is used by other systems, such as damage thresholds.
     /// </remarks>
-    [Access(typeof(DamageableSystem), typeof(WoundableSystem))] // Offbrand
+    [Access(typeof(DamageableSystem), typeof(WoundableBodySystem))] // Offbrand
     public void OnEntityDamageChanged( // Offbrand
         Entity<DamageableComponent> ent,
         DamageSpecifier? damageDelta = null,

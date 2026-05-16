@@ -1,9 +1,13 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
+using Content.Shared._Offbrand.Wounds;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Offbrand.Organs;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(WoundableOrganSystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class WoundableOrganComponent : Component
 {
@@ -12,18 +16,6 @@ public sealed partial class WoundableOrganComponent : Component
     /// </summary>
     [DataField]
     public float Weight;
-
-    /// <summary>
-    /// The total damages accumulated on this organ.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier Damage = new();
-
-    /// <summary>
-    /// The total damages accumulated on this organ from tended wounds.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier TendedDamage = new();
 }
 
 /// <summary>
@@ -31,9 +23,3 @@ public sealed partial class WoundableOrganComponent : Component
 /// </summary>
 [ByRefEvent]
 public readonly record struct WoundableOrganWeightsEvent(Dictionary<Entity<WoundableOrganComponent>, float> Weights);
-
-/// <summary>
-/// Raised on an organ when its wound damage changes
-/// </summary>
-[ByRefEvent]
-public readonly record struct WoundableOrganDamageChanged;

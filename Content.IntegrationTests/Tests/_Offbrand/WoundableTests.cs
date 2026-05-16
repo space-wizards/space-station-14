@@ -38,12 +38,6 @@ public sealed class WoundableTests : GameTest
     organs:
       {OrganCategoryPrototype}: {OrganPrototype}
   - type: WoundableBody
-    damageContainer: {DamageContainerPrototype}
-    maximumDamage:
-      {DamageTypePrototype}: [200, 10]
-    potentialWounds:
-      {DamageTypePrototype}:
-        0: {WoundPrototype}
 
 - type: entity
   id: {WoundPrototype}
@@ -60,6 +54,10 @@ public sealed class WoundableTests : GameTest
   - type: StatusEffectContainer
   - type: WoundableOrgan
     weight: 100
+  - type: Woundable
+    potentialWounds:
+      {DamageTypePrototype}:
+        0: {WoundPrototype}
 
 - type: organCategory
   id: {OrganCategoryPrototype}

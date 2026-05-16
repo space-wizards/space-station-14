@@ -1,5 +1,4 @@
 using Content.Shared.Body;
-using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -141,7 +140,7 @@ public sealed partial class TendingSystem : EntitySystem
         if (!TryComp<TendingComponent>(args.Used, out var tending))
             return;
 
-        _woundable.TendWound(target, ent, tending.Damage);
+        _woundable.TendWound(ent, tending.Damage);
 
         var hasMoreItems = true;
         if (TryComp<StackComponent>(args.Used.Value, out var stackComp))

@@ -1,5 +1,6 @@
 using Content.Shared._Offbrand.Organs;
 using Content.Shared._Offbrand.OrganVisuals;
+using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -21,7 +22,7 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
 
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotInsertedEvent>(OnOrganGotInserted);
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotRemovedEvent>(OnOrganGotRemoved);
-        SubscribeLocalEvent<VisualOrganWoundsComponent, WoundableOrganDamageChanged>(OnWoundableOrganDamageChanged);
+        SubscribeLocalEvent<VisualOrganWoundsComponent, WoundableDamageChanged>(OnWoundableOrganDamageChanged);
     }
 
     private void OnOrganGotInserted(Entity<VisualOrganWoundsComponent> ent, ref OrganGotInsertedEvent args)
@@ -107,7 +108,7 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         if (!Resolve(target, ref target.Comp))
             return;
 
-        if (!TryComp<WoundableOrganComponent>(ent, out var woundable))
+        if (!TryComp<WoundableComponent>(ent, out var woundable))
             return;
 
         if (!ent.Comp.LayersInitialized)
@@ -153,7 +154,7 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         }
     }
 
-    private void OnWoundableOrganDamageChanged(Entity<VisualOrganWoundsComponent> ent, ref WoundableOrganDamageChanged args)
+    private void OnWoundableOrganDamageChanged(Entity<VisualOrganWoundsComponent> ent, ref WoundableDamageChanged args)
     {
         if (Comp<OrganComponent>(ent).Body is not { } body)
             return;
