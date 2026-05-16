@@ -8,11 +8,11 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class DoorJackObjectiveConditionSystem : EntitySystem
+public sealed partial class DoorJackObjectiveConditionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly CounterConditionSystem _counterCondition = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private CounterConditionSystem _counterCondition = default!;
 
     public override void Initialize()
     {
@@ -38,7 +38,7 @@ public sealed class DoorJackObjectiveConditionSystem : EntitySystem
 
         foreach (var obj in _mind.EnumerateObjectives<DoorjackConditionComponent>((mindUid, mind)))
         {
-                _counterCondition.IncreaseCount(obj);
+            _counterCondition.IncreaseCount(obj);
         }
     }
 }

@@ -5,7 +5,7 @@ using Content.Shared.FingerprintReader;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class MailFraudObjectiveSystem : EntitySystem
+public sealed partial class MailFraudObjectiveSystem : EntitySystem
 {
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
