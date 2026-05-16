@@ -55,6 +55,12 @@ public sealed partial class UniqueWoundSpecifier
     public double DamageProbabilityCoefficient;
 
     /// <summary>
+    /// The probability coefficient of the amount of total damage
+    /// </summary>
+    [DataField(required: true)]
+    public double TotalProbabilityCoefficient;
+
+    /// <summary>
     /// The probability constant of the amount of incoming damage
     /// </summary>
     [DataField(required: true)]

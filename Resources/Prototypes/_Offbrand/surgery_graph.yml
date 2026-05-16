@@ -145,17 +145,6 @@
       - material: MedicatedSuture
         amount: 1
         doAfter: 3
-    - to: HuskingTreatment
-      conditions: &husking-conditions
-      - !type:HasStatusEffect
-        effect: WoundHusking
-      completed:
-      - !type:RemoveStatusEffect
-        effect: WoundHusking
-      steps:
-      - material: RegenerativeMesh
-        amount: 3
-        doAfter: 5
     - to: CavityManipulationOpen
       steps:
       - tool: Drilling
@@ -199,17 +188,6 @@
       steps:
       - tool: BoneSetting
         doAfter: 1
-    - to: BoneDeathTreatment
-      conditions: &bone-death-conditions
-      - !type:HasStatusEffect
-        effect: WoundBoneDeath
-      completed:
-      - !type:RemoveStatusEffect
-        effect: WoundBoneDeath
-      steps:
-      - material: MedicatedSuture
-        amount: 3
-        doAfter: 5
   - node: OpenRibCageSetting
     edges:
     - to: RetractedIncision
@@ -219,13 +197,6 @@
       steps:
       - tool: BoneMending
         doAfter: 1
-  - node: BoneDeathTreatment
-    header: construction-component-to-perform-header
-    localizedName: surgery-bone-death-treatment-name
-    actions:
-    - !type:SetNode
-      node: OpenRibCage
-      repeatConditions: *bone-death-conditions
   - node: HeartTreatmentSuture
     header: construction-component-to-perform-header
     localizedName: surgery-heart-treatment-suture-name
@@ -254,13 +225,6 @@
     - !type:SetNode
       node: OpenRibCageRecoupling
       repeatConditions: *lung-damage-conditions
-  - node: HuskingTreatment
-    header: construction-component-to-perform-header
-    localizedName: surgery-husking-treatment-name
-    actions:
-    - !type:SetNode
-      node: OpenRibCage
-      repeatConditions: *husking-conditions
   - node: CavityManipulationOpen
     edges:
     - to: OpenRibCage

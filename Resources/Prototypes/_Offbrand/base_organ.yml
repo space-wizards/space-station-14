@@ -112,19 +112,6 @@
   components:
   - type: WoundableOrgan
   - type: Woundable
-    maximumDamage:
-      Blunt: [200, 10]
-      Slash: [200, 10]
-      Piercing: [200, 10]
-      Heat: [200, 10]
-      Cold: [200, 10]
-      Caustic: [200, 10]
-      Shock: [200, 10]
-      Poison: [100, 10]
-      Radiation: [100, 10]
-      Cellular: [100, 10]
-      Asphyxiation: [100, 0]
-      Bloodloss: [0, 0]
     potentialWounds:
       Blunt:
         0: WoundBruise
@@ -158,6 +145,28 @@
         20: WoundShockSevere
         10: WoundShockModerate
         0: WoundShockSmall
+  - type: UniqueWoundOnDamage
+    wounds:
+    - damageTypes: [Slash, Blunt, Piercing]
+      minimumDamage: 10
+      minimumTotalDamage: 25
+      woundPrototype: WoundArterialBleeding
+      woundDamages:
+        types:
+          Slash: 5
+      damageProbabilityCoefficient: 0.01
+      totalProbabilityCoefficient: 0
+      damageProbabilityConstant: 0
+    - damageTypes: [Blunt]
+      minimumDamage: 10
+      minimumTotalDamage: 30
+      woundPrototype: WoundFracture
+      woundDamages:
+        types:
+          Blunt: 10
+      damageProbabilityCoefficient: 0
+      totalProbabilityCoefficient: 0.01
+      damageProbabilityConstant: 0
 
 - type: entity
   abstract: true

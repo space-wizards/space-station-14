@@ -132,6 +132,9 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
             }
             else
             {
+                if (thresholdIndex >= ent.Comp.Thresholds.Count)
+                    thresholdIndex = ent.Comp.Thresholds.Count - 1;
+
                 _sprite.LayerSetRsi(target, overlayLayerKey, group.OverlayPath, new RSI.StateId($"{group.DamageGroup}{thresholdIndex}"));
                 _sprite.LayerSetVisible(target, overlayLayerKey, true);
             }
