@@ -15,8 +15,6 @@
   id: MothershipCore
   prefRoles: [ MothershipCore ]
   spawnerPrototype: SpawnPointGhostRoleMothershipCore
-  mindRoles:
-  - MindRoleMothershipCore
 
 - type: antag
   id: Xenoborg
