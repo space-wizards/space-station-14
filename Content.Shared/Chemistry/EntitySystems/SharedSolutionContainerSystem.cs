@@ -66,19 +66,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
     public static readonly EntProtoId DefaultSolution = "Solution";
 
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly INetManager Net = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Dependency] protected readonly OpenableSystem Openable = default!;
-    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] protected readonly SharedHandsSystem Hands = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected INetManager Net = default!;
+    [Dependency] protected IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Dependency] protected ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected OpenableSystem Openable = default!;
+    [Dependency] protected SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected SharedHandsSystem Hands = default!;
 
-    [Dependency] protected readonly EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
-    [Dependency] protected readonly EntityQuery<SolutionComponent> SolutionQuery = default!;
-    [Dependency] protected readonly EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
+    [Dependency] protected EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
+    [Dependency] protected EntityQuery<SolutionComponent> SolutionQuery = default!;
+    [Dependency] protected EntityQuery<SolutionManagerComponent> SolutionManagerQuery = default!;
 
     public override void Initialize()
     {

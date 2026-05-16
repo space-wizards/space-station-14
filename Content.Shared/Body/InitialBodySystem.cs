@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes; // Offbrand
 
 namespace Content.Shared.Body;
 
-public sealed class InitialBodySystem : EntitySystem
+public sealed partial class InitialBodySystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly Content.Shared._Offbrand.Skeletons.OrganRelationSystem _organRelation = default!; // Offbrand
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private Content.Shared._Offbrand.Skeletons.OrganRelationSystem _organRelation = default!; // Offbrand
 
     public override void Initialize()
     {
