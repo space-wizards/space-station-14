@@ -664,10 +664,17 @@
 
 # Truned ON on map start
 
+### The placment for has to be
+#   placement:
+#    mode: SnapgridCenter
+### Otherwise it just doesn't work for some reason
+
 - type: entity
   parent: GasPressurePump
   id: GasPressurePumpOn
   suffix: On
+  placement:
+    mode: SnapgridCenter
   components:
   - type: GasPressurePump
     startOnMapInit: true
@@ -676,6 +683,8 @@
   parent: GasPressurePumpOn
   id: GasPressurePumpOnMax
   suffix: On, Max
+  placement:
+    mode: SnapgridCenter
   components:
   - type: GasPressurePump
     targetPressure: 4500
@@ -684,6 +693,8 @@
   parent: GasVolumePump
   id: GasVolumePumpOn
   suffix: On
+  placement:
+    mode: SnapgridCenter
   components:
   - type: GasVolumePump
     startOnMapInit: true

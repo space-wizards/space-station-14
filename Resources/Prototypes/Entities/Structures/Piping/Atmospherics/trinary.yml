@@ -300,3 +300,16 @@
   parent: [GasMixerFlipped, GasMixerOn]
   id: GasMixerOnFlipped
   suffix: On, Flipped
+
+- type: entity
+  parent: GasFilter
+  id: GasFilterOn
+  suffix: On
+  components:
+  - type: GasFilter
+    startOnMapInit: true
+
+- type: entity
+  parent: [GasFilterFlipped, GasFilterOn]
+  id: GasFilterOnFlipped
+  suffix: On, Flipped

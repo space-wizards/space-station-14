@@ -23,6 +23,8 @@ public abstract partial class SharedGasVolumePumpSystem : EntitySystem
         SubscribeLocalEvent<GasVolumePumpComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
         SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
+
+        SubscribeLocalEvent<GasVolumePumpComponent, MapInitEvent>(OnMapInit); // Frontier
     }
 
     private void OnInit(Entity<GasVolumePumpComponent> ent, ref ComponentInit args)
@@ -87,5 +89,16 @@ public abstract partial class SharedGasVolumePumpSystem : EntitySystem
             _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
         else
             _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
+    }
+
+    private void OnMapInit(EntityUid uid, GasVolumePumpComponent pump, MapInitEvent args) // Frontier - Init on map
+    {
+        if (pump.StartOnMapInit)
+        {
+            pump.Enabled = true;
+            Dirty(uid, pump);
+            UpdateAppearance(uid, pump);
+
+        }
     }
 }
