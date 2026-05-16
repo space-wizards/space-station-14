@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+    public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [Dependency]
         private SharedCargoSystem _cargoSystem = default!;
