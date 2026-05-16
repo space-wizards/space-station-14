@@ -637,15 +637,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AntagSpecifierPrototype prototype,
         ICommonSession player)
     {
-        // Re-check entity validity now that the player has spawned.
-        // Pre-selection bypasses the blacklist (AttachedEntity was null at that time),
-        // so we must verify here before applying antag components.
-        if (player.AttachedEntity is { } existing && !IsEntityValid(existing, prototype))
-        {
-            DeSelectSession(gameRule, prototype, player);
-            return false;
-        }
-
         // Get a valid entity to initialize
         if (!TryGetAntagEntity(gameRule, prototype, player, out var antagEnt))
         {
@@ -653,7 +644,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
         }
 
-        // Rechecking the first case.
+        // Re-check entity validity now that the player has spawned.
+        // Pre-selection bypasses the blacklist (AttachedEntity was null at that time),
+        // so we must verify here before applying antag components.
         if (!IsEntityValid(antagEnt.Value, prototype))
         {
             if (antagEnt.Value != player.AttachedEntity)
