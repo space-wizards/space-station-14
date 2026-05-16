@@ -1,10 +1,8 @@
 using Content.Shared.Hands;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
-using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,42 +28,38 @@ public sealed partial class LubedSystem : EntitySystem
         SubscribeLocalEvent<LubedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
-    private void OnInit(EntityUid uid, LubedComponent component, ComponentInit args)
+    private void OnInit(Entity<LubedComponent> ent, ref ComponentInit args)
     {
-        _nameMod.RefreshNameModifiers(uid);
+        _nameMod.RefreshNameModifiers(ent.Owner);
     }
 
     private void OnHandPickUp(Entity<LubedComponent> ent, ref BeforeGettingEquippedHandEvent args)
     {
-        // When predicting dropping a glued item prediction will reinsert the item into the hand when reverting the state to a previous one.
-        // So dropping the item would try to throw it during prediction without this guard statement.
-        if (_timing.ApplyingState)
-            return;
-
-        args.Cancel();
-        var user = args.Container.Owner;
+        var user = args.User;
 
         // Throwing is not predicted yet, so we don't want to predict setting the coordinates either, or it will look weird.
         if (_net.IsServer)
         {
-            _transform.SetCoordinates(uid, Transform(user).Coordinates);
-            _transform.AttachToGridOrMap(uid);
-            _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: component.SlipStrength);
+            args.Cancelled = true;
+            _transform.SetCoordinates(ent, Transform(user).Coordinates);
+            _transform.AttachToGridOrMap(ent);
+            _throwing.TryThrow(ent, _random.NextVector2(), baseThrowSpeed: ent.Comp.SlipStrength);
+            _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(ent, EntityManager))), user, user, PopupType.MediumCaution);
         }
-        _popup.PopupClient(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
 
-        component.SlipsLeft--;
-        Dirty(uid, component);
-        if (component.SlipsLeft <= 0)
+        ent.Comp.SlipsLeft--;
+        Dirty(ent);
+        if (ent.Comp.SlipsLeft <= 0)
         {
-            RemComp<LubedComponent>(ent);
+            RemCompDeferred<LubedComponent>(ent);
             _nameMod.RefreshNameModifiers(ent.Owner);
             return;
         }
     }
 
-    private void OnRefreshNameModifiers(Entity<LubedComponent> entity, ref RefreshNameModifiersEvent args)
+    private void OnRefreshNameModifiers(Entity<LubedComponent> ent, ref RefreshNameModifiersEvent args)
     {
-        args.AddModifier("lubed-name-prefix");
+        if (ent.Comp.SlipsLeft > 0) // The component is removed deferred, so it might still exist when we refresh.
+            args.AddModifier("lubed-name-prefix");
     }
 }

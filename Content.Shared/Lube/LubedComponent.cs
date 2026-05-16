@@ -12,7 +12,7 @@ public sealed partial class LubedComponent : Component
     /// The number of throws before this component will be removed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int SlipsLeft;
+    public int SlipsLeft = 1;
 
     /// <summary>
     /// The throwing velocity.

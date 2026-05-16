@@ -6,9 +6,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Lube;
 
@@ -18,8 +20,9 @@ public sealed partial class LubeSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -77,7 +80,8 @@ public sealed partial class LubeSystem : EntitySystem
                 _popup.PopupClient(Loc.GetString("lube-success", ("target", Identity.Entity(target, EntityManager))), actor, actor, PopupType.Medium);
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 var lubed = EnsureComp<LubedComponent>(target);
-                lubed.SlipsLeft = _random.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
+                var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+                lubed.SlipsLeft = rand.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
                 lubed.SlipStrength = entity.Comp.SlipStrength;
                 Dirty(target, lubed);
                 return true;
