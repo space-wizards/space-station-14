@@ -31,7 +31,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent))]
     [TestCaseSource(nameof(_gamePresets))]
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
-    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GameTickerIgnoredPresets), "DummyNonAntag")]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GameTickerIgnoredPresets), GameTicker.DummyGameRule)]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
         // Initially in the lobby
