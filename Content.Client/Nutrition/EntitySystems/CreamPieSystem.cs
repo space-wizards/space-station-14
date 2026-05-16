@@ -1,7 +1,9 @@
 using Content.Client.DisplacementMap;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
@@ -10,6 +12,7 @@ public sealed class CreamPieSystem : SharedCreamPieSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -66,9 +69,9 @@ public sealed class CreamPieSystem : SharedCreamPieSystem
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, isCreamPied);
 
-        if (ent.Comp1.Displacement != null)
+        if (ent.Comp1.Displacement != null && _prototype.Resolve(ent.Comp1.Displacement, out var displacementProto))
         {
-            _displacement.TryAddDisplacement(ent.Comp1.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
+            _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
         }
     }
 }

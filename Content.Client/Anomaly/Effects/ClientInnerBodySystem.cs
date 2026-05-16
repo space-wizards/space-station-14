@@ -1,8 +1,10 @@
 using Content.Client.DisplacementMap;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Anomaly.Effects;
 
@@ -10,6 +12,8 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     [Dependency] private readonly EntityQuery<InnerBodyAnomalyVisualsComponent> _visualsQuery = default!;
 
     public override void Initialize()
@@ -43,7 +47,18 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         if (_visualsQuery.TryGetComponent(ent, out var visuals) && visuals.Displacement != null)
         {
-            _displacement.TryAddDisplacement(visuals.Displacement, (ent.Owner, sprite), index, ent.Comp.LayerMap, out _);
+            if (_prototype.Resolve(visuals.Displacement, out var displacement))
+            {
+                _displacement.TryAddDisplacement(displacement.Displacement,
+                    (ent.Owner, sprite),
+                    index,
+                    ent.Comp.LayerMap,
+                    out _);
+            }
+            else
+            {
+                _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap);
+            }
         }
     }
 
@@ -55,9 +70,6 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         var index = _sprite.LayerMapGet((ent.Owner, sprite), ent.Comp.LayerMap);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, false);
 
-        if (_visualsQuery.TryGetComponent(ent, out var visuals) && visuals.Displacement != null)
-        {
-            _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap);
-        }
+        _displacement.EnsureDisplacementIsNotOnSprite((ent.Owner, sprite), ent.Comp.LayerMap);
     }
 }

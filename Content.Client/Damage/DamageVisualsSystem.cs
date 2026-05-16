@@ -279,8 +279,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                             sprite,
                             $"{layer}_{group}_{damageVisComp.Thresholds[1]}",
                             $"{layer}{group}",
-                            index,
-                            displacement: damageVisComp.Displacement);
+                            index);
                     }
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
@@ -294,8 +293,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                         damageVisComp.DamageOverlay,
                         $"{layer}_{damageVisComp.Thresholds[1]}",
                         $"{layer}trackDamage",
-                        index,
-                        displacement: damageVisComp.Displacement);
+                        index);
                     damageVisComp.DisabledLayers.Add(layer, false);
                 }
             }
@@ -312,8 +310,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     AddDamageLayerToSprite((entity, spriteComponent),
                         sprite,
                         $"DamageOverlay_{group}_{damageVisComp.Thresholds[1]}",
-                        $"DamageOverlay{group}",
-                        displacement: damageVisComp.Displacement);
+                        $"DamageOverlay{group}");
                     damageVisComp.TopMostLayerKey = $"DamageOverlay{group}";
                 }
             }
@@ -322,8 +319,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 AddDamageLayerToSprite((entity, spriteComponent),
                     damageVisComp.DamageOverlay,
                     $"DamageOverlay_{damageVisComp.Thresholds[1]}",
-                    "DamageOverlay",
-                    displacement: damageVisComp.Displacement);
+                    "DamageOverlay");
                 damageVisComp.TopMostLayerKey = $"DamageOverlay";
             }
         }
@@ -332,7 +328,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     /// <summary>
     ///     Adds a damage tracking layer to a given sprite component.
     /// </summary>
-    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null, DisplacementData? displacement = null)
+    private void AddDamageLayerToSprite(Entity<SpriteComponent?> spriteEnt, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null)
     {
         if (!Resolve(spriteEnt, ref spriteEnt.Comp))
             return;
@@ -349,11 +345,6 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (sprite.Color != null)
             SpriteSystem.LayerSetColor(spriteEnt, newLayer, Color.FromHex(sprite.Color));
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
-
-        if (displacement != null)
-        {
-            _displacement.TryAddDisplacement(displacement, (spriteEnt.Owner, spriteEnt.Comp), newLayer, mapKey, out _);
-        }
     }
 
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)
@@ -370,6 +361,15 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
 
         if (damageVisComp.Disabled)
             return;
+
+        if (AppearanceSystem.TryGetData<string>(uid,
+                DamageVisualizerKeys.Displacement,
+                out var displacement,
+                args.Component) &&
+            _prototypeManager.Resolve<DisplacementDataPrototype>(displacement, out var displacementProto))
+            damageVisComp.Displacement = displacementProto.Displacement;
+        else
+            damageVisComp.Displacement = null;
 
         HandleDamage(uid, args.Component, damageVisComp);
     }
@@ -521,7 +521,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         }
         else
         {
-            UpdateOverlay((entity, spriteComponent), threshold);
+            UpdateOverlay((entity, spriteComponent), threshold, damageVisComp.Displacement);
         }
     }
 
@@ -560,7 +560,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             }
             else
             {
-                UpdateOverlay((entity, spriteComponent, damageVisComp), damageGroup, threshold);
+                UpdateOverlay((entity, spriteComponent, damageVisComp), damageGroup, threshold, entity.Comp3.Displacement);
             }
         }
 
@@ -632,7 +632,9 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 UpdateDamageLayerState(spriteEnt,
                     spriteLayer,
                     $"{layerState}",
-                    threshold);
+                    threshold,
+                    $"{layerMapKey}trackDamage",
+                    damageVisComp.Displacement);
             }
         }
         else if (!damageVisComp.Overlay)
@@ -643,7 +645,9 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             UpdateDamageLayerState(spriteEnt,
                 spriteLayer,
                 $"{layerState}",
-                threshold);
+                threshold,
+                $"{layerMapKey}",
+                damageVisComp.Displacement);
         }
     }
 
@@ -666,7 +670,9 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     (entity, spriteComponent),
                     spriteLayer,
                     $"{layerState}_{damageGroup}",
-                    threshold);
+                    threshold,
+                    $"{layerMapKey}{damageGroup}",
+                    entity.Comp2.Displacement);
             }
         }
         else if (!damageVisComp.Overlay)
@@ -678,27 +684,31 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 (entity, spriteComponent),
                 spriteLayer,
                 $"{layerState}_{damageGroup}",
-                threshold);
+                threshold,
+                $"{layerMapKey}",
+                entity.Comp2.Displacement);
         }
     }
 
     /// <summary>
     ///     Updates an overlay that is tracking all damage.
     /// </summary>
-    private void UpdateOverlay(Entity<SpriteComponent> spriteEnt, FixedPoint2 threshold)
+    private void UpdateOverlay(Entity<SpriteComponent> spriteEnt, FixedPoint2 threshold, DisplacementData? displacement = null)
     {
         SpriteSystem.LayerMapTryGet(spriteEnt.AsNullable(), $"DamageOverlay", out var spriteLayer, false);
 
         UpdateDamageLayerState(spriteEnt,
             spriteLayer,
             $"DamageOverlay",
-            threshold);
+            threshold,
+            $"DamageOverlay",
+            displacement);
     }
 
     /// <summary>
     ///     Updates an overlay based on damage group.
     /// </summary>
-    private void UpdateOverlay(Entity<SpriteComponent, DamageVisualsComponent> entity, string damageGroup, FixedPoint2 threshold)
+    private void UpdateOverlay(Entity<SpriteComponent, DamageVisualsComponent> entity, string damageGroup, FixedPoint2 threshold, DisplacementData? displacement = null)
     {
         var spriteComponent = entity.Comp1;
         var damageVisComp = entity.Comp2;
@@ -713,7 +723,9 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                     (entity, spriteComponent),
                     spriteLayer,
                     $"DamageOverlay_{damageGroup}",
-                    threshold);
+                    threshold,
+                    $"DamageOverlay{damageGroup}",
+                    displacement);
             }
         }
     }
@@ -724,7 +736,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     ///     function calls it), and what threshold
     ///     was passed into it.
     /// </summary>
-    private void UpdateDamageLayerState(Entity<SpriteComponent> spriteEnt, int spriteLayer, string statePrefix, FixedPoint2 threshold)
+    private void UpdateDamageLayerState(Entity<SpriteComponent> spriteEnt, int spriteLayer, string statePrefix, FixedPoint2 threshold, string layerKey, DisplacementData? displacement)
     {
         if (threshold == 0)
         {
@@ -737,6 +749,14 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
                 SpriteSystem.LayerSetVisible(spriteEnt.AsNullable(), spriteLayer, true);
             }
             SpriteSystem.LayerSetRsiState(spriteEnt.AsNullable(), spriteLayer, $"{statePrefix}_{threshold}");
+            if (displacement != null)
+            {
+                _displacement.TryAddDisplacement(displacement, spriteEnt, spriteLayer, layerKey, out _);
+            }
+            else
+            {
+                _displacement.EnsureDisplacementIsNotOnSprite(spriteEnt, layerKey);
+            }
         }
     }
 }

@@ -112,12 +112,22 @@
           state: dwarfism_hands
   - type: HumanoidProfile
     species: Dwarf
-  - type: FireVisuals
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
+
+- type: displacementData
+  id: Dwarfism
+  displacement:
+    sizeMaps:
+      32:
+        sprite: Mobs/Species/Human/displacement.rsi
+        state: dwarfism
+
+- type: displacementData
+  id: DwarfismHands
+  displacement:
+    sizeMaps:
+      32:
+        sprite: Mobs/Species/Human/displacement.rsi
+        state: dwarfism_hands
 
 - type: entity
   parent:
@@ -149,23 +159,13 @@
   - type: Speech
     speechSounds: Bass
   - type: CreamPied
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
-  - type: DamageVisuals
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
+    displacement: Dwarfism
+  - type: Damageable
+    displacement: Dwarfism
+  - type: Flammable
+    displacement: Dwarfism
   - type: InnerBodyAnomalyVisuals
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
+    displacement: Dwarfism
 
 - type: entity
   parent: OrganBase
@@ -181,11 +181,7 @@
   - type: VisualOrgan
     data:
       sprite: Mobs/Species/Human/parts.rsi
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
+    displacement: Dwarfism
 
 - type: entity
   id: OrganDwarfMetabolizer
@@ -381,11 +377,7 @@
   - type: VisualOrgan
     data:
       sprite: Mobs/Customization/eyes.rsi
-    displacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism
+    displacement: Dwarfism
   - type: VisualOrganMarkings
     markingsDisplacement:
       Eyes:

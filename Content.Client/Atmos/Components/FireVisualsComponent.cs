@@ -1,4 +1,5 @@
 using Content.Shared.DisplacementMap;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Atmos.Components;
 
@@ -46,5 +47,5 @@ public sealed partial class FireVisualsComponent : Component
     /// If set, applies a displacement map to the fire visuals effect.
     /// </summary>
     [DataField]
-    public DisplacementData? Displacement;
+    public ProtoId<DisplacementDataPrototype>? Displacement;
 }

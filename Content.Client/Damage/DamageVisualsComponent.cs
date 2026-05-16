@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
@@ -119,7 +120,8 @@ public sealed partial class DamageVisualsComponent : Component
     [DataField("damageOverlay")] public  DamageVisualizerSprite? DamageOverlay;
 
     /// <summary>
-    /// If set, applies a displacement map to the damage visuals.
+    /// Applies a displacement map to the damage visuals.
+    /// Is set via <see cref="DamageableComponent.Displacement"/>.
     /// </summary>
     [DataField]
     public DisplacementData? Displacement;

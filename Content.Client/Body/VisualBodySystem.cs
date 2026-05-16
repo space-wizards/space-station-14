@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
@@ -76,10 +77,10 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
 
         _sprite.LayerSetData(target, index, ent.Comp.Data);
 
-        var displacementData = ent.Comp.Displacement;
-        if (displacementData != null)
+        var displacement = ent.Comp.Displacement;
+        if (displacement != null && _prototype.Resolve(displacement, out var displacementProto))
         {
-            _displacement.TryAddDisplacement(displacementData,
+            _displacement.TryAddDisplacement(displacementProto.Displacement,
                 (target, Comp<SpriteComponent>(target)),
                 index,
                 ent.Comp.Layer,
