@@ -16,13 +16,13 @@ public sealed partial class LubeComponent : Component
     public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
 
     /// <summary>
-    /// Solution on the entity that contains the glue.
+    /// Solution on the entity that contains the lube.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Solution = "drink";
 
     /// <summary>
-    /// Reagent that will be used as glue.
+    /// Reagent that will be used as lube.
     /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<ReagentPrototype> Reagent = "SpaceLube";

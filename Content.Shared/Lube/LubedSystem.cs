@@ -5,18 +5,16 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Lube;
 
 public sealed partial class LubedSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private NameModifierSystem _nameMod = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
 
     public override void Initialize()
@@ -53,7 +51,6 @@ public sealed partial class LubedSystem : EntitySystem
         {
             RemCompDeferred<LubedComponent>(ent);
             _nameMod.RefreshNameModifiers(ent.Owner);
-            return;
         }
     }
 
