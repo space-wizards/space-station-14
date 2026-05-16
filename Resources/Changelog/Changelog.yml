@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Fixed the G.O.R.I.L.L.A gauntlet being able to unanchor walls, doors
-      etc.
-    type: Fix
-  id: 9181
-  time: '2025-11-01T15:28:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41219
 - author: Hitlinemoss
   changes:
   - message: Towels in the trinkets loadout menu are now sorted by hue.
@@ -4082,3 +4074,13 @@
   id: 9692
   time: '2026-05-16T20:10:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43599
+- author: aada
+  changes:
+  - message: A desk bell is now included in the bureaucracy crate.
+    type: Add
+  - message: Variants can be crafted by adding 2 lv cable or a bike horn after screwdrivering
+      a desk bell.
+    type: Add
+  id: 9693
+  time: '2026-05-16T22:29:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36701
