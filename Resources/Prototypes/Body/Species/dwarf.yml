@@ -104,12 +104,12 @@
       sizeMaps:
         32:
           sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism_hands
+          state: dwarfism_hand_left
     rightHandDisplacement:
       sizeMaps:
         32:
           sprite: Mobs/Species/Human/displacement.rsi
-          state: dwarfism_hands
+          state: dwarfism_hand_right
   - type: HumanoidProfile
     species: Dwarf
 
@@ -120,14 +120,6 @@
       32:
         sprite: Mobs/Species/Human/displacement.rsi
         state: dwarfism
-
-- type: displacementData
-  id: DwarfismHands
-  displacement:
-    sizeMaps:
-      32:
-        sprite: Mobs/Species/Human/displacement.rsi
-        state: dwarfism_hands
 
 - type: entity
   parent:
