@@ -5,6 +5,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
 using Content.Shared.EntityTable;
@@ -13,10 +14,6 @@ using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Server.Containers;
-using Content.Shared.Cargo;
-using Content.Shared.Containers;
-using Content.Shared.EntityTable;
 
 namespace Content.IntegrationTests.Tests;
 
