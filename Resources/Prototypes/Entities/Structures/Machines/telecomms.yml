@@ -389,5 +389,4 @@
     receiveFrequencyId: Messager
     transmitFrequencyId: Messager
     receiveAll: true
-    autoConnect: false
-  - type: StationLimitedNetwork
+    autoConnect: true

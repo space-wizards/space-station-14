@@ -7,7 +7,8 @@ namespace Content.Shared.Radio.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class MessagerServerComponent : Component
 {
-    public List<MessagerUser> Users = new();
+    public Dictionary<int, MessagerUser> Users = new();
+    public bool InitialBroadcastDone = false;
 
     public List<MessagerMessage> Messages = new();
 }

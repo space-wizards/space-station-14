@@ -194,4 +194,4 @@
     deviceNetId: Wireless
     transmitFrequencyId: Messager
     receiveFrequencyId: Messager
-    autoConnect: false
+    autoConnect: true

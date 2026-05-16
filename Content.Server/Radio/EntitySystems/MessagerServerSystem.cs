@@ -1,31 +1,25 @@
+using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Radio.Components;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.EntitySystems;
 
 public sealed partial class MessagerServerSystem : EntitySystem
 {
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MessagerServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
+}
 
-    private void OnPacketReceived(EntityUid uid, MessagerServerComponent component, DeviceNetworkPacketEvent args)
-    {
-        // Обработка входящих пакетов
-    }
-
-    private void UpdateUserList(EntityUid uid, MessagerServerComponent component, int userId, string userName)
-    {
-        component.Users.Add(new MessagerUser(userId, userName));
-        Dirty(uid, component);
-    }
-
-    public static class UserDataKeys
-    {
-    public const string Userid = "user_uid";
+public static class UserDataKeys
+{
+    public const string Userid = "user_id";
     public const string UserName = "user_name";
-    }
+    public const string UserList = "user_list";
 }

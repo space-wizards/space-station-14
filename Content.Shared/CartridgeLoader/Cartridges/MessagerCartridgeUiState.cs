@@ -6,9 +6,9 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
 {
     public MessagerStatus Status;
-    public List<MessagerUserEntry> Users;
+    public Dictionary<int, MessagerUserEntry> Users;
 
-    public MessagerCartridgeUiState(MessagerStatus status, List<MessagerUserEntry> users)
+    public MessagerCartridgeUiState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users)
     {
         Status = status;
         Users = users;
@@ -16,7 +16,7 @@ public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
 }
 
 /// <summary>
-///     User list client
+/// User list client
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
 public sealed partial class MessagerUserEntry
@@ -33,7 +33,7 @@ public sealed partial class MessagerUserEntry
 
 
 /// <summary>
-///     Server connection status
+/// Server connection status
 /// </summary>
 [Serializable, NetSerializable]
 public enum MessagerStatus : byte

@@ -16,7 +16,7 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
         VerticalExpand = true;
     }
 
-    public void UpdateState(MessagerStatus status, List<MessagerUserEntry> users)
+    public void UpdateState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users)
     {
         // Updating the UI depending on the status
         ConnectingContainer.Visible = status == MessagerStatus.Connecting;
@@ -24,11 +24,14 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
         ConnectionLostContainer.Visible = status == MessagerStatus.ConnectionLost;
 
         UserListContainer.RemoveAllChildren();
-        foreach (var user in users)
+        if (users != null)
         {
-            var button = new Button { Text = user.Name, HorizontalExpand = true };
-            button.OnPressed += _ => OnUserSelected(user.Id);
-            UserListContainer.AddChild(button);
+            foreach (var user in users.Values)
+            {
+                var button = new Button { Text = user.Name, HorizontalExpand = true };
+                button.OnPressed += _ => OnUserSelected(user.Id);
+                UserListContainer.AddChild(button);
+            }
         }
     }
 
