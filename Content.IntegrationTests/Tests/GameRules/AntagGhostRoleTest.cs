@@ -20,6 +20,14 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed partial class AntagGhostRoleTest : AntagTest
 {
+    public override PoolSettings PoolSettings => new()
+    {
+        Dirty = true,
+        DummyTicker = false,
+        Connected = true,
+        Map = PoolManager.TestStation
+    };
+
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
 
@@ -82,7 +90,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         {
             var rule = SProtoMan.Index<EntityPrototype>(ruleId);
             Assert.That(rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
-            STicker.StartGameRule(ruleId, out var gameRule);
+            STicker.StartGameRule(ruleId);
         }
 
         var mind = ServerSession!.GetMind();

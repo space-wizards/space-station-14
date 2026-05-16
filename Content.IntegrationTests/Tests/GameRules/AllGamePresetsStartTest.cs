@@ -33,9 +33,12 @@ public sealed class AllGamePresetsStartTest : AntagTest
     public async Task TestAllGamemodesCanStart(string presetId)
     {
         // Initially in the lobby
-        Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-        Assert.That(Client.AttachedEntity, Is.Null);
-        Assert.That(STicker.PlayerGameStatuses[Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+        await Server.WaitPost(() =>
+        {
+            Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+            Assert.That(Client.AttachedEntity, Is.Null);
+            Assert.That(STicker.PlayerGameStatuses[Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+        });
 
         // Don't start dummy antag game rule because we want our antags to be predictable for the test.
         Server.CfgMan.SetCVar(CCVars.GameTickerIgnoredPresets, GameTicker.DummyGameRule);
@@ -119,9 +122,12 @@ public sealed class AllGamePresetsStartTest : AntagTest
         await Pair.RunUntilSynced();
 
         // Game should have started
-        Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
-        Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
-        Assert.That(STicker.PlayerGameStatuses.Count == players.Count);
+        await Server.WaitPost(() =>
+        {
+            Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+            Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
+            Assert.That(STicker.PlayerGameStatuses.Count == players.Count);
+        });
         Assert.That(Client.EntMan.EntityExists(Client.AttachedEntity));
 
         var player = Pair.Player!.AttachedEntity!.Value;

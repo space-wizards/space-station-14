@@ -6,7 +6,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Antag;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -27,11 +26,11 @@ public abstract partial class AntagTest : GameTest
 
     [SidedDependency(Side.Server)] protected AntagSelectionSystem AntagSys = default!;
     [SidedDependency(Side.Server)] protected GameTicker STicker = default!;
-    [Dependency] protected SharedMindSystem Mind = default!;
+    [SidedDependency(Side.Server)] protected SharedMindSystem SMind = default!;
 
     protected void SAssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
     {
-        Assert.That(Mind.TryGetMind(session, out var mindEnt, out var mindComp),
+        Assert.That(SMind.TryGetMind(session, out var mindEnt, out var mindComp),
             $"Session {session} spawned into the game as an antag but had no mind!");
         Assert.That(SEntMan.EntityExists(mindComp!.CurrentEntity),
             $"Session {session} spawned into the game as an antag, but had no entity!");
