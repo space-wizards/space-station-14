@@ -243,7 +243,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             // TODO: Make the PopupSystem API more sane so that this is handled by a single method.
             if (args.Origin == ent.Owner) // predict the popup on the client if they caused damage to themselves
                 _popup.PopupClient(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
-            else // only show it to the player that got cauterized
+            else
                 _popup.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
             _audio.PlayPredicted(ent.Comp.BloodHealedSound, ent, args.Origin);
         }
