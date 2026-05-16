@@ -63,8 +63,8 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
 [ByRefEvent]
 public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station, CargoOrderData Order)
 {
-    public Entity<StationDataComponent> Station = Station;
-    public CargoOrderData Order = Order;
+    public readonly Entity<StationDataComponent> Station = Station;
+    public readonly CargoOrderData Order = Order;
     public EntityUid? FulfillmentEntity;
     public bool Handled = false;
 }

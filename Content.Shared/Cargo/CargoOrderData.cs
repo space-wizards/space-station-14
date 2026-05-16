@@ -39,6 +39,9 @@ namespace Content.Shared.Cargo
 
         [DataField]
         public string? Approver;
+        [ViewVariables]
+        public NetEntity? ApprovingConsole;
+
 
         /// <summary>
         /// Which account to deduct funds from when ordering

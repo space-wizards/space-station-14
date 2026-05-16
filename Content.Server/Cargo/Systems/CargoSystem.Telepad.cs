@@ -38,18 +38,11 @@ public sealed partial class CargoSystem
             if (_station.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (
-                !TryGetLinkedConsole((uid, tele), out var console)
-                || console.Value.Comp.Mode != CargoOrderConsoleMode.DirectOrder
-            )
+            if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
+
             var containers = PackOrderIntoContainers(args.Order);
             tele.CurrentOrders.Add(args.Order);
-            for (var i = 0; i < containers.Count; i++)
-            {
-                tele.CurrentContainers.Add(containers[i]);
-            }
             tele.Accumulator = tele.Delay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
@@ -57,23 +50,29 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryGetLinkedConsole(
-        Entity<CargoTelepadComponent> ent,
-        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console
+    private bool IsLinkedToConsole(EntityUid uid, EntityUid? approvingConsole)
+    {
+        if (approvingConsole == null || !TryGetLinkedConsoles(uid, out var consoles))
+            return false;
+
+        return consoles.Any(console => console.Owner == approvingConsole);
+    }
+
+    private bool TryGetLinkedConsoles(
+        EntityUid uid,
+        [NotNullWhen(true)] out List<Entity<CargoOrderConsoleComponent>> consoles
     )
     {
-        console = null;
-        if (
-            !TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent)
-            || sinkComponent.LinkedSources.FirstOrNull() is not { } linked
-        )
+        consoles = new();
+        if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent))
             return false;
-
-        if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
-            return false;
-
-        console = (linked, consoleComp);
-        return true;
+        foreach (var linked in sinkComponent.LinkedSources)
+        {
+            if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+                continue;
+            consoles.Add((linked, consoleComp));
+        }
+        return consoles.Count > 0;
     }
 
     private void UpdateTelepad(float frameTime)
@@ -103,21 +102,24 @@ public sealed partial class CargoSystem
             }
 
             comp.CurrentOrders.RemoveAll(order => order.Basket.Count(item => item.NumOrdered == item.Quantity) == 0);
-            if (comp.CurrentContainers.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
+            if (comp.CurrentOrders.Count == 0)
             {
                 comp.Accumulator += comp.Delay;
                 continue;
             }
 
-            var currentContainer = comp.CurrentContainers.First();
-            if (FulfillOrder(currentContainer, xform.Coordinates, comp.PrinterOutput))
+            var currentOrder = comp.CurrentOrders.First();
+            var containers = PackOrderIntoContainers(currentOrder);
+            if (
+                IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
+                && FulfillOrder(containers.First(), xform.Coordinates, comp.PrinterOutput)
+            )
             {
                 _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentContainers.Remove(currentContainer);
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
@@ -139,7 +141,6 @@ public sealed partial class CargoSystem
             order.AssignedEntity = null;
         }
         ent.Comp.CurrentOrders.Clear();
-        ent.Comp.CurrentContainers.Clear();
     }
 
     private void SetEnabled(

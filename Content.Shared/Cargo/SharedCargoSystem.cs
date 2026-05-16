@@ -356,18 +356,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
     private bool ShouldWrapAsParcel(CargoOrderContainerData container)
     {
-        return !container.IsSingleProduct
-            && GetContainerItemCount(container) == 1
-            && !container.CrateRequired;
+        return !container.IsSingleProduct && GetContainerItemCount(container) == 1 && !container.CrateRequired;
     }
-
-    public string? GetNameAndId(EntityUid whileInteractingWith, EntityUid forActor)
-    {
-        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(whileInteractingWith, forActor);
-        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-        return tryGetIdentityShortInfoEvent.Title;
-    }
-
 }
 
 [NetSerializable, Serializable]

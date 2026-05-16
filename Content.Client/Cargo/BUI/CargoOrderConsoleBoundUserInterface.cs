@@ -5,6 +5,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
@@ -15,6 +16,7 @@ namespace Content.Client.Cargo.BUI
     public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
     {
         private readonly SharedCargoSystem _cargoSystem;
+        private readonly IdentitySystem _identity;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -50,6 +52,7 @@ namespace Content.Client.Cargo.BUI
             : base(owner, uiKey)
         {
             _cargoSystem = EntMan.System<SharedCargoSystem>();
+            _identity = EntMan.System<IdentitySystem>();
         }
 
         protected override void Open()
@@ -62,9 +65,9 @@ namespace Content.Client.Cargo.BUI
             var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
-            var orderRequester = (EntMan.EntityExists(localPlayer)
-                ? _cargoSystem.GetNameAndId(Owner, localPlayer.Value)
-                : null) ?? Loc.GetString("cargo-console-paper-approver-default");
+            var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
+            if (EntMan.EntityExists(localPlayer))
+                orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
             _orderMenu = new CargoConsoleOrderMenu();
 
