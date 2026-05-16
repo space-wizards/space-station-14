@@ -84,8 +84,9 @@
     graph: AirAlarm
     node: air_alarm
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:
@@ -161,8 +162,10 @@
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors_xeno.rsi
     layers:
+    - state: alarmp
+      map: ["airAlarmBase"]  # TODO: fire alarm enum
     - state: alarm0
-      map: ["airAlarmBase"] # TODO: fire alarm enum
+      map: ["airAlarmState"]
     - state: alarmx
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
 

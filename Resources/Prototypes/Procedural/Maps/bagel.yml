@@ -1,0 +1,35 @@
+- type: dungeonRoom
+  id: BagelTheater1
+  size: 11,8
+  atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
+  offset: -1,0 # yeah i fucking hate myself too
+  tags:
+  - TheaterBagel
+
+#- type: dungeonRoom
+#  id: BagelTheater2 # this is the blank one
+#  size: 11,8
+#  atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
+#  offset: 11,0
+#  tags:
+#  - TheaterBagel
+
+- type: dungeonRoom
+  id: BagelTheater3
+  size: 11,8
+  atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
+  offset: -1,9
+  tags:
+  - TheaterBagel
+
+- type: entity
+  id: BagelTheaterRoomMarker
+  parent: BaseRoomMarker
+  name: Bagel Theater interior marker
+  components:
+  - type: RoomFill
+    rotation: false
+    maxSize: 11, 8
+    roomWhitelist:
+      tags:
+      - TheaterBagel

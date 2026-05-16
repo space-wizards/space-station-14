@@ -6,12 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 5h
+      time: 10h
       inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
-  canBeAntag: false
   access:
   - Research
   - Maintenance

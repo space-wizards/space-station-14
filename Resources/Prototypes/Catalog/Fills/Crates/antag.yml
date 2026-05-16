@@ -1,8 +1,8 @@
 - type: entity
+  parent: CratePirate
   id: CratePirateChestCaptain
   name: captains pirate chest
   suffix: Filled
-  parent: CratePirate
   components:
   - type: EntityTableContainerFill
     containers:
@@ -13,10 +13,10 @@
         - id: MicroBombImplanter
 
 - type: entity
+  parent: CratePirate
   id: CratePirateChest
   name: crews pirate chest
   suffix: Filled
-  parent: CratePirate
   components:
   - type: EntityTableContainerFill
     containers:

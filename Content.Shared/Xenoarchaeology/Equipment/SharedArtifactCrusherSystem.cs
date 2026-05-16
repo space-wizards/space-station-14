@@ -17,16 +17,16 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// <summary>
 /// This handles logic relating to <see cref="ArtifactCrusherComponent"/>
 /// </summary>
-public abstract class SharedArtifactCrusherSystem : EntitySystem
+public abstract partial class SharedArtifactCrusherSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAudioSystem AudioSystem = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] protected SharedAudioSystem AudioSystem = default!;
+    [Dependency] protected SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -121,7 +121,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
-        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent)?.Entity;
+        crusher.CrushingSoundEntity = AudioSystem.PlayPredicted(crusher.CrushingSound, ent, user)?.Entity ?? crusher.CrushingSoundEntity;
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
     }
@@ -135,10 +135,7 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, false);
 
         if (early)
-        {
-            AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
-            ent.Comp.CrushingSoundEntity = null;
-        }
+            ent.Comp.CrushingSoundEntity = AudioSystem.Stop(ent.Comp.CrushingSoundEntity);
 
         Dirty(ent, ent.Comp);
     }
