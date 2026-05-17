@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.StationAi;
 // Handles airlock radial
 public abstract partial class SharedStationAiSystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     private void InitializeAirlock()
     {
@@ -101,8 +101,8 @@ public abstract partial class SharedStationAiSystem
         _adminLogger.Add(LogType.Action, $"{args.User} set electrified status on {ent} to [{args.Electrified}] using the Station AI radial.");
         _electrify.SetElectrified((ent, component), args.Electrified);
         var soundToPlay = component.Enabled
-            ? component.AirlockElectrifyDisabled
-            : component.AirlockElectrifyEnabled;
+            ? component.AirlockElectrifyEnabled
+            : component.AirlockElectrifyDisabled;
         _audio.PlayLocal(soundToPlay, ent, args.User);
     }
 }
