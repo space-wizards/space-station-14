@@ -47,22 +47,16 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     Checks if the target entity can currently be sheared.
     /// </summary>
     /// <param name="ent">The shearable entity that will be checked, and the ShearableComponent combined with it.</param>
-    /// <param name="shearedProduct">An out variable of the resolved sheared product prototype.</param>
-    /// <param name="shearingSolutionEnt">An out variable of the resolved sheared product solution entity.</param>
     /// <param name="shearingSolutionToRemove">An out variable of the reagent that will be removed from the target entity if it is sheared.</param>
-    /// <param name="feedbackPopupString">If populated, this string can be used in a client popup to describe why the creature isn't shearable. It makes use of the shearable-system-no-product loc string.</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
     ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
     /// </returns>
-    public bool CanShear(Entity<ShearableComponent> ent, out EntityPrototype shearedProduct, [NotNullWhen(true)] out Entity<SolutionComponent>? shearingSolutionEnt, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
+    public bool CanShear(Entity<ShearableComponent> ent, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, EntityUid? usedItem = null, bool checkItem = true)
     {
         // Set these to null in-case we return early.
-        shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
-        shearingSolutionEnt = null;
         shearingSolutionToRemove = null;
-        feedbackPopupString = null;
 
         // Are we checking items? Has a toolQuality been defined?
         // Even if we are checking items, if no toolQuality has been defined, then they're allowed to use anything, including an empty hand.
@@ -73,14 +67,22 @@ public sealed class SharedShearableSystem : EntitySystem
             return false;
         }
 
+        // This is used in the failure message later.
+        var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
         // If so, True, otherwise False.
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
-        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref shearingSolutionEnt, out var shearingSolutionState))
+        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref ent.Comp.ShearingSolutionEnt, out var shearingSolutionState))
         {
             return false;
+        }
+        else
+        {
+            // Cache the resolved solution on the component.
+            //ent.Comp.ShearingSolutionEnt =
         }
 
         // Store solution.Volume in a variable to make calculations a bit clearer.
@@ -120,10 +122,9 @@ public sealed class SharedShearableSystem : EntitySystem
                 maxProductsToSpawn * productsPerSolution
         ) / 100;
 
-        // Failure message, if the shearable creature has no targetSolutionName to be sheared.
+        // Fail if the shearable creature has no targetSolutionName to be sheared.
         if (shearingSolutionToRemove <= 0)
         {
-            feedbackPopupString = Loc.GetString("shearable-system-no-product", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", shearedProduct.Name));
             return false;
         }
 
@@ -131,26 +132,12 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
-    /// </summary>
-    public bool CanShear(Entity<ShearableComponent> ent, out string? feedbackPopupString, EntityUid? usedItem = null, bool checkItem = true)
-    {
-        return CanShear(ent, out _, out _, out _, out feedbackPopupString, usedItem, checkItem);
-    }
-
-    /// <summary>
-    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
+    ///     Override function, Doesn't include the shearingSolutionToRemove out var.
+    ///     For details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
     /// </summary>
     public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
-        return CanShear(ent, out _, out _, out _, out _, usedItem, checkItem);
-    }
-    /// <summary>
-    ///     Override function, for details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
-    /// </summary>
-    public bool CanShear(Entity<ShearableComponent> ent, out FixedPoint2? shearingSolutionToRemove, bool checkItem = true)
-    {
-        return CanShear(ent, out _, out _, out shearingSolutionToRemove, out _, null, checkItem);
+        return CanShear(ent, out _, usedItem, checkItem);
     }
 
     /// <summary>
@@ -172,14 +159,19 @@ public sealed class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        if (!CanShear(ent, out var feedbackPopupString, usedItem: toolUsed))
+        if (!CanShear(ent, out var shearingSolutionToRemove, usedItem: toolUsed, false))
         {
-            // If this string is set then create a popup now.
-            if (feedbackPopupString != null)
+            // Failed, if appropriate, create a popup now.
+            if (shearingSolutionToRemove <= 0)
             {
+                var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+                var feedbackPopupString = Loc.GetString("shearable-system-no-product",
+                    ("target", Identity.Entity(ent.Owner, EntityManager)),
+                    ("product", shearedProduct.Name));
                 _popup.PopupClient(feedbackPopupString, ent.Owner, userUid);
             }
-            // Fail regardless of popup.
+
+            // Fail
             return;
         }
 
@@ -205,10 +197,20 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Check again and this time get the objects we need.
-        if (!CanShear(ent, out var shearedProduct, out var shearingSolutionEnt, out var shearingSolutionToRemove, out var feedbackPopupString, null, false))
+        if (!CanShear(ent, out var shearingSolutionToRemove, null, false))
         {
             return;
         }
+
+        // Check ShearingSolutionEnt has resolved for sure.
+        if (ent.Comp.ShearingSolutionEnt is null)
+        {
+            return;
+        }
+
+        // Lookup some variables we need.
+        var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+        //shearingSolutionEnt
 
         // Mark as handled so we don't duplicate.
         args.Handled = true;
@@ -218,14 +220,17 @@ public sealed class SharedShearableSystem : EntitySystem
         var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
-        if (shearingSolutionToRemove == 0)
+        if (shearingSolutionToRemove <= 0)
         {
+            var feedbackPopupString = Loc.GetString("shearable-system-no-product",
+                ("target", Identity.Entity(ent.Owner, EntityManager)),
+                ("product", shearedProduct.Name));
             _popup.PopupClient(feedbackPopupString, ent.Owner, args.Args.User);
             return;
         }
 
         // Split the solution inside the creature by solutionToRemove, return what was removed.
-        var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, (FixedPoint2)shearingSolutionToRemove);
+        var removedSolution = _solutionContainer.SplitSolution(ent.Comp.ShearingSolutionEnt.Value, (FixedPoint2)shearingSolutionToRemove);
 
         // Psuedo shared randomness
         // Can be replaced with SharedRandom once #5849 is merged.
@@ -302,7 +307,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Checks whether the entity can be sheared and applies appropriate examine additions.
         if (CanShear(ent, out var shearingSolutionToRemove, checkItem: false) && ent.Comp.ShearableMarkupText != null)
         {
-            // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation have a blank variable..
+            // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation has a blank variable.
             var toolQuality = string.Empty;
             var toolQualityProto = _proto.Index(ent.Comp.ToolQuality);
             // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
@@ -369,6 +374,6 @@ public sealed class SharedShearableSystem : EntitySystem
         if (args.SolutionId != ent.Comp.TargetSolutionName)
             return;
 
-        //UpdateShearingLayer(ent, args.Solution);
+        UpdateShearingLayer(ent, args.Solution);
     }
 }

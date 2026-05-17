@@ -119,6 +119,11 @@ public sealed partial class ShearableComponent : Component
     [DataField]
     public SpriteSpecifier ShearingIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png"));
 
+    /// <summary>
+    ///     Caches the resolved shearing solution entity.
+    /// </summary>
+    public Entity<SolutionComponent>? ShearingSolutionEnt = null;
+
 }
 
 /// <summary>
