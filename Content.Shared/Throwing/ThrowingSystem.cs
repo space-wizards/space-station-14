@@ -9,6 +9,7 @@ using Content.Shared.Friction;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -30,13 +31,14 @@ public sealed partial class ThrowingSystem : EntitySystem
     private float _frictionModifier;
     private float _airDamping;
 
+    [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ThrownItemSystem _thrownSystem = default!;
-    [Dependency] private SharedCameraRecoilSystem _recoil = default!;
-    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private IConfigurationManager _configManager = default!;
 
     [Dependency] private EntityQuery<AnchorableComponent> _anchorableQuery = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -228,7 +230,13 @@ public sealed partial class ThrowingSystem : EntitySystem
             return;
 
         if (recoil)
-            _recoil.KickCamera(user.Value, -direction * 0.04f);
+        {
+            // The effect of KickCamera differs depending on whether it is on the server or on the client.
+            if (_net.IsClient)
+                _recoil.KickCamera(user.Value, -direction * 0.004f);
+            else
+                _recoil.KickCamera(user.Value, -direction * 0.04f);
+        }
 
         // Give thrower an impulse in the other direction
         if (pushbackRatio == 0.0f ||
