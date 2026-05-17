@@ -9,7 +9,7 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
-using Content.Shared.ParadoxClone;
+using Content.Server.ParadoxClone;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
 
@@ -125,7 +125,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         _mind.CopyObjectives(ent.Comp.OriginalMind.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
 
         // give the ghost the materialize action so that it can spawn its "real" body when it desires
-        var action = Spawn(ent.Comp.MaterializeAction);
-        _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
+        // var action = Spawn(ent.Comp.MaterializeAction);
+        // _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
     }
 }

@@ -1,7 +1,7 @@
 using Content.Shared.Mind;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.ParadoxClone;
+namespace Content.Server.ParadoxClone;
 
 public sealed partial class ParadoxCloneSystem : EntitySystem
 {
@@ -16,13 +16,13 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ParadoxCloneComponent, ParadoxCloneMaterializeActionEvent>(OnMaterialize);
+        SubscribeLocalEvent<ParadoxCloneComponent, ActionParadoxCloneMaterializeEvent>(OnMaterialize);
     }
 
     /// <summary>
     /// Materializes the paradox clone, removing its ghost entity and spawning its real body.
     /// </summary>
-    private void OnMaterialize(Entity<ParadoxCloneComponent> ent, ref ParadoxCloneMaterializeActionEvent args)
+    private void OnMaterialize(Entity<ParadoxCloneComponent> ent, ref ActionParadoxCloneMaterializeEvent args)
     {
         // get the mind to transfer
         if (!_mindSystem.TryGetMind(args.Performer, out var mind, out var mindComp))

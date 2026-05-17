@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.ParadoxClone;
+namespace Content.Server.ParadoxClone;
 
 /// <summary>
 /// Added to mind role entities to tag that they are a paradox clone.

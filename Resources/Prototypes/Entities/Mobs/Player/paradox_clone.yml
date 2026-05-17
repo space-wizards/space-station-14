@@ -46,22 +46,15 @@
   description: This has something to do with trousers and with time. Probably.
   # categories: [ HideSpawnMenu, DoNotMap ]
   components:
-  - type: Fixtures
-    fixtures:
-      lightTrigger:
-        shape:
-          !type:PhysShapeCircle
-          radius: 8
-        density: 80
-        hard: false
-        layer:
-        - GhostImpassable
   - type: Tag
     tags:
     - GhostOnlyWarp
   - type: Eye
     pvsScale: 1.5
     drawFov: false
+    visMask: # need this to be able to see its own abilities
+    - Normal
+    - Ghost # Can see ghosts, but this shouldn't be a problem. I hope.
   - type: Visibility
     layer: 2
   - type: Sprite
@@ -69,7 +62,9 @@
     - sprite: Mobs/Aliens/paradox_clone.rsi
       state: paradox
       shader: unshaded
-  - type: CameraActiveOnCollideCollider
+  - type: ActionGrant
+    actions:
+    - ActionParadoxCloneMaterialize
 
 - type: entity
   parent: BaseAction
@@ -81,7 +76,11 @@
     icon:
       sprite: Interface/Actions/carp_rift.rsi
       state: icon
+    raiseOnUser: true
+    raiseOnAction: false
     useDelay: 1
     priority: 3
   - type: InstantAction
-    event: !type:ParadoxCloneMaterializeActionEvent
+    event: !type:ActionParadoxCloneMaterializeEvent
+  - type: Visibility # needed so that the paradox clone can see it
+    layer: 2
