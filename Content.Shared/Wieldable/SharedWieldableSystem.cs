@@ -240,6 +240,9 @@ public abstract partial class SharedWieldableSystem : EntitySystem
         args.Cancelled = true;
     }
 
+    /// <summary>
+    ///     Returns true if the given player can currently wield the given wieldable item.
+    /// </summary>
     public bool CanWield(Entity<WieldableComponent?> wieldable, EntityUid user, bool quiet = false)
     {
         if (!Resolve(wieldable, ref wieldable.Comp, false))
