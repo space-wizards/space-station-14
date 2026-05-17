@@ -40,7 +40,7 @@ public sealed class SharedShearableSystem : EntitySystem
         SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnInteractUsingEvent);
         SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
-        SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<ShearableComponent, SolutionChangedEvent>(OnSolutionChange);
     }
 
     /// <summary>
@@ -66,9 +66,6 @@ public sealed class SharedShearableSystem : EntitySystem
         {
             return false;
         }
-
-        // This is used in the failure message later.
-        var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
 
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
@@ -364,16 +361,16 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     /// <param name="ent">the entity containing a wooly component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
-    private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionChangedEvent args)
     {
         // The changes are already networked as part of the same game state.
         if (_timing.ApplyingState)
             return;
 
         // Only interested in wool solution, ignore the rest.
-        if (args.SolutionId != ent.Comp.TargetSolutionName)
+        if (args.Solution.Comp.Id != ent.Comp.TargetSolutionName)
             return;
 
-        UpdateShearingLayer(ent, args.Solution);
+        UpdateShearingLayer(ent, args.Solution.Comp.Solution);
     }
 }

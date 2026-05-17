@@ -1198,18 +1198,10 @@
         Base: sheep_dead
       Dead:
         Base: sheep_dead
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      udder:
-        maxVol: 250
-        reagents:
-        - ReagentId: MilkSheep
-          Quantity: 25
-      wool:
-        maxVol: 250
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 25
+    - SolutionUdderSheep
+    - SolutionWoolSheep
   - type: Udder
     reagentId: MilkSheep
     quantityPerUpdate: 25
@@ -1271,6 +1263,41 @@
     - FoodRecipes
 
 - type: entity
+  parent: SolutionUdder
+  id: SolutionUdderSheep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: MilkSheep
+        Quantity: 25
+
+- type: entity
+  parent: SolutionWool
+  id: SolutionWoolSheep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: wool
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 25
+
+- type: entity
+  parent: SolutionWool
+  id: SolutionWoolSheepRainbow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: wool
+    solution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 25
+
+- type: entity
   parent: [ MobSheepBase, SimpleMobBase ]
   id: MobSheep
   name: sheep
@@ -1297,18 +1324,10 @@
     shearableMarkupText: rainbow-sheep-shearable-examine-markup
     unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
     verb: rainbow-sheep-shearable-verb
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      udder:
-        maxVol: 250
-        reagents:
-        - ReagentId: MilkSheep
-          Quantity: 30
-      wool:
-        maxVol: 250
-        reagents:
-        - ReagentId: SpaceDrugs
-          Quantity: 25
+    - SolutionUdderSheep
+    - SolutionWoolSheepRainbow
   - type: FlavorProfile
     flavors:
     - leafy
