@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Added new signs, spawners and consoles to Exo, along with some minor
-      balance tweaks and improvements.
-    type: Tweak
-  id: 9183
-  time: '2025-11-01T21:00:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41234
 - author: PickelSilly
   changes:
   - message: Added a new voice sensor item craftable at an autolathe, record a key
@@ -4080,3 +4072,10 @@
   id: 9694
   time: '2026-05-17T10:32:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43970
+- author: Errant
+  changes:
+  - message: Chainsaw sound effects have been replaced.
+    type: Tweak
+  id: 9695
+  time: '2026-05-17T19:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43976
