@@ -23,10 +23,14 @@
 - type: entity
   parent: [AirSensorVoxBase, GasVentPump]
   id: GasVentPumpVox
+  placement:
+    mode: SnapgridCenter
 
 - type: entity
   parent: [AirSensorVoxBase, GasVentScrubber]
   id: GasVentScrubberVox
+  placement:
+    mode: SnapgridCenter
   components:
   - type: GasVentScrubber
     wideNet: true # Air alarm with auto mode overrides filters with hardcoded defaults so default to widenet

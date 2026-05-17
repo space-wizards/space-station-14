@@ -534,10 +534,46 @@
   startNode: start
   targetNode: ventpump
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentPump
+  - GasVentPumpAlt1
+  - GasVentPumpAlt2
+
+- type: construction
+  id: GasVentPumpAlt1
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: ventpumpAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentPump
+  - GasVentPumpAlt1
+  - GasVentPumpAlt2
+
+- type: construction
+  id: GasVentPumpAlt2
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: ventpumpAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentPump
+  - GasVentPumpAlt1
+  - GasVentPumpAlt2
 
 - type: construction
   id: GasPassiveVent
@@ -545,10 +581,46 @@
   startNode: start
   targetNode: passivevent
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPassiveVent
+  - GasPassiveVentAlt1
+  - GasPassiveVentAlt2
+
+- type: construction
+  id: GasPassiveVentAlt1
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: passiveventAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPassiveVent
+  - GasPassiveVentAlt1
+  - GasPassiveVentAlt2
+
+- type: construction
+  id: GasPassiveVentAlt2
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: passiveventAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPassiveVent
+  - GasPassiveVentAlt1
+  - GasPassiveVentAlt2
 
 - type: construction
   id: GasVentScrubber
@@ -556,10 +628,46 @@
   startNode: start
   targetNode: ventscrubber
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentScrubber
+  - GasVentScrubberAlt1
+  - GasVentScrubberAlt2
+
+- type: construction
+  id: GasVentScrubberAlt1
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: ventscrubberAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentScrubber
+  - GasVentScrubberAlt1
+  - GasVentScrubberAlt2
+
+- type: construction
+  id: GasVentScrubberAlt2
+  hide: true
+  graph: GasUnary
+  startNode: start
+  targetNode: ventscrubberAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasVentScrubber
+  - GasVentScrubberAlt1
+  - GasVentScrubberAlt2
 
 - type: construction
   id: GasOutletInjector

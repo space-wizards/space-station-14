@@ -10,13 +10,49 @@
         amount: 2
         doAfter: 1
 
+    - to: ventpumpAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: ventpumpAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: passivevent
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
 
+    - to: passiveventAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: passiveventAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: ventscrubber
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: ventscrubberAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: ventscrubberAlt2
       steps:
       - material: Steel
         amount: 2
@@ -30,6 +66,42 @@
 
   - node: ventpump
     entity: GasVentPump
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: ventpumpAlt1
+    entity: GasVentPumpAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: ventpumpAlt2
+    entity: GasVentPumpAlt2
     edges:
     - to: start
       conditions:
@@ -64,8 +136,80 @@
       - tool: Welding
         doAfter: 1
 
+  - node: passiveventAlt1
+    entity: GasPassiveVentAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: passiveventAlt2
+    entity: GasPassiveVentAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
   - node: ventscrubber
     entity: GasVentScrubber
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: ventscrubberAlt1
+    entity: GasVentScrubberAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: ventscrubberAlt2
+    entity: GasVentScrubberAlt2
     edges:
     - to: start
       conditions:
