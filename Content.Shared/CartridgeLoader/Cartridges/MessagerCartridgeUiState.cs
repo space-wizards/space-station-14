@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.CartridgeLoader;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
@@ -7,11 +8,15 @@ public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
 {
     public MessagerStatus Status;
     public Dictionary<int, MessagerUserEntry> Users;
+    public List<MessagerMessageEntry> Messages;
+    public bool HasNewMessage;
 
-    public MessagerCartridgeUiState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users)
+    public MessagerCartridgeUiState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users, List<MessagerMessageEntry>? messages = null, bool hasNewMessage = false)
     {
         Status = status;
         Users = users;
+        Messages = messages ?? new List<MessagerMessageEntry>();
+        HasNewMessage = hasNewMessage;
     }
 }
 
@@ -31,6 +36,61 @@ public sealed partial class MessagerUserEntry
     }
 }
 
+/// <summary>
+/// Message for UI display
+/// </summary>
+[Serializable, NetSerializable, DataRecord]
+public sealed partial class MessagerMessageEntry
+{
+    public int Id;
+    public string SenderName;
+    public string Content;
+    public DateTime Timestamp;
+    public bool IsIncoming;
+    public int SenderId;
+    public int ReceiverId;
+
+    public MessagerMessageEntry(int id, string content, DateTime timestamp, int senderId, int receiverId)
+    {
+        Id = id;
+        SenderName = "";
+        Content = content;
+        Timestamp = timestamp;
+        SenderId = senderId;
+        ReceiverId = receiverId;
+    }
+}
+
+/// <summary>
+///
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MessagerSendMessageEvent : CartridgeMessageEvent
+{
+    public int ReceiverId;
+    public string Content;
+
+    public MessagerSendMessageEvent(int receiverId, string content)
+    {
+        ReceiverId = receiverId;
+        Content = content;
+    }
+}
+
+
+/// <summary>
+/// UI update request
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MessagerRequestMessagesEvent : CartridgeMessageEvent
+{
+    public int UserId;
+
+    public MessagerRequestMessagesEvent(int userId)
+    {
+        UserId = userId;
+    }
+}
 
 /// <summary>
 /// Server connection status

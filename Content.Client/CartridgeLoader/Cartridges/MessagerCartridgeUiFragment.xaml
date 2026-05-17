@@ -14,14 +14,19 @@
             <customControls:VSeparator Margin="2 0"/>
             <BoxContainer Name="MessageBoxContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Name="MainScreenContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="True">
+                    <Label Name="SelectUserLabel" Text="{Loc messager-select-user}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </BoxContainer>
                 <BoxContainer Name="MessageInputContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
-                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+                    <BoxContainer Name="ChatHeader" Orientation="Horizontal" HorizontalExpand="True">
+                        <Button Name="BackButton" Text="{Loc messager-back}" SetWidth="50"/>
+                        <Label Name="ChatPartnerLabel" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True"/>
+                    </BoxContainer>
+                    <ScrollContainer Name="MessageScrollContainer" HorizontalExpand="True" VerticalExpand="True" VScrollEnabled="True">
                         <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>
                     </ScrollContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                         <LineEdit Name="MessageInput" HorizontalExpand="True" SetHeight="32"/>
-                        <Button Name="SendButton" Text="{Loc messager-send}"/>
+                        <Button Name="SendButton" Text="{Loc messager-send}" SetWidth="50"/>
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>

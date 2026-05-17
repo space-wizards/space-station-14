@@ -1,13 +1,10 @@
 using System.Linq;
-using Content.Server.Radio.EntitySystems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -21,13 +18,6 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         SubscribeLocalEvent<MessagerCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<MessagerCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
     }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        SyncUsers();
-    }
-
 
     /// <summary>
     /// Syncing client and server
@@ -129,13 +119,135 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (server == null)
             return (new Dictionary<int, MessagerUserEntry>(), MessagerStatus.ConnectionLost);
 
-        return (server.Value.Component.Users
-            .ToDictionary(k => k.Key, v => new MessagerUserEntry(v.Value.Id, v.Value.Name)), MessagerStatus.Connected);
+        var userData = GetUserData(cartridgeUid);
+        var currentUserId = userData?.Id;
+
+        var users = server.Value.Component.Users
+            .Where(kv => kv.Key != currentUserId)
+            .ToDictionary(k => k.Key, v => new MessagerUserEntry(v.Value.Id, v.Value.Name));
+
+        return (users, MessagerStatus.Connected);
     }
 
+    /// <summary>
+    /// Takes messages from server and sends them to client
+    /// </summary>
+    private List<MessagerMessageEntry> GetMessages(EntityUid cartridgeUid)
+    {
+        var server = GetServerForCartridge(cartridgeUid);
+        if (server == null)
+            return new List<MessagerMessageEntry>();
+
+        var userData = GetUserData(cartridgeUid);
+        var currentUserId = userData?.Id ?? 0;
+
+        var messages = new List<MessagerMessageEntry>();
+        foreach (var msg in server.Value.Component.Messages)
+        {
+            var isIncoming = msg.ReceiverId == currentUserId || msg.SenderId == currentUserId;
+            if (!isIncoming)
+                continue;
+
+            var senderName = server.Value.Component.Users.TryGetValue(msg.SenderId, out var sender)
+                ? sender.Name
+                : "Unknown";
+
+            messages.Add(new MessagerMessageEntry(msg.Id, msg.Content, msg.Timestamp, msg.SenderId, msg.ReceiverId)
+            {
+                SenderName = senderName,
+                IsIncoming = msg.SenderId != currentUserId
+            });
+        }
+
+        return messages;
+    }
+
+    /// <summary>
+    /// Processing messages from the client
+    /// </summary>
     private void OnUiMessage(EntityUid uid, MessagerCartridgeComponent component, CartridgeMessageEvent args)
     {
-        // Обработка сообщений от UI
+        var userData = GetUserData(uid);
+        if (userData == null)
+            return;
+
+        var server = GetServerForCartridge(uid);
+        if (server == null)
+            return;
+
+        var loaderUid = GetLoaderUid(uid);
+        if (loaderUid == null)
+            return;
+
+        if (args is MessagerSendMessageEvent sendMessage)
+        {
+            var messageId = server.Value.Component.Messages.Count > 0
+                ? server.Value.Component.Messages.Max(m => m.Id) + 1
+                : 1;
+
+            var message = new MessagerMessage(
+                messageId,
+                userData.Value.Id,
+                sendMessage.ReceiverId,
+                sendMessage.Content,
+                DateTime.Now
+            );
+
+            server.Value.Component.Messages.Add(message);
+            Dirty(server.Value.Uid, server.Value.Component);
+            // Update sender UI
+            UpdateUiState(uid, loaderUid.Value);
+
+            var receiverCartridgeUid = GetCartridgeByUserId(sendMessage.ReceiverId);
+            if (receiverCartridgeUid == null)
+                return;
+
+            var receiverLoaderUid = GetLoaderUid(receiverCartridgeUid.Value);
+            if (receiverLoaderUid == null)
+                return;
+
+            SendNotificationToUser(receiverCartridgeUid.Value, userData.Value.Name, sendMessage.Content);
+            // Update receiver UI
+            UpdateUiState(receiverCartridgeUid.Value, receiverLoaderUid.Value);
+        }
+
+        if (args is MessagerRequestMessagesEvent requestMessages)
+        {
+            UpdateUiState(uid, loaderUid.Value);
+        }
+    }
+
+    private void SendNotificationToUser(EntityUid cartridgeUid, string senderName, string messagePreview)
+    {
+        var loaderUid = GetLoaderUid(cartridgeUid);
+        if (loaderUid == null)
+            return;
+
+        _cartridgeLoaderSystem.SendNotification(loaderUid.Value, senderName + " sent a message", senderName + ": " + messagePreview);
+    }
+
+
+    private EntityUid? GetLoaderUid(EntityUid cartridgeUid)
+    {
+        if (!TryComp(cartridgeUid, out TransformComponent? transform))
+            return null;
+
+        return transform.ParentUid;
+    }
+
+    /// <summary>
+    /// looking for the recipient's PDA
+    /// </summary>
+    private EntityUid? GetCartridgeByUserId(int userId)
+    {
+        var cartridgeQuery = EntityQueryEnumerator<MessagerCartridgeComponent>();
+        while (cartridgeQuery.MoveNext(out var cartridgeUid, out _))
+        {
+            var userData = GetUserData(cartridgeUid);
+            if (userData?.Id == userId)
+                return cartridgeUid;
+        }
+        return null;
     }
 
     /// <summary>
@@ -143,10 +255,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     /// </summary>
     public (int Id, string Name)? GetUserData(EntityUid cartridgeUid)
     {
-        if (!TryComp(cartridgeUid, out TransformComponent? transform))
-            return null;
-
-        var pdaUid = transform.ParentUid;
+        var pdaUid = GetLoaderUid(cartridgeUid);
         if (!TryComp<PdaComponent>(pdaUid, out var pda))
             return null;
 
@@ -167,13 +276,15 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
 
     private void OnUiReady(EntityUid uid, MessagerCartridgeComponent component, CartridgeUiReadyEvent args)
     {
-        var (users, status) = GetUserList(uid);
-        UpdateUiState(args.Loader, status, users);
+        UpdateUiState(uid, args.Loader);
     }
 
-    private void UpdateUiState(EntityUid loaderUid, MessagerStatus status, Dictionary<int, MessagerUserEntry> users)
+    private void UpdateUiState(EntityUid cartridgeUid, EntityUid loaderUid)
     {
-        var state = new MessagerCartridgeUiState(status, users);
+        SyncUsers();
+        var (users, status) = GetUserList(cartridgeUid);
+        var messages = GetMessages(cartridgeUid);
+        var state = new MessagerCartridgeUiState(status, users, messages);
         _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 }
