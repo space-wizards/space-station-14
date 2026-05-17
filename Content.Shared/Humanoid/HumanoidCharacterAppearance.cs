@@ -87,38 +87,50 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
-
-        // TODO: Add random markings
-
-        var newEyeColor = random.Pick(_realisticEyeColors);
-
-        // grab the skin type, and clamp it to our colour strategy.
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
         var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
         var strategy = protoMan.Index(skinType).Strategy;
 
-        var newSkinColor = strategy.ClosestSkinColor(colorPalette[0]);
+        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
+        var colorPalette = GetPaletteFromBase(baseColor, random.Next(3));
 
-        // declare some defaults. ensures that the hair and eyes on hues-colored species don't match the skin or one another.
-        var newHairColor = colorPalette[1];
-        var newEyeColor = colorPalette[2];
+        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType));
 
-        // now we do some color logic.
-        if (protoMan.Index(skinType).RealisticColors)
+        var markingData = markingManager.GetMarkingData(species);
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings = [];
+
+        foreach (var (organ, organData) in markingData)
         {
-            // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
-            newHairColor = random.Pick(HairStyles.RealisticHairColors);
-            newHairColor = newHairColor
-                .WithRed(RandomizeColor(newHairColor.R))
-                .WithGreen(RandomizeColor(newHairColor.G))
-                .WithBlue(RandomizeColor(newHairColor.B));
+            // if this is an organ with no markings (heart, stomach, etc)
+            if (!protoMan.TryIndex(organData.Group, out var groupProto))
+                continue;
+
+            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
+            foreach (var layer in organData.Layers)
+            {
+                var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
+
+                if (allMarkings.Count == 0)
+                    continue;
+
+                var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
+                if (layerLimits is null || layerLimits.Limit <= 0)
+                    continue;
+
+                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict));
+            }
+            newMarkings.Add(organ, layerMarkings);
+        }
+
+        HumanoidCharacterAppearance appearance = new(
+            colorDict.GetValueOrDefault(EyeColorKey),
+            colorDict.GetValueOrDefault(SkinColorKey),
+            newMarkings);
 
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
-        return EnsureValid(
-            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
-            species,
-            sex);
+        return EnsureValid(appearance, species, sex);
     }
 
     public static Color ClampColor(Color color)

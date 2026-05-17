@@ -89,13 +89,13 @@ public static class MarkingColoring
 public sealed partial class LayerColoringDefinition
 {
     [DataField("type")]
-    public LayerColoringType? Type = new ColoringTypes.SkinColoring();
+    public LayerColoringType? Type;
 
     /// <summary>
     ///     Coloring types that will be used if main coloring type will return nil
     /// </summary>
     [DataField("fallbackTypes")]
-    public List<LayerColoringType> FallbackTypes = new() {};
+    public List<LayerColoringType> FallbackTypes = new() { new ColoringTypes.SkinColoring() };
 
     /// <summary>
     ///     Color that will be used if coloring type and fallback type will return nil
