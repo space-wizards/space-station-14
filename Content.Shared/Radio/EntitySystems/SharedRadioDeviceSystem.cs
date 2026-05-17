@@ -3,10 +3,10 @@ using Content.Shared.Radio.Components;
 
 namespace Content.Shared.Radio.EntitySystems;
 
-public abstract class SharedRadioDeviceSystem : EntitySystem
+public abstract partial class SharedRadioDeviceSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     #region Toggling
     public void ToggleRadioMicrophone(EntityUid uid, EntityUid user, bool quiet = false, RadioMicrophoneComponent? component = null)

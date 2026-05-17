@@ -55,7 +55,9 @@ public static partial class HeatContainerHelpers
     /// integration steps with adaptive step size.
     /// </remarks>
     [PublicAPI]
-    public static float ConductHeat<T>(ref T cA, ref T cB, float deltaTime, float g) where T : IHeatContainer
+    public static float ConductHeat<T1, T2>(ref T1 cA, ref T2 cB, float deltaTime, float g)
+        where T1 : IHeatContainer
+        where T2 : IHeatContainer
     {
         var dQ = ConductHeatQuery(ref cA, ref cB, deltaTime, g);
         AddHeat(ref cA, dQ);
