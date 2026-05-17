@@ -143,7 +143,7 @@
 
 - type: entity
   name: xenoborg explosive
-  description: I say we take off and nuke the entire site from orbit.
+  description: Used to put holes in specific areas with big angry robots coming out.
   parent: [BasePlasticExplosive, BaseXenoborgContraband]
   id: XenoC4
   components:
