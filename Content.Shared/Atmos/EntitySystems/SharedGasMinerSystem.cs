@@ -19,6 +19,9 @@ public abstract partial class SharedGasMinerSystem : EntitySystem
     {
         var component = ent.Comp;
 
+        if (!component.ShowExamineText)
+            return;
+
         using (args.PushGroup(nameof(GasMinerComponent)))
         {
             args.PushMarkup(Loc.GetString("gas-miner-mines-text",

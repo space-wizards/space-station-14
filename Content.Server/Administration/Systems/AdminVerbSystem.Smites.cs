@@ -1088,6 +1088,7 @@ public sealed partial class AdminVerbSystem
                 var gasMiner = EnsureComp<GasMinerComponent>(args.Target);
                 gasMiner.SpawnGas = Gas.Ammonia;
                 gasMiner.SpawnAmount = 20;
+                gasMiner.ShowExamineText = false;
 
                 var atmosDevice = EnsureComp<AtmosDeviceComponent>(args.Target);
                 atmosDevice.RequireAnchored = false;
