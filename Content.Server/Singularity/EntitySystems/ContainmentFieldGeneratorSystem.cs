@@ -24,8 +24,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private SharedPointLightSystem _light = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private TagSystem _tags = default!;
-    [Dependency]
-    private EntityQuery<ContainmentFieldGeneratorComponent> _genQuery = default!;
+    [Dependency] private EntityQuery<ContainmentFieldGeneratorComponent> _genQuery = default!;
 
     public override void Initialize()
     {

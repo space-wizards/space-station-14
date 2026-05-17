@@ -26,6 +26,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private ILogManager _logManager = default!;
         [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
+        [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
@@ -352,7 +353,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             if (!node.Connectable(EntityManager, xform))
                 yield break;
 
-            foreach (var reachable in node.GetReachableNodes((node.Owner, xform), _nodeContainerQuery, GetEntityQuery<TransformComponent>(), gridEnt, EntityManager))
+            foreach (var reachable in node.GetReachableNodes((node.Owner, xform), _nodeContainerQuery, _xformQuery, gridEnt, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 

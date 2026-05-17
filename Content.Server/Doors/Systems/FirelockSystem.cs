@@ -74,7 +74,6 @@ namespace Content.Server.Doors.Systems
                 }
 
                 if (_airtightQuery.TryGetComponent(uid, out var airtight)
-                    && HasComp<TransformComponent>(uid)
                     && _appearanceQuery.TryGetComponent(uid, out var appearance))
                 {
                     var (pressure, fire) = CheckPressureAndFire(uid, firelock, airtight);
