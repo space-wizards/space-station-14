@@ -34,10 +34,28 @@ public sealed partial class CargoBountyConsoleComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
+    /// The time at which the console will be able to register a claimant on a bounty again.
+    /// </summary>
+    [DataField("nextClaimTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextClaimTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between claims.
+    /// </summary>
+    [DataField("claimDelay")]
+    public TimeSpan ClaimDelay = TimeSpan.FromSeconds(1);
+
+    /// <summary>
     /// The sound made when the bounty is claimed.
     /// </summary>
-    [DataField("claimSound")]
-    public SoundSpecifier ClaimSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg"); // MIKEY - update to be unique!
+    [DataField("claimAddSound")]
+    public SoundSpecifier ClaimAddSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping2.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty claim is removed.
+    /// </summary>
+    [DataField("claimRemoveSound")]
+    public SoundSpecifier ClaimRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping3.ogg");
 
     /// <summary>
     /// The sound made when the bounty is skipped.
