@@ -251,10 +251,10 @@
   components:
   - type: XAEApplyComponents
     components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 150
+    - type: Solution
+      id: beaker
+      solution:
+        maxVol: 120
     - type: FitsInDispenser
       solution: beaker
     - type: RefillableSolution
