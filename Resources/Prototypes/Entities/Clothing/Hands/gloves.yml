@@ -718,7 +718,7 @@
     fiberColor: fibers-yellow
   - type: FingerprintMask
   - type: MeleeSpeech
-    Battlecry: Punchicus!!
+    Battlecry: PUNCHIO KNOCEL!!
   - type: StaticPrice
     price: 2500
   - type: Tag
