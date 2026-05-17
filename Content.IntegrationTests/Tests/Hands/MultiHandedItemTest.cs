@@ -27,9 +27,9 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
     protected const string CrowbarWield3 = "CrowbarWieldableThreeHanded";
 
     [TestPrototypes]
-    private const string TestPrototypes = @"
+    private const string TestPrototypes = @$"
 - type: entity
-  id: DummyOneHanded
+  id: {Dummy1}
   name: Urist McOneHand
   components:
   - type: DoAfter
@@ -44,8 +44,8 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
   - type: Puller
 
 - type: entity
-  parent: DummyOneHanded
-  id: DummyTwoHanded
+  parent: {Dummy1}
+  id: {Dummy2}
   name: Urist McTwoHands
   components:
   - type: Hands
@@ -59,8 +59,8 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
     - hand_left
 
 - type: entity
-  parent: DummyTwoHanded
-  id: DummyThreeHanded
+  parent: {Dummy1}
+  id: {Dummy3}
   name: Urist McThreeHands
   components:
   - type: Hands
@@ -77,8 +77,8 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
     - hand_left
 
 - type: entity
-  parent: DummyTwoHanded
-  id: DummyFourHanded
+  parent: {Dummy1}
+  id: {Dummy4}
   name: Urist McFourHands
   components:
   - type: Hands
@@ -99,43 +99,43 @@ public abstract class BaseMultiHandedItemTest : InteractionTest
 
 - type: entity
   parent: BaseItem
-  id: CrowbarOneHanded
+  id: {Crowbar1}
   components:
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
 
 - type: entity
-  parent: CrowbarOneHanded
-  id: CrowbarTwoHanded
+  parent: {Crowbar1}
+  id: {Crowbar2}
   components:
   - type: MultiHandedItem
     handsNeeded: 2
 
 - type: entity
-  parent: CrowbarOneHanded
-  id: CrowbarThreeHanded
+  parent: {Crowbar1}
+  id: {Crowbar3}
   components:
   - type: MultiHandedItem
     handsNeeded: 3
 
 - type: entity
-  parent: CrowbarOneHanded
-  id: CrowbarWieldableOneHanded
+  parent: {Crowbar1}
+  id: {CrowbarWield1}
   components:
   - type: Wieldable
     freeHandsRequired: 0
 
 - type: entity
-  parent: CrowbarOneHanded
-  id: CrowbarWieldableTwoHanded
+  parent: {Crowbar1}
+  id: {CrowbarWield2}
   components:
   - type: Wieldable
     freeHandsRequired: 1
 
 - type: entity
-  parent: CrowbarOneHanded
-  id: CrowbarWieldableThreeHanded
+  parent: {Crowbar1}
+  id: {CrowbarWield3}
   components:
   - type: Wieldable
     freeHandsRequired: 2
