@@ -148,10 +148,12 @@ public sealed partial class MarkingManager
                 }
 
                 var existingColors = markings[i].MarkingColors;
-                // If there are less colors than sprites, use existing colors and fill missing spots with white
+                // If there are less colors than sprites, use existing colors and fill missing spots with last applicable or white
                 if (marking.Sprites.Count > existingColors.Count)
                 {
-                    var missingColors = Enumerable.Repeat(Color.White, marking.Sprites.Count - existingColors.Count);
+                    var missingColors = Enumerable.Repeat(
+                        existingColors.Count > 0 ? existingColors[existingColors.Count - 1] : Color.White,
+                        marking.Sprites.Count - existingColors.Count);
                     markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
                 }
                 // If there are more colors than sprites, just drop the extras
