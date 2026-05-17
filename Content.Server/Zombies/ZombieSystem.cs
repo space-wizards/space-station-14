@@ -35,7 +35,7 @@ namespace Content.Server.Zombies
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IPrototypeManager _protoManager = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ActionsSystem _actions = default!;

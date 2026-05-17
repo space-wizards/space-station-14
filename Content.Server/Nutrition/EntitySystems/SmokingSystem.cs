@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Clothing.Components;
@@ -24,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private ReactiveSystem _reactiveSystem = default!;
         [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private SharedBloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private AtmosphereSystem _atmos = default!;
         [Dependency] private TransformSystem _transformSystem = default!;
         [Dependency] private InventorySystem _inventorySystem = default!;

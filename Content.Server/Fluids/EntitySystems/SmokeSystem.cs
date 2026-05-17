@@ -38,7 +38,7 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private BloodstreamSystem _blood = default!;
+    [Dependency] private SharedBloodstreamSystem _blood = default!;
     [Dependency] private InternalsSystem _internals = default!;
     [Dependency] private ReactiveSystem _reactive = default!;
     [Dependency] private SharedBroadphaseSystem _broadphase = default!;
