@@ -14,11 +14,8 @@ namespace Content.Client.Cargo.BUI
 {
     public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        [Dependency]
-        private SharedCargoSystem _cargoSystem = default!;
-
-        [Dependency]
-        private IdentitySystem _identity = default!;
+        [Dependency] private SharedCargoSystem _cargoSystem = default!;
+        [Dependency] private IdentitySystem _identity = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
