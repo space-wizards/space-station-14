@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Towels in the trinkets loadout menu are now sorted by hue.
-    type: Tweak
-  - message: White towels no longer have a playtime requirement.
-    type: Tweak
-  - message: Dark green towels are now actually darker than green towels.
-    type: Fix
-  id: 9182
-  time: '2025-11-01T16:01:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39831
 - author: SlamBamActionman
   changes:
   - message: Added new signs, spawners and consoles to Exo, along with some minor
@@ -4084,3 +4073,10 @@
   id: 9693
   time: '2026-05-16T22:29:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36701
+- author: Nem
+  changes:
+  - message: Atmos devices can now be mapped in an enabled state.
+    type: Fix
+  id: 9694
+  time: '2026-05-17T10:32:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43970
