@@ -14,7 +14,7 @@
                   VerticalAlignment="Center"
                   HorizontalExpand="True"
                   VerticalExpand="True">
-        <PanelContainer StyleClasses="BackgroundPanel">
+        <PanelContainer>
             <BoxContainer Orientation="Vertical"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
