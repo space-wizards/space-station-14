@@ -9,11 +9,12 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// Returns true if this solution entity has an amount of reagent in it within a specified minimum and maximum.
 /// </summary>
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
-public sealed partial class ReagentThresholdEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
+public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
 {
     protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentCondition> args)
     {
-        var quant = entity.Comp.Solution.GetTotalPrototypeQuantity(args.Condition.Reagent);
+        var soln = entity.Comp.Solution;
+        var quant = soln.GetTotalPrototypeQuantity(args.Condition.Reagent);
 
         args.Result = quant >= args.Condition.Min && quant <= args.Condition.Max;
     }

@@ -9,7 +9,7 @@
   - !type:RoleTimeRequirement
     role: JobBorg
     time: 5h
-  canBeAntag: false
+  weight: 10
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
@@ -24,7 +24,6 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10h
-  canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgBattery
