@@ -40,14 +40,14 @@ public sealed partial class BountyEntry : BoxContainer
                 ("item", Loc.GetString(entry.Name))));
         }
 
+        ManifestLabel.SetMarkup(Loc.GetString("bounty-console-manifest-label", ("item", string.Join(", ", items))));
+        RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bountyPrototype.Reward)));
+        DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bountyPrototype.Description))));
+
         var claimersList = bounty.ClaimedBy;
         var claimers = claimersList.Count == 0
             ? Loc.GetString("bounty-console-claimed-by-none")
             : string.Join(", ", claimersList);
-
-        ManifestLabel.SetMarkup(Loc.GetString("bounty-console-manifest-label", ("item", string.Join(", ", items))));
-        RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bountyPrototype.Reward)));
-        DescriptionLabel.SetMarkup(Loc.GetString("bounty-console-description-label", ("description", Loc.GetString(bountyPrototype.Description))));
         ClaimedByLabel.SetMarkup(Loc.GetString("bounty-console-claimed-by-label", ("claimers", claimers)));
         IdLabel.SetMarkup(Loc.GetString("bounty-console-id-label", ("id", bounty.Id)));
 
