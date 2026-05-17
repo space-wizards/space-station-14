@@ -1,7 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Nuke
@@ -37,7 +36,7 @@ namespace Content.Client.Nuke
 
             _menu.EjectButton.OnPressed += _ =>
             {
-                SendMessage(new ItemSlotButtonPressedEvent(SharedNukeComponent.NukeDiskSlotId));
+                SendMessage(new ItemSlotButtonPressedEvent(NukeComponent.NukeDiskSlotId));
             };
             _menu.AnchorButton.OnPressed += _ =>
             {
