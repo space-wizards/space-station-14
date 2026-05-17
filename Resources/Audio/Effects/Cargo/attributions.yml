@@ -15,6 +15,7 @@
 - files:
   - ping2.ogg
   - ping3.ogg
+  - ping4.ogg
   copyright: 'modified "ping.ogg" by mikeysaurus'
   license: CC0-1.0
   source: https://github.com/tgstation/tgstation/tree/d6f15fb717e7c047f8befefabb4b7735b3c39a84/sound

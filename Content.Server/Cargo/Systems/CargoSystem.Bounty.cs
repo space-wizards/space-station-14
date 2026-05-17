@@ -79,13 +79,25 @@ public sealed partial class CargoSystem
 
     private void OnClaimMessage(EntityUid uid, CargoBountyConsoleComponent component, BountyClaimMessage args)
     {
+        if (Timing.CurTime < component.NextClaimTime)
+            return;
+
         if (_station.GetOwningStation(uid) is not { } station)
             return;
 
         if (args.Actor is { Valid: true } actor)
         {
-            TryAddBountyClaimer(station, args.BountyId, actor);
-            _audio.PlayPvs(component.ClaimSound, uid);
+            if (TryAddBountyClaimer(station, args.BountyId, actor, out var added, out var removed))
+            {
+                component.NextClaimTime = Timing.CurTime + component.ClaimDelay;
+
+                if (removed && added)
+                    _audio.PlayPvs(component.ClaimAddRemoveSound, uid);
+                else if (removed)
+                    _audio.PlayPvs(component.ClaimRemoveSound, uid);
+                else if (added)
+                    _audio.PlayPvs(component.ClaimAddSound, uid);
+            }
         }
 
         UpdateBountyConsoles();
@@ -555,12 +567,16 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool TryAddBountyClaimer(
-        EntityUid station,
+    private bool TryAddBountyClaimer(EntityUid station,
         string bountyId,
         EntityUid actor,
+        out bool added,
+        out bool removed,
         StationCargoBountyDatabaseComponent? db = null)
     {
+        added = false;
+        removed = false;
+
         if (!Resolve(station, ref db))
             return false;
 
@@ -573,14 +589,24 @@ public sealed partial class CargoSystem
                 continue;
 
             var existingClaimers = bounty.ClaimedBy;
-            if (existingClaimers.Contains(actorName))
-                return false;
-
             var claimers = new List<string>(existingClaimers);
-            if (claimers.Count >= 3)
-                claimers.RemoveAt(0);
 
-            claimers.Add(actorName);
+            if (claimers.Contains(actorName))
+            {
+                claimers.Remove(actorName);
+                removed = true;
+            }
+            else
+            {
+                if (claimers.Count >= 3)
+                {
+                    claimers.RemoveAt(0);
+                    removed = true;
+                }
+
+                claimers.Add(actorName);
+                added = true;
+            }
 
             db.Bounties[i] = bounty with
             {
