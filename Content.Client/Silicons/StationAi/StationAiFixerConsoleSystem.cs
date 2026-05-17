@@ -5,7 +5,7 @@ namespace Content.Client.Silicons.StationAi;
 
 public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerConsoleSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
