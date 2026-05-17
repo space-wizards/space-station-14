@@ -27,10 +27,7 @@ public sealed partial class GasMinerSystem : SharedGasMinerSystem
         var oldState = miner.MinerState;
         float toSpawn;
 
-        if (!TryComp<AtmosDeviceComponent>(ent, out var atmosDevice))
-            return;
-
-        if (!GetValidEnvironment(ent, out var environment) || !Transform(ent).Anchored && atmosDevice.RequireAnchored)
+        if (!GetValidEnvironment(ent, out var environment))
         {
             miner.MinerState = GasMinerState.Disabled;
         }
