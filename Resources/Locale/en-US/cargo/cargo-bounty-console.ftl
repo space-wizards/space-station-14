@@ -21,6 +21,7 @@ bounty-console-flavor-left = Bounties sourced from local unscrupulous dealers.
 bounty-console-flavor-right = v1.4
 
 bounty-manifest-header = [font size=14][bold]Official cargo bounty manifest[/bold] (ID#{$id})[/font]
+bounty-manifest-claimed-by = Claimed by:
 bounty-manifest-list-start = Item manifest:
 
 bounty-console-tab-available-label = Available

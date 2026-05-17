@@ -138,7 +138,11 @@ public sealed partial class CargoSystem
         _audio.PlayPvs(component.SkipSound, uid);
     }
 
-    public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)
+    public void SetupBountyLabel(EntityUid uid,
+        EntityUid stationId,
+        CargoBountyData bounty,
+        PaperComponent? paper = null,
+        CargoBountyLabelComponent? label = null)
     {
         if (!Resolve(uid, ref paper, ref label) || !_protoMan.Resolve<CargoBountyPrototype>(bounty.Bounty, out var prototype))
             return;
@@ -158,6 +162,20 @@ public sealed partial class CargoSystem
             msg.PushNewline();
         }
         msg.AddMarkupOrThrow(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
+
+        if (bounty.ClaimedBy.Count > 0)
+        {
+            msg.PushNewline();
+            msg.PushNewline();
+            msg.AddMarkupOrThrow(Loc.GetString("bounty-manifest-claimed-by"));
+            msg.PushNewline();
+            foreach (var claimer in bounty.ClaimedBy)
+            {
+                msg.AddMarkupOrThrow(Loc.GetString($"- {Loc.GetString(claimer)}"));
+                msg.PushNewline();
+            }
+        }
+
         _paperSystem.SetContent((uid, paper), msg.ToMarkup());
     }
 
