@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Prototypes
 {
     [UsedImplicitly]
-    [Obsolete("More efficient methods exist in EntityPrototyp.HasComp and EntitySystem's proxy methods")]
+    [Obsolete("More efficient methods exist in EntityPrototype.HasComp and EntitySystem's proxy methods")]
     public static class EntityPrototypeHelpers
     {
         [Obsolete("More efficient methods exist in EntityPrototype.HasComp and EntitySystem's proxy methods")]
