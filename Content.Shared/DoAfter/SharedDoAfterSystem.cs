@@ -16,10 +16,10 @@ namespace Content.Shared.DoAfter;
 
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     /// <summary>
     ///     We'll use an excess time so stuff like finishing effects can show.
@@ -251,7 +251,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
 
         // Initial checks
-        if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
+        if (ShouldCancel(doAfter))
             return false;
 
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
