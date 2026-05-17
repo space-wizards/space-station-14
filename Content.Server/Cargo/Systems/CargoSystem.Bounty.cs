@@ -7,7 +7,6 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Paper;
@@ -25,9 +24,9 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSys = default!;
 
     private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 
@@ -474,11 +473,7 @@ public sealed partial class CargoSystem
             {
                 string? actorName = null;
                 if (actor != null)
-                {
-                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(ent.Owner, actor.Value);
-                    RaiseLocalEvent(getIdentityEvent);
-                    actorName = getIdentityEvent.Title;
-                }
+                    actorName = _identity.GetIdentityShortInfo(actor.Value, ent.Owner);
 
                 ent.Comp.History.Add(new CargoBountyHistoryData(data,
                     skipped
