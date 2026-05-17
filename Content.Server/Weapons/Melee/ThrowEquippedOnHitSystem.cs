@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Weapons.Melee;
 
-public sealed class ThrowEquippedOnHitSystem : EntitySystem
+public sealed partial class ThrowEquippedOnHitSystem : EntitySystem
 {
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private IRobustRandom _random = default!;
