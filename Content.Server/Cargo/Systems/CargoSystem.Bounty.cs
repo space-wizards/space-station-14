@@ -26,10 +26,9 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
-    [Dependency] private readonly IdCardSystem _idCard = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSys = default!;
 
     private static readonly ProtoId<NameIdentifierGroupPrototype> BountyNameIdentifierGroup = "Bounty";
 
@@ -120,10 +119,9 @@ public sealed partial class CargoSystem
 
         for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
         {
-            var bounty = bountyDbComp.Bounties[i];
-
-            if (bounty.Id != args.BountyId)
+            if (bountyDbComp.Bounties[i].Id != args.BountyId)
                 continue;
+            var bounty = bountyDbComp.Bounties[i];
             var targetStatus = args.Status;
             var status = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>().FirstOrDefault(s => s.Index == targetStatus);
             bountyDbComp.Bounties[i] = bounty with { Status = status!.ID };
@@ -139,20 +137,12 @@ public sealed partial class CargoSystem
 
         for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
         {
+            if (bountyDbComp.Bounties[i].Id != args.BountyId)
+                continue;
             var bounty = bountyDbComp.Bounties[i];
 
-            if (bounty.Id != args.BountyId)
-                continue;
+            var name = _identity.GetIdentityShortInfo(args.Actor, ent.Owner) ?? Loc.GetString("bounty-console-claimed-by-unknown");
 
-            string name;
-            if (_idCard.TryFindIdCard(args.Actor, out var idCard) && idCard.Comp.FullName != null)
-            {
-                name = idCard.Comp.FullName;
-            }
-            else
-            {
-                name = Loc.GetString("bounty-console-claimed-by-unknown");
-            }
             bountyDbComp.Bounties[i] = bounty with { ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name };
         }
 
@@ -474,6 +464,7 @@ public sealed partial class CargoSystem
         {
             return false;
         }
+
         return TryAddBounty(uid, bounty, component);
     }
 
@@ -487,8 +478,6 @@ public sealed partial class CargoSystem
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
         var defaultStatus = GetDefaultBountyStatus();
-        if (defaultStatus == null)
-            return false;
         var newBounty = new CargoBountyData(bounty, defaultStatus, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))
@@ -497,17 +486,20 @@ public sealed partial class CargoSystem
             return false;
         }
         component.Bounties.Add(newBounty);
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
+        _adminLogger.Add(
+            LogType.Action,
+            LogImpact.Low,
+            $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}"
+        );
         component.TotalBounties++;
         return true;
     }
 
-    private CargoBountyStatusPrototype? GetDefaultBountyStatus()
+    private CargoBountyStatusPrototype GetDefaultBountyStatus()
     {
-        var allStates = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>()
-            .OrderBy(s => s.Index)
-            .FirstOrDefault();
-        return allStates;
+        var allStates = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>();
+        var returnState = allStates.OrderBy(s => s.Index).FirstOrDefault() ?? allStates.First();
+        return returnState;
     }
 
 
