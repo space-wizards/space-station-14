@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PickelSilly
-  changes:
-  - message: Added a new voice sensor item craftable at an autolathe, record a key
-      phrase, and speak it to trigger linked devices.
-    type: Add
-  id: 9184
-  time: '2025-11-03T22:43:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41098
 - author: Centronias
   changes:
   - message: Bleach now actually does what its description says and can be used for
@@ -4079,3 +4071,10 @@
   id: 9695
   time: '2026-05-17T19:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43976
+- author: Nem
+  changes:
+  - message: Custom NavMapBeacon text is displayed
+    type: Fix
+  id: 9696
+  time: '2026-05-17T20:29:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43898
