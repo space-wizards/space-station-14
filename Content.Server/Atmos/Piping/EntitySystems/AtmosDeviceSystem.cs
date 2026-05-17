@@ -112,6 +112,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnDeviceParentChanged(Entity<AtmosDeviceComponent> ent, ref EntParentChangedMessage args)
         {
+            // Skips rejoining atmos on mapload
+            if (args.OldParent is null)
+                return;
+
             RejoinAtmosphere(ent);
         }
 
