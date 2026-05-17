@@ -56,9 +56,7 @@ public sealed partial class BountyEntry : BoxContainer
         {
             BountyStatusSelector.AddItem(Loc.GetString("bounty-console-status", ("status", status.ID)), status.Index);
         }
-        CargoBountyStatusPrototype? bountyStatusPrototype = allStates.FirstOrDefault(status => bounty.Status == status.ID);
-        if (bountyStatusPrototype == null)
-            return;
+        CargoBountyStatusPrototype bountyStatusPrototype = allStates.FirstOrDefault(status => bounty.Status == status.ID) ?? allStates.First();
         BountyStatusSelector.Select(BountyStatusSelector.GetIdx(bountyStatusPrototype.Index));
         BountyStatusSelector.ToolTip = Loc.GetString("bounty-console-status-tooltip", ("status", bountyStatusPrototype.ID));
 
