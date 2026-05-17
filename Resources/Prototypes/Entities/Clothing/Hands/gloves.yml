@@ -693,7 +693,7 @@
     - Kangaroo
 
 - type: entity
-  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
+  parent: [ ClothingHandsGlovesBoxingBase, BaseMagicalContraband ]
   id: ClothingHandsGlovesBungo
   name: bungo gloves
   description: Knock their socks off!
@@ -702,17 +702,8 @@
     sprite: Clothing/Hands/Gloves/bungo.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/bungo.rsi
-  - type: StaminaDamageOnHit
-    damage: 8
   - type: MeleeWeapon
     attackRate: 1.25
-    damage:
-      types:
-        Blunt: 0.4
-    soundHit:
-      collection: Punch
-    animation: WeaponArcFist
-    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
@@ -721,9 +712,5 @@
     Battlecry: PUNCHIO KNOCEL!!
   - type: StaticPrice
     price: 2500
-  - type: Tag
-    tags:
-    - Kangaroo
-    - WhitelistChameleon
   - type: ThrowEquippedOnHit
     throwChance: 0.3
