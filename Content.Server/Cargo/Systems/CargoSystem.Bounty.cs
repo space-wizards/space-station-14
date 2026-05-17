@@ -598,7 +598,8 @@ public sealed partial class CargoSystem
         if (!Resolve(station, ref db))
             return false;
 
-        var actorName = Identity.Name(actor, EntityManager);
+        //var actorName = Identity.Name(actor, EntityManager);
+        var actorName = Name(actor);
 
         for (var i = 0; i < db.Bounties.Count; i++)
         {
