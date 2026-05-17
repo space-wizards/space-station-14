@@ -587,7 +587,7 @@ public sealed partial class CargoSystem
 
     private bool TryAddBountyClaimer(EntityUid station,
         string bountyId,
-        EntityUid actor,
+        EntityUid entity,
         out bool added,
         out bool removed,
         StationCargoBountyDatabaseComponent? db = null)
@@ -598,7 +598,7 @@ public sealed partial class CargoSystem
         if (!Resolve(station, ref db))
             return false;
 
-        var actorName = Identity.Name(actor, EntityManager);
+        var entityName = Identity.Name(entity, EntityManager);
 
         for (var i = 0; i < db.Bounties.Count; i++)
         {
@@ -609,9 +609,9 @@ public sealed partial class CargoSystem
             var existingClaimers = bounty.ClaimedBy;
             var claimers = new List<string>(existingClaimers);
 
-            if (claimers.Contains(actorName))
+            if (claimers.Contains(entityName))
             {
-                claimers.Remove(actorName);
+                claimers.Remove(entityName);
                 removed = true;
             }
             else
@@ -622,7 +622,7 @@ public sealed partial class CargoSystem
                     removed = true;
                 }
 
-                claimers.Add(actorName);
+                claimers.Add(entityName);
                 added = true;
             }
 
