@@ -16,25 +16,24 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class PressurizedSolutionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PressurizedSolutionComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PressurizedSolutionComponent, ShakeEvent>(OnShake);
         SubscribeLocalEvent<PressurizedSolutionComponent, OpenableOpenedEvent>(OnOpened);
         SubscribeLocalEvent<PressurizedSolutionComponent, LandEvent>(OnLand);
-        SubscribeLocalEvent<PressurizedSolutionComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
+        SubscribeLocalEvent<PressurizedSolutionComponent, SolutionChangedEvent>(OnSolutionUpdate);
     }
 
     /// <summary>
@@ -242,10 +241,6 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
     #endregion
 
     #region Event Handlers
-    private void OnMapInit(Entity<PressurizedSolutionComponent> entity, ref MapInitEvent args)
-    {
-        RollSprayThreshold(entity);
-    }
 
     private void OnOpened(Entity<PressurizedSolutionComponent> entity, ref OpenableOpenedEvent args)
     {
@@ -265,9 +260,13 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         SprayOrAddFizziness(entity, entity.Comp.SprayChanceModOnLand, entity.Comp.FizzinessAddedOnLand);
     }
 
-    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionUpdate(Entity<PressurizedSolutionComponent> entity, ref SolutionChangedEvent args)
     {
-        if (args.SolutionId != entity.Comp.Solution)
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
+        if (args.Solution.Comp.Id != entity.Comp.Solution)
             return;
 
         // If the solution is no longer capable of being fizzy, clear any built up fizziness

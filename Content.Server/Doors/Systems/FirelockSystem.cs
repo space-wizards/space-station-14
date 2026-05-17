@@ -6,6 +6,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -15,13 +16,13 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Doors.Systems
 {
-    public sealed class FirelockSystem : SharedFirelockSystem
+    public sealed partial class FirelockSystem : SharedFirelockSystem
     {
-        [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedMapSystem _mapping = default!;
-        [Dependency] private readonly PointLightSystem _pointLight = default!;
+        [Dependency] private SharedDoorSystem _doorSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedMapSystem _mapping = default!;
+        [Dependency] private PointLightSystem _pointLight = default!;
 
         private EntityQuery<AtmosAlarmableComponent> _atmosAlarmQuery;
 
