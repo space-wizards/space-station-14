@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -454,15 +453,13 @@ namespace Content.Server.GameTicking
                 _possiblePositions.Add(transform.Coordinates);
             }
 
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-
             // Fallback to a random grid.
             if (_possiblePositions.Count == 0)
             {
                 var query = AllEntityQuery<MapGridComponent>();
                 while (query.MoveNext(out var uid, out var grid))
                 {
-                    if (!metaQuery.TryGetComponent(uid, out var meta) || meta.EntityPaused || TerminatingOrDeleted(uid))
+                    if (!TryComp(uid, out MetaDataComponent? meta) || meta.EntityPaused || TerminatingOrDeleted(uid))
                     {
                         continue;
                     }
@@ -501,7 +498,7 @@ namespace Content.Server.GameTicking
             {
                 var mapUid = _map.GetMapOrInvalid(map);
 
-                if (!metaQuery.TryGetComponent(mapUid, out var meta)
+                if (!TryComp(mapUid, out MetaDataComponent? meta)
                     || meta.EntityPaused
                     || TerminatingOrDeleted(mapUid))
                 {
