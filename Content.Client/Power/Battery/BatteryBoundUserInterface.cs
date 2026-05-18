@@ -12,9 +12,9 @@ namespace Content.Client.Power.Battery;
 /// <seealso cref="BoundUserInterfaceState"/>
 /// <seealso cref="BatteryMenu"/>
 [UsedImplicitly]
-public sealed class BatteryBoundUserInterface : BoundUserInterface, IBuiPreTickUpdate
+public sealed partial class BatteryBoundUserInterface : BoundUserInterface, IBuiPreTickUpdate
 {
-    [Dependency] private readonly IClientGameTiming _gameTiming = null!;
+    [Dependency] private IClientGameTiming _gameTiming = null!;
 
     [ViewVariables]
     private BatteryMenu? _menu;
