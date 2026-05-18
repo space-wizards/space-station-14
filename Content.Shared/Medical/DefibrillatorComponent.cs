@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio;
@@ -24,8 +24,8 @@ public sealed partial class DefibrillatorComponent : Component
     /// <summary>
     /// The electrical damage from getting zapped.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public int ZapDamage = 5;
+    [DataField(required: true), AutoNetworkedField]
+    public DamageSpecifier ZapDamage = default!;
 
     /// <summary>
     /// How long the victim will be electrocuted after getting zapped.

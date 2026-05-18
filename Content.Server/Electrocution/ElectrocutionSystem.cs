@@ -19,8 +19,10 @@ using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
+using OldStatusEffectsComponent = Content.Shared.StatusEffect.StatusEffectsComponent;
 using Content.Shared.Stunnable;
+using Robust.Shared.Timing;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -46,6 +48,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private NodeGroupSystem _nodeGroup = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private SharedJitteringSystem _jittering = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -55,7 +58,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
 
-    private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -81,8 +83,25 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
         SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
-
+        SubscribeLocalEvent<ElectrocutedStatusEffectComponent, StatusEffectAppliedEvent>(OnElectrocutedStatusApplied);
+        SubscribeLocalEvent<ElectrocutedStatusEffectComponent, StatusEffectRemovedEvent>(OnElectrocutedStatusRemoved);
         UpdatesAfter.Add(typeof(PowerNetSystem));
+    }
+
+    private void OnElectrocutedStatusApplied(Entity<ElectrocutedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+    {
+        if (_timing.ApplyingState) return;
+        EnsureComp<ElectrocutedComponent>(args.Target);
+    }
+
+    private void OnElectrocutedStatusRemoved(Entity<ElectrocutedStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
+    {
+        RemComp<ElectrocutedComponent>(args.Target);
+    }
+
+    private DamageSpecifier GetShockDamage(float amount)
+    {
+        return new(_prototypeManager.Index(DamageType), amount);
     }
 
     public override void Update(float frameTime)
@@ -183,7 +202,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        TryDoElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
+        TryDoElectrocution(args.User, uid, GetShockDamage(component.UnarmedHitShock), component.UnarmedHitStun, false);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -231,7 +250,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                 lastRet = TryDoElectrocution(
                     entity,
                     uid,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    GetShockDamage(electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient
@@ -260,7 +279,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
+                    GetShockDamage(electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth) * damageScalar),
                     TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth) * timeScalar),
                     true,
                     electrified.SiemensCoefficient);
@@ -290,11 +309,16 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
     /// <inheritdoc/>
     public override bool TryDoElectrocution(
-        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
+        EntityUid uid,
+        EntityUid? sourceUid,
+        DamageSpecifier? shockDamage,
+        TimeSpan time,
+        bool refresh,
+        float siemensCoefficient = 1f,
+        bool ignoreInsulation = false)
     {
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
-            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient))
             return false;
 
         RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
@@ -305,17 +329,16 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         EntityUid uid,
         EntityUid sourceUid,
         Node node,
-        int shockDamage,
+        DamageSpecifier? shockDamage,
         TimeSpan time,
         bool refresh,
         float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null,
         TransformComponent? sourceTransform = null)
     {
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
             return false;
 
-        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient))
             return false;
 
         // Coefficient needs to be higher than this to do a powered electrocution!
@@ -367,29 +390,31 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
-    private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
-        int? shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
-        StatusEffectsComponent? statusEffects = null)
+    private bool DoCommonElectrocution(
+        EntityUid uid,
+        EntityUid? sourceUid,
+        DamageSpecifier? shockDamage,
+        TimeSpan time,
+        bool refresh,
+        float siemensCoefficient = 1f)
     {
         if (siemensCoefficient <= 0)
             return false;
 
-        if (shockDamage != null)
+        DamageSpecifier? scaledDamage = null;
+        if (shockDamage is not null)
         {
-            shockDamage = (int) (shockDamage * siemensCoefficient);
-
-            if (shockDamage.Value <= 0)
-                return false;
+            scaledDamage = shockDamage * siemensCoefficient;
+            if (!scaledDamage.AnyPositive()) return false;
         }
 
-        if (!Resolve(uid, ref statusEffects, false) ||
-            !_statusEffects.CanApplyEffect(uid, StatusKeyIn, statusEffects))
-        {
-            return false;
-        }
+        if (!_statusEffects.CanAddStatusEffect(uid, SharedElectrocutionSystem.ElectrocutionStatusEffect)) return false;
 
-        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusKeyIn, time, refresh, statusEffects))
-            return false;
+        if (refresh)
+        {
+            if (!_statusEffects.TrySetStatusEffectDuration(uid, SharedElectrocutionSystem.ElectrocutionStatusEffect, time)) return false;
+        }
+        else if (!_statusEffects.TryAddStatusEffectDuration(uid, SharedElectrocutionSystem.ElectrocutionStatusEffect, time)) return false;
 
         var shouldStun = siemensCoefficient > 0.5f;
 
@@ -403,17 +428,19 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         // TODO: Sparks here.
 
-        if (shockDamage is { } dmg)
+        if (scaledDamage is not null && _damageable.TryChangeDamage(uid, scaledDamage, out var damage, origin: sourceUid))
         {
-            if (_damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index(DamageType), dmg), out var damage, origin: sourceUid))
-            {
-                _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
-            }
+            _adminLogger.Add(LogType.Electrocution,
+                $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh);
-        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true, statusEffects);
+
+        var jitterTime = time * JitterTimeMultiplier;
+        if (TryComp<OldStatusEffectsComponent>(uid, out var oldStatus))
+            _jittering.DoJitter(uid, jitterTime, refresh, JitterAmplitude, JitterFrequency, true, oldStatus);
+        else
+            _jittering.AddJitter(uid, JitterAmplitude, JitterFrequency);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 

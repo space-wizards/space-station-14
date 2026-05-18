@@ -1,6 +1,9 @@
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Electrocution;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -8,6 +11,9 @@ public sealed partial class ShockOnTriggerSystem : XOnTriggerSystem<ShockOnTrigg
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+
+    private static readonly ProtoId<DamageTypePrototype> ShockDamage = "Shock";
 
     protected override void OnTrigger(Entity<ShockOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -21,7 +27,8 @@ public sealed partial class ShockOnTriggerSystem : XOnTriggerSystem<ShockOnTrigg
             target = container.Owner;
         }
 
-        _electrocution.TryDoElectrocution(target, null, ent.Comp.Damage, ent.Comp.Duration, true, ignoreInsulation: true);
+        DamageSpecifier damage = new(_prototypes.Index(ShockDamage), ent.Comp.Damage);
+        _electrocution.TryDoElectrocution(target, null, damage, ent.Comp.Duration, true, ignoreInsulation: true);
         args.Handled = true;
     }
 }
