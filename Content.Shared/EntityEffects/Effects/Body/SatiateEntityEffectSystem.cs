@@ -12,7 +12,7 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 /// </summary>
 public sealed partial class SatiateEntityEffectsSystem : EntityEffectSystem<SatiationComponent, Satiate>
 {
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     protected override void Effect(Entity<SatiationComponent> entity, ref EntityEffectEvent<Satiate> args)
     {

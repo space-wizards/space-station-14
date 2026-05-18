@@ -11,6 +11,12 @@ public sealed class GasTankSystem : SharedGasTankSystem
         SubscribeLocalEvent<GasTankComponent, AfterAutoHandleStateEvent>(OnGasTankState);
     }
 
+    protected override void DeviceUpdated(Entity<GasTankComponent> entity, ref AtmosDeviceUpdateEvent args)
+    {
+        // Atmos not predicted :(
+        throw new NotImplementedException();
+    }
+
     private void OnGasTankState(Entity<GasTankComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (UI.TryGetOpenUi(ent.Owner, SharedGasTankUiKey.Key, out var bui))
