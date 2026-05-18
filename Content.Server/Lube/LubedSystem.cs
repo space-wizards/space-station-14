@@ -10,13 +10,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lube;
 
-public sealed class LubedSystem : EntitySystem
+public sealed partial class LubedSystem : EntitySystem
 {
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {

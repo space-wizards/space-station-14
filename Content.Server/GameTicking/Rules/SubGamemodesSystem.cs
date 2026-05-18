@@ -11,6 +11,9 @@ public sealed class SubGamemodesSystem : GameRuleSystem<SubGamemodesComponent>
         var picked = EntitySpawnCollection.GetSpawns(comp.Rules, RobustRandom);
         foreach (var id in picked)
         {
+            if (GameTicker.IsIgnored(id))
+                continue;
+
             Log.Info($"Starting gamerule {id} as a subgamemode of {ToPrettyString(uid):rule}");
             GameTicker.AddGameRule(id);
         }
