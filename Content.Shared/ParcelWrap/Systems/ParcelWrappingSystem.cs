@@ -30,11 +30,11 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    [Dependency] private readonly EntityQuery<ItemComponent> _itemQuery = default!;
-    [Dependency] private readonly EntityQuery<MultiHandedItemComponent> _multiHandedItemQuery = default!;
-    [Dependency] private readonly EntityQuery<ParcelWrapOverrideComponent> _parcelWrapOverrideQuery = default!;
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
-    [Dependency] private readonly EntityQuery<WrappedParcelComponent> _wrappedParcelQuery = default!;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
+    [Dependency] private EntityQuery<MultiHandedItemComponent> _multiHandedItemQuery = default!;
+    [Dependency] private EntityQuery<ParcelWrapOverrideComponent> _parcelWrapOverrideQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<WrappedParcelComponent> _wrappedParcelQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
