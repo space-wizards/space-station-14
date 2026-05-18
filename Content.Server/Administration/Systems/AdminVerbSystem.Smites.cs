@@ -27,7 +27,9 @@ using Content.Shared.Body.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
@@ -261,7 +263,8 @@ public sealed partial class AdminVerbSystem
                         }
                     }
 
-                    _electrocutionSystem.TryDoElectrocution(args.Target, null, damageToDeal,
+                    DamageSpecifier shockDamage = new(_prototypeManager.Index<DamageTypePrototype>("Shock"), damageToDeal);
+                    _electrocutionSystem.TryDoElectrocution(args.Target, null, shockDamage,
                         TimeSpan.FromSeconds(30), refresh: true, ignoreInsulation: true);
                 },
                 Impact = LogImpact.Extreme,
