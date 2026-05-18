@@ -70,6 +70,7 @@ public sealed partial class AdminVerbSystem
 {
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
+    private static readonly ProtoId<DamageTypePrototype> ShockDamage = "Shock";
 
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -263,7 +264,7 @@ public sealed partial class AdminVerbSystem
                         }
                     }
 
-                    DamageSpecifier shockDamage = new(_prototypeManager.Index<DamageTypePrototype>("Shock"), damageToDeal);
+                    DamageSpecifier shockDamage = new(_prototypeManager.Index<DamageTypePrototype>(ShockDamage), damageToDeal);
                     _electrocutionSystem.TryDoElectrocution(args.Target, null, shockDamage,
                         TimeSpan.FromSeconds(30), refresh: true, ignoreInsulation: true);
                 },
