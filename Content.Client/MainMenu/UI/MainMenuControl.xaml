@@ -13,10 +13,10 @@
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   HorizontalExpand="True"
-                  VerticalExpand="True">
+                  VerticalExpand="True"
+                  SeparationOverride = "24">
         <TextureRect Name="Logo"
-                        Stretch="KeepCentered" />
-        <Control MinHeight = "24"/>
+                     Stretch="KeepCentered" />
         <PanelContainer StyleClasses="BackgroundPanel">
             <BoxContainer Orientation="Vertical"
                           HorizontalAlignment="Center"
