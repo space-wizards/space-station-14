@@ -6,11 +6,11 @@ namespace Content.Shared.CartridgeLoader;
 
 public sealed partial class CartridgeLoaderSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {

@@ -5,7 +5,7 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed partial class NotekeeperCartridgeSystem : EntitySystem
 {
-    [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
@@ -58,6 +58,6 @@ public sealed partial class NotekeeperCartridgeSystem : EntitySystem
             return;
 
         var state = new NotekeeperUiState(component.Notes);
-        _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
+        _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 }
