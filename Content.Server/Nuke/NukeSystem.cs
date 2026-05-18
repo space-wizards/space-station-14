@@ -188,6 +188,7 @@ public sealed partial class NukeSystem : SharedNukeSystem
         {
             _transform.Unanchor(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, true);
+            _adminLog.Add(LogType.Anchor, LogImpact.High, $"{args.Actor} unanchored {uid}");
         }
         else
         {
@@ -210,6 +211,7 @@ public sealed partial class NukeSystem : SharedNukeSystem
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, false);
+            _adminLog.Add(LogType.Anchor, LogImpact.High, $"{args.Actor} anchored {uid}");
         }
 
         UpdateUserInterface(uid, component);
@@ -265,6 +267,7 @@ public sealed partial class NukeSystem : SharedNukeSystem
 
         else
         {
+            _adminLog.Add(LogType.Explosion, LogImpact.High, $"{args.Actor} is attempting to disarm {uid}");
             DisarmBombDoAfter(uid, args.Actor, component);
         }
     }
@@ -379,11 +382,13 @@ public sealed partial class NukeSystem : SharedNukeSystem
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
+                    _adminLog.Add(LogType.Action, LogImpact.Extreme, $"Nuke code entered correctly on {uid}");
                 }
                 else
                 {
                     component.EnteredCode = "";
                     _audio.PlayPvs(component.AccessDeniedSound, uid);
+                    _adminLog.Add(LogType.Action, LogImpact.High, $"Nuke code entered incorrectly on {uid}");
                 }
 
                 break;
@@ -507,10 +512,6 @@ public sealed partial class NukeSystem : SharedNukeSystem
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, nuke.Comp.AlertLevelOnActivate, true, true, true, true);
 
-        var pos = _transform.GetMapCoordinates(nuke, xform: nukeXform);
-
-        _adminLog.Add(LogType.Explosion, LogImpact.Extreme, $"{nuke} has been armed by {user} at position: {pos}!");
-
         // We are collapsing the randomness here, otherwise we would get separate random song picks for checking duration and when actually playing the song afterwards
         _selectedNukeSong = _audio.ResolveSound(nuke.Comp.ArmMusic);
 
@@ -543,8 +544,15 @@ public sealed partial class NukeSystem : SharedNukeSystem
         nuke.Comp.ExplosionTime = _timing.CurTime + TimeSpan.FromSeconds(secondsTillBoom);
         DirtyField(nuke, "ExplosionTime");
 
+        var pos = _transform.GetMapCoordinates(nuke, xform: nukeXform);
+
+        _adminLog.Add(
+            LogType.Explosion,
+            LogImpact.Extreme,
+            $"{nuke} has been armed with a {(int) nuke.Comp.ArmingTime.TotalSeconds} second timer! " +
+                   $"Preformed by {user} at position: {pos}.");
+
         nuke.Comp.Status = NukeStatus.ARMED;
-        UpdateStatus(nuke, nuke.Comp);
         UpdateUserInterface(nuke, nuke.Comp);
         UpdateAppearance(nuke, nuke.Comp);
     }
@@ -584,8 +592,6 @@ public sealed partial class NukeSystem : SharedNukeSystem
         nuke.Comp.ExplosionTime = null;
         DirtyField(nuke, "ExplosionTime");
 
-        _adminLog.Add(LogType.Explosion, LogImpact.Extreme, $"{nuke} was disarmed by {user} with {(int)remainingTime.TotalSeconds} seconds remaining!");
-
         // reset nuke remaining time to either itself or the minimum time, whichever is higher
         nuke.Comp.ArmingTime = remainingTime < nuke.Comp.MinimumTime
                              ? nuke.Comp.MinimumTime
@@ -621,6 +627,11 @@ public sealed partial class NukeSystem : SharedNukeSystem
         nuke.Comp.Status = NukeStatus.COOLDOWN;
         nuke.Comp.CooldownTime = _timing.CurTime + nuke.Comp.Cooldown;
 
+        _adminLog.Add(
+            LogType.Explosion,
+            LogImpact.Extreme,
+            $"Nuke {nuke} was disarmed by {user} with {(int)remainingTime.TotalSeconds} seconds remaining!");
+
         UpdateUserInterface(nuke.Owner, nuke.Comp);
         UpdateAppearance(nuke.Owner, nuke.Comp);
     }
@@ -652,6 +663,8 @@ public sealed partial class NukeSystem : SharedNukeSystem
             return;
 
         component.Exploded = true;
+
+        _adminLog.Add(LogType.Explosion, LogImpact.Extreme, $"{uid} detonated.");
 
         _explosions.QueueExplosion(uid,
             component.ExplosionType,
