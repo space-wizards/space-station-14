@@ -150,7 +150,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         }
 
         var attemptConvertEv = new AttemptConvertRevolutionaryEvent();
-        RaiseLocalEvent(ev.Target, attemptConvertEv);
+        RaiseLocalEvent(ev.Target, ref attemptConvertEv);
 
         if (attemptConvertEv.Cancelled)
             return;
