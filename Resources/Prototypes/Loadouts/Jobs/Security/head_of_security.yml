@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 72000 #20 hrs
+      time: 20h
 
 # Jumpsuit
 - type: loadout

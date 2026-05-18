@@ -104,6 +104,11 @@
   - /Audio/Items/Toys/hew.ogg
 
 - type: soundCollection
+  id: XenoborgScream
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_scream.ogg
+
+- type: soundCollection
   id: XenoborgLaugh
   files:
   - /Audio/Voice/Xenoborg/xenoborg_laugh_1.ogg

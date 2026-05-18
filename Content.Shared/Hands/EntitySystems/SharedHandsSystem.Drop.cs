@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -13,13 +14,14 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     private static readonly ProtoId<TagPrototype> BypassDropChecksTag = "BypassDropChecks";
 
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+        SubscribeLocalEvent<HandsComponent, EntityStorageIntoContainerAttemptEvent>(OnEntityStorageDump);
     }
 
     protected virtual void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
@@ -37,6 +39,14 @@ public abstract partial class SharedHandsSystem
 
         if (TryComp(args.Entity, out VirtualItemComponent? @virtual))
             _virtualSystem.DeleteVirtualItem((args.Entity, @virtual), uid);
+    }
+
+
+    private void OnEntityStorageDump(Entity<HandsComponent> ent, ref EntityStorageIntoContainerAttemptEvent args)
+    {
+        // If you're physically carrying an EntityStroage which tries to dump its contents out,
+        // we want those contents to fall to the floor.
+        args.Cancelled = true;
     }
 
     private bool ShouldIgnoreRestrictions(EntityUid user)
@@ -178,6 +188,20 @@ public abstract partial class SharedHandsSystem
         DoDrop(ent, hand, false);
         ContainerSystem.Insert(entity, targetContainer);
         return true;
+    }
+
+    /// <summary>
+    ///     Tries to drop all currently held items.
+    /// </summary>
+    public void DropAll(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        foreach (var hand in EnumerateHands(ent))
+        {
+            TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction);
+        }
     }
 
     /// <summary>

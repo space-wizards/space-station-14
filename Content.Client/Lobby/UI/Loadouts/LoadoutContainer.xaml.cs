@@ -13,8 +13,8 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutContainer : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     private readonly EntityUid? _entity;
 
@@ -40,7 +40,7 @@ public sealed partial class LoadoutContainer : BoxContainer
             SelectButton.TooltipSupplier = _ => tooltip;
         }
 
-        if (_protoManager.TryIndex(proto, out var loadProto))
+        if (_protoManager.Resolve(proto, out var loadProto))
         {
             var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
 

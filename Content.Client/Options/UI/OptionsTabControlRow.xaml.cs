@@ -48,8 +48,8 @@ namespace Content.Client.Options.UI;
 [GenerateTypedNameReferences]
 public sealed partial class OptionsTabControlRow : Control
 {
-    [Dependency] private readonly ILocalizationManager _loc = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private ValueList<BaseOption> _options;
 
@@ -58,7 +58,7 @@ public sealed partial class OptionsTabControlRow : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        ResetButton.StyleClasses.Add(StyleBase.ButtonOpenRight);
+        ResetButton.StyleClasses.Add(StyleClass.ButtonOpenRight);
         ApplyButton.OnPressed += ApplyButtonPressed;
         ResetButton.OnPressed += ResetButtonPressed;
         DefaultButton.OnPressed += DefaultButtonPressed;

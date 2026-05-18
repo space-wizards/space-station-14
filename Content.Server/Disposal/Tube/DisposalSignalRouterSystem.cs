@@ -6,9 +6,9 @@ namespace Content.Server.Disposal.Tube;
 /// <summary>
 /// Handles signals and the routing get next direction event.
 /// </summary>
-public sealed class DisposalSignalRouterSystem : EntitySystem
+public sealed partial class DisposalSignalRouterSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     public override void Initialize()
     {

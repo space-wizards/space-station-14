@@ -5,106 +5,125 @@
 -- TODO: Handling of sizes != 127 doesn't work properly and rounds differently from the real shader. Ah well.
 
 local scale = 4
+local hasOobPixels = false
 
 -- This script requires UI
 if not app.isUIAvailable then
     return
 end
 
-local getOffsetPixel = function(x, y, image, rect)
-    local posX = x - rect.x
-    local posY = y - rect.y
+local sprite = app.editor.sprite
 
-    if posX < 0 or posX >= image.width or posY < 0 or posY >= image.height then
-        return image.spec.transparentColor
+local spriteChanged = sprite.events:on("change",
+    function()
+        dialog:repaint()
+    end
+)
+
+dialog = Dialog{
+    title = "Displacement map preview",
+    onclose = function(ev)
+        sprite.events:off(spriteChanged)
+    end
+}
+
+function isOutOfBounds(x,y, dx, dy)
+    local size = dialog.data["frame-size"]
+    -- I messed around in Desmos for 2 hours trying to find a function that could do all of this at once
+    -- but I am sadly not a math major
+    -- This works by checking to see if we've wrapped around from say 31 to 01 which indicates that we've gone over
+    -- the edges of a sprite's bounds.
+    if dx > 0 and math.fmod(x+dx, size) < math.fmod(x, size) then
+        return true
+    end
+    -- gotta add size here in case we go from 0 -> -1, since mod -1 is just -1 not 31
+    if dx < 0 and math.fmod(x+size+dx, size) > math.fmod(x, size) then
+        return true
+    end
+    if dy > 0 and math.fmod(y+dy, size) < math.fmod(y, size) then
+        return true
+    end
+    if dy < 0 and math.fmod(y+size+dy, size) > math.fmod(y, size) then
+        return true
     end
 
-    return image:getPixel(posX, posY)
+    return false
 end
 
-local pixelValueToColor = function(sprite, value)
-    return Color(value)
+function getOobColor(x,y)
+    if dialog.data["mark-oob-checkerboard"] then -- requested by Emogarbage :3
+        local size = dialog.data["frame-size"]
+        if (math.sin(math.pi*x*8.0/size) > 0) == (math.cos(math.pi*y*8.0/size) > 0) then
+            return Color{r=0, g=0, b=0, a=255}
+        end
+    end
+    return dialog.data["mark-oob-color"]
 end
 
-local applyDisplacementMap = function(width, height, size, displacement, displacementRect, target, targetRect)
-    -- print(Color(displacement:getPixel(17, 15)).red)
-    local image = target:clone()
+function getOffsetPixel(x, y, dx, dy, image, bounds)
+    if isOutOfBounds(x,y,dx,dy,image) then
+        hasOobPixels = true
+        if dialog.data["mark-oob"] then
+            return getOobColor(x,y)
+        end
+    end
+    local adj_x = x - bounds.x
+    local adj_y = y - bounds.y
+
+    if (image.bounds:contains(Rectangle{adj_x+dx, adj_y+dy, 1, 1})) then
+        return image:getPixel(adj_x+dx, adj_y+dy)
+    end
+
+    return image.spec.transparentColor
+end
+
+
+
+function applyDisplacementMap(width, height, displacement, target)
+    local image = target.image:clone()
     image:resize(width, height)
     image:clear()
 
+    local displacement_size = dialog.data["displacement_size"]
+
     for x = 0, width - 1 do
         for y = 0, height - 1 do
-            local value = getOffsetPixel(x, y, displacement, displacementRect)
-            local color = pixelValueToColor(sprite, value)
-
-            if color.alpha ~= 0 then
-                local offset_x = (color.red - 128) / 127 * size
-                local offset_y = (color.green - 128) / 127 * size
-
-                local colorValue = getOffsetPixel(x + offset_x, y + offset_y, target, targetRect)
-                image:drawPixel(x, y, colorValue)
+            if not displacement.bounds:contains(Rectangle{x,y,1,1}) then
+                goto continue
             end
+
+            local color = Color(displacement.image:getPixel(x - displacement.bounds.x,y - displacement.bounds.y))
+
+            if color.alpha == 0 then
+                goto continue
+            end
+
+            local dx = (color.red - 128) / 127 * displacement_size
+            local dy = (color.green - 128) / 127 * displacement_size
+
+            local colorValue = getOffsetPixel(x, y, dx, dy, target.image, target.bounds)
+            image:drawPixel(x, y, colorValue)
+
+            ::continue::
         end
     end
-
     return image
 end
 
-local dialog = nil
-
-local sprite = app.editor.sprite
-local spriteChanged = sprite.events:on("change",
-    function(ev)
-        dialog:repaint()
-    end)
 
 local layers = {}
 for i,layer in ipairs(sprite.layers) do
     table.insert(layers, 1, layer.name)
 end
 
-local findLayer = function(sprite, name)
-    for i, layer in ipairs(sprite.layers) do
+function findLayer(_sprite, name)
+    for i,layer in ipairs(_sprite.layers) do
         if layer.name == name then
             return layer
         end
     end
-
     return nil
 end
-
-local applyOffset = function(dx, dy)
-    local cel = app.cel
-    local image = cel.image:clone()
-    local sprite = app.editor.sprite
-    local selection = sprite.selection
-    
-    for x = selection.bounds.x, selection.bounds.x + selection.bounds.width - 1 do
-        for y = selection.bounds.y, selection.bounds.y + selection.bounds.height - 1 do
-            local xImg = x - cel.position.x
-            local yImg = y - cel.position.y
-            if xImg >= 0 and xImg < image.width and yImg >= 0 and yImg < image.height then
-                local pixelValue = image:getPixel(xImg, yImg)
-                local color = Color(pixelValue)
-
-                -- Offset R and G channel
-                color.red = math.min(255, math.max(0, color.red + dx))
-                color.green = math.min(255, math.max(0, color.green + dy))
-
-                image:drawPixel(xImg, yImg, app.pixelColor.rgba(color.red, color.green, color.blue, color.alpha))
-            end
-        end
-    end
-    
-    cel.image = image
-    dialog:repaint()
-end
-
-dialog = Dialog{
-    title = "Displacement map preview",
-    onclose = function(ev)
-        sprite.events:off(spriteChanged)
-    end}
 
 dialog:canvas{
     id = "canvas",
@@ -112,6 +131,7 @@ dialog:canvas{
     height = sprite.height * scale,
     onpaint = function(ev)
         local context = ev.context
+        hasOobPixels = false
 
         local layerDisplacement = findLayer(sprite, dialog.data["displacement-select"])
         local layerTarget = findLayer(sprite, dialog.data["reference-select"])
@@ -139,9 +159,8 @@ dialog:canvas{
         -- Apply displacement map and draw
         local image = applyDisplacementMap(
             sprite.width, sprite.height,
-            dialog.data["size"],
-            celDisplacement.image, celDisplacement.bounds,
-            celTarget.image, celTarget.bounds)
+            celDisplacement,
+            celTarget)
 
         context:drawImage(
             -- srcImage
@@ -154,6 +173,10 @@ dialog:canvas{
             0, 0,
             -- dstSize
             image.width * scale, image.height * scale)
+        dialog:modify{
+            id = "oob-pixels-warn",
+            visible = hasOobPixels
+        }
     end
 }
 
@@ -185,7 +208,7 @@ dialog:combobox{
 }
 
 dialog:slider{
-    id = "size",
+    id = "displacement_size",
     label = "displacement size",
     min = 127, --We dont support non 127 atm
     max = 127,
@@ -195,35 +218,51 @@ dialog:slider{
     end
 }
 
-dialog:button{
-    id = "moveDown",
-    text = "Down",
+-- Out of Bounds marking
+dialog:separator()
+
+dialog:label{
+    id = "oob-pixels-warn",
+    text = "Warning: Out-of-bounds displacements detected!",
+    visible = false
+}
+
+dialog:check{
+    id = "mark-oob",
+    label = "Mark Out-of-Bounds Displacements",
+    selected = false,
+    hexpand = false,
     onclick = function(ev)
-        applyOffset(0, -1)
+        dialog:repaint()
     end
 }
 
-dialog:button{
-    id = "moveUp",
-    text = "Up",
+dialog:check{
+    id = "mark-oob-checkerboard",
+    label = "Checkerboard Pattern",
+    selected = false,
+    hexpand = false,
     onclick = function(ev)
-        applyOffset(0, 1)
+        dialog:repaint()
     end
 }
 
-dialog:button{
-    id = "moveLeft",
-    text = "Left",
-    onclick = function(ev)
-        applyOffset(1, 0)
+dialog:number{
+    id = "frame-size",
+    label = "Frame Size",
+    text = "32",
+    hexpand = false,
+    onchange = function(ev)
+        dialog:repaint()
     end
 }
 
-dialog:button{
-    id = "moveRight",
-    text = "Right",
-    onclick = function(ev)
-        applyOffset(-1, 0)
+dialog:color{
+    id = "mark-oob-color",
+    label = "Out-of-Bounds Pixels Color",
+    color = Color{r = 255, g = 0, b = 0},
+    onchange = function(ev)
+        dialog:repaint()
     end
 }
 

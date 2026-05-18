@@ -20,15 +20,15 @@ using Robust.Shared.Utility;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class ExpendableLightSystem : EntitySystem
+    public sealed partial class ExpendableLightSystem : EntitySystem
     {
-        [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly ClothingSystem _clothing = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+        [Dependency] private SharedItemSystem _item = default!;
+        [Dependency] private ClothingSystem _clothing = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private NameModifierSystem _nameModifier = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
@@ -136,13 +136,13 @@ namespace Content.Server.Light.EntitySystems
                 component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
 
                 _nameModifier.RefreshNameModifiers(uid);
-                _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+                _stackSystem.ReduceCount((args.Used, stack), 1);
                 UpdateVisualizer((uid, component));
                 return;
             }
 
             component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
-            _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+            _stackSystem.ReduceCount((args.Used, stack), 1);
             args.Handled = true;
         }
 

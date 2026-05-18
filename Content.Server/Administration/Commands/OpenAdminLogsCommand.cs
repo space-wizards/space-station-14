@@ -6,11 +6,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public sealed class OpenAdminLogsCommand : LocalizedEntityCommands
+public sealed partial class OpenAdminLogsCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private EuiManager _euiManager = default!;
 
-    public override string Command => "adminlogs";
+    public override string Command => Cmd;
+    public const string Cmd = "adminlogs";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

@@ -1,4 +1,6 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
@@ -8,9 +10,9 @@ using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.DeviceLinking.Systems;
 
-public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
+public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 {
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
     public override void Initialize()
     {

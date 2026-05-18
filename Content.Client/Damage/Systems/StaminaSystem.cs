@@ -4,15 +4,16 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Damage.Systems;
 
 public sealed partial class StaminaSystem : SharedStaminaSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly StunSystem _stun = default!; // Clientside Stun System
+    [Dependency] private AnimationPlayerSystem _animation = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private StunSystem _stun = default!; // Clientside Stun System
 
     private const string StaminaAnimationKey = "stamina";
 
@@ -104,6 +105,8 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
 
     private void PlayAnimation(Entity<StaminaComponent, SpriteComponent> entity)
     {
+        DebugTools.Assert(entity.Comp1.CritThreshold > entity.Comp1.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was not less than the crit threshold. This will cause errors, animation has been cancelled.");
+
         var step = Math.Clamp((entity.Comp1.StaminaDamage - entity.Comp1.AnimationThreshold) /
                               (entity.Comp1.CritThreshold - entity.Comp1.AnimationThreshold),
             0f,
