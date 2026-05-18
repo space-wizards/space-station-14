@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Nuke;
 
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(SharedNukeSystem))]
 public sealed partial class NukeComponent : Component
 {
@@ -22,24 +22,31 @@ public sealed partial class NukeComponent : Component
     public static readonly TimeSpan EnterCodeCooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// Default bomb timer value in seconds.
+    /// Default bomb timer.
     /// </summary>
     [DataField]
-    public int Timer = 300;
+    public TimeSpan Timer = TimeSpan.FromSeconds(300);
 
     /// <summary>
     /// If the nuke is disarmed, this sets the minimum amount of time the timer can have.
     /// The remaining time will reset to this value if it is below it.
     /// </summary>
     [DataField]
-    public int MinimumTime = 180;
+    public TimeSpan MinimumTime = TimeSpan.FromSeconds(180);
+
+    /// <summary>
+    /// The actual timer used when the nuke is armed.
+    /// Not a live timer, see <see cref="ExplosionTime"/>.
+    /// </summary>
+    [DataField]
+    public TimeSpan ArmingTime;
 
     /// <summary>
     /// How long until the bomb can arm again after deactivation.
     /// Used to prevent announcements spam.
     /// </summary>
     [DataField]
-    public int Cooldown = 30;
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The <see cref="ItemSlot"/> that stores the nuclear disk. The entity whitelist, sounds, and some other
@@ -53,7 +60,7 @@ public sealed partial class NukeComponent : Component
     /// When this time is left, nuke will play last alert sound
     /// </summary>
     [DataField]
-    public float AlertSoundTime = 10.0f;
+    public TimeSpan AlertSoundTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// How long a user must wait to disarm the bomb.
@@ -144,16 +151,16 @@ public sealed partial class NukeComponent : Component
     [DataField(serverOnly: true)] public string Code = string.Empty;
 
     /// <summary>
-    /// Time until explosion in seconds.
+    /// Game time at which the nuke explodes.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float RemainingTime;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? ExplosionTime;
 
     /// <summary>
-    /// Time until bomb cooldown will expire in seconds.
+    /// Game time at which the nuke can be rearmed.
     /// </summary>
-    [DataField]
-    public float CooldownTime;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan? CooldownTime;
 
     /// <summary>
     /// Current nuclear code buffer. Entered manually by players.
@@ -173,19 +180,19 @@ public sealed partial class NukeComponent : Component
     /// <summary>
     /// Current status of a nuclear bomb.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public NukeStatus Status = NukeStatus.AWAIT_DISK;
 
     /// <summary>
     /// Check if nuke has already played the nuke song so we don't do it again
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool PlayedNukeSong;
 
     /// <summary>
     /// Check if nuke has already played last alert sound
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public bool PlayedAlertSound;
 
     public EntityUid? AlertAudioStream = default;

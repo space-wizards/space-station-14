@@ -49,13 +49,13 @@ public sealed partial class NukeSystem : SharedNukeSystem
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
     /// </summary>
-    private float _nukeSongLength;
+    private TimeSpan _nukeSongLength;
     private ResolvedSoundSpecifier _selectedNukeSong = String.Empty;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
     /// </summary>
-    private const float NukeSongBuffer = 1.5f;
+    private static readonly TimeSpan NukeSongBuffer = TimeSpan.FromSeconds(1.5);
 
     public override void Initialize()
     {
@@ -63,6 +63,7 @@ public sealed partial class NukeSystem : SharedNukeSystem
 
         SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<NukeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
@@ -90,9 +91,9 @@ public sealed partial class NukeSystem : SharedNukeSystem
         UpdateUserInterface(uid, component);
     }
 
-    protected override void OnMapInit(Entity<NukeComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<NukeComponent> ent, ref MapInitEvent args)
     {
-        base.OnMapInit(ent, ref args);
+        ent.Comp.ArmingTime = ent.Comp.Timer;
 
         var originStation = _station.GetOwningStation(ent);
 
@@ -145,7 +146,10 @@ public sealed partial class NukeSystem : SharedNukeSystem
     {
         UpdateUserInterface(uid, component);
 
-        if (args.Anchored == false && component.Status == NukeStatus.ARMED && component.RemainingTime > component.DisarmDoAfterLength)
+        if (!args.Anchored
+            && component.Status == NukeStatus.ARMED
+            && component.ExplosionTime != null
+            && component.ExplosionTime.Value.TotalSeconds > component.DisarmDoAfterLength)
         {
             // yes, this means technically if you can find a way to unanchor the nuke, you can disarm it
             // without the doafter. but that takes some effort, and it won't allow you to disarm a nuke that can't be disarmed by the doafter.
@@ -279,58 +283,73 @@ public sealed partial class NukeSystem : SharedNukeSystem
     }
     #endregion
 
-    /// <inheritdoc />
-    protected override void TickCooldown(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+    public override void Update(float frameTime)
     {
-        if (!Resolve(uid, ref nuke))
-            return;
+        base.Update(frameTime);
 
-        nuke.CooldownTime -= frameTime;
-        if (nuke.CooldownTime <= 0)
+        var query = EntityQueryEnumerator<NukeComponent>();
+        while (query.MoveNext(out var uid, out var nuke))
         {
-            // reset nuke to default state
-            nuke.CooldownTime = 0;
-            nuke.Status = NukeStatus.AWAIT_ARM;
-            UpdateStatus(uid, nuke);
+            switch (nuke.Status)
+            {
+                case NukeStatus.ARMED:
+                    TickTimer((uid, nuke));
+                    break;
+                case NukeStatus.COOLDOWN:
+                    TickCooldown((uid, nuke));
+                    break;
+            }
         }
-
-        UpdateUserInterface(uid, nuke);
     }
 
-    /// <inheritdoc />
-    protected override void TickTimer(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+    private void TickCooldown(Entity<NukeComponent> ent)
     {
-        if (!Resolve(uid, ref nuke))
+        if (ent.Comp.CooldownTime == null)
             return;
 
-        base.TickTimer(uid, frameTime, nuke);
+        if (ent.Comp.CooldownTime <= _timing.CurTime)
+        {
+            // reset nuke to default state
+            ent.Comp.CooldownTime = null;
+            ent.Comp.Status = NukeStatus.AWAIT_ARM;
+            UpdateStatus(ent.Owner, ent.Comp);
+        }
+
+        UpdateUserInterface(ent.Owner, ent.Comp);
+    }
+
+    private void TickTimer(Entity<NukeComponent> ent)
+    {
+        if (ent.Comp.ExplosionTime == null)
+            return;
+
+        var remainingTime = ent.Comp.ExplosionTime.Value - _timing.CurTime;
 
         // Start playing the nuke event song so that it ends a couple seconds before the alert sound
         // should play
-        if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
+        if (remainingTime <= _nukeSongLength + ent.Comp.AlertSoundTime + NukeSongBuffer && !ent.Comp.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
         {
-            _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
-            nuke.PlayedNukeSong = true;
+            _sound.DispatchStationEventMusic(ent, _selectedNukeSong, StationEventMusicType.Nuke);
+            ent.Comp.PlayedNukeSong = true;
         }
 
         // play alert sound if time is running out
-        if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
+        if (remainingTime <= ent.Comp.AlertSoundTime && !ent.Comp.PlayedAlertSound)
         {
-            _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(nuke.AlertSound), new AudioParams{Volume = -5f});
-            _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
-            nuke.PlayedAlertSound = true;
-            DirtyField<NukeComponent>((uid, nuke), "PlayedAlertSound");
-            UpdateAppearance(uid, nuke);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.AlertSound), new AudioParams{Volume = -5f});
+            _sound.StopStationEventMusic(ent, StationEventMusicType.Nuke);
+            ent.Comp.PlayedAlertSound = true;
+            UpdateAppearance(ent.Owner, ent.Comp);
         }
 
-        if (nuke.RemainingTime <= 0)
+        if (remainingTime.TotalSeconds <= 0)
         {
-            nuke.RemainingTime = 0;
-            ActivateBomb(uid, nuke);
+            ent.Comp.ExplosionTime = null;
+            ActivateBomb(ent.Owner, ent.Comp);
         }
 
         else
-            UpdateUserInterface(uid, nuke);
+            UpdateUserInterface(ent.Owner, ent.Comp);
     }
 
     private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
@@ -355,9 +374,6 @@ public sealed partial class NukeSystem : SharedNukeSystem
                 if (component.EnteredCode == component.Code)
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
-                    var modifier = CompOrNull<NukeDiskComponent>(component.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
-                    component.RemainingTime = MathF.Max(component.Timer + (float)modifier.TotalSeconds, component.MinimumTime);
-                    DirtyField<NukeComponent>((uid, component), "RemainingTime");
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
                 }
                 else
@@ -376,11 +392,8 @@ public sealed partial class NukeSystem : SharedNukeSystem
                 {
                     DisarmBomb(uid, component);
                 }
-
                 break;
         }
-
-        DirtyField<NukeComponent>((uid, component), "Status");
     }
 
     private void UpdateUserInterface(EntityUid uid, NukeComponent? component = null)
@@ -400,13 +413,14 @@ public sealed partial class NukeSystem : SharedNukeSystem
         var state = new NukeUiState
         {
             Status = component.Status,
-            RemainingTime = (int) component.RemainingTime,
+            RemainingTime = component.ExplosionTime - _timing.CurTime,
             DiskInserted = component.DiskSlot.HasItem,
             IsAnchored = anchored,
             AllowArm = allowArm,
             EnteredCodeLength = component.EnteredCode.Length,
             MaxCodeLength = component.CodeLength,
-            CooldownTime = (int) component.CooldownTime,
+            CooldownTime = component.CooldownTime - _timing.CurTime,
+            ArmingTime = component.ArmingTime,
         };
 
         _ui.SetUiState(uid, NukeUiKey.Key, state);
@@ -487,13 +501,13 @@ public sealed partial class NukeSystem : SharedNukeSystem
 
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-armed",
-            ("time", (int) component.RemainingTime),
+            ("time", component.ArmingTime.TotalSeconds),
             ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform)))));
         var sender = Loc.GetString("nuke-component-announcement-sender");
         _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
 
         _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.ArmSound));
-        _nukeSongLength = (float) _audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
+        _nukeSongLength = _audio.GetAudioLength(_selectedNukeSong);
 
         // turn on the spinny light
         _pointLight.SetEnabled(uid, true);
@@ -507,8 +521,15 @@ public sealed partial class NukeSystem : SharedNukeSystem
             _transform.AnchorEntity(uid, nukeXform);
         }
 
+        // Set the fuse
+        var modifier = CompOrNull<NukeDiskComponent>(component.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
+        var secondsTillBoom = Math.Max(component.ArmingTime.TotalSeconds + modifier.TotalSeconds, component.MinimumTime.TotalSeconds);
+
+        component.ExplosionTime = _timing.CurTime + TimeSpan.FromSeconds(secondsTillBoom);
+        DirtyField<NukeComponent>((uid, component), "ExplosionTime");
+
         component.Status = NukeStatus.ARMED;
-        DirtyField<NukeComponent>((uid, component), "Status");
+        UpdateStatus(uid,component);
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
     }
@@ -524,6 +545,20 @@ public sealed partial class NukeSystem : SharedNukeSystem
         if (component.Status != NukeStatus.ARMED)
             return;
 
+        if (component.ExplosionTime == null)
+        {
+            Log.Error($"A nuke was disarmed without having had its timer set! Entity: {ToPrettyString(uid)}");
+            return;
+        }
+
+        var remainingTime = component.ExplosionTime.Value - _timing.CurTime;
+        component.ExplosionTime = null;
+
+        // reset nuke remaining time to either itself or the minimum time, whichever is higher
+        component.ArmingTime = remainingTime < component.MinimumTime
+                             ? component.MinimumTime
+                             : remainingTime;
+
         var stationUid = _station.GetOwningStation(uid);
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
@@ -536,13 +571,6 @@ public sealed partial class NukeSystem : SharedNukeSystem
         component.PlayedNukeSong = false;
         _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.DisarmSound));
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
-
-        // reset nuke remaining time to either itself or the minimum time, whichever is higher
-        if (component.RemainingTime < component.MinimumTime)
-        {
-            component.RemainingTime = component.MinimumTime;
-            DirtyField<NukeComponent>((uid, component), "RemainingTime");
-        }
 
         // disable sound and reset it
         if (component.PlayedAlertSound)
@@ -561,7 +589,7 @@ public sealed partial class NukeSystem : SharedNukeSystem
         _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         DirtyField<NukeComponent>((uid, component), "Status");
-        component.CooldownTime = component.Cooldown;
+        component.CooldownTime = _timing.CurTime + component.Cooldown;
 
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
@@ -611,14 +639,17 @@ public sealed partial class NukeSystem : SharedNukeSystem
     }
 
     /// <summary>
-    ///     Set remaining time value
+    /// Set remaining time value.
     /// </summary>
+    /// <param name="uid">The nuke.</param>
+    /// <param name="timer">Seconds until the nuke explodes!!</param>
+    /// <param name="component">The nuke component.</param>
     public void SetRemainingTime(EntityUid uid, float timer, NukeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        component.RemainingTime = timer;
+        component.ExplosionTime = _timing.CurTime + TimeSpan.FromSeconds(timer);
         UpdateUserInterface(uid, component);
     }
 
