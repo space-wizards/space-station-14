@@ -40,6 +40,6 @@ public sealed partial class WieldedPrecondition : HTNPrecondition
         if (wieldable.Wielded)
             return false;
 
-        return _wieldableSystem.CanWield(heldEntity.Value, wieldable, owner, quiet: true);
+        return _wieldableSystem.CanWield((heldEntity.Value, wieldable), owner, quiet: true);
     }
 }

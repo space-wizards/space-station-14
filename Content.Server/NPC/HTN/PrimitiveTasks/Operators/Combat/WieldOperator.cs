@@ -37,7 +37,7 @@ public sealed partial class WieldOperator : HTNOperator
             if (wieldable.Wielded)
                 return HTNOperatorStatus.Failed;
 
-            return _wieldable.TryWield(weaponUid.Value, wieldable, owner)
+            return _wieldable.TryWield((weaponUid.Value, wieldable), owner)
                 ? HTNOperatorStatus.Finished
                 : HTNOperatorStatus.Failed;
         }
@@ -45,7 +45,7 @@ public sealed partial class WieldOperator : HTNOperator
         if (!wieldable.Wielded)
             return HTNOperatorStatus.Failed;
 
-        return _wieldable.TryUnwield(weaponUid.Value, wieldable, owner)
+        return _wieldable.TryUnwield((weaponUid.Value, wieldable), owner)
             ? HTNOperatorStatus.Finished
             : HTNOperatorStatus.Failed;
     }
