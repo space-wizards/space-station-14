@@ -14,7 +14,7 @@
                   VerticalAlignment="Center"
                   HorizontalExpand="True"
                   VerticalExpand="True"
-                  SeparationOverride = "24">
+                  SeparationOverride="24">
         <TextureRect Name="Logo"
                      Stretch="KeepCentered" />
         <PanelContainer StyleClasses="BackgroundPanel">
@@ -24,8 +24,8 @@
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           StyleIdentifier="mainMenuVBox"
-                          MinWidth ="320"
-                          Margin="0 4 0 12 ">
+                          MinWidth="320"
+                          Margin="0 4 0 12">
                 <GridContainer Columns="2" Margin="0 4">
                     <Label Text="{Loc 'main-menu-username-label'}" />
                     <LineEdit Name="UsernameBox"
