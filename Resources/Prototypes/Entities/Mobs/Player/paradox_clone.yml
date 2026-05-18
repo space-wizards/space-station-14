@@ -44,11 +44,12 @@
   id: MobParadoxCloneGhost
   name: space-time paradox
   description: This has something to do with trousers and with time. Probably.
-  # categories: [ HideSpawnMenu, DoNotMap ]
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Tag
     tags:
     - GhostOnlyWarp
+  - type: IntrinsicRadioReceiver # it will be given an activeradio component by the paradoxclonerule system
   - type: Eye
     pvsScale: 1.5
     drawFov: false
@@ -64,7 +65,7 @@
       shader: unshaded
   - type: ActionGrant
     actions:
-    - ActionParadoxCloneMaterialize
+    - ActionParadoxCloneWander
 
 - type: entity
   parent: BaseAction
@@ -74,13 +75,34 @@
   components:
   - type: Action
     icon:
-      sprite: Interface/Actions/carp_rift.rsi
-      state: icon
+      sprite: Mobs/Aliens/paradox_clone.rsi
+      state: preview
+    startDelay: true
     raiseOnUser: true
     raiseOnAction: false
-    useDelay: 1
+    useDelay: 15
     priority: 3
   - type: InstantAction
     event: !type:ActionParadoxCloneMaterializeEvent
+  - type: Visibility # needed so that the paradox clone can see it
+    layer: 2
+
+- type: entity
+  parent: BaseAction
+  id: ActionParadoxCloneWander
+  name: Choose spawn
+  description: Look around for a spawning location.
+  components:
+  - type: Action
+    icon:
+      sprite: Mobs/Aliens/paradox_clone.rsi
+      state: paradox # todo: make this unanimated
+    raiseOnUser: true
+    raiseOnAction: false
+    startDelay: true
+    useDelay: 15
+    priority: 3
+  - type: InstantAction
+    event: !type:ActionParadoxCloneWanderEvent
   - type: Visibility # needed so that the paradox clone can see it
     layer: 2

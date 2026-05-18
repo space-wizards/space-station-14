@@ -1,5 +1,10 @@
+using Content.Server.GameTicking.Rules;
+using Content.Shared.Actions;
 using Content.Shared.Mind;
 using Content.Shared.ParadoxClone;
+using Content.Shared.Radio.Components;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Served.ParadoxClone;
 
@@ -11,12 +16,39 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
     private SharedTransformSystem _transformSystem = default!;
     [Dependency]
     private IEntityManager _entMan = default!;
+    [Dependency]
+    private SharedActionsSystem _actions = default!;
+    [Dependency]
+    private SharedContainerSystem _containers = default!;
 
+    private static readonly EntProtoId ActionSpawn = "ActionParadoxCloneMaterialize";
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ParadoxCloneComponent, ActionParadoxCloneMaterializeEvent>(OnMaterialize);
+        SubscribeLocalEvent<ParadoxCloneComponent, ActionParadoxCloneWanderEvent>(OnWander);
+    }
+
+    private void OnWander(Entity<ParadoxCloneComponent> ent, ref ActionParadoxCloneWanderEvent args)
+    {
+        // Replace the wander action by the spawn action
+        _actions.RemoveAction(args.Action.Owner);
+        _actions.AddAction(ent.Owner, ActionSpawn);
+
+        // Remove the entity from its container
+        if (_containers.TryGetContainingContainer(ent.Owner, out var container))
+        {
+            var owner = container.Owner;
+            _containers.Remove(ent.Owner, container);
+            _entMan.RemoveComponent<ParadoxClonedEntityComponent>(owner);
+        }
+
+        // Remove the paradox clone radio
+        _entMan.RemoveComponent<ActiveRadioComponent>(ent.Owner);
+
+        // Makes the entity visible
+
     }
 
     /// <summary>

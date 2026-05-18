@@ -30,6 +30,11 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
 
+    /// <summary>
+    /// The name of the container which contains the paradox clone ghost on an entity
+    /// </summary>
+    public const string ContainerName = "ParadoxCloneBox";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -107,7 +112,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
 
         // stuff the ghost into the original entity
         _entMan.EnsureComponent<ParadoxClonedEntityComponent>((EntityUid)ent.Comp.OriginalBody, out var holding);
-        holding.ParadoxCloneBox = _containers.EnsureContainer<ContainerSlot>((EntityUid)ent.Comp.OriginalBody, "ParadoxCloneBox");
+        holding.ParadoxCloneBox = _containers.EnsureContainer<ContainerSlot>((EntityUid)ent.Comp.OriginalBody, ContainerName);
         _containers.Insert(ghost, holding.ParadoxCloneBox);
 
         // recover the comms the original has
