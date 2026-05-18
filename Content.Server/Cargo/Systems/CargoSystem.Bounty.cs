@@ -174,8 +174,6 @@ public sealed partial class CargoSystem
                 bounty.ClaimedBy.Add(name);
                 break;
         }
-        if (sound != null)
-            _audio.PlayPvs(sound, ent.Owner);
         bountyDbComp.NextClaimTime = Timing.CurTime + bountyDbComp.ClaimDelay;
 
         if (sound != null)
