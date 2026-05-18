@@ -1,7 +1,7 @@
 using Content.Shared.Mind;
-using Robust.Shared.Timing;
+using Content.Shared.ParadoxClone;
 
-namespace Content.Server.ParadoxClone;
+namespace Content.Served.ParadoxClone;
 
 public sealed partial class ParadoxCloneSystem : EntitySystem
 {
@@ -27,6 +27,9 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
         // get the mind to transfer
         if (!_mindSystem.TryGetMind(args.Performer, out var mind, out var mindComp))
             return;
+
+        // unpause the clone, who was paused so that it doesnt die of spacing
+        SetPaused((EntityUid)ent.Comp.ClonedBody, false);
 
         // transfer the mind and retrieve the body from nullspace
         _mindSystem.TransferTo(mind, ent.Comp.ClonedBody);

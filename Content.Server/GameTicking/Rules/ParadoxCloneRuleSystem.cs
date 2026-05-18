@@ -9,8 +9,12 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
-using Content.Server.ParadoxClone;
+using Content.Shared.ParadoxClone;
+using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -24,6 +28,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
     [Dependency] private readonly TargetSystem _target = default!;
     [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     public override void Initialize()
     {
@@ -88,11 +93,10 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             return;
         }
 
-        // spawn it at the original body's position
-        if (!_entMan.TryGetComponent<TransformComponent>(ent.Comp.OriginalBody, out var transform))
-            return;
+        // pause it, since nullspace is spaced and we dont want it dying
+        SetPaused((EntityUid)clone, true);
 
-        var ghost = Spawn(ent.Comp.GhostProto, transform.Coordinates);
+        var ghost = Spawn(ent.Comp.GhostProto);
 
         // make sure the ghost can keep track of its "real" body
         _entMan.AddComponent(ghost, new ParadoxCloneComponent
@@ -101,10 +105,42 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             RemainingTime = ent.Comp.GhostGracePeriod
         });
 
-        var targetComp = EnsureComp<TargetOverrideComponent>(clone.Value);
+        // stuff the ghost into the original entity
+        _entMan.EnsureComponent<ParadoxClonedEntityComponent>((EntityUid)ent.Comp.OriginalBody, out var holding);
+        holding.ParadoxCloneBox = _containers.EnsureContainer<ContainerSlot>((EntityUid)ent.Comp.OriginalBody, "ParadoxCloneBox");
+        _containers.Insert(ghost, holding.ParadoxCloneBox);
+
+        // recover the comms the original has
+        HashSet<ProtoId<RadioChannelPrototype>> comms = new HashSet();
+        if (_entMan.TryGetComponent<ActiveRadioComponent>(ent.Comp.OriginalBody, out var active))
+        {
+            foreach (var channel in active.Channels)
+            {
+                comms.Add(channel);
+            }
+        }
+
+        if (_entMan.TryGetComponent<WearingHeadsetComponent>(ent.Comp.OriginalBody, out var headsetComponent))
+        {
+            if (_entMan.TryGetComponent<ActiveRadioComponent>(headsetComponent.Headset, out var headsetActive))
+            {
+                foreach (var channel in headsetActive.Channels)
+                {
+                    comms.Add(channel);
+                }
+            }
+        }
+
+        // give them to the ghost
+        _entMan.AddComponent(ghost, new ActiveRadioComponent
+        {
+            Channels = comms,
+        });
+
+        var targetComp = EnsureComp<TargetOverrideComponent>(ghost);
         targetComp.Target = ent.Comp.OriginalMind; // set the kill target
 
-        var gibComp = EnsureComp<GibOnRoundEndComponent>(clone.Value);
+        var gibComp = EnsureComp<GibOnRoundEndComponent>(ghost);
         gibComp.SpawnProto = ent.Comp.GibProto;
         gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
 
@@ -128,4 +164,8 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         // var action = Spawn(ent.Comp.MaterializeAction);
         // _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
     }
+}
+
+internal class HashSet : HashSet<ProtoId<RadioChannelPrototype>>
+{
 }

@@ -1,6 +1,6 @@
 using Content.Shared.Actions;
 
-namespace Content.Server.ParadoxClone;
+namespace Content.Shared.ParadoxClone;
 
 public sealed partial class ActionParadoxCloneMaterializeEvent : InstantActionEvent
 {
