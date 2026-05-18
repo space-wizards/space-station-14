@@ -104,6 +104,6 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
 
     private void OnAttemptConvert(Entity<RevolutionaryComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 }

@@ -64,7 +64,7 @@ public sealed partial class MindShieldSystem : EntitySystem
 
     private void OnAttemptConvert(Entity<MindShieldComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 }
 
