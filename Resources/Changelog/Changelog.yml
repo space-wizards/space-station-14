@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Bleach now actually does what its description says and can be used for
-      cleaning as a better alternative to Space Cleaner!
-    type: Add
-  id: 9185
-  time: '2025-11-04T23:20:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41276
 - author: Kittygyat
   changes:
   - message: Fixed several unintended burn groupings with the clumsy gun explosions
@@ -4078,3 +4070,10 @@
   id: 9696
   time: '2026-05-17T20:29:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43898
+- author: TheMas3212
+  changes:
+  - message: Cows and Goats are now able to eat wheat as intended
+    type: Fix
+  id: 9697
+  time: '2026-05-18T14:35:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43983
