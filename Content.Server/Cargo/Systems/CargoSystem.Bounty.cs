@@ -116,6 +116,9 @@ public sealed partial class CargoSystem
         if (_station.GetOwningStation(ent.Owner) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
             return;
 
+        if (Timing.CurTime < bountyDbComp.NextStatusUpdateTime || !args.Actor.Valid)
+            return;
+
         for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
         {
             if (bountyDbComp.Bounties[i].Id != args.BountyId)
@@ -126,7 +129,8 @@ public sealed partial class CargoSystem
             bountyDbComp.Bounties[i] = bounty with { Status = status!.ID };
         }
 
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
+        _audio.PlayPvs(ent.Comp.ClaimAddSound, ent.Owner);
+        UpdateBountyConsoles();
     }
 
     private void OnBountyClaimedMessage(Entity<CargoBountyConsoleComponent> ent, ref BountyClaimedMessage args)
@@ -134,18 +138,38 @@ public sealed partial class CargoSystem
         if (_station.GetOwningStation(ent.Owner) is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDbComp))
             return;
 
+        if (Timing.CurTime < bountyDbComp.NextClaimTime || !args.Actor.Valid)
+            return;
+
+        var name = _identity.GetIdentityShortInfo(args.Actor, ent.Owner) ?? Loc.GetString("bounty-console-claimed-by-unknown");
+        var added = false;
+        var removed = false;
+
         for (var i = 0; i < bountyDbComp.Bounties.Count; i++)
         {
             if (bountyDbComp.Bounties[i].Id != args.BountyId)
                 continue;
             var bounty = bountyDbComp.Bounties[i];
 
-            var name = _identity.GetIdentityShortInfo(args.Actor, ent.Owner) ?? Loc.GetString("bounty-console-claimed-by-unknown");
+            // Click same claimant to unclaim, otherwise replace current claimant.
+            var oldClaimant = bounty.ClaimedBy;
+            var newClaimant = name.Equals(oldClaimant) ? string.Empty : name;
+            removed = !string.IsNullOrEmpty(oldClaimant);
+            added = !string.IsNullOrEmpty(newClaimant);
 
-            bountyDbComp.Bounties[i] = bounty with { ClaimedBy = name.Equals(bounty.ClaimedBy) ? string.Empty : name };
+            bountyDbComp.Bounties[i] = bounty with { ClaimedBy = newClaimant };
+            bountyDbComp.NextClaimTime = Timing.CurTime + bountyDbComp.ClaimDelay;
+            break;
         }
 
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextSkipTime)));
+        if (removed && added)
+            _audio.PlayPvs(ent.Comp.ClaimAddRemoveSound, ent.Owner);
+        else if (removed)
+            _audio.PlayPvs(ent.Comp.ClaimRemoveSound, ent.Owner);
+        else if (added)
+            _audio.PlayPvs(ent.Comp.ClaimAddSound, ent.Owner);
+
+        UpdateBountyConsoles();
     }
 
     public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)

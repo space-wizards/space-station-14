@@ -34,6 +34,24 @@ public sealed partial class CargoBountyConsoleComponent : Component
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
 
     /// <summary>
+    /// The sound made when the bounty is claimed.
+    /// </summary>
+    [DataField("claimAddSound")]
+    public SoundSpecifier ClaimAddSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping2.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty claim is removed.
+    /// </summary>
+    [DataField("claimRemoveSound")]
+    public SoundSpecifier ClaimRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping3.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty claim is added then removed in one press.
+    /// </summary>
+    [DataField("claimAddRemoveSound")]
+    public SoundSpecifier ClaimAddRemoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping4.ogg");
+
+    /// <summary>
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField("skipSound")]
