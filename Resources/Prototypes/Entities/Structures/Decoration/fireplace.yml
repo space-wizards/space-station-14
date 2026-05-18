@@ -49,3 +49,31 @@
   - type: IgnitionSource
     temperature: 700
     ignited: true
+  - type: Heater
+    maxTemperature: 700
+    conductivity: 10
+    requiresPower: false
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Temperature
+      - SolutionContainerManager
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+      itemcollide:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        hard: false
+        layer:
+        - HighImpassable

@@ -14,6 +14,13 @@
         layer:
         - Opaque
         - BulletImpassable
+      itemcollide:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        hard: false
+        layer:
+        - HighImpassable
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
@@ -44,6 +51,15 @@
   - type: IgnitionSource
     temperature: 700
     ignited: true
+  - type: Heater
+    maxTemperature: 700
+    conductivity: 10
+    requiresPower: false
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Temperature
+      - SolutionContainerManager
   - type: RequireProjectileTarget
 
 - type: entity
