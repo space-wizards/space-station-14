@@ -6,22 +6,18 @@ using Content.Shared.Radio.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Served.ParadoxClone;
+namespace Content.Server.ParadoxClone;
 
 public sealed partial class ParadoxCloneSystem : EntitySystem
 {
-    [Dependency]
-    private SharedMindSystem _mindSystem = default!;
-    [Dependency]
-    private SharedTransformSystem _transformSystem = default!;
-    [Dependency]
-    private IEntityManager _entMan = default!;
-    [Dependency]
-    private SharedActionsSystem _actions = default!;
-    [Dependency]
-    private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
 
     private static readonly EntProtoId ActionSpawn = "ActionParadoxCloneMaterialize";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -47,8 +43,7 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
         // Remove the paradox clone radio
         _entMan.RemoveComponent<ActiveRadioComponent>(ent.Owner);
 
-        // Makes the entity visible
-
+        // Making the entity visible happens on the client
     }
 
     /// <summary>

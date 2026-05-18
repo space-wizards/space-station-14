@@ -46,26 +46,47 @@
   description: This has something to do with trousers and with time. Probably.
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  # override incorporeal's
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4
   - type: Tag
     tags:
     - GhostOnlyWarp
   - type: IntrinsicRadioReceiver # it will be given an activeradio component by the paradoxclonerule system
   - type: Eye
     pvsScale: 1.5
-    drawFov: false
+    drawFov: true
     visMask: # need this to be able to see its own abilities
     - Normal
     - Ghost # Can see ghosts, but this shouldn't be a problem. I hope.
   - type: Visibility
     layer: 2
+  - type: ActionGrant
+    actions:
+    - ActionParadoxCloneWander
+  # these two components make it able to pass trough doors but not trough walls (like a rat)
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+
+- type: entity
+  id: ParadoxCloneWanderComponents
+  components:
   - type: Sprite
     layers:
     - sprite: Mobs/Aliens/paradox_clone.rsi
       state: paradox
       shader: unshaded
-  - type: ActionGrant
-    actions:
-    - ActionParadoxCloneWander
+    noRot: true
 
 - type: entity
   parent: BaseAction
@@ -80,12 +101,11 @@
     startDelay: true
     raiseOnUser: true
     raiseOnAction: false
-    useDelay: 15
+    useDelay: 1 #15
     priority: 3
   - type: InstantAction
     event: !type:ActionParadoxCloneMaterializeEvent
-  - type: Visibility # needed so that the paradox clone can see it
-    layer: 2
+
 
 - type: entity
   parent: BaseAction
@@ -100,9 +120,8 @@
     raiseOnUser: true
     raiseOnAction: false
     startDelay: true
-    useDelay: 15
+    useDelay: 1 #15
     priority: 3
   - type: InstantAction
     event: !type:ActionParadoxCloneWanderEvent
-  - type: Visibility # needed so that the paradox clone can see it
-    layer: 2
+
