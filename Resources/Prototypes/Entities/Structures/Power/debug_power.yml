@@ -38,8 +38,9 @@
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,6 +74,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
@@ -104,6 +110,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
@@ -114,22 +125,11 @@
 
 - type: entity
   parent: BaseSMES
-  id: DebugSMES
-  suffix: DEBUG, Empty
-
-- type: entity
-  parent: BaseSMES
   id: DebugSMESRecharging
   suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-
-- type: entity
-  parent: BaseSubstation
-  id: DebugSubstation
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseSubstation
@@ -138,12 +138,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-
-- type: entity
-  parent: BaseSubstationWall
-  id: DebugSubstationWall
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseSubstationWall
@@ -152,12 +146,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-
-- type: entity
-  parent: BaseAPC
-  id: DebugAPC
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseAPC
@@ -166,7 +154,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
 
 - type: entity
   id: DebugPowerReceiver

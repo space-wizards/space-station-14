@@ -7,11 +7,11 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-public sealed class NetProbeCartridgeSystem : EntitySystem
+public sealed partial class NetProbeCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {

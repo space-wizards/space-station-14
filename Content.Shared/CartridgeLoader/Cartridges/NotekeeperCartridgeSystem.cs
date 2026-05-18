@@ -3,10 +3,10 @@ using Content.Shared.Database;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-public sealed class NotekeeperCartridgeSystem : EntitySystem
+public sealed partial class NotekeeperCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

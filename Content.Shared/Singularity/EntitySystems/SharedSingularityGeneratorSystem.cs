@@ -7,11 +7,11 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// Shared part of SingularitySingularityGeneratorSystem
 /// </summary>
-public abstract class SharedSingularityGeneratorSystem : EntitySystem
+public abstract partial class SharedSingularityGeneratorSystem : EntitySystem
 {
     #region Dependencies
-    [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] protected SharedPopupSystem PopupSystem = default!;
+    [Dependency] private EmagSystem _emag = default!;
     #endregion Dependencies
 
     public override void Initialize()
