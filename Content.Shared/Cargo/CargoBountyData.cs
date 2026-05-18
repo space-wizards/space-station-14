@@ -23,8 +23,11 @@ public readonly partial record struct CargoBountyData
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
+    /// <summary>
+    /// Character names of players who printed labels for this bounty.
+    /// </summary>
     [DataField]
-    public string ClaimedBy { get; init; } = string.Empty;
+    public List<string> ClaimedBy { get; init; } = new();
 
     [DataField]
     public ProtoId<CargoBountyStatusPrototype> Status { get; init; } = string.Empty;

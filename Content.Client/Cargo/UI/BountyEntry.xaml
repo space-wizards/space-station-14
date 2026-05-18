@@ -11,7 +11,8 @@
                     <RichTextLabel Name="RewardLabel"/>
                     <RichTextLabel Name="ManifestLabel"/>
                     <RichTextLabel Name="StatusLabel"/>
-                    <RichTextLabel Name="ClaimedBylabel"/>
+                    <RichTextLabel Name="ClaimedByLabel"
+                                   MaxWidth="390"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" MinWidth="200" HorizontalAlignment="Right">
                     <BoxContainer Orientation="Horizontal" >

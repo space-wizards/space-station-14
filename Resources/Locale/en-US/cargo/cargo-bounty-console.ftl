@@ -14,7 +14,7 @@ bounty-console-description-label = [color=gray]{$description}[/color]
 bounty-console-claim-button-text = Claim
 bounty-console-claimed-by-none = None
 bounty-console-claimed-by-unknown = Unknown
-bounty-console-claimed-by = Claimed by: {$claimant}
+bounty-console-claimed-by-label = Claimed by: {$claimers}
 bounty-console-status-label = Status: {$status ->
         [OnShuttle] [color=limegreen]On Shuttle[/color]
         [Waiting] Waiting

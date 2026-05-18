@@ -24,6 +24,12 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public List<CargoBountyData> Bounties = new();
 
     /// <summary>
+    /// Maximum amount of people who can claim a bounty.
+    /// </summary>
+    [DataField]
+    public int MaxClaimants = 1;
+
+    /// <summary>
     /// A list of all the bounties that have been completed or
     /// skipped for a station.
     /// </summary>
@@ -71,7 +77,7 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// The time between claims.
     /// </summary>
     [DataField("claimDelay")]
-    public TimeSpan ClaimDelay = TimeSpan.FromSeconds(1);
+    public TimeSpan ClaimDelay = TimeSpan.FromSeconds(0.1);
 
     /// <summary>
     /// The time at which players will be able to update the status of a bounty again..
