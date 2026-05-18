@@ -129,8 +129,8 @@ public sealed partial class CargoSystem
             bountyDbComp.Bounties[i] = bounty with { Status = status!.ID };
         }
 
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextStatusUpdateTime)));
         _audio.PlayPvs(ent.Comp.ClaimAddSound, ent.Owner);
+        UpdateBountyConsoles();
     }
 
     private void OnBountyClaimedMessage(Entity<CargoBountyConsoleComponent> ent, ref BountyClaimedMessage args)
@@ -162,14 +162,14 @@ public sealed partial class CargoSystem
             break;
         }
 
-        _uiSystem.SetUiState(ent.Owner, CargoConsoleUiKey.Bounty, new CargoBountyConsoleState(bountyDbComp.Bounties, bountyDbComp.History, TimeUntilNextSkip(bountyDbComp.NextClaimTime)));
-
         if (removed && added)
             _audio.PlayPvs(ent.Comp.ClaimAddRemoveSound, ent.Owner);
         else if (removed)
             _audio.PlayPvs(ent.Comp.ClaimRemoveSound, ent.Owner);
         else if (added)
             _audio.PlayPvs(ent.Comp.ClaimAddSound, ent.Owner);
+
+        UpdateBountyConsoles();
     }
 
     public void SetupBountyLabel(EntityUid uid, EntityUid stationId, CargoBountyData bounty, PaperComponent? paper = null, CargoBountyLabelComponent? label = null)
