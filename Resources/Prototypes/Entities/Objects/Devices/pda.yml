@@ -421,9 +421,6 @@
       whitelist:
         components:
         - Cartridge
-    preinstalled:
-    - CrewManifestCartridge
-    - NewsReaderCartridge
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -435,6 +432,12 @@
   - type: Icon
     state: pda-mime
   - type: Muted # for random sentience event
+  - type: EntityTableContainerFill
+    containers:
+      preinstalled-program-container: !type:AllSelector
+        children:
+        - id: CrewManifestCartridge
+        - id: NewsReaderCartridge
 
 - type: entity
   name: chaplain PDA
