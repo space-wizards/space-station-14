@@ -26,6 +26,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Revolutionary;
 
 namespace Content.Server.Zombies
 {
@@ -71,6 +72,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
             SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<ZombieComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -319,6 +321,11 @@ namespace Content.Server.Zombies
         private void OnMindRemoved(Entity<ZombieComponent> ent, ref MindRemovedMessage args)
         {
             _role.MindRemoveRole<ZombieRoleComponent>((args.Mind.Owner,  args.Mind.Comp));
+        }
+
+        private void OnAttemptConvert(Entity<ZombieComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+        {
+            args.Cancel();
         }
     }
 }
