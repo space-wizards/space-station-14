@@ -7,7 +7,7 @@ namespace Content.Shared.CartridgeLoader;
 /// <summary>
 /// This is used for defining values used for displaying in the program ui in yaml
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(CartridgeLoaderSystem))]
 public sealed partial class CartridgeComponent : Component
 {

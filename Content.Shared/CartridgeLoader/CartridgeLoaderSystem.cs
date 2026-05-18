@@ -26,6 +26,8 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
 
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeLoaderUiMessage>(OnLoaderUiMessage);
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeUiMessage>(OnUiMessage);
+
+        SubscribeLocalEvent<CartridgeComponent, AfterAutoHandleStateEvent>(OnCartridgeState);
     }
 
     private void OnComponentInit(Entity<CartridgeLoaderComponent> ent, ref ComponentInit args)
@@ -117,6 +119,14 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
 
         var args = new CartridgeLoaderNotificationSentEvent(header, message);
         RaiseLocalEvent(loaderUid, ref args);
+    }
+
+    private void OnCartridgeState(Entity<CartridgeComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (ent.Comp.LoaderUid is not { } loader)
+            return;
+
+        UpdateUiState(loader);
     }
 }
 
