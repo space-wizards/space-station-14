@@ -9,23 +9,25 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Remotes.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Remotes.EntitySystems;
 
-public abstract class SharedDoorRemoteSystem : EntitySystem
+public abstract partial class SharedDoorRemoteSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAirlockSystem _airlock = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly SharedElectrocutionSystem _electrify = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private SharedAirlockSystem _airlock = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoorSystem _doorSystem = default!;
+    [Dependency] private SharedElectrocutionSystem _electrify = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] protected IGameTiming Timing = default!;
 
 
     public override void Initialize()
@@ -52,10 +54,10 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                                                                       // Only able to control doors if they are within your vision and within your max range.
                                                                       // Not affected by mobs or machines anymore.
-            || !_examine.InRangeUnOccluded(args.User,
+            || (entity.Comp.RequireInRangeUnoccluded && !_examine.InRangeUnOccluded(args.User,
                 args.Target.Value,
                 SharedInteractionSystem.MaxRaycastRange,
-                null))
+                null)))
 
         {
             return;
@@ -77,15 +79,22 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
             // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
         }
 
-        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-            && !_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+        // Only let remote work on doors that have AccessReader; otherwise, it works on anything with a Door component (curtains, fence gates, etc)
+        if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) && _tagSystem.HasTag(args.Target.Value, entity.Comp.TargetTag))
         {
-            if (isAirlock)
-                _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
+            // Has an access reader component. Check access.
+            if (!_doorSystem.HasAccess(args.Target.Value, accessTarget, doorComp, accessComponent))
+            {
+                if (isAirlock)
+                    _doorSystem.Deny(args.Target.Value, doorComp, user: args.User, predicted: true);
 
-            _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
-            return;
+                _popup.PopupClient(Loc.GetString("door-remote-denied"), args.User, args.User);
+                return;
+            }
         }
+        // Unless allowed to bypass by the flag on the component.
+        else if (entity.Comp.RequireTagWhitelist)
+            return;
 
         switch (entity.Comp.Mode)
         {

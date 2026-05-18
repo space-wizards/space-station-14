@@ -8,14 +8,14 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Ghost
 {
-    public sealed class GhostSystem : SharedGhostSystem
+    public sealed partial class GhostSystem : SharedGhostSystem
     {
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
-        [Dependency] private readonly ContentEyeSystem _contentEye = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
+        [Dependency] private IClientConsoleHost _console = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private SharedActionsSystem _actions = default!;
+        [Dependency] private PointLightSystem _pointLightSystem = default!;
+        [Dependency] private ContentEyeSystem _contentEye = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
