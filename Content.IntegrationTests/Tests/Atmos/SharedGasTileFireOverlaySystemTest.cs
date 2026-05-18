@@ -11,13 +11,12 @@ using System.Numerics;
 namespace Content.IntegrationTests.Tests.Atmos;
 
 /// <summary>
-/// GasTileOverlay is being tested here for networking of atmos fires
+/// Checks networking of fire visuals inside GasTileOverlay
 /// </summary>
-public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
+public sealed partial class SharedGasTileOverlayTest : AtmosTest
 {
-    protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/DeltaPressure/deltapressuretest.yml");
-
     [Test]
+    [Description("Checks networking of fire visuals inside GasTileOverlay.")]
     public async Task TestGasTileFireOverlayDataSync()
     {
         var sMapSys = Server.System<SharedMapSystem>();
@@ -49,8 +48,7 @@ public sealed class SharedGasTileFireOverlaySystemTest : AtmosTest
             Assert.That(ItemToggleSys.TryActivate(welder)); //ignite em
         });
 
-        await RunTicks(30);
-        await Task.WhenAll(Client.WaitIdleAsync(), Server.WaitIdleAsync());
+        await Pair.RunTicksSync(10);
 
         await Client.WaitPost(() =>
         {
