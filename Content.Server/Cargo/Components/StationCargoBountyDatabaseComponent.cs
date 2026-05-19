@@ -30,6 +30,12 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public int MaxClaimants = 1;
 
     /// <summary>
+    /// Default status of a new bounty.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoBountyStatusPrototype> DefaultStatus = "Undelivered";
+
+    /// <summary>
     /// A list of all the bounties that have been completed or
     /// skipped for a station.
     /// </summary>

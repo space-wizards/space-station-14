@@ -505,7 +505,7 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
-        var defaultStatus = GetDefaultBountyStatus();
+        var defaultStatus = _protoMan.Index<CargoBountyStatusPrototype>(component.DefaultStatus);
         var newBounty = new CargoBountyData(bounty, defaultStatus, randomVal);
         // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
         if (component.Bounties.Any(b => b.Id == newBounty.Id))
@@ -521,13 +521,6 @@ public sealed partial class CargoSystem
         );
         component.TotalBounties++;
         return true;
-    }
-
-    private CargoBountyStatusPrototype GetDefaultBountyStatus()
-    {
-        var allStates = _protoMan.EnumeratePrototypes<CargoBountyStatusPrototype>();
-        var returnState = allStates.OrderBy(s => s.Index).FirstOrDefault() ?? allStates.First();
-        return returnState;
     }
 
     /// <summary>
