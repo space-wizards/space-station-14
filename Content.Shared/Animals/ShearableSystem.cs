@@ -22,15 +22,15 @@ namespace Content.Shared.Animals;
 ///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item and optionally toggle a sprite layer.
 ///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
 /// </summary>
-public sealed class SharedShearableSystem : EntitySystem
+public sealed partial class SharedShearableSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
