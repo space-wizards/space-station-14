@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Fixed several unintended burn groupings with the clumsy gun explosions
-      & bible misuse.
-    type: Fix
-  id: 9186
-  time: '2025-11-05T03:43:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41307
 - author: chromiumboy
   changes:
   - message: Gas analyzers now correctly report the total volume and the number of
@@ -4077,3 +4069,11 @@
   id: 9697
   time: '2026-05-18T14:35:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43983
+- author: Pok27
+  changes:
+  - message: Radial menus no longer prevent sending to chat, or deleting text from
+      the chat input box.
+    type: Fix
+  id: 9698
+  time: '2026-05-19T11:59:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40929
