@@ -102,7 +102,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
                 // show popup to the user saying implant failed
                 var name = Identity.Name(target, EntityManager, args.User);
                 var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
-                _popup.PopupPredicted(msg, target, args.User);
+                _popup.PopupClient(msg, target, args.User);
                 // prevent further interaction since popup was shown
                 args.Handled = true;
                 return;
@@ -184,10 +184,10 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(args))
             return;
 
-        _popup.PopupPredicted(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+        _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
 
         var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupPredicted(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
+        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         };
 
         if (_doAfter.TryStartDoAfter(args))
-            _popup.PopupPredicted(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+            _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
     }
 
     private void OnImplant(Entity<ImplanterComponent> ent, ref ImplantEvent args)
