@@ -65,4 +65,16 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? ObjectiveBlacklist;
+
+    /// <summary>
+    /// Amount of time the paradox clone can spend wandering before being forced to spawn
+    /// </summary>
+    [DataField]
+    public float WanderingTime = 70f;
+
+    /// <summary>
+    /// Amount of time the paradox clone can spend listening before being forced to spawn
+    /// </summary>
+    [DataField]
+    public float ListenTime = 240f;
 }

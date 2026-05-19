@@ -77,10 +77,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-
-- type: entity
-  id: ParadoxCloneWanderComponents
-  components:
   - type: Sprite
     layers:
     - sprite: Mobs/Aliens/paradox_clone.rsi

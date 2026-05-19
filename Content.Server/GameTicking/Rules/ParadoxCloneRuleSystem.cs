@@ -107,12 +107,13 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         _entMan.AddComponent(ghost, new ParadoxCloneComponent
         {
             ClonedBody = (EntityUid)clone,
-            RemainingTime = ent.Comp.GhostGracePeriod
+            ListenTime = ent.Comp.GhostGracePeriod,
         });
 
         // stuff the ghost into the original entity
         _entMan.EnsureComponent<ParadoxClonedEntityComponent>((EntityUid)ent.Comp.OriginalBody, out var holding);
         holding.ParadoxCloneBox = _containers.EnsureContainer<ContainerSlot>((EntityUid)ent.Comp.OriginalBody, ContainerName);
+        holding.ParadoxCloneBox.ShowContents = false;
         _containers.Insert(ghost, holding.ParadoxCloneBox);
 
         // recover the comms the original has
