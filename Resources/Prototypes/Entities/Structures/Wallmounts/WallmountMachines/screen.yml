@@ -9,10 +9,14 @@
     textOffset: 0,3
     timerOffset: 0,-4
     rows: 2
+    scrollEnabled: true
+    frameState:
+      sprite: Structures/Wallmounts/screen.rsi
+      state: outer_frame
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
-    state: screen
+    state: screen # Note: outer_frame will be added on top of text layers.
     noRot: true
   - type: Appearance
   - type: Destructible

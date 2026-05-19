@@ -134,7 +134,58 @@
       "name": "colon"
     },
     {
+      "name": "semicolon"
+    },
+    {
       "name": "blank"
+    },
+    {
+      "name": "caret"
+    },
+    {
+      "name": "equals"
+    },
+    {
+      "name": "lparen"
+    },
+    {
+      "name": "rparen"
+    },
+    {
+      "name": "lbracket"
+    },
+    {
+      "name": "rbracket"
+    },
+    {
+      "name": "greaterthan"
+    },
+    {
+      "name": "lessthan"
+    },
+    {
+      "name": "slash"
+    },
+    {
+      "name": "backslash"
+    },
+    {
+      "name": "underscore"
+    },
+    {
+      "name": "quotation"
+    },
+    {
+      "name": "apostrophe"
+    },
+    {
+      "name": "period"
+    },
+    {
+      "name": "comma"
+    },
+    {
+      "name": "percent"
     }
   ]
 }
