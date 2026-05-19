@@ -199,7 +199,7 @@
   - ClothingOuterBioJanitor
   - ClothingHeadHatHoodBioJanitor
   container: CratePlastic
-  cost: 800
+  cost: 600
   category: cargoproduct-category-name-service
   group: market
 

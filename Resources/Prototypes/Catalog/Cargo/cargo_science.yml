@@ -37,7 +37,7 @@
   - ClothingOuterBioScientist
   - ClothingHeadHatHoodBioScientist
   container: CrateScienceSecure
-  cost: 800
+  cost: 600
   category: cargoproduct-category-name-science
   group: market
 

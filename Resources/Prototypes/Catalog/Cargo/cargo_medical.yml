@@ -115,7 +115,7 @@
   - ClothingOuterBioVirology
   - ClothingHeadHatHoodBioVirology
   container: CrateMedicalSecure
-  cost: 400
+  cost: 600
   category: cargoproduct-category-name-medical
   group: market
 

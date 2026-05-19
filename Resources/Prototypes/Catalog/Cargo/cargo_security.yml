@@ -106,7 +106,7 @@
   - ClothingOuterBioSecurity
   - ClothingHeadHatHoodBioSecurity
   container: CrateSecgear
-  cost: 800
+  cost: 600
   category: cargoproduct-category-name-security
   group: market
 

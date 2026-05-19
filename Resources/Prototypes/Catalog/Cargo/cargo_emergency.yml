@@ -108,6 +108,6 @@
   - ClothingOuterBioGeneral
   - ClothingHeadHatHoodBioGeneral
   container: CratePlastic
-  cost: 700
+  cost: 600
   category: cargoproduct-category-name-emergency
   group: market
