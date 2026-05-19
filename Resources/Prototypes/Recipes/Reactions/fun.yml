@@ -157,6 +157,7 @@
   effects:
     - !type:SpawnEntity
       entity: ShardCrystalRandom
+      predicted: false
 
 - type: reaction
   id: Gunpowder

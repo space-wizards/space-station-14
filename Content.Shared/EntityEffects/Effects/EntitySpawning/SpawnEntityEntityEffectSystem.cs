@@ -15,19 +15,20 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
     {
         var quantity = args.Effect.Number * (int)Math.Floor(args.Scale);
         var proto = args.Effect.Entity;
+        var coordinates = Transform(entity).Coordinates;
 
         if (args.Effect.Predicted)
         {
             for (var i = 0; i < quantity; i++)
             {
-                PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+                PredictedSpawnAtPosition(proto, coordinates);
             }
         }
         else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {
-                SpawnNextToOrDrop(proto, entity, entity.Comp);
+                SpawnAtPosition(proto, coordinates);
             }
         }
     }
