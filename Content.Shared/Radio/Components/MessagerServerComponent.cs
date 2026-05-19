@@ -18,6 +18,7 @@ public sealed partial class MessagerUser
 {
     public int Id;
     public string Name;
+    public Dictionary<int, int> UnreadCounts = new();
 
     public MessagerUser(int id, string name)
     {
@@ -33,9 +34,9 @@ public sealed partial class MessagerMessage
     public int SenderId;
     public int ReceiverId;
     public string Content;
-    public DateTime Timestamp;
+    public TimeSpan Timestamp;
 
-    public MessagerMessage(int id, int senderId, int receiverId, string content, DateTime timestamp)
+    public MessagerMessage(int id, int senderId, int receiverId, string content, TimeSpan timestamp)
     {
         Id = id;
         SenderId = senderId;

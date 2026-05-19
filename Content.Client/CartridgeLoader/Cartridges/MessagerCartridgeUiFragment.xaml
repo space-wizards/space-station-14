@@ -21,7 +21,7 @@
                         <Button Name="BackButton" Text="{Loc messager-back}" SetWidth="50"/>
                         <Label Name="ChatPartnerLabel" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True"/>
                     </BoxContainer>
-                    <ScrollContainer Name="MessageScrollContainer" HorizontalExpand="True" VerticalExpand="True" VScrollEnabled="True">
+                    <ScrollContainer Name="MessageScrollContainer" HorizontalExpand="True" VerticalExpand="True" VScrollEnabled="True" HScrollEnabled="False">
                         <BoxContainer Orientation="Vertical" Name="MessageContainer" HorizontalExpand="True" VerticalExpand="True"/>
                     </ScrollContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">

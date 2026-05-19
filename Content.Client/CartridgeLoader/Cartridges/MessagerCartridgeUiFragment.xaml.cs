@@ -36,7 +36,8 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
         UserListContainer.RemoveAllChildren();
         foreach (var user in _users.Values)
         {
-            var button = new Button { Text = user.Name, HorizontalExpand = true };
+            var displayText = user.UnreadCount > 0 ? $"{user.Name} ({user.UnreadCount})" : user.Name;
+            var button = new Button { Text = displayText, HorizontalExpand = true };
             var userId = user.Id;
             button.OnPressed += _ => OnUserSelected(userId);
             UserListContainer.AddChild(button);
@@ -100,13 +101,14 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
 
         foreach (var msg in filteredMessages.OrderBy(m => m.Timestamp))
         {
-            var label = new Label
+            var timeStr = msg.Timestamp.ToString(@"hh\:mm\:ss");
+            var color = msg.IsIncoming ? "aqua" : "white";
+            var richLabel = new RichTextLabel
             {
-                Text = $"{msg.SenderName}: {msg.Content}",
-                HorizontalExpand = true,
-                FontColorOverride = msg.IsIncoming ? Color.Aqua : Color.White
+                Text = $"[color={color}][{timeStr}] {msg.SenderName}: {msg.Content}[/color]",
+                HorizontalExpand = true
             };
-            MessageContainer.AddChild(label);
+            MessageContainer.AddChild(richLabel);
         }
     }
 

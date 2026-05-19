@@ -188,7 +188,7 @@
     programName: messager-cartridge-program-name
     icon:
       sprite: Interface/Misc/program_icons.rsi
-      state: some_icon
+      state: nano_chat
   - type: MessagerCartridge
   - type: DeviceNetwork
     deviceNetId: Wireless

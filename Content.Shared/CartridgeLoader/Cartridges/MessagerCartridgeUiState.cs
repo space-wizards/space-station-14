@@ -28,11 +28,13 @@ public sealed partial class MessagerUserEntry
 {
     public int Id;
     public string Name;
+    public int UnreadCount;
 
-    public MessagerUserEntry(int id, string name)
+    public MessagerUserEntry(int id, string name, int unreadCount = 0)
     {
         Id = id;
         Name = name;
+        UnreadCount = unreadCount;
     }
 }
 
@@ -45,12 +47,12 @@ public sealed partial class MessagerMessageEntry
     public int Id;
     public string SenderName;
     public string Content;
-    public DateTime Timestamp;
+    public TimeSpan Timestamp;
     public bool IsIncoming;
     public int SenderId;
     public int ReceiverId;
 
-    public MessagerMessageEntry(int id, string content, DateTime timestamp, int senderId, int receiverId)
+    public MessagerMessageEntry(int id, string content, TimeSpan timestamp, int senderId, int receiverId)
     {
         Id = id;
         SenderName = "";

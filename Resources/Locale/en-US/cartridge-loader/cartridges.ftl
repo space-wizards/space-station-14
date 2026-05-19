@@ -1,7 +1,7 @@
 device-pda-slot-component-slot-name-cartridge = Cartridge
 
 default-program-name = Program
-messager-cartridge-program-name = Messager
+messager-cartridge-program-name = NanoChat
 messager-status-connecting = Connecting...
 messager-status-connection-lost = Connection Lost
 messager-send = Send

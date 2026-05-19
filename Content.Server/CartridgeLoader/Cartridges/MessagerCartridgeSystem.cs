@@ -5,12 +5,15 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
+using Content.Server.GameTicking;
+using Robust.Shared.Containers;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed partial class MessagerCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -122,11 +125,21 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         var userData = GetUserData(cartridgeUid);
         var currentUserId = userData?.Id;
 
-        var users = server.Value.Component.Users
+        var userList = server.Value.Component.Users
             .Where(kv => kv.Key != currentUserId)
-            .ToDictionary(k => k.Key, v => new MessagerUserEntry(v.Value.Id, v.Value.Name));
+            .Select(kv =>
+            {
+                var unreadCount = 0;
+                if (currentUserId.HasValue)
+                {
+                    kv.Value.UnreadCounts.TryGetValue(currentUserId.Value, out unreadCount);
+                }
+                return new MessagerUserEntry(kv.Value.Id, kv.Value.Name, unreadCount);
+            })
+            .OrderByDescending(u => u.UnreadCount)
+            .ToList();
 
-        return (users, MessagerStatus.Connected);
+        return (userList.ToDictionary(u => u.Id), MessagerStatus.Connected);
     }
 
     /// <summary>
@@ -190,7 +203,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
                 userData.Value.Id,
                 sendMessage.ReceiverId,
                 sendMessage.Content,
-                DateTime.Now
+                _gameTicker.RoundDuration()
             );
 
             server.Value.Component.Messages.Add(message);
@@ -207,12 +220,28 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
                 return;
 
             SendNotificationToUser(receiverCartridgeUid.Value, userData.Value.Name, sendMessage.Content);
+
+            if (server.Value.Component.Users.TryGetValue(userData.Value.Id, out var senderUser))
+            {
+                senderUser.UnreadCounts[sendMessage.ReceiverId] = senderUser.UnreadCounts.GetValueOrDefault(sendMessage.ReceiverId, 0) + 1;
+                Dirty(server.Value.Uid, server.Value.Component);
+            }
             // Update receiver UI
             UpdateUiState(receiverCartridgeUid.Value, receiverLoaderUid.Value);
         }
 
         if (args is MessagerRequestMessagesEvent requestMessages)
         {
+            var currentUserData = GetUserData(uid);
+            if (currentUserData != null)
+            {
+                var currentServer = GetServerForCartridge(uid);
+                if (currentServer != null && currentServer.Value.Component.Users.TryGetValue(requestMessages.UserId, out var chatUser))
+                {
+                    chatUser.UnreadCounts[currentUserData.Value.Id] = 0;
+                    Dirty(currentServer.Value.Uid, currentServer.Value.Component);
+                }
+            }
             UpdateUiState(uid, loaderUid.Value);
         }
     }
@@ -281,6 +310,14 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
 
     private void UpdateUiState(EntityUid cartridgeUid, EntityUid loaderUid)
     {
+        // checking for an IDcard
+        if (!TryComp<PdaComponent>(loaderUid, out var pda) || pda.ContainedId == null)
+        {
+            var lostState = new MessagerCartridgeUiState(MessagerStatus.ConnectionLost, new Dictionary<int, MessagerUserEntry>(), new List<MessagerMessageEntry>());
+            _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, lostState);
+            return;
+        }
+
         SyncUsers();
         var (users, status) = GetUserList(cartridgeUid);
         var messages = GetMessages(cartridgeUid);
