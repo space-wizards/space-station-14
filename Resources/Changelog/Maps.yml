@@ -1087,4 +1087,11 @@
   id: 133
   time: '2026-04-06T18:34:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43481
+- author: ProPeperos
+  changes:
+  - message: On Trade Station - Atmos systems are now fully automated
+    type: Tweak
+  id: 134
+  time: '2026-05-17T22:31:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43973
 Order: 2
