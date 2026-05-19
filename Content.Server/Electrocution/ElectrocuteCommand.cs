@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Electrocution;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class ElectrocuteCommand : LocalizedEntityCommands
+public sealed partial class ElectrocuteCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private ElectrocutionSystem _electrocution = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override string Command => "electrocute";
 

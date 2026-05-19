@@ -104,9 +104,9 @@
   source: "https://youtu.be/QIhwzsk5bww"
 
 - files: ["lizard_happy.ogg"]
-  license: "CC-BY-3.0"
-  copyright: "Audio created by youtube user 'Nagaty Studio'"
-  source: "https://youtu.be/I7CX0AS8RNI"
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "Provided by DaturoDewitt. Created using transformed and layered samples bundled with Logic Pro X"
+  source: "https://github.com/space-wizards/space-station-14/pull/42915"
 
 - files: ["bear.ogg"]
   license: "CC-BY-3.0"

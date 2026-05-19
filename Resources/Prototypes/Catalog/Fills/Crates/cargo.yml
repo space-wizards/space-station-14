@@ -6,8 +6,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage:
-        id: ClothingOuterHardsuitLuxury
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitLuxury
+        - id: ClothingMaskBreath
+        - id: OxygenTankFilled
+        - id: NitrogenTankFilled
 
 - type: entity
   parent: CrateGenericSteel
@@ -121,13 +125,10 @@
     - id: WeaponShotgunHandmade
     - id: WeaponFlareGun
     - id: Bola
-    - id: ToySword
     - id: Shovel
-    - id: WeaponWaterPistol
-    - id: WeaponWaterBlaster
     - id: WeaponTurretXeno
-    - id: WeaponRifleFoam
-      weight: 3
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
 
 - type: entityTable
   id: LotteryClothingEntityTable

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, BaseItem]
   id: BasePaper
   abstract: true
   components:
@@ -8,9 +8,15 @@
     - Document
     - Paper
   - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: ExtinguishableSetCollisionWake
   - type: Flammable
     fireSpread: true
     alwaysCombustible: true
+    canExtinguish: true
     damage:
       types:
         Heat: 1
@@ -19,6 +25,7 @@
     normalState: fire
   - type: Damageable
     damageModifierSet: Wood
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
@@ -45,22 +52,21 @@
     flavors:
     - paper
   - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 1
+  - type: Solution
+    solution:
+      maxVol: 2.5 # I consider paper to be like material sheets, so we divide their capacity by 12
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 1.25
   - type: Item
     size: Tiny
   - type: PhysicalComposition
 
 - type: entity
-  name: paper
   parent: BasePaper
   id: Paper
-  description: 'A piece of white paper.'
+  name: paper
+  description: A piece of white paper.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -82,7 +88,9 @@
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
   - type: FaxableObject
+  - type: PaperVisualizer
   - type: PaperVisuals
+  - type: StationAiWhitelist
 
 - type: entity
   name: paper scrap
@@ -461,3 +469,5 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Injurable
+  - type: StationAiWhitelist

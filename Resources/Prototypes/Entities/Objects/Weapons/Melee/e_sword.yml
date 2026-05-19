@@ -192,6 +192,7 @@
       types:
         Slash: 10
         Heat: 10
+    deactivatedSecret: true
   - type: ComponentToggler
     components:
     - type: Tool

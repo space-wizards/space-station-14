@@ -21,7 +21,6 @@ using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
 using Content.Shared.Station.Components;
-using Content.Shared.Whitelist;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -43,21 +42,22 @@ namespace Content.Server.Chat.Systems;
 /// </summary>
 public sealed partial class ChatSystem : SharedChatSystem
 {
-    [Dependency] private readonly IReplayRecordingManager _replay = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private IReplayRecordingManager _replay = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IChatSanitizationManager _sanitizer = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ReplacementAccentSystem _wordreplacement = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private EntityQuery<GhostHearingComponent> _ghostHearingQuery = default!;
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
@@ -736,7 +736,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(sender, ev, true);
 
         return ev.Message;
     }
@@ -792,10 +792,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         // TODO proper speech occlusion
 
         var recipients = new Dictionary<ICommonSession, ICChatRecipientData>();
-        var ghostHearing = GetEntityQuery<GhostHearingComponent>();
-        var xforms = GetEntityQuery<TransformComponent>();
 
-        var transformSource = xforms.GetComponent(source);
+        var transformSource = Transform(source);
         var sourceMapId = transformSource.MapID;
         var sourceCoords = transformSource.Coordinates;
 
@@ -804,12 +802,12 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (player.AttachedEntity is not { Valid: true } playerEntity)
                 continue;
 
-            var transformEntity = xforms.GetComponent(playerEntity);
+            var transformEntity = Transform(playerEntity);
 
             if (transformEntity.MapID != sourceMapId)
                 continue;
 
-            var observer = ghostHearing.HasComponent(playerEntity);
+            var observer = _ghostHearingQuery.HasComponent(playerEntity);
 
             // even if they are a ghost hearer, in some situations we still need the range
             if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceGetRange)
