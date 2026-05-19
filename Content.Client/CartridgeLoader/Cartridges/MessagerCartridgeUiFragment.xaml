@@ -1,5 +1,4 @@
 <cartridges:MessagerCartridgeUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
-                                        xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                                         xmlns="https://spacestation14.io" Margin="1 0 2 0">
 
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
@@ -8,14 +7,10 @@
             <Label Text="{Loc messager-status-connecting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </BoxContainer>
         <!-- Connected status -->
-        <BoxContainer Name="ConnectedContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Visible="False">
-            <BoxContainer Name="UserListContainer" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True" SetWidth="200">
+        <BoxContainer Name="ConnectedContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
+            <BoxContainer Name="UserListContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             </BoxContainer>
-            <customControls:VSeparator Margin="2 0"/>
             <BoxContainer Name="MessageBoxContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-                <BoxContainer Name="MainScreenContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="True">
-                    <Label Name="SelectUserLabel" Text="{Loc messager-select-user}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </BoxContainer>
                 <BoxContainer Name="MessageInputContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Visible="False">
                     <BoxContainer Name="ChatHeader" Orientation="Horizontal" HorizontalExpand="True">
                         <Button Name="BackButton" Text="{Loc messager-back}" SetWidth="50"/>

@@ -7,6 +7,7 @@ messager-status-connection-lost = Connection Lost
 messager-send = Send
 messager-select-user = Select a user
 messager-back = Back
+messager-notification-message = {$sender} sent a message
 notekeeper-program-name = Notekeeper
 nano-task-program-name = NanoTask
 news-read-program-name = Station news

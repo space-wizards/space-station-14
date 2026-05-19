@@ -18,12 +18,16 @@ public sealed partial class MessagerUser
 {
     public int Id;
     public string Name;
+    public string JobIconId;
+    public string JobTitle;
     public Dictionary<int, int> UnreadCounts = new();
 
-    public MessagerUser(int id, string name)
+    public MessagerUser(int id, string name, string jobIconId, string jobTitle)
     {
         Id = id;
         Name = name;
+        JobIconId = jobIconId;
+        JobTitle = jobTitle;
     }
 }
 

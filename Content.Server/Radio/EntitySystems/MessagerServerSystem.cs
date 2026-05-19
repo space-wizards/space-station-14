@@ -17,9 +17,3 @@ public sealed partial class MessagerServerSystem : EntitySystem
     }
 }
 
-public static class UserDataKeys
-{
-    public const string Userid = "user_id";
-    public const string UserName = "user_name";
-    public const string UserList = "user_list";
-}

@@ -7,6 +7,7 @@ using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
 using Content.Server.GameTicking;
 using Robust.Shared.Containers;
+using Robust.Shared.Localization;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -104,12 +105,14 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
 
         var userId = userData.Value.Id;
         var userName = userData.Value.Name;
+        var jobIconId = userData.Value.JobIconId;
+        var jobTitle = userData.Value.JobTitle;
 
         // Checking for data matches
-        if (server.Value.Component.Users.TryGetValue(userId, out var existing) && existing.Name == userName)
+        if (server.Value.Component.Users.TryGetValue(userId, out var existing) && existing.Name == userName && existing.JobIconId == jobIconId && existing.JobTitle == jobTitle)
             return;
 
-        server.Value.Component.Users[userId] = new MessagerUser(userId, userName);
+        server.Value.Component.Users[userId] = new MessagerUser(userId, userName, jobIconId, jobTitle);
         Dirty(server.Value.Uid, server.Value.Component);
     }
 
@@ -134,7 +137,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
                 {
                     kv.Value.UnreadCounts.TryGetValue(currentUserId.Value, out unreadCount);
                 }
-                return new MessagerUserEntry(kv.Value.Id, kv.Value.Name, unreadCount);
+                return new MessagerUserEntry(kv.Value.Id, kv.Value.Name, kv.Value.JobIconId, kv.Value.JobTitle, unreadCount);
             })
             .OrderByDescending(u => u.UnreadCount)
             .ToList();
@@ -252,7 +255,8 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (loaderUid == null)
             return;
 
-        _cartridgeLoaderSystem.SendNotification(loaderUid.Value, senderName + " sent a message", senderName + ": " + messagePreview);
+        var title = Loc.GetString("messager-notification-message", ("sender", senderName));
+        _cartridgeLoaderSystem.SendNotification(loaderUid.Value, title, senderName + ": " + messagePreview);
     }
 
 
@@ -282,7 +286,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     /// <summary>
     /// Getting user data from the IDcard
     /// </summary>
-    public (int Id, string Name)? GetUserData(EntityUid cartridgeUid)
+    public (int Id, string Name, string JobIconId, string JobTitle)? GetUserData(EntityUid cartridgeUid)
     {
         var pdaUid = GetLoaderUid(cartridgeUid);
         if (!TryComp<PdaComponent>(pdaUid, out var pda))
@@ -295,12 +299,10 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (!TryComp<IdCardComponent>(idCardUid, out var idCard))
             return null;
 
-        var fullName = idCard.FullName;
-        if (string.IsNullOrEmpty(fullName))
-            fullName = "Unknown";
-
+        var fullName = string.IsNullOrEmpty(idCard.FullName) ? Loc.GetString("generic-unknown") : idCard.FullName;
+        var jobTitle = string.IsNullOrEmpty(idCard.LocalizedJobTitle) ? Loc.GetString("job-name-unknown") : idCard.LocalizedJobTitle;
         var id = (int)idCardUid.Value;
-        return (id, fullName);
+        return (id, fullName, idCard.JobIcon, jobTitle);
     }
 
     private void OnUiReady(EntityUid uid, MessagerCartridgeComponent component, CartridgeUiReadyEvent args)

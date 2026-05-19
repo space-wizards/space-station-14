@@ -28,12 +28,16 @@ public sealed partial class MessagerUserEntry
 {
     public int Id;
     public string Name;
+    public string JobIconId;
+    public string JobTitle;
     public int UnreadCount;
 
-    public MessagerUserEntry(int id, string name, int unreadCount = 0)
+    public MessagerUserEntry(int id, string name, string jobIconId, string jobTitle, int unreadCount = 0)
     {
         Id = id;
         Name = name;
+        JobIconId = jobIconId;
+        JobTitle = jobTitle;
         UnreadCount = unreadCount;
     }
 }
