@@ -52,6 +52,35 @@
     sprite: Objects/Fun/Instruments/bassguitar.rsi
 
 - type: entity
+  parent: BaseHandheldInstrument
+  id: FretlessBassGuitarInstrument
+  name: fretless bass guitar
+  description: You feel really cool holding this. Shame only fretted bass players think that.
+  components:
+  - type: Instrument
+    program: 35
+  - type: SwappableInstrument
+    instrumentList:
+      "Fretless": {35: 0}
+      "Slap": {36: 0}
+      "Slap (XTra Funky)": {37: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/bassguitarfretless.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Instruments/bassguitarfretless.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+    sprite: Objects/Fun/Instruments/bassguitarfretless.rsi
+  - type: Tag
+    tags:
+    - StringInstrument
+
+- type: entity
   parent: BaseStringInstrumentClothing
   id: RockGuitarInstrument
   name: rock guitar
