@@ -376,12 +376,8 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: WiresPanel
   - type: Machine
     board: MessengerServerCircuitboard
-  - type: ContainerContainer
-    containers:
-      machine_board: !type:Container
   - type: MessengerServer
   - type: SingletonDeviceNetServer
   - type: DeviceNetwork
