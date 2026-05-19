@@ -277,10 +277,6 @@ namespace Content.Client.Cargo.UI
                 row.SetApproveVisible(orderConsole.Mode != CargoOrderConsoleMode.SendToPrimary);
                 row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(order); };
 
-                Orders.AddChild(new Robust.Client.UserInterface.Control
-                {
-                    MinHeight = 3
-                });
                 Orders.AddChild(row);
             }
         }
@@ -382,10 +378,6 @@ namespace Content.Client.Cargo.UI
                     row.Products.AddChild(subRow);
                 }
 
-                OrderHistory.AddChild(new Robust.Client.UserInterface.Control
-                {
-                    MinHeight = 3
-                });
                 OrderHistory.AddChild(row);
             }
         }

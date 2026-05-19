@@ -13,8 +13,7 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="WindowHeadingBackground" />
 
-            <BoxContainer >
-                <Control MinWidth="5" />
+            <BoxContainer Margin="5 0 15 3">
                 <Label
                     Name="Title"
                     MaxHeight="20"
@@ -26,31 +25,28 @@
                         Access="Public"
                         MaxHeight="20"
                         HorizontalAlignment="Right"/>
-                <Control MinWidth="15" />
             </BoxContainer>
-            <Control MinHeight="3" />
             <PanelContainer
                 Name="Stride"
                 Access="Public"
                 StyleClasses="LowDivider" />
         </BoxContainer>
-        <Control MinHeight="2" />
         <!--  Products  -->
         <BoxContainer
             Name="Products"
             Access="Public"
             HorizontalExpand="True"
             Orientation="Vertical"
-            VerticalExpand="True">
+            VerticalExpand="True"
+            Margin="0 2 0 0">
             <!--  Products are added here by code  -->
         </BoxContainer>
-        <Control MinHeight="2" />
         <BoxContainer
             VerticalAlignment="Bottom"
             HorizontalExpand="True"
-            Orientation="Vertical">
+            Orientation="Vertical"
+            Margin="12 2 15 0">
             <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                <Control MinWidth="5" />
                 <Label
                     HorizontalAlignment="Left"
                     Access="Public"
@@ -62,10 +58,8 @@
                     Access="Public"
                     Align="Right"
                     Text="0" />
-                <Control MinWidth="15" />
             </BoxContainer>
             <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                <Control MinWidth="5" />
                 <Label
                     HorizontalAlignment="Left"
                     Access="Public"
@@ -77,14 +71,18 @@
                     Access="Public"
                     Align="Right"
                     Text="0" />
-                <Control MinWidth="15" />
             </BoxContainer>
-            <PanelContainer
-                Name="StrideStride"
-                Access="Public"
-                StyleClasses="LowDivider" />
+        </BoxContainer>
+        <PanelContainer
+            Name="StrideStride"
+            Access="Public"
+            StyleClasses="LowDivider" />
+        <BoxContainer
+            VerticalAlignment="Bottom"
+            HorizontalExpand="True"
+            Orientation="Vertical"
+            Margin="12 0 15 0">
             <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-                <Control MinWidth="5" />
                 <RichTextLabel
                     Name="Description"
                     Access="Public"
@@ -93,7 +91,6 @@
                     VerticalExpand="True" />
             </BoxContainer>
         </BoxContainer>
-        <Control MinHeight="4" />
         <BoxContainer Name="Buttons" Orientation="Vertical" Access="Public">
             <PanelContainer StyleClasses="LowDivider" />
             <!--  Buttons  -->

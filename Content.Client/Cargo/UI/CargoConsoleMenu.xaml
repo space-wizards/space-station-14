@@ -226,16 +226,16 @@
                             <ScrollContainer VerticalExpand="True">
                                 <BoxContainer Orientation="Vertical">
                                     <BoxContainer Orientation="Horizontal">
-                                        <Control MinWidth="10" />
                                         <BoxContainer
                                             Name="Orders"
                                             HorizontalExpand="True"
                                             Orientation="Vertical"
-                                            VerticalExpand="True">
+                                            VerticalExpand="True"
+                                            Margin="10 5"
+                                            SeparationOverride="5">
 
                                             <!--  Requests are added here by code  -->
                                         </BoxContainer>
-                                        <Control MinWidth="10" />
                                     </BoxContainer>
                                 </BoxContainer>
                             </ScrollContainer>
@@ -248,7 +248,8 @@
                     <BoxContainer
                         Orientation="Vertical"
                         SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
+                        VerticalExpand="True"
+                        SeparationOverride="3">
 
                         <!--  Title  -->
                         <controls:StripeBack>
@@ -268,16 +269,16 @@
                             <ScrollContainer VerticalExpand="True">
                                 <BoxContainer Orientation="Vertical">
                                     <BoxContainer Orientation="Horizontal">
-                                        <Control MinWidth="10" />
                                         <BoxContainer
                                             Name="OrderHistory"
                                             HorizontalExpand="True"
                                             Orientation="Vertical"
-                                            VerticalExpand="True">
+                                            VerticalExpand="True"
+                                            Margin="10 5"
+                                            SeparationOverride="6">
 
                                             <!--  Old are added here by code  -->
                                         </BoxContainer>
-                                        <Control MinWidth="10" />
                                     </BoxContainer>
                                 </BoxContainer>
                             </ScrollContainer>
