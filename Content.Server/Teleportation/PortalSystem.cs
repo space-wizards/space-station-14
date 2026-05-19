@@ -7,9 +7,9 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Teleportation;
 
-public sealed class PortalSystem : SharedPortalSystem
+public sealed partial class PortalSystem : SharedPortalSystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     // TODO Move to shared
     protected override void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,

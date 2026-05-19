@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComponent>
+public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
@@ -60,9 +60,6 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     // we have to do the spawning here so we can transfer the mind to the correct entity and can assign the objectives correctly
     private void OnAntagSelectEntity(Entity<ParadoxCloneRuleComponent> ent, ref AntagSelectEntityEvent args)
     {
-        if (args.Session?.AttachedEntity is not { } spawner)
-            return;
-
         if (ent.Comp.OriginalBody != null) // target was overridden, for example by admin antag control
         {
             if (Deleted(ent.Comp.OriginalBody.Value) || !_mind.TryGetMind(ent.Comp.OriginalBody.Value, out var originalMindId, out var _))
@@ -118,7 +115,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         _containers.Insert(ghost, holding.ParadoxCloneBox);
 
         // recover the comms the original has
-        HashSet<ProtoId<RadioChannelPrototype>> comms = new HashSet();
+        HashSet<ProtoId<RadioChannelPrototype>> comms = new HashSet<ProtoId<RadioChannelPrototype>>();
         if (_entMan.TryGetComponent<ActiveRadioComponent>(ent.Comp.OriginalBody, out var active))
         {
             foreach (var channel in active.Channels)
@@ -171,8 +168,4 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         // var action = Spawn(ent.Comp.MaterializeAction);
         // _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
     }
-}
-
-internal class HashSet : HashSet<ProtoId<RadioChannelPrototype>>
-{
 }
