@@ -1,4 +1,5 @@
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -6,37 +7,34 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Physics;
 
-[TestFixture]
 public sealed class AnchorPrototypeTest : GameTest
 {
     /// <summary>
     /// Asserts that entityprototypes marked as anchored are also static physics bodies.
     /// </summary>
     [Test]
+    [Description("Asserts that entityprototypes marked as anchored are also static physics bodies.")]
+    [RunOnSide(Side.Server)]
     public async Task TestStaticAnchorPrototypes()
     {
-        var pair = Pair;
-
-        var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
-
-        await pair.Server.WaitAssertion(() =>
+        using (Assert.EnterMultipleScope())
         {
-            foreach (var ent in protoManager.EnumeratePrototypes<EntityPrototype>())
+            var xformCompName = SEntMan.ComponentFactory.GetComponentName<TransformComponent>();
+            var physicsCompName = SEntMan.ComponentFactory.GetComponentName<PhysicsComponent>();
+
+            foreach (var ent in SProtoMan.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!ent.Components.TryGetComponent("Transform", out var xformComp) ||
-                   !ent.Components.TryGetComponent("Physics", out var physicsComp))
+                if (!ent.TryGetComponent(xformCompName, out TransformComponent xform)
+                    || !ent.TryGetComponent(physicsCompName, out PhysicsComponent physics))
                 {
                     continue;
                 }
 
-                var xform = (TransformComponent)xformComp;
-                var physics = (PhysicsComponent)physicsComp;
-
                 if (!xform.Anchored)
-                    continue;
+                    return;
 
                 Assert.That(physics.BodyType, Is.EqualTo(BodyType.Static), $"Found entity prototype {ent} marked as anchored but not static for physics.");
             }
-        });
+        }
     }
 }
