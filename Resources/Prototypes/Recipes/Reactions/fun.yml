@@ -11,7 +11,7 @@
 - type: reaction
   id: BuzzochloricBees
   reactants:
-    Saxoite: # do you like jazz (not sorry)
+    Brass: # do you like jazz (not sorry)
       amount: 1
     Fiber: # bees are fuzzy
       amount: 1
@@ -43,6 +43,8 @@
 
 - type: reaction
   id: SpaceGlue
+  requiredMixerCategories:
+  - Stir # prevents turning slimes to glue, TODO: make it react only X units per second; make bloodstream an open thermal system
   minTemp: 370
   reactants:
     SpaceLube:
@@ -233,7 +235,7 @@
   reactants:
     Haloperidol:
       amount: 3
-    Cognizine:
+    Psicodine:
       amount: 2
     CarpoToxin:
       amount: 2
@@ -247,7 +249,7 @@
   reactants:
     Haloperidol:
       amount: 3
-    Cognizine:
+    Psicodine:
       amount: 2
     Happiness:
       amount: 2

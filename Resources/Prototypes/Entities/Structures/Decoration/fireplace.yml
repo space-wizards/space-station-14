@@ -35,8 +35,9 @@
     energy: 3
     color: "#FF6F00"
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:
@@ -46,3 +47,6 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
   - type: AlwaysHot
+  - type: IgnitionSource
+    temperature: 700
+    ignited: true
