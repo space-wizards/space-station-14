@@ -26,6 +26,7 @@ namespace Content.Server.Voting
         public void StartCustomVote(
             ICommonSession? initiator,
             bool showResultsInChat,
+            float duration,
             string title,
             List<string> options,
             IEnumerable<EntityUid>? players = null)
@@ -48,7 +49,7 @@ namespace Content.Server.Voting
             var voteOptions = new VoteOptions
             {
                 Title = title,
-                Duration = TimeSpan.FromSeconds(30),
+                Duration = TimeSpan.FromSeconds(duration),
                 VoterEligibility = players != null ? VoteManager.VoterEligibility.SelectedPlayers : VoteManager.VoterEligibility.All,
                 SelectedVoters = playerSessions,
             };
@@ -174,7 +175,7 @@ namespace Content.Server.Voting
                 options.Add(args[i]);
             }
 
-            _entSysManager.GetEntitySystem<CustomVoteSystem>().StartCustomVote(shell.Player, true, args[0], options);
+            _entSysManager.GetEntitySystem<CustomVoteSystem>().StartCustomVote(shell.Player, true, 30, args[0], options);
         }
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -201,14 +202,14 @@ namespace Content.Server.Voting
         public void StartAll(IInvocationContext ctx, string title, params string[] options)
         {
             _customVote = _entSysManager.GetEntitySystem<CustomVoteSystem>();
-            _customVote.StartCustomVote(ctx.Session, true, title, options.ToList());
+            _customVote.StartCustomVote(ctx.Session, true, 30, title, options.ToList());
         }
 
         [CommandImplementation("startfor")]
-        public void StartFor(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> players, bool showResultsInChar, string title, params string[] options)
+        public void StartFor(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> players, bool showResultsInChar, float duration, string title, params string[] options)
         {
             _customVote = _entSysManager.GetEntitySystem<CustomVoteSystem>();
-            _customVote.StartCustomVote(ctx.Session, showResultsInChar, title, options.ToList(), players);
+            _customVote.StartCustomVote(ctx.Session, showResultsInChar, duration, title, options.ToList(), players);
         }
     }
 
