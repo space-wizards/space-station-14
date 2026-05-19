@@ -246,7 +246,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
     {
         var containers = new List<CargoOrderContainerData>();
 
-        for (int j = 0; j < basket.Count(); j++)
+        for (int j = 0; j < basket.Count; j++)
         {
             var item = basket[j];
             if (!ShouldOrderItem(item))
@@ -281,7 +281,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
     private void PackItemIntoCrates(
         ref CargoOrderItemData item,
         CargoCratePrototype crate,
-        List<CargoOrderContainerData> containers)
+        List<CargoOrderContainerData> containers
+    )
     {
         var remaining = GetItemEntityCount(item) * (item.Quantity - item.NumOrdered);
 
@@ -294,7 +295,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
             if (!CanFitInContainer(container, item, crate))
                 continue;
 
-            var fitting = Math.Min(remaining, container.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
+            var fitting =
+                Math.Min(remaining, container.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
             container.Products.Add(item with { Quantity = fitting });
             remaining -= fitting * GetItemEntityCount(item);
         }
@@ -308,7 +310,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
                 crate.ContainerId,
                 crateRequired: crate.Required,
                 maxItems: crate.MaxItems,
-                cost: crate.Cost);
+                cost: crate.Cost
+            );
             container.Products.Add(item with { Quantity = batch });
             containers.Add(container);
             remaining -= batch * GetItemEntityCount(item);
@@ -316,7 +319,10 @@ public abstract partial class SharedCargoSystem : EntitySystem
         var parcel = (ProtoId<CargoCratePrototype>)"WrappedParcel";
         foreach (var container in containers)
         {
-            if (ShouldWrapAsParcel(container)
+            if (
+                !container.IsSingleProduct
+                && GetContainerItemCount(container) == 1
+                && !container.CrateRequired
                 && _protoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
             {
                 container.Container = parcelProto.Entity;
@@ -330,7 +336,8 @@ public abstract partial class SharedCargoSystem : EntitySystem
     private bool CanFitInContainer(
         CargoOrderContainerData container,
         CargoOrderItemData item,
-        CargoCratePrototype crate)
+        CargoCratePrototype crate
+    )
     {
         if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
             return false;
@@ -351,12 +358,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         {
             return 1;
         }
-        return proto.SpawnList.Count();
-    }
-
-    private bool ShouldWrapAsParcel(CargoOrderContainerData container)
-    {
-        return !container.IsSingleProduct && GetContainerItemCount(container) == 1 && !container.CrateRequired;
+        return proto.SpawnList.Count;
     }
 }
 

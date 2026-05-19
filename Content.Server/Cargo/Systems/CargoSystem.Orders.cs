@@ -277,7 +277,7 @@ namespace Content.Server.Cargo.Systems
                     break;
             }
 
-            return containers.Count() == 0;
+            return containers.Count == 0;
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
