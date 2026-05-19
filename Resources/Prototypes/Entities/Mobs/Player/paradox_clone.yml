@@ -76,13 +76,14 @@
         mask:
         - SmallMobMask
         layer:
-        - SmallMobLayer
+        - None # so that it doesn't move entities
   - type: Sprite
     layers:
     - sprite: Mobs/Aliens/paradox_clone.rsi
       state: paradox
       shader: unshaded
     noRot: true
+    overrideContainerOcclusion: false # Whoever added this field to incorporeal, WHY???? I SPENT HALF AN HOUR ON SHOWCONTENTS BEFORE REALIZING THIS EXISTS"
 
 - type: entity
   parent: BaseAction

@@ -261,6 +261,8 @@
     objectiveBlacklist:
       tags:
       - ParadoxCloneObjectiveBlacklist
+    listenTime: 100
+    wanderingTime: 100
   - type: AntagObjectives
     objectives:
     - ParadoxCloneKillObjective
