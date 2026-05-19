@@ -85,7 +85,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
     cartridgeSlot:
-      priority: -1
+      priority: 1
       name: device-pda-slot-component-slot-name-cartridge
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
