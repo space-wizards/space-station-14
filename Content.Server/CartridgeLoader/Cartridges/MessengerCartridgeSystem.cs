@@ -210,12 +210,6 @@ public sealed partial class MessengerCartridgeSystem : EntitySystem
             server.Value.Component.Messages.Add(message);
             Dirty(server.Value.Uid, server.Value.Component);
 
-            if (server.Value.Component.Users.TryGetValue(userData.Value.Id, out var senderUser))
-            {
-                senderUser.UnreadCounts[sendMessage.ReceiverId] = senderUser.UnreadCounts.GetValueOrDefault(sendMessage.ReceiverId, 0) + 1;
-                Dirty(server.Value.Uid, server.Value.Component);
-            }
-
             UpdateUiState(uid, loaderUid.Value);
 
             var receiverCartridgeUid = GetCartridgeByUserId(sendMessage.ReceiverId);
@@ -226,16 +220,34 @@ public sealed partial class MessengerCartridgeSystem : EntitySystem
             if (receiverLoaderUid == null)
                 return;
 
+            var receiverComp = Comp<MessengerCartridgeComponent>(receiverCartridgeUid.Value);
+            if (receiverComp.ActiveChatPartnerId != userData.Value.Id)
+            {
+                if (server.Value.Component.Users.TryGetValue(userData.Value.Id, out var senderUser))
+                {
+                    senderUser.UnreadCounts[sendMessage.ReceiverId] = senderUser.UnreadCounts.GetValueOrDefault(sendMessage.ReceiverId, 0) + 1;
+                    Dirty(server.Value.Uid, server.Value.Component);
+                }
+            }
+
             SendNotificationToUser(receiverCartridgeUid.Value, userData.Value.Name, sendMessage.Content);
             UpdateUiState(receiverCartridgeUid.Value, receiverLoaderUid.Value);
         }
 
         if (args is MessengerRequestMessagesEvent requestMessages)
         {
-            if (server.Value.Component.Users.TryGetValue(requestMessages.UserId, out var chatUser))
+            if (requestMessages.UserId == 0)
             {
-                chatUser.UnreadCounts[userData.Value.Id] = 0;
-                Dirty(server.Value.Uid, server.Value.Component);
+                component.ActiveChatPartnerId = null;
+            }
+            else
+            {
+                component.ActiveChatPartnerId = requestMessages.UserId;
+                if (server.Value.Component.Users.TryGetValue(requestMessages.UserId, out var chatUser))
+                {
+                    chatUser.UnreadCounts[userData.Value.Id] = 0;
+                    Dirty(server.Value.Uid, server.Value.Component);
+                }
             }
             UpdateUiState(uid, loaderUid.Value);
         }

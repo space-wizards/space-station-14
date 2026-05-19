@@ -99,6 +99,7 @@ public sealed partial class MessengerCartridgeUiFragment : BoxContainer
         MessageInputContainer.Visible = false;
         UserListContainer.Visible = true;
         _currentChatPartnerId = 0;
+        OnRequestMessages?.Invoke(0);
     }
 
     private void OnSendPressed(BaseButton.ButtonEventArgs args)
