@@ -148,6 +148,6 @@
   frequency: 2005
 
 - type: deviceFrequency
-  id: Messager
-  name: device-frequency-prototype-name-messager
+  id: Messenger
+  name: device-frequency-prototype-name-Messenger
   frequency: 2555

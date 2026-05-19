@@ -1,20 +1,18 @@
-using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radio.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class MessagerServerComponent : Component
+public sealed partial class MessengerServerComponent : Component
 {
-    public Dictionary<int, MessagerUser> Users = new();
-    public bool InitialBroadcastDone = false;
+    public Dictionary<int, MessengerUser> Users = new();
 
-    public List<MessagerMessage> Messages = new();
+    public List<MessengerMessage> Messages = new();
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MessagerUser
+public sealed partial class MessengerUser
 {
     public int Id;
     public string Name;
@@ -22,7 +20,7 @@ public sealed partial class MessagerUser
     public string JobTitle;
     public Dictionary<int, int> UnreadCounts = new();
 
-    public MessagerUser(int id, string name, string jobIconId, string jobTitle)
+    public MessengerUser(int id, string name, string jobIconId, string jobTitle)
     {
         Id = id;
         Name = name;
@@ -32,7 +30,7 @@ public sealed partial class MessagerUser
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MessagerMessage
+public sealed partial class MessengerMessage
 {
     public int Id;
     public int SenderId;
@@ -40,7 +38,7 @@ public sealed partial class MessagerMessage
     public string Content;
     public TimeSpan Timestamp;
 
-    public MessagerMessage(int id, int senderId, int receiverId, string content, TimeSpan timestamp)
+    public MessengerMessage(int id, int senderId, int receiverId, string content, TimeSpan timestamp)
     {
         Id = id;
         SenderId = senderId;

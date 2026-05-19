@@ -1,13 +1,13 @@
 device-pda-slot-component-slot-name-cartridge = Cartridge
 
 default-program-name = Program
-messager-cartridge-program-name = NanoChat
-messager-status-connecting = Connecting...
-messager-status-connection-lost = Connection Lost
-messager-send = Send
-messager-select-user = Select a user
-messager-back = Back
-messager-notification-message = {$sender} sent a message
+messenger-cartridge-program-name = NanoChat
+messenger-status-connecting = Connecting...
+messenger-status-connection-lost = Connection Lost
+messenger-send = Send
+messenger-select-user = Select a user
+messenger-back = Back
+messenger-notification-message = {$sender} sent a message
 notekeeper-program-name = Notekeeper
 nano-task-program-name = NanoTask
 news-read-program-name = Station news

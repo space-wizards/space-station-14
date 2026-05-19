@@ -284,9 +284,9 @@
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  id: MessagerServer
-  name: Messager server
-  description: Server for Messager
+  id: MessengerServer
+  name: Messenger server
+  description: Server for Messenger
   placement:
     mode: SnapgridCenter
   components:
@@ -378,15 +378,15 @@
         acts: ["Destruction"]
   - type: WiresPanel
   - type: Machine
-    board: MessagerServerCircuitboard
+    board: MessengerServerCircuitboard
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
-  - type: MessagerServer
+  - type: MessengerServer
   - type: SingletonDeviceNetServer
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: Messager
-    transmitFrequencyId: Messager
+    receiveFrequencyId: Messenger
+    transmitFrequencyId: Messenger
     receiveAll: true
     autoConnect: true

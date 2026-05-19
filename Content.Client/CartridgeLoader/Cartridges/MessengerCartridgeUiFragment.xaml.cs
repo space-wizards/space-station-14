@@ -8,7 +8,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -16,14 +15,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 [GenerateTypedNameReferences]
-public sealed partial class MessagerCartridgeUiFragment : BoxContainer
+public sealed partial class MessengerCartridgeUiFragment : BoxContainer
 {
     private int _currentChatPartnerId;
-    private Dictionary<int, MessagerUserEntry> _users = new();
+    private Dictionary<int, MessengerUserEntry> _users = new();
     private SpriteSystem _spriteSystem = default!;
     private IPrototypeManager _prototypeManager = default!;
 
-    public MessagerCartridgeUiFragment()
+    public MessengerCartridgeUiFragment()
     {
         RobustXamlLoader.Load(this);
         Orientation = LayoutOrientation.Vertical;
@@ -39,13 +38,12 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
         MessageInput.OnTextEntered += OnMessageInputSubmit;
     }
 
-    public void UpdateState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users, List<MessagerMessageEntry>? messages = null)
+    public void UpdateState(MessengerStatus status, Dictionary<int, MessengerUserEntry> users, List<MessengerMessageEntry>? messages = null)
     {
-        _users = users ?? new Dictionary<int, MessagerUserEntry>();
+        _users = users ?? new Dictionary<int, MessengerUserEntry>();
 
-        ConnectingContainer.Visible = status == MessagerStatus.Connecting;
-        ConnectedContainer.Visible = status == MessagerStatus.Connected;
-        ConnectionLostContainer.Visible = status == MessagerStatus.ConnectionLost;
+        ConnectedContainer.Visible = status == MessengerStatus.Connected;
+        ConnectionLostContainer.Visible = status == MessengerStatus.ConnectionLost;
 
         // Update user list
         UserListContainer.RemoveAllChildren();
@@ -123,7 +121,7 @@ public sealed partial class MessagerCartridgeUiFragment : BoxContainer
         MessageInput.Clear();
     }
 
-    private void UpdateMessages(List<MessagerMessageEntry> messages)
+    private void UpdateMessages(List<MessengerMessageEntry> messages)
     {
         MessageContainer.RemoveAllChildren();
 

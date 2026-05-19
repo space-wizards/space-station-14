@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -1369,13 +1369,13 @@
           defaultPrototype: Beaker
 
 - type: entity
-  id: MessagerServerCircuitboard
+  id: MessengerServerCircuitboard
   parent: BaseMachineCircuitboard
-  name: Messager server machine board
-  description: A machine printed circuit board for a Messager server.
+  name: Messenger server machine board
+  description: A machine printed circuit board for a Messenger server.
   components:
     - type: MachineBoard
-      prototype: MessagerServer
+      prototype: MessengerServer
       stackRequirements:
         Steel: 1
         Cable: 2

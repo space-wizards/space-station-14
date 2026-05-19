@@ -6,12 +6,11 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
 using Content.Server.GameTicking;
-using Robust.Shared.Containers;
 using Robust.Shared.Localization;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
-public sealed partial class MessagerCartridgeSystem : EntitySystem
+public sealed partial class MessengerCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private GameTicker _gameTicker = default!;
@@ -19,8 +18,8 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MessagerCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
-        SubscribeLocalEvent<MessagerCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
+        SubscribeLocalEvent<MessengerCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<MessengerCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
     }
 
     /// <summary>
@@ -31,7 +30,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         // Excluding users for later deletion
         var activeUserIdsByServer = new Dictionary<EntityUid, HashSet<int>>();
 
-        var cartridgeQuery = EntityQueryEnumerator<MessagerCartridgeComponent>();
+        var cartridgeQuery = EntityQueryEnumerator<MessengerCartridgeComponent>();
         while (cartridgeQuery.MoveNext(out var cartridgeUid, out _))
         {
             var userData = GetUserData(cartridgeUid);
@@ -51,7 +50,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         // Delete users
         foreach (var (serverUid, activeIds) in activeUserIdsByServer)
         {
-            if (!TryComp(serverUid, out MessagerServerComponent? serverComponent))
+            if (!TryComp(serverUid, out MessengerServerComponent? serverComponent))
                 continue;
 
             var usersToRemove = serverComponent.Users.Keys
@@ -73,12 +72,12 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     /// <summary>
     /// Find the Server
     /// </summary>
-    private (EntityUid Uid, MessagerServerComponent Component)? GetServerForCartridge(EntityUid cartridgeUid)
+    private (EntityUid Uid, MessengerServerComponent Component)? GetServerForCartridge(EntityUid cartridgeUid)
     {
         if (!TryComp(cartridgeUid, out TransformComponent? transform))
             return null;
 
-        var serverQuery = EntityQueryEnumerator<MessagerServerComponent, TransformComponent, ApcPowerReceiverComponent>();
+        var serverQuery = EntityQueryEnumerator<MessengerServerComponent, TransformComponent, ApcPowerReceiverComponent>();
         while (serverQuery.MoveNext(out var serverUid, out var serverComponent, out var serverTransform, out var power))
         {
             if (serverTransform.MapID != transform.MapID)
@@ -112,18 +111,18 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (server.Value.Component.Users.TryGetValue(userId, out var existing) && existing.Name == userName && existing.JobIconId == jobIconId && existing.JobTitle == jobTitle)
             return;
 
-        server.Value.Component.Users[userId] = new MessagerUser(userId, userName, jobIconId, jobTitle);
+        server.Value.Component.Users[userId] = new MessengerUser(userId, userName, jobIconId, jobTitle);
         Dirty(server.Value.Uid, server.Value.Component);
     }
 
     /// <summary>
     /// Getting user data from Server UserList
     /// </summary>
-    private (Dictionary<int, MessagerUserEntry> Users, MessagerStatus Status) GetUserList(EntityUid cartridgeUid)
+    private (Dictionary<int, MessengerUserEntry> Users, MessengerStatus Status) GetUserList(EntityUid cartridgeUid)
     {
         var server = GetServerForCartridge(cartridgeUid);
         if (server == null)
-            return (new Dictionary<int, MessagerUserEntry>(), MessagerStatus.ConnectionLost);
+            return (new Dictionary<int, MessengerUserEntry>(), MessengerStatus.ConnectionLost);
 
         var userData = GetUserData(cartridgeUid);
         var currentUserId = userData?.Id;
@@ -137,38 +136,37 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
                 {
                     kv.Value.UnreadCounts.TryGetValue(currentUserId.Value, out unreadCount);
                 }
-                return new MessagerUserEntry(kv.Value.Id, kv.Value.Name, kv.Value.JobIconId, kv.Value.JobTitle, unreadCount);
+                return new MessengerUserEntry(kv.Value.Id, kv.Value.Name, kv.Value.JobIconId, kv.Value.JobTitle, unreadCount);
             })
             .OrderByDescending(u => u.UnreadCount)
             .ToList();
 
-        return (userList.ToDictionary(u => u.Id), MessagerStatus.Connected);
+        return (userList.ToDictionary(u => u.Id), MessengerStatus.Connected);
     }
 
     /// <summary>
     /// Takes messages from server and sends them to client
     /// </summary>
-    private List<MessagerMessageEntry> GetMessages(EntityUid cartridgeUid)
+    private List<MessengerMessageEntry> GetMessages(EntityUid cartridgeUid)
     {
         var server = GetServerForCartridge(cartridgeUid);
         if (server == null)
-            return new List<MessagerMessageEntry>();
+            return new List<MessengerMessageEntry>();
 
         var userData = GetUserData(cartridgeUid);
         var currentUserId = userData?.Id ?? 0;
 
-        var messages = new List<MessagerMessageEntry>();
+        var messages = new List<MessengerMessageEntry>();
         foreach (var msg in server.Value.Component.Messages)
         {
-            var isIncoming = msg.ReceiverId == currentUserId || msg.SenderId == currentUserId;
-            if (!isIncoming)
+            if (msg.SenderId != currentUserId && msg.ReceiverId != currentUserId)
                 continue;
 
             var senderName = server.Value.Component.Users.TryGetValue(msg.SenderId, out var sender)
                 ? sender.Name
-                : "Unknown";
+                : Loc.GetString("generic-unknown");
 
-            messages.Add(new MessagerMessageEntry(msg.Id, msg.Content, msg.Timestamp, msg.SenderId, msg.ReceiverId)
+            messages.Add(new MessengerMessageEntry(msg.Id, msg.Content, msg.Timestamp, msg.SenderId, msg.ReceiverId)
             {
                 SenderName = senderName,
                 IsIncoming = msg.SenderId != currentUserId
@@ -181,7 +179,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     /// <summary>
     /// Processing messages from the client
     /// </summary>
-    private void OnUiMessage(EntityUid uid, MessagerCartridgeComponent component, CartridgeMessageEvent args)
+    private void OnUiMessage(EntityUid uid, MessengerCartridgeComponent component, CartridgeMessageEvent args)
     {
         var userData = GetUserData(uid);
         if (userData == null)
@@ -195,13 +193,13 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (loaderUid == null)
             return;
 
-        if (args is MessagerSendMessageEvent sendMessage)
+        if (args is MessengerSendMessageEvent sendMessage)
         {
             var messageId = server.Value.Component.Messages.Count > 0
                 ? server.Value.Component.Messages.Max(m => m.Id) + 1
                 : 1;
 
-            var message = new MessagerMessage(
+            var message = new MessengerMessage(
                 messageId,
                 userData.Value.Id,
                 sendMessage.ReceiverId,
@@ -211,7 +209,13 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
 
             server.Value.Component.Messages.Add(message);
             Dirty(server.Value.Uid, server.Value.Component);
-            // Update sender UI
+
+            if (server.Value.Component.Users.TryGetValue(userData.Value.Id, out var senderUser))
+            {
+                senderUser.UnreadCounts[sendMessage.ReceiverId] = senderUser.UnreadCounts.GetValueOrDefault(sendMessage.ReceiverId, 0) + 1;
+                Dirty(server.Value.Uid, server.Value.Component);
+            }
+
             UpdateUiState(uid, loaderUid.Value);
 
             var receiverCartridgeUid = GetCartridgeByUserId(sendMessage.ReceiverId);
@@ -223,27 +227,15 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
                 return;
 
             SendNotificationToUser(receiverCartridgeUid.Value, userData.Value.Name, sendMessage.Content);
-
-            if (server.Value.Component.Users.TryGetValue(userData.Value.Id, out var senderUser))
-            {
-                senderUser.UnreadCounts[sendMessage.ReceiverId] = senderUser.UnreadCounts.GetValueOrDefault(sendMessage.ReceiverId, 0) + 1;
-                Dirty(server.Value.Uid, server.Value.Component);
-            }
-            // Update receiver UI
             UpdateUiState(receiverCartridgeUid.Value, receiverLoaderUid.Value);
         }
 
-        if (args is MessagerRequestMessagesEvent requestMessages)
+        if (args is MessengerRequestMessagesEvent requestMessages)
         {
-            var currentUserData = GetUserData(uid);
-            if (currentUserData != null)
+            if (server.Value.Component.Users.TryGetValue(requestMessages.UserId, out var chatUser))
             {
-                var currentServer = GetServerForCartridge(uid);
-                if (currentServer != null && currentServer.Value.Component.Users.TryGetValue(requestMessages.UserId, out var chatUser))
-                {
-                    chatUser.UnreadCounts[currentUserData.Value.Id] = 0;
-                    Dirty(currentServer.Value.Uid, currentServer.Value.Component);
-                }
+                chatUser.UnreadCounts[userData.Value.Id] = 0;
+                Dirty(server.Value.Uid, server.Value.Component);
             }
             UpdateUiState(uid, loaderUid.Value);
         }
@@ -255,7 +247,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         if (loaderUid == null)
             return;
 
-        var title = Loc.GetString("messager-notification-message", ("sender", senderName));
+        var title = Loc.GetString("messenger-notification-message", ("sender", senderName));
         _cartridgeLoaderSystem.SendNotification(loaderUid.Value, title, senderName + ": " + messagePreview);
     }
 
@@ -273,7 +265,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
     /// </summary>
     private EntityUid? GetCartridgeByUserId(int userId)
     {
-        var cartridgeQuery = EntityQueryEnumerator<MessagerCartridgeComponent>();
+        var cartridgeQuery = EntityQueryEnumerator<MessengerCartridgeComponent>();
         while (cartridgeQuery.MoveNext(out var cartridgeUid, out _))
         {
             var userData = GetUserData(cartridgeUid);
@@ -305,7 +297,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         return (id, fullName, idCard.JobIcon, jobTitle);
     }
 
-    private void OnUiReady(EntityUid uid, MessagerCartridgeComponent component, CartridgeUiReadyEvent args)
+    private void OnUiReady(EntityUid uid, MessengerCartridgeComponent component, CartridgeUiReadyEvent args)
     {
         UpdateUiState(uid, args.Loader);
     }
@@ -315,7 +307,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         // checking for an IDcard
         if (!TryComp<PdaComponent>(loaderUid, out var pda) || pda.ContainedId == null)
         {
-            var lostState = new MessagerCartridgeUiState(MessagerStatus.ConnectionLost, new Dictionary<int, MessagerUserEntry>(), new List<MessagerMessageEntry>());
+            var lostState = new MessengerCartridgeUiState(MessengerStatus.ConnectionLost, new Dictionary<int, MessengerUserEntry>(), new List<MessengerMessageEntry>());
             _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, lostState);
             return;
         }
@@ -323,7 +315,7 @@ public sealed partial class MessagerCartridgeSystem : EntitySystem
         SyncUsers();
         var (users, status) = GetUserList(cartridgeUid);
         var messages = GetMessages(cartridgeUid);
-        var state = new MessagerCartridgeUiState(status, users, messages);
+        var state = new MessengerCartridgeUiState(status, users, messages);
         _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 }

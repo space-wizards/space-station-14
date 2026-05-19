@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BasePDACartridge
   abstract: true
@@ -176,22 +176,22 @@
 
 - type: entity
   parent: BasePDACartridge
-  id: MessagerCartridge
-  name: Messager cartridge
-  description: A messager cartridge template.
+  id: MessengerCartridge
+  name: Messenger cartridge
+  description: A Messenger cartridge.
   components:
   - type: Sprite
     state: cart-y
   - type: UIFragment
-    ui: !type:MessagerCartridgeUi
+    ui: !type:MessengerCartridgeUi
   - type: Cartridge
-    programName: messager-cartridge-program-name
+    programName: messenger-cartridge-program-name
     icon:
       sprite: Interface/Misc/program_icons.rsi
       state: nano_chat
-  - type: MessagerCartridge
+  - type: MessengerCartridge
   - type: DeviceNetwork
     deviceNetId: Wireless
-    transmitFrequencyId: Messager
-    receiveFrequencyId: Messager
+    transmitFrequencyId: Messenger
+    receiveFrequencyId: Messenger
     autoConnect: true

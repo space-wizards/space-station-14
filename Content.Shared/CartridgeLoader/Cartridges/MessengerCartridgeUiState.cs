@@ -4,19 +4,17 @@ using Content.Shared.CartridgeLoader;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
+public sealed class MessengerCartridgeUiState : BoundUserInterfaceState
 {
-    public MessagerStatus Status;
-    public Dictionary<int, MessagerUserEntry> Users;
-    public List<MessagerMessageEntry> Messages;
-    public bool HasNewMessage;
+    public MessengerStatus Status;
+    public Dictionary<int, MessengerUserEntry> Users;
+    public List<MessengerMessageEntry> Messages;
 
-    public MessagerCartridgeUiState(MessagerStatus status, Dictionary<int, MessagerUserEntry> users, List<MessagerMessageEntry>? messages = null, bool hasNewMessage = false)
+    public MessengerCartridgeUiState(MessengerStatus status, Dictionary<int, MessengerUserEntry> users, List<MessengerMessageEntry>? messages = null)
     {
         Status = status;
         Users = users;
-        Messages = messages ?? new List<MessagerMessageEntry>();
-        HasNewMessage = hasNewMessage;
+        Messages = messages ?? new List<MessengerMessageEntry>();
     }
 }
 
@@ -24,7 +22,7 @@ public sealed class MessagerCartridgeUiState : BoundUserInterfaceState
 /// User list client
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed partial class MessagerUserEntry
+public sealed partial class MessengerUserEntry
 {
     public int Id;
     public string Name;
@@ -32,7 +30,7 @@ public sealed partial class MessagerUserEntry
     public string JobTitle;
     public int UnreadCount;
 
-    public MessagerUserEntry(int id, string name, string jobIconId, string jobTitle, int unreadCount = 0)
+    public MessengerUserEntry(int id, string name, string jobIconId, string jobTitle, int unreadCount = 0)
     {
         Id = id;
         Name = name;
@@ -46,7 +44,7 @@ public sealed partial class MessagerUserEntry
 /// Message for UI display
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed partial class MessagerMessageEntry
+public sealed partial class MessengerMessageEntry
 {
     public int Id;
     public string SenderName;
@@ -56,7 +54,7 @@ public sealed partial class MessagerMessageEntry
     public int SenderId;
     public int ReceiverId;
 
-    public MessagerMessageEntry(int id, string content, TimeSpan timestamp, int senderId, int receiverId)
+    public MessengerMessageEntry(int id, string content, TimeSpan timestamp, int senderId, int receiverId)
     {
         Id = id;
         SenderName = "";
@@ -68,15 +66,15 @@ public sealed partial class MessagerMessageEntry
 }
 
 /// <summary>
-///
+/// Send message event
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MessagerSendMessageEvent : CartridgeMessageEvent
+public sealed class MessengerSendMessageEvent : CartridgeMessageEvent
 {
     public int ReceiverId;
     public string Content;
 
-    public MessagerSendMessageEvent(int receiverId, string content)
+    public MessengerSendMessageEvent(int receiverId, string content)
     {
         ReceiverId = receiverId;
         Content = content;
@@ -88,11 +86,11 @@ public sealed class MessagerSendMessageEvent : CartridgeMessageEvent
 /// UI update request
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MessagerRequestMessagesEvent : CartridgeMessageEvent
+public sealed class MessengerRequestMessagesEvent : CartridgeMessageEvent
 {
     public int UserId;
 
-    public MessagerRequestMessagesEvent(int userId)
+    public MessengerRequestMessagesEvent(int userId)
     {
         UserId = userId;
     }
@@ -102,9 +100,8 @@ public sealed class MessagerRequestMessagesEvent : CartridgeMessageEvent
 /// Server connection status
 /// </summary>
 [Serializable, NetSerializable]
-public enum MessagerStatus : byte
+public enum MessengerStatus : byte
 {
-    Connecting,
     Connected,
     ConnectionLost
 };

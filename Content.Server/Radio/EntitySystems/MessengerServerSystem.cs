@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.EntitySystems;
 
-public sealed partial class MessagerServerSystem : EntitySystem
+public sealed partial class MessengerServerSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
