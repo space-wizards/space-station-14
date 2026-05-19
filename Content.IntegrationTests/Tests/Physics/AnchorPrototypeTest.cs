@@ -31,7 +31,7 @@ public sealed class AnchorPrototypeTest : GameTest
                 }
 
                 if (!xform.Anchored)
-                    return;
+                    continue;
 
                 Assert.That(physics.BodyType, Is.EqualTo(BodyType.Static), $"Found entity prototype {ent} marked as anchored but not static for physics.");
             }
