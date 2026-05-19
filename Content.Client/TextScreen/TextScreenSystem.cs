@@ -258,7 +258,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         if (component.FrameState != null)
         {
             var key = TextScreenVisualLayers.Frame;
-            SpriteSystem.RemoveLayer((uid, sprite), key);
+            SpriteSystem.RemoveLayer((uid, sprite), key, logMissing: false); // State may not exist, remove it if it does - needs to be on top of the text.
             SpriteSystem.LayerMapReserve((uid, sprite), key);
             SpriteSystem.LayerSetData((uid, sprite), key, component.FrameState);
         }
