@@ -666,13 +666,6 @@ entities:
     - type: Transform
       pos: 3.5,-5.5
       parent: 1
-- proto: CratePartsT3
-  entities:
-  - uid: 187
-    components:
-    - type: Transform
-      pos: -2.5,2.5
-      parent: 1
 - proto: CratePlasma
   entities:
   - uid: 191
