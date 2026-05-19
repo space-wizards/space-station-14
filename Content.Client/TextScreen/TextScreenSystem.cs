@@ -22,7 +22,7 @@ namespace Content.Client.TextScreen;
 
 
 /// <summary>
-/// The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
+///     The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
 /// </summary>
 public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
@@ -329,7 +329,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Draws a LayerStates dict by setting the sprite states individually.
+    ///     Draws a LayerStates dict by setting the sprite states individually.
     /// </summary>
     private void DrawLayers(EntityUid uid, Dictionary<string, string?> layerStates, SpriteComponent? sprite = null)
     {
@@ -341,7 +341,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Draws a LayerStates dict by setting the sprite states individually.
+    ///     Draws a LayerStates dict by setting the sprite states individually.
     /// </summary>
     private void DrawScrolledLayers(EntityUid uid, TextScreenVisualsComponent screen, SpriteComponent? sprite = null)
     {
@@ -393,7 +393,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    /// Resets the scrolling state for a particular text screen.
+    ///     Resets the scrolling state for a particular text screen.
     /// </summary>
     private void ResetScrollingState(Entity<TextScreenVisualsComponent> ent)
     {
@@ -412,6 +412,9 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         }
     }
 
+    /// <summary>
+    /// Update handler - keep timers and scrolling text up to date.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

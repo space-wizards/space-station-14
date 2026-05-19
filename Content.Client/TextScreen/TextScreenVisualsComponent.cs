@@ -54,7 +54,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int RowLength = 5;
 
     /// <summary>
-    /// Text the screen should show when it finishes a timer.
+    ///     Text the screen should show when it finishes a timer.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string?[] Text = new string?[2];
