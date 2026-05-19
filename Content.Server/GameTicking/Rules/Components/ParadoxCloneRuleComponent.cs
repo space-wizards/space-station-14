@@ -29,12 +29,6 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     public EntProtoId GhostProto = "MobParadoxCloneGhost";
 
     /// <summary>
-    ///     The amount of time the paradox clone can remain in it's <c>GhostProto</c> form before forcefully spawning
-    /// </summary>
-    [DataField]
-    public float GhostGracePeriod = 200f;
-
-    /// <summary>
     ///     The action that is given to the paradox clone ghost so that it can materialize into its "real" body
     /// </summary>
     [DataField]

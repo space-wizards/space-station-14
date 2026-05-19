@@ -107,7 +107,8 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         _entMan.AddComponent(ghost, new ParadoxCloneComponent
         {
             ClonedBody = (EntityUid)clone,
-            ListenTime = ent.Comp.GhostGracePeriod,
+            ListenTime = ent.Comp.ListenTime,
+            WanderTime = ent.Comp.WanderingTime
         });
 
         // stuff the ghost into the original entity

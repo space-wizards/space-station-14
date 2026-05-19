@@ -95,6 +95,9 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
         // Remove the paradox clone radio
         _entMan.RemoveComponent<ActiveRadioComponent>(ent.Owner);
         ent.Comp.IsWandering = true;
+
+        // Give it the spawn action
+        _actions.AddAction(ent.Owner, ActionSpawn);
     }
 
     private void OnMaterialize(Entity<ParadoxCloneComponent> ent, ref ActionParadoxCloneMaterializeEvent args)
@@ -107,6 +110,13 @@ public sealed partial class ParadoxCloneSystem : EntitySystem
     /// </summary>
     private void Materialize(Entity<ParadoxCloneComponent> ent)
     {
+         // clear ALL actions (one of these should be the spawn action)
+        var actions = _actions.GetActions(ent.Owner);
+        foreach (var action in actions)
+        {
+            _actions.RemoveAction((action.Owner, action.Comp));
+        }
+
         // get the mind to transfer
         if (!_mindSystem.TryGetMind(ent.Owner, out var mind, out var mindComp))
             return;
