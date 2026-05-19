@@ -13,7 +13,7 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="WindowHeadingBackground" />
 
-            <BoxContainer Margin="5 0 15 3">
+            <BoxContainer Margin="5,0,15,3">
                 <Label
                     Name="Title"
                     MaxHeight="20"
@@ -21,10 +21,10 @@
                     StyleClasses="LabelKeyText" />
                 <Control HorizontalExpand="True" />
                 <RichTextLabel
-                        Name="Requester"
-                        Access="Public"
-                        MaxHeight="20"
-                        HorizontalAlignment="Right"/>
+                    Name="Requester"
+                    MaxHeight="20"
+                    HorizontalAlignment="Right"
+                    Access="Public" />
             </BoxContainer>
             <PanelContainer
                 Name="Stride"
@@ -34,18 +34,18 @@
         <!--  Products  -->
         <BoxContainer
             Name="Products"
+            Margin="0,2,0,0"
             Access="Public"
             HorizontalExpand="True"
             Orientation="Vertical"
-            VerticalExpand="True"
-            Margin="0 2 0 0">
+            VerticalExpand="True">
             <!--  Products are added here by code  -->
         </BoxContainer>
         <BoxContainer
+            Margin="12,2,15,0"
             VerticalAlignment="Bottom"
             HorizontalExpand="True"
-            Orientation="Vertical"
-            Margin="12 2 15 0">
+            Orientation="Vertical">
             <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                 <Label
                     HorizontalAlignment="Left"
@@ -78,10 +78,10 @@
             Access="Public"
             StyleClasses="LowDivider" />
         <BoxContainer
+            Margin="12,0,15,0"
             VerticalAlignment="Bottom"
             HorizontalExpand="True"
-            Orientation="Vertical"
-            Margin="12 0 15 0">
+            Orientation="Vertical">
             <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                 <RichTextLabel
                     Name="Description"
@@ -91,7 +91,10 @@
                     VerticalExpand="True" />
             </BoxContainer>
         </BoxContainer>
-        <BoxContainer Name="Buttons" Orientation="Vertical" Access="Public">
+        <BoxContainer
+            Name="Buttons"
+            Access="Public"
+            Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <!--  Buttons  -->
             <BoxContainer Margin="3">

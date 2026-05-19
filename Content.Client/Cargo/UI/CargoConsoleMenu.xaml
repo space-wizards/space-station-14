@@ -68,9 +68,7 @@
                             HorizontalExpand="True"
                             PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}" />
 
-                        <OptionButton
-                            Name="Categories"
-                            Prefix="{Loc 'cargo-console-menu-categories-label'}" />
+                        <OptionButton Name="Categories" Prefix="{Loc 'cargo-console-menu-categories-label'}" />
                     </BoxContainer>
 
                     <!--  Product list  -->
@@ -228,11 +226,11 @@
                                     <BoxContainer Orientation="Horizontal">
                                         <BoxContainer
                                             Name="Orders"
+                                            Margin="10,5"
                                             HorizontalExpand="True"
                                             Orientation="Vertical"
-                                            VerticalExpand="True"
-                                            Margin="10 5"
-                                            SeparationOverride="5">
+                                            SeparationOverride="5"
+                                            VerticalExpand="True">
 
                                             <!--  Requests are added here by code  -->
                                         </BoxContainer>
@@ -247,9 +245,9 @@
                     <!--  History Part  -->
                     <BoxContainer
                         Orientation="Vertical"
+                        SeparationOverride="3"
                         SizeFlagsStretchRatio="2"
-                        VerticalExpand="True"
-                        SeparationOverride="3">
+                        VerticalExpand="True">
 
                         <!--  Title  -->
                         <controls:StripeBack>
@@ -271,11 +269,11 @@
                                     <BoxContainer Orientation="Horizontal">
                                         <BoxContainer
                                             Name="OrderHistory"
+                                            Margin="10,5"
                                             HorizontalExpand="True"
                                             Orientation="Vertical"
-                                            VerticalExpand="True"
-                                            Margin="10 5"
-                                            SeparationOverride="6">
+                                            SeparationOverride="6"
+                                            VerticalExpand="True">
 
                                             <!--  Old are added here by code  -->
                                         </BoxContainer>
