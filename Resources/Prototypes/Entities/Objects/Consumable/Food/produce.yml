@@ -2809,3 +2809,56 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  name: sonion
+  description: Shouldn't it be spelt with a u...?
+  parent: [ SolutionCryo, ImpactGrenadeBase, ProduceBase, BaseMajorContraband ]
+  id: FoodSonion
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sonion.rsi
+    state: produce
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Hydroponics/sonion.rsi
+    heldPrefix: icon
+  - type: Produce
+    seedId: sonion
+  - type: Tag
+    tags:
+    - Vegetable
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - onion
+    - strange
+    - spicy
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 15
+      - ReagentId: Kelotane
+        Quantity: 10
+  - type: FlashOnTrigger
+    keysIn:
+    - trigger
+    range: 5
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - trigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
+  - type: DeleteOnTrigger
+    keysIn:
+    - trigger
+  - type: SpawnOnTrigger
+    keysIn:
+    - trigger
+    proto: GrenadeFlashEffect
+    predicted: true

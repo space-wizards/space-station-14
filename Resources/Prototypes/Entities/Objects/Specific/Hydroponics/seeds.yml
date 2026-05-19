@@ -757,3 +757,13 @@
     seedId: bloonion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of sonion seeds
+  id: Sonionseeds
+  components:
+  - type: Seed
+    seedId: sonion
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sonion.rsi
