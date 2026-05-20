@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Gas analyzers now correctly report the total volume and the number of
-      moles of gas contained in gas pipe manifolds.
-    type: Fix
-  - message: The total volume of gas that gas pipe manifolds can contain has been
-      reduced from 1200L to 300L.
-    type: Tweak
-  id: 9187
-  time: '2025-11-06T06:31:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41325
 - author: Princess-Cheeseballs
   changes:
   - message: Phalanx now removes the death gene again.
@@ -4077,3 +4066,18 @@
   id: 9698
   time: '2026-05-19T11:59:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40929
+- author: SlamBamActionman
+  changes:
+  - message: Exo now has a Psychologist's office and job slot.
+    type: Add
+  - message: Exo now features 5 Security Officer job slots (was 4) and 3 Cadet job
+      slots (was 4).
+    type: Tweak
+  - message: Exo Botany has an additional scrubber to prevent gas leakage.
+    type: Tweak
+  - message: Exo Security's mini-armory is now Sec access, and there has been a temporary
+      holding cell added.
+    type: Tweak
+  id: 9699
+  time: '2026-05-20T07:22:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43533
