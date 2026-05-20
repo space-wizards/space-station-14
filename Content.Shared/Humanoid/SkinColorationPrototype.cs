@@ -369,16 +369,16 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         }
 
         // If a range is found, check if the saturation is within the provided ranges.
-        if (hsv.Y < range.Saturation.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Item2 + SkinColorationUtils.Epsilon)
+        if (hsv.Y < range.Saturation.Min - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Max + SkinColorationUtils.Epsilon)
         {
             reason = $"Saturation {hsv.Y} is outside of range of min {range.Saturation.Item1} max {range.Saturation.Item2}";
             return false;
         }
 
         // Check if the value is within provided ranges.
-        if (hsv.Z < range.Value.Item1 - SkinColorationUtils.Epsilon || hsv.Y > range.Value.Item2 + SkinColorationUtils.Epsilon)
+        if (hsv.Z < range.Value.Min - SkinColorationUtils.Epsilon || hsv.Z > range.Value.Max + SkinColorationUtils.Epsilon)
         {
-            reason = $"Value {hsv.Y} is outside of range of min {range.Value.Item1} max {range.Value.Item2}";
+            reason = $"Value {hsv.Z} is outside of range of min {range.Value.Min} max {range.Value.Max}";
             return false;
         }
 
