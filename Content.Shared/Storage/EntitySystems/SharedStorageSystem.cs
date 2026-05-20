@@ -183,7 +183,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
             return;
         }
 
-        UpdateOccupied((container.Owner, storage));
+        // We should ignore resized item so that it doesn't take up space
+        UpdateOccupied((container.Owner, storage), itemEnt);
 
         if (!ItemFitsInGridLocation((itemEnt.Owner, itemEnt.Comp), (container.Owner, storage), loc))
         {
@@ -1535,6 +1536,16 @@ public abstract partial class SharedStorageSystem : EntitySystem
         return ItemFitsInGridLocation(itemEnt, storageEnt, location.Position, location.Rotation);
     }
 
+    /// <summary>
+    /// Checks if an item fits into a specific spot on a storage grid without ignored check.
+    /// </summary>
+    private bool ItemFitsInGridLocation(
+        Dictionary<Vector2i, ulong> occupied,
+        IReadOnlyList<Box2i> itemShape)
+    {
+        return ItemFitsInGridLocation(occupied, itemShape, new Dictionary<Vector2i, ulong>());
+    }
+
     private bool ItemFitsInGridLocation(
         Dictionary<Vector2i, ulong> occupied,
         IReadOnlyList<Box2i> itemShape,
@@ -1605,15 +1616,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
             return false;
 
         var itemShape = ItemSystem.GetAdjustedItemShape(itemEnt, rotation, position);
-        // Ignore the item's existing location for fitting purposes.
-        _ignored.Clear();
 
-        if (storageEnt.Comp.StoredItems.TryGetValue(itemEnt.Owner, out var existing))
-        {
-            AddOccupied(itemEnt, existing, _ignored);
-        }
-
-        return ItemFitsInGridLocation(storageEnt.Comp.OccupiedGrid, itemShape, _ignored);
+        return ItemFitsInGridLocation(storageEnt.Comp.OccupiedGrid, itemShape);
     }
 
     /// <summary>
@@ -1647,16 +1651,31 @@ public abstract partial class SharedStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Updates the occupied grid mask for the entity with single ignored item.
+    /// </summary>
+    protected void UpdateOccupied(Entity<StorageComponent> ent, Entity<ItemComponent?> ignoredItem)
+    {
+        UpdateOccupied(ent, new HashSet<Entity<ItemComponent?>> { ignoredItem });
+    }
+
+    /// <summary>
     /// Updates the occupied grid mask for the entity.
     /// </summary>
-    protected void UpdateOccupied(Entity<StorageComponent> ent)
+    protected void UpdateOccupied(Entity<StorageComponent> ent, HashSet<Entity<ItemComponent?>>? ignoredItems = null)
     {
         ent.Comp.OccupiedGrid.Clear();
         RemoveOccupied(ent.Comp.Grid, ent.Comp.OccupiedGrid);
 
         Dirty(ent);
 
-        foreach (var (stent, storedItem) in ent.Comp.StoredItems)
+        // We shouldnt change original data from component
+        var filteredStoredItems = new Dictionary<EntityUid, ItemStorageLocation>(ent.Comp.StoredItems);
+
+        if (ignoredItems != null)
+            foreach (var (entityUid, comp) in ignoredItems)
+                filteredStoredItems.Remove(entityUid);
+
+        foreach (var (stent, storedItem) in filteredStoredItems)
         {
             if (!_itemQuery.TryGetComponent(stent, out var itemComp))
                 continue;
