@@ -14,6 +14,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Numerics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
