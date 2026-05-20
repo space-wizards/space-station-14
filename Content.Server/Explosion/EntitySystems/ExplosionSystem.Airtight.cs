@@ -254,7 +254,7 @@ public sealed partial class ExplosionSystem
                 if (!_damageableSystem.CanBeDamagedBy((uid, injurable), type))
                     continue;
 
-                var modifier = 1f;
+                var modifier = mod;
                 if (explosionComp != null)
                 {
                     modifier *= explosionComp.DamageCoefficient;
