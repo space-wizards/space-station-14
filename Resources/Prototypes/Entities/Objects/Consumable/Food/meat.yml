@@ -830,7 +830,7 @@
       - state: slime-inhand-right
 
 - type: entity
-  parent: [SolutionHuge, FoodMeatRawBase, BaseSlicingRefinableFoodFood]
+  parent: [SolutionHuge, FoodMeatRawBase, BaseSlicingRefinableFood]
   id: FoodMeatAnomaly
   name: anomalous meat mass
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
