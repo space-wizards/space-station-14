@@ -33,7 +33,6 @@ public sealed class DockTest : GameTest
         var map = await pair.CreateTestMap();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var dockingSystem = entManager.System<DockingSystem>();
         var mapSystem = entManager.System<SharedMapSystem>();
         var xformSystem = entManager.System<SharedTransformSystem>();
@@ -43,8 +42,8 @@ public sealed class DockTest : GameTest
         await server.WaitAssertion(() =>
         {
             entManager.DeleteEntity(map.Grid);
-            var grid1 = mapManager.CreateGridEntity(mapId);
-            var grid2 = mapManager.CreateGridEntity(mapId);
+            var grid1 = mapSystem.CreateGridEntity(mapId);
+            var grid2 = mapSystem.CreateGridEntity(mapId);
             var grid1Ent = grid1.Owner;
             var grid2Ent = grid2.Owner;
             var grid2Offset = new Vector2(50f, 50f);

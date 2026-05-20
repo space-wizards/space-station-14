@@ -21,7 +21,6 @@ namespace Content.Client.Atmos.Overlays;
 public sealed partial class AtmosDebugOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IInputManager _input = default!;
     [Dependency] private IUserInterfaceManager _ui = default!;
     [Dependency] private IResourceCache _cache = default!;
@@ -262,7 +261,7 @@ public sealed partial class AtmosDebugOverlay : Overlay
     private void GetGrids(MapId mapId, Box2Rotated box)
     {
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(
+        _map.FindGridsIntersecting(
             mapId,
             box,
             ref _grids,

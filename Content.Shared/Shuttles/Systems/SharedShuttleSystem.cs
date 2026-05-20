@@ -14,7 +14,6 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected FixtureSystem Fixtures = default!;
     [Dependency] protected SharedMapSystem Maps = default!;
@@ -224,7 +223,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);
         var circle = new PhysShapeCircle(ourFTLBuffer + FTLBufferRange, targetPosition);
 
-        _mapManager.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
+        Maps.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
             ref _grids, includeMap: false);
 
         // If any grids in range that aren't us then can't FTL.

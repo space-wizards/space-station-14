@@ -173,7 +173,7 @@ public partial class RadiationSystem
         // Avoids having to do a lookup per source*receiver.
         var box = Box2.FromTwoPoints(source.WorldPosition, destWorld);
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(mapId, box, ref _grids, true);
+        _maps.FindGridsIntersecting(mapId, box, ref _grids, true);
 
         // gridcast through each grid and try to hit some radiation blockers
         // the ray will be updated with each grid that has some blockers

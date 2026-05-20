@@ -51,7 +51,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected DamageableSystem Damageable = default!;
     [Dependency] protected ExamineSystemShared Examine = default!;
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected IMapManager MapManager = default!;
     [Dependency] protected IPrototypeManager ProtoManager = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] protected ISharedAdminLogManager Logs = default!;
@@ -59,6 +58,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedContainerSystem Containers = default!;
+    [Dependency] protected SharedMapSystem Maps = default!;
     [Dependency] protected SharedPhysicsSystem Physics = default!;
     [Dependency] protected SharedPointLightSystem Lights = default!;
     [Dependency] protected SharedPopupSystem PopupSystem = default!;

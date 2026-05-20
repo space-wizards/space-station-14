@@ -292,12 +292,12 @@ public sealed partial class SalvageSystem
         switch (offering)
         {
             case AsteroidOffering asteroid:
-                var grid = _mapManager.CreateGridEntity(salvMap);
+                var grid = _mapSystem.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
             case DebrisOffering debris:
                 var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
-                var debrisGrid = _mapManager.CreateGridEntity(salvMap);
+                var debrisGrid = _mapSystem.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
                 break;
             case SalvageOffering wreck:

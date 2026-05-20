@@ -12,7 +12,6 @@ namespace Content.Shared.Decals
     public abstract partial class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected IPrototypeManager PrototypeManager = default!;
-        [Dependency] protected IMapManager MapManager = default!;
 
         protected bool PvsEnabled;
 
