@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Destructible;
@@ -43,6 +44,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
     #region Subscriptions
 
+    /// <summary> Normal interactions. </summary>
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -50,17 +52,18 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
         var component = ent.Comp;
         var uid = ent.Owner;
-        var getIsBlocked = new AttemptToolRefineEvent(args.Used);
-        RaiseLocalEvent(ref getIsBlocked);
-        if (!getIsBlocked.IsCancelled)
+        var attemptEvent = new AttemptToolRefineEvent(args.Used);
+        RaiseLocalEvent(ref attemptEvent);
+        if (!attemptEvent.IsCancelled)
         {
-            _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
+            _popup.PopupPredicted(attemptEvent.BlockCause, args.User, args.User);
             return;
         }
 
         args.Handled = UseTool(uid, component, args.Used, args.User);
     }
 
+    /// <summary> Verb interactions. </summary>
     private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         var used = args.Using;
@@ -71,6 +74,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
         var user = args.User;
 
+        // Decide what we use as a tool and can it be used for refinement
         var tool = used ?? user;
         var verbDisabled = false;
         string? verbMessage = null;
@@ -82,14 +86,14 @@ public sealed partial class ToolRefinablSystem : EntitySystem
                 ? null
                 : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
         }
+        // make an attempt to ensure refinement is not blocked.
+        var attemptEvent = new AttemptToolRefineEvent(tool);
+        RaiseLocalEvent(ref attemptEvent);
 
-        var getIsBlocked = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(ref getIsBlocked);
-
-        if (!getIsBlocked.IsCancelled)
+        if (!attemptEvent.IsCancelled)
         {
             verbDisabled = true;
-            verbMessage = getIsBlocked.BlockCause;
+            verbMessage = attemptEvent.BlockCause;
         }
 
         verbMessage ??= component.VerbDefaultTooltip == null
@@ -111,6 +115,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary> DoAfter for refining. </summary>
     private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref ToolRefineDoAfterEvent args)
     {
         if (args.Cancelled || args.Used == null)
@@ -180,6 +185,12 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
     #endregion
 
+    /// <summary>
+    /// Show popup on finishing refining.
+    /// </summary>
+    /// <param name="ent">Entity that was refined.</param>
+    /// <param name="used">Tool that was used to do refinement.</param>
+    /// <param name="user">Entity that initiated refine process.</param>
     private void PopupOnRefine(Entity<ToolRefinableComponent> ent, EntityUid used, EntityUid user)
     {
         var component = ent.Comp;
@@ -195,6 +206,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
     }
 
+    /// <summary>
+    /// Gets solution for transferring reagents into refine result from entity that was refined.
+    /// </summary>
+    /// <param name="source">Entity that is getting refined.</param>
+    /// <param name="solutionName">Solution name (key) which should be used in process.</param>
+    /// <param name="solutionInfo">
+    /// Solution extra data that was extracted from <see cref="SolutionManagerComponent"/>
+    /// (or null if there were no <see cref="SolutionManagerComponent"/> set or if there were
+    /// no solution with name <see cref="solutionName"/>).
+    /// </param>
+    /// <returns></returns>
     private bool TryGetSourceSolutionForTransfer(
         EntityUid source,
         string solutionName,
@@ -210,9 +232,15 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         return true;
     }
 
-    private void FillResult(EntityUid sliceUid, string solutionName, Solution solution)
+    /// <summary>
+    /// Fills refine result entity with reagents from refined entity solution.
+    /// </summary>
+    /// <param name="refineResultUid">Entity to fill.</param>
+    /// <param name="solutionName">Solution to which reagents should be added.</param>
+    /// <param name="solution">Solution that should be used as source.</param>
+    private void FillResult(EntityUid refineResultUid, string solutionName, Solution solution)
     {
-        if (!_solutionContainer.TryGetSolution(sliceUid, solutionName, out var itsSoln, out var itsSolution))
+        if (!_solutionContainer.TryGetSolution(refineResultUid, solutionName, out var itsSoln, out var itsSolution))
             return;
 
         _solutionContainer.RemoveAllSolution(itsSoln.Value);

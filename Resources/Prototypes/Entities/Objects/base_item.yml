@@ -172,8 +172,8 @@
           startingItem: PowerCellHigh
 
 - type: entity
-  id: SlicingRefinableBase
   abstract: true
+  id: BaseSlicingRefinable
   components:
     - type: ToolRefinable
       qualityNeeded: Slicing
@@ -189,7 +189,7 @@
 
 - type: entity
   id: SlicingRefinableFoodBase
-  parent: SlicingRefinableBase
+  parent: BaseSlicingRefinable
   abstract: true
   components:
     - type: ToolRefinableSolution
