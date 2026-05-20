@@ -27,7 +27,6 @@ namespace Content.Server.Salvage
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private ILogManager _logManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private AnchorableSystem _anchorable = default!;
