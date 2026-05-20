@@ -1408,10 +1408,10 @@
       - ReagentId: Protein
         Quantity: 80
   - type: ToolRefinable
+    refineTime: 5
     refineResult:
     - id: FoodMeatCooked
       amount: 8
-    sliceTime: 5
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak

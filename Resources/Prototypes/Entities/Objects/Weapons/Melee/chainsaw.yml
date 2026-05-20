@@ -10,9 +10,7 @@
     - Sawing
   - type: Wieldable
     wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
-      params:
-        volume: -3
+      path: /Audio/Weapons/chainsaw_pull.ogg
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon

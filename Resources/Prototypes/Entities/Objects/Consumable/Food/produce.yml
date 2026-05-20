@@ -205,7 +205,6 @@
     seedId: towercap
   - type: ToolRefinable
     toolQuality: Sawing
-    solutionToSplit: null
     refineResult:
     - id: MaterialWoodPlank1
       amount: 2
@@ -227,7 +226,6 @@
   - type: Produce
     seedId: steelcap
   - type: ToolRefinable
-    solutionToSplit: null
     toolQuality: Sawing
     refineResult:
     - id: SheetSteel1
