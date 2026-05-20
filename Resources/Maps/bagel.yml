@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 271.1.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 01/22/2026 02:05:58
+  time: 05/20/2026 18:08:06
   entityCount: 25402
 maps:
 - 943
@@ -75691,6 +75691,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -31.5,28.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 15305
     components:
     - type: Transform
@@ -76742,6 +76744,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,29.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 14749
     components:
     - type: Transform
@@ -97216,6 +97220,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -18.5,29.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 14745
     components:
     - type: Transform
@@ -98111,12 +98117,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: -19.5,41.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 15377
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -13.5,41.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 15397
     components:
     - type: Transform
@@ -98158,6 +98168,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -19.5,30.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 22887
     components:
     - type: Transform
@@ -98247,29 +98259,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -53.5,14.5
       parent: 60
-  - uid: 14660
-    components:
-    - type: MetaData
-      name: TEG Input
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -29.5,39.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#947507FF'
   - uid: 14738
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,39.5
       parent: 60
-  - uid: 14739
-    components:
-    - type: Transform
-      pos: -33.5,32.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 14774
     components:
     - type: Transform
@@ -98326,22 +98321,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -39.5,33.5
       parent: 60
-  - uid: 15142
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -34.5,30.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 15143
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -34.5,31.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
   - uid: 15433
     components:
     - type: Transform
@@ -98503,6 +98482,8 @@ entities:
     - type: Transform
       pos: -17.5,30.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 15182
     components:
     - type: Transform
@@ -98530,6 +98511,8 @@ entities:
     - type: Transform
       pos: -18.5,30.5
       parent: 60
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 15374
     components:
     - type: Transform
@@ -98542,6 +98525,16 @@ entities:
       parent: 60
 - proto: GasValve
   entities:
+  - uid: 1457
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -29.5,39.5
+      parent: 60
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#947507FF'
   - uid: 1460
     components:
     - type: MetaData
@@ -98554,6 +98547,35 @@ entities:
       open: False
     - type: AtmosPipeColor
       color: '#03FCD3FF'
+  - uid: 5955
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -34.5,31.5
+      parent: 60
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 6504
+    components:
+    - type: Transform
+      pos: -33.5,32.5
+      parent: 60
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 8596
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -34.5,30.5
+      parent: 60
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 14703
     components:
     - type: Transform
