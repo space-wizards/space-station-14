@@ -16,7 +16,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Chat;
+namespace Content.Server.Suicide;
 
 public sealed partial class SuicideSystem : EntitySystem
 {

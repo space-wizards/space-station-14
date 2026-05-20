@@ -5,6 +5,7 @@ using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Content.Server.Suicide;
 
 namespace Content.Server.Chat.Commands
 {
