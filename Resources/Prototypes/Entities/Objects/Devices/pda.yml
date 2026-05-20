@@ -157,6 +157,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -171,6 +172,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -951,6 +953,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -977,6 +980,7 @@
       - WantedListCartridge
       - MedTekCartridge
       - AstroNavCartridge
+      - MessengerCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1181,6 +1185,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1350,6 +1355,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1378,6 +1384,8 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - MedTekCartridge
+    - MessengerCartridge
+
 
 - type: entity
   parent: ClownPDA

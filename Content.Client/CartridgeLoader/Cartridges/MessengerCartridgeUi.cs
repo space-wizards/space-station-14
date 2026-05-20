@@ -36,9 +36,9 @@ public sealed partial class MessengerCartridgeUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not MessengerCartridgeUiState MessengerState)
+        if (state is not MessengerCartridgeUiState messengerState)
             return;
 
-        _fragment?.UpdateState(MessengerState.Status, MessengerState.Users, MessengerState.Messages);
+        _fragment?.UpdateState(messengerState.Status, messengerState.Users, messengerState.Messages);
     }
 }
