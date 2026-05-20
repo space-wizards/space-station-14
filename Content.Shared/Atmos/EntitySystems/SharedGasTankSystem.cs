@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
@@ -32,6 +33,7 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
         SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
         SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
+        SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
     }
 
     private void OnGasShutdown(Entity<GasTankComponent> gasTank, ref ComponentShutdown args)
@@ -106,6 +108,11 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
             },
             Disabled = entity.Comp.IsConnected,
         });
+    }
+
+    private void OnDropped(Entity<GasTankComponent> entity, ref DroppedEvent args)
+    {
+        DisconnectFromInternals(entity, args.User, true);
     }
 
     /// <see cref="ToggleValve(Entity{GasTankComponent},bool,EntityUid?)"/>>
