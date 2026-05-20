@@ -19,7 +19,13 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class CargoTest : GameTest
 {
-    private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored = [];
+    /// <summary>
+    /// <see cref="NoCargoOrderArbitrage"/> will ignore all <see cref="CargoProductPrototype"/>s listed here.
+    /// </summary>
+    private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
+    [
+
+    ];
 
     [SidedDependency(Side.Server)]
     private readonly EntityTableSystem _sTableSystem = null!;
