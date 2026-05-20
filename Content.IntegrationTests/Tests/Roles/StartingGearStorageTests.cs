@@ -1,71 +1,58 @@
-using System.Linq;
+#nullable enable
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Roles;
 using Content.Server.Storage.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Collections;
+using Content.IntegrationTests.Fixtures.Attributes;
+using Content.IntegrationTests.Utility;
 
 namespace Content.IntegrationTests.Tests.Roles;
 
 [TestFixture]
 public sealed class StartingGearPrototypeStorageTest : GameTest
 {
-    public override PoolSettings PoolSettings => new() { Connected = true, Dirty = true };
+    [SidedDependency(Side.Server)] private StorageSystem _sStorageSystem = null!;
+
+    private static readonly string[] StartingGearPrototypes = GameDataScrounger.PrototypesOfKind<StartingGearPrototype>();
 
     /// <summary>
-    /// Checks that a storage fill on a StartingGearPrototype will properly fill
+    /// Checks that a storage fill on a <see cref="StartingGearPrototype"/> will properly fill.
     /// </summary>
-    [Test]
-    public async Task TestStartingGearStorage()
+    [TestCaseSource(nameof(StartingGearPrototypes))]
+    [Description($"Checks that a storage fill on a {nameof(StartingGearPrototype)} will properly fill.")]
+    [RunOnSide(Side.Server)]
+    public async Task TestStartingGearStorage(string startingGearProtoId)
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var mapSystem = server.System<SharedMapSystem>();
-        var storageSystem = server.System<StorageSystem>();
+        var gearProto = SProtoMan.Index<StartingGearPrototype>(startingGearProtoId);
 
-        var protos = server.ProtoMan
-            .EnumeratePrototypes<StartingGearPrototype>()
-            .Where(p => !p.Abstract)
-            .ToList()
-            .OrderBy(p => p.ID);
+        var ents = new ValueList<EntityUid>();
 
-        var testMap = await pair.CreateTestMap();
-        var coords = testMap.GridCoords;
-
-        await server.WaitAssertion(() =>
+        foreach (var (slot, entProtos) in gearProto.Storage)
         {
-            foreach (var gearProto in protos)
+            ents.Clear();
+            var storageProto = ((IEquipmentLoadout)gearProto).GetGear(slot);
+            if (string.IsNullOrEmpty(storageProto))
+                continue;
+
+            if (entProtos.Count == 0)
+                continue;
+
+            var bag = SSpawn(storageProto);
+
+            foreach (var ent in entProtos)
             {
-                var ents = new ValueList<EntityUid>();
-
-                foreach (var (slot, entProtos) in gearProto.Storage)
-                {
-                    ents.Clear();
-                    var storageProto = ((IEquipmentLoadout)gearProto).GetGear(slot);
-                    if (storageProto == string.Empty)
-                        continue;
-
-                    var bag = server.EntMan.SpawnEntity(storageProto, coords);
-                    if (entProtos.Count == 0)
-                        continue;
-
-                    foreach (var ent in entProtos)
-                    {
-                        ents.Add(server.EntMan.SpawnEntity(ent, coords));
-                    }
-
-                    foreach (var ent in ents)
-                    {
-                        if (!storageSystem.CanInsert(bag, ent, out _))
-                            Assert.Fail($"StartingGearPrototype {gearProto.ID} could not successfully put items into storage {bag.Id}");
-
-                        server.EntMan.DeleteEntity(ent);
-                    }
-                    server.EntMan.DeleteEntity(bag);
-                }
+                ents.Add(SSpawn(ent));
             }
 
-            mapSystem.DeleteMap(testMap.MapId);
-        });
+            foreach (var ent in ents)
+            {
+                if (!_sStorageSystem.CanInsert(bag, ent, out var reason))
+                    Assert.Fail($"{nameof(StartingGearPrototype)} {gearProto.ID} could not successfully put item {SEntMan.ToPrettyString(ent)} into storage {bag.Id}. Reason: {reason ?? ""}");
+
+                SEntMan.DeleteEntity(ent);
+            }
+            SEntMan.DeleteEntity(bag);
+        }
     }
 }
