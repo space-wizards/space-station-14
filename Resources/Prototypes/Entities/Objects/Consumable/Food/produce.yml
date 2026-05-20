@@ -226,7 +226,7 @@
   - type: Produce
     seedId: steelcap
   - type: ToolRefinable
-    toolQuality: Sawing
+    qualityNeeded: Sawing
     refineResult:
     - id: SheetSteel1
 
@@ -2250,7 +2250,7 @@
     entries:
       Burger: HolymelonSliceBurger
       Taco: HolymelonSlice
-      Skewer: HolymelonrefineResult:kewer
+      Skewer: HolymelonSliceSkewer
 
 - type: entity
   name: grapes

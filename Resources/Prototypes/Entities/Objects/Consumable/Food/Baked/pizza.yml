@@ -523,7 +523,7 @@
     - Slice
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
-#TODO: Make this do poison damage and make cut pizza refineResult: eventually rot into this.
+#TODO: Make this do poison damage and make cut pizza slice eventually rot into this.
 - type: entity
   name: slice of moldy pizza
   parent: FoodPizzaSliceBase

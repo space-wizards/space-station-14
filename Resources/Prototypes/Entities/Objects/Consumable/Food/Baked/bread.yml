@@ -616,7 +616,7 @@
     - Bread
     - Slice
 
-# Other than bread/refineResult:
+# Other than bread/slice:
 
 - type: entity
   parent: FoodBreadBase
