@@ -105,7 +105,9 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
         {
             ClonedBody = (EntityUid)clone,
             ListenTime = ent.Comp.ListenTime,
-            WanderTime = ent.Comp.WanderingTime
+            WanderTime = ent.Comp.WanderingTime,
+            MaxWanderTime = ent.Comp.WanderingTime,
+            MaxListenTime = ent.Comp.ListenTime
         });
 
         // stuff the ghost into the original entity

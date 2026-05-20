@@ -21,10 +21,22 @@ public sealed partial class ParadoxCloneComponent : Component
     public float ListenTime = 10f;
 
     /// <summary>
+    ///     Initial ListenTime amount, used to display the alert
+    /// </summary>
+    [DataField]
+    public float MaxListenTime = 10f;
+
+    /// <summary>
     ///     The remaining time the paradox clone has before being forced to spawn.
     /// </summary>
     [DataField]
     public float WanderTime = 10f;
+
+    /// <summary>
+    ///     Initial WanderTime amount, used to display the alert
+    /// </summary>
+    [DataField]
+    public float MaxWanderTime = 10f;
 
     /// <summary>
     /// Tracks wether the paradox clone is currently in wander mode OR if it has already wandered.

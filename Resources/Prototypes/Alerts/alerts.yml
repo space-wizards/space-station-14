@@ -27,6 +27,7 @@
     - alertType: Rooted
     - alertType: Pacified
     - alertType: Stealthy
+    - alertType: ParadoxHourglass
 
 - type: entity
   id: AlertSpriteView
@@ -299,6 +300,24 @@
   parent: BorgBattery
   id: AiBattery
   clientHandled: false # the station AI does not have a predicted battery, so we need to send the alert from the server
+
+- type: alert
+  id: ParadoxHourglass
+  icons:
+  - sprite: /Textures/Interface/Alerts/hourglass.rsi
+    state: hourglass0
+  - sprite: /Textures/Interface/Alerts/hourglass.rsi
+    state: hourglass1
+  - sprite: /Textures/Interface/Alerts/hourglass.rsi
+    state: hourglass2
+  - sprite: /Textures/Interface/Alerts/hourglass.rsi
+    state: hourglass3
+  - sprite: /Textures/Interface/Alerts/hourglass.rsi
+    state: hourglass4
+  maxSeverity: 4
+  minSeverity: 0
+  name: alerts-paradox-hourglass-name
+  clientHandled: true
 
 - type: alert
   id: Internals
