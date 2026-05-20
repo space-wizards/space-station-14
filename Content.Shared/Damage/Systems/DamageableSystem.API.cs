@@ -19,7 +19,7 @@ public sealed partial class DamageableSystem
 
     public DamageModifierSet? GetDamageModifierSet(Entity<DamageableComponent?> entity)
     {
-        if (!_damageableQuery.Resolve(entity, ref entity.Comp)
+        if (!_damageableQuery.Resolve(entity, ref entity.Comp, false)
             || entity.Comp.DamageModifierSetId is not { } proto
             || !_prototypeManager.Resolve(proto, out var modifierSet)
            )
