@@ -6,6 +6,11 @@
   copyright: "Modified from borg_chest.png and borg_head.png by TyAshley (AllenTheGreat)"
   source: "https://github.com/TyAshley"
 
+- files: ["bark.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
+
 - files: ["buzz.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat) & Sarahon"
@@ -61,6 +66,11 @@
   copyright: "Made from mothroach.png (created by TurboTracker, screwed by TheShuEd), edited by Pgriha"
   source: "https://github.com/space-wizards/space-station-14/pull/42912"
 
+- files: ["growl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
+
 - files: ["hew.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing weh emote image (weh.png) by ArtisticRoomba"
@@ -70,6 +80,11 @@
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
+
+- files: ["howl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
 
 - files: ["laugh.png"]
   license: "CC-BY-SA-3.0"
@@ -101,6 +116,21 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: ["snarl.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
+
+- files: ["sneeze.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
+
+- files: ["singleclap.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Sarahon, Modified by YoungThug"
+  source: "https://github.com/YoungThugSS14"
+
 - files: ["squeak.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from mouse-0.png by TyAshley (AllenTheGreat) & Sarahon"
@@ -120,6 +150,11 @@
   license: "CC-BY-SA-3.0"
   copyright: "Modified from plushie_lizard.png (icon.png in Plushies/lizard.rsi) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
+
+- files: ["whine.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by YoungThug"
+  source: "https://github.com/YoungThugSS14"
 
 - files: ["whistle.png"]
   license: "CC-BY-SA-3.0"
