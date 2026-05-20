@@ -23,10 +23,10 @@ public sealed class HumanoidProfileTests : GameTest
     private static readonly ProtoId<SpeciesPrototype> Vox = "Vox";
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
-    [SidedDependency(Side.Server)] private BodySystem _bodySystem;
-    [SidedDependency(Side.Server)] private HumanoidProfileSystem _humanoidProfile;
-    [SidedDependency(Side.Server)] private MarkingManager _markingManager;
-    [SidedDependency(Side.Server)] private SharedVisualBodySystem _visualBody;
+    [SidedDependency(Side.Server)] private BodySystem _bodySystem = default!;
+    [SidedDependency(Side.Server)] private HumanoidProfileSystem _humanoidProfile = default!;
+    [SidedDependency(Side.Server)] private MarkingManager _markingManager = default!;
+    [SidedDependency(Side.Server)] private SharedVisualBodySystem _visualBody = default!;
 
     [Test]
     public async Task EnsureValidLoading()
