@@ -50,6 +50,8 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private ElectrocutionSystem _electrocution = default!;
     [Dependency] private BatterySystem _battery = default!;
 
+    [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
+
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
