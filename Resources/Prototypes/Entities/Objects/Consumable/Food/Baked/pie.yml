@@ -60,7 +60,7 @@
 
 - type: entity
   name: apple pie
-  parent: [FoodPieBase, SlicingRefinableFoodBase]
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieApple
   description: A pie containing sweet, sweet love... or apple.
   components:
@@ -499,8 +499,9 @@
         Quantity: 8
       - ReagentId: Amatoxin
         Quantity: 10
-  - type: SliceableFood
-    slice: FoodPieAmanitaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieAmanitaSlice
 
 - type: entity
   name: slice of amanita pie
@@ -541,8 +542,9 @@
     layers:
     - state: tin
     - state: plump
-  - type: SliceableFood
-    slice: FoodPiePlumpSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPiePlumpSlice
 
 - type: entity
   name: slice of plump pie

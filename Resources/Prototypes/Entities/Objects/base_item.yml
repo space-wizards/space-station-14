@@ -188,9 +188,9 @@
         path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
-  id: SlicingRefinableFoodBase
-  parent: BaseSlicingRefinable
   abstract: true
+  parent: BaseSlicingRefinable
+  id: BaseSlicingRefinableFood
   components:
     - type: ToolRefinableSolution
 

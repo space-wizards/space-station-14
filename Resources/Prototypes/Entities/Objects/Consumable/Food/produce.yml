@@ -341,9 +341,8 @@
   - type: Edible
     trash:
     - TrashBananaPeel
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashBananaPeel
   - type: Solution
     solution:
@@ -387,9 +386,8 @@
   - type: Edible
     trash:
     - TrashMimanaPeel
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashMimanaPeel
   - type: Solution
     solution:
@@ -1191,9 +1189,8 @@
   - type: Edible
     trash:
     - FoodCornTrash
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
   - type: Solution
     solution:
@@ -1332,7 +1329,7 @@
     - Vegetable
     - Mushroom
 
-# refineResult:
+# Slices
 
 - type: entity
   parent: FoodInjectableBase
@@ -1869,9 +1866,8 @@
   - type: Edible
     trash:
     - WeaponRevolverPython
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: WeaponRevolverPython
   - type: Tag
     tags:
@@ -1908,9 +1904,8 @@
   - type: Edible
     trash:
     - RevolverCapGun
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: RevolverCapGun
   - type: Tag
     tags:
@@ -1931,9 +1926,8 @@
   - type: Edible
     trash:
     - RevolverCapGunFake
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: RevolverCapGunFake
 
 - type: entity
@@ -2154,7 +2148,7 @@
     entries:
       Burger: WatermelonSliceBurger
       Taco: WatermelonSlice
-      Skewer: WatermelonrefineResult:kewer
+      Skewer: WatermelonSliceSkewer
 
 - type: entity
   name: holymelon
@@ -2342,9 +2336,8 @@
   - type: Edible
     trash:
     - FoodBungoPit
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodBungoPit
   - type: Solution
     solution:
@@ -2649,9 +2642,8 @@
   - type: Edible
     trash:
     - TrashCherryPit
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: TrashCherryPit
   - type: Solution
     solution:

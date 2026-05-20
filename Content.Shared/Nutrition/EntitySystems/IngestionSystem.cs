@@ -24,7 +24,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -89,7 +88,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
-        SubscribeLocalEvent<EdibleComponent, BeforeToolRefinedEvent>(OnBeforeFullySliced);
+        SubscribeLocalEvent<EdibleComponent, BeforeToolRefinedEvent>(OnBeforeToolRefined);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -524,7 +523,7 @@ public sealed partial class IngestionSystem : EntitySystem
         SpawnTrash(entity, args.User);
     }
 
-    private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
+    private void OnBeforeToolRefined(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
     {
         SpawnTrash(entity, args.User);
     }

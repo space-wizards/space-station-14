@@ -54,7 +54,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         var uid = ent.Owner;
         var attemptEvent = new AttemptToolRefineEvent(args.Used);
         RaiseLocalEvent(ref attemptEvent);
-        if (!attemptEvent.IsCancelled)
+        if (attemptEvent.IsCancelled)
         {
             _popup.PopupPredicted(attemptEvent.BlockCause, args.User, args.User);
             return;
@@ -126,7 +126,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
         var getIsBlocked = new AttemptToolRefineEvent(args.Used.Value);
         RaiseLocalEvent(ref getIsBlocked);
-        if (!getIsBlocked.IsCancelled)
+        if (getIsBlocked.IsCancelled)
         {
             _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
             return;
@@ -148,13 +148,13 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         var spawned = new List<EntityUid>(spawns.Count);
         foreach (var protoId in spawns)
         {
-            var sliceUid = PredictedSpawnNextToOrDrop(protoId, uid);
-            spawned.Add(sliceUid);
+            var refineResultUid = PredictedSpawnNextToOrDrop(protoId, uid);
+            spawned.Add(refineResultUid);
 
-            if (!_container.IsEntityOrParentInContainer(sliceUid))
+            if (!_container.IsEntityOrParentInContainer(refineResultUid))
             {
                 var randVect = rng.NextPolarVector2(2.0f, 2.5f);
-                _physics.SetLinearVelocity(sliceUid, randVect);
+                _physics.SetLinearVelocity(refineResultUid, randVect);
             }
         }
 
@@ -164,13 +164,13 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
             foreach (var spawnedUid in spawned)
             {
-                // Fills new slice if original entity allows.
+                // Fills refine result if original entity allows.
                 if (solutionInfo.HasValue && comp.SolutionToSet != null)
                 {
                     var (sourceSoln, sourceSolution) = solutionInfo.Value;
-                    var sliceVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
+                    var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
 
-                    var lostSolution = _solutionContainer.SplitSolution(sourceSoln, sliceVolume);
+                    var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
                     FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
                 }
             }
@@ -270,7 +270,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 [ByRefEvent]
 public record struct AttemptToolRefineEvent(
     EntityUid Using,
-    bool IsCancelled = true,
+    bool IsCancelled = false,
     string? BlockCause = null
 );
 

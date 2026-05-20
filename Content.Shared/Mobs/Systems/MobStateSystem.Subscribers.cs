@@ -46,7 +46,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
-        SubscribeLocalEvent<MobStateComponent, AttemptToolRefineEvent>(GetIsRefinable);
+        SubscribeLocalEvent<MobStateComponent, AttemptToolRefineEvent>(OnAttemptToolRefine);
 
         SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
     }
@@ -140,7 +140,7 @@ public partial class MobStateSystem
         }
     }
 
-    private void GetIsRefinable(Entity<MobStateComponent> ent, ref AttemptToolRefineEvent args)
+    private void OnAttemptToolRefine(Entity<MobStateComponent> ent, ref AttemptToolRefineEvent args)
     {
         if (!IsDead(ent, ent))
         {
