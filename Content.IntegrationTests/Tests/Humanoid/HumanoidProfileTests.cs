@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
@@ -21,10 +23,10 @@ public sealed class HumanoidProfileTests : GameTest
     private static readonly ProtoId<SpeciesPrototype> Vox = "Vox";
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
-    private BodySystem _bodySystem;
-    private HumanoidProfileSystem _humanoidProfile;
-    private MarkingManager _markingManager;
-    private SharedVisualBodySystem _visualBody;
+    [SidedDependency(Side.Server)] private BodySystem _bodySystem;
+    [SidedDependency(Side.Server)] private HumanoidProfileSystem _humanoidProfile;
+    [SidedDependency(Side.Server)] private MarkingManager _markingManager;
+    [SidedDependency(Side.Server)] private SharedVisualBodySystem _visualBody;
 
     [Test]
     public async Task EnsureValidLoading()
@@ -36,17 +38,15 @@ public sealed class HumanoidProfileTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var humanoidProfile = entityManager.System<HumanoidProfileSystem>();
-            var human = entityManager.Spawn(BaseSpecies);
-            humanoidProfile.ApplyProfileTo(human,
+            LoadDependencies(out var body, out var humanoidComponent);
+
+            _humanoidProfile.ApplyProfileTo(body,
                 new HumanoidCharacterProfile()
                 .WithSex(Sex.Female)
                 .WithAge(67)
                 .WithGender(Gender.Neuter)
                 .WithSpecies(Vox));
-            var humanoidComponent = entityManager.GetComponent<HumanoidProfileComponent>(human);
-            var voiceComponent = entityManager.GetComponent<VocalComponent>(human);
+            var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
             Assert.That(humanoidComponent.Age, Is.EqualTo(67));
             Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
@@ -71,6 +71,7 @@ public sealed class HumanoidProfileTests : GameTest
         await server.WaitAssertion(() =>
         {
             LoadDependencies(out var body, out var humanoidComponent);
+
             var profile = HumanoidCharacterProfile.Random();
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
@@ -91,7 +92,7 @@ public sealed class HumanoidProfileTests : GameTest
         {
             LoadDependencies(out var body, out var humanoidComponent);
 
-            var proto = Server.ProtoMan.Index<SpeciesPrototype>(species);
+            var proto = SProtoMan.Index<SpeciesPrototype>(species);
             var profile = HumanoidCharacterProfile.RandomWithSpecies(species);
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
@@ -109,13 +110,8 @@ public sealed class HumanoidProfileTests : GameTest
 
     private void LoadDependencies(out EntityUid body, out HumanoidProfileComponent humanoidComponent)
     {
-        var entityManager = Server.ResolveDependency<IEntityManager>();
-        _humanoidProfile = entityManager.System<HumanoidProfileSystem>();
-        _markingManager = Server.ResolveDependency<MarkingManager>();
-        _visualBody = entityManager.System<SharedVisualBodySystem>();
-        _bodySystem = entityManager.System<BodySystem>();
-        body = entityManager.Spawn(BaseSpecies);
-        humanoidComponent = entityManager.GetComponent<HumanoidProfileComponent>(body);
+        body = SEntMan.Spawn(BaseSpecies);
+        humanoidComponent = SEntMan.GetComponent<HumanoidProfileComponent>(body);
     }
 
     private void AssertValidProfile(Entity<HumanoidProfileComponent> body, HumanoidCharacterProfile profile)
