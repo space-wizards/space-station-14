@@ -1,5 +1,5 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SolutionAppearance;
@@ -21,6 +21,11 @@ public sealed partial class SolutionAppearanceComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// Cached container of the entity that the solution appearance will be relayed to.
+    /// </summary>
+    public BaseContainer? CachedContainer;
 }
 
 [Serializable, NetSerializable]
