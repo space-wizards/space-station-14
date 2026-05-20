@@ -32,6 +32,12 @@ public sealed partial class MessengerCartridgeUi : UIFragment
             var msg = new MessengerRequestMessagesEvent(userId);
             _userInterface?.SendMessage(new CartridgeUiMessage(msg));
         };
+
+        _fragment.OnTyping += () =>
+        {
+            var msg = new MessengerTypingEvent();
+            _userInterface?.SendMessage(new CartridgeUiMessage(msg));
+        };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

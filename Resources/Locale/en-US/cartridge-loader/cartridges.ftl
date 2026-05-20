@@ -1,13 +1,6 @@
 device-pda-slot-component-slot-name-cartridge = Cartridge
 
 default-program-name = Program
-messenger-cartridge-program-name = NanoChat
-messenger-status-connecting = Connecting...
-messenger-status-connection-lost = Connection Lost
-messenger-send = Send
-messenger-select-user = Select a user
-messenger-back = Back
-messenger-notification-message = {$sender} sent a message
 notekeeper-program-name = Notekeeper
 nano-task-program-name = NanoTask
 news-read-program-name = Station news
@@ -108,3 +101,12 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
 wanted-list-history-table-time-col = Time
 wanted-list-history-table-reason-col = Crime
 wanted-list-history-table-initiator-col = Initiator
+
+messenger-cartridge-program-name = NanoChat
+messenger-status-connecting = Connecting...
+messenger-status-connection-lost = Connection Lost
+messenger-send = Send
+messenger-select-user = Select a user
+messenger-back = Back
+messenger-notification-message = {$sender} sent a message
+messenger-typing-popup = Typing in a PDA...

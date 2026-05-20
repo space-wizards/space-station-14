@@ -486,6 +486,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -881,6 +882,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseSecurityPDA

@@ -97,6 +97,15 @@ public sealed class MessengerRequestMessagesEvent : CartridgeMessageEvent
 }
 
 /// <summary>
+/// Typing indicator event
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MessengerTypingEvent : CartridgeMessageEvent
+{
+    public MessengerTypingEvent() { }
+}
+
+/// <summary>
 /// Server connection status
 /// </summary>
 [Serializable, NetSerializable]

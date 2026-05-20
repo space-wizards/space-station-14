@@ -3,7 +3,9 @@ using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.GameTicking;
 using Robust.Shared.Localization;
@@ -14,6 +16,7 @@ public sealed partial class MessengerCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -250,6 +253,11 @@ public sealed partial class MessengerCartridgeSystem : EntitySystem
                 }
             }
             UpdateUiState(uid, loaderUid.Value);
+        }
+
+        if (args is MessengerTypingEvent)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("messenger-typing-popup"), uid, PopupType.Small);
         }
     }
 
