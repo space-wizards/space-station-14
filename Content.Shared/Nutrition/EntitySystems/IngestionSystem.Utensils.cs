@@ -12,10 +12,10 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
-    [Dependency] private readonly EntityQuery<UtensilComponent> _utensilsQuery = default!;
+    [Dependency] private EntityQuery<UtensilComponent> _utensilsQuery = default!;
 
     public void InitializeUtensils()
     {

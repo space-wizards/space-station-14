@@ -15,9 +15,9 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
 {
-    public sealed class WiresMenu : BaseWindow
+    public sealed partial class WiresMenu : BaseWindow
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private IResourceCache _resourceCache = default!;
 
         private readonly Control _wiresHBox;
         private readonly Control _topContainer;
