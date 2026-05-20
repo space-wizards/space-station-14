@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Client.Graphics;
 
 namespace Content.Client.TextScreen;
@@ -78,18 +79,18 @@ public sealed partial class TextScreenVisualsComponent : Component
     public bool ScrollEnabled;
 
     /// <summary>
-    ///     The amount of time between scrolling individual pixels.
-    /// </summary>
-    [DataField]
-    public TimeSpan ScrollTime = TimeSpan.FromMilliseconds(100);
-
-    /// <summary>
     ///     The next time that the text on each row should be scrolled.
     /// </summary>
 
-    // TODO: fix this datafield & serialize it properly
-    // [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetArraySerializer))]
     public TimeSpan[] NextScrollTime = [TimeSpan.MaxValue, TimeSpan.MaxValue];
+
+    /// <summary>
+    ///     The amount of time between scrolling individual pixels per row.
+    /// </summary>
+
+    [DataField]
+    public TimeSpan[] TimeBetweenScrolls = [TimeSpan.MaxValue, TimeSpan.MaxValue];
 
     /// <summary>
     ///     A counter the scroll position of each row.

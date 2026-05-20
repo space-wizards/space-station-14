@@ -86,12 +86,23 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// </summary>
     private const int MaxScrollingCharacters = 32;
 
+    /// <summary>
+    ///     The longest that a message should take to cross the screen before wrapping around.
+    /// </summary>
+    private static readonly TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    ///     The longest that it should take to scroll one pixel on a screen.
+    /// </summary>
+    private static readonly TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
+        SubscribeLocalEvent<TextScreenVisualsComponent, EntityUnpausedEvent>(OnUnpaused);
 
         UpdatesOutsidePrediction = true;
     }
@@ -124,6 +135,18 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             SpriteSystem.LayerSetRsi((ent, sprite), TimerMapKey + i, new ResPath(TextPath));
             SpriteSystem.LayerSetColor((ent, sprite), TimerMapKey + i, screen.Color);
             SpriteSystem.LayerSetRsiState((ent, sprite), TimerMapKey + i, DefaultState);
+        }
+    }
+
+    /// <summary>
+    ///     Handles non-trivial pause timing for scrolling.
+    /// </summary>
+    private void OnUnpaused(Entity<TextScreenVisualsComponent> ent, ref EntityUnpausedEvent args)
+    {
+        for (int i = 0; i < ent.Comp.NextScrollTime.Length; i++)
+        {
+            if (ent.Comp.NextScrollTime[i] != TimeSpan.MaxValue) // Reserved value, should stay at max.
+                ent.Comp.NextScrollTime[i] += args.PausedTime;
         }
     }
 
@@ -341,8 +364,11 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     }
 
     /// <summary>
-    ///     Draws a LayerStates dict by setting the sprite states individually.
+    ///     Handles scrolling, updates the scrolled state of a text screen.
     /// </summary>
+    /// <remarks>
+    ///     Be sure to call BuildTimerLayers before using this to set up the text layers used.
+    /// </remarks>
     private void DrawScrolledLayers(EntityUid uid, TextScreenVisualsComponent screen, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite))
@@ -354,7 +380,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             bool newChar = false;
             while (screen.NextScrollTime[i] < _gameTiming.CurTime)
             {
-                screen.NextScrollTime[i] += screen.ScrollTime;
+                screen.NextScrollTime[i] += screen.TimeBetweenScrolls[i];
                 var newPosition = ++screen.ScrollPosition[i];
                 scrolled = true;
                 newChar |= newPosition % CharWidth == 0; // Rolled over onto a new character, need to update the sprites.
@@ -399,14 +425,22 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     {
         if (ent.Comp.ScrollEnabled)
         {
-            var scrollTime = _gameTiming.CurTime + ent.Comp.ScrollTime;
             for (int i = 0; i < ent.Comp.Rows; i++)
             {
                 // Short/null string, shouldn't scroll.
                 if (ent.Comp.TextToDraw[i] == null || ent.Comp.TextToDraw[i]!.Length <= ent.Comp.RowLength)
+                {
                     ent.Comp.NextScrollTime[i] = TimeSpan.MaxValue;
+                    ent.Comp.TimeBetweenScrolls[i] = TimeSpan.MaxValue;
+                }
                 else
-                    ent.Comp.NextScrollTime[i] = scrollTime;
+                {
+                    // Find our desired scroll speed.
+                    var newMaxScrollTime = MaxMessageScrollTime / ent.Comp.TextToDraw[i]!.Length / CharWidth;
+                    var scrollTime = newMaxScrollTime < MaxPixelScrollTime ? newMaxScrollTime : MaxPixelScrollTime;
+                    ent.Comp.NextScrollTime[i] = _gameTiming.CurTime + scrollTime;
+                    ent.Comp.TimeBetweenScrolls[i] = scrollTime;
+                }
                 ent.Comp.ScrollPosition[i] = 0;
             }
         }
