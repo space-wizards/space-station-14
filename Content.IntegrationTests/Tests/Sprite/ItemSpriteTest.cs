@@ -1,10 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Sprite;
 
@@ -22,41 +22,34 @@ namespace Content.IntegrationTests.Tests.Sprite;
 /// If none of the abveo are true, it might need to be added to the list of ignored components, see
 /// <see cref="Ignored"/>
 /// </remarks>
-[TestFixture]
-public sealed class PrototypeSaveTest : GameTest
+public sealed class ItemSpriteTest : GameTest
 {
-    private static readonly HashSet<string> Ignored = new()
-    {
-        // The only prototypes that should get ignored are those that REQUIRE setup to get a sprite. At that point it is
-        // the responsibility of the spawner to ensure that a valid sprite is set.
+    /// <summary>
+    /// Prototypes listed here will be ignored by <see cref="AllItemsHaveSpritesTest"/>
+    /// </summary>
+    /// <remarks>
+    /// The only prototypes that should get ignored are those that REQUIRE setup to get a sprite.
+    /// At that point it is the responsibility of the spawner to ensure that a valid sprite is set.
+    /// </remarks>
+    private static readonly HashSet<string> Ignored =
+    [
         "VirtualItem"
-    };
+    ];
 
     [Test]
+    [RunOnSide(Side.Client)]
+    [Description("Checks that all items have a visible sprite.")]
     public async Task AllItemsHaveSpritesTest()
     {
-        var pair = Pair;
-        List<EntityPrototype> badPrototypes = [];
-
-        await pair.Client.WaitPost(() =>
+        foreach (var (proto, _) in Pair.GetPrototypesWithComponent<ItemComponent>(ignored: Ignored))
         {
-            foreach (var (proto, _) in pair.GetPrototypesWithComponent<ItemComponent>(Ignored))
-            {
-                var dummy = pair.Client.EntMan.Spawn(proto.ID);
-                pair.Client.EntMan.RunMapInit(dummy, pair.Client.MetaData(dummy));
-                var spriteComponent = pair.Client.EntMan.GetComponentOrNull<SpriteComponent>(dummy);
-                if (spriteComponent?.Icon == null)
-                    badPrototypes.Add(proto);
-                pair.Client.EntMan.DeleteEntity(dummy);
-            }
-        });
+            var dummy = CSpawn(proto.ID);
+            CEntMan.RunMapInit(dummy, Client.MetaData(dummy));
+            var spriteComponent = CEntMan.GetComponentOrNull<SpriteComponent>(dummy);
 
-        Assert.Multiple(() =>
-        {
-            foreach (var proto in badPrototypes)
-            {
-                Assert.Fail($"Item prototype has no sprite: {proto.ID}. It should probably either be marked as abstract, not be an item, or have a valid sprite");
-            }
-        });
+            Assert.That(spriteComponent?.Icon, Is.Not.Null, $"Item prototype \"{proto.ID}\" has no sprite. It should probably either be marked as abstract, not be an item, or have a valid sprite");
+
+            CEntMan.DeleteEntity(dummy);
+        }
     }
 }
