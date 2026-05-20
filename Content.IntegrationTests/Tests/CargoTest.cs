@@ -89,7 +89,7 @@ public sealed class CargoTest : GameTest
                     );
                     SEntMan.DeleteEntity(ent);
                 }
-            });
+            };
         });
     }
 
