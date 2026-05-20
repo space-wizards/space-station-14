@@ -1,30 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Fixed several unintended burn groupings with the clumsy gun explosions
-      & bible misuse.
-    type: Fix
-  id: 9186
-  time: '2025-11-05T03:43:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41307
-- author: chromiumboy
-  changes:
-  - message: Gas analyzers now correctly report the total volume and the number of
-      moles of gas contained in gas pipe manifolds.
-    type: Fix
-  - message: The total volume of gas that gas pipe manifolds can contain has been
-      reduced from 1200L to 300L.
-    type: Tweak
-  id: 9187
-  time: '2025-11-06T06:31:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41325
-- author: Princess-Cheeseballs
-  changes:
-  - message: Phalanx now removes the death gene again.
-    type: Fix
-  id: 9188
-  time: '2025-11-06T21:46:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41163
 - author: Jrpl
   changes:
   - message: Gravity Generators can no longer be unanchored while they are active.
@@ -4077,3 +4051,34 @@
   id: 9697
   time: '2026-05-18T14:35:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43983
+- author: Pok27
+  changes:
+  - message: Radial menus no longer prevent sending to chat, or deleting text from
+      the chat input box.
+    type: Fix
+  id: 9698
+  time: '2026-05-19T11:59:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40929
+- author: SlamBamActionman
+  changes:
+  - message: Exo now has a Psychologist's office and job slot.
+    type: Add
+  - message: Exo now features 5 Security Officer job slots (was 4) and 3 Cadet job
+      slots (was 4).
+    type: Tweak
+  - message: Exo Botany has an additional scrubber to prevent gas leakage.
+    type: Tweak
+  - message: Exo Security's mini-armory is now Sec access, and there has been a temporary
+      holding cell added.
+    type: Tweak
+  id: 9699
+  time: '2026-05-20T07:22:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43533
+- author: mqole
+  changes:
+  - message: A toggle in the Accessibility menu will now allow you to turn off the
+      static in the AI camera overlay.
+    type: Add
+  id: 9700
+  time: '2026-05-20T19:49:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44003
