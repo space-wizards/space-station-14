@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Serialization.TypeSerializers;
 using Robust.Client.Graphics;
 
 namespace Content.Client.TextScreen;

@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
-namespace Content.Shared.Serialization.TypeSerializers.Implementations.Custom;
+namespace Content.Shared.Serialization.TypeSerializers;
 
 /// <summary>
 /// A serializer wrapping the TimeOffsetSerializer that reads and writes arrays of values.
