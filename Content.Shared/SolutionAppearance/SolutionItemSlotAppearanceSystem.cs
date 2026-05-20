@@ -12,10 +12,10 @@ namespace Content.Shared.SolutionAppearance;
 /// </summary>
 public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -38,10 +38,10 @@ public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
 
     private void OnEntGotRemovedFromContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        if (!_entityWhitelist.CheckBoth(args.Container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
+        if (!IsValidSolutionContainer(args.Container.Owner, args.Container.ID))
             return;
 
-        if (!IsValidSolutionContainer(args.Container.Owner, args.Container.ID))
+        if (!_entityWhitelist.CheckBoth(args.Container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
         _appearance.SetData(args.Container.Owner, SolutionContainerVisuals.FillFraction, 0f);
