@@ -12,7 +12,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Content.Shared.Sliceable;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
 
@@ -152,7 +151,6 @@ public sealed class CargoTest : GameTest
         var componentFactory = server.ResolveDependency<IComponentFactory>();
         var whitelist = entManager.System<EntityWhitelistSystem>();
         var cargo = entManager.System<CargoSystem>();
-        var sliceableSys = entManager.System<SliceableSystem>();
 
         var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
 

@@ -1,8 +1,9 @@
+using Content.Shared.Popups;
 using Content.Shared.Storage;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components;
@@ -84,9 +85,8 @@ public sealed partial class ToolRefinableComponent : Component
     public LocId? PopupForOther;
 
     /// <summary>
-    /// Is usage of 'caution' type popup required for <see cref="PopupForUser"/> and <see cref="PopupForOther"/>,
-    /// or small popup will suffice.
+    /// What type of popup should be used for <see cref="PopupForUser"/> and <see cref="PopupForOther"/>.
     /// </summary>
     [DataField]
-    public bool IsUsingCautionPopup;
+    public PopupType PopupType = PopupType.Small;
 }

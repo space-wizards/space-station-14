@@ -15,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -39,18 +38,21 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
         SubscribeLocalEvent<ToolRefinableComponent, GetVerbsEvent<InteractionVerb>>(AddVerb);
         SubscribeLocalEvent<ToolRefinableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ToolRefinableComponent, WelderRefineDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ToolRefinableComponent, ToolRefineDoAfterEvent>(OnDoAfter);
     }
+
+    #region Subscriptions
 
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        var (uid, component) = ent;
-        var getIsBlocked = new GetIsToolRefineBlockedEvent(args.Used, component.QualityNeeded);
+        var component = ent.Comp;
+        var uid = ent.Owner;
+        var getIsBlocked = new AttemptToolRefineEvent(args.Used);
         RaiseLocalEvent(ref getIsBlocked);
-        if (!getIsBlocked.IsRefinable)
+        if (!getIsBlocked.IsCancelled)
         {
             _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
             return;
@@ -59,29 +61,86 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         args.Handled = UseTool(uid, component, args.Used, args.User);
     }
 
-    private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref WelderRefineDoAfterEvent args)
+    private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        var used = args.Using;
+        var component = ent.Comp;
+
+        if (ent.Comp.VerbText == null || !args.CanInteract || !args.CanAccess)
+            return;
+
+        var user = args.User;
+
+        var tool = used ?? user;
+        var verbDisabled = false;
+        string? verbMessage = null;
+
+        if (!_toolSystem.HasQuality(tool, ent.Comp.QualityNeeded))
+        {
+            verbDisabled = true;
+            verbMessage = ent.Comp.ToolMissingQualityTooltip == null
+                ? null
+                : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
+        }
+
+        var getIsBlocked = new AttemptToolRefineEvent(tool);
+        RaiseLocalEvent(ref getIsBlocked);
+
+        if (!getIsBlocked.IsCancelled)
+        {
+            verbDisabled = true;
+            verbMessage = getIsBlocked.BlockCause;
+        }
+
+        verbMessage ??= component.VerbDefaultTooltip == null
+            ? null
+            : Loc.GetString(component.VerbDefaultTooltip.Value);
+
+        InteractionVerb verb = new()
+        {
+            Text = Loc.GetString(ent.Comp.VerbText),
+            Icon = ent.Comp.VerbIcon,
+            Disabled = verbDisabled,
+            Message = verbMessage,
+            Act = () =>
+            {
+                if (!verbDisabled)
+                    UseTool(ent, ent, tool, user);
+            },
+        };
+        args.Verbs.Add(verb);
+    }
+
+    private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref ToolRefineDoAfterEvent args)
     {
         if (args.Cancelled || args.Used == null)
             return;
 
-        var (uid, component) = ent;
+        var component = ent.Comp;
+        var uid = ent.Owner;
 
-        var getIsBlocked = new GetIsToolRefineBlockedEvent(args.Used.Value, component.QualityNeeded);
+        var getIsBlocked = new AttemptToolRefineEvent(args.Used.Value);
         RaiseLocalEvent(ref getIsBlocked);
-        if (!getIsBlocked.IsRefinable)
+        if (!getIsBlocked.IsCancelled)
         {
             _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
             return;
         }
 
-        PopupOnRefine(uid, component, args.Used.Value, args.User);
+        PopupOnRefine(ent, args.Used.Value, args.User);
+
+        var ev = new BeforeToolRefinedEvent(args.User);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
+            return;
 
         // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
         var rndSeed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, args.User.Id, uid.Id);
         var rng = new System.Random(rndSeed);
 
         var spawns = EntitySpawnCollection.GetSpawns(component.RefineResult, rng);
-        List<EntityUid> spawned = new(spawns.Count);
+        var spawned = new List<EntityUid>(spawns.Count);
         foreach (var protoId in spawns)
         {
             var sliceUid = PredictedSpawnNextToOrDrop(protoId, uid);
@@ -115,38 +174,25 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (component.Sound != null)
             _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
 
-        var ev = new BeforeToolRefineFinishedEvent(args.User);
-        RaiseLocalEvent(uid, ref ev);
-
-        if(ev.Cancelled)
-            return;
-
         _gib.Gib(uid);
         _destructible.DestroyEntity(uid);
     }
 
-    private void PopupOnRefine(EntityUid uid, ToolRefinableComponent component, EntityUid used, EntityUid user)
+    #endregion
+
+    private void PopupOnRefine(Entity<ToolRefinableComponent> ent, EntityUid used, EntityUid user)
     {
+        var component = ent.Comp;
+        var uid = ent.Owner;
+
         var slicingDoneMessageForUser = component.PopupForUser == null
             ? null
-            : Loc.GetString(
-                component.PopupForUser,
-                ("target", uid),
-                ("tool", used)
-            );
+            : Loc.GetString(component.PopupForUser, ("target", uid), ("tool", used));
         var slicingDoneMessageForOthers = component.PopupForOther == null
             ? null
-            : Loc.GetString(
-                component.PopupForOther,
-                ("user", user),
-                ("target", uid),
-                ("tool", used)
-            );
-        var popupType = component.IsUsingCautionPopup
-            ? PopupType.MediumCaution
-            : PopupType.Small;
+            : Loc.GetString(component.PopupForOther, ("user", user), ("target", uid), ("tool", used));
 
-        _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, popupType);
+        _popup.PopupPredicted(slicingDoneMessageForUser, slicingDoneMessageForOthers, user, user, component.PopupType);
     }
 
     private bool TryGetSourceSolutionForTransfer(
@@ -158,9 +204,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         solutionInfo = default;
 
         if (!_solutionContainer.TryGetSolution(source, solutionName, out var sourceSoln, out var sourceSolution))
-        {
             return false;
-        }
 
         solutionInfo = (sourceSoln.Value, sourceSolution);
         return true;
@@ -168,74 +212,13 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 
     private void FillResult(EntityUid sliceUid, string solutionName, Solution solution)
     {
-        if (_solutionContainer.TryGetSolution(sliceUid, solutionName, out var itsSoln, out var itsSolution))
-        {
-            _solutionContainer.RemoveAllSolution(itsSoln.Value);
-
-            var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
-            _solutionContainer.TryAddSolution(itsSoln.Value, lostSolutionPart);
-        }
-    }
-
-    private void AddVerb(Entity<ToolRefinableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
-    {
-        var used = args.Using;
-        if (ent.Comp.VerbText == null || !args.CanInteract || !args.CanAccess || !used.HasValue)
+        if (!_solutionContainer.TryGetSolution(sliceUid, solutionName, out var itsSoln, out var itsSolution))
             return;
 
-        var user = args.User;
+        _solutionContainer.RemoveAllSolution(itsSoln.Value);
 
-        EntityUid? tool;
-        string? verbMessage = null;
-        bool verbDisabled = false;
-        var comp = ent.Comp;
-
-        if (args.Using is not null)
-        {
-            if (!_toolSystem.HasQuality(used.Value, comp.QualityNeeded))
-            {
-                verbDisabled = true;
-                verbMessage = comp.ToolMissingQualityTooltip == null
-                    ? null
-                    : Loc.GetString(comp.ToolMissingQualityTooltip, ("target", ent.Owner));
-            }
-            tool = used;
-        }
-        else if (_toolSystem.HasQuality(user, comp.QualityNeeded))
-        {
-            tool = user;
-        }
-        else
-        {
-            return;
-        }
-
-        var getIsBlocked = new GetIsToolRefineBlockedEvent(used.Value, ent.Comp.QualityNeeded);
-        RaiseLocalEvent(ref getIsBlocked);
-
-        if (!getIsBlocked.IsRefinable)
-        {
-            verbDisabled = true;
-            verbMessage = getIsBlocked.BlockCause;
-        }
-
-        verbMessage ??= comp.VerbDefaultTooltip == null
-            ? null
-            : Loc.GetString(comp.VerbDefaultTooltip.Value);
-
-        InteractionVerb verb = new()
-        {
-            Text = Loc.GetString(ent.Comp.VerbText),
-            Icon = ent.Comp.VerbIcon,
-            Disabled = verbDisabled,
-            Message = verbMessage,
-            Act = () =>
-            {
-                if (tool.HasValue)
-                    UseTool(ent, ent, used.Value, user);
-            },
-        };
-        args.Verbs.Add(verb);
+        var lostSolutionPart = solution.SplitSolution(itsSolution.AvailableVolume);
+        _solutionContainer.TryAddSolution(itsSoln.Value, lostSolutionPart);
     }
 
     private bool UseTool(EntityUid uid, ToolRefinableComponent component, EntityUid used, EntityUid user)
@@ -246,7 +229,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
             uid,
             component.RefineTime,
             [component.QualityNeeded],
-            new WelderRefineDoAfterEvent(),
+            new ToolRefineDoAfterEvent(),
             out _,
             fuel: component.RefineFuel
         );
@@ -257,10 +240,9 @@ public sealed partial class ToolRefinablSystem : EntitySystem
 /// Event for checking if tool refining of entity is blocked in some complex way.
 /// </summary>
 [ByRefEvent]
-public record struct GetIsToolRefineBlockedEvent(
+public record struct AttemptToolRefineEvent(
     EntityUid Using,
-    ProtoId<ToolQualityPrototype> RequiredToolQuality,
-    bool IsRefinable = true,
+    bool IsCancelled = true,
     string? BlockCause = null
 );
 
@@ -268,7 +250,7 @@ public record struct GetIsToolRefineBlockedEvent(
 /// Called after slicing of the entity.
 /// </summary>
 [ByRefEvent]
-public record struct BeforeToolRefineFinishedEvent(EntityUid User)
+public record struct BeforeToolRefinedEvent(EntityUid User)
 {
     public bool Cancelled;
 }
