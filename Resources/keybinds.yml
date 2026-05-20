@@ -153,6 +153,12 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorNextObject
+  type: State
+  key: Num9
+- function: EditorPreviousObject
+  type: State
+  key: Num3
 - function: EditorFlipObject
   type: State
   key: MouseMiddle

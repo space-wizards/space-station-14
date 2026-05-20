@@ -51,6 +51,9 @@ namespace Content.Client.Input
             // Not in engine so that the RCD can rotate objects
             common.AddFunction(EngineKeyFunctions.EditorRotateObject);
 
+            common.AddFunction(ContentKeyFunctions.EditorNextObject);
+            common.AddFunction(ContentKeyFunctions.EditorPreviousObject);
+
             var human = contexts.GetContext("human");
             human.AddFunction(EngineKeyFunctions.MoveUp);
             human.AddFunction(EngineKeyFunctions.MoveDown);
