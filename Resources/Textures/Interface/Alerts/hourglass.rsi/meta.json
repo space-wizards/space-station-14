@@ -19,10 +19,11 @@
     {
         "name": "hourglass3",
         "delays": [
+            [
             0.4,
             0.4
+            ]
         ]
-
     },
     {
         "name": "hourglass4"

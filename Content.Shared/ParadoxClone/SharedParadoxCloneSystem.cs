@@ -26,7 +26,7 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     private static readonly EntProtoId ActionSpawn = "ActionParadoxCloneMaterialize";
     private static readonly ProtoId<AlertPrototype> Alert = "ParadoxHourglass";
 
-    private static readonly int AlertSeverityCount = 4;
+    private static readonly short AlertSeverityCount = 4;
 
     public override void Initialize()
     {
@@ -52,8 +52,12 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     {
         if (ent.Comp.IsWandering)
         {
+            // since on the client side it goes negative for a short while
+            if (ent.Comp.WanderTime < 0f)
+                return;
+
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Ceiling(((ent.Comp.MaxWanderTime - ent.Comp.WanderTime) / ent.Comp.MaxWanderTime) * AlertSeverityCount);
+            var severity = (short)Math.Ceiling((ent.Comp.MaxWanderTime - ent.Comp.WanderTime) / ent.Comp.MaxWanderTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
             ent.Comp.WanderTime -= frameTime;
@@ -66,8 +70,12 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
         }
         else
         {
+            // since on the client side it goes negative for a short while
+            if (ent.Comp.ListenTime < 0f)
+                return;
+
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Ceiling(((ent.Comp.MaxListenTime - ent.Comp.ListenTime) / ent.Comp.MaxListenTime) * AlertSeverityCount);
+            var severity = (short)Math.Ceiling((ent.Comp.MaxListenTime - ent.Comp.ListenTime) / ent.Comp.MaxListenTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
             ent.Comp.ListenTime -= frameTime;
