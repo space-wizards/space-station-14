@@ -28,12 +28,14 @@ public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
 
     private void OnSolutionContainerChanged(Entity<SolutionAppearanceComponent> ent, ref SolutionChangedEvent args)
     {
-        UpdateAppearance(ent);
+        if (!_container.TryGetContainingContainer((ent, null, null), out var container))
+            return;
+        UpdateAppearance(ent, container, args.Solution);
     }
 
     private void OnEntGotInsertedIntoContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        UpdateAppearance(ent);
+        UpdateAppearance(ent, args.Container);
     }
 
     private void OnEntGotRemovedFromContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotRemovedFromContainerMessage args)
@@ -48,24 +50,18 @@ public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
         _appearance.SetData(args.Container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, false);
     }
 
-    private void UpdateAppearance(Entity<SolutionAppearanceComponent> ent)
+    private void UpdateAppearance(Entity<SolutionAppearanceComponent> ent, BaseContainer container, SolutionComponent? solutionComp = null)
     {
-        if (!_container.TryGetContainingContainer((ent, null, null), out var container))
-            return;
-
         if (!IsValidSolutionContainer(container.Owner, container.ID))
             return;
 
         if (!_entityWhitelist.CheckBoth(container.Owner, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        if (!TryComp<SolutionComponent>(ent.Owner, out var solutionComp))
+        if (solutionComp == null || !TryComp<SolutionComponent>(ent.Owner, out solutionComp))
             return;
 
-        if (!_solutionContainer.TryGetSolution(ent.Owner, solutionComp.Id, out var solutionEntity, out _))
-            return;
-
-        _solutionContainer.UpdateAppearance(container.Owner, (solutionEntity.Value.Owner, solutionEntity.Value.Comp));
+        _solutionContainer.UpdateAppearance(container.Owner, (ent.Owner, solutionComp!));
         _appearance.SetData(container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, true);
     }
 
