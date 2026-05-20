@@ -47,7 +47,7 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
