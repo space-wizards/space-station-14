@@ -65189,9 +65189,6 @@ entities:
     - type: Transform
       pos: 20.5,-27.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5773
     - type: AtmosPipeColor
@@ -66123,9 +66120,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 15.5,-27.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5773
     - type: AtmosPipeColor
