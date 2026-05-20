@@ -9,6 +9,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -183,6 +184,29 @@ public abstract partial class SharedGunSystem
             return;
 
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", GetBallisticShots(ent.Comp))));
+
+        if (TryGetNextAmmoName(ent, out var ammoName))
+            args.PushMarkup(Loc.GetString("gun-magazine-next-ammo", ("color", AmmoExamineColor), ("ammo", ammoName)));
+    }
+
+    private bool TryGetNextAmmoName(Entity<BallisticAmmoProviderComponent> entity, out string ammoName)
+    {
+        ammoName = string.Empty;
+
+        if (entity.Comp.Container.Count + entity.Comp.UnspawnedCount == 0)
+            return false;
+
+        if (entity.Comp.Container.Count == 0)
+        {
+            if (entity.Comp.Proto == null)
+                return false;
+
+            ammoName = ProtoManager.Index<EntityPrototype>(entity.Comp.Proto).Name;
+        }
+        else
+            ammoName = Name(entity.Comp.Entities[^1]);
+
+        return true;
     }
 
     private void ManualCycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
