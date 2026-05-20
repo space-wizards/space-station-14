@@ -89,7 +89,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         // TODO: Rework drawing to work with implant cases when surgery is in
         if (ent.Comp is { CurrentMode: ImplanterToggleMode.Draw, ImplantOnly: false })
         {
-            TryDraw(ent.Comp, args.User, target, ent);
+            TryDraw(ent, args.User, target);
         }
         else
         {
@@ -112,7 +112,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             if (args.User == target)
                 Implant(target, target, ent);
             else
-                TryImplant(ent.Comp, args.User, target, ent);
+                TryImplant(ent, args.User, target);
         }
 
         args.Handled = true;
@@ -172,9 +172,9 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// <summary>
     /// Attempt to implant someone else with a doafter.
     /// </summary>
-    public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
+    public void TryImplant(Entity<ImplanterComponent> ent, EntityUid user, EntityUid target)
     {
-        var args = new DoAfterArgs(EntityManager, user, component.ImplantTime, new ImplantEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, ent.Comp.ImplantTime, new ImplantEvent(), ent, target: target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -186,25 +186,36 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
 
-        var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
+        if (user != target)
+        {
+            var userName = Identity.Entity(user, EntityManager);
+            _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
+        }
     }
 
     /// <summary>
     /// Try to remove an implant and store it in an implanter
     /// </summary>
     // TODO: Remove when surgery is in
-    public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
+    public void TryDraw(Entity<ImplanterComponent> ent, EntityUid user, EntityUid target)
     {
-        var args = new DoAfterArgs(EntityManager, user, component.DrawTime, new DrawEvent(), implanter, target: target, used: implanter)
+        var args = new DoAfterArgs(EntityManager, user, ent.Comp.DrawTime, new DrawEvent(), ent, target: target, used: ent)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
             NeedHand = true,
         };
 
-        if (_doAfter.TryStartDoAfter(args))
-            _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+        if (!_doAfter.TryStartDoAfter(args))
+            return;
+
+        _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+
+        if (user != target)
+        {
+            var userName = Identity.Entity(user, EntityManager);
+            _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
+        }
     }
 
     private void OnImplant(Entity<ImplanterComponent> ent, ref ImplantEvent args)
@@ -298,8 +309,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// <returns>True if the target passes the checks</returns>
     protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
     {
-        return _whitelist.IsWhitelistPassOrNull(whitelist, target) &&
-            _whitelist.IsWhitelistFailOrNull(blacklist, target);
+        return _whitelist.CheckBoth(target, blacklist, whitelist);
     }
 
     /// <summary>
