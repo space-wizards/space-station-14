@@ -204,7 +204,7 @@
   - type: Produce
     seedId: towercap
   - type: ToolRefinable
-    toolQuality: Sawing
+    qualityNeeded: Sawing
     refineResult:
     - id: MaterialWoodPlank1
       amount: 2
