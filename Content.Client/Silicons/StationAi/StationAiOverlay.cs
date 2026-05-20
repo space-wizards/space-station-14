@@ -33,12 +33,20 @@ public sealed partial class StationAiOverlay : Overlay
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
 
+    private ProtoId<ShaderPrototype> _activeShader = CameraStaticShader;
     private float _updateRate = 1f / 30f;
     private float _accumulator;
 
     public StationAiOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _cfg.OnValueChanged(CCVars.DisableAiStatic, OnAiStaticChanged, invokeImmediately: true);
+
+    }
+
+    private void OnAiStaticChanged(bool toggle)
+    {
+        _activeShader = toggle ? CameraStaticAccessibleShader : CameraStaticShader;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -101,9 +109,7 @@ public sealed partial class StationAiOverlay : Overlay
             () =>
             {
                 worldHandle.SetTransform(invMatrix);
-                var shader = _cfg.GetCVar(CCVars.DisableAiStatic) ?
-                    _proto.Index(CameraStaticAccessibleShader).Instance() :
-                    _proto.Index(CameraStaticShader).Instance();
+                var shader = _proto.Index(_activeShader).Instance();
                 worldHandle.UseShader(shader);
                 worldHandle.DrawRect(worldBounds, Color.White);
             },
