@@ -24,6 +24,11 @@ public sealed partial class MagnetPickupSystem : EntitySystem
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
 
+    /// <summary>
+    /// Reused list of nearby pickup candidates so we can sort them deterministically without allocating every scan.
+    /// </summary>
+    private readonly List<EntityUid> _nearby = [];
+
 
     public override void Initialize()
     {
@@ -71,8 +76,11 @@ public sealed partial class MagnetPickupSystem : EntitySystem
             var playedSound = false;
             var finalCoords = xform.Coordinates;
             var moverCoords = _transform.GetMoverCoordinates(uid, xform);
+            _nearby.Clear();
+            _nearby.AddRange(_lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries));
+            _nearby.Sort((a, b) => GetNetEntity(a).CompareTo(GetNetEntity(b)));
 
-            foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
+            foreach (var near in _nearby)
             {
                 if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, near))
                     continue;
