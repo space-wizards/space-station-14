@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jrpl
-  changes:
-  - message: Gravity Generators can no longer be unanchored while they are active.
-    type: Fix
-  id: 9189
-  time: '2025-11-07T01:05:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41256
 - author: Hitlinemoss
   changes:
   - message: The golden plunger and security star have been moved to their respective
@@ -4082,3 +4075,14 @@
   id: 9700
   time: '2026-05-20T19:49:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44003
+- author: ScarKy0
+  changes:
+  - message: Vulpkanin can now use more saturated colors in the red-orange-yellow
+      range.
+    type: Tweak
+  - message: Vox are no longer hue restricted, but have decreased allowed saturation
+      in the red-pink colors.
+    type: Tweak
+  id: 9701
+  time: '2026-05-20T21:35:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43889
