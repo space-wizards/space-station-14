@@ -2047,11 +2047,15 @@
   waterConsumption: 0.60
   nutrientConsumption: 0.50
   chemicals:
-    Sugar:
+    Aluminium:
       Min: 1
-      Max: 5
-      PotencyDivisor: 20
-    Kelotane:
+      Max: 3
+      PotencyDivisor: 10
+    Potassium:
       Min: 1
-      Max: 5
+      Max: 3
+      PotencyDivisor: 10
+    Sulfur:
+      Min: 1
+      Max: 3
       PotencyDivisor: 10
