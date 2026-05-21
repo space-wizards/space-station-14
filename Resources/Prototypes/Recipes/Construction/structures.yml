@@ -1134,7 +1134,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   id: ConveyorBeltCorner
   graph: ConveyorCornerGraph
