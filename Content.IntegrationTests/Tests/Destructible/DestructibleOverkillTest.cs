@@ -1,55 +1,61 @@
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Destructible;
 
-public sealed class DestructibleOverkillTest
+/// <summary>
+/// Tests ensuring the correct operation of <see cref="SharedDestructibleSystem"/>.
+/// </summary>
+[TestFixture]
+public sealed class DestructibleOverkillTest : GameTest
 {
+    [SidedDependency(Side.Server)] private readonly IEntitySystemManager _sEntSysManager = default!;
+
+    /// <summary>
+    /// Test that an entity with consequences is destroyed cleanly when overkilled.
+    /// </summary>
     [Test]
-    public async Task Test()
+    public async Task EnsureOverkill()
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
+        var testMap = await Pair.CreateTestMap();
 
-        var testMap = await pair.CreateTestMap();
-
-        var sEntityManager = server.ResolveDependency<IEntityManager>();
-        var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-
-        var baseEntityCount = sEntityManager.EntityCount;;
+        // Entity count prior to spawning and destroying
+        var baseEntityCount = SEntMan.EntityCount;
 
         EntityUid sDestructibleEntity = default;
         TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
-        await server.WaitPost(() =>
+        // Spawn our test entity and threshold listener
+        await Server.WaitPost(() =>
         {
-            var coordinates = testMap.GridCoords;
-
-            sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-            sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+            sDestructibleEntity = SEntMan.SpawnEntity(DestructibleDestructionEntityId, testMap.GridCoords);
+            sTestThresholdListenerSystem = _sEntSysManager.GetEntitySystem<TestDestructibleListenerSystem>();
             sTestThresholdListenerSystem.ThresholdsReached.Clear();
         });
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>(TestBruteDamageGroupId);
+            var bruteDamageGroup = SProtoMan.Index<DamageGroupPrototype>(TestBruteDamageGroupId);
             DamageSpecifier bruteDamage = new(bruteDamageGroup, 200);
 
+            // Hit the destructible with enough damage to overkill
             Assert.DoesNotThrow(() =>
             {
-                sEntityManager.System<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
+                SEntMan.System<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
             });
 
+            // Our first threshold should be the overkill destruction
             var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
 
+            // Ensure that the threshold triggered and only has one behavior
             Assert.Multiple(() =>
             {
                 Assert.That(threshold.Triggered, Is.True);
@@ -58,15 +64,14 @@ public sealed class DestructibleOverkillTest
 
             var doActsBehavior = (DoActsBehavior)threshold.Behaviors.Single(b => b is DoActsBehavior);
 
+            // Ensure that the one act in this behavior is destruction
             Assert.Multiple(() =>
             {
                 Assert.That(doActsBehavior.HasAct(ThresholdActs.Destruction));
             });
         });
 
-        await server.WaitRunTicks(1);   // Wait for predicted delete
-        Assert.That(sEntityManager.EntityCount, Is.EqualTo(baseEntityCount), $"Overkill destructible test did not destroy cleanly.");
-
-        await pair.CleanReturnAsync();
+        await Server.WaitRunTicks(1);   // Wait for predicted delete
+        Assert.That(SEntMan.EntityCount, Is.EqualTo(baseEntityCount), $"Overkill destructible test did not destroy cleanly.");
     }
 }
