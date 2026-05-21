@@ -89,7 +89,7 @@ public sealed partial class LabelSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the text of the label from an entity, or <see cref="null"/> if it doesn't have a label.
+    /// Returns the text of the label from an entity, or <see langword="null"/> if it doesn't have a label.
     /// </summary>
     /// <param name="ent">The entity from which to get the label text.</param>
     [Pure]
