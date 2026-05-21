@@ -15,25 +15,19 @@ public sealed partial class ParadoxCloneComponent : Component
     public EntityUid ClonedBody;
 
     /// <summary>
-    ///     The remaining time the paradox clone has before being forced to wander.
+    /// Used to enforce MaxListenTime and MaxWanderTime
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ListenTime = 10f;
+    public TimeSpan Epoch;
 
     /// <summary>
-    ///     Initial ListenTime amount, used to display the alert
+    ///     Initial listening time amount, used to display the alert & make sure it gets forced correctly
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MaxListenTime = 10f;
 
     /// <summary>
-    ///     The remaining time the paradox clone has before being forced to spawn.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float WanderTime = 10f;
-
-    /// <summary>
-    ///     Initial WanderTime amount, used to display the alert
+    ///     Initial wandering time amount, used to display the alert & make sure wandering gets forced properly
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MaxWanderTime = 10f;

@@ -16,6 +16,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -29,6 +30,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     [Dependency] private readonly TargetSystem _target = default!;
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>
     /// The name of the container which contains the paradox clone ghost on an entity
@@ -104,8 +106,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
         _entMan.AddComponent(ghost, new ParadoxCloneComponent
         {
             ClonedBody = (EntityUid)clone,
-            ListenTime = ent.Comp.ListenTime,
-            WanderTime = ent.Comp.WanderingTime,
+            Epoch = _timing.CurTime,
             MaxWanderTime = ent.Comp.WanderingTime,
             MaxListenTime = ent.Comp.ListenTime
         });

@@ -6,12 +6,15 @@ using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.ParadoxClone;
 
 /// <summary>
-///  Handles everything related to paradox clones that isn't rule-related
+///  Handles everything related to paradox clones that isn't rule-related (it handles the spawning mechanics)
 /// </summary>
+// TODO: rework all of this to be generic and completely separate from the paradox clone
+
 public abstract class SharedParadoxCloneSystem : EntitySystem
 {
     [Dependency] protected SharedMindSystem _mindSystem = default!;
@@ -20,8 +23,8 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     [Dependency] protected SharedActionsSystem _actions = default!;
     [Dependency] protected SharedContainerSystem _containers = default!;
     [Dependency] protected readonly SharedPopupSystem _popup = default!;
-
     [Dependency] protected AlertsSystem _alerts = default!;
+    [Dependency] protected IGameTiming _timing = default!;
 
     private static readonly EntProtoId ActionSpawn = "ActionParadoxCloneMaterialize";
     private static readonly ProtoId<AlertPrototype> Alert = "ParadoxHourglass";
@@ -51,16 +54,17 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     {
         if (ent.Comp.IsWandering)
         {
+            var remainingTime = ent.Comp.MaxWanderTime - (_timing.CurTime - ent.Comp.Epoch).Seconds;
+
             // since on the client side it goes negative for a short while
-            if (ent.Comp.WanderTime < 0f)
+            if (remainingTime < 0f)
                 return;
 
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Floor((ent.Comp.MaxWanderTime - ent.Comp.WanderTime) / ent.Comp.MaxWanderTime * AlertSeverityCount);
+            var severity = (short)Math.Floor((ent.Comp.MaxWanderTime - remainingTime) / ent.Comp.MaxWanderTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
-            ent.Comp.WanderTime -= frameTime;
-            if (ent.Comp.WanderTime < 0f)
+            if (remainingTime < 0f)
             {
                 // force entity to spawn
                 Materialize(ent);
@@ -69,16 +73,17 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
         }
         else
         {
+            var remainingTime = ent.Comp.MaxListenTime - (_timing.CurTime - ent.Comp.Epoch).Seconds;
+
             // since on the client side it goes negative for a short while
-            if (ent.Comp.ListenTime < 0f)
+            if (remainingTime < 0f)
                 return;
 
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Floor((ent.Comp.MaxListenTime - ent.Comp.ListenTime) / ent.Comp.MaxListenTime * AlertSeverityCount);
+            var severity = (short)Math.Floor((ent.Comp.MaxListenTime - remainingTime) / ent.Comp.MaxListenTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
-            ent.Comp.ListenTime -= frameTime;
-            if (ent.Comp.ListenTime < 0f)
+            if (remainingTime < 0f)
             {
                 // force entity to wander
                 Wander(ent);
@@ -97,6 +102,9 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     /// </summary>
     private void Wander(Entity<ParadoxCloneComponent> ent)
     {
+        // Reset the timer
+        ent.Comp.Epoch = _timing.CurTime;
+
         // clear ALL actions (one of these should be the wander action)
         var actions = _actions.GetActions(ent.Owner);
         foreach (var action in actions)
@@ -130,6 +138,9 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     /// </summary>
     protected virtual void Materialize(Entity<ParadoxCloneComponent> ent)
     {
+        // Reset the timer
+        ent.Comp.Epoch = _timing.CurTime;
+
         // clear ALL actions (one of these should be the spawn action)
         var actions = _actions.GetActions(ent.Owner);
         foreach (var action in actions)
