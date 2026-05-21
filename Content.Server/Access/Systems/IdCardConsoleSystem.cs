@@ -195,7 +195,6 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // Find the set of tags that the original ID had that the console _didn't_know about.
         var hiddenChanges = oldTags.Except(component.AccessLevels);
 
-        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
         if (!visibleChanges.All(privilegedPerms.Contains))
         {
