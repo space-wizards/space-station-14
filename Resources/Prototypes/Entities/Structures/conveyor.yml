@@ -87,6 +87,9 @@
           Off: { state: conveyor_corner_stopped }
           Forward: { state: conveyor_corner_started }
           Reverse: { state: conveyor_corner_started_r }
+  - type: Construction
+    graph: ConveyorCornerGraph
+    node: entity
 
 - type: entity
   id: ConveyorBeltAssembly
