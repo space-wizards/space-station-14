@@ -4080,8 +4080,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/43889
 - author: TPgameing
   changes:
-  - message: Added the Fire Axe as a purchasable Syndicate Item for Atmospherics,
-      as well as letting you put it on the Suit storage slot!
+  - message: Fire axe now fits in suit storage.
     type: Add
   id: 9702
   time: '2026-05-21T17:36:37.0000000+00:00'
