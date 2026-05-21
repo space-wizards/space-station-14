@@ -190,8 +190,9 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         var removedTags = oldTags.Except(newAccessList);
         var changedTags = addedTags.Union(removedTags);
 
-        // Find the set of tags that the console changed and knew about, and the set of tags that the ID card had initially.
+        // Find the set of tags that the console changed and knew about.
         var visibleChanges = changedTags.Intersect(component.AccessLevels);
+        // Find the set of tags that the original ID had that the console _didn't_know about.
         var hiddenChanges = oldTags.Except(component.AccessLevels);
 
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
@@ -202,6 +203,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
+        // Restore all hidden tags to the newly requested set.
         var finalTags = newAccessList.Union(hiddenChanges);
         _access.TrySetTags(targetId, finalTags);
 
