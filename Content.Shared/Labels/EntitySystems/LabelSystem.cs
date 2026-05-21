@@ -82,7 +82,7 @@ public sealed partial class LabelSystem : EntitySystem
     /// Removes the label from an entity.
     /// </summary>
     /// <param name="ent">The entity from which the label should be removed.</param>
-    /// <returns>true if a label was removed, otherwise false.</returns>
+    /// <returns>true if a label was removed, or false if the entity already didn't have a label.</returns>
     public bool RemoveLabel(Entity<LabelComponent?> ent)
     {
         return RemCompDeferred<LabelComponent>(ent);
