@@ -8,20 +8,43 @@
   },
   "states": [
     {
-        "name": "hourglass0"
+        "name": "hourglass0",
+        "delays": [
+            [
+                0.2,
+                0.2,
+                0.2
+            ]
+        ]
     },
     {
-        "name": "hourglass1"
+        "name": "hourglass1",
+        "delays": [
+            [
+                0.2,
+                0.2,
+                0.2
+            ]
+        ]
     },
     {
-        "name": "hourglass2"
+        "name": "hourglass2",
+        "delays": [
+            [
+                0.2,
+                0.2,
+                0.2
+            ]
+        ]
     },
     {
         "name": "hourglass3",
         "delays": [
             [
-            0.4,
-            0.4
+            0.2,
+            0.2,
+            0.2,
+            0.2
             ]
         ]
     },

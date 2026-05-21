@@ -40,7 +40,6 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var query = _entMan.EntityQueryEnumerator<ParadoxCloneComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
@@ -57,7 +56,7 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
                 return;
 
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Ceiling((ent.Comp.MaxWanderTime - ent.Comp.WanderTime) / ent.Comp.MaxWanderTime * AlertSeverityCount);
+            var severity = (short)Math.Floor((ent.Comp.MaxWanderTime - ent.Comp.WanderTime) / ent.Comp.MaxWanderTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
             ent.Comp.WanderTime -= frameTime;
@@ -65,7 +64,7 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
             {
                 // force entity to spawn
                 Materialize(ent);
-                _popup.PopupEntity(Loc.GetString("paradox-clone-force-spawn"), ent.Owner, ent.Owner, PopupType.MediumCaution);
+                _popup.PopupEntity(Loc.GetString("paradox-clone-force-spawn"), ent.Owner, ent.Owner, PopupType.LargeCaution);
             }
         }
         else
@@ -75,7 +74,7 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
                 return;
 
             // Display the remaining time alert. We use ceil so that it only reaches the 0 remaining time alert when the time is effectively 0
-            var severity = (short)Math.Ceiling((ent.Comp.MaxListenTime - ent.Comp.ListenTime) / ent.Comp.MaxListenTime * AlertSeverityCount);
+            var severity = (short)Math.Floor((ent.Comp.MaxListenTime - ent.Comp.ListenTime) / ent.Comp.MaxListenTime * AlertSeverityCount);
             _alerts.ShowAlert(ent.Owner, Alert, severity);
 
             ent.Comp.ListenTime -= frameTime;
@@ -83,7 +82,7 @@ public abstract class SharedParadoxCloneSystem : EntitySystem
             {
                 // force entity to wander
                 Wander(ent);
-                _popup.PopupEntity(Loc.GetString("paradox-clone-force-wander"), ent.Owner, ent.Owner, PopupType.MediumCaution);
+                _popup.PopupEntity(Loc.GetString("paradox-clone-force-wander"), ent.Owner, ent.Owner, PopupType.LargeCaution);
             }
         }
     }
