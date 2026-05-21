@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels.Components;
@@ -44,20 +45,69 @@ public sealed partial class LabelSystem : EntitySystem
     }
 
     /// <summary>
-    /// Apply or remove a label on an entity.
+    /// Add, change, or remove a label on an entity.
     /// </summary>
+    /// <remarks>
+    /// If <paramref name="text"/> is <see langword="null"/> or an empty string, the <see cref="LabelComponent"/> will be removed.
+    /// </remarks>
     /// <param name="uid">EntityUid to change label on</param>
     /// <param name="text">intended label text (null to remove)</param>
     /// <param name="label">label component for resolve</param>
     /// <param name="metadata">metadata component for resolve</param>
+    // TODO - Change signature to `Label(Entity<LabelComponent?> ent, string? text)`
     public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
     {
-        label ??= EnsureComp<LabelComponent>(uid);
+        // Remove a blank label
+        if (string.IsNullOrEmpty(text))
+        {
+            RemoveLabel((uid, label));
+            return;
+        }
 
-        label.CurrentLabel = text == null ? null : FormattedMessage.EscapeText(text);
+        label = EnsureComp<LabelComponent>(uid);
+
+        label.CurrentLabel = FormattedMessage.EscapeText(text);
         _nameModifier.RefreshNameModifiers(uid);
 
         Dirty(uid, label);
+    }
+
+    /// <summary>
+    /// Removes the label from an entity.
+    /// </summary>
+    /// <param name="ent">The entity from which the label should be removed</param>
+    /// <returns>true if a label was removed, otherwise false.</returns>
+    public bool RemoveLabel(Entity<LabelComponent?> ent)
+    {
+        if (RemCompDeferred<LabelComponent>(ent))
+        {
+            _nameModifier.RefreshNameModifiers(ent.Owner);
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns the text of the label from an entity, or <see cref="null"/> if it doesn't have a label.
+    /// </summary>
+    /// <param name="ent">The entity from which to get the label text.</param>
+    [Pure]
+    public string? GetLabelText(Entity<LabelComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return null;
+
+        return ent.Comp.CurrentLabel;
+    }
+
+    /// <summary>
+    /// Returns true if an entity has a visible label.
+    /// </summary>
+    /// <param name="ent">The entity to check for a label.</param>
+    [Pure]
+    public bool HasLabel(EntityUid ent)
+    {
+        return HasComp<LabelComponent>(ent);
     }
 
     private void OnExamine(Entity<LabelComponent> ent, ref ExaminedEvent args)
@@ -75,7 +125,8 @@ public sealed partial class LabelSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel))
+        // We need to check Running so labels queued for deferred removal don't get applied.
+        if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel) && entity.Comp.Running)
             args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
     }
 
