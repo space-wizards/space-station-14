@@ -44,13 +44,15 @@ public sealed class DestructibleOverkillTest : GameTest
         await Server.WaitAssertion(() =>
         {
             var bruteDamageGroup = SProtoMan.Index<DamageGroupPrototype>(TestBruteDamageGroupId);
-            DamageSpecifier bruteDamage = new(bruteDamageGroup, 200);
+            var bruteDamage = new DamageSpecifier(bruteDamageGroup, 200);
 
             // Hit the destructible with enough damage to overkill
             Assert.DoesNotThrow(() =>
             {
                 SEntMan.System<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
             });
+
+            // We now verify that our component has the properties we expect
 
             // Our first threshold should be the overkill destruction
             var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
@@ -72,6 +74,8 @@ public sealed class DestructibleOverkillTest : GameTest
         });
 
         await Server.WaitRunTicks(1);   // Wait for predicted delete
-        Assert.That(SEntMan.EntityCount, Is.EqualTo(baseEntityCount), $"Overkill destructible test did not destroy cleanly.");
+        Assert.That(SEntMan.EntityCount,
+            Is.EqualTo(baseEntityCount),
+            $"Overkill destructible test produced excess entities. Overkill did not behave as intended.");
     }
 }
