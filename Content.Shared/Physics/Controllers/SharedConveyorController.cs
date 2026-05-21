@@ -293,11 +293,7 @@ public abstract partial class SharedConveyorController : VirtualController
         conveyorRot += bestConveyor.Comp!.Angle;
 
         if (comp.State == ConveyorState.Reverse)
-        {
-            conveyorRot += MathF.PI;
-            if (comp.ConveyorCorner == true) // an additional 90° turn resulting in +270° or -90° for the reverse in corners. Since corners should be more rare than straight conveyors, the operations are performed in this order to reduce the total number of operations.
-                conveyorRot += HalfPI;
-        }
+            conveyorRot += comp.ConveyorCorner ? -HalfPI : MathF.PI
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;
 
