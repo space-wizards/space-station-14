@@ -1,5 +1,4 @@
 using Content.Shared.ParadoxClone;
-using Robust.Shared.Timing;
 
 namespace Content.Client.ParadoxClone;
 

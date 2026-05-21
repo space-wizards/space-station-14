@@ -36,7 +36,7 @@
     sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
 
-# ghost
+# ghost entity, the paradox clone's main body is created through the cloning system.
 - type: entity
   parent:
   - Incorporeal

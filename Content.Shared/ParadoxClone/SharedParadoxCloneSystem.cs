@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Mind;
-using Content.Shared.ParadoxClone;
 using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Containers;
@@ -26,9 +25,11 @@ public abstract partial class SharedParadoxCloneSystem : EntitySystem
     [Dependency] protected AlertsSystem _alerts = default!;
     [Dependency] protected IGameTiming _timing = default!;
 
+    // Materialize action that is given to the paradox clown when the Wander stage is reached. The wander action is given by an ActionGrant.
     private static readonly EntProtoId ActionSpawn = "ActionParadoxCloneMaterialize";
-    private static readonly ProtoId<AlertPrototype> Alert = "ParadoxHourglass";
 
+    // constants used to display the "you are running out of time" alert. Using a maximum severity of 4 hides the "no time"
+    private static readonly ProtoId<AlertPrototype> Alert = "ParadoxHourglass";
     private static readonly short AlertSeverityCount = 4;
 
     public override void Initialize()
@@ -46,11 +47,11 @@ public abstract partial class SharedParadoxCloneSystem : EntitySystem
         var query = _entMan.EntityQueryEnumerator<ParadoxCloneComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            TimePass((uid, comp), frameTime);
+            TimePass((uid, comp));
         }
     }
 
-    private void TimePass(Entity<ParadoxCloneComponent> ent, float frameTime)
+    private void TimePass(Entity<ParadoxCloneComponent> ent)
     {
         if (ent.Comp.IsWandering)
         {
@@ -98,7 +99,7 @@ public abstract partial class SharedParadoxCloneSystem : EntitySystem
     }
 
     /// <summary>
-    /// Makes a paradox clone entity wander
+    /// Makes a paradox clone entity wander (unlinks it from its original entity and let it look for a spawn location)
     /// </summary>
     private void Wander(Entity<ParadoxCloneComponent> ent)
     {
@@ -134,7 +135,7 @@ public abstract partial class SharedParadoxCloneSystem : EntitySystem
     }
 
     /// <summary>
-    /// Materializes the paradox clone, removing its ghost entity and spawning its real body.
+    /// Materializes the paradox clone, removing its ghost entity and spawning its "real" clone body.
     /// </summary>
     protected virtual void Materialize(Entity<ParadoxCloneComponent> ent)
     {

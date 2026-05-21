@@ -3,7 +3,6 @@ using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Medical.SuitSensors;
 using Content.Server.Objectives.Components;
-using Content.Shared.Actions;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
@@ -32,7 +31,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>
-    /// The name of the container which contains the paradox clone ghost on an entity
+    /// The name of the container slot which contains the paradox clone ghost on an entity
     /// </summary>
     public const string ContainerName = "ParadoxCloneBox";
 
@@ -165,9 +164,5 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
             return;
 
         _mind.CopyObjectives(ent.Comp.OriginalMind.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
-
-        // give the ghost the materialize action so that it can spawn its "real" body when it desires
-        // var action = Spawn(ent.Comp.MaterializeAction);
-        // _actions.AddAction(args.EntityUid, ent.Comp.MaterializeAction, action);
     }
 }

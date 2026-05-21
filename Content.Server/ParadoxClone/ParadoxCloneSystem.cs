@@ -14,7 +14,7 @@ public sealed partial class ParadoxCloneSystem : SharedParadoxCloneSystem
             return;
 
         // unpause the clone, who was paused so that it doesnt die of spacing
-        SetPaused((EntityUid)ent.Comp.ClonedBody, false);
+        SetPaused(ent.Comp.ClonedBody, false);
 
         // transfer the mind and retrieve the body from nullspace
         _mindSystem.TransferTo(mind, ent.Comp.ClonedBody);
