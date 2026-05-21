@@ -83,7 +83,7 @@
       state: paradox
       shader: unshaded
     noRot: true
-    overrideContainerOcclusion: false # Whoever added this field to incorporeal, WHY???? I SPENT HALF AN HOUR ON SHOWCONTENTS BEFORE REALIZING THIS EXISTS"
+    overrideContainerOcclusion: false # Here because of Incorporeal.
 
 - type: entity
   parent: BaseAction
