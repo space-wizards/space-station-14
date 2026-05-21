@@ -1,6 +1,7 @@
 using System.Numerics;
-using Content.Shared.Serialization.TypeSerializers;
 using Robust.Client.Graphics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Client.TextScreen;
 
@@ -82,7 +83,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     ///     The next time that the text on each row should be scrolled.
     /// </summary>
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetArraySerializer))]
+    [DataField(customTypeSerializer: typeof(CustomArraySerializer<TimeSpan, TimeOffsetSerializer>))]
     public TimeSpan[] NextScrollTime = [TimeSpan.MaxValue, TimeSpan.MaxValue];
 
     /// <summary>
