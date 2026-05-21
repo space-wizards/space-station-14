@@ -15,14 +15,14 @@ namespace Content.Shared.ParadoxClone;
 /// </summary>
 // TODO: rework all of this to be generic and completely separate from the paradox clone
 
-public abstract class SharedParadoxCloneSystem : EntitySystem
+public abstract partial class SharedParadoxCloneSystem : EntitySystem
 {
     [Dependency] protected SharedMindSystem _mindSystem = default!;
     [Dependency] protected SharedTransformSystem _transformSystem = default!;
     [Dependency] protected IEntityManager _entMan = default!;
     [Dependency] protected SharedActionsSystem _actions = default!;
     [Dependency] protected SharedContainerSystem _containers = default!;
-    [Dependency] protected readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected SharedPopupSystem _popup = default!;
     [Dependency] protected AlertsSystem _alerts = default!;
     [Dependency] protected IGameTiming _timing = default!;
 
