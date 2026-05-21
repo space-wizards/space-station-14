@@ -396,6 +396,25 @@
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgunUranium
+  result: MagazineShotgunUranium
+  materials:
+    Plastic: 240
+    Uranium: 160
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineShotgunTranquilizer
+  result: MagazineShotgunTranquilizer
+  materials:
+    Plastic: 160
+    Steel: 80
+    Glass: 50
+    Plasma: 90
+    Silver: 50
+
+- type: latheRecipe
   parent: BaseAmmoBoxRecipe
   id: BoxLethalshot
   result: BoxLethalshot
@@ -426,14 +445,6 @@
     Uranium: 240
 
 - type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgunUranium
-  result: MagazineShotgunUranium
-  materials:
-    Plastic: 240
-    Uranium: 160
-
-- type: latheRecipe
   parent: BaseAmmoBoxRecipe
   id: BoxBeanbag
   result: BoxBeanbag
@@ -459,17 +470,6 @@
     Glass: 80
     Plasma: 160
     Silver: 80
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazineShotgunTranquilizer
-  result: MagazineShotgunTranquilizer
-  materials:
-    Plastic: 160
-    Steel: 80
-    Glass: 50
-    Plasma: 90
-    Silver: 50
 
 - type: latheRecipe
   parent: BaseAmmoBoxRecipe
