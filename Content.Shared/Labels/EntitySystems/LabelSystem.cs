@@ -23,6 +23,7 @@ public sealed partial class LabelSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LabelComponent, MapInitEvent>(OnLabelCompMapInit);
+        SubscribeLocalEvent<LabelComponent, ComponentShutdown>(OnLabelShutdown);
         SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<LabelComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
 
@@ -41,6 +42,11 @@ public sealed partial class LabelSystem : EntitySystem
             Dirty(ent);
         }
 
+        _nameModifier.RefreshNameModifiers(ent.Owner);
+    }
+
+    private void OnLabelShutdown(Entity<LabelComponent> ent, ref ComponentShutdown args)
+    {
         _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
@@ -75,16 +81,11 @@ public sealed partial class LabelSystem : EntitySystem
     /// <summary>
     /// Removes the label from an entity.
     /// </summary>
-    /// <param name="ent">The entity from which the label should be removed</param>
+    /// <param name="ent">The entity from which the label should be removed.</param>
     /// <returns>true if a label was removed, otherwise false.</returns>
     public bool RemoveLabel(Entity<LabelComponent?> ent)
     {
-        if (RemCompDeferred<LabelComponent>(ent))
-        {
-            _nameModifier.RefreshNameModifiers(ent.Owner);
-            return true;
-        }
-        return false;
+        return RemCompDeferred<LabelComponent>(ent);
     }
 
     /// <summary>
@@ -125,8 +126,8 @@ public sealed partial class LabelSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<LabelComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        // We need to check Running so labels queued for deferred removal don't get applied.
-        if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel) && entity.Comp.Running)
+        // We need to check lifestage so labels queued for deferred removal don't get applied.
+        if (!string.IsNullOrEmpty(entity.Comp.CurrentLabel) && entity.Comp.LifeStage < ComponentLifeStage.Stopping)
             args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
     }
 
