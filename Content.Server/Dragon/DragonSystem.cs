@@ -8,7 +8,6 @@ using Content.Shared.Dragon;
 using Content.Shared.Gibbing;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
@@ -22,21 +21,21 @@ namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
-    [Dependency] private readonly CarpRiftsConditionSystem _carpRifts = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private CarpRiftsConditionSystem _carpRifts = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private SmokeSystem _smoke = default!;
 
-    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
+    [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -53,8 +52,6 @@ public sealed partial class DragonSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
 
         SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
@@ -244,7 +241,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.ResetRifts(objId, obj);
                 break;
@@ -265,7 +262,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.RiftCharged(objId, obj);
                 break;

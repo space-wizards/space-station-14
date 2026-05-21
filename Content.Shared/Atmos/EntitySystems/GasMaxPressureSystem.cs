@@ -14,16 +14,16 @@ namespace Content.Shared.Atmos.EntitySystems;
 /// This handles gas volumes that have a maximum pressure, and the destructive results of them exceeding that pressure.
 /// You may call it the "MaxCapSystem" if you so desire.
 /// </summary>
-public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPressureHolder, IComponent
+public abstract partial class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPressureHolder, IComponent
 {
     private float _maxExplosivePower;
 
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedAtmosphereSystem Atmos = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
-    [Dependency] private readonly SharedExplosionSystem _explosions = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAtmosphereSystem Atmos = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private SharedExplosionSystem _explosions = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,7 +38,7 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
     private void OnDeviceUpdated(Entity<T> entity, ref AtmosDeviceUpdateEvent args)
     {
         // We don't update our atmos device if it's in the process of being deleted.
-        if (CheckStatus(entity))
+        if (CheckStatus(entity, args.dt))
             DeviceUpdated(entity, ref args);
     }
 
@@ -89,8 +89,9 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
     /// Checks the status of an atmos device that has a specified max pressure, and handles overpressure issues.
     /// </summary>
     /// <param name="entity">Gas holding atmos device.</param>
+    /// <param name="dt">Time since the last status update.</param>
     /// <returns>True if the device hasn't failed. False if the device has failed and been destroyed.</returns>
-    protected bool CheckStatus(Entity<T> entity)
+    protected bool CheckStatus(Entity<T> entity, float dt)
     {
         var pressure = entity.Comp.Air.Pressure;
 
@@ -117,13 +118,13 @@ public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPr
         if (pressure > entity.Comp.Overpressure)
         {
             IntegrityLost(entity);
-            entity.Comp.Integrity--;
+            entity.Comp.Integrity -= dt;
             Appearance.SetData(entity.Owner, GasIntegrity.Integrity, entity.Comp.Integrity);
             Appearance.SetData(entity.Owner, GasIntegrity.MaxIntegrity, entity.Comp.MaxIntegrity);
         }
         else if (entity.Comp.Integrity < entity.Comp.MaxIntegrity)
         {
-            entity.Comp.Integrity++;
+            entity.Comp.Integrity = Math.Min(entity.Comp.Integrity + dt, entity.Comp.MaxIntegrity);
             Appearance.SetData(entity.Owner, GasIntegrity.Integrity, entity.Comp.Integrity);
             Appearance.SetData(entity.Owner, GasIntegrity.MaxIntegrity, entity.Comp.MaxIntegrity);
         }

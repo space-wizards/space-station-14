@@ -10,9 +10,9 @@ namespace Content.Client.Atmos.EntitySystems;
 /// This system handles sprite changes for a <see cref="IGasMaxPressureHolder"/>
 /// with a <see cref="MaxPressureVisualsComponent"/> when its <see cref="IGasMaxPressureHolder.Integrity"/> changes.
 /// </summary>
-public sealed class MaxPressureVisualsSystem : EntitySystem
+public sealed partial class MaxPressureVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,10 +46,10 @@ public sealed class MaxPressureVisualsSystem : EntitySystem
         if (args.Sprite is not { } sprite)
             return;
 
-        if (!args.AppearanceData.TryGetValue(GasIntegrity.Integrity, out var obj) || obj is not int integrity)
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.Integrity, out var obj) || obj is not float integrity)
             return;
 
-        if (!args.AppearanceData.TryGetValue(GasIntegrity.MaxIntegrity, out obj) || obj is not int maxIntegrity)
+        if (!args.AppearanceData.TryGetValue(GasIntegrity.MaxIntegrity, out obj) || obj is not float maxIntegrity)
             return;
 
         // We don't want visuals at max integrity, so we return if we're at max.
