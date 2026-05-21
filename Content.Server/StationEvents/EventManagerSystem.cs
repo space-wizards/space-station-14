@@ -194,6 +194,15 @@ public sealed partial class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
+    ///   Runs a specific named event.
+    /// </summary>
+    public void RunNamedEvent(string eventId)
+    {
+        var ent = GameTicker.AddGameRule(eventId);
+        Log.Info($"Running event {eventId} as entity {ent}");
+    }
+
+    /// <summary>
     ///   Randomly picks a valid event.
     /// </summary>
     public string? PickRandomEvent()

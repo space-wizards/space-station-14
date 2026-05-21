@@ -2,8 +2,9 @@
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -28,11 +29,12 @@ namespace Content.Server.StationEvents.Metric;
 ///   Death: 20 per dead body,
 ///   Medical: 10 for crit + 0.05 * damage (so 5 for 100 damage),
 /// </summary>
-public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent>
+public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent>
 {
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public FixedPoint2 InventoryPower(EntityUid uid, CombatMetricComponent component)
     {
@@ -45,9 +47,12 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(uid))
         {
-            if (tagsQ.TryGetComponent(uid, out var tags))
+            if (tagsQ.TryGetComponent(item, out var tags))
             {
-                allTags.UnionWith(tags.Tags);
+                foreach (var tag in tags.Tags)
+                {
+                    allTags.Add(tag.Id);
+                }
             }
         }
 
@@ -80,15 +85,28 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
 
         while (query.MoveNext(out var uid, out var mind, out var mobState, out var damage, out var transform))
         {
-            // Don't count anything that is mindless
-            if (mind.Mind == null)
-                continue;
 
             // Only count threats currently on station, which avoids salvage threats getting counted for instance.
             // Note this means for instance Nukies on nukie planet don't count, so the threat will spike when they arrive.
             if (transform.GridUid == null || !stationGrids.Contains(transform.GridUid.Value))
+            {
                 // TODO: Check for NPCs here, they still count.
                 continue;
+            }
+
+            // Check for dead friendlies BEFORE checking mind null,
+            // because dead players have their mind moved to a ghost.
+            if (mobState.CurrentState == MobState.Dead)
+            {
+                death += combatMetric.DeadScore;
+                continue;
+            }
+
+            // Don't count anything that is mindless (alive mindless mobs like rats)
+            if (mind.Mind == null)
+            {
+                continue;
+            }
 
             // Read per-entity scaling factor (for instance space dragon has much higher threat)
             powerQ.TryGetComponent(uid, out var power);
@@ -112,7 +130,7 @@ public sealed class CombatMetricSystem : ChaosMetricSystem<CombatMetricComponent
                 }
                 else
                 {
-                    medical += damage.Damage.GetTotal() * combatMetric.MedicalMultiplier;
+                    medical += _damageable.GetTotalDamage((uid, damage)) * combatMetric.MedicalMultiplier;
                     if (mobState.CurrentState == MobState.Critical)
                     {
                         medical += combatMetric.CritScore;

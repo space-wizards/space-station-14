@@ -1,13 +1,14 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
-using Content.Shared.Humanoid;
+using Robust.Shared.Player;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
@@ -57,7 +58,7 @@ public sealed class PlayerCount
 ///   good or bad events to nudge it in the correct direction.
 /// </summary>
 [UsedImplicitly]
-public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
+public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
@@ -182,9 +183,7 @@ public sealed class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
             // TODO: A
             if (player.AttachedEntity != null)
             {
-                // TODO: Consider a custom component here instead of HumanoidAppearanceComponent to represent
-                //        "significant enough to count as a whole player"
-                if (HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
+                if (HasComp<ActorComponent>(player.AttachedEntity))
                 {
                     count.Players += 1;
                 }

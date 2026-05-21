@@ -243,6 +243,12 @@
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 40
+      Medical: 40
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
@@ -337,6 +343,9 @@
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
     weight: 8
+    chaos:
+      Atmos: 100
+      Medical: 50
   - type: GasLeakRule
 
 - type: entity
@@ -433,6 +442,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 20
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -454,6 +466,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 20
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -475,6 +490,9 @@
     weight: 5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 20
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -494,6 +512,9 @@
     weight: 1.5
     duration: 5
     maxDuration: 20
+    chaos:
+      Hostile: 20
+      Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 4, 8
@@ -510,6 +531,10 @@
     weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
     occursDuringRoundEnd: false
+    chaos:
+      Hostile: 100
+      Medical: 200
+      Death: 200
   - type: ZombieRule
   - type: AntagSelection
     antags:
@@ -530,6 +555,10 @@
     weight: 5.5
     minimumPlayers: 20
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
+    chaos:
+      Hostile: 200
+      Medical: 200
+      Death: 200
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/striker.yml
@@ -574,6 +603,8 @@
     duration: 150
     maxDuration: 300
     reoccurrenceDelay: 30
+    chaos:
+      Friend: 20
   - type: MassHallucinationsRule
     minTimeBetweenIncidents: 0.1
     maxTimeBetweenIncidents: 300
@@ -589,6 +620,10 @@
     weight: 8
     reoccurrenceDelay: 20
     duration: 1
+    chaos:
+      Hostile: 10
+      Friend: 20
+      Mess: 30
   - type: IonStormRule
 
 - type: entity
@@ -600,6 +635,10 @@
     minimumPlayers: 20
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
+    chaos:
+      Hostile: 20
+      Hunger: 10
+      Thirst: 10
   - type: MobReplacementRule
 
 - type: entity
@@ -612,6 +651,9 @@
     weight: 5
     minimumPlayers: 25
     reoccurrenceDelay: 20
+    chaos:
+      Atmos: 15
+      Mess: 30
   - type: GreytideVirusRule
     accessGroups:
     - Cargo
@@ -647,6 +689,9 @@
     reoccurrenceDelay: 20
     minimumPlayers: 4
     duration: null
+    chaos:
+      Hostile: 10
+      Friend: 10
   - type: SpaceSpawnRule
     spawnDistance: 0
 
@@ -712,6 +757,8 @@
   - type: StationEvent
     earliestStart: 25
     minimumPlayers: 15
+    chaos:
+      Hostile: 20
   - type: AntagSpawner
     prototype: PlayerBorgSyndicateDerelictGhostRole
   - type: AntagSelection

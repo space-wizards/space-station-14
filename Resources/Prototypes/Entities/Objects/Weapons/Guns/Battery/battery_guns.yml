@@ -435,9 +435,7 @@
   - type: Tag
     tags:
     - TurretCompatibleWeapon
-  - type: Tag
-    tags:
-      - Rifle
+    - Rifle
 
 - type: entity
   name: portable particle decelerator

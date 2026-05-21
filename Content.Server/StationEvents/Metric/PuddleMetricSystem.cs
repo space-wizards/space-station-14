@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
+﻿using Content.Server.Chemistry.EntitySystems;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
@@ -11,7 +11,7 @@ namespace Content.Server.StationEvents.Metric;
 ///
 ///   Jani - JaniMetricComponent.Puddles points per BaselineQty of various substances
 /// </summary>
-public sealed class PuddleMetricSystem : ChaosMetricSystem<PuddleMetricComponent>
+public sealed partial class PuddleMetricSystem : ChaosMetricSystem<PuddleMetricComponent>
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 

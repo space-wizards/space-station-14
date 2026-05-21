@@ -13,7 +13,7 @@ namespace Content.Server.StationEvents.Metric;
 ///   Power - PowerCost per door or firelock with no power
 ///   Atmos - PressureCost for holding spacing or FireCost for holding back fire
 /// </summary>
-public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
+public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
@@ -45,11 +45,11 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
 
             if (firelockQ.TryGetComponent(uid, out var firelock))
             {
-                if (firelock.DangerFire)
+                if (firelock.Temperature)
                 {
                     fireCount += 1;
                 }
-                else if (firelock.DangerPressure)
+                else if (firelock.Pressure)
                 {
                     pressureCount += 1;
                 }
@@ -67,7 +67,7 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
                 airlockCounter += 1;
             }
 
-            if (!power.PoweredLastUpdate ?? true)
+            if (!power.Powered)
             {
                 powerCount += 1;
             }
@@ -77,10 +77,16 @@ public sealed class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
 
         // Calculate each stat as a fraction of all doors in the station.
         //   That way the metrics do not "scale up" on large stations.
-        var emagChaos = (emagCount / airlockCounter) * component.EmagCost;
-        var atmosChaos = (fireCount / firelockCounter) * component.FireCost +
-                         (pressureCount / firelockCounter) * component.PressureCost;
-        var powerChaos = (powerCount / doorCounter) * component.PowerCost;
+        var emagChaos = airlockCounter > 0
+            ? (emagCount / airlockCounter) * component.EmagCost
+            : FixedPoint2.Zero;
+        var atmosChaos = firelockCounter > 0
+            ? (fireCount / firelockCounter) * component.FireCost +
+              (pressureCount / firelockCounter) * component.PressureCost
+            : FixedPoint2.Zero;
+        var powerChaos = doorCounter > 0
+            ? (powerCount / doorCounter) * component.PowerCost
+            : FixedPoint2.Zero;
 
         var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
         {

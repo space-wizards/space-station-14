@@ -90,6 +90,9 @@
   id: Boll # MaterialStorage whitelist: Sheetifier
 
 - type: Tag
+  id: Bomb # Used on explosive entities for categorization.
+
+- type: Tag
   id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
 
 - type: Tag
@@ -709,6 +712,9 @@
   id: Handcuffs # It's handcuffs. ConstructionGraph: makeshiftstunprod, Bola, PneumaticCannon
 
 - type: Tag
+  id: Hacking # Used on emag and hacking-related items.
+
+- type: Tag
   id: HandGrenade # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
@@ -827,6 +833,9 @@
 
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
+
+- type: Tag
+  id: Jetpack # Used on jetpack entities for categorization.
 
 ## K ##
 
@@ -1203,6 +1212,9 @@
 
 - type: Tag
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
+
+- type: Tag
+  id: Rifle # Used on rifle weapons for categorization.
 
 - type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
