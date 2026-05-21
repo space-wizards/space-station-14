@@ -127,7 +127,7 @@ public sealed class AllGamePresetsStartTest : AntagTest
             Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
             Assert.That(STicker.PlayerGameStatuses, Has.Count.EqualTo(players.Count));
         });
-        Assert.That(Client.EntMan.EntityExists(Client.AttachedEntity));
+        Assert.That(CEntMan.EntityExists(Client.AttachedEntity));
 
         var player = Pair.Player!.AttachedEntity!.Value;
         Assert.That(SEntMan.EntityExists(player));
