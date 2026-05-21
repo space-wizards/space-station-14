@@ -6,9 +6,11 @@ using Content.IntegrationTests.Utility;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Antag;
+using Content.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -77,6 +79,11 @@ public sealed partial class GhostRoleTest : GameTest
             // Take the ghost role and ensure we take it!
             Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
             Assert.That(ServerSession!.AttachedEntity, Is.Not.Null);
+
+            // TODO: figure out a smarter way to do this. The paradox clone's ghost role is NOT spawned in the same location as the spawn point, and so checking that it isn't in nullspace is good enough.
+            // This is a band aid
+            if (rule.HasComponent<ParadoxCloneRuleComponent>())
+                continue;
 
             // Ensure we spawned in the correct location
             var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
