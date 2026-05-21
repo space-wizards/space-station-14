@@ -40,6 +40,9 @@
   - type: StationEvent
     weight: 5
     duration: 120
+    chaos:
+      Hunger: -80
+      Thirst: -40
     earliestStart: 20
   - type: CargoGiftsRule
     description: cargo-gift-pizza-small

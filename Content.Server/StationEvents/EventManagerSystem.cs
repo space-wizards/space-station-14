@@ -194,7 +194,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly picks a valid event.
+    ///   Randomly picks a valid event.
     /// </summary>
     public string? PickRandomEvent()
     {
@@ -204,7 +204,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Pick a random event from the available events at this time, also considering their weightings.
+    ///   Pick a random event from the available events at this time, also considering their weightings.
     /// </summary>
     /// <returns></returns>
     public string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
@@ -239,7 +239,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the events that have met their player count, time-until start, etc.
+    ///   Gets the events that have met their player count, time-until start, etc.
     /// </summary>
     /// <param name="playerCountOverride">Override for player count, if using this to simulate events rather than in an actual round.</param>
     /// <param name="currentTimeOverride">Override for round time, if using this to simulate events rather than in an actual round.</param>
@@ -316,7 +316,7 @@ public sealed partial class EventManagerSystem : EntitySystem
         return TimeSpan.Zero;
     }
 
-    private bool CanRun(EntityPrototype prototype, StationEventComponent stationEvent, int playerCount, TimeSpan currentTime)
+    public bool CanRun(EntityPrototype prototype, StationEventComponent stationEvent, int playerCount, TimeSpan currentTime)
     {
         if (GameTicker.IsGameRuleActive(prototype.ID))
             return false;

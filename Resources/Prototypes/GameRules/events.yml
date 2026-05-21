@@ -114,6 +114,8 @@
       path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
+    chaos:
+      Anomaly: 100
   - type: AnomalySpawnRule
 
 - type: entity
@@ -130,6 +132,8 @@
       path: /Audio/Announcements/announce.ogg
     weight: 8
     duration: 35
+    chaos:
+      Anomaly: 40
   - type: BluespaceArtifactRule
 
 - type: entity
@@ -141,6 +145,8 @@
     reoccurrenceDelay: 5
     earliestStart: 1
     duration: 1
+    chaos:
+      Anomaly: 40
   - type: BluespaceLockerRule
 
 - type: entity
@@ -151,6 +157,8 @@
     weight: 7
     duration: 1
     minimumPlayers: 15
+    chaos:
+      Power: 100
   - type: BreakerFlipRule
 
 - type: entity
@@ -201,6 +209,12 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 100
+      Medical: 100
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -283,6 +297,12 @@
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Combat: 40
+      Death: 100
+      Medical: 100
   - type: RandomSpawnRule
     prototype: MobRevenant
 
@@ -328,6 +348,10 @@
     minimumPlayers: 15
     weight: 7
     duration: 240
+    chaos:
+      Hostile: 20
+      Friend: 20
+      Medical: 100
   - type: KudzuGrowthRule
 
 - type: entity
@@ -344,6 +368,8 @@
         volume: -4
     duration: 60
     maxDuration: 120
+    chaos:
+      Power: 200
   - type: PowerGridCheckRule
 
 - type: entity
@@ -358,6 +384,8 @@
       path: /Audio/Announcements/attention.ogg
     duration: 120
     maxDuration: 240
+    chaos:
+      Friend: 20
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -386,6 +414,8 @@
     minimumPlayers: 15
     weight: 5
     duration: 60
+    chaos:
+      Mess: 200
   - type: VentClogRule
 
 # Critters

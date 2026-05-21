@@ -1,0 +1,171 @@
+
+- type: entity
+  id: GameDirector
+  parent: BaseGameRule
+  noSpawn: true
+  # not abstract so that we can spawn an empty game director to just measure metrics
+  components:
+    - type: GameDirector
+      storyBeats:
+    - type: AnomalyMetric
+    - type: CombatMetric
+    - type: DoorMetric
+    - type: FoodMetric
+    - type: PuddleMetric
+
+- type: entity
+  id: CombatDynamic
+  parent: GameDirector
+  noSpawn: true
+  components:
+    - type: GameDirector
+      stories:
+        - RelaxedAttack
+        - ScienceAttack
+        - MajorCombat
+
+- type: entity
+  id: CalmDynamic
+  parent: GameDirector
+  noSpawn: true
+  components:
+    - type: GameDirector
+      stories:
+        - Relaxed
+        - Science
+
+- type: story
+  id: Relaxed
+  description: A small attack
+  beats:
+    - Peace
+    - AttackMild
+    - PowerIssues
+
+- type: story
+  id: Science
+  description: Science and engineering issues
+  minPlayers: 30
+  beats:
+    - Peace
+    - MadScience
+    - Peace
+    - PowerIssues
+    - RepairStation
+
+- type: story
+  id: RelaxedAttack
+  description: Mostly calm with a couple of minor problems.
+  beats:
+    - Peace
+    - AttackMild
+    - PowerIssues
+
+- type: story
+  id: ScienceAttack
+  description: Science, minor attack and then engineering issues
+  minPlayers: 30
+  beats:
+    - Peace
+    - MadScience
+    - AttackMild
+    - Peace
+    - PowerIssues
+    - RepairStation
+
+- type: story
+  id: MajorCombat
+  description: A minor and then major attack
+  minPlayers: 40
+  beats:
+    - Peace
+    - AttackMild
+    - PowerIssues
+    - Attackers
+    - RestoreOrder
+    - RepairStation
+    - Peace
+
+- type: storyBeat
+  id: Peace
+  description: Minor Chaos across a wide range
+  goal: # Try to achieve a wide range of different moderate values.
+    Combat: -200 # Friendly forces should have the upper hand
+    Anomaly: 100
+    Atmos: 200
+    Power: 100
+    Mess: 100
+    Hunger: 100
+    Thirst: 100
+    Medical: 100
+
+- type: storyBeat
+  id: PowerIssues
+  description: Create high engineering chaos
+  goal:   # Annoying engineering issues
+    Atmos: 400
+    Power: 400
+    Medical: 100
+
+- type: storyBeat
+  id: MadScience
+  description: Create high Science chaos
+  goal:
+    Anomaly: 400
+    Power: 100
+    Atmos: 100
+    Medical: 100
+  endIfAnyWorse:
+    Anomaly: 500   # Severe atmos, power or medical issues should end this beat.
+    Power: 300
+    Medical: 300
+    Death: 400
+    Combat: -100 # Friendly forces should retain the upper hand
+
+- type: storyBeat
+  id: Attackers
+  description: Drive high combat
+  goal:
+    Hostile: 100  # Quite a few hostiles
+  endIfAnyWorse:
+    Atmos: 800   # Severe atmos, power or medical issues should end this beat.
+    Power: 800
+    Medical: 600
+    Death: 400
+    Combat: -50 # Friendly forces should just retain the upper hand
+
+- type: storyBeat
+  id: AttackMild
+  description: Drive medium combat
+  goal:
+    Hostile: 40  # Perhaps 4 hostiles
+  endIfAnyWorse:
+    Atmos: 400   # Severe atmos, power or medical issues should end this beat.
+    Power: 400
+    Medical: 300
+    Death: 300
+    Combat: -100 # Friendly forces should easily retain the upper hand
+
+- type: storyBeat
+  id: RestoreOrder
+  description: Send help to quell disorder on the station
+  goal:
+    # Traitors: 0  # Try to drive down hostiles and engineering issues
+    Hostile: 10
+    Atmos: 0
+    Medical: 0
+  endIfAllBetter:
+    Atmos: 200
+    Hostile: 20
+    Medical: 200
+
+- type: storyBeat
+  id: RepairStation
+  description: Repair that station
+  goal:
+    Atmos: 0
+    Power: 0
+    Medical: 0
+  endIfAllBetter:
+    Atmos: 200
+    Power: 200
