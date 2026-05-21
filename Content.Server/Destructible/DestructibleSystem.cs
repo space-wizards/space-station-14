@@ -211,6 +211,10 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <summary>
     /// Adds an overkill threshold if one does not exist.
     /// </summary>
+    /// <remarks>
+    /// An overkill threshold is a top priority threshold that will destroy the entity without triggering any other
+    /// behaviors applied to the entity.
+    /// </remarks>
     /// <param name="entity">The entity, component tuple to target.</param>
     private void AddOverkillThreshold(Entity<DestructibleComponent> entity)
     {
