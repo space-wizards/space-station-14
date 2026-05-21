@@ -11,7 +11,6 @@ namespace Content.Client.Construction
     {
         private readonly ConstructionSystem _constructionSystem;
         private readonly ConstructionPrototype? _prototype;
-        private readonly SpriteSystem _sprite;
 
         public ConstructionSystem? CurrentConstructionSystem { get { return _constructionSystem; } }
         public ConstructionPrototype? CurrentPrototype { get { return _prototype; } }
@@ -22,7 +21,6 @@ namespace Content.Client.Construction
         {
             _constructionSystem = constructionSystem;
             _prototype = prototype;
-            _sprite = IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<SpriteSystem>();
             CanRotate = prototype?.CanRotate ?? true;
         }
 
@@ -58,7 +56,7 @@ namespace Content.Client.Construction
             if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(targetProtoId, out EntityPrototype? proto))
                 return;
 
-            manager.CurrentTextures = _sprite.GetPrototypeTextures(proto).ToList();
+            manager.CurrentTextures = _constructionSystem._sprite.GetPrototypeTextures(proto).ToList();
         }
     }
 }
