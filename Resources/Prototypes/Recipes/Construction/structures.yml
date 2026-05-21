@@ -1146,7 +1146,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   id: MetalDoor
   graph: DoorGraph
