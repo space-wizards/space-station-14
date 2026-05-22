@@ -410,12 +410,11 @@
     baseDecayRate: 0.25
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Slime
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 5
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatSlime
@@ -828,12 +827,11 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 1
   - type: ToolRefinable
     refineResult:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -2018,15 +2016,14 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: UnstableMutagen
-        Quantity: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-        - ReagentId: Uranium
-          Quantity: 10
+        Quantity: 50
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 5
+      - ReagentId: Uranium
+        Quantity: 10
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatRat
@@ -3516,16 +3513,16 @@
     baseDecayRate: 0.3
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Blood  # TODO Instead of this, eat from the bloodstream directly
-          Quantity: 55
-        - ReagentId: Fat
-          Quantity: 5
+  - type: Solution
+    id: food
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Blood # TODO Instead of this, eat from the bloodstream directly
+        Quantity: 55
+      - ReagentId: Fat
+        Quantity: 5
   - type: ToolRefinable
     refineResult:
     - id: FoodMeat
