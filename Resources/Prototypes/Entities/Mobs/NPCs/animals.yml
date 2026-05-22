@@ -127,12 +127,11 @@
         Base: dead
   - type: Extractable
     grindableSolutionName: food
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: GroundBee
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GroundBee
+        Quantity: 1
   - type: ToolRefinable
     refineResult:
     - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
@@ -2922,7 +2921,7 @@
 
 - type: entity
   abstract: true
-  parent: [SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobCorgiBase
   name: corgi
   description: Finally, a space corgi!
@@ -2970,7 +2969,7 @@
   #    state: creampie_corgi
 
 - type: entity
-  parent: MobCorgiBase
+  parent: [MobCorgiBase, BaseSlicingRefinable]
   id: MobCorgi
   components:
   - type: DamageStateVisuals

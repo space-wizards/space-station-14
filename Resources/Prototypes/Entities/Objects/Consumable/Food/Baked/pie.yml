@@ -502,6 +502,7 @@
   - type: ToolRefinable
     refineResult:
     - id: FoodPieAmanitaSlice
+      amount: 8
 
 - type: entity
   name: slice of amanita pie
@@ -545,6 +546,7 @@
   - type: ToolRefinable
     refineResult:
     - id: FoodPiePlumpSlice
+      amount: 8
 
 - type: entity
   name: slice of plump pie
