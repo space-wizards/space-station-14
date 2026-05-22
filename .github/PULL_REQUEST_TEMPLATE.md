@@ -1,42 +1,31 @@
-<!-- Guidelines: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
-
-## About the PR
-<!-- What did you change? -->
-
-## Why / Balance
-<!-- Discuss how this would affect game balance or explain why it was changed. Link any relevant discussions or issues. -->
-
-## Technical details
-<!-- Summary of code changes for easier review. -->
-
-## Test plan
 <!--
-Describe how you tested the pull request, and how someone reviewing this PR can test it themselves.
--->
+Pull requests must be atomic. Change one set of related things at a time.
+Test your changes. PRs that were not tested will not be accepted.
+Not including sections of the template may result in having your PR closed.
 
-## Media
-<!-- Attach media if the PR makes in-game changes (clothing, items, features, etc).
-Small fixes/refactors are exempt. Media may be used in SS14 progress reports with credit. -->
+You can self-label your PR. See https://ss13.moe/wiki/index.php/Guide_to_Writing_a_Pull_Request
+Common labels include bugfix, content, tweak, and balance. Enclose them in [ square brackets. -->
 
-## Requirements
-<!-- Confirm the following by placing an X in the brackets without spaces inside (for example: [X] ): -->
-- [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have tested this pull request and written instructions on how to test it
-- [ ] I have added media to this PR or it does not require an in-game showcase.
-<!-- You should understand that not following the above may get your PR closed at maintainer’s discretion -->
+<!-- You can post a header, sample images, and/or simple description here for a quick summary. -->
 
-## Breaking changes
-<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them.
-This will be posted in #codebase-changes. -->
+## What this does
+<!-- Describe here all changes included in the PR. -->
+<!-- If the PR addresses existing issues, here is where you would write "Closes #99999". See https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue -->
+
+## Why it's good
+<!-- Explain why you think these changes are good, or otherwise why you wanted to make them and have them merged. -->
+
+## How it was tested
+<!-- Document what procedures you used to test this PR here, including any images if helpful. -->
 
 ## Changelog
-<!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
-Make sure to read the guidelines and take this Changelog template out of the comment block in order for it to show up.
-Changelog must have a :cl: symbol, so the bot recognizes the changes and adds them to the game's changelog. -->
-<!--
+<!-- See https://ss13.moe/wiki/index.php/Guide_to_Writing_a_Pull_Request -->
 :cl:
-- add: Added fun!
-- remove: Removed fun!
-- tweak: Changed fun!
-- fix: Fixed fun!
--->
+ * rscadd: Added new thing.
+ * rscdel: Removed old thing.
+ * bugfix: Fixed a bug that caused something bad to happen.
+ * tweak: Changed a 5 to a 6.
+ * imageadd: Added new sprites.
+ * imagedel: Removed old sprites.
+ * experiment: Added an experimental/work-in-progress something.
+ * spellcheck: Fixed missing punctuation, typos or restructured a sentence.
