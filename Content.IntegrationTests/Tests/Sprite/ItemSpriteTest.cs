@@ -49,7 +49,7 @@ public sealed class ItemSpriteTest : GameTest
 
             Assert.That(spriteComponent?.Icon, Is.Not.Null, $"Item prototype \"{proto.ID}\" has no sprite. It should probably either be marked as abstract, not be an item, or have a valid sprite");
 
-            CEntMan.DeleteEntity(dummy);
+            CDeleteNow(dummy);
         }
     }
 }

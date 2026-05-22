@@ -33,7 +33,7 @@ public sealed class AutoInternalsTests : GameTest
             Assert.That(_sAtmos.HasAtmosphere(TestMap.Grid), Is.False, "Test map has atmosphere - test needs adjustment!");
             Assert.That(_sInternals.AreInternalsWorking(dummy), "Internals did not automatically connect!");
 
-            SEntMan.DeleteEntity(dummy);
+            SDeleteNow(dummy);
         });
     }
 
