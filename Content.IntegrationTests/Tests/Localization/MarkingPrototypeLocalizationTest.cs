@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Localization;
 
@@ -7,13 +8,6 @@ namespace Content.IntegrationTests.Tests.Localization;
 
 public sealed class MarkingPrototypeLocalizationTest
 {
-    // These categories do not show localized state names anyway, so localizing the state here is redundant.
-    // NOTE: Should this be localized anyway??
-    private readonly HashSet<MarkingCategories> _excludedStateCategories = [
-        MarkingCategories.Hair,
-        MarkingCategories.FacialHair
-    ];
-
     [Test]
     public async Task AllMarkingsLocalized()
     {
@@ -27,7 +21,8 @@ public sealed class MarkingPrototypeLocalizationTest
         {
             foreach (var proto in protoMan.EnumeratePrototypes<MarkingPrototype>())
             {
-                if (proto.SpeciesRestrictions?.Count == 0) // won't show up in the marking picker anyway
+                // markings with empty group whitelists won't show up in the marking picker anyway
+                if (proto.GroupWhitelist?.Count == 0)
                     continue;
 
                 var missingLocales = new List<string>();
@@ -36,8 +31,8 @@ public sealed class MarkingPrototypeLocalizationTest
                 if (!locMan.HasString(nameId))
                     missingLocales.Add(nameId);
 
-                // markings with forced coloring, hair, and facial hair will not show their layer states anyway
-                var statesExcluded = proto.ForcedColoring || _excludedStateCategories.Contains(proto.MarkingCategory);
+                // markings with forced coloring will not show their layer states anyway
+                var statesExcluded = proto.ForcedColoring;
                 if (!statesExcluded)
                     GetMissingStateLocales(proto, ref missingLocales, locMan);
 
