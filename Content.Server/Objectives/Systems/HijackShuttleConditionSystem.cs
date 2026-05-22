@@ -20,6 +20,8 @@ public sealed partial class HijackShuttleConditionSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _role = default!;
 
+    [Dependency] private EntityQuery<HumanoidProfileComponent> _humanoidsQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -78,7 +80,7 @@ public sealed partial class HijackShuttleConditionSystem : EntitySystem
                 continue;
             }
 
-            var isHumanoid = humanoids.HasComponent(player.AttachedEntity.Value);
+            var isHumanoid = _humanoidsQuery.HasComponent(player.AttachedEntity.Value);
             if (!isHumanoid) // Only humanoids count as enemies
                 continue;
 
