@@ -10,10 +10,10 @@ namespace Content.Server.RoundEnd;
 /// </summary>
 public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _configMan = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly EmergencyShuttleSystem _shuttleSys = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSys = default!;
+    [Dependency] private IConfigurationManager _configMan = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private EmergencyShuttleSystem _shuttleSys = default!;
+    [Dependency] private RoundEndSystem _roundEndSys = default!;
 
     public static readonly string AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
     private bool _shuttleEnabled;
