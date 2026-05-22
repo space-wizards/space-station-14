@@ -1732,5 +1732,12 @@ Entries:
   id: 211
   time: '2026-05-10T11:01:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43658
+- author: YoungThugSS14
+  changes:
+  - message: Removed the "spawnentitylist" command.
+    type: Remove
+  id: 212
+  time: '2026-05-12T19:52:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43934
 Name: Admin
 Order: 3
