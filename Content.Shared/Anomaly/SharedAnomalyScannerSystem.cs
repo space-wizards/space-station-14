@@ -8,14 +8,14 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Anomaly;
 
 /// <summary> System for controlling anomaly scanner device. </summary>
-public abstract class SharedAnomalyScannerSystem : EntitySystem
+public abstract partial class SharedAnomalyScannerSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {

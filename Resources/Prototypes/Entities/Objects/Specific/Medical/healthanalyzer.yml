@@ -1,19 +1,15 @@
 - type: entity
-  id: HandheldHealthAnalyzerUnpowered
   parent: BaseItem
+  id: HandheldHealthAnalyzer
   name: health analyzer
-  suffix: Always Powered
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
-    state: icon
     layers:
-      - state: icon
-      - state: analyzer
-        shader: unshaded
-        visible: true
-        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: icon
+    - state: analyzer
+      shader: unshaded
   - type: Item
     heldPrefix: analyzer
     storedRotation: -90
@@ -30,43 +26,7 @@
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: Tag
     tags:
-      - DiscreteHealthAnalyzer
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.BatteryVisuals.State:
-        enum.PowerDeviceVisualLayers.Powered:
-          Full: { visible: true }
-          Neither: { visible: true }
-          Empty: { visible: false }
+    - DiscreteHealthAnalyzer
   - type: GuideHelp
     guides:
     - MedicalDoctor
-
-- type: entity
-  id: HandheldHealthAnalyzer
-  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
-  suffix: ""
-  components:
-  - type: BatteryVisuals
-  - type: PowerCellDraw
-    drawRate: 1.2 #Calculated for 5 minutes on a small cell
-  - type: ToggleCellDraw
-  - type: ActivatableUIRequiresPowerCell
-
-- type: entity
-  id: HandheldHealthAnalyzerEmpty
-  parent: HandheldHealthAnalyzer
-  suffix: Empty
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-  - type: Sprite
-    layers:
-    - state: icon
-    - state: analyzer
-      shader: unshaded
-      visible: false
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]

@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -32,9 +31,9 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly SharedJobSystem _jobs = default!;
-        [Dependency] private readonly AdminSystem _admin = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private SharedJobSystem _jobs = default!;
+        [Dependency] private AdminSystem _admin = default!;
 
         public static readonly EntProtoId ObserverPrototypeName = "MobObserver";
         public static readonly EntProtoId AdminObserverPrototypeName = "AdminObserver";
@@ -201,7 +200,7 @@ namespace Content.Server.GameTicking
                     }
 
                     speciesId = roundStart.Count == 0
-                        ? SharedHumanoidAppearanceSystem.DefaultSpecies
+                        ? HumanoidCharacterProfile.DefaultSpecies
                         : _robustRandom.Pick(roundStart);
                 }
                 else
@@ -346,16 +345,16 @@ namespace Content.Server.GameTicking
 
             DebugTools.AssertNotNull(data);
 
-            var newMind = _mind.CreateMind(data!.UserId, character.Name);
-            _mind.SetUserId(newMind, data.UserId);
-
             jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-
-            _playTimeTrackings.PlayerRolesChanged(player);
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
             DebugTools.AssertNotNull(mobMaybe);
             mob = mobMaybe!.Value;
+
+            var newMind = _mind.CreateMind(data.UserId, Name(mob));
+            _mind.SetUserId(newMind, data.UserId);
+
+            _playTimeTrackings.PlayerRolesChanged(player);
 
             _mind.TransferTo(newMind, mob);
 
@@ -454,15 +453,13 @@ namespace Content.Server.GameTicking
                 _possiblePositions.Add(transform.Coordinates);
             }
 
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-
             // Fallback to a random grid.
             if (_possiblePositions.Count == 0)
             {
                 var query = AllEntityQuery<MapGridComponent>();
                 while (query.MoveNext(out var uid, out var grid))
                 {
-                    if (!metaQuery.TryGetComponent(uid, out var meta) || meta.EntityPaused || TerminatingOrDeleted(uid))
+                    if (!TryComp(uid, out MetaDataComponent? meta) || meta.EntityPaused || TerminatingOrDeleted(uid))
                     {
                         continue;
                     }
@@ -501,7 +498,7 @@ namespace Content.Server.GameTicking
             {
                 var mapUid = _map.GetMapOrInvalid(map);
 
-                if (!metaQuery.TryGetComponent(mapUid, out var meta)
+                if (!TryComp(mapUid, out MetaDataComponent? meta)
                     || meta.EntityPaused
                     || TerminatingOrDeleted(mapUid))
                 {
