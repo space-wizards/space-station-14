@@ -1,4 +1,4 @@
-using Content.Server.Mind;
+﻿using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
@@ -33,7 +33,6 @@ public sealed class CharacterInfoSystem : EntitySystem
         var entity = args.SenderSession.AttachedEntity.Value;
 
         var objectives = new Dictionary<string, List<ObjectiveInfo>>();
-        var jobTitle = Loc.GetString("character-info-no-profession");
         string? briefing = null;
         ProtoId<JobPrototype>? job = null;
         if (_minds.TryGetMind(entity, out var mindId, out var mind))

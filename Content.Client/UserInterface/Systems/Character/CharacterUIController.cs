@@ -137,7 +137,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         UpdateRoleType();
         var job = _prototypeManager.Index(jobId);
         _window.NameLabel.Text = entityName;
-        _window.SubText.Text = job?.Name;
+        _window.SubText.Text = job != null ? Loc.GetString(job.Name) : null;
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
 

@@ -50,7 +50,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         EntityUid Entity,
         Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
-        ProtoId<JobPrototype>? JobID,
+        ProtoId<JobPrototype>? JobId,
         string EntityName
     );
 
