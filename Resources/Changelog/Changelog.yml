@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Princess-Cheeseballs
   changes:
-  - message: Items no longer spin on Conveyors
-    type: Fix
-  id: 9191
-  time: '2025-11-08T20:40:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37468
-- author: Princess-Cheeseballs
-  changes:
   - message: Paradox clones now copy forensics from the original
     type: Fix
   id: 9192
@@ -4086,3 +4079,11 @@
   id: 9702
   time: '2026-05-21T17:36:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37708
+- author: themias
+  changes:
+  - message: Prisoner IDs with permanent sentences show the correct message upon early
+      release.
+    type: Fix
+  id: 9703
+  time: '2026-05-22T16:28:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44018
