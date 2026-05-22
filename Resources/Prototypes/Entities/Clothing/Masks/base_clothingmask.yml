@@ -33,7 +33,7 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionFood, SolutionToolSmall, ClothingMaskBase]
+  parent: [SolutionFood, SolutionToolSmall, ClothingMaskBase, BaseSlicingRefinable]
   id: ClothingMaskBaseButcherable
   components:
   - type: ToolRefinable

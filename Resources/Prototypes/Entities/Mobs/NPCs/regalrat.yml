@@ -1,7 +1,7 @@
 - type: entity
   name: rat king
   id: MobRatKing
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat ]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -128,7 +128,7 @@
     attributes:
       gender: male
   - type: Tool
-    qualities: Slicing # Should work 🙏🙏🙏🙏
+    qualities: Slicing
 
 - type: entity
   id: MobRatKingBuff
@@ -170,7 +170,7 @@
 - type: entity
   name: rat servant
   id: MobRatServant
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat ]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable ]
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:

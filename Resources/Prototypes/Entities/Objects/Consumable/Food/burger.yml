@@ -2,7 +2,7 @@
 # Bun
 
 - type: entity
-  parent: FoodBreadSliceBase
+  parent: [FoodBreadSliceBase, BaseSlicingRefinableFood]
   id: FoodBreadBun
   name: bun
   description: A hamburger bun. Round and convenient to hold.

@@ -371,7 +371,7 @@
     tags: []
 
 - type: entity
-  parent: FoodDoughBase
+  parent: [FoodDoughBase, BaseSlicingRefinableFood]
   id: FoodDough
   name: dough
   description: A piece of dough.
@@ -411,7 +411,7 @@
     node: rolled
 
 - type: entity
-  parent: FoodDoughBase
+  parent: [FoodDoughBase, BaseSlicingRefinableFood]
   id: FoodDoughCornmeal
   name: cornmeal dough
   description: A piece of cornmeal dough.
@@ -433,7 +433,7 @@
     state: cornmealdough-slice
 
 - type: entity
-  parent: FoodDoughBase
+  parent: [FoodDoughBase, BaseSlicingRefinableFood]
   id: FoodDoughTortilla
   name: tortilla dough
   description: A piece of tortilla dough.
@@ -475,7 +475,7 @@
         Quantity: 7.5
 
 - type: entity
-  parent: FoodDoughBase
+  parent: [FoodDoughBase, BaseSlicingRefinableFood]
   id: FoodDoughCotton
   name: cotton dough
   description: A piece of fabric dough.
@@ -585,7 +585,7 @@
     state: dough-pie
 
 - type: entity
-  parent: FoodDough
+  parent: [FoodDough, BaseSlicingRefinableFood]
   id: FoodDoughFlat
   name: flat dough
   description: A flattened dough.
@@ -604,7 +604,7 @@
       amount: 4
 
 - type: entity
-  parent: FoodDoughCotton
+  parent: [FoodDoughCotton, BaseSlicingRefinableFood]
   id: FoodDoughCottonFlat
   name: flat cotton dough
   description: A flattened cotton dough.
@@ -651,7 +651,7 @@
     state: cakebatter
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingMixableBase]
+  parent: [SolutionSmall, FoodBakingMixableBase, BaseSlicingRefinableFood]
   id: FoodButter
   name: stick of butter
   description: A stick of delicious, golden, fatty goodness.
@@ -737,7 +737,7 @@
 
 - type: entity
   name: cheese wheel
-  parent: [SolutionNormal, FoodBakingBase]
+  parent: [SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood]
   id: FoodCheese
   description: A big wheel of delicious Cheddar.
   components:
@@ -792,7 +792,7 @@
       - state: cheesewedge-inhand-right
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingBase]
+  parent: [SolutionSmall, FoodBakingBase, BaseSlicingRefinableFood]
   id: FoodChevre
   name: chèvre log
   description: A soft log of creamy Chèvre.
@@ -848,7 +848,7 @@
     - Slice
 
 - type: entity
-  parent: [SolutionNormal, FoodBakingBase]
+  parent: [SolutionNormal, FoodBakingBase, BaseSlicingRefinableFood]
   id: FoodTofu
   name: tofu
   description: Solid white block with a subtle flavor.

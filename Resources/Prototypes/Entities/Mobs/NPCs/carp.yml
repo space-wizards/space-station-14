@@ -1,7 +1,7 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
   description: It's a space carp.
   abstract: true
   components:
@@ -254,12 +254,6 @@
         types:
           Slash: 10
           Bloodloss: 5
-    - type: ToolRefinable
-      refineResult:
-      - id: FoodMeatFish
-        amount: 4
-      - id: MaterialToothSharkminnow1
-        amount: 3
 
 - type: entity
   id: MobSharkSalvage

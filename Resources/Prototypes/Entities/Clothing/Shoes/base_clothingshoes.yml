@@ -26,7 +26,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBase, BaseSlicingRefinable]
   id: ClothingShoesBaseButcherable
   components:
   - type: ToolRefinable

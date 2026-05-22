@@ -666,7 +666,7 @@
       - state: plain-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseSlicingRefinableFood]
   id: FoodMeatTomato
   name: killer tomato meat
   description: A slice from a huge tomato.
@@ -688,7 +688,7 @@
       - state: tomato-inhand-right
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseSlicingRefinableFood]
   id: FoodMeatSalami
   name: salami
   description: A large tube of salami. Best not to ask what went into it.
@@ -717,7 +717,7 @@
         Blunt: 2
 
 - type: entity
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseSlicingRefinableFood]
   id: FoodMeatClown
   name: meat clown
   description: A delicious, round piece of meat clown. How horrifying.
@@ -921,7 +921,7 @@
         Quantity: 10
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatCooked
   name: steak
   description: A cooked slab of meat. Smells primal.
@@ -993,7 +993,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatBearCooked
   name: cooked bear
   description: A well-cooked slab of bear meat. Tough, but tasty with the right sides.
@@ -1022,7 +1022,7 @@
     heldPrefix: meatball
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatPenguinCooked
   name: penguin filet
   description: A cooked filet of penguin. Can be used as a substitute for fish in recipes.
@@ -1052,7 +1052,7 @@
         color: "#F7E3A3"
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatChickenCooked
   name: cooked chicken
   description: A cooked piece of chicken. Best used in other recipes.
@@ -1126,7 +1126,7 @@
         Quantity: 5
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatDuckCooked
   name: cooked duck
   description: A cooked piece of duck. Best used in other recipes.
@@ -1244,7 +1244,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatLizardCooked
   name: lizard steak
   description: Cooked, tough lizard meat.
@@ -1392,7 +1392,7 @@
         color: "#5B3E2A"
 
 - type: entity
-  parent: [SolutionLarge, FoodMeatCookedBase] # Intentionlly gets smaller when cooked
+  parent: [SolutionLarge, FoodMeatCookedBase, BaseSlicingRefinableFood] # Intentionlly gets smaller when cooked
   id: FoodMeatAnomalyCooked
   name: anomalous steak
   description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
@@ -1425,7 +1425,7 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: [FoodMeatCookedBase, BaseSlicingRefinableFood]
   id: FoodMeatDragonCooked
   name: dragon steak
   description: Pouring ketchup on this is considered a capital crime on most stations.

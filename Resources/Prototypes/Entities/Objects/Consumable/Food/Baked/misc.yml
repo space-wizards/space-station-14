@@ -540,7 +540,7 @@
         Quantity: 0.05
 
 - type: entity
-  parent: [SolutionNormal, FoodBakedBase]
+  parent: [SolutionNormal, FoodBakedBase, BaseSlicingRefinableFood]
   id: FoodBakedBrownieBatch
   name: brownies
   description: A pan of brownies.
@@ -555,7 +555,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/brownie.rsi
     state: brownie-batch
-  - type: SolutionContainerManager
+  - type: Solution
     solutions:
       food:
         maxVol: 88
@@ -599,7 +599,7 @@
     - Slice
 
 - type: entity
-  parent: [SolutionNormal, FoodBakedBase]
+  parent: [SolutionNormal, FoodBakedBase, BaseSlicingRefinableFood]
   id: FoodBakedCannabisBrownieBatch
   name: special brownies
   description: A pan of "special" brownies.
