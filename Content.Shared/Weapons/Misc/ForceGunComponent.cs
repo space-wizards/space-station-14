@@ -10,10 +10,10 @@ public sealed partial class ForceGunComponent : BaseForceGunComponent
     /// Maximum distance to throw entities.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ThrowDistance = 15f;
+    public float ThrowDistance = 50f;
 
     [DataField, AutoNetworkedField]
-    public float ThrowForce = 30f;
+    public float ThrowForce = 300f;
 
     [DataField("soundLaunch")]
     public SoundSpecifier? LaunchSound = new SoundPathSpecifier("/Audio/Weapons/soup.ogg")

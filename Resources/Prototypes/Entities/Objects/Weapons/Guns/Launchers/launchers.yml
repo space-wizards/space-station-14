@@ -391,7 +391,7 @@
       massLimit: 10000
       frequency: 15
       dampingRatio: 4
-      throwForce: 50
+      throwForce: 1000
       throwDistance: 100
       lineColor: "#18a2d5"
     - type: Sprite

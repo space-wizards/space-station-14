@@ -36,6 +36,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] private ThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
+    private const string TetherJointMirror = "tetherMirror";
 
     private const float SpinVelocity = MathF.PI;
     private const float AngularChange = 1f;
@@ -102,6 +103,19 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
             _physics.ApplyAngularImpulse(uid, shortFall, body: physics);
         }
+
+        var tetheredGunQuery = EntityQueryEnumerator<TetherGunComponent>();
+
+        while (tetheredGunQuery.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Tethered == null || comp.TetherEntity == null || comp.TetherMirrorEntity == null)
+                continue;
+            var gunCoords = TransformSystem.GetMapCoordinates(uid);
+            var tetheredCoords = TransformSystem.GetMapCoordinates(comp.Tethered.Value);
+            var tetherCoords = TransformSystem.GetMapCoordinates(comp.TetherEntity.Value);
+            var coords = gunCoords.Offset(tetheredCoords.Position - tetherCoords.Position);
+            TransformSystem.SetMapCoordinates(comp.TetherMirrorEntity.Value, coords);
+        }
     }
 
     private void OnTetherMove(RequestTetherMoveEvent msg, EntitySessionEventArgs args)
@@ -111,7 +125,11 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (user == null)
             return;
 
-        if (!TryGetTetherGun(user.Value, out var gunUid, out var gun) || gun.TetherEntity == null)
+        if (
+            !TryGetTetherGun(user.Value, out var gunUid, out var gun)
+            || gun.TetherEntity == null
+            || gun.TetherMirrorEntity == null
+        )
         {
             return;
         }
@@ -226,16 +244,21 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Invisible tether entity
         var tether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(target));
+        var mirrorTether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(gunUid));
         var tetherPhysics = Comp<PhysicsComponent>(tether);
         component.TetherEntity = tether;
+        component.TetherMirrorEntity = mirrorTether;
         _physics.WakeBody(tether);
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
+        var jointMirror = _joints.CreateDistanceJoint(mirrorTether, gunUid, id: TetherJointMirror);
 
         SharedJointSystem.LinearStiffness(component.Frequency, component.DampingRatio, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
         joint.Damping = damping;
         joint.MaxForce = component.MaxForce;
+        jointMirror.Stiffness = stiffness;
+        jointMirror.Damping = damping;
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
@@ -250,14 +273,17 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (component.Tethered == null)
             return;
 
-        if (component.TetherEntity != null)
+        if (component.TetherEntity != null && component.TetherMirrorEntity != null)
         {
             _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
+            _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
 
             if (_netManager.IsServer)
                 QueueDel(component.TetherEntity.Value);
+                QueueDel(component.TetherMirrorEntity.Value);
 
             component.TetherEntity = null;
+            component.TetherMirrorEntity = null;
         }
 
         if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))

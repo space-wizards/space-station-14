@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Weapons.Misc;
 
@@ -39,8 +40,18 @@ public abstract partial class SharedTetherGunSystem
             // Launch
             var tethered = component.Tethered;
             StopTether(uid, component, land: false);
-            _throwing.TryThrow(tethered!.Value, args.ClickLocation, component.ThrowForce, playSound: false);
-
+            if (
+                TryComp<PhysicsComponent>(Transform(uid).ParentUid, out var physics)
+                && TryComp<PhysicsComponent>(tethered!.Value, out var tetheredPhysics)
+            )
+            {
+                var thrownPos = TransformSystem.GetMapCoordinates(uid);
+                var mapPos = TransformSystem.ToMapCoordinates(args.ClickLocation);
+                var direction = mapPos.Position - thrownPos.Position;
+                var impulseVector = direction.Normalized() * component.ThrowForce;
+                _physics.ApplyLinearImpulse(tethered!.Value, impulseVector, body: tetheredPhysics);
+                _physics.ApplyLinearImpulse(Transform(uid).ParentUid, -impulseVector, body: physics);
+            }
             _audio.PlayPredicted(component.LaunchSound, uid, null);
         }
         else if (args.Target != null)

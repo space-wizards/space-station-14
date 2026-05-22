@@ -12,6 +12,11 @@ public abstract partial class BaseForceGunComponent : Component
     /// </summary>
     [DataField("tetherEntity"), AutoNetworkedField]
     public virtual EntityUid? TetherEntity { get; set; }
+    /// <summary>
+    /// The entity the tethered target has a joint to.
+    /// </summary>
+    [DataField("tetherMirrorEntity"), AutoNetworkedField]
+    public virtual EntityUid? TetherMirrorEntity { get; set; }
 
     /// <summary>
     /// The entity currently tethered.
