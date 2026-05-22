@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -157,7 +158,7 @@ public abstract partial class SharedStunSystem : EntitySystem
             TrySeeingStars(uid);
 
         var timeForLogs = duration.HasValue
-            ? duration.Value.Seconds.ToString()
+            ? duration.Value.TotalSeconds.ToString(CultureInfo.CurrentCulture)
             : "Infinite";
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {timeForLogs} seconds");
     }
@@ -285,7 +286,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time != null)
         {
             UpdateKnockdownTime((uid, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.Seconds} seconds");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.TotalSeconds} seconds");
         }
         else
         {
