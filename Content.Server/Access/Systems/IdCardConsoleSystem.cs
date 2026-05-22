@@ -193,7 +193,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // Find tags that the console changed and knew about.
         var visibleChanges = changedTags.Intersect(component.AccessLevels);
         // Find tags that the original ID had that the console can't change.
-        var hiddenChanges = oldTags.Except(component.AccessLevels);
+        var hiddenTags = oldTags.Except(component.AccessLevels);
 
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
         if (!visibleChanges.All(privilegedPerms.Contains))
@@ -203,15 +203,16 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
 
         // Restore all hidden tags to the newly requested set.
-        var finalTags = newAccessList.Union(hiddenChanges);
-        _access.TrySetTags(targetId, finalTags);
+        newAccessList.AddRange(hiddenTags);
+        _access.TrySetTags(targetId, newAccessList);
 
-        var changes = addedTags.Select(tag => "+" + tag).Union(removedTags.Except(hiddenChanges).Select(tag => "-" + tag));
+        var changeStrings = addedTags.Select(tag => "+" + tag) // All added tags.
+            .Concat(removedTags.Except(newAccessList).Select(tag => "-" + tag)); // All removed tags (except new set due to hidden tags)
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action,
-            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", changes)}] [{string.Join(", ", finalTags)}]");
+            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", changeStrings)}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>
