@@ -24,6 +24,9 @@ namespace Content.Server.Shuttles.Systems;
 // shuttle impact damage ported from Goobstation (AGPLv3) with agreement of all coders involved
 public sealed partial class ShuttleSystem
 {
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
+
     private bool _enabled;
     private float _minimumImpactInertia;
     private float _minimumImpactVelocity;
@@ -51,9 +54,6 @@ public sealed partial class ShuttleSystem
     private readonly ProtoId<ContentTileDefinition> _platingId = "Plating";
     private readonly EntProtoId _sparkEffect = "EffectSparks";
 
-    private EntityQuery<DamageableComponent> _dmgQuery;
-    private EntityQuery<ProjectileComponent> _projQuery;
-
     private HashSet<EntityUid> _countedEnts = new();
     private HashSet<EntityUid> _intersecting = new();
     // for _adminLogSpacing
@@ -62,9 +62,6 @@ public sealed partial class ShuttleSystem
     private void InitializeImpact()
     {
         SubscribeLocalEvent<ShuttleComponent, StartCollideEvent>(OnShuttleCollide);
-
-        _dmgQuery = GetEntityQuery<DamageableComponent>();
-        _projQuery = GetEntityQuery<ProjectileComponent>();
 
         Subs.CVar(_cfg, CCVars.ImpactEnabled, value => _enabled = value, true);
         Subs.CVar(_cfg, CCVars.MinimumImpactInertia, value => _minimumImpactInertia = value, true);
@@ -224,7 +221,6 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void ThrowEntitiesOnGrid(EntityUid gridUid, TransformComponent xform, Vector2 direction)
     {
-        var movedByPressureQuery = GetEntityQuery<MovedByPressureComponent>();
         var knockdownTime = TimeSpan.FromSeconds(5);
 
         var minsq = _minThrowVelocity * _minThrowVelocity;
@@ -247,7 +243,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // don't throw them if they have magboots
-            if (movedByPressureQuery.TryComp(ent, out var moved) && !moved.Enabled)
+            if (_movedByPressureQuery.TryComp(ent, out var moved) && !moved.Enabled)
                 continue;
 
             if (direction.LengthSquared() > minsq)
@@ -386,7 +382,7 @@ public sealed partial class ShuttleSystem
                 if (MathF.Abs(toCenter.X) > 0.5f || MathF.Abs(toCenter.Y) > 0.5f)
                     continue;
 
-                if (_dmgQuery.TryComp(localEnt, out var damageable))
+                if (_damageableQuery.TryComp(localEnt, out var damageable))
                 {
                     // Apply damage scaled by distance but capped to prevent gibbing
                     var scaledDamage = tileData.Energy * _damageMultiplier;

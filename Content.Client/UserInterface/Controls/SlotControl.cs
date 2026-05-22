@@ -6,6 +6,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -17,6 +18,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureRect BlockedRect { get; }
         public TextureRect HighlightRect { get; }
         public SpriteView HoverSpriteView { get; }
+        public Control AdminOverlays { get; }
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
@@ -166,6 +168,8 @@ namespace Content.Client.UserInterface.Controls
                 Visible = false,
             });
 
+            AddChild(AdminOverlays = new Control());
+
             StorageButton.OnKeyBindDown += args =>
             {
                 if (args.Function != EngineKeyFunctions.UIClick)
@@ -227,6 +231,16 @@ namespace Content.Client.UserInterface.Controls
             SpriteView.Visible = true;
             ProtoView.Visible = false;
             UpdateButtonTexture();
+        }
+
+        /// <summary>
+        /// Add an overlay to in the admin overlays location
+        /// </summary>
+        /// <param name="texturePath">The texture path to overlay.</param>
+        /// <param name="color">Color to modulate the texture with - if null no modulation.</param>
+        public void AddAdminOverlay(ResPath texturePath, Color? color = null)
+        {
+            AdminOverlays.AddChild(new SimpleSlotOverlay(texturePath.CanonPath, color));
         }
 
         /// <summary>
