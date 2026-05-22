@@ -190,9 +190,9 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         var removedTags = oldTags.Except(newAccessList);
         var changedTags = addedTags.Union(removedTags);
 
-        // Find the set of tags that the console changed and knew about.
+        // Find tags that the console changed and knew about.
         var visibleChanges = changedTags.Intersect(component.AccessLevels);
-        // Find the set of tags that the original ID had that the console _didn't_know about.
+        // Find tags that the original ID had that the console can't change.
         var hiddenChanges = oldTags.Except(component.AccessLevels);
 
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
