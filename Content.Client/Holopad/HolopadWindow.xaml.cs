@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Client.Holopad;
 
@@ -19,22 +18,18 @@ public sealed partial class HolopadWindow : FancyWindow
 {
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IGameTiming _timing = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
     private readonly SharedTelephoneSystem _telephoneSystem = default!;
     private readonly AccessReaderSystem _accessReaderSystem = default!;
     private readonly PopupSystem _popupSystem = default!;
+    private readonly ISawmill _sawmill = default!;
 
     private EntityUid? _owner = null;
     private HolopadUiKey _currentUiKey;
-    private TelephoneState _currentState;
-    private TelephoneState _previousState;
-    private TimeSpan _buttonUnlockTime;
-    private float _updateTimer = 0.25f;
-
-    private const float UpdateTime = 0.25f;
-    private TimeSpan _buttonUnlockDelay = TimeSpan.FromSeconds(0.5f);
+    private string _currentSearch = string.Empty;
 
     public event Action<NetEntity>? SendHolopadStartNewCallMessageAction;
     public event Action? SendHolopadAnswerCallMessageAction;
@@ -42,6 +37,9 @@ public sealed partial class HolopadWindow : FancyWindow
     public event Action? SendHolopadStartBroadcastMessageAction;
     public event Action? SendHolopadActivateProjectorMessageAction;
     public event Action? SendHolopadRequestStationAiMessageAction;
+
+    private TimeSpan _updateDelay = TimeSpan.FromSeconds(0.25f);
+    private TimeSpan _nextUpdate;
 
     public HolopadWindow()
     {
@@ -52,8 +50,7 @@ public sealed partial class HolopadWindow : FancyWindow
         _telephoneSystem = _entManager.System<SharedTelephoneSystem>();
         _accessReaderSystem = _entManager.System<AccessReaderSystem>();
         _popupSystem = _entManager.System<PopupSystem>();
-
-        _buttonUnlockTime = _timing.CurTime + _buttonUnlockDelay;
+        _sawmill = _logManager.GetSawmill("Holopad");
 
         // Assign button actions
         AnswerCallButton.OnPressed += args => { OnHolopadAnswerCallMessage(); };
@@ -78,10 +75,6 @@ public sealed partial class HolopadWindow : FancyWindow
         {
             BackgroundColor = new Color(82, 82, 82),
         };
-
-        EmergencyBroadcastText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-emergency-broadcast-in-progress")));
-        SubtitleText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-subtitle")));
-        OptionsText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-options")));
     }
 
     #region: Button actions
@@ -166,16 +159,28 @@ public sealed partial class HolopadWindow : FancyWindow
 
     public void UpdateState(Dictionary<NetEntity, string> holopads)
     {
-        if (_owner == null || !_entManager.TryGetComponent<TelephoneComponent>(_owner.Value, out var telephone))
+        if (!_entManager.TryGetComponent<TelephoneComponent>(_owner, out var telephone))
             return;
 
-        // Caller ID text
-        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.LightGray, "Default", 11);
-        var holoapdId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId.Item3, Color.LightGray, "Default", 11);
+        // Caller and holopad ID text
+        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId?.CallerId, telephone.LastCallerId?.CallerJob, Color.LightGray, "Default", 11);
+        var holopadId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId?.DeviceId, Color.LightGray, "Default", 11);
 
-        CallerIdText.SetMessage(FormattedMessage.FromMarkupPermissive(callerId));
-        HolopadIdText.SetMessage(FormattedMessage.FromMarkupPermissive(holoapdId));
-        LockOutIdText.SetMessage(FormattedMessage.FromMarkupPermissive(callerId));
+        if (!FormattedMessage.TryFromMarkup(callerId, out var callerIdMsg))
+        {
+            callerIdMsg = FormattedMessage.FromMarkupPermissive(callerId);
+            _sawmill.Error($"CallerId markup text was incorrectly formatted: {callerIdMsg}");
+        }
+
+        if (!FormattedMessage.TryFromMarkup(holopadId, out var holopadIdMsg))
+        {
+            holopadIdMsg = FormattedMessage.FromMarkupPermissive(holopadId);
+            _sawmill.Error($"HolopadId markup text was incorrectly formatted: {holopadIdMsg}");
+        }
+
+        CallerIdText.SetMessage(callerIdMsg);
+        LockOutIdText.SetMessage(callerIdMsg);
+        HolopadIdText.SetMessage(holopadIdMsg);
 
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();
@@ -183,7 +188,9 @@ public sealed partial class HolopadWindow : FancyWindow
 
         // Clear excess children from the contact list
         while (ContactsList.ChildCount > holopadArray.Length)
+        {
             ContactsList.RemoveChild(ContactsList.GetChild(ContactsList.ChildCount - 1));
+        }
 
         // Make / update required children
         for (int i = 0; i < holopadArray.Length; i++)
@@ -213,55 +220,57 @@ public sealed partial class HolopadWindow : FancyWindow
 
     private void UpdateAppearance()
     {
-        if (_owner == null || !_entManager.TryGetComponent<TelephoneComponent>(_owner.Value, out var telephone))
+        if (!_entManager.TryGetComponent<TelephoneComponent>(_owner, out var telephone))
             return;
 
-        if (_owner == null || !_entManager.TryGetComponent<HolopadComponent>(_owner.Value, out var holopad))
+        if (!_entManager.TryGetComponent<HolopadComponent>(_owner, out var holopad))
             return;
 
-        var hasBroadcastAccess = !_holopadSystem.IsHolopadBroadcastOnCoolDown((_owner.Value, holopad));
+        var broadcastOnCooldown = _holopadSystem.IsHolopadBroadcastOnCoolDown((_owner.Value, holopad));
         var localPlayer = _playerManager.LocalSession?.AttachedEntity;
 
+        // Update container visibility
         ControlsLockOutContainer.Visible = _holopadSystem.IsHolopadControlLocked((_owner.Value, holopad), localPlayer);
         ControlsContainer.Visible = !ControlsLockOutContainer.Visible;
 
-        // Temporarily disable the interface buttons when the call state changes to prevent any misclicks
-        if (_currentState != telephone.CurrentState)
+        // Update contact button visibility
+        if (SearchLineEdit.Text != _currentSearch)
         {
-            _previousState = _currentState;
-            _currentState = telephone.CurrentState;
-            _buttonUnlockTime = _timing.CurTime + _buttonUnlockDelay;
+            _currentSearch = SearchLineEdit.Text;
+
+            foreach (var child in ContactsList.Children)
+            {
+                if (child is not HolopadContactButton contactButton)
+                    continue;
+
+                var passesFilter = string.IsNullOrEmpty(SearchLineEdit.Text) ||
+                                   contactButton.Text?.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase) == true;
+
+                contactButton.Visible = passesFilter;
+            }
         }
 
-        var lockButtons = _timing.CurTime < _buttonUnlockTime;
-
-        // Make / update required children
-        foreach (var child in ContactsList.Children)
+        // Update timers
+        if (ControlsContainer.Visible)
         {
-            if (child is not HolopadContactButton contactButton)
-                continue;
+            var cooldown = _holopadSystem.GetHolopadBroadcastCoolDown((_owner.Value, holopad));
+            var cooldownString = $"{cooldown.Minutes:00}:{cooldown.Seconds:00}";
 
-            var passesFilter = string.IsNullOrEmpty(SearchLineEdit.Text) ||
-                               contactButton.Text?.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase) == true;
-
-            contactButton.Visible = passesFilter;
-            contactButton.Disabled = (_currentState != TelephoneState.Idle || lockButtons);
+            StartBroadcastButton.Text = broadcastOnCooldown
+                ? Loc.GetString("holopad-window-emergency-broadcast-with-countdown", ("countdown", cooldownString))
+                : Loc.GetString("holopad-window-emergency-broadcast");
         }
 
-        // Update control text
-        var cooldown = _holopadSystem.GetHolopadBroadcastCoolDown((_owner.Value, holopad));
-        var cooldownString = $"{cooldown.Minutes:00}:{cooldown.Seconds:00}";
+        if (ControlsLockOutContainer.Visible)
+        {
+            var lockout = _holopadSystem.GetHolopadControlLockedPeriod((_owner.Value, holopad));
+            var lockoutString = $"{lockout.Minutes:00}:{lockout.Seconds:00}";
 
-        StartBroadcastButton.Text = _holopadSystem.IsHolopadBroadcastOnCoolDown((_owner.Value, holopad)) ?
-            Loc.GetString("holopad-window-emergency-broadcast-with-countdown", ("countdown", cooldownString)) :
-            Loc.GetString("holopad-window-emergency-broadcast");
+            LockOutCountDownText.Text = Loc.GetString("holopad-window-controls-unlock-countdown", ("countdown", lockoutString));
+        }
 
-        var lockout = _holopadSystem.GetHolopadControlLockedPeriod((_owner.Value, holopad));
-        var lockoutString = $"{lockout.Minutes:00}:{lockout.Seconds:00}";
-
-        LockOutCountDownText.Text = Loc.GetString("holopad-window-controls-unlock-countdown", ("countdown", lockoutString));
-
-        switch (_currentState)
+        // Update call status text
+        switch (telephone.CurrentState)
         {
             case TelephoneState.Idle:
                 CallStatusText.Text = Loc.GetString("holopad-window-no-calls-in-progress"); break;
@@ -277,7 +286,7 @@ public sealed partial class HolopadWindow : FancyWindow
                 CallStatusText.Text = Loc.GetString("holopad-window-call-in-progress"); break;
 
             case TelephoneState.EndingCall:
-                if (_previousState == TelephoneState.Calling || _previousState == TelephoneState.Idle)
+                if (telephone.PreviousState == TelephoneState.Calling || telephone.PreviousState == TelephoneState.Idle)
                     CallStatusText.Text = Loc.GetString("holopad-window-call-rejected");
                 else
                     CallStatusText.Text = Loc.GetString("holopad-window-call-ending");
@@ -285,31 +294,29 @@ public sealed partial class HolopadWindow : FancyWindow
         }
 
         // Update control disability
-        AnswerCallButton.Disabled = (_currentState != TelephoneState.Ringing || lockButtons);
-        EndCallButton.Disabled = (_currentState == TelephoneState.Idle || _currentState == TelephoneState.EndingCall || lockButtons);
-        StartBroadcastButton.Disabled = (_currentState != TelephoneState.Idle || !hasBroadcastAccess || lockButtons);
-        RequestStationAiButton.Disabled = (_currentState != TelephoneState.Idle || lockButtons);
-        ActivateProjectorButton.Disabled = (_currentState != TelephoneState.Idle || lockButtons);
+        AnswerCallButton.Disabled = telephone.CurrentState is not TelephoneState.Ringing;
+        EndCallButton.Disabled = telephone.CurrentState is TelephoneState.Idle or TelephoneState.EndingCall;
+        StartBroadcastButton.Disabled = telephone.CurrentState is not TelephoneState.Idle || broadcastOnCooldown;
+        RequestStationAiButton.Disabled = telephone.CurrentState is not TelephoneState.Idle;
+        ActivateProjectorButton.Disabled = telephone.CurrentState is not TelephoneState.Idle;
 
         // Update control visibility
-        FetchingAvailableHolopadsContainer.Visible = (ContactsList.ChildCount == 0);
-        ActiveCallControlsContainer.Visible = (_currentState != TelephoneState.Idle || _currentUiKey == HolopadUiKey.AiRequestWindow);
+        FetchingAvailableHolopadsContainer.Visible = ContactsList.ChildCount == 0;
+        ActiveCallControlsContainer.Visible = telephone.CurrentState is not TelephoneState.Idle || _currentUiKey is HolopadUiKey.AiRequestWindow;
         CallPlacementControlsContainer.Visible = !ActiveCallControlsContainer.Visible;
-        CallerIdContainer.Visible = (_currentState == TelephoneState.Ringing);
-        AnswerCallButton.Visible = (_currentState == TelephoneState.Ringing);
+        CallerIdContainer.Visible = telephone.CurrentState is TelephoneState.Ringing;
+        AnswerCallButton.Visible = telephone.CurrentState is TelephoneState.Ringing;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        _updateTimer += args.DeltaSeconds;
+        if (_timing.CurTime < _nextUpdate)
+            return;
 
-        if (_updateTimer >= UpdateTime)
-        {
-            _updateTimer -= UpdateTime;
-            UpdateAppearance();
-        }
+        _nextUpdate = _timing.CurTime + _updateDelay;
+        UpdateAppearance();
     }
 
     private sealed class HolopadContactButton : Button

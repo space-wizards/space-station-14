@@ -933,6 +933,7 @@
 
 - type: construction
   id: SignalControlledValveAlt1
+  hide: true
   graph: GasBinary
   startNode: start
   targetNode: signalvalveAlt1
@@ -948,6 +949,7 @@
 
 - type: construction
   id: SignalControlledValveAlt2
+  hide: true
   graph: GasBinary
   startNode: start
   targetNode: signalvalveAlt2
