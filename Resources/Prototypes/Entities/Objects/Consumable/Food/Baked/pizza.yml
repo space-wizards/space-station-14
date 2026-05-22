@@ -12,15 +12,14 @@
       - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 180
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 120
-        - ReagentId: Vitamin
-          Quantity: 12
+  - type: Solution
+    solution:
+      maxVol: 180
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 120
+      - ReagentId: Vitamin
+        Quantity: 12
   - type: Item
     size: Normal
     shape:
