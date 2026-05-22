@@ -84,7 +84,7 @@ public sealed partial class StoryPrototype : IPrototype
     ///   A human-readable description string for logging / admins
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string Description = string.Empty;
+    public string Description = default!;
 
     /// <summary>
     ///   Minimum number of players on the station to pick this story
