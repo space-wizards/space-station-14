@@ -2,6 +2,7 @@
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Metric.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.StationEvents.Metric;
@@ -15,7 +16,20 @@ namespace Content.Server.StationEvents.Metric;
 /// </summary>
 public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricComponent>
 {
-    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
+
+    private HashSet<EntityUid> _emaggedDoors = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<AirlockComponent, GotEmaggedEvent>(OnDoorEmagged);
+    }
+
+    private void OnDoorEmagged(EntityUid uid, AirlockComponent airlock, ref GotEmaggedEvent args)
+    {
+        _emaggedDoors.Add(uid);
+    }
 
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, DoorMetricComponent component,
         CalculateChaosEvent args)
@@ -59,7 +73,7 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
 
             if (airlockQ.TryGetComponent(uid, out var airlock))
             {
-                if (door.State == DoorState.Emagging)
+                if (_emaggedDoors.Contains(uid))
                 {
                     emagCount += 1;
                 }

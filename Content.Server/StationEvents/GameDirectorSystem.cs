@@ -60,15 +60,15 @@ public sealed class PlayerCount
 [UsedImplicitly]
 public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EventManagerSystem _event = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IChatManager _chat = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -201,7 +201,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
     ///   Sorts the possible events and then picks semi-randomly.
     ///   when maxRandom is 1 it's always the "best" event picked. Higher values allow more events to be randomly selected.
     /// </summary>
-    protected RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
+    private RankedEvent SelectBest(List<RankedEvent> bestEvents, int maxRandom)
     {
         var ranked = bestEvents.OrderBy(ev => ev.Score).Take(maxRandom).ToList();
 
@@ -210,7 +210,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
                       // Of 3 items, there is (50% chance of 1, 36% chance of 2 and 14% chance of 3)
         rand *= ranked.Count - 1;
 
-        var rankedEvent = ranked[(int) Math.Round(rand)];
+        var rankedEvent = ranked[(int)Math.Round(rand)];
 
         // Pick this event
         var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.StationEvent));
@@ -218,10 +218,10 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         return rankedEvent;
     }
 
-    private void LogMessage(string message, bool showChat=true)
+    private void LogMessage(string message, bool showChat = true)
     {
         // TODO: LogMessage strings all require localization.
-        _adminLogger.Add(LogType.GameDirector, showChat?LogImpact.Medium:LogImpact.High, $"{message}");
+        _adminLogger.Add(LogType.GameDirector, showChat ? LogImpact.Medium : LogImpact.High, $"{message}");
         if (showChat)
         {
             _chat.SendAdminAnnouncement("GameDirector " + message);
@@ -255,7 +255,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
                     // Done with this beat (chaos exceeded set bad level)
                     _sawmill.Info($"StoryBeat {beatName} complete. Chaos exceeds {beat.EndIfAnyWorse} (EndIfAnyWorse).");
                 }
-                else if(!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
+                else if (!beat.EndIfAllBetter.Empty && chaos.AllBetterThan(beat.EndIfAllBetter))
                 {
                     // Done with this beat (chaos reached set good level)
                     _sawmill.Info($"StoryBeat {beatName} complete. Chaos better than {beat.EndIfAllBetter} (EndIfAllBetter).");
@@ -349,7 +349,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         // Fall back to improving all scores (not just the ones the beat is focused on)
         //   Generally this means reducing chaos (unspecified scores are desired to be 0).
         var allDesiredChange = beat.Goal - chaos;
-        result = FilterAndScore(scheduler, chaos, allDesiredChange, count, inclNoChaos:true);
+        result = FilterAndScore(scheduler, chaos, allDesiredChange, count, inclNoChaos: true);
 
         return result;
     }

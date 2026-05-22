@@ -45,7 +45,7 @@ public sealed partial class ChaosMetrics : IEquatable<ChaosMetrics>
     /// <summary>
     ///   Main chaos dictionary. Most ChaosMetrics functions exist to somehow modifying this.
     /// </summary>
-    [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<ChaosMetric, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
+    [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<ChaosMetric, FixedPoint2>)), ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<ChaosMetric, FixedPoint2> ChaosDict { get; set; } = new();
 
     /// <summary>

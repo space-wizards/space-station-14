@@ -18,13 +18,13 @@ public sealed partial class GameDirectorComponent : Component
     ///   How long until the next check for an event runs
     ///   Default value is how long until first event is allowed
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TimeNextEvent;
 
     /// <summary>
     ///   When the current beat started
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan BeatStart;
 
     /// <summary>
@@ -73,7 +73,7 @@ public sealed partial class GameDirectorComponent : Component
 ///   Gated by various settings such as the number of players
 /// </summary>
 [DataDefinition]
-[Prototype("story")]
+[Prototype]
 public sealed partial class StoryPrototype : IPrototype
 {
     [ViewVariables]
@@ -118,7 +118,7 @@ public sealed partial class StoryPrototype : IPrototype
 ///   the next round of chaos.
 /// </summary>
 [DataDefinition]
-[Prototype("storyBeat")]
+[Prototype]
 public sealed partial class StoryBeatPrototype : IPrototype
 {
     [ViewVariables]

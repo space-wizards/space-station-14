@@ -1008,7 +1008,6 @@
 - type: Tag
   id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
 
-## N ##
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
 

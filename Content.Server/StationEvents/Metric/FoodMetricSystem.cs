@@ -12,10 +12,8 @@ namespace Content.Server.StationEvents.Metric;
 ///   Measure crew's hunger and thirst
 ///
 /// </summary>
-public sealed class FoodMetricSystem : ChaosMetricSystem<FoodMetricComponent>
+public sealed partial class FoodMetricSystem : ChaosMetricSystem<FoodMetricComponent>
 {
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, FoodMetricComponent component,
         CalculateChaosEvent args)
     {
