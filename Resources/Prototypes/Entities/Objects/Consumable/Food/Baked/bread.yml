@@ -630,19 +630,17 @@
     refineResult:
     - id: FoodBreadBaguetteSlice
       amount: 12
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 120
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 78
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: TableSalt
-          Quantity: 3
-        - ReagentId: Blackpepper
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 78
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: TableSalt
+        Quantity: 3
+      - ReagentId: Blackpepper
+        Quantity: 3
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -902,19 +900,17 @@
     refineResult:
     - id: FoodBreadSausageSlice
       amount: 5
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 240
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 105
-        - ReagentId: Vitamin
-          Quantity: 10
-        - ReagentId: Protein
-          Quantity: 10
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 25
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 105
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: Protein
+        Quantity: 10
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 25
   - type: Sprite
     noRot: true
     drawdepth: Mobs

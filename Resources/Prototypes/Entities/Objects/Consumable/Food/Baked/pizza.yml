@@ -241,17 +241,15 @@
     refineResult:
     - id: FoodPizzaDonkpocketSlice
       amount: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 142
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 120
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: Omnizine
-          Quantity: 9
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 120
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: Omnizine
+        Quantity: 9
   - type: Tag
     tags:
     - Meat
@@ -306,17 +304,15 @@
     refineResult:
     - id: FoodPizzaDankSlice
       amount: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 135
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 102
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: THC
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 102
+      - ReagentId: Vitamin
+        Quantity: 3
+      - ReagentId: THC
+        Quantity: 30
 
 - type: entity
   name: slice of dank pizza
@@ -465,21 +461,19 @@
     refineResult:
     - id: FoodPizzaArnoldSlice
       amount: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 138
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 60
-        - ReagentId: Protein
-          Quantity: 18
-        - ReagentId: Vitamin
-          Quantity: 12
-        - ReagentId: Iron
-          Quantity: 18
-        - ReagentId: Omnizine
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 60
+      - ReagentId: Protein
+        Quantity: 18
+      - ReagentId: Vitamin
+        Quantity: 12
+      - ReagentId: Iron
+        Quantity: 18
+      - ReagentId: Omnizine
+        Quantity: 30
   - type: Tag
     tags:
     - Meat
@@ -715,17 +709,15 @@
     refineResult:
     - id: FoodPizzaWorldpeasSlice
       amount: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 120
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 90
-        - ReagentId: Happiness
-          Quantity: 15
-        - ReagentId: Pax
-          Quantity: 15
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 90
+      - ReagentId: Happiness
+        Quantity: 15
+      - ReagentId: Pax
+        Quantity: 15
 
 - type: entity
   name: slice of world peazza

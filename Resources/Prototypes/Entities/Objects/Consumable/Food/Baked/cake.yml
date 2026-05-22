@@ -1129,19 +1129,17 @@
     refineResult:
     - id: FoodCakeSuppermatterSlice
       amount: 8
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 200
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 120
-        - ReagentId: Vitamin
-          Quantity: 20
-        - ReagentId: Sugar
-          Quantity: 50
-        - ReagentId: Plasma
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 120
+      - ReagentId: Vitamin
+        Quantity: 20
+      - ReagentId: Sugar
+        Quantity: 50
+      - ReagentId: Plasma
+        Quantity: 10
   - type: Edible
     transferAmount: 12
   - type: Item
@@ -1259,21 +1257,19 @@
       - sweet
       - berry
       - motivating
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 55
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 70
-        - ReagentId: Vitamin
-          Quantity: 20
-        - ReagentId: Sugar
-          Quantity: 10
-        - ReagentId: Milk
-          Quantity: 10
-        - ReagentId: JuiceBerry
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 70
+      - ReagentId: Vitamin
+        Quantity: 20
+      - ReagentId: Sugar
+        Quantity: 10
+      - ReagentId: Milk
+        Quantity: 10
+      - ReagentId: JuiceBerry
+        Quantity: 10
   - type: ToolRefinable
     refineResult:
     - id: FoodCakeBerryDelightSlice

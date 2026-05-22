@@ -2567,14 +2567,13 @@
       - cotton
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: Cellulose
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Cellulose
+        Quantity: 10
   - type: ToolRefinable
     refineResult:
     - id: MaterialCotton1
@@ -2602,16 +2601,15 @@
       - pyrotton
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: Phlogiston
-          Quantity: 5
-        - ReagentId: Cellulose
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Phlogiston
+        Quantity: 5
+      - ReagentId: Cellulose
+        Quantity: 5
   - type: ToolRefinable
     refineResult:
     - id: MaterialPyrotton1

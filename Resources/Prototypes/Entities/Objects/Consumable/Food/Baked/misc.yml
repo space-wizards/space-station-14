@@ -556,16 +556,14 @@
     sprite: Objects/Consumable/Food/Baked/brownie.rsi
     state: brownie-batch
   - type: Solution
-    solutions:
-      food:
-        maxVol: 88
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 48
-        - ReagentId: Sugar
-          Quantity: 32
-        - ReagentId: Theobromine
-          Quantity: 8
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 48
+      - ReagentId: Sugar
+        Quantity: 32
+      - ReagentId: Theobromine
+        Quantity: 8
   - type: ToolRefinable
     refineResult:
     - id: FoodBakedBrownie
@@ -615,19 +613,17 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/brownie.rsi
     state: brownie-batch
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 104
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 48
-        - ReagentId: Sugar
-          Quantity: 32
-        - ReagentId: Theobromine
-          Quantity: 8
-        - ReagentId: THC
-          Quantity: 16
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 48
+      - ReagentId: Sugar
+        Quantity: 32
+      - ReagentId: Theobromine
+        Quantity: 8
+      - ReagentId: THC
+        Quantity: 16
   - type: ToolRefinable
     refineResult:
     - id: FoodBakedCannabisBrownie

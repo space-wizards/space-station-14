@@ -684,13 +684,11 @@
         density: 10
         mask:
         - ItemMask
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 60
-        reagents:
-        - ReagentId: Butter
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Butter
+        Quantity: 30
   - type: ToolRefinable
     refineResult:
     - id: FoodButterSlice
@@ -752,12 +750,11 @@
     refineResult:
     - id: FoodCheeseSlice
       amount: 4
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 60
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 60
 
 - type: entity
   parent: [SolutionTiny, FoodBakingBase]
@@ -811,15 +808,13 @@
     refineResult:
     - id: FoodChevreSlice
       amount: 6
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 60
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 24
-        - ReagentId: Vitamin
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 24
+      - ReagentId: Vitamin
+        Quantity: 6
 
 - type: entity
   parent: [SolutionTiny, FoodBakingBase]
@@ -860,15 +855,13 @@
       - tofu
   - type: Sprite
     state: tofu
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 75
-        reagents:
-        - ReagentId: Protein
-          Quantity: 45
-        - ReagentId: Nutriment
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Protein
+        Quantity: 45
+      - ReagentId: Nutriment
+        Quantity: 30
   - type: ToolRefinable
     refineResult:
     - id: FoodTofuSlice
