@@ -28,6 +28,12 @@ public sealed partial class GhostRoleComponent : Component
     [DataField("prob")]
     public float Probability = 1f;
 
+    /// <summary>
+    ///     Wether this ghost role can be followed by ghosts while still in the raffle / available stage.
+    /// </summary>
+    [DataField]
+    public bool CanBeFollowed = true;
+
     // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
     [ViewVariables(VVAccess.ReadWrite)]

@@ -208,6 +208,7 @@
     - MindRoleParadoxClone
     raffle:
       settings: default
+    canBeFollowed: false
   - type: Sprite
     layers:
     - sprite: Markers/jobs.rsi

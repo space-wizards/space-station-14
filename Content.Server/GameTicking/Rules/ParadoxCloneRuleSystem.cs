@@ -71,21 +71,35 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
         }
         else
         {
-            // get possible targets
-            var allAliveHumanoids = _target.GetAliveHumans();
-
-            // we already checked when starting the gamerule, but someone might have died since then.
-            if (allAliveHumanoids.Count == 0)
+            var hadTarget = false;
+            if (args.Coords.IsValid(_entMan))
             {
-                Log.Warning("Could not find any alive players to create a paradox clone from!");
-                return;
+                if (_mind.TryGetMind(args.Coords.EntityId, out var mindId, out var mindComponent))
+                {
+                    ent.Comp.OriginalBody = args.Coords.EntityId;
+                    ent.Comp.OriginalMind = mindId;
+                }
             }
 
-            // pick a random player
-            var randomHumanoidMind = _random.Pick(allAliveHumanoids);
-            ent.Comp.OriginalMind = randomHumanoidMind;
-            ent.Comp.OriginalBody = randomHumanoidMind.Comp.OwnedEntity;
+            if (!hadTarget)
+            {
+                Log.Warning("Paradox clone didn't spawn on a living person with a mind");
+                // get possible targets
+                var allAliveHumanoids = _target.GetAliveHumans();
 
+                // we already checked when starting the gamerule, but someone might have died since then.
+                if (allAliveHumanoids.Count == 0)
+                {
+                    Log.Warning("Could not find any alive players to create a paradox clone from!");
+                    ForceEndSelf(ent.Owner);
+                    return;
+                }
+
+                // pick a random player
+                var randomHumanoidMind = _random.Pick(allAliveHumanoids);
+                ent.Comp.OriginalMind = randomHumanoidMind;
+                ent.Comp.OriginalBody = randomHumanoidMind.Comp.OwnedEntity;
+            }
         }
 
         // We spawn a clone in nullspace. It'll be retrieved later.

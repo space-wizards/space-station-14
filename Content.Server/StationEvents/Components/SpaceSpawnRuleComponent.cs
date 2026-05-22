@@ -21,5 +21,5 @@ public sealed partial class SpaceSpawnRuleComponent : Component
     /// Location that was picked.
     /// </summary>
     [DataField]
-    public MapCoordinates? Coords;
+    public EntityCoordinates? Coords;
 }

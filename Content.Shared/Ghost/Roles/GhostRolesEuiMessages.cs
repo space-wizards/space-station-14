@@ -32,6 +32,10 @@ namespace Content.Shared.Ghost.Roles
         /// </summary>
         public TimeSpan RaffleEndTime { get; set; }
 
+        /// <summary>
+        /// Wether this ghost role can be followed by ghosts. Can be used for ghost roles in which you would gain an advantage by spectating it beforehand
+        /// </summary>
+        public bool CanBeFollowed;
     }
 
     [NetSerializable, Serializable]

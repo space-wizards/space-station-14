@@ -71,7 +71,7 @@ public sealed partial class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
                     continue;
             }
 
-            args.Coordinates.Add(_transform.GetMapCoordinates(xform));
+            args.Coordinates.Add(xform.Coordinates);
         }
     }
 }

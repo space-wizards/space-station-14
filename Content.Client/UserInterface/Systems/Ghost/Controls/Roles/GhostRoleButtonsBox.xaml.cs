@@ -25,7 +25,13 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             {
                 var button = new GhostRoleEntryButtons(role);
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
-                button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+                button.FollowButton.OnPressed += _ =>
+                {
+                    if (role.CanBeFollowed)
+                        OnRoleFollow?.Invoke(role);
+                };
+
+                button.FollowButton.Disabled = !role.CanBeFollowed;
 
                 if (!hasAccess)
                 {

@@ -70,8 +70,7 @@ public sealed partial class GhostRoleTest : GameTest
             // Ensure the ghost role spawner spawned correctly!
             Assert.That(spawner.Rule, Is.EqualTo(gameRule));
             Assert.That(spawner.Definition, Is.Not.Null);
-            Assert.That(xform.MapUid, Is.Not.Null);
-            Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+            Assert.That(xform.Coordinates, Is.Not.EqualTo(new EntityCoordinates()));
 
             var value = rules[spawner.Definition.Value];
             rules[spawner.Definition.Value] = value - 1;
@@ -79,11 +78,6 @@ public sealed partial class GhostRoleTest : GameTest
             // Take the ghost role and ensure we take it!
             Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
             Assert.That(ServerSession!.AttachedEntity, Is.Not.Null);
-
-            // TODO: figure out a smarter way to do this. The paradox clone's ghost role is NOT spawned in the same location as the spawn point, and so checking that it isn't in nullspace is good enough.
-            // This is a band aid
-            if (rule.HasComponent<ParadoxCloneRuleComponent>())
-                continue;
 
             // Ensure we spawned in the correct location
             var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);

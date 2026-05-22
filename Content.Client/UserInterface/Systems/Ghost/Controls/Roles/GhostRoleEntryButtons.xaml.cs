@@ -13,12 +13,14 @@ public sealed partial class GhostRoleEntryButtons : BoxContainer
     private readonly GhostRoleKind _ghostRoleKind;
     private readonly uint _playerCount;
     private readonly TimeSpan _raffleEndTime = TimeSpan.MinValue;
+    private readonly bool _canBeFollowed;
 
     public GhostRoleEntryButtons(GhostRoleInfo ghostRoleInfo)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _canBeFollowed = ghostRoleInfo.CanBeFollowed;
         _ghostRoleKind = ghostRoleInfo.Kind;
         if (IsActiveRaffle(_ghostRoleKind))
         {
@@ -54,6 +56,8 @@ public sealed partial class GhostRoleEntryButtons : BoxContainer
         {
             RequestButton.Text = Loc.GetString(messageId);
         }
+        Log.Log(LogLevel.Info, "cat: " + _canBeFollowed.ToString());
+        FollowButton.Disabled = !_canBeFollowed;
     }
 
     private static bool IsActiveRaffle(GhostRoleKind kind)

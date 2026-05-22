@@ -49,8 +49,7 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
 
         // create the spawner!
         var xform = Transform(gridUid.Value);
-        var position = _transform.GetWorldPosition(xform) + location;
-        comp.Coords = new MapCoordinates(position, xform.MapID);
+        comp.Coords = xform.Coordinates;
         Sawmill.Info($"Picked location {comp.Coords} for {ToPrettyString(uid):rule}");
     }
 

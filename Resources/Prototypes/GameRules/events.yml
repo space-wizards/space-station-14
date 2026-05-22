@@ -267,7 +267,7 @@
     objectives:
     - ParadoxCloneKillObjective
     - ParadoxCloneLivingObjective
-  - type: SpaceSpawnRule # they "spawn" in space but are actually spawned on a random crew member afterwards. The spawn point is the only thing in space.
+  - type: AntagLivingSpawn # they "spawn" in space but are actually spawned on a random crew member afterwards. The spawn point is the only thing in space.
   - type: AntagSelection
     agentName: paradox-clone-round-end-agent-name
     antags:

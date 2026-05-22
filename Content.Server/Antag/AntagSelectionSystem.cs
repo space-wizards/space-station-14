@@ -72,6 +72,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private PlayTimeTrackingSystem _playTime = default!;
     [Dependency] private RoleSystem _role = default!;
     [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private EntityManager _entMan = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -158,8 +159,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // Ensure the player is allowed to play this antagonist!
         if (IsAntagBanned(args.Player, def) || !_playTime.IsAllowed(args.Player, def.PrefRoles))
             return;
+        if (!_entMan.TryGetComponent<TransformComponent>(ent.Owner, out var transform))
+        {
+            Log.Error($"Tried to make {args.Player.UserId} into an entagonist but no transform was present on game rule {ToPrettyString(ent)}");
+            return;
+        }
 
-        if (!TrySpawnAntagonist((rule, select), def, args.Player, _transform.GetMapCoordinates(ent), out var uid))
+        if (!TrySpawnAntagonist((rule, select), def, args.Player, transform.Coordinates, out var uid))
         {
             Log.Error($"Tried to make {args.Player.UserId} into an antagonist but was unable to spawn an entity for them. Game rule {ToPrettyString(ent)}");
             return;
@@ -691,13 +697,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (player.AttachedEntity is not { } uid)
         {
-            Log.Error($"Tried to make {player.UserId} into an antagonist at Map: { coordinates.Value.MapId } ({ coordinates.Value.X }, { coordinates.Value.Y }) but was unable to find an entity for them. Gamerule {ToPrettyString(gameRule)}. Antag {prototype.ID}");
+            Log.Error($"Tried to make {player.UserId} into an antagonist on parent: { ToPrettyString(coordinates.Value.EntityId) } ({ coordinates.Value.X }, { coordinates.Value.Y }) but was unable to find an entity for them. Gamerule {ToPrettyString(gameRule)}. Antag {prototype.ID}");
             return null;
         }
 
         // Move our entity to the new coordinates we found!
         var xform = Transform(uid);
-        _transform.SetMapCoordinates((uid, xform), coordinates.Value);
+        _transform.SetCoordinates(uid, coordinates.Value);
         return uid;
     }
 
@@ -708,8 +714,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private bool TrySpawnAntagonist(Entity<AntagSelectionComponent> gameRule,
         AntagSpecifierPrototype prototype,
         ICommonSession player,
-        MapCoordinates coordinates,
-        [NotNullWhen(true)]out EntityUid? uid)
+        EntityCoordinates coordinates,
+        [NotNullWhen(true)] out EntityUid? uid)
     {
         var ev = new AntagSelectEntityEvent(gameRule, prototype, coordinates, player);
         RaiseLocalEvent(gameRule, ref ev, true);
@@ -751,7 +757,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Raises an event to the gamerule to check all valid possible spawning points for this rule.
     /// Returns a random spawnpoint from a list of valid spawnpoints, or null if there weren't any.
     /// </summary>
-    private bool TryGetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, [NotNullWhen(true)] out MapCoordinates? coordinates, ICommonSession? session = null)
+    private bool TryGetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, [NotNullWhen(true)] out EntityCoordinates? coordinates, ICommonSession? session = null)
     {
         coordinates = GetValidSpawnPosition(ent, antag, session);
         return coordinates != null;
@@ -761,7 +767,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Raises an event to the gamerule to check all valid possible spawning points for this rule.
     /// Returns a random spawnpoint from a list of valid spawnpoints, or null if there weren't any.
     /// </summary>
-    private MapCoordinates? GetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, ICommonSession? session = null)
+    private EntityCoordinates? GetValidSpawnPosition(Entity<AntagSelectionComponent> ent, AntagSpecifierPrototype antag, ICommonSession? session = null)
     {
         var getPosEv = new AntagSelectLocationEvent(ent, antag, session);
         RaiseLocalEvent(ent, ref getPosEv, true);
@@ -838,14 +844,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 /// Only raised if the selected player's current entity is invalid.
 /// </summary>
 [ByRefEvent]
-public record struct AntagSelectEntityEvent(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Antag, MapCoordinates Coords, ICommonSession? Session)
+public record struct AntagSelectEntityEvent(Entity<AntagSelectionComponent> GameRule, AntagSpecifierPrototype Antag, EntityCoordinates Coords, ICommonSession? Session)
 {
     public readonly ICommonSession? Session = Session;
 
     /// list of antag role prototypes associated with a entity. used by the <see cref="AntagMultipleRoleSpawnerComponent"/>
     public readonly AntagSpecifierPrototype Antag = Antag;
 
-    public readonly MapCoordinates Coords = Coords;
+    public readonly EntityCoordinates Coords = Coords;
 
     public bool Handled => Entity != null;
 
@@ -866,7 +872,7 @@ public record struct AntagSelectLocationEvent(Entity<AntagSelectionComponent> Ga
     // the entity of the antagonist
     public AntagSpecifierPrototype Antag = Antag;
 
-    public List<MapCoordinates> Coordinates = new();
+    public List<EntityCoordinates> Coordinates = new();
 }
 
 /// <summary>

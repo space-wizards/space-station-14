@@ -674,7 +674,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
                 RolePrototypes = (jobs, antags),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
-                RaffleEndTime = raffleEndTime
+                RaffleEndTime = raffleEndTime,
+                CanBeFollowed = role.CanBeFollowed
             });
         }
 

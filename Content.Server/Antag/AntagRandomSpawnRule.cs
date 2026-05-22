@@ -6,8 +6,6 @@ namespace Content.Server.Antag;
 
 public sealed partial class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomSpawnComponent>
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,6 +27,6 @@ public sealed partial class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomS
     private void OnSelectLocation(Entity<AntagRandomSpawnComponent> ent, ref AntagSelectLocationEvent args)
     {
         if (ent.Comp.Coords != null)
-            args.Coordinates.Add(_transform.ToMapCoordinates(ent.Comp.Coords.Value));
+            args.Coordinates.Add(ent.Comp.Coords.Value);
     }
 }
