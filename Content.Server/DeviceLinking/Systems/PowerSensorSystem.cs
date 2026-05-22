@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
@@ -26,15 +25,9 @@ public sealed partial class PowerSensorSystem : EntitySystem
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    private EntityQuery<NodeContainerComponent> _nodeQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _nodeQuery = GetEntityQuery<NodeContainerComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<PowerSensorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PowerSensorComponent, ExaminedEvent>(OnExamined);
@@ -99,7 +92,7 @@ public sealed partial class PowerSensorSystem : EntitySystem
         var deviceNode = (CableDeviceNode) nodeContainer.Nodes[cable.Node];
 
         // update state based on the power stats retrieved from the selected power network
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
