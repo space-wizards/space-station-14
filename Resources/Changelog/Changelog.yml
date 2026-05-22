@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: The golden plunger and security star have been moved to their respective
-      roles' "Job trinkets" loadout tab.
-    type: Tweak
-  id: 9190
-  time: '2025-11-07T07:43:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41094
 - author: Princess-Cheeseballs
   changes:
   - message: Items no longer spin on Conveyors
@@ -4086,3 +4078,11 @@
   id: 9701
   time: '2026-05-20T21:35:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43889
+- author: TPgameing
+  changes:
+  - message: Added the Fire Axe as a purchasable Syndicate Item for Atmospherics,
+      as well as letting you put it on the Suit storage slot!
+    type: Add
+  id: 9702
+  time: '2026-05-21T17:36:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37708
