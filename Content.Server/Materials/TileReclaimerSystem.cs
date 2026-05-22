@@ -4,9 +4,9 @@ using Content.Shared.Maps;
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
-public sealed class TileReclaimerSystem : SharedTileReclaimerSystem
+public sealed partial class TileReclaimerSystem : SharedTileReclaimerSystem
 {
-    [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+    [Dependency] private MaterialStorageSystem _materialStorage = default!;
 
     protected override void SpawnMaterialsFromComposition(Entity<MaterialStorageComponent?, TransformComponent?> ent,
         ContentTileDefinition tileDefinition,
