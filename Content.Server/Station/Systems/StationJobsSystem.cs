@@ -419,7 +419,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <param name="pickOverflows">Whether or not to pick from the overflow list.</param>
     /// <param name="disallowedJobs">A set of disallowed jobs, if any.</param>
     /// <returns>The selected job, if any.</returns>
-    public ProtoId<JobPrototype>? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities, bool pickOverflows, IReadOnlySet<ProtoId<JobPrototype>> disallowedJobs)
+    public ProtoId<JobPrototype>? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities, bool pickOverflows, params HashSet<ProtoId<JobPrototype>> disallowedJobs)
     {
         if (station == EntityUid.Invalid)
             return null;
