@@ -26,4 +26,11 @@ do not create conflict surface and are not required here.
 | `.github/workflows/publish-testing.yml` | Deploys to Space Wizards infrastructure; active daily cron |
 | `.github/workflows/build-docfx.yml` | Builds the Space Wizards docs site |
 | `.github/workflows/benchmarks.yml` | Runs benchmarks on Space Wizards infrastructure (SSH, their secrets); active daily cron |
+| `.github/workflows/labeler-untriaged.yml` | Applies the non-curated `S: Untriaged` label; fails on every PR (read-only token + missing label) |
+| `.github/workflows/labeler-needsreview.yml` | Applies the non-curated `S: Needs Review` label; fails on every PR |
+| `.github/workflows/labeler-size.yml` | Applies non-curated `size/*` labels; fails on every PR |
+| `.github/workflows/labeler-conflict.yml` | Applies the non-curated `S: Merge Conflict` label; fails on any conflicted PR |
+| `.github/workflows/labeler-stable.yml` | Labels PRs to a `stable` branch the fork does not use |
+| `.github/workflows/labeler-staging.yml` | Labels PRs to a `staging` branch the fork does not use |
+| `.github/workflows/labeler-review.yml` | Hard-guarded to `space-wizards/space-station-14`; inert on the fork |
 | `CODE_OF_CONDUCT.md` | Needs a full rewrite; TBD completion |
