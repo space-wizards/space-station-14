@@ -71,7 +71,7 @@ public sealed partial class GhostRoleTest : GameTest
             // Ensure the ghost role spawner spawned correctly!
             Assert.That(spawner.Rule, Is.EqualTo(gameRule));
             Assert.That(spawner.Definition, Is.Not.Null);
-            Assert.That(xform.Coordinates, Is.Not.EqualTo(new EntityCoordinates()));
+            Assert.That(xform.Coordinates.IsValid(_entMan), Is.True);
 
             var value = rules[spawner.Definition.Value];
             rules[spawner.Definition.Value] = value - 1;
