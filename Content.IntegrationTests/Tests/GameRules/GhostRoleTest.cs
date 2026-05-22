@@ -25,6 +25,7 @@ public sealed partial class GhostRoleTest : GameTest
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GameTicker _ticker = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
+    [SidedDependency(Side.Server)] private IEntityManager _entMan = default!;
 
     private static string[] _antagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
 
@@ -81,15 +82,10 @@ public sealed partial class GhostRoleTest : GameTest
 
             // Ensure we spawned in the correct location
             var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
-            Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
 
-            // We break it up like this cause otherwise it'll sometimes randomly fail
-            // TODO: Engine IEquatable for EntityCoordinates
-            Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
-
-            // I will not get heisentest due to floating point errors
-            Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
-            Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
+            // Tests that the locations are close. We shouldn't need to check for grids since TryDistance would fail or return a very large number.
+            Assert.That(sessionXform.Coordinates.TryDistance(_entMan, xform.Coordinates, out var distance), Is.True);
+            Assert.That(MathHelper.CloseTo(distance, 0f, 0.001f));
         }
 
         // Ensure all ghost roles spawned and were assigned!!!

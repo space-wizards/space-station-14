@@ -3,7 +3,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Antag.Components;
 
 /// <summary>
-/// Spawns this rule's antags on a random living player.
+/// Spawns this rule's antags on a random living player, in a container.
 /// Requires <see cref="AntagSelectionComponent"/>.
 /// </summary>
 [RegisterComponent]

@@ -12,8 +12,6 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>
 {
-    [Dependency] private SharedTransformSystem _transform = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -44,12 +42,12 @@ public sealed partial class SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleCo
         var size = grid.LocalAABB.Size.Length() / 2;
         var distance = size + comp.SpawnDistance;
         var angle = RobustRandom.NextAngle();
+
         // position relative to station center
         var location = angle.ToVec() * distance;
 
         // create the spawner!
-        var xform = Transform(gridUid.Value);
-        comp.Coords = xform.Coordinates;
+        comp.Coords = new EntityCoordinates(gridUid.Value, location);
         Sawmill.Info($"Picked location {comp.Coords} for {ToPrettyString(uid):rule}");
     }
 

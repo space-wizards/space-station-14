@@ -29,6 +29,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// The name of the container slot which contains the paradox clone ghost on an entity
@@ -78,6 +79,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
                 {
                     ent.Comp.OriginalBody = args.Coords.EntityId;
                     ent.Comp.OriginalMind = mindId;
+                    hadTarget = true;
                 }
             }
 
@@ -113,6 +115,9 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
         SetPaused((EntityUid)clone, true);
 
         var ghost = Spawn(ent.Comp.GhostProto);
+
+        // set the ghost's coords so that tests pass
+        _transform.SetCoordinates(ghost, args.Coords);
 
         // make sure the ghost can keep track of its "real" body
         _entMan.AddComponent(ghost, new ParadoxCloneComponent
