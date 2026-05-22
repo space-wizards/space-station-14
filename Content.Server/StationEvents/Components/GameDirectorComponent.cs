@@ -83,25 +83,25 @@ public sealed partial class StoryPrototype : IPrototype
     /// <summary>
     ///   A human-readable description string for logging / admins
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string Description;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Description = string.Empty;
 
     /// <summary>
     ///   Minimum number of players on the station to pick this story
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MinPlayers = -1;
 
     /// <summary>
     ///   Maximum number of players on the station to pick this story
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxPlayers = Int32.MaxValue;
 
     /// <summary>
     ///   List of beat-ids in this story.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<StoryBeatPrototype>[]? Beats;
 }
 

@@ -12,6 +12,6 @@ public sealed partial class CombatPowerComponent : Component
     /// <summary>
     ///   Threat, expressed as a multiplier (1x is similar to a single player)
     /// </summary>
-    [DataField("threat"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("factor"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Threat = 1.0f;
 }
