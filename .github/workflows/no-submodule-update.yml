@@ -8,6 +8,7 @@ on:
 jobs:
   this_aint_right:
     name: Submodule update in pr found
+    if: ${{ !startsWith(github.head_ref, 'automated/upstream-sync') }}
     runs-on: ubuntu-latest
     steps:
       - name: Fail

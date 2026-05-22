@@ -1,9 +1,8 @@
 # Reporting a security vulnerability
-You can report a security vulnerability through Discord or through email.
 
-If you want to send an email, you can contact us at <support@spacestation14.com>.
-If you want to contact us through Discord, you can join [our server](https://discord.gg/MwDDf6t)
-and then **privately** message anyone with the `@Wizard` or `@SS14 Maintainer` role.
+If you discover a security vulnerability in vgstation14, please report it
+privately. If you want to send an email, you can contact us at <vg14-dev@proton.me>. **Do not open a public issue and do not publicly disclose the
+vulnerability** until the maintainers have addressed it.
 
-In either case, **do not publicly disclose the vulnerability until we explicitly give
-you permission to do so**.
+Contact a vgstation14 maintainer privately — through the project's community
+channels, or by direct message to a repository maintainer on GitHub.

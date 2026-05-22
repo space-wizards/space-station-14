@@ -1,0 +1,24 @@
+name: "VG: Divergence check"
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Compute changed files
+        run: |
+          git fetch --no-tags --depth=50 origin "${{ github.base_ref }}"
+          git diff --name-status "origin/${{ github.base_ref }}...HEAD" > changed_files.txt
+          echo "Changed files:"
+          cat changed_files.txt
+
+      - name: Check divergence policy
+        run: python3 Tools/_VG/check_divergence.py changed_files.txt

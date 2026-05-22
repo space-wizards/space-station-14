@@ -1,0 +1,35 @@
+name: Development task
+description: A PR-sized vgstation14 development task
+labels: ["needs-spec"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One sentence describing what this task delivers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Concrete, checkable conditions for "done".
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Conflict tier
+      description: See docs/vg/divergence-policy.md.
+      options:
+        - "additive (touches only _VG/ zones)"
+        - "upstream-edit (touches a registered upstream file)"
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: vg13 reference
+      description: Link to the /vg/station13 wiki or source for ported features. Leave blank if not a port.
+    validations:
+      required: false

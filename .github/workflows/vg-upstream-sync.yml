@@ -1,0 +1,60 @@
+name: "VG: Upstream sync"
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.VG_SYNC_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "vg14-sync"
+          git config user.email "noreply@users.noreply.github.com"
+
+      - name: Merge upstream master
+        id: merge
+        run: |
+          git remote add upstream https://github.com/space-wizards/space-station-14.git
+          git fetch --no-tags upstream master
+          if git merge-base --is-ancestor upstream/master HEAD; then
+            echo "Already up to date with upstream/master; nothing to sync."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          BRANCH="automated/upstream-sync-$(date +'%Y-%m-%d')"
+          git switch -c "$BRANCH"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          if git merge --no-edit upstream/master; then
+            echo "conflicts=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "conflicts=true" >> "$GITHUB_OUTPUT"
+            git add -A
+            git commit --no-edit
+          fi
+          git push origin "$BRANCH"
+
+      - name: Open pull request
+        if: steps.merge.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.VG_SYNC_TOKEN }}
+        run: |
+          TITLE="Merge upstream/master ($(date +'%Y-%m-%d'))"
+          if [ "${{ steps.merge.outputs.conflicts }}" = "true" ]; then
+            TITLE="[CONFLICTS] $TITLE"
+          fi
+          gh pr create \
+            --base master \
+            --head "${{ steps.merge.outputs.branch }}" \
+            --title "$TITLE" \
+            --body "Automated weekly upstream sync. Conflicts present: ${{ steps.merge.outputs.conflicts }}. Review CI and docs/vg/divergence-registry.md before merging. If conflicts are present this branch contains conflict markers — resolve them locally, then update the PR."
