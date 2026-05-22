@@ -682,6 +682,7 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: ShuttleCaller
 
 - type: entity
   parent: ComputerComms

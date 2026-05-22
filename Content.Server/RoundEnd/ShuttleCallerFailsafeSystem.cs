@@ -1,20 +1,22 @@
 ﻿using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.RoundEnd;
 
-public sealed class ShuttleCallerFailsafeSystem : EntitySystem
+/// <summary>
+///     Forces a shuttle call when necessary.
+/// </summary>
+public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configMan = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _shuttleSys = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSys = default!;
 
-    public static readonly string Announcement = "round-end-system-shuttle-called-failsafe-announcement";
-    private bool ShuttleEnabled;
+    public static readonly string AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
+    private bool _shuttleEnabled;
 
     public override void Initialize()
     {
@@ -23,12 +25,12 @@ public sealed class ShuttleCallerFailsafeSystem : EntitySystem
         SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
 
         Subs.CVar(_configMan, CCVars.EmergencyShuttleEnabled, OnEmergencyShuttleEnabledChange, true);
-        ShuttleEnabled = _configMan.GetCVar(CCVars.EmergencyShuttleEnabled);
+        _shuttleEnabled = _configMan.GetCVar(CCVars.EmergencyShuttleEnabled);
     }
 
     private void OnEmergencyShuttleEnabledChange(bool value)
     {
-        ShuttleEnabled = value;
+        _shuttleEnabled = value;
     }
 
     private void OnStationPostInit(ref StationPostInitEvent args)
@@ -70,7 +72,7 @@ public sealed class ShuttleCallerFailsafeSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        if (!ShuttleEnabled)
+        if (!_shuttleEnabled)
         {
             return; // bruh
         }
@@ -86,6 +88,6 @@ public sealed class ShuttleCallerFailsafeSystem : EntitySystem
             return;
         }
 
-        _roundEndSys.RequestRoundEnd(text: Announcement);
+        _roundEndSys.RequestRoundEnd(text: AnnouncementText);
     }
 }
