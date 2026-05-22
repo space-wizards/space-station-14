@@ -116,76 +116,82 @@
       "name": "z"
     },
     {
-      "name": "exclamation"
+      "name": "angle-l"
     },
     {
-      "name": "question"
-    },
-    {
-      "name": "star"
-    },
-    {
-      "name": "plus"
-    },
-    {
-      "name": "dash"
-    },
-    {
-      "name": "colon"
-    },
-    {
-      "name": "semicolon"
-    },
-    {
-      "name": "blank"
-    },
-    {
-      "name": "caret"
-    },
-    {
-      "name": "equals"
-    },
-    {
-      "name": "lparen"
-    },
-    {
-      "name": "rparen"
-    },
-    {
-      "name": "lbracket"
-    },
-    {
-      "name": "rbracket"
-    },
-    {
-      "name": "greaterthan"
-    },
-    {
-      "name": "lessthan"
-    },
-    {
-      "name": "slash"
-    },
-    {
-      "name": "backslash"
-    },
-    {
-      "name": "underscore"
-    },
-    {
-      "name": "quotation"
+      "name": "angle-r"
     },
     {
       "name": "apostrophe"
     },
     {
-      "name": "period"
+      "name": "backslash"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "bracket-l"
+    },
+    {
+      "name": "bracket-r"
+    },
+    {
+      "name": "caret"
+    },
+    {
+      "name": "colon"
     },
     {
       "name": "comma"
     },
     {
+      "name": "dash"
+    },
+    {
+      "name": "equals"
+    },
+    {
+      "name": "exclamation"
+    },
+    {
+      "name": "hash"
+    },
+    {
+      "name": "paren-l"
+    },
+    {
+      "name": "paren-r"
+    },
+    {
       "name": "percent"
+    },
+    {
+      "name": "period"
+    },
+    {
+      "name": "plus"
+    },
+    {
+      "name": "question"
+    },
+    {
+      "name": "quotation"
+    },
+    {
+      "name": "semicolon"
+    },
+    {
+      "name": "slash"
+    },
+    {
+      "name": "speso"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "underscore"
     }
   ]
 }
