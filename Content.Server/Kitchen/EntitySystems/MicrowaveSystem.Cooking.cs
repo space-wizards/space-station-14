@@ -182,14 +182,13 @@ public sealed partial class MicrowaveSystem
     ///     Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
     /// <param name="component">The microwave that is heating up.</param>
-    /// <param name="time">The time on the microwave, in seconds.</param>
+    /// <param name="time">The heating time that has elapsed, in seconds.</param>
     private void AddTemperature(MicrowaveComponent component, float time)
     {
         var heatToAdd = time * component.BaseHeatMultiplier;
         foreach (var entity in component.Storage.ContainedEntities)
         {
-            if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
+            _temperature.ChangeHeat(entity, heatToAdd, ignoreHeatResistance: false);
 
             foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
             {
