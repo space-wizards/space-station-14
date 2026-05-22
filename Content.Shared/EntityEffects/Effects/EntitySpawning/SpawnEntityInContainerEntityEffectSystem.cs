@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEffectSystem<ContainerManagerComponent, SpawnEntityInContainer>
 {
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private INetManager _net = default!;
 
     protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainer> args)
     {

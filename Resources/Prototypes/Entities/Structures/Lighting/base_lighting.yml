@@ -39,8 +39,9 @@
     softness: 1
     offset: "0, -0.5"
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 2
@@ -283,6 +284,7 @@
           layer:
           - TabletopMachineLayer
     - type: Damageable
+    - type: Injurable
       damageContainer: Inorganic
     - type: Destructible
       thresholds:

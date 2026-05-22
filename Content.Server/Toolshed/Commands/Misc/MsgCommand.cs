@@ -13,7 +13,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Toolshed.Commands.Misc;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
-public sealed class MsgCommand : ToolshedCommand
+public sealed partial class MsgCommand : ToolshedCommand
 {
     [Dependency] private IChatManager _chatManager = default!;
 

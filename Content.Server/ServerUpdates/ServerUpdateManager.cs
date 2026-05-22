@@ -18,15 +18,15 @@ namespace Content.Server.ServerUpdates;
 /// This was originally only designed for restarting on *update*,
 /// but now also handles periodic restarting to keep server uptime via <see cref="CCVars.ServerUptimeRestartMinutes"/>.
 /// </remarks>
-public sealed class ServerUpdateManager : IPostInjectInit
+public sealed partial class ServerUpdateManager : IPostInjectInit
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IWatchdogApi _watchdog = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IBaseServer _server = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IWatchdogApi _watchdog = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IBaseServer _server = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
 
