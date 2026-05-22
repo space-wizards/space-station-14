@@ -5,7 +5,6 @@
   - type: Physics
     bodyType: Dynamic
     sleepingAllowed: false
-    mass: 100000
   - type: Fixtures
     fixtures:
       tether:
