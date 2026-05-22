@@ -46,28 +46,28 @@ namespace Content.Server.Kitchen.EntitySystems;
 /// </summary>
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly LightningSystem _lightning = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly RecipeManager _recipeManager = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private ExplosionSystem _explosion = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private HandsSystem _handsSystem = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private LightningSystem _lightning = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private RecipeManager _recipeManager = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private SharedSuicideSystem _suicide = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {

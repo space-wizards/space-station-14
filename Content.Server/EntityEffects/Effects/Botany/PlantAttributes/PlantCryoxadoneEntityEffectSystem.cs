@@ -7,7 +7,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantCryoxadone>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
