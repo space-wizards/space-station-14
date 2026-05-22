@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Paradox clones now copy forensics from the original
-    type: Fix
-  id: 9192
-  time: '2025-11-09T01:46:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41358
 - author: SirWarock
   changes:
   - message: Fixed Magazines not properly visualizing how much ammo they had left
@@ -4087,3 +4080,10 @@
   id: 9703
   time: '2026-05-22T16:28:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44018
+- author: Princess-Cheeseballs
+  changes:
+  - message: Kudzu no longer blocks you from targeting crawling entities.
+    type: Fix
+  id: 9704
+  time: '2026-05-22T20:52:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39571
