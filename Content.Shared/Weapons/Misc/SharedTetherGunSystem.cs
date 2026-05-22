@@ -104,6 +104,11 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             _physics.ApplyAngularImpulse(uid, shortFall, body: physics);
         }
 
+        MoveMirror();
+    }
+
+    private void MoveMirror()
+    {
         var tetheredGunQuery = EntityQueryEnumerator<TetherGunComponent>();
 
         while (tetheredGunQuery.MoveNext(out var uid, out var comp))
@@ -144,6 +149,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         }
 
         TransformSystem.SetCoordinates(gun.TetherEntity.Value, coords);
+        MoveMirror();
     }
 
     private void OnTetherRanged(EntityUid uid, TetherGunComponent component, AfterInteractEvent args)
@@ -251,7 +257,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.WakeBody(tether);
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
-        var jointMirror = _joints.CreateDistanceJoint(mirrorTether, gunUid, id: TetherJointMirror);
+        var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
 
         SharedJointSystem.LinearStiffness(component.Frequency, component.DampingRatio, tetherPhysics.Mass, targetPhysics.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
@@ -259,6 +265,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         joint.MaxForce = component.MaxForce;
         jointMirror.Stiffness = stiffness;
         jointMirror.Damping = damping;
+        jointMirror.MaxForce = component.MaxForce;
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
