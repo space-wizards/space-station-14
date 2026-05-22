@@ -57,38 +57,19 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         _itemSystem.VisualsChanged(uid);
     }
 
-    private void OnGetHeldVisuals(EntityUid uid, StorageContainerVisualsComponent component, GetInhandVisualsEvent args)
+    private void OnGetHeldVisuals(Entity<StorageContainerVisualsComponent> ent, ref GetInhandVisualsEvent args)
     {
-        if (component.InHandsFillBaseName == null)
+        if (ent.Comp.InHandsFillBaseName == null)
             return;
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp<ItemComponent>(ent, out var item))
             return;
 
-        if (!TryComp<ItemComponent>(uid, out var item))
-            return;
+        var inhandPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+        var layerKeyPrefix = inhandPrefix + args.Location.ToString().ToLowerInvariant() + ent.Comp.InHandsFillBaseName;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.StorageUsed, out var used, appearance))
-            return;
-
-        if (!AppearanceSystem.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, appearance))
-            return;
-
-        var fraction = used / (float)capacity;
-
-        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, component.InHandsMaxFillLevels + 1);
-
-        if (closestFillSprite > 0)
-        {
-            var layer = new PrototypeLayerData();
-
-            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
-
-            layer.State = key;
-
-            args.Layers.Add((key, layer));
-        }
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.InHandsMaxFillLevels) is { } layer)
+            args.Layers.Add(layer);
     }
 
     private void OnGetClothingVisuals(Entity<StorageContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
@@ -96,36 +77,42 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         if (ent.Comp.EquippedFillBaseName == null)
             return;
 
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
+        var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
+        var layerKeyPrefix = equippedPrefix + ent.Comp.EquippedFillBaseName;
+
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.EquippedMaxFillLevels) is { } layer)
+            args.Layers.Add(layer);
+    }
+
+    private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<StorageContainerVisualsComponent> ent, string layerKeyPrefix, int maxFillLevels)
+    {
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return null;
+
         if (!AppearanceSystem.TryGetData<int>(ent, StorageVisuals.StorageUsed, out var used, appearance))
-            return;
+            return null;
 
         if (!AppearanceSystem.TryGetData<int>(ent, StorageVisuals.Capacity, out var capacity, appearance))
-            return;
+            return null;
 
         var fraction = used / (float)capacity;
 
-        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, ent.Comp.EquippedMaxFillLevels + 1);
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
+        if (closestFillSprite <= 0)
+            return null;
 
-        if (closestFillSprite > 0)
-        {
-            var layer = new PrototypeLayerData();
+        var layer = new PrototypeLayerData();
+        var key = layerKeyPrefix + closestFillSprite;
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
+        // Same check as the one in SolutionContainerVisualsSystem.
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI?.TryGetState(key, out _) != true)
+            return null;
 
-            // Same check as the one in SolutionContainerVisualsSystem.
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
-                return;
+        layer.State = key;
 
-            layer.State = key;
-
-            args.Layers.Add((key, layer));
-        }
+        return (key, layer);
     }
 }
