@@ -14,14 +14,22 @@
 - type: entity
   parent: [AirSensorFreezerBase, GasVentPump]
   id: GasVentPumpFreezer
-  placement:
-    mode: SnapgridCenter
+  components:
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasVentPumpFreezer
+      Secondary: GasVentPumpFreezerAlt1
+      Tertiary: GasVentPumpFreezerAlt2
 
 - type: entity
   parent: [AirSensorFreezerBase, GasVentScrubber]
   id: GasVentScrubberFreezer
-  placement:
-    mode: SnapgridCenter
+  components:
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasVentScrubberFreezer
+      Secondary: GasVentScrubberFreezerAlt1
+      Tertiary: GasVentScrubberFreezerAlt2
 
 # air alarm proto with auto: false to prevent the automatic switching of modes overriding the default values
 - type: entity
