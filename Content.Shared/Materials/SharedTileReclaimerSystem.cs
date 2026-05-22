@@ -12,7 +12,7 @@ namespace Content.Shared.Materials;
 /// <summary>
 /// Handles interactions and logic related to <see cref="TileReclaimerComponent"/>.
 /// </summary>
-public abstract class SharedTileReclaimerSystem : EntitySystem
+public abstract partial class SharedTileReclaimerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
