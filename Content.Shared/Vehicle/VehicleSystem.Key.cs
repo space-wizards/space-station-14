@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
 
@@ -57,15 +58,8 @@ public sealed partial class VehicleSystem
             return;
         }
 
-        var hasKey = false;
-        foreach (var contained in container.ContainedEntities)
-        {
-            if (_entityWhitelist.IsWhitelistFail(ent.Comp.KeyWhitelist, contained))
-                continue;
-
-            hasKey = true;
-            break;
-        }
+        var hasKey = container.ContainedEntities.Any(contained =>
+            !_entityWhitelist.IsWhitelistFail(ent.Comp.KeyWhitelist, contained));
 
         if (!hasKey)
             args = args with { CanRun = false };

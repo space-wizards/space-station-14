@@ -51,7 +51,7 @@ public sealed partial class VehicleComponent : Component
 public enum VehicleVisuals : byte
 {
     HasOperator,    // The vehicle has a valid operator
-    CanRun,         // The vehicle can be moved by the operator (turned on :flushed:)
+    CanRun          // The vehicle can be moved by the operator (turned on :flushed:)
 }
 
 /// <summary>
