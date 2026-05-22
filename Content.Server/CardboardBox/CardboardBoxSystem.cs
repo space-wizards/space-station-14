@@ -30,15 +30,16 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
             return;
 
         //Play effect & sound
-        if (_vehicle.TryGetOperator(uid, out var operatorUid))
-        {
-            if (_timing.CurTime > component.EffectCooldown)
-            {
-                RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(uid), GetNetEntity(operatorUid.Value)));
-                _audio.PlayPvs(component.EffectSound, uid);
-                component.EffectCooldown = _timing.CurTime + component.CooldownDuration;
-            }
-        }
+        if (!_vehicle.TryGetOperator(uid, out var operatorUid))
+            return;
+
+        if (_timing.CurTime <= component.EffectCooldown)
+            return;
+
+        RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(uid), GetNetEntity(operatorUid.Value)));
+        _audio.PlayPvs(component.EffectSound, uid);
+
+        component.EffectCooldown = _timing.CurTime + component.CooldownDuration;
     }
 
     private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageAfterOpenEvent args)
@@ -50,10 +51,10 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
     private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, ref StorageAfterCloseEvent args)
     {
         // If this box has a stealth/chameleon effect, enable the stealth effect.
-        if (TryComp(uid, out StealthComponent? stealth))
-        {
-            _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
-            _stealth.SetEnabled(uid, true, stealth);
-        }
+        if (!TryComp(uid, out StealthComponent? stealth))
+            return;
+
+        _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
+        _stealth.SetEnabled(uid, true, stealth);
     }
 }
