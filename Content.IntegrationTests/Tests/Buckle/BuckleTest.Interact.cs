@@ -1,104 +1,81 @@
-﻿using Content.Shared.Buckle;
+﻿#nullable enable
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Buckle;
 
 public sealed partial class BuckleTest
 {
+    [SidedDependency(Side.Server)] private SharedInteractionSystem _sInteraction = null!;
+
     [Test]
+    [RunOnSide(Side.Server)]
     public async Task BuckleInteractUnbuckleOther()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var user = SSpawn(BuckleDummyId);
+        var victim = SSpawn(BuckleDummyId);
+        var chair = SSpawn(StrapDummyId);
 
-        var entMan = server.ResolveDependency<IServerEntityManager>();
-        var buckleSystem = entMan.System<SharedBuckleSystem>();
-
-        EntityUid user = default;
-        EntityUid victim = default;
-        EntityUid chair = default;
-        BuckleComponent buckle = null;
-        StrapComponent strap = null;
-
-        await server.WaitAssertion(() =>
-        {
-            user = entMan.SpawnEntity(BuckleDummyId, MapCoordinates.Nullspace);
-            victim = entMan.SpawnEntity(BuckleDummyId, MapCoordinates.Nullspace);
-            chair = entMan.SpawnEntity(StrapDummyId, MapCoordinates.Nullspace);
-
-            Assert.That(entMan.TryGetComponent(victim, out buckle));
-            Assert.That(entMan.TryGetComponent(chair, out strap));
+        Assert.That(SEntMan.TryGetComponent<BuckleComponent>(victim, out var buckle));
+        Assert.That(SEntMan.TryGetComponent<StrapComponent>(chair, out var strap));
 
 #pragma warning disable RA0002
-            buckle.Delay = TimeSpan.Zero;
+        buckle!.Delay = TimeSpan.Zero;
 #pragma warning restore RA0002
 
-            // Buckle victim to chair
-            Assert.That(buckleSystem.TryBuckle(victim, user, chair, buckle));
-            Assert.Multiple(() =>
-            {
-                Assert.That(buckle.BuckledTo, Is.EqualTo(chair), "Victim did not get buckled to the chair.");
-                Assert.That(buckle.Buckled, "Victim is not buckled.");
-                Assert.That(strap.BuckledEntities, Does.Contain(victim), "Chair does not have victim buckled to it.");
-            });
+        // Buckle victim to chair
+        Assert.That(_sBuckle.TryBuckle(victim, user, chair, buckle));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(buckle.BuckledTo, Is.EqualTo(chair), "Victim did not get buckled to the chair.");
+            Assert.That(buckle.Buckled, "Victim is not buckled.");
+            Assert.That(strap!.BuckledEntities, Does.Contain(victim), "Chair does not have victim buckled to it.");
+        }
 
-            // InteractHand with chair to unbuckle victim
-            entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
-            Assert.Multiple(() =>
-            {
-                Assert.That(buckle.BuckledTo, Is.Null);
-                Assert.That(buckle.Buckled, Is.False);
-                Assert.That(strap.BuckledEntities, Does.Not.Contain(victim));
-            });
-        });
+        // InteractHand with chair to unbuckle victim
+        _sInteraction.InteractHand(user, chair);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(buckle.BuckledTo, Is.Null);
+            Assert.That(buckle.Buckled, Is.False);
+            Assert.That(strap.BuckledEntities, Does.Not.Contain(victim));
+        }
     }
 
     [Test]
+    [RunOnSide(Side.Server)]
     public async Task BuckleInteractBuckleUnbuckleSelf()
     {
-        var pair = Pair;
-        var server = pair.Server;
+        var user = SSpawn(BuckleDummyId);
+        var chair = SSpawn(StrapDummyId);
 
-        var entMan = server.ResolveDependency<IServerEntityManager>();
-
-        EntityUid user = default;
-        EntityUid chair = default;
-        BuckleComponent buckle = null;
-        StrapComponent strap = null;
-
-        await server.WaitAssertion(() =>
-        {
-            user = entMan.SpawnEntity(BuckleDummyId, MapCoordinates.Nullspace);
-            chair = entMan.SpawnEntity(StrapDummyId, MapCoordinates.Nullspace);
-
-            Assert.That(entMan.TryGetComponent(user, out buckle));
-            Assert.That(entMan.TryGetComponent(chair, out strap));
+        Assert.That(SEntMan.TryGetComponent<BuckleComponent>(user, out var buckle));
+        Assert.That(SEntMan.TryGetComponent<StrapComponent>(chair, out var strap));
 
 #pragma warning disable RA0002
-            buckle.Delay = TimeSpan.Zero;
+        buckle!.Delay = TimeSpan.Zero;
 #pragma warning restore RA0002
 
-            // Buckle user to chair
-            entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
-            Assert.Multiple(() =>
-            {
-                Assert.That(buckle.BuckledTo, Is.EqualTo(chair), "Victim did not get buckled to the chair.");
-                Assert.That(buckle.Buckled, "Victim is not buckled.");
-                Assert.That(strap.BuckledEntities, Does.Contain(user), "Chair does not have victim buckled to it.");
-            });
+        // Buckle user to chair
+        _sInteraction.InteractHand(user, chair);
 
-            // InteractHand with chair to unbuckle
-            entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
-            Assert.Multiple(() =>
-            {
-                Assert.That(buckle.BuckledTo, Is.Null);
-                Assert.That(buckle.Buckled, Is.False);
-                Assert.That(strap.BuckledEntities, Does.Not.Contain(user));
-            });
-        });
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(buckle.BuckledTo, Is.EqualTo(chair), "Victim did not get buckled to the chair.");
+            Assert.That(buckle.Buckled, "Victim is not buckled.");
+            Assert.That(strap!.BuckledEntities, Does.Contain(user), "Chair does not have victim buckled to it.");
+        }
+
+        // InteractHand with chair to unbuckle
+        _sInteraction.InteractHand(user, chair);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(buckle.BuckledTo, Is.Null);
+            Assert.That(buckle.Buckled, Is.False);
+            Assert.That(strap.BuckledEntities, Does.Not.Contain(user));
+        }
     }
 }
