@@ -74,16 +74,15 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     private void OnDamageChanged(Entity<DestructibleComponent> entity, ref DamageChangedEvent args)
     {
-        var component = entity.Comp;
-        var uid = entity.Owner;
+        var (uid, comp) = entity;
 
-        component.IsBroken = false;
+        comp.IsBroken = false;
 
-        foreach (var threshold in component.Thresholds)
+        foreach (var threshold in comp.Thresholds)
         {
             if (Triggered(threshold, (uid, args.Damageable)))
             {
-                RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
+                RaiseLocalEvent(uid, new DamageThresholdReached(comp, threshold), true);
 
                 var logImpact = LogImpact.Low;
                 // Convert behaviors into string for logs
@@ -120,7 +119,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
 
             if (threshold.OldTriggered)
             {
-                component.IsBroken |= threshold.Behaviors.Any(b => b is DoActsBehavior doActsBehavior &&
+                comp.IsBroken |= threshold.Behaviors.Any(b => b is DoActsBehavior doActsBehavior &&
                     (doActsBehavior.HasAct(ThresholdActs.Breakage) || doActsBehavior.HasAct(ThresholdActs.Destruction)));
             }
 
