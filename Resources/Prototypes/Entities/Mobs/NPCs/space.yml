@@ -453,7 +453,7 @@
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialDurathread1
-    productsPerSolution: 10
+    solutionPerProduct: 10
     toolQuality: Shearing
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
