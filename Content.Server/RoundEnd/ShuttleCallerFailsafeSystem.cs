@@ -18,6 +18,7 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
 
     public static readonly string AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
     private bool _shuttleEnabled;
+    private bool _failsafeEnabled;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
         SubscribeLocalEvent<ShuttleCallerComponent, MapUidChangedEvent>(OnShuttleCallerMapChange);
 
         Subs.CVar(_configMan, CCVars.EmergencyShuttleEnabled, value => _shuttleEnabled = value, true);
-        _shuttleEnabled = _configMan.GetCVar(CCVars.EmergencyShuttleEnabled);
+        Subs.CVar(_configMan, CCVars.EmergencyShuttleCallerFailsafeEnabled, value => _failsafeEnabled = value, true);
     }
 
     private void OnStationPostInit(ref StationPostInitEvent args)
@@ -54,10 +55,14 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
     }
 
     private void OnShuttleCallerGridChange(Entity<ShuttleCallerComponent> uid, ref GridUidChangedEvent args)
-        => GridChanging(uid, _transformSystem.GetGrid(uid.Owner), args.NewGrid);
+    {
+        GridChanging(uid, _transformSystem.GetGrid(uid.Owner), args.NewGrid);
+    }
 
     private void OnShuttleCallerMapChange(Entity<ShuttleCallerComponent> uid, ref MapUidChangedEvent args)
-        => MapChanging(uid, _transformSystem.GetMap(uid.Owner), args.NewMap);
+    {
+        MapChanging(uid, _transformSystem.GetMap(uid.Owner), args.NewMap);
+    }
 
     private void GridChanging(Entity<ShuttleCallerComponent> uid, EntityUid? oldGrid, EntityUid? newGrid)
     {
@@ -110,9 +115,10 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
             return;
         }
 
-        if (!_shuttleEnabled)
+        // We check _failsafeEnabled here, because it could be updated midround.
+        if (!_shuttleEnabled || !_failsafeEnabled)
         {
-            return; // bruh
+            return;
         }
 
         if (_shuttleSys.ShuttlesLeft || _shuttleSys.EmergencyShuttleArrived ||
