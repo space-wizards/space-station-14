@@ -191,7 +191,7 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Enables the logic in <see cref="ShuttleCallerFailsafeSystem"/> (server only)
+    ///     Enables the shuttle-calling functionality of <see cref="ShuttleCallerFailsafeSystem"/>
     /// </summary>
     public static readonly CVarDef<bool> EmergencyShuttleCallerFailsafeEnabled =
         CVarDef.Create("shuttle.caller_failsafe", true, CVar.SERVERONLY);
