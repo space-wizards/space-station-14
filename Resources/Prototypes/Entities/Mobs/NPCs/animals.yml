@@ -1211,7 +1211,7 @@
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
-    solutionPerProduct: 5 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton.
+    solutionPerProduct: 2.5 # 1 Cotton contains 2.5 Fibre, therefore this is the same.
     toolQuality: Shearing
     shearableMarkupText: sheep-shearable-examine-markup
     unShearableMarkupText: sheep-not-shearable-examine-markup
@@ -1317,7 +1317,7 @@
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: LeavesCannabisRainbow
-    solutionPerProduct: 5 # How much solution should it take to spawn 1 product?
+    solutionPerProduct: 6 # How much solution should it take to spawn 1 product?
     toolQuality: Shearing
     shearableMarkupText: rainbow-sheep-shearable-examine-markup
     unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
