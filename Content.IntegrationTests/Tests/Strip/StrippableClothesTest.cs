@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Utility;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
@@ -9,7 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Strip;
 
-public sealed class StrippableClothesTest
+public sealed class StrippableClothesTest : GameTest
 {
     [TestPrototypes]
     private const string Prototypes = @"
@@ -86,24 +88,28 @@ public sealed class StrippableClothesTest
 ";
 
     private readonly EntProtoId _humanMob = new EntProtoId("MobHuman");
+    private static string[] _entityInventoryGameRules = GameDataScrounger.EntitiesWithComponent("Strippable");
     private const int TotalHandsCount = 2;
     private const int RunSecondsDoAfterEvent = 15;
 
     [Test]
+    [TestOf(typeof(InventoryComponent))]
+    [TestCaseSource(nameof(_entityInventoryGameRules))]
     // <summary>
     //  Test case for validating stripping clothes for target humanMob
     // </summary>
-    public async Task StripClothesMainTest()
+    public async Task StripClothesMainTest(string ruleId)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-
-        EntityUid target = default!;
-        EntityUid attacker = default!;
-
         var invSystem = sEntities.System<InventorySystem>();
+
+        var rule = SProtoMan.Index<EntityPrototype>(ruleId);
+
+        EntityUid attacker = default!;
+        EntityUid target = default!;
 
         var clothesSlots = new Dictionary<string, string>
         {
@@ -120,33 +126,34 @@ public sealed class StrippableClothesTest
             {"jumpsuit", "InventoryJumpsuitJanitorDummy"},
         };
 
+        var validSlots = new HashSet<string>();
+
         await server.WaitAssertion(() =>
         {
-            target = sEntities.SpawnEntity(_humanMob, MapCoordinates.Nullspace);
             attacker = sEntities.SpawnEntity(_humanMob, MapCoordinates.Nullspace);
+            target = sEntities.SpawnEntity(rule.ID, MapCoordinates.Nullspace);
 
             //  Checking for valid slots
-            Assert.Multiple(() =>
+            foreach (var slot in clothesSlots.Keys)
             {
-                foreach (var slot in clothesSlots.Keys)
+                if (invSystem.HasSlot(target, slot))
                 {
-                    Assert.That(
-                        invSystem.HasSlot(target, slot),
-                        Is.True,
-                        $"{_humanMob} does not have a slot {slot}"
-                    );
+                    validSlots.Add(slot);
                 }
-            });
+            }
 
             //  Spawning clothes in slots
             Assert.Multiple(() =>
             {
-                foreach (var keyValuePair in clothesSlots)
+                foreach (var slot in validSlots)
                 {
+                    if (invSystem.TryGetSlotEntity(target, slot, out _))
+                        continue;
+
                     Assert.That(
-                        invSystem.SpawnItemInSlot(target, keyValuePair.Key, keyValuePair.Value, true, true),
+                        invSystem.SpawnItemInSlot(target, slot, clothesSlots[slot], true, true),
                         Is.True,
-                        $"Could not spawn {keyValuePair.Value} in slot {keyValuePair.Key}"
+                        $"Could not spawn {clothesSlots[slot]} in slot {slot}"
                     );
                 }
             });
@@ -154,7 +161,7 @@ public sealed class StrippableClothesTest
             //  All slots must be filled with prototypes
             Assert.Multiple(() =>
             {
-                foreach (var slot in clothesSlots.Keys)
+                foreach (var slot in validSlots)
                 {
                     Assert.That(invSystem.TryGetSlotEntity(target, slot, out _),
                         Is.True,
@@ -167,7 +174,7 @@ public sealed class StrippableClothesTest
         //  Calling stripping event
         await server.WaitPost(() =>
         {
-            foreach (var slot in clothesSlots.Keys)
+            foreach (var slot in validSlots)
             {
                 var ev =  new StrippingSlotButtonPressed(slot, false);
                 ev.Actor = attacker;
@@ -183,7 +190,7 @@ public sealed class StrippableClothesTest
         {
             Assert.Multiple(() =>
             {
-                foreach (var slot in clothesSlots.Keys)
+                foreach (var slot in validSlots)
                 {
                     Assert.That(
                         invSystem.TryGetSlotEntity(target, slot, out _),
@@ -193,8 +200,6 @@ public sealed class StrippableClothesTest
                 }
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
