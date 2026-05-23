@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -34,17 +35,15 @@ public sealed partial class ShearableComponent : Component
     public EntProtoId ShearedProductId = "MaterialCotton1";
 
     /// <summary>
-    ///     How many products will be spawned per solution.
-    ///     A value of 5 will spawn 5 products for every 1u of solution. 25u of solution would spawn 125 product.
-    ///     A value of 0.2 will spawn 0.2 products for every 1u of solution. 25u of solution would spawn 5 product.
+    ///     How much solution to use to spawn 1 product. This is measured in reagents.
     ///     Keep in mind, only up to the maximum stack of the specified product will be spawned,
     ///     the remaining solution will be truncated and left unchanged. In these cases the player can shear more than once to get more.
     /// </summary>
     /// <example>
-    ///     productsPerSolution: 0.2
+    ///     solutionPerProduct: 5
     /// </example>
     [DataField]
-    public float ProductsPerSolution = 0;
+    public FixedPoint2 SolutionPerProduct = 5;
 
     /// <summary>
     ///     The maximum number of products that can be spawned at once.
@@ -127,9 +126,9 @@ public sealed partial class ShearableComponent : Component
 }
 
 /// <summary>
-///     Also part of the Shearable Layer.
+///     A part of the Shearable Layer.
 /// </summary>
-/// <seealso cref="ShearableComponent.Shearable"/>
+/// <seealso cref="ShearableComponent"/>
 [Serializable, NetSerializable]
 public enum ShearableVisuals
 {

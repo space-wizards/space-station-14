@@ -76,48 +76,24 @@ public sealed partial class SharedShearableSystem : EntitySystem
         {
             return false;
         }
-        else
-        {
-            // Cache the resolved solution on the component.
-            //ent.Comp.ShearingSolutionEnt =
-        }
 
-        // Store solution.Volume in a variable to make calculations a bit clearer.
+        // This is the amount of shearing solution inside the entity. e.g. wool/fibre in the sheep.
         var targetSolutionQuantity = shearingSolutionState.Volume;
 
-        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
-        // Then, divide by 1 because it's the reagent needed for 1 product.
-        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
-
-        // Work out the maximum number of products to spawn.
-        var maxProductsToSpawn = (float)productsPerSolution;
-        // If a limit has been defined, use that.
-        if (ent.Comp.MaximumProductsSpawned is not null)
+        // Work out the number of products to spawn.
+        var productsToSpawn = targetSolutionQuantity / ent.Comp.SolutionPerProduct;
+        if (productsToSpawn < 1)
         {
-            maxProductsToSpawn = (float)ent.Comp.MaximumProductsSpawned;
+            productsToSpawn = 0;
+        }
+        else if (ent.Comp.MaximumProductsSpawned is not null && ent.Comp.MaximumProductsSpawned < productsToSpawn)
+        {
+            // Truncate to maximum stack.
+            productsToSpawn = (int)ent.Comp.MaximumProductsSpawned;
         }
 
-        // Modulus the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
-        // subtract targetSolutionQuantity from the remainder.
-        // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
-        // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
-        // e.g.
-        // targetSolutionQuantity.Value = 2500, this is how much shearable solution the target entity contains, it's equivalent to 25 units.
-        // productsPerSolution = 500, this is the YAML defined number of materials we will get from shearing. It has been converted from units to reagent above, it was originally 0.2 units.
-        // maxProductsToSpawn is undefined in YAML and has been defaulted to productsPerSolution (500).
-        // 2500 - 2500 % 500. 500 fits nicely into 2500 so there is no remainder of 0. This means we're removing all 2500 reagent currently.
-        //
-        // Next, we check the maximum number of products we want to spawn, if this is less than the total reagent available then the entity will need to be sheared multiple times to deplete its resources.
-        // If there's no configured maxProductsToSpawn, then we aren't imposing a limit. In this case it defaults to productsPerSolution.
-        // productsPerSolution is set to 500. Therefore, the calculation is:
-        // 500 * 500 / 100 = 2500 (See how it lines up with the total reagent available).
-        // If we had configured a limit, e,g 3 then it would look like this:
-        // 3 * 500 / 100 = 1500, 1000 reagent less than what was available.
-        // We take the smaller of two values with .Min, we don't want to remove more reagent than we're using.
-        shearingSolutionToRemove = FixedPoint2.Min(
-                targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution,
-                maxProductsToSpawn * productsPerSolution
-        ) / 100;
+        // Force into an int to truncate any remainder, because we can only spawn whole items.
+        shearingSolutionToRemove = productsToSpawn.Int() * ent.Comp.SolutionPerProduct;
 
         // Fail if the shearable creature has no targetSolutionName to be sheared.
         if (shearingSolutionToRemove <= 0)
@@ -129,8 +105,8 @@ public sealed partial class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Override function, Doesn't include the shearingSolutionToRemove out var.
-    ///     For details see <see cref="CanShear(Entity{ShearableComponent}, out EntityPrototype, out Entity{SolutionComponent}?, out FixedPoint2?, out string?, EntityUid?, bool)"/>
+    ///     Override function that doesn't include the shearingSolutionToRemove out var.
+    ///     For details see <see cref="CanShear(Entity{ShearableComponent}, out FixedPoint2?, EntityUid?, bool)"/>
     /// </summary>
     public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
@@ -139,7 +115,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     Handles shearing when the player left-clicks an entity.
-    ///     Doesn't run any checks, those are handled by AttemptShear.
+    ///     Doesn't run any checks, those are handled by <see cref="CanShear(Entity{ShearableComponent}, out FixedPoint2?, EntityUid?, bool)"/>.
     /// </summary>
     private void OnInteractUsingEvent(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
@@ -158,7 +134,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         // Run all shearing checks.
         if (!CanShear(ent, out var shearingSolutionToRemove, usedItem: toolUsed, false))
         {
-            // Failed, if appropriate, create a popup now.
+            // Failed, if the entity has no solution then show a popup.
             if (shearingSolutionToRemove <= 0)
             {
                 var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
@@ -207,14 +183,9 @@ public sealed partial class SharedShearableSystem : EntitySystem
 
         // Lookup some variables we need.
         var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
-        //shearingSolutionEnt
 
         // Mark as handled so we don't duplicate.
         args.Handled = true;
-
-        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
-        // Then, divide by 1 because it's the reagent needed for 1 product.
-        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (shearingSolutionToRemove <= 0)
@@ -235,7 +206,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var center = ent.Owner.ToCoordinates();
         // Spawn product.
-        for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
+        for (var i = 0; i < removedSolution.Volume / ent.Comp.SolutionPerProduct; i++)
         {
             // Offset the spawn position by e.g 0.4 pixels, so they don't all stack in one spot.
             var xoffs = rand.NextFloat(-ent.Comp.RandomSpawnOffsetVariation, ent.Comp.RandomSpawnOffsetVariation);
@@ -338,11 +309,8 @@ public sealed partial class SharedShearableSystem : EntitySystem
     /// <param name="sol">a SolutionContainerChangedEvent object passed by the OnSolutionChange event.</param>
     private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution sol)
     {
-        // The minimum solution required to spawn one product.
-        var minimumSol = 100 / ent.Comp.ProductsPerSolution;
-
         // If solution is less than the minimum then disable the shearable layer.
-        if (sol.Volume.Value < minimumSol)
+        if (sol.Volume < ent.Comp.SolutionPerProduct)
         {
             // Remove wool layer
             _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, false);
@@ -357,7 +325,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     Listens for changes in solution, checks if it's a wooly solution, and passes it to UpdateShearingLayer.
-    ///     Depending on the result, the wooly layer may change.
+    ///     Depending on the result, the woolly layer may change.
     /// </summary>
     /// <param name="ent">the entity containing a wooly component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
