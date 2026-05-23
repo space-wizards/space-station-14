@@ -9,7 +9,7 @@ namespace Content.Server.RoundEnd;
 ///     Forces a shuttle call when any grid with <see cref="ShuttleCallerFailsafeComponent"/> has nothing with
 ///     <see cref="ShuttleCallerComponent"/> on it, or on the same map if IncludeCallersInSameMap is true.
 /// </summary>
-public sealed class ShuttleCallerFailsafeSystem : EntitySystem
+public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configMan = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
