@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SolidSyn
-  changes:
-  - message: Clowns and Lawyers can now print their respective skirts and suitskirts
-      at a uniform lathe
-    type: Add
-  id: 9196
-  time: '2025-11-11T06:20:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39846
 - author: April-Gras
   changes:
   - message: Tool-tip punctuation for the accentless speech trait
@@ -4085,3 +4077,13 @@
   id: 9707
   time: '2026-05-22T22:36:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41419
+- author: Princess-Cheeseballs
+  changes:
+  - message: SSD players should no longer show the stun animation forever.
+    type: Fix
+  - message: You should no longer have your vision permanently darkened if you're
+      killed while sleeping.
+    type: Fix
+  id: 9708
+  time: '2026-05-23T08:42:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39409
