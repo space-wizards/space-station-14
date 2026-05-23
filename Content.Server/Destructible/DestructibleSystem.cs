@@ -218,7 +218,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <param name="entity">The entity, component tuple to target.</param>
     private void AddOverkillThreshold(Entity<DestructibleComponent> entity)
     {
-        if (!entity.Comp.GenerateOverkillThreshhold)
+        if (!entity.Comp.GenerateOverkillThreshold)
             return;
 
         var maxTrigger = FixedPoint2.Zero;

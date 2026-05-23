@@ -27,5 +27,5 @@ public sealed partial class DestructibleComponent : Component
     /// its normal destructible threshold.
     /// </summary>
     [DataField(readOnly: true)]
-    public bool GenerateOverkillThreshhold = true;
+    public bool GenerateOverkillThreshold = true;
 }
