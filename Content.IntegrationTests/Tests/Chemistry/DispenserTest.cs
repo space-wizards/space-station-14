@@ -2,23 +2,27 @@ using Content.Client.Chemistry.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
 public sealed class DispenserTest : InteractionTest
 {
+    private static readonly EntProtoId ChemDispenser = "ChemDispenser";
+    private static readonly EntProtoId Beaker = "Beaker";
+
     /// <summary>
     ///     Basic test that checks that a beaker can be inserted and ejected from a dispenser.
     /// </summary>
     [Test]
     public async Task InsertEjectBuiTest()
     {
-        await SpawnTarget("ChemDispenser");
+        await SpawnTarget(ChemDispenser);
         ToggleNeedPower();
 
         // Insert beaker
-        await InteractUsing("Beaker");
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        await InteractUsing(Beaker);
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null);
 
         // Open BUI
         await Interact();
@@ -28,18 +32,18 @@ public sealed class DispenserTest : InteractionTest
         await SendBui(ReagentDispenserUiKey.Key, ev);
 
         // Beaker is back in the player's hands
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Not.Null);
-        AssertPrototype("Beaker", SEntMan.GetNetEntity(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands))));
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Not.Null);
+        AssertPrototype(Beaker, FromServer(HandSys.GetActiveItem((SPlayer, Hands))));
 
         // Re-insert the beaker
         await Interact();
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null);
 
         // Re-eject using the button directly instead of sending a BUI event. This test is really just a test of the
         // bui/window helper methods.
         await ClickControl<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
         await RunTicks(5);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Not.Null);
-        AssertPrototype("Beaker", SEntMan.GetNetEntity(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands))));
+        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Not.Null);
+        AssertPrototype(Beaker, FromServer(HandSys.GetActiveItem((SPlayer, Hands))));
     }
 }
