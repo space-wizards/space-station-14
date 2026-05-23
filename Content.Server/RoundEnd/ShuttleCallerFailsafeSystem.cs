@@ -16,7 +16,7 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
     [Dependency] private EmergencyShuttleSystem _shuttleSys = default!;
     [Dependency] private RoundEndSystem _roundEndSys = default!;
 
-    public static readonly string AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
+    public static readonly LocId AnnouncementText = "round-end-system-shuttle-called-failsafe-announcement";
     private bool _shuttleEnabled;
     private bool _failsafeEnabled;
 
