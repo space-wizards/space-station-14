@@ -50,32 +50,49 @@ public abstract partial class ClothingSystem : EntitySystem
         Entity<ClothingComponent> toEquipEnt,
         Entity<InventoryComponent, HandsComponent> userEnt)
     {
+        // First pass: try to find an empty slot that can accept the item.
         foreach (var slotDef in userEnt.Comp1.Slots)
         {
             if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt))
                 continue;
 
-            if (_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out var slotEntity, userEnt))
+            if (_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out _, userEnt))
+                continue; // slot occupied — skip in first pass
+
+            // Found a valid empty slot. Equip (or start do-after) and stop regardless of return value.
+            _invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true);
+            return;
+        }
+
+        // Second pass: no empty slot found — swap with the first occupied slot whose item allows quick-equip.
+        foreach (var slotDef in userEnt.Comp1.Slots)
+        {
+            if (!_invSystem.CanEquip(userEnt, toEquipEnt, slotDef.Name, out _, slotDef, userEnt, toEquipEnt))
+                continue;
+
+            if (!_invSystem.TryGetSlotEntity(userEnt, slotDef.Name, out var slotEntity, userEnt))
+                continue; // empty slot — already tried in first pass
+
+            // Item in slot has to be quick equipable as well
+            if (TryComp<ClothingComponent>(slotEntity, out var existingItem) && !existingItem.QuickEquip)
+                continue;
+
+            // If the existing item has an unequip delay, TryUnequip will start a do-after (return false).
+            // Treat it as committed to this slot anyway — stop iterating to avoid triggering
+            // unequip do-afters on all other occupied slots.
+            var hasUnequipDelay = existingItem != null && existingItem.UnequipDelay > TimeSpan.Zero;
+
+            if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
             {
-                // Item in slot has to be quick equipable as well
-                if (TryComp(slotEntity, out ClothingComponent? item) && !item.QuickEquip)
-                    continue;
-
-                if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
-                    continue;
-
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
-                    continue;
-
-                _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
-            }
-            else
-            {
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
-                    continue;
+                if (hasUnequipDelay)
+                    return; // do-after started, committed to this slot
+                continue;   // genuine failure (CanUnequip blocked) — try next slot
             }
 
-            break;
+            // Instant unequip succeeded — equip new item into the now-empty slot.
+            _invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true);
+            _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
+            return;
         }
     }
 
