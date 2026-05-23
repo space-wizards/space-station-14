@@ -16,8 +16,8 @@ namespace Content.IntegrationTests.Tests.Destructible;
 /// </summary>
 public sealed class DestructibleOverkillTest : GameTest
 {
-    [SidedDependency(Side.Server)] private TestDestructibleListenerSystem _sDestructibleListenerSystem = default!;
     [SidedDependency(Side.Server)] private DamageableSystem _sDamageableSystem = default!;
+    [SidedDependency(Side.Server)] private TestDestructibleListenerSystem _sDestructibleListenerSystem = default!;
 
     /// <summary>
     /// Test that an entity with consequences is destroyed cleanly when overkilled.
