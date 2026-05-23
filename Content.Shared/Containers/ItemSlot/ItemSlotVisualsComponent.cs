@@ -11,15 +11,6 @@ namespace Content.Shared.Containers.ItemSlot;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ItemSlotVisualsComponent : Component
 {
-    /// Like <see cref="ItemSlotsComponent"/> but for Visuals.
-    [DataField(readOnly:true)]
-    public Dictionary<string, ItemSlotVisuals> SlotVisuals = new();
-}
-
-[DataDefinition]
-[Serializable, NetSerializable]
-public sealed partial class ItemSlotVisuals
-{
     [DataField]
     public ItemSlotVisualLayers Layer = ItemSlotVisualLayers.Fill;
 

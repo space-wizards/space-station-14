@@ -24,22 +24,19 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (args.Sprite == null)
             return;
 
-        foreach (var visual in component.SlotVisuals.Values)
+        if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.Layer, out var layerIndex, false))
+            return;
+
+        var filled = AppearanceSystem.TryGetData(uid, component.Layer, out bool hasItem, args.Component) && hasItem;
+
+        if (filled && !string.IsNullOrEmpty(component.FillBaseName))
         {
-            if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), visual.Layer, out var layerIndex, false))
-                continue;
-
-            var filled = AppearanceSystem.TryGetData(uid, visual.Layer, out bool hasItem, args.Component) && hasItem;
-
-            if (filled && !string.IsNullOrEmpty(visual.FillBaseName))
-            {
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
-                SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, visual.FillBaseName);
-            }
-            else
-            {
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, false);
-            }
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, true);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIndex, component.FillBaseName);
+        }
+        else
+        {
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIndex, false);
         }
 
         _itemSystem.VisualsChanged(uid);
@@ -50,25 +47,21 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (!TryComp<ItemComponent>(uid, out var item))
             return;
 
-        foreach (var visual in component.SlotVisuals.Values)
-        {
-            var layer = new PrototypeLayerData();
+        if (component.InHandsFillBaseName == null)
+            return;
 
-            if (string.IsNullOrEmpty(visual.InHandsFillBaseName))
-                continue;
+        if (!AppearanceSystem.TryGetData(uid, component.Layer, out bool contains) || !contains)
+            return;
 
-            if (!AppearanceSystem.TryGetData(uid, visual.Layer, out bool contains) || !contains)
-                continue;
+        var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
 
-            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+        // No need for fillLevels if it'll just fit one item.
+        var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName;
 
-            // No need for fillLevels if it'll just fit one item.
-            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + visual.InHandsFillBaseName;
+        var layer = new PrototypeLayerData();
+        layer.State = key;
 
-            layer.State = key;
-
-            args.Layers.Add((key, layer));
-        }
+        args.Layers.Add((key, layer));
     }
 
     private void OnGetClothingVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
@@ -76,26 +69,22 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         if (!TryComp<ClothingComponent>(ent, out var clothing))
             return;
 
-        foreach (var visual in ent.Comp.SlotVisuals.Values)
-        {
-            var layer = new PrototypeLayerData();
+        if (ent.Comp.InHandsFillBaseName == null)
+            return;
 
-            if (string.IsNullOrEmpty(visual.EquippedFillBaseName))
-                continue;
+        if (!AppearanceSystem.TryGetData(ent, ent.Comp.Layer, out bool contains) || !contains)
+            return;
 
-            if (!AppearanceSystem.TryGetData(ent, visual.Layer, out bool contains) || !contains)
-                continue;
+        var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
+        var key = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
-            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
-            var key = equippedPrefix + visual.EquippedFillBaseName;
+        // Same check as the one in StorageContainerVisualsSystem.
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
+            return;
 
-            // Same check as the one in StorageContainerVisualsSystem.
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
-                return;
+        var layer = new PrototypeLayerData();
+        layer.State = key;
 
-            layer.State = key;
-
-            args.Layers.Add((key, layer));
-        }
+        args.Layers.Add((key, layer));
     }
 }
