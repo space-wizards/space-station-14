@@ -13,4 +13,10 @@ public sealed partial class ShuttleCallerFailsafeComponent : Component
     /// </summary>
     [DataField]
     public bool IncludeCallersInSameMap = false;
+
+    /// <summary>
+    ///     Any shuttle caller currently counted.
+    /// </summary>
+    [DataField]
+    public HashSet<EntityUid> Callers = new();
 }
