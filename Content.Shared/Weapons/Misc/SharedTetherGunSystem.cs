@@ -1,14 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -34,6 +33,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private ThrownItemSystem _thrown = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
     private const string TetherJoint = "tether";
     private const string TetherJointMirror = "tetherMirror";
@@ -46,6 +47,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<TetherGunComponent, ActivateInWorldEvent>(OnTetherActivate);
         SubscribeLocalEvent<TetherGunComponent, AfterInteractEvent>(OnTetherRanged);
+        SubscribeLocalEvent<TetherGunComponent, DroppedEvent>(OnTetherGunDropped);
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
 
         SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
@@ -121,6 +123,25 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             var coords = gunCoords.Offset(tetheredCoords.Position - tetherCoords.Position);
             TransformSystem.SetMapCoordinates(comp.TetherMirrorEntity.Value, coords);
         }
+    }
+
+    private void OnTetherGunDropped(EntityUid uid, TetherGunComponent component, DroppedEvent args)
+    {
+        if (component.Tethered == null || component.TetherEntity == null || component.TetherMirrorEntity == null)
+            return;
+        var tetheredCoords = TransformSystem.GetMapCoordinates(component.Tethered.Value);
+        EntityCoordinates coords;
+
+        if (_mapManager.TryFindGridAt(tetheredCoords, out var gridUid, out _))
+        {
+            coords = TransformSystem.ToCoordinates(gridUid, tetheredCoords);
+        }
+        else
+        {
+            coords = TransformSystem.ToCoordinates(_mapSystem.GetMap(tetheredCoords.MapId), tetheredCoords);
+        }
+        TransformSystem.SetCoordinates(component.TetherEntity.Value, coords);
+        MoveMirror();
     }
 
     private void OnTetherMove(RequestTetherMoveEvent msg, EntitySessionEventArgs args)
