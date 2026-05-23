@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: April-Gras
-  changes:
-  - message: Tool-tip punctuation for the accentless speech trait
-    type: Tweak
-  id: 9197
-  time: '2025-11-11T17:57:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41392
 - author: Nox38
   changes:
   - message: All grenades now start their fuse after taking 10 damage, and instantly
@@ -4087,3 +4080,10 @@
   id: 9708
   time: '2026-05-23T08:42:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39409
+- author: YoungThugSS14
+  changes:
+  - message: Barber Scissors now play the cutting sound again
+    type: Fix
+  id: 9709
+  time: '2026-05-23T20:46:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43922
