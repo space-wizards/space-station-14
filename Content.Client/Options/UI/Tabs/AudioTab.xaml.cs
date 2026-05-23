@@ -22,6 +22,8 @@ public sealed partial class AudioTab : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        Control.AddOptionDropDown(CVars.AudioDevice, DropDownAudioDevice, BuildAudioDeviceOptions());
+
         var masterVolume = Control.AddOptionPercentSlider(
             CVars.AudioMasterVolume,
             SliderVolumeMaster,
@@ -92,5 +94,30 @@ public sealed partial class AudioTab : Control
         // TODO: I was thinking of giving OptionsTabControlRow a flag to "set CVar immediately", but I'm deferring that
         // until there's a proper system for enforcing people don't close the window with pending changes.
         _audio.SetMasterGain(value);
+    }
+
+    private List<OptionDropDownCVar<string>.ValueOption> BuildAudioDeviceOptions()
+    {
+        var options = new List<OptionDropDownCVar<string>.ValueOption>();
+
+        options.Add(new OptionDropDownCVar<string>.ValueOption(
+            string.Empty,
+            Loc.GetString("ui-options-audio-device-default")));
+
+        foreach (var device in _audio.GetAudioDevices())
+        {
+            options.Add(new OptionDropDownCVar<string>.ValueOption(device, FormatAudioDeviceLabel(device)));
+        }
+
+        return options;
+    }
+
+    private static string FormatAudioDeviceLabel(string device)
+    {
+        const string openAlSoftPrefix = "OpenAL Soft on ";
+        if (device.StartsWith(openAlSoftPrefix, StringComparison.Ordinal))
+            return device[openAlSoftPrefix.Length..];
+
+        return device;
     }
 }
