@@ -153,8 +153,8 @@
     group: XenoArtifactNode
 
 - type: entity
-  id: BaseOneTimeXenoArtifactEffect
   parent: BaseXenoArtifactEffect
+  id: BaseOneTimeXenoArtifactEffect
   name: one-time-effect
   description: Unknown
   categories: [ HideSpawnMenu ]
@@ -169,9 +169,10 @@
     group: XenoArtifactNode
 
 - type: entity
-  id: XenoArtifactEffectUniversalIntercom
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactEffectUniversalIntercom
   description: Obtains ability of long-distance communication device
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -198,9 +199,10 @@
       - Supply
 
 - type: entity
-  id: XenoArtifactBecomeRandomInstrument
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactBecomeRandomInstrument
   description: Obtains ability of musical instrument
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -211,9 +213,10 @@
       key: enum.InstrumentUiKey.Key
 
 - type: entity
-  id: XenoArtifactStorage
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactStorage
   description: Obtains ability of hidden storage
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -225,16 +228,18 @@
       - 0,0,10,5
 
 - type: entity
-  id: XenoArtifactPhasing
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactPhasing
   description: Becomes phased
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAERemoveCollision
 
 - type: entity
-  id: XenoArtifactWandering
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactWandering
   description: Starts to move sporadically
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -245,9 +250,10 @@
       maxStepCooldown: 3
 
 - type: entity
-  id: XenoArtifactSolutionStorage
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSolutionStorage
   description: Obtains ability of container for chemical solutions
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -276,9 +282,10 @@
       utensil: None
 
 - type: entity
-  id: XenoArtifactSpeedUp
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSpeedUp
   description: Improves holder movement speed
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -287,9 +294,10 @@
       sprintModifier: 1.3
 
 - type: entity
-  id: XenoArtifactDrill
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactDrill
   description: Obtains ability of drill
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -303,9 +311,10 @@
     - type: Sharp
 
 - type: entity
-  id: XenoArtifactGenerateEnergy
   parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
+  id: XenoArtifactGenerateEnergy
   description: Produces power
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -319,9 +328,10 @@
           nodeGroupID: HVPower
 
 - type: entity
-  id: XenoArtifactGun
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactGun
   description: Obtains ability of firearm
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -350,9 +360,10 @@
         path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: entity
-  id: XenoArtifactGhost
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactGhost
   description: Becomes sentient
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -370,9 +381,10 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
-  id: XenoArtifactOmnitool
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactOmnitool
   description: Obtains ability of omnitool
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -417,9 +429,10 @@
           path: /Audio/Items/change_drill.ogg
 
 - type: entity
-  id: XenoArtifactEffectBadFeeling
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectBadFeeling
   description: Broadcasts sublime message
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETelepathic
     messages:
@@ -447,9 +460,10 @@
     - badfeeling-artifact-drastic-6
 
 - type: entity
-  id: XenoArtifactEffectGoodFeeling
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectGoodFeeling
   description: Broadcasts sublime message
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETelepathic
     messages:
@@ -476,9 +490,10 @@
     - goodfeeling-artifact-drastic-6
 
 - type: entity
-  id: XenoArtifactEffectJunkSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectJunkSpawn
   description: Create recyclable junk
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -498,16 +513,18 @@
           weight: 1
 
 - type: entity
-  id: XenoArtifactEffectLightFlicker
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectLightFlicker
   description: Minor electromagnetic interference
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAELightFlicker
 
 - type: entity
-  id: XenoArtifactPotassiumWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPotassiumWave
   description: Produces potassium
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -532,9 +549,10 @@
     - Potassium
 
 - type: entity
-  id: XenoArtifactFloraSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFloraSpawn
   description: Produces flora
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -547,9 +565,10 @@
         - id: RandomFloraTree
 
 - type: entity
-  id: XenoArtifactChemicalPuddle
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactChemicalPuddle
   description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreatePuddle
     chemAmount:
@@ -583,32 +602,36 @@
     - Sulfur
 
 - type: entity
-  id: XenoArtifactThrowThingsAround
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactThrowThingsAround
   description: Minor implosion
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEThrowThingsAround
 
 - type: entity
-  id: XenoArtifactColdWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactColdWave
   description: Cools down surrounding gas
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETemperature
     targetTemp: 50
 
 - type: entity
-  id: XenoArtifactHeatWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactHeatWave
   description: Heats up surrounding gas greatly
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETemperature
     targetTemp: 500
 
 - type: entity
-  id: XenoArtifactFoamMild
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamMild
   description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEFoam
     replaceDescription: true
@@ -626,9 +649,10 @@
     - JuiceThatMakesYouWeh
 
 - type: entity
-  id: XenoArtifactRandomInstrumentSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRandomInstrumentSpawn
   description: Creates musical instrument
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -646,9 +670,10 @@
         - id: RandomInstruments
 
 - type: entity
-  id: XenoArtifactMonkeySpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMonkeySpawn
   description: Creates primate
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -669,9 +694,10 @@
           weight: 5.0
 
 - type: entity
-  id: XenoArtifactRadioactive
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactRadioactive
   description: Becomes mildly radioactive
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -682,9 +708,10 @@
       slope: 0.3
 
 - type: entity
-  id: XenoArtifactChargeBattery
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactChargeBattery
   description: Charges up batteries
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEChargeBattery
   - type: XAETelepathic
@@ -692,17 +719,19 @@
     - charge-artifact-popup
 
 - type: entity
-  id: XenoArtifactKnock
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactKnock
   description: Mild electromagnetic interference
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEKnock
   - type: XAELightFlicker
 
 - type: entity
-  id: XenoArtifactMagnet
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactMagnet
   description: Create small gravity well
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -714,9 +743,10 @@
       baseTangentialAcceleration: 3
 
 - type: entity
-  id: XenoArtifactMagnetNegative
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactMagnetNegative
   description: Create small gravity well
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -728,9 +758,10 @@
       baseTangentialAcceleration: -3
 
 - type: entity
-  id: XenoArtifactStealth
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactStealth
   description: Create light interference
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     components:
@@ -741,9 +772,10 @@
       movementVisibilityRate: 0.10
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawn
   parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
+  id: XenoArtifactRareMaterialSpawn
   description: Create rare materials
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -771,9 +803,10 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnSilver
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnSilver
   description: Create rare materials
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -794,9 +827,10 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnPlasma
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnPlasma
   description: Create plasma
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -817,9 +851,10 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnGold
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnGold
   description: Create gold
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -840,9 +875,10 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnUranium
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnUranium
   description: Create uranium
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -863,9 +899,10 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactAngryCarpSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactAngryCarpSpawn
   description: Create hostile fish
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -886,9 +923,10 @@
           weight: 1.0
 
 - type: entity
-  id: XenoArtifactFaunaSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFaunaSpawn
   description: Create friendly fauna
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -933,9 +971,10 @@
           prob: 0.03
 
 - type: entity
-  id: XenoArtifactHostileFaunaSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactHostileFaunaSpawn
   description: Create hostile fauna
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -960,9 +999,10 @@
         - id: MobKangarooSpace
 
 - type: entity
-  id: XenoArtifactCashSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactCashSpawn
   description: Create money
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -989,9 +1029,10 @@
           weight: 0.1
 
 - type: entity
-  id: XenoArtifactShatterWindows
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactShatterWindows
   description: Break windows
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -1008,9 +1049,10 @@
         Structural: 200
 
 - type: entity
-  id: XenoArtifactFoamGood
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamGood
   description: Creates wave of helpful foam
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 7
@@ -1029,9 +1071,10 @@
     - Omnizine
 
 - type: entity
-  id: XenoArtifactFoamDangerous
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamDangerous
   description: Creates wave of harmful foam
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEFoam
     minFoamAmount: 20
@@ -1051,9 +1094,10 @@
     - Amatoxin
 
 - type: entity
-  id: XenoArtifactPuddleRare
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPuddleRare
   description: Creates puddle of helpful chemicals
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreatePuddle
     chemAmount:
@@ -1081,9 +1125,10 @@
     - Siderlac
 
 - type: entity
-  id: XenoArtifactAnomalySpawn
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactAnomalySpawn
   description: Creates anomaly
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1096,9 +1141,10 @@
         - id: RandomAnomalySpawner
 
 - type: entity
-  id: XenoArtifactIgnite
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactIgnite
   description: Pyrokinesis
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEIgnite
     range: 7
@@ -1107,16 +1153,18 @@
       max: 6
 
 - type: entity
-  id: XenoArtifactTeleport
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactTeleport
   description: Teleportation
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAERandomTeleportInvoker
 
 - type: entity
-  id: XenoArtifactEmp
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEmp
   description: Dangerous electromagnetic interference
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 5
@@ -1126,32 +1174,36 @@
   - type: XAEEmpInArea
 
 - type: entity
-  id: XenoArtifactPolyMonkey
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyMonkey
   description: Temporarily reshape flesh to fur
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEPolymorph
 
 - type: entity
-  id: XenoArtifactPolyLizard
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyLizard
   description: Temporarily reshape flesh to scale
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLizard
 
 - type: entity
-  id: XenoArtifactPolyLuminous
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyLuminous
   description: Temporarily reshape flesh to light
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLuminous
 
 - type: entity
-  id: XenoArtifactRadioactiveStrong
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactRadioactiveStrong
   description: Becomes highly radioactive
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1162,9 +1214,10 @@
       slope: 0.3
 
 - type: entity
-  id: XenoArtifactMaterialSpawnGlass
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnGlass
   description: Create glass
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1177,9 +1230,10 @@
         - id: SheetGlass
 
 - type: entity
-  id: XenoArtifactMaterialSpawnSteel
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnSteel
   description: Create steel
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1192,9 +1246,10 @@
         - id: SheetSteel
 
 - type: entity
-  id: XenoArtifactMaterialSpawnPlastic
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnPlastic
   description: Create plastic
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1207,16 +1262,18 @@
         - id: SheetPlastic
 
 - type: entity
-  id: XenoArtifactPortal
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPortal
   description: Create short-living bluespace portal
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEPortal
 
 - type: entity
-  id: XenoArtifactArtifactSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactArtifactSpawn
   description: Create artifact
+  categories: [ HideSpawnMenu ]
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -1234,9 +1291,10 @@
         - id: RandomArtifactSpawner
 
 - type: entity
-  id: XenoArtifactShuffle
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactShuffle
   description: Switch places of sentient beings #not ALL beings, but oh well...
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEShuffle
   - type: XAETelepathic
@@ -1245,9 +1303,10 @@
     - shuffle-artifact-popup
 
 - type: entity
-  id: XenoArtifactHealAll
   parent: BaseXenoArtifactEffect
-  description: Miraclous healing
+  id: XenoArtifactHealAll
+  description: Miraculous healing
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEDamageInArea
     damageChance: 1
@@ -1265,9 +1324,10 @@
         Shock: -100
 
 - type: entity
-  id: XenoArtifactTesla
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactTesla
   description: Mass destruction
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1280,9 +1340,10 @@
         - id: Singularity
 
 - type: entity
-  id: XenoArtifactSingularity
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSingularity
   description: Imminent doom
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1295,9 +1356,10 @@
         - id: TeslaEnergyBall
 
 - type: entity
-  id: XenoArtifactExplosionScary
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactExplosionScary
   description: Small scale high-speed nuclear reaction
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETriggerExplosives
   - type: Explosive
@@ -1310,9 +1372,10 @@
     repeatable: true
 
 - type: entity
-  id: XenoArtifactBoom
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactBoom
   description: Explosion
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAETriggerExplosives
   - type: Explosive
@@ -1324,54 +1387,60 @@
     repeatable: true
 
 - type: entity
-  id: XenoArtifactEffectCreationGasPlasma
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasPlasma
   description: Expels plasma
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
       Plasma: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasTritium
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasTritium
   description: Expels tritium
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
       Tritium: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasAmmonia
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasAmmonia
   description: Expels ammonia
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
       Ammonia: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasFrezon
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasFrezon
   description: Expels frezon
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
       Frezon: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasNitrousOxide
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasNitrousOxide
   description: Expels nitrous oxide
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
       NitrousOxide: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasCarbonDioxide
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasCarbonDioxide
   description: Expels carbon dioxide
+  categories: [ HideSpawnMenu ]
   components:
   - type: XAECreateGas
     gases:
