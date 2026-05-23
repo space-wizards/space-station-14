@@ -39,6 +39,8 @@ ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-bwoink-sound = Play AHelp Notification Sound
+ui-options-audio-device = Output device:
+ui-options-audio-device-default = System default
 ui-options-volume-label = Volume
 
 ## Graphics menu
