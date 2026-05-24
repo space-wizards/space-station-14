@@ -7,9 +7,9 @@ namespace Content.Server.Objectives.Systems;
 
 public sealed partial class MailFraudObjectiveSystem : EntitySystem
 {
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly CounterConditionSystem _counterCondition = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private CounterConditionSystem _counterCondition = default!;
 
     public override void Initialize()
     {
@@ -24,15 +24,12 @@ public sealed partial class MailFraudObjectiveSystem : EntitySystem
         if (_fingerprintReader.IsAllowed(ent.Owner, args.User, out var _, showPopup: false, checkGloves: false))
             return; //cutting open your own letter
 
-        if (!_mind.TryGetMind(args.User, out _, out var mind))
+        if (!_mind.TryGetMind(args.User, out var mindUid, out var mind))
             return;
 
-        foreach (var obj in mind.Objectives)
+        foreach (var obj in _mind.EnumerateObjectives<MailFraudConditionComponent>((mindUid, mind)))
         {
-            if (HasComp<MailFraudConditionComponent>(obj))
-            {
-                _counterCondition.IncreaseCount(obj);
-            }
+            _counterCondition.IncreaseCount(obj);
         }
     }
 }
