@@ -144,11 +144,7 @@
 - type: entity
   id: GravityGeneratorMiniUncharged
   parent: GravityGeneratorMini
-  name: mini gravity generator
   suffix: Uncharged
-  description: It's what keeps you to the floor, now in fun size.
   components:
   - type: PowerCharge
-    idlePower: 15
-    activePower: 500
     charge: 0
