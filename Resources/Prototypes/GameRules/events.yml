@@ -157,7 +157,7 @@
     duration: 1
     minimumPlayers: 15
     chaos:
-      Power: 100
+      Power: 50
   - type: BreakerFlipRule
 
 - type: entity
@@ -187,9 +187,7 @@
     weight: 5
     duration: 1
     chaos:
-      Hostile: 10
-      Friend: 10
-      Combat: 20
+      Mess: 20
   - type: ClericalErrorRule
 
 - type: entity
@@ -216,7 +214,7 @@
       Hostile: 20
       Friend: 20
       Combat: 40
-      Atmos: 100
+      Atmos: 40
       Death: 100
       Medical: 100
     duration: null
@@ -357,7 +355,7 @@
     endAnnouncement: station-event-gas-leak-end-announcement
     weight: 8
     chaos:
-      Atmos: 100
+      Atmos: 50
       Medical: 50
   - type: GasLeakRule
 
@@ -391,7 +389,7 @@
     duration: 60
     maxDuration: 120
     chaos:
-      Power: 200
+      Power: 100
   - type: PowerGridCheckRule
 
 - type: entity
