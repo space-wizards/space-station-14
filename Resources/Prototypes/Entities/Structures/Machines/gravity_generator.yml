@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: GravityGenerator
   parent: BaseMachinePowered
+  id: GravityGenerator
   name: gravity generator
   description: It's what keeps you to the floor.
   placement:
@@ -81,8 +81,8 @@
     price: 5000
 
 - type: entity
-  id: GravityGeneratorMini
   parent: [ GravityGenerator, ConstructibleMachine ]
+  id: GravityGeneratorMini
   name: mini gravity generator
   suffix: Charged
   description: It's what keeps you to the floor, now in fun size.
