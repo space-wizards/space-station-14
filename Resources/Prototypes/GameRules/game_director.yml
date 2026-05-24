@@ -87,8 +87,8 @@
   goal: # Try to achieve a wide range of different moderate values.
     Combat: -200 # Friendly forces should have the upper hand
     Anomaly: 100
-    Atmos: 200
-    Power: 100
+    Atmos: 100
+    Power: 50
     Mess: 100
     Hunger: 100
     Thirst: 100
@@ -98,8 +98,8 @@
   id: PowerIssues
   description: Create high engineering chaos
   goal:   # Annoying engineering issues
-    Atmos: 400
-    Power: 400
+    Atmos: 200
+    Power: 100
     Medical: 100
 
 - type: storyBeat
@@ -107,12 +107,12 @@
   description: Create high Science chaos
   goal:
     Anomaly: 400
-    Power: 100
+    Power: 60
     Atmos: 100
     Medical: 100
   endIfAnyWorse:
-    Anomaly: 500   # Severe atmos, power or medical issues should end this beat.
-    Power: 300
+    Anomaly: 300   # Severe atmos, power or medical issues should end this beat.
+    Power: 80
     Medical: 300
     Death: 400
     Combat: -100 # Friendly forces should retain the upper hand
@@ -123,8 +123,8 @@
   goal:
     Hostile: 100  # Quite a few hostiles
   endIfAnyWorse:
-    Atmos: 800   # Severe atmos, power or medical issues should end this beat.
-    Power: 800
+    Atmos: 100   # Severe atmos, power or medical issues should end this beat.
+    Power: 90
     Medical: 600
     Death: 400
     Combat: -50 # Friendly forces should just retain the upper hand
@@ -135,8 +135,8 @@
   goal:
     Hostile: 40  # Perhaps 4 hostiles
   endIfAnyWorse:
-    Atmos: 400   # Severe atmos, power or medical issues should end this beat.
-    Power: 400
+    Atmos: 100   # Severe atmos, power or medical issues should end this beat.
+    Power: 90
     Medical: 300
     Death: 300
     Combat: -100 # Friendly forces should easily retain the upper hand
@@ -150,7 +150,7 @@
     Atmos: 0
     Medical: 0
   endIfAllBetter:
-    Atmos: 200
+    Atmos: 100
     Hostile: 20
     Medical: 200
 
@@ -162,5 +162,5 @@
     Power: 0
     Medical: 0
   endIfAllBetter:
-    Atmos: 200
-    Power: 200
+    Atmos: 100
+    Power: 60
