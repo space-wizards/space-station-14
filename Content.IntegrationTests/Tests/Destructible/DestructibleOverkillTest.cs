@@ -23,6 +23,7 @@ public sealed class DestructibleOverkillTest : GameTest
     /// Test that an entity with consequences is destroyed cleanly when overkilled.
     /// </summary>
     [Test]
+    [Description("Test that an entity with consequences is destroyed cleanly when overkilled.")]
     public async Task EnsureOverkill()
     {
         var testMap = await Pair.CreateTestMap();
