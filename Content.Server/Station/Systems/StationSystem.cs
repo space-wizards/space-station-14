@@ -412,7 +412,7 @@ public sealed partial class StationSystem : SharedStationSystem
         var grids = new HashSet<EntityUid>();
 
         var query = EntityQueryEnumerator<StationDataComponent>();
-        while (query.MoveNext(out var uid, out var data))
+        while (query.MoveNext(out var data))
         {
             grids.UnionWith(data.Grids);
         }

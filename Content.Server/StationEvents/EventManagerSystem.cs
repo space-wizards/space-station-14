@@ -196,7 +196,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     /// <summary>
     ///   Runs a specific named event.
     /// </summary>
-    public void RunNamedEvent(string eventId)
+    public void RunNamedEvent([ForbidLiteral] string eventId)
     {
         var ent = GameTicker.AddGameRule(eventId);
         Log.Info($"Running event {eventId} as entity {ent}");

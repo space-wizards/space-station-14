@@ -76,13 +76,6 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
     {
         base.Initialize();
         _sawmill = _log.GetSawmill("game_rule");
-        SubscribeLocalEvent<GameDirectorComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
-
-    private void OnUnpaused(EntityUid uid, GameDirectorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.BeatStart += args.PausedTime;
-        component.TimeNextEvent += args.PausedTime;
     }
 
     protected override void Added(EntityUid uid, GameDirectorComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -124,9 +117,9 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
 
         ChaosMetrics chaos = CalculateChaos(uid);
         scheduler.CurrentChaos = chaos;
-        LogMessage($"Chaos is: {chaos}");
+        LogMessage(Loc.GetString("game-director-chaos-report", ("chaos", chaos.ToString()!)));
 
-        if (scheduler.Stories == null || scheduler.Stories.Count() <= 0)
+        if (scheduler.Stories == null || !scheduler.Stories.Any())
         {
             // No stories (e.g. dummy game rule for printing metrics), end game rule now
             GameTicker.EndGameRule(uid, gameRule);
@@ -137,7 +130,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         if (scheduler.TimeNextEvent == TimeSpan.Zero)
         {
             scheduler.TimeNextEvent = _timing.CurTime + TimeSpan.FromSeconds(GameDirectorComponent.MinimumTimeUntilFirstEvent);
-            LogMessage($"Started, first event in {GameDirectorComponent.MinimumTimeUntilFirstEvent} seconds");
+            LogMessage(Loc.GetString("game-director-first-event", ("seconds", GameDirectorComponent.MinimumTimeUntilFirstEvent)));
             return;
         }
 
@@ -159,12 +152,12 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
             _event.RunNamedEvent(chosenEvent.PossibleEvent.StationEvent);
 
             // 2 - 6 minutes until the next event is considered, can vary per beat
-            scheduler.TimeNextEvent = currTime + TimeSpan.FromSeconds(_random.NextFloat(beat.EventDelayMin, beat.EventDelayMax));
+            scheduler.TimeNextEvent = currTime + TimeSpan.FromSeconds(_random.NextFloat((float)beat.EventDelayMin.TotalSeconds, (float)beat.EventDelayMax.TotalSeconds));
         }
         else
         {
             // No events were run. Consider again in 30 seconds (current beat or chaos might change)
-            LogMessage($"Chaos is: {chaos} (No events ran)", false);
+            LogMessage(Loc.GetString("game-director-chaos-no-events", ("chaos", chaos.ToString()!)), false);
             scheduler.TimeNextEvent = currTime + TimeSpan.FromSeconds(30f);
         }
     }
@@ -176,22 +169,18 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
     /// </summary>
     private PlayerCount CountActivePlayers()
     {
-        var allPlayers = _playerManager.Sessions.ToList();
         var count = new PlayerCount();
-        foreach (var player in allPlayers)
+
+        var actorQuery = EntityQueryEnumerator<ActorComponent>();
+        while (actorQuery.MoveNext(out _))
         {
-            // TODO: A
-            if (player.AttachedEntity != null)
-            {
-                if (HasComp<ActorComponent>(player.AttachedEntity))
-                {
-                    count.Players += 1;
-                }
-                else if (HasComp<GhostComponent>(player.AttachedEntity))
-                {
-                    count.Ghosts += 1;
-                }
-            }
+            count.Players += 1;
+        }
+
+        var ghostQuery = EntityQueryEnumerator<GhostComponent>();
+        while (ghostQuery.MoveNext(out _))
+        {
+            count.Ghosts += 1;
         }
 
         return count;
@@ -214,19 +203,17 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
 
         // Pick this event
         var events = String.Join(", ", ranked.Select(r => r.PossibleEvent.StationEvent));
-        LogMessage($"Picked {rankedEvent.PossibleEvent.StationEvent} from best events (in sequence) {events}");
+        LogMessage(Loc.GetString("game-director-picked-event", ("eventId", rankedEvent.PossibleEvent.StationEvent), ("bestEvents", events)));
         return rankedEvent;
     }
 
     private void LogMessage(string message, bool showChat = true)
     {
-        // TODO: LogMessage strings all require localization.
         _adminLogger.Add(LogType.GameDirector, showChat ? LogImpact.Medium : LogImpact.High, $"{message}");
         if (showChat)
         {
-            _chat.SendAdminAnnouncement("GameDirector " + message);
+            _chat.SendAdminAnnouncement(message);
         }
-
     }
     /// <summary>
     ///   Returns the StoryBeat that should be currently used to select events.
@@ -240,14 +227,14 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         {
             var beatName = scheduler.RemainingBeats[0];
             var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
-            var secsInBeat = (curTime - scheduler.BeatStart).TotalSeconds;
+            var timeInBeat = curTime - scheduler.BeatStart;
 
-            if (secsInBeat > beat.MaxSecs)
+            if (timeInBeat > beat.MaxSecs)
             {
                 // Done with this beat (it has lasted too long)
-                _sawmill.Info($"StoryBeat {beatName} complete. It's lasted {scheduler.BeatStart} out of a maximum of {beat.MaxSecs} seconds.");
+                _sawmill.Info($"StoryBeat {beatName} complete. It's lasted {timeInBeat} out of a maximum of {beat.MaxSecs}.");
             }
-            else if (secsInBeat > beat.MinSecs)
+            else if (timeInBeat > beat.MinSecs)
             {
                 // Determine if we meet the chaos thresholds to exit this beat
                 if (!beat.EndIfAnyWorse.Empty && chaos.AnyWorseThan(beat.EndIfAnyWorse))
@@ -283,7 +270,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
             var beatName = scheduler.RemainingBeats[0];
             var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
 
-            LogMessage($"New StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+            LogMessage(Loc.GetString("game-director-new-storybeat", ("beatName", beatName), ("description", beat.Description!), ("goal", beat.Goal.ToString()!)));
             return beat;
         }
 
@@ -309,13 +296,11 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
 
                 scheduler.CurrentStoryName = storyName;
                 SetupEvents(scheduler, count);
-                _sawmill.Info(
-                    $"New Story {storyName}: {story.Description}. {scheduler.PossibleEvents.Count} events to use.");
+                _sawmill.Info(Loc.GetString("game-director-new-story", ("storyName", storyName), ("description", story.Description!), ("count", scheduler.PossibleEvents.Count)));
 
                 var beatName = scheduler.RemainingBeats[0];
                 var beat = _prototypeManager.Index<StoryBeatPrototype>(beatName);
-
-                LogMessage($"First StoryBeat {beatName}: {beat.Description}. Goal is {beat.Goal}");
+                LogMessage(Loc.GetString("game-director-first-storybeat", ("beatName", beatName), ("description", beat.Description!), ("goal", beat.Goal.ToString()!)));
                 return beat;
             }
         }
