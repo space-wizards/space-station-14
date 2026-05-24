@@ -14,11 +14,11 @@ namespace Content.Shared.Tag;
 /// if you need to use them often, it's better to make a proper implementation,
 /// you can read more <a href="https://github.com/space-wizards/space-station-14/pull/28272">HERE</a>.
 /// </summary>
-public sealed class TagSystem : EntitySystem
+public sealed partial class TagSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
-    [Dependency] private readonly EntityQuery<TagComponent> _tagQuery = default!;
+    [Dependency] private EntityQuery<TagComponent> _tagQuery = default!;
 
     public override void Initialize()
     {

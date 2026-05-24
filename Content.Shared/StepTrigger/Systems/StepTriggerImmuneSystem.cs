@@ -4,9 +4,9 @@ using Content.Shared.StepTrigger.Components;
 
 namespace Content.Shared.StepTrigger.Systems;
 
-public sealed class StepTriggerImmuneSystem : EntitySystem
+public sealed partial class StepTriggerImmuneSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

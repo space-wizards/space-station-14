@@ -90,6 +90,7 @@ namespace Content.IntegrationTests.Tests.Damageable
   name: {TestDamageableEntityId}
   components:
   - type: Damageable
+  - type: Injurable
     damageContainer: testDamageContainer
 ";
 

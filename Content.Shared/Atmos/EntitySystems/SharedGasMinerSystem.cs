@@ -4,9 +4,9 @@ using Content.Shared.Temperature;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
-public abstract class SharedGasMinerSystem : EntitySystem
+public abstract partial class SharedGasMinerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAtmosphereSystem _sharedAtmosphereSystem = default!;
+    [Dependency] private SharedAtmosphereSystem _sharedAtmosphereSystem = default!;
 
     public override void Initialize()
     {

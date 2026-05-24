@@ -15,6 +15,7 @@
     slots:
     - Belt
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Appearance
   - type: AnimationPlayer

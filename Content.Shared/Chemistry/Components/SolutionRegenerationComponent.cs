@@ -12,18 +12,6 @@ namespace Content.Shared.Chemistry.Components;
 public sealed partial class SolutionRegenerationComponent : Component
 {
     /// <summary>
-    /// The name of the solution to add to.
-    /// </summary>
-    [DataField("solution", required: true)]
-    public string SolutionName = string.Empty;
-
-    /// <summary>
-    /// The solution to add reagents to.
-    /// </summary>
-    [ViewVariables]
-    public Entity<SolutionComponent>? SolutionRef = null;
-
-    /// <summary>
     /// The reagent(s) to be regenerated in the solution.
     /// </summary>
     [DataField(required: true)]

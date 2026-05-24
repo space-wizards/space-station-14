@@ -13,7 +13,8 @@ public sealed class StartEndGameRulesTest : GameTest
     public override PoolSettings PoolSettings => new PoolSettings
     {
         Dirty = true,
-        DummyTicker = false
+        DummyTicker = false,
+        Map = PoolManager.TestStation
     };
 
     /// <summary>

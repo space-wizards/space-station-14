@@ -21,6 +21,23 @@
       collection: gib # Placeholder
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingBiodegrade
+  name: Biodegrade
+  description: Vomit acid over your restraints, setting yourself free.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Short cooldown but chemical cost
+    raiseOnAction: true
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: biodegrade
+  - type: InstantAction
+    event: !type:ChangelingBiodegradeActionEvent
+  - type: ChangelingBiodegradeAbility
+
+- type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own.
@@ -28,6 +45,7 @@
   - type: Action
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
     iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    itemIconStyle: BigAction
     priority: 1
   - type: TargetAction
   - type: EntityTargetAction
@@ -48,3 +66,39 @@
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingVoiceMimic
+  name: Voice Mimicry
+  description: Model your vocal cords to imitate the voice of someone else.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: mimicry
+  - type: InstantAction
+    event: !type:VoiceMaskSetNameEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingStingDna
+  name: Extract DNA
+  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_off" }
+    iconOn: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_on" }
+    itemIconStyle: BigAction
+    priority: 1
+    useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
+    raiseOnUser: true
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+      - HumanoidProfile
+    event: !type:ChangelingStingDnaEvent

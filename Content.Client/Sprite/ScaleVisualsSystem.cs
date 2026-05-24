@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Sprite;
 
-public sealed class ScaleVisualsSystem : SharedScaleVisualsSystem
+public sealed partial class ScaleVisualsSystem : SharedScaleVisualsSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

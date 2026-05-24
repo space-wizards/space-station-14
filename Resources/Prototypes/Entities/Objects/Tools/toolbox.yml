@@ -81,6 +81,7 @@
   description: A toolbox typically stocked with electrical gear.
   components:
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

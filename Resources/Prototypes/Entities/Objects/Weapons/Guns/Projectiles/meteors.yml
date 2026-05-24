@@ -34,6 +34,7 @@
         - Impassable
         - BulletImpassable
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Explosive
     explosionType: Default
@@ -191,6 +192,11 @@
         spawnAfter: 0.5
 
 - type: entity
+  abstract: true
+  parent: [SolutionHuge, BaseMeteor]
+  id: BaseSolutionMeteor
+
+- type: entity
   parent: BaseMeteor
   id: MeteorUrist
   name: Urist McMeteor
@@ -199,13 +205,11 @@
   components:
   - type: Sprite
     state: human_pixel
-  - type: SolutionContainerManager
-    solutions:
-      blood:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Blood
-          Quantity: 1000
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 480
   - type: Explosive
     totalIntensity: 25
   - type: Destructible
@@ -222,7 +226,7 @@
           params:
             volume: 10
       - !type:SpillBehavior
-        solution: blood
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatHuman:
@@ -232,7 +236,7 @@
 
 # Cow Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorCow
   name: Cosmic cow
   description: Moo-ving at relativistic speeds!
@@ -242,13 +246,11 @@
     state: cow_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
-    solutions:
-      milk:
-        maxVol: 500
-        reagents:
-        - ReagentId: Milk
-          Quantity: 500
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Milk
+        Quantity: 480
   - type: Destructible
     thresholds:
     - trigger:
@@ -261,7 +263,7 @@
         sound:
           path: /Audio/Animals/cow_moo.ogg
       - !type:SpillBehavior
-        solution: milk
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeat:
@@ -274,7 +276,7 @@
 
 # Clown Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorClown
   name: Honksteroid
   description: The final honkening!
@@ -284,13 +286,11 @@
     state: clown_pixel
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
-    solutions:
-      laughter:
-        maxVol: 500
-        reagents:
-        - ReagentId: Laughter
-          Quantity: 500
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 480
   - type: Destructible
     thresholds:
     - trigger:
@@ -303,7 +303,7 @@
         sound:
           path: /Audio/Items/bikehorn.ogg
       - !type:SpillBehavior
-        solution: laughter
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatClown:
@@ -319,7 +319,7 @@
 
 # Potato Meteor
 - type: entity
-  parent: BaseMeteor
+  parent: BaseSolutionMeteor
   id: MeteorPotato
   name: Space potato
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
@@ -328,13 +328,11 @@
     state: potato
   - type: Explosive
     totalIntensity: 25
-  - type: SolutionContainerManager
-    solutions:
-      ketchup:
-        maxVol: 100
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 100
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -344,7 +342,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpillBehavior
-        solution: ketchup
+        solution: solution
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMealFries:

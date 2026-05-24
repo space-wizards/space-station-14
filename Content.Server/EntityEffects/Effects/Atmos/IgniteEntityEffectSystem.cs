@@ -11,7 +11,7 @@ namespace Content.Server.EntityEffects.Effects.Atmos;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class IngiteEntityEffectSystem : EntityEffectSystem<FlammableComponent, Ignite>
 {
-    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
     protected override void Effect(Entity<FlammableComponent> entity, ref EntityEffectEvent<Ignite> args)
     {

@@ -60,9 +60,9 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: Sugar
-        Quantity: 100
-      - ReagentId: Butter
         Quantity: 200
+      - ReagentId: Butter
+        Quantity: 400
   - type: Fixtures
     fixtures:
       fix1:

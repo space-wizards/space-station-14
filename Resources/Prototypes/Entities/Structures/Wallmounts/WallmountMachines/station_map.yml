@@ -39,9 +39,16 @@
       - state: station_map0
       - state: unshaded
         shader: unshaded
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
     - type: Icon
       sprite: Structures/Machines/station_map.rsi
       state: station_map0
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
     - type: ContainerFill
       containers:
         board: [ StationMapCircuitboard ]

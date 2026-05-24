@@ -10,15 +10,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
-    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
+    public sealed partial class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IClientNetManager _netMgr = default!;
-        [Dependency] private readonly IClientConGroupController _conGroup = default!;
-        [Dependency] private readonly IClientConsoleHost _host = default!;
-        [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
+        [Dependency] private IPlayerManager _player = default!;
+        [Dependency] private IClientNetManager _netMgr = default!;
+        [Dependency] private IClientConGroupController _conGroup = default!;
+        [Dependency] private IClientConsoleHost _host = default!;
+        [Dependency] private IResourceManager _res = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IUserInterfaceManager _userInterface = default!;
 
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();

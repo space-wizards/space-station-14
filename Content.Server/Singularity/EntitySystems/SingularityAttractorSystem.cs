@@ -11,10 +11,10 @@ namespace Content.Server.Singularity.EntitySystems;
 /// <summary>
 /// Handles singularity attractors.
 /// </summary>
-public sealed class SingularityAttractorSystem : EntitySystem
+public sealed partial class SingularityAttractorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.

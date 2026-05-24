@@ -11,13 +11,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.HotPotato;
 
-public abstract class SharedHotPotatoSystem : EntitySystem
+public abstract partial class SharedHotPotatoSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-    [Dependency] private readonly DamageOnHoldingSystem _damageOnHolding = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private DamageOnHoldingSystem _damageOnHolding = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
 
     public override void Initialize()

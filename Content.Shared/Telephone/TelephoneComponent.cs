@@ -1,12 +1,11 @@
 using Content.Shared.Chat;
-using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Telephone;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedTelephoneSystem))]
 public sealed partial class TelephoneComponent : Component
 {
@@ -14,19 +13,19 @@ public sealed partial class TelephoneComponent : Component
     /// Sets how long the telephone will ring before it automatically hangs up
     /// </summary>
     [DataField]
-    public float RingingTimeout = 30;
+    public TimeSpan RingingTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Sets how long the telephone can remain idle in-call before it automatically hangs up
     /// </summary>
     [DataField]
-    public float IdlingTimeout = 60;
+    public TimeSpan IdlingTimeout = TimeSpan.FromSeconds(60);
 
     /// <summary>
     /// Sets how long the telephone will stay in the hanging up state before return to idle
     /// </summary>
     [DataField]
-    public float HangingUpTimeout = 2;
+    public TimeSpan HangingUpTimeout = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Tone played while the phone is ringing
@@ -38,7 +37,7 @@ public sealed partial class TelephoneComponent : Component
     /// Sets the number of seconds before the next ring tone is played
     /// </summary>
     [DataField]
-    public float RingInterval = 2f;
+    public TimeSpan RingInterval = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The time at which the next tone will be played
@@ -90,8 +89,8 @@ public sealed partial class TelephoneComponent : Component
     /// <summary>
     /// Speech is relayed through this entity instead of the telephone
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Entity<SpeechComponent>? Speaker = null;
+    [DataField]
+    public EntityUid? Speaker = null;
 
     /// <summary>
     /// Telephone number for this device
@@ -99,40 +98,55 @@ public sealed partial class TelephoneComponent : Component
     /// <remarks>
     /// For future use - a system for generating and handling telephone numbers has not been implemented yet
     /// </remarks>
-    [ViewVariables]
+    [DataField]
     public int TelephoneNumber = -1;
 
     /// <summary>
-    /// Linked telephone
+    /// Other telephones that have been linked to this one
     /// </summary>
-    [ViewVariables]
-    public HashSet<Entity<TelephoneComponent>> LinkedTelephones = new();
+    [DataField]
+    public HashSet<EntityUid> LinkedTelephones = new();
 
     /// <summary>
     /// Defines the current state the telephone is in
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TelephoneState CurrentState = TelephoneState.Idle;
+
+    /// <summary>
+    /// Defines the previous state the telephone was in
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TelephoneState PreviousState = TelephoneState.Idle;
 
     /// <summary>
     /// The game tick the current state started
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoPausedField]
     public TimeSpan StateStartTime;
 
     /// <summary>
     /// Sets whether the telphone can pick up nearby speech
     /// </summary>
-    [ViewVariables]
+    [DataField]
     public bool Muted = false;
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
     /// and the name of the device that they used to do so
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public (string?, string?, string?) LastCallerId;
+    [DataField, AutoNetworkedField]
+    public TelephoneCallRecord? LastCallerId;
 }
+
+/// <summary>
+/// A telephone call record.
+/// </summary>
+/// <param name="CallerId">The name of the person who placed the call.</param>
+/// <param name="CallerJob">The job of the person who placed the call.</param>
+/// <param name="DeviceId">The name of the device used to make the call.</param>
+[Serializable, NetSerializable]
+public record struct TelephoneCallRecord(string? CallerId, string? CallerJob, string? DeviceId);
 
 #region: Telephone events
 

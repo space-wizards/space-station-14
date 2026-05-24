@@ -18,23 +18,23 @@ using Content.Shared.Destructible;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
-public sealed class SliceableFoodSystem : EntitySystem
+public sealed partial class SliceableFoodSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destroy = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDestructibleSystem _destroy = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private DoAfterSystem _doAfter = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SliceableFoodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SliceableFoodComponent, SliceFoodDoAfterEvent>(OnSlicedoAfter);
-        SubscribeLocalEvent<SliceableFoodComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<SliceableFoodComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnInteractUsing(Entity<SliceableFoodComponent> entity, ref InteractUsingEvent args)
@@ -156,10 +156,9 @@ public sealed class SliceableFoodSystem : EntitySystem
         _solutionContainer.TryAddSolution(itsSoln.Value, lostSolutionPart);
     }
 
-    private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
+    private void OnMapInit(Entity<SliceableFoodComponent> entity, ref MapInitEvent args)
     {
-        // TODO: When Food Component is fully kill delete this awful method
-        // This exists just to make tests fail I guess, awesome!
+        // This exists just to make tests fail!
         // If you're here because your test just failed, make sure that:
         // Your food has the edible component
         // The solution listed in the edible component exists

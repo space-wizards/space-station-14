@@ -5,11 +5,7 @@ namespace Content.Server.Objectives.Components;
 
 /// <summary>
 /// Objective condition that requires the player to be a ninja and have doorjacked at least a random number of airlocks.
-/// Requires <see cref="NumberObjectiveComponent"/> to function.
+/// Requires <see cref="NumberObjectiveComponent"/> and <see cref="CounterConditionComponent"/>  to function.
 /// </summary>
-[RegisterComponent, Access(typeof(NinjaConditionsSystem), typeof(SharedSpaceNinjaSystem))]
-public sealed partial class DoorjackConditionComponent : Component
-{
-    [DataField("doorsJacked"), ViewVariables(VVAccess.ReadWrite)]
-    public int DoorsJacked;
-}
+[RegisterComponent]
+public sealed partial class DoorjackConditionComponent : Component;

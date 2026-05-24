@@ -17,6 +17,7 @@
       singleUser: true
       key: enum.StationMapUiKey.Key
     - type: Damageable
+    - type: Injurable
       damageContainer: Inorganic
     - type: Destructible
       thresholds:

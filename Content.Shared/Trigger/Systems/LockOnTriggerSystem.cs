@@ -3,9 +3,9 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class LockOnTriggerSystem : XOnTriggerSystem<LockOnTriggerComponent>
+public sealed partial class LockOnTriggerSystem : XOnTriggerSystem<LockOnTriggerComponent>
 {
-    [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private LockSystem _lock = default!;
 
     protected override void OnTrigger(Entity<LockOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

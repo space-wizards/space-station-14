@@ -8,13 +8,13 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Pinpointer;
 
-public sealed class StationMapSystem : EntitySystem
+public sealed partial class StationMapSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly PowerCellSystem _cell = default!;
-    [Dependency] private readonly SharedStationSystem _station = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
+    [Dependency] private SharedStationSystem _station = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {

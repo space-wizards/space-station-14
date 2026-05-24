@@ -125,7 +125,6 @@
   abstract: true
   parent: BaseObjective
   id: BaseCounterObjective
-  description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
   components:
   - type: CounterCondition
   - type: NumberObjective # min and max to be set in the inheritor
