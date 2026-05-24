@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: All grenades now start their fuse after taking 10 damage, and instantly
-      detonate or break after taking 45.
-    type: Tweak
-  id: 9198
-  time: '2025-11-11T19:01:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34499
 - author: aada
   changes:
   - message: Employed lizard plushies can now be found in bulk lizard plushie crates
@@ -4087,3 +4079,10 @@
   id: 9709
   time: '2026-05-23T20:46:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43922
+- author: jessicamaybe
+  changes:
+  - message: The mimic vendor event has been removed.
+    type: Remove
+  id: 9710
+  time: '2026-05-24T04:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44057
