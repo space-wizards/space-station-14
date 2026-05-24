@@ -1,6 +1,6 @@
 <Document>
   # Space Law: Crime Listing
-  Crime codes are colored by linked crime groups, which are collections of non-stackable crimes. Suffixes are also included in the Quick Crime Guide to identify linked crimes.
+  Crime codes are colored by linked crime groups, which are classifications of crimes that are similar in nature. These classifications are useful for differentiating violent criminals from anti-authoritarian ones for example.
 
   ## Quick Crime Guide
   <Table Columns="6">
@@ -238,7 +238,7 @@
 
   ## Minor Crimes
   - Warnings should be issued for a first offense.
-  - If multiple minor crimes have been committed or it is a repeat offense, 5 minutes per minor crime is the maximum.
+  - If multiple minor crimes have been committed or it is a repeat offense, then 5 minutes is the maximum sentence for a minor crime.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -336,7 +336,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This doesn’t include legitimate and authorized animal testing and usually doesn't extend to vermin or creatures
+        This doesn’t include legitimate and authorized animal testing and usually doesn't extend to vermin such as mice, animals normally used in the process of food production, or creatures
         that could pose a threat to the station.
       </Box>
     </ColorBox>
@@ -389,7 +389,7 @@
   </Table>
 
   ## Moderate Crimes
-  - The maximum sentence per moderate crime is 5 minutes.
+  - The maximum sentence for a moderate crime is 5 minutes.
   - Depending on the situation you may want to issue a warning instead of a detaining.
   <Table Columns="4">
     <ColorBox>
@@ -462,7 +462,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To maliciously damage or deface public or private property or equipment
+        To maliciously damage or deface public or private property or equipment.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -542,7 +542,7 @@
   </Table>
 
   ## Major Crimes
-  - The maximum sentence per major crime is 10 minutes.
+  - The maximum sentence for a major crime is 10 minutes.
   - It is recommended to not use maximum sentences for those being compliant.
   <Table Columns="4">
     <ColorBox>
@@ -649,8 +649,7 @@
   </Table>
 
   ## Extreme Crimes
-  - The maximum sentence per extreme crime is 15 minutes.
-  - Particularly violent offenders may be placed in perma. (Attacking officers in an attempt to escape prison)
+  - The maximum sentence for an extreme crime is 15 minutes.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -812,7 +811,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Summed up; extreme sabotage of station systems or setting off self-destruction systems. This includes any means causing the 
-        entire station to become uninhabitable, "Looses", station-wide atmospherics sabotage, and destruction of the station AI all fall into this category.
+        entire station to become uninhabitable, releasing an active singularity, station-wide atmospherics sabotage, and destruction of the station AI all fall into this category.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -827,7 +826,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To kill a member of the crew.
+        To permanently kill a member of the crew.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -853,8 +852,8 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies when there have been multiple attempted murders with intention,
-        or if the perpetrator has commited multiple acts of Manslaughter.
+        Applies when there have been three or more Attempted Murders with intention,
+        or if the perpetrator has commited three or more acts of Manslaughter.
       </Box>
     </ColorBox>
     <ColorBox>
