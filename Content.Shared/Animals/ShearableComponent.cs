@@ -72,7 +72,7 @@ public sealed partial class ShearableComponent : Component
     /// <summary>
     ///     The "Quality" of the target item that allows this entity to be sheared.
     ///     For example, Wirecutters have the "cutting" quality.
-    ///     Leave undefined for no tool required.
+    ///     Leave null for no tool required.
     /// </summary>
     /// <example>
     ///     toolQuality: Cutting

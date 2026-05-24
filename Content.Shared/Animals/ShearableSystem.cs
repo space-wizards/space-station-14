@@ -18,10 +18,7 @@ using System.Numerics;
 
 namespace Content.Shared.Animals;
 
-/// <summary>
-///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item and optionally toggle a sprite layer.
-///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
-/// </summary>
+/// <inheritdoc cref="ShearableComponent"/>
 public sealed partial class SharedShearableSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -51,7 +48,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
-    ///     A <c>bool</c>, true means the entity can be sheared, false means it cannot.
+    ///     A <see langword="bool"/>, true means the entity can be sheared, false means it cannot.
     /// </returns>
     public bool CanShear(Entity<ShearableComponent> ent, [NotNullWhen(true)] out FixedPoint2? shearingSolutionToRemove, EntityUid? usedItem = null, bool checkItem = true)
     {
@@ -106,8 +103,8 @@ public sealed partial class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     Override function that doesn't include the shearingSolutionToRemove out var.
-    ///     For details see <see cref="CanShear(Entity{ShearableComponent}, out FixedPoint2?, EntityUid?, bool)"/>
     /// </summary>
+    /// <seealso cref="CanShear(Entity{ShearableComponent}, out FixedPoint2?, EntityUid?, bool)"/>
     public bool CanShear(Entity<ShearableComponent> ent, EntityUid? usedItem = null, bool checkItem = true)
     {
         return CanShear(ent, out _, usedItem, checkItem);
@@ -261,7 +258,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     ///     This function adds status hints to the examine of a shearable entity.
     ///     They indicate whether the entity can be sheared or not.
     /// </summary>
-    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="ent">the entity containing a shearable component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
     private void Examined(Entity<ShearableComponent> ent, ref ExaminedEvent args)
     {
@@ -303,9 +300,9 @@ public sealed partial class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     This function changes the animal's shearable layer based on the solution volume.
-    ///     e.g. when a sheep's wool solution volume drops below 5, which is the minimum needed to shear it, the wool will disapear.
+    ///     e.g. when a sheep's wool solution volume drops below 2.5, which is the minimum needed to shear it, the wool will disappear.
     /// </summary>
-    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="ent">the entity containing a shearable component that will be checked.</param>
     /// <param name="sol">a SolutionContainerChangedEvent object passed by the OnSolutionChange event.</param>
     private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution sol)
     {
@@ -324,10 +321,10 @@ public sealed partial class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Listens for changes in solution, checks if it's a wooly solution, and passes it to UpdateShearingLayer.
-    ///     Depending on the result, the woolly layer may change.
+    ///     Listens for changes in solution, checks if it's a shearable solution, and passes it to UpdateShearingLayer.
+    ///     Depending on the result, the shearable layer may change.
     /// </summary>
-    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="ent">the entity containing a shearable component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
     private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionChangedEvent args)
     {
@@ -335,7 +332,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        // Only interested in wool solution, ignore the rest.
+        // Only interested in shearable solution, ignore the rest.
         if (args.Solution.Comp.Id != ent.Comp.TargetSolutionName)
             return;
 
