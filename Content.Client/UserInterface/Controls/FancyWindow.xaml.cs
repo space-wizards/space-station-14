@@ -17,7 +17,8 @@ namespace Content.Client.UserInterface.Controls
     {
         [Dependency] private IEntitySystemManager _sysMan = default!;
         [Dependency] private IStylesheetManager _styleMan = default!;
-        
+        [Dependency] private IEntityManager _entMan = default!;
+
         private ISawmill _logger = default!;
 
         private GuidebookSystem? _guidebookSystem;
