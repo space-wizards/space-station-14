@@ -10,7 +10,7 @@ namespace Content.Shared.SolutionAppearance;
 /// Visual system for devices with <see cref="SolutionItemSlotAppearanceComponent" /> and <see cref="SolutionContainerVisualsComponent" />
 /// Allows the visuals of device to be set using Solution within inserted item. Solution needs to have <see cref="SolutionAppearanceComponent" />.
 /// </summary>
-public sealed class SolutionItemSlotAppearanceSystem : EntitySystem
+public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private SharedContainerSystem _container = default!;
