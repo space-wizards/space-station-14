@@ -65,18 +65,13 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent ev)
     {
         if (ev.Handled)
-        {
             return;
-        }
 
-        string? title = null;
-        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
+        if (TryFindIdCard(ev.Target, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
         {
-            title = ExtractFullTitle(idCard);
+            ev.Title = ExtractFullTitle(idCard);
+            ev.Handled = true;
         }
-
-        ev.Title = title;
-        ev.Handled = true;
     }
 
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -323,6 +318,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
         ent.Comp.Expired = true;
+        ent.Comp.Permanent = false;
         Dirty(ent);
     }
 
