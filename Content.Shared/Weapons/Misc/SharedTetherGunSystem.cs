@@ -111,16 +111,20 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void MoveMirror()
     {
-        var tetheredGunQuery = EntityQueryEnumerator<TetherGunComponent>();
+        var tetherGunQuery = EntityQueryEnumerator<TetherGunComponent>();
 
-        while (tetheredGunQuery.MoveNext(out var uid, out var comp))
+        while (tetherGunQuery.MoveNext(out var uid, out var comp))
         {
             if (comp.Tethered == null || comp.TetherEntity == null || comp.TetherMirrorEntity == null)
                 continue;
+
             var gunCoords = TransformSystem.GetMapCoordinates(uid);
             var tetheredCoords = TransformSystem.GetMapCoordinates(comp.Tethered.Value);
             var tetherCoords = TransformSystem.GetMapCoordinates(comp.TetherEntity.Value);
             var coords = gunCoords.Offset(tetheredCoords.Position - tetherCoords.Position);
+            var currentCoords = TransformSystem.GetMapCoordinates(comp.TetherMirrorEntity.Value);
+            if ((coords.Position - currentCoords.Position).Length() <= 0.01f)
+                continue;
             TransformSystem.SetMapCoordinates(comp.TetherMirrorEntity.Value, coords);
         }
     }
