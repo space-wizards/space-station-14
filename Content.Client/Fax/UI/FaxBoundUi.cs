@@ -8,9 +8,9 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Fax.UI;
 
 [UsedImplicitly]
-public sealed class FaxBoundUi : BoundUserInterface
+public sealed partial class FaxBoundUi : BoundUserInterface
 {
-    [Dependency] private readonly IFileDialogManager _fileDialogManager = default!;
+    [Dependency] private IFileDialogManager _fileDialogManager = default!;
 
     [ViewVariables]
     private FaxWindow? _window;

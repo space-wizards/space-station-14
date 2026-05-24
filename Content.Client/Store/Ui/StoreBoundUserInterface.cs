@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Content.Client.Store.Ui;
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
     private IPrototypeManager _prototypeManager = default!;
+    private readonly StoreSystem _storeSystem = default!;
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -24,6 +26,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _storeSystem = EntMan.System<StoreSystem>();
     }
 
     protected override void Open()
@@ -37,10 +40,12 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             _menu.Title = Loc.GetString(store.Name);
         }
+        if (_storeSystem.TryGetStore(Owner, out var store))
+            _menu.Title = Loc.GetString(store.Value.Comp.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing.ID));
+            SendMessage(new StoreBuyListingMessage(listing.ID, EntMan.GetNetEntity(Owner)));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>

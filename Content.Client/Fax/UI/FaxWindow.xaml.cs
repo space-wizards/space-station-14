@@ -32,7 +32,7 @@ public sealed partial class FaxWindow : FancyWindow
         SendButton.OnPressed += _ => SendButtonPressed?.Invoke();
         RefreshButton.OnPressed += _ => RefreshButtonPressed?.Invoke();
         PeerSelector.OnItemSelected += args =>
-            PeerSelected?.Invoke((string) args.Button.GetItemMetadata(args.Id)!);
+            PeerSelected?.Invoke((string)args.Button.GetItemMetadata(args.Id)!);
     }
 
     public void UpdateState(FaxUiState state)

@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: BoxDonkSoftBase
-  name: foamdart box
+  name: toy ammunition box
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true
@@ -17,7 +17,8 @@
 - type: entity
   parent: BoxDonkSoftBase
   id: BoxDonkSoftBox
-  name: box of foam darts
+  name: foam dart box
+  description: A cardboard box of foam darts.
   components:
   - type: BallisticAmmoProvider
     whitelist:
@@ -35,6 +36,7 @@
   parent: BaseMagazineBoxMagnum
   id: BoxCartridgeCap
   name: cap gun cartridge box
+  description: A cardboard box of cap gun cartridges.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCap

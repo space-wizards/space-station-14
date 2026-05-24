@@ -13,14 +13,15 @@
         shader: unshaded
   - type: PointLight
     radius: 1.6
-    energy: 1.2
+    energy: 2.0
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     offset: "0, 0.6"
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:

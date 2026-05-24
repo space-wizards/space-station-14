@@ -19,5 +19,5 @@ public sealed partial class InternalsOnEntityConditionSystem : EntityConditionSy
 public sealed partial class InternalsCondition : EntityConditionBase<InternalsCondition>
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-internals", ("usingInternals", !Inverted));
+        Loc.GetString("entity-condition-guidebook-internals", ("usingInternals", !Inverted));
 }
