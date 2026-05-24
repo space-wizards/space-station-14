@@ -39,13 +39,13 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
         if (!string.IsNullOrEmpty(component.SolutionName)
             && AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.SolutionName, out string name, args.Component)
             && name != component.SolutionName)
-            fraction = 0f;
+            return;
 
         if (!AppearanceSystem.TryGetData(uid,
                 SolutionContainerVisuals.FillFraction,
                 out float fraction,
                 args.Component))
-            return;
+            fraction = 0f;
 
         // C# moment; setting it as nullable (even though it's not) avoids a
         // gazillion .AsNullable calls.
