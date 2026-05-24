@@ -139,7 +139,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherGunDropped(EntityUid uid, TetherGunComponent component, DroppedEvent args)
     {
-       if (component.Tethered == null || component.TetherEntity == null || component.TetherMirrorEntity == null)
+        if (component.Tethered == null || component.TetherEntity == null || component.TetherMirrorEntity == null)
             return;
         var tetheredCoords = TransformSystem.GetMapCoordinates(component.Tethered.Value);
         EntityCoordinates coords;
