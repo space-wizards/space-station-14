@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -112,24 +113,28 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     private void MoveMirror()
     {
         var tetherGunQuery = EntityQueryEnumerator<TetherGunComponent>();
-
         while (tetherGunQuery.MoveNext(out var uid, out var comp))
-        {
-            if (comp.Tethered == null || comp.TetherEntity == null || comp.TetherMirrorEntity == null)
-                continue;
+            MoveMirrorEntity(uid, comp.Tethered, comp.TetherEntity, comp.TetherMirrorEntity);
+    }
 
-            var gunCoords = TransformSystem.GetMapCoordinates(uid);
-            var tetheredCoords = TransformSystem.GetMapCoordinates(comp.Tethered.Value);
-            var tetherCoords = TransformSystem.GetMapCoordinates(comp.TetherEntity.Value);
-            var coords = gunCoords.Offset(tetheredCoords.Position - tetherCoords.Position);
-            var currentCoords = TransformSystem.GetMapCoordinates(comp.TetherMirrorEntity.Value);
-            if ((coords.Position - currentCoords.Position).Length() <= 0.01f)
-                continue;
-            TransformSystem.SetCoordinates(
-                comp.TetherMirrorEntity.Value,
-                TransformSystem.ToCoordinates(_mapSystem.GetMap(gunCoords.MapId), coords)
-            );
-        }
+    private void MoveMirrorEntity(EntityUid uid, EntityUid? tethered, EntityUid? tetherEntity, EntityUid? mirrorEntity)
+    {
+        if (tethered == null || tetherEntity == null || mirrorEntity == null)
+            return;
+
+        var gunCoords = TransformSystem.GetMapCoordinates(uid);
+        var tetheredCoords = TransformSystem.GetMapCoordinates(tethered.Value);
+        var tetherCoords = TransformSystem.GetMapCoordinates(tetherEntity.Value);
+        var targetCoords = gunCoords.Offset(tetheredCoords.Position - tetherCoords.Position);
+        var currentCoords = TransformSystem.GetMapCoordinates(mirrorEntity.Value);
+
+        if ((targetCoords.Position - currentCoords.Position).Length() <= 0.01f)
+            return;
+
+        TransformSystem.SetCoordinates(
+            mirrorEntity.Value,
+            TransformSystem.ToCoordinates(_mapSystem.GetMap(gunCoords.MapId), targetCoords)
+        );
     }
 
     private void OnTetherGunDropped(EntityUid uid, TetherGunComponent component, DroppedEvent args)
@@ -138,7 +143,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         var tetheredCoords = TransformSystem.GetMapCoordinates(component.Tethered.Value);
         EntityCoordinates coords;
-
         if (_mapManager.TryFindGridAt(tetheredCoords, out var gridUid, out _))
         {
             coords = TransformSystem.ToCoordinates(gridUid, tetheredCoords);
@@ -147,8 +151,15 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         {
             coords = TransformSystem.ToCoordinates(_mapSystem.GetMap(tetheredCoords.MapId), tetheredCoords);
         }
+        if (TryComp(uid, out TransformComponent? gunXform))
+        {
+            if (coords.TryDelta(EntityManager, TransformSystem, gunXform.Coordinates, out Vector2 delta))
+            {
+                coords = gunXform.Coordinates.Offset(delta / 2);
+            }
+        }
         TransformSystem.SetCoordinates(component.TetherEntity.Value, coords);
-        MoveMirror();
+        MoveMirrorEntity(uid, component.Tethered, component.TetherEntity, component.TetherMirrorEntity);
     }
 
     private void OnTetherMove(RequestTetherMoveEvent msg, EntitySessionEventArgs args)
@@ -177,7 +188,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         }
 
         TransformSystem.SetCoordinates(gun.TetherEntity.Value, coords);
-        MoveMirror();
+        MoveMirrorEntity(gunUid.Value, gun.Tethered, gun.TetherEntity, gun.TetherMirrorEntity);
     }
 
     private void OnTetherRanged(EntityUid uid, TetherGunComponent component, AfterInteractEvent args)
