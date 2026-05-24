@@ -125,7 +125,10 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             var currentCoords = TransformSystem.GetMapCoordinates(comp.TetherMirrorEntity.Value);
             if ((coords.Position - currentCoords.Position).Length() <= 0.01f)
                 continue;
-            TransformSystem.SetMapCoordinates(comp.TetherMirrorEntity.Value, coords);
+            TransformSystem.SetCoordinates(
+                comp.TetherMirrorEntity.Value,
+                TransformSystem.ToCoordinates(_mapSystem.GetMap(gunCoords.MapId), coords)
+            );
         }
     }
 
@@ -305,15 +308,18 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (component.Tethered == null)
             return;
 
-        if (component.TetherEntity != null && component.TetherMirrorEntity != null)
+        if (component.TetherEntity != null)
         {
             _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
-            _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
+            if (component.TetherMirrorEntity != null)
+                _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
 
             if (_netManager.IsServer)
+            {
                 QueueDel(component.TetherEntity.Value);
-                QueueDel(component.TetherMirrorEntity.Value);
-
+                if (component.TetherMirrorEntity != null)
+                    QueueDel(component.TetherMirrorEntity.Value);
+            }
             component.TetherEntity = null;
             component.TetherMirrorEntity = null;
         }
