@@ -186,6 +186,10 @@
     minimumPlayers: 15
     weight: 5
     duration: 1
+    chaos:
+      Hostile: 10
+      Friend: 10
+      Combat: 20
   - type: ClericalErrorRule
 
 - type: entity
@@ -212,6 +216,7 @@
       Hostile: 20
       Friend: 20
       Combat: 40
+      Atmos: 100
       Death: 100
       Medical: 100
     duration: null
@@ -276,6 +281,11 @@
     earliestStart: 20
     reoccurrenceDelay: 20
     minimumPlayers: 15
+    chaos:
+      Hostile: 10
+      Friend: 10
+      Combat: 20
+      Death: 20
   - type: ParadoxCloneRule
     objectiveBlacklist:
       tags:
@@ -321,6 +331,10 @@
     earliestStart: 30
     reoccurrenceDelay: 60
     minimumPlayers: 30
+    chaos:
+      Hostile: 300
+      Death: 100
+      Medical: 200
 
 # disabled until event is rewritten to be more interesting
 #- type: entity
@@ -584,6 +598,8 @@
       path: /Audio/Announcements/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
+    chaos:
+      Hostile: 20
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     antags:
@@ -624,7 +640,7 @@
       Friend: 20
       Mess: 30
   - type: IonStormRule
-  
+
 - type: entity
   id: GreytideVirus
   parent: BaseStationEventShortDelay
@@ -659,6 +675,9 @@
     minimumPlayers: 1
     maxOccurrences: 2
     weight: 10
+    chaos:
+      Hostile: 10
+      Friend: 10
   - type: RandomSpawnRule
     prototype: RandomSatchelSpawner
 
