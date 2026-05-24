@@ -2,6 +2,7 @@ using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 
@@ -14,6 +15,8 @@ public sealed class StartEndGameRulesTest : GameTest
     {
         Dirty = true,
         DummyTicker = false,
+        // needed for AntagLivingSpawn which requires an alive humanoid player
+        Connected = true,
         Map = PoolManager.TestStation
     };
 
