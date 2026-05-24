@@ -56,7 +56,7 @@ public sealed partial class GhostRoleEntryButtons : BoxContainer
         {
             RequestButton.Text = Loc.GetString(messageId);
         }
-        Log.Log(LogLevel.Info, "cat: " + _canBeFollowed.ToString());
+
         FollowButton.Disabled = !_canBeFollowed;
     }
 
