@@ -10,12 +10,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.GhostTypes;
 
-public sealed class GhostSpriteStateSystem : EntitySystem
+public sealed partial class GhostSpriteStateSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     /// <summary>
     /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
