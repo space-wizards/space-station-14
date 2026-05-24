@@ -11475,6 +11475,8 @@ entities:
       parent: 2
     - type: PointLight
       radius: 175.75
+    - type: PowerCharge
+      charge: 1
 - proto: Grille
   entities:
   - uid: 19
