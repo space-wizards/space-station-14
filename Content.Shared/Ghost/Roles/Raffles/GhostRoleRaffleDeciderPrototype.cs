@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Server.Ghost.Roles.Raffles;
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Allows getting a <see cref="IGhostRoleRaffleDecider"/> as prototype.
@@ -15,6 +15,6 @@ public sealed partial class GhostRoleRaffleDeciderPrototype : IPrototype
     /// <summary>
     /// The <see cref="IGhostRoleRaffleDecider"/> instance that chooses the winner of a raffle.
     /// </summary>
-    [DataField("decider", required: true)]
+    [DataField(required: true)]
     public IGhostRoleRaffleDecider Decider { get; private set; } = new RngGhostRoleRaffleDecider();
 }

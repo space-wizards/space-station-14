@@ -1,12 +1,12 @@
 using System.Linq;
+using JetBrains.Annotations;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
-using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -14,14 +14,18 @@ using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
 using Content.Shared.Roles;
-using JetBrains.Annotations;
+using Content.Shared.Roles.Components;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -30,16 +34,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Collections;
-using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Components;
 
 namespace Content.Server.Ghost.Roles;
 
 [UsedImplicitly]
-public sealed partial class GhostRoleSystem : EntitySystem
+public sealed partial class GhostRoleSystem : SharedGhostRoleSystem
 {
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
@@ -172,7 +171,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
         }
     }
 
-    public void UpdateAllEui()
+    public override void UpdateAllEui()
     {
         foreach (var eui in _openUis.Values)
         {
