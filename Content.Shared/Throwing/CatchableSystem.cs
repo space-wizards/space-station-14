@@ -8,18 +8,16 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
 
 public sealed partial class CatchableSystem : EntitySystem
 {
-    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private ThrownItemSystem _thrown = default!;
+    [Dependency] private SharedThrownItemSystem _thrown = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
@@ -60,20 +58,14 @@ public sealed partial class CatchableSystem : EntitySystem
             return; // The hands are full!
 
         // Success!
-
         // We picked it up already but we still have to raise the throwing stop (but not the landing) events at the right time,
         // otherwise it will raise the events for that later while still in your hand
-        _thrown.StopThrow(ent.Owner, args.Component);
-
-        // Collisions don't work properly with PopupPredicted or PlayPredicted.
-        // So we make this server only.
-        if (_net.IsClient)
-            return;
+        _thrown.StopThrow(args.Thrown);
 
         var selfMessage = Loc.GetString("catchable-component-success-self", ("item", ent.Owner), ("catcher", Identity.Entity(args.Target, EntityManager)));
         var othersMessage = Loc.GetString("catchable-component-success-others", ("item", ent.Owner), ("catcher", Identity.Entity(args.Target, EntityManager)));
         _popup.PopupEntity(selfMessage, args.Target, args.Target);
-        _popup.PopupEntity(othersMessage, args.Target, Filter.PvsExcept(args.Target), true);
-        _audio.PlayPvs(ent.Comp.CatchSuccessSound, args.Target);
+        _popup.PopupPredicted(othersMessage, args.Target, args.Thrown.Comp.Thrower, Filter.PvsExcept(args.Target), true);
+        _audio.PlayPredicted(ent.Comp.CatchSuccessSound, args.Target, args.Thrown.Comp.Thrower);
     }
 }

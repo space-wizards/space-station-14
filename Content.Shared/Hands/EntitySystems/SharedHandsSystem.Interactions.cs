@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -6,6 +7,8 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Localizations;
+using Content.Shared.Stacks;
+using Content.Shared.Throwing;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -33,6 +36,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.SwapHandsReverse, InputCmdHandler.FromDelegate(SwapHandsReversePressed, handle: false, outsidePrediction: false))
             .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
+            .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
             .Register<SharedHandsSystem>();
     }
 
@@ -101,6 +105,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
             TryDrop((session.AttachedEntity.Value, hands), hands.ActiveHandId, coords);
 
         // always send to server.
+        return false;
+    }
+
+    private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
+    {
+        if (playerSession?.AttachedEntity is {Valid: true} player && Exists(player) && coordinates.IsValid(EntityManager))
+            ThrowHeldItem(player, coordinates, predicted: true);
+
         return false;
     }
     #endregion
@@ -208,5 +220,58 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString(locKey, locUser, locItems));
         }
+    }
+
+    /// <summary>
+    /// Throw the player's currently held item.
+    /// </summary>
+    public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f, bool predicted = false)
+    {
+        if (ContainerSystem.IsEntityInContainer(player) ||
+            !TryComp(player, out HandsComponent? hands) ||
+            !TryGetActiveItem((player, hands), out var throwEnt) ||
+            !_actionBlocker.CanThrow(player, throwEnt.Value))
+            return false;
+
+        if (_timing.CurTime < hands.NextThrowTime)
+            return false;
+        hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
+        Dirty(player, hands);
+
+        if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+        {
+            var splitStack = _stack.Split((throwEnt.Value, stack), 1, Comp<TransformComponent>(player).Coordinates);
+
+            if (splitStack is not {Valid: true})
+                return false;
+
+            throwEnt = splitStack.Value;
+        }
+
+        var direction = TransformSystem.ToMapCoordinates(coordinates).Position - TransformSystem.GetWorldPosition(player);
+        if (direction == Vector2.Zero)
+            return true;
+
+        var length = direction.Length();
+        var distance = Math.Clamp(length, minDistance, hands.ThrowRange);
+        direction *= distance / length;
+
+        var throwSpeed = hands.BaseThrowspeed;
+
+        // Let other systems change the thrown entity (useful for virtual items)
+        // or the throw strength.
+        var ev = new BeforeThrowEvent(throwEnt.Value, direction, throwSpeed, player);
+        RaiseLocalEvent(player, ref ev);
+
+        if (ev.Cancelled)
+            return true;
+
+        // This can grief the above event so we raise it afterwards
+        if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value))
+            return false;
+
+        _throwing.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid), predicted: predicted);
+
+        return true;
     }
 }

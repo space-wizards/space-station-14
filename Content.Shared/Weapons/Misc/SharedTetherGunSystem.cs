@@ -33,7 +33,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private ThrownItemSystem _thrown = default!;
+    [Dependency] private SharedThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
 
@@ -265,8 +265,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             if (land)
             {
                 var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
-                _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics, true);
-                _thrown.StopThrow(component.Tethered.Value, thrown);
+                _thrown.LandComponent((component.Tethered.Value, thrown), targetPhysics, true);
+                _thrown.StopThrow((component.Tethered.Value, thrown));
             }
 
             _physics.SetBodyStatus(component.Tethered.Value, targetPhysics, BodyStatus.OnGround);

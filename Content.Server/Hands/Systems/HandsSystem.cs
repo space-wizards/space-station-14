@@ -1,35 +1,24 @@
 using System.Numerics;
-using Content.Server.Stack;
 using Content.Server.Stunnable;
-using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Input;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
-using Content.Shared.Stacks;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Hands.Systems
 {
     public sealed partial class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private StackSystem _stackSystem = default!;
-        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private PullingSystem _pullingSystem = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -52,10 +41,6 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
             SubscribeLocalEvent<HandsComponent, DropHandItemsEvent>(OnDropHandItems);
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
-                .Register<HandsSystem>();
         }
 
         public override void Shutdown()
@@ -91,7 +76,7 @@ namespace Content.Server.Hands.Systems
             if (TryComp(uid, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
-            var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
+            var offsetRandomCoordinates = TransformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
             if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
                 return;
 
@@ -101,67 +86,6 @@ namespace Content.Server.Hands.Systems
         }
 
         #region interactions
-
-        private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
-        {
-            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player) || !coordinates.IsValid(EntityManager))
-                return false;
-
-            return ThrowHeldItem(player, coordinates);
-        }
-
-        /// <summary>
-        /// Throw the player's currently held item.
-        /// </summary>
-        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
-        {
-            if (ContainerSystem.IsEntityInContainer(player) ||
-                !TryComp(player, out HandsComponent? hands) ||
-                !TryGetActiveItem((player, hands), out var throwEnt) ||
-                !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
-                return false;
-
-            if (_timing.CurTime < hands.NextThrowTime)
-                return false;
-            hands.NextThrowTime = _timing.CurTime + hands.ThrowCooldown;
-
-            if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
-            {
-                var splitStack = _stackSystem.Split((throwEnt.Value, stack), 1, Comp<TransformComponent>(player).Coordinates);
-
-                if (splitStack is not {Valid: true})
-                    return false;
-
-                throwEnt = splitStack.Value;
-            }
-
-            var direction = _transformSystem.ToMapCoordinates(coordinates).Position - _transformSystem.GetWorldPosition(player);
-            if (direction == Vector2.Zero)
-                return true;
-
-            var length = direction.Length();
-            var distance = Math.Clamp(length, minDistance, hands.ThrowRange);
-            direction *= distance / length;
-
-            var throwSpeed = hands.BaseThrowspeed;
-
-            // Let other systems change the thrown entity (useful for virtual items)
-            // or the throw strength.
-            var ev = new BeforeThrowEvent(throwEnt.Value, direction, throwSpeed, player);
-            RaiseLocalEvent(player, ref ev);
-
-            if (ev.Cancelled)
-                return true;
-
-            // This can grief the above event so we raise it afterwards
-            if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value))
-                return false;
-
-            _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
-
-            return true;
-        }
-
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
             // If the holder doesn't have a physics component, they ain't moving

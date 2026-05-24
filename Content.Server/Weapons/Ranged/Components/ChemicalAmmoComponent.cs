@@ -1,10 +1,11 @@
-namespace Content.Server.Weapons.Ranged.Components;
-
-[RegisterComponent]
-public sealed partial class ChemicalAmmoComponent : Component
+namespace Content.Server.Weapons.Ranged.Components
 {
-    public const string DefaultSolutionName = "ammo";
+    [RegisterComponent]
+    public sealed partial class ChemicalAmmoComponent : Component
+    {
+        public const string DefaultSolutionName = "ammo";
 
-    [DataField("solution")]
-    public string SolutionName { get; set; } = DefaultSolutionName;
+        [DataField("solution")]
+        public string SolutionName { get; set; } = DefaultSolutionName;
+    }
 }

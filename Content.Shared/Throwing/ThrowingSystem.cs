@@ -3,9 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Friction;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -33,7 +31,7 @@ public sealed partial class ThrowingSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private ThrownItemSystem _thrownSystem = default!;
+    [Dependency] private SharedThrownItemSystem _thrownSystem = default!;
     [Dependency] private SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
@@ -62,6 +60,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         bool animated = true,
         bool playSound = true,
         bool doSpin = true,
+        bool predicted = false,
         ThrowingUnanchorStrength unanchor = ThrowingUnanchorStrength.None)
     {
         var thrownPos = _transform.GetMapCoordinates(uid);
@@ -70,7 +69,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         if (mapPos.MapId != thrownPos.MapId)
             return;
 
-        TryThrow(uid, mapPos.Position - thrownPos.Position, baseThrowSpeed, user, pushbackRatio, friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, unanchor: unanchor);
+        TryThrow(uid, mapPos.Position - thrownPos.Position, baseThrowSpeed, user, pushbackRatio, friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, predicted: predicted, unanchor: unanchor);
     }
 
     /// <summary>
@@ -95,6 +94,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         bool animated = true,
         bool playSound = true,
         bool doSpin = true,
+        bool predicted = false,
         ThrowingUnanchorStrength unanchor = ThrowingUnanchorStrength.None)
     {
         if (!_physicsQuery.TryComp(uid, out var physics))
@@ -108,7 +108,7 @@ public sealed partial class ThrowingSystem : EntitySystem
             baseThrowSpeed,
             user,
             pushbackRatio,
-            friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, unanchor: unanchor);
+            friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, predicted: predicted, unanchor: unanchor);
     }
 
     /// <summary>
@@ -135,6 +135,7 @@ public sealed partial class ThrowingSystem : EntitySystem
         bool animated = true,
         bool playSound = true,
         bool doSpin = true,
+        bool predicted = false,
         ThrowingUnanchorStrength unanchor = ThrowingUnanchorStrength.None)
     {
         if (baseThrowSpeed <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero || friction < 0)
@@ -205,6 +206,8 @@ public sealed partial class ThrowingSystem : EntitySystem
         // This doesn't actually compensate for air friction, but it's low enough it shouldn't matter.
         var throwSpeed = compensateFriction ? direction.Length() / (flyTime + 1 / tileFriction) : baseThrowSpeed;
         var impulseVector = direction.Normalized() * throwSpeed * physics.Mass;
+        if (predicted)
+            _physics.UpdateIsPredicted(uid, physics);
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         var thrownEvent = new ThrownEvent(user, uid);
@@ -217,7 +220,7 @@ public sealed partial class ThrowingSystem : EntitySystem
 
         if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
         {
-            _thrownSystem.LandComponent(uid, comp, physics, playSound);
+            _thrownSystem.LandComponent((uid, comp), physics, playSound);
         }
         else
         {
@@ -227,8 +230,8 @@ public sealed partial class ThrowingSystem : EntitySystem
         if (user == null)
             return;
 
-        if (recoil)
-            _recoil.KickCamera(user.Value, -direction * 0.04f);
+        if (recoil && _gameTiming.IsFirstTimePredicted)
+            _recoil.KickCamera(user.Value, -direction * 0.04f, predicted: predicted);
 
         // Give thrower an impulse in the other direction
         if (pushbackRatio == 0.0f ||

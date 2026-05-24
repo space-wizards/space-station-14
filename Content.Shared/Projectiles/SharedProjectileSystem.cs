@@ -7,7 +7,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -29,8 +28,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
@@ -82,7 +79,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!embeddable.Comp.EmbedOnThrow)
             return;
 
-        EmbedAttach(embeddable, args.Target, null, embeddable.Comp);
+        EmbedAttach(embeddable, args.Target, args.Thrown.Comp.Thrower, embeddable.Comp);
     }
 
     private void OnEmbedProjectileHit(Entity<EmbeddableProjectileComponent> embeddable, ref ProjectileHitEvent args)
@@ -113,7 +110,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             _transform.SetLocalPosition(uid, xform.LocalPosition + rotation.RotateVec(component.Offset), xform);
         }
 
-        _audio.PlayPredicted(component.Sound, uid, null);
+        _audio.PlayPredicted(component.Sound, uid, user);
         component.EmbeddedIntoUid = target;
         var ev = new EmbedEvent(user, target);
         RaiseLocalEvent(uid, ref ev);
@@ -125,6 +122,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         DebugTools.AssertEqual(embeddedContainer.EmbeddedObjects.Contains(uid), false);
 
         embeddedContainer.EmbeddedObjects.Add(uid);
+        Dirty(target, embeddedContainer);
     }
 
     public void EmbedDetach(EntityUid uid, EmbeddableProjectileComponent? component, EntityUid? user = null)

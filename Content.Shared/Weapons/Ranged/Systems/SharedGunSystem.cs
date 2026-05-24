@@ -91,6 +91,8 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected const string FireRateExamineColor = "yellow";
     public const string ModeExamineColor = "cyan";
 
+    private const float DamagePitchVariation = 0.05f;
+
     public override void Initialize()
     {
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
@@ -638,7 +640,37 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
 
-    public abstract void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound);
+    public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound, EntityUid? user = null)
+    {
+        DebugTools.Assert(!Deleted(otherEntity), "Impact sound entity was deleted");
+
+        // Like projectiles and melee,
+        // 1. Entity specific sound
+        // 2. Ammo's sound
+        // 3. Nothing
+        var playedSound = false;
+
+        if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.GetTotal() > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
+        {
+            var type = SharedMeleeWeaponSystem.GetHighestDamageSound(modifiedDamage, ProtoManager);
+
+            if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
+            {
+                Audio.PlayPredicted(damageSoundType, otherEntity, user, AudioParams.Default.WithVariation(DamagePitchVariation));
+                playedSound = true;
+            }
+            else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
+            {
+                Audio.PlayPredicted(damageSoundGroup, otherEntity, user, AudioParams.Default.WithVariation(DamagePitchVariation));
+                playedSound = true;
+            }
+        }
+
+        if (!playedSound && weaponSound != null)
+        {
+            Audio.PlayPredicted(weaponSound, otherEntity, user);
+        }
+    }
 
     /// <summary>
     /// Used for animated effects on the client.

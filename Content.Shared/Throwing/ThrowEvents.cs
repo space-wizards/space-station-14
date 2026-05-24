@@ -16,10 +16,10 @@ public readonly record struct ThrownEvent(EntityUid? User, EntityUid Thrown);
 /// Raised directed on the target entity being hit by the thrown entity.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ThrowHitByEvent(EntityUid Thrown, EntityUid Target, ThrownItemComponent Component);
+public readonly record struct ThrowHitByEvent(Entity<ThrownItemComponent> Thrown, EntityUid Target);
 
 /// <summary>
 /// Raised directed on the thrown entity that hits another.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ThrowDoHitEvent(EntityUid Thrown, EntityUid Target, ThrownItemComponent Component);
+public readonly record struct ThrowDoHitEvent(Entity<ThrownItemComponent> Thrown, EntityUid Target);

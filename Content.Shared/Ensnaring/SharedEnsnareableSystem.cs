@@ -232,7 +232,7 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
 
         if (TryEnsnare(args.Target, uid, component))
         {
-            _audio.PlayPvs(component.EnsnareSound, uid);
+            _audio.PlayPredicted(component.EnsnareSound, uid, args.Thrown.Comp.Thrower);
         }
     }
 

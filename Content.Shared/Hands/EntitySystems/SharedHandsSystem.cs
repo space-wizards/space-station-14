@@ -6,11 +6,14 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Stacks;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Hands.EntitySystems;
@@ -18,6 +21,7 @@ namespace Content.Shared.Hands.EntitySystems;
 public abstract partial class SharedHandsSystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
@@ -26,6 +30,8 @@ public abstract partial class SharedHandsSystem
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
     [Dependency] private SharedVirtualItemSystem _virtualSystem = default!;
     [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
@@ -33,8 +39,6 @@ public abstract partial class SharedHandsSystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         InitializeInteractions();
         InitializeDrop();
         InitializePickup();
