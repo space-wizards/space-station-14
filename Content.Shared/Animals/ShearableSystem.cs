@@ -129,7 +129,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
     private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
-        if (!CanShear(ent, out var shearingSolutionToRemove, usedItem: toolUsed, false))
+        if (!CanShear(ent, out var shearingSolutionToRemove, usedItem: toolUsed, true))
         {
             // Failed, if the entity has no solution then show a popup.
             if (shearingSolutionToRemove <= 0)
