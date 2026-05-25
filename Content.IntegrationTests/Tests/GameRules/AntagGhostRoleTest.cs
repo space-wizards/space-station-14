@@ -115,6 +115,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         Assert.That(spawner.Definition, Is.Not.Null);
         Assert.That(xform.MapUid, Is.Not.Null);
         Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
+        Assert.That(xform.Coordinates.IsValid(_entMan), Is.True);
 
         // Take the ghost role and ensure we take it!
         Assert.That(_ghostRole.Takeover(ServerSession!, role.Identifier), Is.True);
@@ -124,7 +125,6 @@ public sealed partial class AntagGhostRoleTest : AntagTest
 
         // Ensure we spawned in the correct location
         var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
-        Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
 
         // We do it via distance so that it works for ghost roles which don't spawn "exactly" at their spawn position (e.g. paradox clones)
         var hadDistance = sessionXform.Coordinates.TryDistance(_entMan, xform.Coordinates, out var distance);
