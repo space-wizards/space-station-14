@@ -96,6 +96,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
 
         var user = args.User;   // can't use ref parameter in lambdas
 
+        // Don't add the Label verb if the labeler's text is blank.
         if (ent.Comp.AssignedLabel != string.Empty)
         {
             var labelVerb = new UtilityVerb()
@@ -110,10 +111,10 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
             args.Verbs.Add(labelVerb);
         }
 
-        // Only add the unlabel verb if the target is already labeled.
+        // Add the Remove Label verb whether or not the labeler's text is blank,
+        // but only if the target is already labeled.
         if (_labelSystem.HasLabel(target))
         {
-            // add the unlabel verb to the menu even when the labeler has text
             var unLabelVerb = new UtilityVerb()
             {
                 Act = () =>

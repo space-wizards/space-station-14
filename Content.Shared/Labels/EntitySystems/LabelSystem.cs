@@ -63,7 +63,7 @@ public sealed partial class LabelSystem : EntitySystem
     // TODO - Change signature to `Label(Entity<LabelComponent?> ent, string? text)`
     public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
     {
-        // Remove a blank label
+        // If setting the label to be blank, just remove the label.
         if (string.IsNullOrEmpty(text))
         {
             RemoveLabel((uid, label));
@@ -85,7 +85,7 @@ public sealed partial class LabelSystem : EntitySystem
     /// <returns>true if a label was removed, or false if the entity already didn't have a label.</returns>
     public bool RemoveLabel(Entity<LabelComponent?> ent)
     {
-        return RemCompDeferred<LabelComponent>(ent);
+        return RemComp<LabelComponent>(ent);
     }
 
     /// <summary>
