@@ -4,16 +4,13 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Weapons.Misc;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-public sealed partial class ForceGunComponent : BaseForceGunComponent
+public sealed partial class ForceGunComponent : Component
 {
-    /// <summary>
-    /// Maximum distance to throw entities.
-    /// </summary>
     [DataField, AutoNetworkedField]
-    public float ThrowDistance = 50f;
+    public float ThrowSpeed = 15f;
 
     [DataField, AutoNetworkedField]
-    public float ThrowForce = 300f;
+    public float PushBackRatio = 1f;
 
     [DataField("soundLaunch")]
     public SoundSpecifier? LaunchSound = new SoundPathSpecifier("/Audio/Weapons/soup.ogg")

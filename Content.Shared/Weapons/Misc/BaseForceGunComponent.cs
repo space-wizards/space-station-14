@@ -1,8 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Misc;
 
-public abstract partial class BaseForceGunComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+public sealed partial class BaseForceGunComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("lineColor"), AutoNetworkedField]
     public Color LineColor = Color.Orange;
@@ -11,18 +13,19 @@ public abstract partial class BaseForceGunComponent : Component
     /// The entity the tethered target has a joint to.
     /// </summary>
     [DataField("tetherEntity"), AutoNetworkedField]
-    public virtual EntityUid? TetherEntity { get; set; }
+    public EntityUid? TetherEntity { get; set; }
+
     /// <summary>
     /// The entity the tethered target has a joint to.
     /// </summary>
     [DataField("tetherMirrorEntity"), AutoNetworkedField]
-    public virtual EntityUid? TetherMirrorEntity { get; set; }
+    public EntityUid? TetherMirrorEntity { get; set; }
 
     /// <summary>
     /// The entity currently tethered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("tethered"), AutoNetworkedField]
-    public virtual EntityUid? Tethered { get; set; }
+    public EntityUid? Tethered { get; set; }
 
     /// <summary>
     /// Can the tethergun unanchor entities.
@@ -39,9 +42,19 @@ public abstract partial class BaseForceGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxForce"), AutoNetworkedField]
     public float MaxForce = 200f;
 
+    /// <summary>
+    /// Frequency of the spring which pulls the object towards the tether entity.
+    /// Higher number means faster pull limited my max force.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("frequency"), AutoNetworkedField]
     public float Frequency = 10f;
 
+    /// <summary>
+    /// Damping ratio of the spring which pulls the object towards the tether entity.
+    /// 1 means critical damping, so perfect pull with no overshoot.
+    /// >1 means overdamping. It will move slower.
+    /// <1 means underdamping. It will overshoot and bounce back and forth
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("dampingRatio"), AutoNetworkedField]
     public float DampingRatio = 2f;
 
@@ -50,6 +63,19 @@ public abstract partial class BaseForceGunComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("massLimit"), AutoNetworkedField]
     public float MassLimit = 100f;
+
+    /// <summary>
+    /// Max Distance away from player the object can be before the beam breaks
+    /// Objects also can't be picked up from this far away
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxBeamLength"), AutoNetworkedField]
+    public float MaxBeamLength = 20f;
+
+    /// <summary>
+    /// Max Distance away from player the object can be moved to
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxDistance"), AutoNetworkedField]
+    public float MaxDistance = 10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")

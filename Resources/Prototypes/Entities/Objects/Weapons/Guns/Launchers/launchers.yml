@@ -215,9 +215,9 @@
   components:
     - type: Item
       size: Normal
-    - type: TetherGun
+    - type: BaseForceGun
       frequency: 5
-      dampingRatio: 4
+      dampingRatio: 2
     - type: ItemToggle
       onUse: false
     - type: PowerCellDraw
@@ -257,11 +257,14 @@
   components:
     - type: Item
       size: Normal
-    - type: ForceGun
+    - type: BaseForceGun
       frequency: 15
-      dampingRatio: 4
+      dampingRatio: 1
       massLimit: 50
+      maxDistance: 1
+      maxForce: 400
       lineColor: "#18a2d5"
+    - type: ForceGun
       soundLaunch:
         path: /Audio/Weapons/soup.ogg
         params:
@@ -332,92 +335,6 @@
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
     - type: PacifismAllowedGun
-
-# Admeme
-- type: entity
-  name: tether gun
-  parent: BaseItem
-  id: WeaponTetherGunAdmin
-  suffix: Admeme
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: Item
-      size: Normal
-    - type: TetherGun
-      canTetherAlive: true
-      canUnanchor: true
-      maxForce: 10000
-      massLimit: 10000
-      dampingRatio: 4
-      frequency: 20
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-    - type: ToggleableVisuals
-      spriteLayer: unshaded
-      inhandVisuals:
-        left:
-          - state: inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: inhand-right-unshaded
-            shader: unshaded
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { visible: true }
-            False: { visible: false }
-
-- type: entity
-  name: force gun
-  parent: BaseItem
-  id: WeaponForceGunAdmin
-  suffix: Admeme
-  description: Manipulates gravity around objects to fling them at high velocities.
-  components:
-    - type: Item
-      size: Normal
-    - type: ForceGun
-      canTetherAlive: true
-      canUnanchor: true
-      maxForce: 10000
-      massLimit: 10000
-      frequency: 15
-      dampingRatio: 4
-      throwForce: 1000
-      throwDistance: 100
-      lineColor: "#18a2d5"
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          shader: unshaded
-          visible: false
-    - type: ToggleableVisuals
-      spriteLayer: unshaded
-      inhandVisuals:
-        left:
-          - state: inhand-left-unshaded
-            shader: unshaded
-        right:
-          - state: inhand-right-unshaded
-            shader: unshaded
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { visible: true }
-            False: { visible: false }
 
 - type: entity
   name: meteor launcher

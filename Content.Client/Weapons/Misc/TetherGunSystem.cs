@@ -24,8 +24,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         base.Initialize();
         SubscribeLocalEvent<TetheredComponent, ComponentStartup>(OnTetheredStartup);
         SubscribeLocalEvent<TetheredComponent, ComponentShutdown>(OnTetheredShutdown);
-        SubscribeLocalEvent<TetherGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
-        SubscribeLocalEvent<ForceGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
+        SubscribeLocalEvent<BaseForceGunComponent, AfterAutoHandleStateEvent>(OnAfterState);
         _overlay.AddOverlay(new TetherGunOverlay(EntityManager));
     }
 
@@ -59,7 +58,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         var player = _player.LocalEntity;
 
         if (player == null ||
-            !TryGetTetherGun(player.Value, out _, out var gun) ||
+            !TryGetGun(player.Value, out _, out var gun) ||
             gun.TetherEntity == null)
         {
             return;
@@ -104,13 +103,9 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
             return;
         }
 
-        if (TryComp<ForceGunComponent>(component.Tetherer, out var force))
+        if (TryComp<BaseForceGunComponent>(component.Tetherer, out var force))
         {
             _sprite.SetColor((uid, sprite), force.LineColor);
-        }
-        else if (TryComp<TetherGunComponent>(component.Tetherer, out var tether))
-        {
-            _sprite.SetColor((uid, sprite), tether.LineColor);
         }
     }
 
