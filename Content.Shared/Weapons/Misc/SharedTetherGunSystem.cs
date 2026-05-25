@@ -377,7 +377,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.WakeBody(tether);
 
         var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
-        var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
 
         SharedJointSystem.LinearStiffness(
             component.Frequency,
@@ -390,9 +389,13 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         joint.Stiffness = stiffness;
         joint.Damping = damping;
         joint.MaxForce = component.MaxForce;
-        jointMirror.Stiffness = stiffness;
-        jointMirror.Damping = damping;
-        jointMirror.MaxForce = component.MaxForce;
+        if (component.ReverseForce)
+        {
+            var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
+            jointMirror.Stiffness = stiffness;
+            jointMirror.Damping = damping;
+            jointMirror.MaxForce = component.MaxForce;
+        }
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)

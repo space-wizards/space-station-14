@@ -77,6 +77,12 @@ public sealed partial class BaseForceGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxDistance"), AutoNetworkedField]
     public float MaxDistance = 10f;
 
+    /// <summary>
+    /// Max Distance away from player the object can be moved to
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("reverseForce"), AutoNetworkedField]
+    public bool ReverseForce = true;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")
     {

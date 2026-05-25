@@ -258,11 +258,10 @@
     - type: Item
       size: Normal
     - type: BaseForceGun
-      frequency: 15
-      dampingRatio: 1
+      frequency: 5
+      dampingRatio: 2
       massLimit: 50
       maxDistance: 1
-      maxForce: 400
       lineColor: "#18a2d5"
     - type: ForceGun
       soundLaunch:
@@ -297,6 +296,101 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
+
+# Admeme
+- type: entity
+  name: tether gun
+  parent: BaseItem
+  id: WeaponTetherGunAdmin
+  suffix: Admeme
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: Item
+      size: Normal
+    - type: BaseForceGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 50000
+      massLimit: 10000
+      dampingRatio: 1
+      frequency: 25
+      reverseForce: false
+      maxBeamLength: 100
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  name: force gun
+  parent: BaseItem
+  id: WeaponForceGunAdmin
+  suffix: Admeme
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: Item
+      size: Normal
+    - type: BaseForceGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 50000
+      massLimit: 10000
+      frequency: 50
+      maxDistance: 1
+      dampingRatio: 1
+      lineColor: "#18a2d5"
+      reverseForce: false
+      maxBeamLength: 100
+    - type: ForceGun
+      throwSpeed: 100
+      soundLaunch:
+        path: /Audio/Weapons/soup.ogg
+        params:
+          volume: 2
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   name: grappling gun
