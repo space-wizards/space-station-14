@@ -162,6 +162,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     /// <param name="ent">Entity with a <see cref="SuitSensorComponent"/> under examination.</param>
     /// <param name="args"><see cref="ExaminedEvent"/> arguments,
     /// used to determine range and retrieve the active mode.</param>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
     private void OnExamine(Entity<SuitSensorComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
