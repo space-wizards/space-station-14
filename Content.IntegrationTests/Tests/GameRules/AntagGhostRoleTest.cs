@@ -29,6 +29,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
 
     [SidedDependency(Side.Server)] private IRobustRandom _random = default!;
     [SidedDependency(Side.Server)] private GhostRoleSystem _ghostRole = default!;
+    [SidedDependency(Side.Server)] private IEntityManager _entMan = default!;
 
     private static readonly string[] AntagGameRules = GameDataScrounger.EntitiesWithComponent("AntagSelection");
 
@@ -125,12 +126,11 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
         Assert.That(sessionXform.MapUid, Is.EqualTo(xform.MapUid));
 
-        // We break it up like this cause otherwise it'll sometimes randomly fail
-        // TODO: Engine IEquatable for EntityCoordinates
-        Assert.That(sessionXform.Coordinates.EntityId, Is.EqualTo(xform.Coordinates.EntityId));
+        // We do it via distance so that it works for ghost roles which don't spawn "exactly" at their spawn position (e.g. paradox clones)
+        var hadDistance = sessionXform.Coordinates.TryDistance(_entMan, xform.Coordinates, out var distance);
+        Assert.That(hadDistance, Is.True);
 
         // I will not get heisentest due to floating point errors
-        Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.X, xform.Coordinates.X, 0.001f), Is.True);
-        Assert.That(MathHelper.CloseTo(sessionXform.Coordinates.Y, xform.Coordinates.Y, 0.001f), Is.True);
+        Assert.That(MathHelper.CloseTo(distance, 0f, 0.001f), Is.True);
     }
 }
