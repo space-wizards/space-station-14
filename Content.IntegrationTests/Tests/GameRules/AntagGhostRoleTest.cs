@@ -126,7 +126,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         // Ensure we spawned in the correct location
         var sessionXform = SEntMan.GetComponent<TransformComponent>(ServerSession.AttachedEntity.Value);
 
-        // We do it via distance so that it works for ghost roles which don't spawn "exactly" at their spawn position (e.g. paradox clones)
+        // We do it via distance so that it works for ghost roles which don't spawn "exactly" at their spawn position (e.g. paradox clones which spawn in a container)
         var hadDistance = sessionXform.Coordinates.TryDistance(_entMan, xform.Coordinates, out var distance);
         Assert.That(hadDistance, Is.True);
 
