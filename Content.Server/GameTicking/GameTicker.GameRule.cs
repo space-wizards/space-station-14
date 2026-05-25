@@ -18,8 +18,9 @@ public sealed partial class GameTicker
 {
     /// <summary>
     /// Designated game rule that spawns a fake antagonist to discourage metagaming.
+    /// Has to be a string since <see cref="EntProtoId"/> cannot be a const.
     /// </summary>
-    public static readonly EntProtoId DummyGameRule = "DummyNonAntag";
+    public const string DummyGameRule = "DummyNonAntag";
 
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
