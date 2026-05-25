@@ -47,8 +47,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<BaseForceGunComponent, ActivateInWorldEvent>(OnTetherActivate);
-        SubscribeLocalEvent<BaseForceGunComponent, AfterInteractEvent>(OnTetherRanged);
         SubscribeLocalEvent<ForceGunComponent, AfterInteractEvent>(OnForceRanged);
+        SubscribeLocalEvent<BaseForceGunComponent, AfterInteractEvent>(OnTetherRanged);
         SubscribeLocalEvent<BaseForceGunComponent, DroppedEvent>(OnTetherGunDropped);
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
 
@@ -224,16 +224,16 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     {
         if (args.Target == null || args.Handled)
             return;
-        TryTether(uid, args.Target.Value, args.User, component);
+        if (TryTether(uid, args.Target.Value, args.User, component))
+            args.Handled = true;
     }
 
     private void OnForceRanged(EntityUid uid, ForceGunComponent forceComponent, AfterInteractEvent args)
     {
-        if (args.Handled || args.Target != null)
+        if (args.Handled)
             return;
         if (!_netManager.IsServer)
             return;
-        args.Handled = true;
         if (!TryComp<BaseForceGunComponent>(uid, out var baseComponent) || baseComponent == null)
         {
             return;
@@ -252,6 +252,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             limitMass: false
         );
         _audio.PlayPredicted(forceComponent.LaunchSound, uid, null);
+        args.Handled = true;
     }
 
     protected bool TryGetGun(
