@@ -290,9 +290,7 @@ namespace Content.IntegrationTests.Tests
                     // If the entity deleted itself, check that it didn't spawn other entities
                     if (!server.EntMan.EntityExists(uid))
                     {
-                        // Run extra ticks so that any transient side-effect entities (e.g. explosion visuals with TimedDespawn) 
-                        // expire and the deletion replicates to the client.
-                        await pair.RunTicksSync(75);
+                        await CleanupTransientEntities(pair, serverEntities);
 
                         Assert.That(Count(server.EntMan), Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself\n" +
                             BuildDiffString(serverEntities, Entities(server.EntMan), server.EntMan));
@@ -313,6 +311,7 @@ namespace Content.IntegrationTests.Tests
 
                     await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
                     await pair.RunTicksSync(3);
+                    await CleanupTransientEntities(pair, serverEntities);
 
                     // Check that the number of entities has gone back to the original value.
                     Assert.That(Count(server.EntMan), Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly\n" +
@@ -323,6 +322,27 @@ namespace Content.IntegrationTests.Tests
                         BuildDiffString(clientEntities, Entities(client.EntMan), client.EntMan));
                 }
             });
+        }
+
+        /// <summary>
+        /// Deletes any entities with <see cref="TimedDespawnComponent"/> that were not present in the baseline snapshot.
+        /// Some entities spawn transient side-effects on deletion (e.g. explosion visuals). These side-effect entities
+        /// use TimedDespawn and would persist across test iterations, corrupting baseline entity counts and causing
+        /// cascading assertion failures.
+        /// </summary>
+        private static async Task CleanupTransientEntities(Pair.TestPair pair, HashSet<EntityUid> baselineEntities)
+        {
+            var server = pair.Server;
+            await server.WaitPost(() =>
+            {
+                var query = server.EntMan.AllEntityQueryEnumerator<TimedDespawnComponent>();
+                while (query.MoveNext(out var uid, out _))
+                {
+                    if (!baselineEntities.Contains(uid))
+                        server.EntMan.DeleteEntity(uid);
+                }
+            });
+            await pair.RunTicksSync(3);
         }
 
         private static string BuildDiffString(IEnumerable<EntityUid> oldEnts, IEnumerable<EntityUid> newEnts, IEntityManager entMan)
