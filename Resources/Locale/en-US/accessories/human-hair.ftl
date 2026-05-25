@@ -204,3 +204,7 @@ marking-HumanHairVolaju = Volaju
 marking-HumanHairWisp = Wisp
 marking-HumanHairLongWithBangs = Long With Bangs
 marking-HumanHairOverEyePigtail = Pigtail (Over Eye)
+marking-HumanHairTerminal = Terminal
+marking-HumanHairTerminal-terminal = Primary
+marking-HumanHairTerminal-terminal_highlight = Highlight
+marking-HumanHairTerminal-terminal_headband = Headband
