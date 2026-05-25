@@ -290,6 +290,10 @@ namespace Content.IntegrationTests.Tests
                     // If the entity deleted itself, check that it didn't spawn other entities
                     if (!server.EntMan.EntityExists(uid))
                     {
+                        // Run extra ticks so that any transient side-effect entities (e.g. explosion visuals with TimedDespawn) 
+                        // expire and the deletion replicates to the client.
+                        await pair.RunTicksSync(75);
+
                         Assert.That(Count(server.EntMan), Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself\n" +
                             BuildDiffString(serverEntities, Entities(server.EntMan), server.EntMan));
                         Assert.That(Count(client.EntMan), Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deleting itself\n" +
