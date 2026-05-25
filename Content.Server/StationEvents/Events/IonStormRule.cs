@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
+public sealed partial class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
     [Dependency] private readonly IonStormSystem _ionStorm = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

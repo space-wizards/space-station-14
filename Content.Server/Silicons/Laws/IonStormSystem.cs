@@ -2,7 +2,7 @@ using Content.Shared.Silicons.Laws.Components;
 
 namespace Content.Server.Silicons.Laws;
 
-public sealed class IonStormSystem : EntitySystem
+public sealed partial class IonStormSystem : EntitySystem
 {
     /// <summary>
     /// Triggers the ion storm event and subsequent handlers.
