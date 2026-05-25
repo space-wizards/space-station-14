@@ -81,7 +81,9 @@ public sealed partial class SharedShearableSystem : EntitySystem
         var productsToSpawn = targetSolutionQuantity / ent.Comp.SolutionPerProduct;
         if (productsToSpawn < 1)
         {
-            productsToSpawn = 0;
+            // Nothing to spawn so give up now.
+            shearingSolutionToRemove = 0;
+            return false;
         }
         else if (ent.Comp.MaximumProductsSpawned is not null && ent.Comp.MaximumProductsSpawned < productsToSpawn)
         {
@@ -278,17 +280,16 @@ public sealed partial class SharedShearableSystem : EntitySystem
             // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
             if (toolQualityProto is not null)
             {
-                // Tool quality names are a Loc string so look up that and lower-case it.
-                toolQuality = Loc.GetString(toolQualityProto.Name).ToLower();
+                // Tool quality names are a Loc string so look up that.
                 // If a Loc string isn't found then it will just return the same ID, which means it hasn't been configured right so just error and return.
-                if (string.Equals(toolQuality, toolQualityProto.Name.ToLower()))
+                if (!Loc.TryGetString(toolQualityProto.Name, out toolQuality))
                 {
-                    Log.Debug($"Tried to generate examine text for a shearable entity \"{Name(ent.Owner)}\" but the configured toolQuality ({toolQualityProto.ID}) name: \"{toolQuality}\" is not a Loc string.");
+                    Log.Warning($"Tried to lookup examine text for a shearable entity \"{Name(ent.Owner)}\" but the configured toolQuality ({toolQualityProto.ID}) name: \"{toolQualityProto.Name}\" is not a Loc string.");
                     return;
                 }
             }
             // ALL SYSTEMS GO!
-            args.PushMarkup(Loc.GetString(ent.Comp.ShearableMarkupText.Value, ("target", Identity.Entity(ent.Owner, EntityManager)), ("toolQuality", toolQuality)));
+            args.PushMarkup(Loc.GetString(ent.Comp.ShearableMarkupText.Value, ("target", Identity.Entity(ent.Owner, EntityManager)), ("toolQuality", toolQuality.ToLower())));
             return;
         }
 
