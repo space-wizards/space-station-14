@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Samuka, DarkIcedCoffee, Whale
-  changes:
-  - message: 'Added a new antag: Xenoborgs'
-    type: Add
-  id: 9203
-  time: '2025-11-14T22:21:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40042
 - author: Entvari, Nosrepp
   changes:
   - message: Added the Mini Energy Crossbow to Traitor and Nukie uplinks.
@@ -4086,3 +4079,11 @@
   id: 9714
   time: '2026-05-25T23:17:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44083
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed Delta-Pressure computing the pressure differential for a structure
+      incorrectly.
+    type: Fix
+  id: 9715
+  time: '2026-05-25T23:33:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43517
