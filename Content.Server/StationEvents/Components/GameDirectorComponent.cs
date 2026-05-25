@@ -159,27 +159,27 @@ public sealed partial class StoryBeatPrototype : IPrototype
     ///   The number of seconds that we will remain in this state at minimum
     /// </summary>
     [DataField]
-    public TimeSpan MinSecs = TimeSpan.FromMinutes(8);
+    public TimeSpan MinSecs = TimeSpan.FromSeconds(480);
 
     /// <summary>
     ///   The number of seconds that we will remain in this state at maximum
     /// </summary>
     [DataField]
-    public TimeSpan MaxSecs = TimeSpan.FromMinutes(20);
+    public TimeSpan MaxSecs = TimeSpan.FromSeconds(960);
 
     /// <summary>
     ///   Seconds between events during this beat (min)
     ///   2 minute default
     /// </summary>
     [DataField]
-    public TimeSpan EventDelayMin = TimeSpan.FromMinutes(2);
+    public TimeSpan EventDelayMin = TimeSpan.FromSeconds(120);
 
     /// <summary>
     ///   Seconds between events during this beat (max)
     ///   6 minute default
     /// </summary>
     [DataField]
-    public TimeSpan EventDelayMax = TimeSpan.FromMinutes(6);
+    public TimeSpan EventDelayMax = TimeSpan.FromSeconds(360);
 
     /// <summary>
     ///   How many different events we choose from (at random) when performing this StoryBeat

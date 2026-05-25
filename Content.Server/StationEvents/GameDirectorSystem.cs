@@ -212,7 +212,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         _adminLogger.Add(LogType.GameDirector, showChat ? LogImpact.Medium : LogImpact.High, $"{message}");
         if (showChat)
         {
-            _chat.SendAdminAnnouncement(message);
+            _chat.SendAdminAnnouncement(Loc.GetString("game-director-name", ("message", message)));
         }
     }
     /// <summary>

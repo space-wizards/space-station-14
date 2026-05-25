@@ -1,3 +1,4 @@
+game-director-name = Game Director {$message}
 game-director-chaos-report = Chaos is: {$chaos}
 game-director-first-event = Started, first event in {$seconds} seconds
 game-director-chaos-no-events = Chaos is: {$chaos} (No events ran)
