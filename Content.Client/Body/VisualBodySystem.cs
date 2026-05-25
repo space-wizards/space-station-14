@@ -200,6 +200,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     var spriteLayer = _sprite.AddLayer(target, sprite, index + i + 1);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
+                    Log.Debug("WOWIE NO!");
                 }
 
                 if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
@@ -208,7 +209,14 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     _sprite.LayerSetColor(target, layerId, Color.White);
 
                 if (displacement != null && proto.CanBeDisplaced)
-                    _displacement.TryAddDisplacement(displacement, (target, target.Comp), index + i + 1, layerId, out _);
+                {
+                    _displacement.TryAddDisplacement(displacement,
+                        (target, target.Comp),
+                        index + proto.Sprites.Count + i + 1,
+                        layerId,
+                        out _);
+                }
+
             }
 
             applied.Add(marking);
