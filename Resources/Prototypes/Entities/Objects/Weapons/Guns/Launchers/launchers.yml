@@ -280,22 +280,60 @@
           map: [ "unshaded" ]
           shader: unshaded
           visible: false
-        - type: ToggleableVisuals
-          spriteLayer: unshaded
-          inhandVisuals:
-            left:
-              - state: inhand-left-unshaded
-                shader: unshaded
-            right:
-              - state: inhand-right-unshaded
-                shader: unshaded
-        - type: Appearance
-        - type: GenericVisualizer
-          visuals:
-            enum.TetherVisualsStatus.Key:
-              unshaded:
-                True: { visible: true }
-                False: { visible: false }
+    - type: ToggleableVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  name: grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGun
+  components:
+    - type: Item
+      size: Small
+      shape:
+      - 0,0,1,0
+      - 0,1,0,1
+      storedOffset: 0,-6
+    - type: AmmoCounter
+    - type: GrapplingGun
+    - type: Gun
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
+      fireRate: 0.5
+      clumsyProof: true
+    - type: BasicEntityAmmoProvider
+      proto: GrapplingHook
+      capacity: 1
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: UseDelay
+      delay: 1.5
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }
+    - type: PacifismAllowedGun
 
 # Admeme
 - type: entity
@@ -391,44 +429,6 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
-
-- type: entity
-  name: grappling gun
-  parent: BaseItem
-  id: WeaponGrapplingGun
-  components:
-    - type: Item
-      size: Small
-      shape:
-      - 0,0,1,0
-      - 0,1,0,1
-      storedOffset: 0,-6
-    - type: AmmoCounter
-    - type: GrapplingGun
-    - type: Gun
-      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
-      fireRate: 0.5
-      clumsyProof: true
-    - type: BasicEntityAmmoProvider
-      proto: GrapplingHook
-      capacity: 1
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-      layers:
-        - state: base
-        - state: base-unshaded
-          map: [ "unshaded" ]
-          visible: true
-    - type: UseDelay
-      delay: 1.5
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TetherVisualsStatus.Key:
-          unshaded:
-            True: { state: base-unshaded }
-            False: { state: base-unshaded-off }
-    - type: PacifismAllowedGun
 
 - type: entity
   name: meteor launcher
