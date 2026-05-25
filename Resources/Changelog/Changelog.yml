@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: Security IDs no longer have Service access by default.
-    type: Remove
-  id: 9202
-  time: '2025-11-14T11:15:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41411
 - author: Samuka, DarkIcedCoffee, Whale
   changes:
   - message: 'Added a new antag: Xenoborgs'
@@ -4084,3 +4077,12 @@
   id: 9713
   time: '2026-05-25T22:08:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44079
+- author: Nem
+  changes:
+  - message: Coordinates settings now have hovertext.
+    type: Add
+  - message: Coordinates settings now have a root icon.
+    type: Add
+  id: 9714
+  time: '2026-05-25T23:17:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44083
