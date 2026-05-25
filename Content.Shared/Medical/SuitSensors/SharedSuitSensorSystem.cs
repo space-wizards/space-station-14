@@ -232,6 +232,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
         return new Verb()
         {
             Text = GetModeName(mode),
+            Message = GetModeDescription(mode),
             Disabled = ent.Comp.Mode == mode,
             Priority = -(int)mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
@@ -255,6 +256,30 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
                 break;
             case SuitSensorMode.SensorCords:
                 name = "suit-sensor-mode-cords";
+                break;
+            default:
+                return "";
+        }
+
+        return Loc.GetString(name);
+    }
+
+    public string GetModeDescription(SuitSensorMode mode)
+    {
+        string name;
+        switch (mode)
+        {
+            case SuitSensorMode.SensorOff:
+                name = "suit-sensor-description-off";
+                break;
+            case SuitSensorMode.SensorBinary:
+                name = "suit-sensor-description-binary";
+                break;
+            case SuitSensorMode.SensorVitals:
+                name = "suit-sensor-description-vitals";
+                break;
+            case SuitSensorMode.SensorCords:
+                name = "suit-sensor-description-cords";
                 break;
             default:
                 return "";
