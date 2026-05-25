@@ -336,11 +336,17 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
             await server.WaitPost(() =>
             {
+                var toRemove = new List<EntityUid>();
                 var query = server.EntMan.AllEntityQueryEnumerator<TimedDespawnComponent>();
                 while (query.MoveNext(out var uid, out _))
                 {
                     if (!baselineEntities.Contains(uid))
-                        server.EntMan.DeleteEntity(uid);
+                        toRemove.Add(uid);
+                }
+
+                foreach (var uid in toRemove)
+                {
+                    server.EntMan.DeleteEntity(uid);
                 }
             });
             await pair.RunTicksSync(3);
