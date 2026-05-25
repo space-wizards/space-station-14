@@ -139,7 +139,7 @@
     voices:
       MaleHuman: humanoid-profile-editor-voice-masculine
       FemaleHuman: humanoid-profile-editor-voice-feminine
-    default:
+    defaultSoundsBySex:
       Male: MaleHuman
       Female: FemaleHuman
       Unsexed: MaleHuman

@@ -90,7 +90,7 @@
   - type: MindExaminable
   - type: Familiar
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: Cerberus
       Female: Cerberus
       Unsexed: Cerberus

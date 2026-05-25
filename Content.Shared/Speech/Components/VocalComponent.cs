@@ -19,15 +19,15 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public Dictionary<ProtoId<EmoteSoundsPrototype>, string>? Voices;
+    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId>? Voices;
 
     /// <summary>
     ///     Emote sounds prototype id for each sex (not gender).
     ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     [AutoNetworkedField]
-    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> Default;
+    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> DefaultSoundsBySex;
 
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     [AutoNetworkedField]

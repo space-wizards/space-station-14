@@ -872,7 +872,7 @@ namespace Content.Shared.Preferences
             if (sex is not { } real)
                 return null;
 
-            return vocalComponent?.Default[real];
+            return vocalComponent?.DefaultSoundsBySex[real];
         }
 
         public static VocalComponent? GetVocalFromSpecies(ProtoId<SpeciesPrototype>? speciesId,

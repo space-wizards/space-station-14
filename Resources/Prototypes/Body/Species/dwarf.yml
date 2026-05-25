@@ -62,7 +62,7 @@
     voices:
       UnisexDwarf: humanoid-profile-editor-voice-masculine
       FemaleDwarf: humanoid-profile-editor-voice-feminine
-    default:
+    defaultSoundsBySex:
       Male: UnisexDwarf
       Female: FemaleDwarf
       Unsexed: UnisexDwarf

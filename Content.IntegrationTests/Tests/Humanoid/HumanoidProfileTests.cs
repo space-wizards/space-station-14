@@ -54,7 +54,7 @@ public sealed class HumanoidProfileTests : GameTest
             Assert.That(humanoidComponent.Species, Is.EqualTo(Vox));
 
             Assert.That(voiceComponent.Voices, Is.Not.Null, message: "the MobHuman spawned by this test needs to have sex-specific sound set");
-            Assert.That(voiceComponent.Default![Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
+            Assert.That(voiceComponent.DefaultSoundsBySex![Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
         });
     }
 

@@ -134,7 +134,7 @@
   - type: Vocal
     voices:
       UnisexArachnid: humanoid-profile-editor-voice-neutral
-    default:
+    defaultSoundsBySex:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid

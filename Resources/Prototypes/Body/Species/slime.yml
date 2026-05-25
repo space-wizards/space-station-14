@@ -111,7 +111,7 @@
     voices:
       MaleSlime: humanoid-profile-editor-voice-masculine
       FemaleSlime: humanoid-profile-editor-voice-feminine
-    default:
+    defaultSoundsBySex:
       Male: MaleSlime
       Female: FemaleSlime
       Unsexed: MaleSlime

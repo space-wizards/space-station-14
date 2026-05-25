@@ -282,7 +282,7 @@
     - id: FoodMeatRat
       amount: 1
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: Mouse
       Female: Mouse
       Unsexed: Mouse

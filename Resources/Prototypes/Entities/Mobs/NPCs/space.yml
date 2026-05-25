@@ -105,7 +105,7 @@
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: Bear
   - type: InteractionPopup
     successChance: 0.25
@@ -163,7 +163,7 @@
     speciesId: kangaroo
     templateId: spacekangaroo
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
@@ -266,7 +266,7 @@
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid

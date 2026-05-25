@@ -97,7 +97,7 @@
         - SecretStash
         - WrappedParcel
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: UnisexSilicon
   - type: Tag
     tags:
@@ -139,7 +139,7 @@
   - type: StaticPrice
     price: 500
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: UnisexSiliconSyndicate
 
 - type: entity

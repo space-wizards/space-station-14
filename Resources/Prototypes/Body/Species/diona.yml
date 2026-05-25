@@ -156,7 +156,7 @@
   - type: Vocal
     voices:
       UnisexDiona: humanoid-profile-editor-voice-neutral
-    default:
+    defaultSoundsBySex:
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona

@@ -585,7 +585,7 @@
   - type: Vocal
     voices:
       UnisexMoth: humanoid-profile-editor-voice-neutral
-    default:
+    defaultSoundsBySex:
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth
@@ -1096,7 +1096,7 @@
     speechSounds: Goat
     speechVerb: Goat
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Female: Goat
       Male: Goat
       Unsexed: Goat
@@ -1327,7 +1327,7 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: Kangaroo
   - type: Puller
     needsHands: false
@@ -1583,7 +1583,7 @@
     speechVerb: Reptilian
     allowedEmotes: ['Thump']
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian
@@ -1870,7 +1870,7 @@
       types:
         Blunt: 0.1
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: Mouse
       Female: Mouse
       Unsexed: Mouse
@@ -2261,7 +2261,7 @@
     speechSounds: Parrot
     speechVerb: Parrot
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: Parrot
   - type: ActiveListener
   - type: Vocalizer
@@ -2556,7 +2556,7 @@
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
@@ -3729,7 +3729,7 @@
     speechSounds: Alto
     allowedEmotes: ['Chirp']
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona

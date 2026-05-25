@@ -136,7 +136,7 @@
     allowedEmotes:
     - Laugh
   - type: Vocal
-    default:
+    defaultSoundsBySex:
       Unsexed: UnisexSiliconXenoborg
     wilhelmProbability: 0
   - type: IntrinsicRadioReceiver

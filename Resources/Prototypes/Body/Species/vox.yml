@@ -178,7 +178,7 @@
   - type: Vocal
     voices:
       UnisexVox: humanoid-profile-editor-voice-neutral
-    default:
+    defaultSoundsBySex:
       Male: UnisexVox
       Female: UnisexVox
       Unsexed: UnisexVox

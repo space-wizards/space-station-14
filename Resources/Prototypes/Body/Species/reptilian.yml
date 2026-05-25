@@ -140,7 +140,7 @@
     voices:
       MaleReptilian: humanoid-profile-editor-voice-masculine
       FemaleReptilian: humanoid-profile-editor-voice-feminine
-    default:
+    defaultSoundsBySex:
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian

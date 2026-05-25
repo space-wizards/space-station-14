@@ -169,7 +169,7 @@
   - type: Vocal
     voices:
       UnisexMoth: humanoid-profile-editor-voice-neutral
-    default:
+    defaultSoundsBySex:
       Male: UnisexMoth
       Female: UnisexMoth
       Unsexed: UnisexMoth

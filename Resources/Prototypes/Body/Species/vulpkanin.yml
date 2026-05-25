@@ -165,7 +165,7 @@
     voices:
       MaleVulpkanin: humanoid-profile-editor-voice-masculine
       FemaleVulpkanin: humanoid-profile-editor-voice-feminine
-    default:
+    defaultSoundsBySex:
       Male: MaleVulpkanin
       Female: FemaleVulpkanin
       Unsexed: MaleVulpkanin
