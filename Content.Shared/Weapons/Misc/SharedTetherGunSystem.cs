@@ -37,8 +37,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] private ThrownItemSystem _thrown = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
-    [Dependency] private IEntityManager _entities = default!;
-
     private const string TetherJoint = "tether";
     private const string TetherJointMirror = "tetherMirror";
 
@@ -50,6 +48,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<BaseForceGunComponent, ActivateInWorldEvent>(OnTetherActivate);
         SubscribeLocalEvent<BaseForceGunComponent, AfterInteractEvent>(OnTetherRanged);
+        SubscribeLocalEvent<ForceGunComponent, AfterInteractEvent>(OnForceRanged);
         SubscribeLocalEvent<BaseForceGunComponent, DroppedEvent>(OnTetherGunDropped);
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
 
@@ -67,7 +66,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (TryComp<BaseForceGunComponent>(component.Tetherer, out var tetherGun))
         {
             StopTether(component.Tetherer, tetherGun);
-            return;
         }
     }
 
@@ -115,7 +113,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             var mapTetheredCoords = TransformSystem.GetMapCoordinates(comp.Tethered.Value);
             var tetheredCoords = GetCoords(mapTetheredCoords);
             if (
-                !gunCoords.TryDistance(_entities, TransformSystem, tetheredCoords, out var distance)
+                !gunCoords.TryDistance(EntityManager, TransformSystem, tetheredCoords, out var distance)
                 || distance > comp.MaxBeamLength
             )
             {
@@ -190,7 +188,9 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         BaseForceGunComponent comp
     )
     {
-        var delta = TransformSystem.ToMapCoordinates(desireCoords).Position - TransformSystem.ToMapCoordinates(gunCoords).Position;
+        var desiredMap = TransformSystem.ToMapCoordinates(desireCoords).Position;
+        var gunMap = TransformSystem.ToMapCoordinates(gunCoords).Position;
+        var delta = desiredMap - gunMap;
         if (delta.Length() < comp.MaxDistance)
             return desireCoords;
         return GetCoords(TransformSystem.ToMapCoordinates(gunCoords).Offset(delta.Normalized() * comp.MaxDistance));
@@ -222,25 +222,22 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherRanged(EntityUid uid, BaseForceGunComponent component, AfterInteractEvent args)
     {
-        if (TryComp<ForceGunComponent>(uid, out var comp) && component.Tethered != null)
-        {
-            OnForceRanged(uid, component, comp, args);
-        }
         if (args.Target == null || args.Handled)
             return;
-
         TryTether(uid, args.Target.Value, args.User, component);
     }
 
-    private void OnForceRanged(
-        EntityUid uid,
-        BaseForceGunComponent baseComponent,
-        ForceGunComponent forceComponent,
-        AfterInteractEvent args
-    )
+    private void OnForceRanged(EntityUid uid, ForceGunComponent forceComponent, AfterInteractEvent args)
     {
+        if (args.Handled || args.Target != null)
+            return;
         if (!_netManager.IsServer)
             return;
+        args.Handled = true;
+        if (!TryComp<BaseForceGunComponent>(uid, out var baseComponent) || baseComponent == null)
+        {
+            return;
+        }
         if (baseComponent.Tethered == null)
             return;
         var tethered = baseComponent.Tethered.Value;
@@ -321,7 +318,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         var mapTargetCoords = TransformSystem.GetMapCoordinates(target);
         var targetCoords = GetCoords(mapTargetCoords);
         if (
-            !gunCoords.TryDistance(_entities, TransformSystem, targetCoords, out var distance)
+            !gunCoords.TryDistance(EntityManager, TransformSystem, targetCoords, out var distance)
             || distance > component.MaxBeamLength
         )
         {

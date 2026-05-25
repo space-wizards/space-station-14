@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Misc;
 public sealed partial class ForceGunComponent : Component
 {
     [DataField("throwSpeed"), AutoNetworkedField]
-    public float ThrowSpeed = 10f;
+    public float ThrowSpeed = 20f;
 
     [DataField("pushBackRatio"), AutoNetworkedField]
     public float PushBackRatio = 1f;
