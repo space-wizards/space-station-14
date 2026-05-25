@@ -86038,7 +86038,6 @@ entities:
   - uid: 19378
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 42.5,-102.5
       parent: 2
   - uid: 19384
@@ -86144,43 +86143,36 @@ entities:
   - uid: 19495
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 40.5,-102.5
       parent: 2
   - uid: 19497
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 41.5,-102.5
       parent: 2
   - uid: 19511
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 43.5,-95.5
       parent: 2
   - uid: 19512
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 42.5,-95.5
       parent: 2
   - uid: 19543
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 38.5,-102.5
       parent: 2
   - uid: 19549
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 45.5,-102.5
       parent: 2
   - uid: 19552
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 39.5,-95.5
       parent: 2
   - uid: 19721
