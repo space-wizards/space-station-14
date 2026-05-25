@@ -200,7 +200,6 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     var spriteLayer = _sprite.AddLayer(target, sprite, index + i + 1);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
-                    Log.Debug("WOWIE NO!");
                 }
 
                 if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
