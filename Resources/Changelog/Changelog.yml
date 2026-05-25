@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Entvari, Nosrepp
-  changes:
-  - message: Added the Mini Energy Crossbow to Traitor and Nukie uplinks.
-    type: Add
-  - message: The Foam Crossbow now uses the new sounds shared by the Mini Energy Crossbow.
-    type: Tweak
-  id: 9204
-  time: '2025-11-14T22:34:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39796
 - author: April-Gras
   changes:
   - message: Rat king now goes 0.5 faster when sprinting
@@ -4087,3 +4078,11 @@
   id: 9715
   time: '2026-05-25T23:33:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43517
+- author: RemFexxel
+  changes:
+  - message: Edited spelling errors and out-of-place text in the Space Law's crime
+      list.
+    type: Fix
+  id: 9716
+  time: '2026-05-25T23:53:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44084
