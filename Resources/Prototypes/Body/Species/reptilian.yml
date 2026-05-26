@@ -92,12 +92,8 @@
       Head: OrganReptilianHead
       ArmLeft: OrganReptilianArmLeft
       ArmRight: OrganReptilianArmRight
-      HandRight: OrganReptilianHandRight
-      HandLeft: OrganReptilianHandLeft
       LegLeft: OrganReptilianLegLeft
       LegRight: OrganReptilianLegRight
-      FootLeft: OrganReptilianFootLeft
-      FootRight: OrganReptilianFootRight
       Brain: OrganReptilianBrain
       Eyes: OrganReptilianEyes
       Tongue: OrganReptilianTongue
@@ -234,28 +230,12 @@
   id: OrganReptilianArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganReptilianExternal ]
-  id: OrganReptilianHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganReptilianExternal ]
-  id: OrganReptilianHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganReptilianExternal ]
   id: OrganReptilianLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganReptilianExternal ]
   id: OrganReptilianLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganReptilianExternal ]
-  id: OrganReptilianFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganReptilianExternal ]
-  id: OrganReptilianFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganReptilianInternal ]

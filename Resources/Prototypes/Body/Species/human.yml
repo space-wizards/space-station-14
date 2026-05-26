@@ -67,12 +67,8 @@
       Head: OrganHumanHead
       ArmLeft: OrganHumanArmLeft
       ArmRight: OrganHumanArmRight
-      HandRight: OrganHumanHandRight
-      HandLeft: OrganHumanHandLeft
       LegLeft: OrganHumanLegLeft
       LegRight: OrganHumanLegRight
-      FootLeft: OrganHumanFootLeft
-      FootRight: OrganHumanFootRight
       Brain: OrganHumanBrain
       Eyes: OrganHumanEyes
       Tongue: OrganHumanTongue
@@ -155,28 +151,12 @@
   id: OrganHumanArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganHumanExternal ]
-  id: OrganHumanHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganHumanExternal ]
-  id: OrganHumanHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganHumanExternal ]
   id: OrganHumanLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganHumanExternal ]
   id: OrganHumanLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganHumanExternal ]
-  id: OrganHumanFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganHumanExternal ]
-  id: OrganHumanFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganHumanInternal ]

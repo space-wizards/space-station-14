@@ -775,11 +775,11 @@ HeadHuman: OrganHumanHead
 HeadSkeleton: OrganSkeletonPersonHead
 LeftArmHuman: OrganHumanArmLeft
 LeftArmSkeleton: OrganSkeletonPersonArmLeft
-LeftHandSkeleton: OrganSkeletonPersonHandLeft
+LeftHandSkeleton: OrganSkeletonPersonArmLeft
 LeftLegHuman: OrganHumanLegLeft
 LeftLegSkeleton: OrganSkeletonPersonLegLeft
 RightArmHuman: OrganHumanArmRight
-RightHandSkeleton: OrganSkeletonPersonHandRight
+RightHandSkeleton: OrganSkeletonPersonArmRight
 RightLegHuman: OrganHumanLegRight
 TorsoSkeleton: OrganSkeletonPersonTorso
 RightArmSkeleton: OrganSkeletonPersonArmRight
@@ -836,3 +836,4 @@ FoodMeatSnail: MobSnail
 CratePartsT3: null
 CratePartsT3T4: null
 CratePartsT4: null
+

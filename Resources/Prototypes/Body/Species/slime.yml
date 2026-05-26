@@ -62,12 +62,8 @@
       Head: OrganSlimePersonHead
       ArmLeft: OrganSlimePersonArmLeft
       ArmRight: OrganSlimePersonArmRight
-      HandRight: OrganSlimePersonHandRight
-      HandLeft: OrganSlimePersonHandLeft
       LegLeft: OrganSlimePersonLegLeft
       LegRight: OrganSlimePersonLegRight
-      FootLeft: OrganSlimePersonFootLeft
-      FootRight: OrganSlimePersonFootRight
       Brain: OrganSlimePersonCore
       Lungs: OrganSlimePersonLungs
   - type: HumanoidProfile
@@ -227,28 +223,12 @@
   id: OrganSlimePersonArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganSlimePersonExternal ]
-  id: OrganSlimePersonHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganSlimePersonExternal ]
-  id: OrganSlimePersonHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganSlimePersonExternal ]
   id: OrganSlimePersonLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganSlimePersonExternal ]
   id: OrganSlimePersonLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganSlimePersonExternal ]
-  id: OrganSlimePersonFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganSlimePersonExternal ]
-  id: OrganSlimePersonFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSlimePersonInternal, OrganSlimePersonMetabolizer ]

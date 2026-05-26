@@ -72,12 +72,8 @@
       Head: OrganVulpkaninHead
       ArmLeft: OrganVulpkaninArmLeft
       ArmRight: OrganVulpkaninArmRight
-      HandRight: OrganVulpkaninHandRight
-      HandLeft: OrganVulpkaninHandLeft
       LegLeft: OrganVulpkaninLegLeft
       LegRight: OrganVulpkaninLegRight
-      FootLeft: OrganVulpkaninFootLeft
-      FootRight: OrganVulpkaninFootRight
       Brain: OrganVulpkaninBrain
       Eyes: OrganVulpkaninEyes
       Tongue: OrganVulpkaninTongue
@@ -286,28 +282,12 @@
   id: OrganVulpkaninArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganVulpkaninExternal ]
-  id: OrganVulpkaninHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganVulpkaninExternal ]
-  id: OrganVulpkaninHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganVulpkaninExternal ]
   id: OrganVulpkaninLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganVulpkaninExternal ]
   id: OrganVulpkaninLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganVulpkaninExternal ]
-  id: OrganVulpkaninFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganVulpkaninExternal ]
-  id: OrganVulpkaninFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVulpkaninInternal ]

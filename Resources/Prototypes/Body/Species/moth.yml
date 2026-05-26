@@ -114,12 +114,8 @@
       Head: OrganMothHead
       ArmLeft: OrganMothArmLeft
       ArmRight: OrganMothArmRight
-      HandRight: OrganMothHandRight
-      HandLeft: OrganMothHandLeft
       LegLeft: OrganMothLegLeft
       LegRight: OrganMothLegRight
-      FootLeft: OrganMothFootLeft
-      FootRight: OrganMothFootRight
       Brain: OrganMothBrain
       Eyes: OrganMothEyes
       Tongue: OrganMothTongue
@@ -260,28 +256,12 @@
   id: OrganMothArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganMothExternal ]
-  id: OrganMothHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganMothExternal ]
-  id: OrganMothHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganMothExternal ]
   id: OrganMothLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganMothExternal ]
   id: OrganMothLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganMothExternal ]
-  id: OrganMothFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganMothExternal ]
-  id: OrganMothFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganMothInternal ]

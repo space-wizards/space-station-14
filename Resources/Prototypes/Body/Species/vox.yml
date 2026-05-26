@@ -137,12 +137,8 @@
       Head: OrganVoxHead
       ArmLeft: OrganVoxArmLeft
       ArmRight: OrganVoxArmRight
-      HandRight: OrganVoxHandRight
-      HandLeft: OrganVoxHandLeft
       LegLeft: OrganVoxLegLeft
       LegRight: OrganVoxLegRight
-      FootLeft: OrganVoxFootLeft
-      FootRight: OrganVoxFootRight
       Brain: OrganVoxBrain
       Eyes: OrganVoxEyes
       Tongue: OrganVoxTongue
@@ -330,28 +326,12 @@
   id: OrganVoxArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganVoxExternal ]
-  id: OrganVoxHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganVoxExternal ]
-  id: OrganVoxHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganVoxExternal ]
   id: OrganVoxLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganVoxExternal ]
   id: OrganVoxLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganVoxExternal ]
-  id: OrganVoxFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganVoxExternal ]
-  id: OrganVoxFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVoxInternal ]
