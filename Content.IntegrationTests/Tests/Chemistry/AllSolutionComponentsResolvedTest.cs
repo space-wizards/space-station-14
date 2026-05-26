@@ -34,7 +34,7 @@ public abstract partial class SolutionStringResolveTest<T> : GameTest where T : 
     {
         var uid = SSpawn(proto);
         var comp = SComp<T>(uid);
-        Assert.That(SSolutionSystem.TryGetSolution(uid, GetTargetName((uid, comp)), out var solution, true), Is.True, $"{SToPrettyString(uid)} failed to resolve solution for {typeof(T)}");
+        Assert.That(SSolutionSystem.TryGetSolution(uid, GetTargetName((uid, comp)), out var solution), Is.True, $"{SToPrettyString(uid)} failed to resolve solution for {typeof(T)}");
         Test((uid, comp), solution!.Value);
     }
 
