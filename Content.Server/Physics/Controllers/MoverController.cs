@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -56,6 +57,20 @@ public sealed partial class MoverController : SharedMoverController
 
     private void OnEntityUnpaused(Entity<InputMoverComponent> ent, ref EntityUnpausedEvent args)
     {
+        UpdateMoverStatus((ent, ent.Comp));
+    }
+
+    protected override void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
+    {
+        base.OnInputMoverCanMoveUpdated(ent, ref args);
+
+        if (!args.CanMove)
+        {
+            // Remove from active mover query when entity cannot move
+            RemCompDeferred<ActiveInputMoverComponent>(ent);
+            return;
+        }
+
         UpdateMoverStatus((ent, ent.Comp));
     }
 
