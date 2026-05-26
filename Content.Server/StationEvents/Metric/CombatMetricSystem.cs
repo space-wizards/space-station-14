@@ -9,8 +9,10 @@ using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
@@ -38,6 +40,13 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private NpcFactionSystem _npcFaction = default!;
+
+    private static readonly ProtoId<NpcFactionPrototype>[] HostileFactions = [
+        "SimpleHostile",
+        "Dragon",
+        "Xeno",
+        "Syndicate"
+    ];
 
     public FixedPoint2 InventoryPower(EntityUid uid, CombatMetricComponent component)
     {
@@ -123,7 +132,7 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
             // Count mindless NPCs with hostile factions as hostiles
             if (mind.Mind == null)
             {
-                if (_npcFaction.IsMember(uid, "SimpleHostile") || _npcFaction.IsMember(uid, "Dragon") || _npcFaction.IsMember(uid, "Xeno") || _npcFaction.IsMember(uid, "Syndicate"))
+                if (_npcFaction.IsMemberOfAny(uid, HostileFactions))
                 {
                     powerQ.TryGetComponent(uid, out var npcPower);
                     var npcThreat = npcPower?.Threat ?? 1.0f;
