@@ -95,15 +95,15 @@
     transferAmount: 5
     canChangeTransferAmount: false
   - type: Spillable
-    solution: Welder
+    solution: welder
   - type: DrawableSolution
-    solution: Welder
+    solution: welder
   - type: RefillableSolution
-    solution: Welder
+    solution: welder
   - type: DrainableSolution
-    solution: Welder
+    solution: welder
   - type: ExaminableSolution
-    solution: Welder
+    solution: welder
     heldOnly: true
     exactVolume: true
   - type: SolutionRegeneration
@@ -115,7 +115,7 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg
-  - type: Welder
+  - type: welder
     fuelConsumption: 0.05
     fuelLitCost: 0.05
     tankSafe: true
