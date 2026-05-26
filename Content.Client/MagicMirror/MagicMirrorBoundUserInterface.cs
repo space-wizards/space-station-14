@@ -27,7 +27,7 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
 
         _markingsModel.MarkingsChanged += (_, _) =>
         {
-            SendPredictedMessage(new MagicMirrorSelectMessage(_markingsModel.Markings));
+            SendMessage(new MagicMirrorSelectMessage(_markingsModel.Markings));
         };
     }
 
