@@ -15,15 +15,15 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.TechnologyDisk.Systems;
 
-public sealed class TechnologyDiskSystem : EntitySystem
+public sealed partial class TechnologyDiskSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedResearchSystem _research = default!;
-    [Dependency] private readonly SharedLatheSystem _lathe = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedResearchSystem _research = default!;
+    [Dependency] private SharedLatheSystem _lathe = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private NameModifierSystem _nameModifier = default!;
 
     public override void Initialize()
     {
