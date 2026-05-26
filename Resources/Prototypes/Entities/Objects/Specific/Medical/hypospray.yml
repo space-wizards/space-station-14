@@ -224,6 +224,9 @@
     price: 75 # These are limited supply items.
   - type: TrashOnSolutionEmpty
     solution: hypospray
+  - type: Spillable
+    solution: hypospray
+    spillWhenThrown: false
 
 - type: entity
   parent: ChemicalMedipen
