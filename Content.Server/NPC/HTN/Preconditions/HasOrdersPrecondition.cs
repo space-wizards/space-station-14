@@ -2,7 +2,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 
 public sealed partial class HasOrdersPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     [DataField("orders", required: true)] public Enum Orders = default!;
 

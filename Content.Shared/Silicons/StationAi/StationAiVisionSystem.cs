@@ -6,7 +6,7 @@ using Robust.Shared.Threading;
 
 namespace Content.Shared.Silicons.StationAi;
 
-public sealed class StationAiVisionSystem : EntitySystem
+public sealed partial class StationAiVisionSystem : EntitySystem
 {
     /*
      * This class handles 2 things:
@@ -14,13 +14,13 @@ public sealed class StationAiVisionSystem : EntitySystem
      * 2. It does single-tile lookups to tell if they're visible or not with support for a faster range-only path.
      */
 
-    [Dependency] private readonly IParallelManager _parallel = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly SharedTransformSystem _xforms = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private IParallelManager _parallel = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedTransformSystem _xforms = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
 
-    [Dependency] private readonly EntityQuery<OccluderComponent> _occluderQuery = default!;
+    [Dependency] private EntityQuery<OccluderComponent> _occluderQuery = default!;
 
     private SeedJob _seedJob;
     private ViewJob _job;
