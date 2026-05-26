@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/20/2026 19:16:49
-  entityCount: 18710
+  time: 05/26/2026 09:08:29
+  entityCount: 18708
 maps:
 - 1
 grids:
@@ -12563,8 +12563,6 @@ entities:
       devices:
       - 14801
       - 11896
-      - 1879
-      - 1878
     - type: Fixtures
       fixtures: {}
   - uid: 15066
@@ -12684,8 +12682,6 @@ entities:
       - 15329
       - 15330
       - 15331
-      - 1879
-      - 1878
       - 18033
     - type: Fixtures
       fixtures: {}
@@ -54327,13 +54323,19 @@ entities:
   - uid: 16716
     components:
     - type: Transform
+      anchored: False
       pos: 50.5,-31.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16737
     components:
     - type: Transform
+      anchored: False
       pos: 50.5,-32.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
 - proto: ConveyorBelt
   entities:
   - uid: 2827
@@ -61920,15 +61922,25 @@ entities:
   - uid: 16710
     components:
     - type: Transform
+      anchored: False
       rot: -1.5707963267948966 rad
       pos: 50.5,-30.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
+    - type: PowerConsumer
+      drawRate: 1
   - uid: 16781
     components:
     - type: Transform
+      anchored: False
       rot: -1.5707963267948966 rad
       pos: 50.5,-29.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
+    - type: PowerConsumer
+      drawRate: 1
 - proto: EmitterCircuitboard
   entities:
   - uid: 1179
@@ -62473,8 +62485,6 @@ entities:
       - 12011
       - 10833
       - 10832
-      - 1879
-      - 1878
       - 18033
     - type: Fixtures
       fixtures: {}
@@ -63067,10 +63077,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-16.5
       parent: 2
-    - type: DeviceList
-      devices:
-      - 1879
-      - 1878
     - type: Fixtures
       fixtures: {}
   - uid: 15232
@@ -64014,28 +64020,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13456
-  - uid: 1878
-    components:
-    - type: Transform
-      pos: -4.5,-15.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 15061
-      - 15065
-      - 15328
-      - 11575
-  - uid: 1879
-    components:
-    - type: Transform
-      pos: -3.5,-15.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 15061
-      - 15065
-      - 15328
-      - 11575
   - uid: 1938
     components:
     - type: Transform
@@ -65384,6 +65368,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 34.5,-39.5
       parent: 2
+    - type: GasFilter
+      enabled: True
     - type: AtmosPipeColor
       color: '#CFB05BFF'
   - uid: 2429
@@ -65391,6 +65377,8 @@ entities:
     - type: Transform
       pos: 25.5,-39.5
       parent: 2
+    - type: GasFilter
+      enabled: True
     - type: AtmosPipeColor
       color: '#CFB05BFF'
   - uid: 5981
@@ -65398,6 +65386,9 @@ entities:
     - type: Transform
       pos: 25.5,-35.5
       parent: 2
+    - type: GasFilter
+      filteredGas: Tritium
+      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 7391
@@ -65405,6 +65396,9 @@ entities:
     - type: Transform
       pos: 25.5,-37.5
       parent: 2
+    - type: GasFilter
+      filteredGas: Plasma
+      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 7803
@@ -68957,7 +68951,7 @@ entities:
     components:
     - type: Transform
       anchored: False
-      pos: 34.60656,-31.41991
+      pos: 34.695168,-31.510895
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
@@ -109435,33 +109429,51 @@ entities:
   - uid: 16712
     components:
     - type: Transform
+      anchored: False
       pos: 47.5,-30.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16713
     components:
     - type: Transform
+      anchored: False
       pos: 47.5,-32.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16715
     components:
     - type: Transform
+      anchored: False
       pos: 48.5,-30.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16736
     components:
     - type: Transform
+      anchored: False
       pos: 47.5,-31.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16786
     components:
     - type: Transform
+      anchored: False
       pos: 48.5,-31.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16787
     components:
     - type: Transform
+      anchored: False
       pos: 48.5,-32.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
 - proto: TeslaGenerator
   entities:
   - uid: 1174
@@ -109478,23 +109490,35 @@ entities:
   - uid: 2359
     components:
     - type: Transform
+      anchored: False
       pos: 45.5,-29.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16711
     components:
     - type: Transform
+      anchored: False
       pos: 45.5,-32.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16718
     components:
     - type: Transform
+      anchored: False
       pos: 45.5,-31.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 16719
     components:
     - type: Transform
+      anchored: False
       pos: 45.5,-30.5
       parent: 2
+    - type: Physics
+      bodyType: Dynamic
 - proto: ThrusterMachineCircuitboard
   entities:
   - uid: 17064
