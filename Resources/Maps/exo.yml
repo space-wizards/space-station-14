@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/26/2026 08:45:08
-  entityCount: 20150
+  time: 05/26/2026 12:28:13
+  entityCount: 20145
 maps:
 - 1
 grids:
@@ -10259,7 +10259,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -269223.78
+      secondsUntilStateChange: -270147.06
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10630,7 +10630,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44721.45
+      secondsUntilStateChange: -45644.742
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12522,6 +12522,12 @@ entities:
       parent: 2
 - proto: AtmosDeviceFanDirectional
   entities:
+  - uid: 135
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-2.5
+      parent: 2
   - uid: 753
     components:
     - type: Transform
@@ -12632,12 +12638,6 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-80.5
-      parent: 2
-  - uid: 18498
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 13.5,-2.5
       parent: 2
   - uid: 18597
     components:
@@ -78555,16 +78555,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0335FCFF'
-- proto: GasPressurePumpAlt1
-  entities:
-  - uid: 12870
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 48.5,-65.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#947507FF'
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 5297
@@ -78654,6 +78644,16 @@ entities:
       open: False
 - proto: GasValveAlt1
   entities:
+  - uid: 1499
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 48.5,-65.5
+      parent: 2
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#947507FF'
   - uid: 18401
     components:
     - type: Transform
@@ -81727,11 +81727,6 @@ entities:
     - type: Transform
       pos: -10.5,-0.5
       parent: 2
-  - uid: 135
-    components:
-    - type: Transform
-      pos: -10.5,-0.5
-      parent: 2
   - uid: 136
     components:
     - type: Transform
@@ -82483,11 +82478,6 @@ entities:
       pos: -47.5,-21.5
       parent: 2
   - uid: 1498
-    components:
-    - type: Transform
-      pos: -46.5,-20.5
-      parent: 2
-  - uid: 1499
     components:
     - type: Transform
       pos: -46.5,-20.5
@@ -98192,21 +98182,6 @@ entities:
     components:
     - type: Transform
       pos: -40.5,-7.5
-      parent: 2
-  - uid: 14039
-    components:
-    - type: Transform
-      pos: -30.5,-46.5
-      parent: 2
-  - uid: 14041
-    components:
-    - type: Transform
-      pos: -30.5,-45.5
-      parent: 2
-  - uid: 14048
-    components:
-    - type: Transform
-      pos: -30.5,-44.5
       parent: 2
   - uid: 14054
     components:
