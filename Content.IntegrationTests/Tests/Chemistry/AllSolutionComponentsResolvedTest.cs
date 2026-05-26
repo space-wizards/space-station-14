@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Content.IntegrationTests.Fixtures;
+﻿using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.Chemistry.EntitySystems;

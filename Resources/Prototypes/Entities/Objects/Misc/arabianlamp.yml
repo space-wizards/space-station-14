@@ -115,7 +115,7 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg
-  - type: welder
+  - type: Welder
     fuelConsumption: 0.05
     fuelLitCost: 0.05
     tankSafe: true
