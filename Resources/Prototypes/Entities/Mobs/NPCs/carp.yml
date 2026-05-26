@@ -16,6 +16,8 @@
     - type: NpcFactionMember
       factions:
       - Dragon
+    - type: CombatPower
+      factor: 0.8
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Carps/space.rsi

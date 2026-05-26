@@ -32,7 +32,7 @@ public sealed partial class CombatMetricComponent : Component
     public FixedPoint2 DeadScore = 20.0f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 maxItemThreat = 15.0f;
+    public FixedPoint2 maxItemThreat = 30.0f;
 
     /// <summary>
     ///   ItemThreat - evaluate based on item tags how powerful a player is
@@ -44,12 +44,27 @@ public sealed partial class CombatMetricComponent : Component
             { "Taser", 2.0f },
             { "Sidearm", 2.0f },
             { "Rifle", 5.0f },
+            { "SubMachineGun", 4.0f },
+            { "Shotgun", 4.0f },
+            { "Sniper", 6.0f },
+            { "Launcher", 8.0f },
+            { "LightMachineGun", 6.0f },
+            { "HeavyMachineGun", 8.0f },
             { "HighRiskItem", 2.0f },
             { "CombatKnife", 1.0f },
             { "Knife", 1.0f },
             { "Grenade", 2.0f },
             { "Bomb", 2.0f },
             { "MagazinePistol", 0.5f },
+            { "MagazinePistolHighCapacity", 1.0f },
+            { "MagazinePistolSubMachineGun", 1.0f },
+            { "MagazinePistolSubMachineGunTopMounted", 1.0f },
+            { "MagazinePistolCaselessRifle", 0.5f },
+            { "MagazineLightRifle", 1.0f },
+            { "MagazineLightRifleBox", 2.0f },
+            { "MagazineRifle", 1.5f },
+            { "MagazineShotgun", 1.0f },
+            { "MagazineMagnum", 1.0f },
             { "Hacking", 1.0f },
             { "Jetpack", 1.0f },
         };

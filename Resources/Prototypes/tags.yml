@@ -799,6 +799,9 @@
 - type: Tag
   id: Hypospray # ItemMapper: ClothingBeltMedical
 
+- type: Tag
+  id: HeavyMachineGun # Heavy machine gun weapons
+
 ## I ##
 
 - type: Tag
@@ -877,6 +880,12 @@
 
 - type: Tag
   id: Lime # CargoBounty: BountyLime
+
+- type: Tag
+  id: Launcher # Launcher weapons
+
+- type: Tag
+  id: LightMachineGun # Light machine gun weapons
 
 ## M ##
 
@@ -1409,6 +1418,15 @@
 
 - type: Tag
   id: Spellbook # Storage whitelist: Bookshelf
+
+- type: Tag
+  id: SubMachineGun # Submachine gun weapons
+
+- type: Tag
+  id: Shotgun # Shotgun weapons
+
+- type: Tag
+  id: Sniper # Sniper weapons
 
 ## T ##
 

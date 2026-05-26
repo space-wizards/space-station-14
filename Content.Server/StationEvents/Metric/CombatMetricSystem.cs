@@ -9,7 +9,9 @@ using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
 
@@ -35,6 +37,7 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
     [Dependency] private StationSystem _stationSystem = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private NpcFactionSystem _npcFaction = default!;
 
     public FixedPoint2 InventoryPower(EntityUid uid, CombatMetricComponent component)
     {
@@ -43,15 +46,19 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
         var threat = FixedPoint2.Zero;
 
         var tagsQ = GetEntityQuery<TagComponent>();
+        var storageQ = GetEntityQuery<StorageComponent>();
         var allTags = new HashSet<string>();
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(uid))
         {
-            if (tagsQ.TryGetComponent(item, out var tags))
+            AddItemTags(item, tagsQ, allTags);
+
+            // Also check items inside storage containers (backpacks, duffel bags, etc.)
+            if (storageQ.TryGetComponent(item, out var storage))
             {
-                foreach (var tag in tags.Tags)
+                foreach (var contained in storage.Container.ContainedEntities)
                 {
-                    allTags.Add(tag.Id);
+                    AddItemTags(contained, tagsQ, allTags);
                 }
             }
         }
@@ -65,6 +72,17 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
             return component.maxItemThreat;
 
         return threat;
+    }
+
+    private void AddItemTags(EntityUid item, EntityQuery<TagComponent> tagsQ, HashSet<string> allTags)
+    {
+        if (tagsQ.TryGetComponent(item, out var tags))
+        {
+            foreach (var tag in tags.Tags)
+            {
+                allTags.Add(tag.Id);
+            }
+        }
     }
 
     public override ChaosMetrics CalculateChaos(EntityUid metric_uid, CombatMetricComponent combatMetric,
@@ -102,9 +120,15 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
                 continue;
             }
 
-            // Don't count anything that is mindless (alive mindless mobs like rats)
+            // Count mindless NPCs with hostile factions as hostiles
             if (mind.Mind == null)
             {
+                if (_npcFaction.IsMember(uid, "SimpleHostile") || _npcFaction.IsMember(uid, "Dragon") || _npcFaction.IsMember(uid, "Xeno") || _npcFaction.IsMember(uid, "Syndicate"))
+                {
+                    powerQ.TryGetComponent(uid, out var npcPower);
+                    var npcThreat = npcPower?.Threat ?? 1.0f;
+                    hostiles += combatMetric.HostileScore * npcThreat;
+                }
                 continue;
             }
 

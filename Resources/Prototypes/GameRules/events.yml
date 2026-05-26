@@ -211,8 +211,8 @@
     reoccurrenceDelay: 20
     minimumPlayers: 20
     chaos:
-      Hostile: 20
-      Friend: 20
+      Hostile: 40
+      Friend: 40
       Combat: 40
       Atmos: 40
       Death: 100
@@ -330,7 +330,7 @@
     reoccurrenceDelay: 60
     minimumPlayers: 30
     chaos:
-      Hostile: 300
+      Hostile: 150
       Death: 100
       Medical: 200
 
@@ -567,9 +567,9 @@
     minimumPlayers: 20
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
     chaos:
-      Hostile: 200
-      Medical: 200
-      Death: 200
+      Hostile: 50
+      Medical: 100
+      Death: 100
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/striker.yml

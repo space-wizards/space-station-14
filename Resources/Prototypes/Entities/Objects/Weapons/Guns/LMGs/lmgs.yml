@@ -6,6 +6,9 @@
   abstract: true
   components:
   - type: Sprite
+  - type: Tag
+    tags:
+    - LightMachineGun
   - type: Item
     size: Huge
     shape:

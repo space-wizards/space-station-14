@@ -21,6 +21,8 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: CombatPower
+    factor: 0.8
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -223,6 +225,8 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: CombatPower
+    factor: 0.8
   - type: Tag
     tags:
     - DoorBumpOpener

@@ -6,6 +6,8 @@
   description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
   abstract: true
   components:
+  - type: CombatPower
+    factor: 0.8
   - type: NpcFactionMember
     factions:
     - Xeno
