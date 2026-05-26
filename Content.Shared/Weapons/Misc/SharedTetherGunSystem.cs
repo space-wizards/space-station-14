@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Pinpointer;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Audio.Systems;
@@ -19,6 +18,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Misc;
 
@@ -38,6 +38,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Dependency] private ThrownItemSystem _thrown = default!;
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private const string TetherJoint = "tether";
     private const string TetherJointMirror = "tetherMirror";
 
@@ -118,7 +119,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
                 || distance > comp.MaxBeamLength
             )
             {
-                StopTether(uid, comp, false);
+                StopTether(uid, comp, land: true);
                 continue;
             }
             if (!TryGetGun(Transform(uid).ParentUid, out var gun, out _) || gun != uid)
@@ -354,7 +355,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         if (component.Tethered != null)
         {
-            StopTether(gunUid, component, true);
+            StopTether(gunUid, component, transfer: true);
         }
 
         TryComp<AppearanceComponent>(gunUid, out var appearance);
@@ -373,37 +374,38 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.SetLinearDamping(target, targetPhysics, 0f);
         _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
-        var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
-        thrown.Thrower = gunUid;
         _blocker.UpdateCanMove(target);
 
         // Invisible tether entity
-        var tether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(target));
-        var mirrorTether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(gunUid));
-        var tetherPhysics = Comp<PhysicsComponent>(tether);
-        component.TetherEntity = tether;
-        component.TetherMirrorEntity = mirrorTether;
-        _physics.WakeBody(tether);
-
-        var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
-
-        SharedJointSystem.LinearStiffness(
-            component.Frequency,
-            component.DampingRatio,
-            tetherPhysics.Mass,
-            targetPhysics.Mass,
-            out var stiffness,
-            out var damping
-        );
-        joint.Stiffness = stiffness;
-        joint.Damping = damping;
-        joint.MaxForce = component.MaxForce;
-        if (component.ReverseForce)
+        if (!_timing.ApplyingState)
         {
-            var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
-            jointMirror.Stiffness = stiffness;
-            jointMirror.Damping = damping;
-            jointMirror.MaxForce = component.MaxForce;
+            var tether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(target));
+            var tetherPhysics = Comp<PhysicsComponent>(tether);
+            var mirrorTether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(gunUid));
+            var mirrorPhysics = Comp<PhysicsComponent>(mirrorTether);
+            component.TetherEntity = tether;
+            component.TetherMirrorEntity = mirrorTether;
+
+            var joint = _joints.CreateMouseJoint(tether, target, id: TetherJoint);
+
+            SharedJointSystem.LinearStiffness(
+                component.Frequency,
+                component.DampingRatio,
+                tetherPhysics.Mass,
+                targetPhysics.Mass,
+                out var stiffness,
+                out var damping
+            );
+            joint.Stiffness = stiffness;
+            joint.Damping = damping;
+            joint.MaxForce = component.MaxForce;
+            if (component.ReverseForce)
+            {
+                var jointMirror = _joints.CreateMouseJoint(mirrorTether, gunUid, id: TetherJointMirror);
+                jointMirror.Stiffness = stiffness;
+                jointMirror.Damping = damping;
+                jointMirror.MaxForce = component.MaxForce;
+            }
         }
 
         // Sad...
@@ -421,20 +423,18 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         bool transfer = false
     )
     {
-        if (component.Tethered == null)
-            return;
 
         if (component.TetherEntity != null && component.TetherMirrorEntity != null)
         {
-            _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
-            if (component.ReverseForce)
+            if (!_timing.ApplyingState)
+            {
+                _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
                 _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
-
+            }
             if (_netManager.IsServer)
             {
                 QueueDel(component.TetherEntity.Value);
-                if (component.ReverseForce)
-                    QueueDel(component.TetherMirrorEntity.Value);
+                QueueDel(component.TetherMirrorEntity.Value);
             }
             component.TetherEntity = null;
             component.TetherMirrorEntity = null;
