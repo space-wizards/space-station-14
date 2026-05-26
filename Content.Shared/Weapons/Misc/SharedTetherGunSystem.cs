@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using System.Xml;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -85,29 +84,31 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        UpdateTetheredRotation(frameTime);
+        UpdateGunTethers();
+    }
 
-        // Just to set the angular velocity due to joint funnies
+    private void UpdateTetheredRotation(float frameTime)
+    {
+        // Corrects angular velocity each tick due to joint funnies
         var tetheredQuery = EntityQueryEnumerator<TetheredComponent, PhysicsComponent>();
-
         while (tetheredQuery.MoveNext(out var uid, out _, out var physics))
         {
             var sign = Math.Sign(physics.AngularVelocity);
-
             if (sign == 0)
-            {
                 sign = 1;
-            }
 
             var targetVelocity = MathF.PI * sign;
-
             var shortFall = Math.Clamp(targetVelocity - physics.AngularVelocity, -SpinVelocity, SpinVelocity);
             shortFall *= frameTime * AngularChange;
-
             _physics.ApplyAngularImpulse(uid, shortFall, body: physics);
         }
+    }
 
-        // Moves mirror so the force applied to the gun is the same as applied to the object
-        // Also checks if over max beam length
+    private void UpdateGunTethers()
+    {
+        // Moves mirror so the force applied to the gun equals the force on the object.
+        // Also stops the tether if over max beam length.
         var gunQuery = EntityQueryEnumerator<BaseForceGunComponent>();
         while (gunQuery.MoveNext(out var uid, out var comp))
         {
@@ -118,27 +119,29 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
                 StopTether(uid, comp);
                 continue;
             }
+
             var mapGunCoords = TransformSystem.GetMapCoordinates(uid);
             if (!TryGetCoords(mapGunCoords, out var gunCoords))
                 continue;
             var mapTetheredCoords = TransformSystem.GetMapCoordinates(comp.Tethered.Value);
             if (!TryGetCoords(mapTetheredCoords, out var tetheredCoords))
                 continue;
-            if (
-                !gunCoords.TryDistance(EntityManager, TransformSystem, tetheredCoords, out var distance)
-                || distance > comp.MaxBeamLength
-            )
+
+            if (!gunCoords.TryDistance(EntityManager, TransformSystem, tetheredCoords, out var distance)
+                || distance > comp.MaxBeamLength)
             {
                 StopTether(uid, comp, land: true);
                 continue;
             }
-            // When the gun isn't in hand the tether entity is moved within range of the gun
+
+            // When the gun isn't in hand, clamp the tether entity within range of the gun
             if (!TryGetGun(Transform(uid).ParentUid, out var gun, out _) || gun != uid)
             {
                 var coords = GetAllowedTetherEntityCoords(gunCoords, tetheredCoords, comp);
                 if (coords != tetheredCoords)
                     TransformSystem.SetCoordinates(comp.TetherEntity.Value, coords);
             }
+
             MoveMirrorEntity(uid, comp.Tethered, comp.TetherEntity, comp.TetherMirrorEntity);
         }
     }
@@ -163,7 +166,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherGunDropped(EntityUid uid, BaseForceGunComponent component, DroppedEvent args)
     {
-        // When the tether gun is dropped the tether entity is place in the midpoint of the gun and object
+        // When the tether gun is dropped the tether entity is placed at the midpoint of the gun and object
         // Needed to prevent some strange looking movement of a dropped gun
         // Could instead have the tether entity moved to the target
         if (component.Tethered == null || component.TetherEntity == null || component.TetherMirrorEntity == null)
@@ -173,13 +176,12 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         // TODO: Based on gun location before dropping
         // Should be from after dropping
-        if (TryComp(uid, out TransformComponent? gunXform))
+        if (TryComp(uid, out TransformComponent? gunXform)
+            && coords.TryDelta(EntityManager, TransformSystem, gunXform.Coordinates, out Vector2 delta))
         {
-            if (coords.TryDelta(EntityManager, TransformSystem, gunXform.Coordinates, out Vector2 delta))
-            {
-                var midpoint = gunXform.Coordinates.Offset(delta / 2);
-                coords = GetAllowedTetherEntityCoords(gunXform.Coordinates, midpoint, component);
-            }
+            var midpoint = gunXform.Coordinates.Offset(delta / 2);
+            // If the midpoint is outside the gun's allowed range, clamp it to the edge
+            coords = GetAllowedTetherEntityCoords(gunXform.Coordinates, midpoint, component);
         }
         TransformSystem.SetCoordinates(component.TetherEntity.Value, coords);
         MoveMirrorEntity(uid, component.Tethered, component.TetherEntity, component.TetherMirrorEntity);
@@ -210,17 +212,16 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         BaseForceGunComponent comp
     )
     {
-        // Find the location which is valid for the tether entity
-        // If the desire coords is outside the max distance it is moved to the edge
-        // Used for the force guns holding of objects near to the user
         var desiredMap = TransformSystem.ToMapCoordinates(desireCoords);
         var gunMap = TransformSystem.ToMapCoordinates(gunCoords);
+
+        if (desiredMap.MapId != gunMap.MapId)
+            return gunCoords;
+
         var delta = desiredMap.Position - gunMap.Position;
         if (delta.Length() < comp.MaxDistance)
             return desireCoords;
-        // Unit vector of delta normalized times the max distance
-        // offset from the gun coords to get new coords
-        // If maps are different or invalid returns the gun coords
+
         if (!TryGetCoords(gunMap.Offset(delta.Normalized() * comp.MaxDistance), out var coords))
             return gunCoords;
         return coords;
@@ -349,7 +350,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (HasComp<TetheredComponent>(target) || !TryComp<PhysicsComponent>(target, out var physics))
             return false;
 
-        if (physics.BodyType == BodyType.Static && !component.CanUnanchor || _container.IsEntityInContainer(target))
+        if ((physics.BodyType == BodyType.Static && !component.CanUnanchor) || _container.IsEntityInContainer(target))
             return false;
 
         if (physics.Mass > component.MassLimit)
@@ -409,7 +410,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.SetLinearDamping(target, targetPhysics, 0f);
         _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
-        var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
+        var thrown = EnsureComp<ThrownItemComponent>(target);
         thrown.Thrower = gunUid;
         _blocker.UpdateCanMove(target);
 
@@ -420,7 +421,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             var tether = PredictedSpawnAtPosition("TetherEntity", new EntityCoordinates(target, new Vector2(0, 0)));
             var tetherPhysics = Comp<PhysicsComponent>(tether);
             var mirrorTether = PredictedSpawnAtPosition("TetherEntity", new EntityCoordinates(gunUid, new Vector2(0, 0)));
-            var mirrorPhysics = Comp<PhysicsComponent>(mirrorTether);
             component.TetherEntity = tether;
             component.TetherMirrorEntity = mirrorTether;
 
@@ -463,23 +463,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         bool transfer = false
     )
     {
-        if (component.TetherEntity != null && component.TetherMirrorEntity != null)
-        {
-            if (Exists(component.TetherEntity) || Exists(component.TetherMirrorEntity))
-            {
-                if (!_timing.ApplyingState)
-                {
-                    _joints.ClearJoints(component.TetherEntity.Value);
-                    _joints.ClearJoints(component.TetherMirrorEntity.Value);
-                }
-                PredictedQueueDel(component.TetherEntity);
-                PredictedQueueDel(component.TetherMirrorEntity);
-            }
-            // Clears all joints
-            // The tether entities should never have any other joints
-            component.TetherEntity = null;
-            component.TetherMirrorEntity = null;
-        }
+        CleanupTetherEntities(component);
 
         if (component.Tethered == null)
             return;
@@ -489,19 +473,22 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             UpdateSprite(gunUid, false);
             return;
         }
-        if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))
+
+        var tethered = component.Tethered.Value;
+
+        if (TryComp<PhysicsComponent>(tethered, out var targetPhysics))
         {
             if (land)
             {
-                var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
-                _thrown.LandComponent(component.Tethered.Value, thrown, targetPhysics, true);
-                _thrown.StopThrow(component.Tethered.Value, thrown);
+                var thrown = EnsureComp<ThrownItemComponent>(tethered);
+                _thrown.LandComponent(tethered, thrown, targetPhysics, true);
+                _thrown.StopThrow(tethered, thrown);
             }
 
-            _physics.SetBodyStatus(component.Tethered.Value, targetPhysics, BodyStatus.OnGround);
-            _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);
-            if (TryComp<TetheredComponent>(component.Tethered.Value, out var tetheredComp))
-                _physics.SetAngularDamping(component.Tethered.Value, targetPhysics, tetheredComp.OriginalAngularDamping);
+            _physics.SetBodyStatus(tethered, targetPhysics, BodyStatus.OnGround);
+            _physics.SetSleepingAllowed(tethered, targetPhysics, true);
+            if (TryComp<TetheredComponent>(tethered, out var tetheredComp))
+                _physics.SetAngularDamping(tethered, targetPhysics, tetheredComp.OriginalAngularDamping);
         }
 
         if (!transfer)
@@ -512,10 +499,29 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         UpdateSprite(gunUid, false);
 
-        RemComp<TetheredComponent>(component.Tethered.Value);
-        _blocker.UpdateCanMove(component.Tethered.Value);
+        RemComp<TetheredComponent>(tethered);
+        _blocker.UpdateCanMove(tethered);
         component.Tethered = null;
         Dirty(gunUid, component);
+    }
+
+    private void CleanupTetherEntities(BaseForceGunComponent component)
+    {
+        if (component.TetherEntity == null && component.TetherMirrorEntity == null)
+            return;
+
+        if (!_timing.ApplyingState)
+        {
+            if (component.TetherEntity != null && Exists(component.TetherEntity))
+                _joints.ClearJoints(component.TetherEntity.Value);
+            if (component.TetherMirrorEntity != null && Exists(component.TetherMirrorEntity))
+                _joints.ClearJoints(component.TetherMirrorEntity.Value);
+        }
+
+        PredictedQueueDel(component.TetherEntity);
+        PredictedQueueDel(component.TetherMirrorEntity);
+        component.TetherEntity = null;
+        component.TetherMirrorEntity = null;
     }
 
     private void UpdateSprite(EntityUid uid, bool toggle)
