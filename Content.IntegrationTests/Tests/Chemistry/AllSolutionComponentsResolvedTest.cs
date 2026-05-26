@@ -11,29 +11,47 @@ using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
-[TestFixture]
+/// <summary>
+/// An abstract solutions test which spawns all entities with a generic component.
+/// Attempts to resolve that solution via an abstract string matching method.
+/// The reason this doesn't use interfaces is that string matching is obsolete and going to be deprecated soon.
+/// It's not worth doubling the breaking changes just to make an obsolete behavior prettier.
+/// </summary>
+/// <typeparam name="T">A Component that tries to match to a solution via a string</typeparam>
 [TestOf(typeof(SolutionComponent)), TestOf(typeof(SolutionManagerComponent)),
  TestOf(typeof(SolutionContainerSystem))]
 public abstract partial class SolutionStringResolveTest<T> : GameTest where T : IComponent
 {
-    [SidedDependency(Side.Server)] protected SharedSolutionContainerSystem SolutionSystem = default!;
+    [SidedDependency(Side.Server)] protected SharedSolutionContainerSystem SSolutionSystem = default!;
 
     private static string[] _prototypes = GameDataScrounger.EntitiesWithComponent(CalculateComponentName(typeof(T)));
 
     [Test]
     [TestCaseSource(nameof(_prototypes))]
-    [Description($"Ensures all {nameof(T)} can resolve their attached solution.")]
+    [Description("Ensures all entities can resolve their attached solution.")]
     [RunOnSide(Side.Server)]
     public void SolutionStringResolve(string proto)
     {
         var uid = SSpawn(proto);
         var comp = SComp<T>(uid);
-        Assert.That(SolutionSystem.TryGetSolution(uid, GetTargetName((uid, comp)), out var solution, true), Is.True, $"{SToPrettyString(uid)} failed to resolve solution for {nameof(T)}");
+        Assert.That(SSolutionSystem.TryGetSolution(uid, GetTargetName((uid, comp)), out var solution, true), Is.True, $"{SToPrettyString(uid)} failed to resolve solution for {typeof(T)}");
         Test((uid, comp), solution!.Value);
     }
 
+    /// <summary>
+    /// Returns the string of the solution the tested component is looking for.
+    /// </summary>
+    /// <param name="entity">Entity with an attached solution that needs to be resolved.</param>
+    /// <returns>The string of the solution we're looking for</returns>
     protected abstract string GetTargetName(Entity<T> entity);
 
+    /// <summary>
+    /// Called after the solution attached to the tested generic component is resolved.
+    /// This allows you to test specific behaviors between the attached entity its solution if needed.
+    /// This kind of solution behavior is obsolete so only fill this in if you truly have to.
+    /// </summary>
+    /// <param name="entity">Entity with the attached solution</param>
+    /// <param name="solution">Attached solution</param>
     protected virtual void Test(Entity<T> entity, Entity<SolutionComponent> solution)
     {
 
