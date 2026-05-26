@@ -25,12 +25,19 @@ public sealed partial class ShuttleCallerFailsafeSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit);
+        SubscribeLocalEvent<ShuttleCallerComponent, EntityTerminatingEvent>(OnShuttleCallerTerminating);
         SubscribeLocalEvent<ShuttleCallerComponent, MapInitEvent>(OnShuttleCallerInit);
         SubscribeLocalEvent<ShuttleCallerComponent, GridUidChangedEvent>(OnShuttleCallerGridChange);
         SubscribeLocalEvent<ShuttleCallerComponent, MapUidChangedEvent>(OnShuttleCallerMapChange);
 
         Subs.CVar(_configMan, CCVars.EmergencyShuttleEnabled, value => _shuttleEnabled = value, true);
         Subs.CVar(_configMan, CCVars.EmergencyShuttleCallerFailsafeEnabled, value => _failsafeEnabled = value, true);
+    }
+
+    private void OnShuttleCallerTerminating(Entity<ShuttleCallerComponent> uid, ref EntityTerminatingEvent args)
+    {
+        GridChanging(uid, _transformSystem.GetGrid(uid.Owner), null);
+        MapChanging(uid, _transformSystem.GetMap(uid.Owner), null);
     }
 
     private void OnStationPostInit(ref StationPostInitEvent args)
