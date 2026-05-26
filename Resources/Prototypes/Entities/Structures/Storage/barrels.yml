@@ -41,11 +41,20 @@
         acts: ["Destruction"]
   - type: PhysicalComposition
     materialComposition:
-      Steel: 3000 # 30 sheets, 1 stack
+      Steel: 250
   - type: ExaminableSolution
     solution: tank
+    exactVolume: true
+  - type: RefillableSolution
+    solution: tank
+  - type: InjectableSolution
+    solution: tank
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: tank
   - type: StaticPrice
-    price: 500
+    price: 75
   - type: Construction
     graph: Barrel
     node: barrel
@@ -54,8 +63,12 @@
     size: Ginormous
   - type: MultiHandedItem
   - type: HeldSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetSteel1
+      amount: 5
 
 - type: entity
   parent: BaseBarrelChem
