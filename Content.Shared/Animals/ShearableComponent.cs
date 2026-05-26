@@ -22,7 +22,7 @@ public sealed partial class ShearableComponent : Component
     /// <example>
     ///     targetSolutionName: wool
     /// </example>
-    [DataField]
+    [DataField (required: true)]
     public string TargetSolutionName = string.Empty;
 
     /// <summary>
