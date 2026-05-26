@@ -275,12 +275,6 @@ public sealed partial class ChatSystem : SharedChatSystem
                 break;
         }
     }
-
-    #region Utility
-
-
-
-    #endregion
 }
 
 /// <summary>
