@@ -186,15 +186,6 @@ public sealed partial class ScoopableSolutionTest : SolutionStringResolveTest<Sc
     }
 }
 
-[TestOf(typeof(SolutionContainerVisualsComponent))]
-public sealed partial class SolutionContainerVisualsSolutionTest : SolutionStringResolveTest<SolutionContainerVisualsComponent>
-{
-    protected override string GetTargetName(Entity<SolutionContainerVisualsComponent> entity)
-    {
-        return entity.Comp.SolutionName;
-    }
-}
-
 [TestOf(typeof(SolutionSpikerComponent))]
 public sealed partial class SolutionSpikerSolutionTest : SolutionStringResolveTest<SolutionSpikerComponent>
 {
