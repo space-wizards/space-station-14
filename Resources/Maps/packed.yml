@@ -4,7 +4,7 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/26/2026 10:34:13
+  time: 05/26/2026 10:42:05
   entityCount: 16078
 maps:
 - 126
@@ -13304,6 +13304,14 @@ entities:
     - type: Transform
       pos: 10.5,7.5
       parent: 2
+  - uid: 3237
+    components:
+    - type: Transform
+      anchored: False
+      pos: 58.5,37.5
+      parent: 2
+    - type: Physics
+      bodyType: Dynamic
   - uid: 5100
     components:
     - type: Transform
@@ -43648,7 +43656,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26518.639
+      secondsUntilStateChange: -26569.066
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49441,7 +49449,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -73812.43
+      secondsUntilStateChange: -73862.86
       state: Closing
   - uid: 9362
     components:
@@ -72841,7 +72849,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -11984.372
+      secondsUntilStateChange: -12034.8
       state: Closing
   - uid: 5750
     components:
@@ -86108,13 +86116,6 @@ entities:
     - type: Transform
       pos: 120.5,-17.5
       parent: 2
-- proto: SolidSecretDoor
-  entities:
-  - uid: 3268
-    components:
-    - type: Transform
-      pos: 58.5,37.5
-      parent: 2
 - proto: SpaceVillainArcadeFilled
   entities:
   - uid: 12256
@@ -86384,10 +86385,10 @@ entities:
       parent: 2
 - proto: SpawnPointDetective
   entities:
-  - uid: 3237
+  - uid: 3268
     components:
     - type: Transform
-      pos: 57.5,35.5
+      pos: 58.5,38.5
       parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
