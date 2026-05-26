@@ -1289,7 +1289,7 @@
   - type: Sprite
     state: supply
   - type: MachineBoard
-    prototype: GravityGeneratorMiniUncharged
+    prototype: GravityGeneratorMini
     stackRequirements:
       Manipulator: 7
       Steel: 5
