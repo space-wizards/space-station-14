@@ -1057,25 +1057,21 @@ entities:
   - uid: 50
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -2.5,-5.5
       parent: 325
   - uid: 51
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -2.5,-4.5
       parent: 325
   - uid: 52
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 1.5,-5.5
       parent: 325
   - uid: 53
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 1.5,-4.5
       parent: 325
 - proto: Gyroscope
