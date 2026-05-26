@@ -30,7 +30,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
 
     private void OnAfterState(EntityUid uid, BaseForceGunComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (component.Tethered == null || !TryComp<SpriteComponent>(component.Tethered, out var sprite))
+        if (!TryComp<SpriteComponent>(component.Tethered, out var sprite))
             return;
 
         _sprite.SetColor((component.Tethered.Value, sprite), component.LineColor);

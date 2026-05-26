@@ -16,7 +16,7 @@ public sealed partial class BaseForceGunComponent : Component
     public EntityUid? TetherEntity { get; set; }
 
     /// <summary>
-    /// The entity the tethered target has a joint to.
+    /// The mirror entity which applies an opposite force on the gun through a copy of the main joint
     /// </summary>
     [DataField("tetherMirrorEntity"), AutoNetworkedField]
     public EntityUid? TetherMirrorEntity { get; set; }
@@ -33,6 +33,9 @@ public sealed partial class BaseForceGunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("canUnanchor"), AutoNetworkedField]
     public bool CanUnanchor = false;
 
+    /// <summary>
+    /// Can the tethergun pick up living entities.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("canTetherAlive"), AutoNetworkedField]
     public bool CanTetherAlive = false;
 
@@ -72,13 +75,14 @@ public sealed partial class BaseForceGunComponent : Component
     public float MaxBeamLength = 20f;
 
     /// <summary>
-    /// Max Distance away from player the object can be moved to
+    /// Max Distance away from player the TetherEntity can be moved to
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxDistance"), AutoNetworkedField]
     public float MaxDistance = 10f;
 
     /// <summary>
-    /// Max Distance away from player the object can be moved to
+    /// Does the tether gun apply an opposite force on itself
+    /// Important to be false for admeme variants
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("reverseForce"), AutoNetworkedField]
     public bool ReverseForce = true;

@@ -6,6 +6,9 @@ namespace Content.Shared.Weapons.Misc;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class ForceGunComponent : Component
 {
+    /// <summary>
+    /// Speed an object launched will have
+    /// </summary>
     [DataField("throwSpeed"), AutoNetworkedField]
     public float ThrowSpeed = 20f;
 
