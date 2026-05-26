@@ -349,7 +349,7 @@
     - DropperDrawMode
     - DropperInjectMode
   - type: ExaminableSolution
-    solution: dropper
+    solution: injector
     exactVolume: true
   - type: UserInterface
     interfaces:
