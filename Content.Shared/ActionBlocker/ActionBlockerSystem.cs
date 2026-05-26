@@ -45,9 +45,7 @@ namespace Content.Shared.ActionBlocker
                 Dirty(uid, component);
 
             component.CanMove = !ev.Cancelled;
-            var updatedEv = new CanMoveUpdatedEvent(component.CanMove);
-            RaiseLocalEvent(uid, ref updatedEv);
-            return component.CanMove;
+            return !ev.Cancelled;
         }
 
         /// <summary>
