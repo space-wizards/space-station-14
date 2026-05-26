@@ -13,19 +13,19 @@ public sealed partial class BaseForceGunComponent : Component
     /// The entity the tethered target has a joint to.
     /// </summary>
     [DataField("tetherEntity"), AutoNetworkedField]
-    public EntityUid? TetherEntity { get; set; }
+    public NetEntity? TetherEntity { get; set; }
 
     /// <summary>
     /// The entity the tethered target has a joint to.
     /// </summary>
     [DataField("tetherMirrorEntity"), AutoNetworkedField]
-    public EntityUid? TetherMirrorEntity { get; set; }
+    public NetEntity? TetherMirrorEntity { get; set; }
 
     /// <summary>
     /// The entity currently tethered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("tethered"), AutoNetworkedField]
-    public EntityUid? Tethered { get; set; }
+    public NetEntity? Tethered { get; set; }
 
     /// <summary>
     /// Can the tethergun unanchor entities.
