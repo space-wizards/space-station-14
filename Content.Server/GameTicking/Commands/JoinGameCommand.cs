@@ -62,27 +62,33 @@ namespace Content.Server.GameTicking.Commands
                 shell.WriteLine("Round has not started.");
                 return;
             }
-
-            var id = args[0];
-            if (!int.TryParse(args[1], out var sid))
+            else if (ticker.RunLevel == GameRunLevel.InRound)
             {
-                shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
-            }
+                string id = args[0];
 
-            var station = _entManager.GetEntity(new NetEntity(sid));
-            var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-            if (stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
-            {
-                shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
+                if (!int.TryParse(args[1], out var sid))
+                {
+                    shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+                }
+
+                var station = _entManager.GetEntity(new NetEntity(sid));
+                var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
+                if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+                {
+                    shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
+                    return;
+                }
+
+                if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
+                {
+                    _adminManager.DeAdmin(player);
+                }
+
+                ticker.MakeJoinGame(player, station, id);
                 return;
             }
 
-            if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
-            {
-                _adminManager.DeAdmin(player);
-            }
-
-            ticker.MakeJoinGame(player, station, id);
+            ticker.MakeJoinGame(player, EntityUid.Invalid);
         }
     }
 }
