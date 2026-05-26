@@ -394,7 +394,7 @@
       maxForce: 50000
       massLimit: 10000
       frequency: 50
-      maxDistance: 1
+      maxDistance: 1.5
       dampingRatio: 1
       lineColor: "#18a2d5"
       reverseForce: false

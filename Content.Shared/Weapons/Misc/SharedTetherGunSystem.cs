@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using System.Xml;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -112,6 +113,11 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         {
             if (comp.Tethered == null || comp.TetherEntity == null || comp.TetherMirrorEntity == null)
                 continue;
+            if (!Exists(comp.Tethered) || !Exists(comp.TetherEntity) || !Exists(comp.TetherMirrorEntity))
+            {
+                StopTether(uid, comp);
+                continue;
+            }
             var mapGunCoords = TransformSystem.GetMapCoordinates(uid);
             if (!TryGetCoords(mapGunCoords, out var gunCoords) || gunCoords == null)
                 continue;
@@ -397,9 +403,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             StopTether(gunUid, component, transfer: true);
         }
 
-        TryComp<AppearanceComponent>(gunUid, out var appearance);
-        _appearance.SetData(gunUid, TetherVisualsStatus.Key, true, appearance);
-        _appearance.SetData(gunUid, ToggleableVisuals.Enabled, true, appearance);
+        UpdateSprite(gunUid, true);
 
         // Target updates
         TransformSystem.Unanchor(target, targetXform);
@@ -455,6 +459,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (_netManager.IsServer && component.Stream == null)
             component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null)?.Entity;
 
+        if (!Exists(component.Tethered))
+            StopTether(gunUid, component);
         Dirty(target, tethered);
         Dirty(gunUid, component);
     }
@@ -466,24 +472,32 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         bool transfer = false
     )
     {
-        if (component.Tethered == null)
-            return;
-
         if (component.TetherEntity != null && component.TetherMirrorEntity != null)
         {
+            if (Exists(component.TetherEntity) || Exists(component.TetherMirrorEntity))
+            {
+                if (!_timing.ApplyingState)
+                {
+                    _joints.ClearJoints(component.TetherEntity.Value);
+                    _joints.ClearJoints(component.TetherMirrorEntity.Value);
+                }
+                PredictedQueueDel(component.TetherEntity);
+                PredictedQueueDel(component.TetherMirrorEntity);
+            }
             // Clears all joints
             // The tether entities should never have any other joints
-            if (!_timing.ApplyingState)
-            {
-                _joints.ClearJoints(component.TetherEntity.Value);
-                _joints.ClearJoints(component.TetherMirrorEntity.Value);
-            }
-            PredictedQueueDel(component.TetherEntity);
-            PredictedQueueDel(component.TetherMirrorEntity);
             component.TetherEntity = null;
             component.TetherMirrorEntity = null;
         }
 
+        if (component.Tethered == null)
+            return;
+        if (!Exists(component.Tethered))
+        {
+            component.Tethered = null;
+            UpdateSprite(gunUid, false);
+            return;
+        }
         if (TryComp<PhysicsComponent>(component.Tethered, out var targetPhysics))
         {
             if (land)
@@ -508,14 +522,19 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             component.Stream = null;
         }
 
-        TryComp<AppearanceComponent>(gunUid, out var appearance);
-        _appearance.SetData(gunUid, TetherVisualsStatus.Key, false, appearance);
-        _appearance.SetData(gunUid, ToggleableVisuals.Enabled, false, appearance);
+        UpdateSprite(gunUid, false);
 
         RemComp<TetheredComponent>(component.Tethered.Value);
         _blocker.UpdateCanMove(component.Tethered.Value);
         component.Tethered = null;
         Dirty(gunUid, component);
+    }
+
+    private void UpdateSprite(EntityUid uid, bool toggle)
+    {
+        TryComp<AppearanceComponent>(uid, out var appearance);
+        _appearance.SetData(uid, TetherVisualsStatus.Key, toggle, appearance);
+        _appearance.SetData(uid, ToggleableVisuals.Enabled, toggle, appearance);
     }
 
     [Serializable, NetSerializable]
