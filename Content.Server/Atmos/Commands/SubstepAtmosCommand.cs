@@ -85,7 +85,7 @@ public sealed partial class SubstepAtmosCommand : LocalizedEntityCommands
         }
 
         _atmosphereSystem.SetAtmosphereSimulation(newEnt, false);
-        _atmosphereSystem.RunProcessingFull(newEnt, xform.MapUid.Value, _atmosphereSystem.AtmosTickRate);
+        _atmosphereSystem.RunProcessingFull(newEnt, xform.MapUid.Value, _atmosphereSystem.AtmosTime);
 
         shell.WriteLine(Loc.GetString("cmd-substepatmos-info-substepped-grid", ("grid", EntityManager.ToPrettyString(grid))));
     }

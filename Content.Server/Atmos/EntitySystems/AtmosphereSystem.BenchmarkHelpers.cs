@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -26,26 +27,17 @@ public sealed partial class AtmosphereSystem
         AtmosphereProcessingState state,
         Entity<MapAtmosphereComponent?>? mapEnt = null)
     {
-        var processingPaused = state switch
-        {
-            AtmosphereProcessingState.Revalidate => ProcessRevalidate(ent),
-            AtmosphereProcessingState.TileEqualize => ProcessTileEqualize(ent),
-            AtmosphereProcessingState.ActiveTiles => ProcessActiveTiles(ent),
-            AtmosphereProcessingState.ExcitedGroups => ProcessExcitedGroups(ent),
-            AtmosphereProcessingState.HighPressureDelta => ProcessHighPressureDelta(ent),
-            AtmosphereProcessingState.DeltaPressure => ProcessDeltaPressure(ent),
-            AtmosphereProcessingState.Hotspots => ProcessHotspots(ent),
-            AtmosphereProcessingState.Superconductivity => ProcessSuperconductivity(ent),
-            AtmosphereProcessingState.PipeNet => ProcessPipeNets(ent),
-            AtmosphereProcessingState.AtmosDevices => mapEnt is not null
-                ? ProcessAtmosDevices(ent, mapEnt.Value)
-                : throw new ArgumentException(
-                    "An Entity<MapAtmosphereComponent> must be provided when benchmarking ProcessAtmosDevices."),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
-        ent.Comp1.ProcessingPaused = !processingPaused;
+        if ((uint)state >= (uint)AtmosphereProcessingState.NumStates)
+            throw new ArgumentOutOfRangeException(nameof(state), state, "Unknown atmosphere phase.");
+        if (state == AtmosphereProcessingState.AtmosDevices && mapEnt is null)
+            throw new ArgumentException(
+                "An Entity<MapAtmosphereComponent> must be provided when benchmarking ProcessAtmosDevices.",
+                nameof(mapEnt));
 
-        return processingPaused;
+        _simulationStopwatch.Restart();
+        var completed = _phaseTable[(int)state].Runner(this, ent, mapEnt.GetValueOrDefault());
+        ent.Comp1.Processing.ProcessingPaused = !completed;
+        return completed;
     }
 
     /// <summary>
@@ -53,12 +45,27 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="ent">The entity to simulate.</param>
     /// <param name="mapAtmosphere">The <see cref="MapAtmosphereComponent"/> that belongs to the grid's map.</param>
-    /// <param name="frameTime">Elapsed time to simulate. Recommended value is <see cref="AtmosTickRate"/>.</param>
+    /// <param name="frameTime">Elapsed time to simulate. Must be at least <see cref="AtmosTime"/>.</param>
+    /// <remarks>Test/benchmark only. Restarts the stopwatch each iteration, hiding budget-related scheduling bugs. Use <see cref="ProcessAtmosphereOnce"/> to observe production pause/resume.</remarks>
     public void RunProcessingFull(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
         Entity<MapAtmosphereComponent?> mapAtmosphere,
         float frameTime)
     {
-        while (ProcessAtmosphere(ent, mapAtmosphere, frameTime) != AtmosphereProcessingCompletionState.Finished) { }
+        DebugTools.Assert(frameTime >= AtmosTime,
+            $"RunProcessingFull requires frameTime >= AtmosTime ({AtmosTime}) to make progress; got {frameTime}.");
+
+        // Catches a phase that fails to make progress on resume (would otherwise spin forever).
+        const int maxIterations = 10_000;
+
+        AtmosphereProcessingCompletionState state;
+        var iterations = 0;
+        do
+        {
+            _simulationStopwatch.Restart();
+            state = ProcessAtmosphere(ent, mapAtmosphere, iterations == 0 ? frameTime : 0f);
+            if (++iterations > maxIterations)
+                throw new InvalidOperationException($"Cycle didn't complete after {maxIterations} iterations; a phase is failing to make progress.");
+        } while (state == AtmosphereProcessingCompletionState.Return);
     }
 
     /// <summary>
@@ -69,5 +76,27 @@ public sealed partial class AtmosphereSystem
     public void SetAtmosphereSimulation(Entity<GridAtmosphereComponent> ent, bool simulate)
     {
         ent.Comp.Simulated = simulate;
+    }
+
+    /// <summary>
+    /// Test-only: stamps a phase into the cursor after clearing all cycle scratch state.
+    /// Wall-time bookkeeping is preserved so dt accounting carries across the stamp.
+    /// </summary>
+    public void SetProcessingState(Entity<GridAtmosphereComponent> ent, AtmosphereProcessingState state)
+    {
+        ResetCycleScratch(ent.Comp);
+        ent.Comp.Processing.CycleCursor = new AtmosphereCycleCursor(state, SnapshotPhaseFlags());
+    }
+
+    /// <summary>
+    /// One <see cref="ProcessAtmosphere"/> call with a fresh stopwatch, for tests that need per-call observation.
+    /// </summary>
+    public AtmosphereProcessingCompletionState ProcessAtmosphereOnce(
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<MapAtmosphereComponent?> map,
+        float frameTime)
+    {
+        _simulationStopwatch.Restart();
+        return ProcessAtmosphere(ent, map, frameTime);
     }
 }

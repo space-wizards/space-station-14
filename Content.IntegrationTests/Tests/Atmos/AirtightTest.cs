@@ -51,7 +51,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task Component_InitDataCorrect()
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -79,7 +79,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task MultiTile_Component_InitDataCorrect(AtmosDirection direction)
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         var offsetVec = Vector2i.Zero.Offset(direction);
         await Server.WaitPost(delegate
@@ -117,7 +117,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task Spawn_ReconstructedUpdatesImmediately()
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // Before an entity is spawned, the tile in question should be completely unblocked.
         // This should be reflected in a reconstruction.
@@ -151,7 +151,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task Spawn_CacheUpdatesOnAtmosTick()
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // Space should be blank before spawn.
         using (Assert.EnterMultipleScope())
@@ -212,7 +212,7 @@ public sealed class AirtightTest : AtmosTest
         }
 
         // Tick to update cache.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         using (Assert.EnterMultipleScope())
         {
@@ -251,7 +251,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task Delete_ReconstructedUpdatesImmediately()
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -259,7 +259,7 @@ public sealed class AirtightTest : AtmosTest
             _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
         });
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         Assert.That(
             SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
@@ -276,7 +276,7 @@ public sealed class AirtightTest : AtmosTest
             Is.False,
             "Expected no airtightness for reconstructed AirtightData immediately after deletion.");
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         Assert.That(
             SAtmos.IsTileAirBlocked(ProcessEnt.Owner, Vector2i.Zero, mapGridComp: ProcessEnt.Comp3),
@@ -291,7 +291,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task Delete_CacheUpdatesOnAtmosTick()
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -299,7 +299,7 @@ public sealed class AirtightTest : AtmosTest
             _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
         });
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -330,7 +330,7 @@ public sealed class AirtightTest : AtmosTest
             }
         }
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         using (Assert.EnterMultipleScope())
         {
@@ -383,7 +383,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task MultiTile_Spawn_CacheUpdatesOnAtmosTick(AtmosDirection atmosDirection)
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // Tile should be completely unblocked.
         using (Assert.EnterMultipleScope())
@@ -423,7 +423,7 @@ public sealed class AirtightTest : AtmosTest
             }
         }
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         using (Assert.EnterMultipleScope())
         {
@@ -461,7 +461,7 @@ public sealed class AirtightTest : AtmosTest
     public async Task MultiTile_Delete_CacheUpdatesOnAtmosTick(AtmosDirection atmosDirection)
     {
         // Ensure grid/atmos is initialized.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -470,7 +470,7 @@ public sealed class AirtightTest : AtmosTest
             _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
         });
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitPost(delegate
         {
@@ -500,7 +500,7 @@ public sealed class AirtightTest : AtmosTest
         }
 
         // Tick to update cache after deletion.
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         using (Assert.EnterMultipleScope())
         {
@@ -540,7 +540,7 @@ public sealed class AirtightTest : AtmosTest
     [TestCase(-270f, AtmosDirection.West)]
     public async Task Rotation_AirBlockedDirectionsOnSpawn(float degrees, AtmosDirection expected)
     {
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         var rotation = Angle.FromDegrees(degrees);
 
@@ -552,7 +552,7 @@ public sealed class AirtightTest : AtmosTest
             Transform.SetLocalRotation(_targetRotationEnt, rotation);
         });
 
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         await Server.WaitAssertion(delegate
         {

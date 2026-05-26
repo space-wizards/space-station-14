@@ -202,7 +202,7 @@ public sealed partial class AtmosphereSystem
 
     /// <summary>
     /// Packs data into a <see cref="DeltaPressureDamageResult"/> data struct and enqueues it
-    /// into the <see cref="GridAtmosphereComponent.DeltaPressureDamageResults"/> queue for
+    /// into the <see cref="AtmosphereProcessingRuntime.DeltaPressureDamageResults"/> queue for
     /// later processing.
     /// </summary>
     /// <param name="ent">The entity to enqueue if necessary.</param>
@@ -223,7 +223,7 @@ public sealed partial class AtmosphereSystem
             return;
         }
 
-        gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
+        gridAtmosComp.Processing.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
             pressure,
             delta));
     }

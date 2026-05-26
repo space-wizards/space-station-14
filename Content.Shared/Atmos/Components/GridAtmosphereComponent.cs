@@ -20,23 +20,11 @@ public sealed partial class GridAtmosphereComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public bool Simulated = true;
 
-    /// <summary>
-    /// Indicator for if Atmospherics has delegated the processing of this
-    /// grid to another tick due to the time budget running out.
-    /// </summary>
-    /// <example>If true, Atmospherics is not finished
-    /// processing the current stage and has yielded processing
-    /// to the next tick.</example>
-    [ViewVariables]
-    public bool ProcessingPaused;
+    [NonSerialized, ViewVariables]
+    public readonly AtmosphereProcessingRuntime Processing = new();
 
-    /// <summary>
-    /// Timer used to delay processing for every AtmosTick.
-    /// No, Atmospherics cannot tick every frame.
-    /// </summary>
-    /// TODO: Replace with TimeSpan please.
     [ViewVariables]
-    public float Timer;
+    public AtmosphereProcessingState State => Processing.CycleCursor?.Phase ?? AtmosphereProcessingState.Revalidate;
 
     /// <summary>
     /// Integer that is incremented every time the grid is processed by Atmospherics.
@@ -104,6 +92,82 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
         new(SharedAtmosphereSystem.DeltaPressurePreAllocateLength);
 
+
+    [ViewVariables]
+    public readonly HashSet<IPipeNet> PipeNets = new();
+
+    [ViewVariables]
+    public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
+
+    [ViewVariables]
+    public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
+
+    [ViewVariables]
+    public readonly List<TileAtmosphere> PossiblyDisconnectedTiles = new(100);
+
+    [ViewVariables]
+    public int InvalidatedCoordsCount => InvalidatedCoords.Count;
+
+    [ViewVariables]
+    public long EqualizationQueueCycleControl { get; set; }
+}
+
+public sealed class AtmosphereProcessingRuntime
+{
+    /// <summary>
+    /// Indicator for if Atmospherics has delegated the processing of this
+    /// grid to another tick due to the time budget running out.
+    /// </summary>
+    /// <example>If true, Atmospherics is not finished
+    /// processing the current stage and has yielded processing
+    /// to the next tick.</example>
+    [ViewVariables]
+    public bool ProcessingPaused;
+
+    [ViewVariables]
+    public AtmosphereCycleCursor? CycleCursor;
+
+    [ViewVariables]
+    public float TimeSinceLastDeviceUpdate;
+
+    [ViewVariables]
+    public float CurrentRunDeviceDt;
+
+    /// <summary>
+    /// Timer used to delay processing for every AtmosTick.
+    /// No, Atmospherics cannot tick every frame.
+    /// </summary>
+    /// TODO: Replace with TimeSpan please.
+    [ViewVariables]
+    public float Timer;
+
+    [ViewVariables]
+    public readonly TileRunState EqualizeRun = new();
+
+    [ViewVariables]
+    public readonly TileRunState ActiveTilesRun = new();
+
+    [ViewVariables]
+    public readonly TileRunState HighPressureDeltaRun = new();
+
+    [ViewVariables]
+    public readonly TileRunState HotspotRun = new();
+
+    [ViewVariables]
+    public readonly TileRunState SuperconductRun = new();
+
+    [ViewVariables]
+    public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
+
+    [ViewVariables]
+    public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
+
+    [ViewVariables]
+    public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
+
+    [ViewVariables]
+    public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
+
     /// <summary>
     /// Integer that indicates the current position in the
     /// <see cref="DeltaPressureEntities"/> list that is being processed.
@@ -116,40 +180,22 @@ public sealed partial class GridAtmosphereComponent : Component
     /// </summary>
     [ViewVariables]
     public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
+}
+
+/// <summary>
+/// Per-phase tile snapshot and resume cursor.
+/// </summary>
+public sealed class TileRunState
+{
+    [ViewVariables]
+    public readonly List<TileAtmosphere> Tiles = new();
 
     [ViewVariables]
-    public readonly HashSet<IPipeNet> PipeNets = new();
+    public int Cursor;
 
-    [ViewVariables]
-    public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
-
-    [ViewVariables]
-    public readonly Queue<TileAtmosphere> CurrentRunTiles = new();
-
-    [ViewVariables]
-    public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
-
-    [ViewVariables]
-    public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
-
-    [ViewVariables]
-    public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
-
-    [ViewVariables]
-    public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
-
-    [ViewVariables]
-    public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
-
-    [ViewVariables]
-    public readonly List<TileAtmosphere> PossiblyDisconnectedTiles = new(100);
-
-    [ViewVariables]
-    public int InvalidatedCoordsCount => InvalidatedCoords.Count;
-
-    [ViewVariables]
-    public long EqualizationQueueCycleControl { get; set; }
-
-    [ViewVariables]
-    public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.Revalidate;
+    public void Reset()
+    {
+        Tiles.Clear();
+        Cursor = 0;
+    }
 }
