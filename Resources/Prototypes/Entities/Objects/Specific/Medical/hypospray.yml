@@ -24,6 +24,7 @@
   components:
   - type: Spillable
     solution: hypospray
+    spillWhenThrown: false
 
 - type: entity
   abstract: true
