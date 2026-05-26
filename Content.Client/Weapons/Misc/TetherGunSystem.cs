@@ -30,10 +30,10 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
 
     private void OnAfterState(EntityUid uid, BaseForceGunComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (component.Tethered == null || !TryComp<SpriteComponent>(GetEntity(component.Tethered), out var sprite))
+        if (component.Tethered == null || !TryComp<SpriteComponent>(component.Tethered, out var sprite))
             return;
 
-        _sprite.SetColor((GetEntity(component.Tethered.Value), sprite), component.LineColor);
+        _sprite.SetColor((component.Tethered.Value, sprite), component.LineColor);
     }
 
     public override void Shutdown()
@@ -83,7 +83,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
 
         const float bufferDistance = 0.1f;
 
-        if (TryComp(GetEntity(gun.TetherEntity), out TransformComponent? tetherXform) &&
+        if (TryComp(gun.TetherEntity, out TransformComponent? tetherXform) &&
             tetherXform.Coordinates.TryDistance(EntityManager, TransformSystem, coords, out var distance) &&
             distance < bufferDistance)
         {
