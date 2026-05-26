@@ -75,6 +75,7 @@ public sealed class CargoTest : GameTest
                                 Is.AtMost(proto.Cost),
                                 $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!"
                             );
+                            // If the price was found using the average price it won't spawn the whole container and skips
                             continue;
                         }
                     }
