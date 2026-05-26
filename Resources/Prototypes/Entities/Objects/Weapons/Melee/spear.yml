@@ -109,7 +109,7 @@
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: spear
+    fillBaseName: melee
     inHandsFillBaseName: -fill-
     inHandsMaxFillLevels: 1
     equippedFillBaseName: -fill-
