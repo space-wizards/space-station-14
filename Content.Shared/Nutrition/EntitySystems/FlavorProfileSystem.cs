@@ -57,15 +57,10 @@ public sealed partial class FlavorProfileSystem : EntitySystem
 
     private string FlavorsToFlavorMessage(HashSet<ProtoId<FlavorPrototype>> flavorSet)
     {
-        var flavors = new List<FlavorPrototype>();
+        var flavors = new List<FlavorPrototype>(flavorSet.Count);
         foreach (var flavor in flavorSet)
         {
-            if (string.IsNullOrEmpty(flavor) || !_prototypeManager.TryIndex(flavor, out var flavorPrototype))
-            {
-                continue;
-            }
-
-            flavors.Add(flavorPrototype);
+            flavors.Add(_prototypeManager.Index(flavor));
         }
 
         flavors.Sort((a, b) => a.FlavorType.CompareTo(b.FlavorType));
