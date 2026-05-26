@@ -59,7 +59,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
 
         if (player == null ||
             !TryGetGun(player.Value, out _, out var gun) ||
-            gun.TetherEntity == null)
+            !Exists(gun.TetherEntity))
         {
             return;
         }
@@ -70,16 +70,8 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         if (mouseWorldPos.MapId == MapId.Nullspace)
             return;
 
-        EntityCoordinates coords;
-
-        if (_mapManager.TryFindGridAt(mouseWorldPos, out var gridUid, out _))
-        {
-            coords = TransformSystem.ToCoordinates(gridUid, mouseWorldPos);
-        }
-        else
-        {
-            coords = TransformSystem.ToCoordinates(_mapSystem.GetMap(mouseWorldPos.MapId), mouseWorldPos);
-        }
+        if (!TryGetCoords(mouseWorldPos, out var coords))
+            return;
 
         const float bufferDistance = 0.1f;
 

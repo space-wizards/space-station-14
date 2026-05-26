@@ -3,13 +3,13 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Weapons.Misc;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ForceGunComponent : Component
 {
     /// <summary>
     /// Speed an object launched will have
     /// </summary>
-    [DataField("throwSpeed"), AutoNetworkedField]
+    [DataField("throwSpeed")]
     public float ThrowSpeed = 20f;
 
     [DataField("soundLaunch")]
