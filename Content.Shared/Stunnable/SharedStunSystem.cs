@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -128,25 +127,25 @@ public abstract partial class SharedStunSystem : EntitySystem
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
-    public bool TryAddStunDuration(EntityUid uid, TimeSpan duration, bool visualized = false)
+    public bool TryAddStunDuration(EntityUid uid, TimeSpan duration)
     {
         if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        OnStunnedSuccessfully(uid, duration, visualized);
+        OnStunnedSuccessfully(uid, duration);
         return true;
     }
 
-    public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
+    public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration)
     {
         if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        OnStunnedSuccessfully(uid, duration, visualized);
+        OnStunnedSuccessfully(uid, duration);
         return true;
     }
 
-    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration, bool visualized)
+    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration)
     {
         var ev = new StunnedEvent(); // todo: rename event or change how it is raised - this event is raised each time duration of stun was externally changed
         RaiseLocalEvent(uid, ref ev);
@@ -154,11 +153,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         var evDropHands = new DropHandItemsEvent();
         RaiseLocalEvent(uid, ref evDropHands);
 
-        if (visualized)
-            TrySeeingStars(uid);
-
         var timeForLogs = duration.HasValue
-            ? duration.Value.TotalSeconds.ToString(CultureInfo.CurrentCulture)
+            ? duration.Value.Seconds.ToString()
             : "Infinite";
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {timeForLogs} seconds");
     }
@@ -286,7 +282,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time != null)
         {
             UpdateKnockdownTime((uid, component), time.Value, refresh);
-            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.TotalSeconds} seconds");
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} was knocked down for {time.Value.Seconds} seconds");
         }
         else
         {
@@ -295,7 +291,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
     }
 
-    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
+    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
         if (duration == null)
             return TryUpdateParalyzeDuration(uid, duration);
@@ -305,19 +301,19 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
         Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration, visualized);
+        OnStunnedSuccessfully(uid, duration);
 
         return true;
     }
 
-    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
+    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
         if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
         Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration, visualized);
+        OnStunnedSuccessfully(uid, duration);
 
         return true;
     }
