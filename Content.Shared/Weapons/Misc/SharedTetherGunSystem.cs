@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
@@ -232,8 +233,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        if (!_netManager.IsServer)
-            return;
         if (!TryComp<BaseForceGunComponent>(uid, out var baseComponent) || baseComponent == null)
         {
             return;
@@ -242,17 +241,29 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         var tethered = baseComponent.Tethered.Value;
         StopTether(uid, baseComponent, land: false);
+        if (!_netManager.IsServer)
+            return;
+        var thrownPos = TransformSystem.GetMapCoordinates(tethered);
+        var mapPos = TransformSystem.ToMapCoordinates(args.ClickLocation);
+        var direction = mapPos.Position - thrownPos.Position;
         _throwing.TryThrow(
             tethered,
-            args.ClickLocation,
+            direction,
             forceComponent.ThrowSpeed,
             user: Transform(uid).ParentUid,
             playSound: false,
-            pushbackRatio: forceComponent.PushBackRatio,
-            limitMass: false
+            pushbackRatio: 0
         );
         _audio.PlayPredicted(forceComponent.LaunchSound, uid, null);
         args.Handled = true;
+        if (!TryComp(uid, out PhysicsComponent? body) || !TryComp(tethered, out PhysicsComponent? physics))
+            return;
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var parents = new List<PhysicsComponent>();
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, physicsQuery, parents))
+            body = parents.LastOrDefault();
+        var impulseVector = direction.Normalized() * forceComponent.ThrowSpeed * physics.Mass * (baseComponent.ReverseForce ? 1 : 0);
+        _physics.ApplyLinearImpulse( body!.Owner, -impulseVector, body: body);
     }
 
     protected bool TryGetGun(
@@ -416,12 +427,14 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (component.TetherEntity != null && component.TetherMirrorEntity != null)
         {
             _joints.RemoveJoint(component.TetherEntity.Value, TetherJoint);
-            _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
+            if (component.ReverseForce)
+                _joints.RemoveJoint(component.TetherMirrorEntity.Value, TetherJointMirror);
 
             if (_netManager.IsServer)
             {
                 QueueDel(component.TetherEntity.Value);
-                QueueDel(component.TetherMirrorEntity.Value);
+                if (component.ReverseForce)
+                    QueueDel(component.TetherMirrorEntity.Value);
             }
             component.TetherEntity = null;
             component.TetherMirrorEntity = null;

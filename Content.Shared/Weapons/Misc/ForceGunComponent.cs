@@ -9,9 +9,6 @@ public sealed partial class ForceGunComponent : Component
     [DataField("throwSpeed"), AutoNetworkedField]
     public float ThrowSpeed = 20f;
 
-    [DataField("pushBackRatio"), AutoNetworkedField]
-    public float PushBackRatio = 1f;
-
     [DataField("soundLaunch")]
     public SoundSpecifier? LaunchSound = new SoundPathSpecifier("/Audio/Weapons/soup.ogg")
     {
