@@ -59,6 +59,7 @@
   components:
   - type: Action
     useDelay: 10
+    priority: -99
     icon: Interface/Actions/scream.png
     checkCanInteract: false
   - type: InstantAction
