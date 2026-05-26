@@ -148,7 +148,7 @@
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   icon: { sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi, state: icon }
-  productEntity: ClothingHandsGlovesBoxingBlue # TODO Replace this with the random spawner when it's not bugged
+  productEntity: ClothingHandsGlovesBoxingRiggedBlue # TODO Replace this with the random spawner when it's not bugged
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 8
@@ -258,25 +258,6 @@
   conditions:
   - !type:StoreWhitelistCondition
     whitelist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
-  id: UplinkEstoc
-  name: uplink-estoc-name
-  description: uplink-estoc-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/estoc.rsi, state: icon }
-  productEntity: BriefcaseWeaponDMRFilled
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 10
-  cost:
-    Telecrystal: 14
-  categories:
-  - UplinkWeaponry
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
       tags:
       - NukeOpsUplink
 
@@ -1111,6 +1092,16 @@
   categories:
   - UplinkDisruption
 
+- type: listing
+  id: UplinkTravelCamera
+  name: uplink-travel-camera-name
+  description: uplink-travel-camera-desc
+  productEntity: TravelCamera
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkDeception
+
 # Note: Removed for the time being until surgery/newmed is added. Considered bloat until then.
 # - type: listing
 #   id: UplinkDuffelSurgery
@@ -1139,10 +1130,11 @@
   - UplinkExplosives
 
 - type: listing
-  id: UplinkSyndimovCircuitBoard
+  id: UplinkSyndimovCircuitKit
   name: uplink-syndimov-law-name
   description: uplink-syndimov-law-desc
-  productEntity: SyndimovCircuitBoard
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: syndicate_circuit }
+  productEntity: SyndimovCircuitKit
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 6
@@ -1467,7 +1459,7 @@
   id: UplinkEmpImplanter
   name: uplink-emp-implanter-name
   description: uplink-emp-implanter-desc
-  icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: shield }
+  icon: { sprite: /Textures/Effects/emp.rsi, state: emp_disable }
   productEntity: EmpImplanter
   discountCategory: veryRareDiscounts
   discountDownTo:
@@ -2286,3 +2278,20 @@
   - !type:BuyerJobCondition
     whitelist:
     - Lawyer
+
+#Objective items
+
+- type: listing
+  id: uplinkHijackBeacon
+  name: uplink-hijack-beacon-name
+  description: uplink-hijack-beacon-desc
+  productEntity: HijackBeacon
+  categories:
+    - UplinkObjective
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerObjectiveWhitelistCondition
+    whitelist:
+      components:
+      - HijackTradeStationCondition

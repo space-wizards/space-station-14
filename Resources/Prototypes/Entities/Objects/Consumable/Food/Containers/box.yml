@@ -583,7 +583,7 @@
           children:
           - id: FoodSaladValid
             weight: 0.05
-            amount: 4
+            amount: 2
           - id: FoodSnackSyndi
             amount: 4
 

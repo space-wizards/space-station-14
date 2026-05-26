@@ -13,18 +13,18 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit
 {
-    public sealed class DisposableSystem : EntitySystem
+    public sealed partial class DisposableSystem : EntitySystem
     {
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
-        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedMapSystem _maps = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+        [Dependency] private ThrowingSystem _throwing = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private DisposalUnitSystem _disposalUnitSystem = default!;
+        [Dependency] private DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SharedMapSystem _maps = default!;
+        [Dependency] private SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private SharedTransformSystem _xformSystem = default!;
 
         private EntityQuery<DisposalTubeComponent> _disposalTubeQuery;
         private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
