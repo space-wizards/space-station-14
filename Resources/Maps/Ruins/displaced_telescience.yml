@@ -4001,13 +4001,11 @@ entities:
   - uid: 317
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 0.5,1.5
       parent: 1
   - uid: 318
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 4.5,1.5
       parent: 1
 - proto: GrilleBroken

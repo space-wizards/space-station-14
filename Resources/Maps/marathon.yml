@@ -102891,55 +102891,46 @@ entities:
   - uid: 23834
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -74.5,63.5
       parent: 30
   - uid: 23835
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -73.5,63.5
       parent: 30
   - uid: 23836
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -72.5,63.5
       parent: 30
   - uid: 23837
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -71.5,63.5
       parent: 30
   - uid: 23839
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -69.5,63.5
       parent: 30
   - uid: 23840
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -68.5,63.5
       parent: 30
   - uid: 23841
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -67.5,63.5
       parent: 30
   - uid: 23842
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -66.5,63.5
       parent: 30
   - uid: 23843
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -65.5,63.5
       parent: 30
   - uid: 23874
