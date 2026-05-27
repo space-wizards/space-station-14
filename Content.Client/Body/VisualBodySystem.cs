@@ -211,6 +211,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 {
                     _displacement.TryAddDisplacement(displacement,
                         (target, target.Comp),
+                        // Should be on a different layer than above, so markings with
+                        // multiple layers don't get overwritten by displacements
                         index + proto.Sprites.Count + i + 1,
                         layerId,
                         out _);
