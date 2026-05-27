@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: buunie099
-  changes:
-  - message: Vulpkannin cries now use the same sounds as whining
-    type: Tweak
-  id: 9208
-  time: '2025-11-16T10:34:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40982
 - author: slarticodefast
   changes:
   - message: Crawling speed now depends on the number of free hands you have.
@@ -4091,3 +4084,17 @@
   id: 9719
   time: '2026-05-26T23:38:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38505
+- author: chromiumboy
+  changes:
+  - message: Creatures will be knocked down for 1.5s if they do not exit disposals
+      via a disposals unit.
+    type: Tweak
+  - message: Things trapped in an endless loop in disposals may spontaneously unanchor
+      a pipe and escape.
+    type: Tweak
+  - message: Up to 30 things can be inserted into a disposal/mailing unit before it
+      needs to be flushed.
+    type: Tweak
+  id: 9720
+  time: '2026-05-27T04:55:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40540
