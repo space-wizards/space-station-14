@@ -174,8 +174,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private void OnLoopToggledRequest(bool toggled)
     {
-        var instrument = EntMan.System<InstrumentSystem>();
-
         if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrumentComp))
         {
             instrumentComp.LoopMidi = toggled;
@@ -267,9 +265,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                 return;
 
             var fileName = DateTime.Now.Ticks + ".midi";
-            var data = file.CopyToArray();
-            StoreMidiFile(fileName, data);
-            _fileSource.AddTrack(fileName, data);
+            StoreMidiFile(fileName, file);
+            file.Seek(0, SeekOrigin.Begin);
+            _fileSource.AddTrack(fileName, file.CopyToArray());
         }
         catch
         {
@@ -434,10 +432,20 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             _resManager.UserData.CreateDir(UserMidiDirectory);
     }
 
-    private void StoreMidiFile(string filename, byte[] data)
+    private async void StoreMidiFile(string filename, Stream data)
     {
-        EnsureMidiDirectoryExists();
-        _resManager.UserData.WriteAllBytes(new ResPath(UserMidiDirectory + filename), data);
+        try
+        {
+            EnsureMidiDirectoryExists();
+            using (var file = _resManager.UserData.OpenWrite(new ResPath(UserMidiDirectory + filename)))
+            {
+                await data.CopyToAsync(file);
+            }
+        }
+        catch
+        {
+            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
+        }
     }
 
     private bool RenameMidiFile(string oldName, string newName)
