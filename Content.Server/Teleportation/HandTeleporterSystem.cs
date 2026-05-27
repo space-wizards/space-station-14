@@ -140,7 +140,12 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             portalStrings += " and ";
         portalStrings += ToPrettyString(component.SecondPortal);
         if (portalStrings != "")
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(uid)}");
+        {
+            if (user != null)
+                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(uid)}");
+            else
+                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{portalStrings} were closed");
+        }
 
         // Clear both portals
         if (!Deleted(component.FirstPortal))
@@ -152,7 +157,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         component.SecondPortal = null;
         _audio.PlayPvs(component.ClearPortalsSound, uid);
 
-        if (instability)
-            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), uid, user, PopupType.MediumCaution);
+        if (instability && user != null)
+            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), uid, user.Value, PopupType.MediumCaution);
     }
 }
