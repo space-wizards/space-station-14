@@ -185,6 +185,16 @@
   group: market
 
 - type: cargoProduct
+  id: LivestockSheep
+  icon:
+    sprite: Mobs/Animals/sheep.rsi
+    state: icon
+  product: CrateNPCSheep
+  cost: 1300
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
   id: LivestockSnake
   icon:
     sprite: Mobs/Animals/snake.rsi

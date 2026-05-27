@@ -13,7 +13,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private OpenableSystem _openable = default!;
 
     public void InitializeBlockers()
     {
