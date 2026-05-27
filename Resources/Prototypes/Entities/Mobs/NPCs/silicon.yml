@@ -107,6 +107,7 @@
     - SiliconEmotes
     - Bot
     - Unimplantable
+    - CannotSuicide
   - type: Speech
     speechVerb: Robotic
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
@@ -342,7 +343,6 @@
     tags:
     - Medical
     - Maintenance
-  - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
