@@ -148,12 +148,7 @@ public sealed partial class PowerCellSystem : EntitySystem
         if (!TryGetBatteryFromSlot((ent, powerCellSlotComponent), out var battery))
             return;
 
-        if (!TryComp<BatterySelfRechargerComponent>(battery, out var selfRechargerComp))
-            return;
-
-        var batterySelfRecharge = (battery.Value.Owner, selfRechargerComp);
-
-        _battery.TrySetChargeCooldown(batterySelfRecharge);
+        _battery.TrySetChargeCooldown(battery.Value.Owner);
     }
 
     private void OnDrawStartup(Entity<PowerCellDrawComponent> ent, ref ComponentStartup args)
