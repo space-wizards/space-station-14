@@ -12,17 +12,17 @@ namespace Content.Client.Disposal.Unit
     public sealed partial class DisposalUnitWindow : FancyWindow
     {
         public TimeSpan FullPressure;
+        public float PressurePerSecond;
 
         public DisposalUnitWindow()
         {
-            IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-            PressureBar.UpdatePressure(FullPressure);
+            PressureBar.UpdatePressure(FullPressure, PressurePerSecond);
         }
     }
 }

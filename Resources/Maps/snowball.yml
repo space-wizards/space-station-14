@@ -82939,7 +82939,6 @@ entities:
   - uid: 6652
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 59.5,38.5
       parent: 1
   - uid: 6788
@@ -82960,13 +82959,11 @@ entities:
   - uid: 7073
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,38.5
       parent: 1
   - uid: 7244
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 58.5,38.5
       parent: 1
   - uid: 7306
@@ -83002,7 +82999,6 @@ entities:
   - uid: 7839
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,40.5
       parent: 1
   - uid: 8487
@@ -83018,7 +83014,6 @@ entities:
   - uid: 8762
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 57.5,39.5
       parent: 1
   - uid: 8901
@@ -83119,13 +83114,11 @@ entities:
   - uid: 10802
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 60.5,38.5
       parent: 1
   - uid: 10818
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 61.5,38.5
       parent: 1
   - uid: 10820

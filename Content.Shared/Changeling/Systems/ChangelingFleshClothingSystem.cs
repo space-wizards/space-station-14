@@ -8,12 +8,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed class ChangelingFleshClothingSystem : EntitySystem
+public sealed partial class ChangelingFleshClothingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedChameleonClothingSystem _chameleonClothing = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {

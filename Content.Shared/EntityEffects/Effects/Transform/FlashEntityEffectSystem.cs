@@ -11,9 +11,9 @@ namespace Content.Shared.EntityEffects.Effects.Transform;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<TransformComponent, Flash>
 {
-    [Dependency] private readonly SharedFlashSystem _flash = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedFlashSystem _flash = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
 
     protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<Flash> args)
     {

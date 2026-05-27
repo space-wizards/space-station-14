@@ -309,3 +309,6 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+
+# C# Dev Kit cache file
+*.lscache

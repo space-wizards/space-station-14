@@ -1658,103 +1658,86 @@ entities:
   - uid: 224
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -1.5,2.5
       parent: 1
   - uid: 225
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -0.5,3.5
       parent: 1
   - uid: 226
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,3.5
       parent: 1
   - uid: 227
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,3.5
       parent: 1
   - uid: 228
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 2.5,2.5
       parent: 1
   - uid: 229
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 4.5,0.5
       parent: 1
   - uid: 230
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 5.5,0.5
       parent: 1
   - uid: 231
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 6.5,0.5
       parent: 1
   - uid: 232
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -3.5,0.5
       parent: 1
   - uid: 233
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -4.5,0.5
       parent: 1
   - uid: 234
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,0.5
       parent: 1
   - uid: 235
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,-4.5
       parent: 1
   - uid: 236
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,-5.5
       parent: 1
   - uid: 237
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,-6.5
       parent: 1
   - uid: 238
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 6.5,-4.5
       parent: 1
   - uid: 239
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 6.5,-5.5
       parent: 1
   - uid: 240
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 6.5,-6.5
       parent: 1
   - uid: 241

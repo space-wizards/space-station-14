@@ -14,16 +14,16 @@ namespace Content.Shared.Atmos.EntitySystems;
 /// This handles gas volumes that have a maximum pressure, and the destructive results of them exceeding that pressure.
 /// You may call it the "MaxCapSystem" if you so desire.
 /// </summary>
-public abstract class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPressureHolder, IComponent
+public abstract partial class GasMaxPressureSystem<T> : EntitySystem where T : IGasMaxPressureHolder, IComponent
 {
     private float _maxExplosivePower;
 
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedAtmosphereSystem Atmos = default!;
-    [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
-    [Dependency] private readonly SharedExplosionSystem _explosions = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAtmosphereSystem Atmos = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private SharedExplosionSystem _explosions = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

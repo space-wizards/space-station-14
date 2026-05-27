@@ -13,13 +13,13 @@ namespace Content.Server.Afk;
 /// <summary>
 /// Actively checks for AFK players regularly and issues an event whenever they go afk.
 /// </summary>
-public sealed class AFKSystem : EntitySystem
+public sealed partial class AFKSystem : EntitySystem
 {
-    [Dependency] private readonly IAfkManager _afkManager = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private IAfkManager _afkManager = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     private float _checkDelay;
     private TimeSpan _checkTime;

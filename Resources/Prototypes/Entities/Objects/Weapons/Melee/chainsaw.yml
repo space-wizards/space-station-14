@@ -6,9 +6,7 @@
   components:
   - type: Wieldable
     wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
-      params:
-        volume: -3
+      path: /Audio/Weapons/chainsaw_pull.ogg
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
@@ -24,9 +22,9 @@
         Blunt: 2
         Structural: 4
     soundHit:
-      path: /Audio/Weapons/chainsaw.ogg
+      path: /Audio/Weapons/chainsaw_rev.ogg
       params:
-        volume: -3
+        volume: -2
   - type: IncreaseDamageOnWield
     damage:
       types:

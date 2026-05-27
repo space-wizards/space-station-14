@@ -12,7 +12,7 @@
     - NinjaRole
 
 - type: entity
-  parent: BaseNinjaObjective
+  parent: [BaseNinjaObjective, BaseCounterObjective]
   id: DoorjackObjective
   components:
   - type: Objective

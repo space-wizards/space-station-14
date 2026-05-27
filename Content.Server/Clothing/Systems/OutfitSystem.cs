@@ -19,15 +19,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed class OutfitSystem : EntitySystem
+public sealed partial class OutfitSystem : EntitySystem
 {
-    [Dependency] private readonly IServerPreferencesManager _preferenceManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly HandsSystem _handSystem = default!;
-    [Dependency] private readonly InventorySystem _invSystem = default!;
-    [Dependency] private readonly SharedStationSpawningSystem _spawningSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly StorageSystem _storageSystem = default!;
+    [Dependency] private IServerPreferencesManager _preferenceManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private HandsSystem _handSystem = default!;
+    [Dependency] private InventorySystem _invSystem = default!;
+    [Dependency] private SharedStationSpawningSystem _spawningSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private StorageSystem _storageSystem = default!;
 
     public bool SetOutfit(EntityUid target, string gear, Action<EntityUid, EntityUid>? onEquipped = null, bool unremovable = false)
     {

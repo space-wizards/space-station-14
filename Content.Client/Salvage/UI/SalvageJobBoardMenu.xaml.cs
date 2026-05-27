@@ -10,8 +10,8 @@ namespace Content.Client.Salvage.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SalvageJobBoardMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public Action<string>? OnLabelButtonPressed;
 

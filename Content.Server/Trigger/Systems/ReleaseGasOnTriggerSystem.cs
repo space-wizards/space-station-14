@@ -5,11 +5,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Trigger.Systems;
 
-public sealed class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
+public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTriggerSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
 
     public override void Update(float frameTime)

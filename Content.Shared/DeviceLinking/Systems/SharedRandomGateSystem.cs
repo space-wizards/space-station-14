@@ -3,9 +3,9 @@ using Content.Shared.UserInterface;
 
 namespace Content.Shared.DeviceLinking.Systems;
 
-public abstract class SharedRandomGateSystem : EntitySystem
+public abstract partial class SharedRandomGateSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

@@ -11,10 +11,23 @@
 
 - type: skinColoration
   id: VoxFeathers
-  strategy: !type:ClampedHsvColoration
-    hue: [0.081, 0.48]
-    saturation: [0.2, 0.8]
-    value: [0.36, 0.55]
+  strategy: !type:HueNodeClampedHsvColoration
+    nodes:
+    - hue: 0
+      saturation: [ 0.2, 0.5 ]
+      value: [ 0.36, 0.55 ]
+    - hue: 0.045
+      saturation: [ 0.2, 0.8 ]
+      value: [ 0.36, 0.55 ]
+    - hue: 0.44
+      saturation: [ 0.2, 0.8 ]
+      value: [ 0.36, 0.55 ]
+    - hue: 0.55
+      saturation: [ 0.2, 0.5 ]
+      value: [ 0.36, 0.55 ]
+    - hue: 1
+      saturation: [ 0.2, 0.5 ]
+      value: [ 0.36, 0.5 ]
 
 - type: skinColoration
   id: HumanToned
@@ -22,6 +35,23 @@
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: !type:ClampedHslColoration
-    saturation: [0.0, 0.60]
-    lightness: [0.2, 0.9]
+  strategy: !type:HueNodeClampedHsvColoration
+    nodes:
+    - hue: 0 # From red to orange slowly increase saturation. (0.75 -> 0.9)
+      saturation: [ 0, 0.75 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 0.05 # From orange to yellow, keep it the same. (0.9 -> 0.8)
+      saturation: [ 0, 0.9 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 0.1666 # From yellow to green, slowly decrease it. (0.8 -> 0.65)
+      saturation: [ 0, 0.8 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 0.33 # From green to pink keep it the same. (0.65 -> 0.65)
+      saturation: [ 0, 0.65 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 0.94 # From pink, increase saturation for red. (0.65 -> 0.75)
+      saturation: [ 0, 0.65 ]
+      value: [ 0.2, 0.9 ]
+    - hue: 1 # Red
+      saturation: [ 0, 0.75 ]
+      value: [ 0.2, 0.9 ]

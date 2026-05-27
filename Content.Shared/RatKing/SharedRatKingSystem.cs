@@ -5,11 +5,11 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.RatKing;
 
-public abstract class SharedRatKingSystem : EntitySystem
+public abstract partial class SharedRatKingSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly SharedActionsSystem _action = default!;
+    [Dependency] protected IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected IRobustRandom Random = default!;
+    [Dependency] private SharedActionsSystem _action = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

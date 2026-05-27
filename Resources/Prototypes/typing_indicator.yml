@@ -82,3 +82,9 @@
   typingState: regal0
   idleState: regal3
   offset: 0, 0.125
+
+- type: typingIndicator
+  id: vulpkanin
+  typingState: vulpkanin0
+  idleState: vulpkanin3
+  offset: 0, 0.125

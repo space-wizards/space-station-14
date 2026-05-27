@@ -83,8 +83,8 @@ public interface ISharedFeedbackManager
 /// <inheritdoc cref="ISharedFeedbackManager" />
 public abstract partial class SharedFeedbackManager : ISharedFeedbackManager
 {
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] protected readonly INetManager NetManager = null!;
+    [Dependency] private IPrototypeManager _proto = null!;
+    [Dependency] protected INetManager NetManager = null!;
 
     public virtual IReadOnlySet<ProtoId<FeedbackPopupPrototype>>? DisplayedPopups => null;
 

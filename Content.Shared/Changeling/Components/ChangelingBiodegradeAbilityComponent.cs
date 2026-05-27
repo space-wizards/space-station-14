@@ -6,8 +6,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Changeling.Components;
 
 /// <summary>
-/// Allows the changeling to spawn dummy chameleon clothing items that will transform with them,
-/// mimicing the equipment of the stored disguise.
+/// Allows the changeling to vomit acid over restraints, setting themselves free and stunning whoever is pulling them.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ChangelingBiodegradeAbilityComponent : Component

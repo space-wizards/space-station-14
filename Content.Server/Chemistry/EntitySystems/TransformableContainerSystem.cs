@@ -6,12 +6,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class TransformableContainerSystem : EntitySystem
+public sealed partial class TransformableContainerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private MetaDataSystem _metadataSystem = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {

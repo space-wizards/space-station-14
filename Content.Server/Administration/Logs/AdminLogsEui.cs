@@ -17,13 +17,13 @@ using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed class AdminLogsEui : BaseEui
+public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private IAdminLogManager _adminLogs = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IEntityManager _e = default!;
 
     private readonly ISawmill _sawmill;
 

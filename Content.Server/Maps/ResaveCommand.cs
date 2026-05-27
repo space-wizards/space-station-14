@@ -14,11 +14,11 @@ namespace Content.Server.Maps;
 /// Loads every map and resaves it into the data folder.
 /// </summary>
 [AdminCommand(AdminFlags.Host)]
-public sealed class ResaveCommand : LocalizedCommands
+public sealed partial class ResaveCommand : LocalizedCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IResourceManager _res = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IResourceManager _res = default!;
+    [Dependency] private ILogManager _log = default!;
 
     public override string Command => "resave";
 

@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Verbs.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class InvokeVerbCommand : IConsoleCommand
+    public sealed partial class InvokeVerbCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public string Command => "invokeverb";
         public string Description => Loc.GetString("invoke-verb-command-description");

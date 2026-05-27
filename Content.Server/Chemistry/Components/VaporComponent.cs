@@ -5,8 +5,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed partial class VaporComponent : Component
     {
-        public const string SolutionName = "vapor";
-
         /// <summary>
         /// Stores data on the previously reacted tile. We only want to do reaction checks once per tile.
         /// </summary>

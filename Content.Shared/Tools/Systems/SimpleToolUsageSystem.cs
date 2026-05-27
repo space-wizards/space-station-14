@@ -8,8 +8,8 @@ namespace Content.Shared.Tools.Systems;
 
 public sealed partial class SimpleToolUsageSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedToolSystem _tools = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedToolSystem _tools = default!;
 
     public override void Initialize()
     {

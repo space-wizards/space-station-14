@@ -13,6 +13,7 @@ cargo-console-menu-points-amount = ${$amount}
 cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
 cargo-console-menu-order-capacity-label = Order capacity:{" "}
+cargo-console-menu-order-capacity-number = {$count}/{$capacity}
 cargo-console-menu-call-shuttle-button = Activate telepad
 cargo-console-menu-permissions-button = Permissions
 cargo-console-menu-categories-label = Categories:{" "}
@@ -53,7 +54,7 @@ cargo-console-fund-transfer-broadcast = [bold]{$name} transferred {$amount} spes
 cargo-console-fund-transfer-user-unknown = Unknown
 
 cargo-console-paper-reason-default = None
-cargo-console-paper-approver-default = Self
+cargo-console-paper-approver-default = Unknown
 cargo-console-paper-print-name = Order #{$orderNumber}
 cargo-console-paper-print-text = [head=2]Order #{$orderNumber}[/head]
     {"[bold]Item:[/bold]"} {$itemName} (x{$orderQuantity})

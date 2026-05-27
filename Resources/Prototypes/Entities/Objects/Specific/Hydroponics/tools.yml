@@ -49,6 +49,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: Tool
+    qualities:
+    - Shearing
 
 - type: entity
   name: scythe
