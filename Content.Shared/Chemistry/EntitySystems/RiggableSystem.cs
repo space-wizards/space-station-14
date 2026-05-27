@@ -58,9 +58,9 @@ public sealed partial class RiggableSystem : EntitySystem
 
         if (entity.Comp.IsRigged && !wasRigged)
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
+            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity)} has been rigged up to explode when used.");
 
-            if (TryComp<ItemToggleComponent>(entity.Owner, out var toggleComp) && toggleComp.Activated)
+            if (TryComp<ItemToggleComponent>(entity, out var toggleComp) && toggleComp.Activated)
             {
                 if (TryComp<BatteryComponent>(entity, out var batteryComponent))
                 {
@@ -77,11 +77,11 @@ public sealed partial class RiggableSystem : EntitySystem
 
         var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
 
-        _explosionSystem.TriggerExplosive(ent.Owner, radius: radius, user: cause);
+        _explosionSystem.TriggerExplosive(ent, radius: radius, user: cause);
 
         ent.Comp.Exploded = true;
         Dirty(ent);
-        QueueDel(ent.Owner);
+        QueueDel(ent);
     }
 
     private void OnChargeChanged(Entity<RiggableComponent> ent, ref ChargeChangedEvent args)
