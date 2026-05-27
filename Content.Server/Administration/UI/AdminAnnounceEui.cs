@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -13,7 +14,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using System.Linq;
 
 namespace Content.Server.Administration.UI;
 
@@ -77,10 +77,11 @@ public sealed partial class AdminAnnounceEui : BaseEui
                 var sound = SharedChatSystem.DefaultAnnouncementSound;
                 var soundPath = AdminAnnounceHelpers.NormalizeSoundPath(doAnnounce.SoundPath);
 
-                if (_res.ContentFileExists(soundPath))
+                if (!string.IsNullOrEmpty(soundPath) && _res.ContentFileExists(soundPath))
                     sound = new SoundPathSpecifier(soundPath);
 
-                var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, doAnnounce.Sender);
+                var sender = SharedChatSystem.SanitizeAnnouncement(doAnnounce.Sender, maxLength);
+                var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, sender);
 
                 MapId? adminMapId = null;
                 if (Player.AttachedEntity is { } adminEntity

@@ -1,5 +1,5 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'palette-color-picker-window-title'}"
+               Title="{Loc admin-announce-palette-title}"
                Resizable="False"
                SetSize="330 300">
     <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True" VerticalExpand="True">
@@ -18,10 +18,10 @@
             <Label Text="{Loc admin-announce-presets}" HorizontalAlignment="Center" Margin="0,0,0,4" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4,0,4">
-            <Button Name="PresetWizard" MinSize="32,32" Margin="4,0" ToolTip="Wizard" />
-            <Button Name="PresetNukeOp" MinSize="32,32" Margin="4,0" ToolTip="Nuclear Operative" />
-            <Button Name="PresetCentComm" MinSize="32,32" Margin="4,0" ToolTip="Central Command" />
-            <Button Name="PresetStation" MinSize="32,32" Margin="4,0" ToolTip="Station" />
+            <Button Name="PresetWizard" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-wizard}" />
+            <Button Name="PresetNukeOp" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-nukeops}" />
+            <Button Name="PresetCentComm" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-centcomm}" />
+            <Button Name="PresetStation" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-station}" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

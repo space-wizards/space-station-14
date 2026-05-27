@@ -54,12 +54,16 @@ public static class AdminAnnounceHelpers
 
     public static string GetValidatedColorHex(AdminAnnounceType type, string? value)
     {
-        return Color.TryParse(NormalizeText(value), out var color) ? color.ToHexNoAlpha() : AdminAnnounceDefaults.GetDefaultColorHex(type);
+        return Color.TryParse(NormalizeText(value), out var color)
+            ? color.ToHexNoAlpha()
+            : AdminAnnounceDefaults.GetDefaultColorHex(type);
     }
 
     public static Color GetColor(AdminAnnounceType type, string? value)
     {
-        return Color.TryParse(NormalizeText(value), out var color) ? color : Color.FromHex(AdminAnnounceDefaults.GetDefaultColorHex(type));
+        return Color.TryParse(NormalizeText(value), out var color)
+            ? color
+            : Color.FromHex(AdminAnnounceDefaults.GetDefaultColorHex(type));
     }
 
     public static bool IsValidResourcePath(string? value)
@@ -71,6 +75,8 @@ public static class AdminAnnounceHelpers
     public static string FormatAnnouncement(string announcement, string? sender)
     {
         var trimmedSender = NormalizeText(sender);
-        return string.IsNullOrWhiteSpace(trimmedSender) ? announcement : $"{announcement}\n{Loc.GetString("admin-announce-sent-by")} {trimmedSender}";
+        return string.IsNullOrWhiteSpace(trimmedSender)
+            ? announcement
+            : $"{announcement}\n{Loc.GetString("admin-announce-sent-by")} {trimmedSender}";
     }
 }
