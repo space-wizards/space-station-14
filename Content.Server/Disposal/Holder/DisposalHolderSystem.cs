@@ -128,10 +128,9 @@ public sealed partial class DisposalHolderSystem : SharedDisposalHolderSystem
             var heldMeta = _metaQuery.GetComponent(held);
             var heldXform = _xformQuery.GetComponent(held);
 
-            if (unit != null && unit.Value.Comp.Container != null)
+            // Insert the child into the found disposal unit, then pop them out
+            if (unit != null && unit.Value.Comp.Container != null && _container.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container))
             {
-                // Insert the child into the found disposal unit, then pop them out
-                _container.Insert((held, heldXform, heldMeta), unit.Value.Comp.Container);
                 _disposalUnit.Remove(unit.Value, held);
             }
             else
