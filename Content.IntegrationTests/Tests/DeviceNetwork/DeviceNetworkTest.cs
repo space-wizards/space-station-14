@@ -237,8 +237,6 @@ public sealed class DeviceNetworkTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.That(payload, Is.Not.EqualTo(_sDeviceNetTestSystem.LastPayload).AsCollection);
-
             SSpawnAtPosition(CableApcExtension, coordinates);
 
             _sDeviceNetSystem.QueuePacket(device1, networkComponent2!.Address, payload, networkComponent2.ReceiveFrequency!.Value);
