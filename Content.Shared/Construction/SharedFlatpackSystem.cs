@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Construction.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -12,25 +13,27 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction;
 
-public abstract class SharedFlatpackSystem : EntitySystem
+public abstract partial class SharedFlatpackSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] protected readonly MachinePartSystem MachinePart = default!;
-    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] protected IPrototypeManager PrototypeManager = default!;
+    [Dependency] private AnchorableSystem _anchorable = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] protected MachinePartSystem MachinePart = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedMaterialStorageSystem MaterialStorage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -77,17 +80,18 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return;
         }
 
-        var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-        var coords = _map.ToCenterCoordinates(grid, buildPos);
-
-        // TODO FLATPAK
-        // Make this logic smarter. This should eventually allow for shit like building microwaves on tables and such.
-        // Also: make it ignore ghosts
-        if (_entityLookup.AnyEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static))
+        if (!PrototypeManager.Resolve(comp.Entity, out var proto) ||
+            !proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
         {
-            // this popup is on the server because the predicts on the intersection is crazy
-            if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            return;
+        }
+
+        var (layer, mask) = SharedPhysicsSystem.GetHardCollision(fixture);
+        var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
+
+        if (!_anchorable.TileFree((grid, gridComp), buildPos, layer, mask))
+        {
+            _popup.PopupPredicted(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
             return;
         }
 
