@@ -35,7 +35,7 @@
         entity_storage: !type:Container
     - type: Damageable
     - type: Injurable
-      damageContainer: Box
+      damageContainer: Inorganic
     - type: Sprite
       noRot: true
       sprite: Structures/Storage/closet.rsi
