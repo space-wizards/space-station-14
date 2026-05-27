@@ -177,10 +177,6 @@ public sealed partial class ApcSystem : EntitySystem
     /// <summary>
     /// Updates the UI and appearance of the given APC based on its status in the power network.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="apc"></param>
-    /// <param name="battery"></param>
-    /// <param name="forceChargeCheck"></param>
     public void UpdateApcState(EntityUid uid,
         ApcComponent? apc = null,
         PowerNetworkBatteryComponent? battery = null,
