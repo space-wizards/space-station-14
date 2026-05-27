@@ -14,7 +14,6 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
 
         // get the mapped layer index of the first lock layer and the first channel layer
         var lockIndicatorOverlayStart = SpriteSystem.LayerMapGet((uid, args.Sprite), ApcVisualLayers.InterfaceLock);
-        var channelIndicatorOverlayStart = SpriteSystem.LayerMapGet((uid, args.Sprite), ApcVisualLayers.Equipment);
 
         // Handle APC screen overlay:
         if (!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
@@ -36,16 +35,10 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
                 }
             }
 
-            // ChannelState does nothing currently. The backend doesn't exist.
-            if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.ChannelState, out var channelStates, args.Component))
+            if (AppearanceSystem.TryGetData<ApcChannelState>(uid, ApcVisuals.ChannelState, out var channelState, args.Component))
             {
-                for (var i = 0; i < comp.ChannelIndicators; ++i)
-                {
-                    var layer = (byte)channelIndicatorOverlayStart + i;
-                    var channelState = (sbyte)((channelStates >> (i << (sbyte)ApcChannelState.LogWidth)) & (sbyte)ApcChannelState.All);
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, $"{comp.ChannelPrefix}{i}-{comp.ChannelSuffixes[channelState]}");
-                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, true);
-                }
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.Equipment, $"{comp.ChannelPrefix}-{comp.ChannelSuffixes[(sbyte)channelState]}");
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), ApcVisualLayers.Equipment, true);
             }
 
             if (TryComp<PointLightComponent>(uid, out var light))
@@ -62,11 +55,7 @@ public sealed partial class ApcVisualizerSystem : VisualizerSystem<ApcVisualsCom
                 var layer = (byte)lockIndicatorOverlayStart + i;
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, false);
             }
-            for (var i = 0; i < comp.ChannelIndicators; ++i)
-            {
-                var layer = (byte)channelIndicatorOverlayStart + i;
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, false);
-            }
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), ApcVisualLayers.Equipment, false);
 
             if (TryComp<PointLightComponent>(uid, out var light))
             {

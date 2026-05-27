@@ -33,17 +33,17 @@
     - state: display-charging
       shader: unshaded
       map: ["enum.ApcVisualLayers.ChargeState"]
-    - state: lock0-locked
+    - state: channel-on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+      visible: false
+    - state: lock0-locked #when these are implemented get actual sprites.
       shader: unshaded
       map: ["enum.ApcVisualLayers.InterfaceLock"]
       visible: false
     - state: lock1-locked
       shader: unshaded
       map: ["enum.ApcVisualLayers.PanelLock"]
-      visible: false
-    - state: lock1-locked #when these are implemented get actual sprites.
-      shader: unshaded
-      map: ["enum.ApcVisualLayers.Equipment"]
       visible: false
     - state: lock1-locked
       shader: unshaded
