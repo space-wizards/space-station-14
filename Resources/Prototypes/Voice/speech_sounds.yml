@@ -179,6 +179,24 @@
     path: /Audio/Animals/goat_bah.ogg
 
 - type: speechSounds
+  id: Sheep
+  saySound:
+    path: /Audio/Animals/sheep1.ogg
+  askSound:
+    path: /Audio/Animals/sheep2.ogg
+  exclaimSound:
+    path: /Audio/Animals/sheep3.ogg
+
+- type: speechSounds
+  id: SheepSpace
+  saySound:
+    path: /Audio/Animals/spacesheep1.ogg
+  askSound:
+    path: /Audio/Animals/spacesheep2.ogg
+  exclaimSound:
+    path: /Audio/Animals/spacesheep3.ogg
+
+- type: speechSounds
   id: Vulpkanin
   saySound:
     path: /Audio/Voice/Talk/vulp.ogg
