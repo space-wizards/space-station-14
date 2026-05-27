@@ -26,6 +26,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     [Dependency] private IResourceManager _resManager = default!;
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private ILocalizationManager _loc = default!;
+    private ActionBlockerSystem _actionBlockerSystem = default!;
+    private InteractionSystem _interactionSystem = default!;
+    private SharedContainerSystem _sharedContainerSystem = default!;
 
     private readonly InstrumentSystem _instruments;
 
@@ -44,6 +47,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         IoCManager.InjectDependencies(this);
 
         _instruments = EntMan.System<InstrumentSystem>();
+        _actionBlockerSystem = EntMan.System<ActionBlockerSystem>();
+        _interactionSystem = EntMan.System<InteractionSystem>();
+        _sharedContainerSystem = EntMan.System<SharedContainerSystem>();
     }
 
     protected override void Open()
@@ -175,12 +181,12 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             instrumentComp.LoopMidi = toggled;
         }
 
-        instrument.UpdateRenderer(Owner);
+        _instruments.UpdateRenderer(Owner);
     }
 
     private void OnTrackPositionChangeRequest(int value)
     {
-        EntMan.System<InstrumentSystem>().SetPlayerTick(Owner, value);
+        _instruments.SetPlayerTick(Owner, value);
     }
 
     private void OnOpenInputRequest()
@@ -191,7 +197,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        EntMan.System<InstrumentSystem>().OpenInput(Owner, instrument);
+        _instruments.OpenInput(Owner, instrument);
     }
 
     private void OnCloseInputRequest()
@@ -199,7 +205,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        EntMan.System<InstrumentSystem>().CloseInput(Owner, false, instrument);
+        _instruments.CloseInput(Owner, false, instrument);
     }
 
     private void OnStopPlayingRequest()
@@ -207,7 +213,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        EntMan.System<InstrumentSystem>().CloseMidi(Owner, false, instrument);
+        _instruments.CloseMidi(Owner, false, instrument);
     }
 
     private void OnStartPlayingRequest(byte[] trackData)
@@ -220,7 +226,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         // Close any song that is already playing.
         if (instrument.IsMidiOpen)
-            EntMan.System<InstrumentSystem>().CloseMidi(Owner, false, instrument);
+            _instruments.CloseMidi(Owner, false, instrument);
 
         Timer.Spawn(1000,
             () =>
@@ -231,7 +237,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                 if (!PlayCheck())
                     return;
 
-                if (!EntMan.System<InstrumentSystem>().OpenMidi(Owner, trackData, instrument))
+                if (!_instruments.OpenMidi(Owner, trackData, instrument))
                     _fileSource.IsPlaying = false;
             });
     }
@@ -332,18 +338,17 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (localEntity == Owner)
             return true;
 
-        var container = EntMan.System<SharedContainerSystem>();
         // If we're a handheld instrument, we might be in a container. Get it just in case.
-        container.TryGetContainingContainer((Owner, null, null), out var conMan);
+        _sharedContainerSystem.TryGetContainingContainer((Owner, null, null), out var conMan);
 
         // If the instrument is handheld, and we're not holding it, we return.
         if (instrument.Handheld && (conMan == null || conMan.Owner != localEntity))
             return false;
 
-        if (!EntMan.System<ActionBlockerSystem>().CanInteract(localEntity.Value, Owner))
+        if (!_actionBlockerSystem.CanInteract(localEntity.Value, Owner))
             return false;
 
-        if (!EntMan.System<InteractionSystem>().InRangeUnobstructed(localEntity.Value, Owner))
+        if (!_interactionSystem.InRangeUnobstructed(localEntity.Value, Owner))
             return false;
 
         return true;
