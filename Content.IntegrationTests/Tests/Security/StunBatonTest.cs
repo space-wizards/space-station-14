@@ -39,11 +39,11 @@ public sealed class StunBatonTests : InteractionTest
         var batonIntialCharges = batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
         var batonMaxCharges = batterySystem.GetMaxUses(sBaton, batonComp.EnergyPerUse);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(batonMaxCharges, Is.GreaterThan(0), "Stun baton had no charges.");
             Assert.That(batonIntialCharges, Is.EqualTo(batonMaxCharges), "Stun baton was not fully charged when spawned.");
-        });
+        }
 
         // Spawn a target mob.
         await SpawnTarget(HumanProtoId);
@@ -51,14 +51,14 @@ public sealed class StunBatonTests : InteractionTest
         var staminaComp = Comp<StaminaComponent>();
         Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob spawned knocked down.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob spawned stunned.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing when spawned.");
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
             Assert.That(staminaComp.StaminaDamage, Is.Zero, "Target mob spawned with stamina damage.");
-        });
+        }
 
         // Melee attack.
         await SetCombatMode(true);
@@ -66,7 +66,7 @@ public sealed class StunBatonTests : InteractionTest
         await AttemptLightAttack();
 
         // Not stunned yet.
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob was knocked down after one hit.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned after one hit.");
@@ -74,7 +74,7 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
             Assert.That(staminaComp.StaminaDamage, Is.EqualTo(batonStaminaDamage), "Target mob did not take the correct amount of stamina damage.");
             Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
-        });
+        }
 
         // Attack until stunned.
         for (var i = 0; i < NumberOfHitsToStun - 1; i++)
@@ -84,14 +84,14 @@ public sealed class StunBatonTests : InteractionTest
         }
 
         // Check all components to see if we are stunned now.
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(HasComp<KnockedDownComponent>(), Is.True, "Target mob was not knocked down from the expected number of stun baton hits.");
             Assert.That(HasComp<StunnedComponent>(), Is.True, "Target mob was not stunned from the expected number of stun baton hits.");
             Assert.That(standingStateComp.Standing, Is.False, "Target mob was not downed from the expected number of stun baton hits.");
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
             Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - NumberOfHitsToStun), "Stun baton did not loose the correct charge when stunning.");
-        });
+        }
     }
 
     /// <summary>
@@ -113,11 +113,11 @@ public sealed class StunBatonTests : InteractionTest
         var batonIntialCharges = batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
         var batonMaxCharges = batterySystem.GetMaxUses(sBaton, batonComp.EnergyPerUse);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(batonMaxCharges, Is.GreaterThan(0), "Stun baton had no charges.");
             Assert.That(batonIntialCharges, Is.EqualTo(batonMaxCharges), "Stun baton was not fully charged when spawned.");
-        });
+        }
 
         // Spawn a target mob.
         await SpawnTarget(HumanProtoId);
@@ -125,14 +125,14 @@ public sealed class StunBatonTests : InteractionTest
         var staminaComp = Comp<StaminaComponent>();
         Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob spawned knocked down.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob spawned stunned.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing when spawned.");
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
             Assert.That(staminaComp.StaminaDamage, Is.Zero, "Target mob spawned with stamina damage.");
-        });
+        }
 
         // Attack until the target would be stunned if the baton was activated.
         await SetCombatMode(true);
@@ -143,14 +143,14 @@ public sealed class StunBatonTests : InteractionTest
         }
 
         // Check all components to see if we are stunned now.
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob was knocked down from harmbaton attacks.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned from harmbaton attacks.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was downed from harmbaton attacks.");
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Deactivated stun baton did not cause damage.");
             Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges), "Stun baton lost charge while deactivated.");
-        });
+        }
     }
 
     /// <summary>
@@ -167,11 +167,11 @@ public sealed class StunBatonTests : InteractionTest
         var batteryComp = Comp<BatteryComponent>(baton);
         var batonIntialCharge = batterySystem.GetCharge(sBaton);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(batonIntialCharge, Is.GreaterThan(0), "Stun baton had no charge.");
             Assert.That(batonIntialCharge, Is.EqualTo(batteryComp.MaxCharge), "Stun baton was not fully charged when spawned.");
-        });
+        }
 
         // Missing melee attack.
         await SetCombatMode(true);

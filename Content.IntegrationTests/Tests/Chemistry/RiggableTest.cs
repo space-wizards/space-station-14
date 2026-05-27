@@ -110,10 +110,10 @@ public sealed class RiggableTest : InteractionTest
 
         await RunTicks(5);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Rigged stunbaton did not explode?");
             AssertDeleted(baton);
-        });
+        }
     }
 }
