@@ -7,7 +7,7 @@ namespace Content.Client.Implants.UI;
 
 public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private PrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     [ViewVariables]
     private DeimplantChoiceWindow? _window;
