@@ -287,7 +287,7 @@
   parent: CustomDrinkJug
   id: DrinkDrGibbJug
   name: Dr. Gibb jug
-  description: 42 different flavours... in a jug!
+  description: 42 different flavours... in a jug! (Dr. Gibb claims no responsibility for any abrupt deaths caused while consuming this drink)
   components:
   - type: Solution
     solution:
