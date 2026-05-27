@@ -142,10 +142,7 @@ public sealed partial class PowerCellSystem : EntitySystem
 
         // If PowerCellDraw is enabled. then it should set the charge cooldown on the self recharging battery
 
-        if (!TryComp<PowerCellSlotComponent>(ent, out var powerCellSlotComponent))
-            return;
-
-        if (!TryGetBatteryFromSlot((ent, powerCellSlotComponent), out var battery))
+        if (!TryGetBatteryFromSlot(ent.Owner, out var battery))
             return;
 
         _battery.TrySetChargeCooldown(battery.Value.Owner);
