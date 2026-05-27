@@ -26,11 +26,13 @@ public sealed partial class RiggableSystem : EntitySystem
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
         SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<RiggableComponent, ChargeChangedEvent>(OnChargeChanged);
+        SubscribeLocalEvent<RiggableComponent, ItemToggledEvent>(OnToggled);
     }
 
     private void OnRejuvenate(Entity<RiggableComponent> entity, ref RejuvenateEvent args)
     {
         entity.Comp.IsRigged = false;
+        // TODO: Perhaps purge the solution as well?
     }
 
     private void OnMicrowaved(Entity<RiggableComponent> entity, ref BeingMicrowavedEvent args)
@@ -77,11 +79,11 @@ public sealed partial class RiggableSystem : EntitySystem
 
         var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
 
+        // Explosion system also queues entity deletion
         _explosionSystem.TriggerExplosive(ent, radius: radius, user: cause);
 
         ent.Comp.Exploded = true;
         Dirty(ent);
-        QueueDel(ent);
     }
 
     private void OnChargeChanged(Entity<RiggableComponent> ent, ref ChargeChangedEvent args)
@@ -97,5 +99,16 @@ public sealed partial class RiggableSystem : EntitySystem
             return;
 
         Explode(ent, args.CurrentCharge);
+    }
+
+    private void OnToggled(Entity<RiggableComponent> entity, ref ItemToggledEvent args)
+    {
+        if (args.Activated && entity.Comp.IsRigged)
+        {
+            if (TryComp<BatteryComponent>(entity, out var battery))
+            {
+                Explode(entity, _battery.GetCharge((entity, battery)), args.User);
+            }
+        }
     }
 }

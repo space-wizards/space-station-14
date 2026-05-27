@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
@@ -15,7 +14,6 @@ public sealed partial class StunbatonSystem : EntitySystem
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private RiggableSystem _riggableSystem = default!;
 
     public override void Initialize()
     {
@@ -27,15 +25,22 @@ public sealed partial class StunbatonSystem : EntitySystem
         SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
     }
 
+    /// <summary>
+    /// Handle stamina damage application.
+    /// Make sure the stunbaton is active and there's enough battery juice.
+    /// </summary>
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
         if (!_itemToggle.IsActivated(entity.Owner) ||
-        !TryComp<BatteryComponent>(entity.Owner, out var battery) || !_battery.TryUseCharge((entity.Owner, battery), entity.Comp.EnergyPerUse))
+        !TryComp<BatteryComponent>(entity, out var battery) || !_battery.TryUseCharge((entity, battery), entity.Comp.EnergyPerUse))
         {
             args.Cancelled = true;
         }
     }
 
+    /// <summary>
+    /// Communicate the stunbaton's status and number of remaining uses.
+    /// </summary>
     private void OnExamined(Entity<StunbatonComponent> entity, ref ExaminedEvent args)
     {
         var onMsg = _itemToggle.IsActivated(entity.Owner)
@@ -43,13 +48,17 @@ public sealed partial class StunbatonSystem : EntitySystem
         : Loc.GetString("comp-stunbaton-examined-off");
         args.PushMarkup(onMsg);
 
-        if (TryComp<BatteryComponent>(entity.Owner, out var battery))
+        if (TryComp<BatteryComponent>(entity, out var battery))
         {
-            var count = _battery.GetRemainingUses((entity.Owner, battery), entity.Comp.EnergyPerUse);
+            var count = _battery.GetRemainingUses((entity, battery), entity.Comp.EnergyPerUse);
             args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
         }
     }
 
+    /// <summary>
+    /// Handle activation attempt.
+    /// Make sure there's at least <see cref="StunbatonComponent.EnergyPerUse"/> left in the battery.
+    /// </summary>
     private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
         if (!TryComp<BatteryComponent>(entity, out var battery) || _battery.GetCharge((entity, battery)) < entity.Comp.EnergyPerUse)
@@ -61,17 +70,15 @@ public sealed partial class StunbatonSystem : EntitySystem
             }
             return;
         }
-
-        if (TryComp<RiggableComponent>(entity, out var rig) && rig.IsRigged)
-        {
-            _riggableSystem.Explode((entity, rig), _battery.GetCharge((entity, battery)), args.User);
-        }
     }
 
+    /// <summary>
+    /// Turns off the stunbaton when battery level drops below <see cref="StunbatonComponent.EnergyPerUse"/>.
+    /// </summary>
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
     {
-        if (TryComp<BatteryComponent>(entity.Owner, out var battery) &&
-            _battery.GetCharge((entity.Owner, battery)) < entity.Comp.EnergyPerUse)
+        if (TryComp<BatteryComponent>(entity, out var battery) &&
+            _battery.GetCharge((entity, battery)) < entity.Comp.EnergyPerUse)
         {
             _itemToggle.TryDeactivate(entity.Owner, predicted: false);
         }
