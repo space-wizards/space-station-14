@@ -14,11 +14,7 @@ public sealed class ExplosionPrototypeTest : GameTest
     [Description("Ensures various properties of ExplosionPrototype are correctly configured.")]
     public async Task Validate(string protoKey)
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var protoMan = server.ProtoMan;
-
-        var proto = protoMan.Index<ExplosionPrototype>(protoKey);
+        var proto = SProtoMan.Index<ExplosionPrototype>(protoKey);
 
         using (Assert.EnterMultipleScope())
         {
