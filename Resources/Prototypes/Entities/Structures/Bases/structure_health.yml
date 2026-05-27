@@ -153,8 +153,17 @@
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
 
 - type: entity
   abstract: true
@@ -168,8 +177,17 @@
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
 
 - type: entity
   abstract: true
@@ -183,8 +201,17 @@
         damage: 250
       behaviors:
       - !type:PlaySoundBehavior
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
 
 #endregion
 #region Wall

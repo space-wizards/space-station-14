@@ -8,6 +8,17 @@
     - Genetic
 
 - type: damageContainer
+  id: StructuralBiological
+  supportedGroups:
+  - Brute
+  - Burn
+  - Toxin
+  - Airloss
+  - Genetic
+  supportedTypes:
+  - Structural
+
+- type: damageContainer
   id: Inorganic
   supportedGroups:
     - Brute
