@@ -56,7 +56,6 @@ public sealed partial class ApcSystem : EntitySystem
             }
 
             // Overload
-            var tripped = false;
             if (apc.MainBreakerEnabled && battery.CurrentSupply > apc.MaxLoad)
             {
                 // Not already overloaded, start timer
@@ -70,8 +69,7 @@ public sealed partial class ApcSystem : EntitySystem
                     {
                         apc.TripFlag = true;
                         ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
-                        apc.NeedStateUpdate = true;
-                        tripped = true; // Force an update
+                        apc.NeedStateUpdate = true; // Force an update.
                     }
                 }
             }
