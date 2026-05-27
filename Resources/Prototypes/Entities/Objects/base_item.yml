@@ -45,7 +45,7 @@
   - type: Pullable
   - type: DamageExaminable
   - type: Rotatable
-    increment: 45
+    increment: 30
 
 - type: entity
   name: "storage item"
