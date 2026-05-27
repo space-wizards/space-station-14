@@ -1087,4 +1087,41 @@
   id: 133
   time: '2026-04-06T18:34:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43481
+- author: ProPeperos
+  changes:
+  - message: On Trade Station - Atmos systems are now fully automated
+    type: Tweak
+  id: 134
+  time: '2026-05-17T22:31:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43973
+- author: ProPeperos
+  changes:
+  - message: On Oasis - Turned on distro and filters
+    type: Tweak
+  - message: On Oasis - Added cameras to teg room
+    type: Fix
+  id: 135
+  time: '2026-05-27T09:02:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44109
+- author: ProPeperos
+  changes:
+  - message: On Centcomm - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 136
+  time: '2026-05-27T09:03:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44105
+- author: ProPeperos
+  changes:
+  - message: On Box - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 137
+  time: '2026-05-27T09:04:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44011
+- author: ProPeperos
+  changes:
+  - message: On Marathon - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 138
+  time: '2026-05-27T09:27:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44098
 Order: 2
