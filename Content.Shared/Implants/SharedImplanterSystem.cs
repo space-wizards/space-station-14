@@ -15,6 +15,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Implants;
@@ -23,6 +24,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -36,6 +38,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         InitializeImplanted();
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
@@ -64,7 +67,13 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnEntInserted(Entity<ImplanterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        var implantData = Comp<MetaDataComponent>(args.Entity);
+        if (_timing.ApplyingState)
+            return; // Already networked with the same game state.
+
+        if (args.Container.ID != ImplanterComponent.ImplanterSlotId)
+            return;
+
+        var implantData = MetaData(args.Entity);
         ent.Comp.ImplantData = (implantData.EntityName, implantData.EntityDescription);
         Dirty(ent);
     }
@@ -87,7 +96,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         // TODO: Rework drawing to work with implant cases when surgery is in
-        if (ent.Comp is { CurrentMode: ImplanterToggleMode.Draw, ImplantOnly: false })
+        if (ent.Comp.CurrentMode == ImplanterToggleMode.Draw && !ent.Comp.ImplantOnly)
         {
             TryDraw(ent, args.User, target);
         }
@@ -487,11 +496,17 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (implant != null && _proto.TryIndex<EntityPrototype>(implant, out var proto))
+        if (implant != null && _proto.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
             ent.Comp.DeimplantChosen = proto;
 
+        UpdateUi(ent!);
         Dirty(ent);
     }
+
+    /// <summary>
+    /// Update the BUI and status control.
+    /// </summary>
+    protected virtual void UpdateUi(Entity<ImplanterComponent> ent) { }
 }
 
 /// <summary>
