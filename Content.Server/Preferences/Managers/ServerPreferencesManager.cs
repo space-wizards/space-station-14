@@ -482,9 +482,9 @@ namespace Content.Server.Preferences.Managers
 
                 //Randomize species and set job priorities from cvar
                 var profile = HumanoidCharacterProfile.Random(speciesToBlacklist);
-                var profile2 = profile.WithJobFromCvar(_cfg);
+                profile = profile.WithJobFromCvar(_cfg);
 
-                return await _db.InitPrefsAsync(userId, profile2, cancel);
+                return await _db.InitPrefsAsync(userId, profile, cancel);
             }
 
             return prefs;
