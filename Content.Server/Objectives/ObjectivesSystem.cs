@@ -11,8 +11,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
-using Content.Server.Antag;
-using Content.Server.Antag.Components;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
 using Content.Shared.Prototypes;
@@ -29,7 +27,6 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private SharedJobSystem _job = default!;
 
@@ -62,14 +59,16 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     {
         // go through each gamerule getting data for the roundend summary.
         var summaries = new Dictionary<string, Dictionary<string, List<(EntityUid, string)>>>();
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, AntagSelectionComponent>();
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (comp.AgentName is not { } agent)
+            var info = new ObjectivesTextGetInfoEvent(new List<(EntityUid, string)>(), string.Empty);
+            RaiseLocalEvent(uid, ref info);
+            if (info.Minds.Count == 0)
                 continue;
 
-            var minds = _antag.GetAntagIdentities((uid, comp));
-
+            // first group the gamerules by their agents, for example 2 different dragons
+            var agent = info.AgentName;
             if (!summaries.ContainsKey(agent))
                 summaries[agent] = new Dictionary<string, List<(EntityUid, string)>>();
 
@@ -82,11 +81,11 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             if (summary.ContainsKey(prepend.Text))
             {
                 // same prepended text (usually empty) so combine them
-                summary[prepend.Text].AddRange(minds);
+                summary[prepend.Text].AddRange(info.Minds);
             }
             else
             {
-                summary[prepend.Text] = minds.ToList();
+                summary[prepend.Text] = info.Minds.ToList();
             }
         }
 
