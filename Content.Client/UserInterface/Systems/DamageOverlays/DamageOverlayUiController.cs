@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -15,13 +16,14 @@ using Robust.Shared.Player;
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
 [UsedImplicitly]
-public sealed class DamageOverlayUiController : UIController
+public sealed partial class DamageOverlayUiController : UIController
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [UISystemDependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [UISystemDependency] private readonly DamageableSystem _damageable = default!;
     private Overlays.DamageOverlay _overlay = default!;
 
     public override void Initialize()
@@ -74,11 +76,12 @@ public sealed class DamageOverlayUiController : UIController
     }
 
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
-    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null)
+    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null, InjurableComponent? injurable = null)
     {
         if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState) ||
             thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds) ||
-            damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))
+            damageable == null && !EntityManager.TryGetComponent(entity, out  damageable) ||
+            injurable == null && !EntityManager.TryGetComponent(entity, out injurable))
             return;
 
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
@@ -90,6 +93,7 @@ public sealed class DamageOverlayUiController : UIController
             return; //this entity intentionally has no overlays
         }
 
+        var damagePerGroup = _damageable.GetDamagePerGroup((entity, damageable));
         var critThreshold = foundThreshold.Value;
         _overlay.State = mobState.CurrentState;
 
@@ -102,9 +106,10 @@ public sealed class DamageOverlayUiController : UIController
 
                 if (!_statusEffects.TryEffectsWithComp<PainNumbnessStatusEffectComponent>(entity, out _))
                 {
-                    foreach (var painDamageType in damageable.PainDamageGroups)
+                    foreach (var painDamageType in injurable.PainDamageGroups)
                     {
-                        damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
+
+                        damagePerGroup.TryGetValue(painDamageType, out var painDamage);
                         painLevel += painDamage;
                     }
                     _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
@@ -115,7 +120,7 @@ public sealed class DamageOverlayUiController : UIController
                     }
                 }
 
-                if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
+                if (damagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                 {
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();
                 }
@@ -127,7 +132,7 @@ public sealed class DamageOverlayUiController : UIController
             case MobState.Critical:
             {
                 if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
-                        FixedPoint2.Max(0.0, damageable.TotalDamage), out var critLevel))
+                        FixedPoint2.Max(0.0, _damageable.GetTotalDamage((entity, damageable))), out var critLevel))
                     return;
                 _overlay.CritLevel = critLevel.Value.Float();
 
