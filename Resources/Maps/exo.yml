@@ -4,7 +4,7 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/26/2026 12:28:13
+  time: 05/27/2026 10:45:53
   entityCount: 20145
 maps:
 - 1
@@ -10259,7 +10259,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -270147.06
+      secondsUntilStateChange: -270776.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10630,7 +10630,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -45644.742
+      secondsUntilStateChange: -46273.984
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -104449,17 +104449,20 @@ entities:
       desc: 'May contain: Bees.'
       name: bee spray
     - type: Transform
-      pos: 83.77711,-18.753477
+      pos: 83.78669,-18.784428
       parent: 2
-    - type: SolutionContainerManager
-      solutions:
-        spray:
-          maxVol: 100
-          reagents:
-          - data: null
-            ReagentId: BuzzochloricBees
-            Quantity: 50
-      containers: []
+    - type: Tag
+      tags:
+      - Spray
+    - type: Solution
+      solution:
+        temperature: 293.15
+        canReact: True
+        maxVol: 60
+        reagents:
+        - data: []
+          ReagentId: BuzzochloricBees
+          Quantity: 60
 - proto: SprayBottleSpaceCleaner
   entities:
   - uid: 6971
