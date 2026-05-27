@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -18,20 +16,24 @@ using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Runtime.CompilerServices;
 
 // ReSharper disable once RedundantUsingDirective
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
-        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
+        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
+        [Robust.Shared.IoC.Dependency] private IPlayerManager _playerManager = default!;
+        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private IParallelManager _parMan = default!;
+        [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
+
+        [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
+        [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery = default!;
 
         /// <summary>
         /// Per-tick cache of sessions.
@@ -57,21 +59,10 @@ namespace Content.Server.Atmos.EntitySystems
         private float _updateInterval;
 
         private int _thresholds;
-        private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<GasTileOverlayComponent> _query;
-
-        /// <summary>
-        /// How much the distortion strength should change for the temperature of a tile to be dirtied.
-        /// The strength goes from 0.0f to 1.0f, so 0.05f gives it essentially 20 "steps"
-        /// </summary>
-        private float _heatDistortionStrengthChangeTolerance;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _query = GetEntityQuery<GasTileOverlayComponent>();
-            _gridQuery = GetEntityQuery<MapGridComponent>();
 
             _updateJob = new UpdatePlayerJob()
             {
@@ -83,14 +74,12 @@ namespace Content.Server.Atmos.EntitySystems
                 MapManager = _mapManager,
                 ChunkViewerPool = _chunkViewerPool,
                 LastSentChunks = _lastSentChunks,
-                GridQuery = _gridQuery,
+                GridQuery = _mapGridQuery,
             };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-            Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
-            Subs.CVar(ConfMan, CVars.NetPVS, OnPvsToggle, true);
-            Subs.CVar(ConfMan, CCVars.GasOverlayHeatThreshold, UpdateHeatThresholds, true);
+
+            InitializeCVars();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
@@ -140,12 +129,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
         private void UpdateThresholds(int value) => _thresholds = value;
-        private void UpdateHeatThresholds(float v) => _heatDistortionStrengthChangeTolerance = MathHelper.Clamp01(v);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (_query.Resolve(grid.Owner, ref grid.Comp))
+            if (_gasTileOverlayQuery.Resolve(grid.Owner, ref grid.Comp))
                 grid.Comp.InvalidTiles.Add(index);
         }
 
@@ -179,9 +167,16 @@ namespace Content.Server.Atmos.EntitySystems
 
         public GasOverlayData GetOverlayData(GasMixture? mixture)
         {
-            var data = new GasOverlayData(0,
-                new byte[VisibleGasId.Length],
-                mixture?.Temperature ?? Atmospherics.TCMB);
+            ThermalByte byteTemp;
+            if (mixture == null)
+            {
+                byteTemp = new();
+                byteTemp.SetVacuum();
+            }
+            else
+                byteTemp = new(mixture.Temperature);
+
+            var data = new GasOverlayData(0, new byte[VisibleGasId.Length], byteTemp);
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
@@ -221,17 +216,27 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             var changed = false;
-            var temp = tile.Hotspot.Valid ? tile.Hotspot.Temperature : tile.Air?.Temperature ?? Atmospherics.TCMB;
+
+            ThermalByte newByteTemp = new();
+
+            if (tile.Hotspot.Valid)
+                newByteTemp.SetTemperature(tile.Hotspot.Temperature);
+            else if (!tile.Space && tile.Air?.TotalMoles <= 5f)
+                newByteTemp.SetVacuum();
+            else if (!tile.Space && tile.Air != null)
+                newByteTemp = new(tile.Air.Temperature);
+
             if (oldData.Equals(default))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
             }
             else if (oldData.FireState != tile.Hotspot.State ||
-                     CheckTemperatureTolerance(oldData.Temperature, temp, _heatDistortionStrengthChangeTolerance))
+                     Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
+                     (oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution)) // change of special ThermalByte value
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);
             }
 
             if (tile is {Air: not null, NoGridTile: false})
@@ -277,20 +282,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             chunk.LastUpdate = _gameTiming.CurTick;
             return true;
-        }
-
-        /// <summary>
-        /// This function determines whether the change in temperature is significant enough to warrant dirtying the tile data.
-        /// </summary>
-        private bool CheckTemperatureTolerance(float tempA, float tempB, float tolerance)
-        {
-            var (strengthA, strengthB) = (GetHeatDistortionStrength(tempA), GetHeatDistortionStrength(tempB));
-
-            return (strengthA <= 0f && strengthB > 0f) || // change to or from 0
-                   (strengthB <= 0f && strengthA > 0f) ||
-                   (strengthA >= 1f && strengthB < 1f) || // change to or from 1
-                   (strengthB >= 1f && strengthA < 1f) ||
-                   Math.Abs(strengthA - strengthB) > tolerance; // other change within tolerance
         }
 
         private void UpdateOverlayData()
@@ -487,5 +478,12 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         #endregion
+
+        private void InitializeCVars()
+        {
+            Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
+            Subs.CVar(ConfMan, CCVars.GasOverlayThresholds, UpdateThresholds, true);
+            Subs.CVar(ConfMan, CVars.NetPVS, OnPvsToggle, true);
+        }
     }
 }

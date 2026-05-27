@@ -48,8 +48,9 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # for nukes
@@ -455,6 +456,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-solars
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -673,6 +677,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-arrivals
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeacon
@@ -761,6 +768,9 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-cryosleep
+  - type: Tag
+    tags:
+    - NinjaBombingTargetBlocker
 
 - type: entity
   parent: DefaultStationBeacon

@@ -14,14 +14,14 @@ namespace Content.Shared.Species;
 
 public sealed partial class ReformSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private INetManager _netMan = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
 
     public override void Initialize()
     {

@@ -37,8 +37,9 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -57,9 +58,9 @@
         sound:
           collection: MetalGlassBreak
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: Large
     grid:
-    - 0,0,19,5
+    - 0,0,15,11
   - type: ReagentDispenser
     beakerSlot:
       whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
@@ -74,8 +75,6 @@
       machine_parts: !type:Container
       beakerSlot: !type:ContainerSlot
       storagebase: !type:Container
-  - type: StaticPrice
-    price: 1000
   - type: WiresPanel
   - type: EmptyOnMachineDeconstruct
     containers:

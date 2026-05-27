@@ -27,6 +27,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     /// <summary>
     /// Loadout specific name.
     /// </summary>
+    [DataField]
     public string? EntityName;
 
     /*
@@ -123,7 +124,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 continue;
             }
 
-            var loadouts = groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)];
+            var loadouts = groupProto.MaxLimit > 0 ? groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)] : groupLoadouts;
 
             // Validate first
             for (var i = loadouts.Count - 1; i >= 0; i--)
@@ -228,13 +229,13 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             var loadouts = new List<Loadout>();
             SelectedLoadouts[group] = loadouts;
 
-            if (groupProto.MinLimit > 0)
+            if (groupProto.MinLimit > 0 || loadouts.Count < groupProto.DefaultSelected)
             {
                 // Apply any loadouts we can.
                 foreach (var protoId in groupProto.Loadouts)
                 {
                     // Reached the limit, time to stop
-                    if (loadouts.Count >= groupProto.MinLimit)
+                    if (loadouts.Count >= Math.Max(groupProto.MinLimit, groupProto.DefaultSelected))
                         break;
 
                     if (!protoManager.TryIndex(protoId, out var loadoutProto))
@@ -296,7 +297,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         var groupLoadouts = SelectedLoadouts[selectedGroup];
 
         // Need to unselect existing ones if we're at or above limit
-        var limit = Math.Max(0, groupLoadouts.Count + 1 - protoManager.Index(selectedGroup).MaxLimit);
+        var groupProto = protoManager.Index(selectedGroup);
+        var limit = groupProto.MaxLimit > 0 ? Math.Max(0, groupLoadouts.Count + 1 - protoManager.Index(selectedGroup).MaxLimit) : 0;
 
         for (var i = 0; i < groupLoadouts.Count; i++)
         {

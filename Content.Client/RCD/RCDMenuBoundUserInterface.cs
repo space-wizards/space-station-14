@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.RCD;
 
 [UsedImplicitly]
-public sealed class RCDMenuBoundUserInterface : BoundUserInterface
+public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
 {
     private const string TopLevelActionCategory = "Main";
 
@@ -26,8 +26,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             ["Lighting"] = ("rcd-component-lighting", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png"))),
         };
 
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = default!;
 
     private SimpleRadialMenu? _menu;
 
@@ -125,7 +125,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             var name = Loc.GetString(proto.SetName);
 
             if (proto.Prototype != null &&
-                _prototypeManager.Resolve(proto.Prototype, out var entProto))
+                _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
             {
                 name = entProto.Name;
             }
@@ -144,7 +144,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
         if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
             && proto.Prototype != null
-            && _prototypeManager.Resolve(proto.Prototype, out var entProto))
+            && _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
         {
             tooltip = Loc.GetString(entProto.Name);
         }

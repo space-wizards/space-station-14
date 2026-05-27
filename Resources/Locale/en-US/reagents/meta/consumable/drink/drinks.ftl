@@ -43,6 +43,9 @@ reagent-desc-milk = An opaque white liquid produced by the mammary glands of mam
 reagent-name-milk-goat = goats milk
 reagent-desc-milk-goat = An opaque white liquid produced by a goat. High buttermilk content.
 
+reagent-name-milk-sheep = sheep's milk
+reagent-desc-milk-sheep = An opaque white liquid produced by a sheep. High in fat.
+
 reagent-name-milk-oat = oat milk
 reagent-desc-milk-oat = Surprisingly tasty.
 
@@ -93,3 +96,6 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-orange-lime-soda = citrus bikeshed
+reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!
