@@ -60,9 +60,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         base.FrameUpdate(args);
 
-        if (_entity == null)
-            return;
-
         if (!_entManager.TryGetComponent(_entity, out InstrumentComponent? instrument))
             return;
 
