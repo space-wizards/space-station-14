@@ -19,6 +19,7 @@ namespace Content.Client.Instruments.UI;
 public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 {
     private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
+    private const int MaxSearchDepth = 16;
 
     [Dependency] private IMidiManager _midiManager = default!;
     [Dependency] private IFileDialogManager _dialogs = default!;
@@ -357,7 +358,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         var instrument = new Entity<InstrumentComponent>(Owner, comp);
 
-        while (true)
+        for(var i = 0; i < MaxSearchDepth; i++)
         {
             if (instrument.Comp.Master == null)
                 break;
