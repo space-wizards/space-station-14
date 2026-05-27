@@ -359,7 +359,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (physics.Mass > component.MassLimit)
             return false;
 
-        if (!component.CanTetherAlive && _mob.IsAlive(target))
+        if (!component.CanTetherAlive && _mob.IsAlive(target) || target == Transform(uid).ParentUid)
             return false;
 
         if (TryComp<StrapComponent>(target, out var strap) && strap.BuckledEntities.Count > 0)
