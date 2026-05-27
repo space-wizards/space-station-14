@@ -115,7 +115,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 5
+        Blunt: 8
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Items/Defib/defib_zap.ogg
@@ -128,5 +128,5 @@
         volume: -10
     activatedDamage:
       types:
-        Blunt: 5
-        Shock: 5
+        Blunt: 8
+        Shock: 8
