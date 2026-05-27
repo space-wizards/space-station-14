@@ -1,6 +1,8 @@
 ﻿using Content.Server.StationEvents.Metric.Components;
+using Content.Server.Storage.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
 
 namespace Content.Server.StationEvents.Metric;
 
@@ -30,6 +32,20 @@ public sealed class AnomalyMetric : ChaosMetricSystem<AnomalyMetricComponent>
             }
 
             anomalyChaos += component.BaseCost;
+        }
+
+        // Consider each xenoartifact
+        var artifactQ = EntityQueryEnumerator<XenoArtifactComponent>();
+        while (artifactQ.MoveNext(out _, out _))
+        {
+            anomalyChaos += component.ArtifactCost;
+        }
+
+        // Consider each bluespace locker
+        var lockerQ = EntityQueryEnumerator<BluespaceLockerComponent>();
+        while (lockerQ.MoveNext(out _, out _))
+        {
+            anomalyChaos += component.ArtifactCost;
         }
 
         var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()

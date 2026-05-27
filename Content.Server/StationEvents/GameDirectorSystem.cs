@@ -6,6 +6,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Metric;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Robust.Shared.Player;
@@ -184,6 +185,9 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         }
 
         return count;
+
+        //debug
+        //return new PlayerCount { Players = 80, Ghosts = 0 };
     }
 
     /// <summary>
@@ -319,12 +323,26 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         return chaos.ChaosDict.Values.Sum(v => (float)(v) * (float)(v));
     }
 
+    private const float CriticalThresholdPercent = 0.25f;
+
     private List<RankedEvent> ChooseEvents(GameDirectorComponent scheduler, StoryBeatPrototype beat, ChaosMetrics chaos, PlayerCount count)
     {
-        // TODO : Potentially filter Chaos here using CriticalLevels & DangerLevels which force us to focus on
-        //        big problems (lots of hostiles, spacing) prior to smaller ones (food & drink)
+        // Determine which chaos metrics are critically exceeding the beat's goal
+        var criticalMetrics = new HashSet<ChaosMetric>();
+        foreach (var (metric, goal) in beat.Goal.ChaosDict)
+        {
+            if (!chaos.ChaosDict.TryGetValue(metric, out var current))
+                continue;
+
+            var deviation = current - goal;
+            var threshold = FixedPoint2.Abs(goal) * CriticalThresholdPercent;
+
+            if (current > goal && deviation > threshold && current > 0)
+                criticalMetrics.Add(metric);
+        }
+
         var desiredChange = beat.Goal.ExclusiveSubtract(chaos);
-        var result = FilterAndScore(scheduler, chaos, desiredChange, count);
+        var result = FilterAndScore(scheduler, chaos, desiredChange, count, criticalMetrics);
 
         if (result.Count > 0)
         {
@@ -334,7 +352,13 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         // Fall back to improving all scores (not just the ones the beat is focused on)
         //   Generally this means reducing chaos (unspecified scores are desired to be 0).
         var allDesiredChange = beat.Goal - chaos;
-        result = FilterAndScore(scheduler, chaos, allDesiredChange, count, inclNoChaos: true);
+        result = FilterAndScore(scheduler, chaos, allDesiredChange, count, criticalMetrics, inclNoChaos: true);
+
+        // If still no events after fallback, try without critical filter
+        if (result.Count == 0 && criticalMetrics.Count > 0)
+        {
+            result = FilterAndScore(scheduler, chaos, allDesiredChange, count, inclNoChaos: true);
+        }
 
         return result;
     }
@@ -344,7 +368,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
     ///   Score them (lower is better) in how well they do this.
     /// </summary>
     private List<RankedEvent> FilterAndScore(GameDirectorComponent scheduler, ChaosMetrics chaos,
-        ChaosMetrics desiredChange, PlayerCount count, bool inclNoChaos = false)
+        ChaosMetrics desiredChange, PlayerCount count, HashSet<ChaosMetric>? criticalMetrics = null, bool inclNoChaos = false)
     {
         var noEvent = RankChaosDelta(desiredChange);
         var result = new List<RankedEvent>();
@@ -352,6 +376,22 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
         // Choose an event that specifically achieves chaos goals, focusing only on them.
         foreach (var possibleEvent in scheduler.PossibleEvents)
         {
+            // If there are critical metrics, the event must help reduce at least one of them
+            if (criticalMetrics is { Count: > 0 })
+            {
+                var helps = false;
+                foreach (var metric in criticalMetrics)
+                {
+                    if (possibleEvent.Chaos.ChaosDict.TryGetValue(metric, out var effect) && effect < 0)
+                    {
+                        helps = true;
+                        break;
+                    }
+                }
+                if (!helps)
+                    continue;
+            }
+
             // How much of the relevant chaos will be left after this event has occurred
             var relevantChaosDelta = desiredChange.ExclusiveSubtract(possibleEvent.Chaos);
             var rank = RankChaosDelta(relevantChaosDelta);

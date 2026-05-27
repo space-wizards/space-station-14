@@ -114,7 +114,7 @@
     weight: 8
     duration: 35
     chaos:
-      Anomaly: 100
+      Anomaly: 20
   - type: AnomalySpawnRule
 
 - type: entity
@@ -132,7 +132,7 @@
     weight: 8
     duration: 35
     chaos:
-      Anomaly: 40
+      Anomaly: 10
   - type: BluespaceArtifactRule
 
 - type: entity
@@ -145,7 +145,7 @@
     earliestStart: 1
     duration: 1
     chaos:
-      Anomaly: 40
+      Anomaly: 10
   - type: BluespaceLockerRule
 
 - type: entity
@@ -169,6 +169,8 @@
     minimumPlayers: 25
     weight: 3
     duration: 1
+    chaos:
+      Mess: 20
   - type: BureaucraticErrorRule
     ignoredJobs:
     - StationAi
@@ -187,7 +189,7 @@
     weight: 5
     duration: 1
     chaos:
-      Mess: 20
+      Mess: 15
   - type: ClericalErrorRule
 
 - type: entity
@@ -198,6 +200,9 @@
     weight: 5
     duration: 1
     minimumPlayers: 10
+    chaos:
+      Hostile: 10
+      Medical: 20
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -405,7 +410,7 @@
     duration: 120
     maxDuration: 240
     chaos:
-      Friend: 20
+      Mess: 20
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -454,7 +459,7 @@
     duration: 5
     maxDuration: 20
     chaos:
-      Hostile: 20
+      Hostile: 40
       Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
@@ -478,7 +483,7 @@
     duration: 5
     maxDuration: 20
     chaos:
-      Hostile: 20
+      Hostile: 40
       Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
@@ -502,7 +507,7 @@
     duration: 5
     maxDuration: 20
     chaos:
-      Hostile: 20
+      Hostile: 40
       Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
@@ -524,7 +529,7 @@
     duration: 5
     maxDuration: 20
     chaos:
-      Hostile: 20
+      Hostile: 40
       Medical: 50
   - type: VentHordeRule
     table: !type:GroupSelector
@@ -567,7 +572,7 @@
     minimumPlayers: 20
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
     chaos:
-      Hostile: 50
+      Hostile: 60
       Medical: 100
       Death: 100
   - type: RuleGrids
@@ -635,7 +640,7 @@
     duration: 1
     chaos:
       Hostile: 10
-      Friend: 20
+      Friend: 10
       Mess: 30
   - type: IonStormRule
 
@@ -651,7 +656,7 @@
     reoccurrenceDelay: 20
     chaos:
       Atmos: 15
-      Mess: 30
+      Security: 50
   - type: GreytideVirusRule
     accessGroups:
     - Cargo

@@ -22,5 +22,11 @@ public sealed partial class AnomalyMetricComponent : Component
     ///   Cost of any anomaly
     /// </summary>
     [DataField("dangerCost"), ViewVariables(VVAccess.ReadWrite)]
-    public float BaseCost = 10.0f;
+    public float BaseCost = 20.0f;
+
+    /// <summary>
+    ///   Cost per xenoartifact
+    /// </summary>
+    [DataField("artifactCost"), ViewVariables(VVAccess.ReadWrite)]
+    public float ArtifactCost = 10.0f;
 }

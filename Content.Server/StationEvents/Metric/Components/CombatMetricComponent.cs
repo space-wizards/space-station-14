@@ -56,7 +56,7 @@ public sealed partial class CombatMetricComponent : Component
             { "Handcuffs", 1.0f },
             { "Stunbaton", 3.0f },
             { "Armor", 1.5f },
-            { "HeavyArmor", 3f },
+            { "HeavyArmor", 3.0f },
             { "CombatHardsuit", 4.0f },
             { "HeavyCombatHardsuit", 6.0f },
             { "Grenade", 2.0f },

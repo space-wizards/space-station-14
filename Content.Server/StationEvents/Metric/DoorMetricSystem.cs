@@ -37,6 +37,8 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
         var firelockQ = GetEntityQuery<FirelockComponent>();
         var airlockQ = GetEntityQuery<AirlockComponent>();
 
+        var boltQ = GetEntityQuery<DoorBoltComponent>();
+
         // Keep counters to calculate average at the end.
         var doorCounter = FixedPoint2.Zero;
         var firelockCounter = FixedPoint2.Zero;
@@ -46,6 +48,7 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
         var pressureCount = FixedPoint2.Zero;
         var emagCount = FixedPoint2.Zero;
         var powerCount = FixedPoint2.Zero;
+        var openBoltedCount = FixedPoint2.Zero;
 
         // Add up the pain of all the doors
         // Restrict to just doors on the main station
@@ -78,6 +81,13 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
                     emagCount += 1;
                 }
 
+                if (door.State == DoorState.Open
+                    && boltQ.TryGetComponent(uid, out var bolts)
+                    && bolts.BoltsDown)
+                {
+                    openBoltedCount += 1;
+                }
+
                 airlockCounter += 1;
             }
 
@@ -94,6 +104,9 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
         var emagChaos = airlockCounter > 0
             ? (emagCount / airlockCounter) * component.EmagCost
             : FixedPoint2.Zero;
+        var openBoltedChaos = airlockCounter > 0
+            ? (openBoltedCount / airlockCounter) * component.OpenBoltedCost
+            : FixedPoint2.Zero;
         var atmosChaos = firelockCounter > 0
             ? (fireCount / firelockCounter) * component.FireCost +
               (pressureCount / firelockCounter) * component.PressureCost
@@ -104,7 +117,7 @@ public sealed partial class DoorMetricSystem : ChaosMetricSystem<DoorMetricCompo
 
         var chaos = new ChaosMetrics(new Dictionary<ChaosMetric, FixedPoint2>()
         {
-            {ChaosMetric.Security, emagChaos},
+            {ChaosMetric.Security, emagChaos + openBoltedChaos},
             {ChaosMetric.Atmos, atmosChaos},
             {ChaosMetric.Power, powerChaos},
         });

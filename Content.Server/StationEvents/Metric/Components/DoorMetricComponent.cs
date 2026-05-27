@@ -29,4 +29,10 @@ public sealed partial class DoorMetricComponent : Component
     /// </summary>
     [DataField("fireCost"), ViewVariables(VVAccess.ReadWrite)]
     public float FireCost = 400.0f;
+
+    /// <summary>
+    ///   Cost per door that is both open and bolted (security breach)
+    /// </summary>
+    [DataField("openBoltedCost"), ViewVariables(VVAccess.ReadWrite)]
+    public float OpenBoltedCost = 300.0f;
 }
