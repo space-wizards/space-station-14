@@ -1117,4 +1117,11 @@
   id: 137
   time: '2026-05-27T09:04:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44011
+- author: ProPeperos
+  changes:
+  - message: On Marathon - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 138
+  time: '2026-05-27T09:27:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44098
 Order: 2
