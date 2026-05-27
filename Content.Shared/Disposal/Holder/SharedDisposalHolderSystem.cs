@@ -45,7 +45,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         SubscribeLocalEvent<DisposalHolderComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<ActorComponent, DisposalSystemTransitionEvent>(OnActorTransition);
-        SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
+        SubscribeLocalEvent<BeingDisposedComponent, GetVisMaskEvent>(OnGetVisibility);
     }
 
     private void OnComponentStartup(Entity<DisposalHolderComponent> ent, ref ComponentStartup args)
@@ -68,15 +68,12 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
-    private void OnGetVisibility(ref GetVisMaskEvent ev)
+    private void OnGetVisibility(Entity<BeingDisposedComponent> entity, ref GetVisMaskEvent ev)
     {
         // Prevents mispredictions by allowing players in the disposal system
         // to be sent any entities that are hidden under subfloors
-        if (HasComp<ActorComponent>(ev.Entity) &&
-            HasComp<BeingDisposedComponent>(ev.Entity))
-        {
+        if (HasComp<BeingDisposedComponent>(ev.Entity))
             ev.VisibilityMask |= (int)VisibilityFlags.Subfloor;
-        }
     }
 
     /// <summary>
