@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.Audio;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Teleportation;
 
@@ -27,6 +26,16 @@ public sealed partial class HandTeleporterSystem : EntitySystem
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+    }
+
+    private void OnGridSplit(ref GridSplitEvent args)
+    {
+        var teleporterQuery = EntityQueryEnumerator<HandTeleporterComponent>();
+        while (teleporterQuery.MoveNext(out var uid, out var teleporter))
+        {
+            CheckPortals((uid, teleporter));
+        }
     }
 
     private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
@@ -150,7 +159,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         }
     }
 
-    private void FizzlePortals(EntityUid uid, HandTeleporterComponent component, EntityUid user, bool instability)
+    private void FizzlePortals(EntityUid uid, HandTeleporterComponent component, EntityUid? user, bool instability)
     {
         // Logging
         var portalStrings = "";
