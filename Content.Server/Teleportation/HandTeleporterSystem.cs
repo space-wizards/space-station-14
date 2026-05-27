@@ -74,6 +74,25 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Checks if both portals of a teleporter are on same grid/map
+    /// and if the teleporter allows that. if the portals are in a illegal state, it fizzles them.
+    /// </summary>
+    private void CheckPortals(Entity<HandTeleporterComponent> entity)
+    {
+        // no need to check nothing if there aren't 2 portals
+        if (Deleted(entity.Comp.FirstPortal) || Deleted(entity.Comp.SecondPortal))
+            return;
+
+        var portal1Xform = Transform(entity.Comp.FirstPortal!.Value);
+        var portal2Xform = Transform(entity.Comp.SecondPortal!.Value);
+
+        var sameGrid = portal1Xform.GridUid == portal2Xform.GridUid;
+        var sameMap = portal1Xform.MapID == portal2Xform.MapID;
+
+        if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids || !sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
+            FizzlePortals(entity.Owner, entity.Comp, null, false);
+    }
 
     /// <summary>
     ///     Creates or removes a portal given the state of the hand teleporter.
