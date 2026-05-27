@@ -8,9 +8,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords.Systems;
 
-public abstract class SharedCriminalRecordsSystem : EntitySystem
+public abstract partial class SharedCriminalRecordsSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] protected IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Any entity that has a the name of the record that was just changed as their visible name will get their icon
