@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Crawling speed now depends on the number of free hands you have.
-    type: Tweak
-  id: 9209
-  time: '2025-11-16T23:59:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41458
 - author: Samuka
   changes:
   - message: The xenoborg mothership core can now pull stuff.
@@ -4098,3 +4091,11 @@
   id: 9720
   time: '2026-05-27T04:55:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40540
+- author: HoofedEar
+  changes:
+  - message: Reagent grinders, centrifuges, and electrolysis units no longer function
+      without power
+    type: Fix
+  id: 9721
+  time: '2026-05-27T05:18:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43879
