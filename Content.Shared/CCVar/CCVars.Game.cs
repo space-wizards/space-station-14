@@ -434,5 +434,5 @@ public sealed partial class CCVars
     /// Spaces between entries can be either used or omitted.
     /// </remarks>
     public static readonly CVarDef<string> NewCharacterJobs =
-        CVarDef.Create("game.new_character_jobs", "Passenger", CVar.SERVERONLY);
+        CVarDef.Create("game.new_character_jobs", "Passenger", CVar.REPLICATED);
 }
