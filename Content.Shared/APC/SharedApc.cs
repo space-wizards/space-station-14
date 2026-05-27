@@ -70,7 +70,7 @@ namespace Content.Shared.APC
         /// The log 2 width in bits of the bitfields indicating the status of an APC lock indicator.
         /// Used for bit shifting operations (Mask for the state for indicator i is (All << (i << LogWidth))).
         /// </summary>
-        LogWidth = 1,
+        LogWidth = 2,
     }
 
     /// <summary>

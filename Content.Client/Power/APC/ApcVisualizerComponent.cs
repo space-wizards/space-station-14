@@ -31,7 +31,7 @@ public sealed partial class ApcVisualsComponent : Component
     /// </summary>
     [DataField("lockIndicatorSuffixes")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public string[] LockSuffixes = new string[(byte)(1 << (sbyte)ApcLockState.LogWidth)] { "unlocked", "locked" };
+    public string[] LockSuffixes = new string[(byte)(2 << (sbyte)ApcLockState.LogWidth)] { "unlocked", "locked" };
 
     #endregion Locks
 
