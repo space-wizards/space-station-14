@@ -229,6 +229,7 @@
     objectives:
     - ChangelingSurviveObjective
     - ChangelingUniqueIdentityObjective
+    - ChangelingEscapeIdentityObjective
 
 - type: entity
   id: Revolutionary
