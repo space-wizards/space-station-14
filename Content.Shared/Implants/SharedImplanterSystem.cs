@@ -286,7 +286,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         else
             ImplantMode(ent);
 
-        _forensics.TransferDna(user, target);
+        _forensics.TransferDna(ent, target);
 
         Dirty(ent);
     }
