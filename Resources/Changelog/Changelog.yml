@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: The CMO's locker no longer contains a duplicate beret/cloak.
-    type: Fix
-  - message: The neck gaiter in the HoS's locker has been moved to their dresser.
-    type: Fix
-  id: 9212
-  time: '2025-11-19T02:58:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41487
 - author: korczoczek
   changes:
   - message: Packed's evac shuttle will no longer have its air chamber glass break
@@ -4100,3 +4091,10 @@
   id: 9723
   time: '2026-05-28T04:04:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44132
+- author: themias
+  changes:
+  - message: Gas tanks always disconnect after dropping or storing in a backpack
+    type: Fix
+  id: 9724
+  time: '2026-05-28T04:48:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44126
