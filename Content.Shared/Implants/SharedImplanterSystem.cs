@@ -41,7 +41,8 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
         InitializeImplanted();
 
-        SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
+        SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ImplanterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
 
@@ -54,13 +55,16 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
     }
 
-    private void OnImplanterInit(Entity<ImplanterComponent> ent, ref ComponentInit args)
+    private void OnComponentInit(Entity<ImplanterComponent> ent, ref ComponentInit args)
     {
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
         _itemSlots.AddItemSlot(ent, ImplanterComponent.ImplanterSlotId, ent.Comp.ImplanterSlot);
+    }
 
+    private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
+    {
         ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
         Dirty(ent);
     }
