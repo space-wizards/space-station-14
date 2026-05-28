@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Emp;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -398,7 +399,13 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         }
     }
 
-    private void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
+    /// <summary>
+    /// Updates the visual presentation of the camera based on its current state.
+    /// </summary>
+    /// <param name="uid">The UID of the camera entity.</param>
+    /// <param name="component">The <see cref="SurveillanceCameraComponent"/> of the camera. Resolved if not supplied.</param>
+    /// <param name="appearance">The <see cref="AppearanceComponent"/> of the camera. Resolved if not supplied.</param>
+    protected override void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
     {
         // Don't log missing, because otherwise tests fail.
         if (!Resolve(uid, ref component, ref appearance, false))
@@ -416,6 +423,11 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         if (IsGettingViewed((uid, component)))
         {
             key = SurveillanceCameraVisuals.InUse;
+        }
+
+        if (HasComp<EmpDisabledComponent>(uid))
+        {
+            key = SurveillanceCameraVisuals.Emp;
         }
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
