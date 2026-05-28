@@ -1272,6 +1272,9 @@
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
+  id: Sheep # Reproductive partner key
+
+- type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
