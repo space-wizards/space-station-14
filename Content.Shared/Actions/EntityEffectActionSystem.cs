@@ -4,19 +4,19 @@ using Content.Shared.EntityEffects;
 namespace Content.Shared.Actions;
 
 /// <summary>
-/// Handles <see cref="PopupOnActionComponent"/>.
+/// Handles applying entity effects when an entity effect action is performed.
 /// </summary>
-public sealed partial class StatusEffectActionSystem : EntitySystem
+public sealed partial class EntityEffectActionSystem : EntitySystem
 {
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StatusEffectActionComponent, StatusEffectActionEvent>(OnStatusEffectAction);
+        SubscribeLocalEvent<EntityEffectActionComponent, EntityEffectActionEvent>(OnEntityEffectAction);
     }
 
-    private void OnStatusEffectAction(Entity<StatusEffectActionComponent> ent, ref StatusEffectActionEvent args)
+    private void OnEntityEffectAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectActionEvent args)
     {
         var handled = false;
         foreach (var effect in ent.Comp.Effects)

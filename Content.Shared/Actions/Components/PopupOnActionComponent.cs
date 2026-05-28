@@ -1,33 +1,59 @@
-using Content.Shared.EntityEffects.Effects.Transform;
+using Content.Shared.Popups;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// Displays a popup message when the action is successfully performed.
-/// Uses <see cref="PopupMessage"/> entity effect.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(PopupOnActionSystem))]
 public sealed partial class PopupOnActionComponent : Component
 {
     /// <summary>
-    /// Who receives the popup message.
+    /// The popup message shown to the action performer.
     /// </summary>
     [DataField]
-    public PopupRecipient Recipient = PopupRecipient.User;
+    public PopupMessage? UserMessage;
 
     /// <summary>
-    /// Popup message effect to apply.
+    /// The popup message shown to the target of the action.
     /// </summary>
-    [DataField(required: true)]
-    public PopupMessage Popup;
+    [DataField]
+    public PopupMessage? TargetMessage;
+
+    /// <summary>
+    /// The visual style of the popup.
+    /// </summary>
+    [DataField]
+    public PopupType PopupType = PopupType.Small;
 }
 
 /// <summary>
-/// Who receives the popup message.
+/// Defines a popup message and who can see it.
 /// </summary>
-public enum PopupRecipient : byte
+[DataDefinition]
+public sealed partial class PopupMessage
 {
-    User,
-    Target,
+    /// <summary>
+    /// The locale ID of the message to display.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId Message = string.Empty;
+
+    /// <summary>
+    /// Determines who can see this popup.
+    /// </summary>
+    [DataField]
+    public PopupRecipients Recipients = PopupRecipients.Local;
+}
+
+/// <summary>
+/// Who can see the popup message.
+/// </summary>
+[Serializable, NetSerializable]
+public enum PopupRecipients : byte
+{
+    Pvs,
+    Local,
 }

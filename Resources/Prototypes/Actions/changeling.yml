@@ -103,9 +103,9 @@
       - HumanoidProfile
     event: !type:ChangelingStingDnaEvent
   - type: PopupOnAction
-    popup:
-      messages: [ changeling-sting-success ]
-      visualType: Medium
+    popupType: Medium
+    userMessage:
+      message: changeling-sting-success
 
 - type: entity
   abstract: true
@@ -120,11 +120,11 @@
       components:
       - MobState
       - Bloodstream
-    event: !type:StatusEffectActionEvent
+    event: !type:EntityEffectActionEvent
   - type: PopupOnAction
-    popup:
-      messages: [ changeling-sting-success ]
-      visualType: Medium
+    popupType: Medium
+    userMessage:
+      message: changeling-sting-success
 
 - type: entity
   parent: BaseActionChangelingSting
@@ -139,7 +139,7 @@
     icon:
       sprite: Interface/Actions/changeling2.rsi
       state: mute_sting
-  - type: StatusEffectAction
+  - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
       conditions:
@@ -160,7 +160,7 @@
     icon:
       sprite: Interface/Actions/changeling2.rsi
       state: blind_sting
-  - type: StatusEffectAction
+  - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
       conditions:
@@ -181,7 +181,7 @@
     icon:
       sprite: Interface/Actions/changeling2.rsi
       state: neurodepressant_sting
-  - type: StatusEffectAction
+  - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
       conditions:
