@@ -108,6 +108,11 @@ accent-words-crab-4 = Tipi-tap!
 accent-words-crab-5 = Clik-tap.
 accent-words-crab-6 = Cliliick.
 
+# Cow
+accent-words-cow-1 = Mooo.
+accent-words-cow-2 = Moooooo!
+accent-words-cow-3 = Mooo?
+
 # Kobold
 accent-words-kobold-1 = Yip!
 accent-words-kobold-2 = Grrar.
