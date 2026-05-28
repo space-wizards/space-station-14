@@ -847,7 +847,7 @@
       - ReagentId: Fat
         Quantity: 80
   - type: ToolRefinable
-    refineTime: 16
+    refineTime: 5
     refineResult:
     - id: FoodMeatCutlet
       amount: 16

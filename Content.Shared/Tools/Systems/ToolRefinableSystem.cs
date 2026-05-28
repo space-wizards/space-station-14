@@ -53,7 +53,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         var component = ent.Comp;
         var uid = ent.Owner;
         var attemptEvent = new AttemptToolRefineEvent(args.Used);
-        RaiseLocalEvent(ref attemptEvent);
+        RaiseLocalEvent(args.Target, ref attemptEvent);
         if (attemptEvent.IsCancelled)
         {
             _popup.PopupPredicted(attemptEvent.BlockCause, args.User, args.User);
@@ -88,9 +88,9 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         }
         // make an attempt to ensure refinement is not blocked.
         var attemptEvent = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(ref attemptEvent);
+        RaiseLocalEvent(args.Target, ref attemptEvent);
 
-        if (!attemptEvent.IsCancelled)
+        if (attemptEvent.IsCancelled)
         {
             verbDisabled = true;
             verbMessage = attemptEvent.BlockCause;
@@ -118,14 +118,14 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     /// <summary> DoAfter for refining. </summary>
     private void OnDoAfter(Entity<ToolRefinableComponent> ent, ref ToolRefineDoAfterEvent args)
     {
-        if (args.Cancelled || args.Used == null)
+        if (args.Cancelled || args.Used == null || !args.Target.HasValue)
             return;
 
         var component = ent.Comp;
         var uid = ent.Owner;
 
         var getIsBlocked = new AttemptToolRefineEvent(args.Used.Value);
-        RaiseLocalEvent(ref getIsBlocked);
+        RaiseLocalEvent(args.Target.Value, ref getIsBlocked);
         if (getIsBlocked.IsCancelled)
         {
             _popup.PopupPredicted(getIsBlocked.BlockCause, args.User, args.User);
@@ -148,6 +148,12 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         var spawned = new List<EntityUid>(spawns.Count);
         foreach (var protoId in spawns)
         {
+            if (protoId == null)
+            {
+                Log.Warning($"Attempted to refine {ToPrettyString(ent)} but list of spawns contained null prototype. Refining should leave results.");
+                continue;
+            }
+
             var refineResultUid = PredictedSpawnNextToOrDrop(protoId, uid);
             spawned.Add(refineResultUid);
 

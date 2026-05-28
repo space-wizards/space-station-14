@@ -144,7 +144,7 @@ public partial class MobStateSystem
     {
         if (!IsDead(ent, ent))
         {
-            args = args with { IsCancelled = false, BlockCause = Loc.GetString("refined-slice-verb-target-isnt-dead") };
+            args = args with { IsCancelled = true, BlockCause = Loc.GetString("refined-slice-verb-target-isnt-dead") };
         }
     }
 

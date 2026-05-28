@@ -179,7 +179,7 @@
       qualityNeeded: Slicing
       verbText: refined-slice-verb-name
       verbDefaultTooltip: refined-slice-verb-message-default
-      toolMissingQualityMessage: refined-slice-verb-message-tool
+      toolMissingQualityTooltip: refined-slice-verb-message-tool
       startRefinePopupType: small
       popupForUser: refined-butchered-success
       popupForOther: refined-butchered-success-others
