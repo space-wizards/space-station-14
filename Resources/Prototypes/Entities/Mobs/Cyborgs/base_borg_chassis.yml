@@ -504,6 +504,11 @@
   - type: NpcFactionMember
     factions:
     - Xenoborg
+  - type: AttackWhitelist
+    blacklist:
+      components:
+      - MothershipCore
+    failedMessage: mothership-fail-attack
   - type: Destructible
     thresholds:
     - trigger:
