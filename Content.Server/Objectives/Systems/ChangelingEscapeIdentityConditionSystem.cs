@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Server.Objectives.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Access.Systems;
-using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
 using Content.Shared.Cuffs;
 using Content.Shared.Mind;
@@ -58,7 +56,7 @@ public sealed partial class ChangelingEscapeIdentityConditionSystem : EntitySyst
         if (!_emergencyShuttle.IsTargetEscaping(ownedEntity.Value))
             return 0.5f;
 
-        if (_cuffable.TryGetAllCuffs(ownedEntity.Value, out _))
+        if (_cuffable.IsCuffed(ownedEntity.Value))
             return 0.5f;
 
         // Check 3: Must wear an ID card with the target's name on it.
