@@ -784,11 +784,10 @@
 
 - type: reagent
   id: HardlightToxin
-  name: hardlight-toxin
+  name: reagent-name-hardlight-toxin
   group: Toxins
-  desc: hardlight-toxin
+  desc: reagent-desc-hardlight-toxin
   evaporationSpeed: 100 # Dissolves basically instantly if you *somehow* spill it
-  flavor: warm
   color: "#00FF00"
   physicalDesc: reagent-physical-desc-glowing
   contrabandSeverity: Syndicate
