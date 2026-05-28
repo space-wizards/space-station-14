@@ -69,7 +69,7 @@ public sealed partial class AtmosphereSystem
             {
                 switch (pipe.AirBlockedMaxPressureIncreaseFactor)
                 {
-                    case 0:
+                    case 0 or < 0:
                         continue;
                     case > 0:
                         maxPressure *= pipe.AirBlockedMaxPressureIncreaseFactor;

@@ -122,6 +122,8 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         /// <example>If the tile is air-blocked and the factor is set to 5,
         /// then the MaxPressure is 5 times higher.</example>
+        /// <remarks>Negative values are unsupported for now.
+        /// TODO ATMOS add negative value support. Just for the love of the game.</remarks>
         [DataField]
         public float AirBlockedMaxPressureIncreaseFactor;
 
