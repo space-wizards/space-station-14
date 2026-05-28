@@ -37,7 +37,6 @@ public abstract partial class SharedGunSystem
 
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
-        SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<BallisticAmmoInteractLoaderComponent, AfterInteractEvent>(OnBallisticAmmoLoad);
     }
@@ -378,12 +377,6 @@ public abstract partial class SharedGunSystem
             return;
 
         PauseSelfRefill(entity, args.Duration);
-    }
-
-    private void OnPowerChanged(Entity<BallisticAmmoSelfRefillerComponent> entity, ref PowerChangedEvent args)
-    {
-        // TODO: Make this raise a by ref Refresh Event
-        entity.Comp.AutoRefill = args.Powered;
     }
 
     private void OnBallisticAmmoLoad(Entity<BallisticAmmoInteractLoaderComponent> ent, ref AfterInteractEvent args)
