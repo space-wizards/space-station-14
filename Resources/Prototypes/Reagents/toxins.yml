@@ -793,9 +793,14 @@
   contrabandSeverity: Syndicate
   metabolisms:
     Poison:
-      metabolismRate: 1
+      metabolismRate: 2.5 # It's basically pure energy so it metabolizes very fast
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 1
       - !type:StaminaDamage
+        damage: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectKnockdown
         time: 1.5

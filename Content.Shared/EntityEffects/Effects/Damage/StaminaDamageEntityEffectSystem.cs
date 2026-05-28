@@ -5,7 +5,7 @@ namespace Content.Shared.EntityEffects.Effects.Damage;
 
 public sealed partial class StaminaDamageEntityEffectSystem : EntityEffectSystem<StaminaComponent, StaminaDamage>
 {
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     protected override void Effect(Entity<StaminaComponent> entity, ref EntityEffectEvent<StaminaDamage> args)
     {
@@ -18,7 +18,7 @@ public sealed partial class StaminaDamage : EntityEffectBase<StaminaDamage>
     /// <summary>
     /// The amount of stamina damage we're dealing.
     /// </summary>
-    [DataField]
-    public float Damage = 10f;
+    [DataField(required: true)]
+    public float Damage;
 }
 

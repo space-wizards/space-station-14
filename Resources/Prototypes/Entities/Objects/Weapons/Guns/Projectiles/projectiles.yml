@@ -1404,7 +1404,7 @@
         - Opaque
 
 - type: entity
-  parent: [SolutionAmmo, BaseBullet]
+  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBullet]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt
@@ -1423,13 +1423,12 @@
   - type: Projectile
     damage:
       types:
-        Heat: 2
+        Radiation: 1
   - type: Solution
     solution:
-      maxVol: 3
       reagents:
       - ReagentId: HardlightToxin
-        Quantity: 3
+        Quantity: 7.5
   - type: SolutionInjectOnProjectileHit
-    transferAmount: 3
+    transferAmount: 7.5
     solution: ammo
