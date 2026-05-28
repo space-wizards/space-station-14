@@ -21,7 +21,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class XenoArtifactCommand : ToolshedCommand
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private XenoArtifactSystem? _artifact;
     

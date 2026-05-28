@@ -95,6 +95,7 @@
     sprite: Objects/Fun/Instruments/guitar.rsi
   - type: Wieldable
   - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit.
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

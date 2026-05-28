@@ -74,6 +74,7 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceVox
+  categories: [ HideSpawnMenu ]
   name: vox appearance
   components:
   - type: Inventory
@@ -170,6 +171,10 @@
     allowedEmotes: ['Click', 'Chitter']
   - type: TypingIndicator
     proto: vox
+  - type: CreamPied
+    sprite:
+      sprite: Effects/creampie.rsi
+      state: creampie_vox
   - type: Vocal
     sounds:
       Male: UnisexVox
@@ -242,7 +247,7 @@
     bloodReferenceSolution:
       reagents:
       - ReagentId: AmmoniaBlood
-        Quantity: 300
+        Quantity: 600
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -309,6 +314,12 @@
     dependentHidingLayers:
       enum.HumanoidVisualLayers.Snout:
       - enum.HumanoidVisualLayers.SnoutCover
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hair
 
 - type: entity
   parent: [ OrganBaseArmLeft, OrganVoxExternal ]

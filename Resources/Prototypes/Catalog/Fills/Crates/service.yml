@@ -24,7 +24,6 @@
           amount: 2
         - id: BoxCleanerGrenades
         - id: WireBrush
-          amount: 2
 
 - type: entity
   parent: CratePlastic
@@ -200,6 +199,7 @@
         - id: NewtonCradle
         - id: BoxEnvelope
         - id: BrbSign
+        - id: DeskBell
 
 - type: entity
   parent: CrateGenericSteel
