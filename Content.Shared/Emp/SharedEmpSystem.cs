@@ -132,6 +132,7 @@ public abstract partial class SharedEmpSystem : EntitySystem
             return ev.Affected;
 
         var disabled = EnsureComp<EmpDisabledComponent>(uid);
+        disabled.Affected = ev.Affected;
         disabled.DisabledUntil = Timing.CurTime + duration * durMultiplier;
         Dirty(uid, disabled);
 
@@ -189,7 +190,7 @@ public record struct EmpAttemptEvent(bool Cancelled);
 /// </summary>
 /// <param name="EnergyConsumption">The amount of energy to remove from batteries. In Joule.</param>
 /// <param name="Affected">Set this is true in the subscription to spawn a visual effect at the entity's location.</param>
-/// <param name="Disabled">Set this to ture in the subscription to add <see cref="EmpDisabledComponent"/> to the entity.</param>
+/// <param name="Disabled">Set this to true in the subscription to add <see cref="EmpDisabledComponent"/> to the entity.</param>
 /// <param name="Duration">The duration the entity will be disabled.</param>
 /// <param name="User">The player that caused the EMP. For prediction purposes.</param>
 

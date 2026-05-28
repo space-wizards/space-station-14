@@ -32,4 +32,10 @@ public sealed partial class EmpDisabledComponent : Component
     /// </summary>
     [AutoPausedField]
     public TimeSpan TargetTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// If the entity should have the EMP effect spawned.
+    /// </summary>
+    [AutoNetworkedField]
+    public bool Affected = true;
 }

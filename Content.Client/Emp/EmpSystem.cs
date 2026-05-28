@@ -19,6 +19,7 @@ public sealed partial class EmpSystem : SharedEmpSystem
         // EmpPulseEvent.Affected will spawn the first visual effect directly when the emp is used
         ent.Comp.TargetTime = Timing.CurTime + _random.NextFloat(0.8f, 1.2f) * ent.Comp.EffectCooldown;
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -29,7 +30,9 @@ public sealed partial class EmpSystem : SharedEmpSystem
             if (Timing.CurTime > comp.TargetTime)
             {
                 comp.TargetTime = Timing.CurTime + _random.NextFloat(0.8f, 1.2f) * comp.EffectCooldown;
-                Spawn(EmpDisabledEffectPrototype, transform.Coordinates);
+
+                if(comp.Affected)
+                    Spawn(EmpDisabledEffectPrototype, transform.Coordinates);
             }
         }
     }
