@@ -19,7 +19,7 @@
   id: Hairflower
   storage:
     back:
-    - ClothingHeadHatHairflower
+    - ClothingHeadHatHairFlowerWhite
 
 # Headphones
 - type: loadout
