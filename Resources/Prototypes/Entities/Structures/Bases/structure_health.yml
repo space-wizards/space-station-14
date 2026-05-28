@@ -78,7 +78,37 @@
 - type: entity
   abstract: true
   parent: BaseStructureHealth
-  id: StructureHealthCloset
+  id: StructureHealthContainerFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainer
   components:
   - type: Destructible
     thresholds:
@@ -93,7 +123,7 @@
 - type: entity
   abstract: true
   parent: BaseStructureHealth
-  id: StructureHealthClosetStrong
+  id: StructureHealthContainer
   components:
   - type: Destructible
     thresholds:
@@ -140,6 +170,22 @@
 
 #endregion
 #region Machine
+
+# Not build from a proper frame. Light fixtures and other small electronics.
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true
@@ -208,6 +254,30 @@
     - trigger:
         !type:DamageTrigger
         damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineMassive
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
       behaviors:
       - !type:PlaySoundBehavior
       - !type:DoActsBehavior
