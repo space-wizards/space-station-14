@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nilsy
-  changes:
-  - message: Both rusted variants of Solid and Reinforced walls now take only 4 seconds
-      to brush clean, and just one second to weld clean.
-    type: Tweak
-  id: 9214
-  time: '2025-11-21T06:55:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41518
 - author: Princess-Cheeseballs
   changes:
   - message: Beach balls no longer collide with players.
@@ -4099,3 +4091,10 @@
   id: 9725
   time: '2026-05-28T21:05:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36895
+- author: Prole0
+  changes:
+  - message: New Inhands for the Duffle, Ore, & Satchel Bags of Holding.
+    type: Tweak
+  id: 9726
+  time: '2026-05-28T23:46:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43267
