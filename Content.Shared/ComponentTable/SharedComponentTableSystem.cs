@@ -6,10 +6,10 @@ namespace Content.Shared.ComponentTable;
 /// <summary>
 /// Applies an entity prototype to an entity on map init. Taken from entities inside an EntityTableSelector.
 /// </summary>
-public sealed class SharedComponentTableSystem : EntitySystem
+public sealed partial class SharedComponentTableSystem : EntitySystem
 {
-    [Dependency] private readonly EntityTableSystem _entTable = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private EntityTableSystem _entTable = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
