@@ -16,12 +16,6 @@ public sealed partial class HideableHumanoidLayersComponent : Component
     public Dictionary<HumanoidVisualLayers, SlotFlags> HiddenLayers = new();
 
     /// <summary>
-    ///     Which layers of this humanoid that should be hidden on equipping a corresponding item..
-    /// </summary>
-    [DataField]
-    public HashSet<HumanoidVisualLayers> HideLayersOnEquip = [HumanoidVisualLayers.Hair];
-
-    /// <summary>
     ///     Client only - which layers were last hidden
     /// </summary>
     [ViewVariables]

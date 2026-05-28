@@ -93,6 +93,19 @@
   id: StatusEffectDrunk
   name: drunk
 
+# Prevents the target from seeing
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectBlindness
+  name: temporary blindness
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Blindable
+  - type: BlindnessStatusEffect
+
 # Used for the hardlight crossbow
 - type: entity
   parent: MobStatusEffectDebuff

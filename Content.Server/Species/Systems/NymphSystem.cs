@@ -9,9 +9,9 @@ namespace Content.Server.Species.Systems;
 
 public sealed partial class NymphSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private ZombieSystem _zombie = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,7 @@ public sealed partial class NymphSystem : EntitySystem
             _zombie.ZombifyEntity(nymph);
 
         // Move the mind if there is one and it's supposed to be transferred
-        if (comp.TransferMind == true && _mindSystem.TryGetMind(args.Target, out var mindId, out var mind))
+        if (comp.TransferMind && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, nymph, mind: mind);
 
         // Delete the old organ

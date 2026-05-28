@@ -1012,6 +1012,7 @@
       muzzleFlash: null
 
 - type: entity
+  parent: [SolutionVapor, SolutionSmall]
   id: BulletWaterShot
   name: water
   categories: [ HideSpawnMenu ]
@@ -1034,10 +1035,6 @@
       map: ["enum.VaporVisualLayers.Base"]
   - type: Ammo
     muzzleFlash: null
-  - type: SolutionContainerManager
-    solutions:
-      vapor:
-        maxVol: 50
   - type: Fixtures
     fixtures:
       projectile:
@@ -1407,7 +1404,7 @@
         - Opaque
 
 - type: entity
-  parent: BaseBullet
+  parent: [SolutionAmmo, BaseBullet]
   id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
   name: energy bolt
@@ -1427,13 +1424,12 @@
     damage:
       types:
         Heat: 2
-  - type: SolutionContainerManager
-    solutions:
-      bolt:
-        maxVol: 3
-        reagents:
-        - ReagentId: HardlightToxin
-          Quantity: 3
+  - type: Solution
+    solution:
+      maxVol: 3
+      reagents:
+      - ReagentId: HardlightToxin
+        Quantity: 3
   - type: SolutionInjectOnProjectileHit
     transferAmount: 3
-    solution: bolt
+    solution: ammo
