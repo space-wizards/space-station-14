@@ -35,6 +35,16 @@
   - type: BallisticAmmoProvider
     proto: EnergyCrossbowBolt
     capacity: 1
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
+      ballistic-ammo: !type:Container
+        showEnts: False
+        occludes: True
+        ents: [ ]
 
 - type: entity
   parent: [WeaponEnergyCrossbowBase, BaseSyndicateContraband]
