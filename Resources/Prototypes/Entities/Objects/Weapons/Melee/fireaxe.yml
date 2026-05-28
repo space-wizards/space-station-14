@@ -67,6 +67,15 @@
   - type: MeleeWeapon
     wideAnimationRotation: 135
     swingLeft: true
+  - type: Item
+    shape:
+    - 1,0,2,0
+    - 1,0,1,5
+    - 0,0,0,1
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    size: Ginormous
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite

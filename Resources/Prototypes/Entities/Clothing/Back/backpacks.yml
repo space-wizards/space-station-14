@@ -321,7 +321,7 @@
   - type: Storage
     maxItemSize: Ginormous
     grid:
-    - 0,0,15,7
+    - 0,0,15,7 # Same with all bags of holding
     blacklist:
       tags:
       - Backpack

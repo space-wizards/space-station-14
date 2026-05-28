@@ -198,8 +198,7 @@
   - type: Storage
     maxItemSize: Ginormous
     grid:
-    - 0,0,7,8
-    - 10,0,17,8
+    - 0,0,15,7 # Same with all bags of holding
     blacklist:
       tags:
       - Backpack
@@ -213,3 +212,8 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,19,9
+    blacklist: #Nullifies blacklist; Can store anything
