@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.EntityTable;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Containers;
 
@@ -11,6 +13,8 @@ public sealed partial class ContainerFillSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private IComponentFactory _compFactory = default!;
 
     public override void Initialize()
     {
@@ -68,7 +72,14 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 continue;
             }
 
-            var spawns = _entityTable.GetSpawns(table);
+            var spawns = _entityTable.GetSpawns(table).ToList();
+
+            if (ent.Comp.Sort)
+            {
+                // Reverse order since we want to insert larger items first, and the list is sorted smallest to largest.
+                spawns.Sort((a, b) => CompareSize(b, a));
+            }
+
             foreach (var proto in spawns)
             {
                 var spawn = Spawn(proto, coords);
@@ -81,5 +92,25 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Sorts two protos by <see cref="ItemComponent"/> size, from smallest to largest.
+    /// </summary>
+    /// <param name="a">The first proto.</param>
+    /// <param name="b">The second proto.</param>
+    /// <returns> Less than 0 if a is smaller, greater than 0 if a is larger,
+    /// 0 if they are the same or either proto doesn't have an <see cref="ItemComponent"/>. </returns>
+    private int CompareSize(EntProtoId a, EntProtoId b)
+    {
+        var protoA = _protoMan.Index(a);
+        var protoB = _protoMan.Index(b);
+        if (!protoA.TryGetComponent<ItemComponent>(out var compA, _compFactory) ||
+            !protoB.TryGetComponent<ItemComponent>(out var compB, _compFactory))
+        {
+            return 0;
+        }
+
+        return _protoMan.Index(compA.Size).CompareTo(_protoMan.Index(compB.Size));
     }
 }
