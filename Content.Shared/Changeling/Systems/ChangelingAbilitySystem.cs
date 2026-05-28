@@ -1,15 +1,11 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Events;
 using Content.Shared.Cuffs;
 using Content.Shared.Ensnaring;
 using Content.Shared.Fluids;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -26,9 +22,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;
-    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private ReactiveSystem _reactive = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
     [Dependency] private ChangelingDevourSystem _changelingDevour = default!;
 
@@ -37,7 +30,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingBiodegradeAbilityComponent, ChangelingBiodegradeActionEvent>(OnBiodegradeAction);
-        SubscribeLocalEvent<ChangelingStingAbilityComponent, ChangelingStingActionEvent>(OnStingAction);
         SubscribeLocalEvent<ChangelingIdentityComponent, ChangelingStingDnaEvent>(OnStingDna);
     }
 
@@ -80,35 +72,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
             _puddle.TrySpillAt(args.Performer, ent.Comp.SpillSolution, out _, false);
     }
 
-    private void OnStingAction(Entity<ChangelingStingAbilityComponent> ent, ref ChangelingStingActionEvent args)
-    {
-        if (ent.Comp.RequireAlive && _mobState.IsDead(args.Target))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-sting-attempt-failed-dead"), args.Performer, args.Performer);
-            return;
-        }
-
-        if (!HasComp<BloodstreamComponent>(args.Target))
-            return;
-
-        var beforeInject = new TargetBeforeInjectEvent(args.Performer, args.Performer, args.Target);
-        RaiseLocalEvent(args.Target, ref beforeInject);
-
-        if (beforeInject.Cancelled)
-        {
-            _popup.PopupClient(Loc.GetString("injector-component-blocked-user"), args.Performer, args.Performer);
-            return;
-        }
-
-        _reactive.DoEntityReaction(args.Target, ent.Comp.InjectSolution, ReactionMethod.Injection);
-        if (!_bloodstream.TryAddToBloodstream(args.Target, ent.Comp.InjectSolution))
-        {
-            _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Performer, args.Performer);
-        }
-
-        args.Handled = true;
-    }
-
     private void OnStingDna(Entity<ChangelingIdentityComponent> ent, ref ChangelingStingDnaEvent args)
     {
         if (args.Target == ent.Owner)
@@ -117,7 +80,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (!_changelingDevour.CanDevour(ent.Owner, args.Target, checkDead: false, checkProtected: false))
             return;
 
-        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Target, ent.Owner, PopupType.Medium);
         _changelingIdentity.GrantIdentity(ent, args.Target);
 
         args.Handled = true;
