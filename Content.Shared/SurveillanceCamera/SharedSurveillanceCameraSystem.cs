@@ -30,6 +30,13 @@ public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Handle the effects of being affected by an EMP.
+    /// </summary>
+    /// <param name="ent">Camera entity with a <see cref="SurveillanceCameraComponent"/>.</param>
+    /// <param name="args">
+    /// <see cref="EmpPulseEvent"/> arguments. Used to return expected behavior to <see cref="SharedEmpSystem"/>.
+    /// </param>
     private void OnEmpPulse(Entity<SurveillanceCameraComponent> ent, ref EmpPulseEvent args)
     {
         if (ent.Comp.Active)
@@ -42,6 +49,11 @@ public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
         UpdateVisuals(ent, ent.Comp);
     }
 
+    /// <summary>
+    /// Handle an EMP event wearing off and returning to normal function.
+    /// </summary>
+    /// <param name="ent">Camera entity with a <see cref="SurveillanceCameraComponent"/>.</param>
+    /// <param name="args"><see cref="EmpDisabledRemovedEvent"/> arguments. Unused.</param>
     private void OnEmpDisabledRemoved(Entity<SurveillanceCameraComponent> ent, ref EmpDisabledRemovedEvent args)
     {
         SetActive(ent, true);
