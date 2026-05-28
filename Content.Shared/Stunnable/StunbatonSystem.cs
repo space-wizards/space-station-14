@@ -66,7 +66,7 @@ public sealed partial class StunbatonSystem : EntitySystem
             args.Cancelled = true;
             if (args.User != null)
             {
-                _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), (EntityUid)args.User, (EntityUid)args.User);
+                _popup.PopupPredicted(Loc.GetString("stunbaton-component-low-charge"), (EntityUid)args.User, (EntityUid)args.User);
             }
             return;
         }
