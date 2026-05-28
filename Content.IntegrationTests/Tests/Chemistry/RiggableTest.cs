@@ -64,9 +64,15 @@ public sealed class RiggableTest : InteractionTest
         await Pickup(battery);
         await SpawnTarget(FlashlightProto);
         await Interact();
+        await RunTicks(5);
 
-        Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null,
-            "Battery did not get inserted into the flashlight.");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null,
+                "Battery did not get inserted into the flashlight.");
+            Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
+                "Player recieved damage before flashlight activation.");
+        }
 
         // Turn the flashlight on and observe the result
         await Activate();
