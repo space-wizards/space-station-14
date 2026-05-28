@@ -1,9 +1,10 @@
 using System.Linq;
-using Content.Shared.Atmos;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.HeatContainer;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Temperature.Systems;
@@ -27,11 +28,28 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TemperatureSpeedComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
+        SubscribeLocalEvent<TemperatureComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
+        SubscribeLocalEvent<TemperatureSpeedComponent, TemperatureChangedEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
     }
 
-    private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
+    protected virtual void OnMapInit(Entity<TemperatureComponent> entity, ref MapInitEvent args)
+    {
+        // We calculate the heat capacity for our entity by multiplying its mass by its specific heat.
+        // If the entity has no mass, we assume it's 1 kilogram.
+        var mass = CompOrNull<PhysicsComponent>(entity)?.FixturesMass ?? 1f;
+
+        // TODO: This assumes this is temperature for the whole body, but ideally we want it split into surface and internal temperature!
+        entity.Comp.HeatCapacity = mass * entity.Comp.SpecificHeat;
+    }
+
+    private void OnMassDataChanged(Entity<TemperatureComponent> entity, ref MassDataChangedEvent args)
+    {
+        entity.Comp.HeatCapacity = args.NewMass * entity.Comp.SpecificHeat;
+    }
+
+    private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref TemperatureChangedEvent args)
     {
         foreach (var (threshold, modifier) in ent.Comp.Thresholds)
         {
@@ -82,18 +100,107 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
     }
 
-    public virtual void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
+    /// <summary>
+    /// Conducts heat between an entity with TemperatureComponent and another <see cref="HeatContainer"/>
+    /// </summary>
+    /// <param name="entity">Entity we're conducting heat with</param>
+    /// <param name="heatContainer">Heat container which is conducting heat with our entity</param>
+    /// <param name="deltaT">The amount of time that the heat is allowed to conduct, in seconds. This value should be small.</param>
+    /// <param name="heatTransferMod">An optional heat transfer modifier for this exchange</param>
+    /// <param name="ignoreHeatResistance">Whether we should avoid raising an event which checks for conduction modifiers on our entity.</param>
+    /// <returns>Returns the amount of heat exchanged, in Joules. A positive value means the entity lost heat energy.</returns>
+    public float ConductHeat<T>(Entity<TemperatureComponent?> entity, ref T heatContainer, float deltaT, float heatTransferMod = 1f, bool ignoreHeatResistance = false) where T : IHeatContainer
     {
+        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
+            || MathHelper.CloseTo(entity.Comp.Temperature, heatContainer.Temperature))
+            return 0f;
 
-    }
-
-    public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
-    {
-        if (!TemperatureQuery.Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
+        var conductance = entity.Comp.ThermalConductivity * heatTransferMod;
+        if (!ignoreHeatResistance)
         {
-            return Atmospherics.MinimumHeatCapacity;
+            var ev = new BeforeHeatExchangeEvent();
+            RaiseLocalEvent(entity, ref ev);
+            conductance *= ev.HeatTransferModifier;
         }
 
-        return comp.SpecificHeat * physics.FixturesMass;
+        var lastTemp = entity.Comp.Temperature;
+        var heatEx = HeatContainerHelpers.ConductHeat(ref entity.Comp, ref heatContainer, deltaT, conductance);
+
+        var changeEv = new TemperatureChangedEvent(entity.Comp.Temperature, lastTemp);
+        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
+        return heatEx;
+    }
+
+    /// <summary>
+    /// Conducts heat for an entity with a TemperatureComponent to a source at a fixed temperature.
+    /// </summary>
+    /// <param name="entity">Entity we're conducting heat with</param>
+    /// <param name="temperature">Temperature this entity is being exposed to</param>
+    /// <param name="deltaT">The amount of time that the heat is allowed to conduct, in seconds. This value should be small.</param>
+    /// <param name="heatTransferMod">An optional heat transfer modifier for this exchange</param>
+    /// <param name="ignoreHeatResistance">Whether we should avoid raising an event which checks for conduction modifiers on our entity.</param>
+    /// <returns>Returns the amount of heat exchanged, in Joules. A positive value means the entity lost heat energy.</returns>
+    public float ConductHeat(Entity<TemperatureComponent?> entity, float temperature, float deltaT, float heatTransferMod = 1f, bool ignoreHeatResistance = false)
+    {
+        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false)
+            || MathHelper.CloseTo(entity.Comp.Temperature, temperature))
+            return 0f;
+
+        var conductance = entity.Comp.ThermalConductivity * heatTransferMod;
+        if (!ignoreHeatResistance)
+        {
+            var ev = new BeforeHeatExchangeEvent();
+            RaiseLocalEvent(entity, ref ev);
+            conductance *= ev.HeatTransferModifier;
+        }
+
+        var lastTemp = entity.Comp.Temperature;
+        var heatEx =  HeatContainerHelpers.ConductHeat(ref entity.Comp, temperature, deltaT, conductance);
+
+        var changeEv = new TemperatureChangedEvent(entity.Comp.Temperature, lastTemp);
+        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
+        return heatEx;
+    }
+
+    /// <summary>
+    /// Adds or removes the specified amount of heat from an entity.
+    /// </summary>
+    /// <param name="entity">Entity whose temperature we're modifying.</param>
+    /// <param name="heatAmount">The change in heat.</param>
+    /// <param name="ignoreHeatResistance">Whether we should avoid raising an event to modify the conductance of our entity.</param>
+    /// <returns>Returns the amount of heat that was actually added, after applying heat resistances.</returns>
+    public float ChangeHeat(Entity<TemperatureComponent?> entity, float heatAmount, bool ignoreHeatResistance = false)
+    {
+        if (!TemperatureQuery.Resolve(entity, ref entity.Comp, false) || heatAmount == 0f)
+            return 0f;
+
+        if (!ignoreHeatResistance)
+        {
+            var ev = new BeforeHeatExchangeEvent();
+            RaiseLocalEvent(entity, ref ev );
+            heatAmount *= ev.HeatTransferModifier;
+        }
+
+        var lastTemp = entity.Comp.Temperature;
+        HeatContainerHelpers.AddHeat(ref entity.Comp, heatAmount);
+
+        var changeEv = new TemperatureChangedEvent(entity.Comp.Temperature, lastTemp);
+        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
+
+        return heatAmount;
+    }
+
+    /// <summary>
+    /// Protected because you should not be calling this. Sets heat to a new value.
+    /// </summary>
+    protected void SetTemperature(Entity<TemperatureComponent?> entity, float temp)
+    {
+        if (!TemperatureQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        var lastTemp = entity.Comp.Temperature;
+        entity.Comp.Temperature = temp;
+        var changeEv = new TemperatureChangedEvent(entity.Comp.Temperature, lastTemp);
+        RaiseLocalEvent(entity, ref changeEv, broadcast: true);
     }
 }

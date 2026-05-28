@@ -35,9 +35,6 @@
       0: Alive
       60: Critical
       125: Dead
-  - type: Temperature
-    currentTemperature: 310.15
-    specificHeat: 42
   - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285

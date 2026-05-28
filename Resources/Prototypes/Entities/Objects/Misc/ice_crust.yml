@@ -46,11 +46,14 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Temperature
+      temperature: 250
+      heatCapacity: 13440.002
     - type: TemperatureDamage
       heatDamage:
         types:
           Heat: 5
       coldDamage: {}
+      heatDamageThreshold: 273.15
       coldDamageThreshold: 0
     - type: FrictionContacts
     - type: TileFrictionModifier

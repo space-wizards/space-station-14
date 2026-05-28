@@ -385,7 +385,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                     if (!TryComp<TemperatureComponent>(targetUid, out var temperature))
                         return 0f;
 
-                    return temperature.CurrentTemperature <= con.MinTemp ? 1f : 0f;
+                    return temperature.Temperature <= con.MinTemp ? 1f : 0f;
                 }
             default:
                 throw new NotImplementedException();

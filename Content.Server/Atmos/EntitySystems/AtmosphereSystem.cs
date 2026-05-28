@@ -48,7 +48,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
 
     private const float ExposedUpdateDelay = 1f;
-    private float _exposedTimer = 0f;
 
     private HashSet<EntityUid> _entSet = new();
 
@@ -100,24 +99,23 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         UpdateProcessing(frameTime);
         UpdateHighPressure(frameTime);
 
-        _exposedTimer += frameTime;
-
-        if (_exposedTimer < ExposedUpdateDelay)
-            return;
+        var delay = TimeSpan.FromSeconds(ExposedUpdateDelay);
 
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var transform))
+        while (query.MoveNext(out var uid, out var exposed, out var transform))
         {
+            if (exposed.LastExposure + delay > _gameTiming.CurTime)
+                continue;
+
             var air = GetContainingMixture((uid, transform));
 
             if (air == null)
                 continue;
 
-            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform);
+            var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, air, transform, ExposedUpdateDelay, exposed.ExposedArea);
             RaiseLocalEvent(uid, ref updateEvent);
+            exposed.LastExposure = _gameTiming.CurTime;
         }
-
-        _exposedTimer -= ExposedUpdateDelay;
     }
 
     private void CacheDecals()
