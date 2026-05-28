@@ -15,6 +15,27 @@ public static class ReagentListHelper
     private static readonly StyleBoxFlat Background2 = new() { BackgroundColor = Color.FromHex("#202025") };
     private const int ColorIndicatorWidth = 4;
 
+    public static Control BuildPlaceholderRow(string text, bool fill = false)
+    {
+        return new PanelContainer
+        {
+            PanelOverride = Background1,
+            VerticalExpand = fill,
+            HorizontalExpand = true,
+            Children =
+            {
+                new Label
+                {
+                    Text = text,
+                    StyleClasses = { StyleClass.LabelWeak },
+                    HorizontalAlignment = Control.HAlignment.Center,
+                    VerticalAlignment = fill ? Control.VAlignment.Center : Control.VAlignment.Top,
+                    Margin = new Thickness(4, 2)
+                }
+            }
+        };
+    }
+
     /// <summary>
     /// Builds a UI row for displaying a reagent's name, quantity, and color indicator.
     /// Alternates row colors for better readability.
@@ -32,11 +53,14 @@ public static class ReagentListHelper
         var rowContainer = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            Margin = new Thickness(4, 2),
             Children =
             {
                 new Label 
                 { 
                     Text = $"{name}: ",
+                    ClipText = true,
+                    HorizontalExpand = true,
                     VerticalAlignment = Control.VAlignment.Center 
                 },
                 new Label
@@ -45,13 +69,12 @@ public static class ReagentListHelper
                     StyleClasses = { StyleClass.LabelWeak },
                     VerticalAlignment = Control.VAlignment.Center
                 },
-                new Control { HorizontalExpand = true },
                 new PanelContainer
                 {
                     VerticalExpand = true,
                     MinWidth = ColorIndicatorWidth,
                     PanelOverride = new StyleBoxFlat { BackgroundColor = colorToShow },
-                    Margin = new Thickness(0, 1)
+                    Margin = new Thickness(4, 1, 0, 1)
                 }
             }
         };

@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
+using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Kitchen.UI;
@@ -19,14 +21,18 @@ public static class IngredientGridHelper
     /// <param name="entMan">The entity manager.</param>
     /// <param name="entities">Collection of entities to display.</param>
     /// <param name="onEject">Action to perform when an ingredient is ejected.</param>
+    /// <param name="emptyText">Text to show when there are no visible ingredients.</param>
     /// <returns>The populated grid container.</returns>
     public static void PopulateIngredientsGrid(
         GridContainer grid,
         IEntityManager entMan,
         IEnumerable<EntityUid> entities,
-        Action<NetEntity> onEject)
+        Action<NetEntity> onEject,
+        string? emptyText = null)
     {
         grid.Children.Clear();
+        var added = false;
+
         foreach (var entity in entities)
         {
             if (entMan.Deleted(entity))
@@ -58,6 +64,18 @@ public static class IngredientGridHelper
             };
 
             grid.AddChild(button);
+            added = true;
+        }
+
+        if (!added && emptyText != null)
+        {
+            grid.AddChild(new Label
+            {
+                Text = emptyText,
+                StyleClasses = { StyleClass.LabelWeak },
+                HorizontalAlignment = Control.HAlignment.Center,
+                VerticalAlignment = Control.VAlignment.Center
+            });
         }
     }
 }

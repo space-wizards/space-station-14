@@ -54,6 +54,8 @@ public sealed partial class GrinderMenu : FancyWindow
 
     public void UpdateUi(ReagentGrinderUpdateUserInterfaceState? state = null)
     {
+        var hasServerState = state != null;
+
         if (state == null)
         {
             if (!_entityManager.TryGetComponent<ReagentGrinderComponent>(_owner, out var grinderComp))
@@ -81,6 +83,7 @@ public sealed partial class GrinderMenu : FancyWindow
 
         BeakerEjectButton.Disabled = state.IsActive || !beaker.HasValue;
         ChamberEjectButton.Disabled = state.IsActive || !hasInput;
+        ChamberDisabledOverlay.Visible = state.IsActive;
         GrindButton.Disabled = state.IsActive || !canGrind || !state.IsPowered || !beaker.HasValue;
         JuiceButton.Disabled = state.IsActive || !canJuice || !state.IsPowered || !beaker.HasValue;
 
@@ -98,16 +101,34 @@ public sealed partial class GrinderMenu : FancyWindow
             ChamberGrid,
             _entityManager,
             chamberEntities,
-            netEntity => OnEjectChamber?.Invoke(_entityManager.GetEntity(netEntity)));
+            netEntity => OnEjectChamber?.Invoke(_entityManager.GetEntity(netEntity)),
+            Loc.GetString("grinder-menu-chamber-empty"));
 
         BeakerContents.Children.Clear();
+        BeakerContents.VerticalAlignment = VAlignment.Top;
 
         var beakerName = beaker.HasValue
             ? _entityManager.GetComponent<MetaDataComponent>(beaker.Value).EntityName
-            : Loc.GetString("grinder-menu-no-solution");
+            : Loc.GetString("grinder-menu-no-beaker");
 
         BeakerNameLabel.Text = beakerName;
-        BeakerVolumeLabel.Text = $"{state.CurrentVolume}/{state.MaxVolume}";
+        BeakerVolumeLabel.Text = beaker.HasValue && hasServerState
+            ? $"{state.CurrentVolume}/{state.MaxVolume}"
+            : " ";
+
+        if (!beaker.HasValue)
+        {
+            BeakerContents.VerticalAlignment = VAlignment.Center;
+            BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(Loc.GetString("grinder-menu-no-beaker"), true));
+            return;
+        }
+
+        if (hasServerState && state.BeakerReagents.Count == 0)
+        {
+            BeakerContents.VerticalAlignment = VAlignment.Center;
+            BeakerContents.Children.Add(ReagentListHelper.BuildPlaceholderRow(Loc.GetString("grinder-menu-beaker-empty"), true));
+            return;
+        }
 
         for (var i = 0; i < state.BeakerReagents.Count; i++)
         {

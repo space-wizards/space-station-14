@@ -55,13 +55,14 @@ public sealed partial class MicrowaveMenu : FancyWindow
         IsBusy = state.IsMicrowaveBusy;
         CurrentCooktimeEnd = state.CurrentCookTimeEnd;
 
-        ToggleBusyDisableOverlayPanel(state.IsMicrowaveBusy || state.ContainedSolids.Length == 0);
+        ToggleBusyDisableOverlayPanel(state.IsMicrowaveBusy);
 
         IngredientGridHelper.PopulateIngredientsGrid(
             IngredientsGrid,
             _entityManager,
             state.ContainedSolids.Select(x => _entityManager.GetEntity(x)).ToArray(),
-            netEntity => OnEjectSolid?.Invoke(netEntity));
+            netEntity => OnEjectSolid?.Invoke(netEntity),
+            Loc.GetString("microwave-menu-ingredients-empty"));
 
         StartButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;
         EjectButton.Disabled = state.IsMicrowaveBusy || state.ContainedSolids.Length == 0;

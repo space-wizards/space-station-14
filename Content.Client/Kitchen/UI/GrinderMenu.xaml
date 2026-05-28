@@ -33,7 +33,7 @@
                         </PanelContainer.PanelOverride>
                         <Label Text="{Loc grinder-menu-solution}" StyleClasses="LabelHeading" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0" />
                     </PanelContainer>
-                    <PanelContainer StyleClasses="Inset">
+                    <PanelContainer StyleClasses="Inset" MinHeight="46">
                         <PanelContainer.PanelOverride>
                             <gfx:StyleBoxFlat BackgroundColor="#1e272a" BorderColor="#2C2F33" BorderThickness="2" />
                         </PanelContainer.PanelOverride>
@@ -54,11 +54,18 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
                 </PanelContainer.PanelOverride>
-                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" Margin="6">
-                    <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
-                        <GridContainer Name="ChamberGrid" Access="Public" Columns="3" HSeparationOverride="4" VSeparationOverride="4" HorizontalExpand="True" VerticalExpand="True" />
-                    </BoxContainer>
-                </ScrollContainer>
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
+                    <ScrollContainer VerticalExpand="True" HorizontalExpand="True" Margin="6">
+                        <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True">
+                            <GridContainer Name="ChamberGrid" Access="Public" Columns="3" HSeparationOverride="4" VSeparationOverride="4" HorizontalExpand="True" VerticalExpand="True" />
+                        </BoxContainer>
+                    </ScrollContainer>
+                    <PanelContainer Name="ChamberDisabledOverlay" Access="Public" Visible="False" MouseFilter="Stop">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
+                        </PanelContainer.PanelOverride>
+                    </PanelContainer>
+                </PanelContainer>
             </PanelContainer>
             <Button Name="ChamberEjectButton" Access="Public" Text="{Loc grinder-menu-chamber-content-box-button}" StyleClasses="negative" TextAlign="Center" HorizontalExpand="True" />
         </BoxContainer>
@@ -72,7 +79,7 @@
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" BorderColor="#2C2F33" BorderThickness="2" />
                 </PanelContainer.PanelOverride>
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True" Margin="4">
-                    <BoxContainer Name="BeakerContents" Access="Public" Orientation="Vertical" HorizontalExpand="True" />
+                    <BoxContainer Name="BeakerContents" Access="Public" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" />
                 </ScrollContainer>
             </PanelContainer>
             <Button Name="BeakerEjectButton" Access="Public" Text="{Loc grinder-menu-beaker-content-box-button}" StyleClasses="negative" TextAlign="Center" HorizontalExpand="True" />

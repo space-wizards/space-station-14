@@ -77,7 +77,7 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-    <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
+    <PanelContainer Name="DisableCookingPanelOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
         </PanelContainer.PanelOverride>

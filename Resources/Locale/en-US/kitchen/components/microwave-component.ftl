@@ -20,5 +20,6 @@ microwave-menu-instant-button = INSTANT
 microwave-menu-footer-flavor-left = Do not insert any electronic, metallic or living objects.
 microwave-menu-footer-flavor-right = v1.5
 microwave-menu-ingredients = INGREDIENTS
+microwave-menu-ingredients-empty = No ingredients
 microwave-menu-cook-time = COOK TIME
 microwave-menu-time-selection = TIME SELECTION
