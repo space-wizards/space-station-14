@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: korczoczek
-  changes:
-  - message: Packed's evac shuttle will no longer have its air chamber glass break
-      upon loading
-    type: Fix
-  id: 9213
-  time: '2025-11-19T22:15:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41500
 - author: Nilsy
   changes:
   - message: Both rusted variants of Solid and Reinforced walls now take only 4 seconds
@@ -4098,3 +4090,12 @@
   id: 9724
   time: '2026-05-28T04:48:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44126
+- author: kosticia
+  changes:
+  - message: Biggest part of items with slicing tool quality now can be used for butchering.
+    type: Tweak
+  - message: Butchering is now predicted and called slicing!
+    type: Tweak
+  id: 9725
+  time: '2026-05-28T21:05:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36895
