@@ -8,9 +8,9 @@ namespace Content.Server.Objectives.Systems;
 /// This system handles returning the progress for CounterConditionComponents,
 /// which simple increment for traitor NumberObjectives, e.g. cut into 12 envelopes.
 /// </summary>
-public sealed class CounterConditionSystem : EntitySystem
+public sealed partial class CounterConditionSystem : EntitySystem
 {
-    [Dependency] private readonly NumberObjectiveSystem _number = default!;
+    [Dependency] private NumberObjectiveSystem _number = default!;
     [Dependency] private EntityQuery<CounterConditionComponent> _compQuery = default!;
 
     /// <inheritdoc/>

@@ -15,8 +15,8 @@ namespace Content.Client.Kitchen.UI;
 [GenerateTypedNameReferences]
 public sealed partial class GrinderMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private readonly ItemSlotsSystem _slots;
     private readonly SharedPowerReceiverSystem _power;
@@ -73,7 +73,7 @@ public sealed partial class GrinderMenu : FancyWindow
         }
 
         var chamberEntities = state.ChamberEntities.Select(x => _entityManager.GetEntity(x)).Where(x => x.Valid).ToArray();
-        var beaker = state.Beaker.HasValue ? _entityManager.GetEntity(state.Beaker.Value) : (EntityUid?)null;
+        var beaker = state.Beaker.HasValue ? _entityManager.GetEntity(state.Beaker.Value) : (EntityUid?) null;
 
         var hasInput = chamberEntities.Length > 0;
         var canGrind = hasInput && chamberEntities.All(x => _grinder.CanGrind(x));
@@ -83,7 +83,7 @@ public sealed partial class GrinderMenu : FancyWindow
         ChamberEjectButton.Disabled = state.IsActive || !hasInput;
         GrindButton.Disabled = state.IsActive || !canGrind || !state.IsPowered || !beaker.HasValue;
         JuiceButton.Disabled = state.IsActive || !canJuice || !state.IsPowered || !beaker.HasValue;
-        
+
         GrindButton.Modulate = state.Program == GrinderProgram.Grind ? Color.Green : Color.White;
         JuiceButton.Modulate = state.Program == GrinderProgram.Juice ? Color.Green : Color.White;
 
@@ -94,25 +94,21 @@ public sealed partial class GrinderMenu : FancyWindow
             _ => Loc.GetString("grinder-menu-auto-button-off"),
         };
 
-        // Refresh chamber contents
         IngredientGridHelper.PopulateIngredientsGrid(
             ChamberGrid,
             _entityManager,
             chamberEntities,
             netEntity => OnEjectChamber?.Invoke(_entityManager.GetEntity(netEntity)));
 
-        // Refresh beaker contents
         BeakerContents.Children.Clear();
 
-        var beakerName = beaker.HasValue 
-            ? _entityManager.GetComponent<MetaDataComponent>(beaker.Value).EntityName 
-            : Loc.GetString("grinder-menu-no-beaker");
+        var beakerName = beaker.HasValue
+            ? _entityManager.GetComponent<MetaDataComponent>(beaker.Value).EntityName
+            : Loc.GetString("grinder-menu-no-solution");
 
-        // Show container info
         BeakerNameLabel.Text = beakerName;
         BeakerVolumeLabel.Text = $"{state.CurrentVolume}/{state.MaxVolume}";
 
-        // Show reagent list
         for (var i = 0; i < state.BeakerReagents.Count; i++)
         {
             var reagent = state.BeakerReagents[i];

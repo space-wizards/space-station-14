@@ -12,8 +12,8 @@ namespace Content.Client.Kitchen.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MicrowaveMenu : FancyWindow
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     private const int CookTimeButtonCount = 6;
     private const int CookTimeStepSeconds = 5;
