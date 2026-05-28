@@ -29,7 +29,7 @@ public sealed partial class ChangelingSlugComponent : Component
     /// How long it takes to take over a corpse.
     /// </summary>
     [DataField]
-    public TimeSpan TakeOverDuration = TimeSpan.FromSeconds(30);
+    public TimeSpan TakeOverDuration = TimeSpan.FromSeconds(15);
 
     /// <summary>
     /// The sound to play when starting the takeover.

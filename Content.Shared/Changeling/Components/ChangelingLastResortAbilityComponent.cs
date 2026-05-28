@@ -22,7 +22,6 @@ public sealed partial class ChangelingLastResortAbilityComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
-
 }
 
 /// <summary>
