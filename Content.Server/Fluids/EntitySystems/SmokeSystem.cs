@@ -45,16 +45,13 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    private EntityQuery<SmokeComponent> _smokeQuery;
-    private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
+    [Dependency] private EntityQuery<SmokeComponent> _smokeQuery = default!;
+    [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
-        _smokeQuery = GetEntityQuery<SmokeComponent>();
-        _smokeAffectedQuery = GetEntityQuery<SmokeAffectedComponent>();
 
         SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
@@ -165,12 +162,10 @@ public sealed partial class SmokeSystem : EntitySystem
 
         // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
 
-        var smokeQuery = GetEntityQuery<SmokeComponent>();
-
         _random.Shuffle(args.Neighbors);
         foreach (var neighbor in args.Neighbors)
         {
-            if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+            if (!_smokeQuery.TryGetComponent(neighbor, out var smoke))
                 continue;
 
             smoke.SpreadAmount++;

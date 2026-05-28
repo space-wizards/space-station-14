@@ -8,22 +8,37 @@
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
     layers:
-    - state: condisposal
-      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-    - state: disposal
-      map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-    - state: dispover-charge
-      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-    - state: dispover-ready
-      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-    - state: dispover-full
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-    - state: dispover-handle
-      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: disposal
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      state: dispover-ready
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalUnitVisuals.IsReady:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: disposal-charging }
+      enum.DisposalUnitVisuals.IsCharging:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          True: { state: dispover-charge, visible: true }
+          False: { state: dispover-ready, visible: true }
+      enum.PowerDeviceVisuals.Powered:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false } 
+      enum.AnchorVisuals.Anchored:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: condisposal }
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.ToolOpenableVisuals.ToolOpenableVisualState:
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -32,6 +47,10 @@
       components:
       - HumanoidProfile
   - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
     blacklist:
       components:
       - HumanoidProfile
@@ -47,7 +66,7 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
       solutions: !type:Container
   - type: Physics
     bodyType: Static
@@ -102,16 +121,6 @@
     solution: tank
     destroyOnEmpty: false
     utensil: Spoon
-  - type: GenericVisualizer
-    visuals:
-      enum.ToolOpenableVisuals.ToolOpenableVisualState:
-        ToolOpenableVisualState.StashOpen:
-          Open: { state: disposal-open }
-          Closed: { state: disposal-closed }
-      enum.ToiletVisuals.SeatVisualState:
-        SeatVisualState.SeatUp:
-          SeatUp: { state: disposal-up }
-          SeatDown: { state: disposal-down }
 
 - type: entity
   parent: BaseToilet
@@ -133,11 +142,11 @@
   components:
   - type: Solution
     solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 180
-      - ReagentId: GastroToxin
-        Quantity: 20
+        reagents:
+        - ReagentId: Water
+          Quantity: 180
+        - ReagentId: GastroToxin
+          Quantity: 20
 
 - type: entity
   parent: ToiletEmpty
@@ -208,10 +217,10 @@
     stealGroup: ToiletGoldenDirtyWater
   - type: Solution
     solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 160
-      - ReagentId: Gold
-        Quantity: 20
-      - ReagentId: GastroToxin
-        Quantity: 20
+        reagents:
+        - ReagentId: Water
+          Quantity: 160
+        - ReagentId: Gold
+          Quantity: 20
+        - ReagentId: GastroToxin
+          Quantity: 20
