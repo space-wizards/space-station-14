@@ -18,9 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -54,6 +51,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
+
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
