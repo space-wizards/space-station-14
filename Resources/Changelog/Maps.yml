@@ -1124,4 +1124,20 @@
   id: 138
   time: '2026-05-27T09:27:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44098
+- author: ProPeperos
+  changes:
+  - message: On Fland - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 139
+  time: '2026-05-28T10:03:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44097
+- author: ProPeperos
+  changes:
+  - message: On Exo - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  - message: On Exo - removed telecoms beacon from CE room
+    type: Fix
+  id: 140
+  time: '2026-05-28T10:03:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44093
 Order: 2
