@@ -223,7 +223,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (user != target)
         {
             var userName = Identity.Entity(user, EntityManager);
-            _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target);
+            _popup.PopupEntity(Loc.GetString("implanter-component-draw-target", ("user", userName)), user, target);
         }
     }
 
