@@ -85,7 +85,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
 
     /// <summary>
     /// Checks if both portals of a teleporter are on same grid/map
-    /// and if the teleporter allows that. if the portals are in a illegal state, it fizzles them.
+    /// and if the teleporter allows that. if the portals are in an illegal state, it fizzles them.
     /// </summary>
     private void CheckPortals(Entity<HandTeleporterComponent> entity)
     {
@@ -100,7 +100,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         var sameMap = portal1Xform.MapID == portal2Xform.MapID;
 
         if (!sameGrid && !entity.Comp.AllowPortalsOnDifferentGrids || !sameMap && !entity.Comp.AllowPortalsOnDifferentMaps)
-            FizzlePortals(entity.Owner, entity.Comp, null, false);
+            FizzlePortals(entity, null, false);
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public sealed partial class HandTeleporterSystem : EntitySystem
             if (!component.AllowPortalsOnDifferentGrids && xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
             {
                 // Whoops. Fizzle time. Crime time too because yippee I'm not refactoring this logic right now (I started to, I'm not going to.)
-                FizzlePortals(uid, component, user, true);
+                FizzlePortals((uid, component), user, true);
                 return;
             }
 
@@ -155,37 +155,43 @@ public sealed partial class HandTeleporterSystem : EntitySystem
         }
         else
         {
-            FizzlePortals(uid, component, user, false);
+            FizzlePortals((uid, component), user, false);
         }
     }
 
-    private void FizzlePortals(EntityUid uid, HandTeleporterComponent component, EntityUid? user, bool instability)
+    /// <summary>
+    /// Deletes both portals of a teleporter
+    /// </summary>
+    /// <param name="entity">the teleporter entity</param>
+    /// <param name="user">who deleted the portals</param>
+    /// <param name="instability">if it should send an "instability" popup to the user</param>
+    private void FizzlePortals(Entity<HandTeleporterComponent> entity, EntityUid? user, bool instability)
     {
         // Logging
         var portalStrings = "";
-        portalStrings += ToPrettyString(component.FirstPortal);
+        portalStrings += ToPrettyString(entity.Comp.FirstPortal);
         if (portalStrings != "")
             portalStrings += " and ";
-        portalStrings += ToPrettyString(component.SecondPortal);
+        portalStrings += ToPrettyString(entity.Comp.SecondPortal);
         if (portalStrings != "")
         {
             if (user != null)
-                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(uid)}");
+                _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(entity)}");
             else
                 _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{portalStrings} were closed");
         }
 
         // Clear both portals
-        if (!Deleted(component.FirstPortal))
-            QueueDel(component.FirstPortal.Value);
-        if (!Deleted(component.SecondPortal))
-            QueueDel(component.SecondPortal.Value);
+        if (!Deleted(entity.Comp.FirstPortal))
+            QueueDel(entity.Comp.FirstPortal.Value);
+        if (!Deleted(entity.Comp.SecondPortal))
+            QueueDel(entity.Comp.SecondPortal.Value);
 
-        component.FirstPortal = null;
-        component.SecondPortal = null;
-        _audio.PlayPvs(component.ClearPortalsSound, uid);
+        entity.Comp.FirstPortal = null;
+        entity.Comp.SecondPortal = null;
+        _audio.PlayPvs(entity.Comp.ClearPortalsSound, entity);
 
         if (instability && user != null)
-            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), uid, user.Value, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("handheld-teleporter-instability-fizzle"), entity, user.Value, PopupType.MediumCaution);
     }
 }
