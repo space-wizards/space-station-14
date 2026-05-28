@@ -2841,19 +2841,16 @@ entities:
   - uid: 224
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,4.5
       parent: 1
   - uid: 225
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,7.5
       parent: 1
   - uid: 226
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 1
   - uid: 227
@@ -2964,19 +2961,16 @@ entities:
   - uid: 249
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,-1.5
       parent: 1
   - uid: 250
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -2.5,14.5
       parent: 1
   - uid: 251
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,8.5
       parent: 1
 - proto: GunSafe

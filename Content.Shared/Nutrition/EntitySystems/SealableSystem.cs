@@ -6,7 +6,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class SealableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
     public override void Initialize()
     {
         base.Initialize();

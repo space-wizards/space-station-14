@@ -13,7 +13,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, RobustHarvest>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
