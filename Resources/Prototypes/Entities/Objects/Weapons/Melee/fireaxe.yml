@@ -33,9 +33,8 @@
         Structural: 40
   - type: Item
     shape:
-    - 1,0,2,0
-    - 1,0,1,5
-    - 0,0,0,1
+    - 1,0,2,5
+    - 0,0,0,2
     storedSprite:
       state: storage
       sprite: Objects/Weapons/Melee/fireaxe.rsi
@@ -69,9 +68,8 @@
     swingLeft: true
   - type: Item
     shape:
-    - 1,0,2,0
-    - 1,0,1,5
-    - 0,0,0,1
+    - 1,0,2,5
+    - 0,0,0,2
     storedSprite:
       state: storage
       sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
