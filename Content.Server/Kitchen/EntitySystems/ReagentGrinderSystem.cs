@@ -11,12 +11,12 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
-public sealed class ReagentGrinderSystem : SharedReagentGrinderSystem
+public sealed partial class ReagentGrinderSystem : SharedReagentGrinderSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     public override void UpdateUi(EntityUid uid)
     {
