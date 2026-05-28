@@ -626,6 +626,7 @@
       board: !type:Container
       IdCardConsole-privilegedId: !type:ContainerSlot
       IdCardConsole-targetId: !type:ContainerSlot
+  - type: BeaconHackable
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -681,11 +682,26 @@
     color: "#3c5eb5"
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: BeaconHackable
+    repeatable: false
   - type: Injurable
     damageContainer: StructuralInorganic
 
 - type: entity
+  abstract: true
   parent: ComputerComms
+  id: ComputerCommsAntagonist # nukies and wizard war declaration consoles
+  components:
+  - type: CommunicationsConsole
+    canShuttle: false
+    global: true #announce to everyone they're about to fuck shit up
+    announceSentBy: false
+    sound: /Audio/Announcements/war.ogg
+  - type: BeaconHackable
+    hacked: true # can't hack it if it's already hacked. or something like that. what this does in practice is just make it you can't plant a beacon on the antag comms consoles
+
+- type: entity
+  parent: ComputerCommsAntagonist
   id: SyndicateComputerComms
   name: syndicate communications computer
   description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
@@ -707,10 +723,6 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
-    canShuttle: false
-    global: true #announce to everyone they're about to fuck shit up
-    announceSentBy: false # The title already says who they are.
-    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
@@ -719,7 +731,7 @@
     color: "#f71713"
 
 - type: entity
-  parent: ComputerComms
+  parent: ComputerCommsAntagonist
   id: WizardComputerComms
   name: wizard communications computer
   description: A computer capable of magically projecting your speech to the station. Using this to make an announcement will alert the station to your presence.
@@ -741,10 +753,6 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    canShuttle: false
-    global: true #announce to everyone they're about to fuck shit up
-    announceSentBy: false
-    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
@@ -907,6 +915,7 @@
   - type: GuideHelp
     guides:
     - Cargo
+  - type: BeaconHackable
 
 # Request console variants.
 - type: entity

@@ -1,6 +1,7 @@
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.HijackBeacon;
+using Content.Shared.Traitor;
+using Content.Shared.Traitor.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

@@ -525,5 +525,5 @@ uplink-energycrossbow-name = Mini Energy Crossbow
 uplink-energycrossbow-desc = The go-to sidearm of any operative who prefers their victims not to be moving. Fires regenerating toxic arrows that floors victims in an instant.
 
 #Objective items
-uplink-hijack-beacon-name = Hijack Beacon
-uplink-hijack-beacon-desc = A syndicate-brand hijack beacon designed to get around the firewalls of Nanotrasen-brand Automated Trade Stations. They take 200 seconds to work and Trade Stations will announce they are being hacked, so prepare accordingly.
+uplink-hacking-beacon-name = Hacking Beacon
+uplink-hacking-beacon-desc = A syndicate-brand beacon which, when planted onto Nanotrasen infrastructure, will hack it for the Syndicate's benefit. Required in order to complete hacking objectives. Five minute cooldown upon purchase.

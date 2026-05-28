@@ -2282,16 +2282,19 @@
 #Objective items
 
 - type: listing
-  id: uplinkHijackBeacon
-  name: uplink-hijack-beacon-name
-  description: uplink-hijack-beacon-desc
-  productEntity: HijackBeacon
+  id: uplinkHackingBeacon
+  name: uplink-hacking-beacon-name
+  description: uplink-hacking-beacon-desc
+  productEntity: HackingBeacon
   categories:
     - UplinkObjective
+  cooldown: 300
   conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
   - !type:BuyerObjectiveWhitelistCondition
     whitelist:
       components:
-      - HijackTradeStationCondition
+      - SabotageCondition # I'm not sure if we actually want to restrict this, but for now it probably should be
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink

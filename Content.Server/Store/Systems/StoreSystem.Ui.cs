@@ -6,6 +6,7 @@ using Content.Server.Store.Components;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.NPC.Systems;
@@ -235,6 +236,7 @@ public sealed partial class StoreSystem
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, Proto)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
+        listing.TimeSinceLastPurchase = _timing.CurTime;
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)
             _audio.PlayEntity(component.BuySuccessSound, msg.Actor, GetEntity(msg.SoundSource.Value)); //cha-ching!
 

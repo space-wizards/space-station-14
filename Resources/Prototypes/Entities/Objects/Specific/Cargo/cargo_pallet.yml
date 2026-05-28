@@ -61,10 +61,18 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  abstract: true
+  parent: BaseCargoPallet
+  id: BaseCargoPalletAts
+  components:
+  - type: BeaconHackable
+    repeatable: false
+
+- type: entity
   id: CargoPalletSell
   name: cargo selling pallet
   description: Designates valid items to sell. Made of plastitanium to discourage pesky vandals.
-  parent: BaseCargoPallet
+  parent: BaseCargoPalletAts
   components:
   - type: CargoPallet
     palletType: sell
@@ -81,7 +89,7 @@
   id: CargoPalletBuy
   name: cargo buying pallet
   description: Designates where orders will appear when purchased. Made of plastitanium to discourage pesky vandals.
-  parent: BaseCargoPallet
+  parent: BaseCargoPalletAts
   components:
   - type: CargoPallet
     palletType: buy
