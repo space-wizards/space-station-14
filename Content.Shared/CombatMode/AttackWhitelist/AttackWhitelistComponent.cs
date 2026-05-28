@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Whitelist;
 
-namespace Content.Shared.CombatMode;
+namespace Content.Shared.CombatMode.AttackWhitelist;
 
 /// <summary>
 /// A entity with this component can only attack entities that pass the white/blacklist from this component

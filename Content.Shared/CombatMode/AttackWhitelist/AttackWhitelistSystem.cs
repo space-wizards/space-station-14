@@ -3,7 +3,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
 
-namespace Content.Shared.CombatMode;
+namespace Content.Shared.CombatMode.AttackWhitelist;
 
 public sealed partial class AttackWhitelistSystem : EntitySystem
 {
