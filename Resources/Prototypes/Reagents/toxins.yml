@@ -787,6 +787,7 @@
   name: hardlight-toxin
   group: Toxins
   desc: hardlight-toxin
+  evaporationSpeed: 100 # Dissolves basically instantly if you *somehow* spill it
   flavor: warm
   color: "#00FF00"
   physicalDesc: reagent-physical-desc-glowing
@@ -803,5 +804,5 @@
         damage: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectKnockdown
-        time: 1.5
-        delay: 2.5
+        time: 1
+        delay: 2
