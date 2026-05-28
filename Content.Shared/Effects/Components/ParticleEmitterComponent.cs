@@ -25,7 +25,7 @@ public sealed partial class ParticleEmitterComponent : Component
     [DataField, AutoNetworkedField]
     public float MaxDistance = 0.7f;
 
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityCoordinates LastCoordinates;
 
     [ViewVariables]
