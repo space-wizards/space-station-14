@@ -5,6 +5,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
+using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Verbs;
 using Content.Shared.Wieldable;
 using Robust.Shared.Audio.Systems;
@@ -144,6 +145,11 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// <summary>
     /// Used when an item is attempting to be activated. It returns false if the attempt fails any reason, interrupting the activation.
     /// </summary>
+    /// <param name="ent">The item to activate, with an optional resolved <see cref="ItemToggleComponent"/>.</param>
+    /// <param name="user">The entity attempting the activation, if any.</param>
+    /// <param name="predicted">Whether to predict feedback (sounds/popups) on the client.</param>
+    /// <param name="showPopup">Whether to show a popup with the action outcome.</param>
+    /// <param name="consciousAction">Whether this is a deliberate action, or a trigger activation. See <see cref="ItemToggleOnTriggerComponent.ConsciousAction"/>.</param>
     public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true, bool consciousAction = true)
     {
         if (!_itemToggleQuery.Resolve(ent, ref ent.Comp, false))
@@ -154,6 +160,8 @@ public sealed partial class ItemToggleSystem : EntitySystem
         if (comp.Activated)
             return true;
 
+        // Check the complex interact requirement, or bypass it with consciousAction.
+        // Handles things like mice triggering mousetraps while not being able to set them with verbs.
         if (user != null && ent.Comp.RequireComplexInteract && consciousAction && !_actionBlocker.CanComplexInteract(user.Value))
             return false;
 
@@ -194,6 +202,11 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// <summary>
     /// Used when an item is attempting to be deactivated. It returns false if the attempt fails any reason, interrupting the deactivation.
     /// </summary>
+    /// <param name="ent">The item to activate, with an optional resolved <see cref="ItemToggleComponent"/>.</param>
+    /// <param name="user">The entity attempting the activation, if any.</param>
+    /// <param name="predicted">Whether to predict feedback (sounds/popups) on the client.</param>
+    /// <param name="showPopup">Whether to show a popup with the action outcome.</param>
+    /// <param name="consciousAction">Whether this is a deliberate action, or a trigger activation. See <see cref="ItemToggleOnTriggerComponent.ConsciousAction"/>.</param>
     public bool TryDeactivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true, bool consciousAction = true)
     {
         if (!_itemToggleQuery.Resolve(ent, ref ent.Comp, false))
@@ -207,6 +220,8 @@ public sealed partial class ItemToggleSystem : EntitySystem
         if (!comp.Predictable)
             predicted = false;
 
+        // Check the complex interact requirement, or bypass it with consciousAction.
+        // Handles things like mice triggering mousetraps while not being able to set them with verbs.
         if (user != null && ent.Comp.RequireComplexInteract && consciousAction && !_actionBlocker.CanComplexInteract(user.Value))
             return false;
 

@@ -1,3 +1,4 @@
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.GameStates;
 
@@ -25,6 +26,7 @@ public sealed partial class ItemToggleOnTriggerComponent : BaseXOnTriggerCompone
 
     /// <summary>
     /// Does this trigger require the user to have <see cref="ComplexInteractionComponent"/>?
+    /// If false, bypasses complex interaction checks in <see cref="ItemToggleSystem"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ConsciousAction = true;
