@@ -42,7 +42,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
-using JetBrains.Annotations;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Enumerators;
 
@@ -73,7 +72,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
     [Dependency] protected SharedUserInterfaceSystem UI = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] protected UseDelaySystem UseDelay = default!;
-    [Dependency] private IComponentFactory _compFactory = default!;
 
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
     [Dependency] private EntityQuery<StackComponent> _stackQuery = default!;
@@ -1994,27 +1992,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         item = new(itemUid.Value, itemComp);
         return true;
-    }
-
-    /// <summary>
-    /// Sorts two protos by <see cref="ItemComponent"/> size, from smallest to largest.
-    /// </summary>
-    /// <param name="a">The first proto.</param>
-    /// <param name="b">The second proto.</param>
-    /// <returns> Less than 0 if a is smaller, greater than 0 if a is larger,
-    /// 0 if they are the same or either proto doesn't have an <see cref="ItemComponent"/>.</returns>
-    [PublicAPI]
-    public int CompareSize(EntProtoId a, EntProtoId b)
-    {
-        var protoA = _prototype.Index(a);
-        var protoB = _prototype.Index(b);
-        if (!protoA.TryGetComponent<ItemComponent>(out var compA, _compFactory) ||
-            !protoB.TryGetComponent<ItemComponent>(out var compB, _compFactory))
-        {
-            return 0;
-        }
-
-        return _prototype.Index(compA.Size).CompareTo(_prototype.Index(compB.Size));
     }
 
     [Serializable, NetSerializable]
