@@ -2859,8 +2859,8 @@
         sprite: Mobs/Animals/clownspider.rsi
     - type: ToolRefinable
       refineResult:
-        - id: MaterialBananium1
-          amount: 1
+      - id: MaterialBananium1
+        amount: 1
     - type: DamageStateVisuals
       states:
         Alive:

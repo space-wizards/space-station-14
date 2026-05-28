@@ -193,7 +193,7 @@
     amount: 5
     whitelist:
       tags:
-        - Knife
+      - Knife
 
 - type: cargoBounty
   id: BountyLemon

@@ -197,7 +197,7 @@
     components:
     - type: Tool
       qualities:
-        - Slicing
+      - Slicing
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
@@ -326,7 +326,7 @@
       doAfterDuration: 4.0
     - type: Tool
       qualities:
-        - Slicing
+      - Slicing
   - type: Wieldable
     wieldSound: null # esword light sound instead
   - type: MeleeWeapon
