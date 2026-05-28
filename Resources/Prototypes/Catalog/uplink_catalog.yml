@@ -79,9 +79,6 @@
     Telecrystal: 6
   categories:
   - UplinkWeaponry
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
 
 - type: listing
   id: UplinkThrowingKnivesKit
