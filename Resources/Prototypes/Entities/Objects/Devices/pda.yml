@@ -60,7 +60,6 @@
     quickEquip: false
     slots:
     - idcard
-    - Belt
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
