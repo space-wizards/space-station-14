@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Security;
 
+[TestOf(typeof(StunbatonSystem))]
 public sealed class StunBatonTests : InteractionTest
 {
     private static readonly EntProtoId StunBatonProtoId = "Stunbaton";

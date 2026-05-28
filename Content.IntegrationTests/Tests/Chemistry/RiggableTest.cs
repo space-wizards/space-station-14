@@ -3,11 +3,13 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
+[TestOf(typeof(RiggableSystem))]
 public sealed class RiggableTest : InteractionTest
 {
     private static readonly EntProtoId HumanProtoId = "MobHuman";
