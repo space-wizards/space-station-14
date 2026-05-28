@@ -65,20 +65,24 @@ public sealed class StunBatonTests : InteractionTest
         await RunSeconds(2); // Weapon cooldown.
         await AttemptLightAttack();
 
-        // Not stunned yet.
+        // Not stunned yet after the first hit.
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob was knocked down after one hit.");
-            Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned after one hit.");
-            Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing after one hit.");
             Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
             Assert.That(staminaComp.StaminaDamage, Is.EqualTo(batonStaminaDamage), "Target mob did not take the correct amount of stamina damage.");
             Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
         }
 
-        // Attack until stunned.
+        // Continue attacking, checking that the mob gets stunned when it's supposed to.
         for (var i = 0; i < NumberOfHitsToStun - 1; i++)
         {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob was knocked down before the expected number of stun baton hits.");
+                Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned before the expected number of stun baton hits.");
+                Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing before the expected number of stun baton hits.");
+            }
+
             await RunSeconds(2); // Weapon cooldown.
             await AttemptLightAttack();
         }
@@ -108,7 +112,6 @@ public sealed class StunBatonTests : InteractionTest
         // Spawn a stun baton in the player's hands without turning it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: false);
         var sBaton = ToServer(baton);
-        var batonStaminaDamage = Comp<StaminaDamageOnHitComponent>(baton).Damage;
         var batonComp = Comp<StunbatonComponent>(baton);
         var batonIntialCharges = batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
         var batonMaxCharges = batterySystem.GetMaxUses(sBaton, batonComp.EnergyPerUse);
