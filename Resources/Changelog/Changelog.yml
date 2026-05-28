@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Samuka
-  changes:
-  - message: Borg modules now tell which kind of borgs they fit into.
-    type: Add
-  id: 9211
-  time: '2025-11-17T18:07:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41461
 - author: Hitlinemoss
   changes:
   - message: The CMO's locker no longer contains a duplicate beret/cloak.
@@ -4100,3 +4093,10 @@
   id: 9722
   time: '2026-05-27T09:04:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44116
+- author: marianolarre
+  changes:
+  - message: Security camera texture and animation
+    type: Tweak
+  id: 9723
+  time: '2026-05-28T04:04:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44132
