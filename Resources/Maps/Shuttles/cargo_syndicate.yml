@@ -4,7 +4,7 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/27/2026 15:28:46
+  time: 05/28/2026 21:55:25
   entityCount: 210
 maps: []
 grids:
@@ -226,25 +226,25 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,-0.5
+      pos: 3.5,-0.5
       parent: 1
   - uid: 199
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,1.5
+      pos: 3.5,1.5
       parent: 1
   - uid: 200
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,1.5
+      pos: -2.5,-0.5
       parent: 1
   - uid: 201
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,-0.5
+      pos: -2.5,1.5
       parent: 1
 - proto: BlastDoor
   entities:
