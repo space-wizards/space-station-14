@@ -69,6 +69,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<FlammableComponent, ResistFireAlertEvent>(OnResistFireAlert);
+            SubscribeLocalEvent<FlammableComponent, AttackedEvent>(OnAttacked);
             Subs.SubscribeWithRelay<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
@@ -259,6 +260,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             Resist(ent, ent);
             args.Handled = true;
+        }
+
+        private void OnAttacked(Entity<FlammableComponent> ent, ref AttackedEvent args)
+        {
+            var isHotEvent = new IsHotEvent();
+            RaiseLocalEvent(args.Used, isHotEvent);
+
+            if (!isHotEvent.IsHot)
+                return;
+
+            Ignite(ent.Owner, args.Used, ent.Comp, args.User);
         }
 
         public void UpdateAppearance(EntityUid uid, FlammableComponent? flammable = null, AppearanceComponent? appearance = null)
