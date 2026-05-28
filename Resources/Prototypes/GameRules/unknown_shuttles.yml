@@ -40,6 +40,9 @@
   components:
   - type: StationEvent
     weight: 2
+    chaos:
+      Hostile: 20
+      Mess: 20
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/honki.yml
 
@@ -50,6 +53,8 @@
   - type: StationEvent
     weight: 5 # lower because weird freelance roles
     maxOccurrences: 2
+    chaos:
+      Hostile: 30
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
 
@@ -58,9 +63,12 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    weight: 0.5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
+    chaos:
+      Friend: -20
+      Mess: 20
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/quark.yml
 
@@ -70,6 +78,9 @@
   components:
   - type: StationEvent
     weight: 0.1 #  approximately 1/1000 on the random hostile shuttle table. Golden Legendary!
+    chaos:
+      Hostile: 100
+      Death: 50
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
 
@@ -79,5 +90,7 @@
   components:
   - type: StationEvent
     weight: 1 # lower because antags
+    chaos:
+      Hostile: 30
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml

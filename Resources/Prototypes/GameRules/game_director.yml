@@ -101,6 +101,7 @@
     Atmos: 60
     Power: 90
     Medical: 100
+    Mess: 100
 
 - type: storyBeat
   id: MadScience

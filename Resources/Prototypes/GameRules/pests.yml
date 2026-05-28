@@ -26,6 +26,8 @@
     earliestStart: 15
     weight: 6
     duration: 50
+    chaos:
+      Mess: 50
   - type: VentCrittersRule
     entries:
     - id: MobMouse
@@ -47,6 +49,9 @@
     weight: 6
     duration: 50
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
+    chaos:
+      Hostile: 40
+      Mess: 50
   - type: VentCrittersRule # We don't use Horde here to make RK spawns less predictable.
     entries:
     - id: MobMouse
@@ -68,6 +73,8 @@
   - type: StationEvent
     weight: 6
     duration: 50
+    chaos:
+      Mess: 50
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
@@ -84,6 +91,8 @@
   - type: StationEvent
     weight: 6
     duration: 50
+    chaos:
+      Mess: 30
   - type: VentCrittersRule
     entries:
     - id: MobSnail
@@ -102,6 +111,8 @@
     weight: 6
     duration: 50
     minimumPlayers: 30
+    chaos:
+      Mess: 50
   - type: VentCrittersRule
     entries:
     - id: MobSnail
@@ -126,17 +137,21 @@
     duration: 5
     maxDuration: 20
     reoccurrenceDelay: 15 # Shorter because this event is basically a nat zero on the round. It only exists to potentially confuse security or the crew
+    chaos:
+      Mess: 100
   - type: VentHordeRule
     table: !type:GroupSelector
       rolls: 3,5
       children:
       - !type:GroupSelector
-        children: # Increased chances for special snails on purpose. Makes it a bit more interesting.
+        children:
+        # Increased chances for special snails on purpose. Makes it a bit more interesting.
         - id: MobSnail
         - id: MobSnailSpeed
         - id: MobSnailMoth
       - !type:GroupSelector
-        children: # Increased chances for special roaches on purpose. Makes it a bit more interesting.
+        children:
+        # Increased chances for special roaches on purpose. Makes it a bit more interesting.
         - id: MobCockroach
         - id: MobMothroach
         - id: MobMoproach
