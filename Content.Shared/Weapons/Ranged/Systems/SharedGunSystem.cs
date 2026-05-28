@@ -269,7 +269,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         var prevention = new ShotAttemptedEvent
         {
             User = user,
-            Used = gun
+            Used = gun,
+            Target = gun.Comp.Target,
         };
         RaiseLocalEvent(gun, ref prevention);
         if (prevention.Cancelled)
