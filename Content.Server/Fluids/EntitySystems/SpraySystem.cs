@@ -18,18 +18,18 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class SpraySystem : SharedSpraySystem
+public sealed partial class SpraySystem : SharedSpraySystem
 {
-    [Dependency] private readonly GravitySystem _gravity = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly VaporSystem _vapor = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private GravitySystem _gravity = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private VaporSystem _vapor = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ContainerSystem _container = default!;
 
     private float _gridImpulseMultiplier;
 
@@ -49,7 +49,7 @@ public sealed class SpraySystem : SharedSpraySystem
 
         args.Handled = true;
 
-        var targetMapPos = _transform.GetMapCoordinates(GetEntityQuery<TransformComponent>().GetComponent(args.Target));
+        var targetMapPos = _transform.GetMapCoordinates(Transform(args.Target));
 
         Spray(entity, targetMapPos, args.User);
     }
@@ -104,8 +104,7 @@ public sealed class SpraySystem : SharedSpraySystem
             return;
         }
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var sprayerXform = xformQuery.GetComponent(entity);
+        var sprayerXform = Transform(entity);
 
         var sprayerMapPos = _transform.GetMapCoordinates(sprayerXform);
         var clickMapPos = mapcoord;
@@ -149,7 +148,7 @@ public sealed class SpraySystem : SharedSpraySystem
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
             var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
             var vapor = Spawn(entity.Comp.SprayedPrototype, vaporPos);
-            var vaporXform = xformQuery.GetComponent(vapor);
+            var vaporXform = Transform(vapor);
 
             _transform.SetWorldRotation(vaporXform, rotation);
 
