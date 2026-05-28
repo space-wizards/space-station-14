@@ -55,6 +55,12 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     public bool AffectedByEmp = false;
 
     /// <summary>
+    /// How much power in watts should this device consume each time it recharges ammo?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PowerConsumption;
+
+    /// <summary>
     /// When the next auto refill should occur. This is just implementation state.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
