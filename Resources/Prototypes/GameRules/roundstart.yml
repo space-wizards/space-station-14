@@ -227,7 +227,7 @@
         max: 3
   - type: AntagObjectives
     objectives:
-    - ChangelingSurviveObjective
+    # - ChangelingSurviveObjective TODO: make a random selection of objectives when there are more of them
     - ChangelingUniqueIdentityObjective
     - ChangelingEscapeIdentityObjective
 

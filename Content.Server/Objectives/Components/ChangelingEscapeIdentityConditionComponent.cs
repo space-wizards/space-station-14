@@ -10,4 +10,11 @@ namespace Content.Server.Objectives.Components;
 /// Depends on <see cref="TargetObjectiveComponent"/> to know which target identity to check.
 /// </summary>
 [RegisterComponent, Access(typeof(ChangelingEscapeIdentityConditionSystem))]
-public sealed partial class ChangelingEscapeIdentityConditionComponent : Component;
+public sealed partial class ChangelingEscapeIdentityConditionComponent : Component
+{
+    /// <summary>
+    /// The character name of the target, saved during objective assignment.
+    /// </summary>
+    [DataField]
+    public string? TargetName;
+}
