@@ -218,6 +218,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             {
                 component.SpawnedEntities = refinable.RefineResult;
             }
+            else
+            {
+                component.SpawnedEntities = new();
+            }
 
             var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;
             if (HasComp<ProduceComponent>(toProcess))

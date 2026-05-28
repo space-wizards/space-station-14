@@ -133,8 +133,7 @@
       - ReagentId: GroundBee
         Quantity: 1
   - type: ToolRefinable
-    refineResult:
-    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+    refineResult: [] # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
   - type: Tag
@@ -832,8 +831,7 @@
       - ReagentId: UncookedAnimalProteins
         Quantity: 1
   - type: ToolRefinable
-    refineResult:
-    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+    refineResult: [] # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
   - type: Tag

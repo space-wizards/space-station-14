@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -140,21 +141,30 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
-        var rndSeed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, args.User.Id, uid.Id);
-        var rng = new System.Random(rndSeed);
+        if (component.RefineResult.Count == 0)
+            Log.Warning($"Attempted to refine {ToPrettyString(ent)}, but no spawns were supplied. Refining should leave results.");
+        else
+        {
+            // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
+            var rndSeed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, args.User.Id, uid.Id);
+            var rng = new System.Random(rndSeed);
+            SpawnRefinement(component.RefineResult, uid, rng);
+        }
 
-        var spawns = EntitySpawnCollection.GetSpawns(component.RefineResult, rng);
+        if (component.Sound != null)
+            _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
+
+        _gib.Gib(uid);
+        _destructible.DestroyEntity(uid);
+    }
+
+    private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, System.Random rng)
+    {
+        var spawns = EntitySpawnCollection.GetSpawns(spawnList, rng);
         var spawned = new List<EntityUid>(spawns.Count);
         foreach (var protoId in spawns)
         {
-            if (protoId == null)
-            {
-                Log.Warning($"Attempted to refine {ToPrettyString(ent)} but list of spawns contained null prototype. Refining should leave results.");
-                continue;
-            }
-
-            var refineResultUid = PredictedSpawnNextToOrDrop(protoId, uid);
+            var refineResultUid = PredictedSpawnNextToOrDrop(protoId, source);
             spawned.Add(refineResultUid);
 
             if (!_container.IsEntityOrParentInContainer(refineResultUid))
@@ -164,29 +174,23 @@ public sealed partial class ToolRefinablSystem : EntitySystem
             }
         }
 
-        if (TryComp<ToolRefinableSolutionComponent>(uid, out var comp))
+        if (!TryComp<ToolRefinableSolutionComponent>(source, out var comp))
+            return;
+
+        TryGetSourceSolutionForTransfer(source, comp.SolutionToSplit, out var solutionInfo);
+
+        foreach (var spawnedUid in spawned)
         {
-            TryGetSourceSolutionForTransfer(uid, comp.SolutionToSplit, out var solutionInfo);
-
-            foreach (var spawnedUid in spawned)
+            // Fills refine result if original entity allows.
+            if (solutionInfo.HasValue && comp.SolutionToSet != null)
             {
-                // Fills refine result if original entity allows.
-                if (solutionInfo.HasValue && comp.SolutionToSet != null)
-                {
-                    var (sourceSoln, sourceSolution) = solutionInfo.Value;
-                    var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
+                var (sourceSoln, sourceSolution) = solutionInfo.Value;
+                var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
 
-                    var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
-                    FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
-                }
+                var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
+                FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
             }
         }
-
-        if (component.Sound != null)
-            _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
-
-        _gib.Gib(uid);
-        _destructible.DestroyEntity(uid);
     }
 
     #endregion
