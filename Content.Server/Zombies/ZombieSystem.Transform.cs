@@ -17,6 +17,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
+using Content.Shared.CombatMode.AttackWhitelist;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -45,6 +46,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Zombies;
@@ -146,6 +148,13 @@ public sealed partial class ZombieSystem
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
+
+        //make sure they can't hit other zombies
+        var attackWhitelist = EnsureComp<AttackWhitelistComponent>(target);
+        attackWhitelist.Blacklist = new EntityWhitelist
+        {
+            Components = ["Zombie", "IncurableZombie"],
+        };
 
         //funny voice
         var accentType = "zombie";

@@ -252,13 +252,6 @@ namespace Content.Server.Zombies
                 if (!TryComp<MobStateComponent>(uid, out var mobState))
                     continue;
 
-                if (HasComp<ZombieComponent>(uid) || HasComp<IncurableZombieComponent>(uid))
-                {
-                    // Don't infect, don't deal damage, do not heal from bites, don't pass go!
-                    args.Handled = true;
-                    continue;
-                }
-
                 if (_mobState.IsAlive(uid, mobState))
                 {
                     _damageable.TryChangeDamage(args.User, entity.Comp.HealingOnBite, true, false);
