@@ -563,7 +563,7 @@
   - type: FlavorProfile
     flavors:
       - jelly
-      - mushrooms
+      - mushroom
   - type: Sprite
     layers:
     - state: bowl
@@ -1147,7 +1147,7 @@
     storedOffset: 0,2
   - type: FlavorProfile
     flavors:
-      - mushrooms
+      - mushroom
       - electrons
   - type: Sprite
     layers:
