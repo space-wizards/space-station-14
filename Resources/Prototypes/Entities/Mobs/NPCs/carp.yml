@@ -133,9 +133,9 @@
           radius: 0.40
         density: 10
         mask:
-          - MobMask
+        - MobMask
         layer:
-          - Opaque
+        - Opaque
   - type: TypingIndicator
     proto: robot
 
