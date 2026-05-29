@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -150,6 +151,7 @@ public sealed partial class MarkingManager
                 var existingColors = markings[i].MarkingColors;
                 // If there are less colors than sprites, fill missing spots with the last existing color,
                 // or white, if there are no existing colors
+                // This will occur if an existing marking is edited to have additional layers
                 if (marking.Sprites.Count > existingColors.Count)
                 {
                     var numMissingColors = marking.Sprites.Count - existingColors.Count;
@@ -167,9 +169,10 @@ public sealed partial class MarkingManager
 
                     markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
                 }
-                // If there are more colors than sprites, just drop the extras
+                // If there are more colors than sprites, drop the extras and flag it
                 else if (marking.Sprites.Count < existingColors.Count)
                 {
+                    DebugTools.Assert($"Encountered marking {marking.Name} with more colors than sprites.");
                     markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
                 }
             }
