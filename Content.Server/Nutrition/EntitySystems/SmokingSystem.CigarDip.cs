@@ -9,7 +9,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private readonly OpenableSystem _openable = default!;
+        [Dependency] private OpenableSystem _openable = default!;
 
         private bool TryDipCigar(Entity<CigarComponent> entity, SmokableComponent smokable, ref AfterInteractEvent args)
         {
