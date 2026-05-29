@@ -475,14 +475,12 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         }
     }
 
-    private async void LoadStoredUserMidis()
+    private void LoadStoredUserMidis()
     {
         if (!_resManager.UserData.IsDir(UserMidiDirectory))
             return;
 
-        // Using await because large user libraries might take a few
-        // seconds to load, especially on slower machines.
-        _fileSource.PopulateTrackList(await Task.Run(() => LoadMidisFromDirectory(UserMidiDirectory)));
+        _fileSource.PopulateTrackList(LoadMidisFromDirectory(UserMidiDirectory));
     }
 
     private List<string> LoadMidisFromDirectory(ResPath directory)
