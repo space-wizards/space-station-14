@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/29/2026 10:17:23
-  entityCount: 272
+  time: 05/29/2026 11:19:55
+  entityCount: 271
 maps: []
 grids:
 - 1
@@ -241,21 +241,6 @@ entities:
       chunkHistory: {}
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
-  - uid: 264
-    components:
-    - type: MetaData
-      name: solution - food
-    - type: Transform
-      parent: 263
-    - type: Solution
-      solution:
-        maxVol: 1
-        reagents:
-        - data: []
-          ReagentId: Fiber
-          Quantity: 1
-    - type: ContainedSolution
-      container: 263
 - proto: AirCanister
   entities:
   - uid: 187
@@ -1433,11 +1418,13 @@ entities:
 - proto: Paper
   entities:
   - uid: 263
+    mapInit: true
+    paused: true
     components:
     - type: MetaData
       name: WARNING
     - type: Transform
-      pos: -3.5023484,3.962566
+      pos: -3.4856489,3.9479258
       parent: 1
     - type: Paper
       stampState: paper_stamp-centcom
@@ -1448,12 +1435,13 @@ entities:
         [bold]=====================================================[/bold]
 
                                     [color=red][head=1][bold]!! ATTENTION !![/bold][/head][/color]
+
         [bold]=====================================================[/bold]
+
 
         [bold]_________________________________________________________________________[/bold]
 
                                            [bold]Crew of the NT-Quark[/bold]
-
              [bold]Nuclear containment breach detected on long range
                  halcyon scanners. Seek immediate shelter. Avoid
                          contaminated materials. Do not panic.[/bold]
@@ -1467,6 +1455,10 @@ entities:
 
                                                   [italic]End transmission[/italic]
       editingDisabled: True
+    - type: Flammable
+      nextUpdate: 0.1395183
+    - type: EmitSoundOnCollide
+      nextSound: -2038.4584611
     - type: Fixtures
       fixtures:
         fix1:
@@ -1497,14 +1489,15 @@ entities:
           - InteractImpassable
           - Opaque
           layer: []
-          density: 1
+          density: 0
           hard: False
           restitution: 0
           friction: 0.4
-    - type: ContainerContainer
-      containers:
-        solution@food: !type:ContainerSlot
-          ent: 264
+    - type: Forensics
+      residues: []
+      dnas: []
+      fibers: []
+      fingerprints: []
 - proto: Pen
   entities:
   - uid: 269
