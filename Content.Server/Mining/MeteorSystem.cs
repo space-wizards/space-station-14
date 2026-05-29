@@ -10,12 +10,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Mining;
 
-public sealed class MeteorSystem : EntitySystem
+public sealed partial class MeteorSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
