@@ -75,7 +75,9 @@ public sealed partial class AtmosphereSystem
     /// Revalidates one tile's adjacency, air mixture, and visuals. Airtight, space, and
     /// map-atmosphere data are refreshed in the enqueue pass before this worker runs.
     /// </summary>
-    private static readonly QueueWorker<(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent, float Volume), TileAtmosphere> RevalidateTileWorker =
+    private static readonly QueueWorker<
+        (Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent, float Volume),
+        TileAtmosphere> RevalidateTileWorker =
         static (self, ctx, tile) =>
         {
             DebugTools.Assert(ctx.Ent.Comp1.Tiles.GetValueOrDefault(tile.GridIndices) == tile);
@@ -87,7 +89,9 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Runs Monstermos equalization for one tile from the current phase snapshot.
     /// </summary>
-    private static readonly TileWorker<(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent, int UpdateCounter)> EqualizeTileWorker =
+    private static readonly TileWorker<
+        (Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent,
+        int UpdateCounter)> EqualizeTileWorker =
         static (self, ctx, tile) => self.EqualizePressureInZone(ctx.Ent, tile, ctx.UpdateCounter);
 
     /// <summary>
@@ -106,7 +110,9 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Runs LINDA cell sharing and reactions for one active tile from the current phase snapshot.
     /// </summary>
-    private static readonly TileWorker<(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent, int UpdateCounter)> ActiveTileWorker =
+    private static readonly TileWorker<
+        (Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent,
+        int UpdateCounter)> ActiveTileWorker =
         static (self, ctx, tile) => self.ProcessCell(ctx.Ent, tile, ctx.UpdateCounter);
 
     /// <summary>
@@ -126,7 +132,9 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Advances one excited group's cooldown state from the current phase queue.
     /// </summary>
-    private static readonly QueueWorker<Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>, ExcitedGroup> ExcitedGroupWorker =
+    private static readonly QueueWorker<
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>,
+        ExcitedGroup> ExcitedGroupWorker =
         static (self, ent, excitedGroup) =>
         {
             excitedGroup.BreakdownCooldown++;
@@ -185,7 +193,8 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Processes one hotspot tile from the current phase snapshot.
     /// </summary>
-    private static readonly TileWorker<Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>> HotspotTileWorker =
+    private static readonly TileWorker<
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>> HotspotTileWorker =
         static (self, ent, tile) => self.ProcessHotspot(ent, tile);
 
     /// <summary>
@@ -307,7 +316,9 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Raises one atmos device update from the current phase queue.
     /// </summary>
-    private static readonly QueueWorker<(AtmosDeviceUpdateEvent Ev, TimeSpan Time), Entity<AtmosDeviceComponent>> AtmosDeviceWorker =
+    private static readonly QueueWorker<
+        (AtmosDeviceUpdateEvent Ev, TimeSpan Time),
+        Entity<AtmosDeviceComponent>> AtmosDeviceWorker =
         static (self, ctx, device) =>
         {
             var ev = ctx.Ev;
