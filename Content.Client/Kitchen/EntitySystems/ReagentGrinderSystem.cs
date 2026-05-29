@@ -4,9 +4,9 @@ using Content.Shared.Kitchen.EntitySystems;
 
 namespace Content.Client.Kitchen.EntitySystems;
 
-public sealed class ReagentGrinderSystem : SharedReagentGrinderSystem
+public sealed partial class ReagentGrinderSystem : SharedReagentGrinderSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {

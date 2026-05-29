@@ -58,20 +58,6 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 }
 
 /// <summary>
-/// Raised before food is sliced
-/// </summary>
-[ByRefEvent]
-public record struct SliceFoodEvent();
-
-/// <summary>
-/// is called after a successful attempt at slicing food.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-/// <summary>
 ///    Raised on FoodSequence start element entity when new ingredient is added to FoodSequence
 /// </summary>
 public record struct FoodSequenceIngredientAddedEvent(EntityUid Start, EntityUid Element, ProtoId<FoodSequenceElementPrototype> Proto, EntityUid? User = null);

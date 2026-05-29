@@ -39,8 +39,8 @@ public sealed partial class TechnologyDiskComponent : Component
     [DataField]
     public Dictionary<int, int> DiskPricePerTier = new()
     {
-        [1] = 100,
-        [2] = 500,
-        [3] = 1500
+        [1] = 50,
+        [2] = 135,
+        [3] = 1000,
     };
 }
