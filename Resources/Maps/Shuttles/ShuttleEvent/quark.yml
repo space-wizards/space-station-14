@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/29/2026 11:19:55
-  entityCount: 271
+  time: 05/29/2026 13:40:00
+  entityCount: 272
 maps: []
 grids:
 - 1
@@ -1506,27 +1506,24 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.29701,0.32934618
       parent: 1
-- proto: PillCanister
+- proto: PillCanisterHyronalin
   entities:
-  - uid: 270
+  - uid: 264
     components:
-    - type: MetaData
-      name: pill canister (hyronalin 10u)
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: -3.1553092,0.5242045
+      pos: -3.1778932,0.68124765
       parent: 1
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: Storage
       storedItems:
-        271:
+        270:
           position: 0,0
           _rotation: South
-        272:
+        271:
           position: 1,0
+          _rotation: South
+        272:
+          position: 2,0
           _rotation: South
     - type: ContainerContainer
       containers:
@@ -1534,11 +1531,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 270
           - 271
           - 272
-    - type: Label
-      currentLabel: hyronalin 10u
-    - type: ActiveUserInterface
 - proto: PillHyronalin
   entities:
   - uid: 249
@@ -1566,16 +1561,22 @@ entities:
     - type: Transform
       pos: -1.5819619,0.17803133
       parent: 1
+  - uid: 270
+    components:
+    - type: Transform
+      parent: 264
+    - type: Physics
+      canCollide: False
   - uid: 271
     components:
     - type: Transform
-      parent: 270
+      parent: 264
     - type: Physics
       canCollide: False
   - uid: 272
     components:
     - type: Transform
-      parent: 270
+      parent: 264
     - type: Physics
       canCollide: False
 - proto: PlasmaReinforcedWindowDirectional
