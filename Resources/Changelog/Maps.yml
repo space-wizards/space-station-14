@@ -1147,4 +1147,11 @@
   id: 141
   time: '2026-05-28T16:01:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44124
+- author: ProPeperos
+  changes:
+  - message: On miscellaneous shuttles - Tweaked atmos systems and small fixes
+    type: Tweak
+  id: 142
+  time: '2026-05-29T19:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44151
 Order: 2
