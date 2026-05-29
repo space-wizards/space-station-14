@@ -43,10 +43,11 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     }
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
-    {
+{
         if (args.ActionTag != comp.ActionTag)
             return;
-        comp.IsEnabled = !comp.IsEnabled;
+            
+comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
         Dirty(uid, comp);

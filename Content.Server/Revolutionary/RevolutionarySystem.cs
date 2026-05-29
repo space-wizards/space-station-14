@@ -21,6 +21,7 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
     [Dependency] private IAdminLogManager _adminLogManager = default!;
     [Dependency] private RoleSystem _roleSystem = default!;
     [Dependency] private MindSystem _mindSystem = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
