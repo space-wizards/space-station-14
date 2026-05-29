@@ -281,15 +281,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
         else
         {
-            var idx = TrackList.IndexOf(item);
-            if (idx != -1 && idx + 1 < TrackList.Count)
+            for (var i = 0; i < TrackList.Count - 1; i++)
             {
-                TrackList[idx + 1].Selected = true;
+                if (TrackList[i] != item)
+                    continue;
+                TrackList[i + 1].Selected = true;
+                return;
             }
-            else
-            {
-                TrackList[0].Selected = true;
-            }
+            TrackList[0].Selected = true;
         }
     }
 }
