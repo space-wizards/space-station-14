@@ -91,7 +91,8 @@ public sealed class CargoTest : GameTest
                     );
                     SEntMan.DeleteEntity(ent);
                 }
-            };
+            }
+            ;
         });
     }
 
@@ -181,16 +182,17 @@ public sealed class CargoTest : GameTest
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
+        var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
+
         await Server.WaitAssertion(() =>
         {
-            var sliceableEntityProtos = SProtoMan.EnumeratePrototypes<EntityPrototype>()
+            var sliceableEntityProtos = SProtoMan
+                .EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !Pair.IsTestPrototype(p))
                 .Where(p => p.TryGetComponent<ToolRefinableComponent>(out _, _sCompFact))
                 .Select(p => p.ID)
                 .ToList();
-
-            var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>();
 
             foreach (var proto in sliceableEntityProtos)
             {
@@ -209,9 +211,10 @@ public sealed class CargoTest : GameTest
 
                         // Spawn a slice
 
-                        var sliceCountByProtoId = EntitySpawnCollection.GetSpawns(sliceable.RefineResult)
-                                                                    .GroupBy(x => x)
-                                                                    .ToDictionary(x => x.Key, x => x.Count());
+                        var sliceCountByProtoId = EntitySpawnCollection
+                            .GetSpawns(sliceable.RefineResult)
+                            .GroupBy(x => x)
+                            .ToDictionary(x => x.Key, x => x.Count());
 
                         foreach (var (sliceProtoId, sliceCount) in sliceCountByProtoId)
                         {
@@ -231,7 +234,7 @@ public sealed class CargoTest : GameTest
                                 sliceCount,
                                 Is.EqualTo(1),
                                 $"{proto} counts as part of cargo bounty {bounty.ID} "
-                                + $"and slices into {sliceCount} slices which count for the same bounty!"
+                                    + $"and slices into {sliceCount} slices which count for the same bounty!"
                             );
                         }
                     }
