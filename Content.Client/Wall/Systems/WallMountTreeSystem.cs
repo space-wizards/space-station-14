@@ -7,9 +7,9 @@ using Robust.Shared.Physics;
 
 namespace Content.Client.Wall.Systems;
 
-public sealed class WallMountTreeSystem : ComponentTreeSystem<WallMountTreeComponent, WallMountComponent>
+public sealed partial class WallMountTreeSystem : ComponentTreeSystem<WallMountTreeComponent, WallMountComponent>
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     protected override bool DoFrameUpdate => true;
     protected override bool DoTickUpdate => false;

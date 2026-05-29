@@ -15,7 +15,7 @@ namespace Content.Client.Wall;
 /// <summary>
 /// Renders wall-mounted entities conditionally based on their facing arc relative to the viewport's eye.
 /// </summary>
-public sealed class WallMountVisibilityOverlay(
+public sealed partial class WallMountVisibilityOverlay(
     IGameTiming timing,
     SharedMapSystem map,
     SpriteSystem sprite,

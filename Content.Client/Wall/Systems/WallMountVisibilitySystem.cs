@@ -15,18 +15,19 @@ namespace Content.Client.Wall.Systems;
 /// <summary>
 /// Manages the directional visibility overlay for wall-mounted entities.
 /// </summary>
-public sealed class WallMountVisibilitySystem : EntitySystem
+public sealed partial class WallMountVisibilitySystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
-    [Dependency] private readonly WallMountTreeSystem _tree = default!;
-    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
-    [Dependency] private readonly EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private TransformSystem _xform = default!;
+    [Dependency] private WallMountTreeSystem _tree = default!;
+
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     /// <summary>
     /// Tags that block visibility when present on the same tile.
