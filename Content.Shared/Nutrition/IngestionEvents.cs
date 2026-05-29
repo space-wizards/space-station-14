@@ -150,8 +150,9 @@ public record struct IngestingEvent(EntityUid Food, Solution Split, bool ForceFe
 /// <param name="Target">Who is doing the eating?</param>
 /// <param name="Split">The solution we're currently eating.</param>
 /// <param name="ForceFed">Whether we're being fed by someone else, checkec enough I might as well pass it.</param>
+/// <param name="Satiated">Whether the entity will stop eating after this.</param>
 [ByRefEvent]
-public record struct IngestedEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
+public record struct IngestedEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed, bool Satiated)
 {
     // Should we destroy the ingested entity?
     public bool Destroy;
@@ -205,16 +206,4 @@ public record struct GetEdibleTypeEvent
     {
         Type = proto;
     }
-}
-
-/// <summary>
-/// Raised directed at the food being sliced before it's deleted.
-/// Cancel this if you want to do something special before a food is deleted.
-/// </summary>
-public sealed class BeforeFullySlicedEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    /// The person slicing the food.
-    /// </summary>
-    public EntityUid User;
 }
