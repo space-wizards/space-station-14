@@ -1,6 +1,7 @@
 - type: entity
   parent: AppearanceHuman
   id: AppearanceDwarf
+  categories: [ HideSpawnMenu ]
   name: dwarf appearance
   components:
   - type: Inventory
@@ -62,6 +63,8 @@
       Male: UnisexDwarf
       Female: FemaleDwarf
       Unsexed: UnisexDwarf
+  - type: ReplacementAccent
+    accent: scottish
   - type: Speech
     speechSounds: Bass
 

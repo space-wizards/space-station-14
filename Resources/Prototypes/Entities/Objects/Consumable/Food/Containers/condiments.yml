@@ -1,7 +1,7 @@
 # TODO: Removes the icon components from all these when that gets fixed.
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, BaseItem]
   id: BaseFoodCondiment
   abstract: true
   components:
@@ -46,12 +46,11 @@
   # Note NOT refillable.
   # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
   # Well its fixed now, but I want to share my pain.
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
+  - type: Solution
+    solution:
+      maxVol: 1 # Cheap
   - type: SolutionTransfer
-    maxTransferAmount: 10
+    maxTransferAmount: 1
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -91,13 +90,11 @@
   name: Astrotame
   description: The sweetness of a thousand sugars but none of the calories.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Astrotame
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Astrotame
+        Quantity: 1
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -119,13 +116,11 @@
   name: BBQ sauce
   description: Hand wipes not included.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: BbqSauce
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: BbqSauce
+        Quantity: 1
   - type: Icon
     state: packet-bbq
   - type: Appearance
@@ -139,13 +134,11 @@
   name: corn oil
   description: Corn oil. A delicious oil used in cooking. Made from corn.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Cornoil
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Cornoil
+        Quantity: 1
   - type: Icon
     state: packet-cornoil
   - type: Appearance
@@ -159,13 +152,11 @@
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Coldsauce
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Coldsauce
+        Quantity: 1
   - type: Icon
     state: packet-frostoil
   - type: Appearance
@@ -179,13 +170,11 @@
   name: horseradish sauce
   description: A packet of smelly horseradish sauce.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: HorseradishSauce
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: HorseradishSauce
+        Quantity: 1
   - type: Icon
     state: packet-greygoo
   - type: Appearance
@@ -199,13 +188,11 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Hotsauce
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Hotsauce
+        Quantity: 1
   - type: Icon
     state: packet-hotsauce
   - type: Appearance
@@ -219,12 +206,11 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 1
   - type: Sprite
   - type: Icon
     state: packet-ketchup
@@ -239,12 +225,11 @@
   name: mustard
   description: A condiment made from the ground-up seeds of the Mustard plant.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Mustard
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Mustard
+        Quantity: 1
   - type: Icon
     state: packet-mustard
   - type: Appearance
@@ -258,12 +243,11 @@
   name: black pepper
   description: Often used to flavor food or make people sneeze.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Blackpepper
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blackpepper
+        Quantity: 1
   - type: Icon
     state: packet-pepper
   - type: Appearance
@@ -277,12 +261,11 @@
   name: salt
   description: Salt. From space oceans, presumably.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: TableSalt
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: TableSalt
+        Quantity: 1
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -305,12 +288,11 @@
   name: soy sauce
   description: A salty soy-based flavoring.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Soysauce
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Soysauce
+        Quantity: 1
   - type: Icon
     state: packet-soysauce
   - type: Appearance
@@ -324,12 +306,11 @@
   name: sugar
   description: Tasty spacey sugar!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Sugar
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Sugar
+        Quantity: 1
   - type: Icon
     state: packet-sugar
   - type: Appearance
@@ -355,10 +336,9 @@
     sound:
       collection: pop
     closeable: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
+  - type: Solution
+    solution:
+      maxVol: 50 # ~ 400 to 450ml
   - type: RefillableSolution
     solution: food
   - type: Spillable
@@ -389,12 +369,11 @@
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Coldsauce
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Coldsauce
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -415,12 +394,11 @@
   name: universal enzyme
   description: Used in cooking various dishes.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Enzyme
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Enzyme
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -441,12 +419,11 @@
   name: vinegar bottle
   description: Used in cooking to enhance flavor.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Vinegar
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Vinegar
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -464,12 +441,11 @@
   name: hotsauce bottle
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Hotsauce
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Hotsauce
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -490,12 +466,11 @@
   name: ketchup bottle
   description: You feel more American already.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Ketchup
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ketchup
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -516,12 +491,11 @@
   name: BBQ sauce bottle
   description: Hand wipes not included.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: BbqSauce
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: BbqSauce
+        Quantity: 50
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -540,7 +514,7 @@
 # Shakers
 
 - type: entity
-  parent: BaseFoodCondiment # TODO: This should not inherit TrashOnSolutionEmpty, SpaceGarbage and the price of 0
+  parent: [SolutionVeryTiny, BaseFoodCondiment] # TODO: This should not inherit TrashOnSolutionEmpty, SpaceGarbage and the price of 0
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
@@ -553,10 +527,6 @@
     solution: food
     destroyOnEmpty: false
     utensil: None # don't conflict with stirring
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 5
@@ -590,12 +560,11 @@
   name: salt shaker
   description: Salt. From space oceans, presumably.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: TableSalt
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: TableSalt
+        Quantity: 15
   - type: Sprite
     state: shaker-salt
   - type: Icon
@@ -610,12 +579,11 @@
   name: pepper shaker
   description: Often used to flavor food or make people sneeze.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Blackpepper
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Blackpepper
+        Quantity: 15
   - type: Sprite
     state: shaker-pepper
   - type: Icon

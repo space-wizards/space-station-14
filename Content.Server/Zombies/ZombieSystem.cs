@@ -18,6 +18,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -32,18 +33,18 @@ namespace Content.Server.Zombies;
 
 public sealed partial class ZombieSystem : SharedZombieSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private AutoEmoteSystem _autoEmote = default!;
+    [Dependency] private EmoteOnDamageSystem _emoteOnDamage = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
 
     public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
@@ -72,6 +73,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
         SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
         SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ZombieComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
 
         SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
         SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -323,6 +325,11 @@ public sealed partial class ZombieSystem : SharedZombieSystem
             _role.MindAddRole(args.Mind, "MindRoleZombie", mind: args.Mind.Comp);
 
         DirtyInitialInfectedComps();
+    }
+
+    private void OnAttemptConvert(Entity<ZombieComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+    {
+        args.Cancelled = true;
     }
 
     // Remove the role when getting cloned, getting gibbed and borged, or leaving the body via any other method.

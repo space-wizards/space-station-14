@@ -30,16 +30,16 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.EntitySystems
 {
-    public sealed class EmitterSystem : SharedEmitterSystem
+    public sealed partial class EmitterSystem : SharedEmitterSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly ProjectileSystem _projectile = default!;
-        [Dependency] private readonly GunSystem _gun = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
-        [Dependency] private readonly NavMapSystem _navMap = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private ProjectileSystem _projectile = default!;
+        [Dependency] private GunSystem _gun = default!;
+        [Dependency] private RadioSystem _radio = default!;
+        [Dependency] private NavMapSystem _navMap = default!;
 
         public override void Initialize()
         {
@@ -50,7 +50,7 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<EmitterComponent, DestructionAttemptEvent>(OnDestructionAttempted);
+            SubscribeLocalEvent<EmitterComponent, DestructionEventArgs>(OnDestruction);
             SubscribeLocalEvent<EmitterComponent, MachineDeconstructedEvent>(OnDeconstructed); // you shouldn't be able to deconstruct locked emitters but out of scope to fix
             SubscribeLocalEvent<EmitterComponent, LockToggledEvent>(OnLockToggled);
         }
@@ -174,7 +174,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            AlertRadio((uid, component), "unpowered");
+            AlertRadio((uid, component), component.LocUnpowered);
 
             component.IsPowered = false;
 
@@ -297,27 +297,26 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private void OnDestructionAttempted(Entity<EmitterComponent> ent, ref DestructionAttemptEvent args)
+        private void OnDestruction(Entity<EmitterComponent> ent, ref DestructionEventArgs args)
         {
-            // warn engineering their containment engine needs IMMEDIATE repairs
-            // this doesn't change much for natural loosing through emitter destruction given any meteor warning serves the same purpose
-            // can also be used to scare engineering though given it broadcasts its location you need a renamed station beacon to really scare them
-            AlertRadio(ent, "destroyed");
+            // Engineering needs to know if an emitter is destroyed so they can replace it before the engine looses.
+            AlertRadio(ent, ent.Comp.LocDestroyed);
         }
 
         private void OnDeconstructed(Entity<EmitterComponent> ent, ref MachineDeconstructedEvent args)
         {
             // right now you don't even need to unlock the emitter to deconstruct it. that's almost certainly a bug but even without it it probably still needs an alert
-            AlertRadio(ent, "deconstructed");
+            AlertRadio(ent, ent.Comp.LocDeconstructed);
         }
 
-        private void AlertRadio(Entity<EmitterComponent> ent, string type)
+        private void AlertRadio(Entity<EmitterComponent> ent, string locString)
         {
             if (!ent.Comp.AlertRadio || !ent.Comp.IsOn || !ent.Comp.IsPowered)
                 return; // APEs do not need to scream over engineering radio, and an emitter that is off is probably not going to be alerting radios
 
-            var message = Loc.GetString("emitter-" + type + "-broadcast",
-            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner)))
+            var message = Loc.GetString(
+                locString,
+                ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(ent.Owner)))
             );
             _radio.SendRadioMessage(ent.Owner, message, ent.Comp.RadioChannel, ent.Owner);
         }
@@ -327,7 +326,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (args.Locked)
                 return;
 
-            AlertRadio(ent, "unlocked");
+            AlertRadio(ent, ent.Comp.LocUnlocked);
         }
     }
 }

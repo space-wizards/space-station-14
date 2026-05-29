@@ -6,16 +6,17 @@ using Content.Shared.Stunnable;
 
 namespace Content.Shared.Revolutionary;
 
-public abstract class SharedRevolutionarySystem : EntitySystem
+public abstract partial class SharedRevolutionarySystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedStunSystem _sharedStun = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedStunSystem _sharedStun = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
+        SubscribeLocalEvent<RevolutionaryComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
     }
 
     /// <summary>
@@ -37,5 +38,10 @@ public abstract class SharedRevolutionarySystem : EntitySystem
             _sharedStun.TryUpdateParalyzeDuration(uid, stunTime);
             _popupSystem.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
         }
+    }
+
+    private void OnAttemptConvert(Entity<RevolutionaryComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+    {
+        args.Cancelled = true;
     }
 }

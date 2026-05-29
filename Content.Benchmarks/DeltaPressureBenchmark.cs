@@ -1,11 +1,11 @@
+using System.IO;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnosers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
@@ -69,7 +69,7 @@ public class DeltaPressureBenchmark
     {
         ProgramShared.PathOffset = "../../../../";
         PoolManager.Startup();
-        _pair = await PoolManager.GetServerClient();
+        _pair = await PoolManager.GetServerClient(testContext: new ExternalTestContext("Benchmark", StreamWriter.Null));
         var server = _pair.Server;
 
         var mapdata = await _pair.CreateTestMap();
