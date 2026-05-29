@@ -5,10 +5,10 @@ using Content.Shared.Mind.Components;
 
 namespace Content.Sever.Antag;
 
-public sealed class ShowAntagIconsSystem : EntitySystem
+public sealed partial class ShowAntagIconsSystem : EntitySystem
 {
-    [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly RevolutionarySystem _revolutionary = default!;
+    [Dependency] private ZombieSystem _zombie = default!;
+    [Dependency] private RevolutionarySystem _revolutionary = default!;
 
     public override void Initialize()
     {
