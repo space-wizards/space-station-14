@@ -4,7 +4,6 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
-using Content.Server.Nutrition.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
 using Content.Shared.EntityTable;
@@ -13,6 +12,8 @@ using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Content.Shared.Storage;
+using Content.Shared.Tools.Components;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -177,25 +178,38 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoSliceableBountyArbitrageTest()
     {
-        await Pair.CreateTestMap();
-        var coordinates = Pair.TestMap!.GridCoords;
+        var pair = Pair;
+        var server = pair.Server;
 
-        await Server.WaitAssertion(() =>
+        var testMap = await pair.CreateTestMap();
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapSystem = server.System<SharedMapSystem>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var componentFactory = server.ResolveDependency<IComponentFactory>();
+        var whitelist = entManager.System<EntityWhitelistSystem>();
+        var cargo = entManager.System<CargoSystem>();
+
+        var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
+
+        await server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
-            {
-                var bounties = SProtoMan.EnumeratePrototypes<CargoBountyPrototype>().ToList();
-                var sliceableEntityProtos = SProtoMan
-                    .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
-                    .Where(p => !Pair.IsTestPrototype(p))
-                    .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, _sCompFact))
-                    .Select(p => p.ID);
+            var mapId = testMap.MapId;
+            var grid = mapManager.CreateGridEntity(mapId);
+            var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
-                foreach (var proto in sliceableEntityProtos)
-                {
-                    var ent = SSpawnAtPosition(proto, coordinates);
-                    var sliceable = SEntMan.GetComponent<SliceableFoodComponent>(ent);
+            var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => p.TryGetComponent<ToolRefinableComponent>(out _, componentFactory))
+                .Select(p => p.ID)
+                .ToList();
+
+            foreach (var proto in sliceableEntityProtos)
+            {
+                var ent = entManager.SpawnEntity(proto, coord);
+                var sliceable = entManager.GetComponent<ToolRefinableComponent>(ent);
 
                     // Check each bounty
                     foreach (var bounty in bounties)
@@ -207,26 +221,35 @@ public sealed class CargoTest : GameTest
                             if (!_sCargo.IsValidBountyEntry(ent, entry))
                                 continue;
 
-                            // Spawn a slice
-                            var slice = SSpawnAtPosition(sliceable.Slice, coordinates);
+                        // Spawn a slice
+
+                        var sliceCountByProtoId = EntitySpawnCollection.GetSpawns(sliceable.RefineResult)
+                                                                    .GroupBy(x => x)
+                                                                    .ToDictionary(x => x.Key, x => x.Count());
+
+                        foreach (var (sliceProtoId, sliceCount) in sliceCountByProtoId)
+                        {
+                            var slice = entManager.SpawnEntity(sliceProtoId, coord);
 
                             // See if the slice also counts for this bounty entry
-                            if (!_sCargo.IsValidBountyEntry(slice, entry))
+                            if (!cargo.IsValidBountyEntry(slice, entry))
                             {
-                                SEntMan.DeleteEntity(slice);
+                                entManager.DeleteEntity(slice);
                                 continue;
                             }
 
-                            SEntMan.DeleteEntity(slice);
+                            entManager.DeleteEntity(slice);
 
                             // If for some reason it can only make one slice, that's okay, I guess
                             Assert.That(
-                                sliceable.TotalCount,
+                                sliceCount,
                                 Is.EqualTo(1),
-                                $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.TotalCount} slices which count for the same bounty!"
+                                $"{proto} counts as part of cargo bounty {bounty.ID} "
+                                + $"and slices into {sliceCount} slices which count for the same bounty!"
                             );
                         }
                     }
+                }
 
                     SEntMan.DeleteEntity(ent);
                 }
