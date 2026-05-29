@@ -246,7 +246,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                         _fileSource.IsPlaying = false;
                 });
         }
-        catch (Exception e)
+        catch
         {
             _fileSource.IsPlaying = false;
         }
