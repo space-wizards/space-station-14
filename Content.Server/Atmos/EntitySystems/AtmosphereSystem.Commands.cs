@@ -168,7 +168,7 @@ public sealed partial class AtmosphereSystem
         var enumerator = _map.GetAllTilesEnumerator(ent, ent);
         while (enumerator.MoveNext(out var tileRef))
         {
-            var tile = GetOrNewTile(ent, ent, tileRef.Value.GridIndices);
+            var tile = GetOrNewTile(ent, tileRef.Value.GridIndices);
             UpdateTileData(ent, mapAtmos, tile);
             UpdateAdjacentTiles(ent, tile, activate: true);
             UpdateTileAir(ent, tile, volume);

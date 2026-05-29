@@ -46,7 +46,7 @@ public sealed partial class AtmosphereSystem
             runtime.CurrentRunInvalidatedTiles.EnsureCapacity(atmosphere.InvalidatedCoords.Count);
             foreach (var indices in atmosphere.InvalidatedCoords)
             {
-                var tile = GetOrNewTile(uid, atmosphere, indices, invalidateNew: false);
+                var tile = GetOrNewTile((uid, atmosphere), indices, invalidateNew: false);
                 runtime.CurrentRunInvalidatedTiles.Enqueue(tile);
                 UpdateTileData(ent, mapAtmos, tile);
             }

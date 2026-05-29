@@ -12,21 +12,20 @@ public sealed partial class AtmosphereSystem
     /// <summary>
     /// Returns the <see cref="TileAtmosphere"/> at <paramref name="index"/>, creating and registering one if absent.
     /// </summary>
-    /// <param name="owner">EntityUid of the grid that owns the tile.</param>
-    /// <param name="atmosphere">The grid atmosphere component.</param>
+    /// <param name="grid">The grid whose tile registry to look up.</param>
     /// <param name="index">Tile coordinates on the grid.</param>
     /// <param name="invalidateNew">When a tile is newly created, queue it for revalidation. False to skip, e.g. during a full rebuild that revalidates everything anyway.</param>
     /// <returns>The existing or newly created tile.</returns>
-    private TileAtmosphere GetOrNewTile(EntityUid owner, GridAtmosphereComponent atmosphere, Vector2i index, bool invalidateNew = true)
+    private TileAtmosphere GetOrNewTile(Entity<GridAtmosphereComponent> grid, Vector2i index, bool invalidateNew = true)
     {
-        var tile = atmosphere.Tiles.GetOrNew(index, out var existing);
+        var tile = grid.Comp.Tiles.GetOrNew(index, out var existing);
         if (existing)
             return tile;
 
         if (invalidateNew)
-            atmosphere.InvalidatedCoords.Add(index);
+            grid.Comp.InvalidatedCoords.Add(index);
 
-        tile.GridIndex = owner;
+        tile.GridIndex = grid.Owner;
         tile.GridIndices = index;
         return tile;
     }

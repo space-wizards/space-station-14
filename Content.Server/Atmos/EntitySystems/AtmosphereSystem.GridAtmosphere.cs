@@ -180,7 +180,7 @@ public sealed partial class AtmosphereSystem
             TileAtmosphere? adjacent;
             if (!tile.NoGridTile)
             {
-                adjacent = GetOrNewTile(uid, atmos, adjacentIndices);
+                adjacent = GetOrNewTile((uid, atmos), adjacentIndices);
             }
             else if (!atmos.Tiles.TryGetValue(adjacentIndices, out adjacent))
             {
