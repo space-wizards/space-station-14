@@ -76,7 +76,7 @@ public abstract partial class SharedMoverController
         component.RelayEntity = relayEntity;
         targetComp.Source = uid;
 
-        if (MoverQuery.TryGetComponent(uid, out var sourceMover) && MoverQuery.TryGetComponent(relayEntity, out var inputMover))
+        if (MoverQuery.TryComp(uid, out var sourceMover) && MoverQuery.TryComp(relayEntity, out var inputMover))
         {
             var held = sourceMover.HeldMoveButtons;
             SetMoveInput((uid, sourceMover), MoveButtons.None);
