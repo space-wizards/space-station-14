@@ -1,11 +1,12 @@
 ﻿using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.CombatMode.AttackWhitelist;
 
 /// <summary>
 /// A entity with this component can only attack entities that pass the white/blacklist from this component
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class AttackWhitelistComponent : Component
 {
     /// <summary>
