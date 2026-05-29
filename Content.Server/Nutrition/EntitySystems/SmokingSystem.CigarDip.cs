@@ -3,11 +3,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
+        [Dependency] private readonly OpenableSystem _openable = default!;
+
         private bool TryDipCigar(Entity<CigarComponent> entity, SmokableComponent smokable, ref AfterInteractEvent args)
         {
             if (args.Target is not { } target)
@@ -15,6 +18,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!TryComp(target, out DrainableSolutionComponent? drainable))
                 return false;
+
+            if (_openable.IsClosed(target, args.User))
+                return true;
 
             if (!_solutionContainerSystem.TryGetSolution(target, drainable.Solution, out var containerSoln, out var containerSolution))
                 return false;
