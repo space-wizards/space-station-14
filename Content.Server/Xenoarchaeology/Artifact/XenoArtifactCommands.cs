@@ -246,7 +246,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Argument parser for toolshed commands, which should autocomplete artifact nodes that exists on artifact.
     /// </summary>
-    public sealed class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
+    public sealed partial class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
     {
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private ToolshedManager _toolshedManager = default!;
@@ -325,7 +325,7 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
 /// Custom type parser for toolshed commands that will enable choosing between hand-held and
 /// stationary artifact types.
 /// </summary>
-public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
     private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
     private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
@@ -369,7 +369,7 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
 /// Custom type parser for toolshed commands
 /// that lets choose entity prototype of XenoArtifact effect.
 /// </summary>
-public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
+public sealed partial class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IEntitySystemManager _systemManager = default!;
