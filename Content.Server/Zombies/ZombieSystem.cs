@@ -60,6 +60,7 @@ namespace Content.Server.Zombies
         public override void Initialize()
         {
             base.Initialize();
+            TransformInitialize();
 
             SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
                 new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });

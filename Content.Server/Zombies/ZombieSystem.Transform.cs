@@ -85,6 +85,14 @@ public sealed partial class ZombieSystem
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
 
+    private static string[] NameComponentsZombieCantAttack = [];
+
+    public void TransformInitialize()
+    {
+        NameComponentsZombieCantAttack =
+            ComponentsZombieCantAttack.Select(type => _compFactory.GetComponentName(type)).ToArray();
+    }
+
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
     /// </summary>
@@ -155,7 +163,7 @@ public sealed partial class ZombieSystem
         var attackWhitelist = EnsureComp<AttackWhitelistComponent>(target);
         attackWhitelist.Blacklist = new EntityWhitelist
         {
-            Components = ComponentsZombieCantAttack.Select(type => _compFactory.GetComponentName(type)).ToArray(),
+            Components = NameComponentsZombieCantAttack,
         };
 
         //funny voice
