@@ -37,13 +37,16 @@ public sealed class SharedGasSpecificHeatsTest
         {
             Connected = true,
         };
-        _pair = await PoolManager.GetServerClient(poolSettings);
+        _pair = await PoolManager.GetServerClient(poolSettings, new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
 
         _sEntMan = Server.ResolveDependency<IEntityManager>();
         _cEntMan = Client.ResolveDependency<IEntityManager>();
 
         _sAtmos = _sEntMan.System<Content.Server.Atmos.EntitySystems.AtmosphereSystem>();
         _cAtmos = _cEntMan.System<AtmosphereSystem>();
+
+        // ensure that client and server atmos are fully inited otherwise arrays might not agree
+        await _pair.ReallyBeIdle(1);
     }
 
     [TearDown]
