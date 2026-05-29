@@ -15,7 +15,6 @@ public abstract partial class SharedStationSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
 
-    [Dependency] private EntityQuery<TransformComponent> _xformQuery;
     [Dependency] private EntityQuery<StationMemberComponent> _stationMemberQuery;
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery;
 
@@ -214,7 +213,7 @@ public abstract partial class SharedStationSystem : EntitySystem
         // First collect all valid map IDs where station grids exist
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_xformQuery.TryGetComponent(gridUid, out var xform))
+            if (!TryComp(gridUid, out TransformComponent? xform))
                 continue;
 
             var mapId = xform.MapID;
@@ -228,7 +227,7 @@ public abstract partial class SharedStationSystem : EntitySystem
         foreach (var gridUid in dataComponent.Grids)
         {
             if (!_gridQuery.TryComp(gridUid, out var grid) ||
-                !_xformQuery.TryGetComponent(gridUid, out var gridXform))
+                !TryComp(gridUid, out TransformComponent? gridXform))
             {
                 continue;
             }
@@ -248,7 +247,7 @@ public abstract partial class SharedStationSystem : EntitySystem
         foreach (var session in Filter.GetAllPlayers(_player))
         {
             var entity = session.AttachedEntity;
-            if (entity == null || !_xformQuery.TryGetComponent(entity, out var xform))
+            if (entity == null || !TryComp(entity, out TransformComponent? xform))
                 continue;
 
             var mapId = xform.MapID;
