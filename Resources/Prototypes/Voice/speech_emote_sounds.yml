@@ -698,6 +698,20 @@
       variation: 0.125
 
 - type: emoteSounds
+  id: Sheep
+  sound:
+    collection: Sheep
+    params:
+      variation: 0.05
+
+- type: emoteSounds
+  id: SheepSpace
+  sound:
+    collection: SheepSpace
+    params:
+      variation: 0.05
+
+- type: emoteSounds
   id: Scurret
   params:
     variation: 0.125
