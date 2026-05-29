@@ -29,6 +29,7 @@ public sealed partial class StationSystem : SharedStationSystem
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private ISawmill _sawmill = default!;
 
