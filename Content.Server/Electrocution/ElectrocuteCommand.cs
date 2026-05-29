@@ -36,7 +36,8 @@ public sealed partial class ElectrocuteCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_statusEffects.CanAddStatusEffect(uid.Value, SharedElectrocutionSystem.ElectrocutionStatusEffect))
+        if (!_statusEffects.CanAddStatusEffect(uid.Value, SharedElectrocutionSystem.ElectrocutionStatusEffect)
+            && !_statusEffects.CanAddStatusEffect(uid.Value, SharedElectrocutionSystem.ElectrocutionWeakStatusEffect))
         {
             shell.WriteError(Loc.GetString("cmd-electrocute-entity-cannot-be-electrocuted"));
             return;
