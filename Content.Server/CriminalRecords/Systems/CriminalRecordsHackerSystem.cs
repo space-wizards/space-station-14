@@ -12,14 +12,14 @@ using Robust.Shared.Random;
 
 namespace Content.Server.CriminalRecords.Systems;
 
-public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSystem
+public sealed partial class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private CriminalRecordsSystem _criminalRecords = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
 
     public override void Initialize()
     {
