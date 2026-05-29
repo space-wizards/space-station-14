@@ -14,7 +14,7 @@ namespace Content.Client.Placement;
 /// Draws a directional arrow during entity placement preview for any entity prototype
 /// that has a <see cref="PlacementDirectionIndicatorComponent"/>.
 /// </summary>
-public sealed class PlacementDirectionIndicatorOverlay(
+public sealed partial class PlacementDirectionIndicatorOverlay(
     IEntityManager entMan,
     IPlacementManager placement,
     IPrototypeManager proto,

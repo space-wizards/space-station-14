@@ -9,14 +9,14 @@ namespace Content.Client.Placement;
 /// <summary>
 /// Manages the lifetime of <see cref="PlacementDirectionIndicatorOverlay"/>.
 /// </summary>
-public sealed class PlacementDirectionIndicatorSystem : EntitySystem
+public sealed partial class PlacementDirectionIndicatorSystem : EntitySystem
 {
-    [Dependency] private readonly IPlacementManager _placement = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private IPlacementManager _placement = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private ConstructionSystem _construction = default!;
 
     public override void Initialize()
     {
