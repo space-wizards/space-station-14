@@ -96,8 +96,13 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
         displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
 
-        var displacementIndex = _sprite.AddLayer(sprite.AsNullable(), displacementLayer, null);
-        _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, displacementIndex);
+        // Slightly cursed, but essentially:
+        // If the original sprite layer is at index i, and we add displacementLayer also at i, the layer map,
+        // starting at index i, is shifted over by 1, and displacementLayer is inserted in the now-empty space.
+        // So, the original sprite would be at i + 1, and displacementLayer is at i. This appears to cause
+        // issues with sprites that have multiple layers, which is why we insert displacementLayer at i + 1
+        _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index + 1);
+        _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index + 1);
 
         return true;
     }
