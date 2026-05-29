@@ -183,6 +183,7 @@
   abstract: true
   parent: [ BaseKudzu, SolutionFood ]
   id: BaseFleshKudzu
+  name: tendons
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
   components:
   - type: MeleeSound
@@ -266,7 +267,6 @@
 - type: entity
   parent: BaseFleshKudzu
   id: FleshKudzu
-  name: tendons
   components:
   - type: Temperature
   - type: TemperatureDamage
@@ -285,7 +285,6 @@
 - type: entity
   parent: BaseFleshKudzu
   id: FleshKudzuSpace
-  name: tendons
   suffix: Space
 
 - type: entity
