@@ -4,6 +4,8 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: Transform # required
+      noRot: true
     - type: MeleeSound
       soundGroups:
         Brute:
@@ -32,8 +34,9 @@
       node: grille
       deconstructionTarget: start
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: PerforatedMetallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Electrified
       requirePower: true
       noWindowInTile: true
@@ -59,6 +62,8 @@
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+          - FullTileMask
           layer:
           - GlassLayer
     - type: Destructible
@@ -135,8 +140,9 @@
     tags:
     - ForceNoFixRotations
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -170,6 +176,8 @@
   parent: Grille
   name: diagonal grille
   components:
+  - type: Transform
+    noRot: false
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/grille.rsi
@@ -208,6 +216,8 @@
   parent: ClockworkGrille
   name: diagonal clockwork grille
   components:
+  - type: Transform
+    noRot: false
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/clockwork_grille.rsi

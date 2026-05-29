@@ -13,26 +13,22 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Weather;
 
-public sealed class WeatherSystem : SharedWeatherSystem
+public sealed partial class WeatherSystem : SharedWeatherSystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    private EntityQuery<AudioComponent> _audioQuery;
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<RoofComponent> _roofQuery;
+    [Dependency] private EntityQuery<AudioComponent> _audioQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<RoofComponent> _roofQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnComponentShutdown);
-
-        _audioQuery = GetEntityQuery<AudioComponent>();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _roofQuery = GetEntityQuery<RoofComponent>();
     }
 
     private void OnComponentShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
