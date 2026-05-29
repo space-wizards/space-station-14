@@ -25,7 +25,6 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
-
     }
 
     /// <summary>
