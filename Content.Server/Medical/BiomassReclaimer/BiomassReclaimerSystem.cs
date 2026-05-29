@@ -158,10 +158,14 @@ namespace Content.Server.Medical.BiomassReclaimer
         }
         private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
         {
-            if (!args.CanReach
-                || args.Target == null
-                || !CanGib(reclaimer, args.Used))
+            if (!args.CanReach || args.Target == null)
                 return;
+
+            if (!CanGib(reclaimer, args.Used))
+            {
+                InsertionFailPopup(reclaimer.Owner, args.Used);
+                return;
+            }
 
             StartDoAfter(reclaimer, args.User, args.Target.Value, args.Used);
         }
@@ -201,8 +205,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             if (!CanGib(reclaimer, args.Args.Used.Value))
             {
-                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
-                _throwing.TryThrow(args.Args.Used.Value, direction, 0.5f);
+                InsertionFailPopup(reclaimer.Owner, args.Args.Used.Value);
                 return;
             }
 
@@ -210,6 +213,15 @@ namespace Content.Server.Medical.BiomassReclaimer
             StartProcessing(args.Args.Used.Value, reclaimer);
 
             args.Handled = true;
+        }
+
+        private void InsertionFailPopup(EntityUid reclaimer, EntityUid used)
+        {
+            var message = HasComp<ActiveBiomassReclaimerComponent>(reclaimer)
+                ? Loc.GetString("biomass-reclaimer-busy", ("reclaimer", reclaimer))
+                : Loc.GetString("biomass-reclaimer-insertion-failed", ("reclaimer", reclaimer), ("used", used));
+
+            _popup.PopupEntity(message, reclaimer);
         }
 
         private void StartProcessing(EntityUid toProcess, Entity<BiomassReclaimerComponent> ent, PhysicsComponent? physics = null)
@@ -254,10 +266,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         private bool CanGib(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
         {
             if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
-            {
-                _popup.PopupEntity(Loc.GetString("biomass-reclaimer-busy", ("reclaimer", reclaimer.Owner)), reclaimer.Owner);
                 return false;
-            }
 
             var isPlant = HasComp<ProduceComponent>(dragged);
             if (!isPlant && !HasComp<MobStateComponent>(dragged))
