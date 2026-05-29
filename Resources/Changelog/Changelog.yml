@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Beach balls no longer collide with players.
-    type: Fix
-  id: 9215
-  time: '2025-11-21T11:32:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41450
 - author: notafet
   changes:
   - message: APCs will now trip off when supplying excessive loads.
@@ -4098,3 +4091,10 @@
   id: 9726
   time: '2026-05-28T23:46:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43267
+- author: imatsoup
+  changes:
+  - message: Surplus crates will no longer contain Hijack Beacons
+    type: Fix
+  id: 9727
+  time: '2026-05-29T07:08:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44148
