@@ -15,15 +15,15 @@ namespace Content.Client.Machines.EntitySystems;
 /// Handles client side examination events to show the expected layout of the machine
 /// based on the origin of the main entity.
 /// </summary>
-public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
+public sealed partial class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
     private readonly Color _partiallyTransparent = new Color(255, 255, 255, 180);
 
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly ISerializationManager _serialization= default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private ISerializationManager _serialization= default!;
 
     public override void Initialize()
     {

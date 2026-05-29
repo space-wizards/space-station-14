@@ -14,8 +14,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref emitter))
             return;
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        if (!xformQuery.TryGetComponent(uid, out var xform))
+        if (!TryComp(uid, out TransformComponent? xform))
         {
             Log.Error("ParticleAccelerator attempted to emit a particle without (having) a transform from which to base its initial position and orientation.");
             return;
@@ -23,12 +22,12 @@ public sealed partial class ParticleAcceleratorSystem
 
         var emitted = Spawn(emitter.EmittedPrototype, xform.Coordinates);
 
-        if (xformQuery.TryGetComponent(emitted, out var particleXform))
+        if (TryComp(emitted, out TransformComponent? particleXform))
             _transformSystem.SetLocalRotation(emitted, xform.LocalRotation, particleXform);
 
         if (TryComp<PhysicsComponent>(emitted, out var particlePhys))
         {
-            var angle = _transformSystem.GetWorldRotation(uid, xformQuery);
+            var angle = _transformSystem.GetWorldRotation(uid);
             _physicsSystem.SetBodyStatus(emitted, particlePhys, BodyStatus.InAir);
 
             var velocity = angle.ToWorldVec() * 20f;
