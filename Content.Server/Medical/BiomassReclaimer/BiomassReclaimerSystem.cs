@@ -173,7 +173,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             args.Handled = true;
 
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Dragged):target} in {ToPrettyString(reclaimer):reclaimer}");
+            _adminLogger.Add(LogType.Gib, LogImpact.High, $"{args.User} is attempting to gib {args.Dragged} in {reclaimer}");
 
             StartDoAfter(reclaimer, args.User, reclaimer.Owner, args.Dragged);
         }
@@ -206,7 +206,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return;
             }
 
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
+            _adminLogger.Add(LogType.Gib, LogImpact.High, $"{args.Args.User} used a biomass reclaimer to gib {args.Args.Used.Value} in {reclaimer}");
             StartProcessing(args.Args.Used.Value, reclaimer);
 
             args.Handled = true;
