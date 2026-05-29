@@ -1,7 +1,6 @@
 <controls:FancyWindow  xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:style="clr-namespace:Content.Client.Stylesheets"
     Name="APCMenu"
     Title="{Loc 'apc-menu-title'}"
     Resizable="False">
@@ -19,9 +18,7 @@
                         <!-- Power On/Off -->
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="highlight" MinWidth="120"/>
-                        <BoxContainer Orientation="Horizontal" MinWidth="150">
-                            <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True" ToggleMode="True"/>
-                        </BoxContainer>
+                        <controls:SwitchButton Name="BreakerButton" MinWidth="150"/>
                         <!--Charging Status-->
                         <Label Text="{Loc 'apc-menu-external-label'}" StyleClasses="highlight" MinWidth="120" />
                         <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}" />
