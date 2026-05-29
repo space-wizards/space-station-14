@@ -99,6 +99,8 @@ public sealed partial class AtmosphereSystem
             if (mix == null)
                 return;
 
+            // TODO ATMOS PERF highly inefficient. Compute pipe pressure once from shared volume and check against
+            // enviorn. pressure.
             var dam = PressureDamage(pipe, maxPressure, mix.Pressure);
             if (dam <= 0)
                 continue;
@@ -107,6 +109,19 @@ public sealed partial class AtmosphereSystem
             _damage.TryChangeDamage(pipe.Owner, _pipeBurstingDamageSpecifier);
             PryTile((xformGridUid, mapComp), coords);
         }
+    }
+
+    /// <summary>
+    /// Performs damage on all pipe nodes in the given pipenet that exceed their maximum pressure.
+    /// </summary>
+    /// <param name="pipeNet">The pipenet to check for overpressure.</param>
+    private void PerformPipeDamageOnAllNodes2(IPipeNet? pipeNet)
+    {
+        if (pipeNet is null)
+            return;
+
+        // SIMDeeznuts
+
     }
 
     /// <summary>
