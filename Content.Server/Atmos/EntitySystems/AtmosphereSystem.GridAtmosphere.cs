@@ -107,7 +107,7 @@ public sealed partial class AtmosphereSystem
         }
     }
 
-    private void GridIsSimulated(EntityUid uid, GridAtmosphereComponent component, ref IsSimulatedGridMethodEvent args)
+    private static void GridIsSimulated(EntityUid uid, GridAtmosphereComponent component, ref IsSimulatedGridMethodEvent args)
     {
         if (args.Handled)
             return;
@@ -224,7 +224,7 @@ public sealed partial class AtmosphereSystem
             tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
     }
 
-    private (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)
+    private static (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)
     {
         if (map == null)
             return (GasMixture.SpaceGas, true);
@@ -251,7 +251,7 @@ public sealed partial class AtmosphereSystem
         AddActiveTile(component, tile);
     }
 
-    private void GridIsHotspotActive(EntityUid uid, GridAtmosphereComponent component,
+    private static void GridIsHotspotActive(EntityUid uid, GridAtmosphereComponent component,
         ref IsHotspotActiveMethodEvent args)
     {
         if (args.Handled)

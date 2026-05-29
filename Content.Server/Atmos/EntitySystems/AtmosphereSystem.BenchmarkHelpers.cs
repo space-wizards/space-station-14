@@ -35,7 +35,7 @@ public sealed partial class AtmosphereSystem
                 nameof(mapEnt));
 
         _simulationStopwatch.Restart();
-        var completed = _phaseTable[(int)state].Runner(this, ent, mapEnt.GetValueOrDefault());
+        var completed = PhaseTable[(int)state].Runner(this, ent, mapEnt.GetValueOrDefault());
         ent.Comp1.Processing.ProcessingPaused = !completed;
         return completed;
     }
@@ -66,6 +66,9 @@ public sealed partial class AtmosphereSystem
             if (++iterations > maxIterations)
                 throw new InvalidOperationException($"Cycle didn't complete after {maxIterations} iterations; a phase is failing to make progress.");
         } while (state == AtmosphereProcessingCompletionState.Return);
+
+        DebugTools.Assert(state == AtmosphereProcessingCompletionState.Finished,
+            "RunProcessingFull completed without finishing a cycle; the grid may have been deleted mid-run.");
     }
 
     /// <summary>

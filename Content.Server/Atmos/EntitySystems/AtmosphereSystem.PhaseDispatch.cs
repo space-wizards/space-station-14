@@ -10,8 +10,6 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
-
         private readonly Stopwatch _simulationStopwatch = new();
 
         // How many items a phase drains between budget checks. Reading the Stopwatch in OverBudget
@@ -37,12 +35,12 @@ namespace Content.Server.Atmos.EntitySystems
         // Gate == None means the phase always runs.
         private readonly record struct PhaseDescriptor(
             AtmosphereProcessingState Phase,
-            AtmosPhaseFlags Gate,
+            AtmosPhases Gate,
             PhaseEnabled Enabled,
             PhaseRunner Runner);
 
         // Indexed by (int)AtmosphereProcessingState; BuildPhaseTable asserts row-vs-enum alignment at startup.
-        private static readonly PhaseDescriptor[] _phaseTable = BuildPhaseTable();
+        private static readonly PhaseDescriptor[] PhaseTable = BuildPhaseTable();
 
         private static PhaseDescriptor[] BuildPhaseTable()
         {
@@ -50,52 +48,52 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 new(
                     AtmosphereProcessingState.Revalidate,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, _) => s.ProcessRevalidate(e)),
                 new(
                     AtmosphereProcessingState.TileEqualize,
-                    AtmosPhaseFlags.MonstermosEqualization,
+                    AtmosPhases.MonstermosEqualization,
                     static s => s.MonstermosEqualization,
                     static (s, e, _) => s.ProcessTileEqualize(e)),
                 new(
                     AtmosphereProcessingState.ActiveTiles,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, _) => s.ProcessActiveTiles(e)),
                 new(
                     AtmosphereProcessingState.ExcitedGroups,
-                    AtmosPhaseFlags.ExcitedGroups,
+                    AtmosPhases.ExcitedGroups,
                     static s => s.ExcitedGroups,
                     static (s, e, _) => s.ProcessExcitedGroups(e)),
                 new(
                     AtmosphereProcessingState.HighPressureDelta,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, _) => s.ProcessHighPressureDelta(e)),
                 new(
                     AtmosphereProcessingState.DeltaPressure,
-                    AtmosPhaseFlags.DeltaPressureDamage,
+                    AtmosPhases.DeltaPressureDamage,
                     static s => s.DeltaPressureDamage,
                     static (s, e, _) => s.ProcessDeltaPressure(e)),
                 new(
                     AtmosphereProcessingState.Hotspots,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, _) => s.ProcessHotspots(e)),
                 new(
                     AtmosphereProcessingState.Superconductivity,
-                    AtmosPhaseFlags.Superconduction,
+                    AtmosPhases.Superconduction,
                     static s => s.Superconduction,
                     static (s, e, _) => s.ProcessSuperconductivity(e.Comp1)),
                 new(
                     AtmosphereProcessingState.PipeNet,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, _) => s.ProcessPipeNets(e.Comp1)),
                 new(
                     AtmosphereProcessingState.AtmosDevices,
-                    AtmosPhaseFlags.None,
+                    AtmosPhases.None,
                     static _ => true,
                     static (s, e, m) => s.ProcessAtmosDevices(e, m)),
             };
@@ -110,12 +108,12 @@ namespace Content.Server.Atmos.EntitySystems
             return table;
         }
 
-        private static AtmosphereProcessingState GetNextPhase(AtmosphereProcessingState current, AtmosPhaseFlags flags)
+        private static AtmosphereProcessingState GetNextPhase(AtmosphereProcessingState current, AtmosPhases flags)
         {
             for (var idx = (int)current + 1; idx < (int)AtmosphereProcessingState.NumStates; idx++)
             {
-                var entry = _phaseTable[idx];
-                if (entry.Gate == AtmosPhaseFlags.None || (flags & entry.Gate) != 0)
+                var entry = PhaseTable[idx];
+                if (entry.Gate == AtmosPhases.None || (flags & entry.Gate) != 0)
                     return entry.Phase;
             }
             return AtmosphereProcessingState.Revalidate;
@@ -126,7 +124,7 @@ namespace Content.Server.Atmos.EntitySystems
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             Entity<MapAtmosphereComponent?> map)
         {
-            return _phaseTable[(int)phase].Runner(this, ent, map);
+            return PhaseTable[(int)phase].Runner(this, ent, map);
         }
 
         #endregion
@@ -149,12 +147,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private static AtmosphereProcessingCompletionState RecoverInvalidPhase(GridAtmosphereComponent atmosphere)
-        {
-            // No work happened, so the next real cycle advances UpdateCounter.
-            atmosphere.Processing.CycleCursor = null;
-            atmosphere.Processing.ProcessingPaused = false;
-            return AtmosphereProcessingCompletionState.Finished;
-        }
+            => AbortCycle(atmosphere);
 
         internal static void ResetCycleScratch(GridAtmosphereComponent atmos)
         {
@@ -172,15 +165,16 @@ namespace Content.Server.Atmos.EntitySystems
             runtime.CurrentRunAtmosDevices.Clear();
             runtime.CurrentRunInvalidatedTiles.Clear();
             runtime.DeltaPressureCursor = 0;
+            runtime.DeltaPressureSnapshot.Clear();
             runtime.DeltaPressureDamageResults.Clear();
         }
 
-        private AtmosPhaseFlags SnapshotPhaseFlags()
+        private AtmosPhases SnapshotPhaseFlags()
         {
-            var flags = AtmosPhaseFlags.None;
-            foreach (var phase in _phaseTable)
+            var flags = AtmosPhases.None;
+            foreach (var phase in PhaseTable)
             {
-                if (phase.Gate != AtmosPhaseFlags.None && phase.Enabled(this))
+                if (phase.Gate != AtmosPhases.None && phase.Enabled(this))
                     flags |= phase.Gate;
             }
             return flags;
@@ -240,6 +234,7 @@ namespace Content.Server.Atmos.EntitySystems
             var atmosphere = ent.Comp1;
 
             var runtime = atmosphere.Processing;
+            // Accumulates on every call including resumes, so dt reflects true wall time across pauses.
             runtime.TimeSinceLastDeviceUpdate += frameTime;
 
             // Charge Timer only at cycle start.

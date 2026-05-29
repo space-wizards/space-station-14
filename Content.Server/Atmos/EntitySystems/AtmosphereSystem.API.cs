@@ -778,9 +778,6 @@ public partial class AtmosphereSystem
         grid.Comp.DeltaPressureEntities.RemoveAt(lastIndex);
         grid.Comp.DeltaPressureEntityLookup.Remove(ent.Owner);
 
-        if (grid.Comp.Processing.DeltaPressureCursor > grid.Comp.DeltaPressureEntities.Count)
-            grid.Comp.Processing.DeltaPressureCursor = grid.Comp.DeltaPressureEntities.Count;
-
         ent.Comp.InProcessingList = false;
         ent.Comp.GridUid = null;
         return true;

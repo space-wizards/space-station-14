@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool OverBudget(ref int sinceLastCheck, int lagCheck = LagCheckIterations)
         {
-            if (sinceLastCheck++ < lagCheck)
+            if (++sinceLastCheck < lagCheck)
                 return false;
             sinceLastCheck = 0;
             return BudgetExhausted;
