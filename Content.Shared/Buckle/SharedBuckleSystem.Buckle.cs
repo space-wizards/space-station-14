@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
@@ -369,6 +370,12 @@ public abstract partial class SharedBuckleSystem
         var xform = Transform(buckle);
         var coords = new EntityCoordinates(strap, strap.Comp.BuckleOffset);
         _transform.SetCoordinates(buckle, xform, coords, rotation: Angle.Zero);
+
+        if (TryComp<InputMoverComponent>(buckle, out var mover))
+        {
+            mover.LerpTarget = TimeSpan.Zero;
+            Dirty(buckle, mover);
+        }
 
         _joints.SetRelay(buckle, strap);
 
