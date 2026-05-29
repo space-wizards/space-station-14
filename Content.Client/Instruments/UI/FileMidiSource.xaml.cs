@@ -81,8 +81,20 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             var totalTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTotalTick / instrument.Renderer!.SequencerTimeScale));
             var currentTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTick / instrument.Renderer!.SequencerTimeScale));
             TimeLabel.Text = totalTime.Hours < 1
-                ? $"{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Minutes:D2}:{totalTime.Seconds:D2}"
-                : $"{currentTime.Hours:D2}:{currentTime.Minutes:D2}:{currentTime.Seconds:D2}/{totalTime.Hours:D2}:{totalTime.Minutes:D2}:{totalTime.Seconds:D2}";
+                ? Loc.GetString(
+                    "instruments-component-menu-files-track-playtime-seconds-minutes",
+                    ("currentMinutes", currentTime.ToString("mm")),
+                    ("currentSeconds", currentTime.ToString("ss")),
+                    ("totalMinutes", totalTime.ToString("mm")),
+                    ("totalSeconds", totalTime.ToString("ss")))
+                : Loc.GetString(
+                    "instruments-component-menu-files-track-playtime-seconds-minutes-hours",
+                    ("currentHours", currentTime.ToString("hh")),
+                    ("currentMinutes", currentTime.ToString("mm")),
+                    ("currentSeconds", currentTime.ToString("ss")),
+                    ("totalHours", totalTime.ToString("hh")),
+                    ("totalMinutes", totalTime.ToString("mm")),
+                    ("totalSeconds", totalTime.ToString("ss")));
         }
     }
 
