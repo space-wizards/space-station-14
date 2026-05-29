@@ -1154,4 +1154,11 @@
   id: 142
   time: '2026-05-29T19:30:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44151
+- author: ProPeperos
+  changes:
+  - message: On some ERT shuttles - Tweaked atmos systems
+    type: Tweak
+  id: 143
+  time: '2026-05-29T19:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44150
 Order: 2

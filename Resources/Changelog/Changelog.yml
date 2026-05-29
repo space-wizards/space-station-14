@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MrPersival
-  changes:
-  - message: Now reptilians can eat hivelord remains.
-    type: Fix
-  id: 9217
-  time: '2025-11-21T18:57:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41317
 - author: K-Dynamic, Cadunkus
   changes:
   - message: Added new vox hairstyle called "Vox Catfish."
@@ -4098,3 +4091,10 @@
   id: 9728
   time: '2026-05-29T14:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44114
+- author: slarticodefast
+  changes:
+  - message: Fixed lightning sprite rotation.
+    type: Fix
+  id: 9729
+  time: '2026-05-29T19:49:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42342
