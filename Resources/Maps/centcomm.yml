@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 268.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/07/2025 22:34:43
-  entityCount: 9769
+  time: 05/26/2026 22:42:04
+  entityCount: 9771
 maps: []
 grids:
 - 1668
@@ -4181,7 +4181,7 @@ entities:
           2,-4:
             0: 29303
           2,-3:
-            0: 65535
+            0: 32767
           2,-2:
             0: 65522
           2,-1:
@@ -4367,9 +4367,11 @@ entities:
           8,0:
             0: 65533
           8,1:
-            0: 45311
+            0: 12543
+            2: 32768
           8,2:
-            0: 30475
+            0: 30467
+            2: 8
           8,3:
             0: 30471
           8,4:
@@ -4387,10 +4389,10 @@ entities:
           3,-7:
             0: 36863
           4,-6:
-            2: 819
+            3: 819
             0: 34952
           3,-6:
-            2: 4095
+            3: 4095
             0: 16384
           5,-8:
             0: 6007
@@ -4404,8 +4406,6 @@ entities:
             0: 65535
           6,-6:
             0: 65535
-          6,-8:
-            0: 16384
           7,-7:
             0: 32767
           7,-6:
@@ -4648,16 +4648,16 @@ entities:
             0: 21623
           -8,4:
             1: 240
-            3: 28672
+            4: 28672
           -9,4:
             1: 17600
           -8,5:
-            3: 119
+            4: 119
             1: 61440
           -9,5:
             1: 50244
           -8,6:
-            4: 30576
+            5: 30576
           -8,7:
             1: 240
           -9,7:
@@ -4885,6 +4885,9 @@ entities:
           immutable: True
           moles: {}
         - volume: 2500
+          temperature: 293.15
+          moles: {}
+        - volume: 2500
           temperature: 235
           moles:
             Oxygen: 27.225372
@@ -4910,6 +4913,8 @@ entities:
     - type: NavMap
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AccessConfiguratorUniversal
   entities:
   - uid: 2056
@@ -6464,6 +6469,18 @@ entities:
     components:
     - type: Transform
       pos: -42.5,-26.5
+      parent: 1668
+- proto: AtmosFixBlockerMarker
+  entities:
+  - uid: 9704
+    components:
+    - type: Transform
+      pos: 35.5,8.5
+      parent: 1668
+  - uid: 9705
+    components:
+    - type: Transform
+      pos: 35.5,7.5
       parent: 1668
 - proto: AtmosFixFreezerMarker
   entities:
@@ -23855,25 +23872,23 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 23.5,10.5
+      pos: 23.5,12.5
       parent: 1668
   - uid: 1624
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 24.5,12.5
+      pos: 24.5,11.5
       parent: 1668
   - uid: 1625
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 24.5,11.5
+      pos: 24.5,12.5
       parent: 1668
   - uid: 1626
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 24.5,10.5
+      pos: 22.5,12.5
       parent: 1668
   - uid: 1627
     components:
@@ -23887,123 +23902,137 @@ entities:
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 22.5,12.5
+      pos: 23.5,10.5
       parent: 1668
   - uid: 1751
     components:
     - type: Transform
-      pos: 22.5,11.5
+      rot: 3.141592653589793 rad
+      pos: 22.5,10.5
       parent: 1668
   - uid: 2085
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 23.5,12.5
+      pos: 24.5,10.5
       parent: 1668
   - uid: 3264
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -0.5,30.5
+      pos: -0.5,31.5
       parent: 1668
   - uid: 3520
     components:
     - type: Transform
-      pos: 22.5,10.5
+      rot: 3.141592653589793 rad
+      pos: 22.5,11.5
       parent: 1668
   - uid: 3638
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 5.5,34.5
       parent: 1668
   - uid: 3644
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 7.5,30.5
       parent: 1668
   - uid: 3645
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 7.5,31.5
       parent: 1668
   - uid: 3646
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 5.5,32.5
       parent: 1668
   - uid: 3647
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: -1.5707963267948966 rad
       pos: 0.5,32.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3649
     components:
     - type: Transform
-      pos: 5.5,33.5
+      rot: 3.141592653589793 rad
+      pos: 5.5,36.5
       parent: 1668
   - uid: 3650
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: -1.5707963267948966 rad
       pos: 1.5,32.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3651
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: -1.5707963267948966 rad
       pos: 6.5,32.5
       parent: 1668
   - uid: 3653
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,35.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3654
     components:
     - type: Transform
-      pos: 5.5,35.5
+      rot: 3.141592653589793 rad
+      pos: 5.5,33.5
       parent: 1668
   - uid: 3655
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,36.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3656
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,34.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3657
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 1.5,33.5
       parent: 1668
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 3658
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -0.5,32.5
       parent: 1668
   - uid: 3659
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -0.5,31.5
+      pos: -0.5,30.5
       parent: 1668
   - uid: 3662
     components:
     - type: Transform
-      pos: 5.5,36.5
+      rot: 3.141592653589793 rad
+      pos: 5.5,35.5
       parent: 1668
   - uid: 3663
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: -1.5707963267948966 rad
       pos: 7.5,32.5
       parent: 1668
 - proto: CorporateCircuitBoard
@@ -28009,14 +28038,14 @@ entities:
       pos: -24.5,26.5
       parent: 1668
     - type: GasFilter
-      filteredGas: Nitrogen
+      enabled: True
   - uid: 3499
     components:
     - type: Transform
       pos: -24.5,21.5
       parent: 1668
     - type: GasFilter
-      filteredGas: Oxygen
+      enabled: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasMinerNitrogenStationLarge
@@ -28044,6 +28073,8 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.77
       inletOneConcentration: 0.23
+      targetPressure: 303.975
+      enabled: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasOutletInjector
@@ -38805,12 +38836,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -25.5,19.5
       parent: 1668
+    - type: GasPressurePump
+      targetPressure: 4500
+      enabled: True
   - uid: 3500
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -25.5,25.5
       parent: 1668
+    - type: GasPressurePump
+      targetPressure: 4500
+      enabled: True
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 1175
@@ -42363,7 +42400,6 @@ entities:
       pos: 13.5,29.5
       parent: 1668
     - type: Godmode
-      oldDamage: {}
   - uid: 5998
     components:
     - type: Transform
@@ -43569,7 +43605,6 @@ entities:
           occludes: False
           ent: null
     - type: Godmode
-      oldDamage: {}
   - uid: 6047
     components:
     - type: Transform
@@ -50527,48 +50562,46 @@ entities:
       parent: 1668
     - type: DeviceLinkSource
       linkedPorts:
-        3520:
-        - - Off
-          - Off
-        - - On
-          - Reverse
-        1751:
-        - - Off
-          - Off
-        - - On
-          - Reverse
         1744:
+        - - On
+          - Forward
         - - Off
           - Off
-        - - On
-          - Reverse
         2085:
+        - - On
+          - Forward
         - - Off
           - Off
-        - - On
-          - Reverse
         1624:
+        - - On
+          - Forward
         - - Off
           - Off
-        - - On
-          - Reverse
         1625:
         - - On
           - Forward
         - - Off
           - Off
-        - - On
-          - Reverse
-        1626:
-        - - Off
-          - Off
-        - - On
-          - Reverse
         1600:
+        - - On
+          - Forward
         - - Off
           - Off
+        1626:
         - - On
-          - Reverse
+          - Forward
+        - - Off
+          - Off
+        1751:
+        - - On
+          - Forward
+        - - Off
+          - Off
+        3520:
+        - - On
+          - Forward
+        - - Off
+          - Off
     - type: Fixtures
       fixtures: {}
   - uid: 1728
@@ -50576,6 +50609,8 @@ entities:
     - type: Transform
       pos: 3.5,13.5
       parent: 1668
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1627:
@@ -50583,6 +50618,8 @@ entities:
           - Forward
         - - Off
           - Off
+      lastSignals:
+        Status: True
     - type: Fixtures
       fixtures: {}
   - uid: 2250
@@ -55520,67 +55557,67 @@ entities:
       parent: 1668
     - type: DeviceLinkSource
       linkedPorts:
-        3644:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        3645:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        3663:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
-        3651:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
         3646:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        3649:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
-        - - Middle
-          - Off
-        3638:
-        - - Left
           - Forward
-        - - Right
-          - Reverse
         - - Middle
           - Off
         3654:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3638:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3662:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3649:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3651:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3645:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3644:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3663:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
   - uid: 3652
@@ -55590,67 +55627,67 @@ entities:
       parent: 1668
     - type: DeviceLinkSource
       linkedPorts:
-        3655:
+        3659:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3653:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3656:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3647:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3650:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3657:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        3655:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
         3658:
         - - Left
-          - Forward
-        - - Right
           - Reverse
-        - - Middle
-          - Off
-        3659:
-        - - Left
-          - Forward
         - - Right
-          - Reverse
+          - Forward
         - - Middle
           - Off
         3264:
         - - Left
-          - Forward
-        - - Right
           - Reverse
+        - - Right
+          - Forward
         - - Middle
           - Off
   - uid: 9083
