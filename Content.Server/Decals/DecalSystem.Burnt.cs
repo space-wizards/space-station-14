@@ -8,7 +8,7 @@ namespace Content.Server.Decals;
 
 public sealed partial class DecalSystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
 
     private string[] _burntDecals = [];
 
