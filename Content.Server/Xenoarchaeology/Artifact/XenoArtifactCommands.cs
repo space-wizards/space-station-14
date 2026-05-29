@@ -248,9 +248,9 @@ public sealed partial class XenoArtifactCommand : ToolshedCommand
     /// </summary>
     public sealed class XenoArtifactNodeParser : CustomTypeParser<(Entity<XenoArtifactComponent>, Entity<XenoArtifactNodeComponent>)>
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly ToolshedManager _toolshedManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private ToolshedManager _toolshedManager = default!;
+        [Dependency] private IEntitySystemManager _entitySystemManager = default!;
 
         private XenoArtifactSystem? _artifact;
 
@@ -331,7 +331,7 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
     private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
     private static readonly EntProtoId[] Options = [ArtifactDummyItem, ArtifactDummyStructure];
 
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override bool TryParse(ParserContext ctx, out ProtoId<EntityPrototype> result)
     {
@@ -371,8 +371,8 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
 /// </summary>
 public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntitySystemManager _systemManager = default!;
 
     private XenoArtifactSystem? _artifact;
 
