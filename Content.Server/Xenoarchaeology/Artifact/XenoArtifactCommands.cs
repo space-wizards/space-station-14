@@ -19,7 +19,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 /// Toolshed commands for manipulating xeno artifact.
 /// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
-public sealed class XenoArtifactCommand : ToolshedCommand
+public sealed partial class XenoArtifactCommand : ToolshedCommand
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
