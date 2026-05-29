@@ -6,7 +6,7 @@ namespace Content.Server.Objectives.Systems;
 
 public sealed partial class SupercriticalAnomaliesConditionSystem : EntitySystem
 {
-    [Dependency] private readonly NumberObjectiveSystem _numberObjective = default!;
+    [Dependency] private NumberObjectiveSystem _numberObjective = default!;
 
     public override void Initialize()
     {

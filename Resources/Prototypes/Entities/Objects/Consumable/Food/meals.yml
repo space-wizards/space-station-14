@@ -82,7 +82,7 @@
     storedOffset: 0,-3
   - type: FlavorProfile
     flavors:
-      - carrots
+      - carrot
       - salty
   - type: Sprite
     state: fries-carrot
