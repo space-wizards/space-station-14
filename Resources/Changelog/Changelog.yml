@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: APCs will now trip off when supplying excessive loads.
-    type: Add
-  id: 9216
-  time: '2025-11-21T15:14:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41377
 - author: MrPersival
   changes:
   - message: Now reptilians can eat hivelord remains.
@@ -4098,3 +4091,10 @@
   id: 9727
   time: '2026-05-29T07:08:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44148
+- author: iaada
+  changes:
+  - message: Items can now be rotated with a verb, and rotate while being dragged.
+    type: Add
+  id: 9728
+  time: '2026-05-29T14:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44114
