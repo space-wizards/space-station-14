@@ -4,6 +4,8 @@
   name: bar sign
   abstract: true
   components:
+  - type: WallMount
+    arc: 360
   - type: Sprite
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty

@@ -29,6 +29,8 @@
   description: A virtual map of the surrounding station.
   suffix: Wall
   components:
+    - type: WallMount
+      arc: 360
     - type: Appearance
     - type: StationMap
     - type: Sprite
@@ -111,6 +113,8 @@
   name: station map assembly
   description: A station map assembly.
   components:
+  - type: WallMount
+    arc: 360
   - type: Sprite
     sprite: Structures/Machines/station_map.rsi
     layers:

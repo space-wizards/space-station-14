@@ -57,7 +57,8 @@
           MaterialCloth1:
             min: 1
             max: 1
-  - type: InteractionIgnoreAnchoredInTile
+  - type: WallMount
+    arc: 360
 
 - type: entity
   id: HospitalCurtains
