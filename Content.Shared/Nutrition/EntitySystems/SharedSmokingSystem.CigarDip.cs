@@ -1,16 +1,12 @@
-using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Nutrition.EntitySystems;
 
-namespace Content.Server.Nutrition.EntitySystems;
+namespace Content.Shared.Nutrition.EntitySystems;
 
-public sealed partial class SmokingSystem
+public abstract partial class SharedSmokingSystem
 {
-    [Dependency] private OpenableSystem _openable = default!;
-
     private bool TryDipCigar(Entity<CigarComponent> entity, SmokableComponent smokable, ref AfterInteractEvent args)
     {
         if (args.Target is not { } target)
@@ -19,7 +15,7 @@ public sealed partial class SmokingSystem
         if (!TryComp(target, out DrainableSolutionComponent? drainable))
             return false;
 
-        if (_openable.IsClosed(target, args.User))
+        if (_openable.IsClosed(target, args.User, predicted: true))
             return true;
 
         if (!_solutionContainerSystem.TryGetSolution(target, drainable.Solution, out var containerSoln, out var containerSolution))
@@ -27,7 +23,7 @@ public sealed partial class SmokingSystem
 
         if (containerSolution.Volume <= FixedPoint2.Zero)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-empty", ("cigar", entity.Owner)), target, args.User);
+            _popupSystem.PopupClient(Loc.GetString("cigar-component-dip-empty", ("cigar", entity.Owner)), target, args.User);
             return true;
         }
 
@@ -36,7 +32,7 @@ public sealed partial class SmokingSystem
 
         if (cigSolution.Volume >= cigSolution.MaxVolume)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-full", ("cigar", entity.Owner)), target, args.User);
+            _popupSystem.PopupClient(Loc.GetString("cigar-component-dip-full", ("cigar", entity.Owner)), target, args.User);
             return true;
         }
 
@@ -46,7 +42,7 @@ public sealed partial class SmokingSystem
 
         _solutionContainerSystem.TryAddSolution(cigSoln.Value, drawn);
 
-        _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-success", ("cigar", entity.Owner), ("target", target)), target, args.User);
+        _popupSystem.PopupClient(Loc.GetString("cigar-component-dip-success", ("cigar", entity.Owner), ("target", target)), target, args.User);
 
         return true;
     }

@@ -17,10 +17,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Content.Shared.Atmos;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed partial class SmokingSystem : EntitySystem
+    public sealed partial class SmokingSystem : SharedSmokingSystem
     {
         [Dependency] private ReactiveSystem _reactiveSystem = default!;
         [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -41,6 +42,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
             SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
@@ -64,6 +67,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             smokable.State = state;
+            Dirty(uid, smokable);
             _appearance.SetData(uid, SmokingVisuals.Smoking, state, appearance);
 
             var newState = state switch
