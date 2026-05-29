@@ -31,6 +31,7 @@ public sealed partial class WallMountVisibilityOverlay(
     private readonly TransformSystem _xform = xform;
     private readonly WallMountTreeSystem _tree = tree;
     private readonly WallMountVisibilitySystem _visibility = visibility;
+
     private readonly EntityQuery<MapGridComponent> _gridQuery = gridQuery;
     private readonly EntityQuery<SpriteComponent> _spriteQuery = spriteQuery;
 
