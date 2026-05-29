@@ -14,12 +14,12 @@ namespace Content.Shared.Thief.Systems;
 /// <summary>
 /// <see cref="ThiefBeaconComponent"/>
 /// </summary>
-public sealed class ThiefBeaconSystem : EntitySystem
+public sealed partial class ThiefBeaconSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -57,6 +57,15 @@ public sealed class ThiefBeaconSystem : EntitySystem
     {
         if (args.IsFolded)
             ClearCoordinate(beacon, args.User);
+
+        if (!args.IsFolded) // Set the beacon's coordinates automatically when its unfolded
+        {
+            if (args.User == null)
+                return;
+            var mind = _mind.GetMind(args.User.Value);
+            if (mind != null)
+                SetCoordinate(beacon, mind.Value, args.User);
+        }
     }
 
     private void OnExamined(Entity<ThiefBeaconComponent> beacon, ref ExaminedEvent args)

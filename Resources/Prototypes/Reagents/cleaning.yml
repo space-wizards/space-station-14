@@ -11,7 +11,7 @@
   boilingPoint: 111.0
   meltingPoint: -5.0
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -28,9 +28,9 @@
         probability: 0.15
   tileReactions:
   - !type:CleanTileReaction
-    cleanCost: 0.13
+    cleanCost: 0.01
   - !type:CleanDecalsReaction
-    cleanCost: 0.13
+    cleanCost: 0.01
 
 - type: reagent
   id: SpaceCleaner
@@ -43,8 +43,10 @@
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
-    - !type:CleanTileReaction {}
-    - !type:CleanDecalsReaction {}
+    - !type:CleanTileReaction
+      cleanCost: 0.1
+    - !type:CleanDecalsReaction
+      cleanCost: 0.1
 
 - type: reagent
   id: SoapReagent
@@ -60,7 +62,7 @@
     requiredSlipSpeed: 3.5
   friction: 0.3 # Slightly less friction than water, but not as bad as space lube
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:Vomit
         conditions:
@@ -68,8 +70,6 @@
           reagent: SoapReagent
           min: 6
         probability: 0.20
-    Drink:
-      effects:
       - !type:Vomit
         conditions:
         - !type:ReagentCondition
@@ -115,13 +115,13 @@
       - !type:ModifyBleed
         amount: -1.5
   metabolisms:
-    Narcotic:
+    Bloodstream:
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         time: 5
         type: Add
-    Drink:
+    Digestion:
       effects:
       - !type:GenericStatusEffect
         key: Muted

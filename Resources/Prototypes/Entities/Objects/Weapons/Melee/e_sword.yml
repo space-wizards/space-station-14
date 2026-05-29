@@ -14,7 +14,9 @@
       path: /Audio/Weapons/ebladehum.ogg
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
@@ -94,7 +96,6 @@
     price: 2500
   - type: ComponentToggler
     components:
-    - type: Sharp
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
@@ -102,7 +103,9 @@
     - type: Tool
       useSound:
         collection: Welder
-      qualities: Welding
+      qualities:
+      - Slicing
+      - Welding
       speedModifier: 0.5
     - type: RequiresEyeProtection
       toggled: true
@@ -140,18 +143,19 @@
         volume: -3
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
+      - Welding
+      speedModifier: 0.7
+      useSound:
+        collection: Welder
+    - type: RequiresEyeProtection
+      toggled: true
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
       doAfterDuration: 4.0
-    - type: Tool
-      useSound:
-        collection: Welder
-      qualities: Welding
-      speedModifier: 0.7
-    - type: RequiresEyeProtection
-      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
@@ -209,22 +213,24 @@
       types:
         Slash: 10
         Heat: 10
+    deactivatedSecret: true
   - type: ComponentToggler
     components:
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
+      - Welding
+      speedModifier: 0.8
+      useSound:
+        collection: Welder
+    - type: RequiresEyeProtection
+      toggled: true
     - type: DisarmMalus
       malus: 0.4
     - type: Execution
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
-    - type: Tool
-      useSound:
-        collection: Welder
-      qualities: Welding
-      speedModifier: 0.8
-    - type: RequiresEyeProtection
-      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -307,16 +313,17 @@
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
   - type: ComponentToggler
     components:
-    - type: Sharp
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
       doAfterDuration: 4.0
     - type: Tool
+      qualities:
+      - Slicing
+      - Welding
+      speedModifier: 0.4
       useSound:
         collection: Welder
-      qualities: Welding
-      speedModifier: 0.4
     - type: RequiresEyeProtection
       toggled: true
 
@@ -355,16 +362,17 @@
         volume: 3
   - type: ComponentToggler
     components:
-    - type: Sharp
     - type: DisarmMalus
       malus: 0.7
     - type: Execution
       doAfterDuration: 4.0
     - type: Tool
+      qualities:
+      - Slicing
+      - Welding
+      speedModifier: 0.4
       useSound:
         collection: Welder
-      qualities: Welding
-      speedModifier: 0.4
     - type: RequiresEyeProtection
       toggled: true
   - type: Wieldable
