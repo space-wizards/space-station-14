@@ -59,6 +59,7 @@ namespace Content.Server.Zombies;
 /// </remarks>
 public sealed partial class ZombieSystem
 {
+    [Dependency] private IComponentFactory _compFactory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IChatManager _chatMan = default!;
@@ -80,6 +81,7 @@ public sealed partial class ZombieSystem
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
+    private static readonly List<Type> ComponentsZombieCantAttack = [typeof(ZombieComponent), typeof(IncurableZombieComponent)];
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
 
@@ -153,7 +155,7 @@ public sealed partial class ZombieSystem
         var attackWhitelist = EnsureComp<AttackWhitelistComponent>(target);
         attackWhitelist.Blacklist = new EntityWhitelist
         {
-            Components = ["Zombie", "IncurableZombie"],
+            Components = ComponentsZombieCantAttack.Select(type => _compFactory.GetComponentName(type)).ToArray(),
         };
 
         //funny voice
