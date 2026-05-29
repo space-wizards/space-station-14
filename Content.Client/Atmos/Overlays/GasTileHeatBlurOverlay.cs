@@ -21,18 +21,18 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 ///     Overlay responsible for rendering heat distortion shader.
 /// </summary>
-public sealed class GasTileHeatBlurOverlay : Overlay
+public sealed partial class GasTileHeatBlurOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = true;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> HeatOverlayShader = "HeatBlur";
 
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     private readonly SharedTransformSystem _xformSys;
     private readonly ShaderInstance _shader;
@@ -152,7 +152,9 @@ public sealed class GasTileHeatBlurOverlay : Overlay
                     worldHandle.SetTransform(gridEntToViewportLocal);
 
                     // We only care about tiles that fit in these bounds
-                    var floatBounds = worldToViewportLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+                    var worldToGridLocal = _xformSys.GetInvWorldMatrix(grid.Owner);
+                    var floatBounds = worldToGridLocal.TransformBox(worldBounds).Enlarged(grid.Comp.TileSize);
+
                     var localBounds = new Box2i(
                         (int)MathF.Floor(floatBounds.Left),
                         (int)MathF.Floor(floatBounds.Bottom),

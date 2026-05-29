@@ -4,3 +4,31 @@
   antagonist: true
   setPreference: false # TODO: set this to true once Changeling exits WIP status
   objective: roles-antag-changeling-objective
+
+- type: antagSpecifier
+  parent: RestrictedAntag
+  id: Changeling
+  prefRoles: [ Changeling ]
+  briefing:
+    text: changeling-role-greeting
+    color: Red
+    sound: /Audio/Ambience/Antag/changeling_start.ogg
+  components:
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionChangelingStore
+  - type: Store
+    name: store-preset-name-changeling
+    categories:
+    - ChangelingStoreCombat
+    - ChangelingStoreStealth
+    - ChangelingStoreUtility
+    currencyWhitelist:
+    - ChangelingDNA
+    balance:
+      ChangelingDNA: 60
+  mindRoles:
+  - MindRoleChangeling
