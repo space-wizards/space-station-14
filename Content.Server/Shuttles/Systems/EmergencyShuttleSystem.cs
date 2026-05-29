@@ -643,9 +643,9 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     }
 
     /// <summary>
-    /// Returns whether a target is escaping on the emergency shuttle, but only if evac has arrived.
+    ///     Returns whether a target is escaping, but only if evac has arrived.
     /// </summary>
-    public bool IsTargetEscaping(EntityUid target)
+    public bool IsTargetEscaping(EntityUid target, bool CountEscapePods = true)
     {
         // if evac isn't here then sitting in a pod doesn't return true
         if (!EmergencyShuttleArrived)
@@ -654,7 +654,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         // check if target is on an emergency shuttle
         var xform = Transform(target);
 
-        if (HasComp<EmergencyShuttleComponent>(xform.GridUid))
+        if (HasComp<EmergencyShuttleComponent>(xform.GridUid) || (CountEscapePods && HasComp<EscapePodComponent>(xform.GridUid)))
             return true;
 
         return false;

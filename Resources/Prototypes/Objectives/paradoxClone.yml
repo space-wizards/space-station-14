@@ -16,7 +16,7 @@
 
 - type: entity
   parent: [BaseParadoxCloneObjective, BaseLivingObjective]
-  id: ParadoxCloneLivingObjective
+  id: ParadoxCloneEscapeShuttleObjective
   name: Escape to CentComm alive and unrestrained via the escape shuttle.
   description: Return to your old life.
   components:
@@ -25,6 +25,18 @@
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
   - type: EscapeShuttleCondition
+
+- type: entity
+  parent: [BaseParadoxCloneObjective, BaseLivingObjective]
+  id: ParadoxCloneEscapeObjective
+  name: Escape to CentComm alive and unrestrained.
+  description: Return to your old life.
+  components:
+  - type: Objective
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeCondition
 
 - type: entity
   parent: [BaseParadoxCloneObjective, BaseKillObjective]
