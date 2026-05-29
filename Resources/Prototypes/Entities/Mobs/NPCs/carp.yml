@@ -77,8 +77,6 @@
         - Carp
         - DoorBumpOpener
         - CannotSuicide
-    - type: ReplacementAccent
-      accent: genericAggressive
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup
@@ -89,7 +87,8 @@
 
 - type: entity
   parent: BaseMobCarp
-  id: MobCarp
+  id: BaseMobCarpVisuals
+  abstract: true
   components:
   - type: Sprite
     layers:
@@ -106,6 +105,13 @@
         mouth: ""
 
 - type: entity
+  parent: BaseMobCarpVisuals
+  id: MobCarp
+  components:
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
   name: magicarp
   parent: BaseMobCarp
   id: MobCarpMagic
@@ -115,6 +121,8 @@
     sprite: Mobs/Aliens/Carps/magic.rsi
   - type: TypingIndicator
     proto: guardian
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   name: holocarp
@@ -138,6 +146,8 @@
         - Opaque
   - type: TypingIndicator
     proto: robot
+  - type: ReplacementAccent
+    accent: genericAggressive
 
 - type: entity
   parent: MobCarp
@@ -166,7 +176,7 @@
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: MobCarp
+  parent: BaseMobCarpVisuals
   components:
     - type: GhostRole
       allowMovement: true
@@ -254,6 +264,8 @@
         types:
           Slash: 10
           Bloodloss: 5
+    - type: ReplacementAccent
+      accent: genericAggressive
 
 - type: entity
   id: MobSharkSalvage
