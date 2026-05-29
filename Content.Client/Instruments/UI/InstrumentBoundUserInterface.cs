@@ -84,7 +84,10 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
 
         _instrumentMenu = this.CreateWindow<InstrumentMenu>();
-        _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
+        if(EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
+            _instrumentMenu.Title = metaData.EntityName;
+
         _instrumentMenu.SetupSources(_fileSource, _bandSource, _inputSource);
         _instrumentMenu.SetMidiAvailability(_midiManager.IsAvailable);
         _instrumentMenu.SwitchMode(_fileSource);
@@ -365,30 +368,33 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     /// <summary>
     /// Walks up the tree of instrument masters to find the truest master of them all.
     /// </summary>
-    private ActiveInstrumentComponent ResolveActiveInstrument(InstrumentComponent? comp)
+    private ActiveInstrumentComponent? ResolveActiveInstrument(InstrumentComponent comp)
     {
-        comp ??= EntMan.GetComponent<InstrumentComponent>(Owner);
-
         var instrument = new Entity<InstrumentComponent>(Owner, comp);
 
         for(var i = 0; i < MaxSearchDepth; i++)
         {
-            if (instrument.Comp.Master == null)
+            if (instrument.Comp.Master is not { } master)
                 break;
 
-            instrument = new Entity<InstrumentComponent>((EntityUid)instrument.Comp.Master,
-                EntMan.GetComponent<InstrumentComponent>((EntityUid)instrument.Comp.Master));
+            if(!EntMan.TryGetComponent<InstrumentComponent>(master, out var masterComp))
+                break;
+
+            instrument = new Entity<InstrumentComponent>(master, masterComp);
         }
 
-        return EntMan.GetComponent<ActiveInstrumentComponent>(instrument.Owner);
+        return EntMan.GetComponentOrNull<ActiveInstrumentComponent>(instrument.Owner);
     }
 
     private void UpdateChannels()
     {
+        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+            return;
+
         // Ignore channel switch request while updating.
         _channelsControl.SwitchFilteredChannel -= OnSwitchFilteredChannel;
         List<(int, string, bool)> channelSettings = [];
-        var instrument = EntMan.GetComponent<InstrumentComponent>(Owner);
+
         var activeInstrument = ResolveActiveInstrument(instrument);
 
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
