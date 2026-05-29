@@ -214,30 +214,39 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instruments.CloseMidi(Owner, false, instrument);
     }
 
-    private void OnStartPlayingRequest(byte[] trackData)
+    private async void OnStartPlayingRequest(string fileName)
     {
-        if (!PlayCheck())
-            return;
+        try
+        {
+            if (!PlayCheck())
+                return;
 
-        if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
-            return;
+            if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
+                return;
 
-        // Close any song that is already playing.
-        if (instrument.IsMidiOpen)
-            _instruments.CloseMidi(Owner, false, instrument);
+            // Close any song that is already playing.
+            if (instrument.IsMidiOpen)
+                _instruments.CloseMidi(Owner, false, instrument);
 
-        Timer.Spawn(1000,
-            () =>
-            {
-                if (!_fileSource.IsPlaying)
-                    return;
+            var trackData = await Task.Run(() => LoadMidiData(fileName));
 
-                if (!PlayCheck())
-                    return;
+            Timer.Spawn(1000,
+                () =>
+                {
+                    if (!_fileSource.IsPlaying)
+                        return;
 
-                if (!_instruments.OpenMidi(Owner, trackData, instrument))
-                    _fileSource.IsPlaying = false;
-            });
+                    if (!PlayCheck())
+                        return;
+
+                    if (!_instruments.OpenMidi(Owner, trackData, instrument))
+                        _fileSource.IsPlaying = false;
+                });
+        }
+        catch (Exception e)
+        {
+            _fileSource.IsPlaying = false;
+        }
     }
 
     private async void OnFileAddNewRequest()
@@ -250,7 +259,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
 
             // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
-            // or focus the previously-opened window.
+            //  or focus the previously-opened window.
             _isMidiFileDialogueWindowOpen = true;
 
             await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
@@ -264,10 +273,11 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             if (file == null)
                 return;
 
+            // TODO: At the time of this comment, the file dialog only returns bytes and loses the original file name.
+            //  Find a better solution one day.
             var fileName = DateTime.Now.Ticks + ".midi";
             StoreMidiFile(fileName, file);
-            file.Seek(0, SeekOrigin.Begin);
-            _fileSource.AddTrack(fileName, file.CopyToArray());
+            _fileSource.AddTrack(fileName);
         }
         catch
         {
@@ -437,10 +447,8 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         try
         {
             EnsureMidiDirectoryExists();
-            using (var file = _resManager.UserData.OpenWrite(new ResPath(UserMidiDirectory + filename)))
-            {
-                await data.CopyToAsync(file);
-            }
+            await using var file = _resManager.UserData.OpenWrite(new ResPath(UserMidiDirectory + filename));
+            await data.CopyToAsync(file);
         }
         catch
         {
@@ -477,9 +485,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.PopulateTrackList(await Task.Run(() => LoadMidisFromDirectory(UserMidiDirectory)));
     }
 
-    private List<(string, byte[])> LoadMidisFromDirectory(ResPath directory)
+    private List<string> LoadMidisFromDirectory(ResPath directory)
     {
-        List<(string, byte[])> tracks = [];
+        List<string> tracks = [];
         foreach (var path in _resManager.UserData.DirectoryEntries(directory))
         {
             try
@@ -488,8 +496,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
                 if (!filePath.Extension.Equals("midi") && !filePath.Extension.Equals("mid"))
                     continue;
 
-                var data = _resManager.UserData.ReadAllBytes(filePath);
-                tracks.Add((filePath.Filename, data));
+                tracks.Add(filePath.Filename);
             }
             catch
             {
@@ -498,5 +505,18 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         }
 
         return tracks;
+    }
+
+    private byte[] LoadMidiData(string fileName)
+    {
+        try
+        {
+            var filePath = new ResPath(UserMidiDirectory + fileName);
+            return _resManager.UserData.ReadAllBytes(filePath);
+        }
+        catch
+        {
+            return [];
+        }
     }
 }

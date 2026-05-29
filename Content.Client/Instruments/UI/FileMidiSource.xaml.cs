@@ -18,7 +18,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    public event Action<byte[]>? StartPlayingRequest;
+    public event Action<string>? StartPlayingRequest;
     public event Action? StopPlayingRequest;
     public event Action<int>? TrackPositionChangeRequest;
     public event Action<string>? FileRenameRequest;
@@ -27,7 +27,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     public event Action<bool>? LoopingToggled;
 
     private readonly string _noTrackSelectedText = Loc.GetString("instruments-component-menu-files-no-track-selected");
-    private readonly Dictionary<string, byte[]> _loadedTracks = new();
+    private readonly List<string> _loadedTracks = [];
     private EntityUid? _entity;
 
     private bool IsShuffle => ShuffleButton.Pressed;
@@ -103,11 +103,15 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     private void OnTrackListItemSelected(ItemList.ItemListSelectedEventArgs obj)
     {
         var currentItem = obj.ItemList[obj.ItemIndex];
-        CurrentTrackLabel.Text = currentItem.Text;
-        if (IsPlaying)
+
+        if (!IsPlaying || string.IsNullOrEmpty(currentItem.Text))
         {
-            StartPlaying((byte[])currentItem.Metadata!);
+            IsPlaying = false;
+            return;
         }
+
+        CurrentTrackLabel.Text = currentItem.Text;
+        StartPlaying(currentItem.Text);
     }
 
     private void OnAddButtonPressed(ButtonEventArgs obj)
@@ -135,10 +139,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         if (PlayButton.Pressed)
         {
-            if (!TryGetSelectedTrack(out var track))
+            if (!TryGetSelectedTrackName(out var trackName))
                 return;
 
-            StartPlaying((byte[])track.Metadata!);
+            StartPlaying(trackName);
         }
         else
         {
@@ -181,9 +185,9 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         ResetTrackIndicators();
     }
 
-    private void StartPlaying(byte[] data)
+    private void StartPlaying(string fileName)
     {
-        StartPlayingRequest?.Invoke(data);
+        StartPlayingRequest?.Invoke(fileName);
     }
 
     private void FilterTrackList()
@@ -191,11 +195,11 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         var filterString = CurrentFilter.Trim().ToLowerInvariant();
         TrackList.Clear();
 
-        foreach (var kv in _loadedTracks)
+        foreach (var track in _loadedTracks)
         {
-            var trackName = kv.Key.Trim().ToLowerInvariant();
+            var trackName = track.Trim().ToLowerInvariant();
             if(trackName.Contains(filterString))
-                TrackList.AddItem(kv.Key, null, true, kv.Value);
+                TrackList.AddItem(track);
         }
     }
 
@@ -219,20 +223,16 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         _entity = ent;
     }
 
-    public void PopulateTrackList(IEnumerable<(string, byte[])> tracks)
+    public void PopulateTrackList(IEnumerable<string> tracks)
     {
         _loadedTracks.Clear();
-        foreach (var track in tracks)
-        {
-            _loadedTracks.Add(track.Item1, track.Item2);
-        }
-
+        _loadedTracks.AddRange(tracks);
         FilterTrackList();
     }
 
-    public void AddTrack(string name, byte[] data)
+    public void AddTrack(string name)
     {
-        _loadedTracks.Add(name, data);
+        _loadedTracks.Add(name);
         FilterTrackList();
     }
 
@@ -244,8 +244,8 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     public void UpdateTrackName(string originalName, string newName)
     {
-        if (_loadedTracks.Remove(originalName, out var tempData))
-            _loadedTracks.Add(newName, tempData);
+        if (_loadedTracks.Remove(originalName))
+            _loadedTracks.Add(newName);
         FilterTrackList();
     }
 
