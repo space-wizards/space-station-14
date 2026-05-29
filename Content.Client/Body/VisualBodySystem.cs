@@ -208,16 +208,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     _sprite.LayerSetColor(target, layerId, Color.White);
 
                 if (displacement != null && proto.CanBeDisplaced)
-                {
-                    _displacement.TryAddDisplacement(displacement,
-                        (target, target.Comp),
-                        // Should be on a different layer than above, so markings with
-                        // multiple layers don't get overwritten by displacements
-                        index + proto.Sprites.Count + i + 1,
-                        layerId,
-                        out _);
-                }
-
+                    _displacement.TryAddDisplacement(displacement, (target, target.Comp), index + i + 1, layerId, out _);
             }
 
             applied.Add(marking);

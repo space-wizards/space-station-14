@@ -96,8 +96,8 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
         displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
 
-        _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
-        _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
+        var displacementIndex = _sprite.AddLayer(sprite.AsNullable(), displacementLayer, null);
+        _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, displacementIndex);
 
         return true;
     }
