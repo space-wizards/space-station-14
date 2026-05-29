@@ -1,4 +1,6 @@
 using Content.Server.Nutrition.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
@@ -55,11 +57,54 @@ namespace Content.Server.Nutrition.EntitySystems
         public void OnCigarAfterInteract(Entity<CigarComponent> entity, ref AfterInteractEvent args)
         {
             var targetEntity = args.Target;
+            if (targetEntity == null) return;
+
             if (targetEntity == null ||
                 !args.CanReach ||
                 !TryComp(entity, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;
+
+            //Dippable
+            if (
+                args.CanReach &&
+                TryComp(targetEntity, out DrainableSolutionComponent? drainable))
+            {
+                if (!_solutionContainerSystem.TryGetSolution(targetEntity.Value, drainable.Solution, out var containerSoln, out var containerSolution))
+                    return;
+
+
+                if (containerSolution.Volume <= 0)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-empty", ("cigar", entity.Owner)), targetEntity.Value, args.User);
+                    args.Handled = true;
+                    return;
+                }
+
+                if (_solutionContainerSystem.TryGetSolution(entity.Owner, smokable.Solution, out var cigSoln, out var cigSolution))
+                {
+
+                    if (cigSolution.Volume >= cigSolution.MaxVolume)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-full", ("cigar", entity.Owner)), targetEntity.Value, args.User);
+                        args.Handled = true;
+                        return;
+                    }
+
+                    var maxToDrain = 10;
+                    var amountToDrain = FixedPoint2.Min(cigSolution.AvailableVolume, maxToDrain);
+
+                    var drawn = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToDrain);
+
+                    //fill the cigarette
+                    _solutionContainerSystem.TryAddSolution(cigSoln.Value, drawn);
+
+                    _popupSystem.PopupEntity(Loc.GetString("cigar-component-dip-success", ("cigar", entity.Owner), ("target", targetEntity.Value)), targetEntity.Value, args.User);
+                }
+
+                args.Handled = true;
+                return;
+            }
 
             var isHotEvent = new IsHotEvent();
             RaiseLocalEvent(targetEntity.Value, isHotEvent, true);
