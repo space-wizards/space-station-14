@@ -192,6 +192,20 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pineapplejuice.rsi
 
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkJuicePearCarton
+  name: pear juice
+  description: Definitely legally exported from USSP!
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuicePear
+        Quantity: 60
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pearcarton.rsi
+
 # Normal sized cartons
 
 - type: entity
@@ -310,3 +324,19 @@
     currentLabel: reagent-name-cream
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: DrinkCartonBaseLargeFull
+  id: DrinkJuicePearCartonXL
+  name: pear juice XL
+  description: Definitely legally exported from USSP!
+  components:
+  - type: Solution
+      solution:
+       reagents:
+       - ReagentId: JuicePear
+         Quantity: 240
+  - type: Label
+    currentLabel: reagent-name-juice-pear
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pearcarton.rsi

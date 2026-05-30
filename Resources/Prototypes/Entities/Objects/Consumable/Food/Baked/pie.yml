@@ -622,3 +622,33 @@
       - ReagentId: Theobromine
         Quantity: 8
 # Tastes like tart, dark chocolate.
+
+- type: entity
+  name: pear tart
+  parent: FoodPieBase
+  id: FoodTartPear
+  description: Too many pears has been slaughtered for this delicious treat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - pear
+      - bread 
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    state: pear
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie

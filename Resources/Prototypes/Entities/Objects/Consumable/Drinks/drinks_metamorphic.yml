@@ -2264,3 +2264,37 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPearonade
+  suffix: pearonade
+  description: Lemonade, but made with pears. Obviously.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Pearonade
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/pearonade.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPearJuice
+  suffix: pear juice
+  description: Has a little hint of honey.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: JuicePear
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/pearjuice.rsi
+    state: icon

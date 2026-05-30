@@ -1588,3 +1588,14 @@
 #  name: food-sequence-cotton-burger-content-among-pequeno
 #  sprites:
 #  - sprite: Objects/Fun/pequeno.rsi
+
+# Pear
+
+- type: foodSequenceElement
+  id: Pear
+  name: food-sequence-content-pear
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/pear.rsi
+    state: produce
+  tags:
+  - Fruit

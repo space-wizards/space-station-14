@@ -1557,3 +1557,17 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: Pearonade
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    JuicePear:
+      amount: 1
+    Sugar:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Pearonade: 3

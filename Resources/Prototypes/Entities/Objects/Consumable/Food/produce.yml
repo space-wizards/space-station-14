@@ -2809,3 +2809,40 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  name: pear
+  parent: FoodProduceBase
+  id: FoodPear
+  description: Apple's sweeter cousin.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pear
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pear.rsi
+  - type: Item
+    heldPrefix: produce
+  - type: Produce
+    seedId: pear
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuicePear
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+  - type: FoodSequenceElement
+    entries:
+      Burger: Pear
+      Taco: Pear
