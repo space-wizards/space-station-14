@@ -54,3 +54,5 @@
     actionTag: FakeMindShieldChangeling
     chameleonControllable: false
     visualPriority: 90 # very close to real mindshield, altough this is of no importance right now
+    isInnate: true
+    action: ActionChangelingFakeMindshieldToggle

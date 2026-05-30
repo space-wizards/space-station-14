@@ -29,6 +29,16 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
+        // Innate things
+        SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<FakeMindShieldComponent> ent, ref MapInitEvent args)
+    {
+        if (!ent.Comp.IsInnate)
+            return;
+
+        _actions.AddAction(ent.Owner, ent.Comp.Action);
     }
 
     private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldVisualsEvent args)
@@ -46,8 +56,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 {
         if (args.ActionTag != comp.ActionTag)
             return;
-            
-comp.IsEnabled = !comp.IsEnabled;
+
+        comp.IsEnabled = !comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
         Dirty(uid, comp);

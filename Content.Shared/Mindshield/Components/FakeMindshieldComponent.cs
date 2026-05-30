@@ -41,4 +41,19 @@ public sealed partial class FakeMindShieldComponent : Component
     /// </summary>
     [DataField]
     public bool ChameleonControllable = true;
+
+    /// <summary>
+    ///     Whether the fake mind shield is innate to the entity.
+    ///     When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to change its voice.
+    ///     When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the voice masking abilities for another entity.
+    /// </summary>
+    [DataField]
+    public bool IsInnate = false;
+
+    /// <summary>
+    ///     Action linked to the fake mindshield
+    /// </summary>
+    [DataField]
+    public EntProtoId Action = "FakeMindShieldToggleAction";
+
 }
