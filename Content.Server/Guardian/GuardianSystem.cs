@@ -1,9 +1,11 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Gibbing;
@@ -42,6 +44,7 @@ namespace Content.Server.Guardian
         [Dependency] private ChatSystem _chatSystem = default!;
         [Dependency] private IChatManager _chat = default!;
         [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -338,6 +341,7 @@ namespace Content.Server.Guardian
             // send to the host and the guardian (the guardian needs to know what they said)
             _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, hostActor.PlayerSession.Channel);
             _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, guardianActor.PlayerSession.Channel);
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(entity):player} only to {ToPrettyString(entity.Comp.Host):player}: {args.Message}");
         }
 
         /// <summary>
