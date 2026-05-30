@@ -28,9 +28,9 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
 
         // Mindshield events
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldStatusEvent>(OnQueryStatus);
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, GetMindShieldStatusEvent>(OnQueryStatus);
 
         // Innate things
         SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
@@ -44,15 +44,9 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _actions.AddAction(ent.Owner, ent.Comp.Action);
     }
 
-    private void OnQueryStatus(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldStatusEvent args)
+    private void OnQueryStatus(Entity<FakeMindShieldComponent> ent, ref GetMindShieldStatusEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
-        // Apply the visuals. We check the priority so that this fake mindshield should almost always get overwritten by a real mindshield.
-        if (ent.Comp.VisualPriority > args.IconPriority && ent.Comp.IsEnabled)
-        {
-            args.IconPriority = ent.Comp.VisualPriority;
-            args.MindShieldStatusIcon = ent.Comp.MindShieldStatusIcon;
-        }
     }
 
     private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)

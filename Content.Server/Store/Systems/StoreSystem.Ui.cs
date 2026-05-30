@@ -226,7 +226,7 @@ public sealed partial class StoreSystem
             logImpact = LogImpact.High;
             logExtraInfo = ", but was not from an expected faction";
 
-            _mindShieldSystem.GetMindshieldStatus(buyer, out var isMindshielded, out var _, out var _);
+            _mindShieldSystem.GetMindshieldStatus(buyer, out var isMindshielded, out var _);
             if (isMindshielded)
             {
                 logImpact = LogImpact.Extreme;

@@ -8,24 +8,25 @@ namespace Content.Shared.Mindshield;
 
 public abstract class SharedMindShieldSystem : EntitySystem
 {
+    /// <summary>
+    /// Status icon displayed in the sec HUD.
+    /// </summary>
+    public static ProtoId<SecurityIconPrototype> StatusIcon = "MindShieldIcon";
+
     public override void Initialize()
     {
         base.Initialize();
 
         // Mind shield status events
-        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>(OnStatusQuery);
+        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
+        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
+        SubscribeLocalEvent<MindShieldComponent, GetMindShieldStatusEvent>(OnStatusQuery);
     }
 
-    private void OnStatusQuery(Entity<MindShieldComponent> e, ref QueryMindShieldStatusEvent args)
+    private void OnStatusQuery(Entity<MindShieldComponent> e, ref GetMindShieldStatusEvent args)
     {
         args.IsMindshielded = true;
         args.IsVisible = true;
-        if (e.Comp.VisualPriority > args.IconPriority)
-        {
-            args.MindShieldStatusIcon = e.Comp.MindShieldStatusIcon;
-        }
     }
 
     /// <summary>
@@ -34,15 +35,13 @@ public abstract class SharedMindShieldSystem : EntitySystem
     /// <param name="entity">The entity to check the mindshield status of.</param>
     /// <param name="isMindshielded">If the entity has a functional mind shield</param>
     /// <param name="isVisible">Wether the entity shows a mindshield icon on the sec HUD</param>
-    /// <param name="statusIcon">Status icon to use for the HUD</param>
     /// <remarks>You should never look for a mindshield component and instead use this function.</remarks>
-    public void GetMindshieldStatus(EntityUid entity, out bool isMindshielded, out bool isVisible, out ProtoId<SecurityIconPrototype> statusIcon)
+    public void GetMindshieldStatus(EntityUid entity, out bool isMindshielded, out bool isVisible)
     {
-        var ev = new QueryMindShieldStatusEvent();
+        var ev = new GetMindShieldStatusEvent();
         RaiseLocalEvent(entity, ref ev);
         isMindshielded = ev.IsMindshielded;
         isVisible = ev.IsVisible;
-        statusIcon = ev.MindShieldStatusIcon;
     }
 }
 
@@ -50,7 +49,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
 /// Raised in order to query wether an entity is mindshielded, visually or mechanically.
 /// </summary>
 [ByRefEvent]
-public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
     /// <summary>
@@ -62,14 +61,4 @@ public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRela
     /// Wether a mindshield icon is present
     /// </summary>
     public bool IsVisible = false;
-
-    /// <summary>
-    /// The mindshield icon to be displayed
-    /// </summary>
-    public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
-
-    /// <summary>
-    /// Priority int used to keep trace of MindShieldStatusIcon overwritting.
-    /// </summary>
-    public int IconPriority = 0;
 }
