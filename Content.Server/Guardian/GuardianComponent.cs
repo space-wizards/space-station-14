@@ -15,6 +15,12 @@ namespace Content.Server.Guardian
         public EntityUid? Host;
 
         /// <summary>
+        /// If the guardian messages can only be heard by the host while the guardian is not loose
+        /// </summary>
+        [DataField]
+        public bool HostTelepathy = true;
+
+        /// <summary>
         /// Percentage of damage reflected from the guardian to the host
         /// </summary>
         [DataField]

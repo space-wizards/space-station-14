@@ -306,8 +306,8 @@ namespace Content.Server.Guardian
 
         private void OnSpeakAttempt(Entity<GuardianComponent> entity, ref SpeakAttemptEvent args)
         {
-            // if guardian is loose, they speech is not blocked
-            if (entity.Comp.GuardianLoose)
+            // if guardian is loose or they don't have telepathy, they speech is not blocked
+            if (!entity.Comp.HostTelepathy || entity.Comp.GuardianLoose)
                 return;
 
             // cancel the speech, we gonna send it ourselves only for the host and the guardian
