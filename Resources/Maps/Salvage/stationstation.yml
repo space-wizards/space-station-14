@@ -1248,23 +1248,6 @@ entities:
       pos: 5.5,-6.5
       parent: 179
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 75.31249
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: CrateMedical
   entities:
   - uid: 131

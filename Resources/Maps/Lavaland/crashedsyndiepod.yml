@@ -715,23 +715,6 @@ entities:
           restitution: 0
           friction: 0.4
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
       open: True
       removedMasks: 20
     - type: PlaceableSurface
@@ -767,23 +750,6 @@ entities:
     - type: PlaceableSurface
       isPlaceable: True
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
       open: True
       removedMasks: 20
 - proto: CyberPen

@@ -433,23 +433,6 @@ entities:
       pos: 0.5,3.5
       parent: 52
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 75.31249
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: DrinkGildlagerBottleFull
   entities:
   - uid: 2
