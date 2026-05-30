@@ -2,7 +2,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.NodeContainer.NodeGroups;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -45,20 +44,24 @@ public sealed partial class AtmosphereSystem
         if (pipeNet == null)
             return;
 
+        // Since the pipenet is one massive volume, get current
+        // pressure of the whole pipenet right now instead per node since its all the same
+        var pipeNetPressure = pipeNet.Air.Pressure;
+
         // Check each pipe node for overpressure and apply damage if needed
         // ReSharper disable once ForCanBeConvertedToForeach
         for (var i = 0; i < pipeNet.Nodes.Count; i++)
         {
-            var node = pipeNet.Nodes[i];
+            var curNode = pipeNet.Nodes[i];
             // Node isn't a pipe or doesn't take pressure damage
-            if (node is not PipeNode { MaxPressure: > 0 } pipe)
+            if (curNode is not PipeNode { MaxPressure: > 0 } pipe)
                 continue;
 
             // Check to see if the node has an air-blocking
             // entity over it. We don't want to damage pipes under
             // stuff like walls otherwise it'll be super unintuitive to fix and not fun.
-            var xform = Transform(node.Owner);
-            if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var mapComp))
+            var xform = Transform(curNode.Owner);
+            if (xform.GridUid == null || !_mapGridQuery.TryComp(xform.GridUid, out var mapComp))
                 continue;
 
             var xformGridUid = xform.GridUid.Value;
@@ -89,57 +92,43 @@ public sealed partial class AtmosphereSystem
                 var curDamage = _damage.GetPositiveDamage((pipe.Owner, damage)).GetTotal();
                 p += (float)curDamage * (1 - baseChance);
 
-                var finalChance = Math.Clamp(1-p, 0f, 1f);
+                var finalChance = Math.Clamp(1 - p, 0f, 1f);
                 if (_random.Prob(finalChance))
                     continue;
             }
 
-            // Retrieve the ambient pressure of the pipe in order to compute dP.
-            var mix = GetTileMixture((node.Owner, xform));
+            // Retrieve the ambient pressure of the pipe to compute dP.
+            var mix = GetTileMixture((curNode.Owner, xform));
             if (mix == null)
-                return;
+                continue;
 
-            // TODO ATMOS PERF highly inefficient. Compute pipe pressure once from shared volume and check against
             // enviorn. pressure.
-            var dam = PressureDamage(pipe, maxPressure, mix.Pressure);
+            var dam = PressureDamage(pipeNetPressure, maxPressure, mix.Pressure);
             if (dam <= 0)
                 continue;
 
-            _pipeBurstingDamageSpecifier.DamageDict["Structural"] = dam;
+            _pipeBurstingDamageSpecifier.DamageDict[_structuralDamageId] = dam;
             _damage.TryChangeDamage(pipe.Owner, _pipeBurstingDamageSpecifier);
             PryTile((xformGridUid, mapComp), coords);
         }
     }
 
     /// <summary>
-    /// Performs damage on all pipe nodes in the given pipenet that exceed their maximum pressure.
-    /// </summary>
-    /// <param name="pipeNet">The pipenet to check for overpressure.</param>
-    private void PerformPipeDamageOnAllNodes2(IPipeNet? pipeNet)
-    {
-        if (pipeNet is null)
-            return;
-
-        // SIMDeeznuts
-
-    }
-
-    /// <summary>
-    /// Calculate pressure damage for pipe. There is no damage if the pressure is below MaxPressure,
+    /// Calculates pressure damage for a pipe. There is no damage if the pressure is below MaxPressure,
     /// and damage scales exponentially beyond that.
     /// </summary>
-    /// <param name="pipe">The pipe node to calculate damage for.</param>
+    /// <param name="pipePressure">The current pressure in the pipe.</param>
     /// <param name="maxPressure">The maximum pressure the pipe can handle.</param>
     /// <param name="ambientPressure">The ambient pressure around the pipe.</param>
     /// <returns>The amount of damage to apply.</returns>
-    private static int PressureDamage(PipeNode pipe, float maxPressure, float ambientPressure)
+    private static int PressureDamage(float pipePressure, float maxPressure, float ambientPressure)
     {
         const float tau = 10; // number of atmos ticks to break pipe at nominal overpressure
 
         // Consider the outer environment pressure as well when computing delta pressure.
-        var deltaPressure = Math.Abs(pipe.Air.Pressure - ambientPressure);
+        var deltaPressure = Math.Abs(pipePressure - ambientPressure);
         var diff = deltaPressure - maxPressure;
         const float alpha = 100 / tau;
-        return Math.Min(0, (int)(alpha * float.Exp(diff / maxPressure)));
+        return diff > 0 ? (int)(alpha * float.Exp(diff / maxPressure)) : 0;
     }
 }
