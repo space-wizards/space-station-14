@@ -63,7 +63,6 @@
     stealGroup: AnimalIan
 
 - type: entity
-  name: Old Ian
   parent: [ MobCorgiIan, BaseSlicingRefinable ]
   id: MobCorgiIanOld
   name: Old Ian
@@ -149,7 +148,6 @@
       gender: female
 
 - type: entity
-  name: Puppy Ian
   parent: [ MobCorgiPuppy, BaseSlicingRefinable ]
   id: MobCorgiIanPup
   name: Puppy Ian
