@@ -1,25 +1,23 @@
 using System.Collections.Generic;
-using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Utility;
-using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Localization;
 
 namespace Content.IntegrationTests.Tests.Localization;
 
-public sealed class MarkingPrototypeLocalizationTest
+[TestFixture]
+public sealed class MarkingPrototypeLocalizationTest : GameTest
 {
-    private static string[] _markings = GameDataScrounger.PrototypesOfKind<MarkingPrototype>();
+    private static readonly string[] Markings = GameDataScrounger.PrototypesOfKind<MarkingPrototype>();
 
     [Test]
-    [TestCaseSource(nameof(_markings))]
+    [TestCaseSource(nameof(Markings))]
     [TestOf(typeof(MarkingPrototype))]
     [Description("Ensures that all markings would be properly localized in the marking editor UI.")]
     public async Task AllMarkingsLocalized(string marking)
     {
-        await using var pair = await PoolManager.GetServerClient();
-
-        var server = pair.Server;
+        var server = Pair.Server;
         var protoMan = server.ProtoMan;
         var locMan = server.ResolveDependency<ILocalizationManager>();
         var proto = protoMan.Index<MarkingPrototype>(marking);
