@@ -28,28 +28,16 @@
       required: true
       default: [ VulpTailVulp ]
     enum.HumanoidVisualLayers.LArm:
-      limit: 2
+      limit: 4
       required: false
     enum.HumanoidVisualLayers.RArm:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.LHand:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.RHand:
-      limit: 2
+      limit: 4
       required: false
     enum.HumanoidVisualLayers.LLeg:
-      limit: 2
+      limit: 4
       required: false
     enum.HumanoidVisualLayers.RLeg:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 2
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 2
+      limit: 4
       required: false
     enum.HumanoidVisualLayers.UndergarmentTop:
       limit: 1

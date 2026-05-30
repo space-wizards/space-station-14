@@ -105,7 +105,7 @@
 
 - type: marking
   id: GauzeLowerArmRight
-  bodyPart: RHand
+  bodyPart: RArm
   groupWhitelist: [Human, Reptilian, Arachnid]
   coloring:
     default:
@@ -131,7 +131,7 @@
 
 - type: marking
   id: GauzeLowerLegLeft
-  bodyPart: LFoot
+  bodyPart: LLeg
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -170,7 +170,7 @@
 
 - type: marking
   id: GauzeLowerLegRight
-  bodyPart: RFoot
+  bodyPart: RLeg
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -183,7 +183,7 @@
 
 - type: marking
   id: GauzeBoxerWrapRight
-  bodyPart: RHand
+  bodyPart: RArm
   groupWhitelist: [Human, Reptilian, Arachnid]
   coloring:
     default:
@@ -196,7 +196,7 @@
 
 - type: marking
   id: GauzeBoxerWrapLeft
-  bodyPart: LHand
+  bodyPart: LArm
   groupWhitelist: [Human, Reptilian, Arachnid]
   coloring:
     default:
@@ -249,7 +249,7 @@
 
 - type: marking
   id: GauzeLizardFootRight
-  bodyPart: RFoot
+  bodyPart: RLeg
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -262,7 +262,7 @@
 
 - type: marking
   id: GauzeLizardFootLeft
-  bodyPart: LFoot
+  bodyPart: LLeg
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -432,7 +432,7 @@
 
 - type: marking
   id: GauzeMothLowerLegRight
-  bodyPart: RFoot
+  bodyPart: RLeg
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -445,7 +445,7 @@
 
 - type: marking
   id: GauzeMothLowerLegLeft
-  bodyPart: LFoot
+  bodyPart: LLeg
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -485,7 +485,7 @@
 
 - type: marking
   id: GauzeVulpBoxerwrapLeft
-  bodyPart: LHand
+  bodyPart: LArm
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -498,7 +498,7 @@
 
 - type: marking
   id: GauzeVulpBoxerwrapRight
-  bodyPart: RHand
+  bodyPart: RArm
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -550,7 +550,7 @@
 
 - type: marking
   id: GauzeVulpLowerArmRight
-  bodyPart: RHand
+  bodyPart: RArm
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -563,7 +563,7 @@
 
 - type: marking
   id: GauzeVulpLowerLegLeft
-  bodyPart: LFoot
+  bodyPart: LLeg
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -576,7 +576,7 @@
 
 - type: marking
   id: GauzeVulpLowerLegRight
-  bodyPart: RFoot
+  bodyPart: RLeg
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
