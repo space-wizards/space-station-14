@@ -22,6 +22,6 @@ public sealed partial class ObjectiveIssuerPrototype : IPrototype
     /// <summary>
     /// Localized version of the issuer name.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     public string LocalizedName => Loc.GetString(Name);
 }
