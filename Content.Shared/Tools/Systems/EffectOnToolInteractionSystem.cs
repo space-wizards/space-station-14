@@ -11,7 +11,7 @@ public sealed partial class EffectOnToolInteractionSystem : EntitySystem
 {
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
-    [Dependency] private EntityQuery<SimpleToolInteractionComponent> _SimpleToolInteractionQuery;
+    [Dependency] private EntityQuery<SimpleToolInteractionComponent> _simpleToolInteractionQuery;
 
     public override void Initialize()
     {
@@ -23,7 +23,7 @@ public sealed partial class EffectOnToolInteractionSystem : EntitySystem
 
     private void OnComponentStartup(Entity<EffectOnToolInteractionComponent> ent, ref ComponentStartup args)
     {
-        if (!_SimpleToolInteractionQuery.HasComp(ent))
+        if (!_simpleToolInteractionQuery.HasComp(ent))
         {
             AddComp<SimpleToolInteractionComponent>(ent);
             Log.Warning($"{ToPrettyString(ent)} has {nameof(EffectOnToolInteractionComponent)} but is " +
