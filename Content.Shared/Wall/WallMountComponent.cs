@@ -5,23 +5,23 @@ using Robust.Shared.Physics;
 namespace Content.Shared.Wall;
 
 /// <summary>
-///     This component enables an entity to ignore some obstructions for interaction checks.
+/// Marks an entity as wall-mounted.
+/// Allows interaction through other anchored entities on the same tile within the <see cref="Arc"/>.
+/// Hides the sprite when viewed from outside that arc.
 /// </summary>
-/// <remarks>
-///     This will only exempt anchored entities that intersect the wall-mount. Additionally, this exemption will apply
-///     in a limited arc, providing basic functionality for directional wall mounts.
-/// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class WallMountComponent : Component, IComponentTreeEntry<WallMountComponent>
 {
     /// <summary>
-    ///     Range of angles for which the exemption applies. Bigger is more permissive.
+    /// Range of angles where interaction through other anchored entities on the same tile is allowed.
+    /// Bigger is more permissive.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle Arc = new(MathF.PI);
 
     /// <summary>
-    ///     The direction in which the exemption arc is facing, relative to the entity's rotation. Defaults to south.
+    /// The direction the allowed angle range faces, relative to the entity's rotation.
+    /// Defaults to south.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle Direction = Angle.Zero;
