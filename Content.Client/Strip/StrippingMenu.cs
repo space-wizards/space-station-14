@@ -9,16 +9,16 @@ namespace Content.Client.Strip
     {
         public LayoutContainer InventoryContainer = new();
         public LayoutContainer HandsContainer = new();
-        public BoxContainer SnareContainer = new();
+        public BoxContainer ButtonContainer = new() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 0, 0, 5 ) };
         public bool Dirty = true;
 
         public event Action? OnDirty;
 
         public StrippingMenu()
         {
-            var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 8) };
+            var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical };
             ContentsContainer.AddChild(box);
-            box.AddChild(SnareContainer);
+            box.AddChild(ButtonContainer);
             box.AddChild(HandsContainer);
             box.AddChild(InventoryContainer);
         }
@@ -27,7 +27,7 @@ namespace Content.Client.Strip
         {
             InventoryContainer.RemoveAllChildren();
             HandsContainer.RemoveAllChildren();
-            SnareContainer.RemoveAllChildren();
+            ButtonContainer.RemoveAllChildren();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
