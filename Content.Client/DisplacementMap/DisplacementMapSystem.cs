@@ -41,7 +41,8 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         if (displacementKey is null)
             return false;
 
-        EnsureDisplacementIsNotOnSprite(sprite, key);
+        if (EnsureDisplacementIsNotOnSprite(sprite, key))
+            index--;
 
         if (data.ShaderOverride is not null)
         {
@@ -118,13 +119,13 @@ public sealed partial class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
-    /// <param name="logMissing">Whether to report an error if the displacement map isn't on the sprite.</param>
-    public void EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
+    /// <returns>Returns true if the displacement existed and was removed.</returns>
+    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
         if (displacementLayerKey is null)
-            return;
+            return false;
 
-        _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+        return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
     }
 }

@@ -5,12 +5,7 @@
   name: dwarf appearance
   components:
   - type: Inventory
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
+    femaleDisplacements: { } # Necessary due to MobHuman inheritance for MobDwarf
     displacements:
       jumpsuit:
         sizeMaps:

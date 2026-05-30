@@ -1,7 +1,6 @@
 using Content.Client.DisplacementMap;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -51,7 +50,7 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
             {
                 _displacement.TryAddDisplacement(displacement.Displacement,
                     (ent.Owner, sprite),
-                    index - 1,
+                    index,
                     ent.Comp.LayerMap,
                     out _);
             }
