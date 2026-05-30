@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Objectives.Systems;
+using Content.Shared.Objectives.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Changeling.Components;
 
@@ -13,7 +15,14 @@ public sealed partial class ChangelingMindIdentityTrackerComponent : Component
     /// A dictionary of the identities this changeling has devoured.
     /// </summary>
     [DataField]
-    public List<ChangelingMindTrackedIdentityData> Identities =  new ();
+    public List<ChangelingMindTrackedIdentityData> Identities = new();
+
+    /// <summary>
+    /// Will append contained identities to the objectives under this issuer.
+    /// Won't do anything if null.
+    /// </summary>
+    [DataField]
+    public ProtoId<ObjectiveIssuerPrototype>? AppendIssuer = "Changeling";
 
     /// <summary>
     /// A count of the unique devours performed by the changeling.

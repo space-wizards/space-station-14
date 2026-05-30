@@ -29,18 +29,20 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
 
     private void OnAgentAppendText(Entity<ChangelingMindIdentityTrackerComponent> ent, ref MindAgentTextAppendEvent args)
     {
-        // TODO: Rewrite all of this :)
-        if (args.Issuer != "objective-issuer-changeling")
+        if (ent.Comp.AppendIssuer == null)
+            return;
+        
+        if (args.Issuer != ent.Comp.AppendIssuer)
             return;
 
         var summary = new StringBuilder();
-        var identCount = ent.Comp.Identities.Count;
-        summary.AppendLine("[color=white]Identities[/color]");
-        summary.AppendLine($"They have gained {ent.Comp.Identities.Count} identities: ");
+
+        summary.AppendLine(Loc.GetString("changeling-round-end-identities-category"));
+        summary.AppendLine(Loc.GetString("changeling-round-end-identities-text", ("count", ent.Comp.Identities.Count)));
 
         foreach (var data in ent.Comp.Identities)
         {
-            summary.AppendLine("- " + data.OriginalName + (data.GrantedDna ? " (Devoured)" : ""));
+            summary.AppendLine(Loc.GetString("changeling-round-end-identities-wrapper", ("name", data.OriginalName), ("devoured", data.GrantedDna)));
         }
 
         args.Text += summary.ToString();

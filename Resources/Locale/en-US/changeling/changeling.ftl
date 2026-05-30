@@ -45,5 +45,16 @@ changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
 
+# round end
+changeling-round-end-identities-category = [color=white]Identities[/color]
+changeling-round-end-identities-text = They have obtained { $count ->
+    [one] [color=white]{$count}[/color] identity
+    *[other] [color=white]{$count}[/color] identities
+}.
+changeling-round-end-identities-wrapper = - {$name} { $devoured ->
+    [true] | [color=green]Devoured[/color]
+    *[other] | [color=yellow]Extracted[/color]
+}
+
 # other
 changeling-paused-map-name = Changeling identity storage map

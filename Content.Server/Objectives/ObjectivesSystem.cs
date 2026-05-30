@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
+using Content.Shared.Objectives.Prototypes;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
@@ -353,4 +354,4 @@ public record struct ObjectivesTextPrependEvent(string Text);
 /// Raised on the mind after it's agent data is added, letting you append something.
 /// </summary>
 [ByRefEvent]
-public record struct MindAgentTextAppendEvent(string Text, string Issuer);
+public record struct MindAgentTextAppendEvent(string Text, ProtoId<ObjectiveIssuerPrototype> Issuer);
