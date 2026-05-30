@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.CombatMode;
+using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
@@ -32,7 +33,8 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var target = blackboard.GetValue<EntityUid>(TargetKey);
 
-        if (_entityStorage.TryOpenStorage(owner, target))
+        if (_entManager.HasComponent<EntityStorageComponent>(target) &&
+            _entityStorage.TryOpenStorage(owner, target))
         {
             TaskShutdown(blackboard, HTNOperatorStatus.Finished);
             return;
@@ -57,7 +59,8 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
             return (false, null);
         }
 
-        if (_entityStorage.TryOpenStorage(owner, target))
+        if (_entManager.HasComponent<EntityStorageComponent>(target) &&
+            _entityStorage.TryOpenStorage(owner, target))
         {
             return (false, null);
         }
@@ -105,7 +108,8 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
             }
             else
             {
-                if (_entityStorage.TryOpenStorage(owner, target))
+                if (_entManager.HasComponent<EntityStorageComponent>(target) &&
+                    _entityStorage.TryOpenStorage(owner, target))
                 {
                     status = HTNOperatorStatus.Finished;
                 }

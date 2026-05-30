@@ -54,6 +54,11 @@
     tags:
     - AirSensor
     - Unstackable
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - AtmosphericNetworkMonitor

@@ -103,11 +103,22 @@ public sealed partial class DisposalTubeSystem : EntitySystem
     /// <returns>The adjacent disposal tube.</returns>
     public EntityUid? GetTubeInDirection(Entity<DisposalTubeComponent> ent, Direction direction)
     {
+        return GetTubesInDirection(ent, direction).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Finds all adjacent disposal tubes in a specified direction.
+    /// </summary>
+    /// <param name="ent">The original disposal tube.</param>
+    /// <param name="direction">The specified direction.</param>
+    /// <returns>All adjacent disposal tubes in the direction.</returns>
+    public IEnumerable<EntityUid> GetTubesInDirection(Entity<DisposalTubeComponent> ent, Direction direction)
+    {
         var oppositeDirection = direction.GetOpposite();
 
         var xform = Transform(ent);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            return null;
+            yield break;
 
         var position = xform.Coordinates;
         foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, direction))
@@ -115,13 +126,22 @@ public sealed partial class DisposalTubeSystem : EntitySystem
             if (!TryComp(entity, out DisposalTubeComponent? tube))
                 continue;
 
+            if (!CanConnect(ent, (entity, tube)))
+                continue;
+
             if (!CanConnect((entity, tube), oppositeDirection))
                 continue;
 
-            return entity;
+            yield return entity;
         }
+    }
 
-        return null;
+    /// <summary>
+    /// Checks whether two disposal tubes belong to the same traversal network.
+    /// </summary>
+    public bool CanConnect(Entity<DisposalTubeComponent> ent, Entity<DisposalTubeComponent> other)
+    {
+        return ent.Comp.Network == other.Comp.Network;
     }
 
     /// <summary>

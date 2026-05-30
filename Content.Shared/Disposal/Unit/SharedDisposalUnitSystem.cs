@@ -395,7 +395,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
         if (!Terminating(toRemove) &&
             ent.Comp.Container != null &&
-            _container.Remove(toRemove, ent.Comp.Container))
+            !_container.Remove(toRemove, ent.Comp.Container))
         {
             _climb.Climb(toRemove, toRemove, ent, silent: true);
         }

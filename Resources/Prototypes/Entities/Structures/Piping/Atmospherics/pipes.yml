@@ -68,6 +68,25 @@
     price: 30
 
 - type: entity
+  id: VentCrawlHolder
+  categories: [ HideSpawnMenu ]
+  name: vent craw holder
+  components:
+    - type: DisposalTraversalHolder
+    - type: VentCrawlHolder
+    - type: Physics
+      bodyType: Kinematic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.25
+    - type: ContainerContainer
+      containers:
+        DisposalTraversalHolderComponent: !type:Container
+
+- type: entity
   abstract: true
   parent: GasPipeSansLayers
   id: GasPipeBase
@@ -155,6 +174,11 @@
         Blunt: 8
     soundHit:
       collection: MetalThud # this NEEDS to changed to the metal pipe falling sound effect on april first every year
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - North
   - type: GuideHelp
     guides:
     - Pipes
@@ -205,6 +229,11 @@
     damage:
       types:
         Blunt: 8 # Woe, pipe be upon ye!
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - West
   - type: GuideHelp
     guides:
     - Pipes
@@ -248,6 +277,12 @@
         Blunt: 10
     soundHit:
       collection: MetalThud
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - East
+    - West
   - type: GuideHelp
     guides:
     - Pipes
@@ -293,6 +328,13 @@
         Blunt: 10
     soundHit:
       collection: MetalThud
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - East
+    - West
+    - North
   - type: GuideHelp
     guides:
     - Pipes
@@ -404,6 +446,11 @@
     navMapBlip: GasPipeManifold
     showAbsentConnections: false
   - type: AtmosDevice
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - North
   - type: Tag
     tags:
     - Unstackable
