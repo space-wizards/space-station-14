@@ -215,6 +215,7 @@
    - hiss
    - hisses
    - hissed
+   - hissing
 
 # Vulpkanin
 - type: emote
@@ -325,6 +326,7 @@
    - caw
    - caws
    - cawed
+   - cawing
 
 # hand emotes
 - type: emote
