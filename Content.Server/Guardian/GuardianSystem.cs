@@ -1,5 +1,8 @@
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -13,9 +16,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.Speech;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Guardian
@@ -34,6 +39,9 @@ namespace Content.Server.Guardian
         [Dependency] private GibbingSystem _gibbing = default!;
         [Dependency] private SharedContainerSystem _container = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private ChatSystem _chatSystem = default!;
+        [Dependency] private IChatManager _chat = default!;
+        [Dependency] private IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -46,6 +54,7 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
+            SubscribeLocalEvent<GuardianComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayerAttached);
             SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianPlayerDetached);
 
@@ -293,6 +302,38 @@ namespace Content.Server.Guardian
                 interruptsDoAfters: false);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 
+        }
+
+        private void OnSpeakAttempt(Entity<GuardianComponent> entity, ref SpeakAttemptEvent args)
+        {
+            // if guardian is loose, they speech is not blocked
+            if (entity.Comp.GuardianLoose)
+                return;
+
+            // cancel the speech, we gonna send it ourselves only for the host and the guardian
+            args.Cancel();
+
+            if (!TryComp<ActorComponent>(entity, out var guardianActor))
+                return;
+
+            if (!TryComp<ActorComponent>(entity.Comp.Host, out var hostActor))
+                return;
+
+            if (args.Message == null)
+                return;
+
+            // copy pasted from SendEntitySpeak
+            var speech = _chatSystem.GetSpeechVerb(entity, args.Message);
+            var messageWrapped = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+                ("entityName", Name(entity)),
+                ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
+                ("fontType", speech.FontId),
+                ("fontSize", speech.FontSize),
+                ("message", FormattedMessage.EscapeText(args.Message)));
+
+            // send to the host and the guardian (the guardian needs to know what they said)
+            _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, hostActor.PlayerSession.Channel);
+            _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, guardianActor.PlayerSession.Channel);
         }
 
         /// <summary>
