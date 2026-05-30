@@ -987,7 +987,7 @@
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution
-    solution: beaker
+    solution: anomaly
 
 - type: entity
   id: AnomalyShadow
