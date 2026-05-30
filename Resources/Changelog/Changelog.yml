@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic, Cadunkus
-  changes:
-  - message: Added new vox hairstyle called "Vox Catfish."
-    type: Add
-  id: 9218
-  time: '2025-11-21T22:09:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40689
 - author: ciaran
   changes:
   - message: other people still touching a body when a defib is used will be shocked
@@ -4098,3 +4091,10 @@
   id: 9729
   time: '2026-05-29T19:49:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42342
+- author: VerinSenpai
+  changes:
+  - message: Borg vision should no longer "randomly" be occluded by the damage overlay.
+    type: Fix
+  id: 9730
+  time: '2026-05-30T18:32:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44030
