@@ -1,5 +1,6 @@
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body;
+using Content.Shared.Hands;
 
 namespace Content.Shared._Offbrand.Organs;
 
@@ -15,6 +16,7 @@ public sealed partial class WoundableOrganSystem : EntitySystem
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<HealWoundsEvent>>(UnwrapRelay);
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<GetBleedLevelEvent>>(UnwrapRelay);
         SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<ClampWoundsEvent>>(UnwrapRelay);
+        SubscribeLocalEvent<WoundableOrganComponent, BodyRelayedEvent<BeforeEquippingHandEvent>>(UnwrapRelay);
     }
 
     private void OnGetWeights(Entity<WoundableOrganComponent> ent, ref BodyRelayedEvent<WoundableOrganWeightsEvent> args)

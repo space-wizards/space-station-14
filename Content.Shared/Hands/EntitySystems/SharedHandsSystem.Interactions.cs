@@ -172,6 +172,11 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!CanPickupToHand(uid, entity.Value, handsComp.ActiveHandId, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
             return false;
 
+        // Offbrand
+        if (!BeforeDoPickup((uid, handsComp), entity.Value, handName))
+            return false;
+        // End Offbrand
+
         DoDrop(uid, handName, false, log: false);
         DoPickup(uid, handsComp.ActiveHandId, entity.Value, handsComp, log: false);
         return true;

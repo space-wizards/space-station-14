@@ -181,7 +181,7 @@ namespace Content.Shared.Hands
     /// If true, the item will not be equipped into the user's hand.
     /// </param>
     [ByRefEvent]
-    public record struct BeforeEquippingHandEvent(EntityUid Item, bool Cancelled = false);
+    public record struct BeforeEquippingHandEvent(EntityUid Item, string HandId = "", bool Cancelled = false); // Offbrand - useless hands
 
     /// <summary>
     ///     Raised when putting an entity into a hand slot

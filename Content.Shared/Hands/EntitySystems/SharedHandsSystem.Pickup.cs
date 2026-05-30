@@ -90,7 +90,7 @@ public abstract partial class SharedHandsSystem
         if (!CanPickupToHand(uid, entity, handId, checkActionBlocker: checkActionBlocker, showPopup: true, handsComp: handsComp, item: item))
             return false;
 
-        if (!BeforeDoPickup((uid, handsComp), entity))
+        if (!BeforeDoPickup((uid, handsComp), entity, handId)) // Offbrand - useless hands
             return false;
 
         if (animate)
@@ -252,12 +252,12 @@ public abstract partial class SharedHandsSystem
     /// is called. Used to run a cancelable before pickup event that can have
     /// side effects, unlike the side effect free <see cref="GettingPickedUpAttemptEvent"/>.
     /// </summary>
-    private bool BeforeDoPickup(Entity<HandsComponent?> user, EntityUid item)
+    private bool BeforeDoPickup(Entity<HandsComponent?> user, EntityUid item, string handId)
     {
         if (!Resolve(user, ref user.Comp))
             return false;
 
-        var userEv = new BeforeEquippingHandEvent(item);
+        var userEv = new BeforeEquippingHandEvent(item, handId); // Offbrand - useless hands
         RaiseLocalEvent(user, ref userEv);
 
         if (userEv.Cancelled)
