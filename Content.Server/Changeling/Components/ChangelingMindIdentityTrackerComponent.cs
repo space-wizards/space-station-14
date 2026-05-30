@@ -47,6 +47,7 @@ public sealed partial class ChangelingMindTrackedIdentityData
 
     /// <summary>
     /// Name of the original entity at the time of being devoured.
+    /// Used for round-end text.
     /// </summary>
     [DataField]
     public string OriginalName = "Unnamed";
@@ -56,4 +57,18 @@ public sealed partial class ChangelingMindTrackedIdentityData
     /// </summary>
     [DataField]
     public bool GrantedDna;
+
+    /// <summary>
+    /// String of the original job of the entity.
+    /// Used in round-end text.
+    /// </summary>
+    [DataField]
+    public string OriginalJob;
+
+    /// <summary>
+    /// Whether this is the identity the entity started with.
+    /// Used in round-end text.
+    /// </summary>
+    [DataField]
+    public bool Starting;
 }

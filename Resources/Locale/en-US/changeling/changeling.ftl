@@ -51,7 +51,7 @@ changeling-round-end-identities-text = They have obtained { $count ->
     [one] [color=white]{$count}[/color] identity
     *[other] [color=white]{$count}[/color] identities
 }.
-changeling-round-end-identities-wrapper = - {$name} { $devoured ->
+changeling-round-end-identities-wrapper = - {$name}, {CAPITALIZE($job)} { $devoured ->
     [true] | [color=green]Devoured[/color]
     *[other] | [color=yellow]Extracted[/color]
 }
