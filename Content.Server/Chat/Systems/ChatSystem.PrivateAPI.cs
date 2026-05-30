@@ -21,7 +21,7 @@ public sealed partial class ChatSystem
         bool ignoreActionBlocker = false
         )
     {
-        if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
+        if (!_actionBlocker.CanSpeak(source, originalMessage) && !ignoreActionBlocker)
             return;
 
         var message = TransformSpeech(source, originalMessage);
@@ -94,7 +94,7 @@ public sealed partial class ChatSystem
         bool ignoreActionBlocker = false
         )
     {
-        if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
+        if (!_actionBlocker.CanSpeak(source, originalMessage) && !ignoreActionBlocker)
             return;
 
         var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));

@@ -83,7 +83,7 @@ public sealed partial class VocalizationSystem : EntitySystem
 
         // default to local chat if no other system handles the event
         // first check if the entity can speak
-        if (!_actionBlocker.CanSpeak(entity))
+        if (!_actionBlocker.CanSpeak(entity, message))
             return;
 
         // send the message
