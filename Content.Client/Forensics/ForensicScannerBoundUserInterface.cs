@@ -9,7 +9,7 @@ namespace Content.Client.Forensics;
 [UsedImplicitly]
 public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     [ViewVariables]
     private ForensicScannerMenu? _window;
