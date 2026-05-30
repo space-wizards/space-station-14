@@ -220,7 +220,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     _displacement.TryAddDisplacement(
                         displacement,
                         (target, target.Comp),
-                        index + i + numDisplacements + 1,
+                        // This makes the displacement layer go below the original sprite
+                        index + i + 1,
                         layerId,
                         out _
                     );
