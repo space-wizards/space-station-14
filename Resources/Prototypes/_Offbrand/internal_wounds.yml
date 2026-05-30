@@ -14,13 +14,7 @@
   name: fracture wound
   components:
   - type: Wound
-    damage:
-      types:
-        Blunt: 10
-    maximumDamage: 10
-  - type: MovementModStatusEffect
-    sprintSpeedModifier: 0.8
-    walkSpeedModifier: 0.8
+    maximumDamage: 0
   - type: AnalyzableWound
     descriptions:
       0: wound-internal-fracture
@@ -29,6 +23,22 @@
     visualType: MediumCaution
   - type: ExaminableStatusEffect
     message: fracture-examine
+
+- type: entity
+  parent: WoundInternalBase
+  id: WoundCutTendon
+  name: cut tendon
+  components:
+  - type: Wound
+    maximumDamage: 0
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-internal-cut-tendon
+  - type: PopupOnAppliedStatusEffect
+    message: cut-tendon-applied
+    visualType: MediumCaution
+  - type: ExaminableStatusEffect
+    message: cut-tendon-examine
 
 - type: entity
   parent: WoundInternalBase

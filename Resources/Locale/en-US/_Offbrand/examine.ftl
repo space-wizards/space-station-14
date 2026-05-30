@@ -3,6 +3,7 @@ cpr-target-needs-cpr = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-H
 fracture-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BASIC($target, "look", "looks") } like something is shaped wrong under { POSS-ADJ($target) } skin![/color]
 arterial-bleeding-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } spurting blood![/color]
 bone-death-examine = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } severely mangled![/color]
+cut-tendon-examine = TODO offmed
 
 wound-bleeding-modifier = [color=red]bleeding {$wound}[/color]
 wound-tended-modifier = tended {$wound}

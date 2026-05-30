@@ -4,6 +4,7 @@ moderate-pain-applied = You struggle to keep your eyes open.
 severe-pain-applied = Your whole body is going numb.
 blackout-pain-applied = You feel like you're about to black out.
 fracture-applied = You felt something break inside of you.
+cut-tendon-applied = You felt tear apart inside of you.
 arterial-bleeding-applied = You felt something tear apart inside of you.
 
 tendable-nothing-to-tend = There are no wounds you could tend with { THE($tending) }.

@@ -147,7 +147,7 @@
         0: WoundShockSmall
   - type: UniqueWoundOnDamage
     wounds:
-    - damageTypes: [Slash, Blunt, Piercing]
+    - damageTypes: [Slash, Piercing]
       minimumDamage: 10
       minimumTotalDamage: 25
       woundPrototype: WoundArterialBleeding
@@ -155,16 +155,22 @@
         types:
           Slash: 5
       damageProbabilityCoefficient: 0.01
-      totalProbabilityCoefficient: 0
+      totalProbabilityCoefficient: 0.01
       damageProbabilityConstant: 0
-    - damageTypes: [Blunt]
+    - damageTypes: [Blunt, Piercing]
       minimumDamage: 10
       minimumTotalDamage: 30
       woundPrototype: WoundFracture
-      woundDamages:
-        types:
-          Blunt: 10
-      damageProbabilityCoefficient: 0
+      woundDamages: {}
+      damageProbabilityCoefficient: 0.01
+      totalProbabilityCoefficient: 0.01
+      damageProbabilityConstant: 0
+    - damageTypes: [Slash, Piercing]
+      minimumDamage: 10
+      minimumTotalDamage: 30
+      woundPrototype: WoundCutTendon
+      woundDamages: {}
+      damageProbabilityCoefficient: 0.01
       totalProbabilityCoefficient: 0.01
       damageProbabilityConstant: 0
 
