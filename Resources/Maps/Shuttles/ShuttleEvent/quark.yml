@@ -711,6 +711,7 @@ entities:
           friction: 0.4
     - type: EntityStorage
       open: True
+      removedMasks: 20
     - type: PlaceableSurface
       isPlaceable: True
 - proto: ClothingRandomSpawner
