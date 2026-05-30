@@ -6,7 +6,6 @@
   id: BaseDecoy
   abstract: true
   components:
-  - type: Rotatable
   - type: Sprite
     sprite: Objects/Tools/Decoys/operative_decoy.rsi
     layers:
@@ -35,6 +34,7 @@
     - NamesSyndicateNormal
     nameFormat: name-format-nukie-generic
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: ToggleableVisuals
     spriteLayer: light
