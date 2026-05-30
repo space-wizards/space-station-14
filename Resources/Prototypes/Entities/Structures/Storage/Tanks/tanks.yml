@@ -28,11 +28,11 @@
   - type: EffectOnToolInteraction
     effects:
       Welding:
-        - target:
-          - !type:HealthChange
-            damage:
-              types:
-                Heat: 10
+      - target:
+        - !type:HealthChange
+          damage:
+            types:
+              Heat: 10
   - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
