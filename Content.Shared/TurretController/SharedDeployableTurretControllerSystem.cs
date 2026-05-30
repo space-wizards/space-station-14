@@ -13,12 +13,12 @@ namespace Content.Shared.TurretController;
 /// </summary>
 public abstract partial class SharedDeployableTurretControllerSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessreader = default!;
-    [Dependency] private readonly TurretTargetSettingsSystem _turretTargetingSettings = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private AccessReaderSystem _accessreader = default!;
+    [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

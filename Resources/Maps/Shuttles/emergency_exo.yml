@@ -4784,7 +4784,6 @@ entities:
   - uid: 18
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 11.5,10.5
       parent: 2
   - uid: 99
@@ -4895,25 +4894,21 @@ entities:
   - uid: 481
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 10.5,10.5
       parent: 2
   - uid: 482
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 17.5,2.5
       parent: 2
   - uid: 489
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 9.5,10.5
       parent: 2
   - uid: 544
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 8.5,10.5
       parent: 2
   - uid: 590
@@ -4954,7 +4949,6 @@ entities:
   - uid: 600
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,5.5
       parent: 2
   - uid: 604
@@ -4970,7 +4964,6 @@ entities:
   - uid: 627
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,4.5
       parent: 2
   - uid: 652
@@ -4991,13 +4984,11 @@ entities:
   - uid: 656
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 17.5,0.5
       parent: 2
   - uid: 657
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 14.5,-8.5
       parent: 2
 - proto: GrilleBroken

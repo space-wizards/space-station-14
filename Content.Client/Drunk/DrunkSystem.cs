@@ -7,11 +7,11 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Drunk;
 
-public sealed class DrunkSystem : SharedDrunkSystem
+public sealed partial class DrunkSystem : SharedDrunkSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private DrunkOverlay _overlay = default!;
 

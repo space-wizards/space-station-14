@@ -77,9 +77,9 @@
   - type: Machine
     board: ElectrolysisUnitMachineCircuitboard
   - type: ApcPowerReceiver
-    powerLoad: 0
+    powerLoad: 5
   - type: PowerState
-    idlePowerDraw: 0
+    idlePowerDraw: 5
     workingPowerDraw: 1000 # for a lab-grade machine
 
 # TODO centrifuge should spill the vial if the lid is off
@@ -130,7 +130,7 @@
   - type: Machine
     board: CentrifugeMachineCircuitboard
   - type: ApcPowerReceiver
-    powerLoad: 0
+    powerLoad: 5
   - type: PowerState
-    idlePowerDraw: 0
+    idlePowerDraw: 5
     workingPowerDraw: 500

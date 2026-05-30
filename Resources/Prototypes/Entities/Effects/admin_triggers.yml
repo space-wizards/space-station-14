@@ -1,6 +1,6 @@
 - type: entity
-  id: AdminInstantEffectBase
   abstract: true
+  id: AdminInstantEffectBase
   name: instant effect
   components:
   - type: Sprite
@@ -12,26 +12,26 @@
     lifetime: 5
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectEMP
   suffix: EMP
-  parent: AdminInstantEffectBase
   components:
   - type: EmpOnTrigger
     range: 4
     energyConsumption: 50000
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectBluespace
   suffix: BluespaceFlash
-  parent: AdminInstantEffectBase
   components:
   - type: SpawnOnTrigger
     proto: EffectFlashBluespace
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectFlash
   suffix: Flash
-  parent: AdminInstantEffectBase
   components:
   - type: FlashOnTrigger
     range: 7
@@ -39,9 +39,9 @@
     proto: GrenadeFlashEffect
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectSmoke3
   suffix: Smoke (03 sec)
-  parent: AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 3
@@ -53,9 +53,9 @@
       path: /Audio/Effects/Smoke-grenade.ogg
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectSmoke10
   suffix: Smoke (10 sec)
-  parent: AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 10
@@ -67,9 +67,9 @@
       path: /Audio/Effects/Smoke-grenade.ogg
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectSmoke30
   suffix: Smoke (30 sec)
-  parent: AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 30
@@ -81,9 +81,9 @@
       path: /Audio/Effects/Smoke-grenade.ogg
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectTearGas
   suffix: Tear Gas
-  parent: AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 10
@@ -94,9 +94,9 @@
         Quantity: 50
 
 - type: entity
+  parent: AdminInstantEffectBase
   id: AdminInstantEffectGravityWell
   suffix: Gravity Well
-  parent: AdminInstantEffectBase
   components:
   - type: EmitSoundOnTrigger
     sound:
@@ -118,3 +118,12 @@
     intensity: 10
     falloffPower: 1.5
 
+- type: entity
+  parent: AdminInstantEffectBase
+  id: AdminInstantEffectLightning
+  suffix: Lightning
+  components:
+  - type: LightningArcShooter
+    instant: true
+    shootMinInterval: 6 # larger than the timed despawn so that we only shoot once
+    shootMaxInterval: 7

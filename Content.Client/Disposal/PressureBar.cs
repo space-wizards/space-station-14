@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using Content.Shared.Disposal;
-using Content.Shared.Disposal.Unit;
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -9,10 +7,10 @@ namespace Content.Client.Disposal;
 
 public sealed class PressureBar : ProgressBar
 {
-    public bool UpdatePressure(TimeSpan fullTime)
+    public bool UpdatePressure(TimeSpan fullPressureTime, float pressurePreSecond)
     {
         var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
-        var pressure = (float) Math.Min(1.0f, 1.0f - (fullTime.TotalSeconds - currentTime.TotalSeconds) * SharedDisposalUnitSystem.PressurePerSecond);
+        var pressure = (float)Math.Min(1.0f, 1.0f - (fullPressureTime.TotalSeconds - currentTime.TotalSeconds) * pressurePreSecond);
         UpdatePressureBar(pressure);
         return pressure >= 1.0f;
     }

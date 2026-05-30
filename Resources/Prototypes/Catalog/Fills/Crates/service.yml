@@ -199,6 +199,7 @@
         - id: NewtonCradle
         - id: BoxEnvelope
         - id: BrbSign
+        - id: DeskBell
 
 - type: entity
   parent: CrateGenericSteel

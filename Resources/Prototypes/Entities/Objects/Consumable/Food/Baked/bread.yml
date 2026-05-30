@@ -46,7 +46,7 @@
 
 - type: entity
   name: volcanic loaf
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
@@ -56,9 +56,10 @@
       color: "#281415"
     - state: alpha-filling
       color: "#FF613F"
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadVolcanicSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadVolcanicSlice
+      amount: 8
 
 - type: entity
   name: volcanic slice
@@ -77,7 +78,7 @@
 
 - type: entity
   name: banana bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
@@ -88,9 +89,10 @@
   - type: Sprite
     layers:
     - state: banana
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadBananaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadBananaSlice
+      amount: 8
   - type: Tag
     tags:
     - Fruit
@@ -117,7 +119,7 @@
     - Slice
 
 - type: entity
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadCotton
   name: cotton bread
   description: Bread, but for moff.
@@ -131,9 +133,10 @@
   - type: Sprite
     layers:
     - state: cotton
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadCottonSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadCottonSlice
+      amount: 8
   - type: Tag
     tags:
     - ClothMade
@@ -176,7 +179,7 @@
 
 - type: entity
   name: cornbread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadCorn
   description: Some good down-home country-style, rootin'-tootin', revolver-shootin', dad-gum yeehaw cornbread.
   components:
@@ -187,9 +190,10 @@
   - type: Sprite
     layers:
     - state: cornbread
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadCornSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadCornSlice
+      amount: 8
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -208,7 +212,7 @@
 
 - type: entity
   name: cream cheese bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
@@ -220,9 +224,10 @@
   - type: Sprite
     layers:
     - state: creamcheese
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadCreamcheeseSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadCreamcheeseSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -256,7 +261,7 @@
 
 - type: entity
   name: meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadMeat
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
@@ -267,9 +272,10 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadMeatSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadMeatSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -315,7 +321,7 @@
 
 - type: entity
   name: mimana bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadMimana
   description: Best eaten in silence.
   components:
@@ -326,9 +332,10 @@
   - type: Sprite
     layers:
     - state: mimana
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadMimanaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadMimanaSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -365,16 +372,17 @@
 
 - type: entity
   name: bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadPlain
   description: Some plain old earthen bread.
   components:
   - type: Sprite
     layers:
     - state: plain
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadPlainSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadPlainSlice
+      amount: 8
 
 - type: entity
   name: bread slice
@@ -388,7 +396,7 @@
 
 - type: entity
   name: sausage bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadSausage
   description: Dont think too much about it.
   components:
@@ -399,9 +407,10 @@
   - type: Sprite
     layers:
     - state: sausage
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadSausageSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadSausageSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -442,7 +451,7 @@
 
 - type: entity
   name: spider meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadMeatSpider
   description: Reassuringly green meatloaf made from spider meat.
   components:
@@ -453,9 +462,10 @@
   - type: Sprite
     layers:
     - state: spidermeat
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadMeatSpiderSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadMeatSpiderSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -501,7 +511,7 @@
 
 - type: entity
   name: tofu bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadTofu
   description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
   components:
@@ -512,9 +522,10 @@
   - type: Sprite
     layers:
     - state: tofu
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadTofuSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadTofuSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -547,7 +558,7 @@
 
 - type: entity
   name: xeno meat bread
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadMeatXeno
   description: A fitting, and filling, end to xeno scum.
   components:
@@ -558,9 +569,10 @@
   - type: Sprite
     layers:
     - state: xenomeat
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadMeatXenoSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadMeatXenoSlice
+      amount: 8
   - type: Solution
     solution:
       reagents:
@@ -604,19 +616,20 @@
     - Bread
     - Slice
 
-# Other than bread/slices
+# Other than bread/slice:
 
 - type: entity
-  parent: FoodBreadBase
+  parent: [FoodBreadBase, BaseSlicingRefinableFood]
   id: FoodBreadBaguette
   name: baguette
   description: Bon appétit!
   components:
   - type: Sprite
     state: baguette
-  - type: SliceableFood
-    count: 12
-    slice: FoodBreadBaguetteSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadBaguetteSlice
+      amount: 12
   - type: Solution
     solution:
       reagents:
@@ -649,15 +662,17 @@
 # Tastes like France.
 
 - type: entity
-  parent: FoodBreadBaguette
+  parent: [FoodBreadBaguette, BaseSlicingRefinableFood]
   id: FoodBreadBaguetteCotton
   name: cotton baguette
   description: Bon azzétit!
   components:
   - type: Sprite
     state: baguette-cotton
-  - type: SliceableFood
-    slice: FoodBreadBaguetteCottonSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadBaguetteCottonSlice
+      amount: 12
   - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
@@ -874,16 +889,17 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: [SolutionLarge, FoodBase]
+  parent: [SolutionLarge, FoodBase, BaseSlicingRefinableFood]
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
   - type: FlavorProfile
     flavors:
     - meaty
     - bread
-  - type: SliceableFood
-    count: 8
-    slice: FoodBreadSausageSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadSausageSlice
+      amount: 5
   - type: Solution
     solution:
       reagents:

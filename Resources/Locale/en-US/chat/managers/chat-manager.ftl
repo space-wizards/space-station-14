@@ -124,6 +124,10 @@ chat-speech-verb-goat-1 = bleats
 chat-speech-verb-goat-2 = grunts
 chat-speech-verb-goat-3 = cries
 
+chat-speech-verb-name-sheep = Sheep
+chat-speech-verb-sheep-1 = bleats
+chat-speech-verb-sheep-2 = baas
+
 chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks
 chat-speech-verb-small-mob-2 = pieps

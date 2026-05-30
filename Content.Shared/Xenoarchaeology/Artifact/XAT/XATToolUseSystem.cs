@@ -9,9 +9,9 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 /// <summary>
 /// This handles <see cref="XATToolUseComponent"/>
 /// </summary>
-public sealed class XATToolUseSystem : BaseXATSystem<XATToolUseComponent>
+public sealed partial class XATToolUseSystem : BaseXATSystem<XATToolUseComponent>
 {
-    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

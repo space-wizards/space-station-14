@@ -8,14 +8,14 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.StepTrigger.Systems;
 
-public sealed class StepTriggerSystem : EntitySystem
+public sealed partial class StepTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsquery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsquery = default!;
 
     public override void Initialize()
     {

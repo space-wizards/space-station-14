@@ -4,10 +4,10 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class GibOnTriggerSystem : XOnTriggerSystem<GibOnTriggerComponent>
+public sealed partial class GibOnTriggerSystem : XOnTriggerSystem<GibOnTriggerComponent>
 {
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     protected override void OnTrigger(Entity<GibOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {

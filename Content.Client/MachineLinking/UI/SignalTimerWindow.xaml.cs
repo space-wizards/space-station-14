@@ -10,7 +10,7 @@ namespace Content.Client.MachineLinking.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SignalTimerWindow : DefaultWindow
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private const int MaxTextLength = 5;
 

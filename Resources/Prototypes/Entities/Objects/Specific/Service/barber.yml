@@ -33,6 +33,9 @@
         Piercing: 6
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+  - type: Tool
+    qualities:
+    - Shearing
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

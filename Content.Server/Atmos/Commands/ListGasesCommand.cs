@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ListGasesCommand : IConsoleCommand
+    public sealed partial class ListGasesCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private IEntityManager _e = default!;
 
         public string Command => "listgases";
         public string Description => "Prints a list of gases and their indices.";

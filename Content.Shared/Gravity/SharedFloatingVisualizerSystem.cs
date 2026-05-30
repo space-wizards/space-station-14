@@ -6,9 +6,9 @@ namespace Content.Shared.Gravity;
 /// <summary>
 /// Handles offsetting a sprite when there is no gravity
 /// </summary>
-public abstract class SharedFloatingVisualizerSystem : EntitySystem
+public abstract partial class SharedFloatingVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {

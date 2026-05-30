@@ -8,10 +8,10 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.AdminWho)]
-public sealed class AdminWhoCommand : LocalizedCommands
+public sealed partial class AdminWhoCommand : LocalizedCommands
 {
-    [Dependency] private readonly IAfkManager _afkManager = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private IAfkManager _afkManager = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
 
     public override string Command => "adminwho";
 

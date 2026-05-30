@@ -8,10 +8,10 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class SetOutfitCommand : LocalizedEntityCommands
+    public sealed partial class SetOutfitCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly OutfitSystem _outfitSystem = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private OutfitSystem _outfitSystem = default!;
 
         public override string Command => "setoutfit";
         public override string Description => Loc.GetString("cmd-setoutfit-desc", ("requiredComponent", nameof(InventoryComponent)));

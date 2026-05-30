@@ -8,9 +8,9 @@ namespace Content.Client.Revolutionary;
 /// <summary>
 /// Used for the client to get status icons from other revs.
 /// </summary>
-public sealed class RevolutionarySystem : SharedRevolutionarySystem
+public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {

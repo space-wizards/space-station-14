@@ -13,8 +13,8 @@ namespace Content.Client.Humanoid;
 [GenerateTypedNameReferences]
 public sealed partial class OrganMarkingPicker : Control
 {
-    [Dependency] private readonly MarkingManager _marking = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private MarkingManager _marking = default!;
+    [Dependency] private IEntityManager _entity = default!;
 
     private readonly SpriteSystem _sprite;
 

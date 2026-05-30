@@ -12,10 +12,10 @@ namespace Content.Server.Screens.Systems;
 /// <summary>
 /// Controls the wallmounted screens on stations and shuttles displaying e.g. FTL duration, ETA
 /// </summary>
-public sealed class ScreenSystem : EntitySystem
+public sealed partial class ScreenSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {

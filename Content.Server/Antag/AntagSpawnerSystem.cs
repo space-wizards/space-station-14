@@ -16,6 +16,6 @@ public sealed class AntagSpawnerSystem : EntitySystem
 
     private void OnSelectEntity(Entity<AntagSpawnerComponent> ent, ref AntagSelectEntityEvent args)
     {
-        args.Entity = Spawn(ent.Comp.Prototype);
+        args.Entity = Spawn(ent.Comp.Prototype, args.Coords);
     }
 }

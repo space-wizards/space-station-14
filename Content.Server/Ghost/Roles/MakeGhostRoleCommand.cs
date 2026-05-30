@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Ghost.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MakeGhostRoleCommand : IConsoleCommand
+    public sealed partial class MakeGhostRoleCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
 
         public string Command => "makeghostrole";
         public string Description => "Turns an entity into a ghost role.";

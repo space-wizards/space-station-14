@@ -11,11 +11,11 @@ namespace Content.Client.FeedbackPopup;
 /// This handles getting feedback popup messages from the server and making a popup in the client.
 /// </summary>
 [UsedImplicitly]
-public sealed class FeedbackPopupUIController : UIController
+public sealed partial class FeedbackPopupUIController : UIController
 {
-    [Dependency] private readonly ClientFeedbackManager _feedbackManager = null!;
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] private readonly IUriOpener _uri = null!;
+    [Dependency] private ClientFeedbackManager _feedbackManager = null!;
+    [Dependency] private IPrototypeManager _proto = null!;
+    [Dependency] private IUriOpener _uri = null!;
 
     private FeedbackPopupWindow _window = null!;
 

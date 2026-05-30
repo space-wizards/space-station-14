@@ -1716,5 +1716,28 @@ Entries:
   id: 209
   time: '2026-04-19T17:47:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43098
+- author: IProduceWidgets
+  changes:
+  - message: The `delaystart` command now accepts negative values, allowing to speed
+      up the start of the round.
+    type: Tweak
+  id: 210
+  time: '2026-05-09T19:27:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38270
+- author: Beck
+  changes:
+  - message: You can now see the contraband and chameleon status of items in the examine
+      menu
+    type: Add
+  id: 211
+  time: '2026-05-10T11:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43658
+- author: YoungThugSS14
+  changes:
+  - message: Removed the "spawnentitylist" command.
+    type: Remove
+  id: 212
+  time: '2026-05-12T19:52:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43934
 Name: Admin
 Order: 3

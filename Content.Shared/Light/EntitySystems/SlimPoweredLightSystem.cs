@@ -4,10 +4,10 @@ using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public sealed class SlimPoweredLightSystem : EntitySystem
+public sealed partial class SlimPoweredLightSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private SharedPointLightSystem _lights = default!;
 
     private bool _setting;
 

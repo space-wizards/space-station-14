@@ -8,12 +8,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Systems;
 
-public sealed class SuperBonkSystem : EntitySystem
+public sealed partial class SuperBonkSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly ClumsySystem _clumsySystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private ClumsySystem _clumsySystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

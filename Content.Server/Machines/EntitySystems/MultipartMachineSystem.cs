@@ -13,11 +13,11 @@ namespace Content.Server.Machines.EntitySystems;
 /// When requested, performs scans of the map area around the specified entity
 /// to find and match parts of the machine.
 /// </summary>
-public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
+public sealed partial class MultipartMachineSystem : SharedMultipartMachineSystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private MapSystem _mapSystem = default!;
+    [Dependency] private EntityLookupSystem _lookupSystem = default!;
 
     // The largest size ANY machine can theoretically have.
     // Used to aid search for machines in range of parts that have been anchored/constructed.

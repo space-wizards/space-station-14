@@ -10,14 +10,14 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Anomaly.Effects;
 
-public abstract class SharedGravityAnomalySystem : EntitySystem
+public abstract partial class SharedGravityAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

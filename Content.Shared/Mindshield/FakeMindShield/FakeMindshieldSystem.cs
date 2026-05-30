@@ -8,11 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
-public sealed class FakeMindShieldSystem : EntitySystem
+public sealed partial class FakeMindShieldSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";

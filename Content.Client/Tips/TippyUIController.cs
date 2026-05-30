@@ -17,10 +17,10 @@ using static Content.Client.Tips.TippyUI;
 
 namespace Content.Client.Tips;
 
-public sealed class TippyUIController : UIController
+public sealed partial class TippyUIController : UIController
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceCache _resCache = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 

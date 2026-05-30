@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class SpawnOnBatteryFullSystem : EntitySystem
+public sealed partial class SpawnOnBatteryFullSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private BatterySystem _battery = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     public override void Initialize()
     {

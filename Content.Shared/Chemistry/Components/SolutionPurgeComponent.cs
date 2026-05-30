@@ -16,12 +16,6 @@ namespace Content.Shared.Chemistry.Components;
 public sealed partial class SolutionPurgeComponent : Component
 {
     /// <summary>
-    /// The name of the solution to detract from.
-    /// </summary>
-    [DataField(required: true)]
-    public string Solution = string.Empty;
-
-    /// <summary>
     /// The reagent(s) to be ignored when purging the solution
     /// </summary>
     [DataField]
