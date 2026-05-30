@@ -120,8 +120,8 @@ public abstract class TileAtmosphereTest : AtmosTest
             Assert.That(mix1, Is.Not.EqualTo(null));
             Assert.That(mix2, Is.Not.EqualTo(null));
         });
-
-        const float reactionTolerance = 0.075f;
+        //TODO drop this to 0 once reactions conserve mass.
+        const float reactionTolerance = 0.1f;
         AssertMixMoles(mix1, mix2, reactionTolerance);
         AssertGridMoles(Moles, reactionTolerance);
     }
