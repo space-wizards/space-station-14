@@ -10,8 +10,9 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public abstract partial class GameRuleSystem<T> where T: IComponent
+public abstract partial class GameRuleSystem<T> where T : IComponent
 {
+    private const int RandomTileSearchAttempts = 25;
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
@@ -109,10 +110,10 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         var found = false;
         var aabb = gridComp.LocalAABB;
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < RandomTileSearchAttempts; i++)
         {
-            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
-            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
+            var randomX = RobustRandom.Next((int)aabb.Left, (int)aabb.Right);
+            var randomY = RobustRandom.Next((int)aabb.Bottom, (int)aabb.Top);
 
             tile = new Vector2i(randomX, randomY);
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
