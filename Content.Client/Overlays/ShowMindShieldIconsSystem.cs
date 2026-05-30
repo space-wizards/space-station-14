@@ -1,7 +1,5 @@
 using Content.Shared.Mindshield;
-using Content.Shared.Mindshield.Components;
 using Content.Shared.Overlays;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
@@ -10,6 +8,7 @@ namespace Content.Client.Overlays;
 public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
 {
     [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SharedMindShieldSystem _mindShieldSystem = default!;
 
     public override void Initialize()
     {
@@ -23,10 +22,9 @@ public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowM
         // Is active checks for our ability to display status icons
         if (!IsActive)
             return;
-        
-        var ev = new QueryMindShieldVisualsEvent();
-        RaiseLocalEvent(entt.Owner, ref ev, true);
-        if (ev.IsVisible && _prototype.Resolve(ev.MindShieldStatusIcon, out var statusIconPrototype))
+
+        _mindShieldSystem.GetMindshieldStatus(entt.Owner, out var _, out var isVisible, out var statusIcon);
+        if (isVisible && _prototype.Resolve(statusIcon, out var statusIconPrototype))
             evnt.StatusIcons.Add(statusIconPrototype);
     }
 }

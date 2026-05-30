@@ -12,12 +12,10 @@ public abstract class SharedMindShieldSystem : EntitySystem
     {
         base.Initialize();
 
-        // Mind shield events
-        // Status
+        // Mind shield status events
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>(OnStatusQuery);
-
     }
 
     private void OnStatusQuery(Entity<MindShieldComponent> e, ref QueryMindShieldStatusEvent args)

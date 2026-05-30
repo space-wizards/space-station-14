@@ -20,11 +20,11 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, SeeIdentityAttemptEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, VoiceMaskToggledEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, FakeMindShieldToggleEvent>(RelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldStatusEvent>(RelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
-        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldVisualsEvent>(RelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
+
         // Ref relays, for when you need to write to the event!
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetStoreEvent>(RefRelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldStatusEvent>(RefRelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
     }
 
     /// <summary>

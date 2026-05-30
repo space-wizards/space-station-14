@@ -18,6 +18,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         // Other events
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
 
@@ -25,10 +26,12 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
-        // Visuals events
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryFakeMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryFakeMindShieldVisuals);
+
+        // Mindshield events
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, QueryMindShieldStatusEvent>(OnQueryStatus);
+
         // Innate things
         SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
     }
@@ -41,13 +44,13 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _actions.AddAction(ent.Owner, ent.Comp.Action);
     }
 
-    private void OnQueryFakeMindShieldVisuals(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldVisualsEvent args)
+    private void OnQueryStatus(Entity<FakeMindShieldComponent> ent, ref QueryMindShieldStatusEvent args)
     {
         args.IsVisible |= ent.Comp.IsEnabled;
         // Apply the visuals. We check the priority so that this fake mindshield should almost always get overwritten by a real mindshield.
-        if (ent.Comp.VisualPriority > args.Priority && ent.Comp.IsEnabled)
+        if (ent.Comp.VisualPriority > args.IconPriority && ent.Comp.IsEnabled)
         {
-            args.Priority = ent.Comp.VisualPriority;
+            args.IconPriority = ent.Comp.VisualPriority;
             args.MindShieldStatusIcon = ent.Comp.MindShieldStatusIcon;
         }
     }
