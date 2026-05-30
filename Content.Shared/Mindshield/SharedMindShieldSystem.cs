@@ -14,54 +14,42 @@ public abstract class SharedMindShieldSystem : EntitySystem
 
         // Mind shield events
         // Status
-        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
-        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((_, ref k) => k.Args.IsMindshielded = true);
-        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>((_, ref k) => k.IsMindshielded = true);
-        // Visuals
-        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldVisualsEvent>>((a, ref k) => OnQueryMindShieldVisuals(a, ref k.Args));
-        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldVisualsEvent>(OnQueryMindShieldVisuals);
+        SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
+        SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<QueryMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
+        SubscribeLocalEvent<MindShieldComponent, QueryMindShieldStatusEvent>(OnStatusQuery);
+
     }
 
-    private void OnQueryMindShieldVisuals(Entity<MindShieldComponent> a, ref QueryMindShieldVisualsEvent k)
+    private void OnStatusQuery(Entity<MindShieldComponent> e, ref QueryMindShieldStatusEvent args)
     {
-        k.IsVisible = true;
-        // Apply the visuals. We check the priority so that things like fake mindshields always get overwritten by real mindshields
-        if (a.Comp.VisualPriority > k.Priority)
+        args.IsMindshielded = true;
+        args.IsVisible = true;
+        if (e.Comp.VisualPriority > args.IconPriority)
         {
-            k.Priority = a.Comp.VisualPriority;
-            k.MindShieldStatusIcon = a.Comp.MindShieldStatusIcon;
+            args.MindShieldStatusIcon = e.Comp.MindShieldStatusIcon;
         }
     }
 
     /// <summary>
-    /// Used to know if an entity is mindshielded - this means that the entity has protection from mind control (such as from revolutionary flashes).
+    /// Retrieves mindshielding data of an entity.
     /// </summary>
     /// <param name="entity">The entity to check the mindshield status of.</param>
-    /// <returns>True if a mindshield-granting device is found & is active, false otherwise.</returns>
+    /// <param name="isMindshielded">If the entity has a functional mind shield</param>
+    /// <param name="isVisible">Wether the entity shows a mindshield icon on the sec HUD</param>
+    /// <param name="statusIcon">Status icon to use for the HUD</param>
     /// <remarks>You should never look for a mindshield component and instead use this function.</remarks>
-    public bool IsMindshielded(EntityUid entity)
+    public void GetMindshieldStatus(EntityUid entity, out bool isMindshielded, out bool isVisible, out ProtoId<SecurityIconPrototype> statusIcon)
     {
         var ev = new QueryMindShieldStatusEvent();
         RaiseLocalEvent(entity, ref ev);
-        return ev.IsMindshielded;
-    }
-
-    /// <summary>
-    /// Used to know if an entity LOOKS mindshielded - this means that it would display an icon on the security HUD. In situations where you aren't checking for mind control, only for the presence of a mindshield, you should use this method.
-    /// </summary>
-    /// <param name="entity">The entity to check for.</param>
-    /// <returns>Wether the entity looks mindshielded.</returns>
-    public bool LooksMindshielded(EntityUid entity)
-    {
-        var ev = new QueryMindShieldVisualsEvent();
-        RaiseLocalEvent(entity, ref ev);
-        return ev.IsVisible;
+        isMindshielded = ev.IsMindshielded;
+        isVisible = ev.IsVisible;
+        statusIcon = ev.MindShieldStatusIcon;
     }
 }
 
 /// <summary>
-/// Raised in order to query wether an entity is mindshielded
+/// Raised in order to query wether an entity is mindshielded, visually or mechanically.
 /// </summary>
 [ByRefEvent]
 public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
@@ -71,15 +59,6 @@ public sealed class QueryMindShieldStatusEvent : EntityEventArgs, IInventoryRela
     /// Wether the entity is mindshielded.
     /// </summary>
     public bool IsMindshielded = false;
-}
-/// <summary>
-/// Raised in order to query wether an entity is visually mindshielded. Does NOT make the entity function as if it was mindshielded.
-/// This can be used only for the client (to display mindshield visuals), but it can eventually be used for things like an officer Beepsky who needs to see if crewmembers are mindshielded.
-/// </summary>
-[ByRefEvent]
-public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRelayEvent
-{
-    public SlotFlags TargetSlots => SlotFlags.All;
 
     /// <summary>
     /// Wether a mindshield icon is present
@@ -94,5 +73,5 @@ public sealed class QueryMindShieldVisualsEvent : EntityEventArgs, IInventoryRel
     /// <summary>
     /// Priority int used to keep trace of MindShieldStatusIcon overwritting.
     /// </summary>
-    public int Priority = 0;
+    public int IconPriority = 0;
 }
