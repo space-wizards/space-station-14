@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Buckle.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -28,6 +29,7 @@ public sealed partial class PacificationSystem : EntitySystem
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
         SubscribeLocalEvent<PacifiedComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<PacifiedComponent, ShotAttemptedEvent>(OnShootAttempt);
+        SubscribeLocalEvent<PacifiedComponent, BuckleAttemptEvent>(OnBuckleAttempt);
         SubscribeLocalEvent<PacifismDangerousAttackComponent, AttemptPacifiedAttackEvent>(OnPacifiedDangerousAttack);
     }
 
@@ -75,6 +77,12 @@ public sealed partial class PacificationSystem : EntitySystem
         args.Cancel();
     }
 
+    private void OnBuckleAttempt(Entity<PacifiedComponent> ent, ref BuckleAttemptEvent user)
+    {
+        // Disallow buckling
+        ShowPopup(ent, user.Strap, "pacified-cannot-buckle");
+        user.Cancelled = true;
+    }
     private void OnAttackAttempt(EntityUid uid, PacifiedComponent component, AttackAttemptEvent args)
     {
         if (component.DisallowAllCombat || args.Disarm && component.DisallowDisarm)

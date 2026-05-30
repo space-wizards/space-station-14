@@ -48,6 +48,12 @@ public sealed partial class BuckleComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
+    /// Wether or not this can buckled by pacifists
+    /// </summary>
+    [DataField]
+    public bool PacifismAllowedMode = false;
+
+    /// <summary>
     /// The time that this entity buckled at.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
@@ -112,6 +118,7 @@ public record struct UnstrapAttemptEvent(
 {
     public bool Cancelled;
 }
+
 
 /// <summary>
 /// Event raised directed at a buckle entity before it gets unbuckled.
