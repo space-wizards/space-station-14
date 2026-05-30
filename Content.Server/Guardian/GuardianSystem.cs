@@ -323,9 +323,13 @@ namespace Content.Server.Guardian
                 return;
 
             // copy pasted from SendEntitySpeak
+            var nameEv = new TransformSpeakerNameEvent(entity, Name(entity));
+            RaiseLocalEvent(entity, nameEv);
+            var name = nameEv.VoiceName;
+
             var speech = _chatSystem.GetSpeechVerb(entity, args.Message);
             var messageWrapped = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-                ("entityName", Name(entity)),
+                ("entityName", name),
                 ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
                 ("fontType", speech.FontId),
                 ("fontSize", speech.FontSize),
