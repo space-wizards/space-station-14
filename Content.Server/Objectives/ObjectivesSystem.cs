@@ -147,12 +147,18 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
             var agentSummary = new StringBuilder();
             agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
 
-            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).LocIssuer))
+            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
             {
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                agentSummary.AppendLine(objectiveGroup.Key);
+                if (!_prototypeManager.TryIndex(objectiveGroup.Key, out var issuer))
+                {
+                    Log.Error($"Found incorrect objective issuer {issuer} when generating round end text.");
+                    continue;
+                }
+
+                agentSummary.AppendLine(issuer.LocalizedName);
 
                 foreach (var objective in objectiveGroup)
                 {
@@ -203,6 +209,11 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
                         ));
                     }
                 }
+
+                var agentMindAppend = new MindAgentTextAppendEvent("", objectiveGroup.Key);
+                RaiseLocalEvent(mindId, ref agentMindAppend);
+
+                agentSummary.AppendLine(agentMindAppend.Text);
             }
 
             var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
@@ -337,3 +348,9 @@ public record struct ObjectivesTextGetInfoEvent(List<(EntityUid, string)> Minds,
 /// </summary>
 [ByRefEvent]
 public record struct ObjectivesTextPrependEvent(string Text);
+
+/// <summary>
+/// Raised on the mind after it's agent data is added, letting you append something.
+/// </summary>
+[ByRefEvent]
+public record struct MindAgentTextAppendEvent(string Text, string Issuer);

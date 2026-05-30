@@ -4,7 +4,7 @@
   id: BaseChangelingObjective
   components:
   - type: Objective
-    issuer: objective-issuer-changeling
+    issuer: Changeling
     difficulty: 1
   - type: RoleRequirement
     roles:
