@@ -41116,14 +41116,6 @@ entities:
     - type: Transform
       pos: 47.5,35.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: ClosetL3VirologyFilled
   entities:
   - uid: 5213
@@ -41165,14 +41157,6 @@ entities:
     - type: Transform
       pos: 49.5,26.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
   - uid: 3854
     components:
     - type: Transform
@@ -43022,14 +43006,6 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Engineering
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -43094,14 +43070,6 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Engineering
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -43390,14 +43358,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 29.5,4.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: CrewMonitoringServer
   entities:
   - uid: 15498
@@ -71713,14 +71673,6 @@ entities:
       parent: 2
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -71813,14 +71765,6 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Armory
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: Physics
       bodyType: Static
     - type: Label
@@ -71855,14 +71799,6 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Armory
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
     - type: Label
       currentLabel: 2
     - type: NameModifier
@@ -73473,14 +73409,6 @@ entities:
     - type: Transform
       pos: 50.5,36.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -73646,14 +73574,6 @@ entities:
     - type: Transform
       pos: 60.5,8.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -86859,14 +86779,6 @@ entities:
     - type: Transform
       pos: 39.5,33.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -86890,14 +86802,6 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Security
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -102227,27 +102131,11 @@ entities:
     - type: Transform
       pos: 5.5,-11.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
   - uid: 13063
     components:
     - type: Transform
       pos: 6.5,-11.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: WardrobePrisonFilled
   entities:
   - uid: 2239
@@ -102264,14 +102152,6 @@ entities:
       anchored: True
       pos: 43.5,18.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: Physics
       bodyType: Static
 - proto: WardrobeVirologyFilled
