@@ -153,3 +153,13 @@ public sealed partial class ChangelingNetworkedIdentityData
     [DataField]
     public bool GrantedDna;
 }
+
+/// <summary>
+/// Event raised on the changeling and broadcast when it gains a new identity, or an existing identity data is updated when gaining an identity.
+/// Identities are never removed, so any future grants of an identity (after dropping it, for example) is an update.
+/// </summary>
+/// <param name="Changeling">The changeling that gained an identity.</param>
+/// <param name="Identity">The identity data that was obtained.</param>
+/// <param name="Updated">Whether an identity was granted, but it only updates existing data.</param>
+[ByRefEvent]
+public record struct ChangelingGainedIdentityEvent(EntityUid Changeling, ChangelingIdentityData Identity, bool Updated);

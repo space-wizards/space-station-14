@@ -20,7 +20,7 @@ public sealed partial class ChangelingMindIdentityTrackerComponent : Component
     /// Only counts identities obtained via Devour.
     /// </summary>
     [ViewVariables]
-    public int UniqueCount => Identities.Count(data => data.GrantedDna);
+    public int UniqueDevouredCount => Identities.Count(data => data.GrantedDna);
 }
 
 /// <summary>

@@ -1,3 +1,4 @@
+using System.Text;
 using Content.Server.Changeling.Components;
 using Content.Server.Objectives.Components;
 using Content.Shared.Changeling.Components;
@@ -16,11 +17,33 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ChangelingMindIdentityTrackerComponent, MindAgentTextAppendEvent>(OnAgentAppendText);
+
         SubscribeLocalEvent<ChangelingUniqueIdentityConditionComponent, ObjectiveGetProgressEvent>(OnGetUniqueIdentitiesProgress);
 
         SubscribeLocalEvent<ChangelingDevourMostConditionComponent, ObjectiveGetProgressEvent>(OnGetMostIdentitiesProgress);
 
         SubscribeLocalEvent<ChangelingDevouredEvent>(OnChangelingDevoured);
+        SubscribeLocalEvent<ChangelingGainedIdentityEvent>(OnChangelingGainedIdentity);
+    }
+
+    private void OnAgentAppendText(Entity<ChangelingMindIdentityTrackerComponent> ent, ref MindAgentTextAppendEvent args)
+    {
+        // TODO: Rewrite all of this :)
+        if (args.Issuer != "objective-issuer-changeling")
+            return;
+
+        var summary = new StringBuilder();
+        var identCount = ent.Comp.Identities.Count;
+        summary.AppendLine("[color=white]Identities[/color]");
+        summary.AppendLine($"They have gained {ent.Comp.Identities.Count} identities: ");
+
+        foreach (var data in ent.Comp.Identities)
+        {
+            summary.AppendLine("- " + data.OriginalName + (data.GrantedDna ? " (Devoured)" : ""));
+        }
+
+        args.Text += summary.ToString();
     }
 
     private void OnChangelingDevoured(ref ChangelingDevouredEvent args)
@@ -31,6 +54,19 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         // We add the identity to the list of tracked identities on the mind.
         // This can then be used by objectives to determine the amount of obtained identities, as well as if they were gained via Devour.
         AddOrUpdateUniqueIdentityToTracker(mind, args.Devoured, args.GrantedDna);
+    }
+
+    private void OnChangelingGainedIdentity(ref ChangelingGainedIdentityEvent args)
+    {
+        if (!_mind.TryGetMind(args.Changeling, out var mind, out _))
+            return;
+
+        if (args.Identity.Original == null)
+            return;
+
+        // We add the identity to the list of tracked identities on the mind.
+        // This can then be used by objectives to determine the amount of obtained identities, as well as if they were gained via Devour.
+        AddOrUpdateUniqueIdentityToTracker(mind, args.Identity.Original.Value, args.Identity.GrantedDna);
     }
 
     private void OnGetUniqueIdentitiesProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -53,7 +89,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         if (target == 0)
             return 1f;
 
-        var uniqueCount = tracker.UniqueCount;
+        var uniqueCount = tracker.UniqueDevouredCount;
 
         if (uniqueCount >= target)
             return 1f;
@@ -69,7 +105,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
 
         // We never actually devoured anyone.
         // We don't want to grant greentext if 0 is technically the highest.
-        if (selfTracker.UniqueCount is var selfUniqueCount && selfUniqueCount < 1)
+        if (selfTracker.UniqueDevouredCount is var selfUniqueCount && selfUniqueCount < 1)
             return 0f;
 
         var query = AllEntityQuery<ChangelingMindIdentityTrackerComponent>();
@@ -82,8 +118,8 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
             if (uid == mind)
                 continue;
 
-            if (tracker.UniqueCount > highest)
-                highest = tracker.UniqueCount;
+            if (tracker.UniqueDevouredCount > highest)
+                highest = tracker.UniqueDevouredCount;
         }
 
         // No equal check. Only one can win.
@@ -101,11 +137,11 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         // If the identity already exists, we just update if it was Devoured.
         // We check by EntityUid here because we still count paradox clones and such as unique devours.
         // Tracking by name alone would make it inconsistent to how devours are tracked by the ChangelingDevourSystem and ChangelingIdentitySystem.
-        if (tracker.Identities.TryFirstOrDefault(data => data.Original == target, out var identity))
+        if (tracker.Identities.TryFirstOrDefault(x => x.Original == target, out var identity))
         {
             // We don't want to set it to False afterward, because this entity was Devoured at SOME point before.
             // So we either keep it the same, or mark is as true.
-            identity.GrantedDna = identity.GrantedDna ||  devoured;
+            identity.GrantedDna = identity.GrantedDna || devoured;
             return;
         }
 
