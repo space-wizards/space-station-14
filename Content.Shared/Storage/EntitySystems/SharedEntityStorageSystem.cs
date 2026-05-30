@@ -286,8 +286,8 @@ public abstract partial class SharedEntityStorageSystem : EntitySystem
             if (component.Contents.ContainedEntities.Count >= component.Capacity)
                 break;
         }
-        if (LifeStage(uid) >= EntityLifeStage.MapInitialized) // stop mappers from serializing air in lockers
-            TakeGas(uid, component);
+
+        TakeGas(uid, component);
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
             _audio.PlayPvs(component.CloseSound, uid);
