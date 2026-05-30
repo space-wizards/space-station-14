@@ -42,11 +42,11 @@ public sealed partial class ForensicsSystem : EntitySystem
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
         SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
-        SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+        SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
 
-    private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionContainerChangedEvent ev)
+    private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionChangedEvent ev)
     {
         var soln = GetSolutionsDNA(ev.Solution);
 
@@ -151,10 +151,7 @@ public sealed partial class ForensicsSystem : EntitySystem
     {
         List<string> list = [];
 
-        if (!TryComp<SolutionContainerManagerComponent>(uid, out var comp))
-            return list;
-
-        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(uid))
         {
             list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
         }
