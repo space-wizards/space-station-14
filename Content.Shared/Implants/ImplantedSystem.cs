@@ -1,12 +1,11 @@
-using Content.Shared.Body.Events;
 using Content.Shared.Gibbing;
 using Content.Shared.Implants.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Implants;
+namespace Content.Shared.Implants;
 
-public sealed partial class ImplanterSystem
+public abstract partial class SharedImplanterSystem
 {
     public void InitializeImplanted()
     {
@@ -23,18 +22,17 @@ public sealed partial class ImplanterSystem
 
     private void OnShutdown(Entity<ImplantedComponent> ent, ref ComponentShutdown args)
     {
-        //If the entity is deleted, get rid of the implants
+        // If the entity is deleted, get rid of the implants.
         _container.CleanContainer(ent.Comp.ImplantContainer);
     }
 
     private void OnGibbed(Entity<ImplantedComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
-        // Drop the storage implant contents before the implants are deleted by the body being gibbed
+        // Drop the storage implant contents before the implants are deleted by the body being gibbed.
         foreach (var implant in ent.Comp.ImplantContainer.ContainedEntities)
         {
             if (TryComp<StorageComponent>(implant, out var storage))
                 _container.EmptyContainer(storage.Container, destination: Transform(ent).Coordinates);
         }
-
     }
 }
