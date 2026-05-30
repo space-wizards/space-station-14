@@ -24,7 +24,7 @@ public abstract partial class SharedSubdermalImplantSystem
         // Ref relays, for when you need to write to the event!
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetStoreEvent>(RefRelayToImplantEvent);
-        SubscribeLocalEvent<ImplantedComponent, QueryMindShieldStatusEvent>(RefRelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
+        SubscribeLocalEvent<ImplantedComponent, GetMindShieldStatusEvent>(RefRelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
     }
 
     /// <summary>
