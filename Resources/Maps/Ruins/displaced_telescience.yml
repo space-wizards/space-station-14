@@ -1951,38 +1951,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-9.5
       parent: 1
-- proto: BaseChemistryEmptyVial
-  entities:
-  - uid: 15
-    mapInit: true
-    paused: true
-    components:
-    - type: MetaData
-      name: vial (frezon coolant)
-    - type: Transform
-      parent: 14
-    - type: Tag
-      tags:
-      - CentrifugeCompatible
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - beaker
-    - type: MeleeWeapon
-      nextAttack: -32.1421018
-    - type: EmitSoundOnCollide
-      nextSound: -1171.0409639
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@beaker: !type:ContainerSlot
-          ent: 476
-    - type: Label
-      currentLabel: frezon coolant
-    - type: NameModifier
-      baseName: vial
-    - type: InsideEntityStorage
 - proto: BaseComputer
   entities:
   - uid: 19
