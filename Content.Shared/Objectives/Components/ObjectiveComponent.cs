@@ -24,7 +24,7 @@ public sealed partial class ObjectiveComponent : Component
     /// Organisation that issued this objective, used for grouping and as a header above common objectives.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ObjectiveIssuerPrototype> Issuer;
+    public ProtoId<ObjectiveIssuerPrototype>? Issuer = "Unknown";
 
     /// <summary>
     /// Unique objectives can only have 1 per prototype id.

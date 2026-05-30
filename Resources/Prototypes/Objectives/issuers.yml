@@ -1,4 +1,8 @@
 - type: objectiveIssuer
+  id: Unknown
+  name: objective-issuer-unknown
+
+- type: objectiveIssuer
   id: SpaceWizardsFederation
   name: objective-issuer-swf
 
