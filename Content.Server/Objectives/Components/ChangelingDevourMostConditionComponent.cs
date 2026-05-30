@@ -4,13 +4,7 @@ namespace Content.Server.Objectives.Components;
 
 /// <summary>
 /// Requires that a changeling has obtained the highest amount of unique devours out of all other changelings.
+/// Checks against identities stored on the mind.
 /// </summary>
 [RegisterComponent, Access(typeof(ChangelingObjectiveSystem))]
-public sealed partial class ChangelingDevourMostConditionComponent : Component
-{
-    /// <summary>
-    /// The amount of identities that have been already devoured.
-    /// </summary>
-    [DataField]
-    public int UniqueIdentities;
-}
+public sealed partial class ChangelingDevourMostConditionComponent : Component;

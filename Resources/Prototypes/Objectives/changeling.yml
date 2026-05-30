@@ -45,7 +45,6 @@
   description: This is our hunting ground and we must prove as such.
   components:
   - type: Objective
-    unique: false # We compare against other objectives. Can't do that if there is only one.
     difficulty: 1
     icon:
       sprite: Mobs/Aliens/flesh.rsi
