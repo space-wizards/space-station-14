@@ -31,7 +31,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     {
         if (ent.Comp.AppendIssuer == null)
             return;
-        
+
         if (args.Issuer != ent.Comp.AppendIssuer)
             return;
 

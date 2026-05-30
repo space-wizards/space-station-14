@@ -228,8 +228,8 @@
   - type: AntagObjectives
     objectives:
     # - ChangelingSurviveObjective TODO: make a random selection of objectives when there are more of them
-    - ChangelingUniqueIdentityObjective
     - ChangelingEscapeIdentityObjective
+    - ChangelingUniqueIdentityObjective
     - ChangelingDevourMostObjective
 
 - type: entity
