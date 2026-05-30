@@ -62,7 +62,7 @@
   parent: BaseChangelingObjective
   id: ChangelingDevourMostObjective
   name: Devour the most humanoids.
-  description: We must devour the most unique humanoids out of all other changelings and assert ourselves superior. This is our hunting ground, and none shall compete.
+  description: We must devour the most unique humanoids out of all other changelings.
   components:
   - type: Objective
     difficulty: 1
