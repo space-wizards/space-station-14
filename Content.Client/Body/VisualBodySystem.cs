@@ -220,7 +220,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     _displacement.TryAddDisplacement(
                         displacement,
                         (target, target.Comp),
-                        // This makes the displacement layer go below the original sprite
+                        // Similar logic as above, but this makes the displacement layer go below the
+                        // original sprite. So it should be all the displacements, then all the sprite layers on top
                         index + i + 1,
                         layerId,
                         out _
