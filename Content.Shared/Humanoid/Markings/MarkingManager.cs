@@ -169,11 +169,9 @@ public sealed partial class MarkingManager
 
                     markings[i] = new Marking(marking.ID, existingColors.Concat(missingColors));
                 }
-                // If there are more colors than sprites, drop the extras and flag it
+                // If there are more colors than sprites, drop the extras
                 else if (marking.Sprites.Count < existingColors.Count)
                 {
-                    // TODO: Leaving this out for now so I don't get emailed about failed tests 
-                    // DebugTools.Assert($"Encountered marking {marking.Name} with more colors than sprites.");
                     markings[i] = new Marking(marking.ID, existingColors.Take(marking.Sprites.Count));
                 }
             }
