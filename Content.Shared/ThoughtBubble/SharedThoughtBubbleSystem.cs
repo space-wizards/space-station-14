@@ -7,9 +7,9 @@ namespace Content.Shared.ThoughtBubble;
 /// This handles thought bubble UI effects triggered by pointing at owned items.
 /// </summary>
 
-public sealed class SharedThoughtBubbleSystem : EntitySystem
+public sealed partial class SharedThoughtBubbleSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
