@@ -12,15 +12,15 @@ namespace Content.Shared.Maps;
 /// <summary>
 ///     This system provides various useful helper methods for turfs & tiles. Replacement for <see cref="TurfHelpers"/>
 /// </summary>
-public sealed class TurfSystem : EntitySystem
+public sealed partial class TurfSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitions = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitions = default!;
 
-    [Dependency] private readonly EntityQuery<FixturesComponent> _fixtureQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixtureQuery = default!;
 
     /// <summary>
     /// Attempts to get the turf at or under some given coordinates or null if no such turf exists.
