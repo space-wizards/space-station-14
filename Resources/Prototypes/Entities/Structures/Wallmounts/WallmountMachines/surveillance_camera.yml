@@ -96,6 +96,7 @@
               collection: MetalBreak
               params:
                 volume: -8
+  - type: IgnoreProjectilesAboveAngle
   placement:
     mode: SnapgridCenter
     snap:
