@@ -13,7 +13,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
-using Content.Shared.SS220.ThoughtBubble;
+using Content.Shared.ThoughtBubble;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -245,13 +245,8 @@ namespace Content.Server.Pointing.EntitySystems
                         // Urist McPointer points at his item
                         viewerMessage = Loc.GetString("pointing-system-point-in-own-inventory-others", ("item", itemName), ("pointer", playerName));
 
-                        //SS220 - ThinkingBubble - start
                         var pointedOwnEv = new PointedOwnItemEvent(item);
                         RaiseLocalEvent(player, ref pointedOwnEv);
-
-                        if (pointedOwnEv.Handled)
-                            QueueDel(arrow);
-                        //SS220 - ThinkingBubble - end
                     }
                     else
                     {

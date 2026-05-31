@@ -9,8 +9,7 @@
     offset: 0.4, 0.8
     scale: 0.8, 0.8
     drawdepth: Effects
-    sprite: /Textures/SS220/Effects/ThoughtBubble.rsi
+    sprite: /Textures/Effects/ThoughtBubble.rsi
     layers:
     - state: thought
       map: ["enum.ThoughtBubbleVisuals.Bubble"]
-

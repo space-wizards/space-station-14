@@ -1,11 +1,8 @@
-// © SS220, MIT full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/MIT_LICENSE.TXT
-
 using System.Numerics;
-using Content.Shared.SS220.ThoughtBubble;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Client.SS220.ThoughtBubble;
+namespace Content.Client.ThoughtBubble;
 
 /// <summary>
 /// Handles thought bubble visuals - spawns, updates position/rotation
@@ -20,11 +17,11 @@ public sealed class ThoughtBubbleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ThoughtBubbleComponent, AfterAutoHandleStateEvent>(OnStateHandled);
-        SubscribeLocalEvent<ThoughtBubbleComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<Shared.ThoughtBubble.ThoughtBubbleComponent, AfterAutoHandleStateEvent>(OnStateHandled);
+        SubscribeLocalEvent<Shared.ThoughtBubble.ThoughtBubbleComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStateHandled(Entity<ThoughtBubbleComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnStateHandled(Entity<Shared.ThoughtBubble.ThoughtBubbleComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (GetEntity(ent.Comp.PointedItem) is not { Valid: true } item)
             return;
@@ -62,7 +59,7 @@ public sealed class ThoughtBubbleSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(Entity<ThoughtBubbleComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<Shared.ThoughtBubble.ThoughtBubbleComponent> ent, ref ComponentShutdown args)
     {
         PredictedQueueDel(ent.Comp.BubbleEntity);
         ent.Comp.BubbleEntity = null;

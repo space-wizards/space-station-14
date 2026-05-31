@@ -1,10 +1,7 @@
-// © SS220, MIT full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/MIT_LICENSE.TXT
-
-using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.SS220.ThoughtBubble;
+namespace Content.Shared.ThoughtBubble;
 
 /// <summary>
 /// This handles thought bubble UI effects triggered by pointing at owned items.
