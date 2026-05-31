@@ -9,10 +9,13 @@
   - Hairflower
   - Headphones
   - Wristwatch
+  # Plushies available as trinkets should only be "common" plushies; the rare and goofy ones should be fun mid-round loot.
+  # Use the highest-weight plushies in AllPlushiesTable as a guideline.
   - PlushiePenguin
   - PlushieSharkBlue
   - PlushieSharkGrey
   - PlushieSharkPink
+  - PlushieSheep
   - PlushieSnake
   - PlushieArachind
   - PlushieDiona

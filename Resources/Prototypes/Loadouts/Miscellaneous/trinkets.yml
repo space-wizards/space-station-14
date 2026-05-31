@@ -70,6 +70,13 @@
   groupBy: "plushie"
 
 - type: loadout
+  id: PlushieSheep
+  storage:
+    back:
+    - PlushieSheep
+  groupBy: "plushie"
+
+- type: loadout
   id: PlushieSnake
   storage:
     back:
