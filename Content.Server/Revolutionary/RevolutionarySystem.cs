@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Mind;
-using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -21,11 +20,11 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
     [Dependency] private IAdminLogManager _adminLogManager = default!;
     [Dependency] private RoleSystem _roleSystem = default!;
     [Dependency] private MindSystem _mindSystem = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
-        
+
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
     }
 
@@ -43,7 +42,7 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
             return;
         }
 
-        if (HasComp<RevolutionaryComponent>(uid))
+        if (TryComp<RevolutionaryComponent>(uid, out var comp))
         {
             if (_mindSystem.TryGetMind(uid, out var mindId, out _) &&
             _roleSystem.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
@@ -51,7 +50,7 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
                 _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
             }
 
-            var stunTime = TimeSpan.FromSeconds(4);
+            var stunTime = TimeSpan.FromSeconds(comp.StunTime);
             var name = Identity.Entity(uid, EntityManager);
             RemComp<RevolutionaryComponent>(uid);
             _sharedStun.TryUpdateParalyzeDuration(uid, stunTime);

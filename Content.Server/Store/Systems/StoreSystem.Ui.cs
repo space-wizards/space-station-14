@@ -29,7 +29,6 @@ public sealed partial class StoreSystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private IPrototypeManager _proto = default!;
-
     [Dependency] private MindShieldSystem _mindShieldSystem = default!;
 
     private void InitializeUi()

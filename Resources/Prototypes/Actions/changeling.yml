@@ -120,4 +120,4 @@
       actionTag: FakeMindShieldChangeling
   - type: Tag
     tags:
-    - FakeMindShieldChangeling
+    - FakeMindShieldChangeling # used to distinguish the changeling's toggle mindshield action from the implant's

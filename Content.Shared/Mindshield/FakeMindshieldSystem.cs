@@ -24,8 +24,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
         // Toggle events
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
-        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
-        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e.Owner, e.Comp, sk.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e, ref sk.Args));
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<FakeMindShieldToggleEvent>>((e, ref sk) => OnToggleMindshield(e, ref sk.Args));
 
         // Mindshield events
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
@@ -49,15 +49,15 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         args.IsVisible |= ent.Comp.IsEnabled;
     }
 
-    private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
-{
-        if (args.ActionTag != comp.ActionTag)
+    private void OnToggleMindshield(Entity<FakeMindShieldComponent> ent, ref FakeMindShieldToggleEvent args)
+    {
+        if (args.ActionTag != ent.Comp.ActionTag)
             return;
 
-        comp.IsEnabled = !comp.IsEnabled;
+        ent.Comp.IsEnabled = !ent.Comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
-        Dirty(uid, comp);
+        Dirty(ent.Owner, ent.Comp);
     }
 
     private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
@@ -109,8 +109,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots => SlotFlags.All;
-    
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
+
     [DataField]
     public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 }

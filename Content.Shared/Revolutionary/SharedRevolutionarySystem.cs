@@ -1,12 +1,7 @@
-using Content.Shared.IdentityManagement;
-using Content.Shared.Mindshield.Components;
-using Content.Shared.Popups;
 using Content.Shared.Revolutionary.Components;
-using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
-using Content.Shared.Implants;
 
 namespace Content.Shared.Revolutionary;
 

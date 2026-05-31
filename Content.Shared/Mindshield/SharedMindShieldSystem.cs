@@ -51,7 +51,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
 [ByRefEvent]
 public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots => SlotFlags.All;
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
     /// <summary>
     /// Whether the entity is mindshielded.
     /// </summary>
