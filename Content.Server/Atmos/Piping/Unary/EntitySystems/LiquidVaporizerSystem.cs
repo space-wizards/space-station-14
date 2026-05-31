@@ -24,16 +24,16 @@ using Content.Shared.Tools.Systems;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
 [UsedImplicitly]
-public sealed class LiquidVaporizerSystem : EntitySystem
+public sealed partial  class LiquidVaporizerSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _sharedSolution = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SmokeSystem _smokeSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedSolutionContainerSystem _sharedSolution = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SmokeSystem _smokeSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
 
     public override void Initialize()
