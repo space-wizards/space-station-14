@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class SetDeadChatCommand : LocalizedCommands
+public sealed partial class SetDeadChatCommand : LocalizedCommands
 {
     [Dependency] private IConfigurationManager _configManager = default!;
 
