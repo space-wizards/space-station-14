@@ -182,23 +182,15 @@ public sealed partial class ChatSystem
         bool ignoreActionBlocker = false
     )
     {
-        Log.Debug("entered SendEntitySpeakForTargets");
-
         if (!ignoreActionBlocker && !_actionBlocker.CanSpeak(source, originalMessage))
             return;
-
-        Log.Debug("passed the _actionBlocker check");
 
         var message = TransformSpeech(source, originalMessage);
 
         if (message.Length == 0)
             return;
 
-        Log.Debug("passed the message.Length == 0 check");
-
         var speech = GetSpeechVerb(source, message);
-
-        Log.Debug("got the speech verb");
 
         // get the entity's apparent name (if no override provided).
         string name;
@@ -216,11 +208,7 @@ public sealed partial class ChatSystem
                 speech = proto;
         }
 
-        Log.Debug("got the name");
-
         name = FormattedMessage.EscapeText(name);
-
-        Log.Debug($"name: {name}");
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
             ("entityName", name),
@@ -229,8 +217,6 @@ public sealed partial class ChatSystem
             ("fontSize", speech.FontSize),
             ("message", FormattedMessage.EscapeText(message)));
 
-        Log.Debug($"wrappedMessage: {wrappedMessage}");
-        
         if (!targets.Contains(source))
             targets.Add(source);
 
@@ -240,19 +226,13 @@ public sealed partial class ChatSystem
 
         _chatManager.ChatMessageToMany(ChatChannel.Local, message, wrappedMessage, source, false, true, targetClients);
 
-        Log.Debug("message sent!");
-
         var ev = new EntitySpokeEvent(source, message, null, null);
         RaiseLocalEvent(source, ev, true);
-
-        Log.Debug("EntitySpokeEvent raised!");
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
         // Also doesn't log if hideLog is true.
         if (hideLog || !HasComp<ActorComponent>(source))
             return;
-
-        Log.Debug("passed hide log check");
 
         var targetsList = "";
         foreach (var target in targets)
@@ -283,8 +263,6 @@ public sealed partial class ChatSystem
                     $"Say from {source}, original: {originalMessage} to {targetsList}, transformed: {message}.");
             }
         }
-
-        Log.Debug("finished!");
     }
 
     protected override void SendEntityEmote(
