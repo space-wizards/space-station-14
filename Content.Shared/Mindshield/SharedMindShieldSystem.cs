@@ -46,7 +46,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised in order to query wether an entity is mindshielded, visually or mechanically.
+/// Raised in order to get whether an entity is mindshielded visually, mechanically or both.
 /// </summary>
 [ByRefEvent]
 public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
