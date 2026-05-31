@@ -21,6 +21,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Server.Mapping;
 using Content.Shared.EntityEffects.Effects.Solution;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 using Content.Shared.Coordinates.Helpers;
@@ -48,10 +49,12 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
-
     [Dependency] private EntityQuery<SmokeComponent> _smokeQuery = default!;
     [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
-
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private SpreaderSystem _spreader = default!;
+    [Dependency] private IMapManager _mapMan = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
