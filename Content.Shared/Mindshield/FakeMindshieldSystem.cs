@@ -110,6 +110,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
+    
     [DataField]
     public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 }
