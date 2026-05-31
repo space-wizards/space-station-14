@@ -82,6 +82,7 @@
             True: {visible: false}
     - type: StaticPrice
       price: 120
+    - type: ProtectedFromStepTriggers
 
 - type: entity
   parent: RollerBed
