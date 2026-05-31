@@ -16,10 +16,10 @@ using Robust.Shared.Player;
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
 [UsedImplicitly]
-public sealed class DamageOverlayUiController : UIController
+public sealed partial class DamageOverlayUiController : UIController
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [UISystemDependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -69,6 +69,7 @@ public sealed class DamageOverlayUiController : UIController
 
     private void ClearOverlay()
     {
+        _overlay.State = MobState.Alive;
         _overlay.DeadLevel = 0f;
         _overlay.CritLevel = 0f;
         _overlay.PainLevel = 0f;
