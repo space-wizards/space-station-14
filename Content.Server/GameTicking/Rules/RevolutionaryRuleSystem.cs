@@ -156,7 +156,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         var attemptConvertEv = new AttemptConvertRevolutionaryEvent();
         RaiseLocalEvent(ev.Target, ref attemptConvertEv);
 
-        _mindShieldSystem.GetMindshieldStatus(ev.Target, out var isMindshielded, out var _);
+        _mindShieldSystem.GetMindshieldStatus(ev.Target, out var isMindshielded, out _);
         if (attemptConvertEv.Cancelled || isMindshielded)
             return;
 

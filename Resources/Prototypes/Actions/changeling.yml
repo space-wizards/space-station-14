@@ -107,7 +107,7 @@
   parent: BaseAction
   id: ActionChangelingFakeMindshieldToggle
   name: '[color=green]Toggle Fake Mindshield[/color]'
-  description: Turn fake mindshield wave production on/off
+  description: Turn your mindshield visibility on or off.
   components:
   - type: Action
     icon: { sprite: Interface/Actions/changeling2.rsi, state: mindshield_off }

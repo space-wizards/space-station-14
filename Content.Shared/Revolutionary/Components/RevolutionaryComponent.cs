@@ -25,7 +25,7 @@ public sealed partial class RevolutionaryComponent : Component
     public SoundSpecifier RevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg");
 
     /// <summary>
-    /// For how long you are stunned when flashed & converted
+    /// The duration of the stun when you get deconverted.
     /// </summary>
     [DataField]
     public float StunTime = 4f;

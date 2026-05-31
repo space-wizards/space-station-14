@@ -107,10 +107,17 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Inventory relayed event telling all fake mindshields with the same ActionTag to try to toggle themselves.
+/// </summary>
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
 
+    /// <summary>
+    /// The tag the fake mindshield needs to have to be successfully toggled.
+    /// We seperate it out to allow an entity to, for example, have an implant one and a store bought one without conflicts.
+    /// </summary>
     [DataField]
     public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 }

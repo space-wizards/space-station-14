@@ -50,6 +50,7 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
 
         return HasComp<ShowAntagIconsComponent>(uid);
     }
+
     /// <summary>
     /// Dirties all the Rev components so they are sent to clients.
     ///
