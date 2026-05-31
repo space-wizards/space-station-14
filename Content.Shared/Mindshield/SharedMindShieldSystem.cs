@@ -53,12 +53,12 @@ public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayE
 {
     public SlotFlags TargetSlots => SlotFlags.All;
     /// <summary>
-    /// Wether the entity is mindshielded.
+    /// Whether the entity is mindshielded.
     /// </summary>
-    public bool IsMindshielded = false;
+    public bool IsMindshielded;
 
     /// <summary>
-    /// Wether a mindshield icon is present
+    /// Whether a mindshield icon is present
     /// </summary>
-    public bool IsVisible = false;
+    public bool IsVisible;
 }
