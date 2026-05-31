@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Artifact analyzers are no longer extremely power hungry.
-    type: Tweak
-  id: 9220
-  time: '2025-11-23T00:10:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41543
 - author: Jrpl
   changes:
   - message: Using entities in hand that have a Toggle UI option will now default
@@ -4097,3 +4090,10 @@
   id: 9731
   time: '2026-05-30T21:24:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43755
+- author: B_Kirill
+  changes:
+  - message: Fixed shooting from inside a morgue exploit.
+    type: Fix
+  id: 9732
+  time: '2026-05-31T20:12:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44188
