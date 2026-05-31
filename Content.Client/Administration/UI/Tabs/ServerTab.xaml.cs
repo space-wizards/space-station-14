@@ -20,6 +20,7 @@ namespace Content.Client.Administration.UI.Tabs
 
             _config.OnValueChanged(CCVars.OocEnabled, OocEnabledChanged, true);
             _config.OnValueChanged(CCVars.LoocEnabled, LoocEnabledChanged, true);
+            _config.OnValueChanged(CCVars.DeadChatEnabled, DeadChatEnabledChanged, true);
 
             ServerShutdownButton.OnPressed += _ => _console.ExecuteCommand("shutdown");
         }
@@ -32,6 +33,11 @@ namespace Content.Client.Administration.UI.Tabs
         private void LoocEnabledChanged(bool value)
         {
             SetLoocButton.Pressed = value;
+        }
+
+        private void DeadChatEnabledChanged(bool value)
+        {
+            SetDeadChatButton.Pressed = value;
         }
 
         protected override void Dispose(bool disposing)
