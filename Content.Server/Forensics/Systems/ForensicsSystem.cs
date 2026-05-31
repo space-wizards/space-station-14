@@ -2,7 +2,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Events;
 using Content.Shared.Forensics.Systems;
@@ -35,7 +34,6 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
         SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
         SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
-        SubscribeLocalEvent<FingerprintComponent, TryAccessFingerprintEvent>(OnFingerprintAccessAttempt);
     }
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionChangedEvent ev)
     {
@@ -49,8 +47,6 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         {
             comp.DNAs.Add(dna);
         }
-
-        Dirty(puddle);
     }
 
     private void OnInteract(Entity<HandsComponent> hands, ref ContactInteractionEvent args)
@@ -100,8 +96,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
 
         foreach (var hitEntity in args.HitEntities)
         {
-            if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
-                weapon.Comp.DNAs.Add(hitEntityComp.DNA);
+            TransferDna(weapon, hitEntity);
         }
     }
 
@@ -112,7 +107,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
 
     private void OnCleanForensicsDoAfter(Entity<ForensicsComponent> component, ref CleanForensicsDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Handled || args.Cancelled || args.Target == null)
             return;
 
         if (!TryComp<ForensicsComponent>(args.Target, out var targetComp))
@@ -131,12 +126,8 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         if (TryComp<ResidueComponent>(args.Used, out var residue))
             targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
 
+        targetComp.IsDirty = false;
         Dirty(args.Target.Value, targetComp);
-    }
-
-    private void OnFingerprintAccessAttempt(Entity<FingerprintComponent> ent, ref TryAccessFingerprintEvent args)
-    {
-        args.Fingerprint = ent.Comp.Fingerprint;
     }
 
     private void ApplyEvidence(EntityUid user, EntityUid target)
@@ -145,17 +136,33 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
             return;
 
         var component = EnsureComp<ForensicsComponent>(target);
-        if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves)
-            && TryComp<FiberComponent>(gloves, out var fiber)
-            && !string.IsNullOrEmpty(fiber.FiberMaterial))
+        if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves) && TryComp<FiberComponent>(gloves, out var fiber))
         {
             component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor)
                 ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial))
                 : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+
+            EnableCleanable((target, component));
         }
 
         if (TryAccessFingerprint(user, out _, out var fingerprint))
+        {
             component.Fingerprints.Add(fingerprint);
+            EnableCleanable((target, component));
+        }
+    }
+
+    /// <summary>
+    /// Sets the Client-side boolean and networks it to clients.
+    /// </summary>
+    /// <param name="cleanable">The entity with cleanable forensics.</param>
+    private void EnableCleanable(Entity<ForensicsComponent> cleanable)
+    {
+        if (cleanable.Comp.IsDirty)
+            return;
+
+        cleanable.Comp.IsDirty = true;
+        Dirty(cleanable);
     }
 
     /// <summary>
@@ -251,6 +258,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
             return;
 
         fingerprintOwner.Comp.Fingerprint = GenerateFingerprint();
+        Dirty(fingerprintOwner);
     }
 
     public override void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
@@ -262,7 +270,8 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         recipientComp.DNAs.Add(donorComp.DNA);
         recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
 
-        Dirty(recipient, recipientComp);
+        if (canDnaBeCleaned)
+            EnableCleanable((recipient,  recipientComp));
     }
     #endregion
 }

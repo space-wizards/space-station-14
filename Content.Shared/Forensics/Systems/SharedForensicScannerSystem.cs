@@ -210,7 +210,6 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
 
         Dirty(scanner);
         UpdateUi(scanner);
-        // UpdateUserInterface(uid, component);
     }
 
     private void OnBeforeActivatableUIOpen(Entity<ForensicScannerComponent> scanner, ref BeforeActivatableUIOpenEvent args)

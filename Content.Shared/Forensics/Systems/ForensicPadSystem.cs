@@ -113,6 +113,7 @@ public sealed partial class ForensicPadSystem : EntitySystem
 
         pad.Comp.Sample = args.Sample;
         pad.Comp.Used = true;
+        Dirty(pad);
 
         args.Handled = true;
     }

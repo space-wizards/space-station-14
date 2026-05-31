@@ -17,10 +17,14 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
 
+    [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)], after: [typeof(SharedAbsorbentSystem)]);
         SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+
+        SubscribeLocalEvent<FingerprintComponent, TryAccessFingerprintEvent>(OnFingerprintAccessAttempt);
     }
 
     private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
@@ -39,13 +43,19 @@ public abstract partial class SharedForensicsSystem : EntitySystem
         // These need to be set outside for the anonymous method!
         var user = args.User;
         var target = args.Target;
+        // Whether it's actually cleanable.
+        var canBeCleaned = _forensicsQuery.TryComp(args.Target, out var comp) && comp.IsDirty;
+        var message = canBeCleaned
+            ? Loc.GetString("forensics-verb-message")
+            : Loc.GetString("forensics-cleaning-cannot-clean", ("target", target));
 
         var verb = new UtilityVerb
         {
             Act = () => TryStartCleaning(entity, user, target),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
             Text = Loc.GetString("forensics-verb-text"),
-            Message = Loc.GetString("forensics-verb-message"),
+            Disabled = !canBeCleaned,
+            Message = message,
             // This is important because if its true using the cleaning device will count as touching the object.
             DoContactInteraction = false,
         };
@@ -54,7 +64,7 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempts to clean the given item with the given CleansForensics entity.
+    /// Attempts to clean the given item with the given CleansForensics entity.
     /// </summary>
     /// <param name="cleanForensicsEntity">The entity that is being used to clean the target.</param>
     /// <param name="user">The user that is using the cleanForensicsEntity.</param>
@@ -62,16 +72,13 @@ public abstract partial class SharedForensicsSystem : EntitySystem
     /// <returns>True if the target can be cleaned and has some sort of DNA or fingerprints / fibers and false otherwise.</returns>
     public bool TryStartCleaning(Entity<CleansForensicsComponent> cleanForensicsEntity, EntityUid user, EntityUid target)
     {
-        if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
+        if (!_forensicsQuery.TryComp(target, out var forensicsComp))
         {
             _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
             return false;
         }
 
-        var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
-        var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
-
-        if (hasRemovableDNA || totalPrintsAndFibers > 0)
+        if (forensicsComp.IsDirty)
         {
             var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
             var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
@@ -94,6 +101,11 @@ public abstract partial class SharedForensicsSystem : EntitySystem
 
         _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.MediumCaution);
         return false;
+    }
+
+    private void OnFingerprintAccessAttempt(Entity<FingerprintComponent> ent, ref TryAccessFingerprintEvent args)
+    {
+        args.Fingerprint = ent.Comp.Fingerprint;
     }
 
     #region Public API
