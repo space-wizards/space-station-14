@@ -46,19 +46,19 @@ public abstract class SharedMindShieldSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised in order to query wether an entity is mindshielded, visually or mechanically.
+/// Raised in order to get whether an entity is mindshielded visually, mechanically or both.
 /// </summary>
 [ByRefEvent]
 public sealed class GetMindShieldStatusEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.All;
     /// <summary>
-    /// Wether the entity is mindshielded.
+    /// Whether the entity is mindshielded.
     /// </summary>
-    public bool IsMindshielded = false;
+    public bool IsMindshielded;
 
     /// <summary>
-    /// Wether a mindshield icon is present
+    /// Whether a mindshield icon is present
     /// </summary>
-    public bool IsVisible = false;
+    public bool IsVisible;
 }

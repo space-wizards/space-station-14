@@ -25,6 +25,7 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
     public override void Initialize()
     {
         base.Initialize();
+        
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
     }
 
