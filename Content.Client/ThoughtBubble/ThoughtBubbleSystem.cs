@@ -1,6 +1,7 @@
 using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
+using Content.Shared.ThoughtBubble;
 
 namespace Content.Client.ThoughtBubble;
 
@@ -17,11 +18,11 @@ public sealed partial class ThoughtBubbleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<Shared.ThoughtBubble.ThoughtBubbleComponent, AfterAutoHandleStateEvent>(OnStateHandled);
-        SubscribeLocalEvent<Shared.ThoughtBubble.ThoughtBubbleComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ThoughtBubbleComponent, AfterAutoHandleStateEvent>(OnStateHandled);
+        SubscribeLocalEvent<ThoughtBubbleComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStateHandled(Entity<Shared.ThoughtBubble.ThoughtBubbleComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnStateHandled(Entity<ThoughtBubbleComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (GetEntity(ent.Comp.PointedItem) is not { Valid: true } item)
             return;
@@ -59,7 +60,7 @@ public sealed partial class ThoughtBubbleSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(Entity<Shared.ThoughtBubble.ThoughtBubbleComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<ThoughtBubbleComponent> ent, ref ComponentShutdown args)
     {
         PredictedQueueDel(ent.Comp.BubbleEntity);
         ent.Comp.BubbleEntity = null;
