@@ -14,6 +14,7 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
     {
         SubscribeLocalEvent<PermanentStatusEffectsComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentStatusEffectsComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PermanentStatusEffectsComponent, ComponentRemove>(OnRemove);
     }
 
     private void OnMapInit(Entity<PermanentStatusEffectsComponent> ent, ref MapInitEvent args)
@@ -29,6 +30,14 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
             return;
 
         EnsureStatusEffects(ent);
+    }
+
+    private void OnRemove(Entity<PermanentStatusEffectsComponent> ent, ref ComponentRemove args)
+    {
+        foreach (var effect in ent.Comp.StatusEffects)
+        {
+            _statusEffects.TryRemoveStatusEffect(ent, effect);
+        }
     }
 
     private void EnsureStatusEffects(Entity<PermanentStatusEffectsComponent> ent)
