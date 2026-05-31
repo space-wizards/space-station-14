@@ -10,8 +10,6 @@ namespace Content.Shared.EntityEffects;
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityEffect
 {
-    public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale, EntityUid? user);
-
     [DataField]
     public EntityCondition[]? Conditions;
 
@@ -46,17 +44,4 @@ public abstract partial class EntityEffect
     public virtual LogType LogType => LogType.EntityEffect;
 }
 
-/// <summary>
-/// Used to store an <see cref="EntityEffect"/> so it can be raised without losing the type of the condition.
-/// </summary>
-/// <typeparam name="T">The Condition wer are raising.</typeparam>
-public abstract partial class EntityEffectBase<T> : EntityEffect where T : EntityEffectBase<T>
-{
-    public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale, EntityUid? user)
-    {
-        if (this is not T type)
-            return;
 
-        raiser.RaiseEffectEvent(target, type, scale, user);
-    }
-}

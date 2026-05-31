@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantRemoveKudzu : EntityEffectBase<PlantRemoveKudzu>
+public sealed partial class PlantRemoveKudzu : EntityEffect
 {
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

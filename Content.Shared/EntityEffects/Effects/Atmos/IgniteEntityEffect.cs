@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 /// See serverside system
 /// </summary>
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Ignite : EntityEffectBase<Ignite>
+public sealed partial class Ignite : EntityEffect
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-ignite", ("chance", Probability));

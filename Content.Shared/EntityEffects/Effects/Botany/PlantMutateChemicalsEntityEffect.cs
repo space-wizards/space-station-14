@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <summary>
 /// See serverside system.
 /// </summary>
-public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateChemicals>
+public sealed partial class PlantMutateChemicals : EntityEffect
 {
     /// <summary>
     /// The Reagent list this mutation draws from.

@@ -1,6 +1,6 @@
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
+public sealed partial class PlantChangeStat : EntityEffect
 {
     /// <remarks>
     /// This is the worst thing in the code base.

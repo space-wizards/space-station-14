@@ -1,10 +1,10 @@
-﻿using Content.Shared.Polymorph;
+using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Polymorph : EntityEffectBase<Polymorph>
+public sealed partial class Polymorph : EntityEffect
 {
     /// <summary>
     ///     What polymorph prototype is used on effect

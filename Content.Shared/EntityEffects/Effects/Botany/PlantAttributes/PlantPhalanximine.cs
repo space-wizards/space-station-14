@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantPhalanximine : EntityEffectBase<PlantPhalanximine>
+public sealed partial class PlantPhalanximine : EntityEffect
 {
     /// <inheritdoc/>
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
