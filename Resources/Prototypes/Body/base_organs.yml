@@ -15,12 +15,28 @@
       nudityDefault: [ UndergarmentBottomBoxers ]
 
 - type: entity
-  id: OrganBase
+  id: OrganBaseUnEditable
   name: organ
   abstract: true
   parent: BaseItem
   components:
   - type: Organ
+
+- type: entity
+  id: OrganBase
+  name: organ
+  abstract: true
+  parent: [OrganBaseUnEditable, SolutionFood]
+  components:
+  - type: FlavorProfile
+    flavors:
+    - chicken # INTRODUCING OUR NEW EVERY-MEAT BURRITO, IT'S GOT EVERY MEAT!
+  - type: Edible
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
 
 - type: entity
   parent: OrganBase
@@ -255,6 +271,13 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
+      - ReagentId: GreyMatter
+        Quantity: 10
   - type: FoodSequenceElement
     entries:
       Burger: Brain
