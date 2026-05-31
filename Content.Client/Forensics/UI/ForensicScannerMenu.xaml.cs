@@ -64,7 +64,5 @@ public sealed partial class ForensicScannerMenu : DefaultWindow
             text.AppendLine(residue);
         }
         Diagnostics.Text = text.ToString();
-        // Now that it's properly filled, we set it visible.
-        Visible = true;
     }
 }

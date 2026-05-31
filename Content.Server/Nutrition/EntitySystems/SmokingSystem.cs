@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
+using Content.Server.Forensics.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
@@ -16,7 +17,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Content.Shared.Atmos;
-using Content.Shared.Forensics.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private SharedItemSystem _items = default!;
         [Dependency] private SharedContainerSystem _container = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
-        [Dependency] private SharedForensicsSystem _forensics = default!;
+        [Dependency] private ForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 

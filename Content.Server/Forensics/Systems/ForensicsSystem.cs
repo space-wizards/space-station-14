@@ -35,6 +35,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
         SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
         SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionChangedEvent>(OnSolutionChanged);
     }
+
     private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> puddle, ref SolutionChangedEvent ev)
     {
         var soln = GetSolutionsDNA(ev.Solution);
@@ -74,16 +75,9 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
 
     private void OnBeingGibbed(Entity<ForensicsComponent> mob, ref GibbedBeforeDeletionEvent args)
     {
-        var dna = Loc.GetString("forensics-dna-unknown");
-
-        if (TryComp(mob, out DnaComponent? dnaComp) && dnaComp.DNA != null)
-            dna = dnaComp.DNA;
-
         foreach (var part in args.Giblets)
         {
-            var partComp = EnsureComp<ForensicsComponent>(part);
-            partComp.DNAs.Add(dna);
-            partComp.CanDnaBeCleaned = false;
+            TransferDna(part, mob, false);
         }
     }
 
@@ -268,6 +262,7 @@ public sealed partial class ForensicsSystem : SharedForensicsSystem
 
         EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
         recipientComp.DNAs.Add(donorComp.DNA);
+        // This seems problematic. What if something adds a uncleanable DNA and then something else adds a cleanable DNA?
         recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
 
         if (canDnaBeCleaned)

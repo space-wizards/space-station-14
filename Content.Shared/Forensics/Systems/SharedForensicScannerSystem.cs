@@ -119,7 +119,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         _popupSystem.PopupPredicted(Loc.GetString("forensic-scanner-match-none"), scanner, args.User);
     }
 
-    protected void OpenUserInterface(EntityUid user, Entity<ForensicScannerComponent> scanner)
+    protected void OpenUi(EntityUid user, Entity<ForensicScannerComponent> scanner)
     {
         _ui.OpenUi(scanner.Owner, ForensicScannerUiKey.Key, user, true);
         UpdateUi(scanner);
@@ -133,7 +133,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
         scanner.Comp.SuccessfulScanned = true;
         DirtyField(scanner.AsNullable(), nameof(scanner.Comp.SuccessfulScanned));
 
-        OpenUserInterface(args.Args.User, scanner);
+        OpenUi(args.Args.User, scanner);
     }
 
     private void OnPrint(Entity<ForensicScannerComponent> scanner, ref ForensicScannerPrintMessage args)
@@ -196,7 +196,7 @@ public abstract partial class SharedForensicScannerSystem : EntitySystem
                 .WithMaxDistance(4.5f));
 
         component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
-        Dirty(scanner);
+        DirtyField(scanner.AsNullable(), nameof(component.PrintReadyAt));
     }
 
     private void OnClear(Entity<ForensicScannerComponent> scanner, ref ForensicScannerClearMessage args)

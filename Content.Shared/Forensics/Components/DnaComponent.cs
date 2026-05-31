@@ -5,9 +5,9 @@ namespace Content.Shared.Forensics.Components;
 /// <summary>
 /// This component is for mobs that have DNA.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DnaComponent : Component
 {
-    [DataField]
+    [DataField("dna"), AutoNetworkedField]
     public string? DNA;
 }
