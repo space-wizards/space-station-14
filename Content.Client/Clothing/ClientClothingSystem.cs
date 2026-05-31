@@ -12,6 +12,7 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -47,9 +48,12 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     };
 
     [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private ISerializationManager _serialMan = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+
+    private Dictionary<string, RSI> _rsiPathDict = new();
 
     public override void Initialize()
     {
@@ -112,6 +116,10 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             // No generic data either. Attempt to generate defaults from the item's RSI & item-prefixes
             if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
                 return;
+        }
+        else
+        {
+            layers = CheckForSpeciesSpecificLayers(uid, item, layers, inventory.SpeciesId);
         }
 
         // add each layer to the visuals
@@ -178,6 +186,54 @@ public sealed partial class ClientClothingSystem : ClothingSystem
         layers = new() { layer };
 
         return true;
+    }
+
+    /// <summary>
+    ///     For each layer in the given set of prototype data, looks to see if there's a particular species-specific state and modifies it accordingly if so.
+    /// </summary>
+    /// <remarks>
+    ///     Useful for avoiding YAML redundancy with species-specific ClothingVisuals.
+    /// </remarks>
+    private List<PrototypeLayerData> CheckForSpeciesSpecificLayers(EntityUid uid, ClothingComponent clothing, List<PrototypeLayerData> layers, string? speciesId)
+    {
+        if (string.IsNullOrEmpty(speciesId))
+            return layers;
+
+        // Make a copy of the layers - we need the originals intact.
+        List<PrototypeLayerData> newLayers = new(layers.Count);
+        foreach (var layer in layers)
+            newLayers.Add(_serialMan.CreateCopy(layer, notNullableOverride: true));
+
+        // Find fallback RSI
+        RSI? baseRSI = null;
+        if (clothing.RsiPath != null)
+            baseRSI = _cache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / clothing.RsiPath).RSI;
+        else if (TryComp(uid, out SpriteComponent? sprite))
+            baseRSI = sprite.BaseRSI;
+
+        // For each layer, check that a species-specific version exists.
+        foreach (var layer in newLayers)
+        {
+            // Empty or species-specific layer, nothing to do.
+            if (layer.State == null || layer.State.EndsWith(speciesId))
+                continue;
+
+            // Use a path for the layer if specified, otherwise use the default.
+            RSI? rsi;
+            if (layer.RsiPath != null && _cache.TryGetResource<RSIResource>(layer.RsiPath, out var rsiResource))
+                rsi = rsiResource.RSI;
+            else
+                rsi = baseRSI;
+
+            // Lookup your state.
+            if (rsi != null)
+            {
+                var speciesState = $"{layer.State}-{speciesId}";
+                if (rsi.TryGetState(speciesState, out _))
+                    layer.State = speciesState;
+            }
+        }
+        return newLayers;
     }
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
