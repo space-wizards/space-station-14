@@ -109,8 +109,13 @@ public sealed partial class ChannelsMenu : DefaultWindow
 
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var label = _owner.Loc.GetString("instrument-component-channel-name",
-                ("number", i));
+            var isPercussion = i == RobustMidiEvent.PercussionChannel;
+            var isPercussionLocked = isPercussion && !(instrument?.AllowPercussion ?? true);
+
+            var label = isPercussion
+                ? _owner.Loc.GetString("instrument-component-channel-name-percussion", ("number", i))
+                : _owner.Loc.GetString("instrument-component-channel-name", ("number", i));
+
             if (activeInstrument != null
                 && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
                 && resolvedMidiChannel != null)
@@ -144,7 +149,7 @@ public sealed partial class ChannelsMenu : DefaultWindow
                 }
             }
 
-            var item = ChannelList.AddItem(label, null, true, i);
+            var item = ChannelList.AddItem(label, null, !isPercussionLocked, i);
 
             item.Selected = !instrument?.FilteredChannels[i] ?? false;
         }
