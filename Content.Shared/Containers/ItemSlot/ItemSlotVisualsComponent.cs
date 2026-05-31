@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization;
-using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Containers.ItemSlot;
