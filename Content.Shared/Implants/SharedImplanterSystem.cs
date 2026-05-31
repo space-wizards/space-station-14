@@ -25,7 +25,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;

@@ -48,7 +48,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private FlavorProfileSystem _flavorProfile = default!;
-    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;

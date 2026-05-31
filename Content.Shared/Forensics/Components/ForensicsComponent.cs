@@ -5,16 +5,16 @@ namespace Content.Shared.Forensics.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ForensicsComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<string> Fingerprints = [];
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<string> Fibers = [];
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<string> DNAs = [];
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<string> Residues = [];
 
     /// <summary>
@@ -29,4 +29,11 @@ public sealed partial class ForensicsComponent : Component
     /// </summary>
     [DataField]
     public bool CanDnaBeCleaned = true;
+
+    /// <summary>
+    /// Whether this entity is currently cleanable.
+    /// Solely used for client-side prediction.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsDirty;
 }

@@ -34,7 +34,7 @@ public sealed partial class InjectorSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private OpenableSystem _openable = default!;
     [Dependency] private SharedPopupSystem _popup = default!;

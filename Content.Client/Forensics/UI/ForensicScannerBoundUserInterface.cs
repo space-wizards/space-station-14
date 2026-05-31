@@ -1,13 +1,13 @@
-using Robust.Shared.Timing;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
-namespace Content.Client.Forensics;
+namespace Content.Client.Forensics.UI;
 
 [UsedImplicitly]
-public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
+public sealed partial class ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IGameTiming _gameTiming = default!;
 
@@ -17,16 +17,11 @@ public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private TimeSpan _printCooldown;
 
-    public ForensicScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
     protected override void Open()
     {
         base.Open();
         _window = this.CreateWindow<ForensicScannerMenu>();
-        // We're setting this window invisible until we updated it, to avoid flickering with an empty UI.
-        _window.Visible = false;
+
         _window.Print.OnPressed += _ => Print();
         _window.Clear.OnPressed += _ => Clear();
     }

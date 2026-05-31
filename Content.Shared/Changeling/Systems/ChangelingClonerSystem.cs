@@ -28,7 +28,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
-    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     public override void Initialize()

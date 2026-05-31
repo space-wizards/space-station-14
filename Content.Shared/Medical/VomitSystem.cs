@@ -29,7 +29,7 @@ public sealed partial class VomitSystem : EntitySystem
     [Dependency] private ThirstSystem _thirst = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private ForensicsSystem _forensics = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;

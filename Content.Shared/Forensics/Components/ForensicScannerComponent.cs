@@ -1,16 +1,12 @@
-using System.Threading;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Forensics.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true)]
 public sealed partial class ForensicScannerComponent : Component
 {
-    public CancellationTokenSource? CancelToken;
-
     /// <summary>
     /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
     /// </summary>
@@ -43,6 +39,13 @@ public sealed partial class ForensicScannerComponent : Component
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public string LastScannedName = string.Empty;
+
+    /// <summary>
+    /// Whether the scan has been completed.
+    /// This prevents the client from falsely showing data that the server has sent prematurely for prediction.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
+    public bool SuccessfulScanned;
 
     /// <summary>
     /// When will the scanner be ready to print again?
