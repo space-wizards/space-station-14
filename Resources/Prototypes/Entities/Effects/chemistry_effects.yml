@@ -102,6 +102,7 @@
   - type: SmoothEdge
   - type: IconSmooth
     mode: NoSprite
+    key: foam
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
