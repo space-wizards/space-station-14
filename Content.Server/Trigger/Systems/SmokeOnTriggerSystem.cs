@@ -6,6 +6,7 @@ using Content.Shared.Maps;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 
