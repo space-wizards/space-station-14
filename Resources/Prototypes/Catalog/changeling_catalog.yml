@@ -79,7 +79,7 @@
   cost:
     ChangelingDNA: 10
   categories:
-  - ChangelingStoreUtility
+  - ChangelingStoreStealth
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
