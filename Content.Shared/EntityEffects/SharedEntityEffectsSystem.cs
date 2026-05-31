@@ -13,11 +13,18 @@ namespace Content.Shared.EntityEffects;
 /// Specifically it handles the receiving of events for causing entity effects, and provides
 /// public API for other systems to take advantage of entity effects.
 /// </summary>
-public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
+public sealed partial class SharedEntityEffectsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private SharedEntityConditionsSystem _condition = default!;
+
+    private static Dictionary<Type, IEntityEffectHandler> _handlers = new();
+
+    public static void RegisterHandler(IEntityEffectHandler handler)
+    {
+        _handlers[handler.EffectType] = handler;
+    }
 
     public override void Initialize()
     {
@@ -95,7 +102,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
         // TODO: Replace with proper random prediciton when it exists.
         if (effect.Probability <= 1f && !SharedRandomExtensions.PredictedProb(_timing, effect.Probability, GetNetEntity(target), GetNetEntity(user)))
-                return false;
+            return false;
 
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
@@ -131,17 +138,18 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             );
         }
 
-        effect.RaiseEvent(target, this, scale, user);
+        if (_handlers.TryGetValue(effect.GetType(), out var handler))
+            handler.ApplyEffect(target, effect, scale, user);
     }
+}
 
-    /// <summary>
-    /// Raises an effect to an entity. You should not be calling this unless you know what you're doing.
-    /// </summary>
-    public void RaiseEffectEvent<T>(EntityUid target, T effect, float scale, EntityUid? user) where T : EntityEffectBase<T>
-    {
-        var effectEv = new EntityEffectEvent<T>(effect, scale, user);
-        RaiseLocalEvent(target, ref effectEv);
-    }
+/// <summary>
+/// Direct handler for entity effects, dispatched by type instead of events.
+/// </summary>
+public interface IEntityEffectHandler
+{
+    Type EffectType { get; }
+    void ApplyEffect(EntityUid target, EntityEffect effect, float scale, EntityUid? user);
 }
 
 /// <summary>
@@ -149,21 +157,25 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 /// </summary>
 /// <typeparam name="T">The Component that is required for the effect</typeparam>
 /// <typeparam name="TEffect">The Entity Effect itself</typeparam>
-public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem where T : Component where TEffect : EntityEffectBase<TEffect>
+public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem, IEntityEffectHandler
+    where T : Component where TEffect : EntityEffect
 {
+    public Type EffectType => typeof(TEffect);
+
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<T, EntityEffectEvent<TEffect>>(Effect);
+        SharedEntityEffectsSystem.RegisterHandler(this);
     }
 
-    protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
-}
+    protected abstract void Effect(Entity<T> entity, TEffect effect, float scale, EntityUid? user);
 
-/// <summary>
-/// Used to raise an EntityEffect without losing the type of effect.
-/// </summary>
-public interface IEntityEffectRaiser
-{
-    void RaiseEffectEvent<T>(EntityUid target, T effect, float scale, EntityUid? user) where T : EntityEffectBase<T>;
+    public virtual void ApplyEffect(EntityUid target, EntityEffect effect, float scale, EntityUid? user)
+    {
+        if (effect is not TEffect typed)
+            return;
+        if (!TryComp(target, out T? comp))
+            return;
+        Effect((target, comp), typed, scale, user);
+    }
 }

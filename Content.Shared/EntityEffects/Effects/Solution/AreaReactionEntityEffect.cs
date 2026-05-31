@@ -1,11 +1,11 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Solution;
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEffect>
+public sealed partial class AreaReactionEffect : EntityEffect
 {
     /// <summary>
     /// How many seconds will the effect stay, counting after fully spreading.

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Medical;
+using Content.Shared.Medical;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
@@ -11,14 +11,14 @@ public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private VomitSystem _vomit = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Vomit> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, Vomit effect, float scale, EntityUid? user)
     {
-        _vomit.Vomit(entity.Owner, args.Effect.ThirstAmount * args.Scale, args.Effect.HungerAmount * args.Scale);
+        _vomit.Vomit(entity.Owner, effect.ThirstAmount * scale, effect.HungerAmount * scale);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Vomit : EntityEffectBase<Vomit>
+public sealed partial class Vomit : EntityEffect
 {
     /// <summary>
     /// How much we adjust our thirst after vomiting.

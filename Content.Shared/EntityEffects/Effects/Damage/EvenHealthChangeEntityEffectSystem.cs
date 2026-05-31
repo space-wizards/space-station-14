@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -16,17 +16,17 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<EvenHealthChange> args)
+    protected override void Effect(Entity<DamageableComponent> entity, EvenHealthChange effect, float scale, EntityUid? user)
     {
-        foreach (var (group, amount) in args.Effect.Damage)
+        foreach (var (group, amount) in effect.Damage)
         {
-            _damageable.HealEvenly(entity.AsNullable(), amount * args.Scale, group);
+            _damageable.HealEvenly(entity.AsNullable(), amount * scale, group);
         }
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange>
+public sealed partial class EvenHealthChange : EntityEffect
 {
     /// <summary>
     /// Damage to heal, collected into entire damage groups.
