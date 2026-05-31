@@ -173,6 +173,120 @@ public sealed partial class ChatSystem
             }
     }
 
+    public void SendEntitySpeakForTargets(
+        EntityUid source,
+        string originalMessage,
+        List<EntityUid> targets,
+        string? nameOverride,
+        bool hideLog = false,
+        bool ignoreActionBlocker = false
+    )
+    {
+        Log.Debug("entered SendEntitySpeakForTargets");
+
+        if (!ignoreActionBlocker && !_actionBlocker.CanSpeak(source, originalMessage))
+            return;
+
+        Log.Debug("passed the _actionBlocker check");
+
+        var message = TransformSpeech(source, originalMessage);
+
+        if (message.Length == 0)
+            return;
+
+        Log.Debug("passed the message.Length == 0 check");
+
+        var speech = GetSpeechVerb(source, message);
+
+        Log.Debug("got the speech verb");
+
+        // get the entity's apparent name (if no override provided).
+        string name;
+        if (nameOverride != null)
+        {
+            name = nameOverride;
+        }
+        else
+        {
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            RaiseLocalEvent(source, nameEv);
+            name = nameEv.VoiceName;
+            // Check for a speech verb override
+            if (nameEv.SpeechVerb != null && _prototypeManager.Resolve(nameEv.SpeechVerb, out var proto))
+                speech = proto;
+        }
+
+        Log.Debug("got the name");
+
+        name = FormattedMessage.EscapeText(name);
+
+        Log.Debug($"name: {name}");
+
+        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
+            ("entityName", name),
+            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
+            ("fontType", speech.FontId),
+            ("fontSize", speech.FontSize),
+            ("message", FormattedMessage.EscapeText(message)));
+
+        Log.Debug($"wrappedMessage: {wrappedMessage}");
+        
+        if (!targets.Contains(source))
+            targets.Add(source);
+
+        var targetClients = targets
+            .Where(HasComp<ActorComponent>)
+            .Select(target => Comp<ActorComponent>(target).PlayerSession.Channel);
+
+        _chatManager.ChatMessageToMany(ChatChannel.Local, message, wrappedMessage, source, false, true, targetClients);
+
+        Log.Debug("message sent!");
+
+        var ev = new EntitySpokeEvent(source, message, null, null);
+        RaiseLocalEvent(source, ev, true);
+
+        Log.Debug("EntitySpokeEvent raised!");
+
+        // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
+        // Also doesn't log if hideLog is true.
+        if (hideLog || !HasComp<ActorComponent>(source))
+            return;
+
+        Log.Debug("passed hide log check");
+
+        var targetsList = "";
+        foreach (var target in targets)
+        {
+            if (targetsList != "")
+                targetsList += ", ";
+
+            targetsList += Name(target);
+        }
+
+        if (originalMessage == message)
+        {
+            if (name != Name(source))
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source} as {name} to {targetsList}: {originalMessage}.");
+            else
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {source} to {targetsList}: {originalMessage}.");
+        }
+        else
+        {
+            if (name != Name(source))
+            {
+                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                    $"Say from {source} as {name}, original: {originalMessage} to {targetsList}, transformed: {message}.");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                    $"Say from {source}, original: {originalMessage} to {targetsList}, transformed: {message}.");
+            }
+        }
+
+        Log.Debug("finished!");
+    }
+
     protected override void SendEntityEmote(
         EntityUid source,
         string action,

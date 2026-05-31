@@ -316,32 +316,11 @@ namespace Content.Server.Guardian
             // cancel the speech, we gonna send it ourselves only for the host and the guardian
             args.Cancel();
 
-            if (!TryComp<ActorComponent>(entity, out var guardianActor))
+            if (args.Message == null || entity.Comp.Host == null)
                 return;
 
-            if (!TryComp<ActorComponent>(entity.Comp.Host, out var hostActor))
-                return;
-
-            if (args.Message == null)
-                return;
-
-            // copy pasted from SendEntitySpeak
-            var nameEv = new TransformSpeakerNameEvent(entity, Name(entity));
-            RaiseLocalEvent(entity, nameEv);
-            var name = nameEv.VoiceName;
-
-            var speech = _chatSystem.GetSpeechVerb(entity, args.Message);
-            var messageWrapped = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-                ("entityName", name),
-                ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-                ("fontType", speech.FontId),
-                ("fontSize", speech.FontSize),
-                ("message", FormattedMessage.EscapeText(args.Message)));
-
-            // send to the host and the guardian (the guardian needs to know what they said)
-            _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, hostActor.PlayerSession.Channel);
-            _chat.ChatMessageToOne(ChatChannel.Local, args.Message, messageWrapped, entity, false, guardianActor.PlayerSession.Channel);
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(entity):player} only to {ToPrettyString(entity.Comp.Host):player}: {args.Message}");
+            // set to ignore action blocker to avoid this method calling OnSpeakAttempt again
+            _chatSystem.SendEntitySpeakForTargets(entity, args.Message, [entity.Comp.Host.Value], null, false, true);
         }
 
         /// <summary>
