@@ -53,8 +53,6 @@ public sealed partial class ClientClothingSystem : ClothingSystem
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private Dictionary<string, RSI> _rsiPathDict = new();
-
     public override void Initialize()
     {
         base.Initialize();
