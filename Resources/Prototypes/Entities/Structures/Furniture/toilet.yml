@@ -112,6 +112,11 @@
     solution: tank
     destroyOnEmpty: false
     utensil: Spoon
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
 
 # constructed toilets don't come with Rummageable or plungeruse component to avoid infinite item spawning.
 - type: entity
@@ -136,11 +141,6 @@
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: Water
-        Quantity: 1
 
 # so theres not actually any way to replenish the gastrotoxin / gold in these.
 # I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
@@ -214,11 +214,6 @@
   - type: Rummageable
     table: !type:NestedSelector
       tableId: RatKingLoot
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: Water
-        Quantity: 1
 
 - type: entity
   parent: ToiletGoldenEmpty
