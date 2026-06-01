@@ -6,11 +6,11 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Trigger.Systems;
 
-public sealed class ProximityTriggerAnimationSystem : EntitySystem
+public sealed partial class ProximityTriggerAnimationSystem : EntitySystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AnimationPlayerSystem _player = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /*
      * Currently all of the appearance stuff is hardcoded for portable flashers
