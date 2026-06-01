@@ -362,10 +362,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         if (damageVisComp.Disabled)
             return;
 
-        if (AppearanceSystem.TryGetData<string>(uid,
-                DamageVisualizerKeys.Displacement,
-                out var displacement,
-                args.Component) &&
+        if (AppearanceSystem.TryGetData<string>(uid,  DamageVisualizerKeys.Displacement,  out var displacement, args.Component) &&
             _prototypeManager.Resolve<DisplacementDataPrototype>(displacement, out var displacementProto))
             damageVisComp.Displacement = displacementProto.Displacement;
         else

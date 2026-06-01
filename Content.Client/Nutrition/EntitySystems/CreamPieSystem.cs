@@ -69,7 +69,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, isCreamPied);
 
-        if (ent.Comp1.Displacement != null && _prototype.Resolve(ent.Comp1.Displacement, out var displacementProto))
+        if (_prototype.Resolve(ent.Comp1.Displacement, out var displacementProto))
         {
             _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
         }
