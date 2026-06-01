@@ -1,48 +1,50 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Beam.Components;
+
 /// <summary>
 /// Use this as a generic beam. Not for something like a laser gun, more for something continuous like lightning.
 /// </summary>
-public abstract partial class SharedBeamComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class BeamComponent : Component
 {
     /// <summary>
     /// A unique list of targets that this beam collided with.
     /// Useful for code like Arcing in the Lightning Component.
     /// </summary>
-    [DataField("hitTargets")]
+    [DataField]
     public HashSet<EntityUid> HitTargets = new();
 
     /// <summary>
     /// The virtual entity representing a beam.
     /// </summary>
-    [DataField("virtualBeamController")]
+    [DataField]
     public EntityUid? VirtualBeamController;
 
     /// <summary>
     /// The first beam created, useful for keeping track of chains.
     /// </summary>
-    [DataField("originBeam")]
+    [DataField]
     public EntityUid OriginBeam;
 
     /// <summary>
-    /// The entity that fired the beam originally
+    /// The entity that fired the beam originally.
     /// </summary>
-    [DataField("beamShooter")]
+    [DataField]
     public EntityUid BeamShooter;
 
     /// <summary>
     /// A unique list of created beams that the controller keeps track of.
     /// </summary>
-    [DataField("createdBeams")]
+    [DataField]
     public HashSet<EntityUid> CreatedBeams = new();
 
     /// <summary>
     /// Sound played upon creation
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier? Sound;
 }
 
