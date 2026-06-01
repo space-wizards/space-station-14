@@ -115,6 +115,9 @@ def check_for_zip_download():
         exit(1)
 
 def check_path_for_git():
+    """
+    Check git is invokable before trying to invoke it.
+    """
     if shutil.which("git") is None:
         print("git not found in PATH. Ensure git is installed and in PATH and run this program again!")
         time.sleep(30)
