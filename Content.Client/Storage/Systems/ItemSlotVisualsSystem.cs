@@ -55,8 +55,10 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         // No need for fillLevels if it'll just fit one item.
         var layerKeyPrefix = heldPrefix + args.Location.ToString().ToLowerInvariant() + ent.Comp.InHandsFillBaseName;
 
-        if (GetVisualsLayer(ent, layerKeyPrefix) is { } layer)
-            args.Layers.Add(layer);
+        if (GetVisualsLayer(ent, layerKeyPrefix) is not { } layer)
+            return;
+
+        args.Layers.Add(layer);
     }
 
     private void OnGetClothingVisuals(Entity<ItemSlotVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
@@ -70,8 +72,10 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
         var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
         var layerKeyPrefix = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
-        if (GetVisualsLayer(ent, layerKeyPrefix) is { } layer)
-            args.Layers.Add(layer);
+        if (GetVisualsLayer(ent, layerKeyPrefix) is not { } layer)
+            return;
+
+        args.Layers.Add(layer);
     }
 
     private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<ItemSlotVisualsComponent> ent, string layerKeyPrefix)
