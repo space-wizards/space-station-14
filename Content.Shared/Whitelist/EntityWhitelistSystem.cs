@@ -9,7 +9,8 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private TagSystem _tag = default!;
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
 
     private string _itemComponentName = string.Empty;
     private string _tagComponentName = string.Empty;

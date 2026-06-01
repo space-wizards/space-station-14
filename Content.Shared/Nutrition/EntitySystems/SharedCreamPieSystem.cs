@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;
 using Robust.Shared.Audio.Systems;
@@ -35,7 +36,7 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
         SubscribeLocalEvent<CreamPieComponent, ThrowDoHitEvent>(OnCreamPieHit);
         SubscribeLocalEvent<CreamPieComponent, LandEvent>(OnCreamPieLand);
         SubscribeLocalEvent<CreamPiedComponent, ThrowHitByEvent>(OnCreamPiedHitBy);
-        SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
+        SubscribeLocalEvent<CreamPieComponent, BeforeToolRefinedEvent>(OnToolRefine);
         SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
@@ -157,7 +158,7 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
     // However, the refactor to IngestionSystem caused the event to not be reached,
     // because eating is blocked if an item is inside the food.
 
-    private void OnSlice(Entity<CreamPieComponent> ent, ref SliceFoodEvent args)
+    private void OnToolRefine(Entity<CreamPieComponent> ent, ref BeforeToolRefinedEvent args)
     {
         ActivatePayload(ent);
     }

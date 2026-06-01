@@ -130,7 +130,7 @@
   - type: FlavorProfile
     flavors:
       - onion
-      - greasey
+      - oily
 
 - type: entity
   parent: ClothingEyesHudBase
