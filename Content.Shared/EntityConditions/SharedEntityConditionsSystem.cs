@@ -96,6 +96,8 @@ public interface IEntityConditionHandler
 public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem, IEntityConditionHandler
     where T : Component where TCon : EntityCondition
 {
+    [Dependency] private EntityQuery<T> _query = default!;
+
     public Type ConditionType => typeof(TCon);
 
     /// <inheritdoc/>
@@ -110,7 +112,7 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem, IEn
     {
         if (condition is not TCon typed)
             return false;
-        if (!TryComp(target, out T? comp))
+        if (!_query.TryGetComponent(target, out var comp))
             return false;
         var result = false;
         Condition((target, comp), typed, ref result);
