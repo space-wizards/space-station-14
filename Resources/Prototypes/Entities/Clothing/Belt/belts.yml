@@ -18,7 +18,7 @@
     size: Ginormous
   - type: ItemSlots
     slots:
-      sabre:
+      item:
         name: Sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
