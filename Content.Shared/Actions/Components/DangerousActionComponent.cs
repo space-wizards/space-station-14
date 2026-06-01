@@ -4,7 +4,7 @@ namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// If the user attempts an action with this component,
-/// they cannot do so if they are pacified.
+/// it is aborted with a custom message while the user is pacified.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DangerousActionComponent : Component
