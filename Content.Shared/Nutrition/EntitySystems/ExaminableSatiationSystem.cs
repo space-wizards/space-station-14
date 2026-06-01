@@ -10,12 +10,12 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <see cref="ExaminedEvent"/>s.
 /// </summary>
 /// <seealso cref="ExaminableSatiationComponent"/>
-public sealed class ExaminableSatiationSystem : EntitySystem
+public sealed partial class ExaminableSatiationSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
-    [Dependency] private readonly EntityQuery<SatiationComponent> _satiationQuery = default!;
+    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery = default!;
 
     public override void Initialize()
     {

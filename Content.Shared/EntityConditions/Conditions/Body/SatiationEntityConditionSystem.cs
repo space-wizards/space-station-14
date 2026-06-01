@@ -12,7 +12,7 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// </summary>
 public sealed partial class SatiationEntityConditionSystem : EntityConditionSystem<SatiationComponent, SatiationCondition>
 {
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     protected override void Condition(Entity<SatiationComponent> entity,
         ref EntityConditionEvent<SatiationCondition> args)

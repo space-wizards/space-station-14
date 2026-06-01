@@ -23,12 +23,12 @@ namespace Content.Shared.Nutrition.EntitySystems;
 [SuppressMessage("ReSharper", "UseCollectionExpression")] // Collection expressions use non-whitelisted functions.
 public sealed partial class SatiationSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
 
     public static readonly ProtoId<SatiationTypePrototype> Hunger = "Hunger";
     public static readonly ProtoId<SatiationTypePrototype> Thirst = "Thirst";

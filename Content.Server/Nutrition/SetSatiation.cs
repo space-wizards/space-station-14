@@ -12,10 +12,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Nutrition;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class SetSatiation : LocalizedEntityCommands
+public sealed partial class SetSatiation : LocalizedEntityCommands
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     public override string Command => "setsatiation";
 

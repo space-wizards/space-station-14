@@ -12,9 +12,9 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// This system handles the inclusion of satiation status icons for entities with the <see cref="ShowSatiationIconsComponent"/>
 /// </summary>
-public sealed class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationIconsComponent>
+public sealed partial class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSatiationIconsComponent>
 {
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     private HashSet<ProtoId<SatiationTypePrototype>> _types = [];
 

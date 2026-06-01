@@ -12,9 +12,9 @@ namespace Content.Server.Nutrition;
 /// This command sets the specified <see cref="Satiation">Satiation(s)</see> to 10% of its maximum.
 /// </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class Unsatiate : LocalizedEntityCommands
+public sealed partial class Unsatiate : LocalizedEntityCommands
 {
-    [Dependency] private readonly SatiationSystem _satiation = default!;
+    [Dependency] private SatiationSystem _satiation = default!;
 
     public override string Command => "unsatiate";
 
