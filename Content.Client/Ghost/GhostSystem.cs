@@ -21,10 +21,10 @@ namespace Content.Client.Ghost
 
         private bool _ghostVisibility = true;
 
-        private bool GhostVisibility
+        public bool GhostVisibility
         {
             get => _ghostVisibility;
-            set
+            private set
             {
                 if (_ghostVisibility == value)
                 {
