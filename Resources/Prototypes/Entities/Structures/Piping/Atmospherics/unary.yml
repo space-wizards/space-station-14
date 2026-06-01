@@ -484,7 +484,7 @@
   - type: Solution
     id: overflow
     solution:
-      maxVol: 10000 # should never hit this, since no container can hold this much.
+      maxVol: 500 # should never hit this, since no container can hold this much.
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/vaporizer.rsi
     snapCardinals: true
@@ -560,6 +560,12 @@
         whitelist:
           components:
           - Solution
+  - type: ContainerContainer
+    containers:
+      loadedContainerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Transform
     noRot: false
   - type: PowerSwitch
