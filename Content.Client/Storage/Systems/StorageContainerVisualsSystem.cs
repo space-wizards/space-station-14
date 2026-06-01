@@ -68,8 +68,10 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         var inhandPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
         var layerKeyPrefix = inhandPrefix + args.Location.ToString().ToLowerInvariant() + ent.Comp.InHandsFillBaseName;
 
-        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.InHandsMaxFillLevels) is { } layer)
-            args.Layers.Add(layer);
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.InHandsMaxFillLevels) is not { } layer)
+            return;
+
+        args.Layers.Add(layer);
     }
 
     private void OnGetClothingVisuals(Entity<StorageContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
@@ -83,8 +85,10 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
         var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $"{clothing.EquippedPrefix}-equipped-{args.Slot}";
         var layerKeyPrefix = equippedPrefix + ent.Comp.EquippedFillBaseName;
 
-        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.EquippedMaxFillLevels) is { } layer)
-            args.Layers.Add(layer);
+        if (GetVisualsLayer(ent, layerKeyPrefix, ent.Comp.InHandsMaxFillLevels) is not { } layer)
+            return;
+
+        args.Layers.Add(layer);
     }
 
     private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<StorageContainerVisualsComponent> ent, string layerKeyPrefix, int maxFillLevels)
