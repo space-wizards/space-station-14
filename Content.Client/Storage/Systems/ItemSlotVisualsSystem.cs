@@ -80,10 +80,9 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
 
     private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<ItemSlotVisualsComponent> ent, string layerKeyPrefix)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return null;
-
-        if (!AppearanceSystem.TryGetData(ent, ent.Comp.Layer, out bool hasItem, appearance) || !hasItem)
+        if (!TryComp<AppearanceComponent>(ent, out var appearance)
+            || !AppearanceSystem.TryGetData(ent, ent.Comp.Layer, out bool hasItem, appearance)
+            || !hasItem)
             return null;
 
         var layer = new PrototypeLayerData();
