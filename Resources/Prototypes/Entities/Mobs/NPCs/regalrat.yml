@@ -44,9 +44,9 @@
           radius: 0.3
         density: 230
         mask:
-        - SmallMobMask
+        - MobMask
         layer:
-        - SmallMobLayer
+        - MobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -101,9 +101,8 @@
     tags:
       - CannotSuicide
       - FootstepSound
+      - DoorBumpOpener
   - type: NoSlip
-  - type: Insulated
-    coefficient: 0.5 # rat king touches more wires, see?
   - type: Rummager
   - type: RatKing
     hungerPerArmyUse: 25
