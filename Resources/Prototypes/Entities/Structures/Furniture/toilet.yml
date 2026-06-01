@@ -126,9 +126,9 @@
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   suffix: Constructed, Unplungable
   components:
-    - type: Construction
-      graph: Toilet
-      node: toilet
+  - type: Construction
+    graph: Toilet
+    node: toilet
 
 - type: entity
   parent: BaseToilet
