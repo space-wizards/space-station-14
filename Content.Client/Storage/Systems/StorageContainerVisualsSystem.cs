@@ -93,13 +93,9 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
 
     private (string Key, PrototypeLayerData Layer)? GetVisualsLayer(Entity<StorageContainerVisualsComponent> ent, string layerKeyPrefix, int maxFillLevels)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return null;
-
-        if (!AppearanceSystem.TryGetData<int>(ent, StorageVisuals.StorageUsed, out var used, appearance))
-            return null;
-
-        if (!AppearanceSystem.TryGetData<int>(ent, StorageVisuals.Capacity, out var capacity, appearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance)
+            || !AppearanceSystem.TryGetData<int>(ent, StorageVisuals.StorageUsed, out var used, appearance)
+            || !AppearanceSystem.TryGetData<int>(ent, StorageVisuals.Capacity, out var capacity, appearance))
             return null;
 
         var fraction = used / (float)capacity;
