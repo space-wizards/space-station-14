@@ -113,19 +113,20 @@
     destroyOnEmpty: false
     utensil: Spoon
 
+# constructed toilets don't come with Rummageable or plungeruse component to avoid infinite item spawning.
 - type: entity
   parent: BaseToilet
   id: ConstructedToilet
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
-  suffix: Constructed
+  suffix: Constructed, Unplungable
   components:
     - type: Construction
       graph: Toilet
       node: toilet
 
 - type: entity
-  parent: ConstructedToilet
+  parent: BaseToilet
   id: ToiletEmpty
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
