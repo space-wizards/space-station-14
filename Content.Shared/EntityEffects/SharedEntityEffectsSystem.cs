@@ -162,6 +162,8 @@ public interface IEntityEffectHandler
 public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem, IEntityEffectHandler
     where T : Component where TEffect : EntityEffect
 {
+    [Dependency] private EntityQuery<T> _query = default!;
+
     public Type EffectType => typeof(TEffect);
 
     /// <inheritdoc/>
@@ -176,7 +178,7 @@ public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem, IEn
     {
         if (effect is not TEffect typed)
             return;
-        if (!TryComp(target, out T? comp))
+        if (!_query.TryGetComponent(target, out var comp))
             return;
         Effect((target, comp), typed, scale, user);
     }
