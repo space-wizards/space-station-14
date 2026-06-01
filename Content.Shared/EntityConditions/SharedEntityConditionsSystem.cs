@@ -62,9 +62,6 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
         return condition.Inverted != CheckCondition(target, condition);
     }
 
-    /// <summary>
-    /// Dispatches a condition check directly via handler cache instead of events.
-    /// </summary>
     private static Dictionary<Type, IEntityConditionHandler> _handlers = new();
 
     public static void RegisterHandler(IEntityConditionHandler handler)
@@ -81,7 +78,9 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 }
 
 /// <summary>
-/// Direct handler for entity conditions, dispatched by type instead of events.
+/// This is an abstraction for a dictionary of effect handlers.
+/// Allows you to store any EntityConditionSystem<T, TCon>
+/// in a single Dictionary<Type, IEntityConditionHandler>
 /// </summary>
 public interface IEntityConditionHandler
 {

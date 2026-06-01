@@ -144,7 +144,9 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
 }
 
 /// <summary>
-/// Direct handler for entity effects, dispatched by type instead of events.
+/// This is an abstraction for a dictionary of effect handlers.
+/// Allows you to store any EntityEffectSystem<T, TEffect>
+/// in a single Dictionary<Type, IEntityEffectHandler>
 /// </summary>
 public interface IEntityEffectHandler
 {
