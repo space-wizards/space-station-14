@@ -20,11 +20,11 @@ public sealed partial class DangerousActionSystem : EntitySystem
     {
         if (args.Cancelled)
             return;
-        if (HasComp<PacifiedComponent>(args.User))
-        {
-            _popup.PopupClient(Loc.GetString(ent.Comp.PacificationMessage),args.User,args.User,PopupType.Small);
-            args.Cancelled = true;
-        }
+        if (!HasComp<PacifiedComponent>(args.User))
+            return;
+
+        _popup.PopupClient(Loc.GetString(ent.Comp.PacificationMessage),args.User,args.User,PopupType.Small);
+        args.Cancelled = true;
     }
 
 }
