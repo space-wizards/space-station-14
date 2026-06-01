@@ -1217,7 +1217,9 @@
     reagentId: MilkSheep
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExaminableHunger
+  - type: ExaminableSatiation
+    satiations:
+      Hunger: HungerExamination
   - type: Wooly
   - type: Shearable
     targetSolutionName: wool

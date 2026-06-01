@@ -26,7 +26,7 @@ public sealed partial class ExaminableSatiationComponent : Component
 }
 
 /// <summary>
-/// A definitions of how to describe a satiation's status in examine messages.
+/// A definition of how to describe a satiation's status in examine messages.
 /// </summary>
 /// <seealso cref="ExaminableSatiationComponent"/>
 [Prototype]
