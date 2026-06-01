@@ -273,7 +273,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Petty theft covers the owning or possession of items that were not lawfully or consentually given to the holder.
+        Petty theft covers the possession of items that were not lawfully or consensually given to the holder.
         This may include departmental contraband if the contraband was not approved for the holder.
         Items covered by petty theft are usually easily replaceable, low-value, or low-danger.
       </Box>
@@ -446,7 +446,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         The difference between theft and grand theft is based on how crucial the stolen item is; this is mostly
-        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable
+        used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and irreplaceable
         machine parts. Additionally, stealing anything from the armory is grand theft, including seized contraband.
       </Box>
     </ColorBox>
@@ -488,7 +488,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers places like telecomms, head offices, security zones, command areas, the vault, and the armory.
+        This covers places like telecommunications, head offices, security zones, command areas, the vault, and the armory.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -524,7 +524,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        A conscious, reckless disregard for the safety of others.
+        A conscious, reckless disregard for the safety or well-being of others.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -756,7 +756,7 @@
   </Table>
 
   ## Capital Crimes
-  - Capital crimes should usually lead to a death sentence or shift lasting detainment.
+  - Capital crimes should usually lead to a death sentence or shift-lasting detainment.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -785,12 +785,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To break someone sentenced to Permanent Confinement out of a cell or custody with the intention of escaping.
+        To break someone sentenced to permanent confinement out of a cell or custody with the intention of escaping.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Includes breaking out other people sentenced to Permanent Confinement.
+        Includes breaking out other people sentenced to permanent confinement.
       </Box>
     </ColorBox>
     <ColorBox>
