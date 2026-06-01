@@ -7,6 +7,8 @@
   - type: Action
     useDelay: 30
     itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/recharge.ogg
     icon:
       sprite: Objects/Weapons/Guns/Basic/wands.rsi
       state: nothing
