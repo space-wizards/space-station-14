@@ -22,8 +22,8 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
     private readonly DisposalTraversalVisionSystem _vision;
 
     private const float GlowRadius = 0.015f;
-    private static readonly Color PipeGlowColor = new(0.5f, 0.85f, 1.0f, 0.4f);
-    private static readonly Color CurrentPipeGlowColor = new(1.0f, 0.45f, 0.45f, 0.4f);
+    private static readonly Color PipeGlowColor = new(0.2f, 0.34f, 0.4f, 0.4f);
+    private static readonly Color CurrentPipeGlowColor = new(0.4f, 0.18f, 0.18f, 0.4f);
     private static readonly Vector2[] GlowOffsets =
     {
         new(-GlowRadius, 0),
@@ -52,10 +52,8 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
         if (!_entityManager.TryGetComponent<BeingDisposedComponent>(player, out var beingDisposed))
             return;
 
-        if (!_entityManager.TryGetComponent<DisposalTraversalHolderComponent>(beingDisposed.Holder, out var holder))
-            return;
-
-        if (holder.CurrentTube == null)
+        if (!_entityManager.TryGetComponent<DisposalTraversalHolderComponent>(beingDisposed.Holder, out var holder)
+            || holder.CurrentTube == null)
             return;
 
         if (!_entityManager.TryGetComponent<EyeComponent>(player.Value, out var eye))
