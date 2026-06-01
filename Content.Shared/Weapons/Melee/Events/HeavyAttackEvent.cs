@@ -16,7 +16,7 @@ public sealed class HeavyAttackEvent : AttackEvent
     /// </summary>
     public List<NetEntity> Entities;
 
-    public HeavyAttackEvent(NetEntity weapon, List<NetEntity> entities, NetCoordinates coordinates) : base(coordinates)
+    public HeavyAttackEvent(NetEntity weapon, List<NetEntity> entities, NetCoordinates coordinates, Content.Shared._Offbrand.Input.OffbrandTargetZone targetZone) : base(coordinates, targetZone) // Offbrand
     {
         Weapon = weapon;
         Entities = entities;

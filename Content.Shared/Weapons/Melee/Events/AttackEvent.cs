@@ -12,9 +12,15 @@ namespace Content.Shared.Weapons.Melee.Events
         /// </summary>
         public readonly NetCoordinates Coordinates;
 
-        protected AttackEvent(NetCoordinates coordinates)
+        /// <summary>
+        /// Offbrand - zone being attacked
+        /// </summary>
+        public readonly Content.Shared._Offbrand.Input.OffbrandTargetZone TargetZone;
+
+        protected AttackEvent(NetCoordinates coordinates, Content.Shared._Offbrand.Input.OffbrandTargetZone targetZone) // Offbrand
         {
             Coordinates = coordinates;
+            TargetZone = targetZone; // Offbrand
         }
     }
 

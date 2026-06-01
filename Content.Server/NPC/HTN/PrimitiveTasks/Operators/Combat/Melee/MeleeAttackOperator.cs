@@ -54,7 +54,7 @@ public sealed partial class MeleeAttackOperator : HTNOperator
 
 
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) ||
-            !_melee.AttemptLightAttack(owner, weaponUid, weapon, target))
+            !_melee.AttemptLightAttack(owner, weaponUid, weapon, target, Content.Shared._Offbrand.Input.OffbrandTargetZone.Mid)) // Offbrand
         {
             return HTNOperatorStatus.Continuing;
         }

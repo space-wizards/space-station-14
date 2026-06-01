@@ -181,7 +181,6 @@
   components:
   - type: StatusEffectContainer
   - type: WoundableOrgan
-    weight: 150
   - type: VisualOrganWounds
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     bandageThresholds: [ 10, 50, 100 ]
@@ -193,7 +192,6 @@
   components:
   - type: StatusEffectContainer
   - type: WoundableOrgan
-    weight: 50
   - type: VisualOrganWounds
     thresholds: [ 5, 10, 15, 25, 35, 50 ]
     bandageThresholds: [ 10, 25, 50 ]
@@ -205,7 +203,6 @@
   components:
   - type: StatusEffectContainer
   - type: WoundableOrgan
-    weight: 25
   - type: VisualOrganWounds
     thresholds: [ 3, 6, 9, 15, 21, 30 ]
     bandageThresholds: [ 3, 15, 30 ]
@@ -231,6 +228,11 @@
   - OffbrandOrganParent
   - OffbrandOrganChild
   id: OffbrandOrganWoundableHead
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 75
+      Mid: 50
 
 - type: entity
   abstract: true
@@ -239,6 +241,12 @@
   - OffbrandOrganChild
   - OffbrandOrganParent
   id: OffbrandOrganWoundableArmLeft
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 50
+      Mid: 50
+      Low: 25
 
 - type: entity
   abstract: true
@@ -246,6 +254,11 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   id: OffbrandOrganWoundableFootLeft
+  components:
+  - type: WoundableOrgan
+    weights:
+      Mid: 25
+      Low: 50
 
 - type: entity
   abstract: true
@@ -253,6 +266,12 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   id: OffbrandOrganWoundableHandLeft
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 12
+      Mid: 25
+      Low: 12
 
 - type: entity
   abstract: true
@@ -261,6 +280,11 @@
   - OffbrandOrganChild
   - OffbrandOrganParent
   id: OffbrandOrganWoundableLegLeft
+  components:
+  - type: WoundableOrgan
+    weights:
+      Mid: 50
+      Low: 100
 
 - type: entity
   abstract: true
@@ -269,6 +293,12 @@
   - OffbrandOrganChild
   - OffbrandOrganParent
   id: OffbrandOrganWoundableArmRight
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 50
+      Mid: 50
+      Low: 25
 
 - type: entity
   abstract: true
@@ -276,6 +306,11 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   id: OffbrandOrganWoundableFootRight
+  components:
+  - type: WoundableOrgan
+    weights:
+      Mid: 25
+      Low: 50
 
 - type: entity
   abstract: true
@@ -283,6 +318,12 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   id: OffbrandOrganWoundableHandRight
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 12
+      Mid: 25
+      Low: 12
 
 - type: entity
   abstract: true
@@ -291,6 +332,11 @@
   - OffbrandOrganChild
   - OffbrandOrganParent
   id: OffbrandOrganWoundableLegRight
+  components:
+  - type: WoundableOrgan
+    weights:
+      Mid: 50
+      Low: 100
 
 - type: entity
   abstract: true
@@ -298,6 +344,12 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganParent
   id: OffbrandOrganWoundableTorso
+  components:
+  - type: WoundableOrgan
+    weights:
+      High: 75
+      Mid: 150
+      Low: 50
 
 - type: entity
   abstract: true

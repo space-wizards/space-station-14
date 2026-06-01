@@ -126,7 +126,7 @@ public sealed partial class WoundableBodySystem : OffbrandDamageSystem
             var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
             var rand = new System.Random(seed);
 
-            var organs = _woundableOrgan.GetWoundableOrgans(ent);
+            var organs = _woundableOrgan.GetWoundableOrgans(ent, args.TargetZone);
             var target = SharedRandomExtensions.Pick(organs, rand);
 
             var organEvt = args with { Damage = DamageSpecifier.GetPositive(args.Damage) };

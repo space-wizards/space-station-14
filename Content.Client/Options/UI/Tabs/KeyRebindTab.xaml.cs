@@ -194,6 +194,10 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.MoveStoredItem);
             AddButton(ContentKeyFunctions.RotateStoredItem);
             AddButton(ContentKeyFunctions.SaveItemLocation);
+            // Begin Offbrand
+            AddButton(Content.Shared._Offbrand.Input.OffbrandKeyFunctions.AimHigh);
+            AddButton(Content.Shared._Offbrand.Input.OffbrandKeyFunctions.AimLow);
+            // End Offbrand
 
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);
@@ -223,8 +227,8 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.FocusAdminChat);
             AddButton(ContentKeyFunctions.FocusDeadChat);
             AddButton(ContentKeyFunctions.FocusConsoleChat);
-            AddButton(ContentKeyFunctions.CycleChatChannelForward);
-            AddButton(ContentKeyFunctions.CycleChatChannelBackward);
+            // AddButton(ContentKeyFunctions.CycleChatChannelForward); // Offbrand - this sucked
+            // AddButton(ContentKeyFunctions.CycleChatChannelBackward); // Offbrand - this sucked
             AddButton(ContentKeyFunctions.OpenCharacterMenu);
             AddButton(ContentKeyFunctions.OpenCraftingMenu);
             AddButton(ContentKeyFunctions.OpenGuidebook);

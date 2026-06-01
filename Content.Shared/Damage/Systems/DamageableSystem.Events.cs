@@ -287,8 +287,9 @@ public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin 
 /// <param name="Damage">The amount of damage the entity is being subject to.</param>
 /// <param name="Origin">The originator of the damage</param>
 /// <param name="InterruptsDoAfters">If the damage being dealt will interrupt do-afters</param>
+/// <param name="TargetZone">Offbrand - The targeted zone to deal damage to</param>
 [ByRefEvent]
-public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters);
+public readonly record struct DamageDealtEvent(DamageSpecifier Damage, EntityUid? Origin, bool InterruptsDoAfters, Content.Shared._Offbrand.Input.OffbrandTargetZone TargetZone); // Offbrand
 
 [Obsolete("Will be replaced with damage-model specific events; general 'took damage' can be served by DamageDealtEvent")]
 public sealed class DamageChangedEvent : EntityEventArgs

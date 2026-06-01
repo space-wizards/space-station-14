@@ -221,11 +221,13 @@ public sealed partial class ChatUIController : UIController
         _input.SetInputCommand(ContentKeyFunctions.FocusConsoleChat,
             InputCmdHandler.FromDelegate(_ => FocusChannel(ChatSelectChannel.Console)));
 
-        _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
-            InputCmdHandler.FromDelegate(_ => CycleChatChannel(true)));
+        // Begin Offbrand Removals
+        // _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
+        //     InputCmdHandler.FromDelegate(_ => CycleChatChannel(true)));
 
-        _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
-            InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
+        // _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
+        //     InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
+        // End Offbrand Removals
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
@@ -394,17 +396,19 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
-    private void CycleChatChannel(bool forward)
-    {
-        foreach (var chat in _chats)
-        {
-            if (!chat.Main)
-                continue;
+    // Begin Offbrand Removals
+    // private void CycleChatChannel(bool forward)
+    // {
+    //     foreach (var chat in _chats)
+    //     {
+    //         if (!chat.Main)
+    //             continue;
 
-            chat.CycleChatChannel(forward);
-            break;
-        }
-    }
+    //         chat.CycleChatChannel(forward);
+    //         break;
+    //     }
+    // }
+    // End Offbrand Removals
 
     private void StateChanged(StateChangedEventArgs args)
     {

@@ -314,6 +314,11 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
+            // Begin Offbrand
+            if (_combatQuery.TryComp(user, out var combatMode) && combatMode.IsInCombatMode)
+                return true;
+            // End Offbrand
+
             UserInteraction(user.Value, coords, uid, altInteract: true, checkAccess: ShouldCheckAccess(user.Value));
 
             return false;

@@ -19,6 +19,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Content.Client._Offbrand.Input; // Offbrand
 
 namespace Content.Client.Weapons.Melee;
 
@@ -193,7 +194,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
         var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
-        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
+        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates), _inputSystem.TargetZone())); // Offbrand
     }
 
     private void ClientDisarm(EntityUid attacker, MapCoordinates mousePos, EntityCoordinates coordinates)
@@ -203,7 +204,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (_stateManager.CurrentState is GameplayStateBase screen)
             target = screen.GetClickedEntity(mousePos);
 
-        RaisePredictiveEvent(new DisarmAttackEvent(GetNetEntity(target), GetNetCoordinates(coordinates)));
+        RaisePredictiveEvent(new DisarmAttackEvent(GetNetEntity(target), GetNetCoordinates(coordinates), _inputSystem.TargetZone())); // Offbrand
     }
 
     private void ClientLightAttack(EntityUid attacker, MapCoordinates mousePos, EntityCoordinates coordinates, EntityUid weaponUid, MeleeWeaponComponent meleeComponent)
@@ -222,7 +223,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (Interaction.CombatModeCanHandInteract(attacker, target))
             return;
 
-        RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
+        RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates), _inputSystem.TargetZone())); // Offbrand
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
