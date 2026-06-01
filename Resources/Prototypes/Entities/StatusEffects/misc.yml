@@ -66,8 +66,8 @@
 # Prevents speaking and vocal emotes.
 - type: entity
   abstract: true
-  parent: MobStatusEffectDebuff
-  id: StatusEffectMutedBase
+  parent: MobStatusEffectBase
+  id: MutedStatusEffectBase
   name: muted
   components:
   - type: StatusEffectAlert
@@ -75,19 +75,21 @@
   - type: MutedStatusEffect
 
 - type: entity
-  parent: StatusEffectMutedBase
+  parent: [ MutedStatusEffectBase, MobStatusEffectDebuff ]
   id: StatusEffectMuted
 
 - type: entity
-  parent: StatusEffectMutedBase
+  parent: MutedStatusEffectBase
   id: StatusEffectMimeMuted
   components:
+  - type: StatusEffectAlert
+    alert: VowOfSilence
   - type: MutedStatusEffect
     speakPopup: mime-cant-speak
     screamPopup: mime-cant-speak
 
 - type: entity
-  parent: StatusEffectMutedBase
+  parent: MutedStatusEffectBase
   id: StatusEffectVentriloquistPuppetMuted
   components:
   - type: MutedStatusEffect

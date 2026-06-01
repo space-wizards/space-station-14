@@ -32,9 +32,7 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
         // Still leaves the text so it looks like they are pantomiming a laugh.
         if (args.Args.Emote.Category.HasFlag(EmoteCategory.Vocal))
         {
-            var ev = args.Args;
-            ev.Handled = true;
-            args.Args = ev;
+            args.Args = args.Args with { Handled = true };
         }
     }
 
@@ -55,6 +53,9 @@ public sealed partial class MutedStatusEffectSystem : EntitySystem
 
     private void OnSpeakAttempt(Entity<MutedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<SpeakAttemptEvent> args)
     {
+        if (args.Args.Cancelled)
+            return;
+
         var target = args.Args.Uid;
 
         _popup.PopupEntity(Loc.GetString(ent.Comp.SpeakPopup), target, target);

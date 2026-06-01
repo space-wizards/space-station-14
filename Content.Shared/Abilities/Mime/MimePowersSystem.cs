@@ -72,7 +72,6 @@ public sealed partial class MimePowersSystem : EntitySystem
             Dirty(ent, illiterateComponent);
         }
 
-        _alertsSystem.ShowAlert(ent.Owner, ent.Comp.VowAlert);
         _actionsSystem.AddAction(ent, ref ent.Comp.InvisibleWallActionEntity, ent.Comp.InvisibleWallAction);
     }
 
@@ -155,7 +154,6 @@ public sealed partial class MimePowersSystem : EntitySystem
         if (mimePowers.PreventWriting)
             RemComp<BlockWritingComponent>(uid);
 
-        _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
         _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
         _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
     }
@@ -187,7 +185,6 @@ public sealed partial class MimePowersSystem : EntitySystem
         }
 
         _alertsSystem.ClearAlert(uid, mimePowers.VowBrokenAlert);
-        _alertsSystem.ShowAlert(uid, mimePowers.VowAlert);
         _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
     }
 }

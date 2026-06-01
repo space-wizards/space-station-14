@@ -13,23 +13,15 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PermanentStatusEffectsComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PermanentStatusEffectsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<PermanentStatusEffectsComponent, ComponentRemove>(OnRemove);
     }
 
     private void OnMapInit(Entity<PermanentStatusEffectsComponent> ent, ref MapInitEvent args)
     {
-        EnsureStatusEffects(ent);
-    }
-
-    private void OnStartup(Entity<PermanentStatusEffectsComponent> ent, ref ComponentStartup args)
-    {
-        // MapInit is preferred because the entity and its containers are fully initialized by then.
-        // This startup path only exists for components added after map initialization.
-        if (LifeStage(ent) < EntityLifeStage.MapInitialized)
-            return;
-
-        EnsureStatusEffects(ent);
+        foreach (var effect in ent.Comp.StatusEffects)
+        {
+            _statusEffects.TrySetStatusEffectDuration(ent, effect);
+        }
     }
 
     private void OnRemove(Entity<PermanentStatusEffectsComponent> ent, ref ComponentRemove args)
@@ -37,14 +29,6 @@ public sealed partial class PermanentStatusEffectsSystem : EntitySystem
         foreach (var effect in ent.Comp.StatusEffects)
         {
             _statusEffects.TryRemoveStatusEffect(ent, effect);
-        }
-    }
-
-    private void EnsureStatusEffects(Entity<PermanentStatusEffectsComponent> ent)
-    {
-        foreach (var effect in ent.Comp.StatusEffects)
-        {
-            _statusEffects.TrySetStatusEffectDuration(ent, effect);
         }
     }
 }
