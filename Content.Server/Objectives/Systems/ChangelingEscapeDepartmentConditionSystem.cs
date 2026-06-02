@@ -58,7 +58,6 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (ownedEntity == null || _mind.IsCharacterDeadIc(mind))
             return 0f;
 
-
         // Check 1: Must have transformed into a target with a job that is in the department
         if (!_changelingIdentity.TryGetCurrentIdentityData(ownedEntity.Value, out var identityData))
             return 0f; // this should not happen
