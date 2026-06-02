@@ -26,7 +26,7 @@
   id: OrganBaseOrganic
   name: organ
   abstract: true
-  parent: [ OrganBase, SolutionFood, SolutionSmall ]
+  parent: [ OrganBase, SolutionFood, SolutionTiny ]
   components:
   - type: FlavorProfile
     flavors:
