@@ -8,7 +8,9 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Objectives.Systems;
-
+/// <summary>
+/// Makes it so that <see cref="ChangelingEscapeDepartmentConditionComponet"/> works.
+/// </summary>
 public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySystem
 {
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;

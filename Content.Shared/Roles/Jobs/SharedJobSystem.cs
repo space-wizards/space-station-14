@@ -99,6 +99,59 @@ public abstract partial class SharedJobSystem : EntitySystem
     }
 
     /// <summary>
+    /// Like <see cref="TryGetPrimaryDepartment"/> but tries to get a non-primary department(s) first.
+    /// For all heads (including the captain), it will return Command, but for John Scientist it will return scientist.
+    /// </summary>
+    /// <returns> True if a department was found, false if not </returns>
+    public bool TryGetSecondaryDepartmentsOrFallback(string jobProto, [NotNullWhen(true)] out List<DepartmentPrototype> departmentPrototypes)
+    {
+        // not sorting it since there should only be 1 primary department for a job.
+        // this is enforced by the job tests.
+        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        departmentPrototypes = new List<DepartmentPrototype>();
+        foreach (var department in departmentProtos)
+        {
+            if (!department.Primary && department.Roles.Contains(jobProto))
+            {
+                departmentPrototypes.Append(department);
+                return true;
+            }
+        }
+
+        if (departmentPrototypes.Count() == 0)
+        {
+            // if we don't have any secondary dept, try to get a primary
+            if (TryGetPrimaryDepartment(jobProto, out var t))
+            {
+                departmentPrototypes.Add(t);
+                return true;
+            }
+        }
+
+        // no department was found
+        return false;
+    }
+    /// <summary>
+    /// Gets all departments for a mind's job (if any) and checks if the chosen department is among them.
+    /// </summary>
+    /// <param name="mind">The mind to check for</param>
+    /// <param name="deptProto">The department proto ID to check for</param>
+    /// <returns>True if the mind is a part of the department</returns>
+    public bool MindIsInDepartment(EntityUid mind, string deptProto)
+    {
+        if (!MindTryGetJobId(mind, out var job))
+            return false;
+
+        if (!job.HasValue)
+            return false;
+
+        if (!TryGetAllDepartments(job.Value, out var depts))
+            return false;
+
+        return depts.Any(k => k.ID == deptProto)
+    }
+
+    /// <summary>
     /// Tries to get all the departments for a given job. Will return an empty list if none are found.
     /// </summary>
     public bool TryGetAllDepartments(string jobProto, out List<DepartmentPrototype> departmentPrototypes)
