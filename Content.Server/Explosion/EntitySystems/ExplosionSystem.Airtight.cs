@@ -82,7 +82,6 @@ public sealed partial class ExplosionSystem
 
         // Calculate tile new airtight state.
 
-        var tolerance = new FixedPoint2[_explosionTypes.Count];
         var blockedDirections = _atmosphere.GetAirflowDirections(gridId, tile);
         if (blockedDirections == AtmosDirection.Invalid)
         {
@@ -97,6 +96,7 @@ public sealed partial class ExplosionSystem
             return;
         }
 
+        var tolerance = new FixedPoint2[_explosionTypes.Count];
         var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
