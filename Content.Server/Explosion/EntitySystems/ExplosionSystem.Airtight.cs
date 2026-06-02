@@ -283,7 +283,7 @@ public sealed partial class ExplosionSystem
                 damagePerIntensity += value * Math.Max(0, modifier);
             }
 
-            explosionTolerance[index] = GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
+            explosionTolerance[index] += GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
         }
     }
 
