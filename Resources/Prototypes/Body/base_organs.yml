@@ -15,7 +15,7 @@
       nudityDefault: [ UndergarmentBottomBoxers ]
 
 - type: entity
-  id: OrganBaseUnEdible
+  id: OrganBase
   name: organ
   abstract: true
   parent: BaseItem
@@ -23,10 +23,10 @@
   - type: Organ
 
 - type: entity
-  id: OrganBase
+  id: OrganBaseOrganic
   name: organ
   abstract: true
-  parent: [ OrganBaseUnEdible, SolutionFood, SolutionSmall ]
+  parent: [ OrganBase, SolutionFood, SolutionSmall ]
   components:
   - type: FlavorProfile
     flavors:
@@ -39,7 +39,7 @@
         Quantity: 20
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganBaseTorso
   name: torso
   abstract: true
