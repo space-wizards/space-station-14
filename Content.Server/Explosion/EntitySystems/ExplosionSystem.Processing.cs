@@ -224,37 +224,28 @@ public sealed partial class ExplosionSystem
             ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
-        // We process anchored entities after lookups and ignore them during lookups.
-        // Why? Lookups cannot performantly query anchored entities across multiple tiles is why.
-        // There's not an excellent way to performantly determine if an entity is anchored on the correct tile.
-        // It's significantly faster to just skip processing an entity if it's anchored and ensure it's been added to processed
-        // Rather than have to potentially do several LocalCoordinates -> MapCoordinates on these entities.
-        var tileBlocked = false;
-        _anchored.Clear();
-        _map.GetAnchoredEntities(grid, tile, _anchored);
-        foreach (var entity in _anchored)
-        {
-            processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
-        }
-
         // heat the atmosphere
         if (temperature != null)
         {
             _atmosphere.HotspotExpose(grid.Owner, tile, temperature.Value, currentIntensity, cause, true);
         }
 
+        // We process anchored entities after the AABB lookup for performance reasons.
+        // The AABB lookup cannot performantly check if each anchored entity is on this tile without a bunch of wasted CPU time
+        // To get around this, we just skip them during the first loop.
+        // This prevents us from hitting walls with a greater intensity than intended.
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
-        if (_anchored.Count > 0)
+        var tileBlocked = false;
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        foreach (var entity in _anchored)
         {
-            foreach (var entity in _anchored)
-            {
-                tileBlocked |= IsBlockingTurf(entity);
-            }
-            _anchored.Clear();
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+            tileBlocked |= IsBlockingTurf(entity);
         }
+        _anchored.Clear();
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
         // windows will be flung outwards, and not stay where they spawned. This is however somewhat unnecessary, and a
