@@ -83,25 +83,9 @@ public sealed partial class ExplosionSystem
         // Calculate tile new airtight state.
 
         var tolerance = new FixedPoint2[_explosionTypes.Count];
-        var blockedDirections = AtmosDirection.Invalid;
-
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
-
-        while (anchoredEnumerator.MoveNext(out var uid))
-        {
-            if (!_airtightQuery.TryGetComponent(uid, out var airtight) || !airtight.AirBlocked)
-                continue;
-
-            blockedDirections |= airtight.AirBlockedDirection;
-            GetExplosionTolerance(uid.Value, tolerance);
-        }
-
-        // Log.Info($"UPDATE {gridId}/{tile}: {blockedDirections}");
-
+        var blockedDirections = _atmosphere.GetAirflowDirections(gridId, tile);
         if (blockedDirections == AtmosDirection.Invalid)
         {
-            // No longer airtight
-
             if (!airtightGrid.Tiles.Remove(tile, out var tileData))
             {
                 // Did not have this tile before and after, nothing to do.
@@ -111,6 +95,16 @@ public sealed partial class ExplosionSystem
             // Removing tile data.
             DecrementRefCount(tileData.ToleranceCacheIndex);
             return;
+        }
+
+        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+
+        while (anchoredEnumerator.MoveNext(out var uid))
+        {
+            if (!_airtightQuery.TryGetComponent(uid, out var airtight) || !airtight.AirBlocked)
+                continue;
+
+            GetExplosionTolerance(uid.Value, tolerance);
         }
 
         ref var tileEntry = ref CollectionsMarshal.GetValueRefOrAddDefault(airtightGrid.Tiles, tile, out var existed);
