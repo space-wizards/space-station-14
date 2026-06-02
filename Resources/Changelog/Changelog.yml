@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ReWAFFlution
-  changes:
-  - message: Balloons now float and slide smoothly.
-    type: Tweak
-  id: 9224
-  time: '2025-11-23T20:41:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41102
 - author: slarticodefast
   changes:
   - message: Fixed the gas filter gas selection.
@@ -4094,3 +4087,10 @@
   id: 9735
   time: '2026-06-02T03:02:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40090
+- author: YoungThugSS14
+  changes:
+  - message: Organs are edible again
+    type: Fix
+  id: 9736
+  time: '2026-06-02T04:23:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44197
