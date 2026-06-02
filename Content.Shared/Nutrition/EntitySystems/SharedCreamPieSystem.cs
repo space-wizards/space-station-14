@@ -5,7 +5,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Trigger.Components;
@@ -18,7 +17,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public abstract partial class SharedCreamPieSystem : EntitySystem
 {
-    [Dependency] private SharedStunSystem _stunSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IngestionSystem _ingestion = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
@@ -120,8 +118,6 @@ public abstract partial class SharedCreamPieSystem : EntitySystem
     {
         if (!Exists(args.Thrown) || !TryComp<CreamPieComponent>(args.Thrown, out var creamPie))
             return;
-
-        _stunSystem.TryUpdateParalyzeDuration(creamPied.Owner, creamPie.ParalyzeTime);
 
         // Already creamed, no need to spam popups.
         if (creamPied.Comp.CreamPied)

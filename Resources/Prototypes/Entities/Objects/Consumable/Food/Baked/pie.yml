@@ -173,8 +173,10 @@
     tags:
     - Fruit
     - Pie
-  - type: SliceableFood
-    slice: FoodPieBananaCreamSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieBananaCreamSlice
+      amount: 8
   - type: StunOnCollide
     stunAmount: 0
     knockdownAmount: 1.5
@@ -182,7 +184,7 @@
     slowdownAmount: 1.5
     walkSpeedModifier: 1
     sprintSpeedModifier: 1
-    
+
 - type: entity
   name: slice of banana cream pie
   parent: FoodPieSliceBase
