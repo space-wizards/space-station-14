@@ -229,7 +229,7 @@
     objectives:
     # - ChangelingSurviveObjective TODO: make a random selection of objectives when there are more of them
     - ChangelingUniqueIdentityObjective
-    - ChangelingEscapeIdentityObjective
+    - ChangelingEscapeDepartmentObjective
 
 - type: entity
   id: Revolutionary

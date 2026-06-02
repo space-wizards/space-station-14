@@ -58,10 +58,29 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (ownedEntity == null || _mind.IsCharacterDeadIc(mind))
             return 0f;
 
-        // Check 1: Must have transformed to the target person.
-        if (!_changelingIdentity.TryGetCurrentIdentityData(ownedEntity.Value, out var identityData)
-            || identityData.OriginalName != ent.Comp.TargetName)
-            return 0f;
+
+        // Check 1: Must have transformed into a target with a job that is in the department
+        if (!_changelingIdentity.TryGetCurrentIdentityData(ownedEntity.Value, out var identityData))
+            return 0f; // this should not happen
+
+        // must make sure they had a job
+        var job = identityData.OriginalJob;
+        if (!job.HasValue)
+            return 0f; // do not absorb paradox clones!
+
+        _job.TryGetAllDepartments(job.Value, out var depts);
+        var matched = false;
+        foreach (var dept in depts)
+        {
+            if (dept.ID == ent.Comp.Department.Id)
+            {
+                matched = true;
+                break;
+            }
+        }
+
+        if (!matched)
+            return 0f; // was not in the job pool
 
         // Check 2: Must escape alive.
         if (!_emergencyShuttle.IsTargetEscaping(ownedEntity.Value))
@@ -72,10 +91,21 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
 
         // Check 3: Must wear an ID card with the target's name on it.
         if (!_idCard.TryFindIdCard(ownedEntity.Value, out var idCard))
-            return 0.75f;
+            return 0.75f; // is not wearing an id
 
-        if (idCard.Comp.FullName != ent.Comp.TargetName)
-            return 0.75f;
+        matched = false;
+
+        foreach (var dept in idCard.Comp.JobDepartments)
+        {
+            if (dept.Id == ent.Comp.Department)
+            {
+                matched = true;
+                break;
+            }
+        }
+
+        if (!matched)
+            return 0.75f; // id did not match, only appearance
 
         return 1f;
     }

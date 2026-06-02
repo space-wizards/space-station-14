@@ -61,19 +61,20 @@
 - type: entity
   parent: [BaseChangelingObjective, BaseLivingObjective]
   id: ChangelingEscapeDepartmentObjective
-  description: We must escape with the identity & ID card of any member of a target department.
+  description: We must escape with the identity & ID card of any member of this department.
   components:
   - type: Objective
     difficulty: 1.5
     icon:
-      sprite: Objects/Fun/Plushies/human.rsi
-      state: icon
+      sprite: Objects/Fun/plushielizard_jobs.rsi
+      state: captain
   - type: TargetObjective
-    title: objective-escape-identity-title
-  - type: ChangelingEscapeIdentityCondition
+    title: objective-escape-department-title
+  - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     filters:
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
         - ChangelingRole
+    - !type:DifferentDepartmentMindFilter
