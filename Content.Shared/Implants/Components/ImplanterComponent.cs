@@ -1,6 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -106,6 +107,12 @@ public sealed partial class ImplanterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntProtoId? DeimplantChosen = null;
+
+    /// <summary>
+    /// The sound to be played when an implanter catastrophically fails.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ImplanterDrawFailSound  = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
     [ViewVariables]
     public bool UiUpdateNeeded;

@@ -16,15 +16,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-    - trigger:
-        !type:DamageTrigger
         damage: 75
       behaviors:
       - !type:PlaySoundBehavior
@@ -82,15 +73,6 @@
       sprite: Structures/Windows/cracks_directional.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 37
