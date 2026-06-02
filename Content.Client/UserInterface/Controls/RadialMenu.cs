@@ -239,11 +239,15 @@ public abstract class RadialMenuButtonBase : BaseButton
     /// <inheritdoc />
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
-        if (args.Function == EngineKeyFunctions.UIClick
-            || args.Function == ContentKeyFunctions.AltActivateItemInWorld)
-        {
+        if (args.Function.IsClickOrAltClick())
             base.KeyBindUp(args);
-        }
+    }
+
+    /// <inheritdoc />
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        if (args.Function.IsClickOrAltClick())
+            base.KeyBindDown(args);
     }
 }
 
@@ -285,11 +289,15 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
     /// <inheritdoc />
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
-        if (args.Function == EngineKeyFunctions.UIClick
-            || args.Function == ContentKeyFunctions.AltActivateItemInWorld)
-        {
+        if (args.Function.IsClickOrAltClick())
             base.KeyBindUp(args);
-        }
+    }
+
+    /// <inheritdoc />
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        if (args.Function.IsClickOrAltClick())
+            base.KeyBindDown(args);
     }
 }
 
@@ -682,5 +690,14 @@ public class RadialMenuButtonWithSector : RadialMenuButton, IRadialMenuItemWithS
     private static bool IsWholeCircle(float angleSectorFrom, float angleSectorTo)
     {
         return new Angle(angleSectorFrom).EqualsApprox(new Angle(angleSectorTo));
+    }
+}
+
+static file class RadialMenuButtonsHelpers
+{
+    public static bool IsClickOrAltClick(this BoundKeyFunction function)
+    {
+        return function == EngineKeyFunctions.UIClick
+               || function == ContentKeyFunctions.AltActivateItemInWorld;
     }
 }
