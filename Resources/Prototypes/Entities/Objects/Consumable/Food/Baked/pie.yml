@@ -182,6 +182,7 @@
     slowdownAmount: 1.5
     walkSpeedModifier: 1
     sprintSpeedModifier: 1
+    
 - type: entity
   name: slice of banana cream pie
   parent: FoodPieSliceBase
