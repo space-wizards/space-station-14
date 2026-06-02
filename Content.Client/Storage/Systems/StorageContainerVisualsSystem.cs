@@ -2,6 +2,7 @@
 using Content.Client.Storage.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
@@ -18,8 +19,9 @@ public sealed partial class StorageContainerVisualsSystem : VisualizerSystem<Sto
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
-        SubscribeLocalEvent<StorageContainerVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals);
+        // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
+        SubscribeLocalEvent<StorageContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
+        SubscribeLocalEvent<StorageContainerVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals, after: new[] { typeof(ClothingSystem) });
     }
 
     protected override void OnAppearanceChange(EntityUid uid, StorageContainerVisualsComponent component, ref AppearanceChangeEvent args)
