@@ -9,7 +9,7 @@ public sealed partial class DestructibleActEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private SharedDestructibleSystem _destructible = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, DestructibleAct effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, DestructibleAct effect, EntityEffectData data)
     {
         if ((effect.Acts & ThresholdActs.Breakage) != 0)
             _destructible.BreakEntity(entity);

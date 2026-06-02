@@ -13,9 +13,9 @@ public sealed partial class ExplosionEntityEffectSystem : EntityEffectSystem<Tra
 {
     [Dependency] private ExplosionSystem _explosion = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ExplosionEffect effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> entity, ExplosionEffect effect, EntityEffectData data)
     {
-        var intensity = MathF.Min(effect.IntensityPerUnit * scale, effect.MaxTotalIntensity);
+        var intensity = MathF.Min(effect.IntensityPerUnit * data.Scale, effect.MaxTotalIntensity);
 
         _explosion.QueueExplosion(
             entity,

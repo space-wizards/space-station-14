@@ -12,9 +12,9 @@ public sealed partial class DrunkEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private SharedDrunkSystem _drunk = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, Drunk effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, Drunk effect, EntityEffectData data)
     {
-        var boozePower = effect.BoozePower * scale;
+        var boozePower = effect.BoozePower * data.Scale;
 
         _drunk.TryApplyDrunkenness(entity, boozePower);
     }

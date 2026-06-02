@@ -12,9 +12,9 @@ public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem
 {
     [Dependency] private SharedRottingSystem _rotting = default!;
 
-    protected override void Effect(Entity<PerishableComponent> entity, ReduceRotting effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PerishableComponent> entity, ReduceRotting effect, EntityEffectData data)
     {
-        var amount = effect.Seconds * scale;
+        var amount = effect.Seconds * data.Scale;
 
         _rotting.ReduceAccumulator(entity, amount);
     }

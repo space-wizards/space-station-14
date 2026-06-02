@@ -6,7 +6,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantRemoveKudzuEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantRemoveKudzu>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantRemoveKudzu effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantRemoveKudzu effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;

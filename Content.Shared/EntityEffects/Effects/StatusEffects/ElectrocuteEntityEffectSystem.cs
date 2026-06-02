@@ -14,11 +14,11 @@ public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<S
     [Dependency] private SharedElectrocutionSystem _electrocution = default!;
 
     // TODO: When electrocution is new status, change this to new status
-    protected override void Effect(Entity<StatusEffectsComponent> entity, Electrocute effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<StatusEffectsComponent> entity, Electrocute effect, EntityEffectData data)
     {
         _electrocution.TryDoElectrocution(entity,
             null,
-            (int)(scale * effect.ShockDamage),
+            (int)(data.Scale * effect.ShockDamage),
             effect.ElectrocuteTime,
             effect.Refresh,
             siemensCoefficient: effect.SiemensCoefficient,

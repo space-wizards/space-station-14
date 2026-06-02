@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects;
 public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffectSystem<MobStateComponent, CauseZombieInfection>
 {
     // MobState because you have to die to become a zombie...
-    protected override void Effect(Entity<MobStateComponent> entity, CauseZombieInfection effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MobStateComponent> entity, CauseZombieInfection effect, EntityEffectData data)
     {
         if (HasComp<ZombieImmuneComponent>(entity) || HasComp<IncurableZombieComponent>(entity))
             return;
@@ -28,7 +28,7 @@ public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffe
 public sealed partial class CureZombieInfectionEntityEffectsSystem : EntityEffectSystem<MobStateComponent, CureZombieInfection>
 {
     // MobState because you have to die to become a zombie...
-    protected override void Effect(Entity<MobStateComponent> entity, CureZombieInfection effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MobStateComponent> entity, CureZombieInfection effect, EntityEffectData data)
     {
         if (HasComp<IncurableZombieComponent>(entity))
             return;

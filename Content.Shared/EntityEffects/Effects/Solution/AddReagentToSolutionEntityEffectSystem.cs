@@ -16,24 +16,24 @@ public sealed partial class AddReagentToSolutionEntityEffectSystem : EntityEffec
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    public override void ApplyEffect(EntityUid target, EntityEffect effect, float scale, EntityUid? user)
+    public override void ApplyEffect(EntityUid target, EntityEffectData args)
     {
-        if (effect is not AddReagentToSolution typed)
+        if (args.Effect is not AddReagentToSolution typed)
             return;
 
         if (TryComp(target, out SolutionManagerComponent? mgr))
-            Effect((target, mgr), typed, scale, user);
+            Effect((target, mgr), typed, args);
 
         if (TryComp(target, out SolutionComponent? sol))
-            Effect((target, sol), typed, scale, user);
+            Effect((target, sol), typed, args.Scale, args.User);
     }
 
-    protected override void Effect(Entity<SolutionManagerComponent> entity, AddReagentToSolution effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionManagerComponent> entity, AddReagentToSolution effect, EntityEffectData data)
     {
         if (!_solutionContainer.TryGetSolution((entity, entity), effect.Solution, out var solutionContainer))
             return;
 
-        _solutionContainer.TryAddReagent(solutionContainer.Value, effect.Reagent, scale * effect.StrengthModifier);
+        _solutionContainer.TryAddReagent(solutionContainer.Value, effect.Reagent, data.Scale * effect.StrengthModifier);
     }
 
     private void Effect(Entity<SolutionComponent> entity, AddReagentToSolution effect, float scale, EntityUid? user)

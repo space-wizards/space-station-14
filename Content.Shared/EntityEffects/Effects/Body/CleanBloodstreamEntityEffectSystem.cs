@@ -15,9 +15,9 @@ public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSys
 {
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, CleanBloodstream effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<BloodstreamComponent> entity, CleanBloodstream effect, EntityEffectData data)
     {
-        var cleanseScale = scale * effect.CleanseRate;
+        var cleanseScale = data.Scale * effect.CleanseRate;
 
         _bloodstream.FlushChemicals((entity, entity), cleanseScale, effect.Excluded);
     }

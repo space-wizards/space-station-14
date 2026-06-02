@@ -13,9 +13,9 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private SharedStunSystem _stun = default!;
 
-    protected override void Effect(Entity<StandingStateComponent> entity, ModifyKnockdown effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<StandingStateComponent> entity, ModifyKnockdown effect, EntityEffectData data)
     {
-        var time = effect.Time * scale;
+        var time = effect.Time * data.Scale;
 
         switch (effect.Type)
         {

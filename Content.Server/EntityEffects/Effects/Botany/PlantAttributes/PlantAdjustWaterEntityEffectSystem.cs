@@ -9,7 +9,7 @@ public sealed partial class PlantAdjustWaterEntityEffectSystem : EntityEffectSys
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustWater effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustWater effect, EntityEffectData data)
     {
         _plantHolder.AdjustWater(entity, effect.Amount, entity.Comp);
     }

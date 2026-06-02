@@ -15,9 +15,9 @@ public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<Transfo
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, Flash effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> entity, Flash effect, EntityEffectData data)
     {
-        var range = MathF.Min(scale * effect.RangePerUnit, effect.MaxRange);
+        var range = MathF.Min(data.Scale * effect.RangePerUnit, effect.MaxRange);
 
         _flash.FlashArea(
             entity,

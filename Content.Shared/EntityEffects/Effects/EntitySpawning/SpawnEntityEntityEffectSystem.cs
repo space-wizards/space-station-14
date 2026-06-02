@@ -11,9 +11,9 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
 {
     [Dependency] private INetManager _net = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, SpawnEntity effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> entity, SpawnEntity effect, EntityEffectData data)
     {
-        var quantity = effect.Number * (int)Math.Floor(scale);
+        var quantity = effect.Number * (int)Math.Floor(data.Scale);
         var proto = effect.Entity;
 
         if (effect.Predicted)

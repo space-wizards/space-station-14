@@ -13,7 +13,7 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
 {
     [Dependency] private SharedCreamPieSystem _creamPie = default!;
 
-    protected override void Effect(Entity<CreamPiedComponent> entity, WashCreamPie effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<CreamPiedComponent> entity, WashCreamPie effect, EntityEffectData data)
     {
         _creamPie.SetCreamPied((entity, entity.Comp), false);
     }

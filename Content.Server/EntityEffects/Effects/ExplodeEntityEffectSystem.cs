@@ -13,8 +13,8 @@ public sealed partial class ExplodeEntityEffectSystem : EntityEffectSystem<Explo
 {
     [Dependency] private ExplosionSystem _explosion = default!;
 
-    protected override void Effect(Entity<ExplosiveComponent> entity, Explode effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<ExplosiveComponent> entity, Explode effect, EntityEffectData data)
     {
-        _explosion.TriggerExplosive(entity, entity, effect.Delete, effect.Intensity, effect.Radius, user);
+        _explosion.TriggerExplosive(entity, entity, effect.Delete, effect.Intensity, effect.Radius, data.User);
     }
 }

@@ -11,9 +11,9 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem<LungComponent, ModifyLungGas>
 {
     // TODO: This shouldn't be an entity effect, gasses should just metabolize and make a byproduct by default...
-    protected override void Effect(Entity<LungComponent> entity, ModifyLungGas effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<LungComponent> entity, ModifyLungGas effect, EntityEffectData data)
     {
-        var amount = scale;
+        var amount = data.Scale;
 
         foreach (var (gas, ratio) in effect.Ratios)
         {

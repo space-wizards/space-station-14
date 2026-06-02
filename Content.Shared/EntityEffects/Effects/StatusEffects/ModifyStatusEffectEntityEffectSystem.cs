@@ -12,9 +12,9 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
 {
     [Dependency] private StatusEffectsSystem _status = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ModifyStatusEffect effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, ModifyStatusEffect effect, EntityEffectData data)
     {
-        var time = effect.Time * scale;
+        var time = effect.Time * data.Scale;
         var delay = effect.Delay;
 
         switch (effect.Type)

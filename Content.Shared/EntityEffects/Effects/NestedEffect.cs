@@ -58,8 +58,8 @@ public sealed partial class NestedEffectSystem : EntityEffectSystem<TransformCom
 {
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
-    protected override void Effect(Entity<TransformComponent> ent, NestedEffect effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> ent, NestedEffect effect, EntityEffectData data)
     {
-        _effects.TryApplyEffect(ent, effect.Proto, scale, user);
+        _effects.TryApplyEffect(ent, effect.Proto, data.Scale, data.User);
     }
 }

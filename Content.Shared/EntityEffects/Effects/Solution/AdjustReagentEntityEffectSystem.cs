@@ -15,9 +15,9 @@ public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, AdjustReagent effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustReagent effect, EntityEffectData data)
     {
-        var quantity = effect.Amount * scale;
+        var quantity = effect.Amount * data.Scale;
         var reagent = effect.Reagent;
 
         if (quantity > 0)

@@ -9,7 +9,7 @@ public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityE
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustMutationLevel effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustMutationLevel effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;

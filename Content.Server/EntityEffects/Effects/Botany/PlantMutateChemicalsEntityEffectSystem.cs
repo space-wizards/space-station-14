@@ -14,7 +14,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateChemicals effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateChemicals effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;

@@ -12,9 +12,9 @@ public sealed partial class ModifyBleedEntityEffectSystem : EntityEffectSystem<B
 {
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, ModifyBleed effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<BloodstreamComponent> entity, ModifyBleed effect, EntityEffectData data)
     {
-        _bloodstream.TryModifyBleedAmount(entity.AsNullable(), effect.Amount * scale);
+        _bloodstream.TryModifyBleedAmount(entity.AsNullable(), effect.Amount * data.Scale);
     }
 }
 

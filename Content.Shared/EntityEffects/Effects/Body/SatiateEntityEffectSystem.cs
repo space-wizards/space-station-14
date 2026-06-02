@@ -13,9 +13,9 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSystem<ThirstComponent, SatiateThirst>
 {
     [Dependency] private ThirstSystem _thirst = default!;
-    protected override void Effect(Entity<ThirstComponent> entity, SatiateThirst effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<ThirstComponent> entity, SatiateThirst effect, EntityEffectData data)
     {
-        _thirst.ModifyThirst(entity, entity.Comp, effect.Factor * scale);
+        _thirst.ModifyThirst(entity, entity.Comp, effect.Factor * data.Scale);
     }
 }
 
@@ -26,9 +26,9 @@ public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSyste
 public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSystem<HungerComponent, SatiateHunger>
 {
     [Dependency] private HungerSystem _hunger = default!;
-    protected override void Effect(Entity<HungerComponent> entity, SatiateHunger effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<HungerComponent> entity, SatiateHunger effect, EntityEffectData data)
     {
-        _hunger.ModifyHunger(entity, effect.Factor * scale, entity.Comp);
+        _hunger.ModifyHunger(entity, effect.Factor * data.Scale, entity.Comp);
     }
 }
 

@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class TemplateEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Template>
 {
-    protected override void Effect(Entity<MetaDataComponent> entity, Template effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, Template effect, EntityEffectData data)
     {
         // Effect goes here.
     }

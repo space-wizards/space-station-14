@@ -13,7 +13,7 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPointLightSystem _lightSystem = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, Glow effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, Glow effect, EntityEffectData data)
     {
         var color = effect.Color;
 

@@ -6,7 +6,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPests>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustPests effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustPests effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;

@@ -13,7 +13,7 @@ public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : Entit
 {
     [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
-    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactDurabilityRestore effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactDurabilityRestore effect, EntityEffectData data)
     {
         var durability = effect.RestoredDurability;
 
@@ -33,7 +33,7 @@ public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSyste
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
-    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactUnlock effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactUnlock effect, EntityEffectData data)
     {
         if (EnsureComp<XenoArtifactUnlockingComponent>(entity, out var unlocking))
         {

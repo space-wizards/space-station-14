@@ -12,7 +12,7 @@ public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private SharedChatSystem _chat = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, Emote effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, Emote effect, EntityEffectData data)
     {
         if (effect.ShowInChat)
             _chat.TryEmoteWithChat(entity, effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: effect.Force);

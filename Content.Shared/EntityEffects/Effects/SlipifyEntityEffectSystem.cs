@@ -16,7 +16,7 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
     [Dependency] private CollisionWakeSystem _collisionWake = default!;
     [Dependency] private FixtureSystem _fixture = default!;
 
-    protected override void Effect(Entity<FixturesComponent> entity, Slipify effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<FixturesComponent> entity, Slipify effect, EntityEffectData data)
     {
         EnsureComp<SlipperyComponent>(entity, out var slippery);
         slippery.SlipData = effect.Slippery;

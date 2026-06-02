@@ -17,11 +17,11 @@ public sealed partial class DistributedHealthChangeEntityEffectSystem : EntityEf
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    protected override void Effect(Entity<DamageableComponent> entity, DistributedHealthChange effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<DamageableComponent> entity, DistributedHealthChange effect, EntityEffectData data)
     {
         foreach (var (group, amount) in effect.Damage)
         {
-            _damageable.HealDistributed(entity.AsNullable(), amount * scale, group);
+            _damageable.HealDistributed(entity.AsNullable(), amount * data.Scale, group);
         }
     }
 }
