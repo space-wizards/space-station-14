@@ -1,6 +1,7 @@
 ﻿using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Hands;
 using Content.Shared.Item;
@@ -15,8 +16,9 @@ public sealed partial class ItemSlotVisualsSystem : VisualizerSystem<ItemSlotVis
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ItemSlotVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
-        SubscribeLocalEvent<ItemSlotVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals);
+        // Have these systems go first & add their visuals, then after that, we add our own. No more conflicting visuals!
+        SubscribeLocalEvent<ItemSlotVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals, after: new[] { typeof(ItemSystem) });
+        SubscribeLocalEvent<ItemSlotVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals, after: new[] { typeof(ClothingSystem) });
     }
 
     protected override void OnAppearanceChange(EntityUid uid, ItemSlotVisualsComponent component, ref AppearanceChangeEvent args)
