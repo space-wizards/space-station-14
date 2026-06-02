@@ -191,6 +191,20 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
+    ///     Tries to drop all currently held items.
+    /// </summary>
+    public void DropAll(Entity<HandsComponent?> ent, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        foreach (var hand in EnumerateHands(ent))
+        {
+            TryDrop(ent, hand, targetDropLocation, checkActionBlocker, doDropInteraction);
+        }
+    }
+
+    /// <summary>
     ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path, Does a check to see if a user should bypass those checks as well.
     /// </summary>
     private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target, EntityUid held)
