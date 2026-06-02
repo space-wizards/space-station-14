@@ -9,11 +9,11 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.PlayerPanel;
 
 [UsedImplicitly]
-public sealed class PlayerPanelEui : BaseEui
+public sealed partial class PlayerPanelEui : BaseEui
 {
-    [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IClientAdminManager _admin = default!;
-    [Dependency] private readonly IClipboardManager _clipboard = default!;
+    [Dependency] private IClientConsoleHost _console = default!;
+    [Dependency] private IClientAdminManager _admin = default!;
+    [Dependency] private IClipboardManager _clipboard = default!;
 
     private PlayerPanel PlayerPanel { get; }
 

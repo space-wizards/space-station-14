@@ -13,14 +13,14 @@ namespace Content.Server.Thief.Systems;
 /// <see cref="ThiefUndeterminedBackpackComponent"/>
 /// this system links the interface to the logic, and will output to the player a set of items selected by him in the interface
 /// </summary>
-public sealed class ThiefUndeterminedBackpackSystem : EntitySystem
+public sealed partial class ThiefUndeterminedBackpackSystem : EntitySystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {

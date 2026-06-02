@@ -18,14 +18,14 @@ namespace Content.Shared.Store;
 /// </summary>
 public abstract partial class SharedStoreSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] protected readonly SharedMindSystem Mind = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] protected readonly SharedStackSystem Stack = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected IPrototypeManager Proto = default!;
+    [Dependency] protected SharedMindSystem Mind = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedStackSystem Stack = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
-    [Dependency] protected readonly EntityQuery<StoreComponent> StoreQuery = default!;
-    [Dependency] protected readonly EntityQuery<RemoteStoreComponent> RemoteStoreQuery = default!;
+    [Dependency] protected EntityQuery<StoreComponent> StoreQuery = default!;
+    [Dependency] protected EntityQuery<RemoteStoreComponent> RemoteStoreQuery = default!;
 
     public override void Initialize()
     {

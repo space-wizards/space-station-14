@@ -66,6 +66,9 @@
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "shop" }
 
 - type: entity
   parent: BaseAction

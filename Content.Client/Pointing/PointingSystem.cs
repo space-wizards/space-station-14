@@ -10,7 +10,7 @@ namespace Content.Client.Pointing;
 
 public sealed partial class PointingSystem : SharedPointingSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {

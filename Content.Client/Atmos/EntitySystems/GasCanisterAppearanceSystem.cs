@@ -8,9 +8,9 @@ namespace Content.Client.Atmos.EntitySystems;
 /// <summary>
 /// Used to change the appearance of gas canisters.
 /// </summary>
-public sealed class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
+public sealed partial class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
     {

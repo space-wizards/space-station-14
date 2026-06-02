@@ -21,15 +21,15 @@ namespace Content.Server.VoiceMask;
 
 public sealed partial class VoiceMaskSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     /// <summary>
     ///  The name of the client-side type that represents the user interface window.
@@ -100,7 +100,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         // we only toggle when the other mask turns on
         if (!args.Active)
             return;
-        
+
         // we don't want the entity turned on to be turned off, and there isn't any work to do if it already inactive
         if (ent.Owner == args.Mask || !ent.Comp.Active)
             return;
