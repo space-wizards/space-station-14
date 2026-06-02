@@ -23,11 +23,22 @@ public sealed partial class DifferentDepartmentMindFilter : MindFilter
             return false; // target in no department, so all depts are valid
 
         if (!objJob.HasValue || !job.HasValue)
-            return false;
+            return false; // should not get reached, but just in case...
+
+        // get all departments
+        if (!jobSys.TryGetAllDepartments(objJob.Value, out var a) || !jobSys.TryGetAllDepartments(job.Value, out var b))
+            return false; // this should not be reached, but just in case...
 
         // perform the department check
-        if (jobSys.TryGetDepartment(objJob.Value, out var a) && jobSys.TryGetDepartment(job.Value, out var b))
-            return a.ID == b.ID;
+        foreach (var deptA in a)
+        {
+            foreach (var deptB in b)
+            {
+                if (deptA.ID == deptB.ID)
+                    return true;
+            }
+        }
+
 
         return false;
     }
