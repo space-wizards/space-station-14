@@ -32,9 +32,6 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!_target.GetTarget(ent, out var target))
             return;
 
-        if (!HasComp<MindComponent>(target.Value))
-            return;
-
         if (!_job.MindTryGetJobId(target.Value, out var jobPrototype))
             return;
 
