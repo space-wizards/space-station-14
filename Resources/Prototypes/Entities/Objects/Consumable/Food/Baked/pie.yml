@@ -173,7 +173,13 @@
     - Pie
   - type: SliceableFood
     slice: FoodPieBananaCreamSlice
-
+  - type: StunOnCollide
+    stunAmount: 0
+    knockdownAmount: 1.5
+    drop: false
+    slowdownAmount: 1.5
+    walkSpeedModifier: 1
+    sprintSpeedModifier: 1
 - type: entity
   name: slice of banana cream pie
   parent: FoodPieSliceBase

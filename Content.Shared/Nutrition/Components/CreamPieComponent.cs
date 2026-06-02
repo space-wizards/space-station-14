@@ -12,11 +12,6 @@ namespace Content.Shared.Nutrition.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CreamPieComponent : Component
 {
-    /// <summary>
-    /// The time being hit by this entity will stun you.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan ParalyzeTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The sound to play when hitting something.
