@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Roles.Jobs;
 
 namespace Content.Shared.Mind.Filters;
@@ -30,15 +31,8 @@ public sealed partial class DifferentDepartmentMindFilter : MindFilter
             return false; // this should not be reached, but just in case...
 
         // perform the department check
-        foreach (var deptA in a)
-        {
-            foreach (var deptB in b)
-            {
-                if (deptA.ID == deptB.ID)
-                    return true;
-            }
-        }
-
+        if (a.Select(k => k.ID).Intersect(b.Select(k => k.ID)).Any())
+            return true;
 
         return false;
     }
