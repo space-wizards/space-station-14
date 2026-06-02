@@ -18,6 +18,13 @@ public sealed partial class LightningArcShooterComponent : Component
     public int MaxLightningArc = 1;
 
     /// <summary>
+    /// Fire instantly after spawning?
+    /// If false this entity will fire after <see cref="ShootMaxInterval"/> instead.
+    /// </summary>
+    [DataField]
+    public bool Instant = false;
+
+    /// <summary>
     /// Minimum interval between shooting.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

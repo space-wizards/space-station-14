@@ -43,7 +43,7 @@ public sealed class SkinTonesTest
         {
             var unaryInput = i / 100f; // Test values like 0.0, 0.01, ..., 100.0
             var color = strategy.FromUnary(unaryInput);
-            Assert.That(strategy.VerifySkinColor(color), $"Color {color} from unary value {unaryInput} failed verification.");
+            Assert.That(strategy.VerifySkinColor(color, out var reason), $"Color {color} from unary value {unaryInput} failed verification. Reason: {reason}");
         }
     }
 
@@ -75,7 +75,7 @@ public sealed class SkinTonesTest
     public void TestDefaultHumanSkinToneValid()
     {
         var strategy = new HumanTonedSkinColoration();
-        Assert.That(strategy.VerifySkinColor(strategy.ValidHumanSkinTone));
+        Assert.That(strategy.VerifySkinColor(strategy.ValidHumanSkinTone, out _));
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ public sealed class SkinTonesTest
             var skinColor = strategy.ClosestSkinColor(color);
             LogDriftIfGreater(strategy, color, skinColor, TestContext.CurrentContext.Test.Name); // Monitor drift
 
-            Assert.That(strategy.VerifySkinColor(skinColor),
-                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}");
+            Assert.That(strategy.VerifySkinColor(skinColor, out var reason),
+                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}. Reason: {reason}");
         }
     }
 
@@ -122,8 +122,8 @@ public sealed class SkinTonesTest
             var skinColor = strategy.ClosestSkinColor(color);
             LogDriftIfGreater(strategy, color, skinColor, TestContext.CurrentContext.Test.Name); // Monitor drift
 
-            Assert.That(strategy.VerifySkinColor(skinColor),
-                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}");
+            Assert.That(strategy.VerifySkinColor(skinColor, out var reason),
+                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}. Reason: {reason}");
         }
     }
 
@@ -147,8 +147,8 @@ public sealed class SkinTonesTest
             var skinColor = strategy.ClosestSkinColor(color);
             LogDriftIfGreater(strategy, color, skinColor, TestContext.CurrentContext.Test.Name); // Monitor drift
 
-            Assert.That(strategy.VerifySkinColor(skinColor),
-                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}");
+            Assert.That(strategy.VerifySkinColor(skinColor, out var reason),
+                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}. Reason: {reason}");
         }
     }
 
@@ -172,8 +172,8 @@ public sealed class SkinTonesTest
             var skinColor = strategy.ClosestSkinColor(color);
             LogDriftIfGreater(strategy, color, skinColor, TestContext.CurrentContext.Test.Name); // Monitor drift
 
-            Assert.That(strategy.VerifySkinColor(skinColor),
-                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}");
+            Assert.That(strategy.VerifySkinColor(skinColor, out var reason),
+                $"Color {skinColor} (from input {color}) failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}. Reason: {reason}");
         }
     }
 
@@ -197,8 +197,8 @@ public sealed class SkinTonesTest
             var skinColor = strategy.ClosestSkinColor(color);
             LogDriftIfGreater(strategy, color, skinColor, TestContext.CurrentContext.Test.Name); // Monitor drift
 
-            Assert.That(strategy.VerifySkinColor(skinColor),
-                $"Color {skinColor} (from input {color}) with circular hue failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}");
+            Assert.That(strategy.VerifySkinColor(skinColor, out var reason),
+                $"Color {skinColor} (from input {color}) with circular hue failed verification in {TestContext.CurrentContext.Test.Name} on iteration {i}. Reason: {reason}");
         }
     }
 
@@ -217,7 +217,7 @@ public sealed class SkinTonesTest
         var validColor = Color.FromHsl(new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
         var result = strategy.ClosestSkinColor(validColor);
 
-        Assert.That(strategy.VerifySkinColor(result), Is.True);
+        Assert.That(strategy.VerifySkinColor(result, out _), Is.True);
     }
 
     /// <summary>
@@ -236,7 +236,7 @@ public sealed class SkinTonesTest
         var invalidColor = Color.FromHsl(new Vector4(0.5f, 0.9f, 0.2f, 1.0f));
         var result = strategy.ClosestSkinColor(invalidColor);
 
-        Assert.That(strategy.VerifySkinColor(result), Is.True);
+        Assert.That(strategy.VerifySkinColor(result, out _), Is.True);
         Assert.That(result, Is.Not.EqualTo(invalidColor));
     }
 
