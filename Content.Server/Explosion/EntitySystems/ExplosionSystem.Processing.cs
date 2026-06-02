@@ -224,18 +224,29 @@ public sealed partial class ExplosionSystem
             ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
+        // We process anchored entities after lookups and ignore them during lookups.
+        // Why? Lookups cannot performantly query anchored entities across multiple tiles is why.
+        // There's not an excellent way to performantly determine if an entity is anchored on the correct tile.
+        // It's significantly faster to just skip processing an entity if it's anchored and ensure it's been added to processed
+        // Rather than have to potentially do several LocalCoordinates -> MapCoordinates on these entities.
+        var tileBlocked = false;
+        _anchored.Clear();
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        foreach (var entity in _anchored)
+        {
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+        }
+
         // heat the atmosphere
         if (temperature != null)
         {
             _atmosphere.HotspotExpose(grid.Owner, tile, temperature.Value, currentIntensity, cause, true);
         }
 
-        // We process anchored entities last, these should've been caught by the lookups earlier.
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
-        var tileBlocked = false;
-        _map.GetAnchoredEntities(grid, tile, _anchored);
         if (_anchored.Count > 0)
         {
             foreach (var entity in _anchored)
@@ -274,7 +285,7 @@ public sealed partial class ExplosionSystem
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
-        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform) && !xform.Anchored)
             state.List.Add((uid, xform));
 
         return true;
@@ -428,7 +439,7 @@ public sealed partial class ExplosionSystem
         DamageSpecifier? originalDamage,
         float throwForce,
         string id,
-        TransformComponent xform,
+        TransformComponent? xform,
         float? fireStacksOnIgnite,
         EntityUid? cause)
     {
@@ -465,23 +476,24 @@ public sealed partial class ExplosionSystem
         }
 
         // throw
-        if (!xform.Anchored
-            && throwForce > 0
-            && !EntityManager.IsQueuedForDeletion(uid)
-            && _physicsQuery.TryGetComponent(uid, out var physics)
-            && physics.BodyType == BodyType.Dynamic)
-        {
-            var pos = _transformSystem.GetWorldPosition(xform);
-            var dir = pos - epicenter.Position;
-            if (dir.IsLengthZero())
-                dir = _robustRandom.NextVector2().Normalized();
-            _throwingSystem.TryThrow(
-                uid,
-                dir,
-                physics,
-                xform,
-                throwForce);
-        }
+        if (xform == null
+            || xform.Anchored
+            || throwForce <= 0
+            || EntityManager.IsQueuedForDeletion(uid)
+            || !_physicsQuery.TryGetComponent(uid, out var physics)
+            || physics.BodyType != BodyType.Dynamic)
+            return;
+
+        var pos = _transformSystem.GetWorldPosition(xform);
+        var dir = pos - epicenter.Position;
+        if (dir.IsLengthZero())
+            dir = _robustRandom.NextVector2().Normalized();
+        _throwingSystem.TryThrow(
+            uid,
+            dir,
+            physics,
+            xform,
+            throwForce);
     }
 
     /// <summary>
