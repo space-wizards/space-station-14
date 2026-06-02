@@ -132,7 +132,7 @@ public abstract partial class SharedJobSystem : EntitySystem
         return false;
     }
     /// <summary>
-    /// Gets all departments for a mind's job (if any) and checks if the chosen department is among them.
+    /// Gets all departments for a mind's job (if any) and checks if the chosen department is among them. Works using <see cref="JobIsInDepartment"/>
     /// </summary>
     /// <param name="mind">The mind to check for</param>
     /// <param name="deptProto">The department proto ID to check for</param>
@@ -145,7 +145,15 @@ public abstract partial class SharedJobSystem : EntitySystem
         if (!job.HasValue)
             return false;
 
-        if (!TryGetAllDepartments(job.Value, out var depts))
+        return JobIsInDepartment(job.Value, deptProto);
+    }
+
+    /// <summary>
+    /// Checks if the job is contained within a department, and returns true if it does
+    /// </summary>
+    public bool JobIsInDepartment(string jobProto, string deptProto)
+    {
+        if (!TryGetAllDepartments(job, out var depts))
             return false;
 
         return depts.Any(k => k.ID == deptProto)

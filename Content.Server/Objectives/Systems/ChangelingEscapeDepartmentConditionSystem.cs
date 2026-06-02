@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Objectives.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Access.Systems;
@@ -9,7 +10,7 @@ using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Objectives.Systems;
 /// <summary>
-/// Makes it so that <see cref="ChangelingEscapeDepartmentConditionComponet"/> works.
+/// Makes it so that <see cref="ChangelingEscapeDepartmentConditionComponent"/> works.
 /// </summary>
 public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySystem
 {
@@ -40,10 +41,13 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!jobPrototype.HasValue)
             return;
 
-        if (!_job.TryGetDepartment(jobPrototype, out var departmentPrototype))
+        if (!_job.TryGetSecondaryDepartmentsOrFallback(jobPrototype, out var departmentPrototypes))
             return;
 
-        ent.Comp.Department = departmentPrototype;
+        Debug.Assert(departmentPrototypes.Count > 0, "department prototypes should not be empty here");
+
+        // get the first department, whichever it is
+        ent.Comp.Department = departmentPrototypes[0];
     }
 
     private void OnGetProgress(Entity<ChangelingEscapeDepartmentConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -66,18 +70,9 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!job.HasValue)
             return 0f; // do not absorb paradox clones!
 
-        _job.TryGetAllDepartments(job.Value, out var depts);
-        var matched = false;
-        foreach (var dept in depts)
-        {
-            if (dept.ID == ent.Comp.Department.Id)
-            {
-                matched = true;
-                break;
-            }
-        }
+        var isInDept = _job.JobIsInDepartment(job, ent.Comp.Department);
 
-        if (!matched)
+        if (!isInDept)
             return 0f; // was not in the job pool
 
         // Check 2: Must escape alive.
@@ -91,7 +86,7 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!_idCard.TryFindIdCard(ownedEntity.Value, out var idCard))
             return 0.75f; // is not wearing an id
 
-        matched = false;
+        var matched = false;
 
         foreach (var dept in idCard.Comp.JobDepartments)
         {
