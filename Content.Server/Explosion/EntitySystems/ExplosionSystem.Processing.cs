@@ -207,6 +207,13 @@ public sealed partial class ExplosionSystem
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
 
+        /* We do this so that we don't do an extra TryComp on anchored entities, and so we don't process them twice.
+        This saves us a small amount of processing time, but in the future if we can:
+        1. Limit the lookups to only process entities that are *on* the tile that's exploding
+        2. Make it so ProcessEntity doesn't have throwing behavior
+        Then this would be a pretty massive processing time saver.
+        If you are reading this, piece by piece we can make this system optimzied.
+        */
         _map.GetAnchoredEntities(grid, tile, _anchored);
         processed.UnionWith(_anchored);
 
