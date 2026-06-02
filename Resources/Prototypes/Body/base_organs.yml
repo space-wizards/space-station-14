@@ -37,6 +37,10 @@
       reagents:
       - ReagentId: UncookedAnimalProteins
         Quantity: 20
+  - type: Tag # I am nearing my limit of tolerance for TagComponent.
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   parent: OrganBaseOrganic
