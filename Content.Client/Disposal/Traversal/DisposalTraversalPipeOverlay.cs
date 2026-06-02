@@ -24,6 +24,8 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
     private const float GlowRadius = 0.015f;
     private static readonly Color PipeGlowColor = new(0.2f, 0.34f, 0.4f, 0.4f);
     private static readonly Color CurrentPipeGlowColor = new(0.4f, 0.18f, 0.18f, 0.4f);
+    private static readonly Color PipeBaseColor = new(0.8f, 0.95f, 1.0f);
+    private static readonly Color CurrentPipeBaseColor = new(1.0f, 0.6f, 0.6f);
     private static readonly Vector2[] GlowOffsets =
     {
         new(-GlowRadius, 0),
@@ -90,7 +92,7 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
 
             var isCurrentTube = holder.CurrentTube == uid;
             var glowColor = isCurrentTube ? CurrentPipeGlowColor : PipeGlowColor;
-            var baseColor = isCurrentTube ? new Color(1.0f, 0.6f, 0.6f) : new Color(0.8f, 0.95f, 1.0f);
+            var baseColor = isCurrentTube ? CurrentPipeBaseColor : PipeBaseColor;
             var oldColor = sprite.Color;
 
             _spriteSystem.SetColor((uid, sprite), glowColor);

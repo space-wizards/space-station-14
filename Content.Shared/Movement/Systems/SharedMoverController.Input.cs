@@ -183,10 +183,6 @@ namespace Content.Shared.Movement.Systems
 
         private bool TryUpdateRelative(EntityUid uid, InputMoverComponent mover, TransformComponent xform)
         {
-            if (RelayQuery.TryComp(uid, out var relay)
-                && XformQuery.TryComp(relay.RelayEntity, out var relayXform))
-                xform = relayXform;
-
             var relative = xform.GridUid;
             relative ??= xform.MapUid;
 

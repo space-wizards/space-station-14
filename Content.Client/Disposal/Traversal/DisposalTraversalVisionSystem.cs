@@ -2,7 +2,6 @@ using Content.Client.SubFloor;
 using Content.Shared.Disposal.Traversal;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.SubFloor;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 
