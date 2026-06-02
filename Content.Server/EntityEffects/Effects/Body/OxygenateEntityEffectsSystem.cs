@@ -13,8 +13,8 @@ namespace Content.Server.EntityEffects.Effects.Body;
 public sealed partial class OxygenateEntityEffectsSystem : EntityEffectSystem<RespiratorComponent, Oxygenate>
 {
     [Dependency] private RespiratorSystem _respirator = default!;
-    protected override void Effect(Entity<RespiratorComponent> entity, Oxygenate effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<RespiratorComponent> entity, Oxygenate effect, EntityEffectData data)
     {
-        _respirator.UpdateSaturation(entity, scale * effect.Factor, entity.Comp);
+        _respirator.UpdateSaturation(entity, data.Scale * effect.Factor, entity.Comp);
     }
 }

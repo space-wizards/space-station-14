@@ -12,9 +12,9 @@ public sealed partial class ResetNarcolepsyEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private NarcolepsySystem _narcolepsy = default!;
 
-    protected override void Effect(Entity<NarcolepsyComponent> entity, ResetNarcolepsy effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<NarcolepsyComponent> entity, ResetNarcolepsy effect, EntityEffectData data)
     {
-        var timer = effect.TimerReset * scale;
+        var timer = effect.TimerReset * data.Scale;
 
         _narcolepsy.AdjustNarcolepsyTimer(entity.AsNullable(), timer);
     }

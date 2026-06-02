@@ -15,7 +15,7 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, PopupMessage effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> entity, PopupMessage effect, EntityEffectData data)
     {
         // TODO: When we get proper random prediction remove this check.
         if (_net.IsClient)

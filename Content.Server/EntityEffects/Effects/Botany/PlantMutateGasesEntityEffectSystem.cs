@@ -11,7 +11,7 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateExudeGases effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateExudeGases effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;
@@ -33,7 +33,7 @@ public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEf
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateConsumeGases effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateConsumeGases effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;

@@ -14,12 +14,12 @@ public sealed partial class FlammableEntityEffectSystem : EntityEffectSystem<Fla
 {
     [Dependency] private FlammableSystem _flammable = default!;
 
-    protected override void Effect(Entity<FlammableComponent> entity, Flammable effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<FlammableComponent> entity, Flammable effect, EntityEffectData data)
     {
         // The multiplier is determined by if the entity is already on fire, and if the multiplier for existing FireStacks has a value.
         // If both of these are true, we use the MultiplierOnExisting value, otherwise we use the standard Multiplier.
         var multiplier = entity.Comp.FireStacks == 0f || effect.MultiplierOnExisting == null ? effect.Multiplier : effect.MultiplierOnExisting.Value;
 
-        _flammable.AdjustFireStacks(entity, scale * multiplier, entity.Comp);
+        _flammable.AdjustFireStacks(entity, data.Scale * multiplier, entity.Comp);
     }
 }

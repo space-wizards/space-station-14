@@ -13,7 +13,7 @@ namespace Content.Server.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class MakeSentientEntityEffectSystem : EntityEffectSystem<MetaDataComponent, MakeSentient>
 {
-    protected override void Effect(Entity<MetaDataComponent> entity, MakeSentient effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, MakeSentient effect, EntityEffectData data)
     {
         // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
         // This also works on entities that already have a mind

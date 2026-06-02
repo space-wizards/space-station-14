@@ -12,7 +12,7 @@ public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEff
 {
     [Dependency] private InventorySystem _inventory = default!;
 
-    protected override void Effect(Entity<InventoryComponent> entity, SpawnEntityInInventory effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<InventoryComponent> entity, SpawnEntityInInventory effect, EntityEffectData data)
     {
         _inventory.SpawnItemInSlot(entity, effect.Slot, effect.Entity);
     }

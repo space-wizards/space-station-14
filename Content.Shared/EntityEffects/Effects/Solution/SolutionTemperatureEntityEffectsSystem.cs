@@ -13,7 +13,7 @@ public sealed partial class SetSolutionTemperatureEntityEffectSystem : EntityEff
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, SetSolutionTemperature effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionComponent> entity, SetSolutionTemperature effect, EntityEffectData data)
     {
         _solutionContainer.SetTemperature(entity, effect.Temperature);
     }
@@ -43,10 +43,10 @@ public sealed partial class AdjustSolutionTemperatureEntityEffectSystem : Entity
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionTemperature effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionTemperature effect, EntityEffectData data)
     {
         var solution = entity.Comp.Solution;
-        var temperature = Math.Clamp(solution.Temperature + scale * effect.Delta, effect.MinTemp, effect.MaxTemp);
+        var temperature = Math.Clamp(solution.Temperature + data.Scale * effect.Delta, effect.MinTemp, effect.MaxTemp);
 
         _solutionContainer.SetTemperature(entity, temperature);
     }
@@ -90,11 +90,11 @@ public sealed partial class AdjustSolutionThermalEnergyEntityEffectSystem : Enti
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionThermalEnergy effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionThermalEnergy effect, EntityEffectData data)
     {
         var solution = entity.Comp.Solution;
 
-        var delta = scale * effect.Delta;
+        var delta = data.Scale * effect.Delta;
 
         // Don't adjust thermal energy if we're already at or above max temperature.
         switch (delta)

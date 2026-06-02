@@ -11,11 +11,11 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ExtinguishEntityEffectSystem : EntityEffectSystem<FlammableComponent, Extinguish>
 {
-    protected override void Effect(Entity<FlammableComponent> entity, Extinguish effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<FlammableComponent> entity, Extinguish effect, EntityEffectData data)
     {
         var ev = new ExtinguishEvent
         {
-            FireStacksAdjustment = effect.FireStacksAdjustment * scale,
+            FireStacksAdjustment = effect.FireStacksAdjustment * data.Scale,
         };
 
         RaiseLocalEvent(entity, ref ev);

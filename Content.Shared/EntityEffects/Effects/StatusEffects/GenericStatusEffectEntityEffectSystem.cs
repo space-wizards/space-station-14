@@ -13,9 +13,9 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 {
     [Dependency] private StatusEffectsSystem _status = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, GenericStatusEffect effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, GenericStatusEffect effect, EntityEffectData data)
     {
-        var time = effect.Time * scale;
+        var time = effect.Time * data.Scale;
 
         switch (effect.Type)
         {

@@ -11,9 +11,9 @@ public sealed partial class VomitEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private VomitSystem _vomit = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, Vomit effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, Vomit effect, EntityEffectData data)
     {
-        _vomit.Vomit(entity.Owner, effect.ThirstAmount * scale, effect.HungerAmount * scale);
+        _vomit.Vomit(entity.Owner, effect.ThirstAmount * data.Scale, effect.HungerAmount * data.Scale);
     }
 }
 

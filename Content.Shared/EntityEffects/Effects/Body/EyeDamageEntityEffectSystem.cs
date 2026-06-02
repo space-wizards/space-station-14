@@ -11,9 +11,9 @@ public sealed partial class EyeDamageEntityEffectSystem : EntityEffectSystem<Met
 {
     [Dependency] private BlindableSystem _blindable = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, EyeDamage effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, EyeDamage effect, EntityEffectData data)
     {
-        var amount = (int) Math.Floor(effect.Amount * scale);
+        var amount = (int) Math.Floor(effect.Amount * data.Scale);
         _blindable.AdjustEyeDamage(entity.Owner, amount);
     }
 }

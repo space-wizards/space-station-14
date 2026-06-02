@@ -9,6 +9,13 @@ namespace Content.Shared.EntityConditions;
 /// </summary>
 public sealed partial class SharedEntityConditionsSystem : EntitySystem
 {
+    private Dictionary<Type, EntityConditionHandler> _handlers = new();
+
+    public void RegisterHandler(EntityConditionHandler handler)
+    {
+        _handlers[handler.ConditionType] = handler;
+    }
+
     /// <summary>
     /// Checks a list of conditions to verify that they all return true.
     /// </summary>
@@ -62,14 +69,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
         return condition.Inverted != CheckCondition(target, condition);
     }
 
-    private static Dictionary<Type, IEntityConditionHandler> _handlers = new();
-
-    public static void RegisterHandler(IEntityConditionHandler handler)
-    {
-        _handlers[handler.ConditionType] = handler;
-    }
-
-    private static bool CheckCondition(EntityUid target, EntityCondition condition)
+    private bool CheckCondition(EntityUid target, EntityCondition condition)
     {
         if (_handlers.TryGetValue(condition.GetType(), out var handler))
             return handler.CheckCondition(target, condition);
@@ -78,14 +78,21 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 }
 
 /// <summary>
-/// This is an abstraction for a dictionary of effect handlers.
-/// Allows you to store any EntityConditionSystem<T, TCon>
-/// in a single Dictionary<Type, IEntityConditionHandler>
+/// Abstract base class for entity condition handlers.
+/// Extends EntitySystem so concrete handlers are proper engine systems.
 /// </summary>
-public interface IEntityConditionHandler
+public abstract partial class EntityConditionHandler : EntitySystem
 {
-    Type ConditionType { get; }
-    bool CheckCondition(EntityUid target, EntityCondition condition);
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
+
+    public abstract Type ConditionType { get; }
+    public abstract bool CheckCondition(EntityUid target, EntityCondition condition);
+
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        _conditions.RegisterHandler(this);
+    }
 }
 
 /// <summary>
@@ -93,22 +100,16 @@ public interface IEntityConditionHandler
 /// </summary>
 /// <typeparam name="T">The Component that is required for the effect</typeparam>
 /// <typeparam name="TCon">The Condition we're testing</typeparam>
-public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem, IEntityConditionHandler
+public abstract partial class EntityConditionSystem<T, TCon> : EntityConditionHandler
     where T : Component where TCon : EntityCondition
 {
     [Dependency] private EntityQuery<T> _query = default!;
 
-    public Type ConditionType => typeof(TCon);
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SharedEntityConditionsSystem.RegisterHandler(this);
-    }
+    public override Type ConditionType => typeof(TCon);
 
     protected abstract void Condition(Entity<T> entity, TCon condition, ref bool result);
 
-    public bool CheckCondition(EntityUid target, EntityCondition condition)
+    public override bool CheckCondition(EntityUid target, EntityCondition condition)
     {
         if (condition is not TCon typed)
             return false;

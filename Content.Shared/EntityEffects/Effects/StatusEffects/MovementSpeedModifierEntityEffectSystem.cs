@@ -15,7 +15,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private MovementModStatusSystem _movementModStatus = default!;
 
-    protected override void Effect(Entity<MovementSpeedModifierComponent> entity, MovementSpeedModifier effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MovementSpeedModifierComponent> entity, MovementSpeedModifier effect, EntityEffectData data)
     {
         var proto = effect.EffectProto;
         var sprintMod = effect.SprintSpeedModifier;
@@ -27,7 +27,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                 _movementModStatus.TryUpdateMovementSpeedModDuration(
                     entity,
                     proto,
-                    effect.Time * scale,
+                    effect.Time * data.Scale,
                     sprintMod,
                     walkMod);
                 break;
@@ -37,7 +37,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                     _movementModStatus.TryAddMovementSpeedModDuration(
                         entity,
                         proto,
-                        effect.Time.Value * scale,
+                        effect.Time.Value * data.Scale,
                         sprintMod,
                         walkMod);
                 }
@@ -46,16 +46,16 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
                     _movementModStatus.TryUpdateMovementSpeedModDuration(
                         entity,
                         proto,
-                        effect.Time * scale,
+                        effect.Time * data.Scale,
                         sprintMod,
                         walkMod);
                 }
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, effect.EffectProto, effect.Time * scale);
+                _status.TryRemoveTime(entity, effect.EffectProto, effect.Time * data.Scale);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, proto, effect.Time * scale);
+                _status.TrySetStatusEffectDuration(entity, proto, effect.Time * data.Scale);
                 break;
         }
     }

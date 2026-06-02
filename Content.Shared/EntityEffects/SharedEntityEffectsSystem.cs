@@ -8,6 +8,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects;
 
+public readonly record struct EntityEffectData(EntityEffect Effect, float Scale, EntityUid? User);
+
 /// <summary>
 /// This handles entity effects.
 /// Specifically it handles the receiving of events for causing entity effects, and provides
@@ -19,9 +21,9 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private SharedEntityConditionsSystem _condition = default!;
 
-    private static Dictionary<Type, IEntityEffectHandler> _handlers = new();
+    private Dictionary<Type, EntityEffectHandler> _handlers = new();
 
-    public static void RegisterHandler(IEntityEffectHandler handler)
+    public void RegisterHandler(EntityEffectHandler handler)
     {
         _handlers[handler.EffectType] = handler;
     }
@@ -139,19 +141,26 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
         }
 
         if (_handlers.TryGetValue(effect.GetType(), out var handler))
-            handler.ApplyEffect(target, effect, scale, user);
+            handler.ApplyEffect(target, new EntityEffectData(effect, scale, user));
     }
 }
 
 /// <summary>
-/// This is an abstraction for a dictionary of effect handlers.
-/// Allows you to store any EntityEffectSystem<T, TEffect>
-/// in a single Dictionary<Type, IEntityEffectHandler>
+/// Abstract base class for entity effect handlers.
+/// Extends EntitySystem so concrete handlers are proper engine systems.
 /// </summary>
-public interface IEntityEffectHandler
+public abstract partial class EntityEffectHandler : EntitySystem
 {
-    Type EffectType { get; }
-    void ApplyEffect(EntityUid target, EntityEffect effect, float scale, EntityUid? user);
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+
+    public abstract Type EffectType { get; }
+    public abstract void ApplyEffect(EntityUid target, EntityEffectData args);
+
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        _effects.RegisterHandler(this);
+    }
 }
 
 /// <summary>
@@ -159,27 +168,21 @@ public interface IEntityEffectHandler
 /// </summary>
 /// <typeparam name="T">The Component that is required for the effect</typeparam>
 /// <typeparam name="TEffect">The Entity Effect itself</typeparam>
-public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem, IEntityEffectHandler
+public abstract partial class EntityEffectSystem<T, TEffect> : EntityEffectHandler
     where T : Component where TEffect : EntityEffect
 {
     [Dependency] private EntityQuery<T> _query = default!;
 
-    public Type EffectType => typeof(TEffect);
+    public override Type EffectType => typeof(TEffect);
 
-    /// <inheritdoc/>
-    public override void Initialize()
+    protected abstract void Effect(Entity<T> entity, TEffect effect, EntityEffectData data);
+
+    public override void ApplyEffect(EntityUid target, EntityEffectData args)
     {
-        SharedEntityEffectsSystem.RegisterHandler(this);
-    }
-
-    protected abstract void Effect(Entity<T> entity, TEffect effect, float scale, EntityUid? user);
-
-    public virtual void ApplyEffect(EntityUid target, EntityEffect effect, float scale, EntityUid? user)
-    {
-        if (effect is not TEffect typed)
+        if (args.Effect is not TEffect typed)
             return;
         if (!_query.TryGetComponent(target, out var comp))
             return;
-        Effect((target, comp), typed, scale, user);
+        Effect((target, comp), typed, args);
     }
 }

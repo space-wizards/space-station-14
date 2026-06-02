@@ -17,11 +17,11 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    protected override void Effect(Entity<DamageableComponent> entity, HealthChange effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<DamageableComponent> entity, HealthChange effect, EntityEffectData data)
     {
         var damageSpec = new DamageSpecifier(effect.Damage);
 
-        damageSpec *= scale;
+        damageSpec *= data.Scale;
 
         _damageable.TryChangeDamage(
                 entity.AsNullable(),

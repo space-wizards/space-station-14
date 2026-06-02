@@ -12,9 +12,9 @@ namespace Content.Shared.EntityEffects.Effects;
 public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSystem<TemperatureComponent, AdjustTemperature>
 {
     [Dependency] private SharedTemperatureSystem _temperature = default!;
-    protected override void Effect(Entity<TemperatureComponent> entity, AdjustTemperature effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TemperatureComponent> entity, AdjustTemperature effect, EntityEffectData data)
     {
-        var amount = effect.Amount * scale;
+        var amount = effect.Amount * data.Scale;
 
         _temperature.ChangeHeat(entity, amount, true, entity.Comp);
     }

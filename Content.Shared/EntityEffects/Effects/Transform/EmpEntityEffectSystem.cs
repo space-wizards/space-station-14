@@ -14,9 +14,9 @@ public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<Transform
     [Dependency] private SharedEmpSystem _emp = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, Emp effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<TransformComponent> entity, Emp effect, EntityEffectData data)
     {
-        var range = MathF.Min(effect.RangeModifier * scale, effect.MaxRange);
+        var range = MathF.Min(effect.RangeModifier * data.Scale, effect.MaxRange);
 
         _emp.EmpPulse(_xform.GetMapCoordinates(entity, xform: entity.Comp), range, effect.EnergyConsumption, effect.Duration);
     }

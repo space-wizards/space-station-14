@@ -12,7 +12,7 @@ public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityE
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateSpeciesChange effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateSpeciesChange effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Seed.MutationPrototypes.Count == 0)
             return;

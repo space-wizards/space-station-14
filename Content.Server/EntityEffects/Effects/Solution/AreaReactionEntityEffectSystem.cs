@@ -27,11 +27,11 @@ public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem
     [Dependency] private TurfSystem _turf = default!;
 
     // TODO: A sane way to make Smoke without a solution.
-    protected override void Effect(Entity<SolutionComponent> entity, AreaReactionEffect effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<SolutionComponent> entity, AreaReactionEffect effect, EntityEffectData data)
     {
         var xform = Transform(entity);
         var mapCoords = _xform.GetMapCoordinates(entity);
-        var spreadAmount = (int)Math.Max(0, Math.Ceiling(scale / effect.OverflowThreshold));
+        var spreadAmount = (int)Math.Max(0, Math.Ceiling(data.Scale / effect.OverflowThreshold));
 
         if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
             !_map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef))

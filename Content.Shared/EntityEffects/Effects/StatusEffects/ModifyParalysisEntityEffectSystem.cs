@@ -14,9 +14,9 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private SharedStunSystem _stun = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ModifyParalysis effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<MetaDataComponent> entity, ModifyParalysis effect, EntityEffectData data)
     {
-        var time = effect.Time * scale;
+        var time = effect.Time * data.Scale;
 
         switch (effect.Type)
         {

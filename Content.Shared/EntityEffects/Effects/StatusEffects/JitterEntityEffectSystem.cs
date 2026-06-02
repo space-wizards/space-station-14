@@ -14,9 +14,9 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 {
     [Dependency] private SharedJitteringSystem _jittering = default!;
 
-    protected override void Effect(Entity<StatusEffectsComponent> entity, Jitter effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<StatusEffectsComponent> entity, Jitter effect, EntityEffectData data)
     {
-        var time = effect.Time * scale;
+        var time = effect.Time * data.Scale;
 
         _jittering.DoJitter(entity, TimeSpan.FromSeconds(time), effect.Refresh, effect.Amplitude, effect.Frequency);
     }

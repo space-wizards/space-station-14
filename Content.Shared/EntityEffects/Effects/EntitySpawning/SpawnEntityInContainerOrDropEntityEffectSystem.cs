@@ -13,9 +13,9 @@ public sealed partial class SpawnEntityInContainerOrDropEntityEffectSystem : Ent
 {
     [Dependency] private INetManager _net = default!;
 
-    protected override void Effect(Entity<ContainerManagerComponent> entity, SpawnEntityInContainerOrDrop effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<ContainerManagerComponent> entity, SpawnEntityInContainerOrDrop effect, EntityEffectData data)
     {
-        var quantity = effect.Number * (int)Math.Floor(scale);
+        var quantity = effect.Number * (int)Math.Floor(data.Scale);
         var proto = effect.Entity;
         var container = effect.ContainerName;
 

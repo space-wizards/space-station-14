@@ -14,9 +14,9 @@ public sealed partial class ModifyBloodLevelEntityEffectSystem : EntityEffectSys
 {
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, ModifyBloodLevel effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<BloodstreamComponent> entity, ModifyBloodLevel effect, EntityEffectData data)
     {
-        _bloodstream.TryModifyBloodLevel(entity.AsNullable(), effect.Amount * scale);
+        _bloodstream.TryModifyBloodLevel(entity.AsNullable(), effect.Amount * data.Scale);
     }
 }
 

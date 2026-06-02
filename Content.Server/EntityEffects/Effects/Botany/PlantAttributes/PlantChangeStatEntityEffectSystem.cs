@@ -14,7 +14,7 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, PlantChangeStat effect, float scale, EntityUid? user)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantChangeStat effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
