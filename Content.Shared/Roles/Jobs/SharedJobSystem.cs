@@ -153,10 +153,10 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// </summary>
     public bool JobIsInDepartment(string jobProto, string deptProto)
     {
-        if (!TryGetAllDepartments(job, out var depts))
+        if (!TryGetAllDepartments(jobProto, out var depts))
             return false;
 
-        return depts.Any(k => k.ID == deptProto)
+        return depts.Any(k => k.ID == deptProto);
     }
 
     /// <summary>
