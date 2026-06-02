@@ -207,6 +207,9 @@ public sealed partial class ExplosionSystem
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
 
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        processed.UnionWith(_anchored);
+
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent)> list = new();
@@ -238,7 +241,6 @@ public sealed partial class ExplosionSystem
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
         var tileBlocked = false;
-        _map.GetAnchoredEntities(grid, tile, _anchored);
         foreach (var entity in _anchored)
         {
             processed.Add(entity);
