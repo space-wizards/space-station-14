@@ -123,7 +123,7 @@
 - type: entity
   abstract: true
   parent: BaseStructureHealth
-  id: StructureHealthContainer
+  id: StructureHealthContainerStrong
   components:
   - type: Destructible
     thresholds:
@@ -186,6 +186,13 @@
       - !type:PlaySoundBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
 
 - type: entity
   abstract: true
@@ -199,8 +206,6 @@
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -223,8 +228,6 @@
         damage: 175
       behaviors:
       - !type:PlaySoundBehavior
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -247,8 +250,6 @@
         damage: 250
       behaviors:
       - !type:PlaySoundBehavior
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -271,8 +272,6 @@
         damage: 500
       behaviors:
       - !type:PlaySoundBehavior
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:

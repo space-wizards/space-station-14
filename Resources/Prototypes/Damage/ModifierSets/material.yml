@@ -1,9 +1,34 @@
 # Modifier sets for entities that can be described as fully (or mostly) composed of some specific material
 
-## Metallic
+#region Metallic
 
-## Glass
+Plasteel
+Steel
+CopperAlloy
+PreciousMetal
 
-## Organic
+#endregion
+#region Glass
 
-## Other
+Glass
+ReinforcedGlass
+
+#endregion
+#region Organic
+
+Card
+Wood
+Thread
+Durathread
+Meat
+
+#endregion
+#region Other
+
+Plastic
+Rock # Porcelain too
+Bananium
+Diamond
+
+
+#endregion
