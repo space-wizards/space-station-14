@@ -157,8 +157,8 @@
   id: ChangelingObjectiveGroupEscape
   weights:
     ChangelingSurviveObjective: 0.5
-    ChangelingEscapeIdentityObjective: 1
-    # eventually: escape as a job/dept
+    ChangelingEscapeDepartmentObjective: 1
+    ChangelingEscapeIdentityObjective: 1.5
 
 - type: weightedRandom
   id: ChangelingObjectiveGroupKillDummy
