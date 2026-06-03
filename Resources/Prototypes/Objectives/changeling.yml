@@ -53,8 +53,9 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     filters:
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:HasRoleMindFilter
+      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles n shit.
+      whitelist:
         components:
         - ChangelingRole
 
@@ -73,8 +74,13 @@
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
     filters:
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:HasRoleMindFilter
+      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles n shit.
+      whitelist:
         components:
         - ChangelingRole
-    - !type:DifferentDepartmentMindFilter
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - JobRole # Our target has to be employed, obviously.
+    - !type:DifferentDepartmentMindFilter # I love spawning as a scientist and having to escape as a scientist

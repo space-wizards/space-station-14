@@ -11,7 +11,8 @@ namespace Content.Server.Objectives.Components;
 /// 3. Is wearing an ID card with the matching dept
 /// Depends on <see cref="TargetObjectiveComponent"/> to know which target department to check for.
 /// </summary>
-[RegisterComponent, Access(typeof(ChangelingEscapeDepartmentConditionSystem))]
+[RegisterComponent]
+[Access(typeof(ChangelingEscapeDepartmentConditionSystem))]
 public sealed partial class ChangelingEscapeDepartmentConditionComponent : Component
 {
     /// <summary>

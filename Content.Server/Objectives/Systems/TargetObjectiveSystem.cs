@@ -71,7 +71,7 @@ public sealed partial class TargetObjectiveSystem : EntitySystem
                 deptName = Loc.GetString(deptProto.Name);
             }
         }
-        return Loc.GetString(title, ("targetName", targetName), ("job", jobName), ("dept", deptName));
+        return Loc.GetString(title, ("targetName", targetName), ("job", jobName), ("department", deptName));
     }
 
 }

@@ -3,4 +3,4 @@ objective-unique-identity-description = We must devour {$count} different humano
 
 objective-escape-identity-title = Escape as {$targetName}, {CAPITALIZE($job)}.
 
-objective-escape-department-title = Escape as a member of the {CAPITALIZE($dept)} department.
+objective-escape-department-title = Escape as a member of the {CAPITALIZE($department)} department.
