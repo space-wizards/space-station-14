@@ -1,22 +1,30 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Fluids;
 
-[TestFixture]
 [TestOf(typeof(SpreaderSystem))]
 public sealed class FluidSpill : GameTest
 {
+    private static readonly EntProtoId WallReinforced = "WallReinforced";
+    private static readonly ProtoId<ReagentPrototype> SpilledReagent = "Blood";
+
+    [SidedDependency(Side.Server)] private PuddleSystem _sPuddleSystem = null!;
+    [SidedDependency(Side.Server)] private IMapManager _sMapManager = null!;
+    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
+
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, Entity<MapGridComponent> mapGrid, Vector2i pos)
     {
         return GetPuddleEntity(entityManager, mapGrid, pos)?.Comp;
@@ -37,14 +45,8 @@ public sealed class FluidSpill : GameTest
     [Test]
     public async Task SpillCorner()
     {
-        var pair = Pair;
-        var server = pair.Server;
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var puddleSystem = server.System<PuddleSystem>();
-        var mapSystem = server.System<SharedMapSystem>();
-        var gameTiming = server.ResolveDependency<IGameTiming>();
         EntityUid gridId = default;
+        MapId mapId = default;
 
         /*
          In this test, if o is spillage puddle and # are walls, we want to ensure all tiles are empty (`.`)
@@ -52,48 +54,47 @@ public sealed class FluidSpill : GameTest
             # . .
             o # .
         */
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            mapSystem.CreateMap(out var mapId);
-            var grid = mapManager.CreateGridEntity(mapId);
+            _sMapSystem.CreateMap(out mapId);
+            var grid = _sMapManager.CreateGridEntity(mapId);
             gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {
                 for (var y = 0; y < 3; y++)
                 {
-                    mapSystem.SetTile(grid, new Vector2i(x, y), new Tile(1));
+                    _sMapSystem.SetTile(grid, new Vector2i(x, y), new Tile(1));
                 }
             }
 
-            entityManager.SpawnEntity("WallReinforced", mapSystem.GridTileToLocal(grid, grid.Comp, new Vector2i(0, 1)));
-            entityManager.SpawnEntity("WallReinforced", mapSystem.GridTileToLocal(grid, grid.Comp, new Vector2i(1, 0)));
+            SSpawnAtPosition(WallReinforced, _sMapSystem.GridTileToLocal(grid, grid.Comp, new Vector2i(0, 1)));
+            SSpawnAtPosition(WallReinforced, _sMapSystem.GridTileToLocal(grid, grid.Comp, new Vector2i(1, 0)));
         });
 
-
         var puddleOrigin = new Vector2i(0, 0);
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
-            var solution = new Solution("Blood", FixedPoint2.New(100));
-            var tileRef = mapSystem.GetTileRef(gridId, grid, puddleOrigin);
+            var grid = SComp<MapGridComponent>(gridId);
+            var solution = new Solution(SpilledReagent, FixedPoint2.New(100));
+            var tileRef = _sMapSystem.GetTileRef(gridId, grid, puddleOrigin);
 #pragma warning disable NUnit2045 // Interdependent tests
-            Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
-            Assert.That(GetPuddle(entityManager, (gridId, grid), puddleOrigin), Is.Not.Null);
+            Assert.That(_sPuddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
+            Assert.That(GetPuddle(SEntMan, (gridId, grid), puddleOrigin), Is.Not.Null);
 #pragma warning restore NUnit2045
         });
 
-        var sTimeToWait = (int) Math.Ceiling(2f * gameTiming.TickRate);
-        await server.WaitRunTicks(sTimeToWait);
+        var sTimeToWait = (int)Math.Ceiling(2f * SGameTiming.TickRate);
+        await RunTicksSync(sTimeToWait);
 
-        await server.WaitAssertion(() =>
+        await Server.WaitAssertion(() =>
         {
-            var grid = entityManager.GetComponent<MapGridComponent>(gridId);
-            var puddle = GetPuddleEntity(entityManager, (gridId, grid), puddleOrigin);
+            var grid = SComp<MapGridComponent>(gridId);
+            var puddle = GetPuddleEntity(SEntMan, (gridId, grid), puddleOrigin);
 
 #pragma warning disable NUnit2045 // Interdependent tests
             Assert.That(puddle, Is.Not.Null);
-            Assert.That(puddleSystem.CurrentVolume(puddle!.Value.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
+            Assert.That(_sPuddleSystem.CurrentVolume(puddle!.Value.Owner, puddle), Is.EqualTo(FixedPoint2.New(100)));
 #pragma warning restore NUnit2045
 
             for (var x = 0; x < 3; x++)
@@ -106,7 +107,7 @@ public sealed class FluidSpill : GameTest
                     }
 
                     var newPos = new Vector2i(x, y);
-                    var sidePuddle = GetPuddle(entityManager, (gridId, grid), newPos);
+                    var sidePuddle = GetPuddle(SEntMan, (gridId, grid), newPos);
                     Assert.That(sidePuddle, Is.Null);
                 }
             }
