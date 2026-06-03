@@ -189,7 +189,7 @@
   parent: BaseActionChangelingSting
   id: ActionChangelingStingHallucinogenic
   name: Hallucinogenic Sting
-  description: Silently sting a target and inject them with a chemicals that slow down their higher brain functions.
+  description: Silently sting a target and inject them with chemicals that slow down their higher brain functions.
   components:
   - type: Action
     useDelay: 90
