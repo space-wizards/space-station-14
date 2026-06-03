@@ -19,5 +19,5 @@ public sealed partial class ChangelingEscapeDepartmentConditionComponent : Compo
     /// The department that is targeted by the objective.
     /// </summary>
     [DataField]
-    public ProtoId<DepartmentPrototype> Department;
+    public ProtoId<DepartmentPrototype>? Department;
 }

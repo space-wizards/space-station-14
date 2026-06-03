@@ -76,8 +76,8 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!job.HasValue)
             return 0f;
 
-        if (!_job.JobIsInDepartment(job.Value, ent.Comp.Department))
-            return 0f; // The job of our identity is not in the target department.
+        if (ent.Comp.Department == null || !_job.JobIsInDepartment(job.Value, ent.Comp.Department.Value))
+            return 0f; // The job of our identity is not in the target department or the department doesn't exist.
 
         // Check 2: Must escape alive.
         if (!_emergencyShuttle.IsTargetEscaping(ownedEntity.Value))
