@@ -41,7 +41,6 @@ public sealed partial class CargoSystem
                 continue;
 
             telepad.CurrentOrders.Add(args.Order);
-            telepad.NextTeleport = Timing.CurTime + telepad.TeleportDelay;
             args.Handled = true;
             args.FulfillmentEntity = uid;
             return;
