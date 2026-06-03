@@ -168,7 +168,6 @@
 - type: weightedRandom
   id: ChangelingObjectiveGroupKill
   weights:
-    KillRandomPersonObjective: 1
-    KillRandomHeadObjective: 0.5
+    ChangelingKillRandomPersonObjective: 1
 
 # Crew, wizard, when you code it...

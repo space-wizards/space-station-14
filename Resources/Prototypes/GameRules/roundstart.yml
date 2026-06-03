@@ -233,7 +233,7 @@
       maxPicks: 1
     - groups: ChangelingObjectiveGroupKillDummy
       maxPicks: 1
-    maxDifficulty: 5
+    maxDifficulty: 8
 
 - type: entity
   id: Revolutionary
