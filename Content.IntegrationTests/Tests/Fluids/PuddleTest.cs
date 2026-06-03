@@ -1,72 +1,62 @@
+#nullable enable
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Coordinates;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.Fluids
+namespace Content.IntegrationTests.Tests.Fluids;
+
+[TestOf(typeof(PuddleComponent))]
+public sealed class PuddleTest : GameTest
 {
-    [TestFixture]
-    [TestOf(typeof(PuddleComponent))]
-    public sealed class PuddleTest : GameTest
+    private static readonly ProtoId<ReagentPrototype> TestReagent = "Water";
+
+    [SidedDependency(Side.Server)] private PuddleSystem _sPuddleSystem = null!;
+    [SidedDependency(Side.Server)] private SharedMapSystem _sMapSystem = null!;
+
+    [Test]
+    [Description("Checks that spilling a solution on a grid tile succeeds.")]
+    public async Task TilePuddleTest()
     {
-        [Test]
-        public async Task TilePuddleTest()
+        await Pair.CreateTestMap();
+
+        await Server.WaitAssertion(() =>
         {
-            var pair = Pair;
-            var server = pair.Server;
+            var solution = new Solution(TestReagent, FixedPoint2.New(20));
+            Assert.That(_sPuddleSystem.TrySpillAt(TestMap!.GridCoords, solution, out _), Is.True);
+        });
+    }
 
-            var testMap = await pair.CreateTestMap();
+    [Test]
+    [Description("Tests that spilling a solution in space does not succeed.")]
+    public async Task SpaceNoPuddleTest()
+    {
+        await Pair.CreateTestMap();
+        var grid = TestMap!.Grid;
 
-            var spillSystem = server.System<PuddleSystem>();
-
-            await server.WaitAssertion(() =>
-            {
-                var solution = new Solution("Water", FixedPoint2.New(20));
-                var tile = testMap.Tile;
-                var gridUid = tile.GridUid;
-                var (x, y) = tile.GridIndices;
-                var coordinates = new EntityCoordinates(gridUid, x, y);
-
-                Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.True);
-            });
-        }
-
-        [Test]
-        public async Task SpaceNoPuddleTest()
+        // Remove all tiles
+        await Server.WaitPost(() =>
         {
-            var pair = Pair;
-            var server = pair.Server;
-
-            var testMap = await pair.CreateTestMap();
-            var grid = testMap.Grid;
-
-            var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
-            var spillSystem = server.System<PuddleSystem>();
-            var mapSystem = server.System<SharedMapSystem>();
-
-            // Remove all tiles
-            await server.WaitPost(() =>
+            var tiles = _sMapSystem.GetAllTiles(grid.Owner, grid.Comp);
+            foreach (var tile in tiles)
             {
-                var tiles = mapSystem.GetAllTiles(grid.Owner, grid.Comp);
-                foreach (var tile in tiles)
-                {
-                    mapSystem.SetTile(grid, tile.GridIndices, Tile.Empty);
-                }
-            });
+                _sMapSystem.SetTile(grid, tile.GridIndices, Tile.Empty);
+            }
+        });
 
-            await pair.RunTicksSync(5);
+        await RunTicksSync(5);
 
-            await server.WaitAssertion(() =>
-            {
-                var coordinates = grid.Owner.ToCoordinates();
-                var solution = new Solution("Water", FixedPoint2.New(20));
+        await Server.WaitAssertion(() =>
+        {
+            var solution = new Solution(TestReagent, FixedPoint2.New(20));
 
-                Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.False);
-            });
-        }
+            Assert.That(_sPuddleSystem.TrySpillAt(TestMap.GridCoords, solution, out _), Is.False);
+        });
     }
 }
