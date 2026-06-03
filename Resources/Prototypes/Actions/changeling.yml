@@ -125,30 +125,10 @@
       - Bloodstream
     event: !type:EntityEffectActionEvent
   - type: PopupOnAction
-    popupType: Medium
-    userMessage:
-      message: changeling-sting-success
-
-- type: entity
-  parent: BaseActionChangelingSting
-  id: ActionChangelingMuteSting
-  name: "[color=red]Mute Sting[/color]"
-  description: Silently sting a target and inject mute toxin.
-  components:
-  - type: Action
-    useDelay: 40
-    raiseOnAction: true
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: mute_sting
-  - type: EntityEffectAction
-    effects:
-    - !type:AddReagentToBloodstream
-      conditions:
-      - !type:MobStateCondition
-      reagent: StealthMuteToxin
-      quantity: 5
+    popupType: MediumCaution
+    selfMessage: changeling-sting-success
+    othersMessage: others
+    targetMessage: target
 
 - type: entity
   parent: BaseActionChangelingSting
@@ -170,24 +150,3 @@
       - !type:MobStateCondition
       reagent: NorepinephricAcid
       quantity: 23
-
-- type: entity
-  parent: BaseActionChangelingSting
-  id: ActionChangelingNeurodepressantSting
-  name: "[color=red]Neurodepressant Sting[/color]"
-  description: Silently sting a target and inject neurodepressant.
-  components:
-  - type: Action
-    useDelay: 40
-    raiseOnAction: true
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: neurodepressant_sting
-  - type: EntityEffectAction
-    effects:
-    - !type:AddReagentToBloodstream
-      conditions:
-      - !type:MobStateCondition
-      reagent: Neurodepressant
-      quantity: 10

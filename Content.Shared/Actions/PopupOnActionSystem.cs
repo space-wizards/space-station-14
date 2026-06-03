@@ -15,6 +15,7 @@ public sealed partial class PopupOnActionSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<PopupOnActionComponent, ActionPerformedEvent>(OnActionPerformed);
     }
 
@@ -22,33 +23,30 @@ public sealed partial class PopupOnActionSystem : EntitySystem
     {
         EntityUid? target = null;
 
-        if (TryComp<EntityTargetActionComponent>(ent, out var entityTarget)
-            && entityTarget.Event is { } ev)
-        {
+        if (TryComp<EntityTargetActionComponent>(ent, out var entityTarget) && entityTarget.Event is { } ev)
             target = ev.Target;
-        }
 
-        var user = args.Performer;
-        var userName = Identity.Name(user, EntityManager);
+        if (HasComp<InstantActionComponent>(ent))
+            target = args.Performer;
+
+        var userName = Identity.Name(args.Performer, EntityManager);
         var targetName = target != null ? Identity.Name(target.Value, EntityManager) : string.Empty;
 
-        if (ent.Comp.UserMessage != null)
-            ShowPopup(ent.Comp.UserMessage, user, user, userName, targetName, ent.Comp.PopupType);
+        var selfMessage = ent.Comp.SelfMessage != null
+            ? Loc.GetString(ent.Comp.SelfMessage, ("target", targetName), ("user", userName))
+            : null;
 
-        if (ent.Comp.TargetMessage != null && target != null)
-            ShowPopup(ent.Comp.TargetMessage, target.Value, target.Value, userName, targetName, ent.Comp.PopupType);
-    }
+        var othersMessage = ent.Comp.OthersMessage != null
+            ? Loc.GetString(ent.Comp.OthersMessage, ("target", targetName), ("user", userName))
+            : null;
 
-    private void ShowPopup(PopupMessage popup, EntityUid uid, EntityUid recipient, string userName, string targetName, PopupType type)
-    {
-        var message = popup.Message;
-        if (string.IsNullOrEmpty(message))
-            return;
+        var targetMessage = ent.Comp.TargetMessage != null
+            ? Loc.GetString(ent.Comp.TargetMessage, ("target", targetName), ("user", userName))
+            : null;
 
-        var text = Loc.GetString(message, ("user", userName), ("target", targetName));
-        if (popup.Recipients == PopupRecipients.Local)
-            _popup.PopupClient(text, uid, recipient, type);
-        else
-            _popup.PopupPredicted(text, uid, recipient, type);
+        _popup.PopupPredicted(selfMessage, othersMessage, args.Performer, args.Performer, ent.Comp.PopupType);
+
+        if (target != null)
+            _popup.PopupEntity(targetMessage, target.Value, target.Value, ent.Comp.PopupType);
     }
 }

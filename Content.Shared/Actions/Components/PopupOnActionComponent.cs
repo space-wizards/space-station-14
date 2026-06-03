@@ -11,49 +11,26 @@ namespace Content.Shared.Actions.Components;
 public sealed partial class PopupOnActionComponent : Component
 {
     /// <summary>
-    /// The popup message shown to the action performer.
+    /// The locale ID of the message to the performer of the action.
     /// </summary>
     [DataField]
-    public PopupMessage? UserMessage;
+    public LocId? SelfMessage;
 
     /// <summary>
-    /// The popup message shown to the target of the action.
+    /// The message to show to those around the performer of the action.
     /// </summary>
     [DataField]
-    public PopupMessage? TargetMessage;
+    public LocId? OthersMessage;
+
+    /// <summary>
+    /// The message to show to the action target.
+    /// </summary>
+    [DataField]
+    public LocId? TargetMessage;
 
     /// <summary>
     /// The visual style of the popup.
     /// </summary>
     [DataField]
     public PopupType PopupType = PopupType.Small;
-}
-
-/// <summary>
-/// Defines a popup message and who can see it.
-/// </summary>
-[DataDefinition]
-public sealed partial class PopupMessage
-{
-    /// <summary>
-    /// The locale ID of the message to display.
-    /// </summary>
-    [DataField(required: true)]
-    public LocId Message = string.Empty;
-
-    /// <summary>
-    /// Determines who can see this popup.
-    /// </summary>
-    [DataField]
-    public PopupRecipients Recipients = PopupRecipients.Local;
-}
-
-/// <summary>
-/// Who can see the popup message.
-/// </summary>
-[Serializable, NetSerializable]
-public enum PopupRecipients : byte
-{
-    Pvs,
-    Local,
 }

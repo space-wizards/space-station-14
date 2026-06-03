@@ -13,11 +13,5 @@ changeling-catalog-biodegrade-desc = You learn to utilize acid glands within you
 changeling-catalog-sting-dna-name = Extract DNA
 changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
 
-changeling-catalog-mute-sting-name = Mute Sting
-changeling-catalog-mute-sting-desc = Grow a silent stinger that injects mute toxin. The victim usually realizes it only when they try to speak.
-
 changeling-catalog-blind-sting-name = Blind Sting
 changeling-catalog-blind-sting-desc = Grow a silent stinger that injects a blinding compound.
-
-changeling-catalog-neurodepressant-sting-name = Neurodepressant Sting
-changeling-catalog-neurodepressant-sting-desc = Grow a silent stinger that injects a sedative, leaving the victim drowsy and sluggish.

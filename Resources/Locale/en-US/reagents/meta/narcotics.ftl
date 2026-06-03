@@ -31,9 +31,6 @@ reagent-desc-nocturine = A highly effective sedative and hypnotic, developed by 
 reagent-name-mute-toxin = mute toxin
 reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making the user unable to speak during metabolization.
 
-reagent-name-stealth-mute-toxin = stealth mute toxin
-reagent-desc-stealth-mute-toxin = A thick chemical that coats the vocal cords, making the user unable to speak during metabolization.
-
 reagent-name-norepinephric-acid = norepinephric acid
 reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
 
@@ -42,6 +39,3 @@ reagent-desc-tear-gas = A chemical that causes severe irritation and crying, com
 
 reagent-name-happiness = happiness
 reagent-desc-happiness = Fills you with ecstatic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings.
-
-reagent-name-neurodepressant = neurodepressant
-reagent-desc-neurodepressant = A debilitating compound that affects muscular function, extracted from neurotoxin.

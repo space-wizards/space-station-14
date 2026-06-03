@@ -35,10 +35,6 @@
   alert: Muted
 
 - type: statusEffect
-  id: StealthMuted
-  alwaysAllowed: true # TODO: This will be fixed after the transition to the new status effects
-
-- type: statusEffect
   id: Corporeal
   alert: Corporeal
 

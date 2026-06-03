@@ -72,21 +72,6 @@
   productAction: ActionChangelingStingDna
 
 - type: listing
-  id: ChangelingMuteSting
-  name: changeling-catalog-mute-sting-name
-  description: changeling-catalog-mute-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mute_sting }
-  applyToMob: true
-  cost:
-    ChangelingDNA: 10
-  categories:
-  - ChangelingStoreStealth
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingMuteSting
-
-- type: listing
   id: ChangelingBlindSting
   name: changeling-catalog-blind-sting-name
   description: changeling-catalog-blind-sting-desc
@@ -100,18 +85,3 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingBlindSting
-
-- type: listing
-  id: ChangelingNeurodepressantSting
-  name: changeling-catalog-neurodepressant-sting-name
-  description: changeling-catalog-neurodepressant-sting-desc
-  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: neurodepressant_sting }
-  applyToMob: true
-  cost:
-    ChangelingDNA: 15
-  categories:
-  - ChangelingStoreStealth
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  productAction: ActionChangelingNeurodepressantSting
