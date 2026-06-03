@@ -29,18 +29,23 @@
     pickupAmount: 2 # small feet
   - type: UseDelay
     delay: 0.5 # quick feet
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-        - ReagentId: Water
-          Quantity: 10
-  - type: SolutionPurge
-    preserve:
-      - Water
-    quantity: 10
   - type: SolutionManager
     solutions:
-    - SolutionMopNormal
+    - SolutionMopRoach
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot
+
+- type: entity
+  parent: SolutionMopNormal
+  id: SolutionMopRoach
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 10
+  - type: SolutionPurge
+    preserve:
+    - Water
+    quantity: 10
