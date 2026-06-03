@@ -1,7 +1,8 @@
 using System.Numerics;
 using Content.Client.Graphics;
+using Content.Client.Light.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
+using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -19,28 +20,39 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> StencilMaskShader = "StencilMask";
     private static readonly ProtoId<ShaderPrototype> StencilEqualDrawShader = "StencilEqualDraw";
+    private const float BlurMultiplier = 7f;
 
     [Dependency] private IClyde _clyde = default!;
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IPrototypeManager _proto = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
     private readonly OverlayResourceCache<CachedResources> _resources = new ();
+    private readonly OccluderSystem _occluders;
+    private readonly GridStencilSystem _gridStencil;
+    private readonly SharedTransformSystem _xformSystem;
+
+    private Color _color;
 
     public AmbientOcclusionOverlay()
     {
         IoCManager.InjectDependencies(this);
         ZIndex = AfterLightTargetOverlay.ContentZIndex + 1;
+
+        _occluders = _entManager.System<OccluderSystem>();
+        _gridStencil = _entManager.System<GridStencilSystem>();
+        _xformSystem = _entManager.System<SharedTransformSystem>();
+
+        _cfgManager.OnValueChanged(CCVars.AmbientOcclusionColor, OnColorChanged, true);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         /*
          * tl;dr
-         * - we draw a black square on each "ambient occlusion" entity.
+         * - we draw each occluder's bounds to an AO source texture.
          * - we blur this.
          * - We apply it to the viewport.
          *
@@ -53,37 +65,30 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         var mapId = args.MapId;
         var worldBounds = args.WorldBounds;
         var worldHandle = args.WorldHandle;
-        var color = Color.FromHex(_cfgManager.GetCVar(CCVars.AmbientOcclusionColor));
         var distance = _cfgManager.GetCVar(CCVars.AmbientOcclusionDistance);
+        var resolutionScale = Math.Clamp(_cfgManager.GetCVar(CCVars.AmbientOcclusionResolutionScale), 0.1f, 1f);
         //var color = Color.Red;
         var target = viewport.RenderTarget;
-        var lightScale = target.Size / (Vector2) viewport.Size;
+        var aoSize = new Vector2i(
+            Math.Max(1, (int) MathF.Ceiling(target.Size.X * resolutionScale)),
+            Math.Max(1, (int) MathF.Ceiling(target.Size.Y * resolutionScale)));
+        var lightScale = aoSize / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
-        var maps = _entManager.System<SharedMapSystem>();
-        var lookups = _entManager.System<EntityLookupSystem>();
-        var query = _entManager.System<OccluderSystem>();
-        var xformSystem = _entManager.System<SharedTransformSystem>();
-        var turfSystem = _entManager.System<TurfSystem>();
-        var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        var expandedBounds = worldBounds.Enlarged(GetBlurMargin(viewport, distance));
+        var aoPadding = distance / EyeManager.PixelsPerMeter;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
 
-        if (res.AOTarget?.Texture.Size != target.Size)
+        if (res.AOTarget?.Texture.Size != aoSize)
         {
             res.AOTarget?.Dispose();
-            res.AOTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
+            res.AOTarget = _clyde.CreateRenderTarget(aoSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
         }
 
-        if (res.AOBlurBuffer?.Texture.Size != target.Size)
+        if (res.AOBlurBuffer?.Texture.Size != aoSize)
         {
             res.AOBlurBuffer?.Dispose();
-            res.AOBlurBuffer = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
-        }
-
-        if (res.AOStencilTarget?.Texture.Size != target.Size)
-        {
-            res.AOStencilTarget?.Dispose();
-            res.AOStencilTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-stencil-target");
+            res.AOBlurBuffer = _clyde.CreateRenderTarget(aoSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
         }
 
         // Draw the texture data to the texture.
@@ -93,51 +98,30 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
                 worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
                 var invMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
-                foreach (var entry in query.QueryAabb(mapId, worldBounds))
+                foreach (var entry in _occluders.QueryAabb(mapId, expandedBounds))
                 {
                     DebugTools.Assert(entry.Component.Enabled);
-                    var matrix = xformSystem.GetWorldMatrix(entry.Transform);
+                    var matrix = _xformSystem.GetWorldMatrix(entry.Transform);
                     var localMatrix = Matrix3x2.Multiply(matrix, invMatrix);
 
                     worldHandle.SetTransform(localMatrix);
-                    // 4 pixels
-                    worldHandle.DrawRect(Box2.UnitCentered.Enlarged(distance / EyeManager.PixelsPerMeter), Color.White);
+                    var bounds = entry.Component.BoundingBox;
+                    worldHandle.DrawRect(bounds.Enlarged(aoPadding), Color.White);
                 }
             }, Color.Transparent);
 
-        _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, 14f);
-
-        // Need to do stencilling after blur as it will nuke it.
-        // Draw stencil for the grid so we don't draw in space.
-        args.WorldHandle.RenderInRenderTarget(res.AOStencilTarget,
-            () =>
-            {
-                // Don't want lighting affecting it.
-                worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
-
-                foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
-                {
-                    var transform = xformSystem.GetWorldMatrix(grid.Owner);
-                    var worldToTextureMatrix = Matrix3x2.Multiply(transform, invMatrix);
-                    var tiles = maps.GetTilesEnumerator(grid.Owner, grid, worldBounds);
-                    worldHandle.SetTransform(worldToTextureMatrix);
-                    while (tiles.MoveNext(out var tileRef))
-                    {
-                        if (turfSystem.IsSpace(tileRef))
-                            continue;
-
-                        var bounds = lookups.GetLocalBounds(tileRef, grid.TileSize);
-                        worldHandle.DrawRect(bounds, Color.White);
-                    }
-                }
-
-            }, Color.Transparent);
+        _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, BlurMultiplier);
 
         // Draw the stencil texture to depth buffer.
+        var stencil = _gridStencil.GetNonSpaceStencil(args);
         worldHandle.UseShader(_proto.Index(StencilMaskShader).Instance());
-        worldHandle.DrawTextureRect(res.AOStencilTarget!.Texture, worldBounds);
+        worldHandle.DrawTextureRect(stencil.Texture, worldBounds);
 
         // Draw the Blurred AO texture finally.
+        var color = _entManager.TryGetComponent(args.MapUid, out MapAmbientColorComponent? mapAmbient)
+            ? mapAmbient.Color
+            : _color;
+
         worldHandle.UseShader(_proto.Index(StencilEqualDrawShader).Instance());
         worldHandle.DrawTextureRect(res.AOTarget!.Texture, worldBounds, color);
 
@@ -145,8 +129,25 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         args.WorldHandle.UseShader(null);
     }
 
+    private void OnColorChanged(string value)
+    {
+        _color = Color.FromHex(value);
+    }
+
+    private static float GetBlurMargin(IClydeViewport viewport, float distance)
+    {
+        if (viewport.Eye == null)
+            return distance / EyeManager.PixelsPerMeter;
+
+        var cameraSize = viewport.Eye.Zoom.Y * viewport.Size.Y * (1 / viewport.RenderScale.Y) / EyeManager.PixelsPerMeter;
+
+        // Matches Clyde's BlurRenderTarget radius calculation closely enough to include off-screen AO contributors.
+        return distance / EyeManager.PixelsPerMeter + BlurMultiplier / cameraSize;
+    }
+
     protected override void DisposeBehavior()
     {
+        _cfgManager.UnsubValueChanged(CCVars.AmbientOcclusionColor, OnColorChanged);
         _resources.Dispose();
 
         base.DisposeBehavior();
@@ -157,14 +158,10 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         public IRenderTexture? AOTarget;
         public IRenderTexture? AOBlurBuffer;
 
-        // Couldn't figure out a way to avoid this so if you can then please do.
-        public IRenderTexture? AOStencilTarget;
-
         public void Dispose()
         {
             AOTarget?.Dispose();
             AOBlurBuffer?.Dispose();
-            AOStencilTarget?.Dispose();
         }
     }
 }

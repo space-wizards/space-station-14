@@ -8,14 +8,20 @@ public sealed partial class CCVars
         CVarDef.Create("light.ambient_occlusion", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// Distance in world-pixels of ambient occlusion.
+    /// Color of ambient occlusion.
     /// </summary>
     public static readonly CVarDef<string> AmbientOcclusionColor =
         CVarDef.Create("light.ambient_occlusion_color", "#04080FAA", CVar.CLIENTONLY);
 
     /// <summary>
+    /// Render resolution scale for ambient occlusion.
+    /// </summary>
+    public static readonly CVarDef<float> AmbientOcclusionResolutionScale =
+        CVarDef.Create("light.ambient_occlusion_resolution_scale", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// Distance in world-pixels of ambient occlusion.
     /// </summary>
     public static readonly CVarDef<float> AmbientOcclusionDistance =
-        CVarDef.Create("light.ambient_occlusion_distance", 4f, CVar.CLIENTONLY);
+        CVarDef.Create("light.ambient_occlusion_distance", 2f, CVar.CLIENTONLY);
 }
