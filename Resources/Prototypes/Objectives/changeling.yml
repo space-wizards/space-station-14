@@ -17,7 +17,7 @@
   description: We must stay alive at all cost.
   components:
   - type: Objective
-    difficulty: 1
+    difficulty: 0.5
     icon:
       sprite: Mobs/Species/Human/organs.rsi
       state: heart-on
@@ -54,7 +54,7 @@
   - type: PickRandomPerson
     filters:
     - !type:HasRoleMindFilter
-      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles n shit.
+      inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
       whitelist:
         components:
         - ChangelingRole
@@ -65,7 +65,7 @@
   description: We must escape with the identity & ID card of any member of this department.
   components:
   - type: Objective
-    difficulty: 1.5
+    difficulty: 1
     icon:
       sprite: Objects/Fun/plushielizard_jobs.rsi
       state: captain
@@ -75,7 +75,7 @@
   - type: PickRandomPerson
     filters:
     - !type:HasRoleMindFilter
-      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles n shit.
+      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
       whitelist:
         components:
         - ChangelingRole
