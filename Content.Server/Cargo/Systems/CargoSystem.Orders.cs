@@ -157,22 +157,11 @@ namespace Content.Server.Cargo.Systems
             var amount = GetOutstandingOrderCount((station.Value, orderDatabase), order.Account);
             var capacity = orderDatabase.Capacity;
 
-            // Too many orders, avoid them getting spammed in the UI.
-            if (amount >= capacity)
+            if (amount > capacity)
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-too-many"));
                 PlayDenySound(uid, component);
                 return;
-            }
-
-            // Cap orders so someone can't spam thousands.
-            var cappedAmount = Math.Min(capacity - amount, order.OrderQuantity);
-
-            if (cappedAmount != order.OrderQuantity)
-            {
-                order.OrderQuantity = cappedAmount;
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-snip-snip"));
-                PlayDenySound(uid, component);
             }
 
             var cost = product.Cost * order.OrderQuantity;
@@ -306,6 +295,15 @@ namespace Content.Server.Cargo.Systems
 
             if (!GetAvailableProducts((uid, component)).Contains(args.CargoProductId))
                 return;
+
+            var amount = GetOutstandingOrderCount((stationUid.Value, orderDatabase), component.Account);
+
+            if (amount + args.Amount > orderDatabase.Capacity)
+            {
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-too-many"));
+                PlayDenySound(uid, component);
+                return;
+            }
 
             var order = new CargoOrderData(
                 GenerateOrderId(orderDatabase),
