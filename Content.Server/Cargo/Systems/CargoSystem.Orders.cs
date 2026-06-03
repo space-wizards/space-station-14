@@ -451,7 +451,7 @@ namespace Content.Server.Cargo.Systems
 
         public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
         {
-            return RelevantOrders(station, account, true).Sum(order => order.OrderQuantity - order.NumDispatched);
+            return RelevantOrders(station, account).Sum(order => order.OrderQuantity - order.NumDispatched);
         }
 
         /// <summary>
