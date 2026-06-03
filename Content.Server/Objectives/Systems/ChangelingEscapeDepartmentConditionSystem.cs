@@ -90,7 +90,7 @@ public sealed partial class ChangelingEscapeDepartmentConditionSystem : EntitySy
         if (!_idCard.TryFindIdCard(ownedEntity.Value, out var idCard))
             return 0.75f; // is not wearing an id
 
-        if (idCard.Comp.JobDepartments.Any(k => k.Id == ent.Comp.Department))
+        if (idCard.Comp.JobDepartments.All(k => k.Id != ent.Comp.Department))
             return 0.75f; // found ID is not of the correct department.
 
         return 1f;
