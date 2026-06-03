@@ -34,7 +34,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentInit>(OnStationInit);
         }
 
         private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
@@ -69,9 +69,9 @@ namespace Content.Server.Cargo.Systems
             UpdateOrderState(uid, station);
         }
 
-        private void OnMapInit(Entity<StationCargoOrderDatabaseComponent> ent, ref MapInitEvent args)
+        private void OnStationInit(EntityUid uid, StationCargoOrderDatabaseComponent orderDatabase, ComponentInit args)
         {
-            ent.Comp.NextOrderCheck = Timing.CurTime + ent.Comp.OrderCheckDelay;
+            orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
         }
 
         private void OnEmagged(Entity<CargoOrderConsoleComponent> ent, ref GotEmaggedEvent args)
