@@ -4,43 +4,37 @@
   name: extinguisher cabinet
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
-    - type: Sprite
-      sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
-      snapCardinals: true
-      layers:
-      - state: frame
-      - state: extinguisher
-        map: ["enum.ItemCabinetVisuals.Layer"]
-        visible: true
-      - state: closed
-        map: ["enum.OpenableVisuals.Layer"]
-    - type: ItemSlots
-      slots:
-        ItemCabinet:
-          ejectOnInteract: true
-          whitelist:
-            components:
-            - SpraySafety
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 80
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:EmptyAllContainersBehaviour
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalGlassBreak
-                params:
-                  volume: -4
+  - type: Sprite
+    sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
+    snapCardinals: true
+    layers:
+    - state: frame
+    - state: extinguisher
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: true
+    - state: closed
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - SpraySafety
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
 
 - type: entity
   parent: ExtinguisherCabinet
