@@ -111,6 +111,9 @@ public sealed class FluidSpill : GameTest
                     Assert.That(sidePuddle, Is.Null);
                 }
             }
+
+            // Cleanup
+            _sMapSystem.DeleteMap(mapId);
         });
     }
 }
