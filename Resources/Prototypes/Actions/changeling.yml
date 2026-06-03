@@ -107,8 +107,7 @@
     event: !type:ChangelingStingDnaEvent
   - type: PopupOnAction
     popupType: Medium
-    userMessage:
-      message: changeling-sting-success
+    selfMessage: changeling-sting-success
 
 - type: entity
   abstract: true
@@ -125,10 +124,8 @@
       - Bloodstream
     event: !type:EntityEffectActionEvent
   - type: PopupOnAction
-    popupType: MediumCaution
+    popupType: Medium
     selfMessage: changeling-sting-success
-    othersMessage: others
-    targetMessage: target
 
 - type: entity
   parent: BaseActionChangelingSting
