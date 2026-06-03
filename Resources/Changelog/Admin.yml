@@ -1739,5 +1739,12 @@ Entries:
   id: 212
   time: '2026-05-12T19:52:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43934
+- author: Samuka
+  changes:
+  - message: Super bonk smite is slower now, to avoid giving people seizures
+    type: Tweak
+  id: 213
+  time: '2026-06-03T16:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44223
 Name: Admin
 Order: 3
