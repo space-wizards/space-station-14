@@ -12,18 +12,17 @@ using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
 using Content.Shared.Station.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private TransformSystem _transformSystem = default!;
         [Dependency] private EmagSystem _emag = default!;
-        [Dependency] private IGameTiming _timing = default!;
 
         private void InitializeConsole()
         {
@@ -34,6 +33,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
+
             SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentInit>(OnStationInit);
         }
 
@@ -442,9 +442,9 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            if (_timing.CurTime >= component.NextDenySoundTime)
+            if (Timing.CurTime >= component.NextDenySoundTime)
             {
-                component.NextDenySoundTime = _timing.CurTime + component.DenySoundDelay;
+                component.NextDenySoundTime = Timing.CurTime + component.DenySoundDelay;
                 _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
             }
         }
