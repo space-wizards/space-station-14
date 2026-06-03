@@ -38,24 +38,10 @@
           Unprimed: { state: icon }
 
 - type: entity
-  name: composition C-4
-  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: [BasePlasticExplosive, BaseSyndicateContraband]
-  id: C4
+  id: BasePlasticExplosiveTrigger
+  parent: BasePlasticExplosive
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Bombs/c4.rsi
-    state: icon
-    layers:
-    - state: icon
-      map: ["base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Bombs/c4.rsi
-    slots:
-    - HEAD
-    quickEquip: false
-    equipDelay: 3
-    unequipDelay: 6
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: TriggerOnStuck
@@ -71,7 +57,7 @@
     - trigger
     - stuck
     delay: 10
-    delayOptions: [10, 30, 60, 120, 300]
+    delayOptions: [ 10, 30, 60, 120, 300 ]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
   - type: DeviceLinkSink
@@ -86,6 +72,27 @@
   - type: ExplodeOnTrigger
     keysIn:
     - timer
+
+
+- type: entity
+  name: composition C-4
+  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
+  parent: [BasePlasticExplosiveTrigger, BaseSyndicateContraband]
+  id: C4
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    slots:
+    - HEAD
+    quickEquip: false
+    equipDelay: 3
+    unequipDelay: 6
   - type: HolidayVisuals
     holidays:
       festive:
@@ -99,7 +106,7 @@
 - type: entity
   name: seismic charge
   description: Concussion based explosive designed to destroy large amounts of rock.
-  parent: [ BasePlasticExplosive, BaseSecurityCargoContraband ]
+  parent: [ BasePlasticExplosiveTrigger, BaseSecurityCargoContraband ]
   id: SeismicCharge
   components:
   - type: Sprite
@@ -108,16 +115,6 @@
     layers:
     - state: icon
       map: ["base"]
-  - type: TriggerOnActivate
-  - type: TriggerOnSignal
-  - type: TriggerOnStuck
-    keyOut: stuck
-  - type: ToggleTriggerCondition # for toggling the start on stuck ability
-    keys:
-    - stuck
-    toggleVerb: toggle-trigger-condition-stick-verb
-    toggleOn: toggle-trigger-condition-stick-on
-    toggleOff: toggle-trigger-condition-stick-off
   - type: TimerTrigger
     keysIn:
     - trigger
@@ -129,15 +126,6 @@
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
         volume: -6
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
-  - type: Explosive
     explosionType: Cryo
     totalIntensity: 120
     intensitySlope: 2
-    maxIntensity: 30
-    canCreateVacuum: false
-  - type: ExplodeOnTrigger
-    keysIn:
-    - timer
