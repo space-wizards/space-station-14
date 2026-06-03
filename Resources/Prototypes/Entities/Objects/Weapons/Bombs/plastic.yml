@@ -129,3 +129,5 @@
     explosionType: Cryo
     totalIntensity: 120
     intensitySlope: 2
+    maxIntensity: 30
+    canCreateVacuum: false
