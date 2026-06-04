@@ -1,7 +1,7 @@
 ﻿- type: entity
-  id: BasePlasticExplosive
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BasePlasticExplosive
   components:
   - type: Item
     size: Small
@@ -38,9 +38,9 @@
           Unprimed: { state: icon }
 
 - type: entity
-  id: BasePlasticExplosiveTrigger
-  parent: BasePlasticExplosive
   abstract: true
+  parent: BasePlasticExplosive
+  id: BasePlasticExplosiveTrigger
   components:
   - type: TriggerOnActivate
   - type: TriggerOnSignal
@@ -75,10 +75,10 @@
 
 
 - type: entity
-  name: composition C-4
-  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
   parent: [BasePlasticExplosiveTrigger, BaseSyndicateContraband]
   id: C4
+  name: composition C-4
+  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/c4.rsi
@@ -104,10 +104,10 @@
     price: 625 # 5000 for a bundle of 8
 
 - type: entity
-  name: seismic charge
-  description: Concussion based explosive designed to destroy large amounts of rock.
   parent: [ BasePlasticExplosiveTrigger, BaseSecurityCargoContraband ]
   id: SeismicCharge
+  name: seismic charge
+  description: Concussion based explosive designed to destroy large amounts of rock.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/seismic.rsi
@@ -126,6 +126,7 @@
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
         volume: -6
+  - type: Explosive
     explosionType: Cryo
     totalIntensity: 120
     intensitySlope: 2
