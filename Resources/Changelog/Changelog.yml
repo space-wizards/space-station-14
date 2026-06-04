@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: CDWimmer
-  changes:
-  - message: The Syndicate now commits one less war crime; the Syndicate medical bundle
-      cross is now blue.
-    type: Fix
-  id: 9228
-  time: '2025-11-26T21:13:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41541
 - author: Compilatron144
   changes:
   - message: Plasma got a Christmas makeover.
@@ -4101,3 +4093,10 @@
   id: 9739
   time: '2026-06-04T21:18:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44225
+- author: maland1
+  changes:
+  - message: Updated Traitor guidebook to properly describe uplinks.
+    type: Tweak
+  id: 9740
+  time: '2026-06-04T22:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44240
