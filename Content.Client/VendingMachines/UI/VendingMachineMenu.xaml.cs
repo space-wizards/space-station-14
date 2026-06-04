@@ -24,6 +24,7 @@ namespace Content.Client.VendingMachines.UI
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, EntityUid> _categoryDummies = [];
+        private readonly Dictionary<string, HashSet<EntProtoId>> _categoryDict = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
 
@@ -72,6 +73,7 @@ namespace Content.Client.VendingMachines.UI
             }
             _dummies.Clear();
             _categoryDummies.Clear();
+            _categoryDict.Clear();
         }
 
         private bool DataFilterCondition(string filter, ListData data)
@@ -141,32 +143,30 @@ namespace Content.Client.VendingMachines.UI
 
             var listData = new List<CategoryListData>
             {
-                new("", "Everything")
+                //make first button show every item
+                new("", "item-category-everything")
             };
 
-            //populate category icon sprites
-            foreach (var icon in categories.Icons.Values)
-            {
-                if (!_categoryDummies.TryGetValue(icon, out _))
-                {
-                    var dummy = _entityManager.Spawn(icon);
-                    _categoryDummies.Add(icon, dummy);
-                }
-            }
+            _categoryDict.Clear();
 
-            foreach (var category in categories.Categories.Keys)
+            foreach (var proto in categories.Categories)
             {
-                LocId name;
+                if (!_prototypeManager.Resolve(proto, out var category))
+                    continue;
 
-                if (!categories.Names.TryGetValue(category, out name))
+                _categoryDict.Add(category.ID, category.Items);
+
+                //populate category icon sprites
+                if (category.Icon != null
+                    && !_categoryDummies.TryGetValue(category.ID, out var dummy))
                 {
-                    name = "";
+                    dummy = _entityManager.Spawn(category.Icon);
+                    _categoryDummies.Add(category.ID, dummy);
                 }
 
-                var item = new CategoryListData(category, name);
+                var item = new CategoryListData(category.ID, category.Name);
 
-                if (categories.Icons.TryGetValue(category, out var icon)
-                    && _categoryDummies.TryGetValue(icon, out var sprite))
+                if (_categoryDummies.TryGetValue(category.ID, out var sprite))
                 {
                     item.Sprite = sprite;
                 }
@@ -243,7 +243,7 @@ namespace Content.Client.VendingMachines.UI
                 //category filtering
                 if (categorise)
                 {
-                    if (!categories!.Categories[_category].Contains(prototype))
+                    if (!_categoryDict[_category].Contains(prototype))
                         continue;
                 }
 
