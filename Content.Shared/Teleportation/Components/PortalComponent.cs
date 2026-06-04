@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
@@ -53,4 +53,11 @@ public sealed partial class PortalComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    ///     Radius around this portal where players will subscribe to linked portal views.
+    ///     This lets the destination stream in before the player collides with the portal.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    public float LinkedViewSubscriptionRange = 5f;
 }
