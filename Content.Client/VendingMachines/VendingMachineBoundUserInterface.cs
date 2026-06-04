@@ -3,6 +3,7 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
+using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
 
 namespace Content.Client.VendingMachines
@@ -26,17 +27,19 @@ namespace Content.Client.VendingMachines
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
             _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _menu.OnItemSelected += OnItemSelected;
+            _menu.OnCategorySelected += OnCategorySelected;
             Refresh();
         }
 
         public void Refresh()
         {
             var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+            EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
 
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
 
-            _menu?.Populate(_cachedInventory, enabled);
+            _menu?.Populate(_cachedInventory, categories, enabled);
         }
 
         public void UpdateAmounts()
@@ -67,6 +70,18 @@ namespace Content.Client.VendingMachines
             SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
+        private void OnCategorySelected(GUIBoundKeyEventArgs args, ListData data)
+        {
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            if (data is not CategoryListData { Category: var category })
+                return;
+
+            _menu?.SetCategory(category);
+            Refresh();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -78,7 +93,7 @@ namespace Content.Client.VendingMachines
 
             _menu.OnItemSelected -= OnItemSelected;
             _menu.OnClose -= Close;
-            _menu.Dispose();
+            _menu.Close();
         }
     }
 }

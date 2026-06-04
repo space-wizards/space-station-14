@@ -12,6 +12,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
 using Robust.Shared.Utility;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -22,6 +23,7 @@ namespace Content.Client.VendingMachines.UI
         [Dependency] private IEntityManager _entityManager = default!;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
+        private readonly Dictionary<EntProtoId, EntityUid> _categoryDummies = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
 
@@ -30,7 +32,14 @@ namespace Content.Client.VendingMachines.UI
         /// </summary>
         private bool _enabled;
 
+        /// <summary>
+        /// The currently selected category
+        /// </summary>
+        private string _category = "";
+
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
+
+        public event Action<GUIBoundKeyEventArgs, ListData>? OnCategorySelected;
 
         public VendingMachineMenu()
         {
@@ -42,22 +51,27 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.DataFilterCondition += DataFilterCondition;
             VendingContents.GenerateItem += GenerateButton;
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
+
+            Categories.GenerateItem += GenerateCategoryButton;
+            Categories.ItemKeyBindDown += (args, data) => OnCategorySelected?.Invoke(args, data);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
-
-            // Don't clean up dummies during disposal or we'll just have to spawn them again
-            if (!disposing)
-                return;
+            base.ExitedTree();
 
             // Delete any dummy items we spawned
             foreach (var entity in _dummies.Values)
             {
                 _entityManager.QueueDeleteEntity(entity);
             }
+
+            foreach (var entity in _categoryDummies.Values)
+            {
+                _entityManager.QueueDeleteEntity(entity);
+            }
             _dummies.Clear();
+            _categoryDummies.Clear();
         }
 
         private bool DataFilterCondition(string filter, ListData data)
@@ -83,15 +97,114 @@ namespace Content.Client.VendingMachines.UI
             button.Disabled = !_enabled || _amounts[protoID] == 0;
         }
 
+        private void GenerateCategoryButton(ListData data, ListContainerButton button)
+        {
+            if (data is not CategoryListData { Category: var category, Name: var name, Sprite: var sprite })
+                return;
+
+            var container = new BoxContainer
+            {
+                SetSize = new Vector2(60, 60),
+                Align = BoxContainer.AlignMode.Center
+            };
+
+            if (category == "")
+            {
+                var label = new Label
+                {
+                    Text = "*",
+                    Align = Label.AlignMode.Fill
+                };
+                container.AddChild(label);
+            }
+            else if (
+                sprite.IsValid()
+                && !_entityManager.Deleted(sprite)
+                && _entityManager.HasComponent<SpriteComponent>(sprite))
+            {
+                var spriteView = new SpriteView
+                {
+                    Stretch = SpriteView.StretchMode.Fill
+                };
+                spriteView.SetEntity(sprite);
+
+                container.AddChild(spriteView);
+            }
+
+            button.ToolTip = name;
+
+            button.AddChild(container);
+        }
+
+        private void CreateCategories(VendingCategoryComponent categories)
+        {
+
+            var listData = new List<CategoryListData>
+            {
+                new("", "Everything")
+            };
+
+            //populate category icon sprites
+            foreach (var icon in categories.Icons.Values)
+            {
+                if (!_categoryDummies.TryGetValue(icon, out _))
+                {
+                    var dummy = _entityManager.Spawn(icon);
+                    _categoryDummies.Add(icon, dummy);
+                }
+            }
+
+            foreach (var category in categories.Categories.Keys)
+            {
+                LocId name;
+
+                if (!categories.Names.TryGetValue(category, out name))
+                {
+                    name = "";
+                }
+
+                var item = new CategoryListData(category, name);
+
+                if (categories.Icons.TryGetValue(category, out var icon)
+                    && _categoryDummies.TryGetValue(icon, out var sprite))
+                {
+                    item.Sprite = sprite;
+                }
+
+                listData.Add(item);
+            }
+            Categories.PopulateList(listData);
+        }
+
         /// <summary>
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled)
+        public void Populate(
+            List<VendingMachineInventoryEntry> inventory,
+            VendingCategoryComponent? categories,
+            bool enabled)
         {
             _enabled = enabled;
             _listItems.Clear();
             _amounts.Clear();
+
+            bool categorise;
+
+            //if there are no categories
+            //or no category is selected
+            //then don't filter by category :godo:
+            if (categories == null)
+            {
+                Categories.Orphan();
+                categorise = false;
+            }
+            else
+            {
+                categorise = _category != "";
+
+                CreateCategories(categories);
+            }
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -125,6 +238,13 @@ namespace Content.Client.VendingMachines.UI
                 {
                     _amounts[entry.ID] = 0;
                     continue;
+                }
+
+                //category filtering
+                if (categorise)
+                {
+                    if (!categories!.Categories[_category].Contains(prototype))
+                        continue;
                 }
 
                 if (!_dummies.TryGetValue(entry.ID, out var dummy))
@@ -186,10 +306,20 @@ namespace Content.Client.VendingMachines.UI
             SetSize = new Vector2(Math.Clamp((longestEntryLength + 2) * 12, 250, 400),
                 Math.Clamp(contentCount * 50, 150, 350));
         }
+
+        public void SetCategory(string category)
+        {
+            _category = category;
+        }
     }
 
     public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
     {
         public string ItemText = string.Empty;
+    }
+
+    public record CategoryListData(string Category, LocId Name) : ListData
+    {
+        public EntityUid Sprite = EntityUid.Invalid;
     }
 }

@@ -1295,6 +1295,83 @@
     radius: 1.5
     energy: 3.0
     color: "#c73434"
+  - type: VendingCategory
+    categories:
+      hat:
+        - ClothingHeadHatJester
+        - ClothingHeadHatJesterAlt
+        - ClothingMaskJoy
+        - ClothingHeadHatCardborg
+        - ClothingHeadHatSombrero
+        - ClothingHeadHatPwig
+        - ClothingHeadHatSantahat
+        - ClothingHeadHatSkub
+        - ClothingHeadHatBeretFrench
+        - ClothingHeadHatChickenhead
+        - ClothingHeadHatPumpkin
+        - ClothingHeadHatShrineMaidenWig
+        - ClothingHeadHatWitch1
+        - ClothingHeadHatRedRacoon
+        - ClothingHeadPaperSack
+        - ClothingHeadPaperSackSmile
+        - ClothingEyesBlindfold
+        - ClothingHeadRastaHat
+        - ClothingHeadHatMitreClown
+        - ClothingMaskSadMime
+        - ClothingMaskScaredMime
+        - ClothingHeadHatCasa
+        - FoodPoppy
+        - ClothingHeadHatGladiator
+        - ClothingHeadHatCowboyBrown
+        - ClothingHeadHatCowboyBlack
+        - ClothingHeadHatCowboyWhite
+        - ClothingHeadHatCowboyGrey
+        - ClothingHeadHatWizardFake
+        - ClothingHeadHatRichard
+        - ClothingMaskBlushingClown
+        - ClothingMaskBlushingMime
+        - ClothingHeadHatCowboyBountyHunter
+      suit:
+        - ClothingUniformJumpsuitJester
+        - ClothingUniformJumpsuitJesterAlt
+        - ClothingOuterWinterClown
+        - ClothingOuterWinterMime
+        - ClothingOuterWinterMusician
+        - ClothingOuterCardborg
+        - ClothingOuterPonchoClassic
+        - ClothingOuterRobesJudge
+        - ClothingOuterPoncho
+        - ClothingOuterSanta
+        - ClothingOuterSkub
+        - ClothingOuterSuitChicken
+        - ClothingOuterSuitMonkey
+        - ClothingOuterSuitShrineMaiden
+        - ClothingOuterSuitWitchRobes
+        - ClothingOuterRedRacoon
+        - ClothingUniformJumpsuitDameDane
+        - ClothingOuterDameDane
+        - ClothingOuterClownPriest
+        - ClothingUniformJumpsuitKimono
+        - ClothingUniformJumpsuitGladiator
+        - ClothingOuterWizardFake
+        - ClothingOuterDogi
+        - ClothingOuterSuitCarp
+      shoe:
+        - ClothingShoesJester
+        - ClothingShoesDameDane
+        - ClothingShoesBootsCowboyBrown
+        - ClothingShoesBootsCowboyBlack
+        - ClothingShoesBootsCowboyWhite
+        - ClothingShoesBling
+        - ClothingShoesBootsCowboyFancy
+    names:
+      hat: Hats
+      suit: Suits
+      shoe: Shoes
+    icons:
+      hat: ClothingHeadHatBeretFrench
+      suit: ClothingUniformJumpsuitJester
+      shoe: ClothingShoesBootsCowboyBrown
 
 - type: entity
   parent: VendingMachine
