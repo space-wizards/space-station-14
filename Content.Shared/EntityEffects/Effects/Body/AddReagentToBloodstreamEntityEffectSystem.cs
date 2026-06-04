@@ -23,7 +23,7 @@ public sealed partial class AddReagentToBloodstreamEntityEffectSystem : EntityEf
         solution.AddReagent(args.Effect.Reagent, args.Effect.Quantity * args.Scale);
 
         _bloodstream.TryAddToBloodstream(entity.AsNullable(), solution);
-        _reactive.DoEntityReaction(entity, solution, ReactionMethod.Injection);
+        _reactive.DoEntityReaction(entity, solution, ReactionMethod.Injection); // TODO: This should be part of TryAddToBloodstream
     }
 }
 

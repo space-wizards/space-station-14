@@ -1,6 +1,5 @@
 using Content.Shared.Popups;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions.Components;
 

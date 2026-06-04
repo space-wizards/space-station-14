@@ -18,14 +18,10 @@ public sealed partial class EntityEffectActionSystem : EntitySystem
 
     private void OnEntityEffectAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectActionEvent args)
     {
-        var handled = false;
         foreach (var effect in ent.Comp.Effects)
         {
-            if (_effects.TryApplyEffect(args.Target, effect))
-                handled = true;
+            if (_effects.TryApplyEffect(args.Target, effect, user: args.Performer))
+                args.Handled = true;
         }
-
-        if (handled)
-            args.Handled = true;
     }
 }

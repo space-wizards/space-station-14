@@ -2,6 +2,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Actions;
 
@@ -26,9 +27,6 @@ public sealed partial class PopupOnActionSystem : EntitySystem
         if (TryComp<EntityTargetActionComponent>(ent, out var entityTarget) && entityTarget.Event is { } ev)
             target = ev.Target;
 
-        if (HasComp<InstantActionComponent>(ent))
-            target = args.Performer;
-
         var userName = Identity.Name(args.Performer, EntityManager);
         var targetName = target != null ? Identity.Name(target.Value, EntityManager) : string.Empty;
 
@@ -44,9 +42,21 @@ public sealed partial class PopupOnActionSystem : EntitySystem
             ? Loc.GetString(ent.Comp.TargetMessage, ("target", targetName), ("user", userName))
             : null;
 
-        _popup.PopupPredicted(selfMessage, othersMessage, args.Performer, args.Performer, ent.Comp.PopupType);
+        // Popup to show to the performer.
+        // If there is a target the popup is located on the target, if there is no target it is located on the user.
+        _popup.PopupClient(selfMessage, target ?? args.Performer, args.Performer, ent.Comp.PopupType);
 
+        // Popup to show to the target.
+        // Located on the target.
         if (target != null)
             _popup.PopupEntity(targetMessage, target.Value, target.Value, ent.Comp.PopupType);
+
+        // Popup for everyone else.
+        // Located on the performer.
+        var filter = Filter.PvsExcept(args.Performer, entityManager: EntityManager);
+        if (target != null)
+            filter = filter.RemovePlayerByAttachedEntity(target.Value);
+
+        _popup.PopupEntity(othersMessage, args.Performer, filter, true, ent.Comp.PopupType);
     }
 }
