@@ -32,7 +32,7 @@ public sealed partial class MimePowersSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MimePowersComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<MimePowersComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MimePowersComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
 
@@ -60,7 +60,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         }
     }
 
-    private void OnComponentStartup(Entity<MimePowersComponent> ent, ref ComponentStartup args)
+    private void OnMapInit(Entity<MimePowersComponent> ent, ref MapInitEvent args)
     {
         if (!ent.Comp.VowBroken)
             _statusEffects.TrySetStatusEffectDuration(ent, MutedEffect);
