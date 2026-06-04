@@ -942,11 +942,11 @@ namespace Content.Shared.Containers.ItemSlots
                     slot.Local = false;
                     AddItemSlot(uid, serverKey, slot);
                 }
+            }
 
-                if (TryComp(uid, out ItemSlotsComponent? itemSlots))
-                {
-                    UpdateAppearance(uid, itemSlots);
-                }
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            {
+                UpdateAppearance(uid, itemSlots);
             }
         }
 
