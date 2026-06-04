@@ -28,7 +28,7 @@ comp-kitchen-spike-begin-butcher = { CAPITALIZE(THE($user)) } begins to butcher 
 comp-kitchen-spike-butcher-self = You butchered { THE($victim) }!
 comp-kitchen-spike-butcher = { CAPITALIZE(THE($user)) } butchered { THE($victim) }!
 
-comp-kitchen-spike-need-sharp = Use a sharp object to butcher { THE($target) }.
+comp-kitchen-spike-need-tool-quality = { $quality } tool required to butcher { THE($target) }.
 
 comp-kitchen-spike-unhook-verb = Unhook
 
