@@ -168,7 +168,6 @@ public sealed partial class PortalSystem : SharedPortalSystem
         return views;
     }
 
-    // TODO Move to shared
     protected override void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,
         EntityCoordinates target)
     {
