@@ -265,6 +265,93 @@
     guides:
     - Bartender
     - Drinks
+  - type: VendingCategory
+    categories:
+      tool:
+        - DrinkGlass
+        - DrinkShotGlass
+        - DrinkGlassCoupeShaped
+        - DrinkVacuumFlask
+        - DrinkFlaskBar
+        - DrinkShaker
+        - DrinkJigger
+        - DrinkIceBucket
+        - BarSpoon
+        - CustomDrinkJug
+      bottle:
+        - DrinkAbsintheBottleFull
+        - DrinkAleBottleFull
+        - DrinkBeerBottleFull
+        - DrinkBlueCuracaoBottleFull
+        - DrinkCognacBottleFull
+        - DrinkColaBottleFull
+        - DrinkGinBottleFull
+        - DrinkGildlagerBottleFull
+        - DrinkGrenadineBottleFull
+        - DrinkCoffeeLiqueurBottleFull
+        - DrinkMelonLiquorBottleFull
+        - DrinkPatronBottleFull
+        - DrinkRumBottleFull
+        - DrinkSpaceMountainWindBottleFull
+        - DrinkSpaceUpBottleFull
+        - DrinkTequilaBottleFull
+        - DrinkVermouthBottleFull
+        - DrinkVodkaBottleFull
+        - DrinkWhiskeyBottleFull
+        - DrinkWineBottleFull
+        - DrinkChampagneBottleFull
+        - DrinkSakeBottleFull
+        - ChemistryBottleEthanol
+        - DrinkBottleOfNothingFull
+        - DrinkPoisonWinebottleFull
+      can:
+        - DrinkEnergyDrinkCan
+        - DrinkSodaWaterCan
+        - DrinkSolDryCan
+        - DrinkTonicWaterCan
+        - DrinkBeerCan
+        - DrinkWineCan
+      carton:
+        - DrinkCoconutWaterCarton
+        - DrinkMilkCarton
+        - DrinkCreamCarton
+        - DrinkJuiceLimeCarton
+        - DrinkJuiceLemonCarton
+        - DrinkJuicePineappleCarton
+        - DrinkJuiceOrangeCarton
+        - DrinkJuiceTomatoCarton
+      no-alcohol:
+        - DrinkCoconutWaterCarton
+        - DrinkColaBottleFull
+        - DrinkEnergyDrinkCan
+        - DrinkMilkCarton
+        - DrinkCreamCarton
+        - DrinkGrenadineBottleFull
+        - DrinkJuiceLimeCarton
+        - DrinkJuiceLemonCarton
+        - DrinkJuicePineappleCarton
+        - DrinkJuiceOrangeCarton
+        - DrinkJuiceTomatoCarton
+        - DrinkSodaWaterCan
+        - DrinkSolDryCan
+        - DrinkSpaceMountainWindBottleFull
+        - DrinkSpaceUpBottleFull
+        - DrinkTonicWaterCan
+        - DrinkBottleOfNothingFull
+
+    icons:
+      tool: DrinkGlass
+      bottle: DrinkBeerBottleFull
+      can: DrinkTonicWaterCan
+      carton: DrinkJuiceOrangeCarton
+      no-alcohol: DrinkMilkCarton
+    names:
+      tool: vending-category-tool
+      bottle: vending-category-bottle
+      can: vending-category-can
+      carton: vending-category-carton
+      no-alcohol: vending-category-no-alcohol
+
 
 - type: entity
   parent: VendingMachineBooze
@@ -423,6 +510,124 @@
     radius: 1.8
     energy: 3.0
     color: "#3db83b"
+  - type: VendingCategory
+    categories:
+      bag:
+        - ClothingBackpack
+        - ClothingBackpackDuffel
+        - ClothingBackpackSatchel
+        - ClothingBackpackSatchelLeather
+        - ClothingBeltStorageWaistbag
+      hat:
+        - ClothingHeadHatBeret
+        - ClothingHeadBandBlack
+        - ClothingHeadBandBlue
+        - ClothingHeadBandGreen
+        - ClothingHeadBandRed
+        - ClothingHeadBandSkull
+        - ClothingHeadHatGreyFlatcap
+        - ClothingHeadHatBrownFlatcap
+        - ClothingHeadHatGreysoft
+        - ClothingHeadHatMimesoft
+        - ClothingHeadHatBluesoft
+        - ClothingHeadHatYellowsoft
+        - ClothingHeadHatGreensoft
+        - ClothingHeadHatOrangesoft
+        - ClothingHeadHatRedsoft
+        - ClothingHeadHatBlacksoft
+        - ClothingHeadHatPurplesoft
+        - ClothingHeadHatCorpsoft
+        - ClothingHeadFishCap
+        - ClothingHeadRastaHat
+        - ClothingHeadPropellerHat
+      suit:
+        - ClothingRandomSpawner
+        - ClothingUniformRandomShorts
+        - ClothingUniformJumpsuitColorGrey
+        - ClothingUniformJumpskirtColorGrey
+        - ClothingUniformJumpsuitColorWhite
+        - ClothingUniformJumpskirtColorWhite
+        - ClothingUniformJumpsuitColorBlack
+        - ClothingUniformJumpskirtColorBlack
+        - ClothingUniformJumpsuitColorBlue
+        - ClothingUniformJumpskirtColorBlue
+        - ClothingUniformJumpsuitColorYellow
+        - ClothingUniformJumpskirtColorYellow
+        - ClothingUniformJumpsuitColorGreen
+        - ClothingUniformJumpskirtColorGreen
+        - ClothingUniformJumpsuitColorOrange
+        - ClothingUniformJumpskirtColorOrange
+        - ClothingUniformJumpsuitColorRed
+        - ClothingUniformJumpskirtColorRed
+        - ClothingUniformJumpsuitColorPurple
+        - ClothingUniformJumpskirtColorPurple
+        - ClothingUniformJumpsuitColorPink
+        - ClothingUniformJumpskirtColorPink
+        - ClothingUniformJumpsuitColorDarkBlue
+        - ClothingUniformJumpskirtColorDarkBlue
+        - ClothingUniformJumpsuitColorDarkGreen
+        - ClothingUniformJumpskirtColorDarkGreen
+        - ClothingUniformJumpsuitColorTeal
+        - ClothingUniformJumpskirtColorTeal
+        - ClothingUniformJumpsuitHawaiBlack
+        - ClothingUniformJumpsuitHawaiBlue
+        - ClothingUniformJumpsuitHawaiRed
+        - ClothingUniformJumpsuitHawaiYellow
+        - ClothingUniformJumpsuitFlannel
+        - ClothingUniformJumpsuitCasualBlue
+        - ClothingUniformJumpskirtCasualBlue
+        - ClothingUniformJumpsuitCasualPurple
+        - ClothingUniformJumpskirtCasualPurple
+        - ClothingUniformJumpsuitCasualRed
+        - ClothingUniformJumpskirtCasualRed
+        - ClothingUniformJumpsuitCasualGreen
+        - ClothingUniformJumpskirtCasualGreen
+      shoe:
+        - ClothingShoesColorBlack
+        - ClothingShoesColorBrown
+        - ClothingShoesColorWhite
+        - ClothingShoesColorBlue
+        - ClothingShoesColorYellow
+        - ClothingShoesColorGreen
+        - ClothingShoesColorOrange
+        - ClothingShoesColorRed
+        - ClothingShoesColorPurple
+        - ClothingHeadHatGreysoft
+        - ClothingHeadHatMimesoft
+        - ClothingHeadHatBluesoft
+        - ClothingHeadHatYellowsoft
+        - ClothingHeadHatGreensoft
+        - ClothingHeadHatOrangesoft
+        - ClothingHeadHatRedsoft
+      glove:
+        - ClothingHandsGlovesColorBlack
+        - ClothingHandsGlovesColorGray
+        - ClothingHandsGlovesColorBrown
+        - ClothingHandsGlovesColorWhite
+        - ClothingHandsGlovesColorRed
+        - ClothingHandsGlovesColorBlue
+        - ClothingHandsGlovesColorTeal
+        - ClothingHandsGlovesColorGreen
+        - ClothingHandsGlovesColorOrange
+        - ClothingHandsGlovesColorPurple
+      glasses:
+        - ClothingEyesGlasses
+        - ClothingEyesGlassesCheapSunglasses
+    icons:
+      bag: ClothingBackpack
+      hat: ClothingHeadPropellerHat
+      suit: ClothingUniformJumpsuitColorGrey
+      shoe: ClothingShoesColorBrown
+      glove: ClothingHandsGlovesColorWhite
+      glasses: ClothingEyesGlasses
+    names:
+      bag: vending-category-backpack
+      hat: vending-category-hat
+      suit: vending-category-suit
+      shoe: vending-category-shoe
+      glove: vending-category-glove
+      glasses: vending-category-glasses
+
 
 - type: entity
   parent: VendingMachine
@@ -1365,9 +1570,9 @@
         - ClothingShoesBling
         - ClothingShoesBootsCowboyFancy
     names:
-      hat: Hats
-      suit: Suits
-      shoe: Shoes
+      hat: vending-category-hat
+      suit: vending-category-suit
+      shoe: vending-category-shoe
     icons:
       hat: ClothingHeadHatBeretFrench
       suit: ClothingUniformJumpsuitJester

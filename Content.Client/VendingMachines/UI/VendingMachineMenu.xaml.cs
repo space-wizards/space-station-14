@@ -131,7 +131,7 @@ namespace Content.Client.VendingMachines.UI
                 container.AddChild(spriteView);
             }
 
-            button.ToolTip = name;
+            button.ToolTip = Loc.GetString(name);
 
             button.AddChild(container);
         }
