@@ -413,6 +413,8 @@
   - type: ObjectiveLimit
     # There is only one trade station so there should never be more than one of these objectives.
     limit: 1
+  - type: NotJobRequirement
+    jobs: [ Quartermaster, CargoTechnician, SalvageSpecialist ]
 
 - type: entity
   parent: [BaseTraitorObjective, BaseCounterObjective]
