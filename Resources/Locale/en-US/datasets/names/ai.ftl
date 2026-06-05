@@ -117,7 +117,7 @@ names-ai-dataset-87 = SHOWDOWN
 names-ai-dataset-88 = Solo
 names-ai-dataset-89 = Station Control Program
 
-# Reference to WINE (stands for "WINE Is Not an Emulator"), a windows-compatibility utility for linux. AINU stands for "AI's Not Unix".
+# Reference to XINU (stands for "XINU Is Not Unix"), an operating system for embedded systems. AINU stands for "AI Is Not Unix".
 names-ai-dataset-90 = AINU
 
 names-ai-dataset-91 = Super 35
