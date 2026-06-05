@@ -221,8 +221,8 @@
   - type: EntityEffectAction
     effects:
     - !type:AddReagentToBloodstream
-      reagent: Omnizine # changelings are linked in ss13 lore with the discovery of advanced chemicals such as omnizine, but this should be replaced by a special changeling chemical that cannot counteract the toxins from epinephrine overdose
-      quantity: 20 # Heals 40 units of damage in every category.
+      reagent: Antazine
+      quantity: 20 # Heals plenty of brute, less airloss and burn
     targetUser: true # makes it affect the changeling itself
 
 - type: entity

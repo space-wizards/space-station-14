@@ -86,6 +86,9 @@ reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user
 reagent-name-omnizine = omnizine
 reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that its origins remain a mystery because revealing the secrets of its production would render most commercial pharmaceuticals obsolete.
 
+reagent-name-antazine = antazine
+reagent-desc-antazine = A mysterious non newtonian chemical that seems to move on its own. Can be found in the blood of a certain species of nearly extinct aliens.
+
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = A complicated anti-toxin solution that quickly flushes out toxin while causing minor stress on the body. Reacts with histamine, duplicating itself while flushing it out. Overdose causes extreme pain.
 

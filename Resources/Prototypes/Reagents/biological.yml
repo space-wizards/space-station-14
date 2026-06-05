@@ -261,3 +261,21 @@
         damage:
           types:
             Cellular: 2
+
+# Changeling fleshmend chemical
+- type: reagent
+  id: Antazine
+  name: reagent-name-antazine
+  group: Medicine
+  desc: reagent-desc-antazine
+  physicalDesc: reagent-physical-desc-nondescript
+  flavor: enigmatic
+  color: "#fcf7a9"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:EvenHealthChange
+        damage:
+          Burn: -0.5
+          Airloss: -0.5
+          Brute: -2
