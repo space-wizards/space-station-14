@@ -603,6 +603,7 @@
       nameSegments:
       - NamesDeathCommandoFirst
       - NamesDeathCommandoLast
+      nameFormat: name-format-standard
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 
