@@ -222,7 +222,7 @@
     effects:
     - !type:AddReagentToBloodstream
       reagent: Antazine
-      quantity: 20 # Heals plenty of brute, less airloss and burn
+      quantity: 20 # Heals plenty of brute, less airloss and burn. Also somewhat prevents bloodloss.
     targetUser: true # makes it affect the changeling itself
 
 - type: entity
