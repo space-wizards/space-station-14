@@ -269,7 +269,7 @@
   group: Biological
   desc: reagent-desc-antazine
   physicalDesc: reagent-physical-desc-nondescript
-  flavor: reagent-physical-desc-enigmatic
+  flavor: meaty
   color: "#fcf7a9"
   metabolisms:
     Bloodstream:

@@ -19,9 +19,6 @@ public sealed partial class EntityEffectActionSystem : EntitySystem
 
     private void OnEntityEffectInstantAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectInstantActionEvent args)
     {
-        if (!ent.Comp.TargetUser)
-            return;
-
         foreach (var effect in ent.Comp.Effects)
         {
             // we trigger the actions on the user
