@@ -14,6 +14,17 @@ public sealed partial class EntityEffectActionSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<EntityEffectActionComponent, EntityEffectActionEvent>(OnEntityEffectAction);
+        SubscribeLocalEvent<EntityEffectActionComponent, EntityEffectInstantActionEvent>(OnEntityEffectInstantAction);
+    }
+
+    private void OnEntityEffectInstantAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectInstantActionEvent args)
+    {
+        foreach (var effect in ent.Comp.Effects)
+        {
+            // we trigger the actions on the user
+            if (_effects.TryApplyEffect(args.Performer, effect, user: args.Performer))
+                args.Handled = true;
+        }
     }
 
     private void OnEntityEffectAction(Entity<EntityEffectActionComponent> ent, ref EntityEffectActionEvent args)

@@ -130,3 +130,33 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingHallucinogenic
+
+- type: listing
+  id: ChangelingFleshMend
+  name: changeling-catalog-fleshmend-name
+  description: changeling-catalog-fleshmend-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: fleshmend }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingFleshMend
+
+- type: listing
+  id: ChangelingEpinephrine
+  name: changeling-catalog-epinephrine-name
+  description: changeling-catalog-epinephrine-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: epinephrine }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingEpinephrine

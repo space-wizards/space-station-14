@@ -15,9 +15,20 @@ public sealed partial class EntityEffectActionComponent : Component
     /// </summary>
     [DataField(required: true)]
     public List<EntityEffect> Effects = [];
+
+    /// <summary>
+    /// When set to true, the effect will be used on an entity that calls an <see cref="EntityEffectInstantActionEvent"/>.
+    /// </summary>
+    [DataField]
+    public bool TargetUser = false;
 }
 
 /// <summary>
 /// Event raised when an entity effect action is performed.
 /// </summary>
 public sealed partial class EntityEffectActionEvent : EntityTargetActionEvent;
+
+/// <summary>
+/// Event raised to link between instant actions & the entity effect action.
+/// </summary>
+public sealed partial class EntityEffectInstantActionEvent : InstantActionEvent;

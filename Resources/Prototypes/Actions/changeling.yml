@@ -202,3 +202,50 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingFleshMend
+  name: Flesh Mend
+  description: Produce fast-acting chemicals to cure our flesh.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: fleshmend
+  - type: InstantAction
+    event: !type:EntityEffectInstantActionEvent
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Omnizine # changelings are linked in ss13 lore with the discovery of advanced chemicals such as omnizine, but this should be replaced by a special changeling chemical that cannot counteract the toxins from epinephrine overdose
+      quantity: 20 # Heals 40 units of damage in every category.
+    targetUser: true # makes it affect the changeling itself
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingEpinephrine
+  name: Epinephrine Overdose
+  description: Injects epinephrine, at a cost.
+  components:
+  - type: Action
+    useDelay: 30 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: epinephrine
+  - type: InstantAction
+    event: !type:EntityEffectInstantActionEvent
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Stimulants
+      quantity: 15 # lasts 30 seconds, might be a bit much, and it can be spammed
+    - !type:AddReagentToBloodstream
+      reagent: Toxin
+      quantity: 2 # 16 poison damage
+    targetUser: true # makes it affect the changeling itself
