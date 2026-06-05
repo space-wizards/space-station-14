@@ -1,0 +1,15 @@
+- type: itemCategory
+  id: BarToolCategory
+  name: item-category-tool
+  icon: DrinkGlass
+  items:
+    - DrinkGlass
+    - DrinkShotGlass
+    - DrinkGlassCoupeShaped
+    - DrinkVacuumFlask
+    - DrinkFlaskBar
+    - DrinkShaker
+    - DrinkJigger
+    - DrinkIceBucket
+    - BarSpoon
+    - CustomDrinkJug

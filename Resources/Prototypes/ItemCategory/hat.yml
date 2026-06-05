@@ -1,8 +1,9 @@
 - type: itemCategory
-  id: hat
+  id: HatCategory
   name: item-category-hat
   icon: ClothingHeadPropellerHat
   items:
+    - FoodPoppy
     - ClothingHeadHatAnimalCat
     - ClothingHeadHatAnimalCatBrown
     - ClothingHeadHatAnimalCatBlack
