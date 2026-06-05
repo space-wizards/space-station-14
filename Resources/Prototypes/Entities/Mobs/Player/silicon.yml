@@ -859,7 +859,9 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
   - type: RandomMetadata
-    nameSegments: [NamesDeathCommando]
+    nameSegments:
+    - NamesDeathCommandoFirst
+    - NamesDeathCommandoLast
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict

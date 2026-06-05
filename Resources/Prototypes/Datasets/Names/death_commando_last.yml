@@ -1,0 +1,5 @@
+﻿- type: localizedDataset
+  id: NamesDeathCommandoLast
+  values:
+    prefix: names-death-commando-last-dataset-
+    count: 52

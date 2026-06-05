@@ -600,7 +600,9 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ NamesDeathCommando ]
+      nameSegments:
+      - NamesDeathCommandoFirst
+      - NamesDeathCommandoLast
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 
