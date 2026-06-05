@@ -1746,5 +1746,13 @@ Entries:
   id: 213
   time: '2026-06-03T16:56:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44223
+- author: Zekins3366
+  changes:
+  - message: Construction menu now updates immediately after reloading construction
+      prototypes.
+    type: Fix
+  id: 214
+  time: '2026-06-05T15:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44243
 Name: Admin
 Order: 3
