@@ -485,7 +485,7 @@ public enum LogType
     Connection = 104,
 
     /// <summary>
-    /// A player changed the clog mode on atmos device.
+    /// A player changed the mode on atmos device.
     /// </summary>
-    AtmosFilterClogChanged = 105,
+    AtmosModeChanged = 105,
 }

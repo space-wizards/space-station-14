@@ -173,7 +173,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnChangeClogModeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeClogModeMessage args)
         {
             filter.ClogMode = args.ClogMode;
-            _adminLogger.Add(LogType.AtmosFilterClogChanged, LogImpact.Medium,
+            _adminLogger.Add(LogType.AtmosModeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the clog mode on {ToPrettyString(uid):device} to {args.ClogMode}");
             DirtyUI(uid, filter);
         }
