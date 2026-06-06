@@ -11,10 +11,16 @@
   - type: Sprite
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
-    - map: ["computerLayerBody"]
-      state: television_wall
-    - map: ["computerLayerScreen"]
+    - state: television_wall
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
       state: television_wallscreen
+      shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
@@ -64,11 +70,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/flatscreentv.rsi
-    layers:
-    - map: ["computerLayerBody"]
-      state: television_wall
-    - map: ["computerLayerScreen"]
-      state: television_wallscreen
+    state: television_wall
   - type: Destructible
     thresholds:
     - trigger:
