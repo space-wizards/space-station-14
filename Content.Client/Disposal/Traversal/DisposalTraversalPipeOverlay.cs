@@ -22,10 +22,8 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
     private readonly DisposalTraversalVisionSystem _vision;
 
     private const float GlowRadius = 0.015f;
-    private static readonly Color PipeGlowColor = new(0.2f, 0.34f, 0.4f, 0.4f);
-    private static readonly Color CurrentPipeGlowColor = new(0.4f, 0.18f, 0.18f, 0.4f);
-    private static readonly Color PipeBaseColor = new(0.8f, 0.95f, 1.0f);
-    private static readonly Color CurrentPipeBaseColor = new(1.0f, 0.6f, 0.6f);
+    private static readonly Color CurrentPipeGlowColor = new(1.0f, 0.0f, 0.0f, 0.65f);
+    private static readonly Color PipeBaseColor = new(1.0f, 1.0f, 1.0f, 0.45f);
     private static readonly Vector2[] GlowOffsets =
     {
         new(-GlowRadius, 0),
@@ -90,24 +88,24 @@ public sealed partial class DisposalTraversalPipeOverlay : Overlay
             var worldPos = _transform.GetWorldPosition(uid);
             var worldRot = _transform.GetWorldRotation(uid);
 
-            var isCurrentTube = holder.CurrentTube == uid;
-            var glowColor = isCurrentTube ? CurrentPipeGlowColor : PipeGlowColor;
-            var baseColor = isCurrentTube ? CurrentPipeBaseColor : PipeBaseColor;
             var oldColor = sprite.Color;
 
-            _spriteSystem.SetColor((uid, sprite), glowColor);
-
-            foreach (var offset in GlowOffsets)
+            if (holder.CurrentTube == uid)
             {
-                _spriteSystem.RenderSprite(
-                    (uid, sprite),
-                    worldHandle,
-                    eyeRot,
-                    worldRot,
-                    worldPos + offset);
+                _spriteSystem.SetColor((uid, sprite), CurrentPipeGlowColor);
+
+                foreach (var offset in GlowOffsets)
+                {
+                    _spriteSystem.RenderSprite(
+                        (uid, sprite),
+                        worldHandle,
+                        eyeRot,
+                        worldRot,
+                        worldPos + offset);
+                }
             }
 
-            _spriteSystem.SetColor((uid, sprite), baseColor);
+            _spriteSystem.SetColor((uid, sprite), PipeBaseColor);
 
             _spriteSystem.RenderSprite(
                 (uid, sprite),

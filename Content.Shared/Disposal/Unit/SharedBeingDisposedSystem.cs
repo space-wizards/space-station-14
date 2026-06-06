@@ -40,7 +40,7 @@ public abstract partial class SharedBeingDisposedSystem : EntitySystem
         // This is so that movement under subfloors can be predicted by follower clients.
         foreach (var follower in followed.Following)
         {
-            _disposalHolder.AttachEntity((ent.Comp.Holder, holder), follower);
+            _disposalHolder.AttachEntity(ent.Comp.Holder, follower);
         }
     }
 
@@ -62,7 +62,7 @@ public abstract partial class SharedBeingDisposedSystem : EntitySystem
         if (!TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
             return;
 
-        _disposalHolder.AttachEntity((ent.Comp.Holder, holder), args.Follower);
+        _disposalHolder.AttachEntity(ent.Comp.Holder, args.Follower);
     }
 
     private void OnStoppedFollowing(Entity<BeingDisposedComponent> ent, ref EntityStoppedFollowingEvent args)

@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Body;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Holder;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Item;
@@ -23,6 +24,7 @@ public sealed partial class DisposalTraversalSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private DisposalTubeSystem _tube = default!;
@@ -141,10 +143,7 @@ public sealed partial class DisposalTraversalSystem : EntitySystem
         var container = GetOrEnsureContainer(holder.Owner);
         foreach (var contained in container.ContainedEntities)
         {
-            EnsureComp<BeingDisposedComponent>(contained).Holder = holder.Owner;
-            Dirty(contained, Comp<BeingDisposedComponent>(contained));
-            var ev = new DisposalSystemTransitionEvent();
-            RaiseLocalEvent(contained, ref ev);
+            _disposalHolder.AttachEntity(holder.Owner, contained);
         }
 
         if (TryComp<PhysicsComponent>(holder, out var physBody))
@@ -177,17 +176,13 @@ public sealed partial class DisposalTraversalSystem : EntitySystem
         var containedList = new List<EntityUid>(container.ContainedEntities);
         foreach (var entity in containedList)
         {
-            RemCompDeferred<BeingDisposedComponent>(entity);
-            var ev = new DisposalSystemTransitionEvent();
-            RaiseLocalEvent(entity, ref ev);
-
             _container.Remove(entity, container, reparent: false, force: true);
 
             var xform = Transform(entity);
-            if (xform.ParentUid != ent.Owner)
-                continue;
+            if (xform.ParentUid == ent.Owner)
+                _xform.AttachToGridOrMap(entity, xform);
 
-            _xform.AttachToGridOrMap(entity, xform);
+            _disposalHolder.DetachEntity(entity);
 
             if (TryComp<PhysicsComponent>(entity, out var physics))
                 _physics.WakeBody(entity, body: physics);
