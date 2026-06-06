@@ -135,4 +135,39 @@
   id: ThiefObjectiveGroupEscape
   weights:
     EscapeThiefShuttleObjective: 1
-#Changeling, crew, wizard, when you code it...
+
+# Changeling
+- type: weightedRandom # we need these dummy groups since its shitty code that won't stand having less than two groups before the objectives themselves
+  id: ChangelingObjectiveGroupDevourDummy
+  weights:
+    ChangelingObjectiveGroupDevour: 1
+
+- type: weightedRandom
+  id: ChangelingObjectiveGroupDevour
+  weights:
+    ChangelingUniqueIdentityObjective: 1
+    # eventually: devour most
+
+- type: weightedRandom
+  id: ChangelingObjectiveGroupEscapeDummy
+  weights:
+    ChangelingObjectiveGroupEscape: 1
+
+- type: weightedRandom
+  id: ChangelingObjectiveGroupEscape
+  weights:
+    ChangelingSurviveObjective: 0.5
+    ChangelingEscapeIdentityObjective: 1
+    # eventually: escape as a job/dept
+
+- type: weightedRandom
+  id: ChangelingObjectiveGroupKillDummy
+  weights:
+    ChangelingObjectiveGroupKill: 1
+
+- type: weightedRandom
+  id: ChangelingObjectiveGroupKill
+  weights:
+    ChangelingKillRandomPersonObjective: 1
+
+# Crew, wizard, when you code it...
