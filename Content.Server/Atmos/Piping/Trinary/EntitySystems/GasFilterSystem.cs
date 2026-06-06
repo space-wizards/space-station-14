@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
-
+            SubscribeLocalEvent<GasFilterComponent, GasFilterChangeClogModeMessage>(OnChangeClogModeMessage);
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
@@ -73,7 +73,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // Ratio of each each `removedGas` fraction that can be passed to its node without
             // exceeding max pressure. This might end up negative, but such cases are handled
             // correctly by the `RemoveRatio` method.
-            float selectedRatio;
+            float selectedOutletRatio;
             if (filter.FilteredGas.HasValue)
             {
                 var maxFilteredMoles = removedGas.GetMoles(filter.FilteredGas.Value);
@@ -81,24 +81,32 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 removedFilteredGas.SetMoles(filter.FilteredGas.Value, maxFilteredMoles);
                 removedGas.SetMoles(filter.FilteredGas.Value, 0f);
 
-                var outletRatio =
-                    AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
-                var filterRatio =
+                float selectedFilterRatio;
+                var maxFilterRatio =
                     AtmosphereSystem.FractionToMaxPressure(removedFilteredGas, filterNode.Air, Atmospherics.MaxOutputPressure);
-                selectedRatio = Math.Min(outletRatio, filterRatio);
+                if (filter.ClogMode == GasFilterClogMode.Block) {
+                    var maxOutletRatio =
+                        AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                    selectedFilterRatio = Math.Min(maxOutletRatio, maxFilterRatio);
+                    selectedOutletRatio = selectedFilterRatio;
+                } else { // filter.ClogMode == GasFilterClogMode.Pass
+                    selectedFilterRatio = maxFilterRatio;
+                    selectedOutletRatio =
+                        AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                }
 
-                var filteredGas = removedFilteredGas.RemoveRatio(selectedRatio);
+                var filteredGas = removedFilteredGas.RemoveRatio(selectedFilterRatio);
                 _atmosphereSystem.Merge(filterNode.Air, filteredGas);
                 var leftoverFilteredMoles = removedFilteredGas.GetMoles(filter.FilteredGas.Value);
                 inletNode.Air.AdjustMoles(filter.FilteredGas.Value, leftoverFilteredMoles);
 
-                _ambientSoundSystem.SetAmbience(uid, selectedRatio > 0f);
+                _ambientSoundSystem.SetAmbience(uid, selectedFilterRatio > 0f);
             } else {
-                selectedRatio =
+                selectedOutletRatio =
                     AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
             }
 
-            var passthroughGas = removedGas.RemoveRatio(selectedRatio);
+            var passthroughGas = removedGas.RemoveRatio(selectedOutletRatio);
 
             _atmosphereSystem.Merge(outletNode.Air, passthroughGas);
             _atmosphereSystem.Merge(inletNode.Air, removedGas);
@@ -142,7 +150,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.ClogMode, filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
@@ -160,6 +168,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
+        }
+
+        private void OnChangeClogModeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeClogModeMessage args)
+        {
+            filter.ClogMode = args.ClogMode;
+            _adminLogger.Add(LogType.AtmosFilterClogChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Actor):player} set the clog mode on {ToPrettyString(uid):device} to {args.ClogMode}");
+            DirtyUI(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)

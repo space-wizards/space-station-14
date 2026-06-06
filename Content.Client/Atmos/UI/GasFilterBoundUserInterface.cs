@@ -33,6 +33,7 @@ namespace Content.Client.Atmos.UI
             _window.PopulateGasList(atmosSystem.Gases);
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
+            _window.ClogModeChanged += OnClogModeChanged;
             _window.FilterTransferRateChanged += OnFilterTransferRatePressed;
             _window.SelectGasPressed += OnSelectGasPressed;
         }
@@ -40,6 +41,11 @@ namespace Content.Client.Atmos.UI
         private void OnToggleStatusButtonPressed(bool status)
         {
             SendMessage(new GasFilterToggleStatusMessage(status));
+        }
+
+        private void OnClogModeChanged(GasFilterClogMode mode)
+        {
+            SendMessage(new GasFilterChangeClogModeMessage(mode));
         }
 
         private void OnFilterTransferRatePressed(string value)
@@ -79,6 +85,7 @@ namespace Content.Client.Atmos.UI
 
             _window.Title = (cast.FilterLabel);
             _window.SetFilterStatus(cast.Enabled);
+            _window.SetClogMode(cast.ClogMode);
             _window.SetTransferRate(cast.TransferRate);
             if (cast.FilteredGas is not null)
             {

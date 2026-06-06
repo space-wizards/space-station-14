@@ -483,4 +483,9 @@ public enum LogType
     /// Events related to players connecting/disconnecting.
     /// </summary>
     Connection = 104,
+
+    /// <summary>
+    /// A player changed the clog mode on atmos device.
+    /// </summary>
+    AtmosFilterClogChanged = 105,
 }

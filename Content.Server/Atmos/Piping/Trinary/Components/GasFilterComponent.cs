@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Trinary.Components;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
@@ -7,6 +8,9 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     {
         [DataField]
         public bool Enabled = true;
+
+        [DataField]
+        public GasFilterClogMode ClogMode = GasFilterClogMode.Block;
 
         [DataField("inlet")]
         public string InletName = "inlet";
