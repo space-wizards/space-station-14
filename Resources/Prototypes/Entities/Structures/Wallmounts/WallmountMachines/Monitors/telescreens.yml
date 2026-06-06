@@ -9,8 +9,10 @@
     sprite: Structures/Machines/computers.rsi
     layers:
       - state: telescreen_frame
+      - state: telescreen
       - map: ["enum.PowerDeviceVisualLayers.Powered"]
-        state: telescreen
+        state: telescreen_cameras
+        shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
