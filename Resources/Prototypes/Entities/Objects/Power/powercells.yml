@@ -53,11 +53,6 @@
   - type: Battery
     maxCharge: 70
     startingCharge: 70
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Zinc
-        Quantity: 5
   - type: Tag
     tags:
       - PotatoBattery
@@ -81,12 +76,7 @@
       shader: unshaded
   - type: Battery
     maxCharge: 360
-    startingCharge: 360
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Zinc
-        Quantity: 5    
+    startingCharge: 360 
   - type: Tag
     tags:
       - PowerCellSmall
