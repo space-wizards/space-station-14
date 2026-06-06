@@ -11,12 +11,13 @@
       - state: telescreen_frame
       - map: ["enum.PowerDeviceVisualLayers.Powered"]
         state: telescreen
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          False: { visible: true }
-          True: { visible: false }
+          True: { visible: true }
+          False: { visible: false }
   - type: Destructible
     thresholds:
     - trigger:
