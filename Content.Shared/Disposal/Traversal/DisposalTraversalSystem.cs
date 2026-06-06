@@ -35,6 +35,12 @@ public sealed partial class DisposalTraversalSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<BeingDisposedComponent, MoveInputEvent>(OnMoveInput);
+        SubscribeLocalEvent<DisposalTraversalHolderComponent, EntityTerminatingEvent>(OnHolderTerminating);
+    }
+
+    private void OnHolderTerminating(Entity<DisposalTraversalHolderComponent> ent, ref EntityTerminatingEvent args)
+    {
+        ExitTraversal(ent.AsNullable());
     }
 
     private void OnMoveInput(Entity<BeingDisposedComponent> ent, ref MoveInputEvent args)
@@ -164,9 +170,6 @@ public sealed partial class DisposalTraversalSystem : EntitySystem
     public void ExitTraversal(Entity<DisposalTraversalHolderComponent?> ent)
     {
         if (_net.IsClient)
-            return;
-
-        if (Terminating(ent) || Deleted(ent))
             return;
 
         if (!Resolve(ent, ref ent.Comp))
