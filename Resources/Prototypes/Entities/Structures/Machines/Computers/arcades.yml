@@ -16,6 +16,7 @@
     stateKeyboard: null
     stateScreen: screen_invaders
     stateKeys: null
+    statePanel: panel
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
   - type: Icon

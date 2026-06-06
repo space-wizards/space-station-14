@@ -12,6 +12,7 @@
     stateKeyboard: null
     stateScreen: unshaded
     stateKeys: null
+    statePanel: panel
   - type: DiskConsole
   - type: ResearchClient
   - type: ActivatableUI

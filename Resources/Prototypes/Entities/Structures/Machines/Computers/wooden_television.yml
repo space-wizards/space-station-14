@@ -12,6 +12,7 @@
     stateKeyboard: null
     stateScreen: detective_television
     stateKeys: null
+    statePanel: television_panel
   - type: Computer
     board: ComputerTelevisionCircuitboard
   - type: PointLight

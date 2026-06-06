@@ -19,12 +19,6 @@ public sealed partial class ComputerVisualsComponent : Component
     /// The RSI state used for the keyboard of the computer.
     /// </summary>
     [DataField]
-    public string? StateKeys;
-
-    /// <summary>
-    /// The RSI state used for the keyboard of the computer.
-    /// </summary>
-    [DataField]
     public string? StateKeyboard;
 
     /// <summary>
@@ -32,4 +26,16 @@ public sealed partial class ComputerVisualsComponent : Component
     /// </summary>
     [DataField]
     public string? StateScreen;
+
+    /// <summary>
+    /// The RSI state used for the keyboard of the computer.
+    /// </summary>
+    [DataField]
+    public string? StateKeys;
+
+    /// <summary>
+    /// The RSI state used for the screen of the maintenance panel.
+    /// </summary>
+    [DataField]
+    public string? StatePanel;
 }

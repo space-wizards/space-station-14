@@ -1,3 +1,4 @@
+using Content.Client.Wires.Visualizers;
 using Content.Shared.Computer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -36,6 +37,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Keyboard, comp.StateKeyboard);
         SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Keys, comp.StateKeys);
         SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Screen, comp.StateScreen);
+        SpriteSystem.LayerSetRsiState((uid, sprite), WiresVisualLayers.MaintenancePanel, comp.StatePanel);
     }
 
     protected override void OnAppearanceChange(EntityUid uid,

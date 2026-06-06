@@ -16,11 +16,6 @@
     containers:
       - board
   - type: Computer
-  - type: ComputerVisuals
-    stateFrame: computer
-    stateKeyboard: generic_keyboard
-    stateScreen: generic
-    stateKeys: generic_keys
   - type: ApcPowerReceiver
     powerLoad: 50
   - type: PowerState
@@ -33,15 +28,16 @@
     sprite: Structures/Machines/computers.rsi
     layers:
     - map: ["enum.ComputerVisualLayers.Frame"]
-      state: computer
     - map: ["enum.ComputerVisualLayers.Keyboard"]
-      state: generic_keyboard
     - map: ["enum.ComputerVisualLayers.Screen"]
-      state: generic
     - map: ["enum.ComputerVisualLayers.Keys"]
-      state: generic_keys
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ComputerVisuals
+    stateFrame: computer
+    stateKeyboard: generic_keyboard
+    stateScreen: generic
+    stateKeys: generic_keys
+    statePanel: generic_panel_open
   - type: Appearance
   - type: LitOnPowered
   - type: PointLight

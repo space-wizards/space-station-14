@@ -2287,6 +2287,9 @@
             "name": "television_broken"
         },
         {
+            "name": "television_panel"
+        },
+        {
             "name": "telescreen",
             "directions": 4
         },
