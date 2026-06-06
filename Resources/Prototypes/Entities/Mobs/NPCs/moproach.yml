@@ -1,5 +1,5 @@
 - type: entity
-  parent: [SolutionMop, SolutionToolNormal]
+  parent: SolutionMopNormal
   id: SolutionMopMoproach
   categories: [ HideSpawnMenu ]
   components:
