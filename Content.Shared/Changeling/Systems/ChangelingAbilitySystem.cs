@@ -80,7 +80,6 @@ public sealed partial class ChangelingAbilitySystem : EntitySystem
         if (!_changelingDevour.CanDevour(ent.Owner, args.Target, checkDead: false, checkProtected: false))
             return;
 
-        _popup.PopupClient(Loc.GetString("changeling-sting-success", ("target", Identity.Entity(args.Target, EntityManager))), args.Target, ent.Owner, PopupType.Medium);
         _changelingIdentity.GrantIdentity(ent, args.Target);
 
         args.Handled = true;
