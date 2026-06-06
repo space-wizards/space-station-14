@@ -28,7 +28,6 @@
             type: AtmosAlertsComputerBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
-  - type: WiresVisuals
   - type: GuideHelp
     guides:
     - AtmosphericAlertsComputer
@@ -1007,10 +1006,10 @@
     anchored: true
   - type: UserInterface
     interfaces:
-        enum.SurveillanceCameraMonitorUiKey.Key:
-          type: SurveillanceCameraMonitorBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -1039,10 +1038,10 @@
   - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-        enum.SurveillanceCameraMonitorUiKey.Key:
-          type: SurveillanceCameraMonitorBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: ComputerSurveillanceWirelessCameraMonitor
@@ -1111,10 +1110,10 @@
     anchored: true
   - type: UserInterface
     interfaces:
-        enum.NewsWriterUiKey.Key:
-          type: NewsWriterBoundUserInterface
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+      enum.NewsWriterUiKey.Key:
+        type: NewsWriterBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -1278,7 +1277,7 @@
   components:
   - type: ComputerVisuals
     stateScreen: ai-fixer-empty
-    stateScreen: rd_key
+    stateKeys: rd_key
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -1344,7 +1343,7 @@
   components:
   - type: ComputerVisuals
     stateScreen: request-syndie
-    stateScreen: syndie_generic_keys
+    stateKeys: syndie_generic_keys
   # - type: Computer
   #   board: SyndicateCommsComputerCircuitboard
   - type: Anchorable

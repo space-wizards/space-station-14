@@ -16,6 +16,11 @@
     containers:
       - board
   - type: Computer
+  - type: ComputerVisuals
+    stateFrame: computer
+    stateKeyboard: generic_keyboard
+    stateScreen: generic
+    stateKeys: generic_keys
   - type: ApcPowerReceiver
     powerLoad: 50
   - type: PowerState
