@@ -1,6 +1,6 @@
 - type: entity
   parent: [SolutionMop, SolutionToolNormal]
-  id: SolutionMoproach
+  id: SolutionMopMoproach
   categories: [ HideSpawnMenu ]
   components:
   - type: SolutionRegeneration
@@ -46,7 +46,7 @@
     delay: 0.5 # quick feet
   - type: SolutionManager
     solutions:
-    - SolutionMoproach
+    - SolutionMopMoproach
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot
