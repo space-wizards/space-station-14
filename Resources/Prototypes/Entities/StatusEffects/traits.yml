@@ -6,13 +6,20 @@
   - type: CloneableStatusEffect
 
 - type: entity
-  parent: [BloodstreamStatusEffectBase, TraitStatusEffectBase]
+  abstract: true
+  parent: TraitStatusEffectBase
+  id: TraitStatusEffectDebuff
+  components:
+  - type: StatusEffectDebuff
+
+- type: entity
+  parent: [ BloodstreamStatusEffectBase, TraitStatusEffectDebuff ]
   id: TraitStatusEffectHemophilia
   components:
   - type: HemophiliaStatusEffect
 
 - type: entity
-  parent: [ PainNumbnessStatusEffectBase, TraitStatusEffectBase ]
+  parent: [ PainNumbnessStatusEffectBase, TraitStatusEffectDebuff ]
   id: TraitStatusEffectPainNumbness
   name: pain numbness
 
