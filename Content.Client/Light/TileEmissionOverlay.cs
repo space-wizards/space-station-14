@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -23,6 +24,7 @@ public sealed partial class TileEmissionOverlay : Overlay
     private readonly HashSet<Entity<TileEmissionComponent>> _entities = new();
 
     private List<Entity<MapGridComponent>> _grids = new();
+    private readonly List<WorldRect> _rectBuffer = new();
 
     public const int ContentZIndex = RoofOverlay.ContentZIndex + 1;
 
@@ -68,28 +70,30 @@ public sealed partial class TileEmissionOverlay : Overlay
                 var gridInvMatrix = _xformSystem.GetInvWorldMatrix(grid);
                 var localBounds = gridInvMatrix.TransformBox(bounds);
                 _entities.Clear();
-                _lookup.GetLocalEntitiesIntersecting(grid.Owner, localBounds, _entities);
+                _lookup.GetLocalEntitiesIntersecting(grid.Owner, localBounds, _entities,
+                    LookupFlags.StaticSundries | LookupFlags.Sensors | LookupFlags.Approximate);
 
                 if (_entities.Count == 0)
                     continue;
 
                 var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
+                var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
+                worldHandle.SetTransform(matty);
+                _rectBuffer.Clear();
 
                 foreach (var ent in _entities)
                 {
                     var xform = _xformQuery.Comp(ent);
-
-                    var tile = _mapSystem.LocalToTile(grid.Owner, grid, xform.Coordinates);
-                    var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
-
-                    worldHandle.SetTransform(matty);
+                    var tile = _mapSystem.LocalToTile(grid.Owner, grid.Comp, xform.Coordinates);
 
                     // Yes I am fully aware this leads to overlap. If you really want to have alpha then you'll need
                     // to turn the squares into polys.
                     // Additionally no shadows so if you make it too big it's going to go through a 1x wall.
                     var local = _lookup.GetLocalBounds(tile, grid.Comp.TileSize).Enlarged(ent.Comp.Range);
-                    worldHandle.DrawRect(local, ent.Comp.Color);
+                    _rectBuffer.Add(new WorldRect(local, ent.Comp.Color));
                 }
+
+                worldHandle.DrawRectsUnmodulated(CollectionsMarshal.AsSpan(_rectBuffer));
             }
         }, null);
     }
