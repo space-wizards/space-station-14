@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Content.Client.Graphics;
 using Content.Client.Light.EntitySystems;
 using Content.Shared.CCVar;
@@ -33,6 +34,7 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
     private readonly OccluderSystem _occluders;
     private readonly GridStencilSystem _gridStencil;
     private readonly SharedTransformSystem _xformSystem;
+    private readonly List<WorldTextureRect> _occluderQuads = new();
 
     private Color _color;
 
@@ -97,17 +99,18 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
             {
                 worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
                 var invMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
+                _occluderQuads.Clear();
 
                 foreach (var entry in _occluders.QueryAabb(mapId, expandedBounds))
                 {
                     DebugTools.Assert(entry.Component.Enabled);
                     var matrix = _xformSystem.GetWorldMatrix(entry.Transform);
-                    var localMatrix = Matrix3x2.Multiply(matrix, invMatrix);
-
-                    worldHandle.SetTransform(localMatrix);
                     var bounds = entry.Component.BoundingBox;
-                    worldHandle.DrawRect(bounds.Enlarged(aoPadding), Color.White);
+                    AddOccluderQuad(matrix, bounds.Enlarged(aoPadding));
                 }
+
+                worldHandle.SetTransform(invMatrix);
+                worldHandle.DrawTextureRectsUnmodulated(Texture.White, CollectionsMarshal.AsSpan(_occluderQuads));
             }, Color.Transparent);
 
         _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, BlurMultiplier);
@@ -145,6 +148,13 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         return distance / EyeManager.PixelsPerMeter + BlurMultiplier / cameraSize;
     }
 
+    private void AddOccluderQuad(in Matrix3x2 matrix, in Box2 bounds)
+    {
+        var origin = new Vector2(matrix.M31, matrix.M32);
+        var rotation = new Angle(Math.Atan2(matrix.M12, matrix.M11));
+        _occluderQuads.Add(new WorldTextureRect(new Box2Rotated(bounds.Translated(origin), rotation, origin)));
+    }
+
     protected override void DisposeBehavior()
     {
         _cfgManager.UnsubValueChanged(CCVars.AmbientOcclusionColor, OnColorChanged);
@@ -165,3 +175,4 @@ public sealed partial class AmbientOcclusionOverlay : Overlay
         }
     }
 }
+
