@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Content.Client.Graphics;
 using Content.Shared.Maps;
 using Robust.Client.Graphics;
@@ -27,6 +28,8 @@ public sealed partial class GridStencilSystem : EntitySystem
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
     private List<Entity<MapGridComponent>> _grids = new();
+    private readonly List<WorldRect> _rects = new();
+    private readonly List<Box2> _tileBounds = new();
 
     public override void Initialize()
     {
@@ -44,15 +47,80 @@ public sealed partial class GridStencilSystem : EntitySystem
     /// </summary>
     public IRenderTexture GetNonSpaceStencil(in OverlayDrawArgs args)
     {
-        return GetTileStencil(args,
+        return GetTileBoundsStencil(args,
             "non-space",
             "non-space-grid-stencil",
-            (_, tile) => !_turf.IsSpace(tile));
+            tile => !_turf.IsSpace(tile));
+    }
+
+    private IRenderTexture GetTileBoundsStencil(
+        in OverlayDrawArgs args,
+        string key,
+        string name,
+        Predicate<Tile> predicate)
+    {
+        var viewport = args.Viewport;
+        var target = viewport.RenderTarget;
+        var res = _resources.GetForViewport(viewport, static _ => new CachedResources());
+        var targetRes = res.GetOrCreate(key);
+
+        if (targetRes.Target?.Texture.Size != target.Size)
+        {
+            targetRes.Target?.Dispose();
+            targetRes.Target = _clyde.CreateRenderTarget(target.Size,
+                new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
+                name: name);
+            targetRes.LastFrame = 0;
+        }
+
+        var worldHandle = args.WorldHandle;
+        var invMatrix = viewport.GetWorldToLocalMatrix();
+        var mapId = args.MapId;
+        var worldBounds = args.WorldBounds;
+
+        if (targetRes.LastFrame == _timing.CurFrame &&
+            targetRes.LastMapId == mapId &&
+            targetRes.LastWorldBounds.Equals(worldBounds))
+        {
+            return targetRes.Target!;
+        }
+
+        targetRes.LastFrame = _timing.CurFrame;
+        targetRes.LastMapId = mapId;
+        targetRes.LastWorldBounds = worldBounds;
+
+        worldHandle.RenderInRenderTarget(targetRes.Target,
+            () =>
+            {
+                _grids.Clear();
+                _mapManager.FindGridsIntersecting(mapId, worldBounds, ref _grids);
+
+                foreach (var grid in _grids)
+                {
+                    var invGridMatrix = _xform.GetInvWorldMatrix(grid.Owner);
+                    var localBounds = invGridMatrix.TransformBox(worldBounds);
+                    _tileBounds.Clear();
+                    _map.GetLocalTileBounds(grid.Owner, grid, localBounds, _tileBounds, predicate);
+
+                    var worldToTextureMatrix = Matrix3x2.Multiply(_xform.GetWorldMatrix(grid.Owner), invMatrix);
+                    worldHandle.SetTransform(worldToTextureMatrix);
+                    _rects.Clear();
+
+                    foreach (var bounds in _tileBounds)
+                    {
+                        _rects.Add(new WorldRect(bounds, Color.White));
+                    }
+
+                    worldHandle.DrawRectsUnmodulated(CollectionsMarshal.AsSpan(_rects));
+                }
+            },
+            Color.Transparent);
+
+        return targetRes.Target!;
     }
 
     /// <summary>
     /// Returns a viewport-sized texture where tiles accepted by <paramref name="predicate"/> are white and everything else is transparent.
-    /// The texture is rebuilt at most once per viewport, key, map, and bounds per frame.
     /// </summary>
     public IRenderTexture GetTileStencil(
         in OverlayDrawArgs args,
@@ -102,6 +170,7 @@ public sealed partial class GridStencilSystem : EntitySystem
                     var worldToTextureMatrix = Matrix3x2.Multiply(transform, invMatrix);
                     var tiles = _map.GetTilesEnumerator(grid.Owner, grid, worldBounds);
                     worldHandle.SetTransform(worldToTextureMatrix);
+                    _rects.Clear();
 
                     while (tiles.MoveNext(out var tileRef))
                     {
@@ -109,8 +178,10 @@ public sealed partial class GridStencilSystem : EntitySystem
                             continue;
 
                         var bounds = _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize);
-                        worldHandle.DrawRect(bounds, Color.White);
+                        _rects.Add(new WorldRect(bounds, Color.White));
                     }
+
+                    worldHandle.DrawRectsUnmodulated(CollectionsMarshal.AsSpan(_rects));
                 }
             },
             Color.Transparent);
