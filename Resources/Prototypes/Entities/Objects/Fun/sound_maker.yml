@@ -518,6 +518,8 @@
     sound: *SoundPartyBlower
   - type: UseDelay
     delay: 2.0
+  - type: Whistle
+    distance: 3
 
 - type: entity
   parent: PartyBlowerPink
