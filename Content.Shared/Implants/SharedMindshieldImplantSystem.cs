@@ -1,37 +1,34 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Mind;
-using Content.Server.Roles;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Implants;
+using Content.Shared.Mind;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
-using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
+using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Stunnable;
 
-namespace Content.Server.Revolutionary;
+namespace Content.Shared.Implants;
 
-public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
+public abstract partial class SharedMindshieldImplantSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStunSystem _sharedStun = default!;
-    [Dependency] private IAdminLogManager _adminLogManager = default!;
-    [Dependency] private RoleSystem _roleSystem = default!;
-    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
+    [Dependency] private SharedRoleSystem _roleSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(MindShieldImplanted);
+        SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
     }
 
     /// <summary>
     /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
     /// </summary>
-    private void MindShieldImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent args)
+    private void OnImplantImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent args)
     {
         // Entity that was implanted
         var uid = args.Implanted;
@@ -47,7 +44,7 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
             if (_mindSystem.TryGetMind(uid, out var mindId, out _) &&
             _roleSystem.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
             {
-                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
+                TryLog(uid);
             }
 
             var stunTime = TimeSpan.FromSeconds(comp.StunTime);
@@ -57,4 +54,10 @@ public sealed partial class RevolutionarySystem : SharedRevolutionarySystem
             _popupSystem.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
         }
     }
+
+    /// <summary>
+    /// Will be implemented on the server side to log the mind that was deconverted
+    /// </summary>
+    protected abstract void TryLog(EntityUid uid);
+
 }
