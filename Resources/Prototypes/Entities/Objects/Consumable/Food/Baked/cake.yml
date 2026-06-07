@@ -893,7 +893,10 @@
   description: Happy Birthday little clown...
   components:
   - type: Sprite
-    state: birthday
+    layers:
+    - state: birthday
+    - state: birthday-unshaded
+      shader: unshaded
   - type: ToolRefinable
     refineResult:
     - id: FoodCakeBirthdaySlice

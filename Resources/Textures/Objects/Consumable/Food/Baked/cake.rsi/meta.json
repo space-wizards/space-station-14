@@ -55,6 +55,18 @@
             "name": "birthday"
         },
         {
+            "name": "birthday-unshaded",
+            "delays":
+                [
+                    [
+                        0.2,
+                        0.2,
+                        0.2,
+                        0.2
+                    ]
+                ]
+        },
+        {
             "name": "birthday-inhand-left",
             "directions": 4
         },
