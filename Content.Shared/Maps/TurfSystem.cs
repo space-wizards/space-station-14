@@ -185,7 +185,7 @@ public sealed partial class TurfSystem : EntitySystem
         var tileDef = GetContentTileDefinition(tile);
         DebugTools.Assert(false, $"Found non-cached tilemap atmosphere for ID {tile.TypeId}: {tileDef.ID}");
 
-        // Tile IDs are normally stable after startup, but keep a safe path for unusual reload/order cases.
+        // Tile IDs are normally stable after startup but keep this in case shit breaks.
         return tileDef.MapAtmosphere;
     }
 
