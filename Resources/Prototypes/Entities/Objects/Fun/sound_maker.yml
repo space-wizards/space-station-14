@@ -491,3 +491,26 @@
     hidden: true
   - type: UseDelay
     delay: 2.0
+
+- type: entity
+  parent: BaseItem
+  id: PartyHorn
+  name: party blower
+  description: Blow on one end, party comes out of the other.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/skub.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Payload
+  - type: Item
+    sprite: Objects/Misc/skub.rsi
+  - type: EmitSoundOnUse
+    sound: &SoundPartyHorn
+      path: /Audio/Items/Toys/partyhorn.ogg
+      params:
+        variation: 0.05
+    hidden: true
+  - type: UseDelay
+    delay: 2.0
