@@ -890,7 +890,7 @@
   name: birthday cake
   parent: [FoodCakeBase, BaseSlicingRefinableFood]
   id: FoodCakeBirthday
-  description: Happy Birthday little clown...
+  description: This cake is covered in sprinkles and sparkles to mark a very happy birthday! Keep away from small children.
   components:
   - type: Sprite
     layers:
@@ -908,7 +908,7 @@
   name: slice of birthday cake
   parent: FoodCakeSliceBase
   id: FoodCakeBirthdaySlice
-  description: A slice of your birthday.
+  description: A slice of your birthday. There's sprinkles on the inside too!
   components:
   - type: Sprite
     state: birthday-slice
