@@ -54,30 +54,40 @@ public sealed class VoiceCommandRecipeAmbiguityTest : GameTest
 
         var map = await Pair.CreateTestMap();
 
-        var voiceLatheProtos = SProtoMan.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => !p.Abstract)
-            .Where(p => !Pair.IsTestPrototype(p))
-            .Where(p => p.HasComponent<LatheComponent>() && p.HasComponent<VoiceCommandsComponent>())
-            .ToList();
+        // HasComponent resolves the component factory via IoC, so enumerate on the server thread.
+        var latheIds = new List<string>();
+        await Server.WaitPost(() =>
+        {
+            latheIds = SProtoMan.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !Pair.IsTestPrototype(p))
+                .Where(p => p.HasComponent<LatheComponent>() && p.HasComponent<VoiceCommandsComponent>())
+                .Select(p => p.ID)
+                .ToList();
+        });
 
-        Assert.That(voiceLatheProtos, Is.Not.Empty, "No voice-command lathe prototypes found to test.");
+        Assert.That(latheIds, Is.Not.Empty, "No voice-command lathe prototypes found to test.");
 
         // Spawn each lathe via the tracked helper; mutation runs on the server thread and cleans up after.
         var lathes = new List<(string Id, EntityUid Uid)>();
-        foreach (var proto in voiceLatheProtos)
-            lathes.Add((proto.ID, await SpawnAtPosition(proto.ID, map.GridCoords)));
+        foreach (var id in latheIds)
+            lathes.Add((id, await SpawnAtPosition(id, map.GridCoords)));
 
         var failures = new List<string>();
 
-        foreach (var (id, uid) in lathes)
+        // Reads only; recipe-name resolution needs the server thread's IoC context.
+        await Server.WaitAssertion(() =>
         {
-            // Candidates come from the provider path on MapInit.
-            var comp = SComp<VoiceCommandsComponent>(uid);
-            if (comp.Candidates.Count == 0)
-                failures.Add($"{id}: voice lathe contributes no recipe triggers");
-            else
-                CheckLathe(id, latheSystem, comp, digits, failures);
-        }
+            foreach (var (id, uid) in lathes)
+            {
+                // Candidates come from the provider path on MapInit.
+                var comp = SComp<VoiceCommandsComponent>(uid);
+                if (comp.Candidates.Count == 0)
+                    failures.Add($"{id}: voice lathe contributes no recipe triggers");
+                else
+                    CheckLathe(id, latheSystem, comp, digits, failures);
+            }
+        });
 
         Assert.That(failures, Is.Empty, $"{failures.Count} voice recipe command failure(s):\n{string.Join('\n', failures)}");
     }

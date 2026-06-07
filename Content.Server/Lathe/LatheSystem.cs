@@ -667,6 +667,10 @@ namespace Content.Server.Lathe
             if (!TryAddToQueue(ent, recipe, args.Quantity, ent.Comp))
                 return;
 
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(args.Source):player} voice-queued {args.Quantity} {name} at {ToPrettyString(ent):lathe}");
+
             _popup.PopupEntity(Loc.GetString("lathe-voice-fabricating", ("item", name)), ent, args.Source);
             TryStartProducing(ent, ent.Comp);
             UpdateUserInterfaceState(ent, ent.Comp);
