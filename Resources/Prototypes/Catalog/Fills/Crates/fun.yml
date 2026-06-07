@@ -323,6 +323,8 @@
           amount: 2
         - id: ClothingHeadHatPartyBlue
           amount: 2
+        - id: PartyBlowerPink
+        - id: PartyBlowerBlue
 
 - type: entity
   parent: CratePlastic

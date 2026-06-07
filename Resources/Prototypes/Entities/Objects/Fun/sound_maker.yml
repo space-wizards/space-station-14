@@ -494,23 +494,39 @@
 
 - type: entity
   parent: BaseItem
-  id: PartyHorn
+  id: PartyBlowerPink
   name: party blower
   description: Blow on one end, party comes out of the other.
   components:
   - type: Sprite
-    sprite: Objects/Misc/skub.rsi
-    state: icon
+    sprite: Objects/Fun/partyblower.rsi
+    layers:
+    - state: partyblower-tube
+    - state: partyblower-mouthpiece
+      color: "#f242f5"
   - type: Tag
     tags:
     - Payload
   - type: Item
-    sprite: Objects/Misc/skub.rsi
+    sprite: Objects/Fun/partyblower.rsi
   - type: EmitSoundOnUse
-    sound: &SoundPartyHorn
-      path: /Audio/Items/Toys/partyhorn.ogg
+    sound: &SoundPartyBlower
+      path: /Audio/Items/Toys/partyblower.ogg
       params:
         variation: 0.05
-    hidden: true
+  - type: EmitSoundOnTrigger
+    sound: *SoundPartyBlower
   - type: UseDelay
     delay: 2.0
+
+- type: entity
+  parent: PartyBlowerPink
+  id: PartyBlowerBlue
+  name: party blower
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/partyblower.rsi
+    layers:
+    - state: partyblower-tube
+    - state: partyblower-mouthpiece
+      color: "#1fdaff"
