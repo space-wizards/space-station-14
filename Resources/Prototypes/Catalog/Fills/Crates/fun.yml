@@ -312,8 +312,8 @@
         - id: GlowstickYellow
           amount: 2
         - id: FoodCakeBirthday
-        - id: DrinkLean
-          amount: 4
+        - id: DrinkCanPack
+          amount: 2
         - id: KnifePlastic
         - id: ClothingHeadHatPartyRed
           amount: 2
