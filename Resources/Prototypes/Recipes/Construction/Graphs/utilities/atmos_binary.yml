@@ -136,6 +136,12 @@
         amount: 2
         doAfter: 1
 
+    - to: heatpump
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
   - node: pressurepump
     entity: GasPressurePump
     edges:
@@ -478,6 +484,24 @@
 
   - node: bendradiator
     entity: HeatExchangerBend
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: heatpump
+    entity: GasHeatPump
     edges:
     - to: start
       conditions:

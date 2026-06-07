@@ -1,6 +1,7 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Network;
@@ -21,6 +22,7 @@ public sealed partial class AirAlarmComponent : Component
     public readonly Dictionary<string, GasVentPumpData> VentData = new();
     public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
     public readonly Dictionary<string, AtmosSensorData> SensorData = new();
+    public readonly Dictionary<string, GasHeatPumpData> HeatPumpData = new();
 
     public bool CanSync = true;
 

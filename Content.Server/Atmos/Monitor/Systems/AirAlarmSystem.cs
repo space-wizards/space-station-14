@@ -9,6 +9,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
@@ -207,6 +208,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         component.ScrubberData.Clear();
         component.SensorData.Clear();
         component.VentData.Clear();
+        component.HeatPumpData.Clear();
         component.KnownDevices.Clear();
 
         UpdateUI(uid, component);
@@ -227,6 +229,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         component.ScrubberData.Clear();
         component.SensorData.Clear();
         component.VentData.Clear();
+        component.HeatPumpData.Clear();
     }
 
     private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
@@ -283,6 +286,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         component.VentData.Clear();
         component.ScrubberData.Clear();
         component.SensorData.Clear();
+        component.HeatPumpData.Clear();
 
         SyncRegisterAllDevices(uid);
     }
@@ -376,6 +380,14 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 foreach (string addr in component.SensorData.Keys)
                 {
                     SetAllThresholds(uid, addr, sensorData);
+                }
+                break;
+            case GasHeatPumpData hpData:
+                foreach (var addr in component.HeatPumpData.Keys)
+                {
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
+                        $"{ToPrettyString(args.Actor)} copied settings to heat pump {addr}");
+                    SetData(uid, addr, hpData);
                 }
                 break;
         }
@@ -560,6 +572,10 @@ public sealed partial class AirAlarmSystem : EntitySystem
                         if (!controller.SensorData.TryAdd(args.SenderAddress, sensorData))
                             controller.SensorData[args.SenderAddress] = sensorData;
                         break;
+                    case GasHeatPumpData heatPumpData:
+                        if (!controller.HeatPumpData.TryAdd(args.SenderAddress, heatPumpData))
+                            controller.HeatPumpData[args.SenderAddress] = heatPumpData;
+                        break;
                 }
 
                 controller.KnownDevices.Add(args.SenderAddress);
@@ -662,6 +678,10 @@ public sealed partial class AirAlarmSystem : EntitySystem
             dataToSend.Add((addr, data));
         }
         foreach (var (addr, data) in alarm.SensorData)
+        {
+            dataToSend.Add((addr, data));
+        }
+        foreach (var (addr, data) in alarm.HeatPumpData)
         {
             dataToSend.Add((addr, data));
         }
