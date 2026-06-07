@@ -349,6 +349,7 @@
     - id: DeskBell
     - id: BikeHornImplanter
     - id: SadTromboneImplanter
+    - id: PartyBlowerPink
     - !type:GroupSelector
       children:
       - id: Whistle
