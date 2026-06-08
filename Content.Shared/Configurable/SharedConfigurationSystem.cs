@@ -47,7 +47,7 @@ public abstract partial class SharedConfigurationSystem : EntitySystem
         {
             var value = args.Config.GetValueOrDefault(key);
 
-            if (string.IsNullOrWhiteSpace(value) || validation.Regex.IsMatch(value))
+            if (string.IsNullOrWhiteSpace(value) || !validation.Regex.IsMatch(value))
                 continue;
 
             component.Config[key] = value;
