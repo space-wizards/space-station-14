@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Item
@@ -12,7 +13,7 @@ namespace Content.Shared.Item
         /// Prototypes included in a category
         /// </summary>
         [DataField]
-        public HashSet<EntProtoId> Items = [];
+        public EntityWhitelist Whitelist = default!;
 
         /// <summary>
         /// Icon corresponding to the category
