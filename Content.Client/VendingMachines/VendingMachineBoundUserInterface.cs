@@ -28,18 +28,21 @@ namespace Content.Client.VendingMachines
             _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _menu.OnItemSelected += OnItemSelected;
             _menu.OnCategorySelected += OnCategorySelected;
+
+            EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
+            _menu.CreateCategories(categories);
+
             Refresh();
         }
 
         public void Refresh()
         {
             var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
-            EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
 
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
 
-            _menu?.Populate(_cachedInventory, categories, enabled);
+            _menu?.Populate(_cachedInventory, enabled);
         }
 
         public void UpdateAmounts()
