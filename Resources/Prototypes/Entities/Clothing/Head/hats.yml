@@ -24,6 +24,7 @@
     - PetWearable
     - CorgiWearable
     - ClothMade
+    - HeadWearable
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
@@ -45,6 +46,7 @@
     - PetWearable
     - CorgiWearable
     - ClothMade
+    - HeadWearable
     - Recyclable
     - WhitelistChameleon
 
@@ -61,6 +63,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - PetWearable
     - CorgiWearable
@@ -80,6 +83,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - WhitelistChameleon
 
 - type: entity
@@ -94,6 +98,7 @@
       sprite: Clothing/Head/Hats/casa.rsi
     - type: Tag
       tags:
+      - HeadWearable
       - PetWearable
       - CorgiWearable
 
@@ -109,6 +114,7 @@
     sprite: Clothing/Head/Hats/beret_rnd.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -128,6 +134,7 @@
     sprite: Clothing/Head/Hats/beret_engineering.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -147,6 +154,7 @@
     sprite: Clothing/Head/Hats/beret_qm.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -166,6 +174,7 @@
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -185,6 +194,7 @@
     sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -200,6 +210,7 @@
     sprite: Clothing/Head/Hats/beret_physician.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -215,6 +226,7 @@
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -230,6 +242,7 @@
     sprite: Clothing/Head/Hats/beret_merc.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -247,6 +260,7 @@
     tags:
     - ClothMade
     - HamsterWearable
+    - HeadWearable
     - WhitelistChameleon
     - PetWearable
     - CorgiWearable
@@ -263,6 +277,7 @@
     sprite: Clothing/Head/Hats/bowler_hat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -278,6 +293,7 @@
     sprite: Clothing/Head/Hats/captain.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -312,6 +328,7 @@
     sprite: Clothing/Head/Hats/centcom.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -341,6 +358,7 @@
         - ChefPilot
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -360,6 +378,7 @@
     sprite: Clothing/Head/Hats/brownfedora.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -401,6 +420,7 @@
     sprite: Clothing/Head/Hats/fez.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -416,6 +436,7 @@
     sprite: Clothing/Head/Hats/hopcap.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -435,6 +456,7 @@
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -456,6 +478,7 @@
     price: 500
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -471,6 +494,7 @@
     sprite: Clothing/Head/Hats/witchhat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -486,6 +510,7 @@
     sprite: Clothing/Head/Hats/paper.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -501,6 +526,7 @@
     sprite: Clothing/Head/Hats/pirate.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
   - type: AddAccentClothing
@@ -519,6 +545,7 @@
     sprite: Clothing/Head/Hats/plaguedoctor.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
     - ClothMade
     - Recyclable
@@ -540,6 +567,7 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - ClothMade
     - WhitelistChameleon
@@ -576,6 +604,7 @@
     storedRotation: 0
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -593,6 +622,7 @@
     accent: SpanishAccent
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -608,6 +638,7 @@
     sprite: Clothing/Head/Hats/surgcap_blue.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - ClothMade
     - Recyclable
     - HamsterWearable
@@ -662,6 +693,7 @@
     sprite: Clothing/Head/Hats/tophat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -744,6 +776,7 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - ClothMade
     - WhitelistChameleon
@@ -762,6 +795,7 @@
     stealGroup: ClothingHeadHatWarden
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -778,6 +812,7 @@
     sprite: Clothing/Head/Hats/witch.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - WhitelistChameleon
     - ClothMade
@@ -821,6 +856,7 @@
     sprite: Clothing/Head/Hats/wizardhat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -966,6 +1002,7 @@
     sprite: Clothing/Head/Hats/nursehat.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - ClothMade
     - Recyclable
     - HamsterWearable
@@ -1035,6 +1072,7 @@
     sprite: Clothing/Head/Hats/beret_cmo.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -1164,6 +1202,7 @@
       storagebase: !type:Container
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -1181,6 +1220,7 @@
     sprite: Clothing/Head/Hats/capcap.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -1206,6 +1246,7 @@
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - ClothMade
@@ -1243,6 +1284,7 @@
     storedRotation: 0
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - WhitelistChameleon
@@ -1290,6 +1332,7 @@
     sprite: Clothing/Head/Hats/party_water_cup.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - WhitelistChameleon
@@ -1304,6 +1347,7 @@
   - type: Tag
     tags:
     - BrimFlatcapGrey
+    - HeadWearable
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
@@ -1318,6 +1362,7 @@
   - type: Tag
     tags:
     - BrimFlatcapBrown
+    - HeadWearable
   - type: Sprite
     sprite: Clothing/Head/Hats/brownflatcap.rsi
   - type: Clothing
@@ -1338,6 +1383,7 @@
       replacement: cowboy
     - type: Tag
       tags:
+      - HeadWearable
       - PetWearable
       - CorgiWearable
       - WhitelistChameleon
@@ -1352,12 +1398,6 @@
       sprite: Clothing/Head/Hats/cowboyhatblack.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatblack.rsi
-    - type: Tag
-      tags:
-      - PetWearable
-      - CorgiWearable
-      - WhitelistChameleon
-      - HamsterWearable
 
 - type: entity
   parent: ClothingHeadHatCowboyBrown
@@ -1368,12 +1408,6 @@
       sprite: Clothing/Head/Hats/cowboyhatgrey.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatgrey.rsi
-    - type: Tag
-      tags:
-      - PetWearable
-      - CorgiWearable
-      - WhitelistChameleon
-      - HamsterWearable
 
 - type: entity
   parent: ClothingHeadHatCowboyBrown
@@ -1384,12 +1418,6 @@
       sprite: Clothing/Head/Hats/cowboyhatred.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatred.rsi
-    - type: Tag
-      tags:
-      - PetWearable
-      - CorgiWearable
-      - WhitelistChameleon
-      - HamsterWearable
 
 - type: entity
   parent: ClothingHeadHatCowboyBrown
@@ -1400,12 +1428,6 @@
       sprite: Clothing/Head/Hats/cowboyhatwhite.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatwhite.rsi
-    - type: Tag
-      tags:
-      - PetWearable
-      - CorgiWearable
-      - WhitelistChameleon
-      - HamsterWearable
 
 - type: entity
   parent: ClothingHeadHatCowboyBrown
@@ -1416,12 +1438,6 @@
       sprite: Clothing/Head/Hats/cowboyhatbountyhunter.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/cowboyhatbountyhunter.rsi
-    - type: Tag
-      tags:
-      - PetWearable
-      - CorgiWearable
-      - WhitelistChameleon
-      - HamsterWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -1438,6 +1454,7 @@
     node: strawhat
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
     - HamsterWearable
@@ -1482,6 +1499,7 @@
     sprite: Clothing/Head/Hats/beret_medic.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -1497,6 +1515,7 @@
     sprite: Clothing/Head/Hats/solidheadband.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 
@@ -1534,6 +1553,7 @@
       path: /Audio/Items/flashlight_off.ogg
   - type: Tag
     tags:
+    - HeadWearable
     - PetWearable
     - CorgiWearable
 

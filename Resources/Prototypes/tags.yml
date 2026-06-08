@@ -727,6 +727,9 @@
   id: Head # ConstructionGraph: RitualSeat
 
 - type: Tag
+  id: HeadWearable # Things wearable in the head slot
+
+- type: Tag
   id: HelmetEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit. PartAssembly: VimHarness. ItemMapper: VimHarness
 
 - type: Tag

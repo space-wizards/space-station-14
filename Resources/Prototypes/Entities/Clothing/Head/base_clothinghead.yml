@@ -21,6 +21,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - WhitelistChameleon
 
 - type: entity
@@ -37,6 +38,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - HeadWearable
     - Recyclable
     - WhitelistChameleon
 
@@ -128,8 +130,9 @@
     unequipDelay: 2
   - type: Tag
     tags:
-    - WhitelistChameleon
+    - HeadWearable
     - HelmetEVA
+    - WhitelistChameleon
   - type: IdentityBlocker
   - type: HideLayerClothing
     slots:
@@ -178,6 +181,7 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
   - type: IdentityBlocker
   - type: HideLayerClothing
