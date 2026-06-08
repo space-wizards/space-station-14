@@ -54,7 +54,7 @@ namespace Content.Shared.Tabletop
 
             if (_net.IsServer && !msg.IsDragging)
             {
-                RaiseNetworkEvent(new TabletopServerUpdatedMovedMessage(msg.DraggedEntityUid));
+                RaiseNetworkEvent(new TabletopServerUpdatedMovedMessage(msg.DraggedEntityUid), args.SenderSession);
             }
             draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
             Dirty(dragged, draggableComponent);

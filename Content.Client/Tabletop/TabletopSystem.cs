@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
@@ -32,8 +33,7 @@ namespace Content.Client.Tabletop
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
-        private List<(EntityUid Entity, MapCoordinates Coords, int Count)> _waitingOnServerToMove = new();
-
+        private List<(EntityUid Entity, MapCoordinates Coords, int Count, TimeSpan LastMove)> _waitingOnServerToMove = new();
         private float _timePassed; // Time passed since last update sent to the server.
         private EntityUid? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
@@ -72,11 +72,11 @@ namespace Content.Client.Tabletop
         {
             var index = _waitingOnServerToMove.FindIndex(i => i.Entity == ent);
             if (index < 0)
-                _waitingOnServerToMove.Add((ent, coords, 1));
+                _waitingOnServerToMove.Add((ent, coords, 1, _gameTiming.CurTime));
             else
             {
                 var value = _waitingOnServerToMove[index];
-                _waitingOnServerToMove[index] = value with { Coords = coords, Count = value.Count + 1 };
+                _waitingOnServerToMove[index] = value with { Coords = coords, Count = value.Count + 1 , LastMove = _gameTiming.CurTime};
             }
         }
 
@@ -109,11 +109,18 @@ namespace Content.Client.Tabletop
                 return;
             }
 
+            List<(EntityUid Entity, MapCoordinates Coords, int Count, TimeSpan LastMove)> toBeRemoved = new();
             foreach (var item in _waitingOnServerToMove)
             {
+                if (item.LastMove + TimeSpan.FromSeconds(1) < _gameTiming.CurTime)
+                {
+                    toBeRemoved.Add(item);
+                    continue;
+                }
                 if (_draggedEntity != item.Entity)
                     _transformSystem.SetMapCoordinates(item.Entity, item.Coords);
             }
+            _waitingOnServerToMove = _waitingOnServerToMove.Except(toBeRemoved).ToList();
             // If no entity is being dragged or no viewport is clicked, return
             if (_draggedEntity == null || _viewport == null) return;
 
