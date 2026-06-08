@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Shared.Configurable;
@@ -10,6 +11,7 @@ namespace Content.Shared.Configurable;
 /// </summary>
 public abstract partial class SharedConfigurationSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private SharedToolSystem _toolSystem = default!;
 
@@ -36,11 +38,16 @@ public abstract partial class SharedConfigurationSystem : EntitySystem
 
     private void OnUpdate(EntityUid uid, ConfigurationComponent component, ConfigurationUpdatedMessage args)
     {
+        if (!_protoMan.Resolve(component.Validation, out var validation))
+        {
+            return;
+        }
+
         foreach (var key in component.Config.Keys)
         {
             var value = args.Config.GetValueOrDefault(key);
 
-            if (string.IsNullOrWhiteSpace(value) || component.Validation != null && !component.Validation.IsMatch(value))
+            if (string.IsNullOrWhiteSpace(value) || validation.Regex.IsMatch(value))
                 continue;
 
             component.Config[key] = value;
