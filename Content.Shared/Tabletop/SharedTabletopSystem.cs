@@ -17,6 +17,7 @@ namespace Content.Shared.Tabletop
         [Dependency] private SharedAppearanceSystem _appearance = default!;
         [Dependency] private SharedMapSystem _mapSystem = default!;
         [Dependency] protected SharedTransformSystem Transforms = default!;
+        [Dependency] private INetManager _net = default!;
 
         public override void Initialize()
         {
@@ -51,6 +52,10 @@ namespace Content.Shared.Tabletop
             if (!TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
                 return;
 
+            if (_net.IsServer && !msg.IsDragging)
+            {
+                RaiseNetworkEvent(new TabletopServerUpdatedMovedMessage(msg.DraggedEntityUid));
+            }
             draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
             Dirty(dragged, draggableComponent);
 

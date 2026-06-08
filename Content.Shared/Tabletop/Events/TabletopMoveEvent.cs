@@ -33,4 +33,14 @@ namespace Content.Shared.Tabletop.Events
             TableUid = tableUid;
         }
     }
+    [Serializable, NetSerializable]
+    public sealed class TabletopServerUpdatedMovedMessage : EntityEventArgs
+    {
+        public NetEntity Entity;
+
+        public TabletopServerUpdatedMovedMessage(NetEntity entity)
+        {
+            Entity = entity;
+        }
+    }
 }
