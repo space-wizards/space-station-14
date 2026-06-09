@@ -27,6 +27,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -59,6 +60,12 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnComponentInit(Entity<ImplanterComponent> ent, ref ComponentInit args)
     {
+        ent.Comp.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
+            .Where(proto => _whitelist.IsValid(ent.Comp.DeimplantWhitelist, proto))
+            .Select(proto => new EntProtoId(proto.ID))
+            .OrderBy(proto => proto)
+            .ToList();
+
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
@@ -67,7 +74,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
+        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
 
@@ -117,7 +124,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
                 // show popup to the user saying implant failed
                 var name = Identity.Name(target, EntityManager, args.User);
                 var msg = Loc.GetString("implanter-component-implant-failed", ("implant", implant), ("target", name));
-                _popup.PopupEntity(msg, target, args.User);
+                _popup.PopupClient(msg, target, args.User);
                 // prevent further interaction since popup was shown
                 args.Handled = true;
                 return;
@@ -157,9 +164,10 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnSelected(Entity<ImplanterComponent> ent, ref DeimplantChangeVerbMessage args)
     {
-        ent.Comp.DeimplantChosen = args.Implant;
-        Dirty(ent);
-        SetSelectedDeimplant(ent.AsNullable(), args.Implant);
+        if (args.Implant == null)
+            return;
+
+        SetSelectedDeimplant(ent.AsNullable(), (EntProtoId)args.Implant);
     }
 
     private void TryOpenUi(Entity<ImplanterComponent?> ent, EntityUid user)
@@ -168,7 +176,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         _ui.TryToggleUi(ent.Owner, DeimplantUiKey.Key, user);
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
+        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
 
@@ -199,7 +207,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(args))
             return;
 
-        _popup.PopupEntity(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+        _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
 
         if (user != target)
         {
@@ -224,7 +232,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(args))
             return;
 
-        _popup.PopupEntity(Loc.GetString("injector-component-needle-injecting-user"), target, user);
+        _popup.PopupClient(Loc.GetString("injector-component-needle-injecting-user"), target, user);
 
         if (user != target)
         {
@@ -268,7 +276,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         {
             var name = Identity.Name(target, EntityManager, user);
             var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
-            _popup.PopupEntity(msg, target, user);
+            _popup.PopupClient(msg, target, user);
             return;
         }
 
@@ -424,7 +432,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
             ("implant", implantName),
             ("target", targetName));
-        _popup.PopupEntity(failedPermanentMessage, target, user);
+        _popup.PopupClient(failedPermanentMessage, target, user);
     }
 
     /// <summary>
@@ -447,7 +455,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         _damageable.TryChangeDamage(user, ent.Comp.DeimplantFailureDamage, ignoreResistances: true, origin: ent.Owner);
         var userName = Identity.Entity(user, EntityManager);
         var failedCatastrophicallyMessage = Loc.GetString("implanter-draw-failed-catastrophically", ("user", userName));
-        _popup.PopupEntity(failedCatastrophicallyMessage, user, user, PopupType.MediumCaution);
+        _popup.PopupPredicted(failedCatastrophicallyMessage, user, user, PopupType.MediumCaution);
         _audio.PlayPredicted(ent.Comp.ImplanterDrawFailSound, ent, user);
     }
 
@@ -498,13 +506,13 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// <summary>
     /// Sets the selected deimplant in the UI.
     /// </summary>
-    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, string? implant)
+    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, EntProtoId implant)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (implant != null && ProtoMan.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
-            ent.Comp.DeimplantChosen = proto;
+        if (_whitelist.IsValid(ent.Comp.DeimplantWhitelist, implant))
+            ent.Comp.DeimplantChosen = implant;
 
         UpdateUi(ent!);
         Dirty(ent);
@@ -546,7 +554,7 @@ public sealed class AddImplantAttemptEvent(EntityUid user, EntityUid target, Ent
 [Serializable, NetSerializable]
 public sealed class DeimplantChangeVerbMessage(string? implant) : BoundUserInterfaceMessage
 {
-    public readonly string? Implant = implant;
+    public readonly EntProtoId? Implant = implant;
 }
 
 [Serializable, NetSerializable]

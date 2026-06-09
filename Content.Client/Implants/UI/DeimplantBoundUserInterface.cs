@@ -33,7 +33,7 @@ public sealed partial class DeimplantBoundUserInterface : BoundUserInterface
         // TODO: Don't use protoId for deimplanting
         // and especially not raw strings!
         Dictionary<string, string> implants = new();
-        foreach (var implant in implanterComp.DeimplantWhitelist)
+        foreach (var implant in implanterComp.ImplantsList)
         {
             if (_proto.Resolve(implant, out var proto))
                 implants.Add(proto.ID, proto.Name);
