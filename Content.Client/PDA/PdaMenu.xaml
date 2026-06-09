@@ -28,24 +28,32 @@
                       HorizontalExpand="True"
                       MinSize="50 50"
                       Margin="8">
-            <ContainerButton Name="PdaOwnerButton">
+            <ContainerButton Name="PdaOwnerButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="PdaOwnerLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="IdInfoButton">
+            <ContainerButton Name="IdInfoButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="IdInfoLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationNameButton">
+            <ContainerButton Name="StationNameButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="StationNameLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationAlertLevelButton">
+            <ContainerButton Name="StationAlertLevelButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="StationAlertLevelLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationTimeButton">
+            <ContainerButton Name="StationTimeButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="StationTimeLabel" Access="Public"/>
             </ContainerButton>
-            <ContainerButton Name="StationAlertLevelInstructionsButton">
+            <ContainerButton Name="StationAlertLevelInstructionsButton" StyleClasses="PdaCopyButton"
+                             ToolTip="{Loc 'comp-pda-ui-copy-tooltip'}">
                 <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
             </ContainerButton>
+            <Label Name="CopiedLabel" Visible="False" StyleClasses="PdaCopiedLabel"
+                   Text="{Loc 'comp-pda-ui-copied'}" HorizontalAlignment="Right" Margin="0 4 4 0"/>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"
