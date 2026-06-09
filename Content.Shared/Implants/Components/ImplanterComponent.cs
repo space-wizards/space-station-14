@@ -90,11 +90,16 @@ public sealed partial class ImplanterComponent : Component
     public bool AllowDeimplantAll = false;
 
     /// <summary>
-    /// The subdermal implants that may be removed via this implanter
-    /// TODO: This should be a EntityWhitelist! Don't use protoIds for whitelisting purposes.
+    /// Whitelist of implants that may be removed via this implanter
     /// </summary>
     [DataField]
-    public List<EntProtoId> DeimplantWhitelist = new();
+    public EntityWhitelist DeimplantWhitelist = new();
+
+    /// <summary>
+    /// The list of implants that may be removed via this implanter
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> ImplantsList = new List<EntProtoId>();
 
     /// <summary>
     /// The subdermal implants that may be removed via this implanter
