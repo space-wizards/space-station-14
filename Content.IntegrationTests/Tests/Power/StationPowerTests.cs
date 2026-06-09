@@ -11,6 +11,7 @@ using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
+using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Power;
 
@@ -39,7 +40,6 @@ public sealed class StationPowerTests : GameTest
 
     public override PoolSettings PoolSettings => new ()
     {
-        Dirty = true,
     };
 
     [Explicit]
@@ -53,13 +53,15 @@ public sealed class StationPowerTests : GameTest
         var protoMan = server.ProtoMan;
         var ticker = entMan.System<GameTicker>();
         var batterySys = entMan.System<BatterySystem>();
+        var mapSys = entMan.System<MapSystem>();
+        MapId mapId = default;
 
         // Load the map
         await server.WaitAssertion(() =>
         {
             Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
             var opts = DeserializationOptions.Default with { InitializeMaps = true };
-            ticker.LoadGameMap(mapProto, out var mapId, opts);
+            ticker.LoadGameMap(mapProto, out mapId, opts);
         });
 
         // Let powernet set up
@@ -99,6 +101,8 @@ public sealed class StationPowerTests : GameTest
             Assert.That(totalStartingCharge, Is.GreaterThanOrEqualTo(requiredStoredPower),
                 $"Needs at least {requiredStoredPower - totalStartingCharge} more stored power!");
         });
+
+        await server.WaitPost(() => mapSys.DeleteMap(mapId));
     }
 
     [Test, TestCaseSource(nameof(GameMaps))]
@@ -111,17 +115,19 @@ public sealed class StationPowerTests : GameTest
         var protoMan = server.ProtoMan;
         var ticker = entMan.System<GameTicker>();
         var xform = entMan.System<TransformSystem>();
+        var mapSys = entMan.System<MapSystem>();
+        MapId mapId = default;
 
         // Load the map
         await server.WaitAssertion(() =>
         {
             Assert.That(protoMan.TryIndex<GameMapPrototype>(mapProtoId, out var mapProto));
             var opts = DeserializationOptions.Default with { InitializeMaps = true };
-            ticker.LoadGameMap(mapProto, out var mapId, opts);
+            ticker.LoadGameMap(mapProto, out mapId, opts);
         });
 
         // Wait long enough for power to ramp up, but before anything can trip
-        await pair.RunSeconds(2);
+        await pair.RunSeconds(1);
 
         // Check that no APCs start overloaded
         var apcQuery = entMan.EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent>();
@@ -143,5 +149,7 @@ public sealed class StationPowerTests : GameTest
                 }
             }
         });
+
+        await server.WaitPost(() => mapSys.DeleteMap(mapId));
     }
 }
