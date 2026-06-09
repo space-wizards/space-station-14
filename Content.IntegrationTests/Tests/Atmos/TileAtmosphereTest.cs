@@ -133,18 +133,18 @@ public abstract class TileAtmosphereTest : AtmosTest
         // Set up can't produce Tritium, moles aren't conserved in Tritium Fires.
         Assert.Multiple(() =>
         {
-            Assert.That(plasmaConsumed, Is.GreaterThan(1f), "Plasma should be meaningfully consumed");
+            Assert.That(plasmaConsumed, Is.GreaterThan(1f), "Plasma was not meaningfully consumed");
             // oxygenBurnRate = OxygenBurnRateBase - temperatureScale, temperatureScale in (0,1]
             Assert.That(oxygenConsumed, Is.InRange(0.4f * plasmaConsumed, 1.4f * plasmaConsumed),
-                "Oxygen consumption within oxygenBurnRate bounds");
-            Assert.That(after.GetMoles(Gas.Tritium), Is.Zero, "No tritium below supersaturation threshold");
-            Assert.That(after.GetMoles(Gas.WaterVapor), Is.Zero, "No TritiumFire");
+                "Oxygen consumption outside oxygenBurnRate bounds");
+            Assert.That(after.GetMoles(Gas.Tritium), Is.Zero, "Tritium was produced below supersaturation threshold");
+            Assert.That(after.GetMoles(Gas.WaterVapor), Is.Zero, "Water vapor was produced by a TritiumFire");
             Assert.That(co2Produced,
                 Is.EqualTo(plasmaConsumed + oxygenConsumed).Within(1e-3f),
-                "PlasmaFire conserves moles");
+                "PlasmaFire did not conserve moles");
             Assert.That(after.TotalMoles,
                 Is.EqualTo(before.TotalMoles).Within(1e-3f),
-                "Grid moles conserved");
+                "Grid moles were not conserved");
         });
     }
 }
