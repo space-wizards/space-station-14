@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Atmos;
 [TestOf(typeof(Atmospherics))]
 public sealed class GasArrayTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private const string GasTankTestDummyId = "GasTankTestDummy";
 
     private const string GasTankLegacyTestDummyId = "GasTankLegacyTestDummy";

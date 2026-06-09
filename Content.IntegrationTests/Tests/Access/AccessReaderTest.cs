@@ -13,6 +13,8 @@ namespace Content.IntegrationTests.Tests.Access
     [TestOf(typeof(AccessReaderComponent))]
     public sealed class AccessReaderTest : GameTest
     {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
         [TestPrototypes]
         private const string Prototypes = @"
 - type: entity

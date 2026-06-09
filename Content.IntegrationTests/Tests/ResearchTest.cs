@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class ResearchTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task DisciplineValidTierPrerequesitesTest()
     {

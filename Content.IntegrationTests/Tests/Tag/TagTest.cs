@@ -13,6 +13,8 @@ namespace Content.IntegrationTests.Tests.Tag
     [TestOf(typeof(TagComponent))]
     public sealed class TagTest : GameTest
     {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
         private const string TagEntityId = "TagTestDummy";
 
         // Register these three into the prototype manager

@@ -15,6 +15,8 @@ namespace Content.IntegrationTests.Tests.Damageable
     [TestOf(typeof(DamageableSystem))]
     public sealed class DamageableTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         private const string TestDamageableEntityId = "TestDamageableEntityId";
         private const string TestGroup1 = "TestGroup1";
         private const string TestGroup2 = "TestGroup2";

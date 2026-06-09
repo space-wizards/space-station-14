@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Atmos;
 [TestFixture]
 public sealed class GridJoinTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private const string CanisterProtoId = "AirCanister";
 
     [Test]

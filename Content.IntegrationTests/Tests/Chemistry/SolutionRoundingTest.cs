@@ -12,6 +12,8 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(ChemicalReactionSystem))]
 public sealed class SolutionRoundingTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     // This test tests two things:
     // * A rounding error in reaction code while I was making chloral hydrate
     // * An assert with solution heat capacity calculations that I found a repro for while testing the above.

@@ -10,6 +10,8 @@ namespace Content.IntegrationTests.Tests.Construction
     [TestFixture]
     public sealed class ConstructionPrototypeTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         // discount linter for construction graphs
         // TODO: Create serialization validators for these?
         // Top test definitely can be but writing a serializer takes ages.

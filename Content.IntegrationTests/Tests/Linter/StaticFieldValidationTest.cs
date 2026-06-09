@@ -14,6 +14,8 @@ namespace Content.IntegrationTests.Tests.Linter;
 [TestFixture]
 public sealed class StaticFieldValidationTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task TestStaticFieldValidation()
     {

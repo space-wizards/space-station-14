@@ -29,6 +29,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MaterialArbitrageTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     // These sets are for selectively excluding recipes from arbitrage.
     // You should NOT be adding to these. They exist here for downstreams and potential future issues.
     private readonly HashSet<string> _destructionArbitrageIgnore = [];

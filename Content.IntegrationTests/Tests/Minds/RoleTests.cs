@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Roles.Components;
 using Robust.Shared.GameObjects;
@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class RoleTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// Check that any prototype with a <see cref="MindRoleComponent"/> is properly configured
     /// </summary>

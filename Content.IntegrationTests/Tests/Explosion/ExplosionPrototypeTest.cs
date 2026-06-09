@@ -6,6 +6,8 @@ namespace Content.IntegrationTests.Tests.Explosion;
 
 public sealed class ExplosionPrototypeTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private static string[] _explosionKinds = GameDataScrounger.PrototypesOfKind<ExplosionPrototype>();
 
     [Test]

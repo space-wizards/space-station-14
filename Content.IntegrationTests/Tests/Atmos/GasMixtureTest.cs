@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
@@ -10,6 +10,8 @@ namespace Content.IntegrationTests.Tests.Atmos
     [TestOf(typeof(GasMixture))]
     public sealed class GasMixtureTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         [Test]
         public async Task TestMerge()
         {

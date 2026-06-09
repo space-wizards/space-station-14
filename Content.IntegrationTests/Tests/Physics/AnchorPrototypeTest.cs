@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Physics;
 [TestFixture]
 public sealed class AnchorPrototypeTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// Asserts that entityprototypes marked as anchored are also static physics bodies.
     /// </summary>

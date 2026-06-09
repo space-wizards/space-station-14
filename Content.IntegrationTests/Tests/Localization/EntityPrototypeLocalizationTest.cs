@@ -6,6 +6,8 @@ namespace Content.IntegrationTests.Tests.Localization;
 
 public sealed class EntityPrototypeLocalizationTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// An explanation of why LocIds should not be used for entity prototype names/descriptions.
     /// Appended to the error message when the test is failed.

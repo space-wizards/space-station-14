@@ -17,6 +17,8 @@ namespace Content.IntegrationTests.Tests.Destructible;
 /// </summary>
 public sealed class DestructibleOverkillTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [SidedDependency(Side.Server)] private DamageableSystem _sDamageableSystem = default!;
     [SidedDependency(Side.Server)] private TestDestructibleListenerSystem _sDestructibleListenerSystem = default!;
 

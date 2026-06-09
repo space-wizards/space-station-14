@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Power;
 [TestFixture, TestOf(typeof(SharedPowerStateSystem))]
 public sealed class PowerStatePrototypeTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// Asserts that the <see cref="SharedApcPowerReceiverComponent"/>'s load is the same
     /// as the idle or working power draw from <see cref="PowerStateComponent"/>,

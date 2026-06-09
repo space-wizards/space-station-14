@@ -14,6 +14,8 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(SolutionPurgeSystem))]
 public sealed class SolutionPurgeRegenerationTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private static readonly EntProtoId AdvancedMop = "AdvMopItem";
     private static readonly ProtoId<ReagentPrototype> Water = "Water";
     private static readonly ProtoId<ReagentPrototype> NotWater = "DexalinPlus";

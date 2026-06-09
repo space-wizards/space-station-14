@@ -16,6 +16,8 @@ namespace Content.IntegrationTests.Tests.Destructible
     [TestOf(typeof(AndTrigger))]
     public sealed class DestructibleDamageGroupTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         [Test]
         public async Task AndTest()
         {

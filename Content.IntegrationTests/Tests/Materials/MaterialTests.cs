@@ -17,6 +17,8 @@ namespace Content.IntegrationTests.Tests.Materials
     [TestOf(typeof(MaterialPrototype))]
     public sealed class MaterialPrototypeSpawnsStackMaterialTest : GameTest
     {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Entry;
@@ -10,6 +10,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class ConfigPresetTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task TestLoadAll()
     {

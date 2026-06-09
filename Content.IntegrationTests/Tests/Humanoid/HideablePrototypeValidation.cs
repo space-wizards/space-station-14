@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Humanoid;
 [TestFixture]
 public sealed class HideablePrototypeValidation : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task NoOrgansWithoutClothing()
     {
