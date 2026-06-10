@@ -371,3 +371,14 @@
   - type: Item
   - type: InteractionOutline
   - type: Clickable
+
+- type: entity
+  id: OffbrandHealthDoll
+  parent:
+  - BaseSpeciesLayers
+  components:
+  - type: Body
+  - type: VisualBody
+  - type: ContainerContainer
+  - type: Appearance
+  - type: HideableHumanoidLayers

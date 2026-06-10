@@ -1,3 +1,5 @@
+using Content.Client._Offbrand.BodyVisuals;
+using Content.Client.Body;
 using Content.Shared._Offbrand.Organs;
 using Content.Shared._Offbrand.OrganVisuals;
 using Content.Shared._Offbrand.Wounds;
@@ -15,6 +17,8 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
 
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private BodyAppearanceRelaySystem _relay = default!;
+    [Dependency] private VisualBodySystem _visualBody = default!;
 
     public override void Initialize()
     {
@@ -23,28 +27,49 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotInsertedEvent>(OnOrganGotInserted);
         SubscribeLocalEvent<VisualOrganWoundsComponent, OrganGotRemovedEvent>(OnOrganGotRemoved);
         SubscribeLocalEvent<VisualOrganWoundsComponent, WoundableDamageChanged>(OnWoundableOrganDamageChanged);
+
+        SubscribeLocalEvent<VisualOrganWoundsComponent, BodyRelayedEvent<BodyAppearanceRelayTargetAddedEvent>>(OnRelayTargetAdded);
+        SubscribeLocalEvent<VisualOrganWoundsComponent, BodyRelayedEvent<BodyAppearanceRelayTargetRemovedEvent>>(OnRelayTargetRemoved);
     }
 
     private void OnOrganGotInserted(Entity<VisualOrganWoundsComponent> ent, ref OrganGotInsertedEvent args)
     {
-        SetupLayers(ent, args.Target);
-        UpdateOverlay(ent, args.Target);
+        foreach (var target in _relay.GetTargets(args.Target))
+        {
+            SetupLayers(ent, target);
+            UpdateOverlay(ent, target);
+        }
+
+        UpdateOrganOverlay(ent);
     }
 
     private void OnOrganGotRemoved(Entity<VisualOrganWoundsComponent> ent, ref OrganGotRemovedEvent args)
     {
-        RemoveLayers(ent, args.Target);
+        foreach (var target in _relay.GetTargets(args.Target))
+        {
+            RemoveLayers(ent, target);
+        }
     }
 
-    private void SetupLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
+    private bool SetupLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
     {
         if (!Resolve(target, ref target.Comp))
-            return;
+            return false;
+
+        if (ent.Comp.LayersInitialized.Contains(target.Owner))
+            return true;
+
         var targetSprite = new Entity<SpriteComponent>(target, target.Comp);
 
         var visualOrgan = Comp<VisualOrganComponent>(ent);
         var organLayer = visualOrgan.Layer;
-        var baseIndex = _sprite.LayerMapGet(target, organLayer);
+        if (!_sprite.LayerMapTryGet(target, organLayer, out var baseIndex, false))
+        {
+            _visualBody.ApplyVisual(ent.Owner, target.Owner);
+            if (!_sprite.LayerMapTryGet(target, organLayer, out baseIndex, false))
+                return false;
+        }
+
         var layerIndex = baseIndex;
 
         foreach (var group in ent.Comp.DamageGroups)
@@ -78,12 +103,16 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         _sprite.AddBlankLayer(targetSprite, layerIndex);
         _sprite.LayerMapSet(target, bandageLayerKey, layerIndex);
 
-        ent.Comp.LayersInitialized = true;
+        ent.Comp.LayersInitialized.Add(target.Owner);
+        return true;
     }
 
     private void RemoveLayers(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
     {
         if (!Resolve(target, ref target.Comp))
+            return;
+
+        if (!ent.Comp.LayersInitialized.Remove(target.Owner))
             return;
 
         var visualOrgan = Comp<VisualOrganComponent>(ent);
@@ -99,8 +128,6 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
 
         var bandageLayerKey = $"{visualOrgan.Layer}-bandages";
         _sprite.RemoveLayer(target, bandageLayerKey);
-
-        ent.Comp.LayersInitialized = false;
     }
 
     private void UpdateOverlay(Entity<VisualOrganWoundsComponent> ent, Entity<SpriteComponent?> target)
@@ -111,8 +138,8 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         if (!TryComp<WoundableComponent>(ent, out var woundable))
             return;
 
-        if (!ent.Comp.LayersInitialized)
-            SetupLayers(ent, target);
+        if (!ent.Comp.LayersInitialized.Contains(target.Owner) && !SetupLayers(ent, target))
+            return;
 
         var visualOrgan = Comp<VisualOrganComponent>(ent);
 
@@ -157,11 +184,35 @@ public sealed partial class VisualOrganWoundsSystem : EntitySystem
         }
     }
 
+    private void UpdateOrganOverlay(Entity<VisualOrganWoundsComponent> ent)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        UpdateOverlay(ent, (ent.Owner, sprite));
+    }
+
     private void OnWoundableOrganDamageChanged(Entity<VisualOrganWoundsComponent> ent, ref WoundableDamageChanged args)
     {
+        UpdateOrganOverlay(ent);
+
         if (Comp<OrganComponent>(ent).Body is not { } body)
             return;
 
-        UpdateOverlay(ent, body);
+        foreach (var target in _relay.GetTargets(body))
+        {
+            UpdateOverlay(ent, target);
+        }
+    }
+
+    private void OnRelayTargetAdded(Entity<VisualOrganWoundsComponent> ent, ref BodyRelayedEvent<BodyAppearanceRelayTargetAddedEvent> args)
+    {
+        SetupLayers(ent, args.Args.Target);
+        UpdateOverlay(ent, args.Args.Target);
+    }
+
+    private void OnRelayTargetRemoved(Entity<VisualOrganWoundsComponent> ent, ref BodyRelayedEvent<BodyAppearanceRelayTargetRemovedEvent> args)
+    {
+        RemoveLayers(ent, args.Args.Target);
     }
 }

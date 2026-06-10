@@ -18,7 +18,9 @@
   id: OrganBase
   name: organ
   abstract: true
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - BaseSpeciesLayers # Offbrand - layers
   components:
   - type: Organ
 
