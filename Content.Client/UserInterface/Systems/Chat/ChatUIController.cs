@@ -423,7 +423,6 @@ public sealed partial class ChatUIController : UIController
 
     public void SetSpeechBubbleRoot(LayoutContainer root)
     {
-        //RemoveTypingPreview();
         _speechBubbleRoot.Orphan();
         root.AddChild(_speechBubbleRoot);
         LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
