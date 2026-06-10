@@ -54,7 +54,6 @@
   category: construction-category-tools
   objectType: Item
 
-
 - type: construction
   id: MakeshiftMortarAndPestle
   graph: MakeshiftMortarAndPestle
