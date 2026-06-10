@@ -3,7 +3,6 @@ using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -29,7 +28,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Default clothing entity prototype to spawn into the clothing container.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId ClothingPrototype = default!;
+    public EntProtoId ClothingPrototype;
 
     /// <summary>
     ///     The inventory slot that the clothing is equipped to.
