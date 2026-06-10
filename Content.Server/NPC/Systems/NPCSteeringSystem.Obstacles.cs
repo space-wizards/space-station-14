@@ -168,7 +168,7 @@ public sealed partial class NPCSteeringSystem
                         // TODO: Validate we can damage it
                         if (_destructibleQuery.HasComponent(ent))
                         {
-                            attackResult = _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent, Content.Shared._Offbrand.Input.OffbrandTargetZone.Mid); // Offbrand;
+                            attackResult = _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
                             break;
                         }
                     }

@@ -1,4 +1,3 @@
-using Content.Shared._Offbrand.Input;
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body;
 using Content.Shared.Hands;
@@ -22,13 +21,12 @@ public sealed partial class WoundableOrganSystem : EntitySystem
 
     private void OnGetWeights(Entity<WoundableOrganComponent> ent, ref BodyRelayedEvent<WoundableOrganWeightsEvent> args)
     {
-        if (ent.Comp.Weights.TryGetValue(args.Args.TargetZone, out var weight))
-            args.Args.Weights[ent] = weight;
+        args.Args.Weights[ent] = ent.Comp.Weight;
     }
 
-    public Dictionary<Entity<WoundableOrganComponent>, float> GetWoundableOrgans(EntityUid body, OffbrandTargetZone targetZone)
+    public Dictionary<Entity<WoundableOrganComponent>, float> GetWoundableOrgans(EntityUid body)
     {
-        var organs = new WoundableOrganWeightsEvent(new(), targetZone);
+        var organs = new WoundableOrganWeightsEvent(new());
         RaiseLocalEvent(body, ref organs);
         return organs.Weights;
     }

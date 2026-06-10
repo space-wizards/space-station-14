@@ -216,7 +216,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         }
         else
         {
-            _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim, Content.Shared._Offbrand.Input.OffbrandTargetZone.High); // Offbrand
+            _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim);
         }
 
         _combat.SetInCombatMode(attacker, prev);

@@ -59,21 +59,17 @@ public class ChatInputBox : PanelContainer
 
     private static string GetChatboxInfoPlaceholder()
     {
-        // Begin Offbrand Changes
-        return Loc.GetString("hud-chatbox-info-talk",
-            ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat)));
-        // return (BoundKeyHelper.IsBound(ContentKeyFunctions.FocusChat),
-        //         BoundKeyHelper.IsBound(ContentKeyFunctions.CycleChatChannelForward)) switch
-        //     {
-        //         (true, true) => Loc.GetString("hud-chatbox-info",
-        //             ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat)),
-        //             ("cycle-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.CycleChatChannelForward))),
-        //         (true, false) => Loc.GetString("hud-chatbox-info-talk",
-        //             ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat))),
-        //         (false, true) => Loc.GetString("hud-chatbox-info-cycle",
-        //             ("cycle-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.CycleChatChannelForward))),
-        //         (false, false) => Loc.GetString("hud-chatbox-info-unbound")
-        //     };
-        // End Offbrand Changes
+        return (BoundKeyHelper.IsBound(ContentKeyFunctions.FocusChat),
+                BoundKeyHelper.IsBound(ContentKeyFunctions.CycleChatChannelForward)) switch
+            {
+                (true, true) => Loc.GetString("hud-chatbox-info",
+                    ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat)),
+                    ("cycle-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.CycleChatChannelForward))),
+                (true, false) => Loc.GetString("hud-chatbox-info-talk",
+                    ("talk-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.FocusChat))),
+                (false, true) => Loc.GetString("hud-chatbox-info-cycle",
+                    ("cycle-key", BoundKeyHelper.ShortKeyName(ContentKeyFunctions.CycleChatChannelForward))),
+                (false, false) => Loc.GetString("hud-chatbox-info-unbound")
+            };
     }
 }

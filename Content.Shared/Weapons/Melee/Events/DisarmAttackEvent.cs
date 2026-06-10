@@ -8,7 +8,7 @@ public sealed class DisarmAttackEvent : AttackEvent
 {
     public NetEntity? Target;
 
-    public DisarmAttackEvent(NetEntity? target, NetCoordinates coordinates, Content.Shared._Offbrand.Input.OffbrandTargetZone targetZone) : base(coordinates, targetZone) // Offbrand
+    public DisarmAttackEvent(NetEntity? target, NetCoordinates coordinates) : base(coordinates)
     {
         Target = target;
     }

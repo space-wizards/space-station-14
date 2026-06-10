@@ -1,7 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared._Offbrand.Input;
 using Content.Shared._Offbrand.Wounds;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -13,14 +12,14 @@ namespace Content.Shared._Offbrand.Organs;
 public sealed partial class WoundableOrganComponent : Component
 {
     /// <summary>
-    /// The weight this organ has in being targeted by an attack on its body, based on the targeted zone of the attack.
+    /// The weight this organ has in being targeted by an attack on its body.
     /// </summary>
-    [DataField(required: true)]
-    public Dictionary<OffbrandTargetZone, float> Weights = new();
+    [DataField]
+    public float Weight;
 }
 
 /// <summary>
 /// Raised on a body to get a by-weight dictionary of woundable organs
 /// </summary>
 [ByRefEvent]
-public readonly record struct WoundableOrganWeightsEvent(Dictionary<Entity<WoundableOrganComponent>, float> Weights, OffbrandTargetZone TargetZone);
+public readonly record struct WoundableOrganWeightsEvent(Dictionary<Entity<WoundableOrganComponent>, float> Weights);

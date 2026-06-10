@@ -104,11 +104,11 @@ public sealed partial class NPCCombatSystem
             _physicsQuery.TryGetComponent(component.Target, out var targetPhysics) &&
             targetPhysics.LinearVelocity.LengthSquared() != 0f)
         {
-            _melee.AttemptLightAttackMiss(uid, weaponUid, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)), Content.Shared._Offbrand.Input.OffbrandTargetZone.Mid); // Offbrand
+            _melee.AttemptLightAttackMiss(uid, weaponUid, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
         }
         else
         {
-            _melee.AttemptLightAttack(uid, weaponUid, weapon, component.Target, Content.Shared._Offbrand.Input.OffbrandTargetZone.Mid); // Offbrand;
+            _melee.AttemptLightAttack(uid, weaponUid, weapon, component.Target);
         }
     }
 }

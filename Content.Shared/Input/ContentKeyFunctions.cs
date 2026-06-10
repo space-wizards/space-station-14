@@ -22,8 +22,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
         public static readonly BoundKeyFunction FocusDeadChat = "FocusDeadChatWindow";
         public static readonly BoundKeyFunction FocusConsoleChat = "FocusConsoleChatWindow";
-        // public static readonly BoundKeyFunction CycleChatChannelForward = "CycleChatChannelForward"; // Offbrand - this sucked
-        // public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward"; // Offbrand - this sucked
+        public static readonly BoundKeyFunction CycleChatChannelForward = "CycleChatChannelForward";
+        public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward";
         public static readonly BoundKeyFunction EscapeContext = "EscapeContext";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction OpenEmotesMenu = "OpenEmotesMenu";

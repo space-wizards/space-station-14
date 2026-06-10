@@ -22,8 +22,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.FocusConsoleChat);
             common.AddFunction(ContentKeyFunctions.FocusDeadChat);
-            // common.AddFunction(ContentKeyFunctions.CycleChatChannelForward); // Offbrand - this sucked
-            // common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward); // Offbrand - this sucked
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
+            common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
             common.AddFunction(ContentKeyFunctions.EscapeContext);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenAHelp);
@@ -91,10 +91,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade1);
             human.AddFunction(ContentKeyFunctions.Arcade2);
             human.AddFunction(ContentKeyFunctions.Arcade3);
-            // Begin Offbrand
-            human.AddFunction(Content.Shared._Offbrand.Input.OffbrandKeyFunctions.AimHigh);
-            human.AddFunction(Content.Shared._Offbrand.Input.OffbrandKeyFunctions.AimLow);
-            // End Offbrand
 
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);

@@ -167,20 +167,18 @@ public partial class ChatBox : UIWidget
             return;
         }
 
-        // Begin Offbrand - this sucked
-        // if (args.Function == ContentKeyFunctions.CycleChatChannelForward)
-        // {
-        //     CycleChatChannel(true);
-        //     args.Handle();
-        //     return;
-        // }
+        if (args.Function == ContentKeyFunctions.CycleChatChannelForward)
+        {
+            CycleChatChannel(true);
+            args.Handle();
+            return;
+        }
 
-        // if (args.Function == ContentKeyFunctions.CycleChatChannelBackward)
-        // {
-        //     CycleChatChannel(false);
-        //     args.Handle();
-        // }
-        // End Offbrand - this sucked
+        if (args.Function == ContentKeyFunctions.CycleChatChannelBackward)
+        {
+            CycleChatChannel(false);
+            args.Handle();
+        }
     }
 
     private void OnTextChanged(LineEditEventArgs args)

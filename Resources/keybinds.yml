@@ -92,16 +92,14 @@ binds:
 - function: ToggleFullscreen
   type: State
   key: F11
-# Offbrand - this keybind sucked anyways
-# - function: CycleChatChannelForward
-#   type: State
-#   key: Tab
-#   priority: 1 # Before tab complete
-# - function: CycleChatChannelBackward
-#   type: State
-#   key: Tab
-#   mod1: Control
-# End Offbrand - this keybind sucked anyways
+- function: CycleChatChannelForward
+  type: State
+  key: Tab
+  priority: 1 # Before tab complete
+- function: CycleChatChannelBackward
+  type: State
+  key: Tab
+  mod1: Control
 - function: FocusChatInputWindow
   type: State
   key: T
@@ -653,20 +651,3 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
-# Begin Offbrand
-- function: AimLow
-  type: State
-  key: Alt
-- function: AimHigh
-  type: State
-  key: Tab
-
-- function: Use
-  type: State
-  key: MouseLeft
-  mod1: Alt
-- function: UseSecondary
-  type: State
-  key: MouseRight
-  mod1: Alt
-# End Offbrand

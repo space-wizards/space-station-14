@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared._Offbrand.Input; // Offbrand
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -61,13 +60,12 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        OffbrandTargetZone targetZone = OffbrandTargetZone.Mid // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers, targetZone); // Offbrand
+        return TryChangeDamage(ent, damage, out _, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers);
     }
 
     /// <summary>
@@ -88,13 +86,12 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        OffbrandTargetZone targetZone = OffbrandTargetZone.Mid // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         //! Empty just checks if the DamageSpecifier is _literally_ empty, as in, is internal dictionary of damage types is empty.
         // If you deal 0.0 of some damage type, Empty will be false!
-        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers, targetZone); // Offbrand
+        newDamage = ChangeDamage(ent, damage, ignoreResistances, interruptsDoAfters, origin, ignoreGlobalModifiers); // Offbrand
         return !newDamage.Empty;
     }
 
@@ -115,8 +112,7 @@ public sealed partial class DamageableSystem
         bool ignoreResistances = false,
         bool interruptsDoAfters = true,
         EntityUid? origin = null,
-        bool ignoreGlobalModifiers = false,
-        OffbrandTargetZone targetZone = OffbrandTargetZone.Mid // Offbrand
+        bool ignoreGlobalModifiers = false
     )
     {
         var damageDone = new DamageSpecifier();
@@ -155,7 +151,7 @@ public sealed partial class DamageableSystem
         if (!ignoreGlobalModifiers)
             damage = ApplyUniversalAllModifiers(damage);
 
-        var evt = new DamageDealtEvent(damage, origin, interruptsDoAfters, targetZone); // Offbrand
+        var evt = new DamageDealtEvent(damage, origin, interruptsDoAfters);
         RaiseLocalEvent(ent, ref evt);
 
         return damage;
