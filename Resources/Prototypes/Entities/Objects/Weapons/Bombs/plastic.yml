@@ -24,11 +24,6 @@
     ports:
     - Trigger
   - type: Explosive
-    explosionType:
-    totalIntensity:
-    intensitySlope:
-    maxIntensity:
-    canCreateVacuum:
   - type: ExplodeOnTrigger
     keysIn:
     - timer
@@ -78,7 +73,7 @@
           Primed: { state: primed }
           Unprimed: { state: icon }
 
-
+## Plastic Explosives used in game
 - type: entity
   parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: C4
@@ -109,7 +104,7 @@
     price: 625 # 5000 for a bundle of 8
 
 - type: entity
-  parent: [ BasePlasticExplosiveTrigger, BaseSecurityCargoContraband ]
+  parent: [ BasePlasticExplosive, BaseSecurityCargoContraband ]
   id: SeismicCharge
   name: seismic charge
   description: Concussion based explosive designed to destroy large amounts of rock.
