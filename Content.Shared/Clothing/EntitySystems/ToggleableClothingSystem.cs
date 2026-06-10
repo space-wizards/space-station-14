@@ -60,10 +60,6 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.ClothingUid == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
-        if (text == null)
-            return;
-
         if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
             return;
 
@@ -74,7 +70,7 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         var verb = new EquipmentVerb()
         {
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-            Text = Loc.GetString(text),
+            Text = Loc.GetString(component.VerbText),
         };
 
         if (args.User == wearer)

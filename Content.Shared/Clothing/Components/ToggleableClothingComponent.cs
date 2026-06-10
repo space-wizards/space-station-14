@@ -20,7 +20,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Action used to toggle the clothing on or off.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntProtoId Action = "ActionToggleSuitPiece";
+    public EntProtoId? Action;
 
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
@@ -70,5 +70,5 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ActionEntity"/> action.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? VerbText;
+    public LocId VerbText = "toggle-clothing-verb-default";
 }
