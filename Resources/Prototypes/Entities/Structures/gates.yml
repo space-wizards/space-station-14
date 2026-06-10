@@ -316,3 +316,20 @@
     key: enum.RandomGateUiKey.Key
   - type: Construction
     node: random_gate
+
+- type: entity
+  parent: BaseLogicItem
+  id: CableRelay
+  name: electro-relay
+  description: An electro-relay that disconnects any power cables on its tile when it receives a signal, breaking the powernet without removing the cables. Pulse it again to reconnect them. Link it to a signaller.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: relay
+  - type: CableRelay
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Construction
+    node: relay

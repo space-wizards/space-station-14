@@ -59,6 +59,14 @@
       - material: Cable
         amount: 1
         doAfter: 1
+    - to: relay
+      steps:
+      - material: Gold
+        amount: 1
+        doAfter: 1
+      - material: Cable
+        amount: 2
+        doAfter: 1
   - node: logic_gate
     entity: LogicGateOr
     edges:
@@ -124,3 +132,17 @@
       - !type:SpawnPrototype
         prototype: PartRodMetal1
         amount: 1
+  - node: relay
+    entity: CableRelay
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 1
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2

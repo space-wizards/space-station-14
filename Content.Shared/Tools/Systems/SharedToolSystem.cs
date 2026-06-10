@@ -341,4 +341,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 [Serializable, NetSerializable]
 public sealed partial class CableCuttingFinishedEvent : SimpleDoAfterEvent;
 
+[Serializable, NetSerializable]
+public sealed partial class CableToggleFinishedEvent : SimpleDoAfterEvent;
+
 #endregion
