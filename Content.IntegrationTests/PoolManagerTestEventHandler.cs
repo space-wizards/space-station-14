@@ -14,12 +14,12 @@ public sealed class PoolManagerTestEventHandler
     {
         PoolManager.Startup();
 
-        if (Debugger.IsAttached)
-            return;
-
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {
+            if (Debugger.IsAttached)
+                return;
+
             // This can and probably will cause server/client pairs to shut down MID test, and will lead to really confusing test failures.
             TestContext.Error.WriteLine($"\n\n{nameof(PoolManagerTestEventHandler)}: ERROR: Tests are taking too long. Shutting down all tests. This may lead to weird failures/exceptions.\n\n");
             PoolManager.Shutdown();
@@ -28,6 +28,9 @@ public sealed class PoolManagerTestEventHandler
         // If ending it nicely doesn't work within a minute, we do something a bit meaner.
         _ = Task.Delay(HardStopTimeLimit).ContinueWith(_ =>
         {
+            if (Debugger.IsAttached)
+                return;
+
             var deathReport = PoolManager.DeathReport();
             Environment.FailFast($"Tests took way too ;\n Death Report:\n{deathReport}");
         });
