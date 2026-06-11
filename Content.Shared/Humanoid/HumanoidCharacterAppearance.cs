@@ -12,7 +12,7 @@ namespace Content.Shared.Humanoid;
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, IEquatable<HumanoidCharacterAppearance>
+public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCharacterAppearance>
 {
     [DataField]
     public Color EyeColor { get; set; } = Color.Black;
@@ -103,7 +103,12 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
-        return new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new());
+        // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
+        // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
+        return EnsureValid(
+            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
+            species,
+            sex);
     }
 
     public static Color ClampColor(Color color)
@@ -156,15 +161,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             eyeColor,
             skinColor,
             validatedMarkings);
-    }
-
-    public bool MemberwiseEquals(ICharacterAppearance maybeOther)
-    {
-        if (maybeOther is not HumanoidCharacterAppearance other) return false;
-        if (!EyeColor.Equals(other.EyeColor)) return false;
-        if (!SkinColor.Equals(other.SkinColor)) return false;
-        if (!MarkingManager.MarkingsAreEqual(Markings, other.Markings)) return false;
-        return true;
     }
 
     public bool Equals(HumanoidCharacterAppearance? other)
