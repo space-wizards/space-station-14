@@ -34,11 +34,12 @@ namespace Content.Shared.Examine
 
             public readonly bool CenterAtCursor;
             public readonly bool OpenAtOldTooltip;
+            public readonly bool ShowBody; // Offbrand
 
             public readonly bool KnowTarget;
 
             public ExamineInfoResponseMessage(NetEntity entityUid, int id, FormattedMessage message, List<Verb>? verbs=null,
-                bool centerAtCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
+                bool centerAtCursor=true, bool openAtOldTooltip=true, bool knowTarget = true, bool showBody = false) // Offbrand
             {
                 EntityUid = entityUid;
                 Id = id;
@@ -47,6 +48,7 @@ namespace Content.Shared.Examine
                 CenterAtCursor = centerAtCursor;
                 OpenAtOldTooltip = openAtOldTooltip;
                 KnowTarget = knowTarget;
+                ShowBody = showBody;
             }
         }
     }

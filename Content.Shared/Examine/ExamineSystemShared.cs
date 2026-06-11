@@ -48,7 +48,7 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
-        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
+        public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor, bool showBody = false); // Offbrand
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {

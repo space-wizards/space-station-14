@@ -33,7 +33,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var markup = FormattedMessage.FromMarkupOrThrow(GenerateCableMarkup(uid));
-            _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
+            _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false); // Offbrand
             args.Handled = true;
         }
 

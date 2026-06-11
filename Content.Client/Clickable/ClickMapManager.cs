@@ -21,7 +21,7 @@ namespace Content.Client.Clickable
         };
 
         private const float Threshold = 0.1f;
-        private const int ClickRadius = 2;
+        public const int DefaultClickRadius = 2; // Offbrand
 
         [Dependency] private IResourceCache _resourceCache = default!;
 
@@ -63,17 +63,17 @@ namespace Content.Client.Clickable
             }
         }
 
-        public bool IsOccluding(Texture texture, Vector2i pos)
+        public bool IsOccluding(Texture texture, Vector2i pos, int clickRadius) // Offbrand
         {
             if (!_textureMaps.TryGetValue(texture, out var clickMap))
             {
                 return false;
             }
 
-            return SampleClickMap(clickMap, pos, clickMap.Size, Vector2i.Zero);
+            return SampleClickMap(clickMap, pos, clickMap.Size, Vector2i.Zero, clickRadius); // Offbrand
         }
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos)
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos, int clickRadius) // Offbrand
         {
             if (!_rsiMaps.TryGetValue(rsi, out var rsiData))
             {
@@ -92,15 +92,15 @@ namespace Content.Client.Clickable
             }
 
             var offset = dirDat[frame];
-            return SampleClickMap(rsiData.ClickMap, pos, rsi.Size, offset);
+            return SampleClickMap(rsiData.ClickMap, pos, rsi.Size, offset, clickRadius); // Offbrand
         }
 
-        private static bool SampleClickMap(ClickMap map, Vector2i pos, Vector2i bounds, Vector2i offset)
+        private static bool SampleClickMap(ClickMap map, Vector2i pos, Vector2i bounds, Vector2i offset, int clickRadius) // Offbrand
         {
             var (width, height) = bounds;
             var (px, py) = pos;
 
-            for (var x = -ClickRadius; x <= ClickRadius; x++)
+            for (var x = -clickRadius; x <= clickRadius; x++)
             {
                 var ox = px + x;
                 if (ox < 0 || ox >= width)
@@ -108,7 +108,7 @@ namespace Content.Client.Clickable
                     continue;
                 }
 
-                for (var y = -ClickRadius; y <= ClickRadius; y++)
+                for (var y = -clickRadius; y <= clickRadius; y++)
                 {
                     var oy = py + y;
 
@@ -210,8 +210,8 @@ namespace Content.Client.Clickable
 
     public interface IClickMapManager
     {
-        public bool IsOccluding(Texture texture, Vector2i pos);
+        public bool IsOccluding(Texture texture, Vector2i pos, int clickRadius = ClickMapManager.DefaultClickRadius); // Offbrand
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos);
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos, int clickRadius = ClickMapManager.DefaultClickRadius); // Offbrand
     }
 }

@@ -158,13 +158,13 @@ namespace Content.Client.Examine
             // since there's probably one open already if it's coming in from the server.
             var entity = GetEntity(ev.EntityUid);
 
-            OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
+            OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget, ev.ShowBody); // Offbrand
             UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
         }
 
-        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
+        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor, bool showBody) // Offbrand
         {
-            OpenTooltip(player, target, centerAtCursor);
+            OpenTooltip(player, target, centerAtCursor, showBody: showBody); // Offbrand
             UpdateTooltipInfo(player, target, message, getVerbs: getVerbs);
         }
 
@@ -173,7 +173,7 @@ namespace Content.Client.Examine
         ///     not fill it with information. This is done when the server sends examine info/verbs,
         ///     or immediately if it's entirely clientside.
         /// </summary>
-        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
+        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true, bool knowTarget = true, bool showBody = false) // Offbrand
         {
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
@@ -234,6 +234,19 @@ namespace Content.Client.Examine
                 };
                 spriteView.SetEntity(target);
                 hBox.AddChild(spriteView);
+            }
+
+            if (showBody && HasComp<Content.Shared.Body.BodyComponent>(target))
+            {
+                var doll = new _Offbrand.BodyVisuals.OffbrandHealthDollControl
+                {
+                    OverrideDirection = Direction.South,
+                    SetSize = new Vector2(128, 128),
+                    Scale = new Vector2(4, 4),
+                    HorizontalAlignment = Control.HAlignment.Center,
+                };
+                doll.SetBody(target);
+                vBox.AddChild(doll);
             }
 
             if (knowTarget)

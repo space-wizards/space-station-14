@@ -25,7 +25,7 @@ namespace Content.Server.Examine
             SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
         }
 
-        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
+        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor, bool showBody) // Offbrand
         {
             if (!TryComp<ActorComponent>(player, out var actor))
                 return;
@@ -37,7 +37,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
+                GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor, showBody: showBody // Offbrand
             );
 
             RaiseNetworkEvent(ev, session.Channel);
