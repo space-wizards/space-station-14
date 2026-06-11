@@ -60,8 +60,6 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
 
             CategoryButtonGroup = new ButtonGroup();
-            Categories.GenerateItem += GenerateCategoryButton;
-            Categories.ItemKeyBindDown += (args, data) => OnCategorySelected?.Invoke(args, data);
         }
 
         protected override void ExitedTree()
@@ -106,39 +104,47 @@ namespace Content.Client.VendingMachines.UI
             button.Disabled = !_enabled || _amounts[protoID] == 0;
         }
 
-        private void GenerateCategoryButton(ListData data, ListContainerButton button)
+        private void GenerateCategoryButtons(List<CategoryListData> list)
         {
-            if (data is not CategoryListData { Category: var category, Name: var name, Sprite: var sprite })
-                return;
-
-            button.SetSize = new Vector2(60, 60);
-            button.Margin = new Thickness(0, 0, 10, 0);
-            button.Group = CategoryButtonGroup;
-            button.ToggleMode = true;
-            button.ToolTip = Loc.GetString(name);
-
-            if (category == "")
+            foreach (var data in list)
             {
-                var label = new Label
+                var button = new Button
                 {
-                    Text = "*",
-                    Align = Label.AlignMode.Fill
+                    SetSize = new Vector2(60, 60),
+                    Margin = new Thickness(0, 0, 10, 0),
+                    Group = CategoryButtonGroup,
+                    ToggleMode = true,
+                    ToolTip = Loc.GetString(data.Name)
                 };
-                button.Pressed = true;
-                button.AddChild(label);
-            }
-            else if (
-                sprite.IsValid()
-                && !_entityManager.Deleted(sprite)
-                && _entityManager.HasComponent<SpriteComponent>(sprite))
-            {
-                var spriteView = new SpriteView
-                {
-                    Stretch = SpriteView.StretchMode.Fill
-                };
-                spriteView.SetEntity(sprite);
 
-                button.AddChild(spriteView);
+                button.AddStyleClass(StyleClass.ButtonOpenBoth);
+
+                if (data.Category == "")
+                {
+                    button.Pressed = true;
+                    button.Text = "*";
+                    button.TextAlign = Label.AlignMode.Fill;
+                }
+                else if (
+                    data.Sprite.IsValid()
+                    && !_entityManager.Deleted(data.Sprite)
+                    && _entityManager.HasComponent<SpriteComponent>(data.Sprite))
+                {
+                    var spriteView = new SpriteView
+                    {
+                        Stretch = SpriteView.StretchMode.Fill
+                    };
+                    spriteView.SetEntity(data.Sprite);
+
+                    button.AddChild(spriteView);
+                }
+
+                button.OnPressed += args =>
+                {
+                    OnCategorySelected?.Invoke(args.Event, data);
+                };
+
+                Categories.AddChild(button);
             }
         }
 
@@ -184,7 +190,7 @@ namespace Content.Client.VendingMachines.UI
 
                 listData.Add(item);
             }
-            Categories.PopulateList(listData);
+            GenerateCategoryButtons(listData);
         }
 
         /// <summary>

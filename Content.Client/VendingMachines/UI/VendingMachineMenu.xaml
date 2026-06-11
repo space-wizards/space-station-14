@@ -6,7 +6,9 @@
     MinHeight="210">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer>
-            <co:ListContainer Name="Categories" VerticalExpand="True" Margin="4 4" MinWidth="70"/>
+            <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="4 4" MinWidth="70">
+                <BoxContainer Orientation="Vertical" Name="Categories" />
+            </ScrollContainer>
         </BoxContainer>
         <BoxContainer Name="MainContainer" Orientation="Vertical" HorizontalExpand="True">
             <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
