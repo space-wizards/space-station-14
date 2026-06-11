@@ -442,7 +442,7 @@
   components:
    - type: Tag
      tags:
-      - Deimplantable
+     - Deimplantable
    - type: SubdermalImplant
    - type: MindShieldImplant
 
