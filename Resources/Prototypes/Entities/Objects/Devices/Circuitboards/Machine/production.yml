@@ -776,6 +776,28 @@
       price: 58
 
 - type: entity
+  id: CableRelayMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: electro-relay machine board
+  description: A machine printed circuit board for an electro-relay.
+  components:
+    - type: MachineBoard
+      prototype: CableRelay
+      stackRequirements:
+        CableHV: 2
+        CableMV: 2
+        Cable: 2
+        Steel: 1
+        Manipulator: 2
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
+    - type: StaticPrice
+      price: 40
+
+- type: entity
   parent: BaseMachineCircuitboard
   id: DawInstrumentMachineCircuitboard
   name: digital audio workstation machine board

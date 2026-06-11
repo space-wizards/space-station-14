@@ -47,14 +47,6 @@
   objectType: Item
 
 - type: construction
-  id: CableRelay
-  graph: LogicGate
-  startNode: start
-  targetNode: relay
-  category: construction-category-tools
-  objectType: Item
-
-- type: construction
   id: MakeshiftMortarAndPestle
   graph: MakeshiftMortarAndPestle
   startNode: start

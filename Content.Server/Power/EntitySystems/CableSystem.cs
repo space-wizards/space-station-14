@@ -64,8 +64,7 @@ public sealed partial class CableSystem : EntitySystem
         }
     }
 
-    // A cable can be disconnected/reconnected from the powernet with a cutting tool without removing it,
-    // mirroring how pipe layers are adjusted. This is the counter to an electro-relay severing the cables.
+    // Manually connect/disconnect a cable's powernet node with a cutting tool, without removing the cable.
     private void OnGetVerbs(EntityUid uid, CableComponent cable, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Using is not { } used)

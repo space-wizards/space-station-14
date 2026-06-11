@@ -1,0 +1,58 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: CableRelay
+  name: electro-relay
+  description: A relay that breaks the powernet of the cables on its tile when switched on, without removing them. It needs power to switch on; once thrown it holds until switched off or unanchored. Open its interface to pick which voltages it cuts, or link it to a signaller.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Power/relay.rsi
+    layers:
+    - state: RelayOff
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        base:
+          True: { state: Relay }
+          False: { state: RelayOff }
+  - type: CableRelay
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: UserInterface
+    interfaces:
+      enum.CableRelayUiKey.Key:
+        type: CableRelayBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CableRelayUiKey.Key
+  - type: UseDelay
+    delay: 2
+  - type: WiresPanel
+  - type: Machine
+    board: CableRelayMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1

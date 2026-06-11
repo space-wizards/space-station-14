@@ -77,6 +77,11 @@
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]
+  id: CableRelayMachineCircuitboard
+  result: CableRelayMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]
   id: SMESMachineCircuitboard
   result: SMESMachineCircuitboard
 
