@@ -69,10 +69,14 @@ public sealed partial class ChasmSystem : EntitySystem
     /// <summary>
     /// Causes <paramref name="tripper"/> to fall into <paramref name="chasm"/>: starts a falling animation, optionally
     /// plays a sound, and eventually deletes <paramref name="tripper"/>.
+    /// If <paramref name="chasm"/> does not have a <see cref="ChasmComponent"/> component, does nothing.
     /// </summary>
     [PublicAPI]
-    public void StartFalling(Entity<ChasmComponent> chasm, EntityUid tripper, bool playSound = true)
+    public void StartFalling(Entity<ChasmComponent?> chasm, EntityUid tripper, bool playSound = true)
     {
+        if (!_chasmQuery.Resolve(chasm, ref chasm.Comp, logMissing: false))
+            return;
+
         var falling = AddComp<ChasmFallingComponent>(tripper);
         falling.FallingInto = chasm;
 
