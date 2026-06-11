@@ -63,19 +63,26 @@ public sealed partial class ChasmSystem : EntitySystem
         if (_chasmFallingQuery.HasComp(args.Tripper))
             return;
 
-        StartFalling(entity, args.Tripper);
+        StartFalling(entity.AsNullable(), args.Tripper);
     }
 
     /// <summary>
     /// Causes <paramref name="tripper"/> to fall into <paramref name="chasm"/>: starts a falling animation, optionally
     /// plays a sound, and eventually deletes <paramref name="tripper"/>.
-    /// If <paramref name="chasm"/> does not have a <see cref="ChasmComponent"/> component, does nothing.
+    /// If <paramref name="chasm"/> does not have a <see cref="ChasmComponent"/> component, does nothing and returns null.
     /// </summary>
+    /// <returns>
+    /// <paramref name="tripper"/> with its new <see cref="ChasmFallingComponent"/>, if the entity did start falling. Null otherwise.
+    /// </returns>
     [PublicAPI]
-    public void StartFalling(Entity<ChasmComponent?> chasm, EntityUid tripper, bool playSound = true)
+    public Entity<ChasmFallingComponent>? StartFalling(
+        Entity<ChasmComponent?> chasm,
+        EntityUid tripper,
+        bool playSound = true
+    )
     {
         if (!_chasmQuery.Resolve(chasm, ref chasm.Comp, logMissing: false))
-            return;
+            return null;
 
         var falling = AddComp<ChasmFallingComponent>(tripper);
         falling.FallingInto = chasm;
@@ -88,10 +95,12 @@ public sealed partial class ChasmSystem : EntitySystem
 
         var chasmEvent = new EntityStartedFallingIntoChasmEvent((tripper, falling));
         RaiseLocalEvent(chasm, ref chasmEvent);
-        var tripperEvent = new StartedFallingIntoChasmEvent(chasm);
+        var tripperEvent = new StartedFallingIntoChasmEvent((chasm, chasm.Comp));
         RaiseLocalEvent(tripper, ref tripperEvent);
 
-        Dirty(tripper, falling);
+        Entity<ChasmFallingComponent> ret = (tripper, falling);
+        Dirty(ret);
+        return ret;
     }
 
     private void OnStepTriggerAttempt(Entity<ChasmComponent> entity, ref StepTriggerAttemptEvent args)
