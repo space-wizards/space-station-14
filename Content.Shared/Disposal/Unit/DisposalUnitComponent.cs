@@ -157,6 +157,12 @@ public sealed partial class DisposalUnitComponent : Component
     public bool Engaged;
 
     /// <summary>
+    /// Special flag for handling race conditiong during destruction
+    /// </summary>
+    [DataField]
+    public bool IsDeleted = false;
+
+    /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
