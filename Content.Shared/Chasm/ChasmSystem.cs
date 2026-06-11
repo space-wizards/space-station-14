@@ -1,12 +1,9 @@
 ﻿using Content.Shared.ActionBlocker;
-using Content.Shared.Item;
 using Content.Shared.Movement.Events;
-using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Weapons.Misc;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -25,9 +22,6 @@ public sealed partial class ChasmSystem : EntitySystem
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
     [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
 
-    [Dependency] private SharedPopupSystem _p = default!;
-    [Dependency] private INetManager _n = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -35,29 +29,6 @@ public sealed partial class ChasmSystem : EntitySystem
         SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
         SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-
-        // Server check guards are to prevent predicted replay spamming popups.
-        SubscribeLocalEvent<ItemComponent, StartedFallingIntoChasmEvent>((ent, ref args) =>
-        {
-            if (!_n.IsServer) return;
-            _p.PopupEntity($"\nEnt start fall into {ToPrettyString(args.FallingInto)} ({args.FallingInto.Comp})", args.FallingInto);
-        });
-        SubscribeLocalEvent<ChasmComponent, EntityStartedFallingIntoChasmEvent>((ent, ref args) =>
-        {
-            if (!_n.IsServer) return;
-            _p.PopupEntity($"Chasm starts fall for {ToPrettyString(args.Faller)} ({args.Faller.Comp})\n", ent);
-        });
-
-        SubscribeLocalEvent<ItemComponent, CompletedFallingIntoChasmEvent>((ent, ref args) =>
-        {
-            if (!_n.IsServer) return;
-            _p.PopupEntity($"\nEnt completes fall into {ToPrettyString(args.FellInto)} ({args.FellInto.Comp})", args.FellInto);
-        });
-        SubscribeLocalEvent<ChasmComponent, EntityCompletedFallingIntoChasmEvent>((ent, ref args) =>
-        {
-            if (!_n.IsServer) return;
-            _p.PopupEntity($"Chasm completes fall for {ToPrettyString(args.Faller)} ({args.Faller.Comp})\n", ent);
-        });
     }
 
     public override void Update(float frameTime)
