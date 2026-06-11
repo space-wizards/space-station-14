@@ -9,6 +9,7 @@
       tags: # ignore "WhitelistChameleon" tag
       - ClothMade
       - Recyclable
+      - TorsoWearable
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       layers:

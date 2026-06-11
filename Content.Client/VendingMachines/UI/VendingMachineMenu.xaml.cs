@@ -20,7 +20,7 @@ namespace Content.Client.VendingMachines.UI
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private EntityWhitelistSystem _whitelist = default!;
+        private EntityWhitelistSystem _whitelist;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, EntityUid> _categoryDummies = [];
@@ -48,6 +48,9 @@ namespace Content.Client.VendingMachines.UI
         public VendingMachineMenu()
         {
             MinSize = SetSize = new Vector2(250, 150);
+
+            _whitelist = _entityManager.System<EntityWhitelistSystem>();
+
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 

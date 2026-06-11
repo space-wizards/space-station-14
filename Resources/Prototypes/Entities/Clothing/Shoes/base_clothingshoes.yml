@@ -22,6 +22,7 @@
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+    - FeetWearable
   - type: ProtectedFromStepTriggers
 
 - type: entity

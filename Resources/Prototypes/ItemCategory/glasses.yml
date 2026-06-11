@@ -2,21 +2,10 @@
   id: GlassesCategory
   name: item-category-glasses
   icon: ClothingEyesGlasses
-  items:
-    - ClothingEyesGlassesGar
-    - ClothingEyesGlassesGarOrange
-    - ClothingEyesGlassesGarGiga
-    - ClothingEyesGlassesMeson
-    - ClothingEyesGlasses
-    - ClothingEyesGlassesJensen
-    - ClothingEyesGlassesJamjar
-    - ClothingEyesGlassesOutlawGlasses
-    - ClothingEyesGlassesCheapSunglasses
-    - ClothingEyesGlassesSunglasses
-    - ClothingEyesGlassesSecurity
-    - ClothingEyesGlassesCommand
-    - ClothingEyesGlassesMercenary
-    - ClothingEyesGlassesThermal
-    - ClothingEyesGlassesChemical
-    - ClothingEyesGlassesNoir
-    - ClothingEyesGlassesHiddenSecurity
+  whitelist:
+    tags:
+    - GlassesWearable
+    - Sunglasses
+    components:
+    - FlashImmunity
+    - EyeProtection

@@ -48,6 +48,9 @@
   id: Backpack # ConstructionGraph: ClothingBagPet
 
 - type: Tag
+  id: BackpackWearable # Things wearable in the backpack slot
+
+- type: Tag
   id: Balloon # Default value in BalloonPopperComponent. Tagged entities will be viscously maimed by corresponding poppers.
 
 - type: Tag
@@ -70,6 +73,9 @@
 
 - type: Tag
   id: Bee # CreateEntityTileReaction whitelist on BuzzochloricBees and mode switching (only damages non-bees)
+
+- type: Tag
+  id: BeltWearable # Things wearable in the belt slot
 
 - type: Tag
   id: Beer # CargoBounty: BountyBeer
@@ -557,6 +563,9 @@
   id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk.
 
 - type: Tag
+  id: FeetWearable # Things wearable in the feet slot
+
+- type: Tag
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
 
 - type: Tag
@@ -645,6 +654,12 @@
 
 - type: Tag
   id: GlassShard # ConstructionGraph: BladedFlatcapBrown, BladedFlatcapGrey, ImprovisedArrow, ImprovisedShotgunShellGraph, Shiv, Spear
+
+- type: Tag
+  id: GlassesWearable # Things wearable in the glasses slot
+
+- type: Tag
+  id: GloveWearable # Things wearable in the glove slot
 
 - type: Tag
   id: Goat # Reproductive partner key
@@ -1438,6 +1453,9 @@
 
 - type: Tag
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
+
+- type: Tag
+  id: TorsoWearable # Things wearable in the torso (suit) slot
 
 - type: Tag
   id: Tourniquet # Storage whitelist: ClothingBeltMedical

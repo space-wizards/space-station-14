@@ -37,6 +37,7 @@
     tags:
     - HiViz
     - WhitelistChameleon
+    - TorsoWearable
 
 #(Bartender) vest
 - type: entity

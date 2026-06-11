@@ -38,6 +38,9 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: Tag
+    tags:
+    - BeltWearable
 
 - type: entity
   abstract: true

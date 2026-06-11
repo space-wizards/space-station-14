@@ -2,42 +2,6 @@
   id: GloveCategory
   name: item-category-glove
   icon: ClothingHandsGlovesColorWhite
-  items:
-    - ClothingHandsGlovesColorPurple
-    - ClothingHandsGlovesColorRed
-    - ClothingHandsGlovesColorBlue
-    - ClothingHandsGlovesColorTeal
-    - ClothingHandsGlovesColorBrown
-    - ClothingHandsGlovesColorGray
-    - ClothingHandsGlovesColorGreen
-    - ClothingHandsGlovesColorLightBrown
-    - ClothingHandsGlovesColorOrange
-    - ClothingHandsGlovesColorWhite
-    - ClothingHandsGlovesColorBlack
-    - ClothingHandsGlovesColorYellow
-    - ClothingHandsGlovesColorYellowBudget
-    - ClothingHandsGlovesConducting
-    - ClothingHandsGlovesBoxingRed
-    - ClothingHandsGlovesBoxingBlue
-    - ClothingHandsGlovesBoxingGreen
-    - ClothingHandsGlovesBoxingYellow
-    - ClothingHandsGlovesBoxingRiggedRed
-    - ClothingHandsGlovesBoxingRiggedBlue
-    - ClothingHandsGlovesBoxingRiggedGreen
-    - ClothingHandsGlovesBoxingRiggedYellow
-    - ClothingHandsGlovesCaptain
-    - ClothingHandsGlovesHop
-    - ClothingHandsGlovesLatex
-    - ClothingHandsGlovesNitrile
-    - ClothingHandsGlovesLeather
-    - ClothingHandsGlovesPowerglove
-    - ClothingHandsGlovesRobohands
-    - ClothingHandsGlovesSpaceNinja
-    - ClothingHandsGlovesCombat
-    - ClothingHandsGlovesFingerless
-    - ClothingHandsGlovesFingerlessInsulated
-    - ClothingHandsGlovesMercFingerless
-    - ClothingHandsGlovesCluwne
-    - ClothingHandsGlovesNorthStar
-    - ClothingHandsGlovesForensic
-    - ClothingHandsGlovesJanitor
+  whitelist:
+    tags:
+    - GloveWearable

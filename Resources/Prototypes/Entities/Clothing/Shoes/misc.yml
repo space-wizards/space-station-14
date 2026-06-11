@@ -156,7 +156,8 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
   - type: Tag
-    tags: []
+    tags:
+    - FeetWearable
 
 - type: entity
   parent: BaseAction
@@ -185,7 +186,8 @@
   - type: StaticPrice
     price: 75
   - type: Tag
-    tags: [ ]
+    tags:
+    - FeetWearable
 
 - type: entity
   parent: ClothingShoesBase
@@ -212,4 +214,5 @@
   - type: StaticPrice
     price: 220
   - type: Tag
-    tags: []
+    tags:
+    - FeetWearable

@@ -32,6 +32,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - TorsoWearable
 
 #Alternate / slim basic armor vest, allowed for security and bartenders
 - type: entity
@@ -131,6 +132,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]

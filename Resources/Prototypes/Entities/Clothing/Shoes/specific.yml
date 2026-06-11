@@ -44,6 +44,7 @@
     tags:
     - ClownShoes
     - WhitelistChameleon
+    - FeetWearable
 
 - type: entity
   parent: ClothingShoesClown
@@ -170,6 +171,7 @@
       tags: # ignore "WhitelistChameleon" tag
       - ClothMade
       - Recyclable
+      - FeetWearable
     - type: Sprite
       sprite: Clothing/Shoes/color.rsi
       layers:
