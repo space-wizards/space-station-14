@@ -45,17 +45,12 @@
     supplyRampTolerance: 500
   - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -255,26 +250,20 @@
     - Power
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              GeneratorRTGDamaged:
-                min: 1
-                max: 1
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GeneratorRTGDamaged:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 # TODO: need radioactive fallout when destroyed
 
@@ -290,8 +279,8 @@
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
-      - state: rtg_damaged
-      - state: rtg_glow
+    - state: rtg_damaged
+    - state: rtg_glow
   - type: PowerMonitoringDevice
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg_damaged
@@ -299,12 +288,6 @@
     intensity: 2
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
