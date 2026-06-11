@@ -15,8 +15,9 @@
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Climbable
   - type: Construction
     graph: Railing
@@ -46,12 +47,6 @@
         - TableLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20
@@ -93,7 +88,7 @@
       fix2:
         shape:
           !type:PhysShapeAabb
-          bounds: "0.49,0.49,0.25,-0.49"
+          bounds: "0.25,-0.49,0.49,0.49"
         density: 1000
         mask:
         - TableMask
@@ -101,12 +96,6 @@
         - TableLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20
@@ -139,7 +128,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,0.49,-0.25,0.25"
+          bounds: "-0.49,0.25,-0.25,0.49"
         density: 1000
         mask:
         - TableMask
@@ -147,12 +136,6 @@
         - TableLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20
@@ -211,12 +194,6 @@
           - TableLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 20

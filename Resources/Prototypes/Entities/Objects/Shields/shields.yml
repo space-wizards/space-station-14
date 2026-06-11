@@ -31,40 +31,55 @@
           Piercing: 1
           Heat: 1
     - type: Damageable
+    - type: Injurable
       damageContainer: Shield
+    - type: ExaminableDamage
+      messages: ShieldMessages
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 140
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100 #This is probably enough damage before it breaks
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 2
-                  max: 2
-                SheetGlass:
-                  min: 2
-                  max: 2
+      - trigger:
+          !type:DamageTrigger
+          damage: 100 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
     - type: StaticPrice
       price: 100
+
+- type: entity
+  name: base repairable shield
+  parent: BaseShield
+  id: BaseRepairableShield
+  description: A repairable shield!
+  abstract: true
+  components:
+  - type: Repairable # Negative values represent healing
+    damage:
+      types:
+        Blunt: -20
+        Slash: -20
+        Piercing: -20
+        Heat: -20
+    fuelCost: 10 # 1/2 of a Welder for a full repair
+    doAfterDelay: 5
+    allowSelfRepair: false
 
 #Security Shields
 
 - type: entity
   name: riot shield
-  parent: [ BaseShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseSecurityContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
@@ -85,7 +100,7 @@
 
 - type: entity
   name: laser shield
-  parent: [ BaseShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseSecurityContraband ]
   id: RiotLaserShield
   description: A shield built for withstanding lasers, but not much else.
   components:
@@ -105,7 +120,7 @@
 
 - type: entity
   name: ballistic shield
-  parent: [ BaseShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseSecurityContraband ]
   id: RiotBulletShield
   description: A shield built for protecting against ballistics, but not much else.
   components:
@@ -157,26 +172,20 @@
       node: woodenBuckler
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 60
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 30 #Weaker shield
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: WoodDestroy
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                MaterialWoodPlank:
-                  min: 5
-                  max: 5
+      - trigger:
+          !type:DamageTrigger
+          damage: 30 #Weaker shield
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank:
+              min: 5
+              max: 5
     - type: StaticPrice
       price: 150
 
@@ -212,12 +221,6 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 25
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
           damage: 10 #Very very weak shield
         behaviors:
         - !type:DoActsBehavior
@@ -234,7 +237,7 @@
 
 - type: entity
   name: makeshift shield
-  parent: BaseShield
+  parent: BaseRepairableShield
   id: MakeshiftShield
   description: A rundown looking shield, not good for much.
   components:
@@ -265,26 +268,20 @@
       node: makeshiftShield
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 20 #Very weak shield
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 1
-                  max: 2
+      - trigger:
+          !type:DamageTrigger
+          damage: 20 #Very weak shield
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 1
+              max: 2
 
 - type: entity
   name: web shield
@@ -318,32 +315,26 @@
       node: shield
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 20
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                MaterialWebSilk:
-                  min: 1
-                  max: 1
-            - !type:PlaySoundBehavior
-              sound:
-                collection: WoodDestroy
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWebSilk:
+              min: 1
+              max: 1
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
 
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
   name: clockwork shield
-  parent: BaseShield
+  parent: BaseRepairableShield
   id: ClockworkShield
   description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
   components:
@@ -403,20 +394,20 @@
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetGlass:
-                  min: 5
-                  max: 5
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetGlass:
+              min: 5
+              max: 5
 
 - type: entity
   name: energy shield
@@ -491,29 +482,26 @@
           Piercing: 1
     - type: Appearance
     - type: Damageable
+    - type: Injurable
       damageContainer: Shield
+    - type: ExaminableDamage
+      messages: EnergyShieldMessages
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 180
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                BrokenEnergyShield:
-                  min: 1
-                  max: 1
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            BrokenEnergyShield:
+              min: 1
+              max: 1
     - type: StaticPrice
       price: 350
 
@@ -533,7 +521,7 @@
 
 - type: entity
   name: telescopic shield
-  parent: BaseShield
+  parent: BaseRepairableShield
   id: TelescopicShield
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
@@ -575,28 +563,22 @@
     - type: Appearance
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 70
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalGlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                SheetSteel:
-                  min: 1
-                  max: 1
-                SheetGlass:
-                  min: 2
-                  max: 2
+      - trigger:
+          !type:DamageTrigger
+          damage: 70
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalGlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 1
+              max: 1
+            SheetGlass:
+              min: 2
+              max: 2
     - type: StaticPrice
       price: 150

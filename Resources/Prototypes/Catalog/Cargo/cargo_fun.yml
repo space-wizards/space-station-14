@@ -59,11 +59,24 @@
   group: market
 
 - type: cargoProduct
+  id: FunInstrumentsRandom
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: supersynth
+  product: CrateFunInstrumentsRandom
+  cost: 2500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunArtSupplies
   icon:
     sprite: Objects/Fun/crayons.rsi
     state: box
-  product: CrateFunArtSupplies
+  product: CrayonBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
@@ -365,5 +378,15 @@
     state: random
   product: CratePlants
   cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: BigDrumsInstrument
+  icon:
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+    state: drum
+  product: BigDrumsInstrument
+  cost: 1500
   category: cargoproduct-category-name-fun
   group: market

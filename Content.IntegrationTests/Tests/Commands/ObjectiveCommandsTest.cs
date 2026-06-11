@@ -1,5 +1,6 @@
 #nullable enable
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Objectives;
 using Content.Shared.Mind;
 using Robust.Shared.GameObjects;
@@ -7,7 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests.Commands;
 
-public sealed class ObjectiveCommandsTest
+public sealed class ObjectiveCommandsTest : GameTest
 {
 
     private const string ObjectiveProtoId = "MindCommandsTestObjective";
@@ -20,12 +21,17 @@ public sealed class ObjectiveCommandsTest
   components:
   - type: Objective
     difficulty: 1
-    issuer: objective-issuer-syndicate
+    issuer: TheSyndicate
     icon:
       sprite: error.rsi
       state: error
   - type: DieCondition
 """;
+
+    public override PoolSettings PoolSettings => new ()
+    {
+        Connected = false
+    };
 
     /// <summary>
     /// Creates a dummy session, and assigns it a mind, then
@@ -35,7 +41,7 @@ public sealed class ObjectiveCommandsTest
     [Test]
     public async Task AddListRemoveObjectiveTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var entMan = server.EntMan;
         var playerMan = server.ResolveDependency<ISharedPlayerManager>();
@@ -54,7 +60,7 @@ public sealed class ObjectiveCommandsTest
         });
 
         Assert.That(mindEnt, Is.Not.Null);
-        var mindComp = mindEnt.Value.Comp;
+        var mindComp = mindEnt!.Value.Comp;
         Assert.That(mindComp.Objectives, Is.Empty, "Dummy player started with objectives.");
 
         await pair.WaitCommand($"addobjective {playerSession.Name} {ObjectiveProtoId}");
@@ -66,7 +72,5 @@ public sealed class ObjectiveCommandsTest
         await pair.WaitCommand($"rmobjective {playerSession.Name} 0");
 
         Assert.That(mindComp.Objectives, Is.Empty, "rmobjective failed to remove objective");
-
-        await pair.CleanReturnAsync();
     }
 }

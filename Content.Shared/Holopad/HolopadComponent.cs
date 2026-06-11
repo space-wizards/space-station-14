@@ -11,21 +11,21 @@ namespace Content.Shared.Holopad;
 /// <remarks>
 /// Holopads also require a <see cref="TelephoneComponent"/> to function
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component
 {
     /// <summary>
     /// The entity being projected by the holopad
     /// </summary>
-    [ViewVariables]
-    public Entity<HolopadHologramComponent>? Hologram;
+    [DataField]
+    public EntityUid? Hologram;
 
     /// <summary>
     /// The entity using the holopad
     /// </summary>
-    [ViewVariables]
-    public Entity<HolopadUserComponent>? User;
+    [DataField]
+    public EntityUid? User;
 
     /// <summary>
     /// Proto ID for the user's hologram
@@ -36,26 +36,32 @@ public sealed partial class HolopadComponent : Component
     /// <summary>
     /// The entity that has locked out the controls of this device
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ControlLockoutOwner = null;
 
     /// <summary>
-    /// The game tick the control lockout was initiated
+    /// The time the control lockout will end
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public TimeSpan ControlLockoutStartTime;
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan ControlLockoutEndTime;
+
+    /// <summary>
+    /// The time the control lockout cool down will end
+    /// </summary>
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan ControlLockoutCoolDownEndTime;
 
     /// <summary>
     /// The duration that the control lockout will last in seconds
     /// </summary>
     [DataField]
-    public float ControlLockoutDuration { get; private set; } = 90f;
+    public TimeSpan ControlLockoutDuration { get; private set; } = TimeSpan.FromSeconds(90);
 
     /// <summary>
     /// The duration before the controls can be lockout again in seconds
     /// </summary>
     [DataField]
-    public float ControlLockoutCoolDown { get; private set; } = 180f;
+    public TimeSpan ControlLockoutCoolDown { get; private set; } = TimeSpan.FromSeconds(180);
 }
 
 #region: Event messages

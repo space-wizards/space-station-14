@@ -1,8 +1,7 @@
-using Content.Shared.Abilities.Mime;
-using Content.Server.Chat.Systems;
 using Content.Server.Popups;
-using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Abilities.Mime;
+using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Puppet;
 using Content.Shared.Speech;
@@ -10,9 +9,9 @@ using Content.Shared.Speech.Muting;
 
 namespace Content.Server.Speech.Muting
 {
-    public sealed class MutingSystem : EntitySystem
+    public sealed partial class MutingSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

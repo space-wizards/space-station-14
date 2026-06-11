@@ -2,33 +2,29 @@
 # Base
 
 - type: entity
-  parent: FoodInjectableBase
-  id: FoodPieBase
   abstract: true
+  parent: [SolutionNormal, FoodInjectableBase]
+  id: FoodPieBase
   components:
   - type: Item
-    storedRotation: -90
+    size: Normal
   - type: FlavorProfile
     flavors:
       - sweet
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 14
-        - ReagentId: Sugar
-          Quantity: 5
-  - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
+  - type: Solution
+    solution:
+      reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
+      - ReagentId: Nutriment
+        Quantity: 64
+      - ReagentId: Vitamin
+        Quantity: 8
+      - ReagentId: Sugar
+        Quantity: 8
+  - type: Edible #It's actually possible now to have a pie stored in a tin rather than spawning trash when you finish eating it. But right now I'm just cleaning up.
     trash:
     - FoodPlateTin
-  - type: SliceableFood
-    count: 4
   - type: Tag
     tags:
     - Pie
@@ -46,17 +42,15 @@
       - sweet
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 7
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7.5
-        - ReagentId: Vitamin
-          Quantity: 3.5
-        - ReagentId: Sugar
-          Quantity: 1.25
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
   - type: Tag
     tags:
     - Pie
@@ -66,7 +60,7 @@
 
 - type: entity
   name: apple pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieApple
   description: A pie containing sweet, sweet love... or apple.
   components:
@@ -78,8 +72,10 @@
     layers:
     - state: tin
     - state: apple
-  - type: SliceableFood
-    slice: FoodPieAppleSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieAppleSlice
+      amount: 8
   - type: Tag
     tags:
     - Fruit
@@ -108,7 +104,7 @@
 
 - type: entity
   name: baklava
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieBaklava
   description: A delightful healthy snack made of nut layers with thin bread.
   components:
@@ -120,8 +116,10 @@
     layers:
     - state: tin
     - state: baklava
-  - type: SliceableFood
-    slice: FoodPieBaklavaSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieBaklavaSlice
+      amount: 8
 
 - type: entity
   name: slice of baklava
@@ -139,7 +137,7 @@
 
 - type: entity
   name: banana cream pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieBananaCream
   description: Just like back home, on clown planet! HONK!
   components:
@@ -175,8 +173,10 @@
     tags:
     - Fruit
     - Pie
-  - type: SliceableFood
-    slice: FoodPieBananaCreamSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieBananaCreamSlice
+      amount: 8
 
 - type: entity
   name: slice of banana cream pie
@@ -200,7 +200,7 @@
 
 - type: entity
   name: berry clafoutis
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieClafoutis
   description: No black birds, this is a good sign.
   components:
@@ -213,8 +213,10 @@
     - state: tin
       color: pink
     - state: berryclafoutis
-  - type: SliceableFood
-    slice: FoodPieClafoutisSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieClafoutisSlice
+      amount: 8
   - type: Tag
     tags:
     - Fruit
@@ -243,7 +245,7 @@
 
 - type: entity
   name: cherry pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieCherry
   description: Tastes good enough to make a grown man cry.
   components:
@@ -254,8 +256,10 @@
     layers:
     - state: tin
     - state: cherry
-  - type: SliceableFood
-    slice: FoodPieCherrySlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieCherrySlice
+      amount: 8
   - type: Tag
     tags:
     - Fruit
@@ -283,7 +287,7 @@
 
 - type: entity
   name: meat pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieMeat
   description: An old barber recipe, very delicious!
   components:
@@ -294,8 +298,10 @@
     layers:
     - state: tin
     - state: meat
-  - type: SliceableFood
-    slice: FoodPieMeatSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieMeatSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -323,7 +329,7 @@
 
 - type: entity
   name: pumpkin pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPiePumpkin
   description: Someone should turn this into a latte!
   components:
@@ -335,8 +341,10 @@
     layers:
     - state: tin
     - state: pumpkin
-  - type: SliceableFood
-    slice: FoodPiePumpkinSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPiePumpkinSlice
+      amount: 8
   - type: Tag
     tags:
     - Pie
@@ -360,7 +368,7 @@
 
 - type: entity
   name: xeno pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieXeno
   components:
   - type: FlavorProfile
@@ -371,8 +379,10 @@
     layers:
     - state: tin
     - state: xeno
-  - type: SliceableFood
-    slice: FoodPieXenoSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieXenoSlice
+      amount: 8
   - type: Tag
     tags:
     - Meat
@@ -401,7 +411,7 @@
 
 - type: entity
   name: frosty pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieFrosty
   description: Tastes like blue and cold.
   components:
@@ -412,8 +422,10 @@
     layers:
     - state: tin
     - state: frosty
-  - type: SliceableFood
-    slice: FoodPieFrostySlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieFrostySlice
+      amount: 8
 
 - type: entity
   name: slice of frosty pie
@@ -432,7 +444,7 @@
 
 - type: entity
   name: mime tart
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodTartMime
   description: "\"      \""
   components:
@@ -443,8 +455,10 @@
     state: mime
   - type: Item
     heldPrefix: mime
-  - type: SliceableFood
-    slice: FoodTartMimeSlice
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodTartMimeSlice
+      amount: 8
 
 - type: entity
   name: slice of mime tart
@@ -461,11 +475,9 @@
     heldPrefix: mime
 # Tastes like nothing.
 
-# No Slice
-
 - type: entity
   name: amanita pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPieAmanita
   description: Sweet and tasty poison pie.
   components:
@@ -473,23 +485,54 @@
     flavors:
       - mushroom
   - type: Sprite
-    state: amanita
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 17
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Amatoxin
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 4
+    layers:
+    - state: tin
+    - state: amanita
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 64
+      - ReagentId: Vitamin
+        Quantity: 8
+      - ReagentId: Sugar
+        Quantity: 8
+      - ReagentId: Amatoxin
+        Quantity: 10
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPieAmanitaSlice
+      amount: 8
+
+- type: entity
+  name: slice of amanita pie
+  parent: FoodPieSliceBase
+  id: FoodPieAmanitaSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: Sprite
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: red
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 1
+      - ReagentId: Sugar
+        Quantity: 1
+      - ReagentId: Amatoxin
+        Quantity: 1.25
 # Tastes like pie, mushrooms.
 
 - type: entity
   name: plump pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, BaseSlicingRefinableFood]
   id: FoodPiePlump
   description: I bet you love stuff made out of plump helmets!
   components:
@@ -497,7 +540,27 @@
     flavors:
       - mushroom
   - type: Sprite
-    state: plump
+    layers:
+    - state: tin
+    - state: plump
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodPiePlumpSlice
+      amount: 8
+
+- type: entity
+  name: slice of plump pie
+  parent: FoodPieSliceBase
+  id: FoodPiePlumpSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: Sprite
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: purple
 # Tastes like pie, mushrooms.
 
 # Tart
@@ -513,17 +576,6 @@
       - sweet
   - type: Sprite
     state: grape
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Sugar
-          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -558,13 +610,15 @@
       - chocolate
   - type: Sprite
     state: cocolava
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 35
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Theobromine
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 64
+      - ReagentId: Vitamin
+        Quantity: 8
+      - ReagentId: Sugar
+        Quantity: 8
+      - ReagentId: Theobromine
+        Quantity: 8
 # Tastes like tart, dark chocolate.

@@ -18,9 +18,9 @@ namespace Content.Client.SprayPainter;
 /// <summary>
 /// Client-side spray painter functions. Caches information for spray painter windows and updates the UI to reflect component state.
 /// </summary>
-public sealed class SprayPainterSystem : SharedSprayPainterSystem
+public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public List<SprayPainterDecalEntry> Decals = [];
     public Dictionary<string, List<string>> PaintableGroupsByCategory = new();
@@ -65,7 +65,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             var groupList = new List<string>();
             foreach (var groupId in category.Groups)
             {
-                if (!Proto.TryIndex(groupId, out var group))
+                if (!Proto.Resolve(groupId, out var group))
                     continue;
 
                 groupList.Add(groupId);
@@ -97,7 +97,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         public StatusControl(Entity<SprayPainterComponent> ent)
         {
             _entity = ent;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 

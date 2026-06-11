@@ -20,15 +20,15 @@ using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopSystem : SharedTabletopSystem
+    public sealed partial class TabletopSystem : SharedTabletopSystem
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IUserInterfaceManager _uiManger = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private AppearanceSystem _appearance = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
@@ -36,7 +36,7 @@ namespace Content.Client.Tabletop
         private float _timePassed; // Time passed since last update sent to the server.
         private EntityUid? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
-        private DefaultWindow? _window; // Current open tabletop window (only allow one at a time)
+        private BaseWindow? _window; // Current open tabletop window (only allow one at a time)
         private EntityUid? _table; // The table entity of the currently open game session
 
         public override void Initialize()

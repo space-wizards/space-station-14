@@ -12,10 +12,10 @@ using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
-public sealed class AdminLogsEui : BaseEui
+public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IFileDialogManager _dialogManager = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private IFileDialogManager _dialogManager = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
@@ -156,7 +156,7 @@ public sealed class AdminLogsEui : BaseEui
             return;
         }
 
-        Window = new OSWindow { Title = "Admin Logs", SetWidth = 1100, SetHeight = 400 };
+        Window = new OSWindow { Title = Loc.GetString("admin-logs-title"), SetWidth = 1100, SetHeight = 400 };
 
         LogsControl.Orphan();
         LogsWindow.Dispose();

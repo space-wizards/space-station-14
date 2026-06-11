@@ -19,7 +19,7 @@
     slots:
     - neck
   - type: StaticPrice
-    price: 100
+    price: 12
   - type: Tag
     tags:
     - Bedsheet
@@ -327,13 +327,12 @@
 
 - type: entity
   id: BedsheetWhite
-  parent: BedsheetBase
+  parent: [BedsheetBase, BaseSlicingRefinable]
   name: white bedsheet
   components:
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingOuterGhostSheet #ghostly!
-      amount: 1
   - type: Sprite
     state: sheetwhite
   - type: Clothing

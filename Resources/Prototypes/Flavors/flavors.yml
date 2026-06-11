@@ -1350,6 +1350,11 @@
   description: flavor-complex-dog-food
 
 - type: flavor
+  id: cannedtuna
+  flavorType: Complex
+  description: flavor-complex-canned-tuna
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
@@ -1403,6 +1408,11 @@
   id: paper
   flavorType: Complex
   description: flavor-complex-paper
+
+- type: flavor
+  id: cotton
+  flavorType: Complex
+  description: flavor-complex-cotton
 
 - type: flavor
   id: compressed-meat
