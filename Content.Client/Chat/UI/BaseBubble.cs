@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.UI;
 
-public abstract class BaseBubble : Control
+public abstract partial class BaseBubble : Control
 {
     [Dependency] protected IEyeManager EyeManager = default!;
     [Dependency] protected IEntityManager EntityManager = default!;
