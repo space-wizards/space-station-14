@@ -132,7 +132,7 @@ namespace Content.Client.VendingMachines.UI
                 {
                     var spriteView = new SpriteView
                     {
-                        Stretch = SpriteView.StretchMode.Fill
+                        Stretch = SpriteView.StretchMode.Fit
                     };
                     spriteView.SetEntity(data.Sprite);
 
