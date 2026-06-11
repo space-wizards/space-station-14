@@ -72,7 +72,11 @@ namespace Content.Client.Chat.UI
 
             AddChild(bubble);
 
-            InitializeContentSize(bubble);
+            ForceRunStyleUpdate();
+
+            bubble.Measure(Vector2Helpers.Infinity);
+            ContentSize = bubble.DesiredSize;
+            VerticalOffsetAchieved = -ContentSize.Y;
 
             _deathTime = _timing.RealTime + TotalTime;
         }

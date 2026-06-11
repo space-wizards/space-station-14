@@ -31,8 +31,7 @@ public sealed class PreviewBubble : BaseBubble
         };
 
         AddChild(_panel);
-
-        InitializeContentSize(_panel);
+        ForceRunStyleUpdate();
     }
 
     public float UpdateText(string text)

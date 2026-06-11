@@ -74,16 +74,4 @@ public abstract class BaseBubble : Control
         var height = MathF.Ceiling(MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentSize.Y));
         SetHeight = height;
     }
-
-    /// <summary>
-    ///     Initializes the content size based on a desired size.
-    /// </summary>
-    protected void InitializeContentSize(Control rootControl)
-    {
-        ForceRunStyleUpdate();
-
-        rootControl.Measure(Vector2Helpers.Infinity);
-        ContentSize = rootControl.DesiredSize;
-        VerticalOffsetAchieved = -ContentSize.Y;
-    }
 }
