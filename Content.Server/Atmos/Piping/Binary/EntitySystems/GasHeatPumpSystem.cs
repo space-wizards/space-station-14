@@ -8,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
@@ -15,14 +16,13 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Examine;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
 [UsedImplicitly]
-public sealed partial class GasHeatPumpSystem : EntitySystem
+public sealed partial class GasHeatPumpSystem : SharedGasHeatPumpSystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
@@ -41,95 +41,78 @@ public sealed partial class GasHeatPumpSystem : EntitySystem
         SubscribeLocalEvent<GasHeatPumpComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<GasHeatPumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         SubscribeLocalEvent<GasHeatPumpComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<GasHeatPumpComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, GasHeatPumpComponent comp, ExaminedEvent args)
+    private void OnInit(Entity<GasHeatPumpComponent> ent, ref ComponentInit args)
     {
-        if (!Transform(uid).Anchored || !args.IsInDetailsRange)
-            return;
-
-        args.PushMarkup(Loc.GetString("gas-heat-pump-system-examined",
-            ("statusColor", "lightblue"),
-            ("temp", $"{comp.TargetTemperature:0.##}")));
-
-        if (comp.Blocked)
-            args.PushMarkup(Loc.GetString("gas-heat-pump-system-examined-blocked"));
-
-        if (comp.TemperatureLocked)
-            args.PushMarkup(Loc.GetString("gas-heat-pump-system-examined-locked"));
+        UpdateState(ent);
     }
 
-    private void OnInit(EntityUid uid, GasHeatPumpComponent comp, ComponentInit args)
+    private void OnPowerChanged(Entity<GasHeatPumpComponent> ent, ref PowerChangedEvent args)
     {
-        UpdateState(uid, comp);
+        UpdateState(ent);
     }
 
-    private void OnPowerChanged(EntityUid uid, GasHeatPumpComponent comp, ref PowerChangedEvent args)
+    private void OnHeatPumpLeaveAtmosphere(Entity<GasHeatPumpComponent> ent, ref AtmosDeviceDisabledEvent args)
     {
-        UpdateState(uid, comp);
+        ent.Comp.Enabled = false;
+        Dirty(ent);
+        UpdateState(ent);
     }
 
-    private void OnHeatPumpLeaveAtmosphere(EntityUid uid, GasHeatPumpComponent comp, ref AtmosDeviceDisabledEvent args)
+    private void OnHeatPumpUpdated(Entity<GasHeatPumpComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
-        comp.Enabled = false;
-        Dirty(uid, comp);
-        UpdateState(uid, comp);
-    }
-
-    private void OnHeatPumpUpdated(EntityUid uid, GasHeatPumpComponent comp, ref AtmosDeviceUpdateEvent args)
-    {
-        if (!comp.Enabled || !_powerReceiverSystem.IsPowered(uid))
+        if (!ent.Comp.Enabled || !_powerReceiverSystem.IsPowered(ent))
         {
-            _ambientSoundSystem.SetAmbience(uid, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
-        if (!_nodeContainer.TryGetNodes(uid, comp.RegulatedName, comp.ExternalName,
+        if (!_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.RegulatedName, ent.Comp.ExternalName,
                 out PipeNode? regulated, out PipeNode? external))
         {
-            _ambientSoundSystem.SetAmbience(uid, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
-        var previouslyBlocked = comp.Blocked;
+        var previouslyBlocked = ent.Comp.Blocked;
 
-        if (external.Air.Pressure < comp.MinPressure || regulated.Air.Pressure < comp.MinPressure)
+        if (external.Air.Pressure < ent.Comp.MinPressure || regulated.Air.Pressure < ent.Comp.MinPressure)
         {
-            comp.Blocked = true;
-            if (previouslyBlocked != comp.Blocked)
-                UpdateState(uid, comp);
-            _ambientSoundSystem.SetAmbience(uid, false);
+            ent.Comp.Blocked = true;
+            if (previouslyBlocked != ent.Comp.Blocked)
+                UpdateState(ent);
+            _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
-        comp.Blocked = false;
-        if (previouslyBlocked != comp.Blocked)
-            UpdateState(uid, comp);
+        ent.Comp.Blocked = false;
+        if (previouslyBlocked != ent.Comp.Blocked)
+            UpdateState(ent);
 
         var tReg = regulated.Air.Temperature;
         var tExt = external.Air.Temperature;
 
-		// Temp range locks out so we can avoid unbalanced weird stuff, no magic teg with this sorry
-        var previouslyLocked = comp.TemperatureLocked;
-        comp.TemperatureLocked =
-            tReg < comp.MinOperatingTemperature || tReg > comp.MaxOperatingTemperature ||
-            tExt < comp.MinOperatingTemperature || tExt > comp.MaxOperatingTemperature;
-        if (previouslyLocked != comp.TemperatureLocked)
-            UpdateState(uid, comp);
-        if (comp.TemperatureLocked)
+        // Temp range locks out so we can avoid unbalanced weird stuff, no magic teg with this sorry
+        var previouslyLocked = ent.Comp.TemperatureLocked;
+        ent.Comp.TemperatureLocked =
+            tReg < ent.Comp.MinOperatingTemperature || tReg > ent.Comp.MaxOperatingTemperature ||
+            tExt < ent.Comp.MinOperatingTemperature || tExt > ent.Comp.MaxOperatingTemperature;
+        if (previouslyLocked != ent.Comp.TemperatureLocked)
+            UpdateState(ent);
+        if (ent.Comp.TemperatureLocked)
         {
-            _ambientSoundSystem.SetAmbience(uid, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
-        var tTarget = comp.TargetTemperature;
+        var tTarget = ent.Comp.TargetTemperature;
 
         var delta = tReg - tTarget;
 
         if (MathF.Abs(delta) < Atmospherics.MinimumTemperatureDeltaToConsider)
         {
-            _ambientSoundSystem.SetAmbience(uid, false);
+            _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
@@ -137,17 +120,26 @@ public sealed partial class GasHeatPumpSystem : EntitySystem
 
         // Carnot COP capped by the max rate, tReg on top works for both heat and cool
         var tempGap = MathF.Max(MathF.Abs(tExt - tReg), 1f);
-        var cop = comp.CarnotEfficiency * tReg / tempGap;
-        var heatRate = MathF.Min(comp.MaxHeatTransferRate, cop * comp.WorkInput);
+        var cop = ent.Comp.CarnotEfficiency * tReg / tempGap;
+        var heatRate = MathF.Min(ent.Comp.MaxHeatTransferRate, cop * ent.Comp.WorkInput);
 
         // Joules moved this tick
         var joulesMoved = heatRate * args.dt;
 
-        // Clamp to avoid going over/under the target temp
+        // Clamp regulated side: avoid going over/under the target temp.
         var cReg = _atmosphereSystem.GetHeatCapacity(regulated.Air, true);
         var maxJoulesMoved = MathF.Abs(delta) * cReg;
         if (joulesMoved > maxJoulesMoved)
             joulesMoved = maxJoulesMoved;
+
+        // Clamp to avoid free energy creation (For corner case insane unrealistic heat pumps that can work at any temperature)
+        var cExt = _atmosphereSystem.GetHeatCapacity(external.Air, true);
+        var maxExternalJoules = coolingMode
+            ? (Atmospherics.Tmax - tExt) * cExt // When cooling, we can't heat the sink over max temp
+            : (tExt - Atmospherics.TCMB) * cExt; // When heating, don't draw energy past the minimum
+
+        if (joulesMoved > maxExternalJoules)
+            joulesMoved = maxExternalJoules;
 
         // Same amount leaves one side and enters the other
         // q+w version (to make heat waste from power instead of magic consumption): joulesMoved + joulesMoved / cop
@@ -162,12 +154,12 @@ public sealed partial class GasHeatPumpSystem : EntitySystem
             _atmosphereSystem.AddHeat(external.Air, -joulesMoved);
         }
 
-        _ambientSoundSystem.SetAmbience(uid, true);
+        _ambientSoundSystem.SetAmbience(ent, true);
     }
 
-    private void OnPacketRecv(EntityUid uid, GasHeatPumpComponent comp, DeviceNetworkPacketEvent args)
+    private void OnPacketRecv(Entity<GasHeatPumpComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!TryComp(uid, out DeviceNetworkComponent? netConn)
+        if (!TryComp(ent, out DeviceNetworkComponent? netConn)
             || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
             return;
 
@@ -177,45 +169,66 @@ public sealed partial class GasHeatPumpSystem : EntitySystem
         {
             case AtmosDeviceNetworkSystem.SyncData:
                 payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                payload.Add(AtmosDeviceNetworkSystem.SyncData, comp.ToAirAlarmData());
-                _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+                payload.Add(AtmosDeviceNetworkSystem.SyncData, ToAirAlarmData(ent));
+                _deviceNetSystem.QueuePacket(ent, args.SenderAddress, payload, device: netConn);
                 return;
 
             case DeviceNetworkConstants.CmdSetState:
                 if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasHeatPumpData? setData))
                     break;
 
-                var previous = comp.ToAirAlarmData();
+                var previous = ToAirAlarmData(ent);
 
                 if (previous.Enabled != setData.Enabled)
                 {
                     _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{ToPrettyString(uid)} {(setData.Enabled ? "enabled" : "disabled")}");
+                        $"{ToPrettyString(ent)} {(setData.Enabled ? "enabled" : "disabled")}");
                 }
 
                 if (MathF.Abs(previous.TargetTemperature - setData.TargetTemperature) > 0.01f)
                 {
                     _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{ToPrettyString(uid)} target temperature changed from {previous.TargetTemperature:0.#} K to {setData.TargetTemperature:0.#} K");
+                        $"{ToPrettyString(ent)} target temperature changed from {previous.TargetTemperature:0.#} K to {setData.TargetTemperature:0.#} K");
                 }
 
-                comp.FromAirAlarmData(setData);
-                Dirty(uid, comp);
-                UpdateState(uid, comp);
+                FromAirAlarmData(ent, setData);
+                Dirty(ent);
+                UpdateState(ent);
                 return;
         }
     }
 
-    private void UpdateState(EntityUid uid, GasHeatPumpComponent comp, AppearanceComponent? appearance = null)
+    private void UpdateState(Entity<GasHeatPumpComponent> ent, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref appearance, false))
+        if (!Resolve(ent, ref appearance, false))
             return;
 
-        if (!comp.Enabled || !_powerReceiverSystem.IsPowered(uid))
-            _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
-        else if (comp.Blocked || comp.TemperatureLocked)
-            _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
+        if (!ent.Comp.Enabled || !_powerReceiverSystem.IsPowered(ent))
+            _appearance.SetData(ent, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
+        else if (ent.Comp.Blocked || ent.Comp.TemperatureLocked)
+            _appearance.SetData(ent, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
         else
-            _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
+            _appearance.SetData(ent, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
+    }
+
+    // Conversions
+    public GasHeatPumpData ToAirAlarmData(Entity<GasHeatPumpComponent> ent)
+    {
+        return new GasHeatPumpData
+        {
+            Enabled = ent.Comp.Enabled,
+            Dirty = false,
+            IgnoreAlarms = false,
+            TargetTemperature = ent.Comp.TargetTemperature,
+            MinOperatingTemperature = ent.Comp.MinOperatingTemperature,
+            MaxOperatingTemperature = ent.Comp.MaxOperatingTemperature,
+        };
+    }
+
+    public void FromAirAlarmData(Entity<GasHeatPumpComponent> ent, GasHeatPumpData data)
+    {
+        ent.Comp.Enabled = data.Enabled;
+        ent.Comp.TargetTemperature = data.TargetTemperature;
+        Dirty(ent);
     }
 }

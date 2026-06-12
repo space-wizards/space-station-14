@@ -66,22 +66,6 @@ public sealed partial class GasHeatPumpComponent : Component
     /// </summary>
     [DataField]
     public float MaxOperatingTemperature = Atmospherics.T0C + 100f;
-
-    public GasHeatPumpData ToAirAlarmData() => new()
-    {
-        Enabled = Enabled,
-        Dirty = false,
-        IgnoreAlarms = false,
-        TargetTemperature = TargetTemperature,
-        MinOperatingTemperature = MinOperatingTemperature,
-        MaxOperatingTemperature = MaxOperatingTemperature,
-    };
-
-    public void FromAirAlarmData(GasHeatPumpData data)
-    {
-        Enabled = data.Enabled;
-        TargetTemperature = data.TargetTemperature;
-    }
 }
 
 [Serializable, NetSerializable]
