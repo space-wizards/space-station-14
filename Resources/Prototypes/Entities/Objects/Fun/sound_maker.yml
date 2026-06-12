@@ -517,7 +517,7 @@
   - type: EmitSoundOnTrigger
     sound: *SoundPartyBlower
   - type: UseDelay
-    delay: 2.0
+    delay: 3.0
   - type: Whistle
     distance: 3
 

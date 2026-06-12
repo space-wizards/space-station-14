@@ -113,3 +113,8 @@
   license: "CC0-1.0"
   source: https://freesound.org/people/Crinkem/sounds/492027/
 
+  - files: [ "partyblower.ogg" ]
+    license: "CC-BY-4.0"
+    copyright: "Created by InspectorJ on Freesound; shortened and converted to ogg and mono by UBlueberry (GitHub)"
+    source: "https://freesound.org/s/484267/"
+

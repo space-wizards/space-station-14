@@ -323,8 +323,10 @@
           amount: 2
         - id: ClothingHeadHatPartyBlue
           amount: 2
-        - id: PartyBlowerPink
-        - id: PartyBlowerBlue
+        - !type:GroupSelector
+          children:
+          - id: PartyBlowerBlue
+          - id: PartyBlowerPink
 
 - type: entity
   parent: CratePlastic
