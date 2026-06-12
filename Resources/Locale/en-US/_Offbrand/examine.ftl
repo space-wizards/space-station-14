@@ -26,6 +26,21 @@ wound-count-modifier =
        *[other] a ton of { $wound }
     } on { POSS-ADJ($target) } { $organ }.
 
+wound-count-none = { CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } no wounds on { POSS-ADJ($target) } { $organ }.
+
+wound-count-modifier-exterior =
+    { CAPITALIZE(SUBJECT($organ)) } { CONJUGATE-HAVE($organ) } { $count ->
+        [1] {INDEFINITE( $wound )} { $wound }
+        [2] two { $wound }
+        [3] a few { $wound }
+        [4] a few { $wound }
+        [5] a few { $wound }
+        [6] many { $wound }
+        [7] many { $wound }
+        [8] many { $wound }
+       *[other] a ton of { $wound }
+    }.
+
 -wound-plural-modifier-s = { $count ->
     [one]{""}
    *[other]{"s"}

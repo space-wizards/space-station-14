@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared._Offbrand.Wounds;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(WoundableSystem), typeof(WoundableBodySystem))]
+[Access(typeof(WoundableSystem), typeof(WoundableBodySystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class WoundComponent : Component
 {
     /// <summary>

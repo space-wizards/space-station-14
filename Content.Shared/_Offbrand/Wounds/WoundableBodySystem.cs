@@ -1,13 +1,8 @@
-using System.Linq;
 using Content.Shared._Offbrand.Organs;
-using Content.Shared.Body.Systems;
-using Content.Shared.Body;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.HealthExaminable;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Timing;
@@ -29,7 +24,6 @@ public sealed partial class WoundableBodySystem : OffbrandDamageSystem
         SubscribeLocalEvent<WoundableBodyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<WoundableBodyComponent, DamageDealtEvent>(OnDamageDealt);
         SubscribeLocalEvent<WoundableBodyComponent, RefreshWoundsEvent>(OnRefreshWounds);
-        SubscribeLocalEvent<WoundableBodyComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined, before: [typeof(SharedBloodstreamSystem)]);
     }
 
     private void OnShutdown(Entity<WoundableBodyComponent> ent, ref ComponentShutdown args)
@@ -40,70 +34,6 @@ public sealed partial class WoundableBodySystem : OffbrandDamageSystem
         foreach (var wound in wounds)
         {
             QueueDel(wound);
-        }
-    }
-
-    private static readonly LocId WoundCountModifier = "wound-count-modifier";
-
-    private void OnHealthBeingExamined(Entity<WoundableBodyComponent> ent, ref HealthBeingExaminedEvent args)
-    {
-        if (!TryComp<BodyComponent>(ent, out var body))
-            return;
-
-        foreach (var organ in body.Organs?.ContainedEntities ?? [])
-        {
-            if (!_statusEffects.TryEffectsWithComp<WoundDescriptionComponent>(organ, out var wounds))
-                continue;
-
-            if (!args.Message.IsEmpty)
-            {
-                args.Message.PushNewline();
-            }
-
-            var counts = new Dictionary<(LocId, LocId?, LocId?), int>();
-
-            foreach (var describable in wounds)
-            {
-                var wound = Comp<WoundComponent>(describable);
-                var damage = wound.Damage.GetTotal();
-
-                if (describable.Comp1.Descriptions.HighestMatch(damage) is not { } message)
-                    continue;
-
-                var text = message;
-                LocId? bleedingMessage = null;
-                LocId? tendedMessage = null;
-
-                if (TryComp<BleedingWoundComponent>(describable, out var bleeding) && _woundable.BleedLevel((describable.Owner, bleeding)) > 0f)
-                    bleedingMessage = describable.Comp1.BleedingModifier;
-
-                if (TryComp<TendableWoundComponent>(describable, out var tendable) && tendable.Tended)
-                    tendedMessage = describable.Comp1.TendedModifier;
-
-                var triple = (text, bleedingMessage, tendedMessage);
-
-                if (counts.TryGetValue(triple, out var count))
-                    counts[triple] = count + 1;
-                else
-                    counts[triple] = 1;
-            }
-
-            var first = true;
-            foreach (var (triple, count) in counts.OrderBy(it => it.Key.Item1))
-            {
-                if (!first)
-                    args.Message.PushNewline();
-                else
-                    first = false;
-
-                var text = Loc.GetString(triple.Item1, ("count", count));
-                if (triple.Item2 is { } bleedingMessage)
-                    text = Loc.GetString(bleedingMessage, ("wound", text));
-                if (triple.Item3 is { } tendedMessage)
-                    text = Loc.GetString(tendedMessage, ("wound", text));
-
-                args.Message.AddMarkupOrThrow(Loc.GetString(WoundCountModifier, ("wound", text), ("count", count), ("target", Identity.Entity(ent, EntityManager)), ("organ", organ)));
-            }
         }
     }
 

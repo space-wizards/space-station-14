@@ -1,3 +1,4 @@
+using Content.Shared.Body; // Offbrand - we dgaf about bodies
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -96,7 +97,7 @@ public sealed partial class HealthExaminableSystem : EntitySystem
         // Anything else want to add on to this?
         RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
 
-        if (msg.IsEmpty)
+        if (msg.IsEmpty && !HasComp<BodyComponent>(uid)) // Offbrand - we dgaf about bodies
         {
             msg.AddMarkupOrThrow(Loc.GetString($"health-examinable-{component.LocPrefix}-none"));
         }

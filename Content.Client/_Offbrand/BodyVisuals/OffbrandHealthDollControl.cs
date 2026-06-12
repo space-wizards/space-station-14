@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Clickable;
+using Content.Client.Examine;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Shared.Body;
 using Content.Shared.Input;
@@ -25,6 +26,7 @@ public sealed class OffbrandHealthDollControl : SpriteView
     private static readonly EntProtoId DollPrototype = "OffbrandHealthDoll";
 
     private readonly BodyAppearanceRelaySystem _relay;
+    private readonly ExamineSystem _examine;
     private readonly InputSystem _inputSystem;
 
     private readonly IClickMapManager _clickMap;
@@ -41,6 +43,7 @@ public sealed class OffbrandHealthDollControl : SpriteView
     {
         IoCManager.Resolve(ref _clickMap, ref _inputManager, ref _player, ref _timing);
         _relay = EntMan.System<BodyAppearanceRelaySystem>();
+        _examine = EntMan.System<ExamineSystem>();
         _inputSystem = EntMan.System<InputSystem>();
 
         OverrideDirection = Direction.South;
@@ -166,6 +169,17 @@ public sealed class OffbrandHealthDollControl : SpriteView
     {
         if (EntMan.Deleted(_hoveredOrgan) || _player.LocalSession is null)
             return;
+
+        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            if (_body is { } body)
+            {
+                _examine.DoExamine(_hoveredOrgan.Value, displayTarget: body);
+                args.Handle();
+            }
+
+            return;
+        }
 
         var func = args.Function;
         var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
