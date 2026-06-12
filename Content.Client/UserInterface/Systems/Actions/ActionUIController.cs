@@ -155,7 +155,7 @@ public sealed partial class ActionUIController : UIController, IOnStateChanged<G
     /// <summary>
     ///     If the user clicked somewhere, and they are currently targeting an action, try and perform it.
     /// </summary>
-    private bool TargetingOnUse(in PointerInputCmdArgs args)
+    public bool TargetingOnUse(in PointerInputCmdArgs args) // Offbrand - we need this
     {
         if (!_timing.IsFirstTimePredicted || _actionsSystem == null || SelectingTargetFor is not { } actionId)
             return false;

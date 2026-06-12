@@ -32,6 +32,18 @@ public sealed partial class OffbrandHeartOrganComponent : Component
     [DataField(required: true)]
     public SortedDictionary<FixedPoint2, (double Chance, FixedPoint2 Amount)> StrainDamageThresholds;
 
+    /// <summary>
+    /// The stethoscope sound is considered to be damaged above this threshold.
+    /// </summary>
+    [DataField(required: true)]
+    public FixedPoint2 StethoscopeDamagedAbove;
+
+    /// <summary>
+    /// The strain thresholds for the stethoscope message.
+    /// </summary>
+    [DataField(required: true)]
+    public SortedDictionary<FixedPoint2, LocId> StethoscopeStrainThresholds;
+
     [DataField, AutoNetworkedField]
     public bool Beating = true;
 }

@@ -30,6 +30,7 @@
     itemIconStyle: BigAction
     checkCanInteract: false
   - type: TargetAction
+    repeat: true # Offbrand
   - type: EntityTargetAction
     event: !type:StethoscopeActionEvent
 

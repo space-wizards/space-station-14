@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Actions;
 using Content.Client.Clickable;
+using Content.Client.UserInterface.Systems.Actions;
 using Content.Shared.Body;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -10,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -161,8 +164,37 @@ public sealed class OffbrandHealthDollControl : SpriteView
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
-        if (EntMan.Deleted(_hoveredOrgan))
+        if (EntMan.Deleted(_hoveredOrgan) || _player.LocalSession is null)
             return;
+
+        var func = args.Function;
+        var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
+        var message = new ClientFullInputCmdMessage(
+            _timing.CurTick,
+            _timing.TickFraction,
+            funcId)
+        {
+            State = BoundKeyState.Down,
+            Coordinates = EntMan.GetComponent<TransformComponent>(_hoveredOrgan.Value).Coordinates,
+            ScreenCoordinates = args.PointerLocation,
+            Uid = _hoveredOrgan.Value,
+        };
+
+        var actions = UserInterfaceManager.GetUIController<ActionUIController>();
+        var cmd = new PointerInputCmdHandler.PointerInputCmdArgs(
+            _player.LocalSession,
+            EntMan.GetComponent<TransformComponent>(_hoveredOrgan.Value).Coordinates,
+            args.PointerLocation,
+            _hoveredOrgan.Value,
+            BoundKeyState.Down,
+            message
+        );
+
+        if (args.Function == EngineKeyFunctions.Use && actions.TargetingOnUse(in cmd))
+        {
+            args.Handle();
+            return;
+        }
 
         if (args.Function == EngineKeyFunctions.Use ||
             args.Function == ContentKeyFunctions.ActivateItemInWorld ||
@@ -170,26 +202,7 @@ public sealed class OffbrandHealthDollControl : SpriteView
             args.Function == ContentKeyFunctions.Point ||
             args.Function == ContentKeyFunctions.TryPullObject)
         {
-            var func = args.Function;
-            var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
-
-            var message = new ClientFullInputCmdMessage(
-                _timing.CurTick,
-                _timing.TickFraction,
-                funcId)
-            {
-                State = BoundKeyState.Down,
-                Coordinates = EntMan.GetComponent<TransformComponent>(_hoveredOrgan.Value).Coordinates,
-                ScreenCoordinates = args.PointerLocation,
-                Uid = _hoveredOrgan.Value,
-            };
-
-            var session = _player.LocalSession;
-            if (session != null)
-            {
-                _inputSystem.HandleInputCommand(session, func, message);
-            }
-
+            _inputSystem.HandleInputCommand(_player.LocalSession, func, message);
             args.Handle();
         }
     }

@@ -3,6 +3,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Offbrand.Organs;
 
@@ -20,6 +21,53 @@ public sealed partial class OffbrandLungOrganComponent : Component
     /// </summary>
     [DataField(required: true)]
     public FixedPoint2 AsphyxiationThreshold;
+
+    /// <summary>
+    /// Breath volume to depth descriptions.
+    /// </summary>
+    [DataField(required: true)]
+    public SortedDictionary<float, OffbrandLungBreathingDepth> StethoscopeDepthDescriptions;
+
+    /// <summary>
+    /// Lung damage to regularity descriptions.
+    /// </summary>
+    [DataField(required: true)]
+    public SortedDictionary<FixedPoint2, OffbrandLungBreathingRegularity> StethoscopeRegularityDescriptions;
+
+    /// <summary>
+    /// Respiratory rate to speed descriptions.
+    /// </summary>
+    [DataField(required: true)]
+    public SortedDictionary<FixedPoint2, OffbrandLungBreathingSpeed> StethoscopeSpeedDescriptions;
+
+    /// <summary>
+    /// The stethoscope description.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId StethoscopeDescription;
+}
+
+[Serializable, NetSerializable]
+public enum OffbrandLungBreathingDepth : byte
+{
+    Normal,
+    Shallow,
+}
+
+[Serializable, NetSerializable]
+public enum OffbrandLungBreathingRegularity : byte
+{
+    Regular,
+    Irregular,
+}
+
+[Serializable, NetSerializable]
+public enum OffbrandLungBreathingSpeed : byte
+{
+    Normal,
+    Fast,
+    Faster,
+    Fastest,
 }
 
 /// <summary>

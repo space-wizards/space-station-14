@@ -1,3 +1,4 @@
+using Content.Shared._Offbrand.Medical;
 using Content.Shared._Offbrand.StatusEffects;
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body;
@@ -29,6 +30,20 @@ public sealed partial class OffbrandHeartOrganSystem : EntitySystem
         SubscribeLocalEvent<OffbrandHeartOrganComponent, OrganDamageChangedEvent>(OnOrganDamageChanged);
         SubscribeLocalEvent<HeartStopOnHighStrainComponent, PotentialHeartStopEvent>(OnHeartBeatStrain);
         SubscribeLocalEvent<HeartDefibrillatableComponent, BodyRelayedEvent<TargetDefibrillatedEvent>>(OnTargetDefibrillated);
+        SubscribeLocalEvent<OffbrandHeartOrganComponent, StethoscopeExamineEvent>(OnStethoscopeExamine);
+    }
+
+    private void OnStethoscopeExamine(Entity<OffbrandHeartOrganComponent> ent, ref StethoscopeExamineEvent args)
+    {
+        if (!ent.Comp.Beating)
+            return;
+
+        if (ent.Comp.StethoscopeStrainThresholds.HighestMatch(Strain(ent)) is not { } message)
+            return;
+
+        var damage = Comp<DamageableOrganComponent>(ent);
+
+        args.Messages.Add(Loc.GetString(message, ("damaged", damage.Damage >= ent.Comp.StethoscopeDamagedAbove)));
     }
 
     private void OnOrganGotInserted(Entity<OffbrandHeartOrganComponent> ent, ref OrganGotInsertedEvent args)

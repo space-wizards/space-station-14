@@ -17,6 +17,12 @@
       0.5: [0.3, 0.1]
       0.75: [0.4, 0.1]
       1: [0.5, 2]
+    stethoscopeDamagedAbove: 20
+    stethoscopeStrainThresholds:
+      0: stethoscope-heart-beating.normal
+      0.25: stethoscope-heart-beating.fast
+      0.75: stethoscope-heart-beating.veryfast
+      1: stethoscope-heart-beating.dangerous
   - type: OrganDamageOnDamage
     thresholds:
     - damageTypes: [Slash, Blunt, Piercing]
@@ -91,6 +97,21 @@
   - type: OffbrandLungOrgan
     asphyxiationDamage: Asphyxiation
     asphyxiationThreshold: 100
+    stethoscopeDepthDescriptions:
+      0: Normal
+      0.5: Shallow
+    stethoscopeRegularityDescriptions:
+      0: Regular
+      20: Irregular
+    stethoscopeSpeedDescriptions:
+      0: Normal
+      0.25: Fast
+      0.50: Faster
+      0.75: Fastest
+    stethoscopeDescription: stethoscope-lung-breathing
+  - type: OffbrandDamageableOrganSounds
+    descriptions:
+      25: OffbrandLungStruggleSounds
   - type: DamageOnInhaledAirOrgan
     heatCoefficient: 0.005
     heatConstant: -1.375
@@ -105,6 +126,12 @@
   - type: PassiveOrganDamage
     damage: -0.05
     damageCap: 30
+
+- type: localizedDataset
+  id: OffbrandLungStruggleSounds
+  values:
+    prefix: stethoscope-lung-damaged-sounds-
+    count: 5
 
 - type: entity
   abstract: true

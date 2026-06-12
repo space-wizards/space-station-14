@@ -62,6 +62,8 @@
   - type: AnalyzableWound
     descriptions:
       0: wound-arterial-bleeding
+  - type: StethoscopeDescription
+    description: stethoscope-arterial-bleeding
   - type: PopupOnAppliedStatusEffect
     message: arterial-bleeding-applied
     visualType: MediumCaution

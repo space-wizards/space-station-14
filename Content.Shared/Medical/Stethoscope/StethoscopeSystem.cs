@@ -1,15 +1,25 @@
 using Content.Shared.Actions;
+// Begin Offbrand - part-aware stethoscope
+using Content.Shared._Offbrand.Medical;
+using Content.Shared._Offbrand.Skeletons;
+using Content.Shared.Body;
+using Content.Shared.Examine;
+// End Offbrand - part-aware stethoscope
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Localizations;
 using Content.Shared.Medical.Stethoscope.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+// Begin Offbrand - part-aware stethoscope
+using Robust.Shared.Utility;
+// End Offbrand - part-aware stethoscope
 
 namespace Content.Shared.Medical.Stethoscope;
 
@@ -20,6 +30,10 @@ public sealed partial class StethoscopeSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    // Begin Offbrand Changes - part-aware stethoscope
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private EntityQuery<ParentOrganComponent> _parentOrganQuery = default!;
+    // End Offbrand Changes - part-aware stethoscope
 
     // The damage type to "listen" for with the stethoscope.
     private const string DamageToListenFor = "Asphyxiation";
@@ -49,8 +63,14 @@ public sealed partial class StethoscopeSystem : EntitySystem
         if (!args.Args.CanInteract || !args.Args.CanAccess)
             return;
 
-        if (!HasComp<MobStateComponent>(args.Args.Target))
+        // Begin Offbrand - part-aware stethoscope
+        if (!HasComp<BodyComponent>(args.Args.Target) &&
+            !HasComp<OrganComponent>(args.Args.Target) &&
+            !HasComp<MobStateComponent>(args.Args.Target))
+        {
             return;
+        }
+        // End Offbrand - part-aware stethoscope
 
         var target = args.Args.Target;
 
@@ -68,6 +88,15 @@ public sealed partial class StethoscopeSystem : EntitySystem
     {
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
             return;
+
+        // Begin Offbrand - part-aware stethoscope
+        if (HasComp<BodyComponent>(target))
+        {
+            var markup = new FormattedMessage();
+            _examine.SendExamineTooltip(container.Owner, target, markup, false, true, true);
+            return;
+        }
+        // End Offbrand - part-aware stethoscope
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, container.Owner, ent.Comp.Delay, new StethoscopeDoAfterEvent(), ent, target: target, used: ent)
         {
@@ -95,6 +124,32 @@ public sealed partial class StethoscopeSystem : EntitySystem
 
     private void ExamineWithStethoscope(Entity<StethoscopeComponent> stethoscope, EntityUid user, EntityUid target)
     {
+        // Begin Offbrand Changes - part-aware stethoscope
+        if (HasComp<OrganComponent>(target))
+        {
+            var ev = new StethoscopeExamineEvent(new());
+
+            RaiseLocalEvent(target, ref ev);
+
+            if (_parentOrganQuery.TryGetComponent(target, out var parent))
+            {
+                foreach (var child in parent.Children)
+                {
+                    if (Exists(child))
+                        RaiseLocalEvent(child, ref ev);
+                }
+            }
+
+            if (ev.Messages.Count == 0)
+                _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
+            else
+                _popup.PopupPredicted(Loc.GetString("stethoscope-sounds", ("sounds", ContentLocalizationManager.FormatList(ev.Messages))), target, user);
+
+            stethoscope.Comp.LastMeasuredDamage = null;
+            return;
+        }
+        // End Offbrand Changes - part-aware stethoscope
+
         // TODO: Add check for respirator component when it gets moved to shared.
         // If the mob is dead or cannot asphyxiation damage, the popup shows nothing.
         if (!TryComp<MobStateComponent>(target, out var mobState)                        ||
