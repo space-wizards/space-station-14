@@ -135,7 +135,7 @@ public sealed partial class StethoscopeSystem : EntitySystem
             {
                 foreach (var child in parent.Children)
                 {
-                    if (Exists(child))
+                    if (Exists(child) && HasComp<InternalChildOrganComponent>(child))
                         RaiseLocalEvent(child, ref ev);
                 }
             }

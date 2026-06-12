@@ -257,6 +257,7 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganParent
   - OffbrandOrganChild
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableHead
 
 - type: entity
@@ -265,6 +266,7 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   - OffbrandOrganParent
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableArmLeft
 
 - type: entity
@@ -272,6 +274,7 @@
   parent:
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableFootLeft
 
 - type: entity
@@ -279,6 +282,7 @@
   parent:
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableHandLeft
 
 - type: entity
@@ -287,6 +291,7 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   - OffbrandOrganParent
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableLegLeft
 
 - type: entity
@@ -295,6 +300,7 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   - OffbrandOrganParent
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableArmRight
 
 - type: entity
@@ -302,6 +308,7 @@
   parent:
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableFootRight
 
 - type: entity
@@ -309,6 +316,7 @@
   parent:
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableHandRight
 
 - type: entity
@@ -317,6 +325,7 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganChild
   - OffbrandOrganParent
+  - OffbrandOrganPalpatable
   id: OffbrandOrganWoundableLegRight
 
 - type: entity
@@ -325,6 +334,22 @@
   - OffbrandOrganWoundableVisuals
   - OffbrandOrganParent
   id: OffbrandOrganWoundableTorso
+
+- type: entity
+  abstract: true
+  id: OffbrandOrganPalpatable
+  components:
+  - type: PalpatableOrgan
+    pulseQualities:
+      0.05: Weakest
+      0.25: Weak
+      0.5: SlightlyWeak
+      0.95: Normal
+    pulseSpeeds:
+      0: palpation-pulse.normal
+      0.25: palpation-pulse.fast
+      0.75: palpation-pulse.veryfast
+      1: palpation-pulse.dangerous
 
 - type: entity
   abstract: true
@@ -344,44 +369,57 @@
 
 - type: entity
   abstract: true
+  id: OffbrandOrganChildInternal
+  components:
+  - type: InternalChildOrgan
+
+- type: entity
+  abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseEyes
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseTongue
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseAppendix
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseEars
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseStomach
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseLiver
 
 - type: entity
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseKidneys
 
 - type: entity

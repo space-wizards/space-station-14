@@ -24,6 +24,8 @@
   - type: ExaminableStatusEffect
     message: fracture-examine
   - type: HandIncapacitationStatusEffect
+  - type: PalpationDescription
+    description: palpation-broken-bone
 
 - type: entity
   parent: WoundInternalBase
@@ -41,6 +43,8 @@
   - type: ExaminableStatusEffect
     message: cut-tendon-examine
   - type: HandIncapacitationStatusEffect
+  - type: PalpationDescription
+    description: palpation-cut-tendon
 
 - type: entity
   parent: WoundInternalBase
@@ -69,3 +73,5 @@
     visualType: MediumCaution
   - type: ExaminableStatusEffect
     message: arterial-bleeding-examine
+  - type: PalpationDescription
+    description: palpation-arterial-bleeding
