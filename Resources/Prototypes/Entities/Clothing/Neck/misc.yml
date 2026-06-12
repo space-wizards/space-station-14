@@ -15,6 +15,7 @@
     slots:
     - neck
   - type: Stethoscope
+  - type: TargetingHealthDollOnInteract # Offbrand
 
 - type: entity
   parent: BaseAction
