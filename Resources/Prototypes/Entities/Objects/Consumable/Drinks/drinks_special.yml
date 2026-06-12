@@ -16,6 +16,9 @@
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
     solution: drink
+  - type: Tag
+    tags:
+    - BarTool
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, SolutionLarge, DrinkBase]
@@ -36,6 +39,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+  - type: Tag
+    tags:
+    - BarTool
 
 - type: entity
   parent: [DrinkBaseMaterialPorcelain, SolutionNormal, DrinkBase]
@@ -135,6 +141,9 @@
     mixerType: None
     reactionTypes:
     - Shake
+  - type: Tag
+    tags:
+    - BarTool
 
 - type: entity
   parent: DrinkShaker
@@ -177,6 +186,9 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 20
+  - type: Tag
+    tags:
+    - BarTool
 
 - type: entity
   parent: [DrinkBaseMaterialStrongMetal, SolutionNormal, DrinkBase, DrinkVisualsFill]

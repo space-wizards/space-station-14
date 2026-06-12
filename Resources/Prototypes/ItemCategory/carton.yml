@@ -2,24 +2,6 @@
   id: CartonCategory
   name: item-category-carton
   icon: DrinkJuiceOrangeCarton
-  items:
-    - DrinkCartonLime
-    - DrinkJuiceLimeCarton
-    - DrinkCartonOrange
-    - DrinkJuiceOrangeCarton
-    - DrinkCartonTomato
-    - DrinkJuiceTomatoCarton
-    - DrinkCoconutWaterCarton
-    - DrinkCartonCream
-    - DrinkCreamCarton
-    - DrinkJuiceLemonCarton
-    - DrinkJuicePineappleCarton
-    - DrinkCartonMilk
-    - DrinkMilkCarton
-    - DrinkCartonSoyMilk
-    - DrinkSoyMilkCarton
-    - DrinkCartonOatMilk
-    - DrinkOatMilkCarton
-    - DrinkJuiceLimeCartonXL
-    - DrinkJuiceOrangeCartonXL
-    - DrinkCreamCartonXL
+  whitelist:
+    tags:
+    - CartonDrink

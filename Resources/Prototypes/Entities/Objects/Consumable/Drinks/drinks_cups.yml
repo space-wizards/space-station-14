@@ -67,6 +67,9 @@
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
   - type: SolutionContainerVisuals
     inHandsMaxFillLevels: 1
+  - type: Tag
+    tags:
+    - BarTool
 
 - type: entity
   parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]

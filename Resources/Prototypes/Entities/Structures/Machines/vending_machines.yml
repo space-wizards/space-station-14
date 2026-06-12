@@ -271,7 +271,7 @@
       - BottleCategory
       - CanCategory
       - CartonCategory
-      - NoAlcoholCategory
+      # - NoAlcoholCategory
 
 
 

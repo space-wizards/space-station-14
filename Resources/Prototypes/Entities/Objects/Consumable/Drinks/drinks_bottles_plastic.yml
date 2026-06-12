@@ -44,6 +44,10 @@
     size: Large
     shape:
     - 0,0,1,3
+  - type: Tag
+    tags:
+    - DrinkBottle
+    - BarTool
 
 # Small Plastic Bottles
 

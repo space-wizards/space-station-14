@@ -2,29 +2,7 @@
   id: CanCategory
   name: item-category-can
   icon: DrinkTonicWaterCan
-  items:
-    - SolutionCanComposite
-    - DrinkColaCan
-    - DrinkColaCanEmpty
-    - DrinkIcedTeaCan
-    - DrinkLemonLimeCan
-    - DrinkLemonLimeCranberryCan
-    - DrinkGrapeCan
-    - DrinkRootBeerCan
-    - DrinkSodaWaterCan
-    - DrinkSpaceMountainWindCan
-    - DrinkSpaceUpCan
-    - DrinkSolDryCan
-    - DrinkStarkistCan
-    - DrinkTonicWaterCan
-    - DrinkFourteenLokoCan
-    - DrinkChangelingStingCan
-    - DrinkDrGibbCan
-    - DrinkNukieCan
-    - DrinkEnergyDrinkCan
-    - DrinkShamblersJuiceCan
-    - DrinkPwrGameCan
-    - DrinkBeerCan
-    - DrinkWineCan
-    - DrinkCanPack
+  whitelist:
+    tags:
+    - DrinkCan
 

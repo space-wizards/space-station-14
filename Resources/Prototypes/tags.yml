@@ -63,6 +63,9 @@
   id: Bandana # CargoBounty: BountyBandana
 
 - type: Tag
+  id: BarTool # BarToolCategory ItemCategory
+
+- type: Tag
   id: BaseballBat # CargoBounty: BountyBaseballBat
 
 - type: Tag
@@ -164,6 +167,9 @@
 - type: Tag # Used for specifically chemistry bottles.
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
+- type: Tag         # Used for the BottleCategory ItemCategory
+  id: BottledDrink  # and no, i can't use DrinkBottle because it also covers some canned drinks to make them fit in the dispenser
+
 - type: Tag
   id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart
 
@@ -247,6 +253,9 @@
 
 - type: Tag
   id: CarrotFries # CargoBounty: BountyCarrotFries
+
+- type: Tag
+  id: CartonDrink # CartonCategory ItemCategory
 
 - type: Tag # NOT bullets. This is for the cart to load PDA programs.
   id: Cartridge # Storage whitelist: BasePDA
