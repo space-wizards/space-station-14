@@ -81,9 +81,9 @@ public sealed partial class PalpatableOrganSystem : EntitySystem
         }
 
         if (ev.Messages.Count == 0)
-            _popup.PopupPredicted(Loc.GetString("palpation-nothing"), ent, args.User);
+            _popup.PopupPredictedCursor(Loc.GetString("palpation-nothing"), args.User);
         else
-            _popup.PopupPredicted(Loc.GetString("palpation-feels", ("feels", ContentLocalizationManager.FormatList(ev.Messages))), ent, args.User);
+            _popup.PopupPredictedCursor(Loc.GetString("palpation-feels", ("feels", ContentLocalizationManager.FormatList(ev.Messages))), args.User);
     }
 
     private void CheckPulse(Entity<PalpatableOrganComponent> ent, ref PalpationEvent args)

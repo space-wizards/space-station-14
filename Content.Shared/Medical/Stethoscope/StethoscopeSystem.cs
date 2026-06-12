@@ -141,9 +141,9 @@ public sealed partial class StethoscopeSystem : EntitySystem
             }
 
             if (ev.Messages.Count == 0)
-                _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
+                _popup.PopupPredictedCursor(Loc.GetString("stethoscope-nothing"), user);
             else
-                _popup.PopupPredicted(Loc.GetString("stethoscope-sounds", ("sounds", ContentLocalizationManager.FormatList(ev.Messages))), target, user);
+                _popup.PopupPredictedCursor(Loc.GetString("stethoscope-sounds", ("sounds", ContentLocalizationManager.FormatList(ev.Messages))), user);
 
             stethoscope.Comp.LastMeasuredDamage = null;
             return;

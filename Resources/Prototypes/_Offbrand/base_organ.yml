@@ -2,6 +2,7 @@
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseHeart
   components:
   - type: DamageableOrgan
@@ -39,6 +40,7 @@
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseBrain
   components:
   - type: OffbrandBrainOrgan
@@ -89,6 +91,7 @@
   abstract: true
   parent:
   - OffbrandOrganChild
+  - OffbrandOrganChildInternal
   id: OffbrandOrganBaseLungs
   components:
   - type: DamageableOrgan

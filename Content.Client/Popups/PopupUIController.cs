@@ -35,7 +35,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
     {
         _popupControl = new PopupRootControl(_popup, this);
 
-        UIManager.RootControl.AddChild(_popupControl);
+        UIManager.PopupRoot.AddChild(_popupControl); // Offbrand - popups go over everything
     }
 
     public void OnStateExited(GameplayState state)
@@ -43,7 +43,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
         if (_popupControl == null)
             return;
 
-        UIManager.RootControl.RemoveChild(_popupControl);
+        UIManager.PopupRoot.RemoveChild(_popupControl); // Offbrand - popups go over everything
         _popupControl = null;
     }
 
