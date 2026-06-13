@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
@@ -338,9 +339,20 @@ internal sealed partial class ChatManager : IChatManager
 
     #region Utility
 
+    private bool IsValidWarpDestination(EntityUid source)
+    {
+        if (!source.Valid)
+            return false;
+
+        if (!_entityManager.TryGetComponent(source, out TransformComponent? transform))
+            return false;
+
+        return transform.MapID != MapId.Nullspace;
+    }
+
     public string PrependFollowButtonIfAppropriate(string wrappedMessage, EntityUid source, INetChannel recipient)
     {
-        if (source.Valid && ShouldShowFollowButton(recipient))
+        if (IsValidWarpDestination(source) && ShouldShowFollowButton(recipient))
         {
             var btnText = _localizationManager.GetString("chat-manager-follow-button");
             return $"[cmdlink=\"{btnText}\" command=\"{GhostFollowEntityCommand.CommandName} {_entityManager.GetNetEntity(source)}\" /] " + wrappedMessage;
