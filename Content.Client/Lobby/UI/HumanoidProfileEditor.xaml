@@ -57,6 +57,13 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
+                                    <TextureButton Name="SpeciesRandomizerLockButton"
+                                                   ToggleMode="True"
+                                                   VerticalAlignment="Center"
+                                                   Scale="0.25 0.25"
+                                                   ToolTip="{Loc 'humanoid-profile-editor-species-randomizer-lock-tooltip'}"
+                                    >
+                                    </TextureButton>
                                     <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3"
                                                    VerticalAlignment="Center"
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
