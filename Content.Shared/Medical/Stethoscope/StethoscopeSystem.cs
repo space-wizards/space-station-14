@@ -9,6 +9,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement; // Offbrand - part-aware stethoscope
 using Content.Shared.Inventory;
 using Content.Shared.Localizations;
 using Content.Shared.Medical.Stethoscope.Components;
@@ -125,7 +126,7 @@ public sealed partial class StethoscopeSystem : EntitySystem
     private void ExamineWithStethoscope(Entity<StethoscopeComponent> stethoscope, EntityUid user, EntityUid target)
     {
         // Begin Offbrand Changes - part-aware stethoscope
-        if (HasComp<OrganComponent>(target))
+        if (TryComp<OrganComponent>(target, out var targetOrgan) && targetOrgan.Body is { } body)
         {
             var ev = new StethoscopeExamineEvent(new());
 
@@ -141,9 +142,9 @@ public sealed partial class StethoscopeSystem : EntitySystem
             }
 
             if (ev.Messages.Count == 0)
-                _popup.PopupPredictedCursor(Loc.GetString("stethoscope-nothing"), user);
+                _examine.ElaborateExamineTooltip(user, ExaminationKeys.Stethoscope, FormattedMessage.FromMarkupOrThrow(Loc.GetString("stethoscope-nothing", ("target", Identity.Entity(body, EntityManager)), ("organ", target))));
             else
-                _popup.PopupPredictedCursor(Loc.GetString("stethoscope-sounds", ("sounds", ContentLocalizationManager.FormatList(ev.Messages))), user);
+                _examine.ElaborateExamineTooltip(user, ExaminationKeys.Stethoscope, FormattedMessage.FromMarkupOrThrow(Loc.GetString("stethoscope-sounds", ("sounds", ContentLocalizationManager.FormatList(ev.Messages)), ("target", Identity.Entity(body, EntityManager)), ("organ", target))));
 
             stethoscope.Comp.LastMeasuredDamage = null;
             return;

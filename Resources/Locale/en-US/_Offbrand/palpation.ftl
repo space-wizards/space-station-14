@@ -1,5 +1,5 @@
-palpation-nothing = You don't feel anything of note.
-palpation-feels = You feel {$feels}.
+palpation-nothing = After palpating { POSS-ADJ($target) } { $organ }, you didn't feel anything of note.
+palpation-feels = After palpating { POSS-ADJ($target) } { $organ }, you felt {$feels}.
 
 -palpation-pulse-quality = { $quality ->
     [normal] normal

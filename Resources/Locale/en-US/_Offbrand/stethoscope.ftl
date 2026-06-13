@@ -1,5 +1,6 @@
 stethoscope-arterial-bleeding = the sound of blood rushing
-stethoscope-sounds = You hear {$sounds}.
+stethoscope-sounds = After listening to { POSS-ADJ($target) } { $organ }, you heard {$sounds}.
+stethoscope-soundless = After listening to { POSS-ADJ($target) } { $organ }, you didn't hear anything of note.
 
 stethoscope-lung-damaged-sounds-1 = wheezing sounds
 stethoscope-lung-damaged-sounds-2 = crackling sounds

@@ -43,6 +43,10 @@ namespace Content.Client.Examine
         private CancellationTokenSource? _requestCancelTokenSource;
         private int _idCounter;
         private EntityUid? _requestDisplayTarget; // Offbrand - separate body focus
+        // Begin Offbrand - examine elaboration
+        private readonly Dictionary<Enum, RichTextLabel> _elaborateTooltipLabels = new();
+        private BoxContainer? _elaborateTooltipBox;
+        // End Offbrand - examine elaboration
 
         public override void Initialize()
         {
@@ -53,6 +57,7 @@ namespace Content.Client.Examine
             SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
 
             SubscribeNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(OnExamineInfoResponse);
+            SubscribeNetworkEvent<ExamineSystemMessages.ElaborateExamineTooltipMessage>(OnElaborateExamineTooltip); // Offbrand - examine elaboration
 
             SubscribeLocalEvent<ItemComponent, DroppedEvent>(OnExaminedItemDropped);
 
@@ -187,6 +192,33 @@ namespace Content.Client.Examine
             UpdateTooltipInfo(player, target, message, getVerbs: getVerbs);
         }
 
+        // Begin Offbrand - examine elaboration
+        private void OnElaborateExamineTooltip(ExamineSystemMessages.ElaborateExamineTooltipMessage ev)
+        {
+            if (_playerManager.LocalEntity is not { } player)
+                return;
+
+            ElaborateExamineTooltip(player, ev.Key, ev.Message);
+        }
+
+        public override void ElaborateExamineTooltip(EntityUid user, Enum key, FormattedMessage message)
+        {
+            if (_examineTooltipOpen == null || _elaborateTooltipBox == null)
+                return;
+
+            if (_elaborateTooltipLabels.TryGetValue(key, out var existingLabel))
+            {
+                existingLabel.SetMessage(message);
+                return;
+            }
+
+            var label = new RichTextLabel { Margin = new Thickness(4, 4, 0, 4) };
+            label.SetMessage(message);
+            _elaborateTooltipLabels[key] = label;
+            _elaborateTooltipBox.AddChild(label);
+        }
+        // End Offbrand - examine elaboration
+
         /// <summary>
         ///     Opens the tooltip window and sets spriteview/name/etc, but does
         ///     not fill it with information. This is done when the server sends examine info/verbs,
@@ -266,6 +298,16 @@ namespace Content.Client.Examine
                 doll.SetBody(target);
                 vBox.AddChild(doll);
             }
+
+            // Begin Offbrand - examine elaboration
+            _elaborateTooltipBox = new BoxContainer
+            {
+                Name = "ExamineElaborateVbox",
+                Orientation = LayoutOrientation.Vertical,
+                MaxWidth = _examineTooltipOpen.MaxWidth
+            };
+            vBox.AddChild(_elaborateTooltipBox);
+            // End Offbrand - examine elaboration
 
             if (knowTarget)
             {
@@ -481,6 +523,11 @@ namespace Content.Client.Examine
                 _examineTooltipOpen.Dispose();
                 _examineTooltipOpen = null;
             }
+
+            // Begin Offbrand - examine elaboration
+            _elaborateTooltipLabels.Clear();
+            _elaborateTooltipBox = null;
+            // End Offbrand - examine elaboration
 
             if (_requestCancelTokenSource != null)
             {

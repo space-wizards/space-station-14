@@ -50,6 +50,12 @@ namespace Content.Shared.Examine
         /// </summary>
         public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor, bool showBody = false); // Offbrand
 
+        /// <summary>
+        ///     Offbrand - Updates an already-open examine tooltip with an additional message.
+        ///     Setting the same key multiple times will overwrite previous messages with that key.
+        /// </summary>
+        public abstract void ElaborateExamineTooltip(EntityUid user, Enum key, FormattedMessage message);
+
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             if (IsClientSide(entity))

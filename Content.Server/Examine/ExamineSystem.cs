@@ -43,6 +43,18 @@ namespace Content.Server.Examine
             RaiseNetworkEvent(ev, session.Channel);
         }
 
+        // Begin Offbrand - examine elaboration
+        public override void ElaborateExamineTooltip(EntityUid user, Enum key, FormattedMessage message)
+        {
+            if (!TryComp<ActorComponent>(user, out var actor))
+                return;
+
+            RaiseNetworkEvent(
+                new ExamineSystemMessages.ElaborateExamineTooltipMessage(key, message),
+                actor.PlayerSession.Channel);
+        }
+        // End Offbrand - examine elaboration
+
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
             var player = eventArgs.SenderSession;

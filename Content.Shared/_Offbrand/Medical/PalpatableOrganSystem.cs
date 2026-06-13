@@ -2,18 +2,20 @@ using Content.Shared._Offbrand.Skeletons;
 using Content.Shared._Offbrand.Wounds;
 using Content.Shared.Body;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Localizations;
-using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Offbrand.Medical;
 
 public sealed partial class PalpatableOrganSystem : EntitySystem
 {
+    [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private EntityQuery<ParentOrganComponent> _parentOrganQuery;
 
@@ -63,7 +65,7 @@ public sealed partial class PalpatableOrganSystem : EntitySystem
 
     private void OnDoAfter(Entity<PalpatableOrganComponent> ent, ref PalpationDoAfterEvent args)
     {
-        if (args.Handled || args.Target is null || args.Cancelled)
+        if (args.Handled || args.Target is null || args.Cancelled || Comp<OrganComponent>(ent).Body is not { } body)
             return;
 
         var ev = new PalpationEvent(new());
@@ -81,9 +83,9 @@ public sealed partial class PalpatableOrganSystem : EntitySystem
         }
 
         if (ev.Messages.Count == 0)
-            _popup.PopupPredictedCursor(Loc.GetString("palpation-nothing"), args.User);
+            _examine.ElaborateExamineTooltip(args.User, ExaminationKeys.Palpation, FormattedMessage.FromMarkupOrThrow(Loc.GetString("palpation-nothing", ("target", Identity.Entity(body, EntityManager)), ("organ", ent))));
         else
-            _popup.PopupPredictedCursor(Loc.GetString("palpation-feels", ("feels", ContentLocalizationManager.FormatList(ev.Messages))), args.User);
+            _examine.ElaborateExamineTooltip(args.User, ExaminationKeys.Palpation, FormattedMessage.FromMarkupOrThrow(Loc.GetString("palpation-feels", ("feels", ContentLocalizationManager.FormatList(ev.Messages)), ("target", Identity.Entity(body, EntityManager)), ("organ", ent))));
     }
 
     private void CheckPulse(Entity<PalpatableOrganComponent> ent, ref PalpationEvent args)

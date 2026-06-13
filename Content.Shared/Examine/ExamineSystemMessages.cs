@@ -23,6 +23,21 @@ namespace Content.Shared.Examine
             }
         }
 
+        // Begin Offbrand - examine elaboration
+        [Serializable, NetSerializable]
+        public sealed class ElaborateExamineTooltipMessage : EntityEventArgs
+        {
+            public readonly Enum Key;
+            public readonly FormattedMessage Message;
+
+            public ElaborateExamineTooltipMessage(Enum key, FormattedMessage message)
+            {
+                Key = key;
+                Message = message;
+            }
+        }
+        // End Offbrand - examine elaboration
+
         [Serializable, NetSerializable]
         public sealed class ExamineInfoResponseMessage : EntityEventArgs
         {
