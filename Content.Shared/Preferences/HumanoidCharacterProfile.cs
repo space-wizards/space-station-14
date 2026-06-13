@@ -214,18 +214,25 @@ namespace Content.Shared.Preferences
         }
 
         // TODO: This should eventually not be a visual change only.
-        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
+        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null, ProtoId<SpeciesPrototype>? speciesOverride = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var species = random.Pick(prototypeManager
+            SpeciesPrototype? speciesProto = null;
+            if (speciesOverride != null)
+            {
+                prototypeManager.TryIndex(speciesOverride, out speciesProto);
+            }
+
+            // use both as a default and a fallback when override fails
+            speciesProto ??= random.Pick(prototypeManager
                 .EnumeratePrototypes<SpeciesPrototype>()
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray()
-            ).ID;
+            );
 
-            return RandomWithSpecies(species);
+            return RandomWithSpecies(speciesProto.ID);
         }
 
         public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
