@@ -41,7 +41,7 @@
               name: construction-graph-tag-surveillance-camera-monitor-board
               icon:
                 sprite: Objects/Misc/module.rsi
-                state: cpuboard
+                state: cpu_security
 
         - to: TelescreenFrame
           completed:
@@ -133,7 +133,7 @@
               name: construction-graph-tag-television-board
               icon:
                 sprite: Objects/Misc/module.rsi
-                state: cpu_security
+                state: cpuboard
 
         - to: TelevisionFrame
           completed:
