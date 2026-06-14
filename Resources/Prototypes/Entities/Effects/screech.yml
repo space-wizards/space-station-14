@@ -1,0 +1,11 @@
+- type: entity
+  # Just fades out with no movement animation
+  id: EffectScreech
+  components:
+  - type: TimedDespawn
+    lifetime: 3.2
+  - type: ScreechShockWave
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu
