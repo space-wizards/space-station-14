@@ -23,7 +23,6 @@ namespace Content.Client.VendingMachines.UI
         private EntityWhitelistSystem _whitelist;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
-        private readonly Dictionary<EntProtoId, EntityUid> _categoryDummies = [];
         private readonly Dictionary<string, EntityWhitelist> _categoryDict = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
@@ -72,12 +71,7 @@ namespace Content.Client.VendingMachines.UI
                 _entityManager.QueueDeleteEntity(entity);
             }
 
-            foreach (var entity in _categoryDummies.Values)
-            {
-                _entityManager.QueueDeleteEntity(entity);
-            }
             _dummies.Clear();
-            _categoryDummies.Clear();
             _categoryDict.Clear();
         }
 
@@ -111,7 +105,6 @@ namespace Content.Client.VendingMachines.UI
                 var button = new Button
                 {
                     SetSize = new Vector2(60, 60),
-                    Margin = new Thickness(0, 0, 10, 0),
                     Group = CategoryButtonGroup,
                     ToggleMode = true,
                     ToolTip = Loc.GetString(data.Name)
@@ -132,7 +125,7 @@ namespace Content.Client.VendingMachines.UI
                 {
                     var spriteView = new SpriteView
                     {
-                        Stretch = SpriteView.StretchMode.Fit
+                        Stretch = SpriteView.StretchMode.Fill
                     };
                     spriteView.SetEntity(data.Sprite);
 
@@ -171,21 +164,18 @@ namespace Content.Client.VendingMachines.UI
                 if (!_prototypeManager.Resolve(proto, out var category))
                     continue;
 
+                var item = new CategoryListData(category.ID, category.Name);
                 _categoryDict.Add(category.ID, category.Whitelist);
 
                 //populate category icon sprites
-                if (category.Icon != null
-                    && !_categoryDummies.TryGetValue(category.ID, out var dummy))
+                if (category.Icon != null)
                 {
-                    dummy = _entityManager.Spawn(category.Icon);
-                    _categoryDummies.Add(category.ID, dummy);
-                }
-
-                var item = new CategoryListData(category.ID, category.Name);
-
-                if (_categoryDummies.TryGetValue(category.ID, out var sprite))
-                {
-                    item.Sprite = sprite;
+                    if (!_dummies.TryGetValue(category.ID, out var dummy))
+                    {
+                        dummy = _entityManager.Spawn(category.Icon);
+                        _dummies.Add(category.ID, dummy);
+                    }
+                    item.Sprite = dummy;
                 }
 
                 listData.Add(item);

@@ -7,7 +7,7 @@
     <BoxContainer Orientation="Horizontal">
         <BoxContainer>
             <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="4 4" MinWidth="70">
-                <BoxContainer Orientation="Vertical" Name="Categories" Margin ="0 0 0 10" />
+                <BoxContainer Orientation="Vertical" Name="Categories" Margin="0 0 0 10" />
             </ScrollContainer>
         </BoxContainer>
         <BoxContainer Name="MainContainer" Orientation="Vertical" HorizontalExpand="True">
