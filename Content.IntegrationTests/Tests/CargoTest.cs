@@ -1,18 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Station.Systems;
+using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -36,6 +42,12 @@ public sealed class CargoTest : GameTest
 
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly MapLoaderSystem _sMapLoader = null!;
+    [SidedDependency(Side.Server)]
+    private readonly TransformSystem _sTransform = null!;
+    [SidedDependency(Side.Server)] private StationSystem _station = default!;
 
     [Test]
     public async Task NoCargoOrderArbitrage()
@@ -61,7 +73,11 @@ public sealed class CargoTest : GameTest
                     var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
                     var price = pricing.GetPrice(ent);
 
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                    Assert.That(
+                        price,
+                        Is.AtMost(proto.Cost),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
+                    );
                     entManager.DeleteEntity(ent);
                 }
             });
@@ -262,6 +278,38 @@ public sealed class CargoTest : GameTest
                         $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
                     );
                 }
+            }
+        });
+    }
+
+    [Test]
+    public async Task CargoOrdersFromConsoleSpawn()
+    {
+        await Pair.CreateTestMap();
+        var coordinates = Pair.TestMap!.GridCoords;
+        ResPath atsPath = new("/Maps/Shuttles/trading_outpost.yml");
+        await Pair.Server.WaitAssertion(() =>
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(
+                    _sMapLoader.TryLoadGrid(Pair.TestMap!.MapId, atsPath, out var grid, offset: new Vector2(200, 200)),
+                    "Failed to Spawn ATS"
+                );
+                SEntMan.AddComponent<TradeStationComponent>(grid.Value.Owner);
+                SEntMan.AddComponent<TradeStationComponent>(Pair.TestMap!.Grid);
+                var console = SSpawnAtPosition("ComputerCargoOrders", coordinates);
+                var consoleTransformComp = SComp<TransformComponent>(console);
+                _sTransform.AnchorEntity((console, consoleTransformComp), grid);
+                var allProducts = SProtoMan.EnumeratePrototypes<CargoProductPrototype>();
+                var random = new Random().Next(0, allProducts.Count());
+                var product = SProtoMan.Index<CargoProductPrototype>(allProducts.ElementAt(random));
+                var addOrderEvent = new CargoConsoleAddOrderMessage("", "", product.Product, 1);
+                SEntMan.EventBus.RaiseLocalEvent(console, addOrderEvent);
+                var station = _station.GetOwningStation(console);
+                var orderDatabase = SComp<StationCargoOrderDatabaseComponent>(station.Value);
+                var approveOrderEvent = new CargoConsoleApproveOrderMessage(orderDatabase.Orders["Cargo"].Last().OrderId);
+                SEntMan.EventBus.RaiseLocalEvent(console, approveOrderEvent);
             }
         });
     }
