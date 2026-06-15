@@ -284,9 +284,13 @@ public sealed class CargoTest : GameTest
         {
             using (Assert.EnterMultipleScope())
             {
+                // Spawn id so that it has permission to accept order
                 var iDCard = SSpawnAtPosition("CaptainIDCard", coordinates);
+                // Spawn station entity for station bank account and order database
                 var station = SetupStation("StandardNanotrasenStation", coordinates);
+                // Spawn ATS
                 var grid = SetupATS(new("/Maps/Shuttles/trading_outpost.yml"), Pair.TestMap!.MapId, station);
+                // Spawn cargo request console
                 var console = SetupConsole("ComputerCargoOrders", coordinates);
 
                 Assert.That(_sStation.GetOwningStation(console).HasValue, Is.True, "Console has no owning station");
@@ -299,9 +303,11 @@ public sealed class CargoTest : GameTest
                     "Station has no cargo order database"
                 );
 
+                // Only get products which this console can request
                 var allProducts = _sCargo.GetAvailableProducts(console).ToList();
                 Assert.That(allProducts, Is.Not.Empty, "No available cargo products");
 
+                // How many items to ask for in test
                 const int spawnCount = 1;
                 foreach (var proto in allProducts)
                 {
@@ -318,26 +324,30 @@ public sealed class CargoTest : GameTest
                         new CargoConsoleAddOrderMessage("", "", proto, spawnCount) { Actor = iDCard }
                     );
 
+                    // Check order was placed
                     Assert.That(
                         orderDatabase.Orders.Values.Sum(v => v.Count()),
                         Is.GreaterThan(0),
                         $"[{proto}] Order was not added"
                     );
 
-                    var order = orderDatabase.Orders[(ProtoId<CargoAccountPrototype>)"Cargo"].LastOrDefault();
+                    // Get last placed  order
+                    var order = orderDatabase.Orders[console.Comp.Account].LastOrDefault();
                     Assert.That(
                         order.OrderQuantity,
                         Is.EqualTo(spawnCount),
                         $"[{proto}] Order quantity does not match requested amount"
                     );
 
+                    // Adding money so order is always approved
+                    _sCargo.UpdateBankAccount(station, productProto.Cost * spawnCount, order.Account);
                     // Approve order
-                    _sCargo.UpdateBankAccount(station, 100000, order.Account);
                     SEntMan.EventBus.RaiseLocalEvent(
                         console,
                         new CargoConsoleApproveOrderMessage(order.OrderId) { Actor = iDCard }
                     );
 
+                    // Check order is removed after approval and approval went through
                     Assert.That(
                         orderDatabase.Orders.Values.Sum(v => v.Count()),
                         Is.EqualTo(0),
@@ -348,14 +358,17 @@ public sealed class CargoTest : GameTest
                     var spawnedEntities = GetEntitiesOnCargoPallets(grid.Owner);
                     var count = 0;
                     var expectedProtos = new List<EntProtoId> { productProto.Product };
+                    // Some products spawn inside containers e.g. silver inside parcel
                     if (productProto.Container is { } container)
                         expectedProtos.Add((EntProtoId)container.Entity.Id);
 
+                    // Distinct() in case product is bigger than one tile
                     foreach (var entity in spawnedEntities.Distinct())
                     {
+                        // Get the prototype of the entity on the cargo pad
                         var spawnedPrototype = (EntProtoId)SComp<MetaDataComponent>(entity).EntityPrototype;
 
-                        // Receipt paper may spawn separately; skip and clean up
+                        // Receipt paper may spawn separately
                         if (spawnedPrototype == orderDatabase.PrinterOutput)
                         {
                             SDeleteNow(entity);
@@ -363,6 +376,7 @@ public sealed class CargoTest : GameTest
                         }
 
                         count++;
+                        // Check spawned prototype is the same as requested product
                         Assert.That(
                             spawnedPrototype,
                             Is.AnyOf(expectedProtos),
@@ -371,6 +385,7 @@ public sealed class CargoTest : GameTest
                         SDeleteNow(entity);
                     }
 
+                    // Check the amount of items spawned is the same as requested
                     Assert.That(
                         count,
                         Is.EqualTo(spawnCount),
