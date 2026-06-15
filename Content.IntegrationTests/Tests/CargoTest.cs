@@ -43,30 +43,31 @@ public sealed class CargoTest : GameTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await Pair.CreateTestMap();
-        var coordinates = Pair.TestMap!.GridCoords;
+        var pair = Pair;
+        var server = pair.Server;
 
-        await Server.WaitAssertion(() =>
+        var testMap = await pair.CreateTestMap();
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var pricing = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PricingSystem>();
+
+        await server.WaitAssertion(() =>
         {
-            using (Assert.EnterMultipleScope())
+            Assert.Multiple(() =>
             {
-                foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
+                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
 
-                    var ent = SSpawnAtPosition(proto.Product, coordinates);
-                    var price = _sPricing.GetPrice(ent);
+                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
+                    var price = pricing.GetPrice(ent);
 
-                    Assert.That(
-                        price,
-                        Is.AtMost(proto.Cost),
-                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
-                    );
-                    SEntMan.DeleteEntity(ent);
+                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
+                    entManager.DeleteEntity(ent);
                 }
-            }
-            ;
+            });
         });
     }
 
