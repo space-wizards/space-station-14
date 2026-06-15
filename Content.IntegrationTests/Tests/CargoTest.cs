@@ -29,9 +29,6 @@ public sealed class CargoTest : GameTest
     ];
 
     [SidedDependency(Side.Server)]
-    private readonly EntityTableSystem _sTableSystem = null!;
-
-    [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
 
     [SidedDependency(Side.Server)]
