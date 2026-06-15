@@ -50,10 +50,10 @@ public sealed class CargoTest : GameTest
     private readonly MapLoaderSystem _sMapLoader = null!;
 
     [SidedDependency(Side.Server)]
-    private StationSystem _sStation = default!;
+    private readonly StationSystem _sStation = null!;
 
     [SidedDependency(Side.Server)]
-    private EntityLookupSystem _sLookup = default!;
+    private readonly EntityLookupSystem _sLookup = null!;
 
     [Test]
     public async Task NoCargoOrderArbitrage()
