@@ -210,7 +210,7 @@ public sealed class DeltaPressureTest : AtmosTest
 
             await Server.WaitPost(() =>
             {
-                SAtmos.RunProcessingFull(ProcessEnt,ProcessEnt.Owner, SAtmos.AtmosTickRate);
+                SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
             });
 
             await Server.WaitPost(() =>
@@ -237,7 +237,7 @@ public sealed class DeltaPressureTest : AtmosTest
             // get jiggy with it! hit that dance white boy!
             await Server.WaitPost(() =>
             {
-                SAtmos.RunProcessingFull(ProcessEnt,ProcessEnt.Owner, SAtmos.AtmosTickRate);
+                SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
             });
 
             // need to run some ticks as deleted entities are queued for removal

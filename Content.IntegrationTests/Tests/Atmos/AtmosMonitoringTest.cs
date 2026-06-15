@@ -30,7 +30,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
     public async Task NullOutTileAtmosphereGasMixture()
     {
         // run an atmos update to initialize everything For Real surely
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         var gridNetEnt = SEntMan.GetNetEntity(RelevantAtmos.Owner);
         TargetCoords = new NetCoordinates(gridNetEnt, Vector2.Zero);
@@ -39,7 +39,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
         Transform.TryGetGridTilePosition(airSensorUid, out var vec);
 
         // run another one to ensure that the ref to the GasMixture was picked up
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // should be in the middle
         Assert.That(vec,
@@ -58,7 +58,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
         var wallUid = SEntMan.GetEntity(wall);
 
         // ensure that atmospherics registers the change - the gas mixture should no longer exist
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // the monitor's ref to the gas should be null now
         Assert.That(atmosMonitor.TileGas,
@@ -72,7 +72,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
         await Delete(wallUid);
 
         // ensure that atmospherics registers the change - the gas mixture should be back
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // gas mixture should now exist again
         var newTileMixture = SAtmos.GetTileMixture(airSensorUid);
@@ -91,7 +91,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
     public async Task FixGridAtmosReplaceMixtureOnTileChange()
     {
         // run an atmos update to initialize everything For Real surely
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         var gridNetEnt = SEntMan.GetNetEntity(RelevantAtmos.Owner);
         TargetCoords = new NetCoordinates(gridNetEnt, Vector2.Zero);
@@ -100,7 +100,7 @@ public sealed class AtmosMonitoringTest : AtmosTest
         Transform.TryGetGridTilePosition(airSensorUid, out var vec);
 
         // run another one to ensure that the ref to the GasMixture was picked up
-        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
         // should be in the middle
         Assert.That(vec,

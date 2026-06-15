@@ -21,22 +21,17 @@ public sealed partial class GridAtmosphereComponent : Component
     public bool Simulated = true;
 
     /// <summary>
-    /// Indicator for if Atmospherics has delegated the processing of this
-    /// grid to another tick due to the time budget running out.
+    /// Mutable runtime state for the current atmos processing cycle. This is not serialized and is rebuilt as
+    /// needed when processing restarts or a grid atmosphere is rebuilt.
     /// </summary>
-    /// <example>If true, Atmospherics is not finished
-    /// processing the current stage and has yielded processing
-    /// to the next tick.</example>
-    [ViewVariables]
-    public bool ProcessingPaused;
+    [NonSerialized, ViewVariables]
+    public readonly AtmosphereProcessingRuntime Processing = new();
 
     /// <summary>
-    /// Timer used to delay processing for every AtmosTick.
-    /// No, Atmospherics cannot tick every frame.
+    /// Current processing phase for view variables and diagnostics.
     /// </summary>
-    /// TODO: Replace with TimeSpan please.
     [ViewVariables]
-    public float Timer;
+    public AtmosphereProcessingState State => Processing.CycleCursor?.Phase ?? AtmosphereProcessingState.Revalidate;
 
     /// <summary>
     /// Integer that is incremented every time the grid is processed by Atmospherics.
@@ -104,18 +99,6 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
         new(SharedAtmosphereSystem.DeltaPressurePreAllocateLength);
 
-    /// <summary>
-    /// Integer that indicates the current position in the
-    /// <see cref="DeltaPressureEntities"/> list that is being processed.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public int DeltaPressureCursor;
-
-    /// <summary>
-    /// Queue of entities that need to have damage applied to them.
-    /// </summary>
-    [ViewVariables]
-    public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
     [ViewVariables]
     public readonly HashSet<IPipeNet> PipeNets = new();
@@ -124,22 +107,7 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
 
     [ViewVariables]
-    public readonly Queue<TileAtmosphere> CurrentRunTiles = new();
-
-    [ViewVariables]
-    public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
-
-    [ViewVariables]
-    public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
-
-    [ViewVariables]
-    public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
-
-    [ViewVariables]
     public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
-
-    [ViewVariables]
-    public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
 
     [ViewVariables]
     public readonly List<TileAtmosphere> PossiblyDisconnectedTiles = new(100);
@@ -149,7 +117,157 @@ public sealed partial class GridAtmosphereComponent : Component
 
     [ViewVariables]
     public long EqualizationQueueCycleControl { get; set; }
+}
 
+/// <summary>
+/// Transient state for a grid's in-flight atmos processing cycle.
+/// </summary>
+/// <remarks>
+/// Phase-owned cursors, snapshots, and queues live here. The server scratch reset clears them while preserving
+/// <see cref="Timer"/> and <see cref="TimeSinceLastDeviceUpdate"/> so dt accounting carries across resets.
+/// </remarks>
+public sealed class AtmosphereProcessingRuntime
+{
+    /// <summary>
+    /// Indicator for if Atmospherics has delegated the processing of this
+    /// grid to another tick due to the time budget running out.
+    /// </summary>
+    /// <example>If true, Atmospherics is not finished
+    /// processing the current stage and has yielded processing
+    /// to the next tick.</example>
     [ViewVariables]
-    public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.Revalidate;
+    public bool ProcessingPaused;
+
+    /// <summary>
+    /// Current phase and optional-phase snapshot for the in-flight atmos cycle, or null when no cycle is active.
+    /// </summary>
+    [ViewVariables]
+    public AtmosphereCycleCursor? CycleCursor;
+
+    /// <summary>
+    /// Accumulated frame time since atmos devices last received an update.
+    /// </summary>
+    [ViewVariables]
+    public float TimeSinceLastDeviceUpdate;
+
+    /// <summary>
+    /// Device update delta captured when the AtmosDevices phase begins. Kept stable while that phase is paused.
+    /// </summary>
+    [ViewVariables]
+    public float CurrentRunDeviceDt;
+
+    /// <summary>
+    /// Timer used to delay processing for every AtmosTick.
+    /// No, Atmospherics cannot tick every frame.
+    /// </summary>
+    /// TODO: Replace with TimeSpan please.
+    [ViewVariables]
+    public float Timer;
+
+    /// <summary>
+    /// Tile snapshot and resume cursor for the Monstermos equalization phase.
+    /// </summary>
+    [ViewVariables]
+    public readonly TileRunState EqualizeRun = new();
+
+    /// <summary>
+    /// Tile snapshot and resume cursor for the active tile phase.
+    /// </summary>
+    [ViewVariables]
+    public readonly TileRunState ActiveTilesRun = new();
+
+    /// <summary>
+    /// Tile snapshot and resume cursor for the high-pressure delta phase.
+    /// </summary>
+    [ViewVariables]
+    public readonly TileRunState HighPressureDeltaRun = new();
+
+    /// <summary>
+    /// Tile snapshot and resume cursor for the hotspot phase.
+    /// </summary>
+    [ViewVariables]
+    public readonly TileRunState HotspotRun = new();
+
+    /// <summary>
+    /// Tile snapshot and resume cursor for the superconductivity phase.
+    /// </summary>
+    [ViewVariables]
+    public readonly TileRunState SuperconductRun = new();
+
+    /// <summary>
+    /// Scratch queue for excited groups.
+    /// </summary>
+    [ViewVariables]
+    public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
+
+    /// <summary>
+    /// Scratch queue for pipe nets.
+    /// </summary>
+    [ViewVariables]
+    public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
+
+    /// <summary>
+    /// Scratch queue for atmos devices.
+    /// </summary>
+    [ViewVariables]
+    public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
+
+    /// <summary>
+    /// Scratch queue for revalidation tiles.
+    /// </summary>
+    [ViewVariables]
+    public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
+
+    /// <summary>
+    /// Integer that indicates the current position in the
+    /// <see cref="DeltaPressureSnapshot"/> list that is being processed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public int DeltaPressureCursor;
+
+    /// <summary>
+    /// Snapshot of <see cref="GridAtmosphereComponent.DeltaPressureEntities"/> taken at the
+    /// start of the DeltaPressure phase. Prevents swap-removals during a mid-phase pause from
+    /// skipping entities or causing out-of-bounds access when the phase resumes.
+    /// </summary>
+    [ViewVariables]
+    public readonly List<Entity<DeltaPressureComponent>> DeltaPressureSnapshot =
+        new(SharedAtmosphereSystem.DeltaPressurePreAllocateLength);
+
+    /// <summary>
+    /// Queue of entities that need to have damage applied to them.
+    /// </summary>
+    [ViewVariables]
+    public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
+}
+
+/// <summary>
+/// Phase-local tile snapshot plus resume cursor.
+/// </summary>
+/// <remarks>
+/// Tile phases iterate the snapshot so live source sets may mutate during processing. <see cref="Cursor"/> points to
+/// the next tile after a pause.
+/// </remarks>
+public sealed class TileRunState
+{
+    /// <summary>
+    /// Phase-local snapshot of tiles to process for the current run.
+    /// </summary>
+    [ViewVariables]
+    public readonly List<TileAtmosphere> Tiles = new();
+
+    /// <summary>
+    /// Index of the next tile in <see cref="Tiles"/> to process when resuming.
+    /// </summary>
+    [ViewVariables]
+    public int Cursor;
+
+    /// <summary>
+    /// Clears the current tile snapshot and rewinds the resume cursor.
+    /// </summary>
+    public void Reset()
+    {
+        Tiles.Clear();
+        Cursor = 0;
+    }
 }

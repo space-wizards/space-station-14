@@ -41,7 +41,9 @@ public sealed partial class AtmosphereSystem
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
     /// <param name="start">The starting index in the DeltaPressureEntities list to process from.</param>
     /// <param name="end">The ending index in the DeltaPressureEntities list to process to.</param>
-    private void ProcessDeltaPressureEntityBulk(GridAtmosphereComponent gridAtmosComp, int start, int end)
+    private void ProcessDeltaPressureEntityBulk(GridAtmosphereComponent gridAtmosComp,
+        List<Entity<DeltaPressureComponent>> entList,
+        int start, int end)
     {
         /*
          To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods.
@@ -50,8 +52,6 @@ public sealed partial class AtmosphereSystem
          This code takes advantage of ArrayPool so we can super easily reuse memory per tick
          in threading contexts, otherwise this will literally obliterate GC with a nuclear bomb.
          */
-
-        var entList = gridAtmosComp.DeltaPressureEntities;
         var len = end - start;
 
         const int dirs = Atmospherics.Directions;
@@ -208,7 +208,7 @@ public sealed partial class AtmosphereSystem
 
     /// <summary>
     /// Packs data into a <see cref="DeltaPressureDamageResult"/> data struct and enqueues it
-    /// into the <see cref="GridAtmosphereComponent.DeltaPressureDamageResults"/> queue for
+    /// into the <see cref="AtmosphereProcessingRuntime.DeltaPressureDamageResults"/> queue for
     /// later processing.
     /// </summary>
     /// <param name="ent">The entity to enqueue if necessary.</param>
@@ -229,7 +229,7 @@ public sealed partial class AtmosphereSystem
             return;
         }
 
-        gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
+        gridAtmosComp.Processing.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
             pressure,
             delta));
     }
@@ -246,6 +246,7 @@ public sealed partial class AtmosphereSystem
     private sealed class DeltaPressureParallelBulkJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
+        List<Entity<DeltaPressureComponent>> snapshot,
         int startIndex,
         int cvarBatchSize)
         : IParallelBulkRobustJob
@@ -254,7 +255,7 @@ public sealed partial class AtmosphereSystem
 
         public void ExecuteRange(int start, int end)
         {
-            system.ProcessDeltaPressureEntityBulk(atmosphere, start + startIndex, end + startIndex);
+            system.ProcessDeltaPressureEntityBulk(atmosphere, snapshot, start + startIndex, end + startIndex);
         }
     }
 

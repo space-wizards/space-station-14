@@ -76,6 +76,32 @@ public enum AtmosphereProcessingState : byte
 }
 
 /// <summary>
+/// Snapshot of optional-phase CVars taken at cycle start, so mid-cycle flips don't apply until next cycle.
+/// </summary>
+/// <remarks>
+/// Add a bit here for each optional phase that can be toggled by CVar. Always-running phases use
+/// <see cref="None"/> in the server phase table instead.
+/// </remarks>
+[Flags]
+public enum AtmosPhases : byte
+{
+    None = 0,
+    MonstermosEqualization = 1 << 0,
+    ExcitedGroups = 1 << 1,
+    DeltaPressureDamage = 1 << 2,
+    Superconduction = 1 << 3,
+}
+
+/// <summary>
+/// In-flight cycle position and phase flag snapshot.
+/// </summary>
+/// <remarks>
+/// The dispatcher stores this at cycle start. <see cref="Phase"/> is the next phase to run on resume, while
+/// <see cref="Flags"/> freezes optional-phase enablement for the whole cycle.
+/// </remarks>
+public record struct AtmosphereCycleCursor(AtmosphereProcessingState Phase, AtmosPhases Flags);
+
+/// <summary>
 /// Data on the airtightness of a <see cref="TileAtmosphere"/>.
 /// Cached on the <see cref="TileAtmosphere"/> and updated during
 /// <see cref="AtmosphereProcessingState.Revalidate"/> if it was invalidated.
