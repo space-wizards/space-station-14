@@ -92,7 +92,6 @@ public sealed class CargoTest : GameTest
                     SEntMan.DeleteEntity(ent);
                 }
             }
-            ;
         });
     }
 
@@ -104,7 +103,7 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
@@ -122,7 +121,7 @@ public sealed class CargoTest : GameTest
 
                     SEntMan.DeleteEntity(ent);
                 }
-            });
+            }
         });
     }
 
@@ -131,7 +130,7 @@ public sealed class CargoTest : GameTest
     {
         await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var protoIds = SProtoMan
                     .EnumeratePrototypes<EntityPrototype>()
@@ -168,7 +167,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
                 }
-            });
+            }
         });
     }
 
@@ -281,7 +280,7 @@ public sealed class CargoTest : GameTest
     {
         await Pair.Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 foreach (var (proto, comp) in Pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
@@ -290,7 +289,7 @@ public sealed class CargoTest : GameTest
                         $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
                     );
                 }
-            });
+            }
         });
     }
 }
