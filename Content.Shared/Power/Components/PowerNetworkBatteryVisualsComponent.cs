@@ -1,26 +1,24 @@
-using Content.Shared.Power;
-using Content.Shared.Power.Components;
-using Content.Server.Power.EntitySystems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Power.Components;
+namespace Content.Shared.Power.Components;
 
 /// <summary>
 /// Denotes an entity that will receive appearance updates for the state of its PowerNetworkBattery.
 /// </summary>
-[RegisterComponent, Access(typeof(PowerNetworkBatteryVisualsSystem)), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class PowerNetworkBatteryVisualsComponent : Component
 {
     /// <summary>
     /// The amount of time to wait between updates.
     /// </summary>
-    [DataField]
+    [DataField(serverOnly: true)]
     public TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The number of distinct charge levels a battery has.
     /// 0 is empty, and (NumChargeLevels - 1) is full.
     /// </summary>
-    [DataField]
+    [DataField(serverOnly: true)]
     public int NumChargeLevels = 7;
 
     /// <summary>
@@ -49,4 +47,23 @@ public sealed partial class PowerNetworkBatteryVisualsComponent : Component
     /// </summary>
     [ViewVariables, AutoPausedField]
     public TimeSpan NextUpdateTime;
+
+    /// <summary>
+    /// The prefix used for the RSI states of the sprite layers indicating the charge level of the SMES.
+    /// </summary>
+    [DataField]
+    public string ChargeLevelPrefix = "charge";
+
+    /// <summary>
+    /// If false, charge level 0 will make the ChargeLayer invisible. If true, charge level 0 will make the ChargeLayer set to its 0 state.
+    /// </summary>
+    [DataField]
+    public bool ChargeLevelZeroVisible = true;
+
+    /// <summary>
+    /// The prefix used for the RSI states of the sprite layers indicating the input state of the SMES.
+    /// Will be suffixed with "discharging", "charging", or "still"
+    /// </summary>
+    [DataField]
+    public string ChargeStatePrefix = "";
 }

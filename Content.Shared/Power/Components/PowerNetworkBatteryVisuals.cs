@@ -23,6 +23,30 @@ public enum PowerNetworkBatteryVisuals
 }
 
 /// <summary>
+/// Layers to be updated by PowerNetworkBatteryVisuals
+/// </summary>
+[Serializable, NetSerializable]
+public enum PowerNetworkBatteryVisualLayers
+{
+    /// <summary>
+    /// The layer showing the overall charge level of the device.
+    /// </summary>
+    ChargeLevel,
+    /// <summary>
+    /// The layer showing how the charge level is changing over time.
+    /// </summary>
+    ChargeState,
+    /// <summary>
+    /// The layer showing whether the device can charge or not.
+    /// </summary>
+    CanCharge,
+    /// <summary>
+    /// The layer showing whether the device can discharge or not.
+    /// </summary>
+    CanDischarge,
+}
+
+/// <summary>
 /// Whether or not a given battery can charge/discharge.
 /// </summary>
 [Serializable, NetSerializable]
