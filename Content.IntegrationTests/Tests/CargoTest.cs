@@ -50,9 +50,6 @@ public sealed class CargoTest : GameTest
     private readonly MapLoaderSystem _sMapLoader = null!;
 
     [SidedDependency(Side.Server)]
-    private readonly TransformSystem _sTransform = null!;
-
-    [SidedDependency(Side.Server)]
     private StationSystem _sStation = default!;
 
     [SidedDependency(Side.Server)]
