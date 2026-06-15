@@ -5,6 +5,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
@@ -279,89 +280,143 @@ public sealed class CargoTest : GameTest
         await Pair.CreateTestMap();
         var coordinates = Pair.TestMap!.GridCoords;
 
-        ResPath atsPath = new("/Maps/Shuttles/trading_outpost.yml");
-        string stationId = "StandardNanotrasenStation";
-        string consoleId = "ComputerCargoOrders";
-
         await Pair.Server.WaitAssertion(() =>
         {
-            var iDCard = SSpawnAtPosition("CaptainIDCard", coordinates);
-            var station = SSpawnAtPosition(stationId, coordinates);
-            _sStation.AddGridToStation(station, Pair.TestMap!.Grid);
-            var grid = SetupATS(atsPath, Pair.TestMap!.MapId, station);
-            var console = SetupConsole(consoleId, coordinates);
-            Assert.That(_sStation.GetOwningStation(console).HasValue, Is.True, "Console setup failed");
-            Assert.That(
-                STryComp<StationCargoOrderDatabaseComponent>(
-                    _sStation.GetOwningStation(console),
-                    out var orderDatabase
-                ),
-                Is.True,
-                "Station setup failed"
-            );
-            var allProducts = _sCargo.GetAvailableProducts(console);
-            Assert.That(allProducts.Count(), Is.GreaterThan(0), "No available products");
-            var random = new Random().Next(0, allProducts.Count());
-            var proto = allProducts.ElementAt(random);
-            var entProto = SProtoMan.Index(proto);
-            var spawnCount = 10;
-            var addOrderEvent = new CargoConsoleAddOrderMessage("", "", proto, spawnCount) { Actor = iDCard };
-            SEntMan.EventBus.RaiseLocalEvent(console, addOrderEvent);
-            Assert.That(
-                orderDatabase.Orders.Values.Sum(v => v.Count()),
-                Is.GreaterThan(0),
-                $"Order for {proto} was not Added"
-            );
-            var mostRecentOrder = orderDatabase.Orders[(ProtoId<CargoAccountPrototype>)"Cargo"].LastOrDefault();
-            Assert.That(mostRecentOrder.OrderQuantity, Is.EqualTo(spawnCount), "Wrong number of items requested");
-            _sCargo.UpdateBankAccount(station, 100000, mostRecentOrder.Account);
-            var approveOrderEvent = new CargoConsoleApproveOrderMessage(mostRecentOrder.OrderId) { Actor = iDCard };
-            SEntMan.EventBus.RaiseLocalEvent(console, approveOrderEvent);
-            Assert.That(
-                orderDatabase.Orders.Values.Sum(v => v.Count()),
-                Is.EqualTo(0),
-                $"Order was {proto} not removed"
-            );
-            var intersecting = new HashSet<EntityUid>();
-            foreach (var pallet in _sCargo.GetCargoPallets(grid.Value.Owner, BuySellType.Buy))
+            using (Assert.EnterMultipleScope())
             {
-                var aabb = _sLookup.GetAABBNoContainer(
-                    pallet.Entity,
-                    pallet.PalletXform.LocalPosition,
-                    pallet.PalletXform.LocalRotation
+                var iDCard = SSpawnAtPosition("CaptainIDCard", coordinates);
+                var station = SetupStation("StandardNanotrasenStation", coordinates);
+                var grid = SetupATS(new("/Maps/Shuttles/trading_outpost.yml"), Pair.TestMap!.MapId, station);
+                var console = SetupConsole("ComputerCargoOrders", coordinates);
+
+                Assert.That(_sStation.GetOwningStation(console).HasValue, Is.True, "Console has no owning station");
+                Assert.That(
+                    STryComp<StationCargoOrderDatabaseComponent>(
+                        _sStation.GetOwningStation(console),
+                        out var orderDatabase
+                    ),
+                    Is.True,
+                    "Station has no cargo order database"
                 );
-                _sLookup.GetLocalEntitiesIntersecting(grid.Value.Owner, aabb, intersecting, LookupFlags.Dynamic);
+
+                var allProducts = _sCargo.GetAvailableProducts(console).ToList();
+                Assert.That(allProducts, Is.Not.Empty, "No available cargo products");
+
+                const int spawnCount = 1;
+                foreach (var proto in allProducts)
+                {
+                    var productProto = SProtoMan.Index(proto);
+                    var entProto = SProtoMan.Index(productProto.Product);
+                    // Cargo products which spawn a random entity won't be checked
+                    // Entities which are filled with random entities are still checked
+                    if (entProto.HasComponent<EntityTableSpawnerComponent>(_sCompFact))
+                        continue;
+
+                    // Place order
+                    SEntMan.EventBus.RaiseLocalEvent(
+                        console,
+                        new CargoConsoleAddOrderMessage("", "", proto, spawnCount) { Actor = iDCard }
+                    );
+
+                    Assert.That(
+                        orderDatabase.Orders.Values.Sum(v => v.Count()),
+                        Is.GreaterThan(0),
+                        $"[{proto}] Order was not added"
+                    );
+
+                    var order = orderDatabase.Orders[(ProtoId<CargoAccountPrototype>)"Cargo"].LastOrDefault();
+                    Assert.That(
+                        order.OrderQuantity,
+                        Is.EqualTo(spawnCount),
+                        $"[{proto}] Order quantity does not match requested amount"
+                    );
+
+                    // Approve order
+                    _sCargo.UpdateBankAccount(station, 100000, order.Account);
+                    SEntMan.EventBus.RaiseLocalEvent(
+                        console,
+                        new CargoConsoleApproveOrderMessage(order.OrderId) { Actor = iDCard }
+                    );
+
+                    Assert.That(
+                        orderDatabase.Orders.Values.Sum(v => v.Count()),
+                        Is.EqualTo(0),
+                        $"[{proto}] Order was not removed after approval"
+                    );
+
+                    // Verify spawned entities on pallets
+                    var spawnedEntities = GetEntitiesOnCargoPallets(grid.Owner);
+                    var count = 0;
+                    var expectedProtos = new List<EntProtoId> { productProto.Product };
+                    if (productProto.Container is { } container)
+                        expectedProtos.Add((EntProtoId)container.Entity.Id);
+
+                    foreach (var entity in spawnedEntities.Distinct())
+                    {
+                        var spawnedPrototype = (EntProtoId)SComp<MetaDataComponent>(entity).EntityPrototype;
+
+                        // Receipt paper may spawn separately; skip and clean up
+                        if (spawnedPrototype == orderDatabase.PrinterOutput)
+                        {
+                            SDeleteNow(entity);
+                            continue;
+                        }
+
+                        count++;
+                        Assert.That(
+                            spawnedPrototype,
+                            Is.AnyOf(expectedProtos),
+                            $"[{proto}] Spawned entity has wrong prototype: expected '{productProto.Product}', got '{spawnedPrototype}'"
+                        );
+                        SDeleteNow(entity);
+                    }
+
+                    Assert.That(
+                        count,
+                        Is.EqualTo(spawnCount),
+                        $"[{proto}] Expected {spawnCount} spawned entities, got {count}"
+                    );
+                }
             }
-            var count = 0;
-            foreach (var intersectingEnt in intersecting)
-            {
-                var metaData = SComp<MetaDataComponent>(intersectingEnt);
-                if (metaData.EntityPrototype == entProto.Product)
-                    count++;
-                else
-                    Assert.Fail("Spawned wrong entity");
-            }
-            Assert.That(count, Is.EqualTo(spawnCount), "Wrong number of spawned entities");
-            foreach (var intersectingEnt in intersecting)
-                SDeleteNow(intersectingEnt);
         });
     }
 
-    private Entity<MapGridComponent>? SetupATS(ResPath atsPath, MapId map, EntityUid station)
+    private EntityUid SetupStation(string protoId, EntityCoordinates coordinates)
+    {
+        var station = SSpawnAtPosition(protoId, coordinates);
+        _sStation.AddGridToStation(station, Pair.TestMap!.Grid);
+        return station;
+    }
+
+    private Entity<MapGridComponent> SetupATS(ResPath atsPath, MapId map, EntityUid station)
     {
         Assert.That(
             _sMapLoader.TryLoadGrid(map, atsPath, out var grid, offset: new Vector2(200, 200)),
-            "Failed to Spawn ATS"
+            "Failed to load ATS grid"
         );
         SEntMan.AddComponent<TradeStationComponent>(grid.Value.Owner);
         _sStation.AddGridToStation(station, grid.Value.Owner, grid.Value.Comp);
-        return grid;
+        return grid.Value;
     }
 
     private Entity<CargoOrderConsoleComponent> SetupConsole(string protoId, EntityCoordinates coordinates)
     {
         var console = SSpawnAtPosition(protoId, coordinates);
-        var consoleComponent = SComp<CargoOrderConsoleComponent>(console);
-        return (console, consoleComponent);
+        return (console, SComp<CargoOrderConsoleComponent>(console));
+    }
+
+    private HashSet<EntityUid> GetEntitiesOnCargoPallets(EntityUid gridOwner)
+    {
+        var entities = new HashSet<EntityUid>();
+        foreach (var pallet in _sCargo.GetCargoPallets(gridOwner, BuySellType.Buy))
+        {
+            var aabb = _sLookup.GetAABBNoContainer(
+                pallet.Entity,
+                pallet.PalletXform.LocalPosition,
+                pallet.PalletXform.LocalRotation
+            );
+            _sLookup.GetLocalEntitiesIntersecting(gridOwner, aabb, entities, LookupFlags.Dynamic);
+        }
+        return entities;
     }
 }
