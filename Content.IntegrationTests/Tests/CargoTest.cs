@@ -25,7 +25,7 @@ public sealed class CargoTest : GameTest
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
         // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling")
+        new("FunCrateGambling"),
     ];
 
     [SidedDependency(Side.Server)]
@@ -97,7 +97,7 @@ public sealed class CargoTest : GameTest
 
                     SEntMan.DeleteEntity(ent);
                 }
-            };
+            }
         });
     }
 
@@ -143,7 +143,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
                 }
-            };
+            }
         });
     }
 
@@ -265,7 +265,7 @@ public sealed class CargoTest : GameTest
                         $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
                     );
                 }
-            };
+            }
         });
     }
 }
