@@ -62,7 +62,7 @@ public sealed class CargoTest : GameTest
                     var price = pricing.GetPrice(ent);
 
                     Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
-                    entManager.DeleteEntity(ent);
+                    SDeleteNow(ent);
                 }
             });
         });
@@ -92,7 +92,7 @@ public sealed class CargoTest : GameTest
                             );
                     }
 
-                    SEntMan.DeleteEntity(ent);
+                    SDeleteNow(ent);
                 }
             }
         });
@@ -105,20 +105,10 @@ public sealed class CargoTest : GameTest
         {
             using (Assert.EnterMultipleScope())
             {
-                var protoIds = SProtoMan
-                    .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
-                    .Where(p => !Pair.IsTestPrototype(p))
-                    .Where(p => p.Components.ContainsKey("StaticPrice"));
+                var protoIds = Pair.GetPrototypesWithComponent<StaticPriceComponent>();
 
-                foreach (var proto in protoIds)
+                foreach (var (proto, staticPriceComp) in protoIds)
                 {
-                    // Sanity check
-                    Assert.That(
-                        proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, _sCompFact),
-                        Is.True
-                    );
-
                     if (
                         proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, _sCompFact)
                         && stackPriceComp.Price > 0
@@ -158,18 +148,11 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            var sliceableEntityProtos = SProtoMan
-                .EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !Pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<ToolRefinableComponent>(out _, _sCompFact))
-                .Select(p => p.ID)
-                .ToList();
+            var sliceableEntityProtos = Pair.GetPrototypesWithComponent<ToolRefinableComponent>();
 
-            foreach (var proto in sliceableEntityProtos)
+            foreach (var (proto, sliceable) in sliceableEntityProtos)
             {
-                var ent = SEntMan.SpawnEntity(proto, coordinates);
-                var sliceable = SEntMan.GetComponent<ToolRefinableComponent>(ent);
+                var ent = SSpawnAtPosition(proto.ID, coordinates);
 
                 // Check each bounty
                 foreach (var bounty in bounties)
@@ -190,16 +173,16 @@ public sealed class CargoTest : GameTest
 
                         foreach (var (sliceProtoId, sliceCount) in sliceCountByProtoId)
                         {
-                            var slice = SEntMan.SpawnEntity(sliceProtoId, coordinates);
+                            var slice = SSpawnAtPosition(sliceProtoId, coordinates);
 
                             // See if the slice also counts for this bounty entry
                             if (!_sCargo.IsValidBountyEntry(slice, entry))
                             {
-                                SEntMan.DeleteEntity(slice);
+                                SDeleteNow(slice);
                                 continue;
                             }
 
-                            SEntMan.DeleteEntity(slice);
+                            SDeleteNow(slice);
 
                             // If for some reason it can only make one slice, that's okay, I guess
                             Assert.That(
@@ -212,7 +195,7 @@ public sealed class CargoTest : GameTest
                     }
                 }
 
-                SEntMan.DeleteEntity(ent);
+                SDeleteNow(ent);
             }
         });
     }
