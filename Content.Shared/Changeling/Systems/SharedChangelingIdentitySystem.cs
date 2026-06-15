@@ -44,7 +44,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            GrantIdentity(ent, args.Devoured);
+            GrantIdentity(ent, args.Devoured, true);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -65,14 +65,14 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
+        if (_mind.TryGetMind(ent, out var mind, out _))
+            EnsureComp<ChangelingMindIdentityTrackerComponent>(mind); // We gotta track future gained identities for objective purposes.
+
         // Make a backup of our current identity so we can transform back.
         GrantIdentity(ent, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
-
-        data.Starting = true;
-        data.GrantedDna = true; // I have no idea how you're supposed to ever get DNA from yourself, but just in case.
 
         ent.Comp.CurrentIdentity = data.Identity;
     }
@@ -196,7 +196,8 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// </summary>
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
-    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    /// <param name="devoured">Whether this identity was granted via devouring, aka granted DNA to the changeling.</param>
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target, bool devoured = false)
     {
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
@@ -216,6 +217,15 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         UpdateIdentityData(newIdentity, clone.Value, target);
         AddDevouredReference(ent, target);
+
+        newIdentity.GrantedDna = devoured;
+
+        if (newIdentity.Original == ent)
+        {
+            // This is an identity of us, we don't wanna count it for objectives n stuff.
+            newIdentity.Starting = true;
+            newIdentity.GrantedDna = true;
+        }
 
         var ev = new ChangelingGainedIdentityEvent(ent, newIdentity, updated);
         RaiseLocalEvent(ent, ref ev, true); // Broadcast it to allow the mind tracker to update.

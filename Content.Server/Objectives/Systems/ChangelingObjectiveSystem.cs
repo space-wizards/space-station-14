@@ -1,13 +1,11 @@
-using System.Linq;
 using System.Text;
-using Content.Server.Changeling.Components;
 using Content.Server.Objectives.Components;
+using Content.Server.Roles.Jobs;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -15,6 +13,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
 {
     [Dependency] private NumberObjectiveSystem _number = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private JobSystem _job = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
@@ -44,15 +43,11 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         var summary = new StringBuilder();
 
         summary.AppendLine(Loc.GetString("changeling-round-end-identities-category"));
-        summary.AppendLine(Loc.GetString("changeling-round-end-identities-text", ("count", ent.Comp.Identities.Count(x => !x.Starting))));
+        summary.AppendLine(Loc.GetString("changeling-round-end-identities-text", ("count", ent.Comp.Identities.Count)));
 
         foreach (var data in ent.Comp.Identities)
         {
-            // Don't display our initial identity. It's kinda a given.
-            if (data.Starting)
-                continue;
-
-            summary.AppendLine(Loc.GetString("changeling-round-end-identities-wrapper", ("name", data.OriginalName), ("job", data.OriginalJob), ("devoured", data.GrantedDna)));
+            summary.AppendLine(Loc.GetString("changeling-round-end-identities-wrapper", ("identity", data.Key), ("devoured", data.Value)));
         }
 
         args.Text += summary.ToString();
@@ -63,9 +58,13 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         if (!_mind.TryGetMind(args.Changeling, out var mind, out _))
             return;
 
+        // Devour lacks the data regarding an identity, so we have to fetch jobs here again :(
+        _job.MindTryGetJob(mind, out var job);
+
         // We add the identity to the list of tracked identities on the mind.
         // This can then be used by objectives to determine the amount of obtained identities, as well as if they were gained via Devour.
-        AddOrUpdateUniqueIdentityToTracker(mind, args.Devoured, args.GrantedDna, null, false);
+        // We do this on devour as well so we can update the list to update whether someone was devoured instead of just extracted.
+        AddOrUpdateUniqueIdentityToTracker(mind, args.Devoured, args.GrantedDna, job?.LocalizedName);
     }
 
     private void OnChangelingGainedIdentity(ref ChangelingGainedIdentityEvent args)
@@ -76,15 +75,12 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         if (args.Identity.Original == null)
             return;
 
-        var starting = false;
-
-        // We somehow gained an identity of ourselves.
-        if (args.Identity.Original == args.Changeling)
-            starting = true;
+        if (args.Identity.Starting)
+            return; // We don't want the original identity to count.
 
         // We add the identity to the list of tracked identities on the mind.
         // This can then be used by objectives to determine the amount of obtained identities, as well as if they were gained via Devour.
-        AddOrUpdateUniqueIdentityToTracker(mind, args.Identity.Original.Value, args.Identity.GrantedDna, args.Identity.OriginalJob, starting);
+        AddOrUpdateUniqueIdentityToTracker(mind, args.Identity.Original.Value, args.Identity.GrantedDna, args.Identity.OriginalJob);
     }
 
     private void OnGetUniqueIdentitiesProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
@@ -148,7 +144,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         return (float)selfUniqueCount / (float)(highest+1);
     }
 
-    private void AddOrUpdateUniqueIdentityToTracker(EntityUid mind, EntityUid target, bool devoured, ProtoId<JobPrototype>? job, bool starting)
+    private void AddOrUpdateUniqueIdentityToTracker(EntityUid mind, EntityUid target, bool devoured, ProtoId<JobPrototype>? job)
     {
         EnsureComp<ChangelingMindIdentityTrackerComponent>(mind, out var tracker);
 
@@ -156,27 +152,24 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
 
         var jobName = jobPrototype?.LocalizedName ?? Loc.GetString("job-name-unknown");
 
+        var key =  GetIdentityKey(target, jobName);
+
         // If the identity already exists, we just update if it was Devoured.
         // We check by EntityUid here because we still count paradox clones and such as unique devours.
         // Tracking by name alone would make it inconsistent to how devours are tracked by the ChangelingDevourSystem and ChangelingIdentitySystem.
-        if (tracker.Identities.TryFirstOrDefault(x => x.Original == target, out var identity))
+        if (tracker.Identities.ContainsKey(key))
         {
             // We don't want to set it to False afterward, because this entity was Devoured at SOME point before.
             // So we either keep it the same, or mark is as true.
-            identity.GrantedDna = identity.GrantedDna || devoured;
-            identity.OriginalJob = jobName; // We update the job because Devour is not capable of providing it, but gaining the identity will update it afterward.
+            tracker.Identities[key] = tracker.Identities[key] || devoured;
             return;
         }
 
-        var newData = new ChangelingMindTrackedIdentityData()
-        {
-            Original = target,
-            OriginalName = Name(target),
-            OriginalJob = jobName,
-            GrantedDna = devoured,
-            Starting = starting,
-        };
+        tracker.Identities.Add(key, devoured);
+    }
 
-        tracker.Identities.Add(newData);
+    private string GetIdentityKey(EntityUid target, string job)
+    {
+        return Loc.GetString("changeling-round-end-identity", ("name", Name(target)), ("job", job));
     }
 }
