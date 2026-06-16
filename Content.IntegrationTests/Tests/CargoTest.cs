@@ -5,7 +5,6 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -16,7 +15,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
-[TestFixture]
 public sealed class CargoTest : GameTest
 {
     /// <summary>
@@ -117,7 +115,7 @@ public sealed class CargoTest : GameTest
                         Assert.That(
                             staticPriceComp.Price,
                             Is.EqualTo(0),
-                            $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other."
+                            $"The prototype {proto} has a {nameof(StackPriceComponent)} and {nameof(StaticPriceComponent)} whose values are not compatible with each other."
                         );
                     }
 
@@ -126,7 +124,7 @@ public sealed class CargoTest : GameTest
                         Assert.That(
                             staticPriceComp.Price,
                             Is.EqualTo(0),
-                            $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other."
+                            $"The prototype {proto} has a {nameof(StackComponent)} and {nameof(StaticPriceComponent)} whose values are not compatible with each other."
                         );
                     }
                 }
@@ -200,22 +198,26 @@ public sealed class CargoTest : GameTest
         });
     }
 
+    private const string StackEnt = "StackEnt";
+    private const string StackCount = "5";
+    private const string StackUnitPrice = "20";
+
     [TestPrototypes]
     private const string StackProto =
-        @"
+        @$"
 - type: stack
   id: StackProto
   name: stack-steel
-  spawn: StackEnt
+  spawn: {StackEnt}
 
 - type: entity
-  id: StackEnt
+  id: {StackEnt}
   components:
   - type: StackPrice
-    price: 20
+    price: {StackUnitPrice}
   - type: Stack
     stackType: StackProto
-    count: 5
+    count: {StackCount}
 ";
 
     [Test]
@@ -225,9 +227,9 @@ public sealed class CargoTest : GameTest
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitAssertion(() =>
         {
-            var ent = SSpawnAtPosition("StackEnt", coordinates);
+            var ent = SSpawnAtPosition(StackEnt, coordinates);
             var price = _sPricing.GetPrice(ent);
-            Assert.That(price, Is.EqualTo(100.0));
+            Assert.That(price, Is.EqualTo(double.Parse(StackCount) * double.Parse(StackUnitPrice)));
         });
     }
 
@@ -242,7 +244,7 @@ public sealed class CargoTest : GameTest
                 {
                     Assert.That(
                         proto.TryGetComponent<MobStateComponent>(out _, _sCompFact),
-                        $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
+                        $"Found {nameof(MobPriceComponent)} on {proto.ID}, but no {nameof(MobStateComponent)}!"
                     );
                 }
             }
