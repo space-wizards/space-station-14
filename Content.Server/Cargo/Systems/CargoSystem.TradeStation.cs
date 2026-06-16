@@ -141,7 +141,7 @@ public sealed partial class CargoSystem
             );
             _lookup.GetLocalEntitiesIntersecting(gridUid, aabb, entities, LookupFlags.Dynamic | LookupFlags.Sundries);
         }
-        return entities.Distinct();
+        return entities;
     }
 
     #endregion
