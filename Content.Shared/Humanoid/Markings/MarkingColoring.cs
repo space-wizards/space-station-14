@@ -40,6 +40,7 @@ public static class MarkingColoring
         // Coloring from default properties
         var defaultColor = prototype.Coloring.Default.GetColor(skinColor, eyeColor, otherMarkings);
 
+        // TODO
         if (prototype.Coloring.Layers == null)
         {
             // If layers is not specified, then every layer must be default

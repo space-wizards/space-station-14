@@ -67,11 +67,22 @@ public sealed partial class MarkingPrototype : IPrototype
     [DataField("layers")]
     public List<MarkingLayerData> Layers { get; private set; } = default!;
 
+    /// <summary>
+    ///     Whether or not this marking prototype uses the new layer metadata system,
+    ///     as opposed to the old "sprites" list.
+    /// </summary>
+    public bool UsesLayers() => Layers.Count > 0;
+
+    /// <summary>
+    ///     Gets a number of adjustible colors associated with this marking.
+    /// </summary>
+    public int GetColorCount()
+    {
+        return UsesLayers() ? Layers.Count : Sprites.Count;
+    }
+
     public Marking AsMarking()
     {
-        if (Layers.Count > 0)
-            return new Marking(ID, Layers.Count);
-
-        return new Marking(ID, Sprites.Count);
+        return new Marking(ID, GetColorCount());
     }
 }

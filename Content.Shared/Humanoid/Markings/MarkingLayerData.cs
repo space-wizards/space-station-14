@@ -51,10 +51,19 @@ public sealed partial record MarkingLayerData
     /// <param name="markingId">The ID of the marking this layer belongs to.</param>
     public string GetLocId(string markingId)
     {
-        return Name ?? $"marking-{markingId}-{GetLayerId()}";
+        return Name ?? $"marking-{markingId}-{GetLayerStateId()}";
     }
 
-    private string GetLayerId()
+    /// <summary>
+    ///     Gets an ID associated with this marking layer. Used for sprite keys.
+    /// </summary>
+    /// <param name="markingId">The ID of the marking this layer belongs to.</param>
+    public string GetLayerID(string markingId)
+    {
+        return $"{markingId}-{GetLayerStateId()}";
+    }
+
+    private string GetLayerStateId()
     {
         return Sprite switch
         {

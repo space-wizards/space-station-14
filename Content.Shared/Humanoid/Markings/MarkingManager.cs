@@ -147,9 +147,10 @@ public sealed partial class MarkingManager
                     continue;
                 }
 
-                if (marking.Sprites.Count != markings[i].MarkingColors.Count)
+                var markingLayerCount = marking.GetColorCount();
+                if (markingLayerCount != markings[i].MarkingColors.Count)
                 {
-                    markings[i] = new Marking(marking.ID, marking.Sprites.Count);
+                    markings[i] = new Marking(marking.ID, markingLayerCount);
                 }
             }
         }
