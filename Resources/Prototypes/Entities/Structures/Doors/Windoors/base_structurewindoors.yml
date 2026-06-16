@@ -96,7 +96,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 75
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -221,7 +221,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 125
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
