@@ -37,12 +37,12 @@
   parent: ClothingNeckBase
   id: ClothingScarfBase
   components:
-  - type: TemperatureProtection
-    heatingCoefficient: 1.025
-    coolingCoefficient: 0.5
   - type: Tag
     tags:
     - Scarf
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5
