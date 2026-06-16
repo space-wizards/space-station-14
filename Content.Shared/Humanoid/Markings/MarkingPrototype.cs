@@ -3,6 +3,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
 
+/// <summary>
+///     Definition of a marking, a cosmetic sprite change on a humanoid character.
+///     These are selectable in the character editor.
+/// </summary>
 [Prototype]
 public sealed partial class MarkingPrototype : IPrototype
 {
@@ -11,18 +15,35 @@ public sealed partial class MarkingPrototype : IPrototype
 
     public string Name { get; private set; } = default!;
 
+    /// <summary>
+    ///     The "body part" visual layer that this marking applies to.
+    /// </summary>
+
     [DataField("bodyPart", required: true)]
     public HumanoidVisualLayers BodyPart { get; private set; } = default!;
 
+    /// <summary>
+    ///     A list of markings groups that are able to use this marking.
+    /// </summary>
     [DataField]
     public List<ProtoId<MarkingsGroupPrototype>>? GroupWhitelist;
 
+    /// <summary>
+    ///     A restriction on which sexes may use this marking.
+    /// </summary>
     [DataField("sexRestriction")]
     public Sex? SexRestriction { get; private set; }
 
+    /// <summary>
+    ///     Whether or not this marking's colors can be manually changed by the player.
+    ///     If not, then it will be forced to use a certain color depending on <see cref="Coloring">.
+    /// </summary>
     [DataField("forcedColoring")]
     public bool ForcedColoring { get; private set; } = false;
 
+    /// <summary>
+    ///     Parameters for the default colors that a marking's layers will use.
+    /// </summary>
     [DataField("coloring")]
     public MarkingColors Coloring { get; private set; } = new();
 
@@ -33,6 +54,9 @@ public sealed partial class MarkingPrototype : IPrototype
     [DataField]
     public bool CanBeDisplaced { get; private set; } = true;
 
+    /// <summary>
+    ///     A list of sprite layers associated with this marking.
+    /// </summary>
     [DataField("sprites", required: true)]
     public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
