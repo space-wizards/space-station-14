@@ -81,10 +81,11 @@ public sealed partial class CargoSystem
     }
 
     /// <summary>
-    /// Gets all sell pallets on a grid
+    /// Returns all cargo pallets on a grid, filtered by buy/sell type.
     /// </summary>
-    /// <param name="gridUid"> Grid to find pallets on</param>
-    /// <returns>Iterator of pallet (Uid, Transform)</returns>
+    /// <param name="gridUid">The grid to search for pallets.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.All"/>.</param>
+    /// <returns>Each pallet entity with its <see cref="TransformComponent"/>.</returns>
     public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)> GetCargoPallets(
         EntityUid gridUid,
         BuySellType requestType = BuySellType.All
@@ -101,10 +102,12 @@ public sealed partial class CargoSystem
     }
 
     /// <summary>
-    /// Gets all free buy pallets on a grid
+    /// Returns all unoccupied cargo pallets on a grid, filtered by buy/sell type.
+    /// A pallet is considered free if no dynamic entities are intersecting it.
     /// </summary>
-    /// <param name="gridUid"> Grid to find pallets on</param>
-    /// <returns>Iterator of pallet (Uid, Transform)</returns>
+    /// <param name="gridUid">The grid to search for pallets.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Buy"/>.</param>
+    /// <returns>Each free pallet entity with its <see cref="TransformComponent"/>.</returns>
     public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent Transform)> GetFreeCargoPallets(
         EntityUid gridUid,
         BuySellType requestType = BuySellType.Buy
@@ -124,10 +127,19 @@ public sealed partial class CargoSystem
         }
     }
 
-    public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(EntityUid gridUid)
+    /// <summary>
+    /// Returns all dynamic entities currently sitting on pallets on a grid, filtered by buy/sell type.
+    /// </summary>
+    /// <param name="gridUid">The grid to search.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
+    /// <returns>Distinct set of entity UIDs found on pallets.</returns>
+    public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
+        EntityUid gridUid,
+        BuySellType requestType = BuySellType.Sell
+    )
     {
         var entities = new HashSet<EntityUid>();
-        foreach (var pallet in GetCargoPallets(gridUid, BuySellType.Buy))
+        foreach (var pallet in GetCargoPallets(gridUid, requestType))
         {
             var aabb = _lookup.GetAABBNoContainer(
                 pallet.Entity,
@@ -159,6 +171,15 @@ public sealed partial class CargoSystem
         return true;
     }
 
+    /// <summary>
+    /// Collects all sellable goods from cargo pallets on a grid, along with their prices
+    /// and any sell overrides. Excludes anchored entities, mobs, blacklisted entities,
+    /// and anything with a price of zero.
+    /// </summary>
+    /// <param name="gridUid">The grid to appraise.</param>
+    /// <param name="goods">
+    /// Output set of <c>(entity, overrideSellComponent, price)</c> tuples for each sellable item.
+    /// </param>
     public void GetPalletGoods(
         EntityUid gridUid,
         out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
@@ -182,6 +203,13 @@ public sealed partial class CargoSystem
         }
     }
 
+    /// <summary>
+    /// Determines whether an entity is eligible to be sold.
+    /// An entity cannot be sold if it is a mob, is cargo-blacklisted,
+    /// or contains any such entities recursively in its children.
+    /// </summary>
+    /// <param name="uid">The entity to check.</param>
+    /// <returns><c>true</c> if the entity and all its children are sellable; otherwise <c>false</c>.</returns>
     public bool CanSell(EntityUid uid)
     {
         if (_mobStateQuery.HasComponent(uid) || _cargoSellBlacklistQuery.HasComponent(uid))
