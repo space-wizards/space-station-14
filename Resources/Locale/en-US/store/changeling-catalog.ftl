@@ -12,3 +12,15 @@ changeling-catalog-biodegrade-desc = You learn to utilize acid glands within you
 
 changeling-catalog-sting-dna-name = Extract DNA
 changeling-catalog-sting-dna-desc = Learn to utilize your stinger to absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+
+changeling-catalog-blind-sting-name = Blind Sting
+changeling-catalog-blind-sting-desc = Causes temporary blindness in the target. Good to escape or initiate a fight. Can be used on self.
+
+changeling-catalog-cryogenic-sting-name = Cryogenic Sting
+changeling-catalog-cryogenic-sting-desc = Causes movement slowdown in the target. Perfect for keeping prey from running away. Can be used on self.
+
+changeling-catalog-lethal-sting-name = Lethal Sting
+changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Useless in combat, but ensures they will require medical attention. Can be used on self.
+
+changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
+changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
