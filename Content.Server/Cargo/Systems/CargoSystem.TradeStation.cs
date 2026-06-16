@@ -28,14 +28,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
-        _cfg.OnValueChanged(
-            CCVars.LockboxCutEnabled,
-            (enabled) =>
-            {
-                _lockboxCutEnabled = enabled;
-            },
-            true
-        );
+        _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
 
     #region Console
@@ -146,7 +139,7 @@ public sealed partial class CargoSystem
                 pallet.PalletXform.LocalPosition,
                 pallet.PalletXform.LocalRotation
             );
-            _lookup.GetLocalEntitiesIntersecting(gridUid, aabb, entities, LookupFlags.Dynamic);
+            _lookup.GetLocalEntitiesIntersecting(gridUid, aabb, entities, LookupFlags.Dynamic | LookupFlags.Sundries);
         }
         return entities.Distinct();
     }
