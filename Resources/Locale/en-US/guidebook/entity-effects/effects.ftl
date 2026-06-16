@@ -470,8 +470,8 @@ entity-effect-guidebook-plant-attribute =
         [1] Adjusts
         *[other] adjust
     } {$attribute} by {$positive ->
-    [true] [color=red]{$amount}[/color]
-    *[false] [color=green]{$amount}[/color]
+    [false] [color=red]{$amount}[/color]
+    *[true] [color=green]{$amount}[/color]
     }
 
 entity-effect-guidebook-plant-cryoxadone =
@@ -521,3 +521,9 @@ entity-effect-guidebook-plant-mutate-chemicals =
         [1] Mutates
         *[other] mutate
     } a plant to produce {$name}
+
+entity-effect-guidebook-add-reagent-to-bloodstream =
+    { $chance ->
+        [1] Injects
+        *[other] inject
+    } {$quantity} of {$reagent} directly into the bloodstream

@@ -145,7 +145,7 @@
       state: creampie_arachnid
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganArachnid
   abstract: true
   suffix: Arachnid
