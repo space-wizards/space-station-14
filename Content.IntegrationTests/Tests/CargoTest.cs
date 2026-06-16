@@ -10,6 +10,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -36,6 +37,9 @@ public sealed class CargoTest : GameTest
         // This is ignored because it is explicitly intended to be able to sell for more than it costs.
         new("FunCrateGambling"),
     ];
+
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
 
     [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
@@ -290,7 +294,9 @@ public sealed class CargoTest : GameTest
                 // Spawn cargo request console
                 var console = SetupConsole("ComputerCargoOrders", coordinates);
 
+                // Console is anchored and has station
                 Assert.That(_sStation.GetOwningStation(console).HasValue, Is.True, "Console has no owning station");
+                // Station has order database
                 Assert.That(
                     STryComp<StationCargoOrderDatabaseComponent>(
                         _sStation.GetOwningStation(console),
@@ -298,6 +304,12 @@ public sealed class CargoTest : GameTest
                     ),
                     Is.True,
                     "Station has no cargo order database"
+                );
+                // No orders in the database yet
+                Assert.That(
+                    orderDatabase.Orders.Values.Sum(v => v.Count()),
+                    Is.EqualTo(0),
+                    $"Order database did not start empty"
                 );
 
                 // Only get products which this console can request
@@ -310,10 +322,6 @@ public sealed class CargoTest : GameTest
                 {
                     var productProto = SProtoMan.Index(proto);
                     var entProto = SProtoMan.Index(productProto.Product);
-                    // Cargo products which spawn a random entity won't be checked
-                    // Entities which are filled with random entities are still checked
-                    if (entProto.HasComponent<EntityTableSpawnerComponent>(_sCompFact))
-                        continue;
 
                     // Place order
                     SEntMan.EventBus.RaiseLocalEvent(
@@ -357,10 +365,17 @@ public sealed class CargoTest : GameTest
                     var expectedProtos = new List<EntProtoId> { productProto.Product };
                     // Some products spawn inside containers e.g. silver inside parcel
                     if (productProto.Container is { } container)
-                        expectedProtos.Add((EntProtoId)container.Entity.Id);
-
-                    // Distinct() in case product is bigger than one tile
-                    foreach (var entity in spawnedEntities.Distinct())
+                        expectedProtos.Add(container.Entity.Id);
+                    else if (
+                        entProto.TryGetComponent<EntityTableSpawnerComponent>(out var tableSpawnerComponent, _sCompFact)
+                    )
+                    {
+                        expectedProtos = _sTableSystem
+                            .ListSpawns(tableSpawnerComponent.Table)
+                            .Select(x => x.spawn)
+                            .ToList();
+                    }
+                    foreach (var entity in spawnedEntities)
                     {
                         // Get the prototype of the entity on the cargo pad
                         var spawnedPrototype = (EntProtoId)SComp<MetaDataComponent>(entity).EntityPrototype;
@@ -377,7 +392,7 @@ public sealed class CargoTest : GameTest
                         Assert.That(
                             spawnedPrototype,
                             Is.AnyOf(expectedProtos),
-                            $"[{proto}] Spawned entity has wrong prototype: expected '{productProto.Product}', got '{spawnedPrototype}'"
+                            $"[{proto}] Spawned entity has wrong prototype"
                         );
                         SDeleteNow(entity);
                     }
@@ -417,7 +432,7 @@ public sealed class CargoTest : GameTest
         return (console, SComp<CargoOrderConsoleComponent>(console));
     }
 
-    private HashSet<EntityUid> GetEntitiesOnCargoPallets(EntityUid gridOwner)
+    private IEnumerable<EntityUid> GetEntitiesOnCargoPallets(EntityUid gridOwner)
     {
         var entities = new HashSet<EntityUid>();
         foreach (var pallet in _sCargo.GetCargoPallets(gridOwner, BuySellType.Buy))
@@ -429,6 +444,6 @@ public sealed class CargoTest : GameTest
             );
             _sLookup.GetLocalEntitiesIntersecting(gridOwner, aabb, entities, LookupFlags.Dynamic);
         }
-        return entities;
+        return entities.Distinct();
     }
 }
