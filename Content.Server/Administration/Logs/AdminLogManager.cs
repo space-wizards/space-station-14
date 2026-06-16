@@ -504,7 +504,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         for (var i = 0; i < players.Count; i++)
         {
             var player = players[i];
-            outString += $"[cmdlink=\"{EscapeText(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+            outString += $"[cmdlink=\"{FormattedMessage.EscapeStringParameter(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
 
             if (i < players.Count - 1)
                 outString += ", ";
@@ -535,14 +535,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Escape the given text to not allow breakouts of the cmdlink tags.
-    /// </summary>
-    private string EscapeText(string text)
-    {
-        return FormattedMessage.EscapeText(text).Replace("\"", "\\\"").Replace("'", "\\'");
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)
