@@ -82,12 +82,6 @@
     node: metalDoor
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger200 # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors: &OverkillBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger: &DamageTrigger150
         !type:DamageTrigger
         damage: 150
@@ -115,8 +109,6 @@
     node: plasmaDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger200
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
@@ -142,8 +134,6 @@
     node: goldDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger200
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
@@ -169,8 +159,6 @@
     node: silverDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger200
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
@@ -202,8 +190,6 @@
     node: bananiumDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger200
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger150
       behaviors:
       - !type:DoActsBehavior
@@ -238,8 +224,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -274,8 +258,6 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -311,8 +293,6 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -352,8 +332,6 @@
     damageModifierSet: Card
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 30
@@ -390,10 +368,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors: *OverkillBehavior
-    - trigger:
-        !type:DamageTrigger
         damage: 250 # A pickaxe can destroy this in two hits, since the door is rock.
       behaviors: &IronstoneDestructionBehavior
       - !type:DoActsBehavior
@@ -419,10 +393,6 @@
     sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 375

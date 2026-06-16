@@ -186,15 +186,6 @@
     state: solar_panel_glass_broken
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -224,15 +215,6 @@
     state: solar_panel_plasma_broken
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -262,15 +244,6 @@
     state: solar_panel_uranium_broken
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -323,7 +296,7 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
+    - trigger:
         !type:DamageTrigger
         damage: 200
       behaviors:
