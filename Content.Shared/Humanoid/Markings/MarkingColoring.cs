@@ -18,6 +18,7 @@ public sealed partial class MarkingColors
     ///     Layers with their own coloring type and properties
     /// </summary>
     [DataField("layers", true)]
+    [Obsolete("Marking coloration should be defined in the Layers themselves instead.")]
     public Dictionary<string, LayerColoringDefinition>? Layers;
 }
 

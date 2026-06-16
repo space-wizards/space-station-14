@@ -57,11 +57,21 @@ public sealed partial class MarkingPrototype : IPrototype
     /// <summary>
     ///     A list of sprite layers associated with this marking.
     /// </summary>
-    [DataField("sprites", required: true)]
+    [DataField("sprites")]
+    [Obsolete("Use Layers instead.")]
     public List<SpriteSpecifier> Sprites { get; private set; } = default!;
+
+    /// <summary>
+    ///     A list of layer metadata objects associated with this marking.
+    /// </summary>
+    [DataField("layers")]
+    public List<MarkingLayerData> Layers { get; private set; } = default!;
 
     public Marking AsMarking()
     {
+        if (Layers.Count > 0)
+            return new Marking(ID, Layers.Count);
+
         return new Marking(ID, Sprites.Count);
     }
 }
