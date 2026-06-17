@@ -3,61 +3,74 @@
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: beard_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairColonel
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: colonel_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairFu
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: fu_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairMane
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: mane_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairManeSmall
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: manesmall_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairNeck
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: neck_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairTufts
   bodyPart: FacialHair
   canBeDisplaced: false
   groupWhitelist: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/vox_facial_hair.rsi
       state: tuft_s
-
+    name: marking-layer-facial-hair

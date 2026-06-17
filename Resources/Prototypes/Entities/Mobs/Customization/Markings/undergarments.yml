@@ -1,6 +1,3 @@
-# These options are kept very sparse to not put emphasis on nudity, and to provide a base for players to feel comfortable with.
-# It's unlikely more will be added to upstream for cosmetic reasons. 
-
 - type: marking
   id: UndergarmentBottomBoxers
   bodyPart: UndergarmentBottom
@@ -9,9 +6,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: boxers
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: boxers
 
 - type: marking
   id: UndergarmentBottomBriefs
@@ -21,9 +19,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: briefs
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: briefs
 
 - type: marking
   id: UndergarmentBottomSatin
@@ -33,9 +32,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: satin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: satin
 
 - type: marking
   id: UndergarmentTopBra
@@ -45,9 +45,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: classic
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: classic
 
 - type: marking
   id: UndergarmentTopSportsbra
@@ -57,9 +58,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: sports
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: sports
 
 - type: marking
   id: UndergarmentTopBinder
@@ -69,9 +71,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: binder
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: binder
 
 - type: marking
   id: UndergarmentTopTanktop
@@ -81,21 +84,23 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: tanktop
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: tanktop
 
 - type: marking
-  id: UndergarmentBottomBoxersVox # Voxers.
+  id: UndergarmentBottomBoxersVox
   bodyPart: UndergarmentBottom
   groupWhitelist: [Vox]
   coloring:
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: boxers_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: boxers_vox
 
 - type: marking
   id: UndergarmentBottomBriefsVox
@@ -105,9 +110,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: briefs_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: briefs_vox
 
 - type: marking
   id: UndergarmentBottomSatinVox
@@ -117,9 +123,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: satin_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: satin_vox
 
 - type: marking
   id: UndergarmentTopBraVox
@@ -129,9 +136,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: classic_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: classic_vox
 
 - type: marking
   id: UndergarmentTopSportsbraVox
@@ -141,9 +149,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: sports_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: sports_vox
 
 - type: marking
   id: UndergarmentTopBinderVox
@@ -153,9 +162,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: binder_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: binder_vox
 
 - type: marking
   id: UndergarmentTopTanktopVox
@@ -165,9 +175,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: tanktop_vox
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: tanktop_vox
 
 - type: marking
   id: UndergarmentBottomBoxersReptilian
@@ -177,9 +188,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: boxers_reptilian
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: boxers_reptilian
 
 - type: marking
   id: UndergarmentBottomBriefsReptilian
@@ -189,9 +201,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: briefs_reptilian
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: briefs_reptilian
 
 - type: marking
   id: UndergarmentBottomSatinReptilian
@@ -201,9 +214,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: satin_reptilian
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: satin_reptilian
 
 - type: marking
   id: UndergarmentBottomBoxersVulpkanin
@@ -213,9 +227,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: boxers_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: boxers_vulpkanin
 
 - type: marking
   id: UndergarmentBottomBriefsVulpkanin
@@ -225,9 +240,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: briefs_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: briefs_vulpkanin
 
 - type: marking
   id: UndergarmentBottomSatinVulpkanin
@@ -237,9 +253,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: satin_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: satin_vulpkanin
 
 - type: marking
   id: UndergarmentTopBraVulpkanin
@@ -249,9 +266,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: classic_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: classic_vulpkanin
 
 - type: marking
   id: UndergarmentTopSportsbraVulpkanin
@@ -261,9 +279,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: sports_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: sports_vulpkanin
 
 - type: marking
   id: UndergarmentTopBinderVulpkanin
@@ -273,9 +292,10 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: binder_vulpkanin
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: binder_vulpkanin
 
 - type: marking
   id: UndergarmentTopTanktopVulpkanin
@@ -285,7 +305,7 @@
     default:
       type: null
       fallbackColor: '#FFFFFF'
-  sprites:
-  - sprite: Mobs/Customization/undergarments.rsi
-    state: tanktop_vulpkanin
-    
+  layers:
+  - sprite:
+      sprite: Mobs/Customization/undergarments.rsi
+      state: tanktop_vulpkanin
