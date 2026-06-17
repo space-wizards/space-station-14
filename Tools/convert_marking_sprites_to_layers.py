@@ -15,6 +15,10 @@ import yaml
 
     Converted marking files will replace their original file path.
     The old version of the file is saved to a `.bak` file in the same directory.
+
+    Example usage:
+        py convert_marking_sprites_to_layers.py Resources/Prototypes/Entities/Mobs/Customization/Markings/ears.yml
+    (it's a mouthful. sorry)
 """
 
 VALID_EXTENSION = ".yml"
