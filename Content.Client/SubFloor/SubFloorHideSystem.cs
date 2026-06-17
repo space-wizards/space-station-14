@@ -1,5 +1,4 @@
 using Content.Client.UserInterface.Systems.Sandbox;
-using Content.Shared.DrawDepth;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
