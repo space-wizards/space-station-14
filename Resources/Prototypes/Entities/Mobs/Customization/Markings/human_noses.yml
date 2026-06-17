@@ -3,47 +3,42 @@
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/human_noses.rsi
-      state: schnozz
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: schnozz
 
 - type: marking
   id: HumanNoseNubby
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/human_noses.rsi
-      state: nubby
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: nubby
 
 - type: marking
   id: HumanNoseDroop
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/human_noses.rsi
-      state: droop
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: droop
 
 - type: marking
   id: HumanNoseBlob
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/human_noses.rsi
-      state: blob
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: blob
 
 - type: marking
   id: HumanNoseUppie
   bodyPart: Snout
   forcedColoring: true
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/human_noses.rsi
-      state: uppie
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: uppie

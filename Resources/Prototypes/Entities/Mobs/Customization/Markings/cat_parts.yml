@@ -4,20 +4,21 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:CategoryColoring
-        category: Hair
+      type:
+        !type:CategoryColoring
+          category: Hair
       fallbackTypes:
-      - !type:SkinColoring {}
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/cat_parts.rsi
-      state: ears_cat_outer
-  - sprite:
-      sprite: Mobs/Customization/cat_parts.rsi
-      state: ears_cat_inner
-    coloring:
-      type: !type:SimpleColoring
-        color: '#FFFFFF'
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: ears_cat_outer
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: ears_cat_inner
 
 - type: marking
   id: CatTail
@@ -25,13 +26,13 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:CategoryColoring
-        category: Hair
+      type:
+        !type:CategoryColoring
+          category: Hair
       fallbackTypes:
-      - !type:CategoryColoring
-        category: FacialHair
-      - !type:SkinColoring {}
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/cat_parts.rsi
-      state: tail_cat
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+  sprites:
+  - sprite: Mobs/Customization/cat_parts.rsi
+    state: tail_cat

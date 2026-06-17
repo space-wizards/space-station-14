@@ -2,108 +2,96 @@
   id: ScarEyeRight
   bodyPart: Head
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_eye_right
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_right
 
 - type: marking
   id: ScarEyeLeft
   bodyPart: Head
   groupWhitelist: [Human]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_eye_left
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_left
 
 - type: marking
   id: ScarTopSurgeryShort
   bodyPart: Chest
   groupWhitelist: [Human, Reptilian, Moth, Arachnid, Diona]
   sexRestriction: [Male]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_top_surgery_short
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_short
 
 - type: marking
   id: ScarTopSurgeryLong
   bodyPart: Chest
   groupWhitelist: [Human, Reptilian, Moth, Arachnid, Diona]
   sexRestriction: [Male]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_top_surgery_long
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_long
 
 - type: marking
   id: ScarChest
   bodyPart: Chest
   groupWhitelist: [Human, Reptilian, Moth, Arachnid, Diona]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_chest
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_chest
 
 - type: marking
   id: ScarNeck
   bodyPart: Head
   groupWhitelist: [Human, Reptilian]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_neck
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_neck
 
 - type: marking
   id: ScarChestBullets
   bodyPart: Chest
   groupWhitelist: [Human, Reptilian, Moth, Arachnid]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_chest_bullets
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_chest_bullets
 
 - type: marking
   id: ScarStomachBullets
   bodyPart: Chest
   groupWhitelist: [Human, Reptilian, Moth, Arachnid]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_stomach_bullets
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_stomach_bullets
 
 - type: marking
   id: ScarFace1
   bodyPart: Head
   groupWhitelist: [Human, Reptilian, Moth]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_face_1
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_1
 
 - type: marking
   id: ScarFace2
   bodyPart: Head
   groupWhitelist: [Human, Reptilian, Moth]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_face_2
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_2
 
 - type: marking
   id: ScarEyeRightSmall
   bodyPart: Head
   groupWhitelist: [Human, Reptilian]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_eye_right_small
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_right_small
 
 - type: marking
   id: ScarEyeLeftSmall
   bodyPart: Head
   groupWhitelist: [Human, Reptilian]
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/scars.rsi
-      state: scar_eye_left_small
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_eye_left_small

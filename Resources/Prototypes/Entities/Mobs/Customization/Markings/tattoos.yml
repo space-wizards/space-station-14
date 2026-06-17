@@ -4,12 +4,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_hive_chest
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_hive_chest
 
 - type: marking
   id: TattooNightlingChest
@@ -17,12 +17,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_nightling
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_nightling
 
 - type: marking
   id: TattooSilverburghLeftLeg
@@ -30,12 +30,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_silverburgh_l_leg
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_silverburgh_l_leg
 
 - type: marking
   id: TattooSilverburghRightLeg
@@ -43,12 +43,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_silverburgh_r_leg
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_silverburgh_r_leg
 
 - type: marking
   id: TattooCampbellLeftArm
@@ -56,12 +56,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_campbell_l_arm
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_l_arm
 
 - type: marking
   id: TattooCampbellRightArm
@@ -69,12 +69,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_campbell_r_arm
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_r_arm
 
 - type: marking
   id: TattooCampbellLeftLeg
@@ -82,12 +82,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_campbell_l_leg
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_l_leg
 
 - type: marking
   id: TattooCampbellRightLeg
@@ -95,12 +95,12 @@
   groupWhitelist: [Human]
   coloring:
     default:
-      type: !type:TattooColoring {}
-      fallbackColor: '#666666'
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_campbell_r_leg
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_r_leg
 
 - type: marking
   id: TattooEyeRight
@@ -108,12 +108,12 @@
   groupWhitelist: [Human, Slime, Reptilian]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_r
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_r
 
 - type: marking
   id: TattooEyeLeft
@@ -121,12 +121,12 @@
   groupWhitelist: [Human, Slime, Reptilian]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_l
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_l
 
 - type: marking
   id: TattooEyeMothRight
@@ -134,12 +134,12 @@
   groupWhitelist: [Moth]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_moth_r
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_moth_r
 
 - type: marking
   id: TattooEyeMothLeft
@@ -147,12 +147,12 @@
   groupWhitelist: [Moth]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_moth_l
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_moth_l
 
 - type: marking
   id: TattooEyeVulpkaninRight
@@ -160,12 +160,12 @@
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_vulpkanin_r
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_vulpkanin_r
 
 - type: marking
   id: TattooEyeVulpkaninLeft
@@ -173,29 +173,32 @@
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
-      type: !type:EyeColoring
-        negative: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: tattoo_eye_vulpkanin_l
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_vulpkanin_l
 
 - type: marking
   id: TattooEyeshadowUpper
+  # there are a lot of deliberate limitations with this marking that should be pointed out. some of them may seem overly restrictive on the surface, but most of them are fully intentional.
+  # this marking is meant to be supplementary so they are transparent. if you give this 255 alpha it will probably be really distracting looking and make the face very difficult to read
+  # the reason these are also not recolorable is because allowing for the full RGB range makes these look not very good (especially considering they are stackable, and ESPECIALLY considering vox can stack 3 at once.)
+  # this is not a very big issue on humans, but is much more pronounced on vox & other nonhuman species, where the skin being more colorful can make for some truly dreadful meshing with the sprite thats definitely not desired.
+  # some of these limitations could possibly be removed with better control over how the marking can be customized - possibly removing stacking, allowing recoloring & clamping higher-end colors for the eyeshadow, etc.
   bodyPart: Eyes
   groupWhitelist: [Human, Slime, Reptilian]
   forcedColoring: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: eyeshadow_upper
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: eyeshadow_upper
 
 - type: marking
   id: TattooEyeshadowLower
   bodyPart: Eyes
   groupWhitelist: [Human, Slime, Reptilian]
   forcedColoring: true
-  layers:
-  - sprite:
-      sprite: Mobs/Customization/tattoos.rsi
-      state: eyeshadow_lower
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: eyeshadow_lower
