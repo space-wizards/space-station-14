@@ -26,7 +26,7 @@ public sealed partial record MarkingLayerData
     ///     The default coloring that this layer uses.
     /// </summary>
     [DataField]
-    public LayerColoringDefinition Coloring = new();
+    public LayerColoringDefinition? Coloring = null;
 
     /// <summary>
     ///     If this is true, then this layer cannot be recolored in the character editor.
