@@ -30,8 +30,9 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
 
     private List<Marking> ResolveMarkings(List<Marking> markings, Color? skinColor, Color? eyeColor, Dictionary<Enum, MarkingsAppearance> appearances)
     {
-        var ret = new List<Marking>();
+        var resolved = new List<Marking>();
         var forcedColors = new List<(Marking, MarkingPrototype)>();
+        var forcedLayers = new List<(Marking, MarkingPrototype)>();
 
         // This method uses two loops since some marking with constrained colors care about the colors of previous markings.
         // As such we want to ensure we can apply the markings they rely on first.
@@ -40,10 +41,12 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (!proto.ForcedColoring && appearances.GetValueOrDefault(proto.BodyPart)?.MatchSkin != true)
-                ret.Add(marking);
-            else
+            if (proto.ForcedColoring || appearances.GetValueOrDefault(proto.BodyPart)?.MatchSkin == true)
                 forcedColors.Add((marking, proto));
+            else if (proto.HasForcedColorLayer())
+                forcedLayers.Add((marking, proto));
+            else
+                resolved.Add(marking);
         }
 
         foreach (var (marking, prototype) in forcedColors)
@@ -52,20 +55,44 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
                 prototype,
                 skinColor,
                 eyeColor,
-                ret);
+                resolved);
 
             var markingWithColor = new Marking(marking.MarkingId, colors)
             {
                 Forced = marking.Forced,
             };
+
             if (appearances.GetValueOrDefault(prototype.BodyPart) is { MatchSkin: true } appearance && skinColor is { } color)
             {
                 markingWithColor = markingWithColor.WithColor(color.WithAlpha(appearance.LayerAlpha));
             }
-            ret.Add(markingWithColor);
+
+            resolved.Add(markingWithColor);
         }
 
-        return ret;
+        // Correct markings with forced per-layer coloring.
+        foreach (var (marking, prototype) in forcedLayers)
+        {
+            var colors = MarkingColoring.GetMarkingLayerColors(
+                prototype,
+                skinColor,
+                eyeColor,
+                resolved);
+
+            var newColors = new List<Color>(marking.MarkingColors);
+            DebugTools.Assert(prototype.GetColorCount() == prototype.Layers.Count);
+            for (var i = 0; i < prototype.GetColorCount(); i++)
+            {
+                var layer = prototype.Layers[i];
+                if (layer.ForcedColoring)
+                    newColors[i] = colors[i];
+            }
+
+            var markingWithColors = new Marking(marking.MarkingId, newColors);
+            resolved.Add(markingWithColors);
+        }
+
+        return resolved;
     }
 
     protected virtual void SetOrganColor(Entity<VisualOrganComponent> ent, Color color)

@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -74,6 +75,14 @@ public sealed partial class MarkingPrototype : IPrototype
     public bool UsesLayers()
     {
         return Layers != null && Layers.Count > 0;
+    }
+
+    /// <summary>
+    ///     Whether or not this marking prototype has any layers with forced coloration.
+    /// </summary>
+    public bool HasForcedColorLayer()
+    {
+        return UsesLayers() && Layers.Any(layer => layer.ForcedColoring);
     }
 
     /// <summary>
