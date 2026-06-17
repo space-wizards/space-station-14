@@ -104,6 +104,21 @@ def misc_conversion_for_my_convenience(marking: dict):
     if bodyPart == "FacialHair":
         layers[0]["name"] = "marking-layer-facial-hair"
 
+def convert_to_inline_list(marking: dict, field: str):
+    """
+        Convert a data field to use inline list representation, assuming it is a list.
+
+        Parameters:
+            marking (dict): The marking prototype.
+            field (str): The name of the field to convert.
+    """
+
+    dataField = marking.get(field)
+    if not dataField or not isinstance(dataField, list):
+        return
+
+    marking[field] = InlineListRepresentation(dataField)
+
 def convert_prototype(proto: dict) -> dict:
     """
         Convert an individual prototype into the new format, if it is a marking.
@@ -130,10 +145,9 @@ def convert_prototype(proto: dict) -> dict:
     layers: list  = []
     layerColoring: dict = {}
 
-    # Mark group whitelists to render as inline lists
-    groupWhitelist: list = new_marking.get("groupWhitelist")
-    if (groupWhitelist):
-        new_marking["groupWhitelist"] = InlineListRepresentation(groupWhitelist)
+    # Convert certain data fields into inline lists.
+    convert_to_inline_list(new_marking, "groupWhitelist")
+    convert_to_inline_list(new_marking, "sexRestriction")
 
     # Get per-layer coloring if it exists
     coloring: dict = new_marking.get("coloring")
