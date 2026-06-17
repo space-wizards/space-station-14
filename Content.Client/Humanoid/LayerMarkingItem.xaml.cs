@@ -174,14 +174,12 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
         for (var i = 0; i < _markingPrototype.Layers.Count; i++)
         {
             var layer = _markingPrototype.Layers[i];
-            if (layer.ForcedColoring)
-                continue;
-
             var labelText = layer.GetLayerName(_markingPrototype.ID);
             var colorIndex = i;
             var colorChannel = new LayerMarkingColorChannel();
             colorChannel.SetLayerText(labelText);
             colorChannel.SetColor(marking.MarkingColors[i]);
+            colorChannel.Visible = !layer.ForcedColoring; // may be iffy to keep invisible sliders, but whatever
             colorChannel.OnColorChanged += _ =>
             {
                 _markingsModel.TrySetMarkingColor(_organ,
