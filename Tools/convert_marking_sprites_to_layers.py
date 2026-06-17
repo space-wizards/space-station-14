@@ -91,17 +91,17 @@ def misc_conversion_for_my_convenience(marking: dict):
     """
 
     layers: list = marking.get("layers")
-    layerCount = len(layers)
-    if not layers or layerCount <= 0:
+    layer_count = len(layers)
+    if not layers or layer_count <= 0:
         return
 
     # Make the first layer of  all hair markings use a "hair" locale ID
-    bodyPart = marking.get("bodyPart")
-    if bodyPart == "Hair":
+    body_part = marking.get("bodyPart")
+    if body_part == "Hair":
         layers[0]["name"] = "marking-layer-hair"
 
     # Make the first layer of all facial hair markings use a "facial hair" locale ID
-    if bodyPart == "FacialHair":
+    if body_part == "FacialHair":
         layers[0]["name"] = "marking-layer-facial-hair"
 
 def convert_to_inline_list(marking: dict, field: str):
@@ -113,11 +113,11 @@ def convert_to_inline_list(marking: dict, field: str):
             field (str): The name of the field to convert.
     """
 
-    dataField = marking.get(field)
-    if not dataField or not isinstance(dataField, list):
+    datafield = marking.get(field)
+    if not datafield or not isinstance(datafield, list):
         return
 
-    marking[field] = InlineListRepresentation(dataField)
+    marking[field] = InlineListRepresentation(datafield)
 
 def convert_prototype(proto: dict) -> dict:
     """
@@ -143,7 +143,7 @@ def convert_prototype(proto: dict) -> dict:
     new_marking: dict = proto.copy()
     sprites: list = new_marking.pop("sprites")
     layers: list  = []
-    layerColoring: dict = {}
+    layer_coloring: dict = {}
 
     # Convert certain data fields into inline lists.
     convert_to_inline_list(new_marking, "groupWhitelist")
@@ -152,7 +152,7 @@ def convert_prototype(proto: dict) -> dict:
     # Get per-layer coloring if it exists
     coloring: dict = new_marking.get("coloring")
     if coloring and "layers" in coloring:
-        layerColoring = new_marking["coloring"].pop("layers")
+        layer_coloring = new_marking["coloring"].pop("layers")
 
     # Convert all sprites to layer metadata
     for sprite in sprites:
@@ -160,8 +160,8 @@ def convert_prototype(proto: dict) -> dict:
 
         # Convert layer coloring, if it exists
         state: str = sprite.get("state")
-        if state and state in layerColoring:
-            coloring = layerColoring.pop(state)
+        if state and state in layer_coloring:
+            coloring = layer_coloring.pop(state)
             layer["coloring"] = coloring
 
         # Add this layer to our new layer list
@@ -192,8 +192,8 @@ def convert_file(input_file: str):
     """
     add_yaml_representers()
 
-    filePath, ext = os.path.splitext(input_file)
-    backup_path: str = f"{filePath}{ext}.bak"
+    file_path, ext = os.path.splitext(input_file)
+    backup_path: str = f"{file_path}{ext}.bak"
 
     if (ext != VALID_EXTENSION):
         print(f"ERROR: Prototype file is not a {VALID_EXTENSION} file! Path: {input_file}")
