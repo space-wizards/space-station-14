@@ -196,6 +196,7 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
         }
     }
 
+    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
     private void PopulateColorChannelsForOldSprites(Marking marking)
     {
         _colorSliders = new();

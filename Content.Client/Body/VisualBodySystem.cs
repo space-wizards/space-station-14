@@ -244,6 +244,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
+    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
     private void ApplyOldMarkingSprites(Entity<SpriteComponent?> target,
         Marking marking,
         int index,
@@ -314,6 +315,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
+    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
     private void RemoveOldMarkingSprites(Entity<SpriteComponent?> target, MarkingPrototype proto)
     {
         if (!Resolve(target, ref target.Comp))
@@ -361,24 +363,54 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 if (!_marking.TryGetMarking(marking, out var proto))
                     continue;
 
-                if (proto.BodyPart != args.Args.Layer && !(ent.Comp.DependentHidingLayers.TryGetValue(args.Args.Layer, out var dependent) && dependent.Contains(proto.BodyPart)))
+                if (proto.BodyPart != args.Args.Layer
+                    && !(ent.Comp.DependentHidingLayers.TryGetValue(args.Args.Layer, out var dependent)
+                        && dependent.Contains(proto.BodyPart)))
                     continue;
 
-                // TODO
-                foreach (var sprite in proto.Sprites)
-                {
-                    DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
-                    if (sprite is not SpriteSpecifier.Rsi rsi)
-                        continue;
+                var bodyEnt = args.Body.Owner;
+                var visible = args.Args.Visible;
 
-                    var layerId = $"{proto.ID}-{rsi.RsiState}";
-
-                    if (!_sprite.LayerMapTryGet(args.Body.Owner, layerId, out var index, true))
-                        continue;
-
-                    _sprite.LayerSetVisible(args.Body.Owner, index, args.Args.Visible);
-                }
+                if (proto.UsesLayers())
+                    UpdateMarkingLayerVisibility(proto, bodyEnt, visible);
+                else
+                    UpdateMarkingOldSpriteVisibility(proto, bodyEnt, visible);
             }
+        }
+    }
+
+    /// <summary>
+    ///     Update the visibility of a marking prototype.
+    /// </summary>
+    /// <param name="proto">The marking prototype.</param>
+    /// <param name="body">The entity with this marking.</param>
+    /// <param name="visible">The visibility of this marking.</param>
+    private void UpdateMarkingLayerVisibility(MarkingPrototype proto, EntityUid body, bool visible)
+    {
+        foreach (var layer in proto.Layers)
+        {
+            var layerId = layer.GetLayerID(proto.ID);
+
+            if (_sprite.LayerMapTryGet(body, layerId, out var index, logMissing: true))
+                _sprite.LayerSetVisible(body, index, visible);
+        }
+    }
+
+    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
+    private void UpdateMarkingOldSpriteVisibility(MarkingPrototype proto, EntityUid body, bool visible)
+    {
+        foreach (var sprite in proto.Sprites)
+        {
+            DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
+            if (sprite is not SpriteSpecifier.Rsi rsi)
+                continue;
+
+            var layerId = $"{proto.ID}-{rsi.RsiState}";
+
+            if (!_sprite.LayerMapTryGet(body, layerId, out var index, true))
+                continue;
+
+            _sprite.LayerSetVisible(body, index, visible);
         }
     }
 }

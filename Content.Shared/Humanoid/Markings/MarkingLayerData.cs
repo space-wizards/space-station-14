@@ -63,7 +63,11 @@ public sealed partial record MarkingLayerData
         return $"{markingId}-{GetLayerStateId()}";
     }
 
-    private string GetLayerStateId()
+    /// <summary>
+    ///     Get the ID associated with this marking's layer state.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown if the SpriteSpecifier is an unknown type.</exception>
+    public string GetLayerStateId()
     {
         return Sprite switch
         {
