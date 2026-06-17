@@ -1217,10 +1217,12 @@
     reagentId: MilkSheep
     quantityPerUpdate: 25
     growthDelay: 20
+    minHungerThreshold: Peckish
   - type: ExaminableSatiation
     satiations:
       Hunger: HungerExamination
   - type: Wooly
+    minHungerThreshold: Peckish
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
