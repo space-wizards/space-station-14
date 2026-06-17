@@ -44,12 +44,12 @@ public sealed class BlurryVisionSystem : EntitySystem
 
     private void OnGlassesEquipped(Entity<VisionCorrectionComponent> glasses, ref GotEquippedEvent args)
     {
-        UpdateBlurMagnitude(args.Equipee);
+        UpdateBlurMagnitude(args.EquipTarget);
     }
 
     private void OnGlassesUnequipped(Entity<VisionCorrectionComponent> glasses, ref GotUnequippedEvent args)
     {
-        UpdateBlurMagnitude(args.Equipee);
+        UpdateBlurMagnitude(args.EquipTarget);
     }
 }
 

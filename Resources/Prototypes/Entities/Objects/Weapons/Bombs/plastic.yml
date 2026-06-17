@@ -17,6 +17,7 @@
       - Item
       - Spectral # special case for the rev since it can go incorporeal and ghost bomb you. Also, Idk, its like a ghost or something no touchy.
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:

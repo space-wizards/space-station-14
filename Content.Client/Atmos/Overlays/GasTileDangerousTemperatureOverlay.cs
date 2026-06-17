@@ -14,13 +14,13 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 /// Renders a thermal heatmap overlay for gas tiles, used for equipment like thermal glasses.
 /// /// </summary>
-public sealed class GasTileDangerousTemperatureOverlay : Overlay
+public sealed partial class GasTileDangerousTemperatureOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = false;
 
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IClyde _clyde = default!;
 
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;

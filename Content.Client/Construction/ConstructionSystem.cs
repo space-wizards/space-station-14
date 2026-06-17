@@ -22,13 +22,13 @@ namespace Content.Client.Construction
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ConstructionSystem : SharedConstructionSystem
+    public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private ExamineSystemShared _examineSystem = default!;
+        [Dependency] private SharedTransformSystem _transformSystem = default!;
+        [Dependency] private SpriteSystem _sprite = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
@@ -45,6 +45,7 @@ namespace Content.Client.Construction
             WarmupRecipesCache();
 
             UpdatesOutsidePrediction = true;
+            SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
@@ -76,8 +77,16 @@ namespace Content.Client.Construction
             return false;
         }
 
+        private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+        {
+            if (obj.WasModified<ConstructionPrototype>())
+                WarmupRecipesCache();
+        }
+
         private void WarmupRecipesCache()
         {
+            _recipesMetadataCache.Clear();
+
             foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
                 if (!PrototypeManager.Resolve(constructionProto.Graph, out var graphProto))

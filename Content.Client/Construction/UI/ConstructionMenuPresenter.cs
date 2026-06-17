@@ -21,16 +21,16 @@ namespace Content.Client.Construction.UI
     /// model. This is where the bulk of UI work is done, either calling functions in the model to change state, or collecting
     /// data out of the model to *present* to the screen though the UI framework.
     /// </summary>
-    internal sealed class ConstructionMenuPresenter : IDisposable
+    internal sealed partial class ConstructionMenuPresenter : IDisposable
     {
-        [Dependency] private readonly EntityManager _entManager = default!;
-        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IPlacementManager _placementManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private EntityManager _entManager = default!;
+        [Dependency] private IEntitySystemManager _systemManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPlacementManager _placementManager = default!;
+        [Dependency] private IUserInterfaceManager _uiManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private ILogManager _logManager = default!;
 
         private readonly SpriteSystem _spriteSystem;
         private readonly ISawmill _sawmill;

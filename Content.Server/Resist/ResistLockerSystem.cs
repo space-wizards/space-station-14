@@ -12,14 +12,14 @@ using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Resist;
 
-public sealed class ResistLockerSystem : EntitySystem
+public sealed partial class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly WeldableSystem _weldable = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private LockSystem _lockSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private WeldableSystem _weldable = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {

@@ -35,19 +35,19 @@ public sealed class AbsorbentTest : GameTest
   components:
   - type: Absorbent
     useAbsorberSolution: true
-  - type: SolutionContainerManager
-    solutions:
-      absorbed:
-        maxVol: 100
+  - type: Solution
+    id: absorbed
+    solution:
+      maxVol: 100
 
 - type: entity
   name: {RefillableDummyId}
   id: {RefillableDummyId}
   components:
-  - type: SolutionContainerManager
-    solutions:
-      refillable:
-        maxVol: 200
+  - type: Solution
+    id: refillable
+    solution:
+      maxVol: 200
   - type: RefillableSolution
     solution: refillable
 
@@ -55,10 +55,10 @@ public sealed class AbsorbentTest : GameTest
   name: {SmallRefillableDummyId}
   id: {SmallRefillableDummyId}
   components:
-  - type: SolutionContainerManager
-    solutions:
-      refillable:
-        maxVol: 20
+  - type: Solution
+    id: refillable
+    solution:
+      maxVol: 20
   - type: RefillableSolution
     solution: refillable
 ";

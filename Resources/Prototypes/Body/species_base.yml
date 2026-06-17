@@ -75,10 +75,8 @@
     - RatvarianLanguage
     - PressureImmunity
     - Muted
-    - TemporaryBlindness
     - Pacified
     - Flashed
-    - RadiationProtection
     - Adrenaline
   - type: Identity
   - type: IdExaminable
@@ -216,7 +214,6 @@
     thermalRegulationTemperatureThreshold: 2
   - type: Perishable
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5

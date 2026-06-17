@@ -21,16 +21,16 @@ namespace Content.Server.Delivery;
 /// </summary>
 public sealed partial class DeliverySystem : SharedDeliverySystem
 {
-    [Dependency] private readonly CargoSystem _cargo = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private CargoSystem _cargo = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
+    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
 
     /// <summary>
     /// Default reason to use if the penalization is triggered

@@ -39,48 +39,48 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
-    public sealed class EntryPoint : GameServer
+    public sealed partial class EntryPoint : GameServer
     {
         internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
 
-        [Dependency] private readonly CVarControlManager _cvarCtrl = default!;
-        [Dependency] private readonly ContentLocalizationManager _loc = default!;
-        [Dependency] private readonly ContentNetworkResourceManager _netResMan = default!;
-        [Dependency] private readonly DiscordChatLink _discordChatLink = default!;
-        [Dependency] private readonly DiscordLink _discordLink = default!;
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly GhostKickManager _ghostKick = default!;
-        [Dependency] private readonly IAdminManager _admin = default!;
-        [Dependency] private readonly IAdminLogManager _adminLog = default!;
-        [Dependency] private readonly IAfkManager _afk = default!;
-        [Dependency] private readonly IBanManager _ban = default!;
-        [Dependency] private readonly IChatManager _chatSan = default!;
-        [Dependency] private readonly IChatSanitizationManager _chat = default!;
-        [Dependency] private readonly IComponentFactory _factory = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IConnectionManager _connection = default!;
-        [Dependency] private readonly IEntitySystemManager _entSys = default!;
-        [Dependency] private readonly IGameMapManager _gameMap = default!;
-        [Dependency] private readonly ILogManager _log = default!;
-        [Dependency] private readonly INodeGroupFactory _nodeFactory = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-        [Dependency] private readonly IStatusHost _host = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IWatchlistWebhookManager _watchlistWebhookManager = default!;
-        [Dependency] private readonly JobWhitelistManager _job = default!;
-        [Dependency] private readonly MultiServerKickManager _multiServerKick = default!;
-        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
-        [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
-        [Dependency] private readonly RecipeManager _recipe = default!;
-        [Dependency] private readonly RulesManager _rules = default!;
-        [Dependency] private readonly ServerApi _serverApi = default!;
-        [Dependency] private readonly ServerInfoManager _serverInfo = default!;
-        [Dependency] private readonly ServerUpdateManager _updateManager = default!;
-        [Dependency] private readonly ServerFeedbackManager _feedbackManager = null!;
+        [Dependency] private CVarControlManager _cvarCtrl = default!;
+        [Dependency] private ContentLocalizationManager _loc = default!;
+        [Dependency] private ContentNetworkResourceManager _netResMan = default!;
+        [Dependency] private DiscordChatLink _discordChatLink = default!;
+        [Dependency] private DiscordLink _discordLink = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private GhostKickManager _ghostKick = default!;
+        [Dependency] private IAdminManager _admin = default!;
+        [Dependency] private IAdminLogManager _adminLog = default!;
+        [Dependency] private IAfkManager _afk = default!;
+        [Dependency] private IBanManager _ban = default!;
+        [Dependency] private IChatManager _chatSan = default!;
+        [Dependency] private IChatSanitizationManager _chat = default!;
+        [Dependency] private IComponentFactory _factory = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IConnectionManager _connection = default!;
+        [Dependency] private IEntitySystemManager _entSys = default!;
+        [Dependency] private IGameMapManager _gameMap = default!;
+        [Dependency] private ILogManager _log = default!;
+        [Dependency] private INodeGroupFactory _nodeFactory = default!;
+        [Dependency] private IPrototypeManager _proto = default!;
+        [Dependency] private IResourceManager _res = default!;
+        [Dependency] private IServerDbManager _dbManager = default!;
+        [Dependency] private IServerPreferencesManager _preferences = default!;
+        [Dependency] private IStatusHost _host = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private IWatchlistWebhookManager _watchlistWebhookManager = default!;
+        [Dependency] private JobWhitelistManager _job = default!;
+        [Dependency] private MultiServerKickManager _multiServerKick = default!;
+        [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private RecipeManager _recipe = default!;
+        [Dependency] private RulesManager _rules = default!;
+        [Dependency] private ServerApi _serverApi = default!;
+        [Dependency] private ServerInfoManager _serverInfo = default!;
+        [Dependency] private ServerUpdateManager _updateManager = default!;
+        [Dependency] private ServerFeedbackManager _feedbackManager = null!;
 
         public override void PreInit()
         {
