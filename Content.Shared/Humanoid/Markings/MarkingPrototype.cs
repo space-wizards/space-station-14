@@ -56,33 +56,17 @@ public sealed partial class MarkingPrototype : IPrototype
     public bool CanBeDisplaced { get; private set; } = true;
 
     /// <summary>
-    ///     A list of sprite layers associated with this marking.
+    ///     A list of layers associated with this marking.
     /// </summary>
-    [DataField("_oldSprites")]
-    [Obsolete("Use Layers instead.")]
-    public List<SpriteSpecifier> Sprites { get; private set; } = default!;
-
-    /// <summary>
-    ///     A list of layer metadata objects associated with this marking.
-    /// </summary>
-    [DataField("sprites")]
-    public List<MarkingLayerData> Layers { get; private set; } = default!;
-
-    /// <summary>
-    ///     Whether or not this marking prototype uses the new layer metadata system,
-    ///     as opposed to the old "sprites" list.
-    /// </summary>
-    public bool UsesLayers()
-    {
-        return Layers != null && Layers.Count > 0;
-    }
+    [DataField("sprites", required: true)]
+    public List<MarkingLayerData> Sprites { get; private set; } = default!;
 
     /// <summary>
     ///     Whether or not this marking prototype has any layers with forced coloration.
     /// </summary>
     public bool HasForcedColorLayer()
     {
-        return UsesLayers() && Layers.Any(layer => layer.ForcedColoring);
+        return Sprites.Any(layer => layer.ForcedColoring);
     }
 
     /// <summary>
@@ -90,7 +74,7 @@ public sealed partial class MarkingPrototype : IPrototype
     /// </summary>
     public int GetColorCount()
     {
-        return UsesLayers() ? Layers.Count : Sprites.Count;
+        return Sprites.Count;
     }
 
     public Marking AsMarking()

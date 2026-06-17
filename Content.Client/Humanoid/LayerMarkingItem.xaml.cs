@@ -88,15 +88,9 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
 
     private void UpdateData()
     {
-        var textures = new List<Texture>();
-        if (_markingPrototype.UsesLayers())
-            textures = _markingPrototype.Layers
-                .Select(l => _sprite.Frame0(l.Sprite))
-                .ToList();
-        else
-            textures = _markingPrototype.Sprites
-                .Select(layer => _sprite.Frame0(layer))
-                .ToList();
+        var textures = _markingPrototype.Sprites
+            .Select(l => _sprite.Frame0(l.Sprite))
+            .ToList();
 
         MarkingTexture.Textures = textures;
         SelectButton.Text = Loc.GetString($"marking-{_markingPrototype.ID}");
@@ -158,10 +152,7 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
         if (_markingsModel.GetMarking(_organ, _layer, _markingPrototype.ID) is not { } marking)
             return;
 
-        if (_markingPrototype.UsesLayers())
-            PopulateColorChannelsForLayers(marking);
-        else
-            PopulateColorChannelsForOldSprites(marking);
+        PopulateColorChannelsForLayers(marking);
     }
 
     /// <summary>
@@ -171,47 +162,15 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
     {
         _colorSliders = new();
 
-        for (var i = 0; i < _markingPrototype.Layers.Count; i++)
+        for (var i = 0; i < _markingPrototype.Sprites.Count; i++)
         {
-            var layer = _markingPrototype.Layers[i];
+            var layer = _markingPrototype.Sprites[i];
             var labelText = layer.GetLayerName(_markingPrototype.ID);
             var colorIndex = i;
             var colorChannel = new LayerMarkingColorChannel();
             colorChannel.SetLayerText(labelText);
             colorChannel.SetColor(marking.MarkingColors[i]);
             colorChannel.Visible = !layer.ForcedColoring; // may be iffy to keep invisible sliders, but whatever
-            colorChannel.OnColorChanged += _ =>
-            {
-                _markingsModel.TrySetMarkingColor(_organ,
-                    _layer,
-                    _markingPrototype.ID,
-                    colorIndex,
-                    colorChannel.LayerColor);
-            };
-
-            ColorsContainer.AddChild(colorChannel);
-            _colorSliders.Add(colorChannel.ColorSliders);
-        }
-    }
-
-    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
-    private void PopulateColorChannelsForOldSprites(Marking marking)
-    {
-        _colorSliders = new();
-
-        for (var i = 0; i < _markingPrototype.Sprites.Count; i++)
-        {
-            var labelText = _markingPrototype.Sprites[i] switch
-            {
-                SpriteSpecifier.Rsi rsi => Loc.GetString($"marking-{_markingPrototype.ID}-{rsi.RsiState}"),
-                SpriteSpecifier.Texture texture => Loc.GetString($"marking-{_markingPrototype.ID}-{texture.TexturePath.Filename}"),
-                _ => throw new InvalidOperationException("SpriteSpecifier not of known type"),
-            };
-
-            var colorIndex = i;
-            var colorChannel = new LayerMarkingColorChannel();
-            colorChannel.SetLayerText(labelText);
-            colorChannel.SetColor(marking.MarkingColors[i]);
             colorChannel.OnColorChanged += _ =>
             {
                 _markingsModel.TrySetMarkingColor(_organ,

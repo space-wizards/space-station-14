@@ -35,23 +35,13 @@ public static class MarkingColoring
         List<Marking> otherMarkings
     )
     {
-        var colors = new List<Color>();
         var defaultColor = prototype.Coloring.Default.GetColor(skinColor, eyeColor, otherMarkings);
 
-        if (prototype.UsesLayers())
-            GetColorsForMarkingLayers(prototype,
-                ref colors,
-                skinColor,
-                eyeColor,
-                otherMarkings,
-                defaultColor);
-        else
-            GetColorsForOldSpriteLayers(prototype,
-                ref colors,
-                skinColor,
-                eyeColor,
-                otherMarkings,
-                defaultColor);
+        var colors = GetColorsForMarkingLayers(prototype,
+            skinColor,
+            eyeColor,
+            otherMarkings,
+            defaultColor);
 
         return colors;
     }
@@ -60,23 +50,22 @@ public static class MarkingColoring
     ///     Gets a list of default fallback colors for the layers of a marking prototype.
     /// </summary>
     /// <param name="prototype">The marking prototype.</param>
-    /// <param name="colors">A list of colors to populate.</param>
     /// <param name="skinColor">The skin color of the character.</param>
     /// <param name="eyeColor">The eye color of the character.</param>
     /// <param name="otherMarkings">A list of markings thie character has.</param>
     /// <param name="defaultColor">The universal default color for this marking.</param>
-    private static void GetColorsForMarkingLayers(MarkingPrototype prototype,
-        ref List<Color> colors,
+    private static List<Color> GetColorsForMarkingLayers(MarkingPrototype prototype,
         Color? skinColor,
         Color? eyeColor,
         List<Marking> otherMarkings,
         Color defaultColor)
     {
+        var colors = new List<Color>();
         var layers = prototype.Coloring.Layers;
 
-        for (var i = 0; i < prototype.Layers.Count; i++)
+        for (var i = 0; i < prototype.Sprites.Count; i++)
         {
-            var layer = prototype.Layers[i];
+            var layer = prototype.Sprites[i];
             var layerId = layer.GetLayerStateId();
             var color = defaultColor;
 
@@ -90,44 +79,8 @@ public static class MarkingColoring
 
             colors.Add(color);
         }
-    }
 
-    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
-    private static void GetColorsForOldSpriteLayers(MarkingPrototype prototype,
-        ref List<Color> colors,
-        Color? skinColor,
-        Color? eyeColor,
-        List<Marking> otherMarkings,
-        Color defaultColor)
-    {
-        var layers = prototype.Coloring.Layers;
-
-        for (var i = 0; i < prototype.Sprites.Count; i++)
-        {
-            // Getting layer name
-            string? name = prototype.Sprites[i] switch
-            {
-                SpriteSpecifier.Rsi rsi => rsi.RsiState,
-                SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
-                _ => null
-            };
-            if (name == null)
-            {
-                colors.Add(defaultColor);
-                continue;
-            }
-
-            // All specified layers must be colored separately, all unspecified must depend on default coloring
-            if (layers != null && layers.TryGetValue(name, out var layerColoring))
-            {
-                var marking_color = layerColoring.GetColor(skinColor, eyeColor, otherMarkings);
-                colors.Add(marking_color);
-            }
-            else
-            {
-                colors.Add(defaultColor);
-            }
-        }
+        return colors;
     }
 }
 

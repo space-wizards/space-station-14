@@ -80,10 +80,10 @@ public abstract partial class SharedVisualBodySystem : EntitySystem
                 resolved);
 
             var newColors = new List<Color>(marking.MarkingColors);
-            DebugTools.Assert(prototype.GetColorCount() == prototype.Layers.Count);
+            DebugTools.Assert(prototype.GetColorCount() == prototype.Sprites.Count);
             for (var i = 0; i < prototype.GetColorCount(); i++)
             {
-                var layer = prototype.Layers[i];
+                var layer = prototype.Sprites[i];
                 if (layer.ForcedColoring)
                     newColors[i] = colors[i];
             }

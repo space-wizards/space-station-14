@@ -185,11 +185,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
-
-            if (proto.UsesLayers())
-                ApplyMarkingLayers(target, marking, index, displacement, proto);
-            else
-                ApplyOldMarkingSprites(target, marking, index, displacement, proto);
+            ApplyMarkingLayers(target, marking, index, displacement, proto);
 
             applied.Add(marking);
         }
@@ -213,9 +209,9 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (!Resolve(target, ref target.Comp))
             return;
 
-        for (var i = 0; i < proto.Layers.Count; i++)
+        for (var i = 0; i < proto.Sprites.Count; i++)
         {
-            var layer = proto.Layers[i];
+            var layer = proto.Sprites[i];
             var layerId = layer.GetLayerID(markingId: proto.ID);
             var sprite = layer.Sprite;
             var spriteLayerIndex = index + i + 1;
@@ -244,43 +240,6 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
-    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
-    private void ApplyOldMarkingSprites(Entity<SpriteComponent?> target,
-        Marking marking,
-        int index,
-        DisplacementData? displacement,
-        MarkingPrototype proto)
-    {
-        if (!Resolve(target, ref target.Comp))
-            return;
-
-        for (var i = 0; i < proto.Sprites.Count; i++)
-        {
-            var sprite = proto.Sprites[i];
-
-            DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
-            if (sprite is not SpriteSpecifier.Rsi rsi)
-                continue;
-
-            var layerId = $"{proto.ID}-{rsi.RsiState}";
-
-            if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
-            {
-                var spriteLayer = _sprite.AddLayer(target, sprite, index + i + 1);
-                _sprite.LayerMapSet(target, layerId, spriteLayer);
-                _sprite.LayerSetSprite(target, layerId, rsi);
-            }
-
-            if (marking.MarkingColors is not null && i < marking.MarkingColors.Count)
-                _sprite.LayerSetColor(target, layerId, marking.MarkingColors[i]);
-            else
-                _sprite.LayerSetColor(target, layerId, Color.White);
-
-            if (displacement != null && proto.CanBeDisplaced)
-                _displacement.TryAddDisplacement(displacement, (target, target.Comp), index + i + 1, layerId, out _);
-        }
-    }
-
     private void RemoveMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
     {
         if (!Resolve(target, ref target.Comp))
@@ -291,10 +250,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             if (!_marking.TryGetMarking(marking, out var proto))
                 continue;
 
-            if (proto.UsesLayers())
-                RemoveMarkingLayers(target, proto);
-            else
-                RemoveOldMarkingSprites(target, proto);
+            RemoveMarkingLayers(target, proto);
         }
     }
 
@@ -308,26 +264,9 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (!Resolve(target, ref target.Comp))
             return;
 
-        foreach (var layer in proto.Layers)
+        foreach (var layer in proto.Sprites)
         {
             var layerId = layer.GetLayerID(proto.ID);
-            RemoveMarkingSprite(target, layerId, proto);
-        }
-    }
-
-    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
-    private void RemoveOldMarkingSprites(Entity<SpriteComponent?> target, MarkingPrototype proto)
-    {
-        if (!Resolve(target, ref target.Comp))
-            return;
-
-        foreach (var sprite in proto.Sprites)
-        {
-            DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
-            if (sprite is not SpriteSpecifier.Rsi rsi)
-                continue;
-
-            var layerId = $"{proto.ID}-{rsi.RsiState}";
             RemoveMarkingSprite(target, layerId, proto);
         }
     }
@@ -370,11 +309,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
                 var bodyEnt = args.Body.Owner;
                 var visible = args.Args.Visible;
-
-                if (proto.UsesLayers())
-                    UpdateMarkingLayerVisibility(proto, bodyEnt, visible);
-                else
-                    UpdateMarkingOldSpriteVisibility(proto, bodyEnt, visible);
+                UpdateMarkingLayerVisibility(proto, bodyEnt, visible);
             }
         }
     }
@@ -387,30 +322,12 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
     /// <param name="visible">The visibility of this marking.</param>
     private void UpdateMarkingLayerVisibility(MarkingPrototype proto, EntityUid body, bool visible)
     {
-        foreach (var layer in proto.Layers)
+        foreach (var layer in proto.Sprites)
         {
             var layerId = layer.GetLayerID(proto.ID);
 
             if (_sprite.LayerMapTryGet(body, layerId, out var index, logMissing: true))
                 _sprite.LayerSetVisible(body, index, visible);
-        }
-    }
-
-    [Obsolete("Function exists for the sake of deprecating MarkingPrototype.Sprites. Do not rely on it for future work.")]
-    private void UpdateMarkingOldSpriteVisibility(MarkingPrototype proto, EntityUid body, bool visible)
-    {
-        foreach (var sprite in proto.Sprites)
-        {
-            DebugTools.Assert(sprite is SpriteSpecifier.Rsi);
-            if (sprite is not SpriteSpecifier.Rsi rsi)
-                continue;
-
-            var layerId = $"{proto.ID}-{rsi.RsiState}";
-
-            if (!_sprite.LayerMapTryGet(body, layerId, out var index, true))
-                continue;
-
-            _sprite.LayerSetVisible(body, index, visible);
         }
     }
 }
