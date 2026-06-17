@@ -487,7 +487,7 @@
     speechSounds: SheepSpace
     speechVerb: Sheep
   - type: Vocal
-    sounds:
+    defaultSoundsBySex:
       Female: SheepSpace
       Male: SheepSpace
       Unsexed: SheepSpace

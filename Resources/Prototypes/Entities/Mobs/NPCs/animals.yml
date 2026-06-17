@@ -1227,7 +1227,7 @@
     speechSounds: Sheep
     speechVerb: Sheep
   - type: Vocal
-    sounds:
+    defaultSoundsBySex:
       Female: Sheep
       Male: Sheep
       Unsexed: Sheep
