@@ -58,14 +58,14 @@ public sealed partial class MarkingPrototype : IPrototype
     /// <summary>
     ///     A list of sprite layers associated with this marking.
     /// </summary>
-    [DataField("sprites")]
+    [DataField("_oldSprites")]
     [Obsolete("Use Layers instead.")]
     public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
     /// <summary>
     ///     A list of layer metadata objects associated with this marking.
     /// </summary>
-    [DataField("layers")]
+    [DataField("sprites")]
     public List<MarkingLayerData> Layers { get; private set; } = default!;
 
     /// <summary>

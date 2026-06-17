@@ -6,12 +6,9 @@ import yaml
 """
     What's all this then...???
 
-    This script converts the old format of marking prototypes, in which layers are specified under the "sprites"
-    datafield and per-layer coloring is specified in the "coloring" datafield, to the new format.
-
-    In the new format, "layers" is a field containing a list of layer metadata. This metadata specifies sprite
-    and coloring; it also supports individual locale IDs. This makes it easier to add per-layer properties to
-    markings, which is useful for downstreams.
+    This script converts per-layer marking coloring to be in the "sprites" datafield instead of the "coloring"
+    datafield. It also adds locale names to hair and facial hair automatically.
+    It used to do more than this, but then I made markings more backward-compatible in YML!
 
     Converted marking files will replace their original file path.
     The old version of the file is saved to a `.bak` file in the same directory.
@@ -94,19 +91,19 @@ def misc_conversion_for_my_convenience(marking: dict):
             marking (dict): A marking prototype that has been converted to the new format.
     """
 
-    layers: list = marking.get("layers")
-    layer_count = len(layers)
-    if not layers or layer_count <= 0:
+    sprites: list = marking.get("sprites")
+    sprite_count = len(sprites)
+    if not sprites or sprite_count <= 0:
         return
 
     # Make the first layer of  all hair markings use a "hair" locale ID
     body_part = marking.get("bodyPart")
     if body_part == "Hair":
-        layers[0]["name"] = "marking-layer-hair"
+        sprites[0]["name"] = "marking-layer-hair"
 
     # Make the first layer of all facial hair markings use a "facial hair" locale ID
     if body_part == "FacialHair":
-        layers[0]["name"] = "marking-layer-facial-hair"
+        sprites[0]["name"] = "marking-layer-facial-hair"
 
 def convert_to_inline_list(marking: dict, field: str):
     """
@@ -127,8 +124,8 @@ def convert_prototype(proto: dict) -> dict:
     """
         Convert an individual prototype into the new format, if it is a marking.
 
-        This is done by moving sprites and per-layer coloring settings to layer metadata
-        objects in the "layers" field.
+        This is done by moving per-layer coloring settings to layer metadata
+        objects in the "sprites" field.
 
         Parameters:
             proto (dict): An individual prototype. Not necessarily a marking.
@@ -139,17 +136,15 @@ def convert_prototype(proto: dict) -> dict:
     global prototypes_changed
 
     if ("type" not in proto or proto["type"] != "marking" # Not a marking prototype
-        or "sprites" not in proto # Lacks sprites
-        or "layers" in proto): # Already has layers
+        or "sprites" not in proto): # Lacks sprites
         print(f"Skipping over prototype: {proto.get("id")}")
         return proto
 
     new_marking: dict = proto.copy()
-    sprites: list = new_marking.pop("sprites")
-    layers: list  = []
+    sprites: list = new_marking.get("sprites")
     layer_coloring: dict = {}
 
-    # Convert certain data fields into inline lists.
+    # Convert certain data fields into inline lists for consistency.
     convert_to_inline_list(new_marking, "groupWhitelist")
     convert_to_inline_list(new_marking, "sexRestriction")
 
@@ -158,21 +153,14 @@ def convert_prototype(proto: dict) -> dict:
     if coloring and "layers" in coloring:
         layer_coloring = new_marking["coloring"].pop("layers")
 
-    # Convert all sprites to layer metadata
     for sprite in sprites:
-        layer: dict = { "sprite": sprite }
-
         # Convert layer coloring, if it exists
         state: str = sprite.get("state")
         if state and state in layer_coloring:
             coloring = layer_coloring.pop(state)
-            layer["coloring"] = coloring
+            sprite["coloring"] = coloring
 
-        # Add this layer to our new layer list
-        layers.append(layer)
-
-    # Add "layers" field to prototype
-    new_marking["layers"] = layers
+    # Convert other shit
     misc_conversion_for_my_convenience(new_marking)
 
     prototypes_changed += 1

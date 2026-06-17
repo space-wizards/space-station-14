@@ -13,8 +13,8 @@ public sealed partial record MarkingLayerData
     /// <summary>
     ///     The sprite associated with this marking layer.
     /// </summary>
-    [DataField(required: true)]
-    public SpriteSpecifier Sprite = default!;
+    [IncludeDataField]
+    public SpriteSpecifier.Rsi Sprite = default!;
 
     /// <summary>
     ///     A localization ID for this marking layer.
@@ -69,11 +69,6 @@ public sealed partial record MarkingLayerData
     /// <exception cref="InvalidOperationException">Thrown if the SpriteSpecifier is an unknown type.</exception>
     public string GetLayerStateId()
     {
-        return Sprite switch
-        {
-            SpriteSpecifier.Rsi rsi => rsi.RsiState,
-            SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
-            _ => throw new InvalidOperationException("SpriteSpecifier not of known type"),
-        };
+        return Sprite.RsiState;
     }
 }
