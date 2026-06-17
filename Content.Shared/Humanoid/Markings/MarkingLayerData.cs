@@ -7,7 +7,7 @@ namespace Content.Shared.Humanoid.Markings;
 ///     A representation of properties associated with a single layer of a marking.
 /// </summary>
 [DataDefinition]
-[Serializable, NetSerializable]
+[Serializable]
 public sealed partial record MarkingLayerData
 {
     /// <summary>

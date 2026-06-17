@@ -71,7 +71,10 @@ public sealed partial class MarkingPrototype : IPrototype
     ///     Whether or not this marking prototype uses the new layer metadata system,
     ///     as opposed to the old "sprites" list.
     /// </summary>
-    public bool UsesLayers() => Layers.Count > 0;
+    public bool UsesLayers()
+    {
+        return Layers != null && Layers.Count > 0;
+    }
 
     /// <summary>
     ///     Gets a number of adjustible colors associated with this marking.
