@@ -1,18 +1,20 @@
-using System.Linq;
+﻿using System.Linq;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen;
 
-public sealed partial class RecipeManager
+public sealed partial class RecipeManager : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public List<FoodRecipePrototype> Recipes { get; private set; } = new();
 
-    public void Initialize()
+    public override void Initialize()
     {
+        base.Initialize();
+
         ReloadRecipes();
-        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
