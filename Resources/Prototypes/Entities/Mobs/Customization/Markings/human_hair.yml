@@ -2,1211 +2,1614 @@
   id: HumanHairAfro
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: afro
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: afro
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairAfro2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: afro2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: afro2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBaby
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: baby
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: baby
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBigafro
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bigafro
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bigafro
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairAntenna
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: antenna
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: antenna
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBalding
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: e
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: e
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBedhead
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bedhead
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bedhead
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBedheadv2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bedheadv2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bedheadv2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBedheadv3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bedheadv3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bedheadv3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCube
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cube
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cube
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPulato
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: pulato
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: pulato
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongBedhead
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: long_bedhead
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: long_bedhead
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongBedhead2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: long_bedhead2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: long_bedhead2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFloorlengthBedhead
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: floorlength_bedhead
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: floorlength_bedhead
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBeehive
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: beehive
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: beehive
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBeehivev2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: beehivev2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: beehivev2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBob
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bob
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bob
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBob2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bob2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bob2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBobcut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bobcut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bobcut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBob4
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bob4
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bob4
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBob5
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bob5
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bob5
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBobcurl
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bobcurl
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bobcurl
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBoddicker
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: boddicker
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: boddicker
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBowlcut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bowlcut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bowlcut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBowlcut2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bowlcut2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bowlcut2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBraid
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: braid
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: braid
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBraided
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: braided
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: braided
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBraidfront
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: braidfront
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: braidfront
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBraid2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: braid2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: braid2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHbraid
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: hbraid
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: hbraid
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShortbraid
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shortbraid
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shortbraid
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBraidtail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: braidtail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: braidtail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBunhead2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bunhead2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bunhead2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBun3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bun3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bun3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLargebun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: largebun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: largebun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairManbun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: manbun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: manbun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTightbun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: tightbun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: tightbun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBusiness
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: business
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: business
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBusiness2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: business2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: business2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBusiness3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: business3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: business3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBusiness4
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: business4
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: business4
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBuzzcut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: buzzcut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: buzzcut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCia
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cia
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cia
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicAfro
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicafro
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicafro
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicBigAfro
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicbigafro
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicbigafro
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicBusiness
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicbusiness
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicbusiness
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicCia
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classiccia
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classiccia
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicCornrows2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classiccornrows2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classiccornrows2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicFloorlengthBedhead
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicfloorlength_bedhead
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicfloorlength_bedhead
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicModern
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicmodern
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicmodern
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicMulder
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicmulder
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicmulder
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicWisp
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classicwisp
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classicwisp
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCoffeehouse
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: coffeehouse
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: coffeehouse
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCombover
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: combover
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: combover
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCornrows
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cornrows
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cornrows
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCornrows2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cornrows2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cornrows2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCornrowbun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cornrowbun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cornrowbun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCornrowbraid
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cornrowbraid
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cornrowbraid
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCornrowtail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: cornrowtail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: cornrowtail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCrewcut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: crewcut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: crewcut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCrewcut2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: crewcut2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: crewcut2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCurls
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: curls
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: curls
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairC
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: c
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: c
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDandypompadour
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: dandypompadour
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: dandypompadour
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDevilock
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: devilock
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: devilock
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDoublebun
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: doublebun
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: doublebun
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDoublebunLong
   bodyPart: Hair
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: doublebun_long
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDreads
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: dreads
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: dreads
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDrillruru
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: drillruru
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: drillruru
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairDrillhairextended
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: drillhairextended
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: drillhairextended
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairEmo
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: emo
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: emo
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairEmofringe
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: emofringe
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: emofringe
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairNofade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: nofade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: nofade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHighfade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: highfade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: highfade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairMedfade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: medfade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: medfade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLowfade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: lowfade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: lowfade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBaldfade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: baldfade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: baldfade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFeather
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: feather
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: feather
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFather
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: father
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: father
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSargeant
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sargeant
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sargeant
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFlair
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: flair
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: flair
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBigflattop
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bigflattop
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bigflattop
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFlow
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: f
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: f
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairGelled
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: gelled
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: gelled
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairGentle
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: gentle
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: gentle
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHalfbang
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: halfbang
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: halfbang
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHalfbang2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: halfbang2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: halfbang2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHalfshaved
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: halfshaved
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: halfshaved
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHedgehog
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: hedgehog
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: hedgehog
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHimecut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: himecut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: himecut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHimecut2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: himecut2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: himecut2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShorthime
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shorthime
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shorthime
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHimeup
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: himeup
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: himeup
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHitop
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: hitop
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: hitop
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairJade
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: jade
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: jade
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairJensen
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: jensen
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: jensen
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairJoestar
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: joestar
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: joestar
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairKeanu
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: keanu
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: keanu
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairKusanagi
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: kusanagi
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: kusanagi
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLong
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: long
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: long
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLong2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: long2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: long2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLong3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: long3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: long3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongWithBundles
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longbundled
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longbundled
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongovereye
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longovereye
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longovereye
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLbangs
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: lbangs
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: lbangs
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongemo
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longemo
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longemo
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongfringe
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longfringe
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longfringe
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongsidepart
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longsidepart
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longsidepart
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairMegaeyebrows
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: megaeyebrows
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: megaeyebrows
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairMessy
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: messy
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: messy
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairModern
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: modern
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: modern
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairMohawk
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: d
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: d
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairNitori
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: nitori
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: nitori
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairReversemohawk
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: reversemohawk
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: reversemohawk
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUnshavenMohawk
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: unshaven_mohawk
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: unshaven_mohawk
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairMulder
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: mulder
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: mulder
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairOdango
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: odango
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: odango
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairOmbre
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ombre
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ombre
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairOneshoulder
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: oneshoulder
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: oneshoulder
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShortovereye
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shortovereye
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shortovereye
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairOxton
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: oxton
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: oxton
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairParted
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: parted
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: parted
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPart
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: part
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: part
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairKagami
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: kagami
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: kagami
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPigtails
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: pigtails
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: pigtails
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPigtails2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: pigtails2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: pigtails2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPixie
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: pixie
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: pixie
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPompadour
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: pompadour
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: pompadour
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBigpompadour
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: bigpompadour
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: bigpompadour
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail4
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail4
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail4
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail5
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail5
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail5
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail6
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail6
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail6
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPonytail7
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ponytail7
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ponytail7
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairHighponytail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: highponytail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: highponytail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairStail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: stail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: stail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongstraightponytail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longstraightponytail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longstraightponytail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairCountry
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: country
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: country
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairFringetail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: fringetail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: fringetail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSidetail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sidetail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sidetail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSidetail2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sidetail2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sidetail2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSidetail3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sidetail3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sidetail3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSidetail4
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sidetail4
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sidetail4
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSpikyponytail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: spikyponytail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: spikyponytail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairPoofy
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: poofy
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: poofy
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairQuiff
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: quiff
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: quiff
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairRonin
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: ronin
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: ronin
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShaved
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shaved
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shaved
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShavedpart
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shavedpart
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shavedpart
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShortbangs
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shortbangs
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shortbangs
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairA
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: a
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: a
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShorthair2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shorthair2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shorthair2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShorthair3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shorthair3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shorthair3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairD
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: d
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: d
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairE
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: e
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: e
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairF
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: f
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: f
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShorthairg
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shorthairg
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shorthairg
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHair80s
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: 80s
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: 80s
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairRosa
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: rosa
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: rosa
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairB
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: b
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: b
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSidecut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: sidecut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: sidecut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSkinhead
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: skinhead
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: skinhead
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairProtagonist
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: protagonist
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: protagonist
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSpikey
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: spikey
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: spikey
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSpiky
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: spiky
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: spiky
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSpiky2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: spiky2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: spiky2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSpookyLong
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: spookylong
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: spookylong
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSwept
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: swept
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: swept
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairSwept2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: swept2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: swept2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairBAlt
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: b_alt
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: b_alt
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairThinning
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: thinning
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: thinning
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairThinningfront
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: thinningfront
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: thinningfront
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairThinningrear
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: thinningrear
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: thinningrear
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTopknot
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: topknot
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: topknot
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTressshoulder
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: tressshoulder
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: tressshoulder
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTrimmed
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: trimmed
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: trimmed
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTrimflat
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: trimflat
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: trimflat
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTwintail
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: twintail
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: twintail
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTwoStrands
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: twostrands
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: twostrands
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUndercut
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: undercut
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: undercut
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUndercutleft
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: undercutleft
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: undercutleft
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUndercutright
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: undercutright
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: undercutright
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUnkept
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: unkept
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: unkept
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUpdo
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: updo
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: updo
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairVlong
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: vlong
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: vlong
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongest
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longest
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longest
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongest2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longest2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longest2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairVeryshortovereyealternate
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: veryshortovereyealternate
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: veryshortovereyealternate
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairVlongfringe
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: vlongfringe
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: vlongfringe
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairVolaju
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: volaju
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: volaju
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairWisp
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: wisp
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: wisp
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairUneven
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: uneven
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: uneven
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairTailed
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: tailed
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: tailed
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicLong2
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classiclong2
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classiclong2
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairClassicLong3
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: classiclong3
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: classiclong3
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairShaped
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: shaped
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: shaped
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongBow
   bodyPart: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: longbow
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longbow
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairLongWithBangs
   bodyPart: Hair
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longwithbangs
+    name: marking-layer-hair
+
 - type: marking
   id: HumanHairOverEyePigtail
   bodyPart: Hair
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: overeyepigtail
+    name: marking-layer-hair

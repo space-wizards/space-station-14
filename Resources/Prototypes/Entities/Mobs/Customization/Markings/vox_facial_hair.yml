@@ -4,8 +4,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: beard_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: beard_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairColonel
@@ -13,8 +14,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: colonel_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: colonel_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairFu
@@ -22,8 +24,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: fu_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: fu_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairMane
@@ -31,8 +34,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: mane_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: mane_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairManeSmall
@@ -40,8 +44,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: manesmall_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: manesmall_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairNeck
@@ -49,8 +54,9 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: neck_s
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: neck_s
+    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairTufts
@@ -58,6 +64,6 @@
   canBeDisplaced: false
   groupWhitelist: [Vox]
   sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: tuft_s
-
+  - sprite: Mobs/Customization/vox_facial_hair.rsi
+    state: tuft_s
+    name: marking-layer-facial-hair
