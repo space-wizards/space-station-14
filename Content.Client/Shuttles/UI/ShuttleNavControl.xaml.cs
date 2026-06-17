@@ -220,12 +220,12 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 // Display the coordinates of the center of the grid and its distance from the console.
                 var gridCentre = Vector2.Transform(gridBody.LocalCenter, curGridToView);
-                var gridCenterMapCoords = _transform.ToMapCoordinates(new EntityCoordinates(gUid, gridBody.LocalCenter)).Position;
+                var gridCenterMapPos = _transform.ToWorldPosition(new EntityCoordinates(gUid, gridBody.LocalCenter));
 
-                var gridDistance = (gridCenterMapCoords - mapPos.Position).Length();
+                var gridDistance = (gridCenterMapPos - mapPos.Position).Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
                     ("distance", $"{gridDistance:0.0}"));
-                var coordsText = $"({gridCenterMapCoords.X:0.0}, {gridCenterMapCoords.Y:0.0})";
+                var coordsText = $"({gridCenterMapPos.X:0.0}, {gridCenterMapPos.Y:0.0})";
 
                 // yes 1.0 scale is intended here.
                 var labelDimensions = handle.GetDimensions(Font, labelText, 1f);
