@@ -14,7 +14,6 @@
     Cold: 0.8
     Shock: 0.8
     Caustic: 0.8
-    Structural: 0.6
   flatReductions:
     Blunt: 8
     Slash: 8
@@ -32,7 +31,6 @@
     Blunt: 0.6
     Slash: 0.6
     Piercing: 0.6
-    Structural: 0.8
   flatReductions:
     Blunt: 8
     Slash: 8
@@ -118,22 +116,25 @@
     Slash: 6
     Heat: 8
     Caustic: 6
+    Structural: 4
 
-# Halfway between plasma glass and steel.
+# Halfway between reinforced glass and plasma.
 - type: damageModifierSet
   id: GlassReinforcedPlasmaMod
   coefficients:
-    Blunt: 0.9
+    Blunt: 0.8
     Slash: 0.7
-    Piercing: 1.2
-    Heat: 1.1
-    Cold: 1.3
-    Shock: 1.3
-    Caustic: 0.8
+    Piercing: 1.5
+    Heat: 0.8
+    Cold: 1.4
+    Shock: 1.4
+    Caustic: 0.7
   flatReductions:
-    Blunt: 2
+    Blunt: 4
     Slash: 6
-    Caustic: 4
+    Heat: 4
+    Caustic: 6
+    Structural: 4
 
 #endregion
 #region Organic
@@ -257,6 +258,7 @@
     Slash: 8
     Heat: 8
     Caustic: 8
+    Structural: 8
 
 # Resists everything. Space diamonds have solved the original design flaws of Earth diamonds.
 - type: damageModifierSet
