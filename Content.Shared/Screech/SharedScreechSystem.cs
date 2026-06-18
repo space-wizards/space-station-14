@@ -49,8 +49,9 @@ public sealed partial class SharedScreechSystem : EntitySystem
 
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
+        // If it isn't handled it will not have a cooldown due to how actions work
         args.Handled = true;
-        Screech(ent.Owner, 5f, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
+        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
     }
 
     private void OnScreechProtected(Entity<ScreechProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
