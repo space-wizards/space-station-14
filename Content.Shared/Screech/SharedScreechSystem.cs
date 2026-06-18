@@ -25,13 +25,13 @@ public sealed partial class ScreechSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
+
     private HashSet<EntityUid> _entSet = new();
-
-
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ScreechShockWaveComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ScreechProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
         SubscribeLocalEvent<ScreechProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
