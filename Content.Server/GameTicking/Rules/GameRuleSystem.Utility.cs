@@ -7,6 +7,7 @@ using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -82,51 +83,77 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
         out Vector2i tile,
         out EntityUid targetGrid,
-        out EntityCoordinates targetCoords)
+        out EntityCoordinates targetCoords,
+        int numAttempts = 10)
     {
         tile = default;
         targetCoords = EntityCoordinates.Invalid;
         targetGrid = EntityUid.Invalid;
 
         // Weight grid choice by tilecount
-        var weights = new Dictionary<Entity<MapGridComponent>, float>();
+        var totalTiles = 0;
+        var grids = new List<(Entity<MapGridComponent> Entity, List<TileRef> Tiles)>();
         foreach (var possibleTarget in station.Comp.Grids)
         {
             if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
                 continue;
 
-            weights.Add((possibleTarget, comp), _map.GetAllTiles(possibleTarget, comp).Count());
+            // Get the whole list of tiles for the given grid.
+            // Ideally, we would be able to get the total count based on all of the grid's chunks
+            // And then find the Nth available tile within that grid (in some sane order) later.
+            var tileList = _map.GetAllTiles(possibleTarget, comp).ToList();
+
+            // Just to be sure, no empty elements.
+            if (tileList.Count > 0)
+            {
+                grids.Add(((possibleTarget, comp), tileList));
+                totalTiles += tileList.Count();
+            }
         }
 
-        if (weights.Count == 0)
+        if (grids.Count == 0)
         {
             targetGrid = EntityUid.Invalid;
             return false;
         }
 
-        (targetGrid, var gridComp) = RobustRandom.Pick(weights);
-
-        var found = false;
-        var aabb = gridComp.LocalAABB;
-
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < numAttempts; i++)
         {
-            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
-            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
+            // Find random tile within list.
+            var nextTileIndex = RobustRandom.Next(totalTiles);
+            TileRef? randomTileRef = null;
+            MapGridComponent gridComp = default!;
+            var startIndex = 0;
+            foreach (var grid in grids)
+            {
+                // If the index is in this particular grid, find it and remove the tile to prevent selecting it twice.
+                if (startIndex + grid.Tiles.Count > nextTileIndex)
+                {
+                    (targetGrid, gridComp) = grid.Entity;
+                    randomTileRef = grid.Tiles[nextTileIndex - startIndex];
+                    grid.Tiles.RemoveSwap(nextTileIndex - startIndex);
+                    totalTiles--;
+                    break;
+                }
 
-            tile = new Vector2i(randomX, randomY);
-            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
+                startIndex += grid.Tiles.Count;
+            }
+
+            // Out of valid tiles, or the lookup is buggy.
+            if (randomTileRef is not { } tileRef)
+                return false;
+
+            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tileRef.GridIndices)
                 || _atmosphere.IsTileAirBlockedCached(targetGrid, tile))
             {
                 continue;
             }
 
-            found = true;
             targetCoords = _map.GridTileToLocal(targetGrid, gridComp, tile);
-            break;
+            return true;
         }
 
-        return found;
+        return false;
     }
 
     protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
