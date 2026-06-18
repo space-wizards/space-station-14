@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public sealed class GasVentPumpData : IAtmosDeviceData
+    public sealed partial class GasVentPumpDataPayload : AtmosDeviceDataPayload
     {
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
@@ -17,7 +17,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
 
         // Presets for 'dumb' air alarm modes
 
-        public static GasVentPumpData FilterModePreset = new GasVentPumpData
+        public static GasVentPumpDataPayload FilterModePreset = new GasVentPumpDataPayload
         {
             Enabled = true,
             PumpDirection = VentPumpDirection.Releasing,
@@ -27,7 +27,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PressureLockoutOverride = false
         };
 
-        public static GasVentPumpData FillModePreset = new GasVentPumpData
+        public static GasVentPumpDataPayload FillModePreset = new GasVentPumpDataPayload
         {
             Enabled = true,
             Dirty = true,
@@ -38,7 +38,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PressureLockoutOverride = true
         };
 
-        public static GasVentPumpData PanicModePreset = new GasVentPumpData
+        public static GasVentPumpDataPayload PanicModePreset = new GasVentPumpDataPayload
         {
             Enabled = false,
             Dirty = true,
@@ -49,7 +49,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PressureLockoutOverride = false
         };
 
-        public static GasVentPumpData ReplaceModePreset = new GasVentPumpData
+        public static GasVentPumpDataPayload ReplaceModePreset = new GasVentPumpDataPayload
         {
             Enabled = false,
             IgnoreAlarms = true,

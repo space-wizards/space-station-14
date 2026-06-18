@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -5,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.SuitSensor;
 
 [Serializable, NetSerializable]
-public sealed class SuitSensorStatus
+public sealed partial class SuitSensorStatus : NetworkPayload
 {
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {

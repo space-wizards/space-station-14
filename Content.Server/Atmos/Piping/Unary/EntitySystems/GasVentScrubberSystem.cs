@@ -149,23 +149,21 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent args)
         {
             var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn))
                 return;
 
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+            switch (args.Data)
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, component.ToAirAlarmData());
+                case AtmosSyncDevicePayload:
+                    var payload = new AtmosSyncDevicePayload
+                    {
+                        Data = component.ToAirAlarmData(),
+                    };
 
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
-
                     return;
-                case DeviceNetworkConstants.CmdSetState:
-                    if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out GasVentScrubberData? setData))
+                case AtmosDeviceSetDataPayload setPayload:
+                    if (setPayload.Data is not GasVentScrubberDataPayload setData)
                         break;
 
                     var previous = component.ToAirAlarmData();

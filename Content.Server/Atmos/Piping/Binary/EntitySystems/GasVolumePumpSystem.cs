@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
@@ -110,19 +111,21 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnPacketRecv(Entity<GasVolumePumpComponent> ent, ref DeviceNetworkPacketEvent args)
         {
             var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn))
             {
                 return;
             }
 
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+            switch (args.Data)
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasVolumePumpData(component.LastMolesTransferred));
+                case AtmosSyncDevicePayload:
+                    var payload = new AtmosSyncDevicePayload
+                    {
+                        Data = new GasVolumePumpData
+                        {
+                            LastMolesTransferred = component.LastMolesTransferred,
+                        },
+                    };
 
                     _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
                     return;

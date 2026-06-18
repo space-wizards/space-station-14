@@ -52,10 +52,9 @@ public sealed partial class BorgSystem
                 hasBrain,
                 canDisable);
 
-            var payload = new NetworkPayload()
+            var payload = new RoboticsCyborgDataPayload
             {
-                [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
-                [RoboticsConsoleConstants.NET_CYBORG_DATA] = data
+                Data = data,
             };
             _deviceNetwork.QueuePacket(uid, null, payload, device: device);
 
@@ -83,14 +82,15 @@ public sealed partial class BorgSystem
 
     private void OnPacketReceived(Entity<BorgTransponderComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        var payload = args.Data;
-        if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return;
-
-        if (command == RoboticsConsoleConstants.NET_DISABLE_COMMAND)
-            Disable(ent);
-        else if (command == RoboticsConsoleConstants.NET_DESTROY_COMMAND)
-            Destroy(ent.Owner);
+        switch (args.Data)
+        {
+            case RoboticsCyborgDisablePayload:
+                Disable(ent);
+                break;
+            case RoboticsCyborgDestroyPayload:
+                Destroy(ent);
+                break;
+        }
     }
 
     private void Disable(Entity<BorgTransponderComponent, BorgChassisComponent?> ent)

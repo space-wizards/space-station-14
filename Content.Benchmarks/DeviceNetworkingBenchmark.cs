@@ -11,6 +11,7 @@ using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Benchmarks;
 
@@ -71,11 +72,11 @@ public class DeviceNetworkingBenchmark
             _deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
             var testValue = "test";
-            _payload = new NetworkPayload
+            _payload = new TestPayload
             {
-                ["Test"] = testValue,
-                ["testnumber"] = 1,
-                ["testbool"] = true
+                TestString = testValue,
+                TestNumber = 1,
+                TestBool = true,
             };
 
             _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace);
@@ -139,5 +140,17 @@ public class DeviceNetworkingBenchmark
 
         await server.WaitRunTicks(1);
         await server.WaitIdleAsync();
+    }
+
+    private sealed partial class TestPayload : NetworkPayload
+    {
+        [DataField]
+        public string TestString;
+
+        [DataField]
+        public int TestNumber;
+
+        [DataField]
+        public bool TestBool;
     }
 }

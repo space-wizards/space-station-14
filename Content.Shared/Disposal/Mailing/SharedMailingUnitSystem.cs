@@ -1,5 +1,4 @@
 using Content.Shared.Configurable;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -18,15 +17,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     private const string MailTag = "mail";
-
     private const string TagConfigurationKey = "tag";
-
-    private const string NetTag = "tag";
-    private const string NetSrc = "src";
-    private const string NetTarget = "target";
-    private const string NetCmdSent = "mail_sent";
-    private const string NetCmdRequest = "get_mailer_tag";
-    private const string NetCmdResponse = "mailer_tag";
 
     public override void Initialize()
     {
@@ -47,34 +38,33 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
 
     private void OnPacketReceived(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || !_power.IsPowered(ent.Owner))
+        if (!_power.IsPowered(uid))
             return;
 
-        switch (command)
+        switch (args.Data)
         {
-            case NetCmdRequest:
-                SendTagRequestResponse(ent, args, ent.Comp.Tag);
+            case MailRequestTagPayload:
+                SendTagRequestResponse(uid, args, component.Tag);
                 break;
-            case NetCmdResponse when args.Data.TryGetValue(NetTag, out string? tag):
+            case MailTagPayload payload:
                 //Add the received tag request response to the list of targets
-                ent.Comp.TargetList.Add(tag);
-                Dirty(ent);
+                component.TargetList.Add(payload.Tag);
+                Dirty(uid, component);
                 break;
         }
     }
 
     /// <summary>
-    /// Sends the given tag as a response to a <see cref="NetCmdRequest"/> if it's not null
+    /// Sends the given tag as a response to a <see cref="MailRequestTagPayload"/> if it's not null
     /// </summary>
     private void SendTagRequestResponse(EntityUid uid, DeviceNetworkPacketEvent args, string? tag)
     {
         if (tag == null)
             return;
 
-        var payload = new NetworkPayload
+        var payload = new MailTagPayload
         {
-            [DeviceNetworkConstants.Command] = NetCmdResponse,
-            [NetTag] = tag
+            Tag = tag,
         };
 
         _deviceNetwork.QueuePacket(uid, args.Address, payload, args.Frequency);
@@ -106,32 +96,27 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
         if (string.IsNullOrEmpty(ent.Comp.Tag) || string.IsNullOrEmpty(ent.Comp.Target) || !Resolve(ent, ref device))
             return;
 
-        var payload = new NetworkPayload
+        var payload = new MailSendPayload
         {
-            [DeviceNetworkConstants.Command] = NetCmdSent,
-            [NetSrc] = ent.Comp.Tag,
-            [NetTarget] = ent.Comp.Target
+            Tag = component.Tag,
+            Target = component.Target
         };
 
         _deviceNetwork.QueuePacket(ent, null, payload, null, null, device);
     }
 
     /// <summary>
-    /// Clears the units target list and broadcasts a <see cref="NetCmdRequest"/>.
-    /// The target list will then get populated with <see cref="NetCmdResponse"/> responses from all active mailing units on the same grid
+    /// Clears the units target list and broadcasts a <see cref="MailRequestTagPayload"/>.
+    /// The target list will then get populated with <see cref="MailTagPayload"/> responses from all active mailing units on the same grid
     /// </summary>
     private void UpdateTargetList(Entity<MailingUnitComponent> ent, DeviceNetworkComponent? device = null)
     {
         if (!Resolve(ent, ref device, false))
             return;
 
-        var payload = new NetworkPayload
-        {
-            [DeviceNetworkConstants.Command] = NetCmdRequest
-        };
-
-        ent.Comp.TargetList.Clear();
-        _deviceNetwork.QueuePacket(ent, null, payload, null, null, device);
+        var payload = new MailRequestTagPayload();
+        component.TargetList.Clear();
+        _deviceNetworkSystem.QueuePacket(uid, null, payload, null, null, device);
     }
 
     /// <summary>

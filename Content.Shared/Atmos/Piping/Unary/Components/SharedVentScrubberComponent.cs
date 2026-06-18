@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public sealed class GasVentScrubberData : IAtmosDeviceData
+    public sealed partial class GasVentScrubberDataPayload : AtmosDeviceDataPayload
     {
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
@@ -28,50 +28,50 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
 
         // Presets for 'dumb' air alarm modes
 
-        public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
+        public static GasVentScrubberDataPayload FilterModePreset = new GasVentScrubberDataPayload
         {
             Enabled = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
         };
 
-        public static GasVentScrubberData WideFilterModePreset = new GasVentScrubberData
+        public static GasVentScrubberDataPayload WideFilterModePreset = new GasVentScrubberDataPayload
         {
             Enabled = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = true
         };
 
-        public static GasVentScrubberData FillModePreset = new GasVentScrubberData
+        public static GasVentScrubberDataPayload FillModePreset = new GasVentScrubberDataPayload
         {
             Enabled = false,
             Dirty = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             WideNet = false
         };
 
-        public static GasVentScrubberData PanicModePreset = new GasVentScrubberData
+        public static GasVentScrubberDataPayload PanicModePreset = new GasVentScrubberDataPayload
         {
             Enabled = true,
             Dirty = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             WideNet = true
         };
 
-        public static GasVentScrubberData ReplaceModePreset = new GasVentScrubberData
+        public static GasVentScrubberDataPayload ReplaceModePreset = new GasVentScrubberDataPayload
         {
             Enabled = true,
             IgnoreAlarms = true,
             Dirty = true,
-            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             WideNet = false

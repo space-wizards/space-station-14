@@ -20,8 +20,6 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
 
-    public const string InvokedPort = "link_port";
-
     /// <inheritdoc/>
     public override void Initialize()
     {

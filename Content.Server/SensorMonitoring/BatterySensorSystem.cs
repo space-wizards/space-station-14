@@ -1,6 +1,5 @@
-﻿using Content.Server.DeviceNetwork.Systems;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
@@ -9,8 +8,6 @@ namespace Content.Server.SensorMonitoring;
 
 public sealed partial class BatterySensorSystem : EntitySystem
 {
-    public const string DeviceNetworkCommandSyncData = "bat_sync_data";
-
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
 
@@ -21,26 +18,21 @@ public sealed partial class BatterySensorSystem : EntitySystem
 
     private void PacketReceived(Entity<BatterySensorComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
-            return;
-
-        switch (cmd)
+        switch (args.Data)
         {
-            case DeviceNetworkCommandSyncData:
-                var battery = Comp<BatteryComponent>(uid);
-                var currentCharge = _battery.GetCharge((uid, battery));
-                var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
+            case BatterySensorRequestPayload:
+                var battery = Comp<BatteryComponent>(ent);
+                var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
 
-                var payload = new NetworkPayload
+                var payload = new BatterySensorSyncPayload
                 {
-                    [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
-                    [DeviceNetworkCommandSyncData] = new BatterySensorData(
-                        currentCharge,
+                    Data = new BatterySensorData(
+                        battery.CurrentCharge,
                         battery.MaxCharge,
                         netBattery.CurrentReceiving,
                         netBattery.MaxChargeRate,
                         netBattery.CurrentSupply,
-                        netBattery.MaxSupply)
+                        netBattery.MaxSupply),
                 };
 
                 _deviceNetwork.QueuePacket(ent, args.SenderAddress, payload);

@@ -98,7 +98,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         {
             return (uid, comp);
         }
-        
+
         var manager = Spawn();
         var managerComp = AddComp<DeviceNetworkManagerComponent>(manager);
         return (manager, managerComp);

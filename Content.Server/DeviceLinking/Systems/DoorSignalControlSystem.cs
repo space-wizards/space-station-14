@@ -1,9 +1,7 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
@@ -37,8 +35,8 @@ namespace Content.Server.DeviceLinking.Systems
                 return;
 
             var state = SignalState.Momentary;
-            args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
-
+            if (args.Data is LogicStatePayload statePayload)
+                state = statePayload.State;
 
             if (args.Port == component.OpenPort)
             {

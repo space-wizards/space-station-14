@@ -43,7 +43,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegGeneratorComponent"/>
 /// <seealso cref="TegCirculatorComponent"/>
 /// <seealso cref="TegNodeGroup"/>
-/// <seealso cref="TegSensorData"/>
+/// <seealso cref="TegSensorPayload"/>
 public sealed partial class TegSystem : EntitySystem
 {
     /// <summary>
@@ -62,7 +62,7 @@ public sealed partial class TegSystem : EntitySystem
     private const string NodeNameOutlet = "outlet";
 
     /// <summary>
-    /// Device network command to have the TEG output a <see cref="TegSensorData"/> object for its last statistics.
+    /// Device network command to have the TEG output a <see cref="TegSensorPayload"/> object for its last statistics.
     /// </summary>
     public const string DeviceNetworkCommandSyncData = "teg_sync_data";
 
@@ -366,29 +366,22 @@ public sealed partial class TegSystem : EntitySystem
         TegGeneratorComponent component,
         DeviceNetworkPacketEvent args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
-            return;
-
-        switch (cmd)
+        switch (args.Data)
         {
-            case DeviceNetworkCommandSyncData:
+            case TegSensorSyncPayload:
                 var group = GetNodeGroup(uid);
                 if (group is not { IsFullyBuilt: true })
                     return;
 
                 var supplier = Comp<PowerSupplierComponent>(uid);
 
-                var payload = new NetworkPayload
+                var payload = new TegSensorPayload
                 {
-                    [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
-                    [DeviceNetworkCommandSyncData] = new TegSensorData
-                    {
-                        CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Owner),
-                        CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Owner),
-                        LastGeneration = component.LastGeneration,
-                        PowerOutput = supplier.CurrentSupply,
-                        RampPosition = component.RampPosition
-                    }
+                    CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Owner),
+                    CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Owner),
+                    LastGeneration = component.LastGeneration,
+                    PowerOutput = supplier.CurrentSupply,
+                    RampPosition = component.RampPosition,
                 };
 
                 _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload);
@@ -396,11 +389,11 @@ public sealed partial class TegSystem : EntitySystem
         }
     }
 
-    private TegSensorData.Circulator GetCirculatorSensorData(EntityUid circulator)
+    private TegSensorPayload.Circulator GetCirculatorSensorData(EntityUid circulator)
     {
         var (inlet, outlet) = GetPipes(circulator);
 
-        return new TegSensorData.Circulator(
+        return new TegSensorPayload.Circulator(
             inlet.Air.Pressure,
             outlet.Air.Pressure,
             inlet.Air.Temperature,

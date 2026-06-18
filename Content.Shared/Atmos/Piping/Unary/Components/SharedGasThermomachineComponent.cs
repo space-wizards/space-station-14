@@ -1,9 +1,13 @@
-﻿using Robust.Shared.Serialization;
+using Content.Shared.Atmos.Monitor.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
-[Serializable, NetSerializable]
-public sealed record GasThermoMachineData(float EnergyDelta);
+public sealed partial class GasThermoMachineData(float EnergyDelta) : AtmosDeviceDataPayload
+{
+    [DataField]
+    public float EnergyDelta;
+}
 
 [Serializable]
 [NetSerializable]

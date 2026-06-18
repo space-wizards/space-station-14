@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Payloads;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices
 {
@@ -31,10 +32,9 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             if (networkComponent.TransmitFrequency == null)
                 return;
 
-            var payload = new NetworkPayload
+            var payload = new TogglePayload
             {
-                [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
-                [DeviceNetworkConstants.StateEnabled] = component.State,
+                Enabled = component.State,
             };
 
             _deviceNetworkSystem.QueuePacket(uid, null, payload, device: networkComponent);
@@ -49,10 +49,9 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         {
             var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
+            if (args.Data is not TogglePayload toggle) return;
 
-            component.State = enabled;
+            component.State = toggle.Enabled;
         }
     }
 }

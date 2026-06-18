@@ -72,18 +72,12 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
     private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        var payload = args.Data;
-        if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return;
-        if (command != DeviceNetworkConstants.CmdUpdatedState)
+        if (args.Data is not RoboticsCyborgDataPayload dataPayload)
             return;
 
-        if (!payload.TryGetValue(RoboticsConsoleConstants.NET_CYBORG_DATA, out CyborgControlData? data))
-            return;
-
-        var real = data.Value;
-        real.Timeout = _timing.CurTime + ent.Comp.Timeout;
-        ent.Comp.Cyborgs[args.SenderAddress] = real;
+        var data = dataPayload.Data;
+        data.Timeout = _timing.CurTime + ent.Comp.Timeout;
+        ent.Comp.Cyborgs[args.SenderAddress] = data;
 
         UpdateUserInterface(ent);
     }
@@ -104,12 +98,9 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.TryGetValue(args.Address, out var data))
             return;
 
-        var payload = new NetworkPayload()
-        {
-            [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DISABLE_COMMAND
-        };
-
+        var payload = new RoboticsCyborgDisablePayload();
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
+
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):user} disabled borg {data.Name} with address {args.Address}");
     }
 
@@ -128,11 +119,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.Remove(args.Address, out var data))
             return;
 
-        var payload = new NetworkPayload()
-        {
-            [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DESTROY_COMMAND
-        };
-
+        var payload = new RoboticsCyborgDestroyPayload();
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));

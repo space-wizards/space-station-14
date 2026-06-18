@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
 
@@ -20,7 +21,7 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
 
     public void SendBaselineTestEvent(EntityUid uid)
     {
-        var ev = new DeviceNetworkPacketEvent(0, "", 0, "", uid, new NetworkPayload());
+        var ev = new DeviceNetworkPacketEvent(0, "", 0, "", uid, new TestPayload());
         RaiseLocalEvent(uid, ref ev);
     }
 
@@ -29,3 +30,17 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
         LastPayload = args.Data;
     }
 }
+
+public sealed partial class TestPayload : NetworkPayload
+{
+    [DataField]
+    public string TestString;
+
+    [DataField]
+    public int TestNumber;
+
+    [DataField]
+    public bool TestBool;
+}
+
+public sealed partial class SecondTestPayload : NetworkPayload;

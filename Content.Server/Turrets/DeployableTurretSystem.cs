@@ -11,6 +11,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Repairable;
+using Content.Shared.TurretController;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -76,31 +77,26 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
 
     private void OnPacketReceived(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return;
-
         // Received a command to change armament state
-        if (command == DeployableTurretControllerSystem.CmdSetArmamemtState &&
-            args.Data.TryGetValue(command, out int? armamentState))
+        if (args.Data is TurretControllerSetArmamentPayload armamentPayload)
         {
             if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-                _fireModes.TrySetFireMode((ent, batteryWeaponFireModes), armamentState.Value);
+                _fireModes.TrySetFireMode(ent, batteryWeaponFireModes, armamentPayload.ArmamentState);
 
-            TrySetState(ent, armamentState.Value >= 0);
+            TrySetState(ent, armamentPayload.ArmamentState >= 0);
             return;
         }
 
         // Received a command to change access exemptions
-        if (command == DeployableTurretControllerSystem.CmdSetAccessExemptions &&
-            args.Data.TryGetValue(command, out HashSet<ProtoId<AccessLevelPrototype>>? accessExemptions) &&
-            TryComp<TurretTargetSettingsComponent>(ent, out var turretTargetSettings))
+        if (args.Data is TurretControllerSetAccessPayload accessExemptions
+            && TryComp<TurretTargetSettingsComponent>(ent, out var turretTargetSettings))
         {
-            _turretTargetingSettings.SyncAccessLevelExemptions((ent, turretTargetSettings), accessExemptions);
+            _turretTargetingSettings.SyncAccessLevelExemptions((ent, turretTargetSettings), accessExemptions.AccessExemptions);
             return;
         }
 
         // Received a command to update the device network
-        if (command == DeviceNetworkConstants.CmdUpdatedState)
+        if (args.Data is TurretControllerRequestPayload)
         {
             SendStateUpdateToDeviceNetwork(ent);
             return;
@@ -132,12 +128,10 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         if (!TryComp<DeviceNetworkComponent>(ent, out var device))
             return;
 
-        var payload = new NetworkPayload
+        var payload = new TurretStatePayload
         {
-            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdUpdatedState,
-            [DeviceNetworkConstants.CmdUpdatedState] = GetTurretState(ent)
+            State = GetTurretState(ent),
         };
-
         _deviceNetwork.QueuePacket(ent, null, payload, device: device);
     }
 

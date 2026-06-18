@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
@@ -120,20 +121,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent args)
         {
             var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn))
                 return;
 
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+            switch (args.Data)
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasThermoMachineData(component.LastEnergyDelta));
+                case AtmosSyncDevicePayload:
+                    var payload = new AtmosSyncDevicePayload
+                    {
+                        Data = new GasThermoMachineData(component.LastEnergyDelta),
+                    };
 
                     _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
-
                     return;
             }
         }

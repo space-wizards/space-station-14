@@ -1,8 +1,14 @@
-﻿using Robust.Shared.Serialization;
+using Content.Shared.Atmos.Monitor.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components
 {
-    public sealed record GasVolumePumpData(float LastMolesTransferred);
+    [Serializable, NetSerializable]
+    public sealed partial class GasVolumePumpData : AtmosDeviceDataPayload
+    {
+        [DataField]
+        public float LastMolesTransferred;
+    }
 
     [Serializable, NetSerializable]
     public enum GasVolumePumpUiKey : byte
