@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Screech;
 
-public sealed partial class SharedScreechSystem : EntitySystem
+public sealed partial class ScreechSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
