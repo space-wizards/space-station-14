@@ -6,7 +6,6 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
-using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -17,7 +16,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
 
-[TestFixture]
 public sealed class CargoTest : GameTest
 {
     /// <summary>
@@ -25,11 +23,9 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-
+        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
+        new("FunCrateGambling"),
     ];
-
-    [SidedDependency(Side.Server)]
-    private readonly EntityTableSystem _sTableSystem = null!;
 
     [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
@@ -68,7 +64,7 @@ public sealed class CargoTest : GameTest
                             {
                                 ent = SSpawnAtPosition(item.spawn, coordinates);
                                 price += _sPricing.GetPrice(ent) * item.Item2;
-                                SEntMan.DeleteEntity(ent);
+                                SQueueDel(ent);
                             }
                             // Price of container is not included right now
                             Assert.That(
@@ -89,7 +85,7 @@ public sealed class CargoTest : GameTest
                         Is.AtMost(proto.Cost),
                         $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
                     );
-                    SEntMan.DeleteEntity(ent);
+                    SQueueDel(ent);
                 }
             }
         });
@@ -119,7 +115,7 @@ public sealed class CargoTest : GameTest
                             );
                     }
 
-                    SEntMan.DeleteEntity(ent);
+                    SDeleteNow(ent);
                 }
             }
         });
@@ -132,20 +128,10 @@ public sealed class CargoTest : GameTest
         {
             using (Assert.EnterMultipleScope())
             {
-                var protoIds = SProtoMan
-                    .EnumeratePrototypes<EntityPrototype>()
-                    .Where(p => !p.Abstract)
-                    .Where(p => !Pair.IsTestPrototype(p))
-                    .Where(p => p.Components.ContainsKey("StaticPrice"));
+                var protoIds = Pair.GetPrototypesWithComponent<StaticPriceComponent>();
 
-                foreach (var proto in protoIds)
+                foreach (var (proto, staticPriceComp) in protoIds)
                 {
-                    // Sanity check
-                    Assert.That(
-                        proto.TryGetComponent<StaticPriceComponent>(out var staticPriceComp, _sCompFact),
-                        Is.True
-                    );
-
                     if (
                         proto.TryGetComponent<StackPriceComponent>(out var stackPriceComp, _sCompFact)
                         && stackPriceComp.Price > 0
@@ -154,7 +140,7 @@ public sealed class CargoTest : GameTest
                         Assert.That(
                             staticPriceComp.Price,
                             Is.EqualTo(0),
-                            $"The prototype {proto} has a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other."
+                            $"The prototype {proto} has a {nameof(StackPriceComponent)} and {nameof(StaticPriceComponent)} whose values are not compatible with each other."
                         );
                     }
 
@@ -163,7 +149,7 @@ public sealed class CargoTest : GameTest
                         Assert.That(
                             staticPriceComp.Price,
                             Is.EqualTo(0),
-                            $"The prototype {proto} has a StackComponent and StaticPriceComponent whose values are not compatible with each other."
+                            $"The prototype {proto} has a {nameof(StackComponent)} and {nameof(StaticPriceComponent)} whose values are not compatible with each other."
                         );
                     }
                 }
@@ -185,18 +171,11 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            var sliceableEntityProtos = SProtoMan
-                .EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !Pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<ToolRefinableComponent>(out _, _sCompFact))
-                .Select(p => p.ID)
-                .ToList();
+            var sliceableEntityProtos = Pair.GetPrototypesWithComponent<ToolRefinableComponent>();
 
-            foreach (var proto in sliceableEntityProtos)
+            foreach (var (proto, sliceable) in sliceableEntityProtos)
             {
-                var ent = SEntMan.SpawnEntity(proto, coordinates);
-                var sliceable = SEntMan.GetComponent<ToolRefinableComponent>(ent);
+                var ent = SSpawnAtPosition(proto.ID, coordinates);
 
                 // Check each bounty
                 foreach (var bounty in bounties)
@@ -217,16 +196,16 @@ public sealed class CargoTest : GameTest
 
                         foreach (var (sliceProtoId, sliceCount) in sliceCountByProtoId)
                         {
-                            var slice = SEntMan.SpawnEntity(sliceProtoId, coordinates);
+                            var slice = SSpawnAtPosition(sliceProtoId, coordinates);
 
                             // See if the slice also counts for this bounty entry
                             if (!_sCargo.IsValidBountyEntry(slice, entry))
                             {
-                                SEntMan.DeleteEntity(slice);
+                                SDeleteNow(slice);
                                 continue;
                             }
 
-                            SEntMan.DeleteEntity(slice);
+                            SDeleteNow(slice);
 
                             // If for some reason it can only make one slice, that's okay, I guess
                             Assert.That(
@@ -239,27 +218,31 @@ public sealed class CargoTest : GameTest
                     }
                 }
 
-                SEntMan.DeleteEntity(ent);
+                SDeleteNow(ent);
             }
         });
     }
 
+    private const string StackEnt = "StackEnt";
+    private const string StackCount = "5";
+    private const string StackUnitPrice = "20";
+
     [TestPrototypes]
     private const string StackProto =
-        @"
+        @$"
 - type: stack
   id: StackProto
   name: stack-steel
-  spawn: StackEnt
+  spawn: {StackEnt}
 
 - type: entity
-  id: StackEnt
+  id: {StackEnt}
   components:
   - type: StackPrice
-    price: 20
+    price: {StackUnitPrice}
   - type: Stack
     stackType: StackProto
-    count: 5
+    count: {StackCount}
 ";
 
     [Test]
@@ -269,9 +252,9 @@ public sealed class CargoTest : GameTest
         var coordinates = Pair.TestMap!.GridCoords;
         await Server.WaitAssertion(() =>
         {
-            var ent = SSpawnAtPosition("StackEnt", coordinates);
+            var ent = SSpawnAtPosition(StackEnt, coordinates);
             var price = _sPricing.GetPrice(ent);
-            Assert.That(price, Is.EqualTo(100.0));
+            Assert.That(price, Is.EqualTo(double.Parse(StackCount) * double.Parse(StackUnitPrice)));
         });
     }
 
@@ -286,7 +269,7 @@ public sealed class CargoTest : GameTest
                 {
                     Assert.That(
                         proto.TryGetComponent<MobStateComponent>(out _, _sCompFact),
-                        $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!"
+                        $"Found {nameof(MobPriceComponent)} on {proto.ID}, but no {nameof(MobStateComponent)}!"
                     );
                 }
             }
