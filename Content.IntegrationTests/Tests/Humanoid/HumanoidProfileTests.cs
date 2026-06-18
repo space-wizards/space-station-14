@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
@@ -171,5 +171,31 @@ public sealed class HumanoidProfileTests : GameTest
                     Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex), $"Marking {markingProto.ID} has invalid sex restriction! Expected: {profile.Sex} Current: {markingProto.SexRestriction}");
             }
         }
+    }
+
+    [Test]
+    [TestOf(typeof(VocalComponent))]
+    [TestCaseSource(nameof(_species))]
+    [Description("Tests that if a species has corresponding UI entries for their VocalComponent, as well as sex mappings for their voice entry in speciesPrototype")]
+    public async Task EnsureValidVoices(string species)
+    {
+        await Server.WaitIdleAsync();
+
+        await Server.WaitAssertion(() =>
+        {
+            var proto = SProtoMan.Index<SpeciesPrototype>(species);
+
+            // Species like skeletons don't need UI entries
+            if (!proto.RoundStart)
+                return;
+
+            var body = SEntMan.Spawn(proto.Prototype);
+            var vocal = SEntMan.GetComponent<VocalComponent>(body);
+            var voiceProtos = proto.Voices.Keys;
+            var sexedProtos = vocal.DefaultSoundsBySex.Values.ToHashSet();
+
+            Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
+            Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");
+        });
     }
 }
