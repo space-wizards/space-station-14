@@ -7,11 +7,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///    A recipe for space microwaves.
+///    A microwave-based cooking recipe to produce an entity.
 /// </summary>
 [Prototype("microwaveMealRecipe")]
 public sealed partial class FoodRecipePrototype : IPrototype
 {
+    /// <inheritdoc />
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
