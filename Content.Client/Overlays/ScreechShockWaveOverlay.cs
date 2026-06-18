@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Shared.Effects;
+using Content.Shared.Screech;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -37,7 +37,6 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     {
         if (args.Viewport.Eye == null || _xformSystem is null && !_entMan.TrySystem(out _xformSystem))
             return false;
-
         var query = _entMan.EntityQueryEnumerator<ScreechShockWaveComponent, TransformComponent>();
 
         if (query.MoveNext(out var uid, out var distortion, out var xform))
@@ -59,7 +58,9 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
 
             var time = (float)(_timing.CurTime - distortion.InitTime).TotalSeconds;
             _fade = 1f - time / distortion.FadeTime;
-            return time < distortion.FadeTime;
+
+            if (time < distortion.FadeTime)
+                return true;
         }
 
         return false;

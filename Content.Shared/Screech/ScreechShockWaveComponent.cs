@@ -1,9 +1,10 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Effects;
+namespace Content.Shared.Screech;
 
 /// <summary>
 /// This component displays & configures screen-distorting screeches. The associated overlay is <see cref="ScreechShockWaveOverlay"/> on the client side.
+/// This component by itself has no stunning propriety; it is solely for the display of screeches.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
@@ -36,5 +37,6 @@ public sealed partial class ScreechShockWaveComponent : Component
     /// <summary>
     /// Used with FadeTime to properly fade out the effect.
     /// </summary>
+    [AutoNetworkedField]
     public TimeSpan InitTime;
 }

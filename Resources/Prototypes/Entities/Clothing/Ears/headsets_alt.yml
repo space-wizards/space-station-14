@@ -9,6 +9,7 @@
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: ScreechProtection # despite protecting one ear they'll make you immune to screeches :P
 
 - type: entity
   parent: ClothingHeadsetAlt
