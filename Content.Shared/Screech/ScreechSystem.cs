@@ -33,17 +33,17 @@ public sealed partial class ScreechSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ScreechShockWaveComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ScreechProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
-        SubscribeLocalEvent<ScreechProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
+        SubscribeLocalEvent<NoiseProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
+        SubscribeLocalEvent<NoiseProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
         SubscribeLocalEvent<ActionsComponent, ScreechActionEvent>(OnScreechAction);
-        SubscribeLocalEvent<ScreechProtectionComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<NoiseProtectionComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnExamine(Entity<ScreechProtectionComponent> ent, ref ExaminedEvent args)
+    private void OnExamine(Entity<NoiseProtectionComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.ShowInExamine)
+        if (ent.Comp.ExamineQuip.HasValue)
         {
-            args.PushMarkup(Loc.GetString("screech-protection-examine-text"));
+            args.PushMarkup(Loc.GetString(ent.Comp.ExamineQuip.Value));
         }
     }
 
@@ -54,7 +54,7 @@ public sealed partial class ScreechSystem : EntitySystem
         Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
     }
 
-    private void OnScreechProtected(Entity<ScreechProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
+    private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
     {
         args.Heard = false;
     }

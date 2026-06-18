@@ -216,6 +216,6 @@
       sprite: Interface/Actions/changeling2.rsi
       state: screech
   - type: InstantAction
-    event: !type:ScreechActionEvent
+    event: !type:ScreechActionEvent # very much a placeholder until someone gives us nice audio for changelings
       screechSound:
         path: /Audio/Animals/space_dragon_roar.ogg
