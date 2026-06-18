@@ -6,6 +6,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
+using Content.Shared.EntityTable;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
@@ -23,8 +24,7 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling"),
+
     ];
 
     [SidedDependency(Side.Server)]
@@ -35,6 +35,9 @@ public sealed class CargoTest : GameTest
 
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
 
     [Test]
     public async Task NoCargoOrderArbitrage()
@@ -78,7 +81,7 @@ public sealed class CargoTest : GameTest
                     }
 
                     ent = SSpawnAtPosition(proto.Product, coordinates);
-                    price += _sPricing.GetPrice(ent);
+                    price = _sPricing.GetPrice(ent);
 
                     Assert.That(
                         price,
