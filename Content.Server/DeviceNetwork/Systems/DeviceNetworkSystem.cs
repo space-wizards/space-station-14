@@ -7,7 +7,6 @@ using Content.Server.GameTicking.Events;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.Examine;
 using Robust.Server.GameStates;
 
 namespace Content.Server.DeviceNetwork.Systems;
@@ -28,11 +27,11 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<DeviceNetworkManagerComponent, MapInitEvent>(OnManagerInit);
         SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
-        SubscribeLocalEvent<DeviceNetworkComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
@@ -44,26 +43,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         }
 
         SwapQueues(manager.Comp);
-    }
-
-    public override bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
-    {
-        if (!Resolve(uid, ref device, false))
-            return false;
-
-        if (device.Address == string.Empty)
-            return false;
-
-        frequency ??= device.TransmitFrequency;
-
-        if (frequency == null)
-            return false;
-
-        network ??= device.DeviceNetId;
-
-        var manager = EnsureManager();
-        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, uid, data));
-        return true;
     }
 
     /// <summary>
@@ -104,14 +83,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         return (manager, managerComp);
     }
 
-    private void OnExamine(Entity<DeviceNetworkComponent> ent, ref ExaminedEvent args)
-    {
-        if (ent.Comp.ExaminableAddress)
-        {
-            args.PushText(Loc.GetString("device-address-examine-message", ("address", ent.Comp.Address)));
-        }
-    }
-
     /// <summary>
     /// Automatically attempt to connect some devices when a map starts.
     /// </summary>
@@ -120,31 +91,20 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         var device = ent.Comp;
         if (device.ReceiveFrequency == null
             && device.ReceiveFrequencyId != null
-            && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.ReceiveFrequencyId, out var receive))
+            && _protoMan.TryIndex(device.ReceiveFrequencyId, out var receive))
         {
             device.ReceiveFrequency = receive.Frequency;
         }
 
         if (device.TransmitFrequency == null
             && device.TransmitFrequencyId != null
-            && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.TransmitFrequencyId, out var xmit))
+            && _protoMan.TryIndex(device.TransmitFrequencyId, out var xmit))
         {
             device.TransmitFrequency = xmit.Frequency;
         }
 
         if (device.AutoConnect)
             ConnectDevice(ent.AsNullable());
-    }
-
-    private DeviceNet GetNetwork(int netId)
-    {
-        var manager = EnsureManager();
-        if (manager.Comp.Networks.TryGetValue(netId, out var deviceNet))
-            return deviceNet;
-
-        var newDeviceNet = new DeviceNet(netId, _random);
-        manager.Comp.Networks[netId] = newDeviceNet;
-        return newDeviceNet;
     }
 
     /// <summary>
@@ -173,133 +133,21 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     }
 
     /// <summary>
-    /// Connect an entity with a DeviceNetworkComponent. Note that this will re-use an existing address if the
-    /// device already had one configured. If there is a clash, the device cannot join the network.
-    /// </summary>
-    public bool ConnectDevice(Entity<DeviceNetworkComponent?> ent)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return false;
-
-        return GetNetwork(deviceComp.DeviceNetId).Add((uid, deviceComp));
-    }
-
-    /// <summary>
-    /// Disconnect an entity with a DeviceNetworkComponent.
-    /// </summary>
-    public bool DisconnectDevice(Entity<DeviceNetworkComponent?> ent, bool preventAutoConnect = true)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return false;
-
-        // If manually disconnected, don't auto reconnect when a game state is loaded.
-        if (preventAutoConnect)
-            deviceComp.AutoConnect = false;
-
-        return GetNetwork(deviceComp.DeviceNetId).Remove((uid, deviceComp));
-    }
-
-    /// <summary>
-    /// Checks if a device is already connected to its network
-    /// </summary>
-    /// <returns>True if the device was found in the network with its corresponding network id</returns>
-    public bool IsDeviceConnected(Entity<DeviceNetworkComponent?> ent)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return false;
-
-        var manager = EnsureManager();
-        if (!manager.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
-            return false;
-
-        var device = new Device((uid, deviceComp));
-        return deviceNet.Devices.ContainsValue(device);
-    }
-
-    /// <summary>
-    /// Checks if an address exists in the network with the given netId
-    /// </summary>
-    public bool IsAddressPresent(int netId, string? address)
-    {
-        var manager = EnsureManager();
-        if (address == null || !manager.Comp.Networks.TryGetValue(netId, out var network))
-            return false;
-
-        return network.Devices.ContainsKey(address);
-    }
-
-    public void SetReceiveFrequency(Entity<DeviceNetworkComponent?> ent, uint? frequency)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return;
-
-        if (deviceComp.ReceiveFrequency == frequency)
-            return;
-
-        var deviceNet = GetNetwork(deviceComp.DeviceNetId);
-        deviceNet.Remove((uid, deviceComp));
-        deviceComp.ReceiveFrequency = frequency;
-        deviceNet.Add((uid, deviceComp));
-    }
-
-    public void SetTransmitFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
-    {
-        if (Resolve(uid, ref device, false))
-            device.TransmitFrequency = frequency;
-    }
-
-    public void SetReceiveAll(Entity<DeviceNetworkComponent?> ent, bool receiveAll)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return;
-
-        if (deviceComp.ReceiveAll == receiveAll)
-            return;
-
-        var deviceNet = GetNetwork(deviceComp.DeviceNetId);
-        deviceNet.Remove((uid, deviceComp));
-        deviceComp.ReceiveAll = receiveAll;
-        deviceNet.Add((uid, deviceComp));
-    }
-
-    public void SetAddress(Entity<DeviceNetworkComponent?> ent, string address)
-    {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
-            return;
-
-        if (deviceComp.Address == address && deviceComp.CustomAddress)
-            return;
-
-        var deviceNet = GetNetwork(deviceComp.DeviceNetId);
-
-        deviceNet.Remove((uid, deviceComp));
-        deviceComp.CustomAddress = true;
-        deviceComp.Address = address;
-        deviceNet.Add((uid, deviceComp));
-    }
-
-    public void RandomizeAddress(Entity<DeviceNetworkComponent?> ent)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return;
-        var deviceNet = GetNetwork(ent.Comp.DeviceNetId);
-        deviceNet.Remove((ent.Owner, ent.Comp));
-        ent.Comp.CustomAddress = false;
-        ent.Comp.Address = "";
-        deviceNet.Add((ent.Owner, ent.Comp));
-    }
-
-    /// <summary>
     ///     Try to find a device on a network using its address.
     /// </summary>
     private bool TryGetDevice(int netId, string address, out Device device) =>
         GetNetwork(netId).Devices.TryGetValue(address, out device);
+
+    private DeviceNet GetNetwork(int netId)
+    {
+        var manager = EnsureManager();
+        if (manager.Comp.Networks.TryGetValue(netId, out var deviceNet))
+            return deviceNet;
+
+        var newDeviceNet = new DeviceNet(netId, _random);
+        manager.Comp.Networks[netId] = newDeviceNet;
+        return newDeviceNet;
+    }
 
     private void SendPacket(ref DeviceNetworkPacketEvent packet)
     {

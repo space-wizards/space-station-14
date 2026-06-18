@@ -97,7 +97,7 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
             SensorStatus = serverComponent.SensorStatus,
         };
 
-        _deviceNetworkSystem.QueuePacket(uid, null, payload, device: device);
+        _deviceNetworkSystem.QueuePacket((uid, device), null, payload);
     }
 
     /// <summary>

@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         Data = new GasThermoMachineData(component.LastEnergyDelta),
                     };
 
-                    _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+                    _deviceNetwork.QueuePacket((uid, netConn), args.SenderAddress, payload);
                     return;
             }
         }

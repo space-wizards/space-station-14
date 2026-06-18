@@ -53,7 +53,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             if (!TryComp<DeviceNetworkComponent>(turretUid, out var turretDeviceNetwork))
                 continue;
 
-            _deviceNetwork.QueuePacket(ent, turretDeviceNetwork.Address, payload, device: deviceNetwork);
+            _deviceNetwork.QueuePacket((ent.Owner, deviceNetwork), turretDeviceNetwork.Address, payload);
         }
 
         // Remove newly unlinked devices
@@ -101,7 +101,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
 
         _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} to {armamentState}");
 
-        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     protected override void ChangeExemptAccessLevels(
@@ -128,7 +128,7 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $"{ToPrettyString(user)} set {ToPrettyString(ent)} authorization of {exemption} to {enabled}");
         }
 
-        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     private void UpdateUIState(Entity<DeployableTurretControllerComponent> ent)

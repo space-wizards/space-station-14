@@ -230,7 +230,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         Data = component.ToAirAlarmData(),
                     };
 
-                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+                    _deviceNetSystem.QueuePacket((uid, netConn), args.SenderAddress, payload);
 
                     return;
                 case AtmosDeviceSetDataPayload dataPayload:

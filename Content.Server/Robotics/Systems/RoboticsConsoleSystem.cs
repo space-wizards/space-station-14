@@ -99,7 +99,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
             return;
 
         var payload = new RoboticsCyborgDisablePayload();
-        _deviceNetwork.QueuePacket(ent, args.Address, payload);
+        _deviceNetwork.QueuePacket(ent.Owner, args.Address, payload);
 
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):user} disabled borg {data.Name} with address {args.Address}");
     }
@@ -120,7 +120,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
             return;
 
         var payload = new RoboticsCyborgDestroyPayload();
-        _deviceNetwork.QueuePacket(ent, args.Address, payload);
+        _deviceNetwork.QueuePacket(ent.Owner, args.Address, payload);
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);

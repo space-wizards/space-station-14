@@ -21,11 +21,13 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
 
         /// <summary>
         /// Toggles the state of the switch and sents a <see cref="DeviceNetworkConstants.CmdSetState"/> command with the
-        /// <see cref="DeviceNetworkConstants.StateEnabled"/> value set to state.
+        /// <see cref="DeviceNetworkConstants"/> value set to state.
         /// </summary>
-        private void OnInteracted(EntityUid uid, ApcNetSwitchComponent component, InteractHandEvent args)
+        private void OnInteracted(Entity<ApcNetSwitchComponent> ent, ref InteractHandEvent args)
         {
-            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)) return;
+            var (uid, component) = ent;
+            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent))
+                return;
 
             component.State = !component.State;
 
@@ -37,7 +39,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
                 Enabled = component.State,
             };
 
-            _deviceNetworkSystem.QueuePacket(uid, null, payload, device: networkComponent);
+            _deviceNetworkSystem.QueuePacket(uid, null, payload);
 
             args.Handled = true;
         }

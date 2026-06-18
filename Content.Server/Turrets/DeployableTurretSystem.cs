@@ -132,7 +132,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         {
             State = GetTurretState(ent),
         };
-        _deviceNetwork.QueuePacket(ent, null, payload, device: device);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     protected override void SetState(Entity<DeployableTurretComponent> ent, bool enabled, EntityUid? user = null)
