@@ -29,7 +29,7 @@
     damage:
       types:
         Slash: 10
-        Structural: 40
+        Structural: 25
   - type: Item
     size: Ginormous
   - type: Clothing
