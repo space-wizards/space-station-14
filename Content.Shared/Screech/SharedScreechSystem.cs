@@ -49,6 +49,7 @@ public sealed partial class SharedScreechSystem : EntitySystem
 
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
+        args.Handled = true;
         Screech(ent.Owner, 5f, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
     }
 

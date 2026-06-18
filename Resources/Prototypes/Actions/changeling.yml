@@ -210,10 +210,12 @@
   description: We produce a deafening screech that weakens those around us.
   components:
   - type: Action
-    useDelay: 5
+    useDelay: 20 # unbalanced :godo:
     raiseOnAction: false
     icon:
       sprite: Interface/Actions/changeling2.rsi
-      state: biodegrade
+      state: screech
   - type: InstantAction
     event: !type:ScreechActionEvent
+      screechSound:
+        path: /Audio/Animals/space_dragon_roar.ogg
