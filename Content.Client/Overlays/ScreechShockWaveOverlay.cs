@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Screech;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -20,8 +21,15 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _shader;
     private static readonly ProtoId<ShaderPrototype> ScreechPrototype = "ScreechShockWave";
+    /// <summary>
+    /// Contains a cached list of all screech shock wave entities in PVS
+    /// </summary>
+    private List<(EntityUid, InnerShaderInstance)> _cached;
 
     // The hell of shader variables
+    /// <summary>
+    /// Keeps track of the current amount of registered shockwaves
+    /// </summary>
     private int _currentCount = 0;
     /// <summary>
     /// This constant governs the maximum amount of instances. This is mirrored in the shader itself.
@@ -44,19 +52,27 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         _downScales = new float[MaximumInstances];
         _fades = new float[MaximumInstances];
         _times = new float[MaximumInstances];
+        _cached = new List<(EntityUid, InnerShaderInstance)>();
     }
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.Viewport.Eye == null || _xformSystem is null && !_entMan.TrySystem(out _xformSystem))
             return false;
-        var query = _entMan.EntityQueryEnumerator<ScreechShockWaveComponent, TransformComponent>();
         _currentCount = 0;
-        while (query.MoveNext(out var uid, out var distortion, out var xform))
+        foreach (var cached in _cached)
         {
+            // check if its alive (we don't remove it now, it'll be removed later anyway)
+            if (!_entMan.EntityExists(cached.Item1))
+                continue;
+
+            // if it's not on the same map, we don't care
+            var xform = _entMan.GetComponent<TransformComponent>(cached.Item1);
             if (xform.MapID != args.MapId)
                 continue;
 
-            var mapPos = _xformSystem.GetWorldPosition(uid);
+            // shorthand
+            var distortion = cached.Item2;
+            var mapPos = _xformSystem.GetWorldPosition(cached.Item1);
             var tempCoords = args.Viewport.WorldToLocal(mapPos);
 
             // normalized coords, 0 - 1 plane. This is pure hell, we subtract 1 because fragment calculates from the bottom and local goes from the top of the viewport
@@ -87,6 +103,8 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
             }
         }
 
+        // check for removal of instances whose times are elapsed
+        _cached.RemoveAll((k) => (float)(_timing.CurTime - k.Item2.InitTime).TotalSeconds > k.Item2.FadeTime);
         return _currentCount != 0;
     }
 
@@ -116,14 +134,29 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     }
 
     /// <summary>
+    /// Adds this entity to the cache
+    /// </summary>
+    public void Register(Entity<ScreechShockWaveComponent> ent)
+    {
+        _cached.Add((ent.Owner, new InnerShaderInstance() {
+            WaveSpeed = ent.Comp.WaveSpeed,
+            WaveStrength = ent.Comp.WaveStrength,
+            DownScale = ent.Comp.DownScale,
+            FadeTime = ent.Comp.FadeTime,
+            InitTime = ent.Comp.InitTime
+        }));
+    }
+
+    /// <summary>
     /// This struct represents one distorting screech instance
     /// </summary>
     private struct InnerShaderInstance
     {
-        public Vector2 Position;
-        public float WaveStrength;
+        // these fields are a copy of ScreechShockWaveComponent's
         public float WaveSpeed;
+        public float WaveStrength;
         public float DownScale;
-        public float Fade;
+        public float FadeTime;
+        public TimeSpan InitTime;
     }
 }
