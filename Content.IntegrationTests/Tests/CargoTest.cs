@@ -15,7 +15,6 @@ using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -37,9 +36,6 @@ public sealed class CargoTest : GameTest
     ];
 
     [SidedDependency(Side.Server)]
-    private readonly EntityTableSystem _sTableSystem = null!;
-
-    [SidedDependency(Side.Server)]
     private readonly IComponentFactory _sCompFact = null!;
 
     [SidedDependency(Side.Server)]
@@ -47,6 +43,9 @@ public sealed class CargoTest : GameTest
 
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
+
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
 
     [SidedDependency(Side.Server)]
     private readonly MapLoaderSystem _sMapLoader = null!;
