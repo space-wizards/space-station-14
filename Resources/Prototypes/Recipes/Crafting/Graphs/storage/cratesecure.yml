@@ -6,7 +6,7 @@
       edges:
         - to: cratesecure
           steps:
-            - material: Steel # microbalance to plasteel
+            - material: Steel
               amount: 5
             - material: Cable
               amount: 2

@@ -1,6 +1,0 @@
-# Modifiers applied by status effects
-
-- type: damageModifierSet
-  id: PotassiumIodide
-  coefficients:
-    Radiation: 0.1
