@@ -859,7 +859,7 @@ namespace Content.Shared.Preferences
 
             var entityPrototype = prototypeManager.Index(speciesPrototype.Prototype);
 
-            if (!entityPrototype.TryGetComponent<VocalComponent>(out var vocalComponent, entityManager.ComponentFactory))
+            if (!entityPrototype.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var vocalComponent))
                 return null;
 
             return vocalComponent.DefaultSoundsBySex[real];
