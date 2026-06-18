@@ -1,0 +1,396 @@
+# This file contains the standardized health values for structures.
+# Generally, each type of structure has 3 values for weak, mundane, and strong.
+
+- type: entity
+  abstract: true
+  id: BaseStructureHealth
+  components:
+  - type: Destructible
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+
+#region Airlock / Door
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoorFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoorWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoor
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthDoorStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#endregion
+#region Closet / Container / Locker
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainer
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthContainerStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#endregion
+#region Decoration / Furniture
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthFurnitureWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthFurniture
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#endregion
+#region Machine
+
+# Not build from a proper frame. Light fixtures and other small electronics.
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachine
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthMachineMassive
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+#endregion
+#region Wall
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWallFlimsy
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWallWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWall
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWallStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#endregion
+#region Window
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWindowWeak
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWindow
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 90
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  abstract: true
+  parent: BaseStructureHealth
+  id: StructureHealthWindowStrong
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#endregion
