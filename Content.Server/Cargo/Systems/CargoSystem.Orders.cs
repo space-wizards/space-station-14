@@ -180,7 +180,7 @@ namespace Content.Server.Cargo.Systems
 
             _audio.PlayPvs(ApproveSound, uid);
 
-            if (!_emag.CheckFlag(uid, EmagType.Interaction))
+            if (!emagged)
             {
                 order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
 
