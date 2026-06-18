@@ -20,11 +20,12 @@ public sealed partial class ScreechSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
-    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
+
+    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
 
     private HashSet<EntityUid> _entSet = new();
 
