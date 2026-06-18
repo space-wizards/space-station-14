@@ -67,7 +67,7 @@ public sealed class CargoTest : GameTest
                             {
                                 ent = SSpawnAtPosition(item.spawn, coordinates);
                                 price += _sPricing.GetPrice(ent) * item.Item2;
-                                SQueueDel(ent);
+                                SDeleteNow(ent);
                             }
                             // Price of container is not included right now
                             Assert.That(
@@ -88,7 +88,7 @@ public sealed class CargoTest : GameTest
                         Is.AtMost(proto.Cost),
                         $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
                     );
-                    SQueueDel(ent);
+                    SDeleteNow(ent);
                 }
             }
         });
