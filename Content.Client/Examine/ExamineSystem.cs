@@ -385,7 +385,10 @@ namespace Content.Client.Examine
             buttonsHBox.AddChild(clickExamineBox);
             vbox.AddChild(buttonsHBox);
         }
-
+        /// <summary>
+        /// Handler for the OnClick Event of a Verb Button.
+        /// </summary>
+        /// <param name="obj">The event args</param>
         public void VerbButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             if (obj.Button is ExamineButton button)
@@ -395,7 +398,12 @@ namespace Content.Client.Examine
                     CloseTooltip();
             }
         }
-
+        /// <summary>
+        /// Open and fills by query to server an examine menu with the correct tooltip and menu items.
+        /// </summary>
+        /// <param name="entity">The entity examined</param>
+        /// <param name="centeredOnCursor">if the popup should be on the cursor or the entity's screen position</param>
+        /// <param name="userOverride">An optional user object, if null we assume the client's player entity.</param>
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
             var playerEnt = userOverride ?? _playerManager.LocalEntity;
