@@ -322,6 +322,8 @@ namespace Content.Client.Cargo.UI
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
+
+            RightPart.Visible = orderConsole.Mode != CargoOrderConsoleMode.PrintSlip;
         }
     }
 }
