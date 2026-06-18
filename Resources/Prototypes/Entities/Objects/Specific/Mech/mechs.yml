@@ -47,7 +47,7 @@
     damage:
       types:
         Blunt: 25 #thwack
-        Structural: 20
+        Structural: 10
     soundHit:
       collection: MetalThud
   - type: Puller

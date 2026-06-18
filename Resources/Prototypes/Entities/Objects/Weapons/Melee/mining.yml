@@ -25,7 +25,7 @@
     damage:
       types:
         Piercing: 10
-        Structural: 8
+        Structural: 5
   - type: Item
     size: Normal
     shape:
@@ -162,7 +162,7 @@
       types:
         Blunt: 6
         Slash: 2
-        Structural: 10
+        Structural: 5
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying
@@ -258,4 +258,4 @@
       types:
         Blunt: 2
         Slash: 6
-        Structural: 10
+        Structural: 5
