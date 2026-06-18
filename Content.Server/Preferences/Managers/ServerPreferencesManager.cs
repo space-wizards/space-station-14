@@ -111,9 +111,10 @@ namespace Content.Server.Preferences.Managers
                 new Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>();
 
             var species = profile.Species;
-            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
+            if (!_prototypeManager.HasIndex<SpeciesPrototype>(species))
                 species = HumanoidCharacterProfile.DefaultSpecies;
 
+            var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species); // This needs to be deferred in case species is replaced above
             var voice = HumanoidCharacterProfile.GetDefaultSoundsFromPrototype(speciesPrototype, sex, _prototypeManager, _entityManager);
             if (profile.Voice is { } profileVoice)
                 voice = profileVoice;

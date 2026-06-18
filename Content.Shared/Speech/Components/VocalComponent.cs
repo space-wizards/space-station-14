@@ -14,13 +14,6 @@ namespace Content.Shared.Speech.Components;
 public sealed partial class VocalComponent : Component
 {
     /// <summary>
-    ///     List of user selectable voices in the menu, with associated Loc.
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId>? Voices;
-
-    /// <summary>
     ///     Emote sounds prototype id for each sex (not gender).
     ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>

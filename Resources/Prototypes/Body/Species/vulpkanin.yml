@@ -162,9 +162,6 @@
   - type: TypingIndicator
     proto: vulpkanin
   - type: Vocal
-    voices:
-      MaleVulpkanin: humanoid-profile-editor-voice-masculine
-      FemaleVulpkanin: humanoid-profile-editor-voice-feminine
     defaultSoundsBySex:
       Male: MaleVulpkanin
       Female: FemaleVulpkanin

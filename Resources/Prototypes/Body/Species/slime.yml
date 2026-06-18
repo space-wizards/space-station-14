@@ -108,9 +108,6 @@
   - type: TypingIndicator
     proto: slime
   - type: Vocal
-    voices:
-      MaleSlime: humanoid-profile-editor-voice-masculine
-      FemaleSlime: humanoid-profile-editor-voice-feminine
     defaultSoundsBySex:
       Male: MaleSlime
       Female: FemaleSlime

@@ -40,7 +40,6 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.Voices = source.Comp.Voices;
         targetComp.DefaultSoundsBySex = source.Comp.DefaultSoundsBySex;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
@@ -115,9 +114,6 @@ public sealed partial class VocalSystem : EntitySystem
 
     private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        if (component.Voices == null && component.DefaultSoundsBySex == null)
-            return;
-
         var humanoid = CompOrNull<HumanoidProfileComponent>(uid);
 
         var sex = humanoid?.Sex ?? Sex.Unsexed;

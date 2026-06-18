@@ -9,3 +9,5 @@
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
   lastNames: NamesMothLast
+  voices:
+    UnisexMoth: humanoid-profile-editor-voice-neutral

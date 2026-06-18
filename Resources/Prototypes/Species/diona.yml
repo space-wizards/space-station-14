@@ -12,3 +12,5 @@
   naming: TheFirstofLast
   sexes:
   - Unsexed
+  voices:
+    UnisexDiona: humanoid-profile-editor-voice-neutral

@@ -59,9 +59,6 @@
         layer:
         - MobLayer
   - type: Vocal
-    voices:
-      UnisexDwarf: humanoid-profile-editor-voice-masculine
-      FemaleDwarf: humanoid-profile-editor-voice-feminine
     defaultSoundsBySex:
       Male: UnisexDwarf
       Female: FemaleDwarf

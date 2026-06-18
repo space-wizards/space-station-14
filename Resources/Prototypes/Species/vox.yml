@@ -11,3 +11,5 @@
   naming: First
   sexes:
   - Unsexed
+  voices:
+    UnisexVox: humanoid-profile-editor-voice-neutral

@@ -136,9 +136,6 @@
     speechSounds: Alto
   - type: DamageForceSay
   - type: Vocal
-    voices:
-      MaleHuman: humanoid-profile-editor-voice-masculine
-      FemaleHuman: humanoid-profile-editor-voice-feminine
     defaultSoundsBySex:
       Male: MaleHuman
       Female: FemaleHuman

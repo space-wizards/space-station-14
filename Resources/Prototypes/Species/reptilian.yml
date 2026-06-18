@@ -9,3 +9,6 @@
   maleFirstNames: NamesReptilianMale
   femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
+  voices:
+    MaleReptilian: humanoid-profile-editor-voice-masculine
+    FemaleReptilian: humanoid-profile-editor-voice-feminine

@@ -5,3 +5,6 @@
   prototype: MobDwarf
   dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
+  voices:
+    UnisexDwarf: humanoid-profile-editor-voice-masculine
+    FemaleDwarf: humanoid-profile-editor-voice-feminine

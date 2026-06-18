@@ -1,4 +1,5 @@
 using Content.Shared.Body;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
@@ -80,6 +81,16 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     [DataField]
     public List<Sex> Sexes { get; private set; } = new() { Sex.Male, Sex.Female };
+
+    /// <summary>
+    ///     List of user selectable voices in the menu, with associated Loc.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId> Voices = new()
+    {
+        {"MaleHuman", "humanoid-profile-editor-voice-masculine"},
+        {"FemaleHuman", "humanoid-profile-editor-voice-feminine"},
+    };
 
     /// <summary>
     ///     Characters younger than this are too young to be hired by Nanotrasen.

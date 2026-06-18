@@ -136,9 +136,6 @@
       sprite: Effects/creampie.rsi
       state: creampie_lizard
   - type: Vocal
-    voices:
-      MaleReptilian: humanoid-profile-editor-voice-masculine
-      FemaleReptilian: humanoid-profile-editor-voice-feminine
     defaultSoundsBySex:
       Male: MaleReptilian
       Female: FemaleReptilian

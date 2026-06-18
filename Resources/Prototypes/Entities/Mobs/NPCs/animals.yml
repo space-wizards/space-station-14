@@ -580,8 +580,6 @@
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
-    voices:
-      UnisexMoth: humanoid-profile-editor-voice-neutral
     defaultSoundsBySex:
       Male: UnisexMoth
       Female: UnisexMoth

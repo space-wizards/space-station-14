@@ -514,7 +514,7 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voices = GetVocalFromSpecies(Species, prototypeManager, entityManager)?.Voices?.Keys.ToList() ?? [];
+            var voices = speciesPrototype.Voices.Keys.ToList();
 
             var voice = Voice;
             if (voice is not { } real || !voices.Contains(real) && !prototypeManager.HasIndex(voice))
@@ -845,26 +845,11 @@ namespace Content.Shared.Preferences
             return profile;
         }
 
-        // These exist solely because it needs like 4 operations to do one thing
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromSpecies(ProtoId<SpeciesPrototype>? speciesId,
-            Sex? sex,
-            IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
-        {
-            prototypeManager.TryIndex(speciesId, out var prototype);
-            return GetDefaultSoundsFromPrototype(prototype, sex, prototypeManager, entityManager);
-        }
-
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromPrototype(SpeciesPrototype? speciesPrototype,
-            Sex? sex,
-            IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
-        {
-            var vocalComponent = GetVocalFromPrototype(speciesPrototype, prototypeManager, entityManager);
-            return GetDefaultSoundsFromVocal(vocalComponent, sex, prototypeManager, entityManager);
-        }
-
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromVocal(VocalComponent? vocalComponent,
+        /// <summary>
+        /// Helps fetch default sounds when we have the species prototype
+        /// </summary>
+        /// <returns></returns>
+        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromPrototype(SpeciesPrototype speciesPrototype,
             Sex? sex,
             IPrototypeManager prototypeManager,
             IEntityManager entityManager)
@@ -872,26 +857,12 @@ namespace Content.Shared.Preferences
             if (sex is not { } real)
                 return null;
 
-            return vocalComponent?.DefaultSoundsBySex[real];
-        }
+            var entityPrototype = prototypeManager.Index(speciesPrototype.Prototype);
 
-        public static VocalComponent? GetVocalFromSpecies(ProtoId<SpeciesPrototype>? speciesId,
-            IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
-        {
-            prototypeManager.TryIndex(speciesId, out var speciesPrototype);
-            return GetVocalFromPrototype(speciesPrototype, prototypeManager, entityManager);
-        }
+            if (!entityPrototype.TryGetComponent<VocalComponent>(out var vocalComponent, entityManager.ComponentFactory))
+                return null;
 
-        public static VocalComponent? GetVocalFromPrototype(SpeciesPrototype? speciesPrototype,
-            IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
-        {
-            prototypeManager.TryIndex(speciesPrototype?.Prototype, out var entityPrototype);
-            VocalComponent? vocalComponent = null;
-            entityPrototype?.Components.TryGetComponent(entityManager.ComponentFactory,
-                out vocalComponent);
-            return vocalComponent;
+            return vocalComponent.DefaultSoundsBySex[real];
         }
     }
 }

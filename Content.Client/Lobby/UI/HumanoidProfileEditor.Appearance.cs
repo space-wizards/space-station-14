@@ -108,19 +108,18 @@ public sealed partial class HumanoidProfileEditor
         VoiceButton.Clear();
         _voices.Clear();
 
-        _prototypeManager.TryIndex(Profile.Species, out var speciesPrototype);
-        var voices = HumanoidCharacterProfile.GetVocalFromPrototype(speciesPrototype, _prototypeManager, _entManager)
-            ?.Voices;
+        var speciesPrototype = _prototypeManager.Index(Profile.Species);
+        var voices = speciesPrototype.Voices;
 
-        var voicesNames = voices?.Values.ToList() ?? [];
-        if (voices?.Keys.ToList() is { } voiceIds)
+        var voicesNames = voices.Values.ToList();
+        if (voices.Keys.ToList() is { } voiceIds)
             _voices.AddRange(voiceIds);
 
         if (Profile?.Voice is { } voice && !_voices.Contains(voice) &&
             HumanoidCharacterProfile.GetDefaultSoundsFromPrototype(speciesPrototype, Profile.Sex, _prototypeManager, _entManager) is { } newVoice)
             SetVoice(newVoice);
 
-        for (var i = 0; i < voices?.Count; i++)
+        for (var i = 0; i < voices.Count; i++)
         {
             var name = Loc.GetString(voicesNames[i]);
             VoiceButton.AddItem(name, i);
@@ -251,7 +250,7 @@ public sealed partial class HumanoidProfileEditor
                 break;
         }
 
-        if (HumanoidCharacterProfile.GetDefaultSoundsFromSpecies(Profile?.Species, newSex, _prototypeManager, _entManager) is { } voice)
+        if (_prototypeManager.TryIndex(Profile?.Species, out var prototype) && HumanoidCharacterProfile.GetDefaultSoundsFromPrototype(prototype, newSex, _prototypeManager, _entManager) is { } voice)
             SetVoice(voice);
 
         UpdateGenderControls();

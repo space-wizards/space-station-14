@@ -11,3 +11,5 @@
   lastNames: NamesArachnidLast
   sexes:
   - Unsexed
+  voices:
+    UnisexArachnid: humanoid-profile-editor-voice-neutral
